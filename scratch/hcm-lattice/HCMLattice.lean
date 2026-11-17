@@ -371,6 +371,193 @@ theorem differentiableOn_yc {ξ : ℂ → W.toAffine.Point} (hh : IsHolomorphicM
     (hYd.differentiableAt hV').div (hZd.differentiableAt hV') (hV z hzV).1
   exact (hd.congr_of_eventuallyEq (Filter.eventually_of_mem hV' fun w hw => (hV w hw).2.2.2)).differentiableWithinAt
 
+theorem hasDerivAt_pow_comp {f : ℂ → ℂ} {f' z : ℂ} (n : ℕ) (hf : HasDerivAt f f' z) :
+    HasDerivAt (fun x => f x ^ n) (n * f z ^ (n - 1) * f') z := by
+  have hp := hasDerivAt_pow n (f z)
+  have := HasDerivAt.comp (h := f) z hp hf
+  convert this using 1
+  rfl
+
+theorem yc_sq (L₀ : PeriodPair) {ξ : ℂ → L₀.weierstrassCurve.toAffine.Point} {z : ℂ} (hz : ξ z ≠ 0) :
+    yc ξ z ^ 2 = xc ξ z ^ 3 + (-L₀.g₂ / 4) * xc ξ z + (-L₀.g₃ / 4) := by
+  obtain ⟨h, -⟩ := eq_some_of_ne_zero hz
+  have e := (WeierstrassCurve.Affine.equation_iff _ _).1 h.1
+  simp only [PeriodPair.weierstrassCurve_a₁, PeriodPair.weierstrassCurve_a₂,
+    PeriodPair.weierstrassCurve_a₃, PeriodPair.weierstrassCurve_a₄, PeriodPair.weierstrassCurve_a₆,
+    zero_mul, add_zero] at e
+  exact e
+
+/-- The cubic `x³ − g₂x/4 − g₃/4` has simple roots. -/
+theorem cubic_deriv_ne (L₀ : PeriodPair) {e : ℂ} (he : e ^ 3 + (-L₀.g₂ / 4) * e + (-L₀.g₃ / 4) = 0) :
+    3 * e ^ 2 + (-L₀.g₂ / 4) ≠ 0 := by
+  intro h
+  apply L₀.discriminant_ne_zero
+  have hg₂ : L₀.g₂ = 12 * e ^ 2 := by linear_combination -4 * h
+  have hg₃ : L₀.g₃ = -8 * e ^ 3 := by linear_combination -4 * he - e * hg₂
+  show L₀.g₂ ^ 3 - 27 * L₀.g₃ ^ 2 = 0
+  rw [hg₂, hg₃]; ring
+
+/-- **Local holomorphic extensions of `ξ^*(dx/2y)/dz`.** Near every point, the function
+`x'(z)/(2y(z))` (defined where `ξ(z) ≠ O` and `y(z) ≠ 0`) agrees with a holomorphic function:
+`y'/(3x² − g₂/4)` near `y = 0` (the cubic has simple roots), and `−u' + uq'/(2q)` near `O`
+(`u = X/Y`, `w = Z/Y`, `q = 1 − a₄uw − a₆w²`, `wq = u³`). -/
+theorem exists_local_ext (L₀ : PeriodPair) {ξ : ℂ → L₀.weierstrassCurve.toAffine.Point}
+    (hh : IsHolomorphicMap _ ξ) (z₀ : ℂ) :
+    ∃ V : Set ℂ, IsOpen V ∧ z₀ ∈ V ∧ ∃ ψ : ℂ → ℂ, DifferentiableOn ℂ ψ V ∧
+      ∀ z ∈ V, ξ z ≠ 0 → yc ξ z ≠ 0 → ψ z = deriv (xc ξ) z / (2 * yc ξ z) := by
+  have hΩ := isOpen_ne_zero hh
+  have hxd := differentiableOn_xc hh
+  have hyd := differentiableOn_yc hh
+  by_cases hz₀ : ξ z₀ = 0
+  · obtain ⟨U, X, Y, Z, hzU, hUo, hXd, hYd, hZd, hc⟩ := hh z₀
+    obtain ⟨hX0, hY0, hZ0⟩ := (hz₀ ▸ hc z₀ hzU).of_zero
+    set a₄ : ℂ := -L₀.g₂ / 4
+    set a₆ : ℂ := -L₀.g₃ / 4
+    have hhom : ∀ z ∈ U, Y z ^ 2 * Z z = X z ^ 3 + a₄ * X z * Z z ^ 2 + a₆ * Z z ^ 3 := fun z hz => by
+      have := (hc z hz).homog (by simp) (by simp) (by simp)
+      simpa using this
+    set u : ℂ → ℂ := fun z => X z / Y z
+    set w : ℂ → ℂ := fun z => Z z / Y z
+    set q : ℂ → ℂ := fun z => 1 - a₄ * u z * w z - a₆ * w z ^ 2
+    set U₁ := U ∩ Y ⁻¹' {0}ᶜ
+    have hU₁o : IsOpen U₁ := hYd.continuousOn.isOpen_inter_preimage hUo isOpen_compl_singleton
+    have hud : DifferentiableOn ℂ u U₁ :=
+      (hXd.mono Set.inter_subset_left).div (hYd.mono Set.inter_subset_left) fun z hz => hz.2
+    have hwd : DifferentiableOn ℂ w U₁ :=
+      (hZd.mono Set.inter_subset_left).div (hYd.mono Set.inter_subset_left) fun z hz => hz.2
+    have hqd : DifferentiableOn ℂ q U₁ :=
+      ((differentiableOn_const 1).sub ((hud.const_mul a₄).mul hwd)).sub ((hwd.pow 2).const_mul a₆)
+    set V := U₁ ∩ q ⁻¹' {0}ᶜ
+    have hVo : IsOpen V := hqd.continuousOn.isOpen_inter_preimage hU₁o isOpen_compl_singleton
+    have hz₀V : z₀ ∈ V := ⟨⟨hzU, hY0⟩, by simp [q, u, w, hX0, hZ0]⟩
+    have hVU₁ : V ⊆ U₁ := Set.inter_subset_left
+    have hrel : ∀ z' ∈ V, w z' * q z' = u z' ^ 3 := by
+      intro z' hz'
+      have hY' : Y z' ≠ 0 := hz'.1.2
+      have h := hhom z' hz'.1.1
+      have key : w z' * q z' - u z' ^ 3 =
+          (Y z' ^ 2 * Z z' - (X z' ^ 3 + a₄ * X z' * Z z' ^ 2 + a₆ * Z z' ^ 3)) / Y z' ^ 3 := by
+        simp only [u, w, q]; field_simp; ring
+      rw [h, sub_self, zero_div] at key
+      exact sub_eq_zero.1 key
+    refine ⟨V, hVo, hz₀V, fun z => -deriv u z + u z * deriv q z / (2 * q z), ?_, ?_⟩
+    · have hu := hud.mono hVU₁
+      have hq := hqd.mono hVU₁
+      have hdu := hu.deriv hVo
+      have hdq := hq.deriv hVo
+      exact hdu.neg.add ((hu.mul hdq).div (hq.const_mul 2) fun z hz => mul_ne_zero two_ne_zero hz.2)
+    · intro z hzV hξz _
+      have hZz : Z z ≠ 0 := (hc z hzV.1.1).ne_zero_iff.1 hξz
+      have hYz : Y z ≠ 0 := hzV.1.2
+      have hqz : q z ≠ 0 := hzV.2
+      have hwz : w z ≠ 0 := div_ne_zero hZz hYz
+      have hV' : V ∈ 𝓝 z := hVo.mem_nhds hzV
+      have hU₁' : U₁ ∈ 𝓝 z := hU₁o.mem_nhds hzV.1
+      have hu' := (hud.differentiableAt hU₁').hasDerivAt
+      have hw' := (hwd.differentiableAt hU₁').hasDerivAt
+      have hq' := (hqd.differentiableAt hU₁').hasDerivAt
+      have hder : deriv w z * q z + w z * deriv q z = 3 * u z ^ 2 * deriv u z := by
+        have d1 := hw'.mul hq'
+        have d2 := hasDerivAt_pow_comp 3 hu'
+        have heq : (fun z => u z ^ 3) =ᶠ[𝓝 z] fun z => w z * q z :=
+          Filter.eventually_of_mem hV' fun z' hz' => (hrel z' hz').symm
+        have := (d2.congr_of_eventuallyEq heq.symm).unique d1
+        rw [← this]; push_cast; ring
+      have hZev : ∀ᶠ z' in 𝓝 z, Z z' ≠ 0 :=
+        (hZd.differentiableAt (hUo.mem_nhds hzV.1.1)).continuousAt.eventually_ne hZz
+      have hxe : xc ξ =ᶠ[𝓝 z] fun z' => u z' / w z' := by
+        filter_upwards [hV', hZev] with z' hz'V hz'Z
+        have hξ' : ξ z' ≠ 0 := (hc z' hz'V.1.1).ne_zero_iff.2 hz'Z
+        rw [xc, ((hc z' hz'V.1.1).coords hξ').1]
+        have hY' : Y z' ≠ 0 := hz'V.1.2
+        simp only [u, w]; field_simp
+      have hyz' : yc ξ z = 1 / w z := by
+        rw [yc, ((hc z hzV.1.1).coords hξz).2]; simp only [w]; field_simp
+      have hdx : deriv (xc ξ) z = (deriv u z * w z - u z * deriv w z) / w z ^ 2 := by
+        rw [hxe.deriv_eq]; exact (hu'.div hw' hwz).deriv
+      rw [hdx, hyz']
+      have key : -deriv u z + u z * deriv q z / (2 * q z) -
+          (deriv u z * w z - u z * deriv w z) / w z ^ 2 / (2 * (1 / w z)) =
+          (-3 * deriv u z * (w z * q z) + u z * (deriv w z * q z + w z * deriv q z)) /
+            (2 * q z * w z) := by
+        field_simp; ring
+      rw [hrel z hzV, hder, show -3 * deriv u z * u z ^ 3 + u z * (3 * u z ^ 2 * deriv u z) = 0 by ring,
+        zero_div] at key
+      exact sub_eq_zero.1 key
+  · by_cases hy₀ : yc ξ z₀ = 0
+    · set f' : ℂ → ℂ := fun z => 3 * xc ξ z ^ 2 + (-L₀.g₂ / 4)
+      have hf'd : DifferentiableOn ℂ f' {z | ξ z ≠ 0} :=
+        ((hxd.pow 2).const_mul 3).add (differentiableOn_const _)
+      set V := {z | ξ z ≠ 0} ∩ f' ⁻¹' {0}ᶜ
+      have hVo : IsOpen V := hf'd.continuousOn.isOpen_inter_preimage hΩ isOpen_compl_singleton
+      have hz₀V : z₀ ∈ V := by
+        refine ⟨hz₀, cubic_deriv_ne L₀ ?_⟩
+        have := yc_sq L₀ hz₀
+        rw [hy₀] at this
+        linear_combination -this
+      refine ⟨V, hVo, hz₀V, fun z => deriv (yc ξ) z / f' z, ?_, ?_⟩
+      · exact ((hyd.deriv hΩ).mono Set.inter_subset_left).div (hf'd.mono Set.inter_subset_left)
+          fun z hz => hz.2
+      · intro z hzV hξz hyz
+        have hf'z : f' z ≠ 0 := hzV.2
+        have hΩ' : {z | ξ z ≠ 0} ∈ 𝓝 z := hΩ.mem_nhds hξz
+        have hx' := (hxd.differentiableAt hΩ').hasDerivAt
+        have hy' := (hyd.differentiableAt hΩ').hasDerivAt
+        have hd : 2 * yc ξ z * deriv (yc ξ) z = f' z * deriv (xc ξ) z := by
+          have d1 := hasDerivAt_pow_comp 2 hy'
+          have d2 := ((hasDerivAt_pow_comp 3 hx').add (hx'.const_mul (-L₀.g₂ / 4))).add_const
+            (-L₀.g₃ / 4)
+          have heq : (fun z => yc ξ z ^ 2) =ᶠ[𝓝 z]
+              fun z => xc ξ z ^ 3 + (-L₀.g₂ / 4) * xc ξ z + (-L₀.g₃ / 4) :=
+            Filter.eventually_of_mem hΩ' fun z' hz' => yc_sq L₀ hz'
+          have := (d1.congr_of_eventuallyEq heq.symm).unique d2
+          simp only [f']
+          push_cast at this
+          linear_combination this
+        have key : deriv (yc ξ) z / f' z - deriv (xc ξ) z / (2 * yc ξ z) =
+            (2 * yc ξ z * deriv (yc ξ) z - f' z * deriv (xc ξ) z) / (f' z * (2 * yc ξ z)) := by
+          field_simp
+        rw [hd, sub_self, zero_div] at key
+        exact sub_eq_zero.1 key
+    · set V := {z | ξ z ≠ 0} ∩ yc ξ ⁻¹' {0}ᶜ
+      have hVo : IsOpen V := hyd.continuousOn.isOpen_inter_preimage hΩ isOpen_compl_singleton
+      refine ⟨V, hVo, ⟨hz₀, hy₀⟩, fun z => deriv (xc ξ) z / (2 * yc ξ z), ?_, fun z _ _ _ => rfl⟩
+      exact ((hxd.deriv hΩ).mono Set.inter_subset_left).div
+        ((hyd.mono Set.inter_subset_left).const_mul 2) fun z hz => mul_ne_zero two_ne_zero hz.2
+
+/-- Gluing local holomorphic extensions across a set with dense complement. -/
+theorem exists_entire_of_local {G : Set ℂ} (hG : Dense G) (φ : ℂ → ℂ)
+    (hloc : ∀ z₀, ∃ V : Set ℂ, IsOpen V ∧ z₀ ∈ V ∧ ∃ ψ : ℂ → ℂ, DifferentiableOn ℂ ψ V ∧
+      ∀ z ∈ V, z ∈ G → ψ z = φ z) :
+    ∃ Φ : ℂ → ℂ, Differentiable ℂ Φ ∧ ∀ z ∈ G, Φ z = φ z := by
+  choose V hVo hzV ψ hψ heq using hloc
+  have agree : ∀ z₀ z, z ∈ V z₀ → ψ z₀ z = ψ z z := by
+    intro z₀ z hz
+    have c1 : ContinuousAt (ψ z₀) z := (hψ z₀).continuousOn.continuousAt ((hVo z₀).mem_nhds hz)
+    have c2 : ContinuousAt (ψ z) z := (hψ z).continuousOn.continuousAt ((hVo z).mem_nhds (hzV z))
+    set S := V z₀ ∩ V z ∩ G
+    have hS : z ∈ closure S := by
+      rw [mem_closure_iff]
+      intro o ho hzo
+      obtain ⟨y, hy⟩ := hG.inter_open_nonempty (o ∩ (V z₀ ∩ V z)) (ho.inter ((hVo z₀).inter (hVo z)))
+        ⟨z, hzo, hz, hzV z⟩
+      exact ⟨y, hy.1.1, ⟨hy.1.2, hy.2⟩⟩
+    have hne : (𝓝[S] z).NeBot := mem_closure_iff_nhdsWithin_neBot.1 hS
+    refine tendsto_nhds_unique (l := 𝓝[S] z) (c1.tendsto.mono_left nhdsWithin_le_nhds)
+      ((c2.tendsto.mono_left nhdsWithin_le_nhds).congr' ?_)
+    filter_upwards [self_mem_nhdsWithin] with y hy
+    rw [heq z y hy.1.2 hy.2, heq z₀ y hy.1.1 hy.2]
+  refine ⟨fun z => ψ z z, fun z₀ => ?_, fun z hz => heq z z (hzV z) hz⟩
+  have hev : (fun z => ψ z z) =ᶠ[𝓝 z₀] ψ z₀ :=
+    Filter.eventually_of_mem ((hVo z₀).mem_nhds (hzV z₀)) fun z hz => (agree z₀ z hz).symm
+  exact ((hψ z₀).differentiableAt ((hVo z₀).mem_nhds (hzV z₀))).congr_of_eventuallyEq hev
+
+/-- **Liouville for lattice-periodic entire functions.** -/
+theorem eq_const_of_periodic (L : PeriodPair) {Φ : ℂ → ℂ} (hd : Differentiable ℂ Φ)
+    (hper : ∀ z, ∀ l ∈ L.lattice, Φ (z + l) = Φ z) (z : ℂ) : Φ z = Φ 0 :=
+  hd.apply_eq_apply_of_bounded
+    (IsZLattice.isCompact_range_of_periodic L.lattice Φ hd.continuous fun z w hw => hper z w hw).isBounded z 0
+
 end Liouville
 
 end ZInQ.Contrib.HCMLattice
