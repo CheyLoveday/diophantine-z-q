@@ -25,3 +25,18 @@ Base: wip/derham-scholze at d67ea55f6 (origin/main is an ancestor, VERIFIED `git
   (instance mismatch with `drAct`): do not activate it; `ext` on `Dual (A.V p)` times out (use `LinearMap.ext fun v => _`);
   `rfl` comparing pkg-I4 `galRep` with the kernel's `galT.baseChange` as linear maps times out, the applied form via
   `AbVarBC.vToI4_galRep` is instant; `TensorProduct.inductionOn` has no zero case.
+
+## Results (11-17, VERIFIED unless marked)
+
+- `lake env lean scratch/derham-scholze/HTFromDR.lean`: no errors; `deRhamHodgeTate01_of_fontaineT` standard axioms.
+  Pitfall: `↥(ddrSpaceOver p ρ)` has no usable `AddCommGroup`/`Module.Free` (BdR's AddCommMonoid is the OreLocalization one);
+  fix: `letI := Module.addCommMonoidToAddCommGroup ℚ_[p]` and rank (not finrank) rank-nullity.
+- `lake env lean scratch/derham-scholze/FontaineT.lean`: no errors; `fontaineTwistT_proof` standard axioms
+  (t = log[ε₀], ε₀ = TDict.eps rootSystem; uniformizer via TDict.xe; σ(t) = χ(σ)t via bdrAct_logTeich, cyclotomicCharacter.spec,
+  log_decomp, amax_sep).
+- `lake build ZInQKernel.Contrib.OneProof.DeRhamScholzeT` (+ DeRhamScholze, DeRhamScholzeHT): built.
+- `#discharges` (scratch/derham-scholze/Discharges-output.txt): deRhamVpAbVarDirect by deRhamVpAbVarDirect_of_leaves and
+  hodgeTateDecompOr by TT.hodgeTateDecompOr_of_scholzeMilne, each still assuming [ScholzeDeRhamAlg, T10_TateDuality];
+  standard axioms.
+- autofold dry run: `strict count: 4/27 on 31 -> 4/27 on 31; strictest 4/27 -> 4/27`; FoldDryRun.lean.txt (line 1 stripped)
+  compiles, `sixContactMin_of_open68` standard axioms.
