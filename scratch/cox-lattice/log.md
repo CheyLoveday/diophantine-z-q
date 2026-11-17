@@ -13,3 +13,14 @@
   θ²+bθ+ac' = 0, θ ∉ ℚ (disc_neg) → discr_order: b²−4ac' = [𝓞_k:R]²·d_k = orderDisc R.
   The ring-isomorphism invariance of the discriminant is NOT needed: the isomorphism is used only to pull the
   generator aτ back to R, and the discriminant is computed in k.
+- 12:13 ZInQKernel/Contrib/OneProof/CoxProperLattice.lean (imports CMBranch.PeriodLattice): lake build EXIT 0
+  (11763 jobs). HDec.CMBranch.coxProperLattice_proof : CoxProperLattice; reducedCMPeriod_of_leaves_cox (t35,
+  homLatticeCorr, t11b only). VERIFIED.
+- 13:00 ZInQKernel/Contrib/OneProof/CoxProperLattice/Fold.lean (CMInputs3 = CMInputs2 \ coxProperLattice;
+  sixContactMin_of_open72_cmbranch3): lake build EXIT 0 (15392 jobs). scratch/cox-lattice/Axioms.lean ->
+  axioms-out.txt: all three theorems [propext, Classical.choice, Quot.sound]. VERIFIED.
+- autofold.json: cm-branch2's hand-fold spec with the leaf coxProperLattice removed, 6th component filled by
+  HDec.CMBranch.coxProperLattice_proof. Net vs cm-branch2: GLUE column 0, strict count (pending leaves = GLUE) -1,
+  leaves -1. (Hand fold: autofold.py --dry-run does not apply; Fold.lean is the dry run.)
+- Manuscript check L598-600: correct as written, no missing hypothesis (report §4). Label ELLIOT (uncited step);
+  steps of the Lean proof on-the-spot (report §2).
