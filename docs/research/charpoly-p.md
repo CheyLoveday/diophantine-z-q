@@ -194,3 +194,45 @@ At isogenies it equals `deg`. deg-det's algebra needs three things at every non-
 All three need `Q(ψ) = 0` there, which is M1. A Zariski-density argument would need the isogenies to be dense
 in the family's coordinates. That is the statement `deg(t − φ) ≠ 0` for large `t`, which is the polynomiality
 itself.
+
+## 6. A finer decomposition of `DegHomogPoly` (compiled; for crowdsourcing, not for folding)
+
+The file is `ZInQKernel/Contrib/OneProof/CharPolyCharP/ChiDecomp.lean` (scratch copy `scratch/charpoly-p/ChiDecomp.lean`),
+VERIFIED with standard axioms. It splits Mumford's proof of the polynomiality at the Euler characteristic. The
+statements are over genuine tree definitions:
+- `χ` is CW07's coherent-cohomology `Scheme.Modules.eulerChar` over `k` (on `A.X.left` with `A.X.hom`);
+- invertibility is AnthropicFLT's `Scheme.Modules.IsInvertible` (locally trivial);
+- pullback is Mathlib's `Scheme.Modules.pullback`;
+- `deg` is charpoly-ell's `degEnd`.
+
+| statement | content | rating | tree support |
+| --- | --- | --- | --- |
+| `EulerPullbackDegAt A` | `χ(ψ^*L) = deg ψ · χ(L)` for all `ψ ∈ End A`, `L` invertible | consequence of printed theorems: Mumford §12 (isogenies) and §16 Riemann–Roch (non-isogenies: both sides `0`); locators UNVERIFIED | leading coefficient of the isogeny case in AnthropicFLT (Čech χ); the non-isogeny case is M1, **not in the tree** |
+| `ChiPullbackPolyAt A` | `x ↦ χ((∑ xᵢ eᵢ)^*L)` is a polynomial on `ℤ^r` | composite of printed theorems: cube (Mumford §6/§10) and Snapper/RR (Kleiman 1966, Mumford §16); UNVERIFIED | cube proved (AnthropicFLT); one-variable Snapper proved; bridges and joint polynomiality are glue |
+| `ExistsChiNeZeroAt A` | some invertible `L` has `χ(L) ≠ 0` | consequence of printed theorems: projectivity (Mumford §6 App. 1) and §16; UNVERIFIED | AnthropicFLT: symmetric `𝓛` with positive leading coefficient (Čech χ; bridge is glue) |
+| `DegMulNDimAt A` | `∃ g, dim A = g` and `deg [m] = m^{2g}` for `(m : k) ≠ 0` | printed (Mumford §4); UNVERIFIED | AnthropicFLT `endDegree_nsmul_idPoint_eq_pow_of_natCast_ne_zero` (bridge `degEnd = endDegree` is glue G1) |
+
+Proved theorems:
+
+- `degPolyAt_of_chi : EulerPullbackDegAt A → ChiPullbackPolyAt A → ExistsChiNeZeroAt A → DegMulNAt A g → DegPolyAt A`.
+  - `deg = χ(·^*L)/χ(L)` at integer points.
+  - Homogeneity: `deg(mψ) = m^{2g} deg ψ` follows from `(mψ)^*L ≅ ψ^*[m]^*L` (`Scheme.Modules.pullbackComp`) and
+    `EulerPullbackDegAt` at the invertible `[m]^*L`. Then `eval_eq_homogeneousComponent` shows that a rational
+    polynomial scaling like `m^n` for infinitely many `m` agrees at integer points with its degree-`n` component.
+    `infinite_natCast_ne_zero` supplies infinitely many such `m` (`m ≡ 1 mod char k`).
+- `charPolyIndepOfEllAlgClosed_of_chi`: the field from the four, each restricted to fields with no ring
+  homomorphism to `ℂ`.
+- `#discharges` (`scratch/charpoly-p/Discharges2-output.txt`) shows that it discharges the field and still
+  assumes exactly these four.
+
+This trades one leaf for four, so it is not proposed as a fold. Its use is as a map: three of the four are in
+the tree's vendored AnthropicFLT up to framework bridges. These are G1 (`degEnd` versus `endDegree`) and G6
+(CW07 χ versus AnthropicFLT's Čech χ over an ordered affine cover; AnthropicFLT has
+`OModulePresheaf.nonempty_cechEquiv_ofModules_of_isQuasicoherent_of_isSeparated`, not read). The one published
+input the tree lacks is M1, the non-isogeny half of `EulerPullbackDegAt`.
+
+Sanity checks (math):
+- If `dim A = 0`, then `A` is a point and every statement holds with `g = 0`.
+- For `ψ = 0` and `g ≥ 1`, `χ(0^*L) = χ(𝒪_A) = 0 = deg 0 · χ(L)`.
+- The degree in CW07's `eulerChar` is a `finsum`. It is correct here because `H^q` vanishes above `dim A`
+  (Grothendieck) and is finite-dimensional on proper `A` (CW07 `hasFiniteH_of_isProper`).
