@@ -8,3 +8,14 @@
   (scratch/pc-from-rc/local2.py). VERIFIED (computed, sampling). So every 2-Selmer class has a, b odd and
   b = 1 mod 4: the manuscript's representative shape (no factor 2, L1062) comes from the 2-adic image,
   which the text does not spell out (ELLIOT).
+
+## Lean, first deliverable (core)
+- `ZInQKernel/Contrib/PoleRC/Defs.lean`: `LocM`, `SelM`, `CRM`, `SimultaneousConstruction` (defs only). COMPILED.
+- `Rescale.lean`: `point_of_locM`, `polePoly_eq_zero_of`, `witnesses_of_points` (L1107-1121). COMPILED.
+- `Bookkeeping.lean`: `bookkeeping` (L1020-1032): from B get bits b (m | 2730 positive), beta, theta
+  squarefree, beta = 17, theta = 1 mod 24, coprime, mutual local squares (in ZMod p), A = beta s^2,
+  H = theta c^2. COMPILED, axioms [propext, Classical.choice, Quot.sound].
+  Construction used: B = N/D^2, N = k^2 r, r0 = gcd(r,2730), r1 = r/r0, f | 455 with f r1 = 17 mod 24,
+  m = r0 f / gcd(r0,f)^2, beta = f r1, theta = sqfree part of T = D^2 - N/m, H = T (mB/D)^2.
+- `Reduction.lean`: `poleCompleteness_of_crm : CRM -> SimultaneousConstruction -> Manuscript.PoleCompleteness`.
+  COMPILED, axioms [propext, Classical.choice, Quot.sound].
