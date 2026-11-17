@@ -111,4 +111,5 @@ writes a file of several megabytes per module that embeds absolute paths. Clone 
   ([NOTICE](NOTICE), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).
 - Credits: the November 5 manuscript was produced by Elliot Glazer with Astra 6, Sol 6.1 and Opus 5.5, with auditing
   from Fable 5.1. Vendored libraries are credited in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), and contributed
-  proofs in the [credits section of OPEN.md](docs/one-proof/OPEN.md#credits).
+  proofs in the [credits section of OPEN.md](docs/one-proof/OPEN.md#credits). Everyone who contributed is listed in
+  [CONTRIBUTORS.md](CONTRIBUTORS.md).
