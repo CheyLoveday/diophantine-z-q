@@ -160,6 +160,8 @@ abbrev Cos := SL(2, ℤ) ⧸ CongruenceSubgroup.Gamma0 N
 
 noncomputable instance : Fintype (Cos N) := Fintype.ofFinite _
 
+noncomputable instance : DecidableEq (Cos N) := Classical.decEq _
+
 /-- `g_c = g ∘ γ_c⁻¹`. -/
 def conjF (g : ℍ → ℂ) (c : Cos N) (τ : ℍ) : ℂ := g ((Quotient.out c)⁻¹ • τ)
 
@@ -216,5 +218,168 @@ theorem out_inv_not_mem {c : Cos N} (hc : c ≠ c₀ N) :
   simpa using h
 
 end Cosets
+
+/-! ### The coefficients are level-one functions -/
+
+section Core
+
+variable (N : ℕ) [NeZero N]
+
+theorem coeff_levelOne (F J : Cos N → ℍ → ℂ)
+    (hFs : ∀ (σ : SL(2, ℤ)) c τ, F (σ • c) (σ • τ) = F c τ)
+    (hJs : ∀ (σ : SL(2, ℤ)) c τ, J (σ • c) (σ • τ) = J c τ)
+    (hFm : ∀ c (τ : ℍ), MeromorphicAt (F c ∘ ofComplex) (τ : ℂ))
+    (hJm : ∀ c (τ : ℍ), MeromorphicAt (J c ∘ ofComplex) (τ : ℂ))
+    (hFg : ∀ c, ModGrowth (F c)) (hJg : ∀ c, ModGrowth (J c)) (k : ℕ) :
+    ∃ A B : Polynomial ℂ, B ≠ 0 ∧
+      EvNe (fun τ => B.eval (jf τ) * (symPoly (F · τ) (J · τ)).coeff k = A.eval (jf τ)) := by
+  classical
+  set U := ((symPoly (fun i => MvPolynomial.X (Sum.inl i)) (fun i => MvPolynomial.X (Sum.inr i)) :
+        Polynomial (MvPolynomial (Cos N ⊕ Cos N) ℂ)).coeff k)
+  set H : Cos N ⊕ Cos N → ℍ → ℂ := fun i τ => Sum.elim (F · τ) (J · τ) i
+  have hrep : ∀ τ, (symPoly (F · τ) (J · τ)).coeff k = MvPolynomial.eval (fun i => H i τ) U :=
+    fun τ => by
+      rw [symPoly_coeff_eval]
+  apply levelOne_mero
+  · intro σ τ
+    have hF' : (F · (σ • τ)) = (F · τ) ∘ (MulAction.toPerm σ⁻¹ : Equiv.Perm (Cos N)) := by
+      funext c
+      simp only [Function.comp_apply, MulAction.toPerm_apply]
+      conv_lhs => rw [← smul_inv_smul σ c]
+      exact hFs σ _ τ
+    have hJ' : (J · (σ • τ)) = (J · τ) ∘ (MulAction.toPerm σ⁻¹ : Equiv.Perm (Cos N)) := by
+      funext c
+      simp only [Function.comp_apply, MulAction.toPerm_apply]
+      conv_lhs => rw [← smul_inv_smul σ c]
+      exact hJs σ _ τ
+    rw [hF', hJ', symPoly_comp_equiv]
+  · intro τ
+    have := mero_mvEval H (fun i τ => by cases i <;> simp [H, hFm, hJm]) U τ
+    convert this using 1
+    funext z
+    simp only [Function.comp_apply, hrep]
+  · have := ModGrowth.mvEval H (fun i => by cases i <;> simp [H, hFg, hJg]) U
+    convert this using 1
+    funext τ
+    exact hrep τ
+
+theorem evalX0 (p : Polynomial ℂ) (v : Fin 2 → ℂ) :
+    MvPolynomial.eval v (Polynomial.aeval (MvPolynomial.X 0 : MvPolynomial (Fin 2) ℂ) p) =
+      p.eval (v 0) := by
+  induction p using Polynomial.induction_on' with
+  | add p q hp hq => simp [hp, hq]
+  | monomial n a => simp
+
+/-- **`ℂ(X₀(N)) = ℂ(j, j_N)`, analytic form.** -/
+theorem analytic_core (g : ℍ → ℂ)
+    (hinv : ∀ γ ∈ CongruenceSubgroup.Gamma0 N, ∀ τ, g (γ • τ) = g τ)
+    (hmer : ∀ τ : ℍ, MeromorphicAt (g ∘ ofComplex) (τ : ℂ))
+    (hgr : ∀ γ : SL(2, ℤ), ModGrowth (fun τ => g (γ • τ))) :
+    ∃ A B : MvPolynomial (Fin 2) ℂ, (∃ τ₀ : ℍ, MvPolynomial.eval ![jf τ₀, jN N τ₀] B ≠ 0) ∧
+      EvNe (fun τ => MvPolynomial.eval ![jf τ, jN N τ] B * g τ =
+        MvPolynomial.eval ![jf τ, jN N τ] A) := by
+  classical
+  set F : Cos N → ℍ → ℂ := conjF N g
+  set F1 : Cos N → ℍ → ℂ := fun _ _ => 1
+  set J : Cos N → ℍ → ℂ := conjJ N
+  have hJs : ∀ (σ : SL(2, ℤ)) c τ, J (σ • c) (σ • τ) = J c τ := conjJ_smul N
+  have hJm : ∀ c (τ : ℍ), MeromorphicAt (J c ∘ ofComplex) (τ : ℂ) := fun c τ =>
+    mero_comp_smul (fun τ => (jN_analyticAt N τ.im_pos).meromorphicAt) _ τ
+  have hJg : ∀ c, ModGrowth (J c) := fun c => modGrowth_jN_smul N _
+  have hr := coeff_levelOne N F J (conjF_smul N hinv) hJs
+    (fun c τ => mero_comp_smul hmer _ τ) hJm (fun c => hgr _) hJg
+  have hs := coeff_levelOne N F1 J (fun _ _ _ => rfl) hJs
+    (fun c τ => MeromorphicAt.const 1 _) hJm (fun c => ModGrowth.const 1) hJg
+  choose Ar Br hBr hr using hr
+  choose As Bs hBs hs using hs
+  set n := Fintype.card (Cos N) + 1
+  set D0 : Polynomial ℂ := (∏ k ∈ Finset.range n, Br k) * ∏ k ∈ Finset.range n, Bs k
+  have hD0 : D0 ≠ 0 := mul_ne_zero (Finset.prod_ne_zero_iff.2 fun k _ => hBr k)
+    (Finset.prod_ne_zero_iff.2 fun k _ => hBs k)
+  set Atr : ℕ → Polynomial ℂ := fun k =>
+    Ar k * ((∏ k' ∈ (Finset.range n).erase k, Br k') * ∏ k' ∈ Finset.range n, Bs k')
+  set Ats : ℕ → Polynomial ℂ := fun k =>
+    As k * ((∏ k' ∈ Finset.range n, Br k') * ∏ k' ∈ (Finset.range n).erase k, Bs k')
+  set B : MvPolynomial (Fin 2) ℂ := ∑ k ∈ Finset.range n,
+    Polynomial.aeval (MvPolynomial.X 0) (Ats k) * MvPolynomial.X 1 ^ k
+  set A : MvPolynomial (Fin 2) ℂ := ∑ k ∈ Finset.range n,
+    Polynomial.aeval (MvPolynomial.X 0) (Atr k) * MvPolynomial.X 1 ^ k
+  have hevB : ∀ x y : ℂ, MvPolynomial.eval ![x, y] B = ∑ k ∈ Finset.range n, (Ats k).eval x * y ^ k :=
+    fun x y => by simp [B, evalX0]
+  have hevA : ∀ x y : ℂ, MvPolynomial.eval ![x, y] A = ∑ k ∈ Finset.range n, (Atr k).eval x * y ^ k :=
+    fun x y => by simp [A, evalX0]
+  -- all level-one identities at once
+  have hall := EvNe.finset (Finset.range n) (P := fun k τ =>
+      (Br k).eval (jf τ) * (symPoly (F · τ) (J · τ)).coeff k = (Ar k).eval (jf τ) ∧
+      (Bs k).eval (jf τ) * (symPoly (F1 · τ) (J · τ)).coeff k = (As k).eval (jf τ))
+    (fun k _ => (hr k).and (hs k))
+  -- at a point where they hold
+  have hpt : ∀ τ : ℍ, (∀ k ∈ Finset.range n,
+      (Br k).eval (jf τ) * (symPoly (F · τ) (J · τ)).coeff k = (Ar k).eval (jf τ) ∧
+      (Bs k).eval (jf τ) * (symPoly (F1 · τ) (J · τ)).coeff k = (As k).eval (jf τ)) →
+      MvPolynomial.eval ![jf τ, jN N τ] B =
+        D0.eval (jf τ) * (symPoly (F1 · τ) (J · τ)).eval (jN N τ) ∧
+      MvPolynomial.eval ![jf τ, jN N τ] A =
+        D0.eval (jf τ) * (symPoly (F · τ) (J · τ)).eval (jN N τ) := by
+    intro τ hτ
+    have hdeg : ∀ (f' : Cos N → ℂ), (symPoly f' (J · τ)).natDegree < n := fun f' =>
+      Nat.lt_succ_of_le (natDegree_symPoly_le _ _)
+    constructor
+    · rw [hevB, Polynomial.eval_eq_sum_range' (hdeg _), Finset.mul_sum]
+      refine Finset.sum_congr rfl fun k hk => ?_
+      have h1 := (hτ k hk).2
+      simp only [Ats, D0, Polynomial.eval_mul, Polynomial.eval_prod]
+      rw [← Finset.mul_prod_erase _ _ hk]
+      rw [← Finset.mul_prod_erase (Finset.range n) (fun k' => (Bs k').eval (jf τ)) hk] at *
+      rw [← h1]
+      ring
+    · rw [hevA, Polynomial.eval_eq_sum_range' (hdeg _), Finset.mul_sum]
+      refine Finset.sum_congr rfl fun k hk => ?_
+      have h1 := (hτ k hk).1
+      simp only [Atr, D0, Polynomial.eval_mul, Polynomial.eval_prod]
+      rw [← Finset.mul_prod_erase (Finset.range n) (fun k' => (Br k').eval (jf τ)) hk]
+      rw [← h1]
+      ring
+  -- the evaluation identity `g · S(j_N) = R(j_N)`
+  have hSR : ∀ τ : ℍ, (symPoly (F · τ) (J · τ)).eval (jN N τ) =
+      g τ * (symPoly (F1 · τ) (J · τ)).eval (jN N τ) := by
+    intro τ
+    have e1 := symPoly_eval_self (fun c => F c τ) (fun c => J c τ) (c₀ N)
+    have e2 := symPoly_eval_self (fun c => F1 c τ) (fun c => J c τ) (c₀ N)
+    simp only [J, F, F1, conjJ_c₀ N, conjF_c₀ N hinv, one_mul] at e1 e2
+    simp only [J, F, F1]
+    rw [e1, e2]
+  refine ⟨A, B, ?_, ?_⟩
+  · -- nonvanishing at a point with large imaginary part
+    obtain ⟨R0, hR0⟩ := exists_eval_ne_zero_of_norm_gt D0 hD0
+    obtain ⟨T₁, hT₁⟩ := jf_bounds
+    obtain ⟨Ts, hTs⟩ := jN_separation N
+    obtain ⟨τ₀, hτ₀, hτ₀P⟩ := hall.exists_im_gt (max (max T₁ Ts) (max |R0| 1))
+    have hy1 : 1 ≤ τ₀.im := le_trans (le_trans (le_max_right _ _) (le_max_right _ _)) hτ₀.le
+    refine ⟨τ₀, ?_⟩
+    rw [(hpt τ₀ hτ₀P).1]
+    refine mul_ne_zero (hR0 _ ?_) ?_
+    · have h1 := (hT₁ τ₀ (le_trans (le_trans (le_max_left _ _) (le_max_left _ _)) hτ₀.le)).1
+      have h2 := Real.add_one_le_exp (2 * Real.pi * τ₀.im)
+      have h3 : |R0| < τ₀.im := lt_of_le_of_lt (le_trans (le_max_left _ _) (le_max_right _ _)) hτ₀
+      have hpi := Real.two_le_pi
+      have h4 : 2 * τ₀.im ≤ Real.pi * τ₀.im := mul_le_mul_of_nonneg_right hpi (by linarith)
+      nlinarith [le_abs_self R0]
+    · have e2 := symPoly_eval_self (fun c => F1 c τ₀) (fun c => J c τ₀) (c₀ N)
+      simp only [J, F1, conjJ_c₀ N, one_mul] at e2
+      simp only [J, F1]
+      rw [e2]
+      refine Finset.prod_ne_zero_iff.2 fun c _ => ?_
+      split_ifs with hc
+      · exact one_ne_zero
+      · rw [sub_ne_zero]
+        intro heq
+        exact hTs _ τ₀ (le_trans (le_trans (le_max_right _ _) (le_max_left _ _)) hτ₀.le)
+          (out_inv_not_mem N hc) heq.symm
+  · refine hall.mono fun τ hτ => ?_
+    rw [(hpt τ hτ).1, (hpt τ hτ).2, hSR]
+    ring
+
+end Core
 
 end ZInQ.Gamma0QExp
