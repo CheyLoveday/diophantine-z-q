@@ -26,3 +26,5 @@ The fold module `sixContactMin_of_open56` compiles with the standard axioms.
 **Remains.** A reviewer rating for `X6CoarseModuliIdeal`. Elkies (a) needs a quotient curve; (c) needs exactness of
 `HasCM*` and the closed facts for `ℚ(√−6)`, not `h(−24)`. GR's T1 needs Shimura's moduli interpretation of `Γ∖ℍ` (a
 new printed input). The docstring corrections for GRDict and ElkiesX6StarEvery are written out in the report.
+
+Final commit: 2026-11-17 (host clock), branch wip/x6-coarse. Report: docs/research/x6-coarse.md; checks: scratch/x6-coarse/.
