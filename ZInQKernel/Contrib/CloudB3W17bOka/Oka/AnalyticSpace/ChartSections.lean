@@ -48,7 +48,8 @@ theorem eval_complexAffineSpace_apply {U : TopologicalSpace.Opens (ULift.{u} (Fi
   refine hc.symm.trans ?_
   change c = OkaRing.evalHom hy
     (OkaRing.restrict le_top (Algebra.algebraMap (R := ℂ) (A := OkaRing ⊤) c))
-  rw [AlgHom.commutes, OkaRing.evalHom_algebraMap]
+  rw [AlgHom.commutes]
+  exact (OkaRing.evalHom_algebraMap (U := U) (x := y) hy c).symm
 
 /-- Evaluation commutes with restriction. -/
 lemma eval_map {Z : AnalyticSpace.{u}} {U V : TopologicalSpace.Opens Z} (h : V ≤ U) (z : Z)
@@ -83,8 +84,15 @@ lemma chartOpen_mono {V V' : Opens (ULift.{u} (Fin n) → ℂ)} (h : V' ≤ V) :
 /-- **Sections of `𝒪_Z` over a chart image are holomorphic functions**: for a chart
 `φ : ℂⁿ ⟶ Z` and `V ⊆ ℂⁿ` open, `𝒪(V) ≃ 𝒪_Z(φ(V))`. -/
 noncomputable def chartRingEquiv (V : Opens (ULift.{u} (Fin n) → ℂ)) :
-    OkaRing V ≃+* Z.presheaf.obj (op (chartOpen φ V)) :=
-  (asIso (LocallyRingedSpace.IsOpenImmersion.invApp φ.toLRSHom V)).commRingCatIsoToRingEquiv
+    OkaRing V ≃+* Z.presheaf.obj (op (chartOpen φ V)) := by
+  have hφ : PresheafedSpace.IsOpenImmersion φ.toLRSHom.toHom := inferInstance
+  letI := hφ.c_iso V
+  letI : IsIso (LocallyRingedSpace.IsOpenImmersion.invApp φ.toLRSHom V) := by
+    unfold LocallyRingedSpace.IsOpenImmersion.invApp PresheafedSpace.IsOpenImmersion.invApp
+    apply IsIso.comp_isIso'
+    · infer_instance
+    · exact @IsIso.inv_isIso CommRingCat _ _ _ _ (hφ.c_iso V)
+  exact (asIso (LocallyRingedSpace.IsOpenImmersion.invApp φ.toLRSHom V)).commRingCatIsoToRingEquiv
 
 lemma chartRingEquiv_apply (V : Opens (ULift.{u} (Fin n) → ℂ)) (f : OkaRing V) :
     chartRingEquiv φ V f = LocallyRingedSpace.IsOpenImmersion.invApp φ.toLRSHom V f :=
@@ -99,6 +107,8 @@ lemma chartRingEquiv_restrict {V V' : Opens (ULift.{u} (Fin n) → ℂ)} (h : V'
     (LocallyRingedSpace.IsOpenImmersion.inv_naturality φ.toLRSHom (homOfLE h).op) f
   exact this
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 /-- The identification of sections over chart images is `ℂ`-linear: it sends the constant `c`
 to the restriction of the constant `c` of `Z`. -/
 lemma chartRingEquiv_algebraMap (V : Opens (ULift.{u} (Fin n) → ℂ)) (c : ℂ) :
@@ -118,6 +128,8 @@ lemma chartRingEquiv_algebraMap (V : Opens (ULift.{u} (Fin n) → ℂ)) (c : ℂ
   erw [h3]
   exact presheaf_map_map _ _ _ _
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 /-- **Values of sections over chart images**: the value at `φ y` of the section corresponding
 to a holomorphic function `f` is `f y`. -/
 lemma eval_chartRingEquiv (V : Opens (ULift.{u} (Fin n) → ℂ)) (f : OkaRing V)

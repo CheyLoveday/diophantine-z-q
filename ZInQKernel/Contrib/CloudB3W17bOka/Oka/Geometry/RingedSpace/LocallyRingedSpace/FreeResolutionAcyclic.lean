@@ -251,6 +251,8 @@ lemma subsingleton_H_restrictOpen_of_restrict
   exact @Equiv.subsingleton _ _ (TopCat.Sheaf.H.restrictOpenAddEquivOfEq N.isOpenEmbedding W'
     M.toAb q hφW).toEquiv h
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 /-- The image of a section of `𝒪^I` over an open of `X|_N` under `p : 𝒪^I ⟶ M|_N`, read on the
 corresponding open `W` of `X`, is the combination of the restricted generators. -/
 lemma map_val_app_free_eq_sum [Fintype I] [DecidableEq I]
@@ -273,7 +275,6 @@ lemma map_val_app_free_eq_sum [Fintype I] [DecidableEq I]
   rw [eval_freeHomEquiv_eq_map]
   erw [restrictSectionsEquiv_map le_top r₃]
   rw [sheafOfModules_map_map, restrictGenerator, sheafOfModules_map_map]
-  rfl
 
 /-- Restriction of sections of a sheaf of modules along an equality of opens is injective. -/
 lemma sheafOfModules_map_injective {X : LocallyRingedSpace.{u}}
@@ -311,6 +312,8 @@ lemma sum_restrictRelation_smul [Fintype I] [DecidableEq I] {I' : Type u}
   rw [sheafOfModules_map_self]
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 /-- A relation `∑ᵢ fᵢ • gᵢ|_W = 0` between the restricted generators of `p` lifts to a section
 of the kernel of `p` over the preimage `W'` of `W`. -/
 lemma val_app_freeEvalSymm_eq_zero [Fintype I]
@@ -331,8 +334,9 @@ lemma val_app_freeEvalSymm_eq_zero [Fintype I]
   simp_rw [SheafOfModules.freeEval_freeEvalSymm, ringSheaf_map_map, ringSheaf_map_self] at h1
   rw [hf] at h1
   rw [h1, map_zero, map_zero]
-  rfl
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 /-- A relation `∑ᵢ fᵢ • gᵢ|_W = 0` between the restricted generators of `p`, on an open `W` on
 whose preimage `W'` the kernel of `p` is the image of `a`, is a combination of the rows of the
 coefficient matrix of `a`. -/

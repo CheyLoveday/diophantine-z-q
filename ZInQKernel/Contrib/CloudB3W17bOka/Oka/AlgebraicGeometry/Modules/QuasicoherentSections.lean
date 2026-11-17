@@ -159,6 +159,8 @@ theorem exists_pow_smul_eq_zero (f : Γ(X, U)) (t : Γ(F, U))
   simp only
   rw [mres_smul, h0, mres_zero]
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 include hU in
 /-- For a quasi-coherent `F` of finite type and an affine open `U`, every point of `U` has a
 basic open neighbourhood `D(g) ⊆ U` with `Γ(F, D(g))` a finite `Γ(X, D(g))`-module. -/
