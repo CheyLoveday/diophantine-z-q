@@ -3,7 +3,9 @@
 Status: research note (task gz-dict2, 2026-11-16/17), branch `wip/gz-dict2`, base wip/leaf-fold33b 943f1775
 (origin/main c1e4ed1b is already an ancestor, so no merge was needed). New Lean files:
 `ZInQKernel/Contrib/OneProof/GrossZagierPlane.lean` (the new leaf, D2 and the bridge) and the helper
-`ZInQKernel/Contrib/OneProof/GrossZagierPlane/Extension.lean` (D1). Nothing else under `ZInQKernel/` was edited.
+`ZInQKernel/Contrib/OneProof/GrossZagierPlane/Extension.lean` (D1) and
+`ZInQKernel/Contrib/OneProof/GrossZagierPlane/OptimalUnique.lean` (for D3). Nothing else under `ZInQKernel/` was
+edited.
 Scratch, checks and log: `scratch/gz-dict2/`.
 
 Marks. **VERIFIED**: read in a source named here, computed, or compiled. **STANDARD**: a published theorem with an
@@ -54,6 +56,9 @@ versus morphisms, D2 values through `q`-expansions, D3 optimality). Result:
   direction is `IsOptimalParam ⇒ strong Weil`, i.e. `L = c Λ_f ⇒ φ_* : H₁(X₀(N), ℤ) ↠ H₁(E(ℂ), ℤ)`. With
   `Λ_f = periodLattice f` this is the statement that the loops `τ → γτ` (`γ ∈ Γ₀(N)`) generate `H₁(X₀(N), ℤ)`.
   That is standard topology, but it cannot be stated in Lean: Mathlib has no `H₁(X₀(N))` and no `J₀(N)`.
+  Proved in Lean (`isOptimalParam_unique`): `IsOptimalParam` pins `φ` up to sign. Two parametrizations satisfying it
+  for the same `f, E` agree, or are opposite, at every `τ`. So the hypothesis singles out `±` one map and assumes
+  nothing else about `φ`.
 
 **Manual fold** (`scratch/gz-dict2/FoldCheck.lean`, VERIFIED). `frozenTarget_gzdict2` is `Main.lean`'s
 `frozenTarget` with the binder `hGZ` retyped from `GZAlg.GrossZagierAlgOptCd` to `GZDict2.GrossZagierPlaneOptCd`.
@@ -195,6 +200,25 @@ an assumption on `φ`, so:
   1971 §7.5 and Diamond–Shurman §6.6 for the period lattice, UNVERIFIED locators). This statement cannot be
   formulated in Lean today: Mathlib has no `H₁(X₀(N), ℤ)` and no `J₀(N)`.
 
+**Proved in Lean: `IsOptimalParam` determines `φ` up to sign** (`GrossZagierPlane/OptimalUnique.lean`,
+`isOptimalParam_unique`, VERIFIED). If `(X, Y)` and `(X', Y')` both satisfy `IsOptimalParam N f E`, then
+`modPt E X' Y' = modPt E X Y` at every `τ`, or `modPt E X' Y' = −modPt E X Y` at every `τ`. The proof:
+- both lattices are the period lattice of `E`, since `g₂, g₃` determine it (cd-optimal's `lattice_eq_of_g₂_g₃`);
+- so `c Λ_f = c' Λ_f`, and then `c'/c` and `c/c'` are rational multipliers of a lattice, hence integers
+  (gz-optimal's `rat_mem_int`), so `c' = ±c`;
+- `weierPt E L` depends only on the lattice (`weierPt_congr`) and is odd (`weierPt_neg`: `℘` even, `℘'` odd,
+  `−(x, y) = (x, −y − a₁x − a₃)`).
+
+So the leaf applies to at most `φ` and `[−1] ∘ φ`. Both are strong Weil parametrizations when one is (`[−1]` is an
+automorphism of `E`), and `ĥ` is invariant under `y ↦ −y`. Under Reading 2 the whole of D3 is therefore one standard
+fact:
+
+**P**: `periodLattice f` (the `Γ₀(N)`-loop periods) is the group of periods of `2πi f dτ` over `H₁(X₀(N), ℤ)`.
+
+Given P, `IsOptimalParam` is equivalent to `φ_*` being onto `H₁(E(ℂ), ℤ)`, i.e. to `φ` being the strong Weil
+parametrization (gz-optimal §1). Without H₁ in Lean, P is the smallest step that remains; it is not statable as a
+Lean `Prop` today.
+
 No narrowing of the leaf avoids the question under Reading 2. A Lean hypothesis that implies "strong Weil" without
 `H₁(X₀(N))` or `J₀(N)` is exactly a description of `Λ_f` like `IsOptimalParam`. The decision is the reading of GZ
 V §2's hypothesis on `φ`, already on the pages-wanted list (gz-optimal §1: p. 230 and p. 312).
@@ -244,13 +268,14 @@ it stays "pending reading", for D3 alone. No glue is added either way.
 | --- | --- | --- |
 | `ZInQKernel/Contrib/OneProof/GrossZagierPlane.lean` | §1–§6: `q`-expansion algebra, plane model, identity theorem, D2, leaf, bridge | `lake build ZInQKernel.Contrib.OneProof.GrossZagierPlane`: no errors, no warnings in the file (VERIFIED) |
 | `ZInQKernel/Contrib/OneProof/GrossZagierPlane/Extension.lean` | D1: places and points `τ` | `lake build`: no errors, no warnings in the file; axioms standard (`AxExt-output.txt`, VERIFIED) |
+| `ZInQKernel/Contrib/OneProof/GrossZagierPlane/OptimalUnique.lean` | D3: `isOptimalParam_unique`, `weierPt_congr`, `weierPt_neg` | `lake build`: no errors, no warnings in the file; axioms standard (`AxD3-output.txt`, VERIFIED) |
 | `scratch/gz-dict2/FoldCheck.lean` | manual fold | standard axioms (VERIFIED) |
 | `scratch/gz-dict2/Discharges.lean` | `#discharges` | output above (VERIFIED) |
-| `scratch/gz-dict2/D2a.lean`, `D1a.lean`, `D1b.lean`, `Extension.lean` | development copies | compiled (VERIFIED) |
+| `scratch/gz-dict2/D2a.lean`, `D1a.lean`, `D1b.lean`, `Extension.lean`, `D3.lean` | development copies | compiled (VERIFIED) |
 
 ## 8. Remaining
 
-* The reading of Gross–Zagier V §2's hypothesis on `φ` (D3). Under Reading 2, the topological identification
-  "`Γ₀(N)`-loops generate `H₁(X₀(N), ℤ)`" stays outside Lean until `H₁` of modular curves exists.
+* The reading of Gross–Zagier V §2's hypothesis on `φ` (D3). Under Reading 2, the topological identification P
+  ("`Γ₀(N)`-loops generate `H₁(X₀(N), ℤ)`") stays outside Lean until `H₁` of modular curves exists.
 * A scheme-level form of D1 (`X₀(N)_ℚ` as a smooth proper scheme with function field `X0Field N`) was not
   attempted (§3).
