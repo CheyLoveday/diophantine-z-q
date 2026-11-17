@@ -184,3 +184,9 @@ Base wip/leaf-fold33b d804d07d (= fork main + fold-b115). H top `HDec.HSyn.sixCo
    **render_open count after item 5: 30 open (H 29, strictest 5/24, 1 other); 5/24 on 29.**
 4. Manuscript check: not applicable to locator text, except: Deligne-Serre is not in the manuscript's bibliography
    (VERIFIED: no bibitem for deligne-serre in diophantine_zq.tex); Faltings 1983 is (bibitem faltings1983 L11084).
+
+## Report
+- docs/research/fold-b116.md, scratch/fold-b116/REPLAY.md. Build logs build-wrap.txt (100234 lines) and
+  build-logp.txt (3941 lines) truncated to their axioms/result lines.
+- Final state (VERIFIED, after item 5): top `sixContactMin_of_open79` (TailZ86, `OpenResearchLeaves60`); 30 open
+  (H 29, strictest 5/24, 1 other); strict 5/24 on 29; no SGA7-named constant in frozenTarget's closure.
