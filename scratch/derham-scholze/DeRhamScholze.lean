@@ -1,11 +1,13 @@
 import ZInQKernel.HDecomp.Textbook.T10Etale
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.HodgeTateDecompOrH1
+import ZInQKernel.Contrib.OneProof.MumfordTorsionAlgClosed
 
 /-!
 # derham-scholze: `V_p(A)` is de Rham by Scholze's comparison (manuscript `lem:de-rham-descent`)
 
-Task derham-scholze (2026-11-17). Report `docs/research/derham-scholze.md`.
+Copyright: this file is part of the fork Deicyde/diophantine-z-q (task derham-scholze, 2026-11-17).
+Report `docs/research/derham-scholze.md`; scratch copy `scratch/derham-scholze/DeRhamScholze.lean`.
 
 The manuscript (diophantine_zq.tex, `lem:de-rham-descent`, L10939-11004, step C3) proves that `V_ℓ(A)` is
 de Rham by Scholze's comparison (Forum Math. Pi 1 (2013), Cor. 1.8, Thms 9.1, 9.3, corrigendum Forum Math. Pi 4
@@ -387,6 +389,28 @@ theorem hodgeTateDecompHom_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10
 theorem hodgeTateDecompOr_of_scholze (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
     (hM : AvSplit.MumfordTorsionAlgClosed) (hW : DeRhamHodgeTate01) : ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr :=
   ZInQ.Contrib.HodgeTateOr.or_of_hom (hodgeTateDecompHom_of_scholze hS hT hM hW)
+
+/-! ## §8. The two research fields from the new leaves (Mumford's torsion theorem is proved in the tree) -/
+
+/-- **`deRhamVpAbVarDirect` from Scholze's comparison and Milne's identification.** -/
+theorem deRhamVpAbVarDirect_of_leaves (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality) :
+    DeRhamPrint.Direct.DeRhamVpAbVarDirect :=
+  deRhamVpAbVarDirect_of_scholze hS hT ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof
+
+/-- **`hodgeTateDecompOr` from Scholze's comparison, Milne's identification and `DeRhamHodgeTate01`.** -/
+theorem hodgeTateDecompOr_of_leaves (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality)
+    (hW : DeRhamHodgeTate01) : ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr :=
+  hodgeTateDecompOr_of_scholze hS hT ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof hW
+
+/-- **The manuscript's lemma for `V_p(A)`** (`lem:de-rham-descent`, parts used by the two fields): `V_p(A)` is
+de Rham, `V_p(A)^∨ = H¹_ét(A_{F̄}, ℚ_p)` is de Rham with Hodge jumps in `[0, 1]`, and (with `DeRhamHodgeTate01`)
+`Hom(V_p(A), ℂ_p) ≅ ℂ_p^a ⊕ ℂ_p(−1)^b`, i.e. Hodge–Tate weights in `{0, −1}`. -/
+theorem lemDeRhamDescent_tate (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality) (p : ℕ) [Fact p.Prime]
+    (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F] (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) :
+    IsDeRhamTensorOver p (A.galRep p) ∧ IsDeRhamFam p (fun σ => (A.galRep p).dual σ) ∧
+      HodgeRange p (fun σ => (A.galRep p).dual σ) 1 :=
+  ⟨isDeRhamTensorOver_of_scholze p hS hT ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof F A,
+    dual_deRham_of_scholze p hS hT ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof F A⟩
 
 end
 

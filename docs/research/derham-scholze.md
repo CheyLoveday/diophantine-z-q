@@ -6,7 +6,44 @@ copy `scratch/derham-scholze/DeRhamScholze.lean`).
 
 ## 1. Result
 
-(RESULT-PLACEHOLDER)
+**Both research fields are re-routed to the manuscript's own proof (`lem:de-rham-descent`, step C3) and proved in
+Lean from two leaves: Scholze's comparison as the manuscript applies it, and Milne's identification
+`V_ℓ(A) ≅ H¹_ét(A_{F̄}, ℚ_ℓ)^∨`.** Everything else in the route is proved in Lean: duality, the Hodge–Tate
+weights read off the de Rham filtration, which is the manuscript's "consequently" and covers Fontaine's
+"de Rham ⇒ Hodge–Tate" in this case, and Fontaine's `t`.
+
+```
+DeRhamScholze.deRhamVpAbVarDirect_of_leaves (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality) :
+    DeRhamPrint.Direct.DeRhamVpAbVarDirect
+DeRhamScholze.TT.hodgeTateDecompOr_of_scholzeMilne (hS : ScholzeDeRhamAlg) (hT : T10Etale.T10_TateDuality) :
+    ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr
+```
+
+Both theorems use only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`). `#discharges` shows that
+each one discharges its field and still assumes exactly `[DeRhamScholze.ScholzeDeRhamAlg, T10Etale.T10_TateDuality]`
+(VERIFIED, §6).
+
+* **`ScholzeDeRhamAlg`** (new leaf). For a finite `F/ℚ_p`, a proper smooth `F`-scheme `X` and every `i`,
+  `Hⁱ_ét(X_{F̄}, ℚ_p)` is de Rham and the Hodge filtration of its `D_dR` has its jumps in `[0, i]`. The statement uses
+  **Mathlib's own `ℓ`-adic cohomology** (`Scheme.EllAdicCohomology`, pro-étale, Bhatt–Scholze) with the Galois action
+  by transport of structure. It is rated a **consequence** of Scholze, Forum Math. Pi 1 (2013), Cor. 1.8 with Thms 9.1
+  and 9.3, **not printed form**: the print is about rigid-analytic varieties, which Mathlib does not have (§3.1,
+  Known issue 1).
+* **`T10_TateDuality`** (t10-etale's existing Milne leaf, reused unchanged). It is not an open field at this base,
+  so the fold adds it back. Rated printed form with dictionary, flagged unread.
+* **Proved glue:** the duality and transport of the de Rham property along Milne's identification
+  (`DeRhamScholze.lean`); `DeRhamHodgeTate01`, "de Rham with Hodge jumps in `[0, 1]` ⇒ Hodge–Tate with weights
+  `{0, 1}`" (`DeRhamScholzeHT.lean`, from Tate's two theorems via a twisted Tate–Sen lemma); and `FontaineTwistT`:
+  `t = log [ε₀]` is a uniformizer of `B_dR^+` with `σ(t) = χ(σ) t` (`DeRhamScholzeT.lean`). These are all new Lean
+  proofs, with no new hypotheses.
+* **Fold:** the autofold spec discharges both fields with the two leaves above. The dry run gives
+  `strict count: 4/27 on 31 -> 4/27 on 31` (two GLUE fields become two GLUE leaves). The fold module compiles with
+  standard axioms (VERIFIED, §6). The count drops by up to 2 when the leaves are rated LEAF after reading:
+  `ScholzeDeRhamAlg` if the integrator accepts the manuscript's own algebraic application of Cor. 1.8, and
+  `T10_TateDuality` after a reading of Milne.
+* **Coordination with derham-range:** the new route does not need `range_iotaF_eq_bdrFix`. It reaches derham-direct's
+  print form through `isDeRhamTensorOver_iff` (the tower law), so derham-range's lemma is neither duplicated nor
+  required.
 
 ## 2. The manuscript's lemma and what each row needs
 
@@ -138,8 +175,9 @@ the lemma uses without a citation. It is **on-the-spot glue** and is **proved in
    gives without `H_dR` (Hodge jumps in `[0, 1]`), and the consumer of `hodgeTateDecompOr` already proves
    `a = b = g` from the Weil pairing (hodgetate-from-dr), so no Hodge number is needed downstream.
 5. **"Consequently" (L10995) is Fontaine's de Rham ⇒ Hodge–Tate**, which the lemma does not cite. It is stated as
-   the glue Prop `DeRhamHodgeTate01` and proved in Lean in `DeRhamScholzeHT.lean` (§4) from Tate's theorems and
-   Fontaine's `t` (`FontaineTwistT`).
+   the glue Prop `DeRhamHodgeTate01` and proved in Lean (§4.2) from Tate's theorems and Fontaine's `t`
+   (`FontaineTwistT`, itself proved, §4.3), so it adds no hypothesis. Labelled on-the-spot: the proof is Fontaine's
+   standard argument (gr maps plus Tate–Sen), and every step of it is in Lean.
 6. L11001-11004 (Hodge–Tate comparison alone would not give de Rham): respected. Neither row uses a Hodge–Tate
    decomposition as an input; the de Rham row uses only Scholze + Milne + duality, and the Hodge–Tate row derives the
    decomposition from the de Rham comparison.
@@ -165,8 +203,116 @@ the lemma uses without a citation. It is **on-the-spot glue** and is **proved in
 
 ### 4.2 `DeRhamHodgeTate01` (`DeRhamScholzeHT.lean`)
 
-(HT-PLACEHOLDER)
+File `ZInQKernel/Contrib/OneProof/DeRhamScholzeHT.lean` (scratch copy `scratch/derham-scholze/HTFromDR.lean`).
+`DeRhamScholze.HT.deRhamHodgeTate01_of_fontaineT : FontaineTwistT → DeRhamHodgeTate01`, with standard axioms
+(VERIFIED). The proof is Fontaine's argument, written out:
+
+1. `θ₀ : Fil⁰ B_dR → ℂ_p` (`ι(b) ↦ θ(b)`) and `θ₁ : Fil¹ B_dR → ℂ_p` (`ι(t c) ↦ θ(c)`) are `ℚ_p`-linear (`theta0`,
+   `theta1`).
+2. In Hom form (`D_dR(V^∨) = Hom_{G_F}(V, B_dR)`, `map_ddrFam_dual`; `Fil^j = Hom(V, Fil^j B_dR)`,
+   `map_filRange_dual`), `gr⁰ φ = θ₀ ∘ φ` lands in `Hom_{G_F}(V, ℂ_p)` (`gr0_mem`, by θ-equivariance) and
+   `gr¹ φ = θ₁ ∘ φ` lands in `Hom_{G_F}(V, ℂ_p(1))` (`gr1_mem`, by `σ(t) = χ(σ) t`). The kernel of `gr⁰` is `Fil¹`
+   (`ker θ = 𝔪 = (t)`) and the kernel of `gr¹` is `Fil² = 0`. Rank–nullity then gives
+   `[F:ℚ_p] dim V = dim D_dR ≤ dim Hom_{G_F}(V, ℂ_p) + dim Hom_{G_F}(V, ℂ_p(1))` (`finrank_ddr_le`).
+3. **Tate–Sen, twisted and relative** (`linIndep_two`): `F'`-linearly independent families in
+   `Hom_{G_F}(V, ℂ_p)` and in `Hom_{G_F}(V, ℂ_p(1))` are together `ℂ_p`-linearly independent in
+   `Hom_{ℚ_p}(V, ℂ_p)`. The proof is a minimal relation, twisted by `χ^{wt j − wt k}`: by Tate's `ℂ_p(±1)^{G_F} = 0`
+   the cross terms vanish, and by Ax–Sen–Tate `ℂ_p^{G_F} = F'` the remaining coefficients lie in `F'`. Both of
+   Tate's theorems are proved in the tree.
+4. Writing `a, b` for the `F'`-dimensions, step 3 gives `a + b ≤ dim V` and step 2 gives `a + b ≥ dim V`. So the
+   two bases together form a `ℂ_p`-basis of `Hom(V, ℂ_p)`, and the coordinate isomorphism is
+   `Hom(V, ℂ_p) ≅ ℂ_p^a ⊕ ℂ_p(−1)^b`, `G_F`-equivariant in the exact shape of htdecomp-or's `HodgeTateDecompHom`.
 
 ### 4.3 `FontaineTwistT` (`DeRhamScholzeT.lean`)
 
-(T-PLACEHOLDER)
+File `ZInQKernel/Contrib/OneProof/DeRhamScholzeT.lean` (scratch copy `scratch/derham-scholze/FontaineT.lean`).
+`DeRhamScholze.TT.fontaineTwistT : DeRhamScholze.HT.FontaineTwistT`, with standard axioms (VERIFIED). Take `ε₀`
+derham-print's generator (`TDict.eps rootSystem`) and `t = log [ε₀]` (bst-construct's `logTeich`).
+
+* **Uniformizer** (`maximalIdeal_eq_logTeich`): `log(1 + X) = X + X² g` (`logSeries_eq`), and `psEval X` is
+  `[ε₀] − 1` (`psEval_X`). So `t ≡ [ε₀] − 1 = TDict.xe mod 𝔪²`, which lies in `𝔪 ∖ 𝔪²` (TDict's `xe_mem`,
+  `xe_not_mem_sq`). Hence `t = ξ · unit` (`eq_xi_pow_mul_unit`) and `𝔪 = (t)`.
+* **`σ(t) = χ(σ) t`** (`logTeich_flatAct`): `σ(log [ε]) = log [σ ε]` (bst-construct's `bdrAct_logTeich`).
+  Coordinatewise, `σ(ε₀^{(k)}) = (ε₀^{(k)})^{χ(σ) mod pᵏ}` (`root_flatAct`, from Mathlib's
+  `cyclotomicCharacter.spec`, after lifting the `pᵏ`-th roots of unity of `ℂ_p` to `ℚ̄_p`). pb-pst's `log_decomp`
+  with these exponents, together with the `p`-adic separatedness of `A_max` (`amax_sep`), gives
+  `log [σ ε₀] − χ(σ) log [ε₀] ∈ ⋂_k pᵏ A_max = 0`. This is pb-pst's `logTeich_eq_mul` with the exponent
+  identified as `χ(σ)`.
+
+`deRhamHodgeTate01_proof := deRhamHodgeTate01_of_fontaineT fontaineTwistT` and
+`hodgeTateDecompOr_of_scholzeMilne := hodgeTateDecompOr_of_leaves hS hT deRhamHodgeTate01_proof`.
+
+## 6. Compile log, `#discharges`, fold dry run (all VERIFIED, 11-17, Lean 4.35.0 / Mathlib v4.35.0)
+
+| check | outcome |
+|---|---|
+| `lake env lean scratch/derham-scholze/DeRhamScholze.lean` | no errors (`milneE_comm` needs `maxHeartbeats 4000000`: transport between pkg-I4's and the kernel's copies of the abelian variety) |
+| `lake env lean scratch/derham-scholze/HTFromDR.lean` | no errors; `deRhamHodgeTate01_of_fontaineT`: `[propext, Classical.choice, Quot.sound]` |
+| `lake env lean scratch/derham-scholze/FontaineT.lean` | no errors; `fontaineTwistT_proof`: `[propext, Classical.choice, Quot.sound]` |
+| `lake build ZInQKernel.Contrib.OneProof.DeRhamScholze ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges` | built (16218 jobs) |
+| `lake build ZInQKernel.Contrib.OneProof.DeRhamScholzeT` (with `DeRhamScholzeHT`) | built |
+| `scratch/derham-scholze/Discharges.lean` (full output `Discharges-output.txt`) | see below |
+| `python3 scripts/one_proof/autofold.py scratch/derham-scholze/autofold.json --dry-run` (`autofold-dryrun.txt`) | `strict count: 4/27 on 31 -> 4/27 on 31; strictest 4/27 -> 4/27`; nothing written to the tree |
+| the dry-run module with line 1 stripped (`FoldDryRun.lean.txt`), `lake env lean` | compiles; `HDec.HSyn.sixContactMin_of_open68`: `[propext, Classical.choice, Quot.sound]` |
+
+```
+DISCHARGES [OpenResearchLeaves48.hodgeTateDecompOr] by DeRhamScholze.TT.hodgeTateDecompOr_of_scholzeMilne
+  still assumes: [DeRhamScholze.ScholzeDeRhamAlg, T10Etale.T10_TateDuality]
+DISCHARGES [OpenResearchLeaves48.deRhamVpAbVarDirect] by DeRhamScholze.deRhamVpAbVarDirect_of_leaves
+  still assumes: [DeRhamScholze.ScholzeDeRhamAlg, T10Etale.T10_TateDuality]
+'DeRhamScholze.deRhamVpAbVarDirect_of_leaves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DeRhamScholze.TT.hodgeTateDecompOr_of_scholzeMilne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DeRhamScholze.TT.deRhamHodgeTate01_proof' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DeRhamScholze.TT.fontaineTwistT' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DeRhamScholze.lemDeRhamDescent_tate' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+(`#discharges` also lists the older discharges of these fields, e.g. through `DeRhamVpAbVarAdm` or
+`HodgeTateDecompH1`.)
+
+Files (no `sorry`, no `#eval`/`run_cmd`/notation/macros; none imports `ZInQKernel.OneProof.Main`):
+
+| file | size | imports | content |
+|---|---|---|---|
+| `ZInQKernel/Contrib/OneProof/DeRhamScholze.lean` | 25 KB | `T10Etale`, `DeRhamRange`, `HodgeTateDecompOrH1`, `MumfordTorsionAlgClosed` | the leaf `ScholzeDeRhamAlg`, the glue Prop `DeRhamHodgeTate01`, §4.1 |
+| `ZInQKernel/Contrib/OneProof/DeRhamScholzeHT.lean` | 35 KB | `DeRhamScholze` | `FontaineTwistT` (statement), §4.2 |
+| `ZInQKernel/Contrib/OneProof/DeRhamScholzeT.lean` | 13 KB | `DeRhamScholzeHT`, `PanBergerPst`, `PanBergerSanity`, `DeRhamPrintTDict`, `BdRInvariants` | §4.3 and the final theorems |
+
+The scratch copies (`scratch/derham-scholze/{DeRhamScholze,HTFromDR,FontaineT}.lean`) are the development versions.
+`Statement.lean` copies the two fields verbatim and checks them `Iff.rfl` against the tree.
+
+## 7. Autofold spec, kinds rows, locators
+
+`scratch/derham-scholze/autofold.json` imports `ZInQKernel.Contrib.OneProof.DeRhamScholzeT` and does the following:
+
+* `deRhamVpAbVarDirect` ← `DeRhamScholze.deRhamVpAbVarDirect_of_leaves {n}.scholzeDeRhamAlg {n}.t10TateDuality`, with
+  new leaves `scholzeDeRhamAlg : DeRhamScholze.ScholzeDeRhamAlg` (kind `consequence`, flag "pending review: …") and
+  `t10TateDuality : T10Etale.T10_TateDuality` (kind `published`, flag "unread: …; locator UNVERIFIED");
+* `hodgeTateDecompOr` ← `DeRhamScholze.TT.hodgeTateDecompOr_of_scholzeMilne {n}.scholzeDeRhamAlg {n}.t10TateDuality`,
+  with no new leaf.
+
+Both new rows count GLUE (a consequence; an unread print), so the count is unchanged (two GLUE fields become two GLUE
+leaves). **Recommendation:** fold. The content gains: (i) the H rows now follow the manuscript's C3 exactly as
+cited (Scholze + Milne), with no Fontaine 1982/Tate 1967/Berger/Faltings HT-comparison input, as
+L11001-11004 require; (ii) both leaves are stated over Mathlib's genuine étale (pro-étale) cohomology, a target the
+community can formalize; (iii) one leaf feeds both rows. Two readings could turn the rows into LEAF: Milne's
+Thm 12.1(a) (or Milne 1986 Thm 15.1(a)) for `t10TateDuality`, and the integrator's ruling on whether the manuscript's
+own algebraic application of Cor. 1.8 counts as the print for `scholzeDeRhamAlg`.
+
+Proposed `locators.md` rows (not added, since `locators.md` is not this task's file):
+
+* *Scholze 2013 Cor. 1.8 + Thms 9.1, 9.3 (+ corrigendum), algebraic form over Mathlib's `EllAdicCohomology`
+  (`DeRhamScholze.ScholzeDeRhamAlg`): consequence (rigid → algebraic via 9.1/9.3; `F̄` vs `ℂ_p`; pro-étale vs étale).
+  Locators as in row R10.*
+* *Milne, AV v2.00 Part I Thm 12.1(a) (manuscript) / Milne 1986 Thm 15.1(a) (`T10Etale.T10_TateDuality`):
+  equivariant `H¹(A_{K̄}, ℤ_ℓ) ≅ Hom(T_ℓ A, ℤ_ℓ)`; numbers UNVERIFIED.*
+
+## 8. What remains
+
+* Readings: Milne's theorem (unread here), and the integrator's ruling on `scholzeDeRhamAlg`'s rating.
+* The fold itself (integrator): autofold without `--dry-run`, build, hash guard, OpenStatements, render_open.
+* Not done, and not needed by the two fields: the manuscript's descent from `F` to `K` and the coefficient-field step
+  (parts 2-3 of the lemma for `r`), and the Hodge numbers `2, 2` (they need `H_dR`, which is not in Mathlib; the
+  consumer gets `a = b = g` from the Weil pairing).
+* Optional infrastructure, not used by any proof: functoriality of t10-etale's transport (`galHX` is a group action;
+  §3.1 states the leaf over the operators, which needs no group law).
