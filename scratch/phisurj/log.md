@@ -35,3 +35,16 @@ Base wip/leaf-fold33b 0e3c31258; `git merge origin/main`: already up to date (20
 - `scratch/phisurj/Discharges.lean` → `discharges.txt`: "#discharges: 43 open hypotheses, 8602 theorems checked,
   48 discharge one"; no line for `PhiSurj.*` (expected: `PhiAmpleIsogeny` is not an open hypothesis type; the
   field `MumfordPhiSurjectiveAC` is rerouted, not filled).
+- (a)-reduction (VERIFIED, compiled; now also in the contribution file, rebuilt 18:19):
+  `PhiSurj.TIClassesInPicZeroAC` (def, Prop: over k = k̄ every translation-invariant class is `kClass` of a
+  k-point of B), `mumfordPhiSurjectiveAC_of_ti (ha h1 h2 h4 hT) : MumfordPhiSurjectiveAC`,
+  `tiClassesInPicZeroAC_of_phiSurjective (h8) : TIClassesInPicZeroAC`; helpers `kClass_injective` (Kleiman 9.2.5
+  at Spec k̄, as pic-dict's L5), `exists_lift_kpt`, `kpt_comp_phiL`. Axioms standard.
+- `#discharges` rerun: "43 open hypotheses, 8612 theorems checked, 49 discharge one"; new line
+  `DISCHARGES [OpenAddedLeaves20.mumfordPhiSurjectiveAC] by PhiSurj.mumfordPhiSurjectiveAC_of_ti still assumes:
+  [PhiSurj.TIClassesInPicZeroAC, T09Pic.PicRepresentableAbVar, T09Pic.PicZeroAbVar, T09Pic.WeilPairingMumford,
+  AvSplit.MumfordTorsionAlgClosed]`.
+- `autofold-ti.json` (alternative: fill the field from (a)) --dry-run: "strict count: 13/20 on 33 -> 12/21 on 33;
+  strictest 13/20 -> 12/21" and refuses (GLUE rise; (a) flagged pending reading). Not recommended.
+- Reroute fold count (computed from kinds.tsv: the row `mumfordPhiSurjectiveAC` is LEAF/LEAF): H 13/20 on 33 ->
+  12/20 on 32.
