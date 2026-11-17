@@ -155,10 +155,20 @@ each row's rating now depends only on its own print.
 
 ## 6. `#discharges` and autofold
 
-See `scratch/r3prime-etale/discharges-output.txt` (output pasted below once the build finished). The file
-discharges no bundle field. R3′ was a reading step inside three leaves' height predicate, not a field. So there is
-no fold to run, and `scratch/r3prime-etale/autofold.json` records an empty spec with the proposed flag updates
-of §5.
+`lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.HolChartSerre`
+finished with "Build completed successfully (16216 jobs)" (VERIFIED). `frozenTarget` uses only the standard axioms.
+
+`lake env lean scratch/r3prime-etale/Discharges.lean` exits 0. Its output is in
+`scratch/r3prime-etale/discharges-output.txt` (VERIFIED):
+
+* The output has 19 `DISCHARGES` lines. All of them come from contribution modules already in the tree (for
+  example `CarayolPrinted`, `DeRhamPrint`) that the import pulls in. **None is by `ZInQ.R3Etale`.** This is
+  expected: R3′ was a reading step inside three leaves' height predicate, not a bundle field.
+* The `#print axioms` lines for `exists_tensor_formula`, `translationAnHol`, `isHolChart_iff_isSerreChart'`,
+  `exists_serreChart_at` and `isSerreMetricSq_iff` all give `[propext, Classical.choice, Quot.sound]`.
+
+So there is no fold to run. `scratch/r3prime-etale/autofold.json` records an empty `discharges` list and the
+flag updates of §5 under `flag_updates`. It is not a spec for `autofold.py`; no dry run is applicable.
 
 ## 7. New leaves
 

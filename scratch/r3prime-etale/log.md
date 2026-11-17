@@ -34,3 +34,13 @@
 - `translationAnHol : TranslationAnHol` (from `exists_tensor_formula` with X = Y = 𝒢, μ^*s).
 - `isHolChart_iff_isSerreChart' (hT35) 𝒢 g hg τ φ : IsHolChart 𝒢 τ φ ↔ IsSerreChart 𝒢 τ φ` — only T35
   (the consumers' existing hypothesis) remains.
+
+## 07:50 checks
+- Contrib file `ZInQKernel/Contrib/OneProof/HolChartSerre.lean`: `lake env lean` clean (VERIFIED).
+- `lake build +Main +Discharges +HolChartSerre`: Build completed successfully (16216 jobs) (VERIFIED).
+- `#discharges` (scratch/r3prime-etale/discharges-output.txt): 19 pre-existing lines from imported contribs,
+  none by ZInQ.R3Etale (no field discharged; R3' is a reading step, not a field). Axioms of the five main
+  theorems: propext, Classical.choice, Quot.sound (VERIFIED).
+- `isSerreMetricSq_iff`: IsAnMetricSq (base of IsAnStableHeight, IsAnStableHeightSS, IsStableHeightBarAn) equals
+  the metric read in Serre's charts (VERIFIED, compiled).
+- Report docs/research/r3prime-etale.md; autofold.json = empty spec + flag updates.
