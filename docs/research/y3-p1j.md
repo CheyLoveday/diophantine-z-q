@@ -68,8 +68,8 @@ One row per manuscript step formalized or relied on (diophantine_zq.tex). Verdic
 
 | tex lines | step | verdict | reason |
 |---|---|---|---|
-| L411-412 | `B = (2,−3)`, `𝒪 = ℤ[i,(1+j)/2]`, `μ = 2j+ij` | OK | `𝒪` closed under products in the basis `(1, i, (1+j)/2, (i+ij)/2)` (exact check, `units_mod3.py`, `gram.py`); `nrd μ = 6`, `μ² = −6` (VERIFIED, `gram.out`) |
-| L412-418 | Gram matrix of `Trd(μ⁻¹x ȳ)` and determinant one | OK | computed with exact rationals: equal to the printed matrix with the printed sign, determinant `1` (VERIFIED, `scratch/y3-p1j/gram.out`) |
+| L411-412 | `B = (2,−3)`, `𝒪 = ℤ[i,(1+j)/2]`, `μ = 2j+ij` | OK | `𝒪` closed under products in the basis `(1, i, (1+j)/2, (i+ij)/2)` (exact check, `units_mod3.py`, `gram.py`); `nrd μ = 6`, `μ² = −6` (VERIFIED, `gram.txt`) |
+| L412-418 | Gram matrix of `Trd(μ⁻¹x ȳ)` and determinant one | OK | computed with exact rationals: equal to the printed matrix with the printed sign, determinant `1` (VERIFIED, `scratch/y3-p1j/gram.txt`) |
 | L419-420 | Riemann form convention of Lin–Yang eq. (3), Lemma 3; Rosati `a ↦ μ⁻¹āμ` | unverified | Lin–Yang not read (no network); the Rosati formula is the standard one for `Trd(μ⁻¹xȳ)` (STANDARD) |
 | L420-422 | normalizer quotient is `P¹_j`, branch values `0, ∞, −16/27`, indices `4,6,2` [BG, LY] | OK with caveats (§6 items 1-2) | BG Thm 2.1 and Lemma 3.1 give `V/W ≅ P¹_ℚ`, read by locators.md: YES. The indices are right as orbifold orders, and so as ramification indices of the torsion-free cover `Y₃ → P¹_j` (h-trust A2, loc-fix note); they are not the indices of `X₆ → X₆/W` (locators.md: NO as written). The numerical `j`-normalization is not in BG Thm 2.1/Lemma 3.1: a Möbius normalization (kernel glue `babaGranathX6'_of_rational`). The bibliography cites the BG 2005 preprint, not read. |
 | L423-424 | `K₀ = 𝒪̂^×`, `K₃ = ker(K₀ → (𝒪/3𝒪)^×)` | OK | definitions |
@@ -77,7 +77,7 @@ One row per manuscript step formalized or relied on (diophantine_zq.tex). Verdic
 | L426-429 | local normalizers; `\|N/(𝔸_f^×K₀)\| = 4` | OK | split `p`: normalizer of `M₂(ℤ_p)` is `ℚ_p^× GL₂(ℤ_p)`; `p = 2, 3`: normalizer is `B_p^×`, quotient by `ℚ_p^×𝒪_p^×` of order 2 (parity of `v(nrd)`) (STANDARD; Vignéras LNM 800 Ch. II, UNVERIFIED, as in h-trust A3) |
 | L430-434 | central finite ideles act trivially | OK | `z = q·w`, `q ∈ ℚ^×` with `w ∈ ℤ̂^×`, sign of `q` chosen so `w₃ ≡ 1 mod 3`, so `w ∈ K₃`. For the one central class not in `K₃` (image `−1 ∈ (𝒪/3𝒪)^×`), the moduli form is proved in Lean on the integral model: `sigmaR_neg_one` (`ι(−1) = [−1]` identifies `η(·(−1))` with `η`) |
 | L434-436 | `Y₃` with all determinant components admits `N/(𝔸_f^×K₃)`, quotient `P¹_j` | gap filled (implicit standard step) | the text says "Consequently". It uses that `Sh_{K₃}/(N/𝔸_f^×K₃) = Sh_N` (the normalizer quotient), standard for finite right-translation quotients of canonical models (Deligne 1979 §2.7, UNVERIFIED, as h-trust A3 cites). In Lean the action is the moduli action: twists and `rightMul` act on `Y₃` by the proved `heckeOfFine_proof` and on the integral model by `action_of_z30` (proved here). The orbit description in the leaf's quotient clause is the moduli dictionary for that action (ON THE SPOT as a written argument, §2). |
-| L437-440 | `deg(Y₃ → P¹_j) ≤ 4\|(𝒪/3𝒪)^×\| ≤ 4·81 = 324` | OK (not sharp) | `\|(𝒪/3𝒪)^×\| = 72` (exact count, VERIFIED, `units_mod3.out`; also h-trust A3), so `4·72 = 288 ≤ 324`. The true degree is `\|N/(𝔸_f^×K₃)\| = 4·72/2 = 144`: the central `(ℤ/3)^× = {±1}` lies in `𝔸_f^×K₃`, and a generic point has trivial stabilizer. Also `2` components × `72` = `144` (`π₀ = (ℤ/3)^×`; per component `[𝒪¹/±1 : Γ(3)] = 18` times `\|W\| = 4`; 36 of the 72 units have norm `1 mod 3`, VERIFIED) |
+| L437-440 | `deg(Y₃ → P¹_j) ≤ 4\|(𝒪/3𝒪)^×\| ≤ 4·81 = 324` | OK (not sharp) | `\|(𝒪/3𝒪)^×\| = 72` (exact count, VERIFIED, `units_mod3.txt`; also h-trust A3), so `4·72 = 288 ≤ 324`. The true degree is `\|N/(𝔸_f^×K₃)\| = 4·72/2 = 144`: the central `(ℤ/3)^× = {±1}` lies in `𝔸_f^×K₃`, and a generic point has trivial stabilizer. Also `2` components × `72` = `144` (`π₀ = (ℤ/3)^×`; per component `[𝒪¹/±1 : Γ(3)] = 18` times `\|W\| = 4`; 36 of the 72 units have norm `1 mod 3`, VERIFIED) |
 | L443-446 | Buzzard Thm 2.1 / Cor. 2.3 at `V₁(5)` over `ℤ[1/30]` | unverified | relied on through y3-route-a's leaf `Y3FullThreeRepZ30`; Buzzard locator UNVERIFIED |
 | L447-449 | full five-marking: finite étale cover | OK | standard (level structure on a finite étale group scheme) |
 | L449-462 | `Isom_𝒪(𝒪/3𝒪, A[3])` finite étale, nonempty on geometric fibres | OK | lattice argument checked: for `L` an `𝒪₃`-lattice in `V ≅ B₃` and `x ∈ L` of least valuation, `yx⁻¹ ∈ 𝒪₃` for all `y ∈ L` (`𝒪₃` is the valuation ring), so `L = 𝒪₃x`. The alternative "check in characteristic zero and spread" is also fine |
@@ -316,9 +316,9 @@ research	y3ToP1j	consequence	ELLIOT: the manuscript's own claim (diophantine_zq.
   `hauptmodulOfX6_of_y3ToP1j`, `r1r2W_of_y3ToP1j`, `y3ToP1jAt_noDeg_of_row`, `Descent.toP1DescendsAlongSurj_proof`,
   `Descent.hauptmodulOfX6_of_y3ToP1j'`, `Descent.r1r2W_of_y3ToP1j'` all depend on
   `[propext, Classical.choice, Quot.sound]`.
-* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK, up to date (`build-main.txt`).
+* `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK, up to date (`build-main.tail.txt`).
 * `#discharges` (`discharges.txt`): nothing for `Y3P1j` (see §5.3).
-* Computations: `units_mod3.py` → `units_mod3.out` (`|(𝒪/3𝒪)^×| = 72`); `gram.py` → `gram.out` (L414-416 matrix,
+* Computations: `units_mod3.py` → `units_mod3.txt` (`|(𝒪/3𝒪)^×| = 72`); `gram.py` → `gram.txt` (L414-416 matrix,
   det 1).
 
 ## 8. What remains

@@ -20,7 +20,7 @@
   current chain: babaGranathRationalAb := babaGranathRationalAb_of_printed (elkiesX6StarPrinted_of_functionField
   n.elkiesX6StarFunctionField) ... (EichlerBoundCopy etc.), elkiesX6StarFunctionField from elkiesX6StarEvery and
   x6CoarseModuli (TailZ59:83, EichlerBoundCopy:3703), gonzalezRotgerX6Ab from x6CoarseModuli (TailZ59:78).
-- Computed (VERIFIED, scratch/y3-p1j/gram.py -> gram.out, exact rationals): with mu = 2j+ij (nrd 6, mu^2 = -6) the matrix of
+- Computed (VERIFIED, scratch/y3-p1j/gram.py -> gram.txt, exact rationals): with mu = 2j+ij (nrd 6, mu^2 = -6) the matrix of
   Trd(mu^{-1} x ybar) in the basis (1,i,(1+j)/2,(i+ij)/2) is exactly the printed matrix of L414-416, determinant 1.
 - Lean, ZInQKernel/Contrib/OneProof/Y3ToP1j.lean (namespace Y3P1j), `lake build +ZInQKernel.Contrib.OneProof.Y3ToP1j` OK;
   #print axioms (scratch/y3-p1j/axioms.txt) [propext, Classical.choice, Quot.sound] for action_of_z30, sigmaR_neg_one, isoT,
@@ -38,7 +38,7 @@
     r1r2W_of_y3ToP1j : CanonicalModelY3 -> CoarseX6OfFineW -> Y3ToP1j -> ToP1DescendsAlongSurj -> ReciprocityOfFine ->
     ResidueOfX6 -> R1R2fpRepW (PairsLift from pairsLift_of_t5 and the proved mumfordTorsionAlgClosed_proof).
   * y3ToP1jAt_noDeg_of_row : R1R2fpRepW -> (a witness with every clause of Y3ToP1jAt except the degree bound), pi = pi6 o fY.
-- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK (up to date; scratch/y3-p1j/build-main.txt).
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK (up to date; scratch/y3-p1j/build-main.tail.txt).
 - #discharges with Y3ToP1j imported (scratch/y3-p1j/discharges.txt): no line mentions Y3P1j (VERIFIED): no theorem of the new
   file has the type of a bundle field (HauptmodulOfX6 and R1R2fpRepW are not fields).
 - grep over the whole tree (scratch/y3-p1j/grep-x6.txt, VERIFIED): x6CoarseModuliIdeal and elkiesX6StarEveryIdeal are read only in
