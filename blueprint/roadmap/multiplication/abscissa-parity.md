@@ -15,9 +15,9 @@ $$y^2=x(x-\ell)(x+3\ell).$$
 Then $v_p(x)$ is even.
 
 **Proof sketch.** If $v_p(x)=v_p(\ell)$ there is nothing to prove. Otherwise
-$v_p(x-\ell)=\min(v_p(x),v_p(\ell))$, and, since $v_p(3)=0$, also
-$v_p(x+3\ell)=\min(v_p(x),v_p(\ell))$; in particular both factors are nonzero, so the right
-side is nonzero, $y\ne0$, and
+$v_p(x-\ell)=v_p(x+3\ell)=\min(v_p(x),v_p(\ell))$, by the equality case of the ultrametric
+inequality, since $v_p(3\ell)=v_p(\ell)$ at primes $p\ne3$; in particular both factors are
+nonzero, so the right side is nonzero, $y\ne0$, and
 $$2v_p(y)=v_p(x)+2\min\bigl(v_p(x),v_p(\ell)\bigr).$$
 Hence $v_p(x)$ is even. (This is the manuscript's square-scaling step: after scaling $\ell$
 to a unit, the cubic has valuation $v_p(x)$ if $v_p(x)>0$ and $3v_p(x)$ if $v_p(x)<0$.) The
