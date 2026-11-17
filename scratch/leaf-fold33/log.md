@@ -179,3 +179,13 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     others); crosswalk --check ok; autoform check ok. Scratch files that redeclare bundles renamed .lean.txt
     (grx6ab-print FoldCheck, FoldCheckCombined; elkies-print FoldDryRun; gr-dict BypassFold, BypassReach,
     FoldCheck); host paths removed from scratch/grx6ab-print/build1.txt.
+22. hodgeTateDecompAbVar (consequence, GLUE) proved by hodgetate-from-dr from one new printed-form leaf
+    hodgeTateDecompExists (Fontaine 1982 with both exponents unnamed), adapted by the integration task fold34-ht to the
+    characteristic-0 T9 data of this tree (HodgeTatePairing{Weil0,Core0,CharZero}: hodgeTateDecompAbVar_of_open from
+    hodgeTateDecompExists, mumfordTorsionAlgClosed, picRepresentableAbVar, kleimanPicZeroProper): merged wip/fold34-ht
+    up to its Contrib commits (316c8da2, without its fold commit), autofold scratch/fold34-ht/autofold.json -> TailZ60,
+    `sixContactMin_of_open53`; H 13/19 on 32 -> 14/18 on 32 (GLUE -1; the leaf rated as the task reports it,
+    "unread: new printed leaf", LEAF). Checks (VERIFIED): build +Main +Discharges; frozenTarget standard axioms;
+    check_target.py; only Main.lean changed among existing OneProof modules; OpenStatements 38; DischargesTest rerun;
+    render_open --check ok (32 H, strictest 14/18, 6 others); crosswalk --check ok; autoform check ok.
+    AutofoldDry.lean renamed .lean.txt.
