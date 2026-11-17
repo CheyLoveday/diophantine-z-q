@@ -497,4 +497,144 @@ theorem ellE_iota_mul (τ : UpperHalfPlane) (a b : O) :
 
 end Print
 
+/-! ## 4. The dictionary: print form ⇔ lattice form ⇔ `Y3Fix.IsHodgeH1` -/
+
+section Dict
+
+open HDec.HSyn.G0Split.FibreQM (qmMat IotaCompatible)
+
+/-- **Print form ⇒ lattice form (GLUE, proved).** `Φu = e ∘ T`, `T = β ∘ ℓ_τ⁻¹` (`ℂ`-linear); `H₁ ≅ 𝒪 ≅ Λ_τ`
+gives the uniformization through `isUniformization_of_H1`; the `𝒪`-linearity on `H₁` gives `ι`-compatibility:
+`z ↦ Φu(ι(a) z)` and `z ↦ ι_A(a)(Φu z)` are analytic homomorphisms, so `pmap φ ∘ D₁`, `pmap φ ∘ D₂` with `D₁, D₂`
+`ℂ`-linear; on `v = ℓ_τ(ι b)` the monodromies of their straight loops are `D₁ v` and `D₂ v`, and these loops are
+`c(ab)` and `ι_A(a)_* c(b)`, equal in `H₁`; so `D₁ = D₂` on the full lattice `Λ_τ`, hence everywhere. -/
+theorem lattice_of_print (hU : Uniformization.UniformizationLeafAll) {P : QML3 ℂ} {τ : UpperHalfPlane}
+    (h : IsHodgeH1Print P τ) :
+    ∃ Φu : (Fin 2 → ℂ) → CPts P.A (RingHom.id ℂ),
+      IsUniformization (RingHom.id ℂ) (BPAnalytic.QM.qmLattice τ.im_pos.ne') Φu ∧ IotaCompatible P Φu := by
+  obtain ⟨n, e, β, c, he, hc, hbij, hact, hJ⟩ := h
+  haveI : DiscreteTopology (BPAnalytic.QM.qmLattice τ.im_pos.ne') := by
+    unfold BPAnalytic.QM.qmLattice; infer_instance
+  haveI : IsZLattice ℝ (BPAnalytic.QM.qmLattice τ.im_pos.ne') := by
+    unfold BPAnalytic.QM.qmLattice; infer_instance
+  set Lτ := BPAnalytic.QM.qmLattice τ.im_pos.ne' with hLτ
+  let T := Y3Fix.Tlin τ β hJ
+  have hT : ∀ M, T (Y3Fix.ellE τ M) = β M := Y3Fix.Tlin_ellE τ β hJ
+  let Φu : (Fin 2 → ℂ) → CPts P.A (RingHom.id ℂ) := fun z => e (T z)
+  have hΦa : IsAnalyticHom (RingHom.id ℂ) Φu := ZInQ.HomLattice.isAnalyticHom_lin he T
+  have hΦc : Continuous (show (Fin 2 → ℂ) → P.A.Pt ℂ from Φu) := continuous_of_isAnalyticHom hU hΦa
+  have hcb : ∀ (b : O) (t : unitInterval), c b t = Φu (((t : ℝ) : ℂ) • (bOf τ b : Fin 2 → ℂ)) := by
+    intro b t
+    rw [hc b t, bOf_val]
+    show _ = e (T _)
+    rw [map_smul, hT]
+  have hker : ∀ v ∈ Lτ, Φu v = 1 := by
+    intro v hv
+    obtain ⟨b, hb⟩ := (bOf_bijective τ).2 ⟨v, hv⟩
+    have hv' : v = (bOf τ b : Fin 2 → ℂ) := by rw [hb]
+    have h1 := hcb b 1
+    simp only [Set.Icc.coe_one, Complex.ofReal_one, one_smul] at h1
+    rw [hv', ← h1]; exact (c b).target
+  let lp : Lτ → Path (1 : P.A.Pt ℂ) 1 := fun v =>
+    { toFun := fun t => Φu (((t : ℝ) : ℂ) • (v : Fin 2 → ℂ))
+      continuous_toFun := hΦc.comp
+        ((Complex.continuous_ofReal.comp continuous_subtype_val).smul continuous_const)
+      source' := by
+        have h0 : (((0 : unitInterval) : ℝ) : ℂ) • (v : Fin 2 → ℂ) = 0 := by simp
+        show Φu _ = _
+        rw [h0]; exact ZInQ.HomLattice.map_zero_of_hom hΦa.1
+      target' := by
+        have h1 : (((1 : unitInterval) : ℝ) : ℂ) • (v : Fin 2 → ℂ) = v := by simp
+        show Φu _ = _
+        rw [h1]; exact hker v v.2 }
+  have hlpc : ∀ b, lp (bOf τ b) = c b := fun b => Path.ext (funext fun t => (hcb b t).symm)
+  have hbij' : Function.Bijective (fun v => loopClass (lp v)) := by
+    have hcomp : (fun v => loopClass (lp v)) ∘ bOf τ = fun b => loopClass (c b) := funext fun b => by
+      simp only [Function.comp_apply, hlpc]
+    rw [← Function.Bijective.of_comp_iff _ (bOf_bijective τ), hcomp]; exact hbij
+  have hUnif : IsUniformization (RingHom.id ℂ) Lτ Φu :=
+    isUniformization_of_H1 hU Φu hΦa hker lp (fun v t => rfl) hbij'
+  refine ⟨Φu, hUnif, fun a z => ?_⟩
+  obtain ⟨g, Λ', hd, hz, φ, hφ⟩ := hU P.A
+  have hs := ZInQ.HomLattice.isStrongUnif_of_bp hφ
+  have hcov := isCov hφ
+  set Θ := hcov.fundamentalGroupToMulOpposite e0 with hΘ
+  let Θ' : H1 P.A →* (Multiplicative Λ'.toAddSubgroup)ᵐᵒᵖ := Abelianization.lift Θ
+  have hΘ' : ∀ x, Θ' (Abelianization.of x) = Θ x := fun x => Abelianization.lift_apply_of Θ x
+  obtain ⟨D1, hD1⟩ := ZInQ.HomLattice.exists_complexLinear_of_analytic_strong hs
+    (ZInQ.HomLattice.isAnalyticHom_lin hΦa (Matrix.mulVecLin (qmMat a)))
+  obtain ⟨D2, hD2⟩ := ZInQ.HomLattice.exists_complexLinear_of_analytic_strong hs
+    (ZInQ.HomLattice.isAnalyticHom_comp hΦa (P.q.iota a).hom)
+  have hD1' : ∀ v, pmap φ (D1 v) = Φu ((qmMat a).mulVec v) := hD1
+  have hD2' : ∀ v, pmap φ (D2 v) = Φu v ≫ (P.q.iota a).hom := hD2
+  have hline1 : ∀ (v : Fin 2 → ℂ) (t : ℝ), Φu ((t : ℂ) • (qmMat a).mulVec v) = pmap φ (t • D1 v) := by
+    intro v t; rw [← Matrix.mulVec_smul, ← hD1', map_smul, Complex.coe_smul]
+  have hline2 : ∀ (v : Fin 2 → ℂ) (t : ℝ), Φu ((t : ℂ) • v) ≫ (P.q.iota a).hom = pmap φ (t • D2 v) := by
+    intro v t; rw [← hD2', map_smul, Complex.coe_smul]
+  have hagree : ∀ b : O, D1 (bOf τ b) = D2 (bOf τ b) := by
+    intro b
+    have m1 : D1 (bOf τ b) ∈ Λ' := (pmap_eq_one_iff _).mp (by
+      rw [hD1', bOf_val, ← ellE_iota_mul]; exact hker _ (bOf τ (a * b)).2)
+    have m2 : D2 (bOf τ b) ∈ Λ' := (pmap_eq_one_iff _).mp (by
+      rw [hD2', hker _ (bOf τ b).2]; exact map_one (AbVar.ptMap (L := ℂ) (P.q.iota a)))
+    have e1 := monodromy_line hφ _ m1 (c (a * b)) (fun t => by
+      rw [hcb, bOf_val, ellE_iota_mul, hline1]; rfl)
+    have e2 := monodromy_line hφ _ m2 (pushLoop (P.q.iota a) (c b)) (fun t => by
+      rw [pushLoop_apply, hcb]; exact hline2 _ _)
+    have h1 := congrArg Θ' (hact a b)
+    simp only [loopClass, hΘ'] at h1
+    rw [e1, e2, MulOpposite.op_inj] at h1
+    exact (congrArg Subtype.val (Multiplicative.ofAdd.injective h1)).symm
+  have hD : D1.restrictScalars ℝ = D2.restrictScalars ℝ := by
+    apply ContinuousLinearMap.coe_injective
+    refine LinearMap.ext_on (s := (Lτ : Set (Fin 2 → ℂ))) (IsZLattice.span_top (K := ℝ) (L := Lτ)) ?_
+    intro v hv
+    obtain ⟨b, hb⟩ := (bOf_bijective τ).2 ⟨v, hv⟩
+    have hv' : v = (bOf τ b : Fin 2 → ℂ) := by rw [hb]
+    rw [hv']; exact hagree b
+  have hz' : D1 z = D2 z := congrArg (fun L : (Fin 2 → ℂ) →L[ℝ] (Fin g → ℂ) => L z) hD
+  show Φu ((qmMat a).mulVec z) = Φu z ≫ (P.q.iota a).hom
+  rw [← hD1', ← hD2', hz']
+
+/-- **Lattice form ⇒ print form (GLUE, proved).** `e = Φu`, `β = ℓ_τ`, `c(b)` the straight loop to
+`ℓ_τ(ι b) ∈ Λ_τ`; `exists_H1_of_isUniformization` gives `Λ_τ ≅ H₁`; `ι`-compatibility gives `ι_A(a)_* c(b) = c(ab)`
+already as loops. -/
+theorem print_of_lattice (hU : Uniformization.UniformizationLeafAll) {P : QML3 ℂ} {τ : UpperHalfPlane}
+    {Φu : (Fin 2 → ℂ) → CPts P.A (RingHom.id ℂ)}
+    (hUn : IsUniformization (RingHom.id ℂ) (BPAnalytic.QM.qmLattice τ.im_pos.ne') Φu)
+    (hio : IotaCompatible P Φu) : IsHodgeH1Print P τ := by
+  haveI : DiscreteTopology (BPAnalytic.QM.qmLattice τ.im_pos.ne') := by
+    unfold BPAnalytic.QM.qmLattice; infer_instance
+  haveI : IsZLattice ℝ (BPAnalytic.QM.qmLattice τ.im_pos.ne') := by
+    unfold BPAnalytic.QM.qmLattice; infer_instance
+  set Lτ := BPAnalytic.QM.qmLattice τ.im_pos.ne' with hLτ
+  obtain ⟨he, hker, lp, hlp, hbij⟩ := exists_H1_of_isUniformization hU Φu hUn
+  refine ⟨2, Φu, Y3Fix.ellE τ, fun b => lp (bOf τ b), he, fun b t => ?_, ?_, fun a b => ?_,
+    Y3Fix.ellE_J τ⟩
+  · rw [hlp]; rfl
+  · exact (Function.Bijective.of_comp_iff _ (bOf_bijective τ)).mpr hbij
+  · show loopClass _ = loopClass _
+    congr 1
+    refine Path.ext (funext fun t => ?_)
+    show lp (bOf τ b) t ≫ (P.q.iota a).hom = lp (bOf τ (a * b)) t
+    have h1 := hlp (bOf τ b) t
+    have h2 := hlp (bOf τ (a * b)) t
+    have h3 : Φu (((t : ℝ) : ℂ) • (bOf τ b : Fin 2 → ℂ)) ≫ (P.q.iota a).hom =
+        Φu (((t : ℝ) : ℂ) • (bOf τ (a * b) : Fin 2 → ℂ)) := by
+      rw [← hio, Matrix.mulVec_smul, bOf_val, bOf_val, ellE_iota_mul]
+    exact (congrArg (· ≫ (P.q.iota a).hom) h1).trans (h3.trans h2.symm)
+
+/-- **The print's `H₁` form is equivalent to y3-fix's `IsHodgeH1`** (both directions proved, given the textbook
+uniformization `UniformizationLeafAll`, itself proved in the tree: `uniformizationLeafAll_proof`). -/
+theorem print_iff_hodge (P : QML3 ℂ) (τ : UpperHalfPlane) : IsHodgeH1Print P τ ↔ Y3Fix.IsHodgeH1 P τ := by
+  constructor
+  · intro h
+    obtain ⟨Φu, hu, hio⟩ := lattice_of_print uniformizationLeafAll_proof h
+    exact Y3Fix.hodge_of_lattice hu hio
+  · intro h
+    obtain ⟨Φu, hu, hio⟩ := Y3Fix.lattice_of_hodge h
+    exact print_of_lattice uniformizationLeafAll_proof hu hio
+
+end Dict
+
 end Y3Hodge
