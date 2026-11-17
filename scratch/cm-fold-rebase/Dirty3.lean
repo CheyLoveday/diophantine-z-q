@@ -11,7 +11,10 @@ open Lean Meta
   -- closure
   let mut seen : Std.HashSet Name := {}
   let mut order : Array Name := #[]
-  let mut stack : Array Name := #[root]
+  let mut stack : Array Name := #[root, `HDec.HSyn.GR9.openResearchLeaves31_of_OpenResearchLeaves32_eb_cf,
+    `HDec.HSyn.GR9.openResearchLeaves32_of_OpenResearchLeaves33_eb_cf,
+    `HDec.HSyn.GR9.openResearchLeaves33_of_OpenResearchLeaves34_eb_cf,
+    `HDec.HSyn.GR9.openResearchLeaves34_of_OpenResearchLeaves35_eb_cf]
   while h : stack.size > 0 do
     let n := stack.back
     stack := stack.pop
