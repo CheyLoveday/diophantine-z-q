@@ -5,6 +5,7 @@ import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Mod
 set_option backward.isDefEq.respectTransparency false
 
 open CategoryTheory AlgebraicGeometry Limits Opposite MonoidalCategory
+open scoped CategoryTheory.MonObj
 
 namespace PhiAmple
 
