@@ -52,3 +52,14 @@ Base: wip/c8-conrad at d67ea55f6 (origin/main is an ancestor). Top: `ZInQ.OnePro
   PkgI4.EigenformHT, r.r10 PkgI4.DeRhamComparison, h9 G9GlueNoT23.
 - G12DetPZ's conclusion is existential in (H, dr, eps, chi): it follows from finiteness of psi alone
   (H = ker psi, dr = psi^2, eps = chi = 1).
+
+## 5. Compile results (VERIFIED)
+
+- lake build ZInQKernel.OneProof.Main: ok (16214 jobs), frozenTarget standard axioms.
+- scratch/c8-conrad/C8Conrad.lean: compiles (2 fixes: QuotientGroup.mk for the Artin-lift coercion; coe_range).
+  Copied to ZInQKernel/Contrib/OneProof/C8Conrad.lean; lake build ok; axioms standard for c8TwistFinite_of_conrad,
+  g12DetPZ_of_twistFinite, g12DetPZ_of_conrad.
+- #discharges: 36 open, 15748 checked, 19 discharge one; none from C8Conrad (no field discharged).
+- FieldTaint (seeds picRepresentableAbVar, kleimanPicZeroProper954SiteQ): terminals gluePieces_of_open4_hf_pz_eb
+  (t09SymmIsogenyExists -> DetTate, C8), glueOutputs_of_leaves3_hf_pz_eb (t8, Poincare), g8_g12/afterG7/gluePieces
+  via r10 <- hodgeTateDecompAbVar (R10). Three consumers confirmed.

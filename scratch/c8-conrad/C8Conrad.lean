@@ -44,7 +44,7 @@ def unitsQp (u : ℤ_[p]ˣ) : ℚ_[p]ˣ := Units.map (PadicInt.Coe.ringHom : ℤ
 `G_{ℚ_p}` is Tau Ceti's absolute local Artin map at `x` (normalization: `χ_cyc(Art(p^k u)) = u⁻¹`, Tau Ceti's
 `abelianizedLocalCyclotomicCharacter_artinMap_padic`). -/
 def IsArtinLift (σ : PkgI4.GQp p) (x : ℚ_[p]ˣ) : Prop :=
-  ((σ : Field.absoluteGaloisGroup ℚ_[p]) : Field.absoluteGaloisGroupAbelianization ℚ_[p]) = TauCeti.ClassFieldTheory.artinMap ℚ_[p] x
+  (QuotientGroup.mk (show Field.absoluteGaloisGroup ℚ_[p] from σ) : Field.absoluteGaloisGroupAbelianization ℚ_[p]) = TauCeti.ClassFieldTheory.artinMap ℚ_[p] x
 
 variable {p}
 
@@ -176,8 +176,8 @@ theorem g12DetPZ_of_twistFinite (hC8 : C8TwistFinite) (h9 : G9GlueNoT23) (hdR : 
   intro _ K _ _ A r e N χ g ψ ιC ιL S hdim hint hN hg hatt
   have hr : PkgI4.GaloisRep.HasHTWeightsAtSelf (ρ := r) 5 {0, -1} := (h9 hdR K A 5 r e hdim hint).2
   have hfin : (Set.range ψ.toHom).Finite := hC8 r N χ g ψ ιC ιL S hN hg hr hatt
-  haveI : Finite (ψ.toHom.range) := by
-    rw [MonoidHom.coe_range] at *
+  have : Finite (ψ.toHom.range) := by
+    rw [← MonoidHom.coe_range] at hfin
     exact hfin.to_subtype
   refine ⟨ψ.toHom.ker, inferInstance, ψ.toHom ^ 2, 1, 1, fun x => ?_, fun h hh => ?_, ?_⟩
   · simp

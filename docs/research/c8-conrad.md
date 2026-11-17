@@ -99,6 +99,27 @@ The Picard rows reach (ii) and (iii) because of how the project proved those ste
 hodgetate-from-dr), not because of anything in the manuscript. Rerouting them is outside this task's scope (step C8),
 and §5 lists them as recommendations.
 
+### 2.2 By a field-taint run on the built top (VERIFIED)
+
+`scratch/c8-conrad/FieldTaint.lean` is fold33-pic's script with the seeds `picRepresentableAbVar` and
+`kleimanPicZeroProper954SiteQ`. It was run on this branch after `lake build ZInQKernel.OneProof.Main` (16214 jobs, ok;
+`frozenTarget` uses the standard axioms). Output: `scratch/c8-conrad/fieldtaint_out.txt`, closure 304845, 16 iterations.
+* Tainted fields: `kleimanPicZeroProper954SiteQ`, `kleimanPicZeroProper954`, `picRepresentableAbVar`, `picZeroAbVar`,
+  `phiAmpleIsogeny`, `weilPairingMumford`, `t09SymmIsogenyExists`, `poincareComplement`, `t8`,
+  `hodgeTateDecompAbVar`, `r10`.
+* Terminal consumers (not bundle maps):
+  * `HDec.HSyn.gluePieces_of_open4_hf_pz_eb` uses `OpenAddedLeaves4PZ.t09SymmIsogenyExists`. Its only occurrence is
+    `detTate_of_leaves4_pz l.t09SymmIsogenyExists …` (EichlerBoundCopy L2704). This is **(i) C8**.
+  * `HDec.HSyn.glueOutputs_of_leaves3_hf_pz_eb` uses `TextbookLeavesHFPZ.t8`. This is **(ii) Poincaré**.
+  * `HDec.G0Galois.g8_g12_of_leaves3_hf_pz_eb`, `G0AssembleMod.afterG7_of3_hf_pz_eb` and `gluePieces_of_open4_hf_pz_eb`
+    use `r10`, which the edge `researchLeaves5_of_open7_pz_eb : r10 ← hodgeTateDecompAbVar` fills (EichlerBoundCopy
+    L2423: `r10 := HodgeLF7.r10 (deRhamComparisonHT_of_leavesT r.hodgeTateDecompAbVar …)`). This is **(iii)**:
+    R10, the de Rham comparison with its weights `0, −1` of multiplicity `g`, feeding G9 (C3) and G11.
+
+So the three consumers are confirmed in the built tree. Removing (i) leaves the two rows tainted through (ii) and (iii).
+The Conrad route itself reads `r.r10` (to get the weights `{0, −1}` of `r`, exactly as the existing G9 step does). It
+therefore still depends on (iii), like every route through C3.
+
 ## 3. The Lean statements (`ZInQKernel/Contrib/OneProof/C8Conrad.lean`, namespace `HDec.G0Galois.C8Conrad`)
 
 ### 3.1 Objects
@@ -135,6 +156,29 @@ New definitions:
 | `LocAlgExponentEqWeight` | the exponent of a locally algebraic character of `G_{ℚ_p}` is its Hodge–Tate weight | N5 L763-764 ("removing its integral local Hodge–Tate weight"); STANDARD (Serre 1968 Ch. III App.; Tate 1967 §3.3) | GLUE, unproved. **On-the-spot sketch:** if `ψ(Art u) = uⁿ` on `1 + pᵏℤ_p`, then `φ = ψ·χ_cycⁿ` is trivial on an open subgroup of the inertia of `G_{ℚ_p}^{ab}` (the closure of `Art(ℤ_p^×)`, local class field theory), so `φ` is a finite character times an unramified one, and both have Hodge–Tate weight `0` (Ax–Sen–Tate with Hilbert 90). So `ψ = φ·χ^{−n}` has weight `n`, and a Hodge–Tate character has one weight. |
 | `FiniteOfLocAlgTrivialQ` | a continuous `ψ : G_ℚ → ℚ̄_p^×`, unramified outside a finite set and trivial on the Artin lifts (through `decomp`) of the units `1 + pᵏℤ_p`, has finite image | N5 L761-765 ("class field theory over ℚ … finite inertia at five and at every other prime, hence a finite ray-class character") | GLUE, unproved. Plan: Kronecker–Weber (proved, `ZInQKernel/Contrib/KroneckerWeber`) gives `G_ℚ^{ab} ≅ ℤ̂^×`; Tau Ceti's `localArtinMap_cyclotomic_padic_primePow` handles `q = p`; at `q ≠ p`, the image of the virtually pro-`q` group `ℤ_q^×` in the virtually pro-`p` group `O_E^×` is finite (rv-h-c8 §4 item 3; **on-the-spot**, elementary, not stated in N5). |
 | `C8TwistFinite` | C8's conclusion: the twist `ψ` has finite image | N5 L758-766 | proved from the above (§4) |
+
+## 4. Lean results (VERIFIED)
+
+`ZInQKernel/Contrib/OneProof/C8Conrad.lean` (= `scratch/c8-conrad/C8Conrad.lean`) imports
+`ZInQKernel.OneProof.H.PicZeroCharZeroCopy`, the module that declares the consumer `G12DetPZ`. It does not import
+`OneProof.Main`.
+* `lake build ZInQKernel.Contrib.OneProof.C8Conrad`: ok, no errors or warnings in the file.
+* `#print axioms` (`scratch/c8-conrad/axioms_out.txt`): `c8TwistFinite_of_conrad`, `g12DetPZ_of_twistFinite`,
+  `g12DetPZ_of_conrad` use only `[propext, Classical.choice, Quot.sound]`.
+
+| theorem | statement |
+|---|---|
+| `c8TwistFinite_of_conrad` | `EigenformRepExists → PkgI4.EigenformHT → ConradAppBQp → TwistCharHT0 → LocAlgExponentEqWeight → FiniteOfLocAlgTrivialQ → C8TwistFinite` |
+| `g12DetPZ_of_twistFinite` | `C8TwistFinite → G9GlueNoT23 → PkgI4.DeRhamComparison → HDec.G0Galois.G12DetPZ` |
+| `g12DetPZ_of_conrad` | the composite: `G12DetPZ` from Conrad App. B, the three glue Props and the chain's R13, R14, R10, G9 |
+
+**Observation (VERIFIED by the proof of `g12DetPZ_of_twistFinite`).** `G12DetPZ` asserts only the existence of `H`,
+`det r`, `ε`, `χ_cyc` with the determinant identities. Once `ψ` has finite image, `H = ker ψ`, `det r := ψ²` and
+`ε = χ_cyc := 1` satisfy it. So the consumer is equivalent, under its hypotheses, to the finiteness of the twist, and
+the Weil pairing enters C8 only to prove that finiteness.
+
+`#discharges` (`scratch/c8-conrad/Discharges.lean`, output `discharges_out.txt`): 36 open hypotheses, 15748 theorems
+checked, 19 discharge one. **None of them is in `C8Conrad`**: as expected, no open hypothesis is discharged (§5).
 
 ## 5. Fold: none proposed (dry-run reasoning; SPECULATIVE counts, VERIFIED premises)
 
