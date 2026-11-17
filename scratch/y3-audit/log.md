@@ -12,3 +12,9 @@
 - R16CoreY unrelated to Y3 (VERIFIED reading R16Split.lean:534).
 - Rigidity at level 3 (STANDARD argument, Serre's lemma): Aut(A,ι,η) = roots of unity u in End_O(A) with u-1 ∈ 3End_O(A); |u-1|^2 ≤ 4 < 9 ⇒ u = 1.
 - Verdict committed: .fleet/y3-audit-verdict.md.
+
+## part (2)
+
+- ZInQKernel/Contrib/OneProof/Y3RepresentableQ.lean: Y3RepresentableQ (representability over Q, QMAbSchemeP, locally noetherian Q-schemes, QMFamFibre, ∃!), y3FineModuliAbP_of_rep(') and shimuraMainThmIDeligneY3AbU_of_rep('): COMPILED (lake build + lake env lean, no errors) 04:09.
+- mumfordTorsionAlgClosed is proved on main (ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof), so the primed versions need no textbook hypothesis.
+- scratch/y3-audit/GenFib.lean: ShimuraIntegralModelRep → Y3RepresentableQ via genFib + abBC (base change of QMAbScheme): in progress.
