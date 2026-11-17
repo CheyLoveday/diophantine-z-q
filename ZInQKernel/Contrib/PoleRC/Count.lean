@@ -259,4 +259,96 @@ theorem eqs_of_localBad (hq : LocalBad) (hsf : Squarefree ℓ) (h12 : ℓ % 12 =
     simp only [Pi.add_apply, Pi.mul_apply, Pi.smul_apply, smul_eq_mul]
     exact alg_b _ _ _ _ _ e₂ hv hB
 
+/-! ### The conditions at two and three: `E3` and `E4` -/
+
+theorem prod_zmod4 (T : Finset ℕ) (hT : ∀ p ∈ T, p % 2 = 1) :
+    ((∏ p ∈ T, p : ℕ) : ZMod 4) = (-1) ^ (T.filter (fun p => p % 4 = 3)).card := by
+  have hq : ∀ q ∈ T, (q : ZMod 4) = if q % 4 = 3 then -1 else 1 := by
+    intro q hq
+    rw [← ZMod.natCast_mod q 4]
+    have : q % 4 = 1 ∨ q % 4 = 3 := by have := hT q hq; omega
+    rcases this with h | h <;> rw [h] <;> decide
+  push_cast
+  rw [Finset.prod_congr rfl hq, Finset.prod_ite, Finset.prod_const_one, mul_one, Finset.prod_const]
+
+theorem prod_zmod3 (T : Finset ℕ) (hT : ∀ p ∈ T, p % 3 ≠ 0) :
+    ((∏ p ∈ T, p : ℕ) : ZMod 3) = (-1) ^ (T.filter (fun p => p % 3 = 2)).card := by
+  have hq : ∀ q ∈ T, (q : ZMod 3) = if q % 3 = 2 then -1 else 1 := by
+    intro q hq
+    rw [← ZMod.natCast_mod q 3]
+    have : q % 3 = 1 ∨ q % 3 = 2 := by have := hT q hq; omega
+    rcases this with h | h <;> rw [h] <;> decide
+  push_cast
+  rw [Finset.prod_congr rfl hq, Finset.prod_ite, Finset.prod_const_one, mul_one, Finset.prod_const]
+
+theorem dot_ind_eq_card (f : ℕ → Prop) [DecidablePred f] {b : ℤ}
+    (hsb : b.natAbs.primeFactors ⊆ ℓ.primeFactors) :
+    ∑ i : Supp ℓ, (if f i then (1 : ZMod 2) else 0) * ind ℓ b i =
+      ((b.natAbs.primeFactors.filter f).card : ZMod 2) := by
+  classical
+  have h : ∀ i : Supp ℓ, (if f i then (1 : ZMod 2) else 0) * ind ℓ b i =
+      if (i : ℕ) ∈ b.natAbs.primeFactors then (if f i then 1 else 0) else 0 := by
+    intro i; simp only [ind]; split_ifs <;> simp
+  rw [Finset.sum_congr rfl (fun i _ => h i),
+    sum_supp_eq (fun q => if q ∈ b.natAbs.primeFactors then (if f q then (1 : ZMod 2) else 0)
+      else 0), Finset.sum_ite_mem, Finset.inter_eq_right.mpr hsb, Finset.sum_boole]
+
+theorem natAbs_eq_prod {b : ℤ} (hb : Squarefree b) :
+    b.natAbs = ∏ p ∈ b.natAbs.primeFactors, p :=
+  (Nat.prod_primeFactors_of_squarefree (Int.squarefree_natAbs.mpr hb)).symm
+
+theorem intCast_eq_sign_mul (R : Type*) [CommRing R] (b : ℤ) :
+    (b : R) = (if b < 0 then -1 else 1) * ((b.natAbs : ℕ) : R) := by
+  by_cases h : b < 0
+  · rw [if_pos h]
+    have : b = -(b.natAbs : ℤ) := by rw [Int.natCast_natAbs, abs_of_neg h]; ring
+    conv_lhs => rw [this]
+    rw [Int.cast_neg, Int.cast_natCast]; ring
+  · rw [if_neg h, one_mul]
+    have : b = (b.natAbs : ℤ) := by rw [Int.natCast_natAbs, abs_of_nonneg (not_lt.mp h)]
+    conv_lhs => rw [this]
+    rw [Int.cast_natCast]
+
+theorem even_of_neg_one_pow {R : Type*} [Ring R] (h : (-1 : R) ≠ 1) {n : ℕ}
+    (hn : (-1 : R) ^ n = 1) : Even n := by
+  rcases Nat.even_or_odd n with he | ho
+  · exact he
+  · rw [ho.neg_one_pow] at hn; exact absurd hn h
+
+theorem zmod2_eq_of_even {σ c : ℕ} (h : Even (σ + c)) : (c : ZMod 2) = σ := by
+  have : ((σ + c : ℕ) : ZMod 2) = 0 := (ZMod.natCast_eq_zero_iff_even).mpr h
+  push_cast at this
+  have key : ∀ x y : ZMod 2, x + y = 0 → y = x := by decide
+  exact key _ _ this
+
+theorem sg_eq_cast (b : ℤ) : sg b = ((if b < 0 then 1 else 0 : ℕ) : ZMod 2) := by
+  unfold sg; split_ifs <;> simp
+
+/-- **`E3`: the condition at two** (`b ≡ 1 (mod 4)` gives `sᵗv = σ`). -/
+theorem e3_of_mod4 (h12 : ℓ % 12 = 11) {b : ℤ} (hb : Squarefree b)
+    (hsb : b.natAbs.primeFactors ⊆ ℓ.primeFactors) (h4 : b % 4 = 1) :
+    sgn ℓ ⬝ᵥ ind ℓ b = sg b := by
+  classical
+  have hT : ∀ p ∈ b.natAbs.primeFactors, p % 2 = 1 := fun p hp =>
+    supp_mod_two (ℓ := ℓ) (by omega) ⟨p, hsb hp⟩
+  have hZ := intCast_eq_sign_mul (ZMod 4) b
+  rw [natAbs_eq_prod hb, prod_zmod4 _ hT] at hZ
+  have hb1 : (b : ZMod 4) = 1 := by
+    rw [← ZMod.intCast_mod b 4, show b % ((4 : ℕ) : ℤ) = 1 by simpa using h4]; rfl
+  rw [hb1] at hZ
+  have hpar : Even ((if b < 0 then 1 else 0) +
+      (b.natAbs.primeFactors.filter (fun p => p % 4 = 3)).card) := by
+    apply even_of_neg_one_pow (R := ZMod 4) (by decide)
+    rw [pow_add, show ((-1 : ZMod 4) ^ (if b < 0 then 1 else 0)) = (if b < 0 then -1 else 1) by
+      split_ifs <;> simp]
+    exact hZ.symm
+  have hdot : sgn ℓ ⬝ᵥ ind ℓ b = ((b.natAbs.primeFactors.filter (fun p => p % 4 = 3)).card :
+      ZMod 2) := by
+    rw [dotProduct, ← dot_ind_eq_card (fun p => p % 4 = 3) hsb]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    have := Fact.mk (supp_prime i)
+    rw [sgn, lsym_neg_one]
+  rw [hdot, sg_eq_cast]
+  exact zmod2_eq_of_even hpar
+
 end ZInQ.Manuscript.PoleRC
