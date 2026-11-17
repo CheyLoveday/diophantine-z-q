@@ -176,7 +176,7 @@ The unramified half is not needed any more: `FiniteOfLocAlgTrivialQNoRam`.
   `L'`-isogeny `A × Z → J`. No citation. h-trust E1 names Mumford §19 Thm 1.
 * The consumer needs the theorem over the number field `L'`, in the form `AVB1.PoincareComplement` (any field of
   characteristic 0). That is the form of Milne's Prop. 12.1, which holds over any field. Mumford §19 Thm 1 is stated
-  over an algebraically closed field. So the leaf is stated as Milne's, weakened (§3).
+  over an algebraically closed field. Both base-field claims are from memory (UNVERIFIED). So the leaf is stated as Milne's, weakened (§3).
 * `t8` from it: `HSyn.t8_of_poincareComplement` is the chain's own derivation (`textbookLeaves6_of_open7_hf_pz`,
   PicZeroCharZeroCopy L1640) with its other inputs proved. In the dry run the textbook bundle is built by
   `openTextbookLeaves13HF_of_open16_P`, so the field taint no longer reaches `poincareComplement` or `t8` (§2).
@@ -239,9 +239,9 @@ the hand-fold of §6 removes both rows.
 ## 8. Known issues and limitations
 
 * **Known issue with h-trust's supplier at E1, not with the manuscript.** h-trust E1 names Mumford §19 Thm 1 for
-  Poincaré reducibility. Mumford works over an algebraically closed field, but the manuscript applies the theorem over
+  Poincaré reducibility. Mumford's book works over an algebraically closed field (from memory, UNVERIFIED), but the manuscript applies the theorem over
   the number field `L'` (L865). The consumer's form (`PoincareComplement`, over any field of characteristic 0) is
-  Milne's Prop. 12.1, which is over an arbitrary field. The leaf is therefore stated and attributed as Milne's.
+  Milne's Prop. 12.1, which is over an arbitrary field (from memory, UNVERIFIED). The leaf is therefore stated and attributed as Milne's.
   The manuscript itself cites nothing, so this is a supplier correction, not a gap.
 * **Locators unread on this host.**
   * Milne 1986 Prop. 12.1 and Milne AV v2.00: the task asked for a checked locator; jmilne.org cannot be fetched.
