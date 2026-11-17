@@ -40,7 +40,7 @@ Base wip/leaf-fold33b d435851d (fork main after lane74; H top `HDec.HSyn.sixCont
    (SemistabAssembly.bostLowerBoundAn_of_ss n.bostLowerBoundAnSS) _) _ _`) and `HeightSplit.r21_of_leaves'` ->
    `BostGR9.r21_of_grBost'`; the top bundle is emitted in HDec.HSyn as `OpenResearchLeaves54` (27 fields), with the
    javanpeykarThm111An field doc's "semistable reduction as printed" phrase corrected (inbox 62; only in the new structure,
-   no existing module edited). Dry run (`GR9DryRun.lean`) compiled: first attempt sorryAx (argument parser dropped a
+   no existing module edited). Dry run (`GR9DryRun.lean.txt`) compiled: first attempt sorryAx (argument parser dropped a
    `.mumfordTorsionAlgClosed` projection after a parenthesis; fixed), then `sixContactMin_of_open73` standard axioms.
 5. `python3 scratch/fold-b112/gen_gr9_fold.py` -> `ZInQKernel/OneProof/H/TailZ80.lean` (3057 lines), Main switched to
    `sixContactMin_of_open73` / `OpenResearchLeaves54` (docstring paragraph added); kinds row `bostLowerBoundAnSS` replaced by
@@ -73,7 +73,7 @@ Base wip/leaf-fold33b d435851d (fork main after lane74; H top `HDec.HSyn.sixCont
 
 1. Merged origin/wip/sz-raynaud 34a0b3cb (no conflicts; commit b67c46ff). Hygiene: build logs `scratch/sz-raynaud/build1.txt`,
    `build2.txt` (163k lines) left out; `scratch/sz-raynaud/DryRunFold.lean` (redeclares an HDec.HSyn bundle) renamed
-   `.lean.txt`; no host paths (the `/home/` hit in `strict/render_open.py` is render_open's own host-path regex); no
+   `.lean.txt`; no host paths (the home-directory-path hit in `strict/render_open.py` is render_open's own host-path regex); no
    vendored code.
 2. `lake build ZInQKernel.Contrib.OneProof.SZRaynaud` ok. `#discharges` on the fold-1 head (`DischargesSZ.lean`, output
    `DischargesSZ-output.txt`, VERIFIED): `OpenResearchLeaves54.raynaudSemistableSHOr` DISCHARGED by
@@ -81,7 +81,7 @@ Base wip/leaf-fold33b d435851d (fork main after lane74; H top `HDec.HSyn.sixCont
    `#print axioms` of the module standard (pow_smul_tate: [propext, Quot.sound]); no sorry, no error.
 3. Spec `scratch/fold-b112/autofold-sz.json` = sz-raynaud's `autofold.json` unchanged (one leaf; `ElliotWildInertiaTrivial`
    is not in the spec, so no row with nothing discharged is added, as inbox 64a asks). Dry run regenerated on this line:
-   strict 5/24 on 29 -> 5/24 on 29; the printed module (`SZDryRun.lean`) compiled, `sixContactMin_of_open74` standard axioms.
+   strict 5/24 on 29 -> 5/24 on 29; the printed module (`SZDryRun.lean.txt`) compiled, `sixContactMin_of_open74` standard axioms.
 4. `python3 scripts/one_proof/autofold.py scratch/fold-b112/autofold-sz.json` -> `TailZ81.lean` (`OpenResearchLeaves55`,
    `openResearchLeaves54_of_OpenResearchLeaves55`, `sixContactMin_of_open74`); Main switched; kinds row
    `raynaudSemistableSHOr` (published, LEAF/LEAF) -> `silverbergZarhinThm35` (published, flag "reading 11-17 (...)",
@@ -114,7 +114,7 @@ the new structure `OpenResearchLeaves54`'s javanpeykarThm111An field doc (TailZ8
    `Y3RouteA.y3FineModuliAbP_of_z30`, still assumes `[Y3RouteA.Y3FullThreeRepZ30]`, standard axioms;
    `y3FineModuliAbP_of_z30`, `y3RepresentableQ_of_z30` standard axioms.
 3. Spec `scratch/fold-b112/autofold-y3.json` = the branch's `autofold.json` unchanged. Dry run on this line: 5/24 on 29 ->
-   5/24 on 29; printed module (`Y3DryRun.lean`) compiled, `sixContactMin_of_open75` standard axioms.
+   5/24 on 29; printed module (`Y3DryRun.lean.txt`) compiled, `sixContactMin_of_open75` standard axioms.
 4. autofold -> `TailZ82.lean` (`OpenResearchLeaves56`, `sixContactMin_of_open75`); Main switched; kinds row
    `y3FineModuliAbP` (consequence, GLUE/GLUE) -> `y3FullThreeRepZ30` (consequence, flag "ELLIOT: ...", GLUE/GLUE,
    flag_class unverified-locator; columns 1-7 identical to the branch's `kinds-row.tsv`, VERIFIED by diff); claims no row.
@@ -139,7 +139,7 @@ the new structure `OpenResearchLeaves54`'s javanpeykarThm111An field doc (TailZ8
    `CarayolRefold.carayolThmAIrr_of_frob`, still assumes `[CarayolRefold.CarayolThmAFrob]`, standard axioms;
    `carayolThmAIrr_of_frob`, `frob_of_DDT31`, `odd_of_frobDet` standard axioms.
 3. Spec `scratch/fold-b112/autofold-car.json` = the branch's `autofold.json` unchanged. Dry run on this line: 5/24 on 29 ->
-   5/24 on 29; printed module (`CarDryRun.lean`) compiled, `sixContactMin_of_open76` standard axioms.
+   5/24 on 29; printed module (`CarDryRun.lean.txt`) compiled, `sixContactMin_of_open76` standard axioms.
 4. autofold -> `TailZ83.lean` (`OpenResearchLeaves57`, `sixContactMin_of_open76`); Main switched; kinds row
    `carayolThmAIrr` (consequence, GLUE/GLUE) -> `carayolThmAFrob` (published, flag "unread: new printed leaf (packaged
    form; ...)", GLUE/GLUE, flag_class unread); claims no row.
@@ -175,3 +175,9 @@ the new structure `OpenResearchLeaves54`'s javanpeykarThm111An field doc (TailZ8
    **render_open count after fold 5: 30 open (H 29, strictest 5/24, 1 other); strict 5/24 on 29 (count-neutral).**
    The task's rule (a fold lowers the GLUE count or removes a field) is not met by this or any fold here; each was
    folded because the integrator's instructions (inbox 59, 64a, 67, 68) name it as a count-neutral fold.
+
+## Wrap-up
+- The four dry-run modules (`GR9DryRun`, `SZDryRun`, `Y3DryRun`, `CarDryRun`; they redeclare HDec.HSyn bundles) renamed
+  `.lean.txt`. Report `docs/research/fold-b112.md`, replay `scratch/fold-b112/REPLAY.md`.
+- **Final count: 30 open (H 29, strict and strictest 5/24, 1 other), top `sixContactMin_of_open76` (TailZ83,
+  `OpenResearchLeaves57`).**
