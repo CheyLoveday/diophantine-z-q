@@ -96,9 +96,9 @@ Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/D
 
 * [`h21C`](#h21c) (GLUE): Tian-Yuan-Zhang, Genus periods, genus points and congruent number problem, Asian J. Math. 21 (2017), arXiv:1411.4728v1 Theorem 2.1 (L554-559), with P(d1, d2) defined at L551-552
 * [`hCM`](#hcm) (GLUE; unread, unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4; Lang, Elliptic functions, Ch. 10 Thm 3 (numbers UNVERIFIED)
-* [`h33`](#h33) (GLUE): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8) (arXiv:1411.4728v1 L1299-1311)
+* [`h33a`](#h33a) (GLUE; pending-review, unread): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8), for every algebraic identification i0 : (X0(32), oo) = (A, O) over Q (arXiv:1411.4728v1 L1296-1311; journal number UNVERIFIED)
 * [`hBFH`](#hbfh) (LEAF; unread, reading-risk): Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
-* [`hGZ`](#hgz) (GLUE; pending-reading, unverified-locator): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
+* [`hGZ`](#hgz) (GLUE; pending-review, unread, unverified-locator): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V section 2 Thm 2.1 (pi fixed on p. 310); any modular parametrization with pi(infty) = 0
 
 ### Packet R4
 
@@ -182,9 +182,9 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`charPolyIndepOfEllAlgClosed`](#charpolyindepofellalgclosed) | textbook | published | LEAF |  |  | T3 | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
 | [`h21C`](#h21c) | frozenTarget | composite | GLUE | note |  | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hCM`](#hcm) | frozenTarget | consequence | GLUE | unread, unverified-locator | good-first | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
-| [`h33`](#h33) | frozenTarget | consequence | GLUE | note | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
+| [`h33a`](#h33a) | frozenTarget | published | GLUE | pending-review, note, unread | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hBFH`](#hbfh) | frozenTarget | published | LEAF | note, unread, reading-risk | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
-| [`hGZ`](#hgz) | frozenTarget | consequence | GLUE | pending-reading, unverified-locator | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
+| [`hGZ`](#hgz) | frozenTarget | published | GLUE | pending-review, unread, unverified-locator | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 
 ## The hypotheses
 
@@ -741,64 +741,43 @@ ZInQ.Contrib.HCMDict.ShimuraThm54
 > law, the printed `ξ'` still satisfies `ξ'(0) = ξ(0)^σ = O` (take `u = 0`), and a biholomorphism of complex tori
 > fixing `0` is a group isomorphism, so the conclusion here follows in either reading.
 
-### h33
+### h33a
 
-* Argument `h33` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: re-rated 11-16 under the dictionary ruling (dictionary pass, rater and skeptic): PchiG uses the eta-quotient map phiC where TYZ use the algebraic Q-isomorphism i_0 (analytic uniformization of X0(32)); choosing eps before phi needs TYZ Prop 3.2(4); readings are of arXiv v1, journal number UNVERIFIED.
-* Source: Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8) (arXiv:1411.4728v1 L1299-1311)
+* Argument `h33a` of `frozenTarget`; kind **published**, strict **GLUE**; flag: pending review (inbox 15a: new printed leaf, GLUE until a reviewer rates it); unread: journal version not checked; arXiv v1 re-read by h33-fix 11-17 (L1173-1174, L1296-1311); i0 is algebraic (pull-back Q(A) = Q(j, j_32), bijective, ord_q x < 0) and every step from it to the consumer is Lean (h33-fix: eta model is such an i0, j and j_32 rational in its x, y; h33-dict: eps before Phi, CM points); readings kept: X_U = X0(32)_Q(i) with P_n -> tau_n, sign of [i] (alpha = -i, L1564-1566), model y^2 = x^3 + 4x for 2y^2 = x^3 + x, D1 (function-field embeddings = morphisms, Hartshorne I.6.12) as for hGZ.
+* Source: Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8), for every algebraic identification i0 : (X0(32), oo) = (A, O) over Q (arXiv:1411.4728v1 L1296-1311; journal number UNVERIFIED)
 * packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74).
 * Human readings recorded: none.
 * Status: open.
 
 ```lean
-ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33
+ZInQ.H33Fix.TYZThm33Alg
 ```
 
-> **Leaf TYZ-3.3: TYZ Theorem 3.3 ("Gross–Zagier formula"), printed form, for `n ≡ 5, 7 (mod 8)`.**
+> **Leaf TYZ-3.3 (printed form): Tian–Yuan–Zhang Theorem 3.3 ("Gross–Zagier formula") for TYZ's algebraic
+> identification `i₀ : (X₀(32), ∞) ≅ (A, O)` over `ℚ`, for `n ≡ 5, 7 (mod 8)`.**
 > 
-> Source: Tian–Yuan–Zhang, *Genus periods, genus points and congruent number problem*,
-> arXiv:1411.4728v1 (Asian J. Math. 21 (2017) 721–774), Theorem 3.3 (`\label{GZ}`, Period7.tex
-> L1299–1311), with the definitions of §3.1: `Cl_n = Gal(H_n/K_n)`, `Cl'_n`, `σ` (L1263–1265), `Φ` and
-> `P_χ` (L1279–1284), `𝒫(n) = 2^{−1−ρ(n)} 𝓛(n) α_n ∈ A(K_n)^- ⊗ ℚ` (L1288–1295), `h₂` (L992). The
-> statement, for every positive squarefree `n ≡ 5, 7 (mod 8)`, every `Φ` and every character
-> `χ : Cl_n → {±1}`:
+> Source: Tian–Yuan–Zhang, *Genus periods, genus points and congruent number problem*, arXiv:1411.4728v1,
+> Theorem 3.3 (`\label{GZ}`, Period7.tex L1296–1311, re-read 11-17 by h33-fix), with the set-up of §3.1: `A ≅ (X₀(32), ∞)`
+> and "Fix an identification `i₀`" (L1173–1174), `f_n = f₀ − f₀∘[i]` for `n ≡ 5`, `f_n = i₀` for `n ≡ 7`
+> (L1195–1198), the CM points `P_n`, `Cl_n`, `Φ`, `P_χ`, `𝒫(n)`, `h₂` (L1203–1295, L992). Journal version: Asian J.
+> Math. 21 (2017) 721–774, NOT checked.
 > 
-> * `P_χ` is non-torsion only if `χ = χ_{d₀,d₁}` with `n = d₀d₁`, `0 < d₀ ≡ 5, 6, 7`,
-> `0 < d₁ ≡ 1, 2, 3 (mod 8)` (the character of `K_n(√d₁)`, resp. `K_n(√d₁*)` for `n ≡ 7`);
-> * in that case `P_χ = ε(d₀,d₁) 2^{h₂(n)} 𝓛(d₁) 𝒫(d₀)` in `A(H'_n(i)) ⊗ ℚ`, `ε(d₀,d₁) = ±i` on
-> `(5,3)`, `±1` otherwise.
+> The statement: for every isomorphism `i₀` (`IsX0IsoAlg φ`, `φ = i₀^*`), the holomorphic functions `X = x∘i₀`,
+> `Y = y∘i₀` on `ℍ` (the composite of `i₀` with the uniformization `ℍ → X₀(32)(ℂ)`: the holomorphic functions with
+> `q`-expansions `φ(x)`, `φ(y)`, unique by `eq_of_hasQExp`), every family `w` of algebraic points with
+> `w(n) = i₀(P_n)` in `A(ℂ)`, `TYZThm33EpsAfter (zOfLift w)` holds (h33-dict's display: `P_χ` torsion unless
+> `χ = χ_{d₀,d₁}`, and then `P_χ = ε(d₀,d₁) 2^{h₂(n)} 𝓛(d₁) 𝒫(d₀)` in `A(ℚ̄) ⊗ ℚ`, `ε` chosen after `Φ`, `χ`).
 > 
-> Encoding (a reading of the same display, never stronger):
-> * Model: the leaf is stated over the kernel's `basePt`, i.e. Heegner points on the eta-quotient model
-> `X0.phiC`, whereas TYZ build `z_n` from an arbitrary identification `i_0`. Passing from the print to the
-> leaf uses that the eta-model coordinates are rational functions on `X₀(32)` (q-expansion principle;
-> `IsRatModFn 32` in Bridge.lean), so `phiC = [M]∘i_0` with `M ∈ End_ℚ(A) = ℤ`, which the existential
-> `𝒫` absorbs. So the leaf is TYZ Theorem 3.3 carried along the eta model, not its literal display
-> (statement review v2, M1).
-> * `A(H'_n(i)) ⊗ ℚ ⊂ A(ℚ̄) ⊗ ℚ`; a vector of `A(ℚ̄) ⊗ ℚ` is `Q/m`; equality is "the difference of the
-> cleared multiples is torsion". `A` is the kernel's `y² = x³ + 4x ≅ X₀(32)`, `ℚ`-isomorphic to TYZ's
-> `2y² = x³ + x` by `(x, y) ↦ (2x, 4y)`, compatibly with `[i]`; `z_n = f_n(P_n)` is the kernel's
-> pinned point `TYZ35.basePt n` (cm-numeric/cm-bridge; `(1 − [i]) f₀(P_n)` for `n ≡ 5`). TYZ print
-> `f_n = f₀ − f₀∘[i]` (L1196) with `[i]` an automorphism of `X_U ≅ X₀(32)_{ℚ(i)}`; reading it as
-> `(1 − [i])∘f₀` with this sign of `i` is fixed by the paper: in the proof of the Hecke-action
-> proposition for `n ≡ 5` the cusps `[∞,1]`, `[0]` lie on the component of `P_n` and `α = −i`
-> (about L1238, L1519, L1551, L1564-1566), so TYZ's `[i]` acts as `+i` there; with this sign
-> `f_n = f₀∘[1 − i]` (about L1584) is `ϖ`-invariant up to 2-torsion (about L1586-1589), as Prop. 3.1
-> and the proof of Thm 3.3 (about L1909-1912) need. It agrees with cm-numeric's numerics. With the
-> other sign the lifts do not commute with `[i]`, the contributing and excluded characters swap,
-> and the leaf would be false, not weaker (statement review of tyz-split, 2026-11-14).
-> * Non-vacuity: the hypothesis on `ℓ` is satisfiable only if every `𝓛(m)²` (`m ≡ 1, 3`) is an integer
-> square, i.e. together with `TYZThm11Integral` (TYZ Thm 1.1); otherwise the leaf (and the row,
-> through `IsTYZLcal`) is vacuously true.
-> * `h₂` is defined in TYZ §2 (L992) and reused in §3 (L2354).
-> * `𝒫(d)` enters only through `Q d / m d` with `Q d ∈ A(K_d)^-` and `Q d` torsion when
-> `ord_{s=1} L(E_d, s) > 1` (then `𝓛(d) = 0` by its definition, L338–345, so `𝒫(d) = 0`, L1295).
-> This forgets the value `2^{−1−ρ(d)}𝓛(d)` of the coefficient (it needs Néron–Tate regulators,
-> not in Mathlib): the leaf is weaker than the printed theorem, not stronger.
-> * `𝓛(d₁)` (`d₁ ≡ 1, 3`, `n` odd) is defined up to sign (L364); `ℓ` is any integer choice with
-> `ℓ(d₁)² = 𝓛(d₁)²` (`lcalSq`), the sign absorbed in `ε` (`ε` is chosen after `ℓ`).
-> * Only `n ≡ 5, 7` (TYZ: `n ≡ 5, 6, 7`); then `d₀, d₁` are odd, so the classes `6, 2` do not occur
-> (they are kept in the statement as printed).
-> * `Φ` is encoded by lifts (`IsPhi`), `χ` is a character of `Cl_n = Gal(H_n/K_n)` itself.
+> Readings (unchanged from h33-dict, tyz-split, h33-sign; not Lean):
+> * `X, Y` holomorphic on `ℍ`: `i₀⁻¹(O) = {∞}` is a cusp; the cusps are not points of `ℍ`;
+> * `P_n` is the CM point `τ_n` of `tyzForm n` (`n ≡ 5`) resp. `tyzForm7 n` (`n ≡ 7`), read on `X₀(32)` through
+> `X_U ≅ X₀(32)_{ℚ(i)}` (L1191–1193) and the fixed points of TYZ's embeddings (h33-sign);
+> * `f₀∘[i] = [i]∘f₀` on the component of `P_n`, with the sign of `[i]` fixed by `α = −i` (L1564–1566; the other
+> sign makes the statement false, h33-sign); `z_n = zOfLift w n`;
+> * `A` in the model `y² = x³ + 4x` (above); the weakenings of h33-dict (`𝒫` existential with its coefficient
+> forgotten, `n ≡ 5, 7` only, `ℓ` any sign choice of `𝓛`). The family `w` is quantified: the leaf is vacuous,
+> never false, for a non-algebraic family; the hypotheses are satisfiable given `hCM`
+> (`tyzThm33Alg_hyps_satisfiable`).
 
 ### hBFH
 
@@ -842,19 +821,18 @@ ZInQ.BFHPrinted.BFHClauseIIGamma0
 
 ### hGZ
 
-* Argument `hGZ` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: rated 11-16 by reviewer (rater and skeptic, Addendum 2): consequence, GLUE/GLUE; reading 11-17 (inbox 3, notes readings/gz-d3-d5.md): D3 cleared (GZ V section 2, p. 310, fixes an arbitrary covering pi with pi(infinity) = 0 and Thm 2.1 holds for it) and D5 cleared (printed at IV (0.4), p. 268); stays GLUE until D1 (Q-embeddings of function fields are morphisms of the curves, Hartshorne I.6.12), D2 (phi at Heegner points read through q-expansions) and the identity jacobiSym = epsilon_D are proved in Lean; locator UNVERIFIED.
-* Source: Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
+* Argument `hGZ` of `frozenTarget`; kind **published**, strict **GLUE**; flag: pending review (inbox 14: new printed leaf, GLUE until a reviewer rates it); unread: new printed leaf (hgz-steps: GZSch.GrossZagierCurveCd, pi : X0(N) -> E a nonconstant morphism of Q-schemes on a normal proper model of Q(j, j_N), E = Proj Q[X,Y,Z]/(F_E), pi(infty) = O, Heegner points as C-points of X, twist by epsilon_D; D1 (phi^* -> morphism), D2 (values at the C-points tau = modPt of the q-expansion functions), model and point existence, epsilon_D = (./|D|) proved in Lean (grossZagierAlgOptCd_of_curve); D3 cleared by the queue9 reading of GZ V section 2, p. 310 (any covering pi with pi(infty) = 0)); locator UNVERIFIED.
+* Source: Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V section 2 Thm 2.1 (pi fixed on p. 310); any modular parametrization with pi(infty) = 0
 * packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
 * Human readings recorded: none.
 * Status: open.
 
 ```lean
-ZInQ.GZAlg.GrossZagierAlgOptCd
+ZInQ.GZSch.GrossZagierCurveCd
 ```
 
-> **The leaf of the `C_d` route, algebraic form**: `GrossZagierAlgOptAt E'` for every short model
-> `E'` in the isogeny class of `C_d : y² = x³ − d²x` (`aₙ(E') = aₙ(C_d)`), `d ≡ 5 (mod 8)` squarefree.
-> A restriction of `GrossZagierAlgOpt`.
+> **The leaf of the `C_d` route, curve form**: `GrossZagierCurveAt E'` for every short model `E'` in
+> the isogeny class of `C_d : y² = x³ − d²x`, `d ≡ 5 (mod 8)` squarefree.
 
 ## Credits
 

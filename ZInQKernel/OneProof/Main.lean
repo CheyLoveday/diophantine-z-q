@@ -13,12 +13,14 @@ import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8
 import ZInQKernel.Contrib.OneProof.HeegnerPointRationalCd
 import ZInQKernel.Contrib.OneProof.GrossConjugationCd
 import ZInQKernel.Contrib.OneProof.GrossZagierAlgebraic
+import ZInQKernel.Contrib.OneProof.GrossZagierScheme
 import ZInQKernel.Contrib.OneProof.EtaW32Character
 import ZInQKernel.Contrib.OneProof.TYZTestVectorExists
 import ZInQKernel.Contrib.OneProof.Gamma0QExpansion
 import ZInQKernel.Contrib.OneProof.TYZProp23Printed
 import ZInQKernel.Contrib.OneProof.ShimuraMainCM
 import ZInQKernel.Contrib.OneProof.TYZLcalOne
+import ZInQKernel.Contrib.OneProof.TYZThm33Alg
 
 /-!
 # The whole proof in one theorem
@@ -73,8 +75,9 @@ the development fork, and from nothing else. It composes three compiled chains:
   `C_d` (route A, leaf-fold33): `ZInQ.GZStatements.frozenTarget_of_sixContactMin_tyzThm35ReadingA_fhNonvanishingCd_grossZagierHeegnerCd`
   with heegner-32's `grossZagierHeegnerCd_of_printed` (from `T5Glue.ShimuraMainCM`, which hcm-dict's
   `HCMDict.shimuraMainCM_of_printed` derives from Shimura 1971 Thm 5.4 as printed, the binder `hCM`), gz-conj's proved conjugation relation, and
-  `GZAlg.grossZagierFormulaCd_of_alg` (gzopt-dict, through period-odd and cd-optimal) from Gross–Zagier over the
-  algebraic curve `X₀(N)` (`hGZ`), the `q`-expansion principle for `Γ₀(N)` (proved: gamma0-qexp,
+  `GZAlg.grossZagierFormulaCd_of_alg` (gzopt-dict, through period-odd and cd-optimal) from Gross–Zagier for a
+  modular parametrization π : X₀(N) → E, a morphism of ℚ-schemes (`hGZ`, hgz-steps' `GZSch.GrossZagierCurveCd`, bridged by
+  `grossZagierAlgOptCd_of_curve`), the `q`-expansion principle for `Γ₀(N)` (proved: gamma0-qexp,
   `Gamma0QExp.gamma0QExpansion_proof`) and the eta-quotient law at level 32 (proved: etaw32-proof,
   `EtaW32Character.etaW32Character_proof`). TYZ's test vector `hfx` is proved (hfx-proof, `HfxProof.tyzTestVectorExists`), and so is TYZ Proposition 2.3
   `hP23` (hp23-proof, `HP23Proof.tyzProp23Printed`).
@@ -127,6 +130,9 @@ and `HDec.HSyn.sixContactMin_of_open56` goes through `sixContactMin_of_open55_eb
 `scratch/fold34-eichler/gen/gen.py`), a copy of every declaration that reads a count field or takes a bundle carrying
 one, with the count fields typed `GR56.R5fpCountLe`. The originals are unchanged.
 
+h33-fix replaced `h33` (`TYZSplit.TYZThm33`) by `h33a` (`ZInQ.H33Fix.TYZThm33Alg`, TYZ Thm 3.3 for TYZ's algebraic
+identification `i₀` given by its pull-back on function fields; `H33Fix.tyzThm33_of_alg`, with `isX0IsoAlg_eta` proved).
+
 The hypotheses of `frozenTarget` are therefore exactly the open statements. Discharging one means replacing a field or
 hypothesis by its proof; the theorem's statement then loses that hypothesis.
 -/
@@ -140,17 +146,17 @@ theorem _root_.ZInQ.OneProof.frozenTarget
     (r : HDec.HSyn.OpenResearchLeaves41) (t : HDec.HSyn.OpenTextbookLeaves17) (l : HDec.HSyn.OpenAddedLeaves25)
     (h21C : ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC)
     (hCM : ZInQ.Contrib.HCMDict.ShimuraThm54)
-    (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
+    (h33a : ZInQ.H33Fix.TYZThm33Alg)
     (hBFH : ZInQ.BFHPrinted.BFHClauseIIGamma0)
-    (hGZ : ZInQ.GZAlg.GrossZagierAlgOptCd) :
+    (hGZ : ZInQ.GZSch.GrossZagierCurveCd) :
     ZInQ.FrozenTarget :=
   ZInQ.GZStatements.frozenTarget_of_sixContactMin_tyzThm35ReadingA_fhNonvanishingCd_grossZagierHeegnerCd
     (HDec.HSyn.sixContactMin_of_open59 r t l)
     (ThetaWP8.tyzThm35ReadingA_noHX (ZInQ.Contrib.LcalOne.tyzThm11Integral_of_thm21C_only h21C) (H29Split.tyzLemma29Mod2_of_sixLeaves ZInQ.Contrib.OneProof.LegendreThreeSquares.legendreThreeSquares_proof
       ZInQ.Contrib.OneProof.JonesPall.jonesPall_proof ZInQ.Contrib.HfxProof.tyzTestVectorExists (ZInQ.Contrib.TYZGenusFold.tyzLemma29PrintedNe3_of_thm21C h21C) ZInQ.Contrib.T21Proof.tyzThm21At31
-      ZInQ.Contrib.HP23Proof.tyzProp23Printed) (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) h33)
+      ZInQ.Contrib.HP23Proof.tyzProp23Printed) (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) (ZInQ.H33Fix.tyzThm33_of_alg (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) h33a))
     (ZInQ.GZStatements.fhNonvanishingCd_of_fhNonvanishing (ZInQ.BFHPrinted.fhNonvanishing_of_bfhClauseIIGamma0 hBFH))
-    (ZInQ.Heegner32.grossZagierHeegnerCd_of_printed (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) (ZInQ.GZAlg.grossZagierFormulaCd_of_alg hGZ ZInQ.Contrib.Gamma0QExp.gamma0QExpansion_proof
+    (ZInQ.Heegner32.grossZagierHeegnerCd_of_printed (ZInQ.Contrib.HCMDict.shimuraMainCM_of_printed hCM) (ZInQ.GZAlg.grossZagierFormulaCd_of_alg (ZInQ.GZSch.grossZagierAlgOptCd_of_curve hGZ) ZInQ.Contrib.Gamma0QExp.gamma0QExpansion_proof
       ZInQ.Contrib.OneProof.EtaW32Character.etaW32Character_proof)
       ZInQ.GZConj.grossConjugationCd)
 

@@ -212,7 +212,7 @@ T-5		ZInQ.Contrib.TYZGenus.Shimura.ShimuraReciprocityModFn	249195fd0,f6df5fa32,c
 T-6		ZInQ.Contrib.TYZGenus.Package.Thm35First	249195fd0	no
 T-7		ZInQ.Contrib.TYZGenus.CMBridge.Lemma321Five	249195fd0	no
 T-11		ZInQ.Contrib.TYZGenus.TYZ35.TYZThm33Pinned	f6df5fa32,cba8157f7	no
-T-12	h33	ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
+T-12		ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33	5fd81e870,085a7a53a,f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes
 T-13		ZInQ.Contrib.TYZGenus.TYZSplitT5.CMModuli	5fd81e870,085a7a53a	no
 T-14		ZInQ.Contrib.TYZGenus.TYZSplitT5.X0RatStructure	5fd81e870,085a7a53a	no
 T-15		T5Glue.ShimuraMainCM	f18bcb904,3691994d4,f96b7323d,8342c2eb7	yes

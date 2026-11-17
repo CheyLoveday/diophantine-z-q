@@ -275,3 +275,17 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     axioms; check_target.py; only Main.lean changed among existing OneProof modules; closure (no sorryAx); OpenStatements
     40; DischargesTest rerun, no error; render_open --check ok (35 H, strictest 16/19, 5 others); crosswalk --check ok;
     autoform check ok.
+31. Reviewer verdicts applied (inbox 13a: h21C composite GLUE; inbox 16 queue10: modularHTPrinted, panPrintedP,
+    bergerPrintedV, carayolThmAIrr, bdRInvariantsPrinted, deRhamVpAbVarPrinted, elkiesX6StarEvery,
+    gonzalezRotgerThm512X6, x6CoarseModuli, javanpeykarPrintedMapHF, bostLowerBoundPrinted, gaudronRemondThm14Printed
+    consequence GLUE/GLUE; chevalleyPerfect, hodgeTateDecompExists pending reading GLUE; gamma1IntegralSpan LEAF/GLUE
+    (strictest); heckePrimeIntegralToRational LEAF/LEAF). H strictest 16/19 -> 11/24 on 35.
+32. Manual Main folds of two binders (inbox 14, 15a): hgz-steps (wip/hgz-steps 92fd272e, with gz-dict2's
+    GrossZagierPlane): hGZ retyped to ZInQ.GZSch.GrossZagierCurveCd through GZSch.grossZagierAlgOptCd_of_curve
+    (D1, D2, model, points, cusp proved); h33-fix (wip/h33-fix 9b70b564, with h33-dict): h33 -> h33a :
+    ZInQ.H33Fix.TYZThm33Alg through H33Fix.tyzThm33_of_alg (isX0IsoAlg_eta proved). Both new rows pending review
+    (GLUE), kinds rows from the tasks' kinds-row.tsv; locators.md row for GrossZagierCurveCd appended. Count unchanged
+    (40 open; others: h21C, hCM, h33a, hGZ GLUE, hBFH LEAF). kleiman-section2 (inbox 15b) deferred: its hand fold
+    must be regenerated on this top. Checks (VERIFIED): build +Main +Discharges (16069 jobs); frozenTarget standard
+    axioms; check_target.py; OpenStatements 40; DischargesTest rerun, no error; render_open --check ok (35 H,
+    strictest 11/24, 5 others); crosswalk --check ok; autoform check ok.

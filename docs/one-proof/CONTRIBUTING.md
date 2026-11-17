@@ -238,9 +238,6 @@ DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
 DISCHARGES [OpenResearchLeaves41.hodgeTateDecompExists] by ZInQ.Contrib.HodgeTateFromPairing.hodgeTateDecompExists_of_field
   still assumes: [ZInQ.Contrib.HodgeSplit.HodgeTateDecompAbVar]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
-  still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
-  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves41.pazukiCor13Upper] by ZInQ.HeightDict.pazukiCor13Upper_of_printed
   still assumes: [ZInQ.HeightDict.PazukiCor13UpperPrinted,
  BPAnalytic.Uniformization.UniformizationLeafAll,
@@ -266,7 +263,7 @@ DISCHARGES [OpenResearchLeaves41.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 40 open hypotheses, 12719 theorems checked, 26 discharge one
+#discharges: 40 open hypotheses, 13245 theorems checked, 25 discharge one
 ```
 <!-- worked-example:end -->
 
