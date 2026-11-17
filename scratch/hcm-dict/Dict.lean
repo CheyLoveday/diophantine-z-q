@@ -87,4 +87,101 @@ theorem exists_lattice_eq (W : WeierstrassCurve ℂ) [W.IsElliptic] (h₁ : W.a�
   · rw [PeriodPair.weierstrassCurve_a₆, hsc.g₃, ← e₆]
     simp only [Units.val_inv_eq_inv_val]; ring
 
+/-! ## §4. Local holomorphic lift through `ℂ → E(ℂ)`
+
+Adapted from the vendored FLT proof `ModularCurve.kw_surgehgf4_hH2d_betweenCurvesCocountableHoloLift_of_affineHoloCoords`
+(anthropics/fermats-last-theorem, Apache-2.0; `Vendor/AnthropicFLT`): the local inverse of `℘` composed with the
+`x`-coordinate, the sign of `y` fixed by continuity. -/
+
+theorem omega_div_four_notMem (L : PeriodPair) : L.ω₁ / 4 ∉ L.lattice := by
+  intro h
+  apply L.ω₁_div_two_notMem_lattice
+  have : L.ω₁ / 2 = L.ω₁ / 4 + L.ω₁ / 4 := by ring
+  rw [this]; exact add_mem h h
+
+theorem derivWeierstrassP_omega_div_four_ne (L : PeriodPair) : ℘'[L] (L.ω₁ / 4) ≠ 0 := by
+  intro h0
+  have hU := L.isUniformization_toPoint L.discriminant_ne_zero
+  have hw := omega_div_four_notMem L
+  have h2 : L.toPoint L.discriminant_ne_zero (L.ω₁ / 4 + L.ω₁ / 4) = 0 := by
+    rw [hU.1, L.toPoint_of_notMem _ hw]
+    classical
+    apply Point.add_self_of_Y_eq
+    simp [WeierstrassCurve.Affine.negY, h0]
+  apply L.ω₁_div_two_notMem_lattice
+  have : L.ω₁ / 2 = L.ω₁ / 4 + L.ω₁ / 4 := by ring
+  rw [this]; exact hU.2.2 _ h2
+
+theorem exists_local_lift (L₀ : PeriodPair) {Λ : Set ℂ}
+    (ξ : ℂ → L₀.weierstrassCurve.toAffine.Point) (hξ : IsAnalyticUnif L₀.weierstrassCurve Λ ξ) :
+    ∃ z₁ : ℂ, ∃ r > 0, ∃ G : ℂ → ℂ, DifferentiableOn ℂ G (Metric.ball z₁ r) ∧
+      ∀ z ∈ Metric.ball z₁ r, L₀.toPoint L₀.discriminant_ne_zero (G z) = ξ z := by
+  set w₀ := L₀.ω₁ / 4 with hw₀def
+  have hw₀Λ : w₀ ∉ L₀.lattice := omega_div_four_notMem L₀
+  have hder' : ℘'[L₀] w₀ ≠ 0 := derivWeierstrassP_omega_div_four_ne L₀
+  obtain ⟨z₀, hz₀⟩ := hξ.2.1 (L₀.toPoint L₀.discriminant_ne_zero w₀)
+  have hξz₀ : ξ z₀ ≠ 0 := by
+    rw [hz₀, L₀.toPoint_of_notMem _ hw₀Λ]; exact Point.some_ne_zero _
+  obtain ⟨U, hUo, hz₀U, X, Y, hXd, hYd, hcoord⟩ := hξ.2.2.2 z₀ hξz₀
+  obtain ⟨hnsz₀, hcoord₀⟩ := hcoord z₀ hz₀U
+  have hPw₀ : ℘[L₀] w₀ = X z₀ ∧ ℘'[L₀] w₀ / 2 = Y z₀ := by
+    have h := hz₀
+    rw [hcoord₀, L₀.toPoint_of_notMem _ hw₀Λ, Point.some.injEq] at h
+    exact ⟨h.1.symm, h.2.symm⟩
+  have hYz₀ : Y z₀ ≠ 0 := by
+    rw [← hPw₀.2]; exact div_ne_zero hder' two_ne_zero
+  have hU : U ∈ 𝓝 z₀ := hUo.mem_nhds hz₀U
+  have hder : deriv ℘[L₀] w₀ ≠ 0 := by
+    simp only [PeriodPair.deriv_weierstrassP]; exact hder'
+  have hPa : AnalyticAt ℂ ℘[L₀] w₀ := L₀.analyticOnNhd_weierstrassP w₀ hw₀Λ
+  set ψ := hPa.hasStrictDerivAt.localInverse ℘[L₀] (deriv ℘[L₀] w₀) w₀ hder with hψdef
+  have hψa : AnalyticAt ℂ ψ (X z₀) := hPw₀.1 ▸ hPa.analyticAt_localInverse hder
+  have hψw₀ : ψ (X z₀) = w₀ :=
+    hPw₀.1 ▸ HasStrictFDerivAt.localInverse_apply_image _
+  set G := ψ ∘ X with hGdef
+  have hXcont : ContinuousAt X z₀ := (hXd.differentiableAt hU).continuousAt
+  have hGcont : ContinuousAt G z₀ := hψa.continuousAt.comp hXcont
+  have hGz₀ : G z₀ = w₀ := hψw₀
+  have hevΛ : ∀ᶠ z in 𝓝 z₀, G z ∉ L₀.lattice :=
+    hGcont.eventually (L₀.isClosed_lattice.isOpen_compl.mem_nhds (hGz₀ ▸ hw₀Λ))
+  have hevR : ∀ᶠ z in 𝓝 z₀, ℘[L₀] (G z) = X z := by
+    have h := hPw₀.1 ▸ hPa.hasStrictDerivAt.eventually_right_inverse hder
+    exact hXcont.eventually h
+  have hevψd : ∀ᶠ z in 𝓝 z₀, DifferentiableAt ℂ ψ (X z) :=
+    hXcont.eventually
+      ((AnalyticAt.eventually_analyticAt hψa).mono fun _ hy => hy.differentiableAt)
+  have hevXd : ∀ᶠ z in 𝓝 z₀, DifferentiableAt ℂ X z :=
+    eventually_of_mem hU fun z hz => hXd.differentiableAt (hUo.mem_nhds hz)
+  have hevU : ∀ᶠ z in 𝓝 z₀, z ∈ U := hU
+  have hevSgn : ∀ᶠ z in 𝓝 z₀, ℘'[L₀] (G z) / 2 + Y z ≠ 0 := by
+    have hP'cont : ContinuousAt ℘'[L₀] (G z₀) := by
+      rw [hGz₀]; exact (L₀.analyticOnNhd_derivWeierstrassP w₀ hw₀Λ).continuousAt
+    have hcont : ContinuousAt (fun z => ℘'[L₀] (G z) / 2 + Y z) z₀ :=
+      ((hP'cont.comp hGcont).div_const 2).add (hYd.differentiableAt hU).continuousAt
+    refine hcont.eventually (isOpen_ne.mem_nhds ?_)
+    show ℘'[L₀] (G z₀) / 2 + Y z₀ ≠ 0
+    rw [hGz₀, hPw₀.2, ← two_mul]; exact mul_ne_zero two_ne_zero hYz₀
+  obtain ⟨r, hr, hball⟩ := Metric.eventually_nhds_iff_ball.mp
+    (((((hevΛ.and hevR).and hevψd).and hevXd).and hevU).and hevSgn)
+  refine ⟨z₀, r, hr, G, fun z hz => ?_, fun z hz => ?_⟩
+  · obtain ⟨⟨⟨⟨⟨-, -⟩, hψd⟩, hXdz⟩, -⟩, -⟩ := hball z hz
+    exact (hψd.comp z hXdz).differentiableWithinAt
+  · obtain ⟨⟨⟨⟨⟨hGzΛ, hPGz⟩, -⟩, -⟩, hzU⟩, hsgn⟩ := hball z hz
+    obtain ⟨hnsz, hcoordz⟩ := hcoord z hzU
+    have hPGy : ℘'[L₀] (G z) / 2 = Y z := by
+      have h1 : (℘'[L₀] (G z) / 2) ^ 2 = Y z ^ 2 := by
+        have hG := (WeierstrassCurve.Affine.equation_iff _ _).mp
+          (hPGz ▸ L₀.equation_weierstrassP hGzΛ)
+        have hY := (WeierstrassCurve.Affine.equation_iff _ _).mp hnsz.1
+        simp only [L₀.weierstrassCurve_a₁, L₀.weierstrassCurve_a₂, L₀.weierstrassCurve_a₃,
+          zero_mul, add_zero] at hG hY
+        exact hG.trans hY.symm
+      have hfac : (℘'[L₀] (G z) / 2 - Y z) * (℘'[L₀] (G z) / 2 + Y z) = 0 := by
+        linear_combination h1
+      rcases mul_eq_zero.mp hfac with h | h
+      · exact sub_eq_zero.mp h
+      · exact absurd h hsgn
+    rw [L₀.toPoint_of_notMem _ hGzΛ, hcoordz, Point.some.injEq]
+    exact ⟨hPGz, hPGy⟩
+
 end ZInQ.Contrib.HCMDict
