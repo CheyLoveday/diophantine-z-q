@@ -26,7 +26,7 @@ run_cmd do
         todo := todo ++ ci.type.getUsedConstants
         if let some v := fcValue? ci then todo := todo ++ v.getUsedConstants
     return seen
-  let checked : Li  let checked : List Name := [`sorryAx,
+  let checked : List Name := [`sorryAx,
     -- removed (must be false)
     `X1Igusa.IgusaGL2DSGalSome, `X1Igusa.igusaGL2DS_of_igusaGL2DSGalSome, `X1Igusa.IgusaGL2DS,
     `X1Igusa.x1PointsConjugate_of_igusaGL2DS, `AfTateLam.r16CoreY_of_ds965, `AfTateLam.r16CoreY_of_printed,
@@ -34,7 +34,7 @@ run_cmd do
     -- the replacement route (must be true)
     `AfTateLam.r16CoreY_of_ds965_x0, `AfTateLam.x1PointsConjugate_proof, `FltCqj2.x0Transitive_proof,
     `ZInQ.RLeaf.igusaTransitive_iff_x0Transitive, `HDec.HSyn.OpenResearchLeaves53, `HDec.HSyn.sixContactMin_of_open72]
-nQ.OneProof.frozenTarget] do
+  for root in [`ZInQ.OneProof.frozenTarget] do
     let s := closure root
     IO.println s!"{root}: closure {s.size}"
     for b in checked do

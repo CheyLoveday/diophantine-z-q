@@ -29,3 +29,23 @@ Base wip/leaf-fold33b 97247ce1 (top `sixContactMin_of_open71`, TailZ78). Build t
    `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.IgusaDrop`:
    Build completed successfully (16226 jobs); 'HDec.HSyn.sixContactMin_of_open72' and 'ZInQ.OneProof.frozenTarget'
    depend on axioms: [propext, Classical.choice, Quot.sound] (VERIFIED; build log left out of the commit).
+4. Checks after the fold (VERIFIED; `bash scratch/igusa-drop/run_checks.sh ~/dzq-wt/leaf-fold33b`, output run_checks.out):
+   * hash guard (DumpCompact; base dump with LEAN_PATH on the base build tree of ~/dzq-wt/leaf-fold33b at 97247ce1, its
+     frozenTarget type over OpenResearchLeaves52): before 18128, after 18163 constants; only before 0; only after 35 (all
+     in ZInQKernel.OneProof.H.TailZ79); changed 1: ['ZInQ.OneProof.frozenTarget'] (cmp_hashes.txt; hash dumps kept out
+     of the commit, 1.7 MB each).
+   * #print axioms ZInQ.OneProof.frozenTarget: [propext, Classical.choice, Quot.sound].
+   * FoldCheck.lean (closure of frozenTarget, 304529 constants): sorryAx, X1Igusa.IgusaGL2DSGalSome,
+     igusaGL2DS_of_igusaGL2DSGalSome, X1Igusa.IgusaGL2DS, x1PointsConjugate_of_igusaGL2DS, AfTateLam.r16CoreY_of_ds965,
+     AfTateLam.r16CoreY_of_printed, OpenResearchLeaves52, sixContactMin_of_open71 all absent; r16CoreY_of_ds965_x0,
+     x1PointsConjugate_proof, FltCqj2.x0Transitive_proof, igusaTransitive_iff_x0Transitive, OpenResearchLeaves53,
+     sixContactMin_of_open72 present. (First FoldCheck run had a copy error in the `checked` list; fixed and rerun.)
+   * OpenStatements.lean: 34 open hypotheses (was 35).
+   * render_open: 29 H hypotheses, strictest 5/24, 5 others (was 30, 6/24); --check: ok, 34 open, 4 generated files up
+     to date. STATUS.md, OPEN.md, CONTRIBUTING.md, open-statements.json regenerated.
+   * DischargesTest rerun: 19 DISCHARGES lines, no error.
+   * frontier_crosswalk: 232 IDs, 4 matched; --check ok.
+   * autoform check blueprint (46b46d6d): exit 0, OK: 776 articles, 2337 dependencies.
+   * `#discharges` cannot show igusaGL2DSGalSome as DISCHARGED: this is a bypass (IgusaGL2DSGalSome itself is not
+     proved); the closure check shows it gone, as for fold-b105's chevalleyPerfect.
+   Count: 35 -> 34 open; H 6/24 on 30 -> 5/24 on 29 (-1 field, -1 LEAF; strict GLUE unchanged).
