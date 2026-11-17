@@ -34,3 +34,17 @@
 - Third r6 consumer found (not in sz-raynaud's report): the kernel field, `KernelField.kernelFieldExists_of_pieces_hf`
   via `good_of_QML3 hNOS hRay hTors K PK (T u) (three_mem_T u)` (good reduction of the model outside T(u), B3(v)).
   It is the same manuscript step L529-530. VERIFIED (read, Contrib/OneProof/HomFreeFiniteAlgClosedReroute/Consumers.lean:1196).
+- TaintD.lean (decl-level taint, closure of `sixContactMin_of_open72`, 274299 constants; out taintD-out.txt):
+  IX35 seeds: 28 carriers, 91 tainted (the whole chain from TailZ79 down to `gluePieces_of_open4_hf_pz_eb`);
+  COR33 seeds: 23 carriers, 86 tainted. TaintD2.lean (carriers by constructor type; adds `ResearchLeaves3EB`).
+  The field-level FieldTaint (Taint79.lean) did not finish in 20 min (killed, no output).
+- R6's terminal readers on the live chain (VERIFIED, taintD2-out.txt): TailH `raynaudPlace_of_R6`, `tateWildK_of_R6`,
+  `torsFix_of_descent` (D2, via Consumers' `linkedTateLocal_of_leaves3_hf` -> LTLocal); TailI `modelG3G6_of_leaves3`
+  (A6); TailC `good_of_QML3` (kernel field, via `kernelFieldExists_of_split_hf''`).
+- Contrib/OneProof/D2WildNF.lean (= D2R.lean), A6IntModel.lean (= A6U.lean), D2A6Wrap.lean (`D2A6.R6U` :=
+  RaynaudWildNF ∧ ShimuraIntegralModelRep; wrappers with the originals' signatures): lake build OK; wrappers
+  standard axioms. VERIFIED.
+- gen/gen_chain.py -> Contrib/OneProof/D2A6Chain.lean (131 blocks: 102 declarations + 29 structures copied,
+  `X -> X_u`/`XU`; R6 -> R6U, IX 3.5 fields -> `r6u : R6U`, readers -> wrappers): `lake env lean` 0 errors,
+  `#print axioms HDec.HSyn.sixContactMin_of_open72_u`: [propext, Classical.choice, Quot.sound]. VERIFIED
+  (chain-out1.txt).
