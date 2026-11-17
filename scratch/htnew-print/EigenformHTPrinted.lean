@@ -940,3 +940,196 @@ end GlobalHT
 end
 
 end EigenformHTPrinted
+
+/-! ## §7. The new leaf (printed existence form, reading-robust) and the discharge -/
+
+namespace EigenformHTPrinted
+
+open ZInQ.Contrib.HodgeSplit ZInQ.Contrib.G9 ZInQ.Contrib.G9.PkgI4 Module
+
+noncomputable section
+
+/-- **New leaf (R13, printed existence form, robust to every reading).** Galois representations attached to
+newforms are Hodge–Tate at `ℓ` with weights `0, k − 1`, every level (`ℓ ∣ N` included): for a prime `ℓ`,
+embeddings `ιC : ℚ̄ → ℂ`, `ιL : ℚ̄ → ℚ̄_ℓ`, and a newform `f ∈ S_k(Γ₁(N))` of weight `k ≥ 2` (Tau Ceti's printed
+`HeckeRing.GL2.Newform N k`: a normalized Hecke eigenform in the Petersson complement of the old space), **there
+is** a continuous `ρ : G_ℚ → GL₂(ℚ̄_ℓ)`, unramified at every `p ∤ Nℓ`, whose Frobenius traces are `a_p(f)`
+(read through `ιC`, `ιL`), and whose restriction to `G_{ℚ_ℓ}` is Hodge–Tate with weights `0` and `k − 1`.
+
+Lean form: Hodge–Tate weights are the kernel's `HasHTWeightsAtSelf` (Tate's `dim (ℂ_ℓ(w) ⊗ V)^{G_{ℚ_ℓ}}`, the
+cyclotomic character has weight `−1`, so weight `w` occurs iff `gr^w D_dR(V) ≠ 0`); `IsArithFrob σ v p` is an
+arithmetic Frobenius at a place `v` of `ℚ̄` over `p`. **Reading-robust clauses** (so that no printed wording is
+weaker than the leaf):
+* *normalization*: the conclusion is the disjunction of the two self-consistent normalizations — arithmetic
+  Frobenius `σ` has trace `a_p` and the weights are `{0, 1 − k}` (Tate-module normalization, as Diamond–Shurman
+  9.6.5), **or** geometric Frobenius `σ⁻¹` has trace `a_p` and the weights are `{0, k − 1}` (cohomological
+  normalization, as Deligne's and Kato's `H¹_ét`). A print in either Frobenius normalization and either sign
+  convention for weights is one of the two disjuncts once its convention is translated to `htMult`;
+* *semisimplicity*: not asked (the semisimplification is handled in Lean, `exists_ss`);
+* *Frobenius*: only the trace, in the form "if `ιC α = a_p` then `tr = ιL α`" (no algebraicity of `a_p` is
+  asserted); the "characteristic polynomial `x² − a_p x + χ(p)p^{k−1}`" wording gives it (`trace_of_charpoly`);
+* *embeddings*: a print stated for an isomorphism `ι : ℚ̄_ℓ ≅ ℂ` gives every pair `(ιC, ιL)` (extend
+  `ιC ∘ ιL⁻¹` to `ℚ̄_ℓ ≅ ℂ`; STANDARD).
+
+Sources (no network on this host: every number and wording UNVERIFIED unless said otherwise). Existence form as
+printed: the theorem on representations attached to newforms in the surveys Taylor, *Galois representations*,
+Ann. Fac. Sci. Toulouse Math. (6) 13 (2004), and Gee, *Modularity lifting theorems*, Essent. Number Theory 1
+(2022) §2 (both UNVERIFIED). Content: Deligne 1971 (existence; Sém. Bourbaki 355), Faltings, Math. Ann. 278
+(1987) (Hodge–Tate, `ℓ ∤ N`), Saito, Invent. Math. 129 (1997) (all levels), Kato, Astérisque 295 (2004) §§9.2-9.4,
+(9.2.2), pp. 187-188 (de Rham at every level for `V_{F_λ}(f)`: read by the locator audit, row R13) and §11.3
+(filtration jumps `0, k − 1`; UNVERIFIED). For prints about the étale-cohomological `V_{F_λ}(f)` (Kato, Saito),
+the leaf is their consequence with witness `V_{F_λ}(f) ⊗_{F_λ} ℚ̄_ℓ` (∃-introduction). Replaces ht-exists's
+`KatoHTExists` (which asked for a semisimple witness in one fixed normalization). -/
+def ModularHTPrinted : Prop :=
+  ∀ (ℓ : ℕ) [Fact ℓ.Prime] (ιC : Qbar →ₐ[ℚ] ℂ) (ιL : Qbar →ₐ[ℚ] PadicAlgCl ℓ)
+    (N : ℕ) [NeZero N] (k : ℤ) (f : HeckeRing.GL2.Newform N k), 2 ≤ k →
+    ∃ ρ : GaloisRep ℓ 2,
+      ((∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ρ.UnramifiedAt p ∧
+          ∀ α : Qbar, ιC α = coeff (f.toCuspForm : CF N k) p →
+            ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
+              (ρ.mat σ).trace = ιL α) ∧
+        ρ.HasHTWeightsAtSelf ℓ {0, 1 - k}) ∨
+      ((∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ρ.UnramifiedAt p ∧
+          ∀ α : Qbar, ιC α = coeff (f.toCuspForm : CF N k) p →
+            ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
+              (ρ.mat σ⁻¹).trace = ιL α) ∧
+        ρ.HasHTWeightsAtSelf ℓ {0, k - 1})
+
+/-- The "characteristic polynomial" wording of the Frobenius clause gives the trace clause. -/
+theorem trace_of_charpoly {K : Type*} [Field K] (M : Matrix (Fin 2) (Fin 2) K) (a b : K)
+    (h : M.charpoly = Polynomial.X ^ 2 - Polynomial.C a * Polynomial.X + Polynomial.C b) :
+    M.trace = a := by
+  rw [Matrix.trace_eq_neg_charpoly_coeff, h]
+  simp [Polynomial.coeff_X, Polynomial.coeff_C]
+
+section Steps
+
+variable {ℓ : ℕ} [Fact ℓ.Prime] {ιC : Qbar →ₐ[ℚ] ℂ} {ιL : Qbar →ₐ[ℚ] PadicAlgCl ℓ} {N : ℕ} {k : ℤ}
+
+/-- **Duality step** (GLUE, proved): a cohomologically normalized `ρ` (geometric Frobenius has trace `a_p`)
+has arithmetically normalized contragredient. -/
+theorem dual_arith_of_geom {f : CF N k} (ρ : GaloisRep ℓ 2)
+    (hg : ∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ρ.UnramifiedAt p ∧ ∀ α : Qbar, ιC α = coeff f p →
+        ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
+          (ρ.mat σ⁻¹).trace = ιL α) :
+    ∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → (dualGR ρ).UnramifiedAt p ∧ ∀ α : Qbar, ιC α = coeff f p →
+        ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
+          ((dualGR ρ).mat σ).trace = ιL α := by
+  intro p hp hpN
+  obtain ⟨hu, htr⟩ := hg p hp hpN
+  refine ⟨fun v hv σ hσ => ?_, fun α hα v σ hv hσ => ?_⟩
+  · have h1 := hu v hv σ⁻¹ ((v.inertiaSubgroup ℚ).inv_mem hσ)
+    apply Units.ext
+    change (ρ.mat ((σ : v.decompositionSubgroup ℚ) : GQ)⁻¹).transpose = 1
+    have : ((σ⁻¹ : v.decompositionSubgroup ℚ) : GQ) = ((σ : v.decompositionSubgroup ℚ) : GQ)⁻¹ := rfl
+    rw [GaloisRep.mat, ← this, h1, Units.val_one, Matrix.transpose_one]
+  · rw [dualGR_mat, Matrix.trace_transpose, htr α hα v σ hv hσ]
+
+/-- The universal trace clause and the algebraicity of the `a_p` give `AttachedTo`. -/
+theorem attached_of_univ {f : CF N k} {ρ : GaloisRep ℓ 2}
+    (halg : ∀ p : ℕ, ∃ α : Qbar, ιC α = coeff f p)
+    (h : ∀ p : ℕ, p.Prime → ¬ p ∣ N * ℓ → ρ.UnramifiedAt p ∧ ∀ α : Qbar, ιC α = coeff f p →
+        ∀ (v : ValuationSubring Qbar) (σ : GQ), LiesOver v p → IsArithFrob σ v p →
+          (ρ.mat σ).trace = ιL α) :
+    ρ.AttachedTo ιC ιL f := by
+  intro p hp hpN
+  obtain ⟨hu, htr⟩ := h p hp hpN
+  obtain ⟨α, hα⟩ := halg p
+  exact ⟨hu, α, hα, htr α hα⟩
+
+/-- Same traces and unramified where `ρ₁` is: attached to the same form. -/
+theorem attached_of_trace {f : CF N k} {ρ₁ ρ' : GaloisRep ℓ 2} (ha : ρ₁.AttachedTo ιC ιL f)
+    (htr : ∀ σ, (ρ'.mat σ).trace = (ρ₁.mat σ).trace) (hun : ∀ τ, ρ₁.toHom τ = 1 → ρ'.toHom τ = 1) :
+    ρ'.AttachedTo ιC ιL f := by
+  intro p hp hpN
+  obtain ⟨hu, α, hα, htr1⟩ := ha p hp hpN
+  exact ⟨fun v hv σ hσ => hun _ (hu v hv σ hσ), α, hα, fun v σ hv hσ => (htr σ).trans (htr1 v σ hv hσ)⟩
+
+/-- **Transport step** (GLUE, proved: Chebotarev + Brauer–Nesbitt `attachedConj_proof`, invariance of Hodge–Tate
+weights under conjugation `htConj_proof`; ht-exists's `ht_of_attached`, verbatim). -/
+theorem ht_of_attached (ιC : Qbar →ₐ[ℚ] ℂ) (ιL : Qbar →ₐ[ℚ] PadicAlgCl ℓ)
+    (hN : 0 < N) (f : CF N k) (ρ₀ ρ : GaloisRep ℓ 2) (S : Multiset ℤ)
+    (hss₀ : ρ₀.IsSemisimple) (hatt₀ : ρ₀.AttachedTo ιC ιL f) (hHT₀ : ρ₀.HasHTWeightsAtSelf ℓ S)
+    (hss : ρ.IsSemisimple) (hatt : ρ.AttachedTo ιC ιL f) : ρ.HasHTWeightsAtSelf ℓ S := by
+  have hconj : IsConj ρ₀ ρ := by
+    refine attachedConj_proof ℓ ρ₀ ρ (N * ℓ).primeFactors hss₀ hss fun p hp hpS => ?_
+    have hpN : ¬ p ∣ N * ℓ := by
+      intro h
+      exact hpS (Nat.mem_primeFactors.mpr ⟨hp, h, Nat.mul_ne_zero (by omega)
+        (Fact.out : ℓ.Prime).ne_zero⟩)
+    obtain ⟨hu₀, α₀, hα₀, htr₀⟩ := hatt₀ p hp hpN
+    obtain ⟨hu, α, hα, htr⟩ := hatt p hp hpN
+    have heq : α₀ = α := by
+      apply ιC.toRingHom.injective
+      change ιC α₀ = ιC α
+      rw [hα₀, hα]
+    refine ⟨hu₀, hu, fun v σ hv hσ => ?_⟩
+    rw [htr₀ v σ hv hσ, htr v σ hv hσ, heq]
+  exact htConj_proof ℓ 2 ρ₀ ρ S hconj hHT₀
+
+/-- The Fourier coefficients of a normalized eigenform of weight `≥ 2` are algebraic (from the LEAF field
+`eigenformCoeffFieldFinite`: `K_f` is a number field). -/
+theorem exists_alg_coeff (hK : DSCoeffExt.EigenformCoeffFieldFinite) (ιC : Qbar →ₐ[ℚ] ℂ)
+    {χ : DirichletCharacter ℂ N} {f : CF N k} (hN : 0 < N) (hk : 2 ≤ k)
+    (hf : IsNormalizedEigenform f χ) (n : ℕ) : ∃ α : Qbar, ιC α = coeff f n := by
+  haveI : NeZero N := ⟨hN.ne'⟩
+  haveI : FiniteDimensional ℚ (DSCoeffExt.coeffField f) :=
+    hK N k χ f hk (DSCoeffExt.isNormalizedEigenformDS_of hf)
+  exact DSCoeffExt.exists_pre ιC (DSCoeffExt.coeffField f) ⟨coeff f n, DSCoeffExt.coeff_mem_coeffField f n⟩
+
+end Steps
+
+/-- **The field `eigenformHTNew` from the printed existence form** (GLUE, all proved: newform dictionary
+(newform-dict), algebraicity of `a_p` (LEAF field `eigenformCoeffFieldFinite`), dualization (`HTDual`, from Tate's
+theorems, proved on main), semisimplification (§6), Chebotarev + Brauer–Nesbitt transport). -/
+theorem eigenformHTNew_of_printed (h : ModularHTPrinted) (hK : DSCoeffExt.EigenformCoeffFieldFinite) :
+    EigenformHTNew := by
+  intro ℓ _ ιC ιL N k χ f ρ hN hk hf hss hatt
+  obtain ⟨_, g, rfl, -⟩ := (NewformDict.g9_isNewform_iff hN).mp hf
+  have halg : ∀ p : ℕ, ∃ α : Qbar, ιC α = coeff (g.toCuspForm : CF N k) p :=
+    exists_alg_coeff hK ιC hN hk hf.1
+  obtain ⟨ρ₀, h₀⟩ := h ℓ ιC ιL N k g hk
+  have key : ∃ ρ₁ : GaloisRep ℓ 2, ρ₁.AttachedTo ιC ιL (g.toCuspForm : CF N k) ∧
+      ρ₁.HasHTWeightsAtSelf ℓ {0, 1 - k} := by
+    rcases h₀ with ⟨ha, hHT⟩ | ⟨hg, hHT⟩
+    · exact ⟨ρ₀, attached_of_univ halg ha, hHT⟩
+    · refine ⟨dualGR ρ₀, attached_of_univ halg (dual_arith_of_geom ρ₀ hg), ?_⟩
+      have h2 := htDual ℓ 2 ρ₀ {0, k - 1} (by simp) hHT
+      have hS : (({0, k - 1} : Multiset ℤ).map Neg.neg) = {0, 1 - k} := by
+        simp only [Multiset.insert_eq_cons, Multiset.map_cons, Multiset.map_singleton, neg_zero, neg_sub]
+      rwa [hS] at h2
+  obtain ⟨ρ₁, ha₁, hHT₁⟩ := key
+  obtain ⟨ρ', hss', hHT', htr, hun⟩ := exists_ss ρ₁ {0, 1 - k} (by simp) hHT₁
+  exact ht_of_attached ιC ιL hN _ ρ' ρ _ hss' (attached_of_trace ha₁ htr hun) hHT' hss hatt
+
+/-- **Converse: the leaf is no stronger than the field**, over the LEAF fields `dsThm965Printed`,
+`eigenformCoeffFieldFinite`, `dsThm966Printed` (existence of a semisimple attached `ρ`, through
+`r14Det_of_printed`). -/
+theorem printed_of_eigenformHTNew (hD : DSCoeffExt.DSThm965Printed)
+    (hK : DSCoeffExt.EigenformCoeffFieldFinite) (hDS : DSCoeffExt.DSThm966Printed) (h : EigenformHTNew) :
+    ModularHTPrinted := by
+  intro ℓ _ ιC ιL N _ k g hk
+  have hN : 0 < N := Nat.pos_of_neZero N
+  have hnew : IsNewform (g.toCuspForm : CF N k) (MulChar.ofUnitHom g.χ) :=
+    NewformDict.g9_isNewform_iff_pkgI4.mpr (NewformDict.isNewform_of_newform g)
+  have hR : EigenformRepExists := eigenformRepExists_of_r14Det (r14Det_of_printed
+    (DS965Weak.dsThm965_of_weak (DSCoeffExt.dsThm965Weak_of_printed hD hK))
+    (DSCoeffExt.dsThm966_of_printed hDS))
+  obtain ⟨ρ, hss, hatt⟩ := hR ℓ ιC ιL N k _ _ hN (by omega) hnew.1
+  refine ⟨ρ, Or.inl ⟨fun p hp hpN => ?_, h ℓ ιC ιL N k _ _ ρ hN hk hnew hss hatt⟩⟩
+  obtain ⟨hu, α, hα, htr⟩ := hatt p hp hpN
+  refine ⟨hu, fun β hβ v σ hv hσ => ?_⟩
+  have hβα : β = α := by
+    apply ιC.toRingHom.injective
+    change ιC β = ιC α
+    rw [hβ, hα]
+  rw [hβα]
+  exact htr v σ hv hσ
+
+theorem printed_iff (hD : DSCoeffExt.DSThm965Printed) (hK : DSCoeffExt.EigenformCoeffFieldFinite)
+    (hDS : DSCoeffExt.DSThm966Printed) : ModularHTPrinted ↔ EigenformHTNew :=
+  ⟨fun h => eigenformHTNew_of_printed h hK, printed_of_eigenformHTNew hD hK hDS⟩
+
+end
+
+end EigenformHTPrinted
