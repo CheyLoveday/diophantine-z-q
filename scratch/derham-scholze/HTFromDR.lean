@@ -16,6 +16,7 @@ Hodge–Tate, with `gr^j D_dR ↪ (ℂ_p(j) ⊗ W)^{G_F}`. Here it is proved for
 set_option linter.style.longLine false
 set_option linter.unusedSectionVars false
 set_option warn.classDefReducibility false
+set_option synthInstance.maxHeartbeats 400000
 
 namespace DeRhamScholze.HT
 
@@ -126,9 +127,9 @@ theorem t_ne_zero : t ≠ 0 := by
   intro h
   have h1 : IsLocalRing.maximalIdeal (BDeRhamPlus 𝓞_ℂ_[p] p) = ⊥ := by
     rw [ht, h, Ideal.span_singleton_eq_bot]
-  have h2 := DeRhamPrint.TDict.varpi_mem_max p
+  have h2 := DeRhamPrint.TDict.varpi_mem_max (p := p)
   rw [h1, Ideal.mem_bot] at h2
-  exact DeRhamPrint.TDict.varpi_ne_zero p h2
+  exact DeRhamPrint.TDict.varpi_ne_zero (p := p) h2
 
 theorem mul_left_cancel_t {c c' : BDeRhamPlus 𝓞_ℂ_[p] p} (h : iota p (t * c) = iota p (t * c')) : c = c' :=
   mul_left_cancel₀ (t_ne_zero ht) (iota_injective p h)
@@ -137,8 +138,9 @@ theorem mul_left_cancel_t {c c' : BDeRhamPlus 𝓞_ℂ_[p] p} (h : iota p (t * c
 def pre1 (x : filB p 1) : BDeRhamPlus 𝓞_ℂ_[p] p := ((mem_filB_iff ht 1 x).mp x.2).choose
 
 theorem iota_pre1 (x : filB p 1) : iota p (t * pre1 ht x) = x := by
-  have := ((mem_filB_iff ht 1 x).mp x.2).choose_spec
-  rwa [pow_one] at this
+  have h := ((mem_filB_iff ht 1 x).mp x.2).choose_spec
+  calc iota p (t * pre1 ht x) = iota p (t ^ 1 * pre1 ht x) := by rw [pow_one]
+    _ = x := h
 
 theorem pre1_eq {x : filB p 1} {c : BDeRhamPlus 𝓞_ℂ_[p] p} (h : iota p (t * c) = x) : pre1 ht x = c :=
   mul_left_cancel_t ht ((iota_pre1 ht x).trans h.symm)
@@ -167,15 +169,15 @@ variable {p}
 variable {F : Type*} [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
 variable {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V)
 
+/-- `Hom(V, Fil^j B_dR) → Hom(V, Fil^j B_dR)` as maps into the subspace. -/
+def codR (j : ℕ) : (filH p j : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] BdR p)) →ₗ[ℚ_[p]] (V →ₗ[ℚ_[p]] filB p j) where
+  toFun φ := LinearMap.codRestrict (filB p j) φ.1 φ.2
+  map_add' _ _ := LinearMap.ext fun _ => Subtype.ext rfl
+  map_smul' _ _ := LinearMap.ext fun _ => Subtype.ext rfl
+
 /-- `gr⁰ : Hom(V, Fil⁰ B_dR) → Hom(V, ℂ_p)`, `φ ↦ θ ∘ φ`. -/
-def gr0 : (filH p 0 : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] BdR p)) →ₗ[ℚ_[p]] (V →ₗ[ℚ_[p]] ℂ_[p]) where
-  toFun φ := theta0 p ∘ₗ LinearMap.codRestrict (filB p 0) φ.1 φ.2
-  map_add' φ ψ := LinearMap.ext fun v => by
-    change theta0 p ⟨φ.1 v + ψ.1 v, _⟩ = theta0 p ⟨φ.1 v, φ.2 v⟩ + theta0 p ⟨ψ.1 v, ψ.2 v⟩
-    rw [← map_add]; rfl
-  map_smul' c φ := LinearMap.ext fun v => by
-    change theta0 p ⟨c • φ.1 v, _⟩ = c • theta0 p ⟨φ.1 v, φ.2 v⟩
-    rw [← map_smul]; rfl
+def gr0 : (filH p 0 : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] BdR p)) →ₗ[ℚ_[p]] (V →ₗ[ℚ_[p]] ℂ_[p]) :=
+  LinearMap.llcomp ℚ_[p] V (filB p 0) ℂ_[p] (theta0 p) ∘ₗ codR 0
 
 theorem gr0_apply (φ : (filH p 0 : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] BdR p))) (v : V) {b : BDeRhamPlus 𝓞_ℂ_[p] p}
     (hb : iota p b = φ.1 v) : gr0 φ v = theta p b :=
@@ -184,14 +186,8 @@ theorem gr0_apply (φ : (filH p 0 : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] BdR p))
 variable {t : BDeRhamPlus 𝓞_ℂ_[p] p} (ht : IsLocalRing.maximalIdeal (BDeRhamPlus 𝓞_ℂ_[p] p) = Ideal.span {t})
 
 /-- `gr¹ : Hom(V, Fil¹ B_dR) → Hom(V, ℂ_p)`, `φ ↦ θ ∘ (φ/t)`. -/
-def gr1 : (filH p 1 : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] BdR p)) →ₗ[ℚ_[p]] (V →ₗ[ℚ_[p]] ℂ_[p]) where
-  toFun φ := theta1 ht ∘ₗ LinearMap.codRestrict (filB p 1) φ.1 φ.2
-  map_add' φ ψ := LinearMap.ext fun v => by
-    change theta1 ht ⟨φ.1 v + ψ.1 v, _⟩ = theta1 ht ⟨φ.1 v, φ.2 v⟩ + theta1 ht ⟨ψ.1 v, ψ.2 v⟩
-    rw [← map_add]; rfl
-  map_smul' c φ := LinearMap.ext fun v => by
-    change theta1 ht ⟨c • φ.1 v, _⟩ = c • theta1 ht ⟨φ.1 v, φ.2 v⟩
-    rw [← map_smul]; rfl
+def gr1 : (filH p 1 : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] BdR p)) →ₗ[ℚ_[p]] (V →ₗ[ℚ_[p]] ℂ_[p]) :=
+  LinearMap.llcomp ℚ_[p] V (filB p 1) ℂ_[p] (theta1 ht) ∘ₗ codR 1
 
 theorem gr1_apply (φ : (filH p 1 : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] BdR p))) (v : V) {c : BDeRhamPlus 𝓞_ℂ_[p] p}
     (hc : iota p (t * c) = φ.1 v) : gr1 ht φ v = theta p c :=
@@ -218,7 +214,8 @@ theorem gr1_mem (hσ : ∀ σ : GQp p, DR.bdrPlusMap p (oAct p σ) t = qpToPlus 
     exact ⟨c, by rwa [pow_one] at hc⟩
   have h2 : iota p (t * (qpToPlus p (cycPow p (gfToGqp p F σ) 1) *
       DR.bdrPlusMap p (oAct p (gfToGqp p F σ)) c)) = φ.1 (ρ σ v) := by
-    rw [hφ σ v, ← hc, BdRInv.bdrAct_algebraMap, map_mul, hσ]
+    rw [hφ σ v, ← hc, BdRInv.bdrAct_algebraMap,
+      RingHom.map_mul (DR.bdrPlusMap p (oAct p (gfToGqp p F σ))) t c, hσ]
     congr 1
     ring
   rw [gr1_apply ht φ (ρ σ v) h2, gr1_apply ht φ v hc, map_mul, theta_qpToPlus, thetaPlusCp_bdrPlusMap,
@@ -247,6 +244,7 @@ theorem mem_filH2_of_gr1 (φ : (filH p 1 : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] 
   obtain ⟨d, rfl⟩ := hm
   exact (mem_filB_iff ht 2 _).mpr ⟨d, by rw [← hc]; congr 1; ring⟩
 
+include ht in
 /-- **`dim D_dR(V^∨) ≤ dim Hom_{G_F}(V, ℂ_p) + dim Hom_{G_F}(V, ℂ_p(1))`** when the Hodge filtration of
 `Hom_{G_F}(V, B_dR)` has its jumps in `[0, 1]` (`gr⁰ ↪ Hom_{G_F}(V, ℂ_p)`, `gr¹ ↪ Hom_{G_F}(V, ℂ_p(1))`). -/
 theorem finrank_ddr_le (hσ : ∀ σ : GQp p, DR.bdrPlusMap p (oAct p σ) t = qpToPlus p (cycPow p σ 1) * t)
@@ -254,9 +252,7 @@ theorem finrank_ddr_le (hσ : ∀ σ : GQp p, DR.bdrPlusMap p (oAct p σ) t = qp
     [FiniteDimensional ℚ_[p] (htSpaceOver p ρ 0)] [FiniteDimensional ℚ_[p] (htSpaceOver p ρ 1)] :
     finrank ℚ_[p] (ddrSpaceOver p ρ) ≤
       finrank ℚ_[p] (htSpaceOver p ρ 0) + finrank ℚ_[p] (htSpaceOver p ρ 1) := by
-  by_cases hz : finrank ℚ_[p] (ddrSpaceOver p ρ) = 0
-  · rw [hz]; exact Nat.zero_le _
-  haveI : FiniteDimensional ℚ_[p] (ddrSpaceOver p ρ) := Module.finite_of_finrank_pos (Nat.pos_of_ne_zero hz)
+  letI : AddCommGroup (ddrSpaceOver p ρ) := Module.addCommMonoidToAddCommGroup ℚ_[p]
   let G0 : ddrSpaceOver p ρ →ₗ[ℚ_[p]] htSpaceOver p ρ 0 :=
     LinearMap.codRestrict _ (gr0 ∘ₗ Submodule.inclusion h0) (fun φ => gr0_mem ρ _ φ.2)
   let incl : LinearMap.ker G0 →ₗ[ℚ_[p]] (filH p 1 : Submodule ℚ_[p] (V →ₗ[ℚ_[p]] BdR p)) :=
@@ -267,15 +263,20 @@ theorem finrank_ddr_le (hσ : ∀ σ : GQp p, DR.bdrPlusMap p (oAct p σ) t = qp
   let G1 : LinearMap.ker G0 →ₗ[ℚ_[p]] htSpaceOver p ρ 1 :=
     LinearMap.codRestrict _ (gr1 ht ∘ₗ incl) (fun φ => gr1_mem ρ ht hσ _ φ.1.2)
   have hG1 : Function.Injective G1 := by
-    rw [← LinearMap.ker_eq_bot, eq_bot_iff]
-    intro φ hφ
-    have h3 : gr1 ht (incl φ) = 0 := congrArg Subtype.val (LinearMap.mem_ker.mp hφ)
+    refine (injective_iff_map_eq_zero G1).mpr fun φ hφ => ?_
+    have h3 : gr1 ht (incl φ) = 0 := congrArg Subtype.val hφ
     have h4 : φ.1.1 ∈ ddrSpaceOver p ρ ⊓ filH p 2 := ⟨φ.1.2, mem_filH2_of_gr1 ht (incl φ) h3⟩
     rw [h2, Submodule.mem_bot] at h4
-    rw [Submodule.mem_bot]
     exact Subtype.ext (Subtype.ext h4)
-  rw [← LinearMap.finrank_range_add_finrank_ker G0]
-  exact Nat.add_le_add (Submodule.finrank_le _) (LinearMap.finrank_le_finrank_of_injective hG1)
+  have hr1 : Module.rank ℚ_[p] (LinearMap.range G0) ≤ finrank ℚ_[p] (htSpaceOver p ρ 0) := by
+    rw [Module.finrank_eq_rank]; exact Submodule.rank_le _
+  have hr2 : Module.rank ℚ_[p] (LinearMap.ker G0) ≤ finrank ℚ_[p] (htSpaceOver p ρ 1) := by
+    rw [Module.finrank_eq_rank]; exact LinearMap.rank_le_of_injective G1 hG1
+  have hrk : Module.rank ℚ_[p] (ddrSpaceOver p ρ) ≤
+      ((finrank ℚ_[p] (htSpaceOver p ρ 0) + finrank ℚ_[p] (htSpaceOver p ρ 1) : ℕ) : Cardinal) := by
+    rw [← LinearMap.rank_range_add_rank_ker G0, Nat.cast_add]
+    exact add_le_add hr1 hr2
+  exact Module.finrank_le_of_rank_le hrk
 
 end GrMaps
 
@@ -286,15 +287,8 @@ section TateSen
 variable {p}
 variable (F : Type*) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
 
-/-- `ℂ_p` as an `F'`-algebra through `F' ⊆ ℚ̄_p ⊆ ℂ_p` (`iotaCp`). -/
-@[instance_reducible] def algCp : Algebra (fieldF p F) ℂ_[p] := (iotaCp p F).toRingHom.toAlgebra
-
-attribute [local instance] algCp
-
+/-- `ℂ_p` is an `F'`-algebra (`F' ⊆ ℚ̄_p ⊆ ℂ_p`, Mathlib's instance); its structure map is `iotaCp`. -/
 theorem algebraMap_algCp (x : fieldF p F) : algebraMap (fieldF p F) ℂ_[p] x = iotaCp p F x := rfl
-
-instance towerCp : IsScalarTower ℚ_[p] (fieldF p F) ℂ_[p] :=
-  IsScalarTower.of_algebraMap_eq fun c => ((iotaCp p F).commutes c).symm
 
 variable {F} {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V)
 
@@ -305,7 +299,7 @@ def htF (i : ℤ) : Submodule (fieldF p F) (V →ₗ[ℚ_[p]] ℂ_[p]) where
   add_mem' ha hb σ v := by simp only [LinearMap.add_apply, ha σ v, hb σ v, map_add, smul_add]
   smul_mem' c φ hφ σ v := by
     simp only [LinearMap.smul_apply, hφ σ v]
-    rw [Algebra.smul_def c (φ v), map_mul, algebraMap_algCp, cpAct_iotaCp_gf, ← algebraMap_algCp,
+    rw [Algebra.smul_def c (φ v), map_mul, algebraMap_algCp, DeRhamPrint.Direct.cpAct_iotaCp_gf, ← algebraMap_algCp,
       ← Algebra.smul_def, smul_comm]
 
 theorem restrictScalars_htF (i : ℤ) : (htF ρ i).restrictScalars ℚ_[p] = htSpaceOver p ρ i :=
@@ -315,13 +309,12 @@ theorem finrank_htSpaceOver_eq (i : ℤ) :
     finrank ℚ_[p] (htSpaceOver p ρ i) = finrank ℚ_[p] F * finrank (fieldF p F) (htF ρ i) := by
   rw [← restrictScalars_htF, ← finrank_fieldF p F,
     ((htF ρ i).restrictScalarsEquiv ℚ_[p] (fieldF p F)).restrictScalars ℚ_[p] |>.finrank_eq]
-  have : Module.Free (fieldF p F) (htF ρ i) := Module.Free.of_divisionRing (fieldF p F) (htF ρ i)
+  have : Module.Free (fieldF p F) (htF ρ i) := Module.Free.of_divisionRing _ _
   exact (Module.finrank_mul_finrank ℚ_[p] (fieldF p F) (htF ρ i)).symm
 
 theorem cycPow_add (σ : GQp p) (i j : ℤ) : cycPow p σ (i + j) = cycPow p σ i * cycPow p σ j := by
   simp only [cycPow, zpow_add, Units.val_mul, PadicInt.coe_mul]
 
-omit [FiniteDimensional ℚ_[p] F] in
 theorem smul_eq_iota (c : fieldF p F) (φ : V →ₗ[ℚ_[p]] ℂ_[p]) : c • φ = iotaCp p F c • φ :=
   LinearMap.ext fun v => by simp only [LinearMap.smul_apply, Algebra.smul_def, algebraMap_algCp]; rfl
 
@@ -418,35 +411,39 @@ theorem linIndep_two {a b : ℕ} (x : Fin a → htF ρ 0) (y : Fin b → htF ρ 
     have hin : ∀ k, wt k = wt j → ∃ d : fieldF p F, c' k = iotaCp p F d := fun k hk =>
       fixed_mem_range hA (fun σ => by
         have := hfix σ k
-        rwa [he, hk, sub_self, show cycPow p (gfToGqp p F σ) 0 = 1 from cycPow_zero p _, map_one,
-          one_mul] at this)
-    rcases j with j0 | j0
-    · choose d hd using fun i : Fin a => hin (Sum.inl i) rfl
+        simp only [he, hk, sub_self, cycPow_zero, map_one, one_mul] at this
+        exact this)
+    obtain ⟨j0, hj0⟩ | ⟨j0, hj0⟩ : (∃ j0, j = Sum.inl j0) ∨ (∃ j0, j = Sum.inr j0) := by
+      rcases j with j0 | j0
+      exacts [Or.inl ⟨j0, rfl⟩, Or.inr ⟨j0, rfl⟩]
+    · choose d hd using fun i : Fin a => hin (Sum.inl i) (by rw [hj0]; rfl)
       have hsum : ∑ i, d i • x i = 0 := by
         apply Subtype.ext
         rw [Submodule.coe_sum, Submodule.coe_zero, ← hrel', Fintype.sum_sum_type]
         have h2 : ∑ i : Fin b, c' (Sum.inr i) • z (Sum.inr i) = 0 :=
-          Finset.sum_eq_zero fun i _ => by rw [hzero (Sum.inr i) (by simp [wt]), zero_smul]
+          Finset.sum_eq_zero fun i _ => by
+            rw [hzero (Sum.inr i) (by rw [hj0]; simp [wt]), zero_smul]
         rw [h2, add_zero]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [Submodule.coe_smul, smul_eq_iota, ← hd i]
         rfl
       have := (Fintype.linearIndependent_iff.mp hx) d hsum j0
-      have h1 : iotaCp p F (d j0) = 1 := (hd j0).symm.trans hc'j
+      have h1 : iotaCp p F (d j0) = 1 := by rw [← hd j0, ← hj0]; exact hc'j
       rw [this, map_zero] at h1
       exact zero_ne_one h1
-    · choose d hd using fun i : Fin b => hin (Sum.inr i) rfl
+    · choose d hd using fun i : Fin b => hin (Sum.inr i) (by rw [hj0]; rfl)
       have hsum : ∑ i, d i • y i = 0 := by
         apply Subtype.ext
         rw [Submodule.coe_sum, Submodule.coe_zero, ← hrel', Fintype.sum_sum_type]
         have h2 : ∑ i : Fin a, c' (Sum.inl i) • z (Sum.inl i) = 0 :=
-          Finset.sum_eq_zero fun i _ => by rw [hzero (Sum.inl i) (by simp [wt]), zero_smul]
+          Finset.sum_eq_zero fun i _ => by
+            rw [hzero (Sum.inl i) (by rw [hj0]; simp [wt]), zero_smul]
         rw [h2, zero_add]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [Submodule.coe_smul, smul_eq_iota, ← hd i]
         rfl
       have := (Fintype.linearIndependent_iff.mp hy) d hsum j0
-      have h1 : iotaCp p F (d j0) = 1 := (hd j0).symm.trans hc'j
+      have h1 : iotaCp p F (d j0) = 1 := by rw [← hd j0, ← hj0]; exact hc'j
       rw [this, map_zero] at h1
       exact zero_ne_one h1
   · push_neg at hfix
@@ -525,8 +522,10 @@ theorem map_filRange_dual (j : ℕ) :
       ⟨∑ i, (⟨φ (bV i), hφ (bV i)⟩ : filB p j) ⊗ₜ bV.dualBasis i, by simp [map_sum]⟩, ?_⟩
     apply bV.ext
     intro k
-    simp only [LinearEquiv.coe_coe, map_sum, LinearMap.coeFn_sum, Finset.sum_apply, tensorDualEquiv_tmul,
+    simp only [LinearEquiv.coe_coe, map_sum, LinearMap.sum_apply, tensorDualEquiv_tmul,
       Basis.dualBasis_apply_self, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+
+end Assembly
 
 section Final
 
@@ -534,8 +533,6 @@ variable {p}
 variable {F : Type*} [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
 variable {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] [FiniteDimensional ℚ_[p] V]
   (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V)
-
-attribute [local instance] algCp
 
 /-- `Hom_{ℚ_p}(V, ℂ_p)` has `ℂ_p`-dimension `dim V`. -/
 theorem finrank_hom : finrank ℂ_[p] (V →ₗ[ℚ_[p]] ℂ_[p]) = finrank ℚ_[p] V := by
@@ -545,28 +542,40 @@ theorem fd_hom : FiniteDimensional ℂ_[p] (V →ₗ[ℚ_[p]] ℂ_[p]) :=
   LinearEquiv.finiteDimensional ((Module.finBasis ℚ_[p] V).constr ℂ_[p])
 
 /-- The bound `dim_{F'} Hom_{G_F}(V, ℂ_p(i)) ≤ dim V` (`i = 0, 1`), with finiteness. -/
-theorem fd_htF (hT : TateTwistInvariants) (hA : AxSenTate) (i : Fin 2) :
-    FiniteDimensional (fieldF p F) (htF ρ (i : ℤ)) ∧
-      finrank (fieldF p F) (htF ρ (i : ℤ)) ≤ finrank ℚ_[p] V := by
-  haveI := fd_hom (p := p) (V := V)
-  have hb : ∀ s : Finset (htF ρ (i : ℤ)), (LinearIndependent (fieldF p F) fun k : s => (k : htF ρ (i : ℤ))) →
-      s.card ≤ finrank ℚ_[p] V := by
-    intro s hs
-    let e := s.equivFin
-    have hs' : LinearIndependent (fieldF p F) (fun k : Fin s.card => ((e.symm k : s) : htF ρ (i : ℤ))) :=
-      hs.comp e.symm e.symm.injective
-    rw [← finrank_hom (p := p)]
-    fin_cases i
-    · have h := (linIndep_two ρ hT hA (fun k : Fin s.card => ((e.symm k : s) : htF ρ 0))
-        (Fin.elim0 : Fin 0 → htF ρ 1) hs' (linearIndependent_empty_type)).fintype_card_le_finrank
-      simpa using h
-    · have h := (linIndep_two ρ hT hA (Fin.elim0 : Fin 0 → htF ρ 0)
-        (fun k : Fin s.card => ((e.symm k : s) : htF ρ 1)) (linearIndependent_empty_type) hs').fintype_card_le_finrank
-      simpa using h
+theorem fd_htF_aux (hT : TateTwistInvariants) (hA : AxSenTate) (i : ℤ)
+    (hb : ∀ s : Finset (htF ρ i), (LinearIndependent (fieldF p F) fun k : s => (k : htF ρ i)) →
+      s.card ≤ finrank ℚ_[p] V) :
+    FiniteDimensional (fieldF p F) (htF ρ i) ∧ finrank (fieldF p F) (htF ρ i) ≤ finrank ℚ_[p] V := by
   have hrank := rank_le hb
-  have hfin : FiniteDimensional (fieldF p F) (htF ρ (i : ℤ)) :=
+  have hfin : FiniteDimensional (fieldF p F) (htF ρ i) :=
     Module.rank_lt_aleph0_iff.mp (lt_of_le_of_lt hrank (Cardinal.natCast_lt_aleph0))
   exact ⟨hfin, Module.finrank_le_of_rank_le hrank⟩
+
+/-- The bound `dim_{F'} Hom_{G_F}(V, ℂ_p) ≤ dim V`, with finiteness. -/
+theorem fd_htF0 (hT : TateTwistInvariants) (hA : AxSenTate) :
+    FiniteDimensional (fieldF p F) (htF ρ 0) ∧ finrank (fieldF p F) (htF ρ 0) ≤ finrank ℚ_[p] V := by
+  haveI := fd_hom (p := p) (V := V)
+  refine fd_htF_aux ρ hT hA 0 fun s hs => ?_
+  let e := s.equivFin
+  have hs' : LinearIndependent (fieldF p F) (fun k : Fin s.card => ((e.symm k : s) : htF ρ 0)) :=
+    hs.comp e.symm e.symm.injective
+  have h := (linIndep_two ρ hT hA (fun k : Fin s.card => ((e.symm k : s) : htF ρ 0))
+    (Fin.elim0 : Fin 0 → htF ρ 1) hs' (linearIndependent_empty_type)).fintype_card_le_finrank
+  rw [Fintype.card_sum, Fintype.card_fin, Fintype.card_fin, add_zero, finrank_hom] at h
+  exact h
+
+/-- The bound `dim_{F'} Hom_{G_F}(V, ℂ_p(1)) ≤ dim V`, with finiteness. -/
+theorem fd_htF1 (hT : TateTwistInvariants) (hA : AxSenTate) :
+    FiniteDimensional (fieldF p F) (htF ρ 1) ∧ finrank (fieldF p F) (htF ρ 1) ≤ finrank ℚ_[p] V := by
+  haveI := fd_hom (p := p) (V := V)
+  refine fd_htF_aux ρ hT hA 1 fun s hs => ?_
+  let e := s.equivFin
+  have hs' : LinearIndependent (fieldF p F) (fun k : Fin s.card => ((e.symm k : s) : htF ρ 1)) :=
+    hs.comp e.symm e.symm.injective
+  have h := (linIndep_two ρ hT hA (Fin.elim0 : Fin 0 → htF ρ 0)
+    (fun k : Fin s.card => ((e.symm k : s) : htF ρ 1)) (linearIndependent_empty_type) hs').fintype_card_le_finrank
+  rw [Fintype.card_sum, Fintype.card_fin, Fintype.card_fin, zero_add, finrank_hom] at h
+  exact h
 
 theorem fd_htSpaceOver (i : ℤ) [FiniteDimensional (fieldF p F) (htF ρ i)] :
     FiniteDimensional ℚ_[p] (htSpaceOver p ρ i) := by
@@ -583,7 +592,7 @@ theorem tAct_sum {ι : Type*} [Fintype ι] (σ : Field.absoluteGaloisGroup F) (c
     (z : ι → V →ₗ[ℚ_[p]] ℂ_[p]) :
     tAct ρ σ (∑ k, c k • z k) = ∑ k, cpAct p (gfToGqp p F σ) (c k) • tAct ρ σ (z k) := by
   refine LinearMap.ext fun w => ?_
-  simp only [LinearMap.comp_apply, LinearMap.coeFn_sum, Finset.sum_apply, LinearMap.smul_apply,
+  simp only [LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply,
     cpLin_apply, map_sum, smul_eq_mul, map_mul]
 
 theorem tAct_of_mem {i : ℤ} {f : V →ₗ[ℚ_[p]] ℂ_[p]} (hf : f ∈ htSpaceOver p ρ i) (σ : Field.absoluteGaloisGroup F) :
@@ -602,7 +611,7 @@ theorem deRhamHodgeTate01_of_fontaineT (hF : FontaineTwistT) : DeRhamHodgeTate01
   intro p _ F _ _ _ V _ _ ρ h1 h2
   obtain ⟨t, ht, hσ⟩ := hF p
   obtain ⟨hfdD, hrank⟩ := h1
-  haveI : FiniteDimensional ℚ_[p] V := Module.finite_dual_iff.mp hfdD
+  haveI : FiniteDimensional ℚ_[p] V := (Module.finite_dual_iff (K := ℚ_[p]) (V := V)).mp hfdD
   have hT := ZInQ.Contrib.CloudB3W11.tateTwistInvariants_proof
   have hA := ZInQ.Contrib.CloudB3W11.axSenTate_proof
   -- `dim_{ℚ_p} Hom_{G_F}(V, B_dR) = [F:ℚ_p] dim V`
@@ -622,9 +631,8 @@ theorem deRhamHodgeTate01_of_fontaineT (hF : FontaineTwistT) : DeRhamHodgeTate01
     rw [← hfil 2]
     exact (congrArg _ hf2).trans (Submodule.map_bot _)
   -- the `F'`-dimensions `a`, `b`
-  obtain ⟨hfa, hale⟩ := fd_htF ρ hT hA 0
-  obtain ⟨hfb, hble⟩ := fd_htF ρ hT hA 1
-  simp only [Fin.isValue, Fin.val_zero, Nat.cast_zero, Fin.val_one, Nat.cast_one] at hfa hale hfb hble
+  obtain ⟨hfa, hale⟩ := fd_htF0 ρ hT hA
+  obtain ⟨hfb, hble⟩ := fd_htF1 ρ hT hA
   haveI := hfa
   haveI := hfb
   haveI := fd_htSpaceOver ρ (0 : ℤ)
@@ -676,3 +684,4 @@ end Final
 end
 
 end DeRhamScholze.HT
+#print axioms DeRhamScholze.HT.deRhamHodgeTate01_of_fontaineT

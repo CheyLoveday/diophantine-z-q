@@ -97,9 +97,27 @@ generations (av-b2 §2.6: "leaf, confirmed") and is no longer open at this base 
 it back as a leaf. **Rating: printed form with dictionary** (the pro-étale/étale comparison of §3.1 step 4, and
 equivariance from canonicity), flagged unread (Milne not read here).
 
-### 3.3 Glue: `DeRhamHodgeTate01`
+### 3.3 `DeRhamHodgeTate01` (glue; the manuscript's "consequently", L10995) and `FontaineTwistT`
 
-(GLUE-PLACEHOLDER)
+```lean
+def DeRhamHodgeTate01 : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
+    (V : Type) [AddCommGroup V] [Module ℚ_[p] V] (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V),
+    IsDeRhamFam p (fun σ => ρ.dual σ) → HodgeRange p (fun σ => ρ.dual σ) 1 →
+    ∃ (a b : ℕ) (e : (V →ₗ[ℚ_[p]] ℂ_[p]) ≃ₗ[ℂ_[p]] (Fin a → ℂ_[p]) × (Fin b → ℂ_[p])),
+      ∀ σ f, e (cpLin p (gfToGqp p F σ) ∘ₗ f ∘ₗ ρ σ⁻¹) =
+        ((fun k => cpAct p (gfToGqp p F σ) ((e f).1 k)),
+          (fun k => cycPow p (gfToGqp p F σ) (-1) • cpAct p (gfToGqp p F σ) ((e f).2 k)))
+```
+
+A de Rham representation `V^∨` whose Hodge filtration has its jumps in `[0, 1]` is Hodge–Tate with weights in
+`{0, 1}`, in the Hom form of htdecomp-or (`Hom(V, ℂ_p) = ℂ_p ⊗ V^∨`). This is the step behind the manuscript's
+"Consequently the Tate module has weights 0,0,−1,−1": Fontaine's "de Rham ⇒ Hodge–Tate, `gr D_dR ≅ D_HT`", which
+the lemma uses without a citation. It is **on-the-spot glue** and is **proved in Lean** (§4) from
+
+* Tate's two theorems (`ℂ_p(i)^{G_K} = 0` for `i ≠ 0`, `ℂ_p^{G_K} = K`), proved in the tree
+  (`tateTwistInvariants_proof`, `axSenTate_proof`), and
+* `FontaineTwistT`: `B_dR^+` has a uniformizer `t` with `σ(t) = χ(σ) t` (Fontaine's `t = log [ε]`), see §4.3.
 
 ## 5. Known issues
 
@@ -127,3 +145,28 @@ equivariance from canonicity), flagged unread (Milne not read here).
    decomposition from the de Rham comparison.
 7. The corrigendum (Forum Math. Pi 4 (2016) e6): per the locator audit (`locators.md` R10), it repairs the
    definitions of the period sheaves and keeps the comparison results; no issue for this use. Not re-read here.
+
+## 4. The glue proved in Lean
+
+### 4.1 The de Rham row (`DeRhamScholze.lean`)
+
+| declaration | statement | from |
+|---|---|---|
+| `galHX`, `galHX_abVar`, `galHX_bijective`, `rhoH` | `σ` on `Hⁱ(X_{F̄}, ℤ_p)` and `Hⁱ(X_{F̄}, ℚ_p)`; equals t10-etale's `galH` | t10-etale's `transportₗ` |
+| `ddrFam`, `ddrFam_rep`, `IsDeRhamFam`, `filB`, `filD`, `HodgeRange` | `D_dR`, de Rham, `Fil^j` | definitions |
+| `map_ddrFam`, `map_filD`, `isDeRhamFam_of_equiv`, `hodgeRange_of_equiv` | an equivariant isomorphism `W ≅ W'` carries `D_dR` and `Fil^j D_dR` across | linear algebra |
+| `dualBC`, `dualBC_comm` | `ℚ_p ⊗ Hom_{ℤ_p}(T, ℤ_p) ≅ Hom_{ℚ_p}(ℚ_p ⊗ T, ℚ_p)` (`T` finite free), equivariant | Mathlib's `IsBaseChange.toDualBaseChange` |
+| `milneE`, `milneE_comm` | `H¹(A_{F̄}, ℚ_p) ≅ V_p(A)^∨`, `G_F`-equivariant | `T10_TateDuality`, T26 (from `mumfordTorsionAlgClosed_proof`) |
+| `dual_deRham_of_scholze` | `V_p(A)^∨` de Rham with Hodge jumps in `[0, 1]` | the two leaves |
+| `isDeRhamTensorOver_of_scholze` | `V_p(A)` de Rham | + duality `DeRhamPrint.isDeRhamTensorOver_dual` (`B_dR` a field, `bdRInvariantsPrinted_proof`), `Module.evalEquiv` |
+| `deRhamVpAbVarDirect_of_leaves` | **the field `deRhamVpAbVarDirect`** | + derham-direct's `isDeRhamTensorOver_iff` |
+| `lemDeRhamDescent_tate` | the manuscript's lemma for `V_p(A)` (parts 1-2, jump clause) | |
+| `hodgeTateDecompOr_of_leaves` | **the field `hodgeTateDecompOr`** from the leaves and `DeRhamHodgeTate01` | htdecomp-or's `or_of_hom` |
+
+### 4.2 `DeRhamHodgeTate01` (`DeRhamScholzeHT.lean`)
+
+(HT-PLACEHOLDER)
+
+### 4.3 `FontaineTwistT` (`DeRhamScholzeT.lean`)
+
+(T-PLACEHOLDER)

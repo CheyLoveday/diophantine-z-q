@@ -49,15 +49,15 @@ theorem plus_logTeich (σ : GQp p) {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.un
 
 /-- A `pᵏ`-th root of unity of `ℂ_p` comes from `ℚ̄_p`. -/
 theorem exists_coe_of_pow_eq_one (k : ℕ) {r : ℂ_[p]} (hr : r ^ p ^ k = 1) :
-    ∃ s : PadicAlgCl p, (s : ℂ_[p]) = r ∧ s ^ p ^ k = 1 := by
-  have hne : NeZero ((p ^ k : ℕ) : PadicAlgCl p) := ⟨by
+    ∃ s : PadicAlgCl p, ((s : PadicAlgCl p) : ℂ_[p]) = r ∧ s ^ p ^ k = 1 := by
+  haveI : NeZero ((p ^ k : ℕ) : PadicAlgCl p) := ⟨by
     rw [Nat.cast_pow]; exact pow_ne_zero _ (Nat.cast_ne_zero.mpr (Fact.out : p.Prime).ne_zero)⟩
   obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (PadicAlgCl p) (p ^ k)
-  have hζ' : IsPrimitiveRoot ((ζ : PadicAlgCl p) : ℂ_[p]) (p ^ k) :=
+  have hζ' : IsPrimitiveRoot (algebraMap (PadicAlgCl p) ℂ_[p] ζ) (p ^ k) :=
     hζ.map_of_injective (algebraMap (PadicAlgCl p) ℂ_[p]).injective
   obtain ⟨j, -, hj⟩ := hζ'.eq_pow_of_pow_eq_one hr
   refine ⟨ζ ^ j, ?_, ?_⟩
-  · rw [← hj]; push_cast; rfl
+  · rw [← hj, PadicComplex.coe_eq, map_pow]
   · rw [← pow_mul, mul_comm, pow_mul, hζ.pow_eq_one, one_pow]
 
 /-- The exponent `χ(σ) mod pᵏ`. -/
@@ -81,8 +81,7 @@ theorem root_flatAct (σ : GQp p) {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.unt
   have := cyclotomicCharacter.spec p σ.toRingEquiv s hs1
   change σ s = _ at this
   rw [this, SubmonoidClass.coe_pow, ← hs]
-  push_cast
-  rfl
+  exact map_pow (algebraMap (PadicAlgCl p) ℂ_[p]) s _
 
 /-! ## §3. `log [σ ε₀] = χ(σ) log [ε₀]` -/
 
