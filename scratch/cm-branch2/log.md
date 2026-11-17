@@ -60,3 +60,4 @@
 - Closure scan of sixContactMin_of_open73_cm (gruse73-out.txt, 130280 constants): GR512Bridge.GonzalezRotgerThm512X6RCF,
   GRDict.GonzalezRotgerThm512X6, R5ptProps, every GR projection: ABSENT. VERIFIED: González–Rotger Thm 5.12 is off the route.
 - #discharges rerun with CoxProof (discharges.txt): 34 open, 17130 checked, 123 = 19 pre-existing + 104 _r5 projection noise.
+- 13:00 R5Prune split into R5Prune1..3 + R5Prune (each < 141 KB, CONTRIBUTING's 150 KB guideline); lake build Open73 + CMBranch2 EXIT 0; axioms standard.

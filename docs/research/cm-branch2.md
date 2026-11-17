@@ -58,7 +58,8 @@ needs from y3-route-a and beyond. The re-source is not a GLUE gain by itself.
 | `Contrib/OneProof/CMBranch/CoxProof.lean` | `CoxCore.discr_pair`, `CoxCore.discr_order`, `mult_iff_dvd`, `coxProperLattice_proof` |
 | `Contrib/OneProof/CMBranch/PeriodLattice.lean` | `end_ringEquiv_mult`, `end_ringEquiv_baseChange`, `cmPeriodLattice_of`, `reducedCMPeriod_of_leaves` |
 | `Contrib/OneProof/CMBranch/Top2.lean` | `CMInputs2`, the chain open72 → open4 with `c` threaded (generated, `gen/mk_top2.py`) |
-| `Contrib/OneProof/CMBranch/R5Prune.lean` | the weak-row bypass (generated, `gen/gen_r5.py`), top `sixContactMin_of_open72_cm2_r5` |
+| `Contrib/OneProof/CMBranch/R5Prune1..3.lean`, `R5Prune.lean` | the weak-row bypass (generated, `gen/gen_r5.py`; four files under 141 KB), top `sixContactMin_of_open72_cm2_r5` |
+| `Contrib/OneProof/CMBranch/Open73.lean` | the next generation `OpenResearchLeaves54CM` and `sixContactMin_of_open73_cm` (generated, `gen/gen_open73.py`) |
 | `Contrib/OneProof/CMBranch2.lean` | `CMInputs3` and the deliverable `sixContactMin_of_open72_cmbranch2` |
 
 ## 2. The three glue Props of the CM branch

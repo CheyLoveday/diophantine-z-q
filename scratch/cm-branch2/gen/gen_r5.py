@@ -142,7 +142,25 @@ def main():
         if pat not in txt:
             print('PATCH NOT FOUND:', pat[:80]); continue
         txt = txt.replace(pat, rep)  # all occurrences
-    open(os.path.join(ROOT, 'ZInQKernel/Contrib/OneProof/CMBranch/R5Prune.lean'), 'w').write(txt)
+    # split into parts under ~140 KB at block boundaries ("-- copied from" lines)
+    head_end = txt.index('-- copied from')
+    header, rest = txt[:head_end], txt[head_end:]
+    blocks = ['-- copied from' + b for b in rest.split('-- copied from')[1:]]
+    parts, cur = [], ''
+    for b in blocks:
+        if len((cur + b).encode()) > 140000 and cur:
+            parts.append(cur); cur = ''
+        cur += b
+    parts.append(cur)
+    n = len(parts)
+    names = [f'R5Prune{i + 1}' for i in range(n - 1)] + ['R5Prune']
+    base = os.path.join(ROOT, 'ZInQKernel/Contrib/OneProof/CMBranch/')
+    for i, (nm, body) in enumerate(zip(names, parts)):
+        imp = 'import ZInQKernel.Contrib.OneProof.CMBranch.Top2' if i == 0 else f'import ZInQKernel.Contrib.OneProof.CMBranch.{names[i - 1]}'
+        h = header.replace('import ZInQKernel.Contrib.OneProof.CMBranch.Top2', imp)
+        h = h.replace('-/', f'Part {i + 1} of {n}. -/', 1)
+        open(base + nm + '.lean', 'w').write(h + body)
+    print('parts:', names)
     print(len(copies), 'copies,', len(txt.splitlines()), 'lines')
 
 HELPER = """
