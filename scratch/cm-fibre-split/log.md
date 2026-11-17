@@ -59,3 +59,17 @@ diophantine_zq.tex L581-586. Base: origin/wip/cox-lattice 6298e108 + origin/main
 - `cmMatrixUnitSplit_of (hCO : CMCurveOrder) : CMMatrixUnitSplit`: proved. End(A) torsion-free via [s] surjective (epi).
 - New remaining glue `CMCurveOrder` (End(E_Lbar) is an order of an imaginary quadratic field for an isogeny factor E
   of A with End0(A_Omega) = M2(Q(sqrt d))).
+
+## 2026-11-17 ~17:00 CMCurveOrder PROVED (VERIFIED, scratch/cm-fibre-split/CurveOrder.lean, standard axioms)
+- `cmCurveOrder_of (hHF : HomFreeFiniteC) : CMCurveOrder`. Pieces (all compiled):
+  - KdAlg: Q(sqrt d) = AdjoinRoot (X^2 - C d), d<0: irreducible, NumberField, finrank 2, totally complex
+    (a real embedding would send r with r^2 = d < 0 to a real number), root not rational;
+    `conductor_ne_zero_of_mem`: a subring R of O_k containing theta not in Q has finite index (Z[theta] <= R and
+    cm-branch2's CoxCore.discr_order: b^2 - 4N = [O:Z[theta]]^2 d_k != 0).
+  - Transport `trEquiv`: End(X_Omega) = End(X_Omega') for an L-iso sigma : Omega = Omega' (conjugation by the
+    comparison iso xc over Spec sigma; group law via xc_mul; rigidity).
+  - `idem_two`: an idempotent eps of M2(K), eps != 0,1, has trace 1 and eps y eps = tr(y eps) eps.
+  - corner map kappa : End(E_Omega) -> k, g |-> tr((1/n) psi(h' g i')), psi = e o (1 (x) -), a ring hom, injective
+    (torsion-free), image R an order (integral by T6 on E_Omega with an embedding Omega -> C; contains (s n) r).
+  - eps != 0 since 1 != 0 in End(E') (dim E' = 1); eps != 1 since else i' finite surjective, dim E' = dim A'.
+- CMCurveOrder statement amended (my own new Prop): added `A.dim = 2` (used for eps != 1).
