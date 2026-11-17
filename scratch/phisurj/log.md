@@ -14,3 +14,24 @@ Base wip/leaf-fold33b 0e3c31258; `git merge origin/main`: already up to date (20
 - `AvSplit.MumfordTorsionAlgClosed` (TailQ.lean:1257, A(k)[n] ≅ (ZMod n)^{2g}) is an open textbook leaf
   (`OpenTextbookLeaves15.mumfordTorsionAlgClosed`) and is proved on origin/proof/picard-fibres-20261116
   (`ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof`, not merged here). VERIFIED (git show).
+
+## Lean results (all VERIFIED: compiled on this host, `lake env lean`, LEAN_NUM_THREADS=8)
+- Build tree copied from ~/dzq-wt/leaf-fold33b (same commit 0e3c31258), `.lake/build` and `lean/.lake/build`.
+- `scratch/phisurj/DimSurj.lean`: `PhiSurj.surjective_of_dim_le` — a locally quasi-finite closed morphism
+  `f : X → Y`, `Y` irreducible, `dim X = a`, `dim Y ≤ a`, is surjective. Compiles.
+- `scratch/phisurj/PhiSurj.lean`: `exists_torsAddEquiv` (A[n] ≃+ (ZMod n)^{2 dim A} for A over any field, from
+  `AvSplit.MumfordTorsionAlgClosed` at A_K̄ through `pts` and `dim_baseChange_scheme`), `card_le_of_perfect`
+  (#B[n] ≤ n^m if A[n] ≅ (ZMod n)^m and the right kernel of e : A[n] × B[n] → μ_n is trivial),
+  `dim_le_of_weil`, `phiAmpleIsogeny_of_weil : WeilPairingMumford → MumfordTorsionAlgClosed → PhiAmpleIsogeny`.
+  `#print axioms` = [propext, Classical.choice, Quot.sound].
+- `ZInQKernel/Contrib/OneProof/PhiAmpleIsogenyWeil.lean` (same content): `lake build
+  ZInQKernel.Contrib.OneProof.PhiAmpleIsogenyWeil` → "Build completed successfully (12814 jobs)".
+- `scratch/phisurj/FoldTailZ49.lean` (hand fold): `OpenAddedLeaves21` = OpenAddedLeaves20 without
+  `mumfordPhiSurjectiveAC`; `sixContactMin_of_open42 (r : OpenResearchLeaves29) (t : OpenTextbookLeaves15)
+  (l : OpenAddedLeaves21)` through `sixContactMin_of_open37_hf`, the field's three readers fed by
+  `phiAmpleIsogeny_of_weil l.weilPairingMumford t.mumfordTorsionAlgClosed`. Axioms standard (34 s).
+- `scratch/phisurj/FrozenTargetDryRun.lean`: Main's `frozenTarget` body with `open42` and `OpenAddedLeaves21`
+  (`frozenTarget_phisurj`), axioms standard.
+- `scratch/phisurj/Discharges.lean` → `discharges.txt`: "#discharges: 43 open hypotheses, 8602 theorems checked,
+  48 discharge one"; no line for `PhiSurj.*` (expected: `PhiAmpleIsogeny` is not an open hypothesis type; the
+  field `MumfordPhiSurjectiveAC` is rerouted, not filled).
