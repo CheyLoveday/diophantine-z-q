@@ -18,3 +18,17 @@
 - Chain of the field in the bundles: bostLowerBoundAn (OpenResearchLeaves43CF..48, TailZ68-74) ->
   bostLowerBoundPrinted (TailZ74:990) -> HeightSplit.BostLowerBound (TailZ74:465, chevalley) -> R21
   (EichlerBoundCopy:482, OpenResearchLeaves8EB).
+
+## Compile results (2026-11-17)
+- `lake build ZInQKernel.OneProof.H.TailZ74 ZInQKernel.Contrib.OneProof.AnalyticStableHeight`: success (15369 jobs).
+- `ZInQKernel/Contrib/OneProof/GaudronRemondSection9.lean`: compiles, no warnings (VERIFIED). Leaf
+  GaudronRemondSec9LowerAn; normalization lemmas deligne_heightFormula_shift, deligne_bound_iff, bostAn_iff_faltings;
+  half_log_two_pi_sq_lt, sec9_bound_lt_bost (old row strictly stronger); gaudronRemondSec9LowerAn_of_bostLowerBoundAn;
+  sec9Printed_of_an(')/sec9An_of_printed; grBostBound_of_sec9Printed(_chevalley); r21_of_grBost('); r21_of_sec9An.
+- Closure.lean: 114 affected structures; 110 decls to copy (TailZ74 33, TailZ69 1, EichlerBoundCopy 76).
+- GR9Bypass.lean (gen_bypass.py, 4045 lines): compiles; sixContactMin_of_open67_gr9 axioms [propext,
+  Classical.choice, Quot.sound]; field check: 29 vs 29 fields, only bostLowerBoundAn <-> gaudronRemondSec9LowerAn,
+  no other type differs (VERIFIED). One fix needed: SGRFold sibling added12_of_open29_hf_pz qualified with _root_.
+- `#discharges` (Main + Discharges + GaudronRemondSection9, 16216 jobs): 19 discharges, none by ZInQ.BostGR9
+  (expected: leaf weaker than the field). Output in discharges.txt.
+- autofold.json: mode "bypass" (not autofoldable), leaf row kind published, flag "pending reading: ...".
