@@ -20,6 +20,7 @@ Exp. II; locators UNVERIFIED):
 
 set_option linter.unusedSectionVars false
 set_option linter.style.longLine false
+set_option linter.style.haveILetI false
 
 namespace BdRInv
 
@@ -172,6 +173,95 @@ theorem bdrPlusMap_plus (σ : GQp p) (w : WittVector p (PreTilt (𝓞_ℂ_[p] : 
 theorem bdrPlusMap_teich (σ : GQp p) (x : PreTilt (𝓞_ℂ_[p] : Type) p) :
     DR.bdrPlusMap p (oAct p σ) (plus p (teichmuller p x)) = plus p (teichmuller p (DR.preTiltMap p (oAct p σ) x)) := by
   rw [bdrPlusMap_plus, map_teichmuller]
+
+/-! ## 4. `T = [ε] - 1` is a uniformizer and `σ(T) = T · c_σ` with `θ(c_σ) = χ(σ)` -/
+
+/-- `T = [ε] - 1 ∈ B_dR^+`. -/
+abbrev T : BDeRhamPlus (𝓞_ℂ_[p] : Type) p := xe (Zq p)
+
+theorem exists_T_eq : ∃ v : (BDeRhamPlus (𝓞_ℂ_[p] : Type) p)ˣ, T p = varpi p * v := by
+  have hm : T p ∈ IsLocalRing.maximalIdeal (BDeRhamPlus (𝓞_ℂ_[p] : Type) p) := xe_mem (Zq p)
+  rw [maximalIdeal_BDeRhamPlus] at hm
+  obtain ⟨v, hv⟩ := Ideal.mem_span_singleton'.mp hm
+  by_cases hu : IsUnit v
+  · obtain ⟨u, rfl⟩ := hu
+    exact ⟨u, by rw [← hv, mul_comm]⟩
+  · exfalso
+    have hv' : v ∈ IsLocalRing.maximalIdeal (BDeRhamPlus (𝓞_ℂ_[p] : Type) p) := hu
+    rw [maximalIdeal_BDeRhamPlus] at hv'
+    obtain ⟨b, hb⟩ := Ideal.mem_span_singleton'.mp hv'
+    apply xe_not_mem_sq (Zq p)
+    rw [Ideal.mem_span_singleton']
+    exact ⟨b, by show b * varpi p ^ 2 = T p; rw [← hv, ← hb]; ring⟩
+
+/-- The unit `v` with `T = ξ · v`. -/
+def vT : (BDeRhamPlus (𝓞_ℂ_[p] : Type) p)ˣ := (exists_T_eq p).choose
+
+theorem T_eq : T p = varpi p * (vT p : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) := (exists_T_eq p).choose_spec
+
+theorem irreducible_T : Irreducible (T p) := by
+  haveI := isDiscreteValuationRing_BDeRhamPlus p
+  rw [IsDiscreteValuationRing.irreducible_iff_uniformizer, T_eq,
+    Ideal.span_singleton_mul_right_unit (vT p).isUnit, maximalIdeal_BDeRhamPlus]
+
+theorem T_ne_zero : T p ≠ 0 := (irreducible_T p).ne_zero
+
+/-- The bound constant `‖θ(v)‖⁻¹`. -/
+def CT : ℝ := ‖thetaPlusCp p (vT p : BDeRhamPlus (𝓞_ℂ_[p] : Type) p)‖⁻¹
+
+theorem CT_nonneg : 0 ≤ CT p := inv_nonneg.mpr (norm_nonneg _)
+
+/-- **`[ρ] - 1 ∈ T · B_dR^+` with a uniformly bounded `θ` of the cofactor** for `ρ♯ = 1`. -/
+theorem teich_sub_one (ρ : PreTilt (𝓞_ℂ_[p] : Type) p) (hρ : ρ.untilt = 1) :
+    ∃ r, plus p (teichmuller p ρ) - 1 = T p * r ∧ ‖thetaPlusCp p r‖ ≤ CT p := by
+  have hk : teichmuller p ρ - 1 ∈ RingHom.ker (fontaineTheta (𝓞_ℂ_[p] : Type) p) := by
+    rw [RingHom.mem_ker, map_sub, fontaineTheta_teichmuller, hρ, map_one, sub_self]
+  rw [ker_fontaineTheta_Cp] at hk
+  obtain ⟨r', hr'⟩ := Ideal.mem_span_singleton'.mp hk
+  refine ⟨plus p r' * ((vT p)⁻¹ : (BDeRhamPlus (𝓞_ℂ_[p] : Type) p)ˣ), ?_, ?_⟩
+  · have h1 : plus p (teichmuller p ρ) - 1 = plus p r' * varpi p := by
+      show _ = plus p r' * plus p (xi p)
+      rw [← map_mul, hr', map_sub, map_one]
+    rw [h1, T_eq]
+    calc plus p r' * varpi p = varpi p * ((vT p : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) *
+        ((vT p)⁻¹ : (BDeRhamPlus (𝓞_ℂ_[p] : Type) p)ˣ)) * plus p r' := by
+          rw [Units.mul_inv, mul_one, mul_comm]
+      _ = _ := by ring
+  · rw [map_mul, norm_mul, map_units_inv, norm_inv, thetaPlusCp_plus, CT]
+    exact mul_le_of_le_one_left (inv_nonneg.mpr (norm_nonneg _)) (norm_le_one p _)
+
+theorem thetaPlusCp_geom (x : BDeRhamPlus (𝓞_ℂ_[p] : Type) p) (hx : thetaPlusCp p x = 1) (n : ℕ) :
+    thetaPlusCp p (∑ i ∈ Finset.range n, x ^ i) = n := by
+  rw [map_sum]
+  simp only [map_pow, hx, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
+
+/-- Step A: for each `m`, `σ(T) = T · w` with `θ(w) ≡ a_m` up to `C ‖p‖^m`. -/
+theorem bdrPlus_T_approx (σ : GQp p) (m : ℕ) : ∃ w, DR.bdrPlusMap p (oAct p σ) (T p) = T p * w ∧
+    ‖thetaPlusCp p w - (aexp p σ m : ℂ_[p])‖ ≤ CT p * ‖(p : ℂ_[p])‖ ^ m := by
+  obtain ⟨r, hr, hrb⟩ := teich_sub_one p (rho p σ m) (untilt_rho p σ m)
+  set a := aexp p σ m
+  set N := p ^ m
+  set E := plus p (teichmuller p (eps (Zq p)))
+  set R := plus p (teichmuller p (rho p σ m))
+  have hE : E - 1 = T p := rfl
+  have hθE : thetaPlusCp p E = 1 := by
+    rw [thetaPlusCp_teich, untilt_eps]; rfl
+  have hθR : thetaPlusCp p R = 1 := by
+    rw [thetaPlusCp_teich, untilt_rho]; rfl
+  have hσT : DR.bdrPlusMap p (oAct p σ) (T p) = E ^ a * R ^ N - 1 := by
+    change DR.bdrPlusMap p (oAct p σ) (E - 1) = _
+    rw [map_sub, map_one, bdrPlusMap_teich, preTiltMap_eps p σ m, map_mul, map_pow, map_pow,
+      map_mul, map_pow, map_pow]
+  refine ⟨(∑ i ∈ Finset.range a, E ^ i) * R ^ N + r * ∑ i ∈ Finset.range N, R ^ i, ?_, ?_⟩
+  · rw [hσT]
+    have h1 : E ^ a - 1 = (∑ i ∈ Finset.range a, E ^ i) * T p := by rw [← hE, geom_sum_mul]
+    have h2 : R ^ N - 1 = (∑ i ∈ Finset.range N, R ^ i) * (T p * r) := by rw [← hr, geom_sum_mul]
+    linear_combination R ^ N * h1 + h2
+  · rw [map_add, map_mul, map_mul, map_pow, hθR, one_pow, mul_one, thetaPlusCp_geom p E hθE,
+      thetaPlusCp_geom p R hθR, add_sub_cancel_left, norm_mul]
+    have : ((N : ℕ) : ℂ_[p]) = (p : ℂ_[p]) ^ m := by simp [N]
+    rw [this, norm_pow]
+    exact mul_le_mul_of_nonneg_right hrb (pow_nonneg (norm_nonneg _) m)
 
 end
 
