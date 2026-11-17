@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.Y3FullThreeZ30
+import ZInQKernel.OneProof.H.TailZ21
 
 set_option linter.all false
 
@@ -253,4 +254,150 @@ theorem action_of_z30 (h : Y3FullThreeRepZ30) :
 
 end Yoneda
 
+/-! ## 3. The leaf `Y3ToP1j` (diophantine_zq.tex L420-440) -/
+
+section Leaf
+
+open HDec.QMSplit.Moduli
+
+/-- **The clauses of `Y3ToP1j` at one fine witness `(Y, Φ)` and one `π : Y → P¹`** (the quotient of `Y₃` by
+`N/(𝔸_f^× K₃)`, on `ℚ̄`-points, in the coordinate `j`):
+* (quotient) two `ℚ̄`-points have the same `π`-value iff their underlying QM pairs are `Aut(𝒪)`-twists of each
+  other: the `N`-orbits, since `N = N_{B^×}(𝒪)·𝔸_f^×·K₀` acts through `Aut 𝒪 = N_{B^×}(𝒪)/ℚ^×` (twists) and
+  through `K₀/K₃ = (𝒪/3𝒪)^×` on the three-marking, and the three-markings of one pair form one
+  `(𝒪/3𝒪)^×`-orbit;
+* (branch values, L421-422) the CM points by `ℤ[i]`, `ℤ[ζ₃]`, `ℤ[√−6]` are exactly the fibres over `0`, `∞`,
+  `−16/27`;
+* (quotient map) `π` is onto `P¹(ℚ̄)`;
+* (degree, L437-440) every fibre on `ℚ̄`-points is finite with at most `324` points (a consequence of
+  `deg(Y₃ → P¹_j) ≤ 4|(𝒪/3𝒪)^×| ≤ 324`). -/
+def Y3ToP1jAt (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (π : ToP1 Y.left) : Prop :=
+  (∀ (y y' : fieldPt Qbar ⟶ Y) (P Q : QML3 Qbar), Φ Qbar y = M3.mk P → Φ Qbar y' = M3.mk Q →
+      (π.val (K := Qbar) y.left = π.val (K := Qbar) y'.left ↔
+          ∃ α : O ≃+* O, Nonempty (QMIso (P.q.twist α) Q.q)) ∧
+      (HasCM4 P.q ↔ π.val (K := Qbar) y.left = OnePoint.some 0) ∧
+      (HasCM3 P.q ↔ π.val (K := Qbar) y.left = OnePoint.infty) ∧
+      (HasCM24 P.q ↔ π.val (K := Qbar) y.left = OnePoint.some (-16 / 27))) ∧
+  (∀ t : OnePoint Qbar, ∃ y : fieldPt Qbar ⟶ Y, π.val (K := Qbar) y.left = t) ∧
+  (∀ t : OnePoint Qbar, {y : fieldPt Qbar ⟶ Y | π.val (K := Qbar) y.left = t}.Finite ∧
+      {y : fieldPt Qbar ⟶ Y | π.val (K := Qbar) y.left = t}.ncard ≤ 324)
+
+/-- **LEAF `Y3ToP1j` (kind consequence; flag ELLIOT: the manuscript's own claim, diophantine_zq.tex L425-440,
+with the identification of the normalizer quotient cited at L420-422 to Baba–Granath and Lin–Yang).**
+
+Manuscript (Glazer, 11/5 manuscript, proof of Theorem 4.1; read for this leaf):
+* L411-420: `B = (2, −3)`, `𝒪 = ℤ[i, (1 + j)/2]`, `μ = 2j + ij`, the principal-polarization datum with Rosati
+  involution `a ↦ μ⁻¹ā μ`;
+* L420-422: "the normalizer quotient is `P¹_j`, with branch values `0, ∞, −16/27` and indices `4, 6, 2`"
+  [Baba–Granath; Lin–Yang];
+* L423-424: `K₀ = 𝒪̂^×`, `K₃ = ker(K₀ → (𝒪/3𝒪)^×)`;
+* L425-429: `N` the finite-adelic normalizer of `𝒪̂`; it normalizes `K₃`; `|N/(𝔸_f^× K₀)| = 4`;
+* L430-434: central finite ideles act trivially on the level-three curve;
+* L434-440: the whole `Y₃`, with all its determinant components, admits the action of `N/(𝔸_f^× K₃)` with
+  quotient `P¹_j`, and `deg(Y₃ → P¹_j) ≤ 4|(𝒪/3𝒪)^×| ≤ 4·81 = 324`.
+
+Lean form: for every fine witness `(Y, Φ)` of the level-3 moduli problem (`R1fpProps`, the kernel's `Y₃`), some
+`π : Y → P¹` satisfies `Y3ToP1jAt`. The action itself is not in the leaf: its global generators (twists by
+`Aut 𝒪` and `rightMul` by `𝒪^×`) are automorphisms of `Y` by the proved glue `heckeOfFine_proof`
+(`R1heckeProps`), and of the integral model by `action_of_z30` (this file, from `Y3FullThreeRepZ30`), where
+`−1` acts trivially (`sigmaR_neg_one`, the case of L430-434 that is not already in `K₃`). The CM clauses are
+the branch-value statement of L421-422 in the form of the kernel's Baba–Granath reading (each of
+`CM(−4)`, `CM(−3)`, `CM(−24)` is the fibre over its branch value; Baba–Granath §3.1, UNVERIFIED). The degree
+clause is a consequence of the degree bound (a finite morphism of degree `d` has fibres of at most `d` points).
+Not printed form: no print states this for the level-3 curve; the manuscript derives it from the adelic
+computation at L425-436 plus the cited identification of the normalizer quotient (L420-422). -/
+def Y3ToP1j : Prop :=
+  ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y), R1fpProps Y Φ → ∃ π : ToP1 Y.left, Y3ToP1jAt Y Φ π
+
+/-- **GLUE `ToP1DescendsAlongSurj` (descent of a map to `P¹` along a surjection of curves).** For proper smooth
+curves `Y`, `X` over `ℚ`, `f : Y → X` onto `X(ℚ̄)` and `π : Y → P¹` constant on the `ℚ̄`-fibres of `f`, there
+is `π₆ : X → P¹` with `π₆ ∘ f = π` on `ℚ̄`-points. Textbook: it is the kernel's proved `FactorThroughSurj`
+(`factorThroughSurj_proof`, TailZ20) with `X' = P¹_ℚ`, once `P¹_ℚ` is an object of `Over (Spec ℚ)`, proper and
+smooth of relative dimension 1, with the chart dictionary `ToP1 X ≃ (X ⟶ P¹_ℚ)` (Hartshorne II.7.1; the
+kernel states maps to `P¹` by charts because Mathlib 4.35 has no `P¹` with its point bijection). -/
+def ToP1DescendsAlongSurj : Prop :=
+  ∀ (Y X : Over (Spec (CommRingCat.of ℚ))), IsProper Y.hom → SmoothOfRelativeDimension 1 Y.hom →
+    IsProper X.hom → SmoothOfRelativeDimension 1 X.hom → ∀ (f : Y ⟶ X) (π : ToP1 Y.left),
+    (∀ x : fieldPt Qbar ⟶ X, ∃ y : fieldPt Qbar ⟶ Y, y ≫ f = x) →
+    (∀ y y' : fieldPt Qbar ⟶ Y, y ≫ f = y' ≫ f → π.val (K := Qbar) y.left = π.val (K := Qbar) y'.left) →
+      ∃ π₆ : ToP1 X.left, ∀ y : fieldPt Qbar ⟶ Y, π₆.val (K := Qbar) (y ≫ f).left = π.val (K := Qbar) y.left
+
+/-- Twisting both sides of an isomorphism of QM pairs. -/
+def qmIsoTwist {K : Type} [Field K] {A A' : PkgI3.AbVar K} {q : QMStr A} {q' : QMStr A'} (f : QMIso q q')
+    (α : O ≃+* O) : QMIso (q.twist α) (q'.twist α) where
+  φ := f.φ
+  ψ := f.ψ
+  left := f.left
+  right := f.right
+  equivariant a := f.equivariant (α a)
+
+/-- The forgetful map is onto `X(ℚ̄)` on a coarse witness, from `PairsLift`. -/
+theorem lift_of_pairsLift {Y X : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)} {fY : Y ⟶ X} (h6 : X6Props Y Φ X Ψ fY)
+    (hL : PairsLift) (x : fieldPt Qbar ⟶ X) : ∃ y : fieldPt Qbar ⟶ Y, y ≫ fY = x := by
+  obtain ⟨Q, hQ⟩ := Quotient.exists_rep (Ψ x)
+  obtain ⟨P, hP⟩ := hL Q
+  refine ⟨(Φ Qbar).symm (M3.mk P), Ψ.injective ?_⟩
+  rw [h6.2.2.2.2.2 _ P (Equiv.apply_symm_apply _ _), hP, hQ]
+
+/-- The class of the underlying pair of a point of `Y` is the class of its image in `X`. -/
+theorem forget_rel {Y X : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)} {fY : Y ⟶ X} (h6 : X6Props Y Φ X Ψ fY)
+    {y : fieldPt Qbar ⟶ Y} {Py : QML3 Qbar} (hy : Φ Qbar y = M3.mk Py) {P : QMPair Qbar}
+    (hP : Ψ (y ≫ fY) = Quotient.mk _ P) : Nonempty (QMIso Py.q P.q) := by
+  have := (h6.2.2.2.2.2 y Py hy).symm.trans hP
+  exact Quotient.exact this
+
+/-- **R2 on `X₆` (the kernel's `HauptmodulOfX6`) from `Y3ToP1j`**, the descent glue and `PairsLift`: descend
+`π` along the forgetful map `Y₃ → X₆` (constant on its fibres by the quotient clause with `α = id`) and
+transport the clauses along `QMIso`s. -/
+theorem hauptmodulOfX6_of_y3ToP1j (hY : Y3ToP1j) (hD : ToP1DescendsAlongSurj) (hL : PairsLift) :
+    HauptmodulOfX6 := by
+  intro Y Φ X Ψ fY h1 h6
+  obtain ⟨π, hcl, hsurj, -⟩ := hY Y Φ h1
+  have rep : ∀ y : fieldPt Qbar ⟶ Y, ∃ P : QML3 Qbar, Φ Qbar y = M3.mk P := fun y => by
+    obtain ⟨P, hP⟩ := Quotient.exists_rep (Φ Qbar y)
+    exact ⟨P, hP.symm⟩
+  have hconst : ∀ y y' : fieldPt Qbar ⟶ Y, y ≫ fY = y' ≫ fY →
+      π.val (K := Qbar) y.left = π.val (K := Qbar) y'.left := by
+    intro y y' hyy
+    obtain ⟨P, hP⟩ := rep y
+    obtain ⟨Q, hQ⟩ := rep y'
+    obtain ⟨e⟩ := forget_rel h6 hP (P := Q.forget) (by rw [hyy]; exact h6.2.2.2.2.2 y' Q hQ)
+    exact ((hcl y y' P Q hP hQ).1).2 ⟨RingEquiv.refl O, ⟨e⟩⟩
+  obtain ⟨π₆, hπ₆⟩ := hD Y X h1.1 h1.2.1 h6.1 h6.2.1 fY π (lift_of_pairsLift h6 hL) hconst
+  refine ⟨π₆, fun x x' P Q hP hQ => ?_, fun t => ?_⟩
+  · obtain ⟨y, rfl⟩ := lift_of_pairsLift h6 hL x
+    obtain ⟨y', rfl⟩ := lift_of_pairsLift h6 hL x'
+    obtain ⟨Py, hPy⟩ := rep y
+    obtain ⟨Qy, hQy⟩ := rep y'
+    obtain ⟨e⟩ := forget_rel h6 hPy hP
+    obtain ⟨e'⟩ := forget_rel h6 hQy hQ
+    obtain ⟨hf, h4, h3, h24⟩ := hcl y y' Py Qy hPy hQy
+    rw [hπ₆, hπ₆]
+    refine ⟨hf.trans ⟨fun ⟨α, ⟨g⟩⟩ => ⟨α, ⟨((qmIsoTwist e.symm α).trans g).trans e'⟩⟩,
+      fun ⟨α, ⟨g⟩⟩ => ⟨α, ⟨((qmIsoTwist e α).trans g).trans e'.symm⟩⟩⟩, ?_, ?_, ?_⟩
+    · exact ⟨fun h => h4.1 (HasCM4.of_iso e.symm h), fun h => HasCM4.of_iso e (h4.2 h)⟩
+    · exact ⟨fun h => h3.1 (HasCM3.of_iso e.symm h), fun h => HasCM3.of_iso e (h3.2 h)⟩
+    · exact ⟨fun h => h24.1 (HasCM24.of_iso e.symm h), fun h => HasCM24.of_iso e (h24.2 h)⟩
+  · obtain ⟨y, hy⟩ := hsurj t
+    exact ⟨y ≫ fY, (hπ₆ y).trans hy⟩
+
+/-- **The row `r1r2` (weak form) with R2 re-sourced to `Y3ToP1j`**: the kernel's `r1r2fpRep_of'W` (TailZ21)
+with `HauptmodulOfX6` from `hauptmodulOfX6_of_y3ToP1j` instead of Baba–Granath on `X₆`. `PairsLift` is supplied
+from T5 (`pairsLift_of_t5`), itself from the proved `mumfordTorsionAlgClosed_proof`. The other inputs are
+those of `r1r2fpRep_of'W`: the canonical model `CanonicalModelY3`, the coarse space `CoarseX6OfFineW`,
+reciprocity `ReciprocityOfFine`, and González–Rotger `ResidueOfX6`. -/
+theorem r1r2W_of_y3ToP1j (hE : CanonicalModelY3) (hX : CoarseX6OfFineW) (hY : Y3ToP1j)
+    (hD : ToP1DescendsAlongSurj) (hR : ReciprocityOfFine) (h5 : ResidueOfX6) : HDec.LeafAdopt.R1R2fpRepW :=
+  r1r2fpRep_of'W hE hX (hauptmodulOfX6_of_y3ToP1j hY hD
+    (pairsLift_of_t5 (AvSplit.torsionStructure_of_mumford
+      ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof))) hR h5
+
+end Leaf
+
 end Y3P1j
+
+#print axioms Y3P1j.action_of_z30
+#print axioms Y3P1j.hauptmodulOfX6_of_y3ToP1j
+#print axioms Y3P1j.r1r2W_of_y3ToP1j
