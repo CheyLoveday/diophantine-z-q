@@ -22,7 +22,6 @@ noncomputable section
 
 open UpperHalfPlane ModularCurve Filter Topology
 
-local notation "𝕢" => Function.Periodic.qParam
 
 namespace ZInQ.Gamma0QExp
 
@@ -43,7 +42,7 @@ def jN (N : ℕ) [NeZero N] (τ : ℍ) : ℂ := jf (scaleN N τ)
 
 /-- **`L` sums to `F` on all of `ℍ`.** -/
 def Rz (L : LaurentSeries ℂ) (F : ℍ → ℂ) : Prop :=
-  ∀ τ : ℍ, HasSum (fun m : ℤ => L.coeff m * 𝕢 1 (τ : ℂ) ^ m) (F τ)
+  ∀ τ : ℍ, HasSum (fun m : ℤ => L.coeff m * Function.Periodic.qParam 1 (τ : ℂ) ^ m) (F τ)
 
 namespace Rz
 
@@ -63,9 +62,9 @@ theorem neg (hL : Rz L F) : Rz (-L) (fun τ => -F τ) := fun τ => by
 theorem sub (hL : Rz L F) (hL' : Rz L' G) : Rz (L - L') (fun τ => F τ - G τ) := by
   simpa only [sub_eq_add_neg] using hL.add hL'.neg
 
-theorem single (k : ℤ) (c : ℂ) : Rz (HahnSeries.single k c) (fun τ => c * 𝕢 1 (τ : ℂ) ^ k) :=
+theorem single (k : ℤ) (c : ℂ) : Rz (HahnSeries.single k c) (fun τ => c * Function.Periodic.qParam 1 (τ : ℂ) ^ k) :=
   fun τ => by
-    convert hasSum_single (f := fun m : ℤ => (HahnSeries.single k c).coeff m * 𝕢 1 (τ : ℂ) ^ m)
+    convert hasSum_single (f := fun m : ℤ => (HahnSeries.single k c).coeff m * Function.Periodic.qParam 1 (τ : ℂ) ^ m)
       k (fun m hm => by rw [HahnSeries.coeff_single_of_ne hm, zero_mul]) using 1
     rw [HahnSeries.coeff_single_same]
 
@@ -104,7 +103,7 @@ theorem rz_jq : Rz (coeffEmb ℂ jq) jf := fun τ => by
   simpa only [coeffEmb_coeff_eq, jf] using hasSum_jq_qParam τ
 
 theorem qParam_scaleN (N : ℕ) [NeZero N] (τ : ℍ) :
-    𝕢 1 ((scaleN N τ : ℍ) : ℂ) = 𝕢 1 (τ : ℂ) ^ N := by
+    Function.Periodic.qParam 1 ((scaleN N τ : ℍ) : ℂ) = Function.Periodic.qParam 1 (τ : ℂ) ^ N := by
   simp only [Function.Periodic.qParam, coe_scaleN, Complex.ofReal_one, div_one]
   rw [← Complex.exp_nat_mul]
   ring_nf
@@ -112,7 +111,7 @@ theorem qParam_scaleN (N : ℕ) [NeZero N] (τ : ℍ) :
 theorem rz_jqN (N : ℕ) [NeZero N] : Rz (coeffEmb ℂ (jqN N)) (jN N) := fun τ => by
   have h := hasSum_jq_qParam (scaleN N τ)
   rw [qParam_scaleN] at h
-  set q := 𝕢 1 (τ : ℂ)
+  set q := Function.Periodic.qParam 1 (τ : ℂ)
   have hinj : Function.Injective (fun m : ℤ => (N : ℤ) * m) :=
     mul_right_injective₀ (by exact_mod_cast NeZero.ne N)
   rw [← hinj.hasSum_iff]
@@ -147,7 +146,7 @@ def rUnit (t : ℝ) : ℂˣ := Units.mk0 (Real.exp (-2 * Real.pi * t) : ℂ)
   (Complex.ofReal_ne_zero.2 (Real.exp_pos _).ne')
 
 theorem qParam_shiftH (t : ℝ) (ht : 0 ≤ t) (τ : ℍ) :
-    𝕢 1 ((shiftH t ht τ : ℍ) : ℂ) = (rUnit t : ℂ) * 𝕢 1 (τ : ℂ) := by
+    Function.Periodic.qParam 1 ((shiftH t ht τ : ℍ) : ℂ) = (rUnit t : ℂ) * Function.Periodic.qParam 1 (τ : ℂ) := by
   simp only [Function.Periodic.qParam, coe_shiftH, Complex.ofReal_one, div_one, rUnit,
     Units.val_mk0, Complex.ofReal_exp]
   rw [← Complex.exp_add]
@@ -158,7 +157,7 @@ theorem qParam_shiftH (t : ℝ) (ht : 0 ≤ t) (τ : ℍ) :
   ring
 
 theorem rz_qTwist_of {L : LaurentSeries ℂ} {F : ℍ → ℂ} (t : ℝ) (ht : 0 ≤ t)
-    (h : ∀ τ : ℍ, HasSum (fun m : ℤ => L.coeff m * 𝕢 1 ((shiftH t ht τ : ℍ) : ℂ) ^ m)
+    (h : ∀ τ : ℍ, HasSum (fun m : ℤ => L.coeff m * Function.Periodic.qParam 1 ((shiftH t ht τ : ℍ) : ℂ) ^ m)
       (F (shiftH t ht τ))) :
     Rz (qTwist (rUnit t) L) (F ∘ shiftH t ht) := fun τ => by
   have := h τ
@@ -207,11 +206,11 @@ theorem continuousAt_of_rz {L : LaurentSeries ℂ} {F : ℍ → ℂ} (hL : Rz L 
     ContinuousAt (F ∘ ofComplex) (τ : ℂ) := by
   obtain ⟨k, hk⟩ := exists_coeff_eq_zero_below L
   set L' := HahnSeries.single (k : ℤ) (1 : ℂ) * L
-  have hL' : Rz L' (fun τ => 𝕢 1 (τ : ℂ) ^ k * F τ) := by
+  have hL' : Rz L' (fun τ => Function.Periodic.qParam 1 (τ : ℂ) ^ k * F τ) := by
     have := (Rz.single (k : ℤ) (1 : ℂ)).mul hL
     simpa only [one_mul, zpow_natCast] using this
-  have hc : ∀ σ : ℍ, HasSum (fun n : ℕ => L'.coeff n * 𝕢 1 (σ : ℂ) ^ n)
-      (𝕢 1 (σ : ℂ) ^ k * F σ) := by
+  have hc : ∀ σ : ℍ, HasSum (fun n : ℕ => L'.coeff n * Function.Periodic.qParam 1 (σ : ℂ) ^ n)
+      (Function.Periodic.qParam 1 (σ : ℂ) ^ k * F σ) := by
     intro σ
     have h := hL' σ
     rw [← (Nat.cast_injective (R := ℤ)).hasSum_iff] at h
@@ -226,9 +225,9 @@ theorem continuousAt_of_rz {L : LaurentSeries ℂ} {F : ℍ → ℂ} (hL : Rz L 
   have hmd := P2MW.S_ModularCurve_coeff_eq_zero_of_hasSum_of_slash_invariant.ModularCurve.Realized.mdifferentiable
     one_pos hc
   have hd := (mdifferentiableAt_iff.mp (hmd τ)).continuousAt
-  have hq : ContinuousAt (fun z : ℂ => 𝕢 1 z ^ k) (τ : ℂ) :=
+  have hq : ContinuousAt (fun z : ℂ => Function.Periodic.qParam 1 z ^ k) (τ : ℂ) :=
     ((Function.Periodic.differentiable_qParam (h := 1)).continuous.pow k).continuousAt
-  have hq0 : 𝕢 1 (τ : ℂ) ^ k ≠ 0 := pow_ne_zero _ (Complex.exp_ne_zero _)
+  have hq0 : Function.Periodic.qParam 1 (τ : ℂ) ^ k ≠ 0 := pow_ne_zero _ (Complex.exp_ne_zero _)
   have hdiv := hd.div hq hq0
   refine hdiv.congr ?_
   filter_upwards [isOpen_upperHalfPlaneSet.mem_nhds τ.im_pos] with z hz

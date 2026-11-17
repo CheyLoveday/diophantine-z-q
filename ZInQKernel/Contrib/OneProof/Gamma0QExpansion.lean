@@ -32,9 +32,8 @@ namespace ZInQ.Contrib.Gamma0QExp
 
 open ZInQ.Gamma0QExp
 
-local notation "𝕢" => Function.Periodic.qParam
 
-theorem qPar_eq_qParam (τ : ℍ) : ZInQ.GZAlg.qPar τ = 𝕢 1 (τ : ℂ) := by
+theorem qPar_eq_qParam (τ : ℍ) : ZInQ.GZAlg.qPar τ = Function.Periodic.qParam 1 (τ : ℂ) := by
   simp [ZInQ.GZAlg.qPar, Function.Periodic.qParam]
 
 /-- `aeval (jq, jqN)` of a two-variable polynomial as a `ℂ`-combination of elements of

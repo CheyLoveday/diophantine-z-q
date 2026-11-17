@@ -23,7 +23,6 @@ noncomputable section
 open UpperHalfPlane ModularCurve Filter Topology Asymptotics
 open scoped MatrixGroups Manifold
 
-local notation "𝕢" => Function.Periodic.qParam
 
 namespace ZInQ.Gamma0QExp
 
@@ -112,17 +111,17 @@ end ModGrowth
 theorem jf_smul (γ : SL(2, ℤ)) (τ : ℍ) : jf (γ • τ) = jf τ :=
   E4_cube_div_discriminant_smul γ τ
 
-theorem norm_qParam_one (τ : ℍ) : ‖𝕢 1 (τ : ℂ)‖ = Real.exp (-(2 * Real.pi * τ.im)) := by
+theorem norm_qParam_one (τ : ℍ) : ‖Function.Periodic.qParam 1 (τ : ℂ)‖ = Real.exp (-(2 * Real.pi * τ.im)) := by
   rw [Function.Periodic.norm_qParam, div_one, coe_im]
   ring_nf
 
-theorem qParam_ne_zero (z : ℂ) : 𝕢 1 z ≠ 0 := Complex.exp_ne_zero _
+theorem qParam_ne_zero (z : ℂ) : Function.Periodic.qParam 1 z ≠ 0 := Complex.exp_ne_zero _
 
 theorem hasSum_qjf (τ : ℍ) : HasSum (fun m : ℕ => ((PowerSeries.coeff m jNum : ℤ) : ℂ) *
-    𝕢 1 (τ : ℂ) ^ m) (𝕢 1 (τ : ℂ) * jf τ) :=
+    Function.Periodic.qParam 1 (τ : ℂ) ^ m) (Function.Periodic.qParam 1 (τ : ℂ) * jf τ) :=
   hasSum_jNum_qParam τ
 
-theorem tendsto_qjf : Tendsto (fun τ : ℍ => 𝕢 1 (τ : ℂ) * jf τ) atImInfty (𝓝 1) := by
+theorem tendsto_qjf : Tendsto (fun τ : ℍ => Function.Periodic.qParam 1 (τ : ℂ) * jf τ) atImInfty (𝓝 1) := by
   have := P2MW.S_ModularCurve_coeff_eq_zero_of_hasSum_of_slash_invariant.ModularCurve.Realized.tendsto_atImInfty
     one_pos hasSum_qjf
   simpa [PowerSeries.coeff_zero_eq_constantCoeff, constantCoeff_jNum] using this
@@ -133,15 +132,15 @@ theorem jf_bounds : ∃ T₁ : ℝ, ∀ τ : ℍ, T₁ ≤ τ.im →
   have h := (tendsto_qjf.eventually (Metric.ball_mem_nhds (1 : ℂ) (by norm_num : (0 : ℝ) < 1 / 2)))
   obtain ⟨T, hT⟩ := (atImInfty_mem _).1 h
   refine ⟨T, fun τ hτ => ?_⟩
-  have h1 : ‖𝕢 1 (τ : ℂ) * jf τ - 1‖ < 1 / 2 := by
+  have h1 : ‖Function.Periodic.qParam 1 (τ : ℂ) * jf τ - 1‖ < 1 / 2 := by
     have := hT τ hτ
     simpa [Metric.mem_ball, dist_eq_norm] using this
-  have h2 : 1 / 2 ≤ ‖𝕢 1 (τ : ℂ) * jf τ‖ := by
-    have := norm_sub_norm_le (1 : ℂ) (𝕢 1 (τ : ℂ) * jf τ)
+  have h2 : 1 / 2 ≤ ‖Function.Periodic.qParam 1 (τ : ℂ) * jf τ‖ := by
+    have := norm_sub_norm_le (1 : ℂ) (Function.Periodic.qParam 1 (τ : ℂ) * jf τ)
     rw [norm_one, norm_sub_rev] at this
     linarith
-  have h3 : ‖𝕢 1 (τ : ℂ) * jf τ‖ ≤ 2 := by
-    have := norm_le_norm_add_norm_sub' (𝕢 1 (τ : ℂ) * jf τ) 1
+  have h3 : ‖Function.Periodic.qParam 1 (τ : ℂ) * jf τ‖ ≤ 2 := by
+    have := norm_le_norm_add_norm_sub' (Function.Periodic.qParam 1 (τ : ℂ) * jf τ) 1
     rw [norm_one] at this
     linarith
   rw [norm_mul, norm_qParam_one] at h2 h3
@@ -163,7 +162,7 @@ theorem jf_differentiableAt (τ : ℍ) : DifferentiableAt ℂ (jf ∘ ofComplex)
   have hmd := P2MW.S_ModularCurve_coeff_eq_zero_of_hasSum_of_slash_invariant.ModularCurve.Realized.mdifferentiable
     one_pos hasSum_qjf
   have h1 := mdifferentiableAt_iff.mp (hmd τ)
-  have h2 : DifferentiableAt ℂ (fun z : ℂ => 𝕢 1 z) (τ : ℂ) :=
+  have h2 : DifferentiableAt ℂ (fun z : ℂ => Function.Periodic.qParam 1 z) (τ : ℂ) :=
     (Function.Periodic.differentiable_qParam (h := 1)) _
   refine (h1.div h2 (qParam_ne_zero _)).congr_of_eventuallyEq ?_
   filter_upwards [isOpen_upperHalfPlaneSet.mem_nhds τ.im_pos] with z hz
@@ -226,7 +225,7 @@ theorem exists_poly_kill (n : ℕ) : ∀ L : LaurentSeries ℂ, (∀ m : ℤ, m 
 /-! ### Level one, holomorphic -/
 
 theorem periodic_of_invariant {G : ℍ → ℂ} (hinv : ∀ (γ : SL(2, ℤ)) (τ : ℍ), G (γ • τ) = G τ)
-    (k : ℕ) : Function.Periodic ((fun τ : ℍ => 𝕢 1 (τ : ℂ) ^ k * G τ) ∘ ofComplex) 1 := by
+    (k : ℕ) : Function.Periodic ((fun τ : ℍ => Function.Periodic.qParam 1 (τ : ℂ) ^ k * G τ) ∘ ofComplex) 1 := by
   intro w
   by_cases hw : 0 < w.im
   · have hw' : 0 < (w + 1).im := by simpa using hw
@@ -249,10 +248,10 @@ theorem levelOne_hol (G : ℍ → ℂ) (hG : MDifferentiable 𝓘(ℂ) 𝓘(ℂ)
     (hinv : ∀ (γ : SL(2, ℤ)) (τ : ℍ), G (γ • τ) = G τ) (hgr : ModGrowth G) :
     ∃ P : Polynomial ℂ, ∀ τ : ℍ, G τ = P.eval (jf τ) := by
   obtain ⟨k, hk⟩ := hgr
-  set f : ℍ → ℂ := fun τ => 𝕢 1 (τ : ℂ) ^ k * G τ
+  set f : ℍ → ℂ := fun τ => Function.Periodic.qParam 1 (τ : ℂ) ^ k * G τ
   have hfper := periodic_of_invariant hinv k
   have hfhol : MDifferentiable 𝓘(ℂ) 𝓘(ℂ) f := by
-    have hq : MDifferentiable 𝓘(ℂ) 𝓘(ℂ) (fun τ : ℍ => 𝕢 1 (τ : ℂ) ^ k) := fun τ =>
+    have hq : MDifferentiable 𝓘(ℂ) 𝓘(ℂ) (fun τ : ℍ => Function.Periodic.qParam 1 (τ : ℂ) ^ k) := fun τ =>
       mdifferentiableAt_iff.mpr <| by
         refine (((Function.Periodic.differentiable_qParam (h := 1)) (τ : ℂ)).pow k).congr_of_eventuallyEq ?_
         filter_upwards [isOpen_upperHalfPlaneSet.mem_nhds τ.im_pos] with z hz
@@ -260,7 +259,7 @@ theorem levelOne_hol (G : ℍ → ℂ) (hG : MDifferentiable 𝓘(ℂ) 𝓘(ℂ)
           UpperHalfPlane.coe_mk]
     exact hq.mul hG
   have hfbdd : IsBoundedAtImInfty f := by
-    have hq : (fun τ : ℍ => 𝕢 1 (τ : ℂ) ^ k) =O[atImInfty]
+    have hq : (fun τ : ℍ => Function.Periodic.qParam 1 (τ : ℂ) ^ k) =O[atImInfty]
         fun τ => Real.exp (-(2 * Real.pi * k * τ.im)) := by
       refine IsBigO.of_bound 1 (Eventually.of_forall fun τ => ?_)
       rw [norm_pow, norm_qParam_one, one_mul, Real.norm_eq_abs, abs_of_pos (Real.exp_pos _),
@@ -295,7 +294,7 @@ theorem levelOne_hol (G : ℍ → ℂ) (hG : MDifferentiable 𝓘(ℂ) 𝓘(ℂ)
     exact ofPowerSeries_coeff_of_neg _ (by omega))
   set L' := L - Polynomial.aeval (coeffEmb ℂ jq) P
   have hL' : Rz L' (fun τ => G τ - P.eval (jf τ)) := hL.sub (rz_jq.polyAeval P)
-  have hsum' : ∀ τ : ℍ, HasSum (fun n : ℕ => L'.coeff n * 𝕢 1 (τ : ℂ) ^ n)
+  have hsum' : ∀ τ : ℍ, HasSum (fun n : ℕ => L'.coeff n * Function.Periodic.qParam 1 (τ : ℂ) ^ n)
       (G τ - P.eval (jf τ)) := fun τ => by
     have h := hL' τ
     rw [← (Nat.cast_injective (R := ℤ)).hasSum_iff] at h
@@ -312,8 +311,8 @@ theorem levelOne_hol (G : ℍ → ℂ) (hG : MDifferentiable 𝓘(ℂ) 𝓘(ℂ)
     coeff_eq_zero_of_hasSum_of_slash_invariant hsum' hinv' hn
   refine ⟨P + Polynomial.C (L'.coeff 0), fun τ => ?_⟩
   have h1 := hsum' τ
-  have h2 : HasSum (fun n : ℕ => L'.coeff n * 𝕢 1 (τ : ℂ) ^ n) (L'.coeff 0) := by
-    convert hasSum_single (f := fun n : ℕ => L'.coeff n * 𝕢 1 (τ : ℂ) ^ n) 0
+  have h2 : HasSum (fun n : ℕ => L'.coeff n * Function.Periodic.qParam 1 (τ : ℂ) ^ n) (L'.coeff 0) := by
+    convert hasSum_single (f := fun n : ℕ => L'.coeff n * Function.Periodic.qParam 1 (τ : ℂ) ^ n) 0
       (fun n hn => by rw [hzero n hn, zero_mul]) using 1
     simp
   have := h1.unique h2
