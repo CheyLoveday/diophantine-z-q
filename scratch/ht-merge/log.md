@@ -20,3 +20,12 @@
   - Conclusion: every end consumer applies the leaf only to abelian surfaces (A'.dim = 2). But the intermediate
     statements (the H field hodgeTateDecompAbVar, R10 / bundle field r10, and the four theorems of task part (3)) quantify
     over every g. A g = 2 leaf cannot prove them unchanged.
+* Leaf statement chosen: general g (`DeRhamScholze.HTMerge.ScholzeH1AbVar`), flagged generalization (on-the-spot);
+  manuscript-exact `ScholzeH1AbSurf` (g = 2) also stated, implied by it, and proves `HodgeTateDecompAbSurf` (H field at
+  g = 2). Reason: the four theorems kept unchanged by task part (3) and the H field / R10 quantify over every g.
+* Manuscript (VERIFIED, read): lem:de-rham-descent L10939-10951 (abelian surface), Scholze L10954-10965, Hodge numbers
+  L10996; step C3 citation L735-737; bibitems L11010-11018.
+* Count (VERIFIED, scratch/ht-merge/count.py on kinds.tsv H rows): current 5/24 on 29; ht-abvar spec 5/27 on 32;
+  ht-merge spec 5/26 on 31. New row passes render_open.kinds_row_problems (flag_class pending-review,unverified-locator).
+* Build: copied ht-abvar's .lake/build (ZInQKernel oleans, ir) into this worktree; `lake build
+  ZInQKernel.Contrib.OneProof.HTAbVarScholze` rebuilds the closure changed by main (LPrefix etc.).
