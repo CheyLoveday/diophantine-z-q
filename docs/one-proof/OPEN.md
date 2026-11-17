@@ -13,12 +13,12 @@ removes it. See
 
 **31 hypotheses of the H part** (in the bundles `OpenAddedLeaves27`, `OpenResearchLeaves48`), plus 5 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
-* **Strict count: 4 published / 27 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 5 published / 26 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: consequence 22, published 9.
+* By kind: consequence 21, published 10.
 
 ## Kernel-wide readings
 
@@ -158,7 +158,6 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`gonzalezRotgerThm512X6RCF`](#gonzalezrotgerthm512x6rcf) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`heckeJ1DS`](#heckej1ds) | research | consequence | GLUE | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`hodgeTateDecompOr`](#hodgetatedecompor) | research | consequence | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
-| [`igusaGL2DSGalSome`](#igusagl2dsgalsome) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`javanpeykarThm111`](#javanpeykarthm111) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`modularHTCoeff`](#modularhtcoeff) | research | consequence | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`neronOggShafarevichSep`](#neronoggshafarevichsep) | research | consequence | GLUE | unread, reading-risk |  | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
@@ -170,6 +169,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`x6CoarseModuliIdeal`](#x6coarsemoduliideal) | research | consequence | GLUE | pending-review, unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`y3FineModuliAbP`](#y3finemoduliabp) | research | consequence | GLUE | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`dsThm966Printed`](#dsthm966printed) | research | published | LEAF | note | good-first | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
+| [`igusaGL2DSGalSome`](#igusagl2dsgalsome) | research | published | LEAF | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r9a`](#r9a) | research | published | LEAF |  | good-first | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`raynaudSemistableSHOr`](#raynaudsemistableshor) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
@@ -407,20 +407,6 @@ ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr
 
 > Hodge-Tate decomposition of V_p(A), tensor form OR Hom form, bases chosen, dimensions unnamed: C_p (x) V_p(A) = C_p(1)^a + C_p^b (Fontaine, Invent. Math. 65 (1982), Theoreme principal, if printed in tensor form) or Hom_{Q_p}(V_p(A), C_p) = C_p^a + C_p(-1)^b (Tate 1967 4, corollary on Hom(T(G), C), good reduction; Fontaine 1982, if printed in Hom form); the Hom form implies the tensor form by C_p-dualization proved in Lean (htdecomp-or); locators UNVERIFIED
 
-### igusaGL2DSGalSome
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves48.igusaGL2DSGalSome`; kind **consequence**, strict **GLUE**; flag: pending review (inbox 43: new leaf, GLUE until cove-88 rates it; source: cited print, Diamond-Shurman Thm 7.6.3, not in diophantine_zq.tex) unread: new printed leaf (no human reading); AI page check (igusa-gal, 11-17) in the 2005 and 2016 printings: Thm 7.6.3 p. 290 / p. 294; rho is the action of Gal(Q(j,E_j[N])/Q(j)) on E_j[N] in the ordered basis (P_tau, Q_tau) of (7.11), p. 287 / p. 291 (as in Cor 7.5.3, p. 284 / p. 288), stated for one basis as printed (the every-basis form is proved in Lean, igusaGL2DSGal_of_some); N > 1 (standing assumption opening section 7.5, p. 279 / p. 283), the leaf assumes 1 < N; E_j of (7.12) p. 282 / p. 286 with j transcendental, points in Q(j)bar^2 (p. 287 / p. 291), Q(j, E_j[N]) generated by x(E_j[N]) and y(E_j[N]) (p. 283 / p. 287); chord-tangent group law with origin [0,1,0] (section 7.1, pp. 253-254 / pp. 257-258).
-* Source: Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), Theorem 7.6.3 (p. 290; 2016 printing p. 294), rho defined p. 287 (2016: p. 291), universal curve (7.12) p. 282 (2016: p. 286); Igusa, Amer. J. Math. 81 (1959) (unread)
-* discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-X1Igusa.IgusaGL2DSGalSome
-```
-
-> igusa-gal: Diamond-Shurman Thm 7.6.3 (first part) in its printed form: for N > 1, Gal(L_N/Q(j)) -> GL_2(Z/N) is onto, where L_N = Q(j, E_j[N]) (X1Igusa.LDS N) is the subfield of an algebraic closure of Q(j) generated by the x- and y-coordinates of the N-torsion of the universal curve E_j : y^2 = 4x^3 - g x - g, g = 27j/(j - 1728) (DS (7.12)), j transcendental: for some basis e of E_j[N] (the print fixes (P_tau, Q_tau) of (7.11)) and every g in GL_2(Z/N) some sigma_0 in Gal(L_N/Q(j)) acts on E_j[N] as g in the basis e (on L_N-points, Affine.Point.map). Implies igusaGL2DS with no hypothesis (X1Igusa.igusaGL2DS_of_igusaGL2DSGalSome: one basis gives every basis by conjugation in GL_2(Z/N) (igusaGL2DSGal_of_some), then liftNormal to Aut(Q(j)bar/Q(j)), IsAlgClosure.normal, liftNormal_commutes; N = 1 directly). Pages read by igusa-gal: Thm 7.6.3 p. 290 (2005) / p. 294 (2016); rho p. 287 / p. 291; (7.12) p. 282 / p. 286.
-
 ### javanpeykarThm111
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves48.javanpeykarThm111`; kind **consequence**, strict **GLUE**; flag: reviewer verdict queue13-15 (11-17; notes crowd-kit/ckpt/leaf-review/queue13..15-verdict.md): consequence, GLUE/GLUE; earlier: pending review (Addendum 1: new printed leaf, GLUE until a reviewer rates it); the print over its own objects (deg_B as Nat.find, h_Fal(Jac X) as the stable height of an abelian variety over Qbar via a model over a number field), replacing javanpeykarPrintedMapHF's two reading steps (degree of a given Belyi map; model over the field of definition K) by Lean proofs; remaining readings are definition-level: IsStableHeightBar is Faltings' stable height (independent of the number field and model), height-fix's IsPrintedStableHeight, unramified via the ramification index at closed points.
@@ -574,6 +560,20 @@ DSThm966EV.DSThm966Printed
 ```
 
 > Deligne-Serre, Formes modulaires de poids 1, Ann. Sci. ENS (4) 7 (1974), Thm 4.1 with (4.1.1), p. 514, as printed: for f != 0 a (cusp) form of type (1, eps) with eps(-1) = -1 that is an eigenvector of the T_p, p not dividing N, with eigenvalues a_p (Tau Ceti EigenformAwayFromLevel N 1, no normalization a_1 = 1), a continuous rho : G_Q -> GL_2(C) with finite image, unramified outside N, with tr rho(Frob_p) = a_p (the T_p-eigenvalue F.eigenvalue p) and det rho(Frob_p) = eps(p). The coefficient form a_p = coeff g p (from a_1 = 1) and eps(-1) = -1 (parity lemma, TauCeti Parity.lean:113) are glue in DSThm966EV.dsThm966_of_printed (coeff-fix).
+
+### igusaGL2DSGalSome
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves48.igusaGL2DSGalSome`; kind **published**, strict **LEAF**; flag: reading 11-17 (igusa-gal task agent from local copies of the 2005 and 2016 printings, located page by page in docs/research/igusa-gal.md; rated q21 rate and verify): DS Thm 7.6.3 p. 290 / p. 294, H_Q = Gal(Q(j,E_j[N])/Q(j)), "there is an isomorphism rho : H_Q -> GL_2(Z/NZ)" (injectivity dropped); rho is the action of H_Q on E_j[N] in the ordered basis (P_tau, Q_tau) of (7.11), (P^s, Q^s)^T = rho(s)(P, Q)^T, defined in 7.6 as before, p. 287 / p. 291; the leaf's exists-basis takes the print's basis (exists-introduction) and its column convention reads rho(s)^T (specialize at g^T); N > 1 opens section 7.5, p. 279 / p. 283; E_j of (7.12) p. 282 / p. 286 with j transcendental, points in an algebraic closure of Q(j) (opening of 7.6, p. 287 / p. 291), which Kbar = AlgebraicClosure (RatFunc Q) names, written as EDS by y = 2y'; chord-tangent law, section 7.1 pp. 253-254 / pp. 257-258; the every-basis and Aut(Kbar/Q(j)) forms are proved in Lean (igusaGL2DSGal_of_some, igusaGL2DS_of_igusaGL2DSGal).
+* Source: Diamond-Shurman, A First Course in Modular Forms, GTM 228 (2005), Theorem 7.6.3 (p. 290; 2016 printing p. 294), rho defined p. 287 (2016: p. 291), universal curve (7.12) p. 282 (2016: p. 286); Igusa, Amer. J. Math. 81 (1959) (unread)
+* discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+X1Igusa.IgusaGL2DSGalSome
+```
+
+> igusa-gal: Diamond-Shurman Thm 7.6.3 (first part) in its printed form: for N > 1, Gal(L_N/Q(j)) -> GL_2(Z/N) is onto, where L_N = Q(j, E_j[N]) (X1Igusa.LDS N) is the subfield of an algebraic closure of Q(j) generated by the x- and y-coordinates of the N-torsion of the universal curve E_j : y^2 = 4x^3 - g x - g, g = 27j/(j - 1728) (DS (7.12)), j transcendental: for some basis e of E_j[N] (the print fixes (P_tau, Q_tau) of (7.11)) and every g in GL_2(Z/N) some sigma_0 in Gal(L_N/Q(j)) acts on E_j[N] as g in the basis e (on L_N-points, Affine.Point.map). Implies igusaGL2DS with no hypothesis (X1Igusa.igusaGL2DS_of_igusaGL2DSGalSome: one basis gives every basis by conjugation in GL_2(Z/N) (igusaGL2DSGal_of_some), then liftNormal to Aut(Q(j)bar/Q(j)), IsAlgClosure.normal, liftNormal_commutes; N = 1 directly). Pages read by igusa-gal: Thm 7.6.3 p. 290 (2005) / p. 294 (2016); rho p. 287 / p. 291; (7.12) p. 282 / p. 286.
 
 ### r9a
 
