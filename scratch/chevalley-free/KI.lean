@@ -542,8 +542,112 @@ theorem kbar_KI (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X)
 
 end KbarKI
 
+section KI1
+
+set_option synthInstance.maxHeartbeats 400000
+
+variable {k : Type} [Field k] {U : Over (Spec (CommRingCat.of k))} [GrpObj U]
+  {B' : PkgI3.AbVar (AlgebraicClosure k)}
+  {k₁ : Type} [Field k₁] [Algebra k k₁] [Algebra k₁ (AlgebraicClosure k)]
+  [IsScalarTower k k₁ (AlgebraicClosure k)]
+
+/-- `Spec k₁ → Spec k`. -/
+abbrev qq (k k₁ : Type) [Field k] [Field k₁] [Algebra k k₁] :
+    Spec (CommRingCat.of k₁) ⟶ Spec (CommRingCat.of k) := Spec.map (CommRingCat.ofHom (algebraMap k k₁))
+
+/-- `Spec k̄ → Spec k₁`. -/
+abbrev q₂ (k k₁ : Type) [Field k] [Field k₁] [Algebra k₁ (AlgebraicClosure k)] :
+    Spec (CommRingCat.of (AlgebraicClosure k)) ⟶ Spec (CommRingCat.of k₁) :=
+  Spec.map (CommRingCat.ofHom (algebraMap k₁ (AlgebraicClosure k)))
+
+omit [GrpObj U] in
+theorem q₂_qq : q₂ k k₁ ≫ qq k k₁ = sφ (φbar k) := by
+  rw [← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq]
+
+/-- `U_{k̄} → U_{k₁}`. -/
+abbrev rr (U : Over (Spec (CommRingCat.of k))) (k₁ : Type) [Field k₁] [Algebra k k₁]
+    [Algebra k₁ (AlgebraicClosure k)] [IsScalarTower k k₁ (AlgebraicClosure k)] :
+    pullback U.hom (sφ (φbar k)) ⟶ pullback U.hom (qq k k₁) :=
+  pullback.map U.hom (sφ (φbar k)) U.hom (qq k k₁) (𝟙 _) (q₂ k k₁) (𝟙 _) (by simp)
+    (by rw [Category.comp_id, q₂_qq])
+
+omit [GrpObj U] in
+theorem exists_ext_point [Algebra.IsAlgebraic k₁ (AlgebraicClosure k)] (L : Type) [Field L] [IsAlgClosed L]
+    (a : Spec (CommRingCat.of L) ⟶ Spec (CommRingCat.of k₁)) :
+    ∃ ra : AlgebraicClosure k →+* L, Spec.map (CommRingCat.ofHom ra) ≫ q₂ k k₁ = a := by
+  let a' : k₁ →+* L := (Spec.preimage a).hom
+  letI : Algebra k₁ L := a'.toAlgebra
+  refine ⟨(IsAlgClosed.lift (R := k₁) (S := AlgebraicClosure k) (M := L)).toRingHom, ?_⟩
+  rw [← Spec.map_comp]
+  conv_rhs => rw [← Spec.map_preimage a]
+  congr 1
+  ext x
+  exact (IsAlgClosed.lift (R := k₁) (S := AlgebraicClosure k) (M := L)).commutes x
+
+/-- `KI` at points with values in an algebraically closed field. -/
+theorem algclosed_KI [Algebra.IsAlgebraic k₁ (AlgebraicClosure k)]
+    (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X)
+    (hπ : letI := B'.grp; letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      IsMonHom π') (r : ℕ)
+    (e : letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R],
+      (Fin r → Rˣ) →* (algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U))
+    (he_ker : letI := B'.grp; letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R]
+      (u : algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U),
+      u ≫ π' = 1 ↔ u ∈ (e R).range)
+    (he_nat : ∀ (R S : Type) [CommRing R] [Algebra (AlgebraicClosure k) R] [CommRing S]
+      [Algebra (AlgebraicClosure k) S] (f : R →ₐ[AlgebraicClosure k] S) (t : Fin r → Rˣ),
+      e S (fun i => Units.map (f : R →* S) (t i)) = algPtMap f ≫ e R t)
+    (X₁ : Over (Spec (CommRingCat.of k₁))) (π₁ : (Over.pullback (qq k k₁)).obj U ⟶ X₁)
+    (c : B'.X.left ⟶ X₁.left) (hc : IsPullback c B'.X.hom X₁.hom (q₂ k k₁))
+    (hcompat : π'.left ≫ c = rr U k₁ ≫ π₁.left)
+    (L : Type) [Field L] [IsAlgClosed L] (u v : Spec (CommRingCat.of L) ⟶ U.left)
+    (a b : Spec (CommRingCat.of L) ⟶ Spec (CommRingCat.of k₁))
+    (hu : u ≫ U.hom = a ≫ qq k k₁) (hv : v ≫ U.hom = a ≫ qq k k₁) (hb : a ≫ qq k k₁ = b ≫ qq k k₁)
+    (h : pullback.lift u a hu ≫ π₁.left = pullback.lift v a hv ≫ π₁.left) :
+    pullback.lift u b (hu.trans hb) ≫ π₁.left = pullback.lift v b (hv.trans hb) ≫ π₁.left := by
+  obtain ⟨ra, hra⟩ := exists_ext_point (k := k) (k₁ := k₁) L a
+  obtain ⟨rb, hrb⟩ := exists_ext_point (k := k) (k₁ := k₁) L b
+  have hua : u ≫ U.hom = Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k) := by
+    rw [hu, ← hra, Category.assoc, q₂_qq]
+  have hva : v ≫ U.hom = Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k) := by
+    rw [hv, ← hra, Category.assoc, q₂_qq]
+  have hbb : Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k) = Spec.map (CommRingCat.ofHom rb) ≫ sφ (φbar k) := by
+    rw [← q₂_qq (k₁ := k₁), ← Category.assoc, hra, hb, ← hrb, Category.assoc]
+  have hab : ra.comp (φbar k) = rb.comp (φbar k) := by
+    have := hbb
+    rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp] at this
+    have := Spec.map_injective this
+    exact congrArg CommRingCat.Hom.hom this
+  have hlift : ∀ (w : Spec (CommRingCat.of L) ⟶ U.left) (ρ : AlgebraicClosure k →+* L)
+      (x : Spec (CommRingCat.of L) ⟶ Spec (CommRingCat.of k₁)) (hρ : Spec.map (CommRingCat.ofHom ρ) ≫ q₂ k k₁ = x)
+      (hw : w ≫ U.hom = x ≫ qq k k₁) (hw' : w ≫ U.hom = Spec.map (CommRingCat.ofHom ρ) ≫ sφ (φbar k)),
+      pullback.lift w x hw ≫ π₁.left = (pullback.lift w _ hw' ≫ π'.left) ≫ c := by
+    intro w ρ x hρ hw hw'
+    rw [Category.assoc, hcompat, ← Category.assoc]
+    congr 1
+    apply pullback.hom_ext
+    · simp
+    · simp [hρ]
+  have hst : ∀ (w : Spec (CommRingCat.of L) ⟶ U.left) (ρ : AlgebraicClosure k →+* L)
+      (hw' : w ≫ U.hom = Spec.map (CommRingCat.ofHom ρ) ≫ sφ (φbar k)),
+      (pullback.lift w _ hw' ≫ π'.left) ≫ B'.X.hom = Spec.map (CommRingCat.ofHom ρ) := by
+    intro w ρ hw'
+    rw [Category.assoc, Over.w π']
+    exact pullback.lift_snd _ _ _
+  have hk : pullback.lift u _ hua ≫ π'.left = pullback.lift v _ hva ≫ π'.left := by
+    apply hc.hom_ext
+    · rw [← hlift u ra a hra hu hua, ← hlift v ra a hra hv hva, h]
+    · rw [hst, hst]
+  have hk2 := kbar_KI π' hπ r e he_ker he_nat L ra rb hab u v hua hva hbb hk
+  rw [hlift u rb b hrb (hu.trans hb) (hua.trans hbb), hlift v rb b hrb (hv.trans hb) (hva.trans hbb), hk2]
+
+end KI1
+
 end ZInQ.ChevFree
 
 #print axioms ZInQ.ChevFree.rig_raw
 #print axioms ZInQ.ChevFree.torus_kernel_transfer
 #print axioms ZInQ.ChevFree.kbar_KI
+#print axioms ZInQ.ChevFree.algclosed_KI
