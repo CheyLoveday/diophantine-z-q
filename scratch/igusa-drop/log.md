@@ -49,3 +49,7 @@ Base wip/leaf-fold33b 97247ce1 (top `sixContactMin_of_open71`, TailZ78). Build t
    * `#discharges` cannot show igusaGL2DSGalSome as DISCHARGED: this is a bypass (IgusaGL2DSGalSome itself is not
      proved); the closure check shows it gone, as for fold-b105's chevalleyPerfect.
    Count: 35 -> 34 open; H 6/24 on 30 -> 5/24 on 29 (-1 field, -1 LEAF; strict GLUE unchanged).
+5. Replay (VERIFIED, text): generator run in a temporary worktree at 159fcd50 (Contrib commit, pre-fold) produced
+   TailZ79.lean, Main.lean, kinds.tsv, claims.tsv byte-identical to the committed fold (cmp); worktree removed. On the
+   folded head the generator prints "OpenResearchLeaves53 has no field igusaGL2DSGalSome: nothing to do".
+6. Report docs/research/igusa-drop.md, .fleet/igusa-drop.md.
