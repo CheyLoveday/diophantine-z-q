@@ -9,6 +9,7 @@ import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.ShapiroInput
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.Witness
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.Cartesian
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.CorDescent
+import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.MackeyCor
 
 /-!
 # HeegnerCohomology: the cohomological layer of `ex:arith-finite-heegner` (tex 2834–3410)
@@ -32,4 +33,6 @@ Index of the area (all `PROVED`, standard axioms):
 * `Cartesian`: restriction and corestriction commute in Cartesian squares; node `CartesianNode`.
 * `CorDescent`: corestriction commutes with conjugation; the genuine hypothesis of RC10's
   `FiveTerm.descend_cor` (`hsq_genuine`) and `descend_cor_genuine`.
+* `MackeyCor`: each Mackey orbit term is the local corestriction of the transported cocycle; node
+  `MackeyCorNode`.
 -/
