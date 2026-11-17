@@ -24,3 +24,12 @@
   GR9.openResearchLeaves34_of_35_eb_cf_r5 (unused on the route) deleted; GR9 bundle conversions (elkiesEquationsX6Ab_of_printed,
   babaGranath, Elkies fields) by field_ops; GR9 bundles 9EB/8EB field r1r2 : R1R2fpRepW_y3 = Y3X6.R1R2fpY3. None blocked.
   Y3X6/* and Y3X6Fold.lean: no code line mentions an X6 field or clause name.
+- lake build ZInQKernel.OneProof.Main, Discharges, MainGreenTao, DeRhamRange: EXIT 0, 15987 jobs (build-main.log).
+- Dry-run fold (VERIFIED, scratch/y3-x6b/MainDryRun.lean -> maindryrun-out.txt): main's Main.lean with research bundle
+  OpenResearchLeaves59Y3 and H argument sixContactMin_of_open78_y3x6 r t l; EXIT 0; frozenTarget axioms
+  [propext, Classical.choice, Quot.sound].
+- #discharges (VERIFIED, scratch/y3-x6b/discharges.txt): "30 open hypotheses, 14230 theorems checked, 405 discharge one"
+  (against main's OpenResearchLeaves57); 15 pre-existing reductions (same as cm-fold-rebase), 390 projections of copied
+  structures (300 _r5/_cm as in cm-fold-rebase + 90 _y3/_y3x6/59Y3); none from y3-x6b; no sorry.
+- Count (kinds.tsv rule): 5 LEAF / 28 GLUE on 33 -> 5 LEAF / 28 GLUE on 33; GLUE change 0 (strict and strictest).
+- Deliverables: scratch/y3-x6b/autofold.json, kinds-rows.tsv, kinds-remove.tsv; report docs/research/y3-x6b.md.

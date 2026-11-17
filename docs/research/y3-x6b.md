@@ -129,8 +129,19 @@ None of the `Y3X6/*` files and neither `Y3X6Fold.lean` mentions an X₆ field or
     * the new bundles' names (`_y3x6`).
 * **Dry-run fold** (`scratch/y3-x6b/MainDryRun.lean` → `maindryrun-out.txt`): fork main's `Main.lean` with the research
   bundle switched to `OpenResearchLeaves59Y3` and the H argument to `sixContactMin_of_open78_y3x6 r t l`. It is the
-  generation after `sixContactMin_of_open77_cm`. DRYRUN_RESULT
-* **`#discharges`** (`scratch/y3-x6b/Discharges.lean` → `discharges.txt`): DISCHARGES_RESULT
+  generation after `sixContactMin_of_open77_cm`. `lake env lean` exits 0, and the output is `'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice,
+  Quot.sound]` (VERIFIED).
+* **`#discharges`** (`scratch/y3-x6b/Discharges.lean` → `discharges.txt`): it imports Main, Discharges and `Y3X6Fold` (all built with `lake build`, EXIT 0,
+  `build-main.log`). The summary line is "30 open hypotheses, 14230 theorems checked, 405 discharge one" (VERIFIED).
+  * The open hypotheses are those of fork main's current `frozenTarget` (`OpenResearchLeaves57`, TailZ83). Main is not
+    switched to the CM fold on this branch.
+  * 15 of the 405 are the pre-existing reductions on main. They are the same 15 that cm-fold-rebase lists: carayol,
+    ds965, deRham ×2, javanpeykar, the two X₆ rows (`ideal_of_elkiesX6StarEvery`, `x6CoarseModuliIdeal_of_twist`),
+    deligne, GR §9 from Bost, pazuki ×4, hodgeTate ×2.
+  * The other 390 are projections `X.<field>` of copied bundle structures: cm-branch2's and cm-fold-rebase's `_r5`/`_cm`
+    copies (300, as in cm-fold-rebase) and this task's `_y3`/`_y3x6`/`59Y3` copies (90). This is the known noise for
+    copied structures.
+  * No y3-x6b theorem discharges a top field, as expected for a re-route. There is no `sorry`.
 * **Autofold spec**: `scratch/y3-x6b/autofold.json`. It is a hand fold (re-route): replace
   `sixContactMin_of_open77_cm r t l` by `sixContactMin_of_open78_y3x6 r t l` and the bundle `OpenResearchLeaves58CM` by
   `OpenResearchLeaves59Y3`, and import `ZInQKernel.Contrib.OneProof.Y3X6Fold`. It removes the two X₆ fields and lists the
