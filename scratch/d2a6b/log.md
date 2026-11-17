@@ -54,3 +54,18 @@ Base: fork main d435851d; merged origin/wip/d2a6-reroute (698c8c9e) and origin/w
   silverbergZarhinThm35 (raynaudSemistableSHOr := raynaudSemistableSHOr_of_sz35) and y3FullThreeRepZ30.
   Count (kinds.tsv of f3402e89): strict 5/24 on 29 → 5/24 on 29; strictest 5/24 → 5/24. Count-neutral.
   `lake env lean scratch/d2a6b/BypassFold.lean`: 0 errors; `sixContactMin_of_open77`: standard axioms (bypass-out.txt).
+
+## Closure check and Step 3 PruneScan (VERIFIED)
+
+- ClosureCheck.lean (bypass module + check), `lake env lean`: closure of open77 274360 constants. Absent:
+  SGA7_IX_3_5_ForwardGeom_Def34, SGA7_IX_3_5_ForwardGeom, both RaynaudCriterionNF, GapNeron.RaynaudCriterionNF,
+  QML3.goodReduction, raynaudPlace_of_R6, torsFix_of_descent, modelG3G6_of_leaves3, good_of_QML3,
+  **SGRSplit.ShimuraIntegralModelRep**, sorryAx. Present: RaynaudWildNF, ElliotWildInertiaTrivial,
+  SilverbergZarhinThm35, Y3FullThreeRepZ30, Y3FineModuliAbP (through y3FineModuliAbP_of_z30), RaynaudSemistableSHOr
+  (through raynaudSemistableSHOr_of_sz35), SGA7_IX_Cor3_3_Def34. Control open76: old ones present,
+  ShimuraIntegralModelRep absent. Residual name: ReductSplit.SemistableUnipotent._proof_2 (auxiliary proof term).
+- PruneScan (PruneScanBypass.lean, 9m21s): top-level fields unused: base open76 0 of 27+0+2; bypass open77 0 of
+  27+0+2. Prune set empty in both. Live chain bundles (the U copies) have exactly the unused fields of their
+  originals in base (prunescan-summary.txt): no field lost its last reader. `mulEtaleAbelianScheme` is a field only
+  of the old textbook generations OpenTextbookLeaves7-10, unused in base and bypass alike (on this base the live
+  textbook bundle OpenTextbookLeaves18 has 0 fields); nothing to prune.
