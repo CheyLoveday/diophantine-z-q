@@ -37,34 +37,30 @@ polynomial. It is retired and kept at the tag
 [`route-k-final`](https://github.com/Deicyde/diophantine-z-q/tree/route-k-final);
 [`docs/research/rs-pole.md`](docs/research/rs-pole.md) explains why it existed.
 
-## Status (fork `main` at `da9f973f`, 2026-11-17)
+## Status (fork `main` at `09be94bd`, 2026-11-17)
 
 - **One theorem, [`ZInQ.OneProof.frozenTarget`](ZInQKernel/OneProof/Main.lean), proves `ZInQ.FrozenTarget` from
-  36 open hypotheses, statements not yet proved in Lean.** Lean's kernel checks it with no `sorry` and only the
+  30 open hypotheses, statements not yet proved in Lean.** Lean's kernel checks it with no `sorry` and only the
   standard axioms `propext`, `Classical.choice` and `Quot.sound`. Everything else, including every finite
   computation, is proved in Lean. So far only the project's own machines have run this check: no hosted runner or
   third party has finished a build of the theorem ([#62](https://github.com/Deicyde/diophantine-z-q/issues/62)).
   The [main build cache](.github/workflows/main-build-cache.yml) workflow builds it after each push to `main` and,
   once a build finishes, fails unless the axioms are among these three.
-- **The hypotheses are premises, not axioms:** Lean proves "if they all hold, then ℤ is Diophantine in ℚ". 31 belong
-  to the six-contact height estimate (the manuscript's Theorem 4.1) and 5 to the positive-rank part
-  (Tian–Yuan–Zhang and Gross–Zagier). Each is classed as a published theorem (24), a consequence of one (9) or a
-  combination of several (3). Under the project's strict count, 16 are published theorems in their printed form; the
-  other 20 still need an argument or a reading. AI raters assigned these classes. An AI audit on 2026-11-17 read
-  the 32 of these hypotheses that existed then, found none false, and moved four out of "published"
+- **The hypotheses are premises, not axioms:** Lean proves "if they all hold, then ℤ is Diophantine in ℚ". 29 belong
+  to the six-contact height estimate (the manuscript's Theorem 4.1). The other one is pole completeness (the
+  manuscript's Theorem 5.2), which is the manuscript's own claim and not a published theorem. Of the 29, 12 are
+  classed as published theorems and 17 as consequences of one. Under the project's strict count, 5 are published
+  theorems in their printed form; the other 24 still need an argument or a reading. AI raters assigned these
+  classes, and an AI audit on 2026-11-17 re-rated the list
   ([#63](https://github.com/Deicyde/diophantine-z-q/issues/63),
-  [#64](https://github.com/Deicyde/diophantine-z-q/issues/64),
   [#65](https://github.com/Deicyde/diophantine-z-q/issues/65)). The live list, with each statement's source, rating
   and holder, is [`docs/one-proof/OPEN.md`](docs/one-proof/OPEN.md).
-- **Progress:** 65 open hypotheses on 2026-11-15, 36 on 2026-11-17. The count falls when a hypothesis is proved and
-  also when it is restated as one or more printed statements, so it does not measure proved content: the generated
-  folds `TailZ25` to `TailZ65` removed 63 hypotheses and added 42.
+- **Progress:** 65 open hypotheses on 2026-11-15, 30 on 2026-11-17. The count falls when a hypothesis is proved,
+  when it is restated as one or more printed statements, and when the route changes (the switch away from Route K
+  removed five hypotheses and added pole completeness), so it does not measure proved content.
 - **AI caveat.** The manuscript was written with AI models and audited by an AI model, and the project's Lean was
   written by AI coding agents. Published hypotheses have been compared with their printed sources only by AI readers,
-  and the newest (flagged `unread` on OPEN.md) not at all; no person has confirmed one yet. The Tian–Yuan–Zhang
-  paper behind two of the hypotheses has errors that those hypotheses work around
-  ([`docs/research/rv-tyz-inputs.md`](docs/research/rv-tyz-inputs.md),
-  [#64](https://github.com/Deicyde/diophantine-z-q/issues/64)).
+  and the newest (flagged `unread` on OPEN.md) not at all; no person has confirmed one yet.
 
 ## Upstream
 
