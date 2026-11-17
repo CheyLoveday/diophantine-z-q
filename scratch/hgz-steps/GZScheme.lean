@@ -349,4 +349,66 @@ theorem ptOf_eq_modPt [E.IsElliptic] {Px Qx Py Qy : MvPolynomial (Fin 2) ℚ}
     have := hx s Px Qx (by rw [hs]; exact hrx')
     exact not_tendsto_atTop_of_tendsto_nhds this.norm hpole
 
+
+/-! ## §6. The cusp `∞` exists on every model -/
+
+/-- The valuation ring of `ord_q` (the place `∞`) in `ℚ(X₀(N))`. -/
+def qVal (N : ℕ) [NeZero N] : ValuationSubring (X0Field N) where
+  carrier := {g | 0 ≤ HahnSeries.addVal ℤ ℚ (g : LaurentSeries ℚ)}
+  mul_mem' {a b} ha hb := by
+    simp only [Set.mem_setOf_eq, IntermediateField.coe_mul, AddValuation.map_mul] at *
+    exact add_nonneg ha hb
+  one_mem' := by simp
+  add_mem' {a b} ha hb := by
+    simp only [Set.mem_setOf_eq, IntermediateField.coe_add] at *
+    exact le_trans (le_min ha hb) (AddValuation.map_add _ _ _)
+  zero_mem' := by simp
+  neg_mem' {a} ha := by
+    simp only [Set.mem_setOf_eq, IntermediateField.coe_neg, AddValuation.map_neg] at *
+    exact ha
+  mem_or_inv_mem' a := by
+    by_cases ha : a = 0
+    · left; simp [ha]
+    have ha' : (a : LaurentSeries ℚ) ≠ 0 := by simpa using ha
+    have hia : ((a⁻¹ : X0Field N) : LaurentSeries ℚ) ≠ 0 := by simpa using ha
+    have h1 : HahnSeries.addVal ℤ ℚ (a : LaurentSeries ℚ) +
+        HahnSeries.addVal ℤ ℚ ((a⁻¹ : X0Field N) : LaurentSeries ℚ) = 0 := by
+      rw [← AddValuation.map_mul, ← IntermediateField.coe_mul, mul_inv_cancel₀ ha,
+        IntermediateField.coe_one, AddValuation.map_one]
+    simp only [Set.mem_setOf_eq]
+    rw [HahnSeries.addVal_apply_of_ne ha', HahnSeries.addVal_apply_of_ne hia] at h1 ⊢
+    have h2 : (a : LaurentSeries ℚ).order + ((a⁻¹ : X0Field N) : LaurentSeries ℚ).order = 0 := by
+      exact_mod_cast h1
+    rcases le_total 0 (a : LaurentSeries ℚ).order with h | h
+    · left; exact_mod_cast h
+    · right; exact_mod_cast (show (0 : ℤ) ≤ ((a⁻¹ : X0Field N) : LaurentSeries ℚ).order by omega)
+
+theorem rat_mem_qVal (N : ℕ) [NeZero N] (c : ℚ) : algebraMap ℚ (X0Field N) c ∈ qVal N := by
+  show 0 ≤ HahnSeries.addVal ℤ ℚ ((algebraMap ℚ (X0Field N) c : X0Field N) : LaurentSeries ℚ)
+  by_cases hc : c = 0
+  · simp [hc]
+  have hcst : ((algebraMap ℚ (X0Field N) c : X0Field N) : LaurentSeries ℚ) = HahnSeries.single 0 c :=
+    (RingHom.congr_fun (Subsingleton.elim (((X0Field N).val : X0Field N →+* LaurentSeries ℚ).comp
+      (algebraMap ℚ (X0Field N))) HahnSeries.C) c).trans rfl
+  rw [hcst, HahnSeries.addVal_apply_of_ne (by simpa using hc), HahnSeries.order_single hc]
+  rfl
+
+/-- `ℚ` inside the comap of a valuation subring of `ℚ(X₀(N))` containing `ℚ`. -/
+def ratToComap {N : ℕ} [NeZero N] {X : Scheme.{0}} [IsIntegral X] (e : X.functionField ≃+* X0Field N)
+    (O : ValuationSubring (X0Field N)) (hO : ∀ c : ℚ, algebraMap ℚ (X0Field N) c ∈ O) :
+    ℚ →+* O.comap (e : X.functionField →+* X0Field N) :=
+  ((e.symm : X0Field N →+* X.functionField).comp (algebraMap ℚ (X0Field N))).codRestrict _
+    (fun c => by
+      rw [ValuationSubring.mem_comap]
+      simpa using hO c)
+
+theorem exists_cusp {N : ℕ} [NeZero N] (X : Scheme.{0}) [IsIntegral X]
+    (sX : X ⟶ Spec (CommRingCat.of ℚ)) [IsProper sX] (e : X.functionField ≃+* X0Field N) :
+    ∃ p : X, IsCuspInfty N e p := by
+  obtain ⟨p, θ, -, hθ⟩ := exists_center X sX ((qVal N).comap (e : X.functionField →+* X0Field N))
+    (ratToComap e (qVal N) (rat_mem_qVal N))
+  refine ⟨p, fun s => ?_⟩
+  rw [← hθ s]
+  exact (θ s).2
+
 end ZInQ.GZSch
