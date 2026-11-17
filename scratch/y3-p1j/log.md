@@ -47,3 +47,12 @@
   (TailZ36:102) and babaGranathRationalAb (TailZ37:91); elkiesX6StarPrinted -> elkiesEquationsX6Ab (TailZ29:106; -> x6ConicModel ->
   x6KummerFibre -> NoCM, EichlerBoundCopy:2668) and HeckeSqrtBranchAny (sgr-direct, EichlerBoundCopy:3221, Lemma NV route).
   So re-sourcing R2 (babaGranathRationalAb) leaves both fields read: neither can be dropped on this base.
+- ToP1DescendsAlongSurj PROVED (VERIFIED, compiled, standard axioms): ZInQKernel/Contrib/OneProof/Y3ToP1jDescent.lean,
+  `Y3P1j.Descent.toP1DescendsAlongSurj_proof`. Ingredients: p1-quot's P1Scheme.lean copied (namespace Y3P1j.P1;
+  `ProjectiveSpace` qualified as `AlgebraicGeometry.ProjectiveSpace`, else ambiguous with Mathlib's root ProjectiveSpace),
+  giving the CloudW07 projective line proper + smooth of rel. dim 1 + IsP1CoordinateQ + every ToP1 a pullback (p1SchemeQ_body);
+  new `pt_eq_of_val` (points of a P^1-coordinatized Q-scheme determined by the coordinate; X6Glue.ev_injective + ext_rat +
+  evaluation_eq_zero_iff_notMem_basicOpen at infinity), `val_congr`; then factorThroughSurj_proof.
+  Corollaries: `hauptmodulOfX6_of_y3ToP1j' : Y3ToP1j -> HauptmodulOfX6`, `r1r2W_of_y3ToP1j'` (no new glue).
+  `lake build +ZInQKernel.Contrib.OneProof.Y3ToP1jDescent` OK; axioms in scratch/y3-p1j/axioms.txt.
+- #discharges rerun with Y3ToP1jDescent imported: still no line mentioning Y3P1j (VERIFIED).
