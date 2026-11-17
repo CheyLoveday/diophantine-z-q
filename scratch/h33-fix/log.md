@@ -10,3 +10,7 @@
 - ThetaE.lean COMPILES (VERIFIED): e4T_eq, e6T_eq (rank one, Mathlib), j_theta, j_eta (j(τ)·jDen(x,y) = jNum(x,y),
   jDen ≠ 0), j32_eta (j(32τ)·j32Den(x) = j32Num(x)). Needed `lake build ...JacobiLambdaDeriv` first (11342 jobs).
 - 00:50 ZInQKernel/Contrib/OneProof/TYZThm33Alg.lean + TYZThm33Alg/ThetaJ.lean: lake build success (VERIFIED, build-output.txt). jq_rel/jq32_rel need maxHeartbeats 4e6 (instance defeq on LaurentSeries ℂ).
+- 01:00 #discharges (VERIFIED): DISCHARGES [h33] by ZInQ.H33Fix.tyzThm33_of_alg, still assumes
+  [T5Glue.ShimuraMainCM, ZInQ.H33Fix.TYZThm33Alg]; axioms standard. FoldCheck frozenTarget_h33Alg compiles, rfl-equal.
+- TYZ source re-read (VERIFIED): L1173-1174 "isomorphic to (X_0(32),∞). Fix an identification i_0"; L1296-1311 display.
+- Report docs/research/h33-fix.md; autofold.json; kinds-row.tsv.
