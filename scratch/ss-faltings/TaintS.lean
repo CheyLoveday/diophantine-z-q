@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ79
+import ZInQKernel.OneProof.H.TailZ83
 import Lean
 /-! ss-faltings (adapted from d2a6-reroute's TaintD.lean and TaintD2.lean): in the closure of the top theorem,
 (T) constants whose value depends transitively on a seed projection (the Cor. 3.3 fields `sga7_IX_Cor3_3_Def34`,
@@ -7,7 +7,7 @@ SS fields `semistableReductionThm`, `semistableNeronBaseChange`, `semistablePers
 mentions a carrier (a structure whose constructor type mentions a seed type) or a seed type. -/
 open Lean
 
-def topName : Name := `HDec.HSyn.sixContactMin_of_open72
+def topName : Name := `HDec.HSyn.sixContactMin_of_open76
 
 def ccValue? (ci : ConstantInfo) : Option Expr :=
   match ci with
@@ -78,6 +78,8 @@ run_cmd do
         if let some (.ctorInfo cv) := env.find? info.ctorName then carriers := carriers.insert cv.induct
   IO.println s!"===== SSF"
   IO.println s!"carriers {carriers.toList}"
+  for c in carriers.toList do
+    IO.println s!"C {modOf env c} {c}"
   let mut out : Array String := #[]
   for c in tainted.toList do
     let uses := (valUses.getD c #[]).toList.filter (fun u => (u.toString.splitOn "HDec").length > 1)

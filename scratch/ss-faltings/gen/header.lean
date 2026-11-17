@@ -1,5 +1,5 @@
 import @TOPMOD@
-import ZInQKernel.Contrib.OneProof.SSFaltings
+import ZInQKernel.Contrib.OneProof.SSFaltingsGR9
 
 /-! # ss-faltings: the chain of `@TOP@` rerouted off SGA 7 IX Cor. 3.3
 

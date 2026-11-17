@@ -14,8 +14,8 @@ counts. It stops with an error if an edit target is missing. It changes nothing 
 
 Usage (repository root):
     python3 scratch/ss-faltings/gen/gen_bypass.py [TOP_MODULE R0 OLD_TOP NEWR NEW_TOP TEXTBOOK ADDED]
-defaults: ZInQKernel.OneProof.H.TailZ79 OpenResearchLeaves53 sixContactMin_of_open72 OpenResearchLeaves54SF
-          sixContactMin_of_open73sf OpenTextbookLeaves18 OpenAddedLeaves27
+defaults: ZInQKernel.OneProof.H.TailZ83 OpenResearchLeaves57 sixContactMin_of_open76 OpenResearchLeaves58SF
+          sixContactMin_of_open77sf OpenTextbookLeaves18 OpenAddedLeaves27
 """
 import csv, importlib.util, os, sys
 
@@ -27,8 +27,8 @@ af = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(af)
 import render_open  # noqa: E402 (autofold put scripts/one_proof on sys.path)
 
-D = ['ZInQKernel.OneProof.H.TailZ79', 'OpenResearchLeaves53', 'sixContactMin_of_open72', 'OpenResearchLeaves54SF',
-     'sixContactMin_of_open73sf', 'OpenTextbookLeaves18', 'OpenAddedLeaves27']
+D = ['ZInQKernel.OneProof.H.TailZ83', 'OpenResearchLeaves57', 'sixContactMin_of_open76', 'OpenResearchLeaves58SF',
+     'sixContactMin_of_open77sf', 'OpenTextbookLeaves18', 'OpenAddedLeaves27']
 TOPMOD, R0, OLD_TOP, NEWR, NEW_TOP, TB, AD = (ARGS + D[len(ARGS):]) if len(ARGS) <= len(D) else af.die('too many args')
 OUT = 'scratch/ss-faltings/BypassFold.lean'
 ROWS = 'scratch/ss-faltings/kinds-rows.tsv'

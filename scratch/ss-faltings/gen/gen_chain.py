@@ -1,4 +1,4 @@
-"""ss-faltings generator: writes the chain of the top theorem (default `sixContactMin_of_open72`) rerouted off SGA 7 IX
+"""ss-faltings generator: writes the chain of the top theorem (default `sixContactMin_of_open76`, module TailZ83) rerouted off SGA 7 IX
 Cor. 3.3 (the research field `sga7_IX_Cor3_3_Def34` and its descendants) onto Faltings' invariance of the semistable
 height (`ZInQ.SSFaltings.FaltingsSemistableHeightBC`, Faltings 1983) and Raynaud's criterion
 (`ZInQ.SSFaltings.SemistableReductionThmIF`, proved in `Contrib/OneProof/SSFaltings.lean`), as one Lean module.
@@ -28,8 +28,8 @@ from copylib import emit, find_decl
 copylib.CTX = re.compile(copylib.CTX.pattern[:-1] + r"|attribute \[-instance)")
 
 H = "ZInQKernel/OneProof/H/"
-TOPMOD = sys.argv[2] if len(sys.argv) > 2 else "ZInQKernel.OneProof.H.TailZ79"
-TOP = "HDec.HSyn." + (sys.argv[3] if len(sys.argv) > 3 else "sixContactMin_of_open72")
+TOPMOD = sys.argv[2] if len(sys.argv) > 2 else "ZInQKernel.OneProof.H.TailZ83"
+TOP = "HDec.HSyn." + (sys.argv[3] if len(sys.argv) > 3 else "sixContactMin_of_open76")
 TS = "scratch/ss-faltings/taintS-out.txt"
 F = "_root_.ZInQ.SSFaltings.FaltingsSemistableHeightBC"
 IF = "_root_.ZInQ.SSFaltings.SemistableReductionThmIF"
@@ -176,25 +176,40 @@ SS13_BODY = (
     "    (_root_.GapNeron.neronSchemeModelExistsNF t.neronSchemeExtensionExists)\n"
     "    (_root_.ReductGlue.semistableLocalGlobal_leaf (_root_.CToPrinted.neronLocalizesDVR_of_printed r.blr_1_2_4))")
 
+# each row: alternatives (old reader -> new reader); exactly one alternative of each row must occur in
+# `heightRowsNo20_of8_hf_eb` (bost-gr9, fold-b112, moved R21 from TailY's `r21_of_leaves'` to `BostGR9.r21_of_grBost'`)
 READER_SUBS = [
-    ("_root_.ZInQ.HeightSplit.r18_of_leaves", "_root_.ZInQ.SSFaltings.r18_of_leavesF"),
-    ("_root_.ZInQ.HeightSplit.r19_of_leaves", "_root_.ZInQ.SSFaltings.r19_of_leavesF"),
-    ("_root_.ZInQ.HeightSplit.r21_of_leaves'", "_root_.ZInQ.SSFaltings.r21_of_leavesF"),
-    ("_root_.ZInQ.HeightSplit.r22_of_upper", "_root_.ZInQ.SSFaltings.r22_of_upperF"),
-    ("_root_.ZInQ.HeightSplit.stableHeightFinite_of'", "_root_.ZInQ.SSFaltings.stableHeightFinite_ofF"),
+    [("_root_.ZInQ.HeightSplit.r18_of_leaves", "_root_.ZInQ.SSFaltings.r18_of_leavesF")],
+    [("_root_.ZInQ.HeightSplit.r19_of_leaves", "_root_.ZInQ.SSFaltings.r19_of_leavesF")],
+    [("_root_.ZInQ.HeightSplit.r21_of_leaves'", "_root_.ZInQ.SSFaltings.r21_of_leavesF"),
+     ("_root_.ZInQ.BostGR9.r21_of_grBost'", "_root_.ZInQ.SSFaltings.r21_of_grBostF'")],
+    [("_root_.ZInQ.HeightSplit.r22_of_upper", "_root_.ZInQ.SSFaltings.r22_of_upperF")],
+    [("_root_.ZInQ.HeightSplit.stableHeightFinite_of'", "_root_.ZInQ.SSFaltings.stableHeightFinite_ofF")],
 ]
+
+
+def carrier_modules(path):
+    out = {}
+    for l in open(path).read().split("\n"):
+        m = re.match(r"^C (\S+) (\S+)$", l)
+        if m:
+            out[m.group(2)] = m.group(1)
+    return out
 
 
 def main():
     nodes = parse_lines(TS)
     carriers = carriers_of(TS)
 
+    cmods = carrier_modules(TS)
+
     def carrier_file(cs):
-        for cand in sorted(os.listdir(H)):
-            p = H + cand
-            if cand.endswith(".lean") and re.search(r"^structure " + cs.split(".")[-1] + r" ", open(p).read(), re.M):
-                return p
-        raise SystemExit("no file for carrier " + cs)
+        if cs not in cmods:
+            raise SystemExit("no module line (C ...) for carrier " + cs + " in " + TS)
+        p = mod2file(cmods[cs])
+        if not re.search(r"^structure " + cs.split(".")[-1] + r" ", open(p).read(), re.M):
+            raise SystemExit("carrier " + cs + " not found in " + p)
+        return p
     cfile = {cs: carrier_file(cs) for cs in carriers}
 
     def parent(n):
@@ -280,9 +295,11 @@ def main():
             txt = new
             cnt["ss13"] += 1
         if s == "heightRowsNo20_of8_hf_eb":
-            for a, b in READER_SUBS:
-                if a not in txt:
-                    raise SystemExit(f"heightRowsNo20_of8_hf_eb: {a} not found")
+            for alts in READER_SUBS:
+                hit = [(a, b) for a, b in alts if re.search(re.escape(a) + r"(?![\w'])", txt)]
+                if len(hit) != 1:
+                    raise SystemExit(f"heightRowsNo20_of8_hf_eb: {len(hit)} of the readers {[a for a, _ in alts]} found")
+                a, b = hit[0]
                 txt = re.sub(re.escape(a) + r"(?![\w'])", b, txt)
             n1 = len(re.findall(r"\br\.semistableReductionThm\b", txt))
             n2 = len(re.findall(r"\br\.semistableNeronBaseChange\b", txt))
