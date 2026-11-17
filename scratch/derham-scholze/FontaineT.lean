@@ -85,6 +85,7 @@ theorem root_flatAct (σ : GQp p) {ε : PreTilt 𝓞_ℂ_[p] p} (h : PreTilt.unt
 
 /-! ## §3. `log [σ ε₀] = χ(σ) log [ε₀]` -/
 
+open ZInQ.Contrib.G9.BdrKer.Cp (root root_pow) in
 theorem logTeich_flatAct {ε₀ : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε₀) (σ : GQp p) :
     logTeich p (show PreTilt.untilt (flatAct p σ ε₀) = 1 by rw [DR.untilt_preTiltMap, h.1, map_one]) =
       zpB p (cyclotomicCharacter (PadicAlgCl p) p σ.toRingEquiv : ℤ_[p]) * logTeich p h.1 := by
@@ -119,11 +120,17 @@ theorem logSeries_eq : ∃ g : (AinfP p)⟦X⟧, logSeries p = X + X ^ 2 * g := 
 theorem psEval_X {x : AinfP p} (hx : x ∈ Ith p) :
     psEval (Ith p) hx PowerSeries.X = AdicCompletion.of (Ith p) (AinfP p) x := by
   refine AdicCompletion.ext_evalₐ fun n => ?_
-  rw [evalₐ_psEval]
-  rcases n with _ | n
-  · exact Subsingleton.elim _ _
-  · rw [AdicCompletion.evalₐ_of, PowerSeries.trunc_X]
-    simp
+  rw [evalₐ_psEval, AdicCompletion.evalₐ_of]
+  apply Ideal.Quotient.eq.mpr
+  rcases n with _ | _ | n
+  · rw [pow_zero, Ideal.one_eq_top]; trivial
+  · have h0 : PowerSeries.trunc 1 (PowerSeries.X : PowerSeries (AinfP p)) = 0 := by
+      ext i
+      simp [PowerSeries.coeff_trunc, PowerSeries.coeff_X]
+    rw [h0, Polynomial.eval_zero, zero_sub, zero_add, pow_one]
+    exact neg_mem hx
+  · rw [PowerSeries.trunc_X, Polynomial.eval_X, sub_self]
+    exact zero_mem _
 
 /-- TDict's generator `ε₀ = (1, ζ_p, ζ_{p²}, …)`. -/
 abbrev eps0 : PreTilt 𝓞_ℂ_[p] p := DeRhamPrint.TDict.eps (DeRhamPrint.TDict.rootSystem p)
@@ -144,15 +151,26 @@ theorem logTeich_sub_xe_mem :
   obtain ⟨g, hg⟩ := logSeries_eq p
   have hxe : DeRhamPrint.TDict.xe (DeRhamPrint.TDict.rootSystem p) =
       psEval (Ith p) (teich_sub_one_mem p (isGenEps_eps0 p).1) PowerSeries.X := by
-    rw [psEval_X, DeRhamPrint.TDict.xe, DeRhamPrint.TDict.plus, RingHom.comp_apply, map_sub, map_one]
+    rw [psEval_X, DeRhamPrint.TDict.xe]
+    simp only [map_sub, map_one]
     rfl
   have hmem : DeRhamPrint.TDict.xe (DeRhamPrint.TDict.rootSystem p) ∈ Ideal.span {DeRhamPrint.TDict.varpi p} := by
     have := DeRhamPrint.TDict.xe_mem (DeRhamPrint.TDict.rootSystem p)
     rwa [ZInQ.Contrib.G9.BdrKer.Cp.maximalIdeal_BDeRhamPlus] at this
   obtain ⟨d, hd⟩ := Ideal.mem_span_singleton'.mp hmem
   change psEval (Ith p) (teich_sub_one_mem p (isGenEps_eps0 p).1) (logSeries p) - _ ∈ _
-  rw [hg, map_add, ← hxe, add_sub_cancel_left, map_mul, map_pow, ← hxe, ← hd, Ideal.mem_span_singleton']
-  exact ⟨d ^ 2 * psEval (Ith p) (teich_sub_one_mem p (isGenEps_eps0 p).1) g, by ring⟩
+  rw [hg, map_add, ← hxe]
+  have key : (psEval (Ith p) (teich_sub_one_mem p (isGenEps_eps0 p).1) (PowerSeries.X ^ 2 * g) :
+      BDeRhamPlus 𝓞_ℂ_[p] p) ∈ Ideal.span {DeRhamPrint.TDict.varpi p ^ 2} := by
+    rw [map_mul, map_pow, ← hxe, ← hd]
+    have h1 : (d * DeRhamPrint.TDict.varpi p) ^ 2 ∈
+        (Ideal.span {DeRhamPrint.TDict.varpi p ^ 2} : Ideal (BDeRhamPlus 𝓞_ℂ_[p] p)) := by
+      rw [mul_pow]
+      exact Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self _)
+    rw [mul_comm]
+    exact Ideal.mul_mem_left _ _ h1
+  convert key using 1
+  exact add_sub_cancel_left _ _
 
 theorem maximalIdeal_eq_logTeich :
     IsLocalRing.maximalIdeal (BDeRhamPlus 𝓞_ℂ_[p] p) = Ideal.span {logTeich p (isGenEps_eps0 p).1} := by
@@ -162,7 +180,7 @@ theorem maximalIdeal_eq_logTeich :
   have hsq_le : (Ideal.span {DeRhamPrint.TDict.varpi p ^ 2} : Ideal (BDeRhamPlus 𝓞_ℂ_[p] p)) ≤
       IsLocalRing.maximalIdeal _ := by
     rw [Ideal.span_le, Set.singleton_subset_iff]
-    exact Ideal.pow_mem_of_mem _ (DeRhamPrint.TDict.varpi_mem_max p) 2 (by norm_num)
+    exact Ideal.pow_mem_of_mem _ (DeRhamPrint.TDict.varpi_mem_max (p := p)) 2 (by norm_num)
   have htm : t ∈ IsLocalRing.maximalIdeal (BDeRhamPlus 𝓞_ℂ_[p] p) := by
     have : t = DeRhamPrint.TDict.xe Z + (t - DeRhamPrint.TDict.xe Z) := by ring
     rw [this]
@@ -208,3 +226,5 @@ theorem fontaineTwistT_proof : FontaineTwistT' := by
 end
 
 end DeRhamScholze.TT
+
+#print axioms DeRhamScholze.TT.fontaineTwistT_proof
