@@ -154,3 +154,33 @@ Base wip/leaf-fold33b d804d07d (= fork main + fold-b115). H top `HDec.HSyn.sixCo
    potentially semistable) unchanged from fold-b115 (gap filled for the citation; the BC 9.2.10 identification remains
    GLUE, now reduced in Lean to the one Prop log[p~] not in Frac(B_max)); the Galois half of Fontaine's argument is an
    on-the-spot (c) fill, proved (logp-transc §1). No errors.
+
+## Item 5: docs edits (inbox 78 items 1-2, inbox 80)
+1. `python3 scratch/fold-b116/rows_items45.py docs` (VERIFIED by the diff):
+   - javanpeykarThm111An: "(Szpiro, Asterisque 127, Lemme 3.2.1, Ch. I)" -> "(Szpiro (ed.), Asterisque 127, Chap. I,
+     Lemme 3.2.1)"; appended "; locators page-checked 11-17: arXiv v1 p. 1 (Thm 1.1.1), p. 9 (§2.3); ANT p. 90; ANT
+     p. 98 not reachable, arXiv v1 is the cited print"; leading "reading risk: " dropped and flag_class reading-risk
+     -> note (no other reading risk in the flag: the remaining items are a ruling request on the composite, the
+     semistability-clause note and "locators UNVERIFIED" for the Faltings/Deligne independence step). Rating
+     consequence GLUE/GLUE unchanged (the flag still contains "UNVERIFIED", so must_be_glue). pages-wanted loses the
+     row.
+   - r9a source: "Faltings 1983 Satz 3" -> "Faltings 1983 §5 Endomorphismen, Satz 3, p. 360"; r9b source: "Faltings
+     1983 Satz 4, Kor. 1" -> "Faltings 1983 §5, Satz 4 p. 360 and Korollar 1 p. 361"; dsThm966Printed source locator
+     -> "Deligne-Serre, Thm 4.1 with (4.1.1), pp. 513-514", flag + " (print not in the manuscript's bibliography)".
+     Ratings unchanged.
+   - Docstrings: dsThm966Printed field docstring in TailZ86 (the newest module; rebuilt anyway): "p. 514" -> "pp.
+     513-514". r9a/r9b fields have no docstring in the bundles. The r9a docstring at Contrib/G9/I3Layer.lean:879
+     (`PkgI3.FaltingsSemisimple`) NOT edited: the module is low in the import graph and no fold of this task rebuilds
+     it (inbox 78: docstring edits only in modules the fold rebuilds anyway). Inbox 78 item 3 waits for #90.
+   - claims.tsv (inbox 80, hand edit): hPC row added exactly as given (task "#83 / PR #90 (Theorem 5.3 headline)",
+     status "PR #90 under review", holder_kind project, public_holder project, claim_url .../pull/90, hold held; since
+     and issue empty). No PoincareComplement row: AVB1.PoincareComplement is not an open field on this head (OPEN.md
+     lists 29 H fields + hPC; none is PoincareComplement). pazukiCor13Upper row dropped: origin/wip/pazuki-inputs last
+     commit 11-16 23:33 PST, origin/wip/pazuki-route last commit 11-17 02:49 PST, no activity after 11-17 12:00 PST.
+2. Build: TailZ86 + Main + Discharges ok (16002 jobs), frozenTarget standard.
+3. Checks (`run_checks.sh 5 hashes_fold4.txt`, VERIFIED): hash guard unchanged (21041, nothing changed: docstring
+   only); closure as after item 3; OpenStatements 30; render_open, `--check` ok; DischargesTest 18; crosswalk ok;
+   autoform exit 0; GATE=ok.
+   **render_open count after item 5: 30 open (H 29, strictest 5/24, 1 other); 5/24 on 29.**
+4. Manuscript check: not applicable to locator text, except: Deligne-Serre is not in the manuscript's bibliography
+   (VERIFIED: no bibitem for deligne-serre in diophantine_zq.tex); Faltings 1983 is (bibitem faltings1983 L11084).
