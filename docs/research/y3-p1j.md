@@ -1,7 +1,8 @@
 # y3-p1j: the leaf `Y3ToP1j`, the N-action on the integral model, and the moduli row's R2 re-sourced to `Y₃ → P¹_j`
 
 Task y3-p1j, 2026-11-17. Branch wip/y3-p1j, started at the tip of y3-route-a (6558e2ffa). Lean:
-`ZInQKernel/Contrib/OneProof/Y3ToP1j.lean` (namespace `Y3P1j`). Scratch: `scratch/y3-p1j/` (log, computations,
+`ZInQKernel/Contrib/OneProof/Y3ToP1j.lean` (namespace `Y3P1j`) and `ZInQKernel/Contrib/OneProof/Y3ToP1jDescent.lean`
+(the descent glue, proved). Scratch: `scratch/y3-p1j/` (log, computations,
 axioms, `#discharges`, grep evidence, kinds rows).
 
 Marks: **VERIFIED** means compiled, computed, or read in the source. **STANDARD** means a published argument with a
@@ -41,8 +42,10 @@ is in neither the manuscript nor a print read here.
    * `hauptmodulOfX6_of_y3ToP1j : Y3ToP1j → ToP1DescendsAlongSurj → PairsLift → HauptmodulOfX6`.
    * `r1r2W_of_y3ToP1j` builds the row `LeafAdopt.R1R2fpRepW` with R2 from `Y3ToP1j` instead of from Baba–Granath
      on `X₆`. `PairsLift` comes from the proved `mumfordTorsionAlgClosed_proof`.
-   * The one new glue Prop is `ToP1DescendsAlongSurj`, the descent of a map to `P¹` along `Y₃ → X₆`. It is the
-     proved `FactorThroughSurj` with target `P¹_ℚ`, plus the chart dictionary. It is not proved here.
+   * The descent of a map to `P¹` along `Y₃ → X₆` was stated as glue (`ToP1DescendsAlongSurj`) and is
+     **proved** in `ZInQKernel/Contrib/OneProof/Y3ToP1jDescent.lean` (`toP1DescendsAlongSurj_proof`, standard
+     axioms). So `hauptmodulOfX6_of_y3ToP1j' : Y3ToP1j → HauptmodulOfX6` and `r1r2W_of_y3ToP1j'` rest on
+     `Y3ToP1j` alone, with no new glue.
    * **Neither `x6CoarseModuliIdeal` nor `elkiesX6StarEveryIdeal` can be dropped on this base** (grep over the
      whole tree, §5.2). R2 was their only use on the cm-branch base, not on this one:
      * `x6CoarseModuliIdeal` still supplies the row's `X₆` witness (`X6Props`, `CoarseX6OfFineW`) and
@@ -202,6 +205,12 @@ theorem hauptmodulOfX6_of_y3ToP1j (hY : Y3ToP1j) (hD : ToP1DescendsAlongSurj) (h
     HauptmodulOfX6
 theorem r1r2W_of_y3ToP1j (hE : CanonicalModelY3) (hX : CoarseX6OfFineW) (hY : Y3ToP1j)
     (hD : ToP1DescendsAlongSurj) (hR : ReciprocityOfFine) (h5 : ResidueOfX6) : HDec.LeafAdopt.R1R2fpRepW
+
+-- Y3ToP1jDescent.lean
+theorem toP1DescendsAlongSurj_proof : Y3P1j.ToP1DescendsAlongSurj
+theorem hauptmodulOfX6_of_y3ToP1j' (hY : Y3P1j.Y3ToP1j) : HauptmodulOfX6
+theorem r1r2W_of_y3ToP1j' (hE : CanonicalModelY3) (hX : CoarseX6OfFineW) (hY : Y3P1j.Y3ToP1j)
+    (hR : ReciprocityOfFine) (h5 : ResidueOfX6) : HDec.LeafAdopt.R1R2fpRepW
 ```
 
 How `hauptmodulOfX6_of_y3ToP1j` works:
@@ -214,12 +223,21 @@ How `hauptmodulOfX6_of_y3ToP1j` works:
 `r1r2W_of_y3ToP1j` is the kernel's `r1r2fpRep_of'W` (TailZ21), with `HauptmodulOfX6` now from `Y3ToP1j` instead of
 from `BabaGranathX6`.
 
-**`ToP1DescendsAlongSurj` is GLUE (textbook), not ON THE SPOT.** It is the kernel's proved `FactorThroughSurj`
-(`factorThroughSurj_proof`, TailZ20) applied with target `X' = P¹_ℚ`. Two pieces are missing:
-* `P¹_ℚ` as an object of `Over (Spec ℚ)` that is proper and smooth of relative dimension 1 (CloudW07's
-  `ProjectiveSpace` is in the tree);
-* the chart dictionary `ToP1 X ≃ (X ⟶ P¹_ℚ)` (Hartshorne II.7.1). p1-quot built the direction `ToP1 → hom` on its
-  own branch.
+**`ToP1DescendsAlongSurj` is proved** (`Y3P1j.Descent.toP1DescendsAlongSurj_proof`,
+`ZInQKernel/Contrib/OneProof/Y3ToP1jDescent.lean`, standard axioms, VERIFIED). The proof has three parts:
+* **P¹ as a scheme.** p1-quot's `P1Scheme.lean` (origin/wip/p1-quot) is copied with namespace `Y3P1j.P1`. It
+  gives the CloudW07 projective line `ℙ(ULift (Fin 2); Spec ℚ)`, proper and smooth of relative dimension 1 over
+  `ℚ`, with standard charts `T₁/T₀` and `T₀/T₁` that make it `P¹` by charts (`IsP1CoordinateQ`). Every
+  `σ : ToP1 Z` is the pullback of the standard chart along a morphism `m : Z → ℙ` (`p1SchemeQ_body`).
+* **New here: `pt_eq_of_val`.** A `K`-point of a `P¹`-coordinatized `ℚ`-scheme is determined by its coordinate.
+  * In the chart `U`, the ring map `Γ(U) → K` is fixed on `ℚ` (`RingHom.ext_rat`) and on the generator `f`;
+    `ℚ[X] → Γ(U)` is surjective, and the kernel's `X6Glue.ev_injective` concludes.
+  * At `∞` the same argument works in `V` with `g`, which vanishes there
+    (`evaluation_eq_zero_iff_notMem_basicOpen`).
+* **New here: `val_congr`.** `ToP1.val` reads only `(U, f)`.
+
+Then `factorThroughSurj_proof` (TailZ20) factors `m` through `f`. The hypothesis "`m` is constant on the fibres of
+`f`" comes from `pt_eq_of_val`, and `π₆` is the pullback of the standard chart.
 
 ### 5.2 Can `x6CoarseModuliIdeal` and `elkiesX6StarEveryIdeal` be dropped? No (VERIFIED by grep)
 
@@ -256,19 +274,18 @@ On the cm-branch base (origin/wip/cm-branch, not merged here), NoCM and `R5ptPro
 * **No autofold spec and no dry run.** autofold discharges a field of the top bundle. No top field is provable from
   the new statements, and none becomes unread (§5.2): the row is built inside the chain
   (`x6Rows_of_open14_hf_gm_pz_eb`), not from a top field.
-* A re-route dry run would replace that internal producer and thread `Y3ToP1j` and `ToP1DescendsAlongSurj` up to
-  the top. It would add two GLUE rows and remove none, and it was not built.
+* A re-route dry run would replace that internal producer and thread `Y3ToP1j` up to the top. It would add one GLUE
+  row and remove none, and it was not built.
 * `#discharges` with the new module imported (`scratch/y3-p1j/discharges.txt`, VERIFIED) has no line mentioning
   `Y3P1j`. `HauptmodulOfX6` and `R1R2fpRepW` are not field types.
 * **GLUE count against the base: unchanged, 4/27 on 31 (strict) and 4/27 (strictest)**, since nothing is folded. If
-  the two new statements entered the open list (only through a re-route), they would count GLUE/GLUE each:
-  31 → 33 rows, 4/29.
-* Exact kinds rows for the new statements, for when they are folded, in autofold's column format
+  `Y3ToP1j` entered the open list (only through a re-route), it would count GLUE/GLUE: 31 → 32 rows, 4/28. The
+  descent glue is proved and adds no row.
+* The exact kinds row for the new leaf, for when it is folded, in autofold's column format
   (`scratch/y3-p1j/kinds-rows.tsv`):
 
 ```
 research	y3ToP1j	consequence	ELLIOT: the manuscript's own claim (diophantine_zq.tex L425-440: N/(A_f^* K_3) acts on Y_3 with all determinant components, central ideles trivially, quotient P^1_j, deg(Y_3 -> P^1_j) <= 4|(O/3O)^*| <= 324), with the normalizer quotient identified by Baba-Granath and Lin-Yang (L420-422); every-witness form over R1fpProps; quotient read on Qbar-points as Aut(O)-twist classes (orbit dictionary ON THE SPOT); CM branch values as the kernel's Baba-Granath section 3.1 reading, locator UNVERIFIED	GLUE	GLUE	diophantine_zq.tex L420-440 (Glazer, 11/5 manuscript); Baba-Granath, Canad. J. Math. 60 (2008) Thm 2.1 and Lemma 3.1 (V/W = P^1_Q, read by the locator audit) and section 3.1 table (UNVERIFIED); |(O/3O)^*| = 72 computed	y3-p1j; pending review				unverified-locator	elliotglazer/diophantine-z-q#86
-added	toP1DescendsAlongSurj	glue		GLUE	GLUE	textbook: FactorThroughSurj (proved, TailZ20) with target P^1_Q and the chart dictionary ToP1 X = (X -> P^1_Q) (Hartshorne II.7.1)	y3-p1j					
 ```
 
 ## 6. Known issues (source issues; exact locations)
@@ -291,9 +308,10 @@ added	toP1DescendsAlongSurj	glue		GLUE	GLUE	textbook: FactorThroughSurj (proved,
 
 ## 7. Compile record (VERIFIED)
 
-* `lake build +ZInQKernel.Contrib.OneProof.Y3ToP1j`: OK.
+* `lake build +ZInQKernel.Contrib.OneProof.Y3ToP1j` and `lake build +ZInQKernel.Contrib.OneProof.Y3ToP1jDescent`: OK.
 * `scratch/y3-p1j/Axioms.lean` (`axioms.txt`): `action_of_z30`, `sigmaR_neg_one`, `isoT`,
-  `hauptmodulOfX6_of_y3ToP1j`, `r1r2W_of_y3ToP1j`, `y3ToP1jAt_noDeg_of_row` all depend on
+  `hauptmodulOfX6_of_y3ToP1j`, `r1r2W_of_y3ToP1j`, `y3ToP1jAt_noDeg_of_row`, `Descent.toP1DescendsAlongSurj_proof`,
+  `Descent.hauptmodulOfX6_of_y3ToP1j'`, `Descent.r1r2W_of_y3ToP1j'` all depend on
   `[propext, Classical.choice, Quot.sound]`.
 * `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK, up to date (`build-main.txt`).
 * `#discharges` (`discharges.txt`): nothing for `Y3P1j` (see §5.3).
@@ -302,8 +320,6 @@ added	toP1DescendsAlongSurj	glue		GLUE	GLUE	textbook: FactorThroughSurj (proved,
 
 ## 8. What remains
 
-* Prove `ToP1DescendsAlongSurj`: `P¹_ℚ` proper and smooth over `ℚ`, the chart dictionary, then
-  `FactorThroughSurj`.
 * The re-route that would let the X₆ fields go: restate the row over `Y₃` (`R2fpProps`) and re-route its consumers
   (`cm_of_val`, the Kummer fibre, sgr-direct's `HeckeSqrtBranchAny`) on top of cm-branch.
 * Optional: the moduli dictionary of §2 in Lean. The Atkin–Lehner normalizer elements realize the four classes of

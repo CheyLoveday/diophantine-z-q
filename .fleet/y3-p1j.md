@@ -2,8 +2,8 @@
 
 Task y3-p1j, 2026-11-17. Report: docs/research/y3-p1j.md (§1 is the Manuscript check). Log: scratch/y3-p1j/log.md.
 
-**Main result.** New file `ZInQKernel/Contrib/OneProof/Y3ToP1j.lean` (namespace `Y3P1j`). It compiles with
-`lake build`, and every summary theorem uses only the standard axioms (VERIFIED).
+**Main result.** New files `ZInQKernel/Contrib/OneProof/Y3ToP1j.lean` and `Y3ToP1jDescent.lean` (namespace
+`Y3P1j`). Both compile with `lake build`, and every summary theorem uses only the standard axioms (VERIFIED).
 * **(a) Leaf `Y3ToP1j`** (kind consequence, flag ELLIOT, tex L420-440). For every fine witness `(Y, Φ)` there is
   a `π : Y → P¹` with these properties:
   * its `ℚ̄`-fibres are the `Aut(𝒪)`-twist classes, i.e. the `N`-orbits;
@@ -20,9 +20,12 @@ Task y3-p1j, 2026-11-17. Report: docs/research/y3-p1j.md (§1 is the Manuscript 
   * Summary theorem: `action_of_z30`.
 * **(c)** The quotient `P¹_j` has a source: Baba–Granath Thm 2.1 and Lemma 3.1 (`V/W ≅ P¹_ℚ`), cited at L420-422.
   The step `Sh_{K₃}/N = Sh_N` is an implicit standard step; the `j`-normalization is a Möbius choice.
-* **(d)** `hauptmodulOfX6_of_y3ToP1j : Y3ToP1j → ToP1DescendsAlongSurj → PairsLift → HauptmodulOfX6`, and
-  `r1r2W_of_y3ToP1j` builds the row `R1R2fpRepW` with R2 from `Y3ToP1j`. The one new glue Prop is
-  `ToP1DescendsAlongSurj`: textbook, `FactorThroughSurj` with target `P¹_ℚ`.
+* **(d)** `Descent.hauptmodulOfX6_of_y3ToP1j' : Y3ToP1j → HauptmodulOfX6`, and `Descent.r1r2W_of_y3ToP1j'` builds
+  the row `R1R2fpRepW` with R2 from `Y3ToP1j` alone.
+  * The descent of a `P¹`-map along `Y₃ → X₆` (`ToP1DescendsAlongSurj`) is proved. Ingredients: p1-quot's CloudW07
+    `P¹` (copied); a new lemma that points are determined by their coordinate; the kernel's
+    `factorThroughSurj_proof`.
+  * No new glue.
 
 **Not droppable (VERIFIED by grep, scratch/y3-p1j/grep-x6.txt).** `x6CoarseModuliIdeal` and
 `elkiesX6StarEveryIdeal` are still read on this base:
@@ -30,7 +33,7 @@ Task y3-p1j, 2026-11-17. Report: docs/research/y3-p1j.md (§1 is the Manuscript 
 * `elkiesX6StarEveryIdeal`: `x6ConicModel` → NoCM, and sgr-direct's `HeckeSqrtBranchAny`.
 
 So no top field is discharged: there is no autofold spec or dry run. `#discharges` lists nothing for `Y3P1j`, and
-the GLUE count is unchanged at 4/27 on 31. Kinds rows for a later fold are in scratch/y3-p1j/kinds-rows.tsv.
+the GLUE count is unchanged at 4/27 on 31. The kinds row for a later fold is in scratch/y3-p1j/kinds-rows.tsv; it would make the count 4/28 on 32.
 
 **Manuscript check.**
 * L412-418 Gram matrix: exact, det 1, VERIFIED.
@@ -40,5 +43,4 @@ the GLUE count is unchanged at 4/27 on 31. Kinds rows for a later fold are in sc
   Thm 2.1/Lemma 3.1; the bibliography cites the BG preprint; the polarization point from y3-route-a.
 
 **Remains.**
-* Prove `ToP1DescendsAlongSurj` (P¹_ℚ proper smooth, plus the chart dictionary; p1-quot has `ToP1 → hom`).
 * Drop the X₆ fields: restate the row over Y₃ (`R2fpProps`) and re-route its consumers on top of cm-branch.
