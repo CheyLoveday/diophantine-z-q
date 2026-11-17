@@ -1,4 +1,4 @@
-"""fold-b112: inbox 64b, the bergerSurveyF source column (cove-88). The phrase the inbox names ('Berger survey IV.5.1,
+"""fold-b112: inbox 64b, the bergerSurveyF source column (the reviewer). The phrase the inbox names ('Berger survey IV.5.1,
 cited print') is not in the row on this base (VERIFIED by grep); the row's leading survey citation is replaced by the
 lead's text and the rest (survey sections used, Inventiones numbering, Lean pointers) is kept. Rating unchanged.
 Usage: python3 scratch/fold-b112/row_edits_64b.py"""
