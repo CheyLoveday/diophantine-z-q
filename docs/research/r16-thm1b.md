@@ -11,7 +11,10 @@ wrong. Round 2's citation of DS 6.6.4 / Shimura 1971 Thm 7.14 for it is dropped.
 
 ## Main result
 
-@@COUNT@@
+**GLUE count: base 5 LEAF / 24 GLUE on 29 rows, and 5 / 24 on 29 after the fold. The fold is count-neutral**
+(autofold dry run: `strict count: 5/24 on 29 -> 5/24 on 29; strictest 5/24 -> 5/24`; no `--allow-rise` needed).
+Round 2's two-row version was +1 GLUE. Out: `afShimura` (GLUE) and `heckeJ1DS` (GLUE). In: `shimuraThm1Af` (GLUE)
+and `bShStandardModel` (GLUE).
 
 * **One row replaces two** (the lead's ruling (a)). `R16Thm1b.ShimuraThm1Af` is the following statement. There is
   a triple `(A, ν, θ)` with Shimura's clauses (i)–(iii) (`R16Thm1.ShimuraClauses`) and `IsAfQuotient`
@@ -112,7 +115,15 @@ its Lean statement; its flag now records this split.
 
 ## 4. Merge check and proofs
 
-@@MERGE@@
+* **Merge check (VERIFIED):** after the merge of fork main f3402e89 (e7ac05a33),
+  `lake build ZInQKernel.Contrib.OneProof.R16Thm1` succeeds (11362 jobs; it rebuilds `R16ShimuraLi`, `R16CoreYDS965`
+  and `R16Thm1`, with linter warnings only). The merge broke nothing, and no fix was needed.
+* `R16Thm1.lean`: only docstrings were edited (misprint location per ruling (c); `xiSq` is a theorem step per (b);
+  multiplicity one is cited to the print, p. 527, in place of DS 6.6.4 / Shimura 1971 Thm 7.14). It rebuilds.
+* `R16Thm1b.lean` builds with no warnings. `afShimura_of_thm1Af` and `r16CoreY_of_thm1Af : BShStandardModel →
+  ShimuraThm1Af → AfCharpolyDS965 → IgusaGL2DS → MumfordTorsionAlgClosed → R16CoreY` depend on `[propext,
+  Classical.choice, Quot.sound]` (`scratch/r16-thm1b/Axioms-output.txt`; the round-1/2 theorems are re-checked
+  there too).
 
 ## 5. Fold (`scratch/r16-thm1b/autofold.json`)
 
