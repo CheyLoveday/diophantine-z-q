@@ -19,3 +19,20 @@ Task: lower the GLUE of frozenTarget's `h21C : ZInQ.Contrib.TYZGenusFold.TYZThm2
 - Injectivity: HfxProof.two_adic_b1 with omega = 0 + a decide check mod 4.
 - f_delta: psi_delta(t) = (-1)^{tr(delta x_t)} on the 8 reps, extended by invariance.
 - Dictionary: InPiZ <-> span{f_delta} and U_n-invariant (Fourier on F_2^3, character orthogonality by decide).
+
+## Results (compiled)
+- ZInQKernel/Contrib/OneProof/TYZThm21Span/FDelta.lean (namespace ZInQ.Contrib.H21CSteps): COMPILES (lake build, no errors).
+  - `exists_twoRepU`: every unit of B^ lies in B^x (1+2x_t) GU, GU = <U4, Q^^x> (surjectivity). VERIFIED (compiled).
+  - `twoRep_mem_DCU_iff`: twoRep v t in DCU (twoRep v t') <-> t = t' (injectivity), via two_adic_b1 (omega = 0) and
+    `mod4_sep` (decide +kernel: 64 pairs x 24 units x 16 (X,Y)). VERIFIED (compiled).
+  - `GU_le_HgrpN`: GU <= <U_n, Q^^x>. `GU_le_SgC`. VERIFIED.
+  - `deltaQ`, `xRepQ`, `trdQ`, `psiDelta δ t = (-1)^{floor tr(δ x_t)}`; `psiDelta_eq_tab` (48 cases, norm_num):
+    exponents a+b+c, a+b, b+c, b, a+c, a for δ = (i+j)/2, (i-j)/2, (j+k)/2, (j-k)/2, (k+i)/2, (k-i)/2. VERIFIED.
+    Consistency with Thm 2.4(3) (chi0 f_{(i+j)/2} = f_{(i-j)/2} etc.): by hand from the table, chi0 = (-1)^c. VERIFIED (hand).
+  - `psi_orth`, `psi_sum`, `psi_sum_chi0` (decide +kernel). VERIFIED.
+  - `fDelta`, `fDelta_eq_of_mem` (B^x-left, Q^^x U-right invariant), `fDelta_twoRep`. VERIFIED.
+- ZInQKernel/Contrib/OneProof/TYZThm21Span.lean: COMPILES.
+  - `InPiSpan`, `IsTestVectorSpan`, `TYZThm21Span` (new leaf), `fourier8`, `inPiZ_iff_inPiSpan`,
+    `isTestVector_iff_span`, `exists_testVectorSpan` (non-vacuity), `tyzThm21PairsC_of_span`, `tyzThm21Span_of_pairsC`.
+- Split into two separate Lean Props (Thm 2.1 / Thm 2.4(1)): BLOCKED — pi (JL transfer of f_E) has no Lean definition;
+  Thm 2.4(1) enters only as pi^U = span f_delta, substituted into Thm 2.1. Result: one leaf replacing h21C.
