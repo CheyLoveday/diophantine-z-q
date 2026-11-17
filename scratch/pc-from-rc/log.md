@@ -36,3 +36,6 @@
   (q0 = 7 mod 12, p_k = 1 mod 12, the slot types of L1042) found n with the matrix conditions for n
   in all 30 cases (within <= 308 tries); for n = 5627 = 17*331 brute force gives #Sel = 8, (17,1) in Sel.
   construct.py: (beta, theta) = (65, 97*193) also succeeded (n = 308487335).
+- batch2.py: 30 random (beta, theta) with theta > 1 (1-3 primes, theta = 1 mod 24, mutual local squares):
+  slot-shape search found n with the matrix conditions for BOTH n and n*theta in 30/30 cases
+  (<= 697 tries each). VERIFIED (computed). Evidence that MatrixRealization is true; not a proof.
