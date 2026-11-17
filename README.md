@@ -1,5 +1,22 @@
 # ℤ is Diophantine in ℚ: the Lean proof
 
+## Contributors
+
+- **Elliot Glazer** ([@elliotglazer](https://github.com/elliotglazer)): the manuscript and the upstream repository.
+- **Jack McCarthy** ([@Deicyde](https://github.com/Deicyde)): this fork, with AI agents working for him.
+- **Contributed work on `main`:** loning ([@loning](https://github.com/loning)),
+  Chey Loveday ([@CheyLoveday](https://github.com/CheyLoveday)),
+  Carlos Toledo ([@carlostoledo1891](https://github.com/carlostoledo1891)),
+  Cameron Freer ([@cameronfreer](https://github.com/cameronfreer)) and
+  Junyan Xu ([@alreadydone](https://github.com/alreadydone)).
+- **Claims and discussion:** zachbaugher ([@zachbaugher](https://github.com/zachbaugher)).
+- **The October 11 manuscript:** Sohail Farhangi.
+- **Credited by the upstream project for its collective notes:** Stefan Baranczuk, Jose Brox
+  ([@JoseBrox](https://github.com/JoseBrox)), Gabe Conant, Sohail Farhangi, Cameron Freer, James Freitag, Elliot
+  Glazer, Jennifer Park and Caroline Terry.
+
+What each person did is in [CONTRIBUTORS.md](CONTRIBUTORS.md).
+
 This fork formalizes in Lean 4 the main theorem of the manuscript
 [*ℤ is Diophantine in ℚ*](diophantine_zq.pdf) (November 5, 2026, Theorem 1.1): there is a polynomial `P` with
 integer coefficients such that a rational number `q` is an integer exactly when `P(q, w) = 0` for some
