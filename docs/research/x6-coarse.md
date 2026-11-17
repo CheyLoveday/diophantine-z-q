@@ -102,8 +102,40 @@ and `[𝒪 : 𝒪μ] = nrd(μ)²`. Counted by hand from the congruence condition
   the verified page numbers. The old docstring is in `ElkiesX6StarEvery.lean`, which may not be edited: integrator,
   please carry the citation of the new leaf's docstring.
 * **(d) Transport to every witness: already a Lean proof** (`every_of_functionField`, elkies-print).
-* **(a) `ℚ(X/W) = ℚ(X)^W`: not done.** (filled in below)
-* **(c) "every CM point of discriminant `D`" from "the CM point of `X*(1)`": not done.** (filled in below)
+* **(a) `ℚ(X/W) = ℚ(X)^W`: not done, and it cannot be stated more literally today.** Mathlib v4.35 and the tree
+  have no quotient of a curve by a finite group, so `X*(1) = X(1)/W` has no Lean object. A more literal leaf
+  would posit a curve `X*` with `π : X → X*` that is `W`-invariant and universal among `W`-invariant morphisms,
+  plus an isomorphism `X* ≅ P¹_t`. Deriving `ℚ(X)^W = π^*ℚ(X*)` from that needs three inputs. (i) Extension of a
+  rational function on a smooth proper curve to a morphism to `P¹` (valuative criterion). (ii) Factorization
+  through `π`. (iii) `[ℚ(X) : ℚ(X)^W] = |W| = 4`: Artin's theorem (`FixedPoints.finrank_eq_card` in Mathlib) applied
+  to a *faithful* action of the four `w_m` on `ℚ(X)`. Faithfulness needs a QM pair over `ℚ̄` whose four twists by
+  `Ad μ_m` are pairwise non-isomorphic, i.e. a point with trivial `W`-stabilizer, and no such existence statement is
+  in the tree. Estimated cost: several days. SPECULATIVE.
+  The function-field form stays a consequence: `ℚ(X/W) = ℚ(X)^W` is how the quotient's function field is defined
+  (Serre, *Groupes algébriques et corps de classes* III §12; STANDARD, locator UNVERIFIED), as elkies-coord §4
+  argued.
+* **(c) "every point with that CM" from "the CM point of `X*(1)`": not done; the tree is two closed
+  number-theoretic facts short.** The counting route the lead proposes, with GR Prop. 5.6 (bundle field
+  `gonzalezRotgerProp56X6`) and Thm 5.12 (bundle field `gonzalezRotgerThm512X6`), would go as follows. At
+  `(6, 1)` each of the three orders has `#CM(R) = 2^{b} h = 2`, with `(b, h) = (0, 2), (1, 1), (1, 1)` for
+  `ℤ[√−6], ℤ[i], ℤ[ζ₃]`. Thm 5.12 gives `[ℚ(x) : ℚ] = 2`. So the two CM points of each discriminant are one
+  `Gal(ℚ̄/ℚ)`-orbit, and since `t` is defined over `ℚ`, `t(σx) = σ(t(x))` (the chain's `val_galPt`). Hence one
+  printed value `t(x₀) = 0, 1, ∞` at one CM point gives the value at every CM point of that discriminant. The
+  chain already has this argument's pieces for `ℤ[i]` and `ℤ[ζ₃]`. In `LPrefix.lean`: `pic_R4`, `pic_R3`,
+  `inertCount6_K4`, `inertCount6_K3`, `residue_eq_adjoin_of_R5pt`, `fibre_le_two_of_R5count`, `val_galPt`,
+  `subsingleton_of_galois` (the `π₀` core of pi0-x6). Missing:
+  1. the closed facts for `k = ℚ(√−6)`: `R = ℤ[√−6]` is its ring of integers (conductor 1) and
+     `inertCount6 k = 0` (2 and 3 ramify). The class number itself is **not** needed: Thm 5.12 gives degree
+     `2^{[b ≠ 0]} h` and Prop. 5.6 gives `#CM = 2^b h`, and these agree for `b ≤ 1`. So the Galois orbit
+     (`#Hom_ℚ(ℚ(x), ℚ̄) = [ℚ(x) : ℚ]`) exhausts `CM(R)` without computing `h(−24) = 2`;
+  2. "exactness": `HasCM24 P.q` (some `φ ∈ End_𝒪 A` with `φ² = −6`) ⇒ `End_𝒪 A ≅ ℤ[√−6]`, and likewise for
+     `HasCM4`, `HasCM3`. The chain's `subsingleton_of_bundle` takes these as the hypotheses `hexact₄`, `hexact₃`
+     for the same reason. GR56's lattice model (`com_equiv_of_eig`) is the likely route;
+  3. the CM order is Galois-invariant: `End_𝒪` of a base change along `σ` (the Galois clause gives
+     `IsBaseChangeOfPair σ P Q`) is isomorphic to `End_𝒪 A`, plus `#Hom_ℚ(ℚ(x), ℚ̄) = [ℚ(x):ℚ]` for the orbit count.
+  Until (1) and (2) are proved, the leaf's CM clause ("every point with that CM") remains a consequence of
+  Table 1 together with the uniqueness of the CM point of each discriminant on `X*(1)`. That uniqueness is
+  implicit in Elkies' "the CM point of discriminant `D`" (p. 17 and Table 1, per the lead's reading).
 
 ### 4.2 `gonzalezRotgerThm512X6` (priority 2) — (filled in below)
 
