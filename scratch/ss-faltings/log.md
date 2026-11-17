@@ -28,3 +28,18 @@ Base: fork main d435851d (branch wip/ss-faltings). Task: reroute SS2/SS3 off SGA
 ## 3. SSFaltings.lean compile (VERIFIED)
 - `lake env lean ZInQKernel/Contrib/OneProof/SSFaltings.lean`: no errors (after fixing `pazukiC2_nonneg` namespace
   `ZInQ.HeightSplit` and the compositum `L := KA ⊔ KB` as a `let` with `IntermediateField.finiteDimensional_sup`).
+
+## 4. Trace on the new top (VERIFIED, `lake env lean scratch/ss-faltings/TaintS.lean` -> taintS-out.txt)
+- Top `HDec.HSyn.sixContactMin_of_open76` (TailZ83). Closure 274529 constants; 28 carriers (25 in TailZ80 =
+  bost-gr9's chain copy, namespace `HDec.HSyn.GR9`; `OpenResearchLeaves55/56/57` in TailZ81-83); 110 tainted (T),
+  852 T+S lines.
+- Readers unchanged except R21: bost-gr9 moved R21 to `ZInQ.BostGR9.r21_of_grBost'` (reads SS1, SS2 through TailY's
+  identification). New `ZInQKernel/Contrib/OneProof/SSFaltingsGR9.lean`: `r21_of_grBostF`, `r21_of_grBostF'`.
+- sz-raynaud: `raynaudSemistableSHOr` is mapped from `silverbergZarhinThm35` by the copied conversion
+  `openResearchLeaves54_of_OpenResearchLeaves55` (copied verbatim by the chain generator): nothing to do by hand.
+
+## 5. Chain (VERIFIED)
+- `python3 scratch/ss-faltings/gen/gen_chain.py ZInQKernel/Contrib/OneProof/SSFChain.lean`: 100 blocks; 72
+  declarations, 28 structures; edits cor33_fields 38, ss_fields 6, assign 43, hss 4, ss13 1, rows 1, r20 1.
+- `lake build ZInQKernel.Contrib.OneProof.SSFChain`: EXIT 0; `HDec.HSyn.sixContactMin_of_open76_sf` depends on axioms
+  [propext, Classical.choice, Quot.sound].
