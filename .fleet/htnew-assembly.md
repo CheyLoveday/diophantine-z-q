@@ -25,3 +25,5 @@ Proposed rating: LEAF (`published`, flag `unread`, locator UNVERIFIED); under th
 
 **Remains.** Integrator: real fold, kinds.tsv, locators.md row (proposed in docs/research/htnew-assembly.md §3).
 Optional: Baire descent for R5. Report: docs/research/htnew-assembly.md; log: scratch/htnew-assembly/log.md.
+
+Last checked 2026-11-17 03:19 PST on origin/wip/leaf-fold33b beafc63d merged into wip/htnew-assembly.
