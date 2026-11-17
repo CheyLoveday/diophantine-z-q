@@ -288,4 +288,47 @@ theorem exists_eq_toPoint_mul (L₀ : PeriodPair) {Λ : Set ℂ}
     _ = ξ₀h (n • (α * (z / n))) := (map_nsmul _ _ _).symm
     _ = _ := by rw [← hαz, hξ₀h]
 
+/-! ## §6. Every analytic isomorphism `ℂ/L → E(ℂ)` of a short model is `(μ²℘_L, μ³℘'_L/2)` -/
+
+theorem exists_some_eq {W : WeierstrassCurve.Affine ℂ} {x y x' y' : ℂ} (h : W.Nonsingular x y)
+    (hx : x = x') (hy : y = y') : ∃ h' : W.Nonsingular x' y', Point.some x y h = .some x' y' h' := by
+  subst hx; subst hy; exact ⟨h, rfl⟩
+
+theorem eq_scaled_of_isAnalyticUnif (W : WeierstrassCurve ℂ) [W.IsElliptic] (h₁ : W.a₁ = 0)
+    (h₂ : W.a₂ = 0) (h₃ : W.a₃ = 0) (L : PeriodPair) (ξ : ℂ → W.toAffine.Point)
+    (hξ : IsAnalyticUnif W L.lattice ξ) :
+    ∃ μ : ℂ, μ ≠ 0 ∧ W.a₄ = μ ^ 4 * (-L.g₂ / 4) ∧ W.a₆ = μ ^ 6 * (-L.g₃ / 4) ∧
+      ∀ z, z ∉ L.lattice →
+        ∃ h : W.toAffine.Nonsingular (μ ^ 2 * ℘[L] z) (μ ^ 3 * (℘'[L] z / 2)),
+          ξ z = .some _ _ h := by
+  obtain ⟨L₀, rfl⟩ := exists_lattice_eq W h₁ h₂ h₃
+  obtain ⟨α, hα⟩ := exists_eq_toPoint_mul L₀ ξ hξ
+  have hU := L₀.isUniformization_toPoint L₀.discriminant_ne_zero
+  have hker : ∀ z, z ∈ L.lattice ↔ α * z ∈ L₀.lattice := fun z => by
+    rw [← SetLike.mem_coe, ← hξ.2.2.1 z, hα z]
+    exact ⟨hU.2.2 _, fun h => L₀.toPoint_of_mem _ h⟩
+  have hα0 : α ≠ 0 := by
+    rintro rfl
+    exact L.ω₁_div_two_notMem_lattice ((hker _).2 (by simp))
+  have hsc : T5Glue.IsScale L₀ L α := by
+    refine ⟨hα0, ?_⟩
+    ext x
+    simp only [SetLike.mem_coe, Set.mem_smul_set, smul_eq_mul]
+    constructor
+    · intro hx
+      refine ⟨α⁻¹ * x, (hker _).2 ?_, ?_⟩
+      · rwa [mul_inv_cancel_left₀ hα0]
+      · rw [mul_inv_cancel_left₀ hα0]
+    · rintro ⟨y, hy, rfl⟩
+      exact (hker y).1 hy
+  refine ⟨α⁻¹, inv_ne_zero hα0, ?_, ?_, fun z hz => ?_⟩
+  · rw [PeriodPair.weierstrassCurve_a₄, hsc.g₂, inv_pow]; ring
+  · rw [PeriodPair.weierstrassCurve_a₆, hsc.g₃, inv_pow]; ring
+  · have hz' : α * z ∉ L₀.lattice := fun h => hz ((hker z).2 h)
+    have e1 : ℘[L₀] (α * z) = α⁻¹ ^ 2 * ℘[L] z := by rw [hsc.weierstrassP, inv_pow]
+    have e2 : ℘'[L₀] (α * z) / 2 = α⁻¹ ^ 3 * (℘'[L] z / 2) := by
+      rw [hsc.derivWeierstrassP, inv_pow]; ring
+    obtain ⟨h', e⟩ := exists_some_eq _ e1 e2
+    exact ⟨h', by rw [hα z, L₀.toPoint_of_notMem _ hz', e]⟩
+
 end ZInQ.Contrib.HCMDict
