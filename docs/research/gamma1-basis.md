@@ -34,7 +34,7 @@ field by `gamma1IntegralSpan_of_basis`).
 Counts (autofold dry run, VERIFIED): strict 12/23 on 35 → 12/23 on 35; **strictest 11/24 → 12/23** (GLUE −1),
 no new glue (the bridge is proved).
 
-Compile status: see section 4.
+Compile status: all of it compiles with only `propext`, `Classical.choice`, `Quot.sound` (section 4, VERIFIED).
 
 ## 2. Checks asked for
 
@@ -71,7 +71,29 @@ UNVERIFIED".
 
 ## 4. Lean (compile record)
 
-PENDING (filled in below when the build finishes).
+All VERIFIED (compiled on this host, 11-17):
+
+* `lake build +ZInQKernel.Contrib.OneProof.Gamma1IntegralBasis +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`:
+  success, 16,070 jobs; `ZInQ.OneProof.frozenTarget` standard axioms (`scratch/gamma1-basis/build.log`).
+* `#discharges` (`scratch/gamma1-basis/Discharges.lean`, output `scratch/gamma1-basis/discharges-output.txt`):
+
+  ```
+  DISCHARGES [OpenResearchLeaves41.gamma1IntegralSpan] by Gamma1Basis.gamma1IntegralSpan_of_basis
+    still assumes: [Gamma1Basis.Gamma1IntegralBasis]
+    axioms: [propext, Classical.choice, Quot.sound]
+  DISCHARGES [OpenResearchLeaves41.gamma1IntegralSpan] by Gamma1Basis.old_of_basis
+    still assumes: [Gamma1Basis.Gamma1IntegralBasis]
+    axioms: [propext, Classical.choice, Quot.sound]
+  ```
+
+  `#print axioms` of `gamma1IntegralBasis_of_span` and `gamma1IntegralBasis_iff_span`: the same three. No `sorry`.
+* Autofold spec `scratch/gamma1-basis/autofold.json` (field `gamma1IntegralSpan`, proof
+  `_root_.Gamma1Basis.gamma1IntegralSpan_of_basis {n}.gamma1IntegralBasis`, one leaf `gamma1IntegralBasis`, kind
+  published, flag "unread: new printed leaf (...); locator UNVERIFIED"). `autofold.py --dry-run` (tree untouched):
+  `strict count: 12/23 on 35 -> 12/23 on 35; strictest 11/24 -> 12/23`. The generated module
+  (`scratch/gamma1-basis/FoldDryRun.lean`, line 1 stripped; raw output `FoldDryRun.lean.txt`) compiles against
+  TailZ66: `OpenResearchLeaves42`, `openResearchLeaves41_of_OpenResearchLeaves42` and `sixContactMin_of_open60`,
+  all with standard axioms (`scratch/gamma1-basis/foldrun-output.txt`).
 
 ## 5. What remains
 
