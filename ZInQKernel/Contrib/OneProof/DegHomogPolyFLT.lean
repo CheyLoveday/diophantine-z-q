@@ -3,6 +3,10 @@ import ZInQKernel.Contrib.OneProof.MilneQuasiInverse.Flatness
 import ZInQKernel.Contrib.CloudB3W16Torsion.RelativeBridges
 import ZInQKernel.Contrib.CloudB3W16Torsion.Vendor.AnthropicFLT.Theorems.Thm_GoodReductionJacobian_RelativeGroupLaw_isFinite_of_isFinite_endKerStr
 import ZInQKernel.Contrib.CloudB3W16Torsion.Vendor.AnthropicFLT.Theorems.Thm_GoodReductionJacobian_RelativeGroupLaw_surjective_and_endDegree_eq_finrank_of_isFinite_of_flat
+import ZInQKernel.Contrib.CloudB3W16Torsion.Vendor.AnthropicFLT.Theorems.Thm_Module_Flat_of_isLocalHom_of_isRegularLocalRing_of_ringKrullDim_quotient_eq_zero
+import ZInQKernel.Contrib.CloudB3W16Torsion.Vendor.AnthropicFLT.Theorems.Thm_AlgebraicGeometry_Smooth_isRegularLocalRing_stalk
+import ZInQKernel.Contrib.CloudB3W16Torsion.Vendor.AnthropicFLT.Theorems.Thm_AlgebraicGeometry_IsFinite_ringKrullDim_stalk_quotient_eq_zero
+import ZInQKernel.Contrib.CloudB3W16Torsion.Vendor.AnthropicFLT.Theorems.Thm_AlgebraicGeometry_ringKrullDim_stalk_eq_of_isFinite_endomorphism
 import ZInQKernel.Contrib.OneProof.CharPolyPort.Vendor.AnthropicFLT.Theorems.Thm_GoodReductionJacobian_RelativeGroupLaw_exists_isHomogeneous_eval_eq_endDegree_of_abelianSchemePropertyBundle
 
 /-!
@@ -157,6 +161,46 @@ def FiniteEndSurjective : Prop :=
   ∀ (k : Type) [Field k] [IsAlgClosed k] (A : PkgI3.AbVar k) (ψ : PkgI3.AbVar.End A),
     IsFinite ψ.hom.left → Surjective ψ.hom.left
 
+/-- **A finite endomorphism of an abelian variety is flat (proved).** Miracle flatness at each
+stalk: regular local rings of equal dimension with zero-dimensional fibre. This is the argument of
+the vendored FLT proof `flat_schemeNsmul_of_isFinite_of_field` (written there for `[n]`), run for an
+arbitrary finite endomorphism over `k`. -/
+theorem flat_of_isFinite {k : Type} [Field k] (A : PkgI3.AbVar k) (ψ : PkgI3.AbVar.End A)
+    [IsFinite ψ.hom.left] : Flat ψ.hom.left := by
+  haveI : LocallyOfFiniteType A.X.hom := inferInstance
+  haveI : IsLocallyNoetherian A.X.left := LocallyOfFiniteType.isLocallyNoetherian A.X.hom
+  rw [AlgebraicGeometry.Flat.iff_flat_stalkMap]
+  intro x
+  algebraize [(ψ.hom.left.stalkMap x).hom]
+  haveI : IsRegularLocalRing (A.X.left.presheaf.stalk x) :=
+    AlgebraicGeometry.Smooth.isRegularLocalRing_stalkFLT (f := A.X.hom) x
+  haveI : IsRegularLocalRing (A.X.left.presheaf.stalk (ψ.hom.left.base x)) :=
+    AlgebraicGeometry.Smooth.isRegularLocalRing_stalkFLT (f := A.X.hom) (ψ.hom.left.base x)
+  haveI : IsNoetherianRing (A.X.left.presheaf.stalk x) := inferInstance
+  haveI : IsLocalHom (algebraMap
+      ↑(A.X.left.presheaf.stalk (ψ.hom.left.base x)) ↑(A.X.left.presheaf.stalk x)) :=
+    inferInstanceAs (IsLocalHom (ψ.hom.left.stalkMap x).hom)
+  have hfib : ringKrullDim (↑(A.X.left.presheaf.stalk x) ⧸
+      (IsLocalRing.maximalIdeal ↑(A.X.left.presheaf.stalk (ψ.hom.left.base x))).map
+        (algebraMap ↑(A.X.left.presheaf.stalk (ψ.hom.left.base x)) ↑(A.X.left.presheaf.stalk x))) = 0 :=
+    AlgebraicGeometry.IsFinite.ringKrullDim_stalk_quotient_eq_zero ψ.hom.left x
+  have hdim : ringKrullDim (A.X.left.presheaf.stalk x) =
+      ringKrullDim (A.X.left.presheaf.stalk (ψ.hom.left.base x)) :=
+    AlgebraicGeometry.ringKrullDim_stalk_eq_of_isFinite_endomorphism
+      (f := A.X.hom) ψ.hom.left (Over.w ψ.hom) x
+  exact Module.Flat.of_isLocalHom_of_isRegularLocalRing_of_ringKrullDim_quotient_eq_zero
+      ↑(A.X.left.presheaf.stalk (ψ.hom.left.base x)) ↑(A.X.left.presheaf.stalk x) hfib hdim
+
+/-- **`FiniteEndSurjective` (proved)**: finite ⇒ flat (`flat_of_isFinite`) ⇒ surjective (vendored FLT
+`surjective_and_endDegree_eq_finrank_of_isFinite_of_flat`). -/
+theorem finiteEndSurjective : FiniteEndSurjective := by
+  intro k _ _ A ψ hfin
+  haveI : IsFinite ψ.hom.left := hfin
+  haveI : IsFinite (toPt ψ).1 := hfin
+  haveI : Flat (toPt ψ).1 := flat_of_isFinite A ψ
+  exact ⟨(RelativeGroupLaw.surjective_and_endDegree_eq_finrank_of_isFinite_of_flat k A.X.hom (law A)
+    (toPt ψ)).1⟩
+
 /-- **`degEnd = endDegree`** (proved from the two glue statements). -/
 theorem degEnd_eq_endDegree (h1 : FinrankGenericEqDegEnd) (h2 : FiniteEndSurjective)
     (k : Type) [Field k] [IsAlgClosed k] (A : PkgI3.AbVar k) (ψ : PkgI3.AbVar.End A) :
@@ -208,11 +252,11 @@ theorem degHomogPoly_of_degEndEq (h : DegEndEqEndDegree) : DegDet.DegHomogPoly :
 
 /-- **deg-det's `DegHomogPoly`, every characteristic, from the two glue statements (proved).** -/
 theorem degHomogPoly_of_glue (h1 : FinrankGenericEqDegEnd) (h2 : FiniteEndSurjective) :
-    DegDet.DegHomogPoly := by
-  intro k _ _ A r e
-  obtain ⟨g, N, hg, hN, hev⟩ := degHomogPolyEndDegree k A r e
-  refine ⟨g, N, hg, hN, fun x => ?_⟩
-  rw [degEnd_eq_endDegree h1 h2 k A]
-  exact hev x
+    DegDet.DegHomogPoly :=
+  degHomogPoly_of_degEndEq (degEndEqEndDegree_of_glue h1 h2)
+
+/-- **deg-det's `DegHomogPoly`, every characteristic, from `FinrankGenericEqDegEnd` alone (proved).** -/
+theorem degHomogPoly_of_finrankGeneric (h1 : FinrankGenericEqDegEnd) : DegDet.DegHomogPoly :=
+  degHomogPoly_of_glue h1 finiteEndSurjective
 
 end ZInQ.Contrib.OneProof.DegPolyFLT
