@@ -138,6 +138,8 @@ theorem degHomogPolyEndDegree (k : Type) [Field k] [IsAlgClosed k] (A : PkgI3.Ab
 
 /-! ## 3. `endDegree = degEnd`, from two glue statements -/
 
+attribute [local instance] isIntegral_left
+
 /-- **GLUE (open): the rank of an isogeny at the generic point is its function-field degree.** For an
 isogeny `ψ` of an abelian variety (finite, surjective, hence flat), Mathlib's rank
 `Scheme.Hom.finrank ψ η` of the finite flat morphism at the generic point `η` equals
@@ -154,8 +156,6 @@ preserves dimension, and a proper closed subset of the irreducible `A` has small
 def FiniteEndSurjective : Prop :=
   ∀ (k : Type) [Field k] [IsAlgClosed k] (A : PkgI3.AbVar k) (ψ : PkgI3.AbVar.End A),
     IsFinite ψ.hom.left → Surjective ψ.hom.left
-
-attribute [local instance] isIntegral_left
 
 /-- **`degEnd = endDegree`** (proved from the two glue statements). -/
 theorem degEnd_eq_endDegree (h1 : FinrankGenericEqDegEnd) (h2 : FiniteEndSurjective)
