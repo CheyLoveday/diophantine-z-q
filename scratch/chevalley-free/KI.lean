@@ -2,6 +2,11 @@ import ZInQKernel.Contrib.OneProof.SemiAbelianDescendsPerfect
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.AbelianVariety.RationalCurves
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Birational.ValuativeExtension
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Curve.Dimension
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Descent.LocalSections
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Geometrically.Smooth
+import Mathlib.AlgebraicGeometry.Sites.Fpqc
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.AlgebraicGeometry.Descent.Finite
+import ZInQKernel.Contrib.CloudW07JacobiansCurves.Jacobian.CategoryTheory.Limits.Shapes.Pullback.Map
 
 /-! # chevalley-free, step R: morphisms from `𝔾_m` to an abelian variety are constant -/
 
@@ -18,6 +23,289 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
 namespace ZInQ.ChevFree
+
+
+section Descent
+
+variable {S S' : Scheme.{0}} (q : S' ⟶ S) {U : Over S} {X₁ : Over S'}
+  (π₁ : (Over.pullback q).obj U ⟶ X₁)
+
+/-- `X₁ ×_S S'`. -/
+abbrev PP := pullback (X₁.hom ≫ q) q
+
+/-- `U_{S'} ×_S S'`. -/
+abbrev YY := pullback (π₁.left ≫ X₁.hom ≫ q) q
+
+/-- `π₁ × id : U_{S'} ×_S S' → X₁ ×_S S'`. -/
+abbrev αα : YY q π₁ ⟶ PP q (X₁ := X₁) :=
+  pullback.map (π₁.left ≫ X₁.hom ≫ q) q (X₁.hom ≫ q) q π₁.left (𝟙 _) (𝟙 _) (by simp) (by simp)
+
+theorem isPullback_αα :
+    IsPullback (pullback.fst _ _) (αα q π₁) π₁.left (pullback.fst (X₁.hom ≫ q) q) :=
+  isPullback_pullback_map_left π₁.left (X₁.hom ≫ q) q
+
+theorem w_π₁ : π₁.left ≫ X₁.hom = pullback.snd U.hom q := Over.w π₁
+
+/-- The `U`-coordinate of a point of `U_{S'} ×_S S'`. -/
+abbrev uPart : YY q π₁ ⟶ U.left := pullback.fst _ _ ≫ pullback.fst U.hom q
+
+theorem uPart_cond : uPart q π₁ ≫ U.hom = pullback.snd (π₁.left ≫ X₁.hom ≫ q) q ≫ q := by
+  rw [Category.assoc, pullback.condition, ← w_π₁ q π₁, ← Category.assoc, ← Category.assoc]
+  simp only [Category.assoc]
+  exact pullback.condition
+
+/-- `(u, a, b) ↦ π₁(u, b)`. -/
+abbrev ββ : YY q π₁ ⟶ X₁.left :=
+  pullback.lift (uPart q π₁) (pullback.snd _ _) (uPart_cond q π₁) ≫ π₁.left
+
+/-- **The transport condition `KI`**: if `u, v` have the same image under `π₁` over `a`, they have the same image
+over every `b` with the same image in `S`. -/
+def KI : Prop :=
+  ∀ (Z : Scheme.{0}) (u v : Z ⟶ U.left) (a b : Z ⟶ S') (hu : u ≫ U.hom = a ≫ q)
+    (hv : v ≫ U.hom = a ≫ q) (hb : a ≫ q = b ≫ q),
+    pullback.lift u a hu ≫ π₁.left = pullback.lift v a hv ≫ π₁.left →
+    pullback.lift u b (hu.trans hb) ≫ π₁.left = pullback.lift v b (hv.trans hb) ≫ π₁.left
+
+variable {q π₁}
+
+theorem ββ_coeq (hKI : KI q π₁) {Z : Scheme.{0}} (g h : Z ⟶ YY q π₁)
+    (hgh : g ≫ αα q π₁ = h ≫ αα q π₁) : g ≫ ββ q π₁ = h ≫ ββ q π₁ := by
+  have h1 : g ≫ pullback.fst _ _ ≫ π₁.left = h ≫ pullback.fst _ _ ≫ π₁.left := by
+    have := congrArg (· ≫ pullback.fst (X₁.hom ≫ q) q) hgh
+    simpa only [Category.assoc, pullback.lift_fst] using this
+  have h2 : g ≫ pullback.snd _ _ = h ≫ pullback.snd _ _ := by
+    have := congrArg (· ≫ pullback.snd (X₁.hom ≫ q) q) hgh
+    simpa only [Category.assoc, pullback.lift_snd, Category.comp_id] using this
+  have h3 : g ≫ pullback.fst _ _ ≫ pullback.snd U.hom q = h ≫ pullback.fst _ _ ≫ pullback.snd U.hom q := by
+    have := congrArg (· ≫ X₁.hom) h1
+    simpa only [Category.assoc, w_π₁] using this
+  set a := g ≫ pullback.fst _ _ ≫ pullback.snd U.hom q
+  set b := g ≫ pullback.snd (π₁.left ≫ X₁.hom ≫ q) q
+  have hu : (g ≫ uPart q π₁) ≫ U.hom = a ≫ q := by
+    simp only [a, Category.assoc, pullback.condition]
+  have hv : (h ≫ uPart q π₁) ≫ U.hom = a ≫ q := by
+    rw [h3]; simp only [Category.assoc, pullback.condition]
+  have hb : a ≫ q = b ≫ q := by
+    have := congrArg (g ≫ ·) (uPart_cond q π₁)
+    simp only [Category.assoc] at this
+    simp only [a, b, Category.assoc]
+    rw [show pullback.snd U.hom q ≫ q = pullback.fst U.hom q ≫ U.hom from pullback.condition.symm]
+    exact this
+  have eg : g ≫ pullback.fst _ _ = pullback.lift (g ≫ uPart q π₁) a hu := by
+    apply pullback.hom_ext <;> simp [a]
+  have eh : h ≫ pullback.fst _ _ = pullback.lift (h ≫ uPart q π₁) a hv := by
+    apply pullback.hom_ext
+    · simp
+    · simp [a, h3]
+  have key := hKI Z (g ≫ uPart q π₁) (h ≫ uPart q π₁) a b hu hv hb (by
+    rw [← eg, ← eh]; simpa only [Category.assoc] using h1)
+  have eg' : g ≫ pullback.lift (uPart q π₁) (pullback.snd _ _) (uPart_cond q π₁) =
+      pullback.lift (g ≫ uPart q π₁) b (hu.trans hb) := by
+    apply pullback.hom_ext <;> simp [b]
+  have eh' : h ≫ pullback.lift (uPart q π₁) (pullback.snd _ _) (uPart_cond q π₁) =
+      pullback.lift (h ≫ uPart q π₁) b (hv.trans hb) := by
+    apply pullback.hom_ext
+    · simp
+    · simp [b, h2]
+  simp only [ββ, ← Category.assoc, eg', eh']
+  exact key
+
+variable [Flat π₁.left] [Surjective π₁.left] [QuasiCompact π₁.left]
+
+instance : Flat (αα q π₁) := MorphismProperty.of_isPullback (P := @Flat) (isPullback_αα q π₁) inferInstance
+instance : Surjective (αα q π₁) :=
+  MorphismProperty.of_isPullback (P := @Surjective) (isPullback_αα q π₁) inferInstance
+instance : QuasiCompact (αα q π₁) :=
+  MorphismProperty.of_isPullback (P := @QuasiCompact) (isPullback_αα q π₁) inferInstance
+
+/-- **The descent datum in universal form**: `ψ : X₁ ×_S S' → X₁`, `(π₁(u, a), b) ↦ π₁(u, b)`. -/
+def ψψ (hKI : KI q π₁) : PP q (X₁ := X₁) ⟶ X₁.left :=
+  EffectiveEpi.desc (αα q π₁) (ββ q π₁) (fun g h hgh => ββ_coeq hKI g h hgh)
+
+theorem ψ_fac (hKI : KI q π₁) : αα q π₁ ≫ ψψ hKI = ββ q π₁ := EffectiveEpi.fac _ _ _
+
+/-- The transport of `π₁(u₁)` to `c` is `π₁(u, c)`. -/
+theorem ψ_π (hKI : KI q π₁) {Z : Scheme.{0}} (u₁ : Z ⟶ ((Over.pullback q).obj U).left) (c : Z ⟶ S')
+    (h : (u₁ ≫ π₁.left) ≫ X₁.hom ≫ q = c ≫ q) :
+    pullback.lift (u₁ ≫ π₁.left) c h ≫ ψψ hKI =
+      pullback.lift (u₁ ≫ pullback.fst U.hom q) c (by
+        rw [Category.assoc, pullback.condition, ← Category.assoc, ← h, ← w_π₁ q π₁]
+        simp only [Category.assoc]) ≫ π₁.left := by
+  have e : pullback.lift (u₁ ≫ π₁.left) c h = pullback.lift u₁ c (by simpa only [Category.assoc] using h) ≫
+      αα q π₁ := by
+    apply pullback.hom_ext <;> simp
+  rw [e, Category.assoc, ψ_fac]
+  simp only [ββ, ← Category.assoc]
+  congr 1
+  apply pullback.hom_ext <;> simp
+
+theorem ψ_snd (hKI : KI q π₁) : ψψ hKI ≫ X₁.hom = pullback.snd (X₁.hom ≫ q) q := by
+  rw [← cancel_epi (αα q π₁), ← Category.assoc, ψ_fac]
+  simp only [ββ, Category.assoc, w_π₁, pullback.lift_snd, Category.comp_id]
+
+theorem ψ_unit (hKI : KI q π₁) :
+    (pullback.lift (𝟙 X₁.left) X₁.hom (by simp) : X₁.left ⟶ PP q (X₁ := X₁)) ≫ ψψ hKI = 𝟙 X₁.left := by
+  rw [← cancel_epi π₁.left, ← Category.assoc, Category.comp_id]
+  have e : π₁.left ≫ (pullback.lift (𝟙 X₁.left) X₁.hom (by simp) : X₁.left ⟶ PP q (X₁ := X₁)) =
+      pullback.lift (𝟙 _ ≫ π₁.left) (pullback.snd U.hom q)
+        (by rw [Category.id_comp, reassoc_of% (w_π₁ q π₁)]) := by
+    apply pullback.hom_ext
+    · simp
+    · simp only [Category.assoc, pullback.lift_snd]; exact w_π₁ q π₁
+  rw [e, ψ_π hKI (𝟙 _)]
+  conv_rhs => rw [← Category.id_comp π₁.left]
+  congr 1
+  apply pullback.hom_ext <;> simp
+
+/-- `(X₁ ×_S S') ×_S S'`. -/
+abbrev TT := pullback (pullback.snd (X₁.hom ≫ q) q ≫ q) q
+
+/-- `(U_{S'} ×_S S') ×_S S'`. -/
+abbrev TU := pullback (αα q π₁ ≫ pullback.snd (X₁.hom ≫ q) q ≫ q) q
+
+abbrev α₃ : TU (q := q) (π₁ := π₁) ⟶ TT (q := q) (X₁ := X₁) :=
+  pullback.map (αα q π₁ ≫ pullback.snd (X₁.hom ≫ q) q ≫ q) q (pullback.snd (X₁.hom ≫ q) q ≫ q) q
+    (αα q π₁) (𝟙 _) (𝟙 _) (by simp) (by simp)
+
+theorem isPullback_α₃ :
+    IsPullback (pullback.fst _ _) (α₃ (q := q) (π₁ := π₁)) (αα q π₁) (pullback.fst _ _) :=
+  isPullback_pullback_map_left (αα q π₁) (pullback.snd (X₁.hom ≫ q) q ≫ q) q
+
+instance : Flat (α₃ (q := q) (π₁ := π₁)) :=
+  MorphismProperty.of_isPullback (P := @Flat) isPullback_α₃ inferInstance
+instance : Surjective (α₃ (q := q) (π₁ := π₁)) :=
+  MorphismProperty.of_isPullback (P := @Surjective) isPullback_α₃ inferInstance
+instance : QuasiCompact (α₃ (q := q) (π₁ := π₁)) :=
+  MorphismProperty.of_isPullback (P := @QuasiCompact) isPullback_α₃ inferInstance
+
+theorem ψ_coassoc_univ (hKI : KI q π₁) :
+    pullback.lift (pullback.fst (pullback.snd (X₁.hom ≫ q) q ≫ q) q ≫ ψψ hKI)
+      (pullback.snd (pullback.snd (X₁.hom ≫ q) q ≫ q) q) (by
+        rw [Category.assoc, reassoc_of% (ψ_snd hKI), pullback.condition]) ≫ ψψ hKI =
+    pullback.lift (pullback.fst (pullback.snd (X₁.hom ≫ q) q ≫ q) q ≫ pullback.fst (X₁.hom ≫ q) q)
+      (pullback.snd (pullback.snd (X₁.hom ≫ q) q ≫ q) q) (by
+        rw [Category.assoc, pullback.condition]; exact pullback.condition) ≫ ψψ hKI := by
+  rw [← cancel_epi (α₃ (q := q) (π₁ := π₁))]
+  refine (Category.assoc _ _ _).symm.trans (Eq.trans ?_ (Category.assoc _ _ _))
+  let y := pullback.fst (αα q π₁ ≫ pullback.snd (X₁.hom ≫ q) q ≫ q) q
+  let c' := pullback.snd (αα q π₁ ≫ pullback.snd (X₁.hom ≫ q) q ≫ q) q
+  let u₁ := y ≫ pullback.lift (uPart q π₁) (pullback.snd _ _) (uPart_cond q π₁)
+  have hc : y ≫ (αα q π₁ ≫ pullback.snd (X₁.hom ≫ q) q ≫ q) = c' ≫ q := pullback.condition
+  have hαs : αα q π₁ ≫ pullback.snd (X₁.hom ≫ q) q = pullback.snd (π₁.left ≫ X₁.hom ≫ q) q := by
+    simp
+  have hαs' : αα q π₁ ≫ pullback.snd (X₁.hom ≫ q) q ≫ q =
+      pullback.snd (π₁.left ≫ X₁.hom ≫ q) q ≫ q := by rw [← Category.assoc, hαs]
+  have w' : π₁.left ≫ X₁.hom ≫ q = pullback.snd U.hom q ≫ q := by rw [← Category.assoc, w_π₁]
+  have h1 : (u₁ ≫ π₁.left) ≫ X₁.hom ≫ q = c' ≫ q := by
+    have e : (u₁ ≫ π₁.left) ≫ X₁.hom ≫ q = y ≫ (pullback.snd (π₁.left ≫ X₁.hom ≫ q) q ≫ q) := by
+      simp only [u₁, Category.assoc, w', pullback.lift_snd_assoc]
+    exact e.trans ((congrArg (y ≫ ·) hαs').symm.trans hc)
+  have h2 : ((y ≫ pullback.fst _ _) ≫ π₁.left) ≫ X₁.hom ≫ q = c' ≫ q := by
+    have e : ((y ≫ pullback.fst _ _) ≫ π₁.left) ≫ X₁.hom ≫ q =
+        y ≫ (pullback.snd (π₁.left ≫ X₁.hom ≫ q) q ≫ q) := by
+      simp only [Category.assoc]; exact congrArg (y ≫ ·) pullback.condition
+    exact e.trans ((congrArg (y ≫ ·) hαs').symm.trans hc)
+  have e1 : α₃ (q := q) (π₁ := π₁) ≫ pullback.lift (pullback.fst (pullback.snd (X₁.hom ≫ q) q ≫ q) q ≫ ψψ hKI)
+      (pullback.snd (pullback.snd (X₁.hom ≫ q) q ≫ q) q) (by
+        rw [Category.assoc, reassoc_of% (ψ_snd hKI), pullback.condition]) =
+      pullback.lift (u₁ ≫ π₁.left) c' h1 := by
+    apply pullback.hom_ext
+    · simp only [Category.assoc, pullback.lift_fst, u₁, y]
+      rw [pullback.lift_fst_assoc, Category.assoc, ψ_fac]
+    · simp [c']
+  have e2 : α₃ (q := q) (π₁ := π₁) ≫ pullback.lift
+      (pullback.fst (pullback.snd (X₁.hom ≫ q) q ≫ q) q ≫ pullback.fst (X₁.hom ≫ q) q)
+      (pullback.snd (pullback.snd (X₁.hom ≫ q) q ≫ q) q) (by
+        rw [Category.assoc, pullback.condition]; exact pullback.condition) =
+      pullback.lift ((y ≫ pullback.fst _ _) ≫ π₁.left) c' h2 := by
+    apply pullback.hom_ext
+    · simp [y]
+    · simp [c']
+  rw [e1, e2, ψ_π hKI, ψ_π hKI]
+  congr 2
+  simp [u₁, uPart]
+
+theorem ψ_coassoc (hKI : KI q π₁) {Z : Scheme.{0}} (x : Z ⟶ X₁.left) (b c : Z ⟶ S')
+    (hb : x ≫ X₁.hom ≫ q = b ≫ q) (hc : x ≫ X₁.hom ≫ q = c ≫ q) :
+    pullback.lift (pullback.lift x b hb ≫ ψψ hKI) c (by
+      rw [Category.assoc, reassoc_of% (ψ_snd hKI), pullback.lift_snd_assoc, ← hb, hc]) ≫ ψψ hKI =
+      pullback.lift x c hc ≫ ψψ hKI := by
+  let t : Z ⟶ TT (q := q) (X₁ := X₁) := pullback.lift (pullback.lift x b hb) c (by
+    rw [pullback.lift_snd_assoc, ← hb, hc])
+  have := congrArg (t ≫ ·) (ψ_coassoc_univ (q := q) (π₁ := π₁) hKI)
+  simp only [← Category.assoc] at this
+  convert this using 2
+  · apply pullback.hom_ext
+    · simp only [Category.assoc, pullback.lift_fst, t]; rw [pullback.lift_fst_assoc]
+    · simp [t]
+  · apply pullback.hom_ext
+    · simp [t]
+    · simp [t]
+
+/-- **The descent datum on `X₁`** (transport form): a point `x` over `f₁` goes to `ψ(x, f₂)`. -/
+def dd (hKI : KI q π₁) : Over.DescentDatum q X₁ where
+  transport f₁ f₂ e p := Over.homMk (pullback.lift p.left f₂ (by rw [← Category.assoc, Over.w p]; exact e) ≫
+    ψψ hKI) (by
+      change (pullback.lift p.left f₂ _ ≫ ψψ hKI) ≫ X₁.hom = f₂
+      rw [Category.assoc, ψ_snd, pullback.lift_snd])
+  transport_homMk_comp c f₁ f₂ e p := by
+    ext
+    change pullback.lift (c ≫ p.left) (c ≫ f₂) _ ≫ ψψ hKI = c ≫ (pullback.lift p.left f₂ _ ≫ ψψ hKI)
+    refine Eq.trans ?_ (Category.assoc _ _ _)
+    congr 1
+    apply pullback.hom_ext <;> simp
+  transport_self f p := by
+    ext
+    simp only [Over.homMk_left]
+    have : pullback.lift p.left f (by rw [← Category.assoc, Over.w p]; rfl) =
+        p.left ≫ (pullback.lift (𝟙 X₁.left) X₁.hom (by simp) : X₁.left ⟶ PP q (X₁ := X₁)) := by
+      apply pullback.hom_ext
+      · simp
+      · simp only [Category.assoc, pullback.lift_snd]; exact (Over.w p).symm
+    rw [this, Category.assoc, ψ_unit, Category.comp_id]
+  transport_transport f₁ f₂ f₃ h₁₂ h₂₃ p := by
+    ext
+    simp only [Over.homMk_left]
+    exact ψ_coassoc hKI p.left f₂ f₃ _ _
+
+/-- **Descent of the quotient**: with `KI`, finite sets of `X₁` in affine opens, and `q` finite flat surjective
+of finite presentation, `X₁` descends to `B₀` over `S` and `π₁` to `π : U → B₀`. -/
+theorem exists_descent (hKI : KI q π₁) [IsFinite q] [Flat q] [LocallyOfFinitePresentation q] [Surjective q]
+    (hfin : ∀ s : Set X₁.left, s.Finite → ∃ V : X₁.left.Opens, IsAffineOpen V ∧ s ⊆ V) :
+    ∃ (B₀ : Over S) (d : X₁.left ⟶ B₀.left) (π : U.left ⟶ B₀.left),
+      IsPullback d X₁.hom B₀.hom q ∧ pullback.fst U.hom q ≫ π = π₁.left ≫ d ∧ π ≫ B₀.hom = U.hom := by
+  obtain ⟨B₀, d, hsq, hinv⟩ := (dd hKI).isEffective_of_isFinite hfin
+  have hψd : ψψ hKI ≫ d = pullback.fst (X₁.hom ≫ q) q ≫ d := by
+    have := hinv (pullback.fst (X₁.hom ≫ q) q ≫ X₁.hom) (pullback.snd _ _)
+      (by rw [Category.assoc]; exact pullback.condition) (Over.homMk (pullback.fst _ _) rfl)
+    change (pullback.lift (pullback.fst (X₁.hom ≫ q) q) (pullback.snd (X₁.hom ≫ q) q) _ ≫ ψψ hKI) ≫ d =
+      pullback.fst (X₁.hom ≫ q) q ≫ d at this
+    rwa [pullback.lift_fst_snd, Category.id_comp] at this
+  have hcoeq : ∀ {Z : Scheme.{0}} (g h : Z ⟶ pullback U.hom q),
+      g ≫ pullback.fst U.hom q = h ≫ pullback.fst U.hom q → g ≫ π₁.left ≫ d = h ≫ π₁.left ≫ d := by
+    intro Z g h hgh
+    have hc : (g ≫ π₁.left) ≫ X₁.hom ≫ q = (h ≫ pullback.snd U.hom q) ≫ q :=
+      calc (g ≫ π₁.left) ≫ X₁.hom ≫ q = g ≫ pullback.snd U.hom q ≫ q := by
+            rw [Category.assoc, ← Category.assoc π₁.left, w_π₁]
+        _ = g ≫ pullback.fst U.hom q ≫ U.hom := by rw [pullback.condition]
+        _ = h ≫ pullback.fst U.hom q ≫ U.hom := by rw [← Category.assoc, hgh, Category.assoc]
+        _ = (h ≫ pullback.snd U.hom q) ≫ q := by rw [pullback.condition, Category.assoc]
+    have e := ψ_π hKI g (h ≫ pullback.snd U.hom q) hc
+    have e' : pullback.lift (g ≫ pullback.fst U.hom q) (h ≫ pullback.snd U.hom q) (by
+        rw [hgh, Category.assoc, Category.assoc, pullback.condition]) = h := by
+      apply pullback.hom_ext
+      · simp [hgh]
+      · simp
+    rw [e'] at e
+    rw [← Category.assoc h, ← e, Category.assoc, hψd, pullback.lift_fst_assoc, Category.assoc]
+  refine ⟨B₀, d, EffectiveEpi.desc (pullback.fst U.hom q) (π₁.left ≫ d) (fun g h hgh => hcoeq g h hgh),
+    hsq, EffectiveEpi.fac _ _ _, ?_⟩
+  rw [← cancel_epi (pullback.fst U.hom q), ← Category.assoc, EffectiveEpi.fac, Category.assoc, hsq.w,
+    ← Category.assoc, w_π₁, pullback.condition]
+
+end Descent
+
+
 
 section Rig
 
@@ -643,6 +931,142 @@ theorem algclosed_KI [Algebra.IsAlgebraic k₁ (AlgebraicClosure k)]
   have hk2 := kbar_KI π' hπ r e he_ker he_nat L ra rb hab u v hua hva hbb hk
   rw [hlift u rb b hrb (hu.trans hb) (hua.trans hbb), hlift v rb b hrb (hv.trans hb) (hva.trans hbb), hk2]
 
+theorem fpqc_specField (L M : Type) [Field L] [Field M] [Algebra L M] :
+    Flat (Spec.map (CommRingCat.ofHom (algebraMap L M))) ∧ Surjective (Spec.map (CommRingCat.ofHom (algebraMap L M))) := by
+  have h := (flat_and_surjective_SpecMap_iff (CommRingCat.ofHom (algebraMap L M))).mpr
+    ((RingHom.faithfullyFlat_algebraMap_iff).mpr inferInstance)
+  exact h
+
+theorem lift_comp_left {X Y S Z' Z : Scheme.{0}} (f : X ⟶ S) (g : Y ⟶ S) (ρ : Z' ⟶ Z) (x : Z ⟶ X) (y : Z ⟶ Y)
+    (h : x ≫ f = y ≫ g) :
+    pullback.lift (ρ ≫ x) (ρ ≫ y) (by rw [Category.assoc, Category.assoc, h]) = ρ ≫ pullback.lift x y h := by
+  apply pullback.hom_ext <;> simp
+
+/-- `KI` at points with values in any field (pass to an algebraic closure). -/
+theorem field_KI [Algebra.IsAlgebraic k₁ (AlgebraicClosure k)]
+    (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X)
+    (hπ : letI := B'.grp; letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      IsMonHom π') (r : ℕ)
+    (e : letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R],
+      (Fin r → Rˣ) →* (algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U))
+    (he_ker : letI := B'.grp; letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R]
+      (u : algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U),
+      u ≫ π' = 1 ↔ u ∈ (e R).range)
+    (he_nat : ∀ (R S : Type) [CommRing R] [Algebra (AlgebraicClosure k) R] [CommRing S]
+      [Algebra (AlgebraicClosure k) S] (f : R →ₐ[AlgebraicClosure k] S) (t : Fin r → Rˣ),
+      e S (fun i => Units.map (f : R →* S) (t i)) = algPtMap f ≫ e R t)
+    (X₁ : Over (Spec (CommRingCat.of k₁))) (π₁ : (Over.pullback (qq k k₁)).obj U ⟶ X₁)
+    (c : B'.X.left ⟶ X₁.left) (hc : IsPullback c B'.X.hom X₁.hom (q₂ k k₁))
+    (hcompat : π'.left ≫ c = rr U k₁ ≫ π₁.left)
+    (L : Type) [Field L] (u v : Spec (CommRingCat.of L) ⟶ U.left)
+    (a b : Spec (CommRingCat.of L) ⟶ Spec (CommRingCat.of k₁))
+    (hu : u ≫ U.hom = a ≫ qq k k₁) (hv : v ≫ U.hom = a ≫ qq k k₁) (hb : a ≫ qq k k₁ = b ≫ qq k k₁)
+    (h : pullback.lift u a hu ≫ π₁.left = pullback.lift v a hv ≫ π₁.left) :
+    pullback.lift u b (hu.trans hb) ≫ π₁.left = pullback.lift v b (hv.trans hb) ≫ π₁.left := by
+  let ρ := Spec.map (CommRingCat.ofHom (algebraMap L (AlgebraicClosure L)))
+  obtain ⟨hfl, hsu⟩ := fpqc_specField L (AlgebraicClosure L)
+  haveI : Flat ρ := hfl
+  haveI : Surjective ρ := hsu
+  haveI : QuasiCompact ρ := inferInstance
+  rw [← cancel_epi ρ, ← Category.assoc, ← Category.assoc,
+    ← lift_comp_left U.hom (qq k k₁) ρ u b (hu.trans hb), ← lift_comp_left U.hom (qq k k₁) ρ v b (hv.trans hb)]
+  refine algclosed_KI π' hπ r e he_ker he_nat X₁ π₁ c hc hcompat (AlgebraicClosure L) (ρ ≫ u) (ρ ≫ v)
+    (ρ ≫ a) (ρ ≫ b) (by rw [Category.assoc, hu, ← Category.assoc])
+    (by rw [Category.assoc, hv, ← Category.assoc]) (by rw [Category.assoc, hb, ← Category.assoc]) ?_
+  rw [lift_comp_left U.hom (qq k k₁) ρ u a hu, lift_comp_left U.hom (qq k k₁) ρ v a hv, Category.assoc,
+    Category.assoc, h]
+
+/-- **`KI` for `π₁`**, from the field case, on a smooth (hence reduced) universal source. -/
+theorem KI_of [Algebra.IsAlgebraic k₁ (AlgebraicClosure k)]
+    (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X)
+    (hπ : letI := B'.grp; letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      IsMonHom π') (r : ℕ)
+    (e : letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R],
+      (Fin r → Rˣ) →* (algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U))
+    (he_ker : letI := B'.grp; letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R]
+      (u : algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U),
+      u ≫ π' = 1 ↔ u ∈ (e R).range)
+    (he_nat : ∀ (R S : Type) [CommRing R] [Algebra (AlgebraicClosure k) R] [CommRing S]
+      [Algebra (AlgebraicClosure k) S] (f : R →ₐ[AlgebraicClosure k] S) (t : Fin r → Rˣ),
+      e S (fun i => Units.map (f : R →* S) (t i)) = algPtMap f ≫ e R t)
+    (X₁ : Over (Spec (CommRingCat.of k₁))) (π₁ : (Over.pullback (qq k k₁)).obj U ⟶ X₁)
+    (c : B'.X.left ⟶ X₁.left) (hc : IsPullback c B'.X.hom X₁.hom (q₂ k k₁))
+    (hcompat : π'.left ≫ c = rr U k₁ ≫ π₁.left)
+    [Smooth π₁.left] [Smooth U.hom] [Smooth (qq k k₁)] [IsSeparated X₁.hom] :
+    KI (qq k k₁) π₁ := by
+  intro Z u v a b hu hv hb h
+  -- the universal source
+  let W := pullback U.hom (qq k k₁)
+  let Rel := pullback π₁.left π₁.left
+  let aR : Rel ⟶ Spec (CommRingCat.of k₁) := pullback.fst π₁.left π₁.left ≫ pullback.snd U.hom (qq k k₁)
+  let Z₀ := pullback (aR ≫ qq k k₁) (qq k k₁)
+  have haR : pullback.snd π₁.left π₁.left ≫ pullback.snd U.hom (qq k k₁) = aR := by
+    have := congrArg (· ≫ X₁.hom) (pullback.condition (f := π₁.left) (g := π₁.left))
+    simp only [Category.assoc, w_π₁] at this
+    exact this.symm
+  let u₀ : Z₀ ⟶ U.left := pullback.fst _ _ ≫ pullback.fst π₁.left π₁.left ≫ pullback.fst U.hom (qq k k₁)
+  let v₀ : Z₀ ⟶ U.left := pullback.fst _ _ ≫ pullback.snd π₁.left π₁.left ≫ pullback.fst U.hom (qq k k₁)
+  let a₀ : Z₀ ⟶ Spec (CommRingCat.of k₁) := pullback.fst _ _ ≫ aR
+  let b₀ : Z₀ ⟶ Spec (CommRingCat.of k₁) := pullback.snd _ _
+  have hWc : pullback.fst U.hom (qq k k₁) ≫ U.hom = pullback.snd U.hom (qq k k₁) ≫ qq k k₁ :=
+    pullback.condition
+  have hu₀ : u₀ ≫ U.hom = a₀ ≫ qq k k₁ := by
+    simp only [u₀, a₀, aR, Category.assoc]; rw [hWc]
+  have hv₀ : v₀ ≫ U.hom = a₀ ≫ qq k k₁ := by
+    simp only [v₀, a₀, Category.assoc]; rw [hWc, ← Category.assoc (pullback.snd π₁.left π₁.left), haR]
+  have hb₀ : a₀ ≫ qq k k₁ = b₀ ≫ qq k k₁ := by
+    simp only [a₀, b₀, Category.assoc]; exact pullback.condition
+  have h₀ : pullback.lift u₀ a₀ hu₀ ≫ π₁.left = pullback.lift v₀ a₀ hv₀ ≫ π₁.left := by
+    have e1 : pullback.lift u₀ a₀ hu₀ = pullback.fst _ _ ≫ pullback.fst π₁.left π₁.left := by
+      apply pullback.hom_ext <;> simp [u₀, a₀, aR]
+    have e2 : pullback.lift v₀ a₀ hv₀ = pullback.fst _ _ ≫ pullback.snd π₁.left π₁.left := by
+      apply pullback.hom_ext
+      · simp [v₀]
+      · simp only [a₀, pullback.lift_snd, Category.assoc]; rw [haR]
+    rw [e1, e2]
+    simp only [Category.assoc]
+    exact congrArg (pullback.fst (aR ≫ qq k k₁) (qq k k₁) ≫ ·) pullback.condition
+  -- reducedness of the universal source
+  haveI : Smooth (pullback.fst (aR ≫ qq k k₁) (qq k k₁)) := inferInstance
+  haveI : Smooth aR := inferInstance
+  haveI : Smooth (b₀ ≫ qq k k₁) := by
+    rw [← hb₀]; simp only [a₀]; infer_instance
+  haveI : IsReduced Z₀ := Smooth.isReduced_of_field (b₀ ≫ qq k k₁)
+  -- field tests
+  have huniv : pullback.lift u₀ b₀ (hu₀.trans hb₀) ≫ π₁.left = pullback.lift v₀ b₀ (hv₀.trans hb₀) ≫ π₁.left := by
+    let src : Over (Spec (CommRingCat.of k₁)) := Over.mk b₀
+    let f₁ : src ⟶ X₁ := Over.homMk (pullback.lift u₀ b₀ (hu₀.trans hb₀) ≫ π₁.left) (by
+      change (pullback.lift u₀ b₀ _ ≫ π₁.left) ≫ X₁.hom = b₀
+      rw [Category.assoc, w_π₁, pullback.lift_snd])
+    let f₂ : src ⟶ X₁ := Over.homMk (pullback.lift v₀ b₀ (hv₀.trans hb₀) ≫ π₁.left) (by
+      change (pullback.lift v₀ b₀ _ ≫ π₁.left) ≫ X₁.hom = b₀
+      rw [Category.assoc, w_π₁, pullback.lift_snd])
+    haveI : IsReduced src.left := (inferInstance : IsReduced Z₀)
+    have := Scheme.over_hom_eq_of_field_tests f₁ f₂ (fun L _ β p => by
+      apply Over.OverMorphism.ext
+      simp only [Over.comp_left, f₁, f₂, Over.homMk_left]
+      rw [← Category.assoc, ← Category.assoc,
+        ← lift_comp_left U.hom (qq k k₁) p.left u₀ b₀ (hu₀.trans hb₀),
+        ← lift_comp_left U.hom (qq k k₁) p.left v₀ b₀ (hv₀.trans hb₀)]
+      refine field_KI π' hπ r e he_ker he_nat X₁ π₁ c hc hcompat L (p.left ≫ u₀) (p.left ≫ v₀)
+        (p.left ≫ a₀) (p.left ≫ b₀) (by rw [Category.assoc, hu₀, ← Category.assoc])
+        (by rw [Category.assoc, hv₀, ← Category.assoc]) (by rw [Category.assoc, hb₀, ← Category.assoc]) ?_
+      rw [lift_comp_left U.hom (qq k k₁) p.left u₀ a₀ hu₀, lift_comp_left U.hom (qq k k₁) p.left v₀ a₀ hv₀,
+        Category.assoc, Category.assoc, h₀])
+    exact congrArg (fun z => Over.Hom.left z) this
+  -- specialize
+  let t : Z ⟶ Z₀ := pullback.lift (pullback.lift (pullback.lift u a hu) (pullback.lift v a hv) h) b (by
+    simp only [aR, Category.assoc]; rw [pullback.lift_fst_assoc, pullback.lift_snd_assoc, hb])
+  have := congrArg (t ≫ ·) huniv
+  simp only [← Category.assoc] at this
+  convert this using 2
+  · apply pullback.hom_ext <;> simp [t, u₀, b₀]
+  · apply pullback.hom_ext <;> simp [t, v₀, b₀]
+
 end KI1
 
 end ZInQ.ChevFree
@@ -651,3 +1075,4 @@ end ZInQ.ChevFree
 #print axioms ZInQ.ChevFree.torus_kernel_transfer
 #print axioms ZInQ.ChevFree.kbar_KI
 #print axioms ZInQ.ChevFree.algclosed_KI
+#print axioms ZInQ.ChevFree.KI_of
