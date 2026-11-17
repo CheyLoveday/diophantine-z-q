@@ -27,3 +27,24 @@ sixContactMin_of_open48 in TailZ55): merge 09ec5c5b, no conflicts (VERIFIED, git
 * Dropped top: NewNames.lean lists the 71 constants declared in CarayolPrintedIrr, CarayolPrinted, NewformDict, CarayolLevel
   (new-names.txt); DroppedTopCheck.lean (imports ZInQKernel.Contrib.AllContrib) finds none of them in that environment;
   positive control PkgI6.TraceContainsRamificationIdx found (dropped-top-check.txt). So no name clash from the new modules.
+
+## Step 3: discharges, fold dry runs (VERIFIED, on merged main c0f3d085, top sixContactMin_of_open48 / TailZ55)
+* discharges.txt (Discharges.lean): `DISCHARGES [OpenResearchLeaves31.r17]` by
+  - `CarayolPrinted.carayolR17'_of_printedIrr`, still assumes [CarayolThmAIrr, DSCoeffExt.EigenformCoeffFieldFinite];
+  - `CarayolPrinted.carayolR17'_of_printed`, still assumes [CarayolThmA, EigenformCoeffFieldFinite];
+  - `CarayolPrinted.carayolR17'_of_split`, still assumes [CarayolExistence, CarayolConductor, EigenformCoeffFieldFinite];
+  all [propext, Classical.choice, Quot.sound]; also adjoin_eq_top_of_irreducible_odd, carayolThmA_of_irr standard.
+* autofold dry runs (`autofold.py SPEC --dry-run`, kinds.tsv of main):
+  - autofold.json (carayolThmAIrr, published, unread + risks): 11/18 on 29 -> 12/17 on 29; strictest 11/18 -> 12/17.
+  - autofold-burnside.json (r17-print's carayolThmA, unread): 11/18 -> 12/17 (same).
+  - autofold-split.json (carayolExistence published unread + carayolConductor composite): 11/18 on 29 -> 12/18 on 30.
+  - autofold-pending.json (carayolThmAIrr, pending reading): 11/18 -> 11/18 (neutral).
+* AutofoldDryRun.lean (line 1 stripped): compiles; `sixContactMin_of_open49` standard axioms (autofold-dryrun-compile.txt).
+* FrozenTargetDryRun.lean: Main's imports + dry-run body + `frozenTarget_r17rebase` (Main's frozenTarget with
+  OpenResearchLeaves32 and open49): compiles, standard axioms (frozentarget-dryrun-compile.txt).
+* AutofoldDryRunSplit.lean: compiles, standard axioms.
+
+## Scenario F (VERIFIED)
+* ScenarioF.lean: verbatim copy of ModularSplit.R17.CarayolRealization (diff identical to scratch/modular-split/R17.lean);
+  `carayolRealization_of_printed : CarayolThmA → EigenformCoeffFieldFinite → CarayolRealization` and the Irr variant,
+  standard axioms (scenarioF.txt). So the printed leaf supersedes modular-split's split as well.
