@@ -56,7 +56,11 @@ def KolyvaginThm1 : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → IsModular E → AnalyticRankOne E →
     Module.rank ℤ E.toAffine.Point = 1 ∧ Finite (sha E)
 
-/-- **Lemma 5.5 (`lem:forward-rank`), the rank half at `r = 1`, from the two prints.** -/
+/-- **Lemma 5.5 (`lem:forward-rank`), the rank half at `r = 1`, from the two prints.**
+ON THE SPOT (correction (c)): only `rank = 1` is used downstream. Tex L1107–1109 uses "rank one
+and finite Ш, hence Ш[2] = 0"; here, with `#E_ℓ(ℚ)[2] = 4`, Mordell–Weil and `#SelM ℓ = 8`, the
+Kummer map is onto by counting (`descentGlueM`), which re-derives `r + dim Ш[2] = 1` without the
+finiteness of Ш. -/
 theorem kolyvaginRankOne_of_printed (hB : BCDTThmA) (hK : KolyvaginThm1) : KolyvaginRankOne :=
   fun E hE hA => (hK E hE (hB E hE) hA).1
 

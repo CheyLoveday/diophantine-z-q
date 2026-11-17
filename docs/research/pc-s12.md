@@ -130,7 +130,11 @@ resolved (12, 14, 10 by S12 and Lean) or recorded (19).
   `ℚ_p`). Tau Ceti's `selmerAt E 1` is the cohomological `Sel₂(E/ℚ)`. Their comparison is the
   hypothesis `KummerSelmerM : #Sel₂(E_ℓ/ℚ) = #SelM ℓ`: **textbook GLUE, not proved**. Tau Ceti's
   `TwoDescent.lean` proves one ingredient (the Kummer map of `[2]` read through a 2-torsion point is
-  `x − e`) and says itself that it is "not that comparison itself". Locator: Silverman, *The
+  `x − e`), and `EtaleTwoDescent.lean` builds the cohomological descent map
+  `H¹(G_K, E[2]) → (K[X]/(f))ˣ/squares` and proves that it agrees with the explicit map on Kummer
+  classes (`cohomologicalMap_kummerMap`); its header says that the Selmer comparison "also needs its
+  injectivity and the agreement of the local conditions, which are not proved". Those two facts,
+  specialized to the split cubic of `E_ℓ` and to the x-form `LocM`, are what `KummerSelmerM` asks. Locator: Silverman, *The
   Arithmetic of Elliptic Curves*, 2nd ed., Prop. X.1.4 (as S12 L242 cites it). Silverman is in the
   manuscript's bibliography (Known issue 6). No count form is called "Theorem 5.3" here: `Lemma54At`
   at Silverman's `Sel₂` is Lemma 5.4 composed with this identification.
@@ -185,7 +189,35 @@ as their type). Round 1's files do, in two places, to be re-checked after the re
 
 ## `#discharges` and autofold
 
-See §"Deliverable checks" below (filled in after the run).
+`scratch/pc-s12/Discharges.lean` (imports `ZInQKernel.OneProof.Main`, `ZInQKernel.OneProof.Discharges`
+and the final file) was run after `lake build` of the three modules (exit 0): "#discharges: 34
+open hypotheses, 16366 theorems checked, 19 discharge one"; none of the 19 is a PoleRC/PoleS12
+theorem (output: `scratch/pc-s12/discharges-output.txt`). VERIFIED. As in round 1,
+`Manuscript.PoleCompleteness` is not a field of any bundle of `ZInQ.OneProof.frozenTarget`, so
+nothing is discharged and autofold does not apply; `scratch/pc-s12/autofold.json` records the
+statements with kinds and flags for a manuscript-faithful headline (issue #74).
+
+## Files (round 2; all new, none imports `ZInQKernel.OneProof.Main`)
+
+| file | content |
+| --- | --- |
+| `Contrib/OneProof/PoleCompletenessFromRCGenuine.lean` | final theorems: `poleCompleteness_of_restrictedConverseGenuine`, `…_abstract`, `dimThreeCount`, `simultaneousConstruction` |
+| `PoleS12/SharpAlg.lean` | `𝔽₂` algebra: `KS`, `KSharp`, `sharp_targets`, `sharp_ker_of_deleted`, `exists_toggle_injOn`, `block_injOn` |
+| `PoleS12/Convert.lean` | `kmat_mulVec_eq`, `matrixConditions_of_KS`, parities, `lsym_prod` |
+| `PoleS12/Primes.lean` | `exists_prime_lsym` (CRT + Dirichlet), `exists_aux_primes` |
+| `PoleS12/Choice.lean` | `mc_of_choice` |
+| `PoleS12/Realization.lean` | `matrixRealization` |
+| `PoleS12/TwoAdic.lean` | `locM_two_even`, `two_adic_odd` |
+| `PoleS12/NecS12.lean` | `necAt_S12`, `e3_of_e2`, `mod4_of_e3` |
+| `PoleS12/Suff.lean` | `locM_cand`, `sqClass_at_bad`, `sqClass_three`, `LocalGoodUnram`, `cand_mem_S12` |
+| `PoleS12/CountS12.lean` | `dimThreeCount_S12` |
+| `PoleS12/GoodF/KummerF.lean`, `GoodF/DescentF.lean` | Kummer maps and 2-descent over a field with `2, 3 ≠ 0`; `locM_finite` |
+| `PoleS12/GoodUnram.lean` | `localGoodUnram` |
+| `PoleS12/Leaves.lean` | `IsModular`, `BCDTThmA`, `KolyvaginThm1`, `Lemma54`, `KummerSelmerM`, `FullTwoTorsion`, `selM_finite` |
+
+Round 1's uncommitted change to `PoleRC/Count.lean` (`NecAt`, class hypothesis in
+`eqs_of_localBad`) did not compile at the start (unknown `hN`); it was finished and committed
+(log, first entry).
 
 ## What remains
 

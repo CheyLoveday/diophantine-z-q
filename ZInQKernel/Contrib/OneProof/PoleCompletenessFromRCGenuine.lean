@@ -54,7 +54,9 @@ form. Proved in Lean: the bookkeeping, the rescaling, the complete 2-descent, `M
 (S12 `par:simultaneous-matrices`), every local condition of the dimension-three count
 (S12 `par:descent`). Remaining: Theorem 5.3 (`RestrictedConverseGenuine`), the printed leaves
 `Lemma54`, `BCDTThmA`, `KolyvaginThm1`, `MordellWeil`, and the GLUE statement `KummerSelmerM`
-(the Kummer identification `#Sel₂(E_ℓ/ℚ) = #SelM ℓ`, Silverman X.1.4). -/
+(the Kummer identification `#Sel₂(E_ℓ/ℚ) = #SelM ℓ`, Silverman X.1.4).
+ON THE SPOT (correction (c)): of `KolyvaginThm1` only the rank is used; finiteness of Ш
+(tex L1107–1109) is replaced by the counting argument of `descentGlueM`. -/
 theorem poleCompleteness_of_restrictedConverseGenuine (hRC : RestrictedConverseGenuine)
     (h54 : Lemma54) (hKum : KummerSelmerM) (hB : BCDTThmA) (hK : KolyvaginThm1)
     (hMW : MordellWeil) : Manuscript.PoleCompleteness :=

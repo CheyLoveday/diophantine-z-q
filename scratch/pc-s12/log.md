@@ -54,3 +54,15 @@
 - Final: `poleCompleteness_of_restrictedConverseGenuine (RestrictedConverseGenuine) (Lemma54)
   (KummerSelmerM) (BCDTThmA) (KolyvaginThm1) (MordellWeil) : Manuscript.PoleCompleteness`.
   Axioms [propext, Classical.choice, Quot.sound] (scratch/pc-s12/axioms-output.txt). VERIFIED.
+
+## Route K lemmas used (correction (f) note; vendor these if the CertifiedRank chain breaks)
+From ZInQ.RouteK.Selmer: SqEq (+ refl/symm/trans/mul/isSquare_mul), sqEq_iff_isSquare_mul,
+isSquare_div_sq_iff (Covering); even_valuation_of_isSquare, isSquare_intCast_of_residue,
+isSquare_intCast_div_of_residue, isSquare_intCast_div_two_adic, isSquare_coe_iff_toZModPow_two,
+two_adic_norm_two (PadicSquare); sqEq_one_of_isSquare, two_adic_norm_eq_zpow, two_adic_norm_le_of_lt,
+two_adic_norm_intCast_of_odd, two_adic_norm_natCast_of_odd, two_adic_norm_four, two_adic_norm_add_lt (Two);
+even_valuation_of_sqEq_unit, not_dvd_of_squarefree_of_even_padicValInt (Good). Round 1's LocalP
+(localGood_nec, localThree_nec, localBad_nec, locM_torsion) and KummerM/DescentM (via RouteK.Rank.Image,
+RK9) have the same transitive closure (RouteK.Selmer.Covering -> Hypotheses.CertifiedRank ->
+RouteK.Assembly.Realize -> RouteK.Slots{,.Theta,.Multiplier}, RouteK.System.Config). No direct import
+or use of Slots/Multiplier, Slots/Theta, Config.monsky. VERIFIED (import-closure script).
