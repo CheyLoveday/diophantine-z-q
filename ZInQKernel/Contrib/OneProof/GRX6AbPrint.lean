@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.GRDict
+import ZInQKernel.Contrib.OneProof.UniformizationLeafAll
 
 /-!
 # grx6ab-print: the field `gonzalezRotgerX6Ab` from printed statements, one object per leaf
@@ -80,7 +81,7 @@ theorem x6ModuliWitness_of_coarse (hY : RayClassCFT.ShimuraMainThmIDeligneY3AbU)
     GRDict.X6ModuliWitness := by
   obtain ⟨Y, Φ, h1, -⟩ := hY
   obtain ⟨X, Ψ, hp, hs, hn, hgal, hal, huniv⟩ := hX
-  obtain ⟨hpY, hsY, -, -, ⟨𝒜, h𝒜⟩, -⟩ := h1
+  obtain ⟨hpY, hsY, -, -, ⟨𝒜, h𝒜⟩, -⟩ := id h1
   have hfib : ∀ (K : Type) [Field K] [Algebra ℚ K] (s : fieldPt K ⟶ Y), ∃ P : QML3 K,
       IsFibreOf 𝒜.toQMFamily s.left P := by
     intro K _ _ s
@@ -107,5 +108,14 @@ theorem gonzalezRotgerX6Ab_of_coarse (h : GRDict.GonzalezRotgerThm512X6)
     (hU : BPAnalytic.Uniformization.UniformizationLeafAll) (hG : ZInQ.HomLattice.GAGAMorphism)
     (hM : AvSplit.MumfordTorsionAlgClosed) : HDec.QMSplit.Moduli.GonzalezRotgerX6Ab :=
   GRDict.gonzalezRotgerX6Ab_of_witness h (x6ModuliWitness_of_coarse hY hX) hU hG hM
+
+/-- **The final form**: `gonzalezRotgerX6Ab` from the two printed leaves (`GonzalezRotgerThm512X6`,
+`X6CoarseModuli`), the existing research field `shimuraMainThmIDeligneY3AbU` and the textbook fields `gagaMorphism`,
+`mumfordTorsionAlgClosed` (`uniformizationLeafAll` is the proved `uniformizationLeafAll_proof`). -/
+theorem gonzalezRotgerX6Ab_of_print (h : GRDict.GonzalezRotgerThm512X6)
+    (hY : RayClassCFT.ShimuraMainThmIDeligneY3AbU) (hX : X6CoarseModuli)
+    (hG : ZInQ.HomLattice.GAGAMorphism) (hM : AvSplit.MumfordTorsionAlgClosed) :
+    HDec.QMSplit.Moduli.GonzalezRotgerX6Ab :=
+  gonzalezRotgerX6Ab_of_coarse h hY hX uniformizationLeafAll_proof hG hM
 
 end GRX6AbPrint
