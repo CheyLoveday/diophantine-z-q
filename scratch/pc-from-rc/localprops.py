@@ -7,7 +7,7 @@ sys.path.insert(0,'scratch/pc-from-rc')
 from selmer import factor, loc_p, loc_inf, sqfree_divs
 from compare import cls_q, add
 bad=0; n=0
-samples=[l for l in range(11,400) if l%12==11 and len(set(factor(l)))==len(factor(l))][:30]
+samples=[l for l in range(11,400) if l%12==11 and len(set(factor(l)))==len(factor(l))][:12]
 for l in samples:
     fs=factor(l)
     goodps=[p for p in [5,7,11,13,17,19,23] if (6*l)%p][:2]

@@ -351,4 +351,36 @@ theorem e3_of_mod4 (h12 : ℓ % 12 = 11) {b : ℤ} (hb : Squarefree b)
   rw [hdot, sg_eq_cast]
   exact zmod2_eq_of_even hpar
 
+/-- **`E4`: the condition at three** (`b ≡ 1 (mod 3)` gives `(λ + s)ᵗv = σ`). -/
+theorem e4_of_mod3 (h12 : ℓ % 12 = 11) {b : ℤ} (hb : Squarefree b)
+    (hsb : b.natAbs.primeFactors ⊆ ℓ.primeFactors) (h3 : b % 3 = 1) :
+    (lam ℓ + sgn ℓ) ⬝ᵥ ind ℓ b = sg b := by
+  classical
+  have hT : ∀ p ∈ b.natAbs.primeFactors, p % 3 ≠ 0 := by
+    intro p hp h
+    have hp3 := supp_ne_three (ℓ := ℓ) (by omega) ⟨p, hsb hp⟩
+    have hpp := (Nat.mem_primeFactors.mp hp).1
+    exact hp3 ((Nat.prime_dvd_prime_iff_eq Nat.prime_three hpp).mp
+      (Nat.dvd_of_mod_eq_zero h)).symm
+  have hZ := intCast_eq_sign_mul (ZMod 3) b
+  rw [natAbs_eq_prod hb, prod_zmod3 _ hT] at hZ
+  have hb1 : (b : ZMod 3) = 1 := by
+    rw [← ZMod.intCast_mod b 3, show b % ((3 : ℕ) : ℤ) = 1 by simpa using h3]; rfl
+  rw [hb1] at hZ
+  have hpar : Even ((if b < 0 then 1 else 0) +
+      (b.natAbs.primeFactors.filter (fun p => p % 3 = 2)).card) := by
+    apply even_of_neg_one_pow (R := ZMod 3) (by decide)
+    rw [pow_add, show ((-1 : ZMod 3) ^ (if b < 0 then 1 else 0)) = (if b < 0 then -1 else 1) by
+      split_ifs <;> simp]
+    exact hZ.symm
+  have hdot : (lam ℓ + sgn ℓ) ⬝ᵥ ind ℓ b =
+      ((b.natAbs.primeFactors.filter (fun p => p % 3 = 2)).card : ZMod 2) := by
+    rw [dotProduct, ← dot_ind_eq_card (fun p => p % 3 = 2) hsb]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    have := Fact.mk (supp_prime i)
+    rw [Pi.add_apply, lam, sgn, lsym_three i (supp_mod_two (by omega) i)
+      (supp_ne_three (by omega) i), lsym_neg_one, add_assoc, zmod2_add_self, add_zero]
+  rw [hdot, sg_eq_cast]
+  exact zmod2_eq_of_even hpar
+
 end ZInQ.Manuscript.PoleRC
