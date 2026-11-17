@@ -53,3 +53,12 @@
 - Run 1's background build killed at TailH (06:29); build2 started: lake build SZRaynaud + OneProof.Main +
   OneProof.Discharges (scratch/sz-raynaud/build2.txt).
 - build2: ZInQKernel.Contrib.OneProof.SZRaynaud compiled (6.3s), only warning: haveI -> have style hint at :168 (fixed after). VERIFIED (compiled).
+- build2 (07:14): `lake build SZRaynaud OneProof.Main OneProof.Discharges` EXIT 0; frozenTarget axioms
+  [propext, Classical.choice, Quot.sound]. Rebuilt SZRaynaud after the style fix: OK, no warnings from it. VERIFIED.
+- scratch/sz-raynaud/Discharges.lean (`lake env lean`, EXIT 0, output discharges-out.txt):
+  `DISCHARGES [OpenResearchLeaves42.raynaudSemistableSHOr] by SZRaynaud.raynaudSemistableSHOr_of_sz35
+   still assumes: [SZRaynaud.SilverbergZarhinThm35]  axioms: [propext, Classical.choice, Quot.sound]`.
+  #print axioms of all 11 new theorems: [propext, Classical.choice, Quot.sound] (pow_smul_tate: [propext, Quot.sound]).
+  VERIFIED (compiled).
+- Dry-run fold output minus line 1 (scratch/sz-raynaud/DryRunFold.lean) compiles, EXIT 0:
+  'HDec.HSyn.sixContactMin_of_open61' depends on axioms: [propext, Classical.choice, Quot.sound]. VERIFIED.

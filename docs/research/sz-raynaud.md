@@ -56,7 +56,7 @@ Task sz-raynaud (2026-11-17), base wip/ga-rigidity (f9e83fdb), no other branch m
   The ELLIOT sentence does follow from the row, using one on-the-spot glue statement (wild inertia is pro-`p`):
   `elliot_of_semistableUnipotent`. The converse does not hold.
 
-**Proved in Lean** (`ZInQKernel/Contrib/OneProof/SZRaynaud.lean`, namespace `SZRaynaud`; compile status in §5):
+**Proved in Lean** (`ZInQKernel/Contrib/OneProof/SZRaynaud.lean`, namespace `SZRaynaud`; compiled, §5):
 
 | statement | kind | what it is |
 | --- | --- | --- |
@@ -152,7 +152,16 @@ kernel's own; the manuscript states the sentence without proof.
   - Imports GaRigiditySGA7, RaynaudSemistableOr, NeronDVR, GeomConnOfRationalPoint, MumfordTorsionAlgClosed and
     MulEtale; never `ZInQKernel.OneProof.Main`.
   - GaRigidity.lean and GaRigiditySGA7.lean are unchanged. No other file under ZInQKernel/ was edited.
-- **Compile, `#discharges`, axioms:** see the log (filled in below once the build finishes).
+- **Compile (VERIFIED, 11-17 07:14):** `lake build ZInQKernel.Contrib.OneProof.SZRaynaud ZInQKernel.OneProof.Main
+  ZInQKernel.OneProof.Discharges` completed successfully; `ZInQ.OneProof.frozenTarget` depends on the standard
+  axioms only.
+- **`#discharges`** (scratch/sz-raynaud/Discharges.lean, output scratch/sz-raynaud/discharges-out.txt):
+  `DISCHARGES [OpenResearchLeaves42.raynaudSemistableSHOr] by SZRaynaud.raynaudSemistableSHOr_of_sz35`, which still
+  assumes `[SZRaynaud.SilverbergZarhinThm35]` and uses the axioms `[propext, Classical.choice, Quot.sound]`.
+- **`#print axioms`:** all 11 new theorems use `[propext, Classical.choice, Quot.sound]`, except `pow_smul_tate`,
+  which uses `[propext, Quot.sound]`. No `sorry`.
+- **Dry-run fold:** the output minus its first line (scratch/sz-raynaud/DryRunFold.lean) compiles, and
+  `HDec.HSyn.sixContactMin_of_open61` uses the standard axioms only.
 - **Autofold:**
   - Spec: scratch/sz-raynaud/autofold.json, which discharges `raynaudSemistableSHOr` with the leaf
     `silverbergZarhinThm35`.
