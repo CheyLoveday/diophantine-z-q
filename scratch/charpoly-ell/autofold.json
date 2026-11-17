@@ -1,0 +1,13 @@
+{"name": "charpoly-ell",
+ "imports": ["ZInQKernel.Contrib.OneProof.CharPolyIndepOfEllAlgClosed"],
+ "discharges": [
+   {"field": "charPolyIndepOfEllAlgClosed",
+    "proof": "_root_.ZInQ.Contrib.OneProof.CharPolyEll.charPolyIndepOfEllAlgClosed_of_degEqDetTate {n}.degEqDetTate {n}.homFreeFiniteAlgClosed",
+    "leaves": [
+      {"name": "degEqDetTate",
+       "type": "_root_.ZInQ.Contrib.OneProof.CharPolyEll.DegEqDetTate",
+       "doc": "Mumford, Abelian varieties (1970), section 19, Theorem 4, first assertion (numbering UNVERIFIED): for an endomorphism psi of an abelian variety over an algebraically closed field k and a prime l != char k, deg psi = det T_l(psi). Stated on V_l = Q_l (x) T_l in any finite basis (equal to the determinant on the free Z_l-module T_l), with deg the genuine degree degEnd: [K(A) : psi^* K(A)] (stalk map at the generic point) for psi finite and surjective, 0 otherwise (Mumford's convention for non-isogenies).",
+       "kind": "published",
+       "flag": "unread: new printed leaf (Mumford 19 Thm 4, deg = det T_l; the field charPolyIndepOfEllAlgClosed is the other assertion of the same theorem, proved from this one plus homFreeFiniteAlgClosed); locator UNVERIFIED",
+       "source": "Mumford, Abelian varieties, section 19, Theorem 4 (first assertion: deg phi = det T_l(phi))"}]}],
+ "note": "charPolyIndepOfEllAlgClosed is proved from DegEqDetTate and the bundle's own field homFreeFiniteAlgClosed (only Module.Finite Z (End A) is used, for the integrality of phi over Z). Glue in Lean: det(n - V_l phi) = charpoly(V_l phi)(n) = deg(n - phi) for every integer n, Lagrange interpolation over Q, uniqueness across l, integer coefficients via the roots of the characteristic polynomial being roots of a monic integer polynomial (Mathlib isIntegral_coeff_of_factors). Net count: -1 field +1 leaf. Report docs/research/charpoly-ell.md."}
