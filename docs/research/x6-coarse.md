@@ -108,8 +108,8 @@ and `[𝒪 : 𝒪μ] = nrd(μ)²`. Counted by hand from the congruence condition
   no further published input (`elkiesX6StarEvery_of_ideal'`). On the witness built from `X6CoarseModuliIdeal` the
   two `W`'s coincide (`atkinLehnerW_eq_of_clause`). Transport to every witness is the existing
   `ElkiesPrint.every_of_functionField`, i.e. step (d), which needs T5 from `mumfordTorsionAlgClosed`. The converse
-  holds given the textbook fields `gagaMorphism` and `mumfordTorsionAlgClosed` (`ideal_of_elkiesX6StarEvery`). Its docstring cites `X*(1)` with `Σ = {2, 3}` and
-  the verified page numbers. The old docstring is in `ElkiesX6StarEvery.lean`, which may not be edited: integrator,
+  holds given the textbook fields `gagaMorphism` and `mumfordTorsionAlgClosed` (`ideal_of_elkiesX6StarEvery`).
+  Its docstring cites `X*(1)` with `Σ = {2, 3}` and the verified page numbers. The old docstring is in `ElkiesX6StarEvery.lean`, which may not be edited: integrator,
   please carry the citation of the new leaf's docstring.
 * **(d) Transport to every witness: already a Lean proof** (`every_of_functionField`, elkies-print).
 * **(a) `ℚ(X/W) = ℚ(X)^W`: not done, and it cannot be stated more literally today.** Mathlib v4.35 and the tree
@@ -124,8 +124,8 @@ and `[𝒪 : 𝒪μ] = nrd(μ)²`. Counted by hand from the congruence condition
   The function-field form stays a consequence: `ℚ(X/W) = ℚ(X)^W` is how the quotient's function field is defined
   (Serre, *Groupes algébriques et corps de classes* III §12; STANDARD, locator UNVERIFIED), as elkies-coord §4
   argued.
-* **(c) "every point with that CM" from "the CM point of `X*(1)`": not done; the tree is two closed
-  number-theoretic facts short.** The counting route the lead proposes, with GR Prop. 5.6 (bundle field
+* **(c) "every point with that CM" from "the CM point of `X*(1)`": not done; three Lean steps are missing,
+  listed below.** The counting route the lead proposes, with GR Prop. 5.6 (bundle field
   `gonzalezRotgerProp56X6`) and Thm 5.12 (bundle field `gonzalezRotgerThm512X6`), would go as follows. At
   `(6, 1)` each of the three orders has `#CM(R) = 2^{b} h = 2`, with `(b, h) = (0, 2), (1, 1), (1, 1)` for
   `ℤ[√−6], ℤ[i], ℤ[ζ₃]`. Thm 5.12 gives `[ℚ(x) : ℚ] = 2`. So the two CM points of each discriminant are one
@@ -140,14 +140,19 @@ and `[𝒪 : 𝒪μ] = nrd(μ)²`. Counted by hand from the congruence condition
      (`#Hom_ℚ(ℚ(x), ℚ̄) = [ℚ(x) : ℚ]`) exhausts `CM(R)` without computing `h(−24) = 2`;
   2. "exactness": `HasCM24 P.q` (some `φ ∈ End_𝒪 A` with `φ² = −6`) ⇒ `End_𝒪 A ≅ ℤ[√−6]`, and likewise for
      `HasCM4`, `HasCM3`. The chain's `subsingleton_of_bundle` takes these as the hypotheses `hexact₄`, `hexact₃`
-     for the same reason. GR56's lattice model (`com_equiv_of_eig`) is the likely route;
+     for the same reason. GR56's lattice model gives a route, in four steps:
+     * `exists_O` gives `x ∈ 𝒪` with `ι(x)v = c·v`, where `c` is the scalar of `φ`;
+     * `x² = d`, since `act` is injective on `B`;
+     * `ℚ(√d) → B`, `√d ↦ x`, is then an embedding, and it is optimal for the maximal order;
+     * `GR56.com_equiv_of_eig` gives `End_𝒪 A ≅ R`.
+     Estimated a few hundred lines per discriminant, plus a `ℚ(√−6)` setup;
   3. the CM order is Galois-invariant: `End_𝒪` of a base change along `σ` (the Galois clause gives
      `IsBaseChangeOfPair σ P Q`) is isomorphic to `End_𝒪 A`, plus `#Hom_ℚ(ℚ(x), ℚ̄) = [ℚ(x):ℚ]` for the orbit count.
-  Until (1) and (2) are proved, the leaf's CM clause ("every point with that CM") remains a consequence of
+  Until (1)–(3) are proved, the leaf's CM clause ("every point with that CM") remains a consequence of
   Table 1 together with the uniqueness of the CM point of each discriminant on `X*(1)`. That uniqueness is
   implicit in Elkies' "the CM point of discriminant `D`" (p. 17 and Table 1, per the lead's reading).
 
-### 4.2 `gonzalezRotgerThm512X6` (priority 2): analysed, not reduced
+### 4.2 `gonzalezRotgerThm512X6` (priority 2): T2 proved as glue, T1 needs a new printed input
 
 The leaf (`GRDict.GonzalezRotgerThm512X6`) is GR Thm 5.12 at `(6, 1)`, weakened by and-elimination, on every
 witness, over `IsGRCMPoint`. The lead names two unprinted transport steps.
