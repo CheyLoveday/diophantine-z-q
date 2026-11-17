@@ -222,12 +222,11 @@ DISCHARGES [OpenResearchLeaves38.elkiesX6StarEvery] by X6ALIdeal.elkiesX6StarEve
 DISCHARGES [OpenResearchLeaves38.x6CoarseModuli] by X6ALIdeal.x6CoarseModuli_of_ideal
   still assumes: [X6ALIdeal.X6CoarseModuliIdeal]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 39 open hypotheses, 11185 theorems checked, 52 discharge one
+#discharges: 39 open hypotheses, 11194 theorems checked, 52 discharge one
 ```
 
 (`elkiesX6StarEvery_of_ideal`, the same with `ObjBridge.TorsionStructure` instead of `mumfordTorsionAlgClosed`, is
-also listed; the run reports `11185 theorems checked`.) `#print axioms` on every theorem of the file gives the
-standard three
+also listed.) `#print axioms` on all 56 theorems of the file gives the standard three
 (`scratch/x6-coarse/axioms.txt`).
 
 **Autofold spec** `scratch/x6-coarse/autofold.json`: `x6CoarseModuli` → leaf `x6CoarseModuliIdeal` (kind
