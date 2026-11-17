@@ -1,0 +1,12 @@
+{"name": "degpoly-proof-degdet-route",
+ "imports": ["ZInQKernel.Contrib.OneProof.DegHomogPolyC"],
+ "discharges": [
+   {"field": "charPolyIndepOfEllAlgClosed",
+    "proof": "_root_.ZInQ.Contrib.OneProof.DegPolyC.charPolyIndepOfEllAlgClosed_of_degHomogPolyNoEmb {n}.uniformizationLeafAll {n}.mumfordTorsionAlgClosed {n}.degHomogPolyNoEmb {n}.homFreeFiniteAlgClosed",
+    "leaves": [{"name": "degHomogPolyNoEmb",
+                "type": "_root_.ZInQ.Contrib.OneProof.DegPolyC.DegHomogPolyNoEmb",
+                "doc": "Mumford, Abelian varieties (1970), section 19 (locator UNVERIFIED; the statement used in the proof of 19 Thm 4): deg is a homogeneous polynomial function of degree 2g on End(X), read in coordinates of a finite family e_1..e_r, restricted to algebraically closed fields with no ring homomorphism to C (characteristic p, or characteristic 0 of transcendence degree above the continuum). Over fields that embed into C it is proved (degpoly-proof: deg psi = det_Z(psi on the period lattice)).",
+                "kind": "published",
+                "flag": "unread: specialization (forall-instance) of deg-det's printed leaf DegHomogPoly (Mumford 19) to fields with no embedding into C; the characteristic-p case is used (T7 at the reduction mod p, degpoly-proof section 5); locator UNVERIFIED",
+                "source": "Mumford, Abelian varieties, section 19 (deg homogeneous polynomial of degree 2g on End X), fields with no embedding into C"}]}],
+ "note": "degpoly-proof (deg-det route): charPolyIndepOfEllAlgClosed via deg-det's charPolyIndepOfEllAlgClosed_of_degHomogPoly_mumford with DegHomogPoly = DegHomogPolyC (proved from uniformizationLeafAll, mumfordTorsionAlgClosed) + the weaker leaf degHomogPolyNoEmb; also uses the open field homFreeFiniteAlgClosed. Count-neutral."}
