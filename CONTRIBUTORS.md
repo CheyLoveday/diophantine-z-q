@@ -5,7 +5,6 @@ Everyone whose work is in this repository, or who took part in the open work on 
 ## The manuscript
 
 - **Elliot Glazer** ([@elliotglazer](https://github.com/elliotglazer)): the manuscript [*ℤ is Diophantine in ℚ*](diophantine_zq.pdf), produced with Astra 6, Sol 6.1 and Opus 5.5 and audited by Fable 5.1, and the upstream repository this fork came from.
-
 - **Sohail Farhangi**: the earlier conditional manuscript of October 11, 2026, *A conditional Diophantine definition of Z in Q from four arithmetic inputs* (with ChatGPT 6), kept unmodified in [`October 11 Manuscript/`](October%2011%20Manuscript/README.md).
 
 ## Credited by the upstream project
