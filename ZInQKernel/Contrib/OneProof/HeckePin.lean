@@ -1,6 +1,37 @@
 import ZInQKernel.Contrib.OneProof.R16CoreYDS965
 import Mathlib.Analysis.Real.Cardinality
 
+/-!
+# hecke-pin: the dictionary steps `IsHeckeT`, `IsDiamond`, `IsAfQuotient`, `IsAfAction` pin Diamond–Shurman's objects
+
+Task hecke-pin (2026-11-17), report `docs/research/hecke-pin.md`, scratch `scratch/hecke-pin/`.
+
+The three leaves `AfTateLam.HeckeJ1DS`, `AfTateLam.AfShimura` (`AfTateLambda.lean`) and
+`AfTateLam.AfCharpolyDS965` (`R16CoreYDS965.lean`) quantify over endomorphisms `T_p`, `⟨d⟩` of `J = J₁(N)` given
+by DS's double-coset action on divisor classes of the points `x_τ` (`IsHeckeT`, `IsDiamond`), and over
+`(A, π, θ)` characterized by `IsAfQuotient` (with `KillsIf`, the kernel of `evF` on the free algebra) and
+`IsAfAction`. This file proves that these hypothesis-position definitions are about DS's objects:
+
+* **Gap 1 (`KillsIf` is DS's `I_f`).** `evF_eq_zero_of_heckeJ_eq_zero`: `ker(heckeJ) ⊆ ker(evF)`, so the
+  eigenvalue of `T ∈ 𝕋_ℤ` on `f` is well defined (`evF_wellDefined`), the image of `ker(evF)` is DS's
+  `I_f = {T ∈ 𝕋_ℤ : Tf = 0}` (`image_ker_evF_eq_IfDS`) and `KillsIf φ ↔ φ` kills `I_f J`
+  (`killsIf_iff_IfDS`). Proof: the double-coset operators lift to formal divisors on `ℍ` (`heckeD`);
+  the class map `Σ n_τ[τ] ↦ Σ n_τ aj(x_τ)` intertwines them with `heckeJ` (`cls_heckeD`, Claim A) and
+  `Σ n_τ[τ] ↦ Σ n_τ F(τ)` (`F` a primitive of `f`) multiplies by `evF` (`psi_heckeD`, Claim B); Abel's
+  theorem puts `evF(h)(F(τ) − F(τ₀))` in a countable set for all `τ`, while `F` is continuous and
+  non-constant on the connected `ℍ`. Inputs: the leaf candidates `X1TauPoints` (DS §7.7) and
+  `AbelJacobiX1` (DS Thm 6.1.2), and the glue `EichlerPrimitive`, `EichlerHecke` (analytic, provable).
+* **Gap 2 (pinning).** `isHeckeT_unique`, `isDiamond_unique`: two endomorphisms with DS's action on the
+  classes of the `x_τ` are equal (given `X1TauPoints` and the glue `ConstOnTauPoints`; through the
+  Albanese property). `isAfQuotient_unique`: `A_f` is unique up to unique isomorphism compatible with `π`
+  (no extra input), and `induced_comm`: the induced endomorphisms correspond.
+* **Gap 3 (`θ` pinned).** `coeff_mem_genField`: every `a_n(f)` lies in `ℚ(a_p(f), χ(d))` (Hecke recurrence
+  from `IsNormalizedEigenform`); `theta_unique`: two `θ` with `IsAfAction` for the same `(A, π)` are equal
+  (no extra input).
+
+No `sorry`, no `axiom`.
+-/
+
 noncomputable section
 
 namespace AfTateLam.HeckePin

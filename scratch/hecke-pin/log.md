@@ -13,3 +13,14 @@
   and Thm 7.2.5. (locator for X1TauPoints)
 
 ## Plan / statements
+- New file ZInQKernel/Contrib/OneProof/HeckePin.lean (namespace AfTateLam.HeckePin). VERIFIED: `lake build
+  ZInQKernel.Contrib.OneProof.HeckePin` succeeds (02:07).
+  * gap 3: coeff_zero_eq, coeff_mem_genField (a_n ∈ ℚ(a_p, χ(d)) from IsNormalizedEigenform), theta_unique. No extra input.
+  * gap 2b: hom_ext_of_isAfQuotient, isAfQuotient_unique (unique iso compatible with π), induced_comm. No extra input.
+  * gap 1: heckeD (free algebra on Div(ℍ)), cls_heckeD (Claim A), psi_heckeD (Claim B),
+    evF_eq_zero_of_heckeJ_eq_zero : X1TauPoints → AbelJacobiX1 → EichlerPrimitive → EichlerHecke → ... →
+    heckeJ h = 0 → evF h = 0; evF_wellDefined, image_ker_evF_eq_IfDS, killsIf_iff_IfDS.
+  * gap 2a: isHeckeT_agree, isDiamond_agree (need only TauPts), end_eq_of_classes (ConstOnTauPoints + Albanese),
+    isHeckeT_unique, isDiamond_unique.
+- New Props: X1TauPoints (leaf candidate, DS §7.7), AbelJacobiX1 (leaf candidate, DS Thm 6.1.2 + Milne JV),
+  EichlerPrimitive (GLUE), EichlerHecke (GLUE), ConstOnTauPoints (GLUE).
