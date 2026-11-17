@@ -289,3 +289,15 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     must be regenerated on this top. Checks (VERIFIED): build +Main +Discharges (16069 jobs); frozenTarget standard
     axioms; check_target.py; OpenStatements 40; DischargesTest rerun, no error; render_open --check ok (35 H,
     strictest 11/24, 5 others); crosswalk --check ok; autoform check ok.
+33. Batch for w98, one autofold scratch/leaf-fold33/autofold-batch-w98.json -> TailZ67, `sixContactMin_of_open60`:
+    merged wip/bdr-inv 3633c220, wip/derham-direct 606f4565, wip/javanpeykar-direct 35d256d0 (its contribution moved
+    from scratch to Contrib/OneProof/JavanpeykarDirect.lean). bdRInvariantsPrinted := BdRInv.bdRInvariantsPrinted_proof
+    (outright, from the in-tree Tate twist and Ax-Sen-Tate theorems); deRhamVpAbVarPrinted :=
+    DeRhamPrint.Direct.deRhamVpAbVarPrinted_of_direct from deRhamVpAbVarDirect (Berger II.5.1 p. 19 as printed; the
+    queue10 step dim_K -> dim_Qp proved); javanpeykarPrintedMapHF := JavanpeykarDirect.javanpeykarPrintedMap_of_thm111
+    from javanpeykarThm111 (Javanpeykar Thm 1.1.1 over its own objects; both reading steps proved). The two new leaves
+    pending review (GLUE). Count: 40 open -> 39 open; H strictest 11/24 on 35 -> 11/23 on 34 (-1 field -1 GLUE; -2
+    GLUE more if the reviewer rates the two new leaves LEAF). Checks (VERIFIED): build +Main +Discharges (16073 jobs);
+    frozenTarget standard axioms; check_target.py; only Main.lean changed among existing OneProof modules; OpenStatements
+    39; DischargesTest rerun, no error; render_open --check ok (34 H, strictest 11/23, 5 others); crosswalk --check ok;
+    autoform check ok.

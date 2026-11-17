@@ -1,0 +1,42 @@
+{
+ "name": "leaf-fold33-batch-w98",
+ "imports": [
+  "ZInQKernel.Contrib.OneProof.BdRInvariants",
+  "ZInQKernel.Contrib.OneProof.DeRhamPrintDirect",
+  "ZInQKernel.Contrib.OneProof.JavanpeykarDirect"
+ ],
+ "discharges": [
+  {
+   "field": "bdRInvariantsPrinted",
+   "proof": "_root_.BdRInv.bdRInvariantsPrinted_proof"
+  },
+  {
+   "field": "deRhamVpAbVarPrinted",
+   "proof": "_root_.DeRhamPrint.Direct.deRhamVpAbVarPrinted_of_direct {n}.deRhamVpAbVarDirect",
+   "leaves": [
+    {
+     "name": "deRhamVpAbVarDirect",
+     "type": "_root_.DeRhamPrint.Direct.DeRhamVpAbVarDirect",
+     "doc": "Fontaine, as printed by Berger, An introduction to the theory of p-adic representations (Geometric aspects of Dwork theory, de Gruyter 2004; arXiv math/0210184v1) section II.5.1, p. 19: the Tate modules of abelian varieties are de Rham, i.e. dim_K D_dR(V_p(A)) = dim_{Q_p} V_p(A) with D_dR(V) = (B_dR (x)_{Q_p} V)^{G_K} a K-space through K -> Kbar -> B_dR^+. Lean form: A over a finite F/Q_p, G_F acting through gfToGqp (image G_{F'}, F' the image of F in Qbar_p, so the print's K is F'), D_dR = DeRhamPrint.Direct.ddrF an F'-space through iotaF : F' -> Qbar_p -> B_dR^+ -> B_dR, the unique theta-compatible lift (iotaPlusF_unique), G_F-invariant (bdrAct_iotaF). Equivalent to the old field deRhamVpAbVarPrinted by the tower law (deRhamVpAbVarPrinted_of_direct and its converse, proved). Berger's B_dR = B_dR^+[1/t] matched by DeRhamPrint.TDict.bdREquivAwayT",
+     "kind": "published",
+     "flag": "pending review: direct instance of Berger II.5.1 p. 19 (integrator's ruling: LEAF once a reviewer confirms the reading relayed in readings/derham.md); primary Fontaine numbers UNVERIFIED",
+     "source": "Berger, An introduction to the theory of p-adic representations (2004), section II.5.1, p. 19 (arXiv math/0210184v1), attributing to Fontaine: Tate modules of abelian varieties are de Rham (dim_K D_dR(V) = dim V); F'-structure on D_dR through the theta-compatible F' -> B_dR^+ and the tower law proved (derham-direct)"
+    }
+   ]
+  },
+  {
+   "field": "javanpeykarPrintedMapHF",
+   "proof": "_root_.JavanpeykarDirect.javanpeykarPrintedMap_of_thm111 {n}.javanpeykarThm111",
+   "leaves": [
+    {
+     "name": "javanpeykarThm111",
+     "type": "_root_.JavanpeykarDirect.JavanpeykarThm111",
+     "doc": "javanpeykar-direct: Javanpeykar, Algebra Number Theory 8 (2014), Thm 1.1.1, over the print's objects: for Kbar any algebraic closure of Q and X a smooth proper connected integral curve over Kbar (IsCurve), projective (closed immersion into P(n; Spec Kbar)), of genus g = genusK X = dim H^1(X, O_X) >= 1, W an abelian variety over Kbar representing Pic^0_{X/Kbar} with the tensor group law (Jac X), h_Fal(Jac X) = any x with IsStableHeightBar W x (x is height-fix's printed stable height IsPrintedStableHeight of a model of W over some number field L inside Kbar), and deg_B(X) = belyiDegree X hB = Nat.find of the existence of a Belyi map of positive degree (hB: X has a Belyi map, javanpeykar-fix's IsBelyiMap; Belyi's theorem is not used): x <= 13*10^6 * g * deg_B(X)^5. javanpeykarPrintedMapHF follows in Lean (JavanpeykarDirect.javanpeykarPrintedMap_of_thm111: specialization Kbar = AlgebraicClosure K, X = X0 x_K Kbar; deg_B(X) <= d for the given Belyi map and the bound increasing in deg_B; L = K for the model V).",
+     "kind": "published",
+     "flag": "pending review (Addendum 1: new printed leaf, GLUE until a reviewer rates it); the print over its own objects (deg_B as Nat.find, h_Fal(Jac X) as the stable height of an abelian variety over Qbar via a model over a number field), replacing javanpeykarPrintedMapHF's two reading steps (degree of a given Belyi map; model over the field of definition K) by Lean proofs; remaining readings are definition-level: IsStableHeightBar is Faltings' stable height (independent of the number field and model), height-fix's IsPrintedStableHeight, unramified via the ramification index at closed points",
+     "source": "Javanpeykar, Polynomial bounds for Arakelov invariants of Belyi curves, Algebra Number Theory 8 (2014), Thm 1.1.1, p. 90 (arXiv:1403.6404v1 Thm 1.1.1, p. 1); height identification p. 98 (arXiv section 2.3 p. 9); locators recorded by the locator audit (docs/research/locators.md row R18); over height-fix's printed stable height (javanpeykar-direct)"
+    }
+   ]
+  }
+ ]
+}
