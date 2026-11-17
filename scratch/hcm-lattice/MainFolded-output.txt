@@ -1,0 +1,2 @@
+'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+real	0m12.913s

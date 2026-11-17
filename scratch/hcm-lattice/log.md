@@ -45,3 +45,10 @@ Base: wip/leaf-fold33b d879bb73. Build tree seeded from ~/dzq-check2 (same HEAD)
   - `IsImmersion.comp_mul`, `isAnalyticIso_of_unif` (IsAnalyticUnif on a short model ⇒ IsAnalyticIso);
   - `shimuraThm54_of_local : ShimuraThm54Local → HCMDict.ShimuraThm54` (the old leaf from the new one);
     axioms [propext, Classical.choice, Quot.sound].
+- FoldCheck.lean regenerated: COMPILED (0 errors, 33 s). `#discharges`:
+  `DISCHARGES [hCM] by ZInQ.Contrib.HCMLattice.shimuraThm54_of_local / still assumes: [ShimuraThm54Local] /
+  axioms: [propext, Classical.choice, Quot.sound]`. `frozenTarget_hCMLocal` (frozenTarget with hCM filled by
+  shimuraThm54_of_local) and `frozenTarget_hCMLocal'` (folded Main body, shimuraMainCM_of_local at both uses):
+  standard axioms.
+- MainFolded.lean (Main.lean with the fold applied, HCMLattice inlined): COMPILED, 0 errors;
+  `ZInQ.OneProof.frozenTarget` depends on [propext, Classical.choice, Quot.sound].
