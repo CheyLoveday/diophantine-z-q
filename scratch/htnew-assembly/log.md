@@ -20,3 +20,9 @@ EigenformHTPrinted.ModularHTPrinted` (verbatim copy: `ModularHTPrinted-copy.lean
   coercion). Final: success, ~21 s, warnings only. VERIFIED.
 - `lake build +ZInQKernel.Contrib.OneProof.ModularHTCoeff`: success. `Axioms.lean` → `axioms.txt`: modularHTPrinted_of_coeff,
   eigenformHTNew_of_coeff, printHTMult_eq, kernel_of_print, reading_arith, reading_geom: [propext, Classical.choice, Quot.sound]. VERIFIED.
+- `lake env lean scratch/htnew-assembly/Discharges.lean` → `Discharges-output.txt`: `DISCHARGES [OpenResearchLeaves42.modularHTPrinted] by
+  HTNewAssembly.modularHTPrinted_of_coeff / still assumes: [HTNewAssembly.ModularHTCoeff] / axioms: [propext, Classical.choice,
+  Quot.sound]`; footer `39 open hypotheses, 13436 theorems checked, 26 discharge one`. VERIFIED.
+- `python3 scripts/one_proof/autofold.py scratch/htnew-assembly/autofold.json --dry-run` → `autofold-dryrun.txt`: `strict count:
+  12/22 on 34 -> 13/21 on 34; strictest 11/23 -> 12/22`. Line 1 stripped → `FoldDryRun.lean` (renamed `.lean.txt` after the check):
+  `lake env lean` success, `HDec.HSyn.sixContactMin_of_open61` depends on [propext, Classical.choice, Quot.sound]. VERIFIED.
