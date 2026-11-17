@@ -73,3 +73,17 @@ vendored CloudW07 modules, `MilneQuasiInverse.Descent` and Mathlib):
   `exists_π_app_comp_eq_of_locallyOfFinitePresentation`) → `fsd` (KI from rigidity, descent datum, effective
   finite flat descent, group law through fpqc quotient, property descent, kernel comparison) →
   `quotientDescendsPerfect_proof` → semiab-descend's assembly with step (e) replaced.
+
+## 7. Fold (VERIFIED)
+
+- `fold/gen_bypass.py` → `fold/TailZ65.lean.txt`: `OpenResearchLeaves40` (= 39 without `chevalleyPerfect`, 27
+  fields, same fields and order as autofold's), `openResearchLeaves36EB_of_OpenResearchLeaves40` (composite of
+  39→38EB→37EB→36EB, readers replaced), `sixContactMin_of_open58`.
+- `fold/autofold-count-dryrun.txt`: `strict count: 16/15 on 31 -> 15/15 on 30; strictest 16/15 -> 15/15`.
+- `fold/MainCheck.lean` (ChevFree + module + frozenTarget copy on the new bundle + closure checks): compiles;
+  `sixContactMin_of_open58`, `frozenTarget_chevFree` standard axioms; closure of the current top
+  `sixContactMin_of_open57` (270602 constants) mentions `ChevalleyPerfect` only in bundle fields/constructors of
+  39/38EB/37EB and in `semiAbelianDescendsPerfect_of_chevalley`, `bostLowerBound_of_printed_chevalley`,
+  `gaudronRemondThm14_of_printed_chevalley`; closure of the new top (270704) and new frozen target (300062):
+  `ChevalleyPerfect`, the three `_chevalley` theorems, `sorryAx`, `OpenResearchLeaves39` absent.
+- Not done here: adding the modules to `ZInQKernel/`, Main switch, kinds.tsv/claims.tsv rows (task rules).
