@@ -91,6 +91,9 @@ writes a file of several megabytes per module that embeds absolute paths. Clone 
   [here](https://github.com/Deicyde/diophantine-z-q/blob/222c98bfaaade688e1c0afdef7c857ce59ab6081/README.md).
 - [Blueprint site](https://deicyde.github.io/diophantine-z-q/) (a snapshot from 2026-11-13; it redeploys after
   the next main build cache run that passes on `main`).
+- Licence: the fork's own material is under the Apache License 2.0 ([LICENSE](LICENSE)). It does not cover the
+  manuscripts, `construction/` and `lean/`, which came from upstream, or the vendored libraries
+  ([NOTICE](NOTICE), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).
 - Credits: the November 5 manuscript was produced by Elliot Glazer with Astra 6, Sol 6.1 and Opus 5.5, with auditing
   from Fable 5.1. Vendored libraries are credited in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), and contributed
   proofs in the [credits section of OPEN.md](docs/one-proof/OPEN.md#credits).
