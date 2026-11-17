@@ -3,3 +3,4 @@
 'Y3P1j.isoT' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Y3P1j.hauptmodulOfX6_of_y3ToP1j' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Y3P1j.r1r2W_of_y3ToP1j' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Y3P1j.y3ToP1jAt_noDeg_of_row' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -412,6 +412,28 @@ theorem r1r2W_of_y3ToP1j (hE : CanonicalModelY3) (hX : CoarseX6OfFineW) (hY : Y3
     (pairsLift_of_t5 (AvSplit.torsionStructure_of_mumford
       ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof))) hR h5
 
+/-- **Consistency: the row's `X₆` data give every clause of `Y3ToP1jAt` except the degree bound**, for
+`π = π₆ ∘ fY`. So, against the leaves the chain already uses (Baba–Granath on `X₆` through the row), the only new
+content of `Y3ToP1j` is the fibre bound `≤ 324` (L437-440) and the passage from one witness to every witness. -/
+theorem y3ToP1jAt_noDeg_of_row (h : HDec.LeafAdopt.R1R2fpRepW) :
+    ∃ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (π : ToP1 Y.left), R1fpProps Y Φ ∧
+      (∀ (y y' : fieldPt Qbar ⟶ Y) (P Q : QML3 Qbar), Φ Qbar y = M3.mk P → Φ Qbar y' = M3.mk Q →
+        (π.val (K := Qbar) y.left = π.val (K := Qbar) y'.left ↔
+            ∃ α : O ≃+* O, Nonempty (QMIso (P.q.twist α) Q.q)) ∧
+        (HasCM4 P.q ↔ π.val (K := Qbar) y.left = OnePoint.some 0) ∧
+        (HasCM3 P.q ↔ π.val (K := Qbar) y.left = OnePoint.infty) ∧
+        (HasCM24 P.q ↔ π.val (K := Qbar) y.left = OnePoint.some (-16 / 27))) ∧
+      (∀ t : OnePoint Qbar, ∃ y : fieldPt Qbar ⟶ Y, π.val (K := Qbar) y.left = t) := by
+  obtain ⟨Y, Φ, X, Ψ, fY, π₆, h1, -, h6, h2, -, ⟨hs6, hsY⟩, -⟩ := h
+  have hv : ∀ y : fieldPt Qbar ⟶ Y, (π₆.comp fY.left).val (K := Qbar) y.left = π₆.val (K := Qbar) (y ≫ fY).left :=
+    fun y => ToP1.val_comp_right (K := Qbar) π₆ fY.left y.left
+  refine ⟨Y, Φ, π₆.comp fY.left, h1, fun y y' P Q hP hQ => ?_, fun t => ?_⟩
+  · rw [hv, hv]
+    exact h2 (y ≫ fY) (y' ≫ fY) P.forget Q.forget (h6.2.2.2.2.2 y P hP) (h6.2.2.2.2.2 y' Q hQ)
+  · obtain ⟨x, hx⟩ := hs6 t
+    obtain ⟨y, rfl⟩ := hsY x
+    exact ⟨y, (hv y).trans hx⟩
+
 end Leaf
 
 end Y3P1j

@@ -20,3 +20,30 @@
   current chain: babaGranathRationalAb := babaGranathRationalAb_of_printed (elkiesX6StarPrinted_of_functionField
   n.elkiesX6StarFunctionField) ... (EichlerBoundCopy etc.), elkiesX6StarFunctionField from elkiesX6StarEvery and
   x6CoarseModuli (TailZ59:83, EichlerBoundCopy:3703), gonzalezRotgerX6Ab from x6CoarseModuli (TailZ59:78).
+- Computed (VERIFIED, scratch/y3-p1j/gram.py -> gram.out, exact rationals): with mu = 2j+ij (nrd 6, mu^2 = -6) the matrix of
+  Trd(mu^{-1} x ybar) in the basis (1,i,(1+j)/2,(i+ij)/2) is exactly the printed matrix of L414-416, determinant 1.
+- Lean, ZInQKernel/Contrib/OneProof/Y3ToP1j.lean (namespace Y3P1j), `lake build +ZInQKernel.Contrib.OneProof.Y3ToP1j` OK;
+  #print axioms (scratch/y3-p1j/axioms.txt) [propext, Classical.choice, Quot.sound] for action_of_z30, sigmaR_neg_one, isoT,
+  hauptmodulOfX6_of_y3ToP1j, r1r2W_of_y3ToP1j, y3ToP1jAt_noDeg_of_row (VERIFIED).
+  * opP alpha u (twist by alpha in Aut O, then rightMul by u in O^x) on QMAbSchemeP S; rightMulP u = opP refl u, twistP alpha = opP alpha 1.
+    (Pitfall: elaborating the two special cases as separate structure instances loops in whnf; with alpha free it does not.)
+  * Yoneda on Y3FullThreeRepZ30's representing scheme: sigmaR/sigmaT unique with sigma^*A = T A; composition laws
+    sigmaR_comp (sigma_u >> sigma_v = sigma_{vu}), sigmaT_comp; isoR, isoT automorphisms; sigmaR_neg_one: -1 acts as identity
+    (via iota(-1) = [-1]); summary action_of_z30.
+  * Leaf Y3ToP1j (every fine witness (Y,Phi) with R1fpProps has pi : ToP1 Y with Y3ToP1jAt: fibres = Aut(O)-twist classes of
+    underlying pairs, CM(-4),CM(-3),CM(-24) <-> 0, oo, -16/27, onto P^1(Qbar), Qbar-fibres finite with <= 324 points).
+  * Glue ToP1DescendsAlongSurj (descent of a ToP1 map along a surjection of proper smooth curves; = proved FactorThroughSurj
+    with X' = P^1_Q plus the chart dictionary; not proved here).
+  * hauptmodulOfX6_of_y3ToP1j : Y3ToP1j -> ToP1DescendsAlongSurj -> PairsLift -> HauptmodulOfX6;
+    r1r2W_of_y3ToP1j : CanonicalModelY3 -> CoarseX6OfFineW -> Y3ToP1j -> ToP1DescendsAlongSurj -> ReciprocityOfFine ->
+    ResidueOfX6 -> R1R2fpRepW (PairsLift from pairsLift_of_t5 and the proved mumfordTorsionAlgClosed_proof).
+  * y3ToP1jAt_noDeg_of_row : R1R2fpRepW -> (a witness with every clause of Y3ToP1jAt except the degree bound), pi = pi6 o fY.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges`: OK (up to date; scratch/y3-p1j/build-main.txt).
+- #discharges with Y3ToP1j imported (scratch/y3-p1j/discharges.txt): no line mentions Y3P1j (VERIFIED): no theorem of the new
+  file has the type of a bundle field (HauptmodulOfX6 and R1R2fpRepW are not fields).
+- grep over the whole tree (scratch/y3-p1j/grep-x6.txt, VERIFIED): x6CoarseModuliIdeal and elkiesX6StarEveryIdeal are read only in
+  the TailZ71/TailZ74 conversions to x6CoarseModuli and elkiesX6StarEvery. Their readers: x6CoarseModuli -> gonzalezRotgerX6Ab
+  (X6 witness + R5ptProps; TailZ59:78) and elkiesX6StarFunctionField (TailZ59:83); elkiesX6StarFunctionField -> elkiesX6StarPrinted
+  (TailZ36:102) and babaGranathRationalAb (TailZ37:91); elkiesX6StarPrinted -> elkiesEquationsX6Ab (TailZ29:106; -> x6ConicModel ->
+  x6KummerFibre -> NoCM, EichlerBoundCopy:2668) and HeckeSqrtBranchAny (sgr-direct, EichlerBoundCopy:3221, Lemma NV route).
+  So re-sourcing R2 (babaGranathRationalAb) leaves both fields read: neither can be dropped on this base.
