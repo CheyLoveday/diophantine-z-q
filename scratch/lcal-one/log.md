@@ -31,3 +31,11 @@ Task: prove `ZInQ.Contrib.TYZDecomp.TYZLcalOne : lcalSq 1 = 1` (Leaves.lean:266)
 - `two_lt_Xr`, `U = Xr/4 + 1/Xr > 1`, `sqrt_U : √(U³−U) = (X²−4)/(8X²)·(−Y)`.
 - `integral_Fr : ∫_{(0,∞)} Fr = omegaInt / (8π)` (FTC `integral_Ioi_of_hasDerivAt_of_nonpos` for
   `G = K ∘ U`, `K(u) = (Ω − ∫₁^u dv/√(v³−v))/4`, `G' = −2π Fr`).
+
+## TYZLcalOne PROVED (VERIFIED, compiled, 2026-11-16 ~23:55)
+- `scratch/lcal-one/LcalOne.lean`: `ZInQ.Contrib.LcalOne.tyzLcalOne : ZInQ.Contrib.TYZDecomp.TYZLcalOne`;
+  `#print axioms` → `[propext, Classical.choice, Quot.sound]`.
+- Part A: `tsum_latT_block` (block decomposition mod 4 of `Σ unitOf(α) α e^{−πN(α)x/16}`), `tsum_latT_eq`
+  (grouping by the norm + gz-theta `etaThetaIdentity`: it is `4 f(ix/32)`), `sum_cU_gaussTheta`
+  (`Σ_j cU_j Θ_{j/4}(x) = ¼ f(ix/32)`), `lValOne_one_eq_integral : lValOne 1 = 2π ∫_{(0,∞)} f(it) dt`.
+- `lValOne_one : lValOne 1 = Ω/4`; `tyzLcalOne` from `TYZLcal.lcalSq_one`.

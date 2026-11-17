@@ -432,4 +432,169 @@ theorem integral_Fr : ∫ t in Ioi (0 : ℝ), Fr t = omegaInt / (8 * π) := by
   field_simp
   linarith
 
+/-! ## Part A: `L(C₁, 1) = 2π ∫₀^∞ f(it) dt` -/
+
+open ZInQ.Contrib.HeckeFE
+
+theorem norm_unitOf_le' (t : ZMod 4 × ZMod 4) : ‖unitOf t‖ ≤ 1 := by
+  unfold unitOf
+  split_ifs <;> simp
+
+/-- The lattice theta series of `ψ₁`: `Σ_{α ∈ ℤ[i]} unitOf(α) α e^{−π N(α) x/16}`. -/
+def latT (x : ℝ) (p : ℤ × ℤ) : ℂ :=
+  unitOf ((p.1 : ZMod 4), (p.2 : ZMod 4)) * gz 0 0 p * Real.exp (-π * gq 0 0 p * (x / 16))
+
+theorem summable_latT {x : ℝ} (hx : 0 < x) : Summable (latT x) := by
+  have h0 := (hasSum_gaussTheta 0 0 (t := x / 16) (by positivity)).summable
+  have hn : Summable fun p : ℤ × ℤ => ‖gz 0 0 p * Real.exp (-π * gq 0 0 p * (x / 16))‖ :=
+    summable_norm_iff.mpr h0
+  refine Summable.of_norm_bounded hn fun p => ?_
+  rw [latT, mul_assoc, norm_mul]
+  calc ‖unitOf ((p.1 : ZMod 4), (p.2 : ZMod 4))‖ *
+        ‖gz 0 0 p * (Real.exp (-π * gq 0 0 p * (x / 16)) : ℂ)‖
+      ≤ 1 * ‖gz 0 0 p * (Real.exp (-π * gq 0 0 p * (x / 16)) : ℂ)‖ :=
+        mul_le_mul_of_nonneg_right (norm_unitOf_le' _) (norm_nonneg _)
+    _ = _ := one_mul _
+
+/-- **Block decomposition**: the lattice series is `Σ_j unitOf(j) · 4 · Θ_{j/4}(x)`. -/
+theorem tsum_latT_block {x : ℝ} (hx : 0 < x) :
+    ∑' p, latT x p = ∑ j : Fin 4 × Fin 4, 4 * unitOf (((j.1 : ℤ) : ZMod 4), ((j.2 : ℤ) : ZMod 4)) *
+      gaussTheta (((j.1 : ℝ) / 4 : ℝ) : UnitAddCircle) (((j.2 : ℝ) / 4 : ℝ) : UnitAddCircle) x := by
+  have hsum := summable_latT hx
+  have h2 := (blockEquiv 4).summable_iff.mpr hsum
+  rw [← (blockEquiv 4).tsum_eq]
+  refine (h2.tsum_prod).trans ?_
+  rw [tsum_fintype]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  rw [← (hasSum_gaussTheta ((j.1 : ℝ) / 4) ((j.2 : ℝ) / 4) hx).tsum_eq, ← tsum_mul_left]
+  refine tsum_congr fun q => ?_
+  simp only [Function.comp_apply, latT]
+  rw [gz_block, gq_block]
+  have hc : unitOf ((((blockEquiv 4 (j, q)).1 : ℤ) : ZMod 4), (((blockEquiv 4 (j, q)).2 : ℤ) : ZMod 4)) =
+      unitOf (((j.1 : ℤ) : ZMod 4), ((j.2 : ℤ) : ZMod 4)) := by
+    have h4 : (4 : ZMod 4) = 0 := rfl
+    simp [blockEquiv_apply, h4]
+  rw [hc]
+  simp only [Nat.cast_ofNat]
+  have he : Real.exp (-π * (4 ^ 2 * gq ((j.1 : ℝ) / 4) ((j.2 : ℝ) / 4) q) *
+      (x / 16)) = Real.exp (-π * gq ((j.1 : ℝ) / 4) ((j.2 : ℝ) / 4) q * x) := by
+    congr 1; ring
+  rw [he]
+  ring
+
+/-- **Grouping by the norm**: the lattice series is `4 f(ix/32)`. -/
+theorem tsum_latT_eq {x : ℝ} (hx : 0 < x) :
+    ∑' p, latT x p = 4 * X0.fC (I * ((x / 32 : ℝ) : ℂ)) := by
+  set τ : UpperHalfPlane := ⟨I * ((x / 32 : ℝ) : ℂ), by simp; positivity⟩ with hτ
+  have hη := ZInQ.GZTheta.etaThetaIdentity τ
+  have hfib := (summable_latT hx).hasSum.tsum_fiberwise (fun p : ℤ × ℤ => (p.1 ^ 2 + p.2 ^ 2).toNat)
+  have key : ∀ n : ℕ, ∑' p : ↑((fun p : ℤ × ℤ => (p.1 ^ 2 + p.2 ^ 2).toNat) ⁻¹' {n}), latT x p =
+      4 * (heckeCoeff 1 n * cexp (2 * π * I * (τ : ℂ)) ^ n) := by
+    intro n
+    have hset : (fun p : ℤ × ℤ => (p.1 ^ 2 + p.2 ^ 2).toNat) ⁻¹' {n} = ↑(normFiber n) := by
+      ext p
+      simp only [Set.mem_preimage, Set.mem_singleton_iff, Finset.mem_coe, mem_normFiber]
+      have : 0 ≤ p.1 ^ 2 + p.2 ^ 2 := by positivity
+      omega
+    rw [hset, Finset.tsum_subtype' (normFiber n) (latT x)]
+    have hw : cexp (2 * π * I * (τ : ℂ)) ^ n = ((Real.exp (-π * n * (x / 16)) : ℝ) : ℂ) := by
+      rw [← Complex.exp_nat_mul, ofReal_exp]
+      congr 1
+      simp only [hτ, UpperHalfPlane.coe_mk]
+      push_cast
+      ring_nf
+      rw [I_sq]
+      ring
+    rw [hw, heckeCoeff, Finset.mul_sum, Finset.sum_mul, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun p hp => ?_
+    have hq : gq 0 0 p = (n : ℝ) := by
+      have h := mem_normFiber.mp hp
+      simp only [gq, add_zero]; exact_mod_cast h
+    simp only [latT, hq, jacobiSym.one_right, Int.cast_one, one_mul]
+    ring
+  have hfib' : HasSum (fun n : ℕ => 4 * (heckeCoeff 1 n * cexp (2 * π * I * (τ : ℂ)) ^ n))
+      (∑' p, latT x p) := hfib.congr_fun fun n => (key n).symm
+  rw [hfib'.unique (hη.mul_left 4)]
+  simp only [X0.fC, X0.etaD, hτ, UpperHalfPlane.coe_mk]
+  push_cast
+  ring
+
+/-- **The theta kernel of `L(C₁, s)` is `¼ f(ix/32)`.** -/
+theorem sum_cU_gaussTheta {x : ℝ} (hx : 0 < x) :
+    ∑ j : Fin 4 × Fin 4, ZInQ.Contrib.TYZLcal.cU (((j.1 : ℤ) : ZMod 4), ((j.2 : ℤ) : ZMod 4)) *
+      gaussTheta (((j.1 : ℝ) / 4 : ℝ) : UnitAddCircle) (((j.2 : ℝ) / 4 : ℝ) : UnitAddCircle) x =
+      (1 / 4) * X0.fC (I * ((x / 32 : ℝ) : ℂ)) := by
+  have h := (tsum_latT_block hx).symm.trans (tsum_latT_eq hx)
+  have e : ∑ j : Fin 4 × Fin 4, ZInQ.Contrib.TYZLcal.cU (((j.1 : ℤ) : ZMod 4), ((j.2 : ℤ) : ZMod 4)) *
+      gaussTheta (((j.1 : ℝ) / 4 : ℝ) : UnitAddCircle) (((j.2 : ℝ) / 4 : ℝ) : UnitAddCircle) x =
+      (1 / 16) * ∑ j : Fin 4 × Fin 4, 4 * unitOf (((j.1 : ℤ) : ZMod 4), ((j.2 : ℤ) : ZMod 4)) *
+      gaussTheta (((j.1 : ℝ) / 4 : ℝ) : UnitAddCircle) (((j.2 : ℝ) / 4 : ℝ) : UnitAddCircle) x := by
+    rw [Finset.mul_sum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    simp only [ZInQ.Contrib.TYZLcal.cU]
+    ring
+  rw [e, h]
+  ring
+
+theorem gaussLambda_one (a b : UnitAddCircle) :
+    gaussLambda a b 1 = ∫ t in Ioi (0 : ℝ), gaussTheta a b t := by
+  simp [gaussLambda, mellin]
+
+theorem integrableOn_gaussTheta (a b : UnitAddCircle) :
+    IntegrableOn (gaussTheta a b) (Ioi (0 : ℝ)) := by
+  have h := mellinConvergent_gaussTheta a b 1
+  simpa [MellinConvergent] using h
+
+/-- **`L(C₁, 1) = 2π ∫₀^∞ f(it) dt`.** -/
+theorem lValOne_one_eq_integral :
+    ZInQ.Contrib.TYZDecomp.lValOne 1 = 2 * π * ∫ t in Ioi (0 : ℝ), X0.fC (I * t) := by
+  rw [ZInQ.Contrib.TYZLcal.lValOne_one_eq]
+  simp_rw [gaussLambda_one]
+  have e1 : ∀ j : Fin 4 × Fin 4,
+      ZInQ.Contrib.TYZLcal.cU (((j.1 : ℤ) : ZMod 4), ((j.2 : ℤ) : ZMod 4)) * (1 / 4) *
+        ((π : ℂ) * ∫ t in Ioi (0 : ℝ),
+          gaussTheta (((j.1 : ℝ) / 4 : ℝ) : UnitAddCircle) (((j.2 : ℝ) / 4 : ℝ) : UnitAddCircle) t) =
+      (π / 4 : ℂ) * ∫ t in Ioi (0 : ℝ),
+        ZInQ.Contrib.TYZLcal.cU (((j.1 : ℤ) : ZMod 4), ((j.2 : ℤ) : ZMod 4)) *
+          gaussTheta (((j.1 : ℝ) / 4 : ℝ) : UnitAddCircle) (((j.2 : ℝ) / 4 : ℝ) : UnitAddCircle) t := by
+    intro j
+    rw [MeasureTheory.integral_const_mul]
+    ring
+  simp_rw [e1]
+  rw [← Finset.mul_sum, ← MeasureTheory.integral_finsetSum]
+  swap
+  · intro j _
+    exact (integrableOn_gaussTheta _ _).const_mul _
+  rw [MeasureTheory.setIntegral_congr_fun measurableSet_Ioi fun x hx => sum_cU_gaussTheta hx]
+  rw [MeasureTheory.integral_const_mul]
+  have hs := MeasureTheory.integral_comp_mul_left_Ioi (fun t : ℝ => X0.fC (I * t)) 0
+    (b := 1 / 32) (by norm_num)
+  simp only [mul_zero] at hs
+  have e2 : (fun x : ℝ => X0.fC (I * ((x / 32 : ℝ) : ℂ))) =
+      fun x : ℝ => X0.fC (I * ((1 / 32 * x : ℝ) : ℂ)) := by
+    funext x; congr 3; ring
+  rw [e2, hs, Complex.real_smul]
+  push_cast
+  ring
+
+/-! ## The result -/
+
+theorem lValOne_one : ZInQ.Contrib.TYZDecomp.lValOne 1 = (omegaInt : ℂ) / 4 := by
+  rw [lValOne_one_eq_integral]
+  have e : ∫ t in Ioi (0 : ℝ), X0.fC (I * t) = ∫ t in Ioi (0 : ℝ), ((Fr t : ℝ) : ℂ) := by
+    refine MeasureTheory.setIntegral_congr_fun measurableSet_Ioi fun t _ => ?_
+    exact (Fr_eq t).symm
+  rw [e, integral_complex_ofReal, integral_Fr]
+  have hp : (π : ℂ) ≠ 0 := ofReal_ne_zero.mpr Real.pi_ne_zero
+  push_cast
+  field_simp
+  ring
+
+/-- **`𝓛(1) = 1`**: `L(y² = x³ − x, 1) = ¼ ∫₁^∞ dx/√(x³ − x)`. -/
+theorem tyzLcalOne : ZInQ.Contrib.TYZDecomp.TYZLcalOne := by
+  unfold ZInQ.Contrib.TYZDecomp.TYZLcalOne
+  rw [ZInQ.Contrib.TYZLcal.lcalSq_one, lValOne_one]
+  have h : (omegaInt : ℂ) ≠ 0 := ofReal_ne_zero.mpr ZInQ.Contrib.TYZDecomp.omegaInt_pos.ne'
+  field_simp
+
 end ZInQ.Contrib.LcalOne
