@@ -162,10 +162,40 @@ Files in `scratch/eps-splitting/`:
   gz-dict2 and hgz-steps.
 - `kinds-row.tsv`, `locators-row.md`: proposed rows, not applied.
 
-## 5. Checks
+## 5. Checks (all VERIFIED)
 
-Recorded in §6 after the builds.
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.GrossZagierSplit`:
+  14,283 jobs, no errors (`scratch/eps-splitting/build2.txt`). Both new files also compile under `lake env lean` with
+  no errors and no warnings.
+- `#discharges` (`scratch/eps-splitting/Discharges.lean`, output `Discharges-output.txt`):
+
+  ```
+  DISCHARGES [hGZ] by ZInQ.GZSplit.grossZagierAlgOptCd_of_split
+    still assumes: [ZInQ.GZSplit.GrossZagierCurveCdSplit]
+    axioms: [propext, Classical.choice, Quot.sound]
+  #discharges: 39 open hypotheses, 11491 theorems checked, 52 discharge one
+  ```
+
+- `FoldCheck.lean` (`FoldCheck-output.txt`): `[propext, Classical.choice, Quot.sound]` for each of
+  `ZInQ.EpsSplit.frozenTarget_split`, `GZSplit.grossZagierAlgOptCd_of_split`,
+  `GZSplit.grossZagierCurveCdSplit_of_curveCd`, `EpsSplit.splitType_epsD`, `EpsSplit.quadChar_eq_epsD` and
+  `EpsSplit.adjoin_thetaO_eq_top`.
+- The new files have no `sorry`, no `axiom`, and no build-time code (`#eval`, `run_cmd`, `syntax`, `notation`,
+  macros). Sizes: 7.7 KB and 29.7 KB.
+
+| file | content |
+| --- | --- |
+| `Contrib/OneProof/GrossZagierSplit/QuadSplit.lean` | `𝓞_K = ℤ[θ]`, `minpoly`, Kummer–Dedekind transfer, three types, `splitType_epsD`, `quadChar_eq_epsD` |
+| `Contrib/OneProof/GrossZagierSplit.lean` | leaf `GrossZagierCurveCdSplit`, the equivalence with `GZSch.GrossZagierCurveCd`, `grossZagierAlgOptCd_of_split` |
+| `scratch/eps-splitting/QuadInt.lean` | development copy (same proofs, one section) |
+| `scratch/eps-splitting/QuadSplit.lean`, `GrossZagierSplit.lean` | copies of the Contrib files |
 
 ## 6. What remains
 
-Recorded after the builds.
+- The integrator's fold (`fold-spec.md`), after or instead of hgz-steps' fold. Both forms are in the build, and the
+  bridge goes through hgz-steps' `grossZagierAlgOptCd_of_curve`, so this branch needs hgz-steps' modules (it is
+  based on `wip/hgz-steps`).
+- Rows for kinds.tsv and locators.md (`kinds-row.tsv`, `locators-row.md`). The GZ locators are not re-read: there is
+  no copy on this host.
+- Nothing in the `ε_D` identification is left unproved. It covers every negative fundamental discriminant, even
+  `D ≡ 0 (mod 4)`, which the leaf does not use.

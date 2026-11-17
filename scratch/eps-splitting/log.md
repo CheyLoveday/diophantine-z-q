@@ -25,3 +25,9 @@ Base: wip/hgz-steps 92fd272e, merged origin/main (e1b31749) as dc6321558.
   `grossZagierAlgOptCd_of_split : GrossZagierCurveCdSplit → GZAlg.GrossZagierAlgOptCd`.
   - build1 (`lake build ZInQKernel.Contrib.OneProof.GrossZagierSplit`): GrossZagierScheme tree built; GrossZagierSplit
     failed only on a missing `open HeckeRing.GL2` (`Newform`). Fixed; `lake env lean` on the file: no errors. VERIFIED.
+- build2 (`lake build +Main +Discharges +GrossZagierSplit`): 14,283 jobs, no errors. VERIFIED.
+- `#discharges`: `DISCHARGES [hGZ] by ZInQ.GZSplit.grossZagierAlgOptCd_of_split, still assumes [ZInQ.GZSplit.GrossZagierCurveCdSplit]`,
+  standard axioms; 39 open, 11491 checked, 52 discharge one. VERIFIED (`Discharges-output.txt`).
+- FoldCheck: `frozenTarget_split` and the five key theorems have standard axioms. VERIFIED (`FoldCheck-output.txt`).
+- Rating: `GZSplit.GrossZagierCurveCdSplit` LEAF, printed form (direct instance); equivalent to `GZSch.GrossZagierCurveCd`
+  in Lean (both directions). GZ locators UNVERIFIED (no copy on host).
