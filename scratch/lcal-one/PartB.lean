@@ -278,4 +278,158 @@ theorem two_lt_Xr {t : ℝ} (ht : 0 < t) : 2 < Xr t := by
   have := le_of_tendsto tendsto_Xr_zero hev
   linarith
 
+/-! ## The substitution `u = x/4 + 1/x` and the fundamental theorem of calculus -/
+
+open ZInQ.Contrib.TYZDecomp (omegaInt)
+open ZInQ.Contrib.TYZDecomp.OmegaInt (f f_measurable integrableOn_f)
+
+/-- `u(t) = x(it)/4 + 1/x(it)`: the `2`-isogeny `y² = x³ + 4x → Y² = X³ − 16X`, `X = x + 4/x`,
+followed by `X = 4u` (to `y² = u³ − u`). -/
+def U (t : ℝ) : ℝ := Xr t / 4 + (Xr t)⁻¹
+
+theorem one_lt_U {t : ℝ} (ht : 0 < t) : 1 < U t := by
+  have hX := two_lt_Xr ht
+  have hX0 := Xr_pos ht
+  have e : U t - 1 = (Xr t - 2) ^ 2 / (4 * Xr t) := by
+    unfold U; field_simp; ring
+  have : 0 < (Xr t - 2) ^ 2 / (4 * Xr t) := div_pos (pow_pos (sub_pos.mpr hX) 2) (by positivity)
+  linarith
+
+theorem hasDerivAt_U {t : ℝ} (ht : 0 < t) :
+    HasDerivAt U ((-4 * π * Fr t * Yr t) / 4 + -(-4 * π * Fr t * Yr t) / Xr t ^ 2) t := by
+  have hX := hasDerivAt_Xr ht
+  exact (hX.div_const 4).add (hX.inv (Xr_pos ht).ne')
+
+/-- `√(u³ − u) = (x² − 4)/(8x²) · (−y)` on the imaginary axis. -/
+theorem sqrt_U {t : ℝ} (ht : 0 < t) :
+    Real.sqrt (U t ^ 3 - U t) = (Xr t ^ 2 - 4) / (8 * Xr t ^ 2) * (-Yr t) := by
+  have hX := two_lt_Xr ht
+  have hX0 := Xr_pos ht
+  have hY := Yr_neg ht
+  have hnn : 0 ≤ (Xr t ^ 2 - 4) / (8 * Xr t ^ 2) * (-Yr t) := by
+    have : 0 ≤ Xr t ^ 2 - 4 := by nlinarith
+    have : 0 ≤ -Yr t := by linarith
+    positivity
+  rw [← Real.sqrt_sq hnn]
+  congr 1
+  rw [mul_pow, neg_sq, Yr_sq ht]
+  unfold U
+  field_simp
+  ring
+
+/-- `∫₁^u dv/√(v³ − v)`. -/
+def P (u : ℝ) : ℝ := ∫ v in (1 : ℝ)..u, f v
+
+/-- `K(u) = ¼ ∫_u^∞ dv/√(v³ − v)`, written as `(Ω − P(u))/4`. -/
+def K (u : ℝ) : ℝ := (omegaInt - P u) / 4
+
+theorem K_one : K 1 = omegaInt / 4 := by simp [K, P]
+
+theorem intervalIntegrable_f {a b : ℝ} (ha : 1 ≤ a) (hb : 1 ≤ b) :
+    IntervalIntegrable f MeasureTheory.volume a b := by
+  rw [intervalIntegrable_iff]
+  refine integrableOn_f.mono_set ?_
+  intro x hx
+  rw [Set.uIoc] at hx
+  exact lt_of_le_of_lt (le_min ha hb) hx.1
+
+theorem continuousAt_f {u : ℝ} (hu : 1 < u) : ContinuousAt f u := by
+  have hpos : 0 < u ^ 3 - u := by
+    have : 0 < u * (u - 1) * (u + 1) := mul_pos (mul_pos (by linarith) (by linarith)) (by linarith)
+    nlinarith
+  unfold f
+  refine continuousAt_const.div ?_ (Real.sqrt_pos.mpr hpos).ne'
+  exact (Real.continuous_sqrt.comp (by fun_prop : Continuous fun x : ℝ => x ^ 3 - x)).continuousAt
+
+theorem hasDerivAt_K {u : ℝ} (hu : 1 < u) : HasDerivAt K (-f u / 4) u := by
+  have hP : HasDerivAt P (f u) u :=
+    intervalIntegral.integral_hasDerivAt_right (intervalIntegrable_f le_rfl hu.le)
+      (f_measurable.stronglyMeasurable.stronglyMeasurableAtFilter) (continuousAt_f hu)
+  exact (((hasDerivAt_const u omegaInt).sub hP).div_const 4).congr_deriv (by ring)
+
+theorem continuousWithinAt_K : ContinuousWithinAt K (Ici 1) 1 := by
+  have hP : ContinuousOn P (Set.uIcc 1 2) :=
+    intervalIntegral.continuousOn_primitive_interval' (intervalIntegrable_f le_rfl (by norm_num))
+      Set.left_mem_uIcc
+  rw [Set.uIcc_of_le (by norm_num)] at hP
+  have hP' : ContinuousWithinAt P (Ici 1) 1 :=
+    (hP 1 ⟨le_rfl, by norm_num⟩).mono_of_mem_nhdsWithin (Icc_mem_nhdsGE (by norm_num))
+  exact (continuousWithinAt_const.sub hP').div_const 4
+
+theorem tendsto_K_atTop : Tendsto K atTop (𝓝 0) := by
+  have hP : Tendsto P atTop (𝓝 omegaInt) :=
+    intervalIntegral_tendsto_integral_Ioi 1 integrableOn_f tendsto_id
+  have := (tendsto_const_nhds (x := omegaInt)).sub hP |>.div_const 4
+  rw [sub_self, zero_div] at this
+  exact this
+
+/-- `ũ`: `u` on `(0, ∞)`, `1` elsewhere. -/
+def Ut (t : ℝ) : ℝ := if 0 < t then U t else 1
+
+/-- The primitive `G(t) = K(u(t))`, `G(0) = K(1) = Ω/4`. -/
+def G (t : ℝ) : ℝ := K (Ut t)
+
+theorem tendsto_U_zero : Tendsto U (𝓝[>] 0) (𝓝 1) := by
+  have h := (tendsto_Xr_zero.div_const 4).add (tendsto_Xr_zero.inv₀ (by norm_num))
+  have e : (2 : ℝ) / 4 + 2⁻¹ = 1 := by norm_num
+  rw [e] at h
+  exact h
+
+theorem continuousWithinAt_G : ContinuousWithinAt G (Ici 0) 0 := by
+  rw [← continuousWithinAt_Ioi_iff_Ici]
+  have hU : Tendsto Ut (𝓝[>] 0) (𝓝[Ici 1] 1) := by
+    rw [tendsto_nhdsWithin_iff]
+    refine ⟨tendsto_U_zero.congr' ?_, ?_⟩
+    · filter_upwards [self_mem_nhdsWithin] with t ht
+      simp [Ut, show (0 : ℝ) < t from ht]
+    · filter_upwards [self_mem_nhdsWithin] with t ht
+      simp only [Ut, show (0 : ℝ) < t from ht, ite_true]
+      exact (one_lt_U ht).le
+  have := continuousWithinAt_K.tendsto.comp hU
+  have hG0 : G 0 = K 1 := by simp [G, Ut]
+  rw [ContinuousWithinAt, hG0]
+  exact this
+
+theorem hasDerivAt_G {t : ℝ} (ht : 0 < t) : HasDerivAt G (-2 * π * Fr t) t := by
+  have h := (hasDerivAt_K (one_lt_U ht)).comp t (hasDerivAt_U ht)
+  have heq : G =ᶠ[𝓝 t] K ∘ U := by
+    filter_upwards [Ioi_mem_nhds ht] with s hs
+    simp [G, Ut, show (0 : ℝ) < s from hs]
+  refine (h.congr_of_eventuallyEq heq).congr_deriv ?_
+  have hX := two_lt_Xr ht
+  have hX0 := Xr_pos ht
+  have hY := Yr_neg ht
+  have h4 : Xr t ^ 2 - 4 ≠ 0 := by nlinarith
+  have hY0 : Yr t ≠ 0 := hY.ne
+  unfold f
+  rw [sqrt_U ht]
+  field_simp
+  ring
+
+theorem tendsto_U_atTop : Tendsto U atTop atTop := by
+  refine tendsto_atTop_mono' atTop ?_ (tendsto_Xr_atTop.atTop_div_const (by norm_num : (0:ℝ) < 4))
+  filter_upwards [eventually_gt_atTop 0] with t ht
+  have := Xr_pos ht
+  unfold U
+  have : 0 ≤ (Xr t)⁻¹ := by positivity
+  linarith
+
+theorem tendsto_G_atTop : Tendsto G atTop (𝓝 0) := by
+  refine (tendsto_K_atTop.comp tendsto_U_atTop).congr' ?_
+  filter_upwards [eventually_gt_atTop 0] with t ht
+  simp [G, Ut, ht]
+
+/-- **`∫₀^∞ f(it) dt = Ω/(8π)`.** -/
+theorem integral_Fr : ∫ t in Ioi (0 : ℝ), Fr t = omegaInt / (8 * π) := by
+  have h := integral_Ioi_of_hasDerivAt_of_nonpos continuousWithinAt_G
+    (fun t ht => hasDerivAt_G ht) (fun t ht => by
+      have := Fr_pos (show (0 : ℝ) < t from ht)
+      have := Real.pi_pos
+      nlinarith) tendsto_G_atTop
+  have hG0 : G 0 = omegaInt / 4 := by simp [G, Ut, K_one]
+  rw [hG0, MeasureTheory.integral_const_mul] at h
+  have hp := Real.pi_pos
+  field_simp
+  linarith
+
 end ZInQ.Contrib.LcalOne

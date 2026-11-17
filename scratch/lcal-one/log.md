@@ -21,3 +21,13 @@ Task: prove `ZInQ.Contrib.TYZDecomp.TYZLcalOne : lcalSq 1 = 1` (Leaves.lean:266)
    `x → ∞` as `t → ∞`. With `u = x/4 + 1/x` (the 2-isogeny `32a1 → y² = x³ − 16x`, rescaled to `C₁`):
    `u'/√(u³ − u) = 8π fC`, `u: (0,∞) → (1,∞)`. FTC on `(0,∞)` for `K(u(t))`, `K(u) = ¼∫_u^∞ dv/√(v³−v)`:
    `2π ∫ fC(it) dt = K(1) = omegaInt/4`.
+
+## Part B compiled (VERIFIED, `scratch/lcal-one/PartB.lean`, 2026-11-16 ~23:30)
+- `Xr, Yr, Fr t := re of xC, yC, fC at i t`; real by x0-32's `xC_neg_conj` etc.; `Fr > 0`, `Yr < 0` (eta values
+  real nonzero), `Yr² = Xr³ + 4Xr` (tyz-cm `etaModelEquation`), `Xr > 0`.
+- `hasDerivAt_Xr : Xr' = −4π Fr Yr` (from gz-weil `etaModelDifferential`), strictly increasing.
+- `tendsto_Xr_zero : Xr → 2` at `0⁺` (`xC = 2θ₃(16τ)/θ₂(16τ)`, squared S-laws of WeilJacobi, `θ₃, θ₄ → 1`).
+- `tendsto_Xr_atTop : Xr → ∞` (`1/x = e^{−4πt} T(16it)/(2θ₃)`, `T → 2`).
+- `two_lt_Xr`, `U = Xr/4 + 1/Xr > 1`, `sqrt_U : √(U³−U) = (X²−4)/(8X²)·(−Y)`.
+- `integral_Fr : ∫_{(0,∞)} Fr = omegaInt / (8π)` (FTC `integral_Ioi_of_hasDerivAt_of_nonpos` for
+  `G = K ∘ U`, `K(u) = (Ω − ∫₁^u dv/√(v³−v))/4`, `G' = −2π Fr`).
