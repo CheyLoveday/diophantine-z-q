@@ -2,6 +2,7 @@ import Mathlib.NumberTheory.NumberField.Ideal.KummerDedekind
 import Mathlib.NumberTheory.FundamentalDiscriminant
 import Mathlib.Algebra.Polynomial.SpecificDegree
 import Mathlib.Tactic.ComputeDegree
+import ZInQKernel.Contrib.OneProof.GrossZagierScheme.EpsD
 
 open Polynomial NumberField
 
@@ -238,5 +239,112 @@ theorem minpoly_thetaO (hD : Int.IsFundamentalDiscr D) (hneg : D < 0) (hδ : δ 
     simp only [algebraMap_int_eq, eq_intCast] at this
     rw [← coe_thetaO hD hδ, ← this]
     push_cast; rfl
+
+
+/-! ## Splitting of primes in a quadratic field -/
+
+variable (K) in
+/-- **`p` splits in `K`**: two distinct prime ideals of `𝓞 K` lie over `p` (for a quadratic field,
+`p 𝓞_K = 𝔭 𝔭'` with `𝔭 ≠ 𝔭'`). -/
+def IsSplitIn (p : ℕ) : Prop :=
+  ∃ P ∈ (Ideal.span {(p : ℤ)}).primesOver (𝓞 K), ∃ Q ∈ (Ideal.span {(p : ℤ)}).primesOver (𝓞 K),
+    P ≠ Q
+
+variable (K) in
+/-- **`p` is inert in `K`**: `p 𝓞_K` is a prime ideal. -/
+def IsInertIn (p : ℕ) : Prop := (Ideal.span {(p : 𝓞 K)}).IsPrime
+
+variable (K) in
+/-- **`p` ramifies in `K`**: some prime of `𝓞 K` over `p` has ramification index `> 1`. -/
+def IsRamifiedIn (p : ℕ) : Prop :=
+  ∃ P ∈ (Ideal.span {(p : ℤ)}).primesOver (𝓞 K), 1 < Ideal.ramificationIdx P ℤ
+
+section KD
+
+open RingOfIntegers NumberField.Ideal UniqueFactorizationMonoid
+
+variable [NumberField K] {θ : 𝓞 K} {p : ℕ} [Fact p.Prime]
+
+theorem isInertIn_iff (hp : ¬ p ∣ exponent θ) :
+    IsInertIn K p ↔ Irreducible ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))) := by
+  have hg0 : (minpoly ℤ θ).map (Int.castRingHom (ZMod p)) ≠ 0 :=
+    map_monic_ne_zero (minpoly.monic θ.isIntegral)
+  let e := ZModXQuotSpanEquivQuotSpan hp
+  unfold IsInertIn
+  rw [← Ideal.Quotient.isDomain_iff_prime]
+  constructor
+  · intro h
+    have : IsDomain ((ZMod p)[X] ⧸ Ideal.span {(minpoly ℤ θ).map (Int.castRingHom (ZMod p))}) :=
+      MulEquiv.isDomain _ e.toMulEquiv
+    rw [Ideal.Quotient.isDomain_iff_prime, Ideal.span_singleton_prime hg0] at this
+    exact this.irreducible
+  · intro h
+    have : IsDomain ((ZMod p)[X] ⧸ Ideal.span {(minpoly ℤ θ).map (Int.castRingHom (ZMod p))}) := by
+      rw [Ideal.Quotient.isDomain_iff_prime, Ideal.span_singleton_prime hg0]; exact h.prime
+    exact MulEquiv.isDomain _ e.symm.toMulEquiv
+
+theorem isSplitIn_iff (hp : ¬ p ∣ exponent θ) :
+    IsSplitIn K p ↔ ∃ Q₁ ∈ monicFactorsMod θ p, ∃ Q₂ ∈ monicFactorsMod θ p, Q₁ ≠ Q₂ := by
+  let e := primesOverSpanEquivMonicFactorsMod (θ := θ) hp
+  constructor
+  · rintro ⟨P, hP, Q, hQ, hne⟩
+    refine ⟨e ⟨P, hP⟩, (e ⟨P, hP⟩).2, e ⟨Q, hQ⟩, (e ⟨Q, hQ⟩).2, fun h => hne ?_⟩
+    exact congrArg Subtype.val (e.injective (Subtype.ext h))
+  · rintro ⟨Q₁, h₁, Q₂, h₂, hne⟩
+    refine ⟨e.symm ⟨Q₁, h₁⟩, (e.symm ⟨Q₁, h₁⟩).2, e.symm ⟨Q₂, h₂⟩, (e.symm ⟨Q₂, h₂⟩).2,
+      fun h => hne ?_⟩
+    exact congrArg Subtype.val (e.symm.injective (Subtype.ext h))
+
+theorem isRamifiedIn_iff (hp : ¬ p ∣ exponent θ) :
+    IsRamifiedIn K p ↔ ∃ Q ∈ monicFactorsMod θ p,
+      1 < multiplicity Q ((minpoly ℤ θ).map (Int.castRingHom (ZMod p))) := by
+  let e := primesOverSpanEquivMonicFactorsMod (θ := θ) hp
+  constructor
+  · rintro ⟨P, hP, h⟩
+    refine ⟨e ⟨P, hP⟩, (e ⟨P, hP⟩).2, ?_⟩
+    have := ramificationIdx_primesOverSpanEquivMonicFactorsMod_symm_apply' hp (e ⟨P, hP⟩).2
+    rw [Subtype.coe_eta, Equiv.symm_apply_apply] at this
+    rw [← this]; exact h
+  · rintro ⟨Q, hQ, h⟩
+    exact ⟨_, (e.symm ⟨Q, hQ⟩).2,
+      by rwa [ramificationIdx_primesOverSpanEquivMonicFactorsMod_symm_apply' hp]⟩
+
+end KD
+
+/-! ## Factorization types of a monic quadratic -/
+
+section Poly
+
+open UniqueFactorizationMonoid
+
+variable {F : Type*} [Field F] [DecidableEq F]
+
+theorem multiplicity_eq_count {Q g : F[X]} (hQ : Q ∈ normalizedFactors g) (hg : g ≠ 0) :
+    multiplicity Q g = (normalizedFactors g).count Q :=
+  multiplicity_eq_of_emultiplicity_eq_some (by
+    rw [emultiplicity_eq_count_normalizedFactors (irreducible_of_normalized_factor Q hQ) hg,
+      normalize_normalized_factor Q hQ])
+
+theorem normalizedFactors_of_irreducible {g : F[X]} (hg : Irreducible g) (hm : g.Monic) :
+    normalizedFactors g = {g} := by
+  rw [normalizedFactors_irreducible hg, hm.normalize_eq_self]
+
+theorem normalizedFactors_X_sub_C_mul (a b : F) :
+    normalizedFactors ((X - C a) * (X - C b)) = {X - C a, X - C b} := by
+  rw [normalizedFactors_mul (X_sub_C_ne_zero a) (X_sub_C_ne_zero b),
+    normalizedFactors_irreducible (irreducible_X_sub_C a),
+    normalizedFactors_irreducible (irreducible_X_sub_C b),
+    (monic_X_sub_C a).normalize_eq_self, (monic_X_sub_C b).normalize_eq_self]
+  rfl
+
+theorem not_irreducible_X_sub_C_mul (a b : F) : ¬ Irreducible ((X - C a) * (X - C b)) := by
+  intro h
+  rcases h.isUnit_or_isUnit rfl with h | h <;> exact not_isUnit_X_sub_C _ h
+
+theorem quadratic_eq_mul {A c r₁ r₂ : F} (h1 : r₁ + r₂ = A) (h2 : r₁ * r₂ = c) :
+    X ^ 2 - C A * X + C c = (X - C r₁) * (X - C r₂) := by
+  rw [← h1, ← h2, C_add, C_mul]; ring
+
+end Poly
 
 end ZInQ.EpsSplit
