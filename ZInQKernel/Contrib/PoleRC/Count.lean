@@ -66,4 +66,89 @@ theorem qcls_formula (h12 : ℓ % 12 = 11) {x : ℤ} (hx : Squarefree x)
   · split_ifs <;> simp only [Prod.snd_add, Prod.snd_sum, Prod.snd_zero, sgn, add_zero,
       zero_add] <;> ring
 
+/-! ### The local images of the Kummer map of `E_ℓ` (GLUE, textbook local computations) -/
+
+/-- **Local image at the real place**: for `ℓ > 0`, the class `(a, b)` is in the real Kummer image
+iff `a > 0` (real points have `x ≥ ℓ`, giving `a, b > 0`, or `−3ℓ ≤ x ≤ 0`, giving `a > 0 > b`).
+Proved in Lean below (`localReal`). -/
+def LocalReal : Prop :=
+  ∀ (ℓ : ℕ) (a b : ℤ), 0 < ℓ → a ≠ 0 → b ≠ 0 → (LocM ℝ ℓ a b ↔ 0 < a)
+
+/-- **Local image at `2`** (GLUE, textbook): for squarefree `ℓ ≡ 3 (mod 4)` and squarefree
+`a, b`, the class `(a, b)` is in the Kummer image of `E_ℓ(ℚ₂)` iff `a, b` are odd and
+`b ≡ 1 (mod 4)`. The image has `8 = 2 · #E_ℓ(ℚ₂)[2]` elements. Checked numerically
+(`scratch/pc-from-rc/local2.py`, `localprops.py`); not proved in Lean. -/
+def LocalTwo : Prop :=
+  ∀ (ℓ : ℕ) (a b : ℤ), Squarefree ℓ → ℓ % 4 = 3 → Squarefree a → Squarefree b →
+    (LocM ℚ_[2] ℓ a b ↔ a % 2 = 1 ∧ b % 4 = 1)
+
+/-- **Local image at `3`** (GLUE, textbook): for squarefree `ℓ ≡ 2 (mod 3)` (split multiplicative
+reduction at `3`), the class `(a, b)` is in the Kummer image of `E_ℓ(ℚ₃)` iff `b ≡ 1 (mod 3)`; the
+image is spanned by the torsion classes `(ℓ, 1)`, `(3, −ℓ)`. Checked numerically; not proved in
+Lean. -/
+def LocalThree : Prop :=
+  ∀ (ℓ : ℕ) (a b : ℤ), Squarefree ℓ → ℓ % 3 = 2 → Squarefree a → Squarefree b →
+    (LocM ℚ_[3] ℓ a b ↔ b % 3 = 1)
+
+/-- **Local image at a prime `q ∣ ℓ`, `q ≠ 2, 3`** (GLUE, textbook): `E_ℓ` is the quadratic twist
+by `ℓ` of a curve with good reduction at `q`, so it has reduction type `I₀*` there, and the
+Kummer image of `E_ℓ(ℚ_q)` is spanned by the images `(ℓ, 1)`, `(3, −ℓ)` of the two-torsion
+points. In square classes at `q` (`qcls`): `(a, b) = e₁ (ℓ, 1) + e₂ (3, −ℓ)`. Checked numerically;
+not proved in Lean. -/
+def LocalBad : Prop :=
+  ∀ (ℓ q : ℕ) [Fact q.Prime] (a b : ℤ), Squarefree ℓ → q ∣ ℓ → q ≠ 2 → q ≠ 3 →
+    Squarefree a → Squarefree b →
+    (LocM ℚ_[q] ℓ a b ↔ ∃ e₁ e₂ : ZMod 2,
+      qcls q a = e₁ • qcls q ℓ + e₂ • qcls q 3 ∧ qcls q b = e₂ • qcls q (-(ℓ : ℤ)))
+
+/-- **Local image at a prime of good reduction** (GLUE, textbook; Silverman X.4): for `p ∤ 6ℓ`, the
+Kummer image of `E_ℓ(ℚ_p)` is the unramified classes: `p ∤ a` and `p ∤ b`. Checked numerically;
+not proved in Lean. -/
+def LocalGood : Prop :=
+  ∀ (ℓ p : ℕ) [Fact p.Prime] (a b : ℤ), Squarefree ℓ → ¬ p ∣ 6 * ℓ →
+    Squarefree a → Squarefree b → (LocM ℚ_[p] ℓ a b ↔ ¬ (p : ℤ) ∣ a ∧ ¬ (p : ℤ) ∣ b)
+
+theorem isSquare_real_of_nonneg {r : ℝ} (h : 0 ≤ r) : IsSquare r :=
+  ⟨Real.sqrt r, (Real.mul_self_sqrt h).symm⟩
+
+/-- **`LocalReal` holds.** -/
+theorem localReal : LocalReal := by
+  intro ℓ a b hℓ ha hb
+  have hℓ' : (0 : ℝ) < ℓ := by exact_mod_cast hℓ
+  constructor
+  · rintro (⟨h1, -⟩ | ⟨x, h1, h2, h3⟩)
+    · have : (0 : ℝ) ≤ a := h1.nonneg
+      have ha' : (a : ℝ) ≠ 0 := by exact_mod_cast ha
+      exact_mod_cast lt_of_le_of_ne this (Ne.symm ha')
+    · by_contra hneg
+      have ha' : (a : ℝ) < 0 := by
+        have : a < 0 := lt_of_le_of_ne (not_lt.mp hneg) ha
+        exact_mod_cast this
+      have e1 := h1.nonneg
+      have hx : x + 3 * ℓ ≤ 0 := by
+        by_contra hc
+        push Not at hc
+        have : (x + 3 * ℓ) / (a : ℝ) < 0 := div_neg_of_pos_of_neg hc ha'
+        linarith
+      have e2 := h2.nonneg
+      have hb' : (b : ℝ) < 0 := by
+        rcases lt_or_gt_of_ne (show (b : ℝ) ≠ 0 by exact_mod_cast hb) with h | h
+        · exact h
+        · have : (x - ℓ) / (b : ℝ) < 0 := div_neg_of_neg_of_pos (by linarith) h
+          linarith
+      have e3 := h3.nonneg
+      have : x / ((a : ℝ) * b) < 0 := div_neg_of_neg_of_pos (by linarith) (mul_pos_of_neg_of_neg ha' hb')
+      linarith
+  · intro ha0
+    have ha' : (0 : ℝ) < a := by exact_mod_cast ha0
+    rcases lt_or_gt_of_ne (show (b : ℝ) ≠ 0 by exact_mod_cast hb) with hb' | hb'
+    · right
+      refine ⟨-ℓ, isSquare_real_of_nonneg ?_, isSquare_real_of_nonneg ?_,
+        isSquare_real_of_nonneg ?_⟩
+      · exact div_nonneg (by linarith) ha'.le
+      · exact div_nonneg_of_nonpos (by linarith) hb'.le
+      · exact div_nonneg_of_nonpos (by linarith) (mul_neg_of_pos_of_neg ha' hb').le
+    · left
+      exact ⟨isSquare_real_of_nonneg ha'.le, isSquare_real_of_nonneg hb'.le⟩
+
 end ZInQ.Manuscript.PoleRC
