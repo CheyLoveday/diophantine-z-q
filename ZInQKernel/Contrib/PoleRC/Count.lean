@@ -151,4 +151,66 @@ theorem localReal : LocalReal := by
     · left
       exact ⟨isSquare_real_of_nonneg ha'.le, isSquare_real_of_nonneg hb'.le⟩
 
+/-! ### Square classes of `ℓ`, `3`, `−ℓ` at the primes of `ℓ` -/
+
+theorem natAbs_primeFactors_ell : ((ℓ : ℤ)).natAbs.primeFactors = ℓ.primeFactors := by
+  simp
+
+theorem natAbs_primeFactors_negell : (-(ℓ : ℤ)).natAbs.primeFactors = ℓ.primeFactors := by
+  simp
+
+theorem ind_ell : ind ℓ (ℓ : ℤ) = 1 := by
+  funext i; simp [ind, natAbs_primeFactors_ell, i.2]
+
+theorem ind_negell : ind ℓ (-(ℓ : ℤ)) = 1 := by
+  funext i; simp [ind, i.2]
+
+theorem qcls_three (i : Supp ℓ) (h12 : ℓ % 12 = 11) :
+    haveI := Fact.mk (supp_prime i)
+    qcls i 3 = (0, lam ℓ i) := by
+  have := Fact.mk (supp_prime i)
+  have h := qcls_prime_ne (i : ℕ) 3 Nat.prime_three (Ne.symm (supp_ne_three (by omega) i))
+  simpa [lam] using h
+
+theorem qcls_ell (i : Supp ℓ) (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) :
+    haveI := Fact.mk (supp_prime i)
+    qcls i (ℓ : ℤ) = (1, Kmat ℓ i i) := by
+  have := Fact.mk (supp_prime i)
+  rw [qcls_formula h12 (Int.squarefree_natCast.mpr hsf)
+    (by rw [natAbs_primeFactors_ell]; exact Finset.subset_insert _ _) i]
+  rw [ind_ell, kmat_mulVec_one, natAbs_primeFactors_ell, if_neg (three_not_mem h12),
+    if_neg (by simp)]
+  simp
+
+theorem qcls_negell (i : Supp ℓ) (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) :
+    haveI := Fact.mk (supp_prime i)
+    qcls i (-(ℓ : ℤ)) = (1, sgn ℓ i + Kmat ℓ i i) := by
+  have := Fact.mk (supp_prime i)
+  have hsq : Squarefree (-(ℓ : ℤ)) := by
+    rw [← Int.squarefree_natAbs]; simpa using hsf
+  have hpos : (0 : ℤ) < ℓ := by have : 0 < ℓ := by omega
+                                exact_mod_cast this
+  rw [qcls_formula h12 hsq (by rw [natAbs_primeFactors_negell]; exact Finset.subset_insert _ _) i]
+  rw [ind_negell, kmat_mulVec_one, natAbs_primeFactors_negell, if_neg (three_not_mem h12),
+    if_pos (by omega)]
+  simp
+
+/-! ### `𝔽₂` bookkeeping -/
+
+theorem alg_a : ∀ (u Ku Kii lam v δ e1 e2 : ZMod 2), u = e1 → v = e2 →
+    δ * lam + 0 + (Ku + Kii * u) = e1 * Kii + e2 * lam → Ku + lam * v = δ * lam := by decide
+
+theorem alg_a' : ∀ (u Ku Kii lam v δ : ZMod 2), Ku + lam * v = δ * lam →
+    δ * lam + 0 + (Ku + Kii * u) = u * Kii + v * lam := by decide
+
+theorem alg_b : ∀ (v Kv Kii s σ e2 : ZMod 2), v = e2 →
+    0 + σ * s + (Kv + Kii * v) = e2 * (s + Kii) → Kv + s * v = σ * s := by decide
+
+theorem alg_b' : ∀ (v Kv Kii s σ : ZMod 2), Kv + s * v = σ * s →
+    0 + σ * s + (Kv + Kii * v) = v * (s + Kii) := by decide
+
+theorem ite_mul_eq (P : Prop) [Decidable P] (x : ZMod 2) :
+    (if P then x else 0) = (if P then 1 else 0) * x := by
+  split_ifs <;> simp
+
 end ZInQ.Manuscript.PoleRC
