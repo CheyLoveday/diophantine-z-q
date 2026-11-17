@@ -689,7 +689,7 @@ theorem dcRelPM_iff (τ τ' : UpperHalfPlane) (g g' : BAQˣ) :
       have h3 := normSq_denom_pos (RayClassCFT.iotaGL gm hγ) τ.im_pos.ne'
       rw [← him] at h1
       by_contra hn
-      push_neg at hn
+      push Not at hn
       have : (ShimuraGlue.nrdQ ℚ gm : ℝ) * (τ : ℂ).im / Complex.normSq (denom (RayClassCFT.iotaGL gm hγ) τ) ≤ 0 :=
         div_nonpos_of_nonpos_of_nonneg (mul_nonpos_of_nonpos_of_nonneg hn h2.le) h3.le
       linarith

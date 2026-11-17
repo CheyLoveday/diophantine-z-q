@@ -33,3 +33,12 @@ unrelated TYZThm21Span files).
 - Hodge.lean stage 5 (§7 leaf): `DeligneCanonicalModelY3EveryPrint` (Ψ on ℍ^± × G(𝔸_f), fibres DCRelPM, moduli
   IsHodgeH1Print), `deligneH_of_print : DeligneCanonicalModelY3EveryPrint → Y3Fix.DeligneCanonicalModelY3EveryH`,
   `shimuraMainThmIDeligneY3AbU_of_printPM`: compiles, 0 errors.
+- Contributor module `ZInQKernel/Contrib/OneProof/Y3HodgePrint.lean` (new file = Hodge.lean): `lake build` OK.
+- autofold spec `autofold.json` (field deligneCanonicalModelY3EveryH := Y3Hodge.deligneH_of_print
+  {n}.deligneCanonicalModelY3EveryPrint; leaf kind consequence, flag "pending review (new leaf, GLUE until a
+  reviewer rates it) ..."): `--dry-run` strict 11/23 on 34 -> 11/23 on 34; strictest 10/24 -> 10/24 (GLUE for GLUE).
+  FoldCheck.lean.txt (dry run minus line 1) compiles: `HDec.HSyn.sixContactMin_of_open61` standard axioms.
+- `lake build ZInQKernel.OneProof.Discharges ZInQKernel.OneProof.Main` OK (16073 jobs; frozenTarget standard axioms).
+  Discharges.lean: DISCHARGES [OpenResearchLeaves42.deligneCanonicalModelY3EveryH] by Y3Hodge.deligneH_of_print,
+  still assumes [Y3Hodge.DeligneCanonicalModelY3EveryPrint]; 39 open, 13439 theorems checked; all Y3Hodge
+  #print axioms standard (discharges.txt).
