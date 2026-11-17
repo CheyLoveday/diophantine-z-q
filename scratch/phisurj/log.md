@@ -54,3 +54,20 @@ Base wip/leaf-fold33b 0e3c31258; `git merge origin/main`: already up to date (20
   `PhiSurj.mumfordMulNPicZeroAC_of_open : … → PicDict.MumfordMulNPicZeroAC` (Mumford §8 (iv)), via
   `mumfordBundle_eq_one_of_isTI` (Λ(c) = 1 for translation-invariant c) and `hom_ext_kpt`. Not on the fold's
   route; they are two of the four Mumford displays weil-proof's reduction of `weilPairingMumford` still assumed.
+
+## Phase 2: dropping the Weil-pairing leaf (VERIFIED, compiled)
+- Merged origin/wip/weil-proof (clean, adds WeilFormula.lean, WeilFormulaTheta.lean, docs, scratch); both build.
+- `ZInQKernel/Contrib/OneProof/PhiSurjDescent.lean`: `PhiSurj.Desc.nonempty_iso_of_invariant` — fpqc descent of a
+  `tᵢ`-invariant trivialization `𝒪 ≅ m^*M` along `m` when the sections `x ↦ (x, tᵢ x)` cover `X ×_{m,X,m} X` by open
+  immersions (vendored `nonempty_iso_of_toDescentData_iso`, Mathlib `DescentData'`). lake build ok.
+- `ZInQKernel/Contrib/OneProof/PhiAmpleIsogenyOpen.lean` (lake build ok, 12861 jobs):
+  `AVDesc.mul_props` ([n] étale, surjective, proper), `mul_cover`, `sec_isOpenImmersion`, `sec_cover`
+  (Jacobson + k-points), `formula_nondeg_right` (right kernel of Mumford's formula pairing trivial: pic-dict's
+  `MumfordWeilNondegAC`, second conjunct, in the form "formula ≡ 1 ⇒ c = 1"), `card_isDT_le`
+  (#{c TI, cⁿ = 1} ≤ n^{2 dim X}), `dim_le_of_open`, `phiAmpleIsogeny_of_open : PicRepresentableAbVar →
+  PicZeroAbVar → MumfordTorsionAlgClosed → PhiAmpleIsogeny`, `mumfordPhiSurjectiveAC_of_ti_open`.
+  All standard axioms (`scratch/phisurj/axioms.txt`).
+- Fold updated (`FoldTailZ49.lean`, `FrozenTargetDryRun.lean`): `phiAmpleIsogeny_of_open l.picRepresentableAbVar
+  l.picZeroAbVar t.mumfordTorsionAlgClosed`; both compile, standard axioms.
+- `#discharges` rerun: "43 open hypotheses, 8799 theorems checked, 56 discharge one"; `mumfordPhiSurjectiveAC_of_ti_open`
+  still assumes [TIClassesInPicZeroAC, PicRepresentableAbVar, PicZeroAbVar, MumfordTorsionAlgClosed].

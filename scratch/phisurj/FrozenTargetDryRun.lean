@@ -1,13 +1,13 @@
 import ZInQKernel.OneProof.Main
 import ZInQKernel.OneProof.H.TailZ48
-import ZInQKernel.Contrib.OneProof.PhiAmpleIsogenyWeil
+import ZInQKernel.Contrib.OneProof.PhiAmpleIsogenyOpen
 
 /-! # OneProof H, phisurj: `sixContactMin_of_open42` (hand fold, after leaf-fold33's reroute pattern)
 
 Field removed: `mumfordPhiSurjectiveAC` (Mumford §8 Thm 1 over `k = k̄`). It is not filled: its only readers
 (TailZ45:123 and the poincare conversion, TailZ46:104 / HomFreeFiniteAlgClosedReroute:2082) read
 `PicFix.phiAmpleIsogeny_of_printed l.mumfordKLFiniteSectionAC l.mumfordPhiSurjectiveAC : T09Pic.PhiAmpleIsogeny`,
-which is now `PhiSurj.phiAmpleIsogeny_of_weil l.weilPairingMumford t.mumfordTorsionAlgClosed`. The route below is
+which is now `PhiSurj.phiAmpleIsogeny_of_open l.picRepresentableAbVar l.picZeroAbVar t.mumfordTorsionAlgClosed`. The route below is
 `sixContactMin_of_open41 → open40_hf → open39_hf → open38_hf → open37_hf` with that one term changed. No new leaf. -/
 
 namespace HDec
@@ -24,23 +24,23 @@ structure OpenAddedLeaves21 : Prop where
   weilPairingMumford : _root_.T09Pic.WeilPairingMumford
 
 /-- `OpenAddedLeaves18` (the generation with the field `phiAmpleIsogeny`) from `OpenAddedLeaves21` and the
-textbook bundle: `phiAmpleIsogeny` by `PhiSurj.phiAmpleIsogeny_of_weil`. -/
+textbook bundle: `phiAmpleIsogeny` by `PhiSurj.phiAmpleIsogeny_of_open`. -/
 theorem openAddedLeaves18_of_OpenAddedLeaves21 (t : OpenTextbookLeaves15) (n : OpenAddedLeaves21) :
     OpenAddedLeaves18 where
   egaIV_8_10_5_xii := _root_.ZInQ.Contrib.EGAProperLimit.egaIV_8_10_5_xii_proof
   picRepresentableAbVar := n.picRepresentableAbVar
   picZeroAbVar := n.picZeroAbVar
-  phiAmpleIsogeny := _root_.PhiSurj.phiAmpleIsogeny_of_weil n.weilPairingMumford t.mumfordTorsionAlgClosed
+  phiAmpleIsogeny := _root_.PhiSurj.phiAmpleIsogeny_of_open n.picRepresentableAbVar n.picZeroAbVar t.mumfordTorsionAlgClosed
   weilPairingMumford := n.weilPairingMumford
 
 /-- `OpenTextbookLeaves13HF` from `OpenTextbookLeaves15` and `OpenAddedLeaves21` (as
-`openTextbookLeaves13_of_OpenTextbookLeaves14_hf`, with `PhiAmpleIsogeny` from `phiAmpleIsogeny_of_weil`). -/
+`openTextbookLeaves13_of_OpenTextbookLeaves14_hf`, with `PhiAmpleIsogeny` from `phiAmpleIsogeny_of_open`). -/
 theorem openTextbookLeaves13HF_of_open15_21 (t : OpenTextbookLeaves15) (l : OpenAddedLeaves21) :
     OpenTextbookLeaves13HF where
   mumfordTorsionAlgClosed := t.mumfordTorsionAlgClosed
   homFreeFiniteAlgClosed := _root_.ZInQ.Contrib.OneProof.HomFreeC.homFreeFiniteC _root_.uniformizationLeafAll_proof t.mumfordTorsionAlgClosed
   charPolyIndepOfEllAlgClosed := t.charPolyIndepOfEllAlgClosed
-  poincareComplement := _root_.ZInQ.Contrib.OneProof.PoincareComplement.poincareComplement_of_open l.picRepresentableAbVar l.picZeroAbVar (_root_.PhiSurj.phiAmpleIsogeny_of_weil l.weilPairingMumford t.mumfordTorsionAlgClosed) _root_.ZInQ.Contrib.MilneQuasiInverse.milneIsogenyQuasiInverse_proof _root_.ZInQ.Contrib.OneProof.CartierSmooth.cartierSmooth_proof
+  poincareComplement := _root_.ZInQ.Contrib.OneProof.PoincareComplement.poincareComplement_of_open l.picRepresentableAbVar l.picZeroAbVar (_root_.PhiSurj.phiAmpleIsogeny_of_open l.picRepresentableAbVar l.picZeroAbVar t.mumfordTorsionAlgClosed) _root_.ZInQ.Contrib.MilneQuasiInverse.milneIsogenyQuasiInverse_proof _root_.ZInQ.Contrib.OneProof.CartierSmooth.cartierSmooth_proof
   gagaMorphism := t.gagaMorphism
   neronSchemeExtensionExists := t.neronSchemeExtensionExists
 
