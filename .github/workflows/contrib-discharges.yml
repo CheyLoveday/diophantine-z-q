@@ -108,6 +108,20 @@ jobs:
       - name: Fetch the Mathlib build cache
         run: lake exe cache get
 
+      # The newest build of main that main-build-cache.yml saved, so the build below compiles only what the pull
+      # request adds. This run can read main's caches but not write to them (GitHub scopes a pull request run's
+      # caches to its own ref), and this workflow saves none. With no cache yet, the build starts cold, as before.
+      - name: Restore main's build
+        if: github.event_name == 'pull_request'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            .lake/build
+            lean/.lake/build
+          key: zinq-build-v1-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'lean/lakefile.toml') }}-${{ github.event.pull_request.base.sha }}
+          restore-keys: |
+            zinq-build-v1-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'lean/lakefile.toml') }}-
+
       - name: Measure the cold build of the OneProof target
         if: github.event_name == 'workflow_dispatch'
         run: |
