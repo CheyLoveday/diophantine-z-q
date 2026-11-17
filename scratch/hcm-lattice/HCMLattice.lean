@@ -657,6 +657,244 @@ theorem exists_local_lift' (L₀ : PeriodPair)
     exact ⟨hPGz, hPGy⟩
 
 
+
+/-- **The Weierstrass-map step, proved.** A holomorphic map `ξ : ℂ → E_{L₀}(ℂ) ⊂ ℙ²(ℂ)` inducing a bijection
+`ℂ/L → E_{L₀}(ℂ)` with `ξ(0) = O` is `z ↦ ξ_{L₀}(αz)` with `L₀ = αL`. Proof: `x'/(2y)` (the pull-back of the
+invariant differential) extends to an entire `L`-periodic function, hence is a constant `α` (Liouville); a local
+lift `g` through `ξ_{L₀}` has `g' = α`, so `ξ = ξ_{L₀}(α · + β)` near a point, then on the complement of a countable
+set (identity theorem) and everywhere (homogeneous coordinates); `ξ(0) = O` gives `β ∈ L₀`. -/
+theorem eq_toPoint_of_holo (L₀ L : PeriodPair) (ξ : ℂ → L₀.weierstrassCurve.toAffine.Point)
+    (hb : InducesBij L₀.weierstrassCurve L.lattice ξ) (hh : IsHolomorphicMap _ ξ) (h0 : ξ 0 = 0) :
+    ∃ α : ℂ, T5Glue.IsScale L₀ L α ∧ ∀ z, ξ z = L₀.toPoint L₀.discriminant_ne_zero (α * z) := by
+  set D₀ := L₀.discriminant_ne_zero
+  have hU := L₀.isUniformization_toPoint D₀
+  have hker : ∀ z, ξ z = 0 ↔ z ∈ L.lattice := fun z =>
+    ⟨fun h => by simpa using hb.2.1 z 0 (h.trans h0.symm), fun h => by simpa [h0] using hb.1 0 z h⟩
+  have hLc : ∀ M : PeriodPair, (M.lattice : Set ℂ).Countable := fun M => by
+    have : Countable M.lattice := Countable.of_equiv _ M.latticeEquivProd.toEquiv.symm
+    exact Set.countable_coe_iff.1 this
+  set G : Set ℂ := {z | ξ z ≠ 0 ∧ yc ξ z ≠ 0} with hGdef
+  -- the bad set `ξ⁻¹(O) ∪ ξ⁻¹(E[2] ∖ O)` is countable
+  have hBc : Gᶜ.Countable := by
+    set p : Polynomial ℂ := Polynomial.X ^ 3 +
+      (Polynomial.C (-L₀.g₂ / 4) * Polynomial.X + Polynomial.C (-L₀.g₃ / 4))
+    have hp0 : p ≠ 0 :=
+      (Polynomial.monic_X_pow_add (lt_of_le_of_lt Polynomial.degree_linear_le (by norm_num))).ne_zero
+    have hR := Polynomial.finite_setOfPred_isRoot hp0
+    have hsub : Gᶜ ⊆ (L.lattice : Set ℂ) ∪
+        ⋃ x ∈ {x | p.IsRoot x}, {z | ξ z ≠ 0 ∧ yc ξ z = 0 ∧ xc ξ z = x} := by
+      intro z hz
+      by_cases hξ : ξ z = 0
+      · exact Or.inl ((hker z).1 hξ)
+      · have hy : yc ξ z = 0 := by
+          by_contra hy; exact hz ⟨hξ, hy⟩
+        refine Or.inr (Set.mem_iUnion₂.2 ⟨xc ξ z, ?_, hξ, hy, rfl⟩)
+        have := yc_sq L₀ hξ
+        rw [hy] at this
+        simp only [Set.mem_ofPred_eq, Polynomial.IsRoot, p, Polynomial.eval_add, Polynomial.eval_pow,
+          Polynomial.eval_X, Polynomial.eval_mul, Polynomial.eval_C]
+        linear_combination -this
+    refine Set.Countable.mono hsub ((hLc L).union (hR.countable.biUnion fun x _ => ?_))
+    by_cases hne : {z | ξ z ≠ 0 ∧ yc ξ z = 0 ∧ xc ξ z = x}.Nonempty
+    · obtain ⟨w, hw⟩ := hne
+      refine ((hLc L).image (· + w)).mono fun z (hz : z ∈ {z | ξ z ≠ 0 ∧ yc ξ z = 0 ∧ xc ξ z = x}) =>
+        (⟨z - w, ?_, sub_add_cancel z w⟩ : z ∈ (· + w) '' (L.lattice : Set ℂ))
+      apply hb.2.1
+      obtain ⟨h1, e1⟩ := eq_some_of_ne_zero hz.1
+      obtain ⟨h2, e2⟩ := eq_some_of_ne_zero hw.1
+      rw [e1, e2, Point.some.injEq]
+      exact ⟨hz.2.2.trans hw.2.2.symm, hz.2.1.trans hw.2.1.symm⟩
+    · rw [Set.not_nonempty_iff_eq_empty.1 hne]; exact Set.countable_empty
+  have hGd : Dense G := by
+    have := hBc.dense_compl ℝ; rwa [compl_compl] at this
+  -- `x'/(2y)` extends to an entire function `Φ`
+  obtain ⟨Φ, hΦd, hΦG⟩ := exists_entire_of_local hGd (fun z => deriv (xc ξ) z / (2 * yc ξ z))
+    fun z₀ => by
+      obtain ⟨V, hVo, hz₀V, ψ, hψd, hψ⟩ := exists_local_ext L₀ hh z₀
+      exact ⟨V, hVo, hz₀V, ψ, hψd, fun z hz hzG => hψ z hz hzG.1 hzG.2⟩
+  have hxper : ∀ l ∈ L.lattice, ∀ z, xc ξ (z + l) = xc ξ z := fun l hl z => by
+    simp only [xc, hb.1 z l hl]
+  have hyper : ∀ l ∈ L.lattice, ∀ z, yc ξ (z + l) = yc ξ z := fun l hl z => by
+    simp only [yc, hb.1 z l hl]
+  have hper : ∀ z, ∀ l ∈ L.lattice, Φ (z + l) = Φ z := by
+    intro z l hl
+    have := Continuous.ext_on hGd (hΦd.continuous.comp (continuous_id.add continuous_const : Continuous fun x : ℂ => x + l)) hΦd.continuous
+      (fun z hz => by
+        have hzl : z + l ∈ G := by
+          refine ⟨?_, ?_⟩
+          · rw [hb.1 z l hl]; exact hz.1
+          · rw [hyper l hl]; exact hz.2
+        show Φ (z + l) = Φ z
+        rw [hΦG _ hzl, hΦG z hz, hyper l hl]
+        congr 1
+        rw [← deriv_comp_add_const]
+        congr 1
+        funext x; exact hxper l hl x)
+    exact congrFun this z
+  set α := Φ 0 with hαdef
+  have hΦc : ∀ z, Φ z = α := eq_const_of_periodic L hΦd hper
+  -- a local lift `g` with `g' = α`
+  obtain ⟨z₁, r, hr, g, hgd, hgeq, hgΛ⟩ := exists_local_lift' L₀ ξ hb.2.2 hh
+  have hball : ∀ z ∈ Metric.ball z₁ r,
+      ξ z ≠ 0 ∧ xc ξ z = ℘[L₀] (g z) ∧ yc ξ z = ℘'[L₀] (g z) / 2 := by
+    intro z hz
+    rw [xc, yc, ← hgeq z hz, L₀.toPoint_of_notMem _ (hgΛ z hz).1]
+    exact ⟨Point.some_ne_zero _, rfl, rfl⟩
+  have hgder : ∀ z ∈ Metric.ball z₁ r, deriv g z = α := by
+    intro z hz
+    have hzb : Metric.ball z₁ r ∈ 𝓝 z := Metric.isOpen_ball.mem_nhds hz
+    have hgd' := (hgd.differentiableAt hzb).hasDerivAt
+    have hP : HasDerivAt ℘[L₀] (℘'[L₀] (g z)) (g z) := by
+      rw [← PeriodPair.deriv_weierstrassP]
+      exact (L₀.analyticOnNhd_weierstrassP _ (hgΛ z hz).1).differentiableAt.hasDerivAt
+    have hcomp := HasDerivAt.comp (h := g) z hP hgd'
+    have hxe : xc ξ =ᶠ[𝓝 z] fun w => ℘[L₀] (g w) :=
+      Filter.eventually_of_mem hzb fun w hw => (hball w hw).2.1
+    have hdx : deriv (xc ξ) z = ℘'[L₀] (g z) * deriv g z := by
+      rw [hxe.deriv_eq]; exact hcomp.deriv
+    have hP'z := (hgΛ z hz).2
+    have hzG : z ∈ G := ⟨(hball z hz).1, by rw [(hball z hz).2.2]; exact div_ne_zero hP'z two_ne_zero⟩
+    have := hΦG z hzG
+    rw [hΦc z, hdx, (hball z hz).2.2] at this
+    rw [this]; field_simp
+  set β := g z₁ - α * z₁ with hβdef
+  have hglin : ∀ z ∈ Metric.ball z₁ r, g z = α * z + β := by
+    intro z hz
+    have hk : ∀ s ∈ Metric.ball z₁ r, HasDerivAt (fun s => g s - α * s) 0 s := by
+      intro s hs
+      have h1 : HasDerivAt g α s := by
+        rw [← hgder s hs]
+        exact (hgd.differentiableAt (Metric.isOpen_ball.mem_nhds hs)).hasDerivAt
+      have h2 : HasDerivAt (fun s => α * s) α s := by simpa using (hasDerivAt_id s).const_mul α
+      have := h1.sub h2
+      rwa [sub_self] at this
+    have := IsOpen.is_const_of_deriv_eq_zero (f := fun s => g s - α * s) Metric.isOpen_ball
+      (convex_ball z₁ r).isPreconnected
+      (fun s hs => (hk s hs).differentiableAt.differentiableWithinAt)
+      (fun s hs => (hk s hs).deriv) hz (Metric.mem_ball_self hr)
+    rw [hβdef]; linear_combination this
+  have hz₁b := Metric.mem_ball_self hr (x := z₁)
+  -- `α ≠ 0`
+  have hα0 : α ≠ 0 := by
+    intro hα
+    obtain ⟨ε, hε, hsmall⟩ := ZInQ.Contrib.HCMDict.exists_lattice_small L
+    set t : ℂ := ((min r ε / 2 : ℝ) : ℂ)
+    have ht0 : t ≠ 0 := by
+      simp only [t, ne_eq, Complex.ofReal_eq_zero]; positivity
+    have htn : ‖t‖ = min r ε / 2 := by
+      simp only [t, Complex.norm_real, Real.norm_eq_abs]
+      exact abs_of_pos (by positivity)
+    have htr : z₁ + t ∈ Metric.ball z₁ r := by
+      simp only [Metric.mem_ball, dist_self_add_left, htn]
+      linarith [min_le_left r ε]
+    have hpt : ξ (z₁ + t) = ξ z₁ := by
+      rw [← hgeq _ htr, ← hgeq _ hz₁b, hglin _ htr, hglin _ hz₁b, hα, zero_mul, zero_mul]
+    have hl := hb.2.1 _ _ hpt
+    rw [add_sub_cancel_left] at hl
+    exact ht0 (hsmall t hl (by rw [htn]; linarith [min_le_right r ε]))
+  set η : ℂ → L₀.weierstrassCurve.toAffine.Point := fun z => L₀.toPoint D₀ (α * z + β) with hηdef
+  -- the complement of a countable closed set
+  have hAc : Continuous fun z : ℂ => α * z + β := (continuous_const.mul continuous_id).add continuous_const
+  set C : Set ℂ := (L.lattice : Set ℂ) ∪ (fun z => α * z + β) ⁻¹' (L₀.lattice : Set ℂ)
+  have hCc : C.Countable := (hLc L).union (Set.Countable.mono
+    (fun z (hz : z ∈ (fun z => α * z + β) ⁻¹' (L₀.lattice : Set ℂ)) =>
+      (⟨α * z + β, hz, by field_simp; ring⟩ : z ∈ (fun l => (l - β) / α) '' (L₀.lattice : Set ℂ)))
+    ((hLc L₀).image _))
+  have hCcl : IsClosed C := L.isClosed_lattice.union (L₀.isClosed_lattice.preimage hAc)
+  have hDo : IsOpen Cᶜ := hCcl.isOpen_compl
+  have hDconn : IsPreconnected Cᶜ :=
+    (hCc.isPathConnected_compl_of_one_lt_rank (by rw [Complex.rank_real_complex]; norm_num)).isConnected.isPreconnected
+  have hDdense : Dense Cᶜ := hCc.dense_compl ℝ
+  have hDΩ : ∀ z ∈ Cᶜ, ξ z ≠ 0 ∧ α * z + β ∉ L₀.lattice := fun z hz => by
+    simp only [C, Set.mem_compl_iff, Set.mem_union, Set.mem_preimage, not_or, SetLike.mem_coe] at hz
+    exact ⟨fun h => hz.1 ((hker z).1 h), hz.2⟩
+  have hz₁D : z₁ ∈ Cᶜ := by
+    simp only [C, Set.mem_compl_iff, Set.mem_union, Set.mem_preimage, not_or, SetLike.mem_coe]
+    exact ⟨fun h => (hball z₁ hz₁b).1 ((hker z₁).2 h), by
+      rw [← hglin z₁ hz₁b]; exact (hgΛ z₁ hz₁b).1⟩
+  have hAa : ∀ z : ℂ, AnalyticAt ℂ (fun z : ℂ => α * z + β) z := fun z =>
+    (analyticAt_const.mul analyticAt_id).add analyticAt_const
+  have hxa : AnalyticOnNhd ℂ (xc ξ) Cᶜ :=
+    ((differentiableOn_xc hh).mono fun z hz => (hDΩ z hz).1).analyticOnNhd hDo
+  have hya : AnalyticOnNhd ℂ (yc ξ) Cᶜ :=
+    ((differentiableOn_yc hh).mono fun z hz => (hDΩ z hz).1).analyticOnNhd hDo
+  have hpa : AnalyticOnNhd ℂ (fun z => ℘[L₀] (α * z + β)) Cᶜ := fun z hz =>
+    AnalyticAt.comp (f := fun z => α * z + β) (x := z) (L₀.analyticOnNhd_weierstrassP _ (hDΩ z hz).2) (hAa z)
+  have hp'a : AnalyticOnNhd ℂ (fun z => ℘'[L₀] (α * z + β) / 2) Cᶜ := fun z hz =>
+    (AnalyticAt.comp (f := fun z => α * z + β) (x := z)
+      (L₀.analyticOnNhd_derivWeierstrassP _ (hDΩ z hz).2) (hAa z)).div_const (c := 2)
+  have hb₁ : Metric.ball z₁ r ∈ 𝓝 z₁ := Metric.ball_mem_nhds z₁ hr
+  have hxeq := hxa.eqOn_of_preconnected_of_eventuallyEq hpa hDconn hz₁D
+    (Filter.eventually_of_mem hb₁ fun z hz => by rw [(hball z hz).2.1, hglin z hz])
+  have hyeq := hya.eqOn_of_preconnected_of_eventuallyEq hp'a hDconn hz₁D
+    (Filter.eventually_of_mem hb₁ fun z hz => by rw [(hball z hz).2.2, hglin z hz])
+  have hξηD : ∀ z ∈ Cᶜ, ξ z = η z := by
+    intro z hz
+    obtain ⟨h, e⟩ := eq_some_of_ne_zero (hDΩ z hz).1
+    rw [e, hηdef]
+    simp only
+    rw [L₀.toPoint_of_notMem _ (hDΩ z hz).2, Point.some.injEq]
+    exact ⟨hxeq hz, hyeq hz⟩
+  -- extension to all of `ℂ` through homogeneous coordinates
+  have hηh : IsHolomorphicMap _ η :=
+    (toPoint_isImmersion L₀).isHolomorphicMap.comp_affine α β
+  have hξη : ∀ z, ξ z = η z := by
+    intro z
+    obtain ⟨U₁, X₁, Y₁, Z₁, hz1, hU1o, hX1, hY1, hZ1, hc1⟩ := hh z
+    obtain ⟨U₂, X₂, Y₂, Z₂, hz2, hU2o, hX2, hY2, hZ2, hc2⟩ := hηh z
+    have hOo : IsOpen (U₁ ∩ U₂) := hU1o.inter hU2o
+    have hzcl : z ∈ closure (U₁ ∩ U₂ ∩ Cᶜ) := by
+      rw [mem_closure_iff]
+      intro o ho hzo
+      obtain ⟨y, hy⟩ := hDdense.inter_open_nonempty (o ∩ (U₁ ∩ U₂)) (ho.inter hOo) ⟨z, hzo, hz1, hz2⟩
+      exact ⟨y, hy.1.1, hy.1.2, hy.2⟩
+    have zero_at : ∀ c : ℂ → ℂ, ContinuousOn c (U₁ ∩ U₂) → (∀ y ∈ U₁ ∩ U₂ ∩ Cᶜ, c y = 0) → c z = 0 := by
+      intro c hc hcz
+      have hcz' : ContinuousAt c z := hc.continuousAt (hOo.mem_nhds ⟨hz1, hz2⟩)
+      have hne : (𝓝[U₁ ∩ U₂ ∩ Cᶜ] z).NeBot := mem_closure_iff_nhdsWithin_neBot.1 hzcl
+      exact tendsto_nhds_unique (l := 𝓝[U₁ ∩ U₂ ∩ Cᶜ] z) (hcz'.tendsto.mono_left nhdsWithin_le_nhds)
+        (tendsto_const_nhds.congr' (eventually_nhdsWithin_of_forall fun y hy => (hcz y hy).symm))
+    have hcross : ∀ y ∈ U₁ ∩ U₂ ∩ Cᶜ, Y₁ y * Z₂ y - Z₁ y * Y₂ y = 0 ∧
+        Z₁ y * X₂ y - X₁ y * Z₂ y = 0 ∧ X₁ y * Y₂ y - Y₁ y * X₂ y = 0 := by
+      intro y hy
+      have h2 := hc2 y hy.1.2
+      rw [← hξηD y hy.2] at h2
+      exact (hc1 y hy.1.1).cross_eq_zero h2
+    have hc1' := hX1.continuousOn.mono (Set.inter_subset_left (t := U₂))
+    have hc2' := hY1.continuousOn.mono (Set.inter_subset_left (t := U₂))
+    have hc3' := hZ1.continuousOn.mono (Set.inter_subset_left (t := U₂))
+    have hc4' := hX2.continuousOn.mono (Set.inter_subset_right (s := U₁))
+    have hc5' := hY2.continuousOn.mono (Set.inter_subset_right (s := U₁))
+    have hc6' := hZ2.continuousOn.mono (Set.inter_subset_right (s := U₁))
+    have e0 := zero_at (fun y => Y₁ y * Z₂ y - Z₁ y * Y₂ y) ((hc2'.mul hc6').sub (hc3'.mul hc5'))
+      fun y hy => (hcross y hy).1
+    have e1 := zero_at (fun y => Z₁ y * X₂ y - X₁ y * Z₂ y) ((hc3'.mul hc4').sub (hc1'.mul hc6'))
+      fun y hy => (hcross y hy).2.1
+    exact (hc1 z hz1).eq_of_cross (hc2 z hz2) e0 e1
+  -- `β ∈ L₀`
+  have hβ : β ∈ L₀.lattice := by
+    have := hξη 0
+    rw [h0, hηdef] at this
+    simp only [mul_zero, zero_add] at this
+    exact hU.2.2 _ this.symm
+  have hform : ∀ z, ξ z = L₀.toPoint D₀ (α * z) := fun z => by
+    rw [hξη z, hηdef]
+    simp only
+    rw [hU.1, L₀.toPoint_of_mem _ hβ, add_zero]
+  refine ⟨α, ⟨hα0, ?_⟩, hform⟩
+  have hker' : ∀ z, z ∈ L.lattice ↔ α * z ∈ L₀.lattice := fun z => by
+    rw [← hker, hform]
+    exact ⟨hU.2.2 _, fun h => L₀.toPoint_of_mem _ h⟩
+  ext x
+  simp only [SetLike.mem_coe, Set.mem_smul_set, smul_eq_mul]
+  constructor
+  · intro hx
+    refine ⟨α⁻¹ * x, (hker' _).2 ?_, ?_⟩
+    · rwa [mul_inv_cancel_left₀ hα0]
+    · rw [mul_inv_cancel_left₀ hα0]
+  · rintro ⟨y, hy, rfl⟩
+    exact (hker' y).1 hy
+
 end Liouville
 
 end ZInQ.Contrib.HCMLattice

@@ -21,3 +21,11 @@ Base: wip/leaf-fold33b d879bb73. Build tree seeded from ~/dzq-check2 (same HEAD)
   `InducesBij`, `IsAnalyticIso`; `deriv_derivWeierstrassP_ne` (℘'(z₀)=0 ⇒ ℘''(z₀)≠0, via disc ≠ 0 and isolated zeros);
   `toPoint_isImmersion`, `toPoint_isAnalyticIso` (Weierstrass map z ↦ [℘ : ℘'/2 : 1] is an analytic isomorphism
   ℂ/L → E_L(ℂ); at lattice points the lift [w + w³h : (−2 + w³k)/2 : w³] from Mathlib's ℘[L - l₀]).
+- HCMLattice.lean (Analytic + §C): COMPILED, no sorry. VERIFIED:
+  - projective-coordinate lemmas `IsProjCoord.{ne_zero_iff,coords,of_zero,homog,cross_eq_zero,eq_of_cross}`;
+  - `exists_local_ext`: x'/(2y) has local holomorphic extensions everywhere (y'/(3x²−g₂/4) near y=0 using disc≠0;
+    −u'+uq'/(2q) near O with u=X/Y, w=Z/Y, q=1−a₄uw−a₆w², wq=u³);
+  - `exists_entire_of_local` (gluing across a dense set), `eq_const_of_periodic` (Liouville);
+  - `exists_local_lift'` (hcm-dict's lift, for surjective holomorphic ξ);
+  - `eq_toPoint_of_holo`: holomorphic ξ : ℂ → E_{L₀}(ℂ) inducing a bijection ℂ/L ≅ E_{L₀}(ℂ) with ξ(0)=O is
+    z ↦ ξ_{L₀}(αz) with IsScale L₀ L α. (The Weierstrass-map step: proved, no Silverman leaf needed.)
