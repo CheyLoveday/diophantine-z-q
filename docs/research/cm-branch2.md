@@ -135,7 +135,14 @@ Statement unchanged (cm-branch). It packs two manuscript steps:
    endomorphism lattice of rank `r ≤ 16F₀²`, `L = EK`, `[L:ℚ] ≤ F₀3^{r²} ≤ D`. The chain formalized A8 as
    `G0ModField.KernelFieldExists`, but its proof goes through `ConjMapsNoCM`, i.e. through NoCM; cm-branch localized it
    to fibres without CM (`KernelFieldExistsNC`). A8 itself does not depend on the case split; what is missing is a proof of
-   the conjugacy maps (`ConjMaps`) without NoCM.
+   the conjugacy maps without NoCM. VERIFIED by reading: `G0ModField.KernelField.ConjMapsNoCM` (TailC L6108) takes
+   `∀ φ ∈ com P.q, φ ∈ ℤ` at the point as a hypothesis. With trivial commutant the conjugacy isomorphisms `A^σ ≅ A` are
+   unique up to sign, so the maps `m σ` on `L`-points form a descent datum. At a CM fibre the commutant contains an
+   order of `k`, the isomorphisms are unique only up to its units, and the cocycle condition needs a choice. The
+   manuscript does not take this route: it reads the field of definition off the Galois action on the endomorphism
+   lattice of `W₀ = Res_{K/ℚ} A` (kernel field `E`, L546-555), and that argument needs no rigidity. So A8 at a CM fibre
+   needs A8 re-formalized along the manuscript's Weil-restriction argument. The chain's `ConjMaps` descent cannot be
+   reused there.
 2. **Matrix units** (L563-586): `End⁰(A_ℚ̄) = M₂(k)` at a CM fibre (Milne, Part I Thms 2.8-2.9 for algebraicity of
    Hodge endomorphisms, cited at L563, plus the centralizer computation L572-577), the idempotent `e₁₁`, `E = image of e₁₁`
    (an abelian subvariety; the tree has image recipes, `Hom.image` + flat base change), the `L`-isogeny
