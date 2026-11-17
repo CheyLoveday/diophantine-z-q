@@ -48,3 +48,22 @@ with N I prime to 2n and α ∈ I with (α) = I M, M + (N I) = O; the idele aK (
 * scratch/tyz-genus/FoldCheck.lean → FoldCheck-output.txt: `frozenTarget_thm21` (frozenTarget with hL29 replaced by
   h21 : TYZThm21Pairs) and `frozenTarget_thm21'` (as an instance of the current frozenTarget): standard axioms.
   Count: TYZ hypotheses h11, hL29 → h11, h21 (2 → 2, neutral).
+
+## Step 3: h11 — analysis and the best combination — VERIFIED (compiled)
+
+* F3.1 (VERIFIED, reading): every relation of TYZ Thm 2.1 / Lemma 2.9 at n > 1 is a product ℓ(d1)ℓ(d2) with
+  d1 d2 = n > 1, so ℓ(1)^2 is never isolated; the n = 1 instance (pair (1,1)) is excluded by `TYZThm21Pairs` (1 < n).
+  TYZ's own proof of Thm 1.1 asserts 𝓛(1) = 1 separately (L1082, as quoted in rv-pn-encoding/tyz-decomp) and the
+  halving step fails at m = 1 (rv-pn-encoding). The project has only bounds 0 < ‖lcalSq 1‖ < 4 (t21-proof).
+  So h11 needs an exact input at m = 1 (TYZLcalOne or Tunnell), besides a non-integer form of Thm 2.1.
+* F3.2 (VERIFIED, compiled) ZInQKernel/Contrib/OneProof/TYZThm11Genus.lean:
+  - `TYZThm21PairsC` (Thm 2.1 for every pair with complex sign choices ℓ : ℕ → ℂ, ℓ(m)^2 = lcalSq m; not vacuous:
+    complex square roots exist), `tyzThm21Pairs_of_C : TYZThm21PairsC → TYZThm21Pairs`;
+  - `lemma29_coreC` (TYZ's proof of Lemma 2.9 over ℂ, with the proved Lemma 2.8);
+  - `tyzThm11Integral_of_thm21C : TYZThm21PairsC → TYZLcalOne → TYZThm11Integral` (TYZ's induction; n = 3 from
+    Thm 2.1 at (3,1) with t21-proof's f_3(1) = ±3 and #μ = 6, no Tunnell);
+  - `tyzLemma29PrintedNe3_of_thm21C`.
+* #discharges (Discharges-output.txt): `DISCHARGES [h11] by ...tyzThm11Integral_of_thm21C still assumes:
+  [TYZThm21PairsC, TYZLcalOne]`; `DISCHARGES [hL29] by ...tyzLemma29PrintedNe3_of_thm21C still assumes:
+  [TYZThm21PairsC]`; all standard axioms.
+* FoldCheck variant B `frozenTarget_thm21C` (h11, hL29 → h21C, hL1): standard axioms. Count 2 → 2 (neutral).
