@@ -29,9 +29,11 @@ scheme. This file
   (`degHomogPolyEndDegree`, no hypothesis);
 * compares `endDegree` with `degEnd` (`degEnd_eq_endDegree`) from two glue statements
   (`FinrankGenericEqDegEnd`, `FiniteEndSurjective`), the vendored FLT lemmas
-  `isFinite_of_isFinite_endKerStr` and `surjective_and_endDegree_eq_finrank_of_isFinite_of_flat`,
-  and the tree's flatness of isogenies (`MilneQuasiInverse.finite_surjective_abVarHom_flat`);
-* concludes `DegHomogPoly` from the two glue statements (`degHomogPoly_of_glue`).
+  `isFinite_of_isFinite_endKerStr` and `surjective_and_endDegree_eq_finrank_of_isFinite_of_flat`;
+* proves both glue statements: `finiteEndSurjective` (a finite endomorphism is flat by FLT's
+  miracle-flatness argument, `flat_of_isFinite`, hence surjective) and `finrankGenericPoint` (the rank
+  at the generic point is the function-field degree, `CharPolyPort/FinrankGeneric.lean`);
+* concludes **`degHomogPoly : DegDet.DegHomogPoly`, with no hypothesis, in every characteristic**.
 -/
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
