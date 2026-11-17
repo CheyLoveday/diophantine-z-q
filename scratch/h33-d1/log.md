@@ -41,3 +41,4 @@
   std axioms); #discharges: [h33] by H33D1.tyzThm33_of_curveSome (assumes ShimuraMainCM, TYZThm33CurveSome);
   [hGZ] by GZSplitUnique.grossZagierAlgOptCd_of_splitSome (assumes GrossZagierCurveCdSplitSome);
   [hGZ] by GZUnique.grossZagierAlgOptCd_of_some. 0 sorry.
+- 11-17 02:45 scratch copies of the final Contrib files (the interrupted run's non-compiling drafts Charts.lean/TYZThm33Curve.lean replaced); build-deps.txt (stale) removed. The compiled versions are the ones under ZInQKernel/Contrib/OneProof/.

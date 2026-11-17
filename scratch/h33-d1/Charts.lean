@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.GrossZagierScheme
+import ZInQKernel.Contrib.OneProof.CurveModelUnique
 import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Projective.Prime
 
 /-!
@@ -45,6 +46,23 @@ theorem eval₂_mul_homog {R S σ : Type*} [CommSemiring R] [CommSemiring S] (f 
 
 variable (E : WeierstrassCurve ℚ)
 
+/-- The affine coordinate ring `ℚ[X, Y]/(W_E)`. -/
+abbrev CR : Type := E.toAffine.CoordinateRing
+
+abbrev xA : CR E := WeierstrassCurve.Affine.CoordinateRing.mk E.toAffine (Polynomial.C Polynomial.X)
+abbrev yA : CR E := WeierstrassCurve.Affine.CoordinateRing.mk E.toAffine Polynomial.X
+
+theorem wEqA_xA_yA : WEqA E (xA E) (yA E) := by
+  refine WEqA.of_map (algebraMap (CR E) E.toAffine.FunctionField)
+    (IsFractionRing.injective _ _) ?_
+  exact wEqA_of_wEqR (ZInQ.GZDict2.wEqR_gen E)
+
+theorem zC_ne_zero : zC E ≠ 0 := by
+  intro h
+  have := evAB_zC E (xA E) (yA E) (affEq_of_wEqA (wEqA_xA_yA E))
+  rw [h, map_zero] at this
+  exact zero_ne_one this
+
 theorem zC_mem_irrelevant : zC E ∈ (HomogeneousIdeal.irrelevant (gr E)).toIdeal := by
   rw [HomogeneousIdeal.irrelevant_eq_span]
   exact Ideal.subset_span (Set.mem_iUnion₂.mpr ⟨1, one_pos, zC_mem E⟩)
@@ -58,7 +76,7 @@ def eta0 : ProjectiveSpectrum (gr E) where
   not_irrelevant_le := by
     intro h
     have : zC E ∈ (⊥ : Ideal E.toProjective.CoordinateRing) := h (zC_mem_irrelevant E)
-    exact E.toProjective.coord_ne_zero (by simpa using this)
+    exact zC_ne_zero E (by simpa using this)
 
 instance irreducibleSpace_ESch : IrreducibleSpace (ESch E) := by
   have h : closure ({eta0 E} : Set (ProjectiveSpectrum (gr E))) = Set.univ := by
@@ -95,13 +113,10 @@ theorem yC_mem : yC E ∈ gr E 1 := E.toProjective.coord_mem_grading 1
 theorem xC_cube : xC E ^ 3 = zC E * (yC E ^ 2 + algebraMap ℚ _ E.a₁ * xC E * yC E +
     algebraMap ℚ _ E.a₃ * yC E * zC E - algebraMap ℚ _ E.a₂ * xC E ^ 2 -
     algebraMap ℚ _ E.a₄ * xC E * zC E - algebraMap ℚ _ E.a₆ * zC E ^ 2) := by
-  have h0 : (Ideal.Quotient.mk (Ideal.span {E.toProjective.polynomial}) E.toProjective.polynomial) = 0 :=
-    Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.subset_span rfl)
-  simp only [WeierstrassCurve.Projective.polynomial, map_sub, map_add, map_mul, map_pow] at h0
-  have hC : ∀ a : ℚ, Ideal.Quotient.mk (Ideal.span {E.toProjective.polynomial}) (MvPolynomial.C a) =
-      algebraMap ℚ E.toProjective.CoordinateRing a := fun a => rfl
-  simp only [hC] at h0
-  linear_combination -h0
+  have h := (WeierstrassCurve.Projective.equation_iff _).mp E.toProjective.equation_coord
+  simp only [WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
+    WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆] at h
+  linear_combination -h
 
 /-- **The complement of `D₊(Z)` lies in `D₊(Y)`** (if `Z ∈ p` then `X ∈ p`, so `Y ∉ p`). -/
 theorem mem_basicOpen_Y_of_not_mem_Z (p : ESch E) (hp : p ∉ Proj.basicOpen (gr E) (zC E)) :
@@ -128,8 +143,8 @@ theorem mem_basicOpen_Y_of_not_mem_Z (p : ESch E) (hp : p ∉ Proj.basicOpen (gr
 instance algQAZ : Algebra ℚ (AZ E) :=
   ((algebraMap (gr E 0) (AZ E)).comp (algebraMap ℚ (gr E 0))).toAlgebra
 
-theorem val_xz : (xz E).val = Localization.mk (xC E) ⟨zC E ^ 1, 1, rfl⟩ := rfl
-theorem val_yz : (yz E).val = Localization.mk (yC E) ⟨zC E ^ 1, 1, rfl⟩ := rfl
+theorem val_xz : (xz E).val = Localization.mk (xC E) (⟨zC E ^ 1, 1, rfl⟩ : Submonoid.powers (zC E)) := rfl
+theorem val_yz : (yz E).val = Localization.mk (yC E) (⟨zC E ^ 1, 1, rfl⟩ : Submonoid.powers (zC E)) := rfl
 
 /-- **`F/Zⁿ = F(x, y, 1)` for `F` homogeneous of degree `n`.** -/
 theorem away_mk_eq_aeval (n : ℕ) (p : MvPolynomial (Fin 3) ℚ) (hp : p.IsHomogeneous n)
@@ -147,15 +162,18 @@ theorem away_mk_eq_aeval (n : ℕ) (p : MvPolynomial (Fin 3) ℚ) (hp : p.IsHomo
     intro i
     fin_cases i
     · simp only [Function.comp_apply, Fin.zero_eta, Matrix.cons_val_zero]
-      rw [← hval, val_xz, ← Localization.mk_one_eq_algebraMap, Localization.mk_mul,
-        Localization.mk_eq_mk_iff, Localization.r_iff_exists]
-      exact ⟨1, by simp; ring⟩
+      have key := IsLocalization.mk'_spec' L (E.toProjective.coord 0)
+        (⟨zC E ^ 1, 1, rfl⟩ : Submonoid.powers (zC E))
+      rw [← hval, val_xz, Localization.mk_eq_mk']
+      convert key.symm using 2
+      simp [ψ]
     · simp only [Function.comp_apply, Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_zero]
-      rw [← hval, val_yz, ← Localization.mk_one_eq_algebraMap, Localization.mk_mul,
-        Localization.mk_eq_mk_iff, Localization.r_iff_exists]
-      exact ⟨1, by simp; ring⟩
+      have key := IsLocalization.mk'_spec' L (E.toProjective.coord 1)
+        (⟨zC E ^ 1, 1, rfl⟩ : Submonoid.powers (zC E))
+      rw [← hval, val_yz, Localization.mk_eq_mk']
+      convert key.symm using 2
+      simp [ψ]
     · simp [Function.comp_apply, map_one]
-      rfl
   have hmk : ψ (Ideal.Quotient.mk _ p) = MvPolynomial.eval₂ (ψ.comp (algebraMap ℚ _))
       (fun i => ψ (E.toProjective.coord i)) p := by
     conv_lhs => rw [← MvPolynomial.eval₂_eta p]
@@ -165,8 +183,9 @@ theorem away_mk_eq_aeval (n : ℕ) (p : MvPolynomial (Fin 3) ℚ) (hp : p.IsHomo
       MvPolynomial.eval₂ ((algebraMap (AZ E) L).comp (algebraMap ℚ (AZ E)))
         (algebraMap (AZ E) L ∘ ![xz E, yz E, 1]) p := by
     rw [hmk]
-    simp only [hzx]
-    rw [eval₂_mul_homog _ _ _ hp,
+    have hfun : (fun i => ψ (E.toProjective.coord i)) =
+        fun i => ψ (zC E) * (algebraMap (AZ E) L ∘ ![xz E, yz E, 1]) i := funext hzx
+    rw [hfun, eval₂_mul_homog _ _ _ hp,
       RingHom.ext_rat (ψ.comp (algebraMap ℚ _)) ((algebraMap (AZ E) L).comp (algebraMap ℚ (AZ E)))]
   rw [Localization.mk_eq_mk', IsLocalization.mk'_eq_iff_eq_mul, hmain]
   simp only [map_pow]
@@ -212,16 +231,6 @@ theorem wEqA_xz_yz : WEqA E (xz E) (yz E) := by
 
 /-! ## §4. `A_(Z) ≅ ℚ[x, y]/(W_E)` -/
 
-/-- The affine coordinate ring `ℚ[X, Y]/(W_E)`. -/
-abbrev CR : Type := E.toAffine.CoordinateRing
-
-abbrev xA : CR E := WeierstrassCurve.Affine.CoordinateRing.mk E.toAffine (Polynomial.C Polynomial.X)
-abbrev yA : CR E := WeierstrassCurve.Affine.CoordinateRing.mk E.toAffine Polynomial.X
-
-theorem wEqA_xA_yA : WEqA E (xA E) (yA E) := by
-  refine WEqA.of_map (algebraMap (CR E) E.toAffine.FunctionField)
-    (IsFractionRing.injective _ _) ?_
-  exact wEqA_of_wEqR (ZInQ.GZDict2.wEqR_gen E)
 
 /-- `A_(Z) → ℚ[x, y]/(W_E)`, `X/Z ↦ x`, `Y/Z ↦ y`. -/
 def azToCR : AZ E →+* CR E := chartHom E (xA E) (yA E) (affEq_of_wEqA (wEqA_xA_yA E))
@@ -249,8 +258,10 @@ theorem crToAZ_yA : crToAZ E (yA E) = yz E := by
 theorem crToAZ_azToCR (a : AZ E) : crToAZ E (azToCR E a) = a := by
   have : (crToAZ E).comp (azToCR E) = RingHom.id _ := by
     apply ringHom_ext_AZ E
-    · simp [azToCR, chartHom_xz, crToAZ_xA]
-    · simp [azToCR, chartHom_yz, crToAZ_yA]
+    · change crToAZ E (azToCR E (xz E)) = xz E
+      rw [azToCR, chartHom_xz, crToAZ_xA]
+    · change crToAZ E (azToCR E (yz E)) = yz E
+      rw [azToCR, chartHom_yz, crToAZ_yA]
   exact RingHom.congr_fun this a
 
 theorem azToCR_crToAZ (a : CR E) : azToCR E (crToAZ E a) = a := by
@@ -268,8 +279,8 @@ theorem azToCR_crToAZ (a : CR E) : azToCR E (crToAZ E a) = a := by
 
 /-- **`A_(Z) ≅ ℚ[x, y]/(W_E)`.** -/
 def azEquiv : AZ E ≃+* CR E :=
-  RingEquiv.ofHomInv (azToCR E) (crToAZ E) (RingHom.ext (crToAZ_azToCR E))
-    (RingHom.ext (azToCR_crToAZ E))
+  RingEquiv.ofRingHom (azToCR E) (crToAZ E) (RingHom.ext (azToCR_crToAZ E))
+    (RingHom.ext (crToAZ_azToCR E))
 
 /-- **A ring map out of `A_(Z)` is the point given by its values on `x`, `y`.** -/
 theorem eq_chartHom {K : Type} [CommRing K] [Algebra ℚ K] (χ : AZ E →+* K)
@@ -288,23 +299,12 @@ section Kappa
 
 variable {X : Scheme.{0}} [IsIntegral X] {R : CommRingCat.{0}} (j : Spec R ⟶ X) [IsOpenImmersion j]
 
-theorem range_fromSpecFunctionField :
-    Set.range X.fromSpecFunctionField = {genericPoint X} := by
-  ext z
-  constructor
-  · rintro ⟨w, rfl⟩
-    have hw : w = IsLocalRing.closedPoint X.functionField := Subsingleton.elim _ _
-    subst hw
-    exact Scheme.fromSpecStalk_closedPoint
-  · intro hz
-    exact ⟨IsLocalRing.closedPoint X.functionField, hz.symm ▸ Scheme.fromSpecStalk_closedPoint⟩
-
 /-- **A chart through the generic point gives `R → K(X)`**: `Spec K(X) → X` factors through it. -/
 theorem exists_kappa (h : genericPoint X ∈ j.opensRange) :
     ∃ u : R →+* X.functionField,
       Spec.map (CommRingCat.ofHom u) ≫ j = X.fromSpecFunctionField := by
   have hr : Set.range X.fromSpecFunctionField ⊆ Set.range j := by
-    rw [range_fromSpecFunctionField]
+    rw [ZInQ.CurveModel.range_fromSpecFunctionField]
     rintro _ rfl
     exact h
   refine ⟨(Spec.preimage (IsOpenImmersion.lift j X.fromSpecFunctionField hr)).hom, ?_⟩
@@ -320,10 +320,11 @@ theorem kappa_unique {u u' : R →+* X.functionField}
 theorem genericPoint_mem_of_kappa {u : R →+* X.functionField}
     (hu : Spec.map (CommRingCat.ofHom u) ≫ j = X.fromSpecFunctionField) :
     genericPoint X ∈ j.opensRange := by
-  have h := congrArg (fun f => f (IsLocalRing.closedPoint X.functionField)) hu
+  have h := congrArg (fun f => f (IsLocalRing.closedPoint (CommRingCat.of X.functionField))) hu
   simp only [Scheme.Hom.comp_apply] at h
-  rw [Scheme.fromSpecStalk_closedPoint] at h
-  exact ⟨_, h⟩
+  have h0 : X.fromSpecFunctionField (IsLocalRing.closedPoint (CommRingCat.of X.functionField)) =
+      genericPoint X := Scheme.fromSpecStalk_closedPoint
+  exact ⟨_, h.trans h0⟩
 
 /-- **`K(X)` is the fraction field of `R`** through `R → K(X)`. -/
 theorem isFractionRing_of_chart {u : R →+* X.functionField}
@@ -341,15 +342,15 @@ theorem isFractionRing_of_chart {u : R →+* X.functionField}
   have hr' : Spec.map r' = e.inv := Spec.map_preimage _
   have h1 : r ≫ r' = 𝟙 _ := Spec.map_injective (by rw [Spec.map_comp, hr, hr', e.inv_hom_id, Spec.map_id])
   have h2 : r' ≫ r = 𝟙 _ := Spec.map_injective (by rw [Spec.map_comp, hr, hr', e.hom_inv_id, Spec.map_id])
-  let rr : R ≃+* Γ(X, U) := RingEquiv.ofHomInv r.hom r'.hom
-    (by ext a; exact congrArg (fun f => f.hom a) h1) (by ext a; exact congrArg (fun f => f.hom a) h2)
+  let rr : R ≃+* Γ(X, U) := RingEquiv.ofRingHom r.hom r'.hom
+    (by ext a; exact congrArg (fun f => f.hom a) h2) (by ext a; exact congrArg (fun f => f.hom a) h1)
   have hFF : X.fromSpecFunctionField = Spec.map (X.germToFunctionField U) ≫ hU.fromSpec := by
-    rw [← hU.fromSpecStalk_eq_fromSpecStalk hgen]; rfl
+    exact (hU.fromSpecStalk_eq_fromSpecStalk hgen).symm
   have hu2 : u = (r ≫ X.germToFunctionField U).hom := by
     refine kappa_unique j hu ?_
     rw [CommRingCat.ofHom_hom, Spec.map_comp, Category.assoc, hr,
       IsOpenImmersion.isoOfRangeEq_hom_fac, hFF]
-  have h3 := (isFractionRing_iff_of_base_ringEquiv rr.symm).mp hF
+  have h3 := (IsFractionRing.isFractionRing_iff_of_base_ringEquiv X.functionField rr.symm).mp hF
   have key : (algebraMap Γ(X, U) X.functionField).comp rr.symm.symm.toRingHom = u := by
     rw [hu2]; rfl
   rw [key] at h3
@@ -390,13 +391,18 @@ end Kappa
 
 /-! ## §6. The function field of `ESch E` is `ℚ(E)` -/
 
+theorem opensRange_chartZ : (chartZ E).opensRange = Proj.basicOpen (gr E) (zC E) :=
+  Proj.opensRange_awayι _ _ _ _
+
 theorem genericPoint_mem_chartZ : genericPoint (ESch E) ∈ (chartZ E).opensRange := by
-  rw [chartZ, Proj.opensRange_awayι]
+  rw [opensRange_chartZ]
   refine ((genericPoint_spec (ESch E)).mem_open_set_iff (Proj.basicOpen (gr E) (zC E)).isOpen).mpr
     ⟨eta0 E, trivial, ?_⟩
   change zC E ∉ (⊥ : HomogeneousIdeal (gr E))
   intro h
-  exact E.toProjective.coord_ne_zero (by simpa using h)
+  have h' : zC E ∈ (⊥ : HomogeneousIdeal (gr E)).toIdeal := h
+  rw [HomogeneousIdeal.toIdeal_bot, Ideal.mem_bot] at h'
+  exact zC_ne_zero E h'
 
 /-- **`A_(Z) → K(ESch E)`**, the chart `D₊(Z)` at the generic point. -/
 def kappaZ : AZ E →+* (ESch E).functionField :=
@@ -410,7 +416,8 @@ theorem kappaZ_spec : Spec.map (CommRingCat.ofHom (kappaZ E)) ≫ chartZ E =
 def ffEquiv : (ESch E).functionField ≃+* E.toAffine.FunctionField :=
   letI := (kappaZ E).toAlgebra
   haveI := isFractionRing_of_chart (chartZ E) (kappaZ_spec E)
-  IsFractionRing.ringEquivOfRingEquiv (azEquiv E)
+  IsFractionRing.ringEquivOfRingEquiv (K := (ESch E).functionField) (L := E.toAffine.FunctionField)
+    (azEquiv E)
 
 theorem ffEquiv_kappaZ (a : AZ E) :
     ffEquiv E (kappaZ E a) = algebraMap (CR E) E.toAffine.FunctionField (azToCR E a) := by
@@ -426,11 +433,6 @@ theorem ffEquiv_yz : ffEquiv E (kappaZ E (yz E)) = ZInQ.GZAlg.genY E := by
 
 /-! ## §7. The chart `D₊(Y)` at `O`, and `Z/Y = 1/y` -/
 
-theorem zC_ne_zero : zC E ≠ 0 := by
-  intro h
-  have := evAB_zC E (xA E) (yA E) (affEq_of_wEqA (wEqA_xA_yA E))
-  rw [h, map_zero] at this
-  exact zero_ne_one this
 
 theorem yC_ne_zero : yC E ≠ 0 := by
   intro h
@@ -439,7 +441,7 @@ theorem yC_ne_zero : yC E ≠ 0 := by
     simp
   have := congrFun (E.toProjective.evalHom_comp_coord (RingHom.id ℚ) hO) 1
   simp only [Function.comp_apply] at this
-  rw [h, map_zero] at this
+  rw [show E.toProjective.coord 1 = 0 from h, map_zero] at this
   simp at this
 
 /-- The chart `D₊(Y) = Spec A_(Y) ⟶ ESch E` (it contains `O = [0 : 1 : 0]`). -/
@@ -449,75 +451,7 @@ def chartY : Spec (CommRingCat.of (Away (gr E) (yC E))) ⟶ ESch E :=
 instance : IsOpenImmersion (chartY E) := by unfold chartY; infer_instance
 
 abbrev AY : Type := Away (gr E) (yC E)
-abbrev AYZ : Type := Away (gr E) (yC E * zC E)
-
 /-- `v = Z/Y ∈ A_(Y)`. -/
 abbrev vY : AY E := Away.isLocalizationElem (yC_mem E) (zC_mem E)
-
-/-- `A_(Y) → A_(YZ)`. -/
-def mY : AY E →+* AYZ E := awayMap (gr E) (zC_mem E) (rfl : yC E * zC E = yC E * zC E)
-
-/-- `A_(Z) → A_(YZ)`. -/
-def mZ : AZ E →+* AYZ E := awayMap (gr E) (yC_mem E) (mul_comm (yC E) (zC E))
-
-theorem specMY_chartY : Spec.map (CommRingCat.ofHom (mY E)) ≫ chartY E =
-    Spec.map (CommRingCat.ofHom (mZ E)) ≫ chartZ E := by
-  rw [chartY, chartZ, mY, mZ, Proj.SpecMap_awayMap_awayι, Proj.SpecMap_awayMap_awayι]
-
-theorem mY_vY_mul_mZ_yz : mY E (vY E) * mZ E (yz E) = 1 := by
-  apply val_injective
-  simp only [mY, mZ, vY, Away.isLocalizationElem, yz, awayMap_mk, val_mul, Away.val_mk,
-    Localization.mk_mul, val_one]
-  rw [← Localization.mk_one, Localization.mk_eq_mk_iff, Localization.r_iff_exists]
-  exact ⟨1, by simp; ring⟩
-
-theorem genericPoint_mem_chartYZ :
-    genericPoint (ESch E) ∈ (Spec.map (CommRingCat.ofHom (mY E)) ≫ chartY E).opensRange := by
-  rw [chartY, mY, Proj.SpecMap_awayMap_awayι, Proj.opensRange_awayι]
-  refine ((genericPoint_spec (ESch E)).mem_open_set_iff (Proj.basicOpen _ _).isOpen).mpr
-    ⟨eta0 E, trivial, ?_⟩
-  change yC E * zC E ∉ (⊥ : HomogeneousIdeal (gr E))
-  intro h
-  exact mul_ne_zero (yC_ne_zero E) (zC_ne_zero E) (by simpa using h)
-
-/-- `A_(YZ) → K(ESch E)`. -/
-def kappaYZ : AYZ E →+* (ESch E).functionField :=
-  (exists_kappa _ (genericPoint_mem_chartYZ E)).choose
-
-theorem kappaYZ_spec : Spec.map (CommRingCat.ofHom (kappaYZ E)) ≫
-    (Spec.map (CommRingCat.ofHom (mY E)) ≫ chartY E) = (ESch E).fromSpecFunctionField :=
-  (exists_kappa _ (genericPoint_mem_chartYZ E)).choose_spec
-
-/-- **`A_(Y) → K(ESch E)`**, the chart `D₊(Y)` at the generic point. -/
-def kappaY : AY E →+* (ESch E).functionField := (kappaYZ E).comp (mY E)
-
-theorem kappaY_spec : Spec.map (CommRingCat.ofHom (kappaY E)) ≫ chartY E =
-    (ESch E).fromSpecFunctionField := by
-  rw [kappaY, CommRingCat.ofHom_comp, Spec.map_comp, Category.assoc, kappaYZ_spec]
-
-theorem kappaZ_eq : kappaZ E = (kappaYZ E).comp (mZ E) := by
-  refine kappa_unique (chartZ E) (kappaZ_spec E) ?_
-  rw [CommRingCat.ofHom_comp, Spec.map_comp, Category.assoc, ← specMY_chartY, kappaYZ_spec]
-
-/-- **`Z/Y = (Y/Z)⁻¹` in `K(ESch E)`.** -/
-theorem kappaY_vY_mul : kappaY E (vY E) * kappaZ E (yz E) = 1 := by
-  rw [kappaY, kappaZ_eq, RingHom.comp_apply, RingHom.comp_apply, ← map_mul, mY_vY_mul_mZ_yz, map_one]
-
-/-- **`v = Z/Y` vanishes at every `ℂ`-point of `D₊(Y)` outside `D₊(Z)`** (`O`). -/
-theorem chiY_vY_eq_zero (χ : AY E →+* ℂ)
-    (hx : (Spec.map (CommRingCat.ofHom χ) ≫ chartY E) (IsLocalRing.closedPoint (CommRingCat.of ℂ)) ∉
-      (chartZ E).opensRange) : χ (vY E) = 0 := by
-  by_contra hne
-  apply hx
-  rw [chartZ, Proj.opensRange_awayι]
-  have hpre := Proj.awayι_preimage_basicOpen (gr E) (yC_mem E) one_pos (zC_mem E) one_pos
-  have hmem : (Spec.map (CommRingCat.ofHom χ)) (IsLocalRing.closedPoint (CommRingCat.of ℂ)) ∈
-      chartY E ⁻¹ᵁ Proj.basicOpen (gr E) (zC E) := by
-    rw [chartY, hpre, PrimeSpectrum.mem_basicOpen]
-    intro hv
-    have h2 : χ (vY E) ∈ IsLocalRing.maximalIdeal ℂ := hv
-    rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, isUnit_iff_ne_zero] at h2
-    exact h2 hne
-  exact hmem
 
 end ZInQ.H33D1
