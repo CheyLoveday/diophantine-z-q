@@ -441,4 +441,133 @@ theorem x6CoarseModuliIdeal_of_twist (hF : IsogenyQuotient) (h : GRX6AbPrint.X6C
 theorem x6CoarseModuliIdeal_iff (hF : IsogenyQuotient) : X6CoarseModuliIdeal ↔ GRX6AbPrint.X6CoarseModuli :=
   ⟨x6CoarseModuli_of_ideal, x6CoarseModuliIdeal_of_twist hF⟩
 
+/-! ## 7. Elkies' statement with Elkies' (isogeny-form) Atkin–Lehner group -/
+
+section Elkies
+
+open HDec.QMSplit.Moduli
+
+/-- `ℚ(X₆)^W` for the printed Atkin–Lehner group `W = atkinLehnerWIdeal` (Elkies p. 10: `w_p : A ↦ A/ker I_p`). -/
+def fixedByWIdeal {X : Over (Spec (CommRingCat.of ℚ))} [IsIntegral X.left]
+    (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) : Set X.left.functionField :=
+  {φ | ∀ g ∈ atkinLehnerWIdeal X Ψ, ElkiesCoord.ffPullback (Z := X.left) ((Over.forget _).mapIso g) φ = φ}
+
+theorem fixedByWIdeal_eq {X : Over (Spec (CommRingCat.of ℚ))} [IsIntegral X.left]
+    {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)} (hP : IsProper X.hom)
+    (hS : SmoothOfRelativeDimension 1 X.hom) (hal : ALIdealClause X Ψ) :
+    fixedByWIdeal Ψ = ElkiesCoord.fixedByW Ψ := by
+  unfold fixedByWIdeal ElkiesCoord.fixedByW
+  rw [atkinLehnerW_eq_of_clause hP hS hal]
+
+/-- **LEAF `ElkiesX6StarEveryIdeal`** (Elkies, *Shimura curve computations*, ANTS-III, LNCS 1423 (1998), §3 with
+`Σ = {2, 3}`: `X*(1) = X(1)/W`, p. 10, with `w_p : A ↦ A/ker I_p`; `X*(1) ≅ P¹_t`, p. 17; CM values Table 1 p. 26
+and pp. 22–23; function field `ℚ(t)(√(−t), √(3(t − 1)))`, p. 17; locators verified by the lead from arXiv
+math/0005160). The clauses of `ElkiesPrint.ElkiesX6StarEvery`, with Elkies' Atkin–Lehner group in his isogeny form
+(`atkinLehnerWIdeal`: `w_m(A, ι) = (A/A[I_m], ι_m)`) instead of the twist form, on every witness of the moduli
+description whose `X` carries the printed Atkin–Lehner automorphisms (`ALIdealClause`). Implies
+`ElkiesX6StarEvery` from `X6CoarseModuliIdeal`, `ShimuraMainThmIDeligneY3AbU` and T5 (`elkiesX6StarEvery_of_ideal`),
+and follows from it given `IsogenyQuotient` (`ideal_of_elkiesX6StarEvery`). -/
+def ElkiesX6StarEveryIdeal : Prop :=
+  ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y) (X : Over (Spec (CommRingCat.of ℚ)))
+    (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) (fY : Y ⟶ X),
+    LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ → X6Props Y Φ X Ψ fY → ALIdealClause X Ψ →
+    ∃ t : ToP1 X.left,
+      (∀ (_ : IsIntegral X.left) (hη : genericPoint X.left ∈ t.U),
+        fixedByWIdeal Ψ =
+          (Subfield.closure {X.left.presheaf.germ t.U _ hη t.f} : Set X.left.functionField)) ∧
+      (∀ (x : fieldPt Qbar ⟶ X) (P : QMPair Qbar), Ψ x = Quotient.mk _ P →
+        (HasCM24 P.q → t.val (K := Qbar) x.left = OnePoint.some 0) ∧
+        (HasCM4 P.q → t.val (K := Qbar) x.left = OnePoint.some 1) ∧
+        (HasCM3 P.q → t.val (K := Qbar) x.left = OnePoint.infty)) ∧
+      X6Glue.ElkiesCharts X t
+
+/-- On a witness with the printed clause, the isogeny-form leaf gives the twist-form statement. -/
+theorem every_at_of_ideal (h : ElkiesX6StarEveryIdeal) {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {X : Over (Spec (CommRingCat.of ℚ))} {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)} {fY : Y ⟶ X}
+    (h1 : LeafQM.AV.R1UnivRigid.R1fpPropsAb Y Φ) (h6 : X6Props Y Φ X Ψ fY) (hal : ALIdealClause X Ψ) :
+    ElkiesCoord.ElkiesX6StarFunctionField := by
+  obtain ⟨t, hff, hcm, hc⟩ := h Y Φ X Ψ fY h1 h6 hal
+  refine ⟨Y, Φ, X, Ψ, fY, t, h1, h6, fun hI hη => ?_, hcm, hc⟩
+  rw [← fixedByWIdeal_eq h6.1 h6.2.1 hal]
+  exact hff hI hη
+
+/-- **`ElkiesX6StarEvery` from the isogeny-form leaf**, the printed coarse leaf `X6CoarseModuliIdeal`, the field
+`shimuraMainThmIDeligneY3AbU` and T5. The witness is built as in `GRX6AbPrint.x6ModuliWitness_of_coarse` and keeps
+the printed Atkin–Lehner clause; the two `W`'s agree on it (`atkinLehnerW_eq_of_clause`); then transport to every
+witness (`ElkiesPrint.every_of_functionField`). -/
+theorem elkiesX6StarEvery_of_ideal (h : ElkiesX6StarEveryIdeal) (hX : X6CoarseModuliIdeal)
+    (hY : RayClassCFT.ShimuraMainThmIDeligneY3AbU) (hT : ObjBridge.TorsionStructure) :
+    ElkiesPrint.ElkiesX6StarEvery := by
+  obtain ⟨Y, Φ, h1, -⟩ := hY
+  obtain ⟨X, Ψ, hp, hs, hn, hgal, hal, huniv⟩ := hX
+  obtain ⟨hpY, hsY, -, -, ⟨𝒜, h𝒜⟩, -⟩ := id h1
+  have hfib : ∀ (K : Type) [Field K] [Algebra ℚ K] (s : fieldPt K ⟶ Y), ∃ P : QML3 K,
+      IsFibreOf 𝒜.toQMFamily s.left P := by
+    intro K _ _ s
+    obtain ⟨P, hP⟩ := Quotient.exists_rep (Φ K s)
+    exact ⟨P, h𝒜 K s P hP.symm⟩
+  obtain ⟨g, hg⟩ := huniv Y hpY hsY 𝒜 hfib
+  have h6 : X6Props Y Φ X Ψ g :=
+    ⟨hp, hs, hn, hgal, alTwist_of_alIdeal hal, fun y P hP => hg y P (h𝒜 Qbar y P hP)⟩
+  exact ElkiesPrint.every_of_functionField (every_at_of_ideal h h1 h6 hal) hT
+
+/-- The same with T5 from the textbook field `mumfordTorsionAlgClosed` (the form used by the fold). -/
+theorem elkiesX6StarEvery_of_ideal' (h : ElkiesX6StarEveryIdeal) (hX : X6CoarseModuliIdeal)
+    (hY : RayClassCFT.ShimuraMainThmIDeligneY3AbU) (hM : AvSplit.MumfordTorsionAlgClosed) :
+    ElkiesPrint.ElkiesX6StarEvery :=
+  elkiesX6StarEvery_of_ideal h hX hY (ObjBridge.torsionStructure_iff.mpr (AvSplit.torsionStructure_of_mumford hM))
+
+/-- **The isogeny-form leaf is not stronger than `ElkiesX6StarEvery`** (given `IsogenyQuotient`, the two `W`'s
+agree on every witness). -/
+theorem ideal_of_elkiesX6StarEvery (hF : IsogenyQuotient) (h : ElkiesPrint.ElkiesX6StarEvery) :
+    ElkiesX6StarEveryIdeal := by
+  intro Y Φ X Ψ fY h1 h6 _
+  obtain ⟨t, hff, hcm, hc⟩ := h Y Φ X Ψ fY h1 h6
+  refine ⟨t, fun hI hη => ?_, hcm, hc⟩
+  unfold fixedByWIdeal
+  rw [atkinLehnerW_eq_of_isogenyQuotient hF]
+  exact hff hI hη
+
+end Elkies
+
+/-! ## 8. The Galois clause is the naturality square of the coarse map at `Spec σ` -/
+
+section Galois
+
+variable {X : Over (Spec (CommRingCat.of ℚ))} {Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)}
+
+/-- **The Galois clause of `X6CoarseModuli`, verbatim** (existence form). -/
+def GaloisClause (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) :
+    Prop :=
+  ∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X) (P : QMPair Qbar),
+    Ψ x = Quotient.mk _ P → ∃ Q : QMPair Qbar,
+      Ψ (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = Quotient.mk _ Q ∧ IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q
+
+/-- **Naturality of the coarse map at the morphism `Spec σ : Spec ℚ̄ → Spec ℚ̄` over `ℚ`** (Mumford, GIT Def. 5.6:
+the coarse map is a natural transformation from the moduli functor to `Hom(−, X)`; for `σ` it says: if `Q` is the
+base change of `P` along `σ`, the point classifying `Q` is the point classifying `P` composed with `Spec σ`). -/
+def GaloisNatural (X : Over (Spec (CommRingCat.of ℚ))) (Ψ : (fieldPt Qbar ⟶ X) ≃ Quotient (pairSetoid Qbar)) :
+    Prop :=
+  ∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (x : fieldPt Qbar ⟶ X) (P Q : QMPair Qbar),
+    Ψ x = Quotient.mk _ P → IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q →
+      Ψ (fieldMap (σ : Qbar →ₐ[ℚ] Qbar) ≫ x) = Quotient.mk _ Q
+
+/-- The Lean clause gives the naturality square for every base change (base changes are unique up to isomorphism,
+`ShimuraSplit.bc_uniquePair`). -/
+theorem galoisNatural_of_clause (h : GaloisClause X Ψ) : GaloisNatural X Ψ := by
+  intro σ x P Q hP hQ
+  obtain ⟨Q', hQ', hbc⟩ := h σ x P hP
+  rw [hQ']
+  exact Quotient.sound (ShimuraSplit.bc_uniquePair hbc hQ)
+
+/-- Conversely the naturality square and the existence of a base change give the Lean clause. -/
+theorem clause_of_galoisNatural (h : GaloisNatural X Ψ)
+    (hE : ∀ (σ : Qbar ≃ₐ[ℚ] Qbar) (P : QMPair Qbar), ∃ Q : QMPair Qbar, IsBaseChangeOfPair (σ : Qbar →+* Qbar) P Q) :
+    GaloisClause X Ψ := by
+  intro σ x P hP
+  obtain ⟨Q, hQ⟩ := hE σ P
+  exact ⟨Q, h σ x P Q hP hQ, hQ⟩
+
+end Galois
+
 end X6ALIdeal
