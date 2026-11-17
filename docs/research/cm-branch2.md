@@ -193,7 +193,18 @@ fold): comment-aware context extraction; `open … in` lines are not context; a 
 makes `X` ambiguous in `SGRDirectNV`, so `Polynomial.X` is written out there; local names equal to a dirty member's last
 component (`h5`) must not be renamed.
 
-**Is González–Rotger off the route?** See §3.1 (closure scan).
+### 3.1 Closure scans (VERIFIED)
+
+* `scratch/cm-branch2/GRUse.lean` on `sixContactMin_of_open72_cm2_r5` (`gruse-out.txt`, 130539 constants): `R5ptProps`,
+  `GRDict.r5ptProps_of_thm512`, `GRX6AbPrint.gonzalezRotgerX6Ab_of_print`, `FS5NoCM.R1R2fpFullProps` absent;
+  `OpenResearchLeaves35EBCF.gonzalezRotgerThm512X6` (the last carrier's projection) absent; the top projection
+  `OpenResearchLeaves53.gonzalezRotgerThm512X6RCF` present only through the conversions 53 → 36EBCF → 35EBCF, which
+  carry it.
+* The same scan on `sixContactMin_of_open73_cm` (§7; `gruse73-out.txt`, 130280 constants): no González–Rotger constant at
+  all (`GR512Bridge.GonzalezRotgerThm512X6RCF`, `GR512Bridge.gonzalezRotgerThm512X6_of_rcf`,
+  `GRDict.GonzalezRotgerThm512X6`, `R5ptProps` absent).
+* `scratch/cm-branch2/FieldScan.lean` (`fieldscan-out.txt`): every field of `OpenResearchLeaves54CM` (31) and
+  `OpenAddedLeaves27` (2) occurs in the closure of `sixContactMin_of_open73_cm`; no other field is left syntactically unread.
 
 
 ## 4. The new statements and their rating
@@ -226,6 +237,30 @@ The consumers read the row through `LeafQM.AV.R1R2fp_Y`: `(Y, Φ, π := π₆ �
 `R2fpProps` (fibres of `π` on `Y₃(ℚ̄)` = `Aut 𝒪`-twist classes, values `0, ∞, −16/27` at the CM points `−4, −3, −24`),
 plus the conjuncts listed by the clause scan (§5.1).
 
+### 5.1 Which conjuncts of the row are read (VERIFIED, `scratch/cm-branch2/ClauseUse.lean`, `clauseuse.txt`)
+
+On the weak-row top, binders whose type is the clause and whose body uses them:
+
+| clause | readers (constants) | main readers |
+|---|---|---|
+| `R5ptProps` | 0 | — (pruned) |
+| `R5fp` (the bundle field `r5`) | 0 | — |
+| `X6ConicModel` (the added field `x6ConicModel`) | 0 | — (NoCM only) |
+| `R1fpProps` | 88 | everywhere (`Y₃` itself) |
+| `R2fpProps` | 50 | `TSHecke.*`, `SGRDirect.*`, period maps, `KernelField.*`, `CMBranch.cmBranchOut_of` |
+| `X6Props` | 41 | `ElkiesPrint.*`, `X6ALIdeal.*`, `x6Props_transport`, `gonzalezRotgerX6Ab_r5_of_coarse` |
+| `R1heckeProps` | 14 | `TSHecke.*`, `PropTSGlue.*`, `PeriodGlue.twistOrbitFinite_of` |
+| `R2X6Props` | 9 | `R2fpProps_of_X6`, `exists_fibre_object_r5`, `residue_unramified_over_branch_r5`, `cm_of_val` |
+| `R2X6PropsIff` | 7 | `babaGranathX6_of`, `hauptmodulOfX6_of`, `cmExists_of_iff` |
+| `X6Surj` | 6 | `exists_fibre_object_r5`, `Pin.cm_objects_of_R1R2fp_r5`, `GapST.cm_pointW_r5`, `pairsLift_of_rep_r5` |
+| `CMExists` | 5 | `residue_unramified_over_branch_r5`, `Pin.cm_objects_of_R1R2fp_r5`, `cm_of_val`, `hauptmodulUniqueX6S_of` |
+| `R1recProps` | 4 | `residue_unramified_over_branch_r5`, `ShimuraSplit.r1rec_of_point` |
+
+So a `Y₃`-only re-source must supply, on `Y₃`: `R2fpProps` (fibre and CM-value clauses for `π : Y₃ → P¹_j`),
+surjectivity of `π` on `ℚ̄`-points, the existence of the three CM points, and reciprocity at them. The readers that are
+stated on `X₆` data (`exists_fibre_object`, `residue_unramified_over_branch`, `cm_objects_of_R1R2fp`, `cm_of_val`) would
+need `Y₃` forms, i.e. a second weak-row bypass like §3 with the row replaced by its `Y₃` form.
+
 **The manuscript's route** (L421-441): the normalizer `N` of `𝒪̂` acts on the level-3 curve `Y₃` (all determinant
 components) through `N/(𝔸_f^× K₃)`, the quotient is `P¹_j` with branch values `0, ∞, −16/27` and indices `4, 6, 2`
 (`[babagranath, linyang]`, L420-422), and `deg(Y₃ → P¹_j) ≤ 4·|(𝒪/3𝒪)^×| ≤ 324`; the integral model comes from
@@ -256,8 +291,8 @@ Buzzard Thm 2.1 / Cor. 2.3 applied to `V₁(5)` over `ℤ[1/30]` (L444-470). `X�
      equivalent" (Baba–Granath);
    - (e) **surjectivity of `π` on `ℚ̄`-points** (the first half of `X6Surj`, used to choose a fibre over `J(u)`, A4):
      immediate from (b) (a non-constant map of proper curves);
-   - (f) **the CM existence clause** `CMExists` (three CM points with the given values): the clause scan (§5.1) says
-     which conjuncts of the row are read on the CM-branch route.
+   - (f) **the CM existence clause** `CMExists` (three CM points with the given values), the reciprocity clause
+     `R1recProps` and the second half of `X6Surj` (`Y₃ → X₆` onto), all read on the route (§5.1).
 3. *What would leave the route*: `x6CoarseModuliIdeal` and `elkiesX6StarEveryIdeal` (and `babaGranathRationalAb`'s
    `X₆` form, `rayClassCMAb` if only used for `X₆`), replaced by (b), (c) (Lin–Yang or Baba–Granath on `Y₃/N`) and
    (d). Net: two GLUE fields out, at least two new leaves in ((b) textbook, (c) printed), plus the glue for (d) unless
@@ -310,7 +345,7 @@ switch `frozenTarget`'s research bundle to
 ### 7.1 `#discharges` (VERIFIED)
 
 `scratch/cm-branch2/Discharges.lean` (imports Main, Discharges, `CMBranch2`), output `scratch/cm-branch2/discharges.txt`:
-"34 open hypotheses, 17109 theorems checked, 123 discharge one". 19 of them are the pre-existing reductions also
+"34 open hypotheses, 17130 theorems checked, 123 discharge one" (rerun after `CoxProof.lean`). 19 of them are the pre-existing reductions also
 reported on the base (cm-branch reported the same 19). The other 104 are projections of the copied bundle structures
 (`OpenResearchLeavesNGMEB_r5.r9a`, …), which `#discharges` reads as "discharges" because a projection of a structure field
 has the field's type. This is the known noise for copied structures in Contrib modules (raynaud-narrow). No CM-branch
