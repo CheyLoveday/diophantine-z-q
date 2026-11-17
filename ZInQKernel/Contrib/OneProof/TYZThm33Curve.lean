@@ -52,7 +52,7 @@ instance curveA_isElliptic' : curveA.IsElliptic := by
 def TYZ33Body (X : Scheme.{0}) [IsIntegral X] (sX : X ⟶ Spec (CommRingCat.of ℚ))
     (ι : X.functionField ≃+* X0Field 32) : Prop :=
   ∀ i₀ : X ⟶ ESch curveA, IsIso i₀ → i₀ ≫ toSpecQ curveA = sX →
-  (∀ p : X, IsCuspInfty 32 ι p → i₀ p ∉ (chartZ curveA).opensRange) →
+  (∀ p : X, IsCuspInfty 32 ι p → i₀ p = ptO curveA) →
   ∀ w : ℕ → PtA,
     (∀ n : ℕ, ∀ hn : n % 8 = 5, Squarefree n → ∀ x : Spec (CommRingCat.of ℂ) ⟶ X,
       IsPointAt 32 ι (tyzForm n hn).tauH x → toC (w n) = ZInQ.GZSch.ptOf curveA (x ≫ i₀)) →
@@ -79,8 +79,9 @@ The objects:
 * `A` is the projective scheme `ESch curveA = Proj ℚ[X, Y, Z]/(Y²Z − X³ − 4XZ²)` (`y² = x³ + 4x`,
   `ℚ`-isomorphic to TYZ's `2y² = x³ + x` by `(x, y) ↦ (2x, 4y)`).
 * `i₀ : X ⟶ ESch curveA` is an isomorphism of `ℚ`-schemes with `i₀(∞) = O`: the cusp `∞`
-  (`IsCuspInfty`, the center of `ord_q`) maps outside the chart `D₊(Z)`, whose complement is `O`
-  (`mem_basicOpen_Y_of_not_mem_Z`, `valuationRing_loc_O`).
+  (`IsCuspInfty`, the center of `ord_q`) maps to the point `O = ptO curveA` (the `ℚ`-point
+  `[0 : 1 : 0]` of the chart `D₊(Y)`, `chiO`), the unique point outside the chart `D₊(Z)`
+  (G4(b), `not_mem_chartZ_iff`).
 * `P_n` is the CM point `τ_n` of `tyzForm n` (`n ≡ 5`) resp. `tyzForm7 n` (`n ≡ 7`): the
   `ℂ`-points `x` of `X` at `τ_n` (`IsPointAt`), and `i₀(P_n) ∈ A(ℂ)` is `ptOf curveA (x ≫ i₀)`.
 * `w n ∈ A(ℚ̄)` with `w n = i₀(P_n)` in `A(ℂ)`; then `TYZThm33EpsAfter (zOfLift w)` (h33-dict's
@@ -196,7 +197,8 @@ theorem tyzThm33Alg_of_curveSome (h : TYZThm33CurveSome) : ZInQ.H33Fix.TYZThm33A
     intro τ x hx
     rw [ptOf_eq_modPt φ hv ι i₀ hπ hrx hry τ x hx]
     exact modPt_eq_h33 φ hXf hYf hqX hqY τ hrx hry
-  refine hbody i₀ hiso (specQ_ext _ _) (cusp_not_mem_chart φ ι i₀ hπ hφ.2) w ?_ ?_
+  refine hbody i₀ hiso (specQ_ext _ _)
+    (fun p hp => (not_mem_chartZ_iff curveA _).mp (cusp_not_mem_chart φ ι i₀ hπ hφ.2 p hp)) w ?_ ?_
   · intro n hn hsq x hx
     rw [h5 n hn hsq, hval _ x hx]
   · intro n hn hsq x hx
@@ -239,7 +241,7 @@ theorem tyzThm33Curve_hyps_satisfiable (hCM : T5Glue.ShimuraMainCM) {X : Scheme.
     (sX : X ⟶ Spec (CommRingCat.of ℚ)) [IsProper sX]
     (hv : ∀ p : X, ValuationRing (X.presheaf.stalk p)) (ι : X.functionField ≃+* X0Field 32) :
     ∃ i₀ : X ⟶ ESch curveA, IsIso i₀ ∧ i₀ ≫ toSpecQ curveA = sX ∧
-      (∀ p : X, IsCuspInfty 32 ι p → i₀ p ∉ (chartZ curveA).opensRange) ∧
+      (∀ p : X, IsCuspInfty 32 ι p → i₀ p = ptO curveA) ∧
       ∃ w : ℕ → PtA,
         (∀ n : ℕ, ∀ hn : n % 8 = 5, Squarefree n → ∀ x : Spec (CommRingCat.of ℂ) ⟶ X,
           IsPointAt 32 ι (tyzForm n hn).tauH x → toC (w n) = ZInQ.GZSch.ptOf curveA (x ≫ i₀)) ∧
@@ -255,7 +257,8 @@ theorem tyzThm33Curve_hyps_satisfiable (hCM : T5Glue.ShimuraMainCM) {X : Scheme.
     intro τ x hx
     rw [ptOf_eq_modPt φ hv ι i₀ hπ hrx hry τ x hx]
     exact modPt_eq_h33 φ hXf hYf hqX hqY τ hrx hry
-  refine ⟨i₀, hiso, specQ_ext _ _, cusp_not_mem_chart φ ι i₀ hπ hφ.2, w, ?_, ?_⟩
+  refine ⟨i₀, hiso, specQ_ext _ _,
+    fun p hp => (not_mem_chartZ_iff curveA _).mp (cusp_not_mem_chart φ ι i₀ hπ hφ.2 p hp), w, ?_, ?_⟩
   · intro n hn hsq x hx
     rw [h5 n hn hsq, hval _ x hx]
   · intro n hn hsq x hx

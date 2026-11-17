@@ -201,14 +201,14 @@ theorem away_mk_eq_aeval_Y (n : ℕ) (p : MvPolynomial (Fin 3) ℚ) (hp : p.IsHo
   simp only [map_pow]
   ring
 
-theorem genY_one : gY E 1 = 1 := by
+theorem gY_one : gY E 1 = 1 := by
   apply val_injective
   rw [gY, Away.val_mk, val_one, Localization.mk_eq_mk', IsLocalization.mk'_eq_iff_eq_mul,
     one_mul]
   simp
 
 /-- `v · w = u³` in `A_(Y)`, `w = 1 + a₁u + a₃v − a₂u² − a₄uv − a₆v²`. -/
-theorem genY_equation :
+theorem gY_equation :
     gY E 2 * (1 + algebraMap ℚ (AY E) E.a₁ * gY E 0 + algebraMap ℚ (AY E) E.a₃ * gY E 2 -
       algebraMap ℚ (AY E) E.a₂ * gY E 0 ^ 2 - algebraMap ℚ (AY E) E.a₄ * gY E 0 * gY E 2 -
       algebraMap ℚ (AY E) E.a₆ * gY E 2 ^ 2) = gY E 0 ^ 3 := by
@@ -223,7 +223,7 @@ theorem genY_equation :
     rw [Away.val_mk, h0, Localization.mk_zero, val_zero]
   rw [hz] at h
   simp only [WeierstrassCurve.Projective.polynomial, map_sub, map_add, map_mul, map_pow,
-    MvPolynomial.aeval_X, MvPolynomial.aeval_C, genY_one, one_pow, one_mul, mul_one] at h
+    MvPolynomial.aeval_X, MvPolynomial.aeval_C, gY_one, one_pow, one_mul, mul_one] at h
   linear_combination -h
 
 theorem mem_gr_iff' {n : ℕ} {F : E.toProjective.CoordinateRing} (hF : F ∈ gr E (n • 1)) :
@@ -247,7 +247,7 @@ theorem le_span_uv (q : Ideal (AY E)) [q.IsPrime] (hu : gY E 0 ∈ q) (hv : gY E
     funext i
     fin_cases i
     · simp [hu']
-    · simp [genY_one]
+    · simp [gY_one]
     · simp [hv']
   have hπ : π (MvPolynomial.aeval (gY E) p) = k (MvPolynomial.eval ![0, 1, 0] p) := by
     rw [MvPolynomial.map_aeval, MvPolynomial.coe_eval₂Hom, hfun, MvPolynomial.eval,
@@ -280,7 +280,7 @@ theorem valuationRing_loc_O (q : Ideal (AY E)) [q.IsPrime] (hv : gY E 2 ∈ q)
   set w : AY E := 1 + algebraMap ℚ (AY E) E.a₁ * gY E 0 + algebraMap ℚ (AY E) E.a₃ * gY E 2 -
       algebraMap ℚ (AY E) E.a₂ * gY E 0 ^ 2 - algebraMap ℚ (AY E) E.a₄ * gY E 0 * gY E 2 -
       algebraMap ℚ (AY E) E.a₆ * gY E 2 ^ 2 with hw
-  have heq := genY_equation E
+  have heq := gY_equation E
   rw [← hw] at heq
   have hu : gY E 0 ∈ q := by
     have : gY E 0 ^ 3 ∈ q := heq ▸ q.mul_mem_right _ hv
@@ -324,7 +324,7 @@ theorem valuationRing_loc_O (q : Ideal (AY E)) [q.IsPrime] (hv : gY E 2 ∈ q)
   exact valuationRing_of_maximalIdeal_principal ⟨uT, hm⟩
 
 /-- The chart `D₊(Y)` covers the complement of `D₊(Z)`, where `v = Z/Y` vanishes. -/
-theorem genY_two_eq : Away.isLocalizationElem (yC_mem E) (zC_mem E) = gY E 2 := by
+theorem gY_two_eq : Away.isLocalizationElem (yC_mem E) (zC_mem E) = gY E 2 := by
   apply val_injective
   simp [gY, Away.val_mk]
 
@@ -348,9 +348,86 @@ theorem valuationRing_stalk_ESch [E.IsElliptic] (p : ESch E) :
       by_contra hne
       apply hp'
       have hmem : q ∈ chartY E ⁻¹ᵁ Proj.basicOpen (gr E) (zC E) := by
-        rw [chartY, hpre, PrimeSpectrum.mem_basicOpen, genY_two_eq]
+        rw [chartY, hpre, PrimeSpectrum.mem_basicOpen, gY_two_eq]
         exact hne
       exact hmem
     exact valuationRing_of_chart' (chartY E) q (valuationRing_loc_O E q.asIdeal hv)
+
+/-! ## §5. G4(b): the complement of `D₊(Z)` is the single point `O = [0 : 1 : 0]` -/
+
+theorem eqn_O : (E.toProjective.map (RingHom.id ℚ)).Equation ![0, 1, 0] := by
+  rw [WeierstrassCurve.Projective.equation_iff]; simp
+
+/-- Evaluation at `[0 : 1 : 0]` on the homogeneous coordinate ring. -/
+def evO : E.toProjective.CoordinateRing →+* ℚ := E.toProjective.evalHom (RingHom.id ℚ) (eqn_O E)
+
+theorem evO_coord (i : Fin 3) : evO E (E.toProjective.coord i) = ![0, 1, 0] i :=
+  congrFun (E.toProjective.evalHom_comp_coord (RingHom.id ℚ) (eqn_O E)) i
+
+theorem evO_yC : evO E (yC E) = 1 := evO_coord E 1
+
+theorem isUnit_evO_yC : IsUnit (evO E (yC E)) := isUnit_iff_exists_inv.mpr ⟨1, by rw [evO_yC, one_mul]⟩
+
+/-- **The `ℚ`-point `O = [0 : 1 : 0]` of the chart `D₊(Y)`**: `A_(Y) →+* ℚ`, `F/Yⁿ ↦ F(0, 1, 0)`. -/
+def chiO : AY E →+* ℚ :=
+  (Localization.awayLift (evO E) (yC E) (isUnit_evO_yC E)).comp
+    (algebraMap (AY E) (Localization.Away (yC E)))
+
+theorem chiO_gY (i : Fin 3) : chiO E (gY E i) = ![0, 1, 0] i := by
+  change Localization.awayLift (evO E) (yC E) (isUnit_evO_yC E) (gY E i).val = _
+  rw [gY, Away.val_mk, Localization.awayLift_mk (evO E) (yC E) _ 1 (by rw [evO_yC, one_mul]),
+    evO_coord]
+  simp
+
+theorem gY_zero_mem (q : Ideal (AY E)) [q.IsPrime] (hv : gY E 2 ∈ q) : gY E 0 ∈ q := by
+  have heq := gY_equation E
+  have : gY E 0 ^ 3 ∈ q := heq ▸ q.mul_mem_right _ hv
+  exact ‹q.IsPrime›.mem_of_pow_mem 3 this
+
+/-- A prime of `A_(Y)` containing `v = Z/Y` is `(u, v) = ker χ_O`. -/
+theorem eq_ker_chiO (q : Ideal (AY E)) [q.IsPrime] (hv : gY E 2 ∈ q) :
+    q = RingHom.ker (chiO E) := by
+  have hu := gY_zero_mem E q hv
+  have hk0 : gY E 0 ∈ RingHom.ker (chiO E) := RingHom.mem_ker.mpr (by rw [chiO_gY]; rfl)
+  have hk2 : gY E 2 ∈ RingHom.ker (chiO E) := RingHom.mem_ker.mpr (by rw [chiO_gY]; rfl)
+  haveI : (RingHom.ker (chiO E)).IsPrime := RingHom.ker_isPrime _
+  have hspan : ∀ J : Ideal (AY E), gY E 0 ∈ J → gY E 2 ∈ J → Ideal.span {gY E 0, gY E 2} ≤ J := by
+    intro J h0 h2
+    rw [Ideal.span_le]
+    intro x hx
+    rcases hx with rfl | rfl
+    · exact h0
+    · exact h2
+  exact le_antisymm ((le_span_uv E q hu hv).trans (hspan _ hk0 hk2))
+    ((le_span_uv E _ hk0 hk2).trans (hspan _ hu hv))
+
+/-- **The point `O`**: the prime `ker χ_O` of the chart `D₊(Y)`. -/
+def ptO : ESch E := chartY E ⟨RingHom.ker (chiO E), RingHom.ker_isPrime _⟩
+
+theorem chartY_mem_Z_iff (q : Spec (CommRingCat.of (AY E))) :
+    chartY E q ∈ Proj.basicOpen (gr E) (zC E) ↔ gY E 2 ∉ q.asIdeal := by
+  have hpre := Proj.awayι_preimage_basicOpen (gr E) (yC_mem E) one_pos (zC_mem E) one_pos
+  change q ∈ chartY E ⁻¹ᵁ Proj.basicOpen (gr E) (zC E) ↔ _
+  rw [chartY, hpre, PrimeSpectrum.mem_basicOpen, gY_two_eq]
+
+/-- **G4(b): `V₊(Z) ∩ ESch E = {O}`**: a point lies outside the chart `D₊(Z)` iff it is `O`. -/
+theorem not_mem_chartZ_iff (p : ESch E) : p ∉ (chartZ E).opensRange ↔ p = ptO E := by
+  rw [opensRange_chartZ]
+  constructor
+  · intro hp
+    have hY := mem_basicOpen_Y_of_not_mem_Z E p hp
+    have hrY : (chartY E).opensRange = Proj.basicOpen (gr E) (yC E) := Proj.opensRange_awayι _ _ _ _
+    rw [← hrY] at hY
+    obtain ⟨q, rfl⟩ := hY
+    have hv : gY E 2 ∈ q.asIdeal := by
+      by_contra hne
+      exact hp ((chartY_mem_Z_iff E q).mpr hne)
+    have hq := eq_ker_chiO E q.asIdeal hv
+    unfold ptO
+    congr 1
+    exact PrimeSpectrum.ext hq
+  · rintro rfl h
+    rw [ptO, chartY_mem_Z_iff] at h
+    exact h (RingHom.mem_ker.mpr (by rw [chiO_gY]; rfl))
 
 end ZInQ.H33D1

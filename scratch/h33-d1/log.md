@@ -29,3 +29,15 @@
   over ℚ with i₀(∞) ∉ D₊(Z), w n = ptOf(x ≫ i₀) at the points τ_n ⇒ TYZThm33EpsAfter), `TYZThm33Curve` (∀ models),
   `tyzThm33CurveSome_of_all`, `exists_iso_of_phi` (D1 both directions via model uniqueness + ESch normal),
   `tyzThm33Alg_of_curveSome`, `tyzThm33_of_curveSome`.
+- 11-17 02:35 merged origin/wip/eps-splitting (5e3d65de; only its own Lean files + main's docs/.github changes).
+  VERIFIED (compiled): `GrossZagierSplitUnique.lean`: leaf `ZInQ.GZSplitUnique.GrossZagierCurveCdSplitSome`
+  (one model + split twist), `gzSplitBody_transfer`, `grossZagierAlgOptCd_of_splitSome`;
+  `GrossZagierModelUnique.model_transfer` (inverse isos, cusp/point transport both ways).
+- 11-17 02:40 VERIFIED (compiled): `TYZThm33Curve.lean` §5 `tyzThm33Curve_of_some` (∃ ⇒ ∀ models),
+  `tyzThm33Curve_hyps_satisfiable` (given hCM, on every model). Normal.lean §5 G4(b):
+  `not_mem_chartZ_iff : p ∉ D₊(Z) ↔ p = ptO E` (ptO = chartY(ker χ_O), χ_O = evaluation at [0:1:0]),
+  `eq_ker_chiO`. Leaf cusp condition restated as `i₀ p = ptO curveA` (i₀(∞) = O literally).
+- 11-17 02:30 VERIFIED: FoldCheck.lean (frozenTarget_d1, frozenTarget_d1s recommended, rfl-equalities,
+  std axioms); #discharges: [h33] by H33D1.tyzThm33_of_curveSome (assumes ShimuraMainCM, TYZThm33CurveSome);
+  [hGZ] by GZSplitUnique.grossZagierAlgOptCd_of_splitSome (assumes GrossZagierCurveCdSplitSome);
+  [hGZ] by GZUnique.grossZagierAlgOptCd_of_some. 0 sorry.
