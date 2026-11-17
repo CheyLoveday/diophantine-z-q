@@ -209,25 +209,16 @@ DISCHARGES [OpenResearchLeaves53.y3FineModuliAbP] by Y3Fix.y3FineModuliAbP_of_fi
 DISCHARGES [OpenResearchLeaves53.deligneCanonicalModelY3EveryPrint] by Y3Hodge.print_of_deligneH
   still assumes: [Y3Fix.DeligneCanonicalModelY3EveryH]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
-  still assumes: [ZInQ.BFHPrinted.BFHClauseIIKronecker]
-  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves53.pazukiCor13Upper] by ZInQ.ChevFree.pazukiCor13Upper_of_printed_free
   still assumes: [ZInQ.HeightFix.PazukiCor13UpperPrinted,
  BPAnalytic.Uniformization.UniformizationLeafAll,
  AvSplit.MumfordTorsionAlgClosed]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [h21S] by ZInQ.Contrib.H21CSteps.tyzThm21Span_of_pairsC
-  still assumes: [ZInQ.Contrib.TYZGenusFold.TYZThm21PairsC]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves53.hodgeTateDecompOr] by ZInQ.Contrib.HodgeTateOr.or_of_hom
   still assumes: [ZInQ.Contrib.HodgeTateOr.HodgeTateDecompHom]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves53.hodgeTateDecompOr] by ZInQ.Contrib.HodgeTateOr.or_of_tensor
   still assumes: [ZInQ.Contrib.HodgeTateFromPairing.HodgeTateDecompExists]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [h33c] by ZInQ.H33D1.tyzThm33CurveSome_of_all
-  still assumes: [ZInQ.H33D1.TYZThm33Curve]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves53.pazukiCor13Upper] by ZInQ.HeightDict.pazukiCor13Upper_of_printed
   still assumes: [ZInQ.HeightDict.PazukiCor13UpperPrinted,
@@ -246,7 +237,7 @@ DISCHARGES [OpenResearchLeaves53.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 34 open hypotheses, 16037 theorems checked, 19 discharge one
+#discharges: 30 open hypotheses, 11256 theorems checked, 16 discharge one
 ```
 <!-- worked-example:end -->
 
