@@ -59,3 +59,30 @@ Build tree `.lake/build` and `lean/.lake/build` copied (reflink) from a sibling 
    sentence, now the leaf faltingsSemistableHeightBC, Faltings 1983 section 1); L598 and L875-876 gap filled ("stable
    Faltings height" occurs only there and is never defined; supplied in Lean); L620-621 gap filled (isogeny step
    needs a common semistable field, supplied at K(A[15])K(B[15])); L814-817 OK; no errors.
+
+## Item 2: Tau Ceti pin identity (inbox 72; vendored Tau Ceti code-identical to Deicyde/TauCeti 86b92544)
+
+1. Edits (exact lines from the integrator's note):
+   - `ZInQKernel/Contrib/TauCeti/Backport/RingTheory/HahnSeries/Map.lean:228`:
+     `simp [lin, coeff_monomial, Finsupp.single_apply, hf] at this` -> `simp [lin, coeff_monomial, hf] at this`;
+   - `ZInQKernel/Contrib/TauCeti/Backport/Mathlib/Polynomial.lean:22`: `rw [if_neg hn.ne, sub_zero] at h1` ->
+     `rw [ite_eq_right hn.ne, sub_zero] at h1`;
+   - `ZInQKernel/Contrib/TauCeti/MathlibBackport/Sylow.lean:24`: the joined statement line of `maximal_isPGroup` split
+     after `(P : Sylow p G) :` with a 4-space continuation (Mathlib layout; the pin's exact layout is UNVERIFIED, see 3);
+   - `Homogeneous.lean` (72.4): VERIFIED already as required on the base (line 6 is the one-line "-- Vendored from
+     Tau Ceti (..., commit 5a01f5fe3621, module TauCeti.RingTheory.MvPolynomial.Homogeneous), Apache-2.0." header;
+     no "Modified for the Z-in-Q kernel" line; no `private`); no change.
+2. Compile (VERIFIED): both pin lines compile. `lake build` of the three modules ok; then `lake build
+   ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.Contrib.AllContrib` ok (16285 jobs, 19 min 53 s:
+   the changed oleans rebuild the OneProof chain TailG..TailZ84 and their Contrib dependents); frozenTarget
+   [propext, Classical.choice, Quot.sound]. No lead-outbox entry needed (no pin line fails).
+3. Diff count against the pin: NOT computable on this host. The pin's source (Deicyde/TauCeti 86b92544 = Tau Ceti
+   5a01f5fe + the Mathlib v4.35.0 port commit) is not on disk (no `.lake/packages/TauCeti` in any worktree, no object
+   86b92544 in the repository's object store; network blocked). Against the integrator's list of differences
+   (72.1-72.4) the count is 0 code differences after this commit. Two layout items are UNVERIFIED: the Sylow line break
+   (Mathlib style chosen) and "the pin's comment wrapping" in Map.lean (header comments untouched: they carry the
+   Apache-2.0 4(b) modification notice "imports rewritten", still true).
+4. Checks (`run_checks.sh 2 hashes_fold1.txt`, VERIFIED): hash guard 19972 -> 19972, changed 0 (`cmp_fold2.txt`);
+   closure unchanged (292905, no sorryAx); OpenStatements 30; render_open and `--check` ok; DischargesTest 16 lines;
+   crosswalk ok; autoform exit 0; gate.sh GATE=ok. ThirdParty/TauCeti/NOTICE needs no edit (no entry for these lines).
+   **render_open count after item 2: 30 open (H 29, strictest 5/24, 1 other); unchanged.**
