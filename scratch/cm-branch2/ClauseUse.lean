@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.CMBranch.Top2
+import ZInQKernel.Contrib.OneProof.CMBranch.R5Prune
 /-! cm-branch2: which conjuncts of the moduli row are READ on the CM-branch route.
 For every constant in the transitive closure of the root, walk its value; at every binder (λ, ∀, let) whose type
 head is one of the clause defs, record whether the body uses the bound variable (`hasLooseBVar 0`).
@@ -22,11 +22,11 @@ partial def scanBinders (clauses : List Name) (e : Expr) : StateM (Std.HashSet E
 
 #eval show MetaM Unit from do
   let env ← getEnv
-  let root := `HDec.HSyn.sixContactMin_of_open72_cm2
+  let root := `HDec.HSyn.sixContactMin_of_open72_cm2_r5
   let clauses : List Name := [`LeafQM.AV.R5ptProps, `LeafQM.AV.R1fpProps, `LeafQM.AV.R1heckeProps,
     `LeafQM.AV.X6Props, `LeafQM.AV.R2X6Props, `HDec.LeafAdopt.R2X6PropsIff, `LeafQM.AV.R2X6PropsIff,
     `LeafQM.AV.R1recProps, `LeafQM.AV.X6Surj, `LeafQM.AV.CMExists, `LeafQM.AV.R2fpProps,
-    `HDec.X6Kummer.X6ConicModel]
+    `HDec.X6Kummer.X6ConicModel, `HDec.X6Kummer.X6ConicModel_r5, `HDec.LeafAdopt.R1R2fpRepW_r5, `LeafQM.AV.R1R2fp_r5, `LeafQM.AV.R5fp]
   let clauses := clauses.filter (fun c => env.contains c)
   IO.println s!"clauses present: {clauses}"
   let mut seen : Std.HashSet Name := {}
