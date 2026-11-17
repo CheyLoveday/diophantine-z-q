@@ -1,0 +1,41 @@
+[trimmed to the last 40 lines by pb-p1]
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [tyzZ7, hn]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ℹ [16091/16093] Built ZInQKernel.OneProof.H.TailZ71 (5.0s)
+info: ZInQKernel/OneProof/H/TailZ71.lean:119:0: 'HDec.HSyn.sixContactMin_of_open64' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [16092/16093] Built ZInQKernel.Contrib.OneProof.TYZThm33Curve (6.6s)
+warning: ZInQKernel/Contrib/OneProof/TYZThm33Curve.lean:143:8: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: ZInQKernel/Contrib/OneProof/TYZThm33Curve.lean:221:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/TYZThm33Curve.lean:222:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ZInQKernel/Contrib/OneProof/TYZThm33Curve.lean:226:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ℹ [16093/16093] Built ZInQKernel.OneProof.Main (5.1s)
+info: ZInQKernel/OneProof/Main.lean:179:0: 'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (16093 jobs).
+EXIT 0
