@@ -20,3 +20,4 @@ no translation by non-rational points needed):
 Target theorem: PhiAmpleIsogeny from MumfordPhiSurjectiveAC alone (removes mumfordKLFiniteSectionAC).
 
 ## Compile log
+- KL1.lean (zero-locus lemmas; isAffine_of_ample_mul_eq_one; subsingleton_of_isAffine_of_isField): COMPILED, no errors (11 s warm; first cold run 3.5 min).
