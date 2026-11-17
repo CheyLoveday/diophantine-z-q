@@ -43,3 +43,14 @@ Base: fork main d435851d (branch wip/ss-faltings). Task: reroute SS2/SS3 off SGA
   declarations, 28 structures; edits cor33_fields 38, ss_fields 6, assign 43, hss 4, ss13 1, rows 1, r20 1.
 - `lake build ZInQKernel.Contrib.OneProof.SSFChain`: EXIT 0; `HDec.HSyn.sixContactMin_of_open76_sf` depends on axioms
   [propext, Classical.choice, Quot.sound].
+
+## 6. Bypass fold (VERIFIED)
+- `python3 scratch/ss-faltings/gen/gen_bypass.py` (defaults TailZ83 OpenResearchLeaves57 sixContactMin_of_open76
+  OpenResearchLeaves58SF sixContactMin_of_open77sf OpenTextbookLeaves18 OpenAddedLeaves27): 27 fields -> 27;
+  strict count 5/24 on 29 -> 5/24 on 29 (LEAF/GLUE on fields); strictest 5/24 -> 5/24. bypass-gen-out.txt.
+- `sh scratch/ss-faltings/gen/make_check.sh` then `lake env lean scratch/ss-faltings/BypassCheck.lean`
+  (bypass-check-out.txt): EXIT 0; `sixContactMin_of_open77sf` [propext, Classical.choice, Quot.sound]; closure of
+  open77sf: SGA7_IX_Cor3_3_Def34, SGA7_IX_Cor3_3, CToPrinted.SGA7_IX_3_3, SemistablePersistsSHcp,
+  SemistableNeronBaseChange, SemistablePersists all absent; FaltingsSemistableHeightBC, SemistableReductionThmIF,
+  SilverbergZarhinThm35 present; SGA7_IX_3_5_ForwardGeom_Def34 present (d2a6b's row); no sorryAx. Control open76: all
+  Cor. 3.3 names present. All 18 new SSFaltings theorems and open76_sf: standard axioms only.
