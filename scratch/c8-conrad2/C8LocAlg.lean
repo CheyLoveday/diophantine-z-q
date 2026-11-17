@@ -1,7 +1,17 @@
 import ZInQKernel.Contrib.OneProof.C8Conrad
 import ZInQKernel.Contrib.TauCeti.NumberTheory.ClassFieldTheory.Local.ExplicitCyclotomicSymbol.ArtinMap
 
-/-! # c8-conrad2: `LocAlgExponentEqWeight` from Tate's theorem over `\hat{K^{ur}}` -/
+/-! # c8-conrad2: two of c8-conrad's glue Props for step C8
+
+* `LocAlgExponentEqWeight` (diophantine_zq.tex L763-764, "removing its integral local Hodge–Tate weight") is proved
+  from `TateTwistInvariantsInertia` (Tate 1967 §3.3 Thm 2 for the completion of `K^{ur}`) and Tau Ceti's local
+  class field theory of `ℚ_p` (`locAlgExponentEqWeight_of_tateInertia`). Proof: a nonzero `φ ∈ H_{-w}(ψ)` gives
+  `x = φ(v) ≠ 0` in `ℂ_p` with `σ(x) = χ(σ)^{w-n} x` for every `σ` in the inertia group of `K = ℚ_p(ζ_{p^k})`, since
+  every such `σ` is an Artin lift of a unit `u ≡ 1 mod p^k` (`exists_unit_isArtinLift`, `cyc_of_isArtinLift`,
+  `toZModPow_cyc_eq_one`); Tate's theorem forces `w = n`.
+* `FiniteOfLocAlgTrivialQ` (L761-765, "class field theory over ℚ") is reduced to three smaller Props
+  (`finiteOfLocAlgTrivialQ_of_pieces`): `InertiaFiniteAwayFromP` (on-the-spot), `InertiaAtPDecomp` (dictionary) and
+  `CFTFiniteQ` (class field theory over `ℚ`); the local part at `p` is proved (`pow_card_eq_one_of_mem_inertia`). -/
 
 set_option linter.style.longLine false
 
@@ -230,5 +240,3 @@ theorem finiteOfLocAlgTrivialQ_of_pieces (hA : InertiaFiniteAwayFromP) (hB : Ine
 end HDec.G0Galois.C8Conrad
 
 
-#print axioms HDec.G0Galois.C8Conrad.locAlgExponentEqWeight_of_tateInertia
-#print axioms HDec.G0Galois.C8Conrad.finiteOfLocAlgTrivialQ_of_pieces

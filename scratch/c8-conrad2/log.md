@@ -42,3 +42,13 @@ Base: wip/c8-conrad a411466b4, merged origin/main 97247ce1c (merge cff986a75). T
   L = completion of K^ur, G_L = G_K ∩ I_{Q_p}; locator UNVERIFIED). Helpers proved: `norm_eq_one_of_valuation_eq_one`,
   `exists_unit_isArtinLift` (Tau Ceti `map_artinMap_unitFiltration_zero`), `cyc_of_isArtinLift` (Tau Ceti
   `localCyclotomicCharacter_artinMap_padic`; PkgI4.cyc = localCyclotomicCharacter by rfl), `toZModPow_cyc_eq_one`.
+
+## 4. FiniteOfLocAlgTrivialQ reduced; contributions (VERIFIED, compiled)
+- `finiteOfLocAlgTrivialQ_of_pieces : InertiaFiniteAwayFromP → InertiaAtPDecomp → CFTFiniteQ →
+  FiniteOfLocAlgTrivialQ`, standard axioms; local part at p proved (`pow_card_eq_one_of_mem_inertia`: ψ∘decomp on
+  I_{Q_p} has values in the φ(p^k)-th roots of unity).
+- `ZInQKernel/Contrib/OneProof/C8LocAlg.lean` (= scratch copy) and `C8Poincare.lean` (C8Inputs now: conradAppBQp,
+  tateTwistInvariantsInertia, twistCharHT0, inertiaFiniteAwayFromP, inertiaAtPDecomp, cftFiniteQ): lake build ok.
+- Dry run recompiled against the new C8Inputs: frozenTarget_c8 standard axioms.
+- `#discharges` (`Discharges.lean`, `discharges_out.txt`): 35 open hypotheses, 16073 theorems checked, 19 discharge
+  one, none from C8Conrad/C8LocAlg/C8Poincare (expected: no bundle field is discharged).
