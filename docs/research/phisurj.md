@@ -38,7 +38,8 @@ Details of the reroute:
 * The proof (§3) uses no cohomology: a dimension count, the torsion count, Mumford's Weil-pairing formula
   (weil-proof's `mumfordWeilPairingAC_proof`) and a **new Lean proof of the descent half of Mumford §20**
   (`PhiSurj.AVDesc.formula_nondeg_right`, fpqc descent along `[n]`).
-* **Hand fold** `scratch/phisurj/FoldTailZ49.lean`: `OpenAddedLeaves21` (= `OpenAddedLeaves20` without the field) and
+* **Hand fold** `scratch/phisurj/FoldTailZ49.lean`: `OpenAddedLeaves21` (= `OpenAddedLeaves20` without
+  `mumfordPhiSurjectiveAC` and `weilPairingMumford`) and
   `sixContactMin_of_open42 (r : OpenResearchLeaves29) (t : OpenTextbookLeaves15) (l : OpenAddedLeaves21)`;
   `scratch/phisurj/FrozenTargetDryRun.lean` proves `ZInQ.FrozenTarget` from Main's hypotheses with `OpenAddedLeaves21`
   in place of `OpenAddedLeaves20`. Both compile with `[propext, Classical.choice, Quot.sound]`.
