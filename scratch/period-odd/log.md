@@ -5,7 +5,7 @@ target: hL3 replaced by `GrossZagierModuliOptCd` + `EtaW32Character` only.
 
 ## 2026-11-16
 
-- Build: copied `.lake/build` and `lean/.lake/build` from ~/dzq-wt/cd-optimal (same commit 04d7251c).
+- Build: copied `.lake/build` and `lean/.lake/build` from the cd-optimal worktree (same commit 04d7251c).
   Probe import of `ZInQKernel.Contrib.OneProof.CdOptimal` compiles (1.5 min). VERIFIED.
 - Plan (bypass of CdTwistedPeriodOdd): GZHL3.GrossZagierFormulaCd from GrossZagierModuliOptCd + EtaW32Character,
   by a case split on `Λ_d ⊄ (1+i)L`:

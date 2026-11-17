@@ -238,7 +238,10 @@ DISCHARGES [OpenResearchLeaves29.sga7_IX_3_5_ForwardGeom] by UnipotentForward.fo
 DISCHARGES [hBFH] by ZInQ.BFHPrinted.bfhClauseIIGamma0_of_bfhClauseIIKronecker
   still assumes: [ZInQ.BFHPrinted.BFHClauseIIKronecker]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 43 open hypotheses, 6793 theorems checked, 13 discharge one
+DISCHARGES [hGZ] by ZInQ.GZAlg.grossZagierAlgOptCd_of
+  still assumes: [ZInQ.GZAlg.GrossZagierAlgOpt]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 45 open hypotheses, 8227 theorems checked, 14 discharge one
 ```
 <!-- worked-example:end -->
 

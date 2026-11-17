@@ -1,6 +1,6 @@
 # gzopt-dict results log
 
-Base: wip/period-odd 6382ef59, merged origin/main e41a7169 (merge 812b36c0). Build tree copied from ~/dzq-wt/period-odd.
+Base: wip/period-odd 6382ef59, merged origin/main e41a7169 (merge 812b36c0). Build tree copied from the period-odd worktree.
 
 ## Statements (ZInQKernel/Contrib/OneProof/GrossZagierAlgebraic.lean, namespace ZInQ.GZAlg)
 - Model of Q(X0(N)): vendored FLT `ModularCurve.modularFunctionField N` = Q(jq, jq(q^N)) ⊂ LaurentSeries Q (abbrev `X0Field`).

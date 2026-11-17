@@ -176,7 +176,7 @@ optimal.
 | `scratch/period-odd/isog_check.gp` | numerical check of §2.2 | VERIFIED |
 
 **Build.** `lake build ZInQKernel.Contrib.OneProof.PeriodOdd`. The build tree was copied from
-`~/dzq-wt/cd-optimal`, which is the same commit. Each new file elaborates in under 10 s, and `lake env lean` on each
+the cd-optimal worktree, which is the same commit. Each new file elaborates in under 10 s, and `lake env lean` on each
 file shows no warnings.
 
 **`#discharges`** (`scratch/period-odd/discharges-output.txt`, VERIFIED):

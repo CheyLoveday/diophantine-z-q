@@ -202,6 +202,6 @@ lake env lean scratch/heegner-32/Check.lean         # axioms → out_check.txt
 lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges
 lake env lean scratch/heegner-32/MainEdit.lean      # frozenTarget_heegner32 → out_mainedit.txt
 lake env lean scratch/heegner-32/Discharges.lean    # → discharges-output.txt
-~/bin/uv run --offline --with cypari2 python scratch/heegner-32/py/periods.py 5
-~/bin/uv run --offline --with cypari2 python scratch/heegner-32/py/twist_check.py 5 31
+uv run --offline --with cypari2 python scratch/heegner-32/py/periods.py 5
+uv run --offline --with cypari2 python scratch/heegner-32/py/twist_check.py 5 31
 ```

@@ -4,7 +4,7 @@ import json, subprocess, sys, os
 args = sys.argv[1:]
 assert 1 <= len(args) <= 10
 p = subprocess.Popen(['lake', 'env', 'repl'], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                     text=True, cwd=os.path.expanduser('~/dzq-wt/gzopt-dict'))
+                     text=True, cwd='.')
 def send(obj):
     p.stdin.write(json.dumps(obj) + '\n\n'); p.stdin.flush()
     lines = []

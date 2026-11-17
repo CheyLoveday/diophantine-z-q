@@ -1,6 +1,6 @@
 # gz-optimal results log
 
-Base: wip/gz-moduli 85111fc7. Build tree: reflink copy of ~/dzq-wt/gz-moduli/.lake/build and lean/.lake/build.
+Base: wip/gz-moduli 85111fc7. Build tree: reflink copy of the gz-moduli worktree's .lake/build and lean/.lake/build.
 
 ## Statements read (VERIFIED, in the tree)
 - Target leaf: `ZInQ.GZModuli.GrossZagierModuliCd` (ZInQKernel/Contrib/OneProof/GrossZagierModuli.lean:155),

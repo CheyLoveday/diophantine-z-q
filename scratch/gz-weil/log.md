@@ -4,7 +4,7 @@ Task: make gz-hl3's split of `hL3` net negative by turning `StrongWeilCurve` and
 (Eichler–Shimura + Faltings, analytic form) into printed form or theorems, restricted to what the proof uses.
 
 ## Setup (2026-11-15 04:40 PST)
-- base c118e9d2 (wip/gz-hl3). Build tree copied (reflink) from ~/dzq-wt/gz-hl3 (same ZInQKernel tree, built 11-15 04:12).
+- base c118e9d2 (wip/gz-hl3). Build tree copied (reflink) from the gz-hl3 worktree (same ZInQKernel tree, built 11-15 04:12).
 
 ## Uses (VERIFIED, read)
 - `StrongWeilCurve`, `IsogenyLattice` are used only in `eichlerShimuraParamAt_of_leaves`

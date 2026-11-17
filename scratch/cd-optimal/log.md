@@ -1,7 +1,7 @@
 # cd-optimal log
 
 Task: prove `ZInQ.GZOptimal.CdOptimal` (ZInQKernel/Contrib/OneProof/GrossZagierOptimal.lean) or reduce it.
-Base wip/gz-optimal 2631cd0b. Build tree copied from ~/dzq-wt/gz-optimal (.lake/build, lean/.lake/build).
+Base wip/gz-optimal 2631cd0b. Build tree copied from the gz-optimal worktree (.lake/build, lean/.lake/build).
 
 ## Numerics (py/)
 

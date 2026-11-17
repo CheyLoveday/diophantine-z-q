@@ -2,7 +2,7 @@
 
 ## Setup (2026-11-16 00:00 PST)
 - Base 60a3fac7 + merge origin/wip/gz-weil ad22e947 (commit 6c5f81e4). gz-heegner (58a780e4) is an ancestor.
-- Build tree copied from ~/dzq-wt/gz-moduli (identical ZInQKernel/ and lean/ trees). HeegnerCd builds (VERIFIED).
+- Build tree copied from the gz-moduli worktree (identical ZInQKernel/ and lean/ trees). HeegnerCd builds (VERIFIED).
 
 ## Numerics: the period lattice of f_d versus the lattice L of C_d (scratch/heegner-32/py/periods.py)
 - Periods Phi_d(γτ) − Phi_d(τ), γ = (a b; 32d²·k, dd) ∈ Γ₀(32d²), computed from ellan (40 digits, ≤ 4·10⁴ terms),

@@ -11,7 +11,7 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**35 hypotheses of the H part** (in the bundles `OpenAddedLeaves19`, `OpenResearchLeaves29`, `OpenTextbookLeaves14`), plus 8 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
+**35 hypotheses of the H part** (in the bundles `OpenAddedLeaves19`, `OpenResearchLeaves29`, `OpenTextbookLeaves14`), plus 10 hypotheses of the Tian–Yuan–Zhang and Gross–Zagier parts listed at the end.
 
 * **Strict count: 15 published / 20 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
@@ -86,7 +86,6 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`hfx`](#hfx) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/hfx-proof)) | 2026-11-16 |
 | [`hL29`](#hl29) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/h29-proof)) | 2026-11-16 |
 | [`hCM`](#hcm) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) | 2026-11-16 |
-| [`hL3`](#hl3) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gz-hl3)) | 2026-11-15 |
 
 ## Packets
 
@@ -119,7 +118,9 @@ Tian-Yuan-Zhang and Gross-Zagier. Claim it on [Deicyde #14](https://github.com/D
 * [`hCM`](#hcm) (GLUE; unverified-locator): Shimura 1971 (Introduction to the arithmetic theory of automorphic functions) Thm 5.4, Shimura's reciprocity law at CM points, in idelic form (number UNVERIFIED)
 * [`h33`](#h33) (GLUE): Tian-Yuan-Zhang, Thm 3.3 (Gross-Zagier formula), printed form for n = 5, 7 (mod 8) (arXiv:1411.4728v1 L1299-1311)
 * [`hBFH`](#hbfh) (LEAF; unread, reading-risk): Bump-Friedberg-Hoffstein, clause (ii) (nonvanishing of quadratic twists), classical Gamma0(N) form with the Kronecker symbol; locator UNVERIFIED
-* [`hL3`](#hl3) (GLUE): Gross-Zagier, Invent. Math. 84 (1986), Thm I.6.3 and Ch. V, with Gross's conjugation relation (Gross 1984, section 5)
+* [`hGZ`](#hgz) (LEAF; unread): Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
+* [`hQ`](#hq) (LEAF; unverified-locator): G. Shimura, Introduction to the arithmetic theory of automorphic functions (1971), Prop. 6.9 and Thm 6.6; F. Diamond, J. Shurman, A first course in modular forms (GTM 228), sections 7.5-7.6 (all UNVERIFIED locators)
+* [`hW`](#hw) (LEAF; unread): M. Newman, Construction and application of a class of modular functions (I, II), Proc. LMS 1957/1959; B. Gordon, K. Hughes, Multiplicative properties of eta-products II (1981); K. Ono, The web of modularity (CBMS 102, 2004), Thm 1.64 (all UNVERIFIED locators)
 
 ### Packet R4
 
@@ -206,7 +207,9 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`hCM`](#hcm) | frozenTarget | consequence | GLUE | note, unverified-locator |  | T2 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/cm-primitive)) |
 | [`h33`](#h33) | frozenTarget | consequence | GLUE | note | long-pole | T4 | [elliotglazer #74](https://github.com/elliotglazer/diophantine-z-q/issues/74) | 0 | open |
 | [`hBFH`](#hbfh) | frozenTarget | published | LEAF | note, unread, reading-risk | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
-| [`hL3`](#hl3) | frozenTarget | composite | GLUE |  | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gz-hl3)) |
+| [`hGZ`](#hgz) | frozenTarget | published | LEAF | unread | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
+| [`hQ`](#hq) | frozenTarget | published | LEAF | unverified-locator | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
+| [`hW`](#hw) | frozenTarget | published | LEAF | unread | long-pole | T4 | [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76) | 0 | open |
 
 ## The hypotheses
 
@@ -992,35 +995,70 @@ ZInQ.BFHPrinted.BFHClauseIIGamma0
 > forms and their derivatives*, Invent. Math. 102 (1990), 543–618, opening theorem (pp. 543–544),
 > clause (ii).
 
-### hL3
+### hGZ
 
-* Argument `hL3` of `frozenTarget`; kind **composite**, strict **GLUE**.
-* Source: Gross-Zagier, Invent. Math. 84 (1986), Thm I.6.3 and Ch. V, with Gross's conjugation relation (Gross 1984, section 5)
+* Argument `hGZ` of `frozenTarget`; kind **published**, strict **LEAF**; flag: unread: new printed leaf, no reading recorded.
+* Source: Gross-Zagier, Heegner points and derivatives of L-series, Invent. Math. 84 (1986), 225-320, Thm I.6.3 (p.230 per locators.md) and Ch. V Thm 2.1 (V section 2, p.312 per locators.md); strong Weil case
 * packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
 * Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/gz-hl3)).
+* Status: open.
 
 ```lean
-ZInQ.GZDecomp.GrossZagierHeegner
+ZInQ.GZAlg.GrossZagierAlgOptCd
 ```
 
-> **(L3) Gross–Zagier with Gross's conjugation relation, in the form that can be stated today.**
-> Let `E/ℚ` be an elliptic curve whose L-series is that of a weight-2 newform `f` of level `N` and
-> trivial nebentypus (`aₙ(f) = aₙ(E)` for all `n ≥ 1`). Let `D < −4` be an odd fundamental
-> discriminant with the Heegner hypothesis for `N`, and suppose `L(f, s)` has a simple zero at
-> `s = 1` while `L(f ⊗ χ_D, 1) ≠ 0` (so `L'(E/K, 1) = L'(f, 1) L(f ⊗ χ_D, 1) ≠ 0`). Then for every
-> field `K ≅ ℚ(√D)` the group `E(K)` has a point `y` of infinite order (the Heegner point `y_K`)
-> with `σ y − y` torsion for every `σ ∈ Aut(K/ℚ)` (`ȳ_K = −ε y_K` up to torsion, `ε = −1`).
+> **The leaf of the `C_d` route, algebraic form**: `GrossZagierAlgOptAt E'` for every short model
+> `E'` in the isogeny class of `C_d : y² = x³ − d²x` (`aₙ(E') = aₙ(C_d)`), `d ≡ 5 (mod 8)` squarefree.
+> A restriction of `GrossZagierAlgOpt`.
+
+### hQ
+
+* Argument `hQ` of `frozenTarget`; kind **published**, strict **LEAF**; flag: locator UNVERIFIED: Shimura 1971 Prop. 6.9 with Thm 6.6; Diamond-Shurman 7.5-7.6.
+* Source: G. Shimura, Introduction to the arithmetic theory of automorphic functions (1971), Prop. 6.9 and Thm 6.6; F. Diamond, J. Shurman, A first course in modular forms (GTM 228), sections 7.5-7.6 (all UNVERIFIED locators)
+* packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+ZInQ.GZAlg.Gamma0QExpansion
+```
+
+> **Leaf Q-EXP (the `q`-expansion principle for `Γ₀(N)` with rational coefficients).** Let `g` be
+> a meromorphic modular function for `Γ₀(N)` (invariant, meromorphic on `ℍ` and at every cusp:
+> `GZHeegner.IsRatModFnMero`) whose `q`-expansion `x` at `∞` has rational coefficients. Then `x` lies
+> in `ℚ(j, j_N)`, i.e. `g ∈ ℚ(j(τ), j(Nτ))`.
 > 
-> Literature: B. Gross, D. Zagier, Invent. Math. 84 (1986), 225-320, Theorem I.6.3 and its
-> corollaries in Ch. V (UNVERIFIED numbers): `L'(E/K, 1) = c ĥ(y_K)` with `c ≠ 0`; B. Gross,
-> *Heegner points on X₀(N)*, Modular forms (Durham 1983), 1984, for `ȳ_K = −ε y_K` mod torsion
-> (UNVERIFIED). Folded in, because the modular curve `X₀(N)`, the parametrization and the Heegner
-> point cannot be stated in Lean today: the modular parametrization `X₀(N) → E` (Eichler–Shimura
-> construction of the strong Weil curve `E_f`, Shimura 1971, Thm 7.14-7.15, UNVERIFIED, plus
-> Faltings 1983 Korollar 2 (`L(E) = L(E_f)` ⇒ `E ∼ E_f`), or for CM curves Shimura, Nagoya Math. J.
-> 43 (1971)); and nondegeneracy of `ĥ` on `E(K)` (proved in Tau Ceti:
-> `Affine.Point.canonicalHeight_eq_zero_iff_isOfFinAddOrder`).
+> Source: Shimura, *Introduction to the arithmetic theory of automorphic functions* (1971),
+> Prop. 6.9 (the field of `Γ₀(N)`-functions with rational Fourier coefficients is `ℚ(j, j∘N)`) with
+> Thm. 6.6; Diamond–Shurman, *A first course in modular forms*, §7.5 (`ℂ(X₀(N)) = ℂ(j, j_N)`) and
+> §7.6–7.7 (the rational structure via `q`-expansions); locators UNVERIFIED (no copy on this host).
+> The print states the result for `ℚ(X₀(N))` as a subfield of `ℂ(X₀(N))`; the `q`-expansion map is
+> injective on it, so this is the printed statement read through `q`-expansions.
+
+### hW
+
+* Argument `hW` of `frozenTarget`; kind **published**, strict **LEAF**; flag: unread: new printed leaf, no reading recorded.
+* Source: M. Newman, Construction and application of a class of modular functions (I, II), Proc. LMS 1957/1959; B. Gordon, K. Hughes, Multiplicative properties of eta-products II (1981); K. Ono, The web of modularity (CBMS 102, 2004), Thm 1.64 (all UNVERIFIED locators)
+* packet [R3](#packet-r3); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #76](https://github.com/elliotglazer/diophantine-z-q/issues/76).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+ZInQ.CdOpt.EtaW32Character
+```
+
+> **The transformation law of the eta quotient `v = η(8τ)η(32τ)²/η(16τ)³` on `Γ₀(32)`**
+> (printed leaf; Newman, Gordon–Hughes): `v(γτ) = (2/d) v(τ)` for `γ = [a, b; c, d] ∈ Γ₀(32)`.
+> 
+> The theorem of Newman (1957, 1959) and Gordon–Hughes (1981), as stated in K. Ono, *The web of
+> modularity* (CBMS 102, 2004), Thm 1.64 (UNVERIFIED locator): if `f = ∏_{δ ∣ N} η(δτ)^{r_δ}` with
+> `k = ½ Σ r_δ ∈ ℤ`, `Σ δ r_δ ≡ 0 (mod 24)` and `Σ (N/δ) r_δ ≡ 0 (mod 24)`, then
+> `f(γτ) = χ(d) (cτ + d)^k f(τ)` for every `γ ∈ Γ₀(N)`, with `χ(d) = ((−1)^k s / d)`,
+> `s = ∏ δ^{r_δ}`. Here `N = 32`, `r₈ = 1`, `r₁₆ = −3`, `r₃₂ = 2`: `k = 0`, `Σ δ r_δ = 24`,
+> `Σ (32/δ) r_δ = 0`, `s = 8 · 32² / 16³ = 2`, so `χ(d) = (2/d)`. Stated with Mathlib's `χ₈ = (2/·)`
+> on `ℤ/8` (the Kronecker symbol `(2/d)` for odd `d`, even in `d`, so `−γ` and `γ` agree). A
+> consequence of the print (one instance). Checked numerically for 602 matrices
+> (`scratch/cd-optimal/py/wchar.gp`, for `w = 1/v`).
 
 ## Credits
 

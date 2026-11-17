@@ -232,7 +232,7 @@ UNVERIFIED:
 
 **Build.** The command was `lake build ZInQKernel.Contrib.OneProof.GrossZagierAlgebraic ZInQKernel.OneProof.Main
 ZInQKernel.OneProof.Discharges ZInQKernel.Contrib.OneProof.HeegnerPointRationalCd ZInQKernel.Contrib.OneProof.GrossConjugationCd`.
-It completed: 13752 jobs in 25 min 47 s, on a build tree copied from `~/dzq-wt/period-odd`. The new file builds in
+It completed: 13752 jobs in 25 min 47 s, on a build tree copied from the period-odd worktree. The new file builds in
 about 11 s.
 
 **`#discharges`** (VERIFIED): `56 open hypotheses, 3984 theorems checked, 10 discharge one`. None of the 10 is by a

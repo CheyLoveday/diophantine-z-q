@@ -10,6 +10,9 @@ import ZInQKernel.Contrib.OneProof.LegendreThreeSquares
 import ZInQKernel.Contrib.OneProof.TYZThm21At31
 import ZInQKernel.Contrib.OneProof.JonesPall
 import ZInQKernel.Contrib.OneProof.ThetaWeierstrass8
+import ZInQKernel.Contrib.OneProof.HeegnerPointRationalCd
+import ZInQKernel.Contrib.OneProof.GrossConjugationCd
+import ZInQKernel.Contrib.OneProof.GrossZagierAlgebraic
 
 /-!
 # The whole proof in one theorem
@@ -60,7 +63,11 @@ the development fork, and from nothing else. It composes three compiled chains:
 * GZ and assembly: `ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves` proves `ZInQ.FrozenTarget`
   from H, reading A and the two open Gross–Zagier statements, with `HeckeThetaNewform` proved
   (`OneProof/TopChain.lean`) and Hecke's continuation and the functional equation proved
-  (`ZInQ.Contrib.heckeContinuation`, `ZInQ.Contrib.functionalEquation5`).
+  (`ZInQ.Contrib.heckeContinuation`, `ZInQ.Contrib.functionalEquation5`). Gross–Zagier enters only for the curves
+  `C_d` (route A, leaf-fold33): `ZInQ.GZStatements.frozenTarget_of_sixContactMin_tyzThm35ReadingA_fhNonvanishingCd_grossZagierHeegnerCd`
+  with heegner-32's `grossZagierHeegnerCd_of_printed` (from `hCM`), gz-conj's proved conjugation relation, and
+  `GZAlg.grossZagierFormulaCd_of_alg` (gzopt-dict, through period-odd and cd-optimal) from Gross–Zagier over the
+  algebraic curve `X₀(N)` (`hGZ`), the `q`-expansion principle for `Γ₀(N)` (`hQ`) and the eta-quotient law at level 32 (`hW`).
 
 The hypotheses of `frozenTarget` are therefore exactly the open statements. Discharging one means replacing a field or
 hypothesis by its proof; the theorem's statement then loses that hypothesis.
@@ -78,13 +85,16 @@ theorem _root_.ZInQ.OneProof.frozenTarget
     (hP23 : H29Split.TYZProp23Printed)
     (hCM : _root_.T5Glue.ShimuraMainCM)
     (h33 : ZInQ.Contrib.TYZGenus.TYZSplit.TYZThm33)
-    (hBFH : ZInQ.BFHPrinted.BFHClauseIIGamma0) (hL3 : ZInQ.GZDecomp.GrossZagierHeegner) :
+    (hBFH : ZInQ.BFHPrinted.BFHClauseIIGamma0)
+    (hGZ : ZInQ.GZAlg.GrossZagierAlgOptCd) (hQ : ZInQ.GZAlg.Gamma0QExpansion) (hW : ZInQ.CdOpt.EtaW32Character) :
     ZInQ.FrozenTarget :=
-  ZInQ.GZDecomp.frozenTarget_of_sixContactMin_tyzThm35ReadingA_gzLeaves
+  ZInQ.GZStatements.frozenTarget_of_sixContactMin_tyzThm35ReadingA_fhNonvanishingCd_grossZagierHeegnerCd
     (HDec.HSyn.sixContactMin_of_open39 r t l)
     (ThetaWP8.tyzThm35ReadingA_noHX h11 (H29Split.tyzLemma29Mod2_of_sixLeaves ZInQ.Contrib.OneProof.LegendreThreeSquares.legendreThreeSquares_proof
       ZInQ.Contrib.OneProof.JonesPall.jonesPall_proof hfx hL29 ZInQ.Contrib.T21Proof.tyzThm21At31 hP23) hCM h33)
-    ZInQ.GZTheta.Frontier.heckeThetaNewform (ZInQ.BFHPrinted.fhNonvanishing_of_bfhClauseIIGamma0 hBFH) hL3
+    (ZInQ.GZStatements.fhNonvanishingCd_of_fhNonvanishing (ZInQ.BFHPrinted.fhNonvanishing_of_bfhClauseIIGamma0 hBFH))
+    (ZInQ.Heegner32.grossZagierHeegnerCd_of_printed hCM (ZInQ.GZAlg.grossZagierFormulaCd_of_alg hGZ hQ hW)
+      ZInQ.GZConj.grossConjugationCd)
 
 end ZInQ.Contrib.TYZChain
 
