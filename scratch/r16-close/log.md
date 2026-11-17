@@ -8,3 +8,9 @@
 - mumfordTorsionAlgClosed: open textbook LEAF on main c0f3d085c; proved by PR #54 (origin/proof/mumford-torsion-review-20261117, mumfordTorsionAlgClosed_proof at root, file Contrib/OneProof/MumfordTorsionAlgClosed.lean), being folded on origin/wip/fold34-pr (not on main). Spec uses {t}.mumfordTorsionAlgClosed; after fold34-pr, substitute _root_.mumfordTorsionAlgClosed_proof.
 - Correction: the PR #54 theorem is ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof (VERIFIED, git show).
 - Page numbers from DS 2005 running heads (VERIFIED): Prop 5.2.1 p.171, 6.3 starts p.226, Def 6.6.3 p.241, Prop 6.6.4 p.242, (7.12) p.282, Thm 7.6.3 p.290, 7.9 starts p.300, Lemma 9.5.3 p.390, Thm 9.5.4 pp.390-391 (earlier entries corrected).
+- 2026-11-16 23:15 `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.AfTateLambda`: Build completed successfully (14233 jobs) (VERIFIED; aftate-fix2 chain compiles unchanged on main c0f3d085c).
+- `lake build +ZInQKernel.Contrib.OneProof.R16CoreYSatDet`: OK (4.7 s for the file).
+- `lake env lean scratch/r16-close/Discharges.lean` (Discharges-output.txt): DISCHARGES [OpenResearchLeaves31.r16CoreY] by AfTateLam.r16CoreY_of_sat_det, still assumes [HeckeJ1DS, AfShimura, AfTateDSLambdaSat, AfDetLambda, IgusaGL2DS, MumfordTorsionAlgClosed], axioms standard. Totals: 35 open hypotheses, 10326 theorems checked, 45 discharge one.
+- Target.lean: verbatim copy of R16Split.R16CoreY, copy_iff by Iff.rfl, r16CoreY_copy standard axioms (VERIFIED).
+- Fold dry run (autofold.py --dry-run, line 1 stripped): `strict count: 11/18 on 29 -> 15/18 on 33; strictest 11/18 -> 15/18` (LEAF/GLUE). FoldDryRun.lean compiles; 'HDec.HSyn.sixContactMin_of_open49' standard axioms (VERIFIED). GLUE unchanged (r16CoreY out, afDetLambda in).
+- Build-time code scan of R16CoreYSatDet.lean: only docstring mention of "sorry"/"axiom".
