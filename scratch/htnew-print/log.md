@@ -18,3 +18,4 @@ Base: c0f3d085 (main; `git merge origin/main`: already up to date, 2026-11-16 22
 New leaf robust to every ht-exists reading point: (i) normalization disjunction (arith Frob & HT {0,1-k}) or
 (geom Frob & HT {0,k-1}); (ii) no semisimplicity (semisimplification preserves HT weights: proved in Lean);
 (iii) trace-only Frobenius clause; (iv) printed newform (Tau Ceti Newform, via newform-dict).
+- 23:35 EigenformHTPrinted.lean §1-§6a (HTDual copy; diagonal reps semisimple, invariant line, conjGR, diagGR) compiles (lake env lean, 17 s). VERIFIED.
