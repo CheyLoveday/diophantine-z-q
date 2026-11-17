@@ -13,3 +13,8 @@
   Pi_f^vee, rho_f = sigma(Pi_f^vee)^vee; normalization L9784-9796: arithmetic Frobenius polynomial X^2 - a_q X + q chi(q).
   Casselman Thm 1 at L9802-9806 used for local conductor one (ramified-character blocks). VERIFIED (read).
 - CarayolRefold.lean §1-§2 (isOpen_ker_cycN, cycN_arithFrob, cycL_arithFrob, nearOne, odd_of_frobDet) compile, no warnings (lake env lean). VERIFIED.
+- Carayol Thm A form: not expressible in Lean (no Weil-Deligne / local Langlands / automorphic reps in Mathlib 4.35,
+  Tau Ceti, ZInQKernel; grep for WeilGroup/WeilDeligne/LocalLanglands/automorphic: no hits except an unrelated file). VERIFIED (search).
+- Leaf CarayolThmAFrob: per-Frobenius det p*psi(p) (manuscript L9794 normalization) instead of global det; irreducible over K_lambda; DDT conductor.
+- carayolThmAIrr_of_frob, frob_of_DDT31, carayolThmAIrr_of_DDT31, carayolR17'_of_frob compile (lake env lean, no warnings). VERIFIED.
+- autofold dry run: strict count 4/27 on 31 -> 4/27 on 31 (count-neutral; unread leaf counts GLUE). VERIFIED.
