@@ -30,3 +30,7 @@ Base: origin/main 0caafe66 + merged origin/wip/t21-proof f597c34c (T21Proof help
   hfx for every squarefree n ≡ 1 (mod 8) and admissible τ. COMPILES (no sorry).
 - `ZInQKernel/Contrib/OneProof/TYZTestVectorExists.lean`: `ZInQ.Contrib.HfxProof.tyzTestVectorExists :
   H29Split.TYZTestVectorExists`. COMPILES. No sorry/native_decide/axiom/#eval (grep).
+- `#discharges` (scratch/hfx-proof/Discharges.lean): `DISCHARGES [hfx] by ZInQ.Contrib.HfxProof.tyzTestVectorExists`,
+  still assumes [], axioms [propext, Classical.choice, Quot.sound]. VERIFIED.
+- FoldCheck.lean: frozenTarget_noHfx and frozenTarget_noHfxT21 compile, standard axioms. VERIFIED.
+- autofold --dry-run: refuses (`hfx` is a top-level argument, not a bundle field); manual fold needed.

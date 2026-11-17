@@ -112,8 +112,24 @@ The output is in `scratch/hfx-proof/Discharges-output.txt`, from `scratch/hfx-pr
 +ZInQKernel.Contrib.OneProof.TYZTestVectorExists`, then `lake env lean`):
 
 ```
-(see Discharges-output.txt; filled in below once the build finished)
+DISCHARGES [hfx] by ZInQ.Contrib.HfxProof.tyzTestVectorExists
+  still assumes: []
+  axioms: [propext, Classical.choice, Quot.sound]
+...
+#discharges: 56 open hypotheses, 3456 theorems checked, 8 discharge one
+'ZInQ.Contrib.HfxProof.tyzTestVectorExists' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
+
+The build took 72 minutes wall-clock (13,726 Lake jobs; a partial rebuild on this host). `FoldCheck.lean`
+(`scratch/hfx-proof/FoldCheck-output.txt`):
+
+```
+'ZInQ.Contrib.TYZChain.frozenTarget_noHfx' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.TYZChain.frozenTarget_noHfxT21' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+`autofold.py scratch/hfx-proof/autofold.json --dry-run` refuses with `not a field of the current bundles:
+['hfx']`, as expected (§5).
 
 ## 5. Fold
 
