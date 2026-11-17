@@ -364,4 +364,131 @@ def IsAnStableHeight {K : Type} [Field K] (A : PkgI3.AbVar K) (x : ℝ) : Prop :
 
 end AnDefs
 
+/-! ## §6. The print's measure is the chart-by-chart measure (Φ-free statement, proved through T35) -/
+
+section Equiv
+
+variable {K : Type} [Field K] [NumberField K] {A : PkgI3.AbVar K} {L : Type} [Field L]
+  [NumberField L] [Algebra K L]
+
+/-- **Chart independence of the density.** For `η ≠ 0` and `g = dim A`, a Borel measure on `A_τ(ℂ)`
+has the density of `(i/2)^g η̃ ∧ η̄̃` at `p` in every holomorphic chart of `A_τ(ℂ)^an`
+(`HasAnFormDensityAt`) iff it has the density `|τ l|²` at `p` in the translated algebraic coordinates
+(height-fix's `HasFormDensityAt`). `⇒`: the algebraic chart is a holomorphic chart
+(`exists_holChart`), in which the coefficient is `l`. `⇐`: change of variables from the algebraic chart
+to any holomorphic chart (`jacobian_bounds`). -/
+theorem hasAnFormDensityAt_iff (hT35 : ZInQ.LeafPush2.UniformizationExists) (𝒢 : GroupModel A L)
+    (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ)
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) (heta : eta ≠ 0)
+    (p : 𝒢.Pts τ) : HasAnFormDensityAt 𝒢 τ nu eta p ↔ HasFormDensityAt 𝒢 τ nu eta p := by
+  letI := anTop 𝒢 τ
+  letI := anBorel 𝒢 τ
+  have hwne : ∀ (U : Fin g → 𝒢.G.left.Opens) (hU : ∀ i, 𝒢.genericUnit ∈ U i)
+      (s : ∀ i, Γ(𝒢.G.left, U i))
+      (hm : ∀ i, 𝒢.G.left.presheaf.germ (U i) 𝒢.genericUnit (hU i) (s i) ∈
+        IsLocalRing.maximalIdeal 𝒢.genStalk) (l : L),
+      eta = l • 𝒢.wedge (fun i => ⟨_, hm i⟩) → 𝒢.wedge (fun i => ⟨_, hm i⟩) ≠ 0 :=
+    fun U hU s hm l h hw => heta (by rw [h, hw, smul_zero])
+  constructor
+  · intro hA U hU s hm l hrep ε hε
+    obtain ⟨e, hpe, heq, hhol⟩ :=
+      exists_holChart hT35 𝒢 g hg τ U hU s hm (hwne U hU s hm l hrep) p
+    obtain ⟨W, hW, hWb⟩ := hA e hhol hpe U hU s hm l hrep ε hε
+    have hid : fderiv ℂ (chartAt 𝒢 τ U s p ∘ e.symm) (e p) = ContinuousLinearMap.id ℂ _ := by
+      have hev : (chartAt 𝒢 τ U s p ∘ e.symm) =ᶠ[𝓝 (e p)] id :=
+        Filter.eventually_of_mem (e.open_target.mem_nhds (e.map_source hpe)) fun x hx => by
+          simp only [Function.comp_apply, id]
+          rw [heq (e.map_target hx), e.right_inv hx]
+      rw [hev.fderiv_eq, fderiv_id]
+    have hdet1 : ‖(ContinuousLinearMap.id ℂ (Fin g → ℂ)).det‖ ^ 2 = 1 := by
+      simp [ContinuousLinearMap.det]
+    refine ⟨W ∩ e.source, inter_mem hW (e.open_source.mem_nhds hpe), fun E hE hEm => ?_⟩
+    have himg : chartAt 𝒢 τ U s p '' E = e '' E :=
+      (heq.mono (hE.trans inter_subset_right)).image_eq
+    have := hWb E (hE.trans inter_subset_left) hEm
+    rw [hid, hdet1, _root_.mul_one] at this
+    rw [himg]; exact this
+  · intro hF φ hφ hpφ U hU s hm l hrep ε hε
+    obtain ⟨V, hVo, hpV, hdV, -⟩ := hφ p hpφ U hU s hm (hwne U hU s hm l hrep)
+    set G := chartAt 𝒢 τ U s p ∘ φ.symm with hGdef
+    set D := fderiv ℂ G (φ p)
+    set c := ‖τ l‖ ^ 2 with hcdef
+    set d := ‖D.det‖ ^ 2 with hddef
+    have hc0 : 0 ≤ c := by positivity
+    have hd0 : 0 ≤ d := by positivity
+    have hGs : HasStrictFDerivAt G D (φ p) := Holomorphic.hasStrictFDerivAt hVo hdV hpV
+    set ε₁ := min 1 (ε / (2 * (c + 1))) with hε₁def
+    have hε₁ : 0 < ε₁ := lt_min one_pos (by positivity)
+    obtain ⟨ρ, hρ, hJ⟩ := jacobian_bounds hGs hε₁
+    set ε₂ := ε / (2 * (d + 1)) with hε₂def
+    have hε₂ : 0 < ε₂ := by positivity
+    obtain ⟨W₂, hW₂, hW₂b⟩ := hF U hU s hm l hrep ε₂ hε₂
+    have hpre : φ ⁻¹' Metric.ball (φ p) ρ ∈ 𝓝 p :=
+      (φ.continuousAt hpφ).preimage_mem_nhds (Metric.ball_mem_nhds _ hρ)
+    refine ⟨W₂ ∩ φ.source ∩ φ ⁻¹' Metric.ball (φ p) ρ,
+      inter_mem (inter_mem hW₂ (φ.open_source.mem_nhds hpφ)) hpre, fun E hE hEm => ?_⟩
+    have hEs : E ⊆ φ.source := fun q hq => (hE hq).1.2
+    have himg : chartAt 𝒢 τ U s p '' E = G '' (φ '' E) := by
+      rw [image_image]
+      refine image_congr fun q hq => ?_
+      simp only [hGdef, Function.comp_apply, φ.left_inv (hEs hq)]
+    have hT : φ '' E ⊆ Metric.ball (φ p) ρ := by
+      rintro _ ⟨q, hq, rfl⟩; exact (hE hq).2
+    obtain ⟨-, -, hup, hlow⟩ := hJ _ hT
+    have hb := hW₂b E (fun q hq => (hE hq).1.1) hEm
+    rw [himg] at hb
+    set v := (volume (φ '' E)).toReal
+    set X := (volume (G '' (φ '' E))).toReal
+    set a := (nu E).toReal
+    have hv0 : 0 ≤ v := ENNReal.toReal_nonneg
+    have h1 : |a - c * X| ≤ ε₂ * ((d + ε₁) * v) :=
+      hb.trans (mul_le_mul_of_nonneg_left hup hε₂.le)
+    have h2 : |c * X - c * d * v| ≤ c * (ε₁ * v) := by
+      rw [show c * X - c * d * v = c * (X - d * v) by ring, abs_mul, abs_of_nonneg hc0]
+      refine mul_le_mul_of_nonneg_left ?_ hc0
+      rw [abs_le]; constructor <;> nlinarith
+    have hε₁1 : ε₁ ≤ 1 := min_le_left _ _
+    have hε₁2 : ε₁ ≤ ε / (2 * (c + 1)) := min_le_right _ _
+    have e1 : ε₂ * (d + ε₁) ≤ ε / 2 := by
+      have : ε₂ * (d + 1) = ε / 2 := by rw [hε₂def]; field_simp
+      nlinarith
+    have e2 : c * ε₁ ≤ ε / 2 := by
+      have h' : c * (ε / (2 * (c + 1))) ≤ ε / 2 := by
+        rw [mul_div_assoc', div_le_div_iff₀ (by positivity) (by positivity)]
+        nlinarith
+      exact (mul_le_mul_of_nonneg_left hε₁2 hc0).trans h'
+    calc |a - c * d * v| = |(a - c * X) + (c * X - c * d * v)| := by ring_nf
+      _ ≤ |a - c * X| + |c * X - c * d * v| := abs_add_le _ _
+      _ ≤ ε₂ * ((d + ε₁) * v) + c * (ε₁ * v) := add_le_add h1 h2
+      _ = (ε₂ * (d + ε₁) + c * ε₁) * v := by ring
+      _ ≤ (ε / 2 + ε / 2) * v := mul_le_mul_of_nonneg_right (add_le_add e1 e2) hv0
+      _ = ε * v := by ring
+
+theorem isAnFormMeasure_iff (hT35 : ZInQ.LeafPush2.UniformizationExists) (𝒢 : GroupModel A L)
+    (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ)
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) (heta : eta ≠ 0) :
+    IsAnFormMeasure 𝒢 τ nu eta ↔ IsFormMeasure 𝒢 τ nu eta :=
+  and_congr Iff.rfl (forall_congr' fun p => hasAnFormDensityAt_iff hT35 𝒢 g hg τ nu eta heta p)
+
+/-- **The print's metric (integral over the complex manifold `A_τ(ℂ)^an`) is height-fix's metric.** -/
+theorem isAnMetricSq_iff (hT35 : ZInQ.LeafPush2.UniformizationExists) (𝒢 : GroupModel A L)
+    (g : ℕ) (hg : A.dim = (g : WithBot ℕ∞)) (τ : L →+* ℂ) (eta : 𝒢.hodgeSpace g) (heta : eta ≠ 0)
+    (r : ℝ) : IsAnMetricSq 𝒢 τ eta r ↔ IsPrintedMetricSq 𝒢 τ eta r := by
+  letI := anBorel 𝒢 τ
+  unfold IsAnMetricSq IsPrintedMetricSq
+  simp only [isAnFormMeasure_iff hT35 𝒢 g hg τ _ eta heta]
+
+/-- **The two stable heights coincide** (given T35). -/
+theorem isAnStableHeight_iff (hT35 : ZInQ.LeafPush2.UniformizationExists) (A : PkgI3.AbVar K)
+    (x : ℝ) : IsAnStableHeight A x ↔ ZInQ.HeightFix.IsPrintedStableHeight A x := by
+  constructor
+  · rintro ⟨L, iF, iN, iA, 𝒩, g, hN, hS, hdim, eta, hetaM, heta0, hsec, r, hr, hx⟩
+    exact ⟨L, iF, iN, iA, 𝒩, g, hN, hS, hdim, eta, hetaM, heta0, hsec, r,
+      fun τ => (isAnMetricSq_iff hT35 𝒩 g hdim τ eta heta0 (r τ)).mp (hr τ), hx⟩
+  · rintro ⟨L, iF, iN, iA, 𝒩, g, hN, hS, hdim, eta, hetaM, heta0, hsec, r, hr, hx⟩
+    exact ⟨L, iF, iN, iA, 𝒩, g, hN, hS, hdim, eta, hetaM, heta0, hsec, r,
+      fun τ => (isAnMetricSq_iff hT35 𝒩 g hdim τ eta heta0 (r τ)).mpr (hr τ), hx⟩
+
+end Equiv
+
 end ZInQ.R3Residual
