@@ -1,6 +1,6 @@
 import ZInQKernel.OneProof.Main
 import Lean
-/-! piczero-char0: field-level forward taint from bundle field `picZeroAbVar` through `frozenTarget`'s closure.
+/-! fold33-pic (copy of piczero-char0's FieldTaint.lean, run on the tree after phisurj's fold): field-level forward taint from bundle field `picZeroAbVar` through `frozenTarget`'s closure.
 A constant whose value is `fun .. => S.mk a₁ … aₙ` (a bundle map) taints only the fields `aᵢ` that use a tainted
 projection (and those field names become seeds); any other constant using a tainted projection or a tainted
 constant is reported as a terminal consumer. -/

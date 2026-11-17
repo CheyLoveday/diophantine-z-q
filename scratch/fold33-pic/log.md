@@ -53,3 +53,19 @@ the worktree had no project build).
 - DischargesTest rerun: `#discharges: 35 open hypotheses, 9695 theorems checked, 34 discharge one` (was 37, 9464, 38);
   the four `OpenAddedLeaves20.weilPairingMumford` lines (pic-dict reductions) are gone with the field.
 - autoform check blueprint: OK: 781 articles, 2343 dependencies, 705 fully proved, 2531 declaration name(s) resolved.
+
+## Step 2a: char-0 reader analysis on the folded tree, merge origin/wip/piczero-char0 (2cc19764)
+- FieldTaint (copy of piczero-char0's, seed `picZeroAbVar`, fieldtaint_1.txt, VERIFIED, closure 271467): tainted fields
+  t8, t09SymmIsogenyExists, t9, phiAmpleIsogeny, picZeroAbVar, poincareComplement, weilPairingMumford. Edges:
+  `openAddedLeaves18_of_OpenAddedLeaves22` computes phiAmpleIsogeny and weilPairingMumford from L2 (phisurj);
+  `openTextbookLeaves13HF_of_open16_22` computes poincareComplement; `addedLeaves12_of_open13` computes
+  t09SymmIsogenyExists from picZeroAbVar, phiAmpleIsogeny, weilPairingMumford; t9 and t8 as before. Terminal readers
+  exactly piczero-char0's three: `gluePieces_of_open4_hf` (t09SymmIsogenyExists, at `[NumberField K]`),
+  `g8_g12_of_leaves3_hf` (t9, dead), `glueOutputs_of_leaves3_hf` (t8 from poincareComplement, a `CharZero` statement);
+  the rest are the chain theorems passing bundles. So after phisurj every reader of picZeroAbVar is still in
+  characteristic 0 (the new fields phiAmpleIsogeny/weilPairingMumford feed only t09SymmIsogenyExists).
+- merge origin/wip/piczero-char0: clean. Hygiene (as fold33-piczero): scratch/piczero-char0/{FoldCheck, Iso2,
+  RerouteCheck}.lean -> .lean.txt; the first-generation reroute Contrib/OneProof/PicZeroAbVarCharZeroReroute.lean (built
+  on 0e3c3125, imported by nothing) moved to scratch/piczero-char0/PicZeroAbVarCharZeroReroute.lean.txt (copies in
+  Contrib flood #discharges; the regenerated copy goes to OneProof/H/); the docstring line of PicZeroAbVarCharZero.lean
+  naming it updated. Host paths: none.
