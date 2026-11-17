@@ -309,6 +309,8 @@ end TorusR
 
 section KbarKI
 
+set_option synthInstance.maxHeartbeats 400000
+
 variable {k : Type} [Field k] {U : Over (Spec (CommRingCat.of k))} [GrpObj U]
   {B' : PkgI3.AbVar (AlgebraicClosure k)}
 
@@ -348,17 +350,14 @@ theorem rig_raw (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X) (L : Type
   rw [Φ_natural, Φ_natural, MulEquiv.apply_symm_apply] at h2
   exact congrArg (fun z => Over.Hom.left z) h2
 
-/-- The group structure on `U_{k̄}` (base change). -/
-@[reducible] def grpFU (U : Over (Spec (CommRingCat.of k))) [GrpObj U] :
-    GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
-
-attribute [local instance] grpFU
 
 /-- The unit of `U_{k̄}` at a `k̄`-algebra `L`, on `U`. -/
 theorem one_left_fst (L : Type) [CommRing L] [Algebra (AlgebraicClosure k) L] :
+    letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
     (1 : algPt (AlgebraicClosure k) L ⟶ (Over.pullback (sφ (φbar k))).obj U).left ≫
         pullback.fst U.hom (sφ (φbar k)) =
       (algPt (AlgebraicClosure k) L).hom ≫ sφ (φbar k) ≫ (η[U] : 𝟙_ _ ⟶ U).left := by
+  letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
   rw [Hom.one_def, Over.comp_left, Category.assoc, CToPrinted.unit_bc_fst]
   rfl
 
@@ -366,8 +365,10 @@ theorem one_left_fst (L : Type) [CommRing L] [Algebra (AlgebraicClosure k) L] :
 theorem lift_unit (L : Type) [CommRing L] (ρ : CommRingCat.of (AlgebraicClosure k) ⟶ CommRingCat.of L)
     (x : Spec (CommRingCat.of L) ⟶ U.left) (hx : x = Spec.map ρ ≫ sφ (φbar k) ≫ (η[U] : 𝟙_ _ ⟶ U).left)
     (h : x ≫ U.hom = Spec.map ρ ≫ sφ (φbar k)) :
+    letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
     pullback.lift x (Spec.map ρ) h =
       Spec.map ρ ≫ (η[(Over.pullback (sφ (φbar k))).obj U] : 𝟙_ _ ⟶ _).left := by
+  letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
   apply pullback.hom_ext
   · rw [pullback.lift_fst, Category.assoc, CToPrinted.unit_bc_fst, hx]
   · rw [pullback.lift_snd, Category.assoc]
@@ -378,8 +379,10 @@ theorem lift_unit (L : Type) [CommRing L] (ρ : CommRingCat.of (AlgebraicClosure
 /-- **Torus kernels are transport-stable**: a point of the torus `ker π'` for the `k̄`-structure `ra` on `L` maps to
 the unit under `π'` for any other `k̄`-structure `rb` with the same restriction to `k` (rigidity). -/
 theorem torus_kernel_transfer (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X)
-    (hπ : letI := B'.grp; IsMonHom π') (r : ℕ)
-    (e : ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R],
+    (hπ : letI := B'.grp; letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      IsMonHom π') (r : ℕ)
+    (e : letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+      ∀ (R : Type) [CommRing R] [Algebra (AlgebraicClosure k) R],
       (Fin r → Rˣ) →* (algPt (AlgebraicClosure k) R ⟶ (Over.pullback (sφ (φbar k))).obj U))
     (he_nat : ∀ (R S : Type) [CommRing R] [Algebra (AlgebraicClosure k) R] [CommRing S]
       [Algebra (AlgebraicClosure k) S] (f : R →ₐ[AlgebraicClosure k] S) (t : Fin r → Rˣ),
@@ -393,6 +396,7 @@ theorem torus_kernel_transfer (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B
       Spec.map (CommRingCat.ofHom rb) ≫ (η[B'.X] : 𝟙_ _ ⟶ B'.X).left := by
   letI Ia := ra.toAlgebra
   intro hcond
+  letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
   letI := B'.grp
   haveI := hπ
   letI Ia0 : Algebra (AlgebraicClosure k) (TorusRing L r) := algK ra (TorusRing L r)
@@ -410,7 +414,9 @@ theorem torus_kernel_transfer (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B
   have hW : W ≫ U.hom =
       Spec.map (CommRingCat.ofHom ((algebraMap L (TorusRing L r)).comp rb)) ≫ sφ (φbar k) := by
     simp only [W, Category.assoc]
-    rw [pullback.condition, ← Category.assoc, Over.w (e (TorusRing L r) (tUniv r))]
+    have hw : (e (TorusRing L r) (tUniv r)).left ≫ pullback.snd U.hom (sφ (φbar k)) =
+        (algPt (AlgebraicClosure k) (TorusRing L r)).hom := Over.w (e (TorusRing L r) (tUniv r))
+    rw [pullback.condition, ← Category.assoc, hw]
     change Spec.map (CommRingCat.ofHom ((algebraMap L (TorusRing L r)).comp ra)) ≫ sφ (φbar k) = _
     rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp,
       RingHom.comp_assoc, RingHom.comp_assoc, hab]
@@ -430,8 +436,9 @@ theorem torus_kernel_transfer (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B
   have h1 : e L (fun _ => (1 : Lˣ)) = 1 := map_one (e L)
   have hc1 : ((e L (fun _ => (1 : Lˣ))).left ≫ pullback.fst U.hom (sφ (φbar k))) ≫ U.hom =
       Spec.map (CommRingCat.ofHom rb) ≫ sφ (φbar k) := by
-    rw [Category.assoc, pullback.condition, ← Category.assoc, Over.w (e L _)]
-    change Spec.map (CommRingCat.ofHom ra) ≫ sφ (φbar k) = _
+    have hw : (e L (fun _ => (1 : Lˣ))).left ≫ pullback.snd U.hom (sφ (φbar k)) =
+        Spec.map (CommRingCat.ofHom ra) := Over.w (e L _)
+    rw [Category.assoc, pullback.condition, ← Category.assoc, hw]
     rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, hab]
   rw [hlift t hcond, Category.assoc, rig_raw π' L rb r W hW t, ← Category.assoc, ← hlift _ hc1]
   have hx : (e L (fun _ => (1 : Lˣ))).left ≫ pullback.fst U.hom (sφ (φbar k)) =
