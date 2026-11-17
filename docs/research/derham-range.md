@@ -47,8 +47,17 @@ File `ZInQKernel/Contrib/OneProof/DeRhamRange.lean` (namespace `DeRhamPrint.Rang
 | `DeRhamVpAbVarAdm` | the leaf in admissibility form | |
 | `deRhamVpAbVarDirect_iff_adm`, `deRhamVpAbVarDirect_of_adm`, `deRhamVpAbVarPrinted_of_adm` | the bridges | |
 
-Compile: `lake env lean scratch/derham-range/DeRhamRange.lean` gave no errors and no warnings after the edits.
-`#discharges` and `#print axioms`: `scratch/derham-range/Discharges-output.txt`.
+Compile (VERIFIED): `lake env lean scratch/derham-range/DeRhamRange.lean` gave no errors and no warnings after the
+edits. `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.DeRhamRange`
+succeeded. `#discharges` (`scratch/derham-range/Discharges-output.txt`):
+
+```
+DISCHARGES [OpenResearchLeaves45.deRhamVpAbVarDirect] by DeRhamPrint.Range.deRhamVpAbVarDirect_of_adm
+  still assumes: [DeRhamPrint.Range.DeRhamVpAbVarAdm]
+  axioms: [propext, Classical.choice, Quot.sound]
+'DeRhamPrint.Range.range_iotaF_eq_bdrFix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DeRhamPrint.Range.deRhamVpAbVarDirect_iff_adm' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
 
 ## Leaf rating
 
@@ -78,5 +87,6 @@ leaf `deRhamVpAbVarAdm` (kind `published`, flag beginning "pending reading: ..."
 run (`scripts/one_proof/autofold.py ... --dry-run`, output `scratch/derham-range/autofold-dryrun.txt`):
 `strict count: 9/25 on 34 -> 9/25 on 34`, so the count is unchanged. With a flag beginning "pending review",
 autofold would rate the leaf LEAF (autofold.py line 196). That would raise the count without a reading, so I did
-not use that flag. Recommendation: do not apply the spec unless the reading shows Berger's definition is the
+not use that flag. The dry-run module (`FoldDryRun.lean.txt`, line 1 stripped) compiles:
+`HDec.HSyn.sixContactMin_of_open65` uses the standard axioms only (VERIFIED). Recommendation: do not apply the spec unless the reading shows Berger's definition is the
 admissibility one. The `dim_K` form (the current leaf) is equally close to the most likely prints.
