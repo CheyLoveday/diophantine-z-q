@@ -1,5 +1,20 @@
 # Kernel-checked formalization plan
 
+> **Superseded on 2026-11-17.** The pole-completeness part of this plan describes Route K, the
+> route the project used until fork issues #76 and #77: a pole polynomial for the congruent
+> number curves `y² = x(x − ℓ)(x + ℓ)`, whose pole completeness was proved from the certified
+> rank hypothesis CR₃, with CR₃ derived from Tian–Yuan–Zhang and Gross–Zagier. Route K is
+> retired and kept at the tag `route-k-final`; `docs/research/rs-pole.md` records why it was
+> adopted. The main theorem now follows the manuscript, apart from route AP and the catalogue
+> bound CAT₈ described below.
+> `ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`
+> (`ZInQKernel/MainGreenTao.lean`) proves the target from the minimal height hypothesis
+> `SixContactMin` and pole completeness `PoleCompleteness`, the manuscript's Theorem 5.2 for its
+> own polynomial (curves `y² = x(x − ℓ)(x + 3ℓ)`). `ZInQ.OneProof.frozenTarget` replaces
+> `SixContactMin` by the open statements listed in `docs/one-proof/OPEN.md`. The manuscript
+> derives Theorem 5.2 from its restricted converse theorem (Theorem 5.3); formalizing that
+> derivation is fork issue #83. The rest of this document is kept as a record of the plan.
+
 This fork works toward a Lean proof of the 11/5 manuscript's Theorem 1.1, the statement
 frozen upstream as `ZInQ.exists_bounded_integer_polynomial_defining_integers`
 (`lean/Frozen/BoundedIntegerPolynomial.lean`), in which every finite computation is
