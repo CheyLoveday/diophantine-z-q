@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.ShimuraY3Print
 import ZInQKernel.Contrib.OneProof.ShimuraGoodReductionNoGuard
+import ZInQKernel.Contrib.OneProof.UniformizationLeafAll
 
 /-! # y3-fix: `shimuraMainThmIDeligneY3AbU` from two printed-form leaves
 
@@ -32,8 +33,10 @@ Proved here (standard axioms, no `sorry`):
   (`Φ = φ ∘ proj ∘ β ∘ ℓ_τ⁻¹`, `ℓ_τ(M) = M (τ,1)ᵀ`, `ℂ`-linear because `ℓ_τ(M J_τ) = i ℓ_τ(M)`).
 * `shimuraMainThmIDeligneY3AbU_of_print : MumfordTorsionAlgClosed → Y3FineModuliAbP →
   DeligneCanonicalModelY3EveryH → ShimuraMainThmIDeligneY3AbU` (the discharge).
-* `y3FineModuliAbP_of_field`, `deligneP_of_field`: the new fine-moduli leaf and the lattice-form canonical-model
-  leaf over the printed clause list follow from the field (given `TorsionStructure`).
+* `hodge_of_lattice`, `hodge_iff_lattice`: the converse dictionary (lattice form ⇒ `H₁` form, through
+  `uniformizationLeafAll_proof` and the `ℂ`-linear lift of `φ⁻¹ ∘ Φu`), so the two forms are equivalent.
+* `print_iff_field : MumfordTorsionAlgClosed → ((Y3FineModuliAbP ∧ DeligneCanonicalModelY3EveryH) ↔
+  ShimuraMainThmIDeligneY3AbU)`: neither new leaf is stronger than the field.
 -/
 
 set_option linter.all false
@@ -537,6 +540,221 @@ theorem lattice_of_hodge {P : QML3 ℂ} {τ : UpperHalfPlane} (h : IsHodgeH1 P �
 
 end Hodge
 
+/-! ## 8. The converse dictionary: the lattice form gives the `H₁` form -/
+
+section Converse
+
+open Complex Filter Topology
+open HDec.HSyn.G0Split.FibreQM (qmMat IotaCompatible)
+open MonoidalCategory CartesianMonoidalCategory MonObj PkgI3
+open scoped CategoryTheory.Obj
+
+theorem countable_of_zlattice {g : ℕ} (Λ : Submodule ℤ (Fin g → ℂ)) [DiscreteTopology Λ]
+    [IsZLattice ℝ Λ] : (Λ : Set (Fin g → ℂ)).Countable := by
+  haveI : Module.Finite ℤ Λ := ZLattice.module_finite ℝ Λ
+  obtain ⟨n, f, hf⟩ := Module.Finite.exists_fin' ℤ Λ
+  have : (Λ : Set (Fin g → ℂ)) = Set.range (fun c => ((f c : Λ) : Fin g → ℂ)) := by
+    ext v
+    constructor
+    · intro hv
+      obtain ⟨c, hc⟩ := hf ⟨v, hv⟩
+      exact ⟨c, by simp only [hc]⟩
+    · rintro ⟨c, rfl⟩
+      exact (f c).2
+  rw [this]
+  exact Set.countable_range _
+
+/-- A real subspace `W` with `W + Λ` everything, `Λ` countable, is everything. -/
+theorem eq_top_of_add_countable {g : ℕ} (W : Submodule ℝ (Fin g → ℂ)) (Λ : Set (Fin g → ℂ))
+    (hΛ : Λ.Countable) (h : ∀ w, ∃ x ∈ W, w - x ∈ Λ) : W = ⊤ := by
+  by_contra hW
+  obtain ⟨ψ, hψ0, hψW⟩ := W.exists_le_ker_of_lt_top (lt_top_iff_ne_top.mpr hW)
+  obtain ⟨v, hv⟩ : ∃ v, ψ v ≠ 0 := by
+    by_contra hc
+    push Not at hc
+    exact hψ0 (LinearMap.ext hc)
+  apply Cardinal.not_countable_real
+  refine (hΛ.image ψ).mono fun r _ => ?_
+  obtain ⟨x, hx, hwx⟩ := h ((r / ψ v) • v)
+  refine ⟨_, hwx, ?_⟩
+  rw [map_sub, LinearMap.mem_ker.mp (hψW hx), sub_zero, map_smul, smul_eq_mul, div_mul_cancel₀ _ hv]
+
+/-- **The converse dictionary** (compiled): the kernel's lattice-form clause gives the `H₁`/Hodge form, with
+`(Λ, φ)` the uniformization of `uniformizationLeafAll_proof` and `β = T ∘ ℓ_τ`, `T` the `ℂ`-linear lift of
+`φ⁻¹ ∘ Φu`. So `IsHodgeH1 P τ` is equivalent to the lattice form. -/
+theorem hodge_of_lattice {P : QML3 ℂ} {τ : UpperHalfPlane}
+    {Φu : (Fin 2 → ℂ) → ZInQ.LeafPush2.CPts P.A (RingHom.id ℂ)}
+    (hU : ZInQ.LeafPush2.IsUniformization (RingHom.id ℂ) (BPAnalytic.QM.qmLattice τ.im_pos.ne') Φu)
+    (hio : IotaCompatible P Φu) : IsHodgeH1 P τ := by
+  obtain ⟨g, Λ, hDisc, hZ, φ, hφ⟩ := uniformizationLeafAll_proof P.A
+  obtain ⟨u1, u2, u3, u4, u5⟩ := hU
+  set Lτ := BPAnalytic.QM.qmLattice τ.im_pos.ne' with hLτ
+  haveI : DiscreteTopology Lτ := by
+    rw [hLτ]; unfold BPAnalytic.QM.qmLattice; infer_instance
+  let f : (Fin 2 → ℂ) → BPAnalytic.Torus Λ := fun z => φ.symm (Additive.ofMul (Φu z))
+  have hf : ∀ z, φ (f z) = Additive.ofMul (Φu z) := fun z => φ.apply_symm_apply _
+  have hfadd : ∀ z w, f (z + w) = f z + f w := by
+    intro z w
+    simp only [f, u1]
+    exact map_add φ.symm _ _
+  have hf0 : f 0 = 0 := by
+    have h := hfadd 0 0
+    rw [add_zero] at h
+    exact left_eq_add.mp h
+  have hfker : ∀ z, f z = 0 ↔ z ∈ Lτ := by
+    intro z
+    rw [← u2 z]
+    constructor
+    · intro h
+      have h2 := hf z
+      rw [h, map_zero] at h2
+      exact Additive.ofMul.injective (by rw [← h2]; rfl)
+    · intro h
+      apply φ.injective
+      rw [hf, h, map_zero]
+      rfl
+  -- continuity of `f = φ⁻¹ ∘ Φu`
+  have hev : ∀ (U : P.A.X.left.Opens) (s : Γ(P.A.X.left, U)),
+      (fun z => BPAnalytic.Uniformization.evalAt P.A U s (Φu z)) =
+        fun z => ZInQ.LeafPush2.cEvalAt (Φu z) U s := fun U s =>
+    funext fun z => (ZInQ.LeafPush2.cEvalAt_eq_evalAt P.A (Φu z) U s).symm
+  have hfc : Continuous f := by
+    rw [continuous_iff_continuousAt]
+    intro z0 N hN
+    obtain ⟨v0, hv0⟩ := QuotientAddGroup.mk_surjective (f z0)
+    have hv0' : BPAnalytic.proj Λ v0 = f z0 := hv0
+    rw [← hv0'] at hN
+    obtain ⟨U, k, fs, ε, hε, hin, hcl⟩ := hφ.open_map v0 N hN
+    have hpt : Additive.toMul (φ (BPAnalytic.proj Λ v0)) = Φu z0 := by
+      rw [hv0', hf]; rfl
+    rw [hpt] at hin hcl
+    have hz0 : z0 ∈ ZInQ.LeafPush2.cDom Φu U := hin
+    have hcont : ∀ i, ContinuousAt (fun z => BPAnalytic.Uniformization.evalAt P.A U (fs i) (Φu z)) z0 :=
+      fun i => by
+        rw [hev]
+        exact ((u5 U (fs i)).differentiableAt ((u4 U).mem_nhds hz0)).continuousAt
+    have hball : ∀ᶠ z in 𝓝 z0, z ∈ ZInQ.LeafPush2.cDom Φu U ∧ ∀ i,
+        ‖BPAnalytic.Uniformization.evalAt P.A U (fs i) (Φu z) -
+          BPAnalytic.Uniformization.evalAt P.A U (fs i) (Φu z0)‖ < ε := by
+      refine Filter.Eventually.and
+        (show ∀ᶠ z in 𝓝 z0, z ∈ ZInQ.LeafPush2.cDom Φu U from (u4 U).mem_nhds hz0) ?_
+      rw [Filter.eventually_all]
+      intro i
+      exact ((hcont i).eventually (Metric.ball_mem_nhds _ hε)).mono fun z hz => by
+        simpa [dist_eq_norm] using hz
+    refine Filter.mem_map.mpr (hball.mono fun z hz => ?_)
+    obtain ⟨q, hq, hqe⟩ := hcl (Φu z) hz.1 hz.2
+    have : q = f z := φ.injective (by rw [hf, ← hqe]; rfl)
+    rw [← this]
+    exact hq
+  -- the `ℝ`-linear lift
+  let fA : (Fin 2 → ℂ) →+ BPAnalytic.Torus Λ := { toFun := f, map_zero' := hf0, map_add' := hfadd }
+  let fb : BPAnalytic.Torus Lτ →+ BPAnalytic.Torus Λ :=
+    QuotientAddGroup.lift Lτ.toAddSubgroup fA (fun z hz => (AddMonoidHom.mem_ker).mpr ((hfker z).2 hz))
+  have hfbc : Continuous fb := (QuotientAddGroup.isQuotientMap_mk _).continuous_iff.mpr hfc
+  obtain ⟨T, -, hTf⟩ := BPAnalytic.exists_realLinear_lift Lτ Λ fb hfbc
+  have hTf' : ∀ v, BPAnalytic.proj Λ (T v) = f v := fun v => (hTf v).symm
+  -- `T` is `ℂ`-linear (the argument of `IsUniformization.exists_complexLinear`)
+  obtain ⟨U, fs, e, hU0, hF⟩ := hφ.coords (T 0)
+  set F : (Fin g → ℂ) → (Fin g → ℂ) := fun v i =>
+    BPAnalytic.Uniformization.evalAt P.A U (fs i) (Additive.toMul (φ (BPAnalytic.proj Λ v))) with hFdef
+  set G : (Fin 2 → ℂ) → (Fin g → ℂ) := fun v i =>
+    BPAnalytic.Uniformization.evalAt P.A U (fs i) (Φu v) with hGdef
+  have hFT : ∀ v, F (T v) = G v := by
+    intro v
+    funext i
+    simp only [hFdef, hGdef, hTf', hf]
+    rfl
+  have hFan : AnalyticAt ℂ F (T 0) :=
+    AnalyticAt.pi fun i => (hφ.holo U (fs i)).2 (T 0) hU0
+  have hz0 : (0 : Fin 2 → ℂ) ∈ ZInQ.LeafPush2.cDom Φu U := by
+    have h : BPAnalytic.Uniformization.PtIn P.A (Additive.toMul (φ (BPAnalytic.proj Λ (T 0)))) U := hU0
+    rw [hTf', hf] at h
+    exact h
+  have hGd : DifferentiableAt ℂ G 0 := by
+    rw [differentiableAt_pi]
+    intro i
+    have h := (u5 U (fs i)).differentiableAt ((u4 U).mem_nhds hz0)
+    rw [← hev] at h
+    exact h
+  have hstrict : HasStrictFDerivAt F (e : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)) (T 0) := by
+    have h := hFan.hasStrictFDerivAt
+    rwa [hF.fderiv] at h
+  have hevT : ∀ᶠ v in 𝓝 (0 : Fin 2 → ℂ), hstrict.localInverse F e (T 0) (G v) = T v := by
+    have hcont : Filter.Tendsto (T : (Fin 2 → ℂ) → (Fin g → ℂ)) (𝓝 0) (𝓝 (T 0)) :=
+      T.continuous.tendsto 0
+    filter_upwards [hcont.eventually hstrict.eventually_left_inverse] with v hv
+    rw [← hFT v]; exact hv
+  have hdiffL : DifferentiableAt ℂ (hstrict.localInverse F e (T 0)) (G 0) := by
+    have h := hstrict.to_localInverse.differentiableAt
+    rwa [hFT 0] at h
+  have hTdiff : DifferentiableAt ℂ (T : (Fin 2 → ℂ) → (Fin g → ℂ)) 0 :=
+    (hdiffL.comp 0 hGd).congr_of_eventuallyEq (hevT.mono fun v hv => hv.symm)
+  set D := fderiv ℂ (T : (Fin 2 → ℂ) → (Fin g → ℂ)) 0
+  have hD : (D.restrictScalars ℝ : (Fin 2 → ℂ) →L[ℝ] (Fin g → ℂ)) = T :=
+    (hTdiff.hasFDerivAt.restrictScalars ℝ).unique T.hasFDerivAt
+  have hDT : ∀ v, D v = T v := fun v => congrArg (fun L : (Fin 2 → ℂ) →L[ℝ] _ => L v) hD
+  have hDf : ∀ v, BPAnalytic.proj Λ (D v) = f v := fun v => by rw [hDT, hTf']
+  have hkey : ∀ z, D z ∈ Λ ↔ z ∈ Lτ := fun z => by
+    rw [← hfker, ← hDf, show (0 : BPAnalytic.Torus Λ) = BPAnalytic.proj Λ 0 from rfl,
+      BPAnalytic.proj_eq_iff, sub_zero]
+  -- `D` is bijective
+  have hDinj : Function.Injective D := by
+    have h0 : ∀ y, D y = 0 → y = 0 := by
+      intro y hy
+      have hmem : ∀ t : ℝ, t • y ∈ Lτ := fun t => by
+        rw [← hkey, D.map_smul_of_tower, hy, smul_zero]
+        exact Λ.zero_mem
+      have hconst := PreconnectedSpace.constant (inferInstance : PreconnectedSpace ℝ)
+        (f := fun t => (⟨t • y, hmem t⟩ : Lτ)) ((continuous_id.smul continuous_const).subtype_mk _)
+        (x := 1) (y := 0)
+      have := congrArg Subtype.val hconst
+      simpa using this
+    intro z w h
+    exact sub_eq_zero.mp (h0 _ (by rw [map_sub, h, sub_self]))
+  have hDsurj : Function.Surjective D := by
+    have hW := eq_top_of_add_countable
+      (LinearMap.range (D.restrictScalars ℝ : (Fin 2 → ℂ) →L[ℝ] (Fin g → ℂ)).toLinearMap)
+      (Λ : Set (Fin g → ℂ)) (countable_of_zlattice Λ) (fun w => by
+        obtain ⟨z, hz⟩ := u3 (Additive.toMul (φ (BPAnalytic.proj Λ w)))
+        refine ⟨D z, ⟨z, rfl⟩, ?_⟩
+        have : BPAnalytic.proj Λ w = BPAnalytic.proj Λ (D z) := by
+          rw [hDf]
+          apply φ.injective
+          rw [hf, hz]
+          rfl
+        exact (BPAnalytic.proj_eq_iff Λ).mp this)
+    intro w
+    have hw : w ∈ LinearMap.range (D.restrictScalars ℝ : (Fin 2 → ℂ) →L[ℝ] (Fin g → ℂ)).toLinearMap := by
+      rw [hW]; exact Submodule.mem_top
+    obtain ⟨z, hz⟩ := hw
+    exact ⟨z, hz⟩
+  let Tl : (Fin 2 → ℂ) ≃ₗ[ℝ] (Fin g → ℂ) :=
+    LinearEquiv.ofBijective (D.restrictScalars ℝ : (Fin 2 → ℂ) →L[ℝ] (Fin g → ℂ)).toLinearMap
+      ⟨hDinj, hDsurj⟩
+  have hTl : ∀ M, ((ellE τ).trans Tl) M = D (ellE τ M) := fun M => rfl
+  refine ⟨g, Λ, hDisc, φ, hφ, (ellE τ).trans Tl, fun v => ?_, fun M => ?_, fun a M => ?_⟩
+  · obtain ⟨z, rfl⟩ := hDsurj v
+    rw [hkey]
+    refine Iff.trans (HDec.HSyn.G0Split.FibreQM.PeriodGlue.mem_qmLattice_iff _ z) ?_
+    constructor
+    · rintro ⟨b, hb, rfl⟩
+      exact ⟨b, hb, by rw [hTl, latVec_eq]⟩
+    · rintro ⟨b, hb, h⟩
+      exact ⟨b, hb, by rw [latVec_eq]; exact hDinj (by rw [h, hTl])⟩
+  · rw [hTl, hTl, ellE_J, D.map_smul]
+  · rw [hTl, hTl, ellE_iota, hDf, hDf, hf, hf]
+    exact hio a (ellE τ M)
+
+/-- **`IsHodgeH1` is equivalent to the kernel's lattice-form clause** (both directions compiled). -/
+theorem hodge_iff_lattice (P : QML3 ℂ) (τ : UpperHalfPlane) :
+    IsHodgeH1 P τ ↔ ∃ Φu : (Fin 2 → ℂ) → ZInQ.LeafPush2.CPts P.A (RingHom.id ℂ),
+      ZInQ.LeafPush2.IsUniformization (RingHom.id ℂ) (BPAnalytic.QM.qmLattice τ.im_pos.ne') Φu ∧
+      IotaCompatible P Φu :=
+  ⟨lattice_of_hodge, fun ⟨_, hU, hio⟩ => hodge_of_lattice hU hio⟩
+
+end Converse
+
 /-! ## 5. The leaves (lattice form) and the discharge -/
 
 /-- **LEAF `Y3FineModuliAbP`: the fine moduli scheme `Y₃` of QM abelian surfaces with full level-3 structure
@@ -669,6 +887,33 @@ textbook bundle). -/
 theorem shimuraMainThmIDeligneY3AbU_of_print (hM : AvSplit.MumfordTorsionAlgClosed)
     (h1 : Y3FineModuliAbP) (h2 : DeligneCanonicalModelY3EveryH) : ShimuraMainThmIDeligneY3AbU :=
   field_of_printP (AvSplit.torsionStructure_of_mumford hM) h1 (deligneP_of_H h2)
+
+theorem body_H_of {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {Ψ : UpperHalfPlane → BAQˣ → (fieldPt ℂ ⟶ Y)} (h : DeligneBodyAt Y Φ Ψ) : DeligneBodyAtH Y Φ Ψ := by
+  obtain ⟨h1, h2, h3, ⟨hm, hh⟩, h5⟩ := h
+  refine ⟨h1, h2, h3, ⟨fun τ => ?_, hh⟩, h5⟩
+  obtain ⟨P, hP, Φu, hU, hio⟩ := hm τ
+  exact ⟨P, hP, hodge_of_lattice hU hio⟩
+
+theorem units_H_of {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {Ψ : UpperHalfPlane → BAQˣ → (fieldPt ℂ ⟶ Y)} (h : ModuliAtUnits Y Φ Ψ) : ModuliAtUnitsH Y Φ Ψ := by
+  intro u hu τ
+  obtain ⟨P, hP, Φu, hU, hio⟩ := h u hu τ
+  exact ⟨P, hP, hodge_of_lattice hU hio⟩
+
+/-- The `H₁`-form leaf and the lattice-form leaf (over the printed clause list) are equivalent. -/
+theorem deligneH_iff_P : DeligneCanonicalModelY3EveryH ↔ DeligneCanonicalModelY3EveryP := by
+  refine ⟨deligneP_of_H, fun h Y Φ hY => ?_⟩
+  obtain ⟨Ψ, hb, hU⟩ := h Y Φ hY
+  exact ⟨Ψ, body_H_of hb, units_H_of hU⟩
+
+/-- **Neither new leaf is stronger than the field** (given the textbook field `mumfordTorsionAlgClosed`):
+together they are equivalent to `ShimuraMainThmIDeligneY3AbU`. -/
+theorem print_iff_field (hM : AvSplit.MumfordTorsionAlgClosed) :
+    (Y3FineModuliAbP ∧ DeligneCanonicalModelY3EveryH) ↔ ShimuraMainThmIDeligneY3AbU :=
+  ⟨fun h => shimuraMainThmIDeligneY3AbU_of_print hM h.1 h.2, fun h =>
+    ⟨y3FineModuliAbP_of_field (AvSplit.torsionStructure_of_mumford hM) h,
+     deligneH_iff_P.2 (deligneP_of_field (AvSplit.torsionStructure_of_mumford hM) h)⟩⟩
 
 end Final
 

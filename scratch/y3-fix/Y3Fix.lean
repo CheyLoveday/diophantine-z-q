@@ -556,7 +556,7 @@ theorem countable_of_zlattice {g : ℕ} (Λ : Submodule ℤ (Fin g → ℂ)) [Di
     constructor
     · intro hv
       obtain ⟨c, hc⟩ := hf ⟨v, hv⟩
-      exact ⟨c, by rw [hc]⟩
+      exact ⟨c, by simp only [hc]⟩
     · rintro ⟨c, rfl⟩
       exact (f c).2
   rw [this]
@@ -569,7 +569,7 @@ theorem eq_top_of_add_countable {g : ℕ} (W : Submodule ℝ (Fin g → ℂ)) (�
   obtain ⟨ψ, hψ0, hψW⟩ := W.exists_le_ker_of_lt_top (lt_top_iff_ne_top.mpr hW)
   obtain ⟨v, hv⟩ : ∃ v, ψ v ≠ 0 := by
     by_contra hc
-    push_neg at hc
+    push Not at hc
     exact hψ0 (LinearMap.ext hc)
   apply Cardinal.not_countable_real
   refine (hΛ.image ψ).mono fun r _ => ?_
@@ -584,14 +584,17 @@ theorem hodge_of_lattice {P : QML3 ℂ} {τ : UpperHalfPlane}
     {Φu : (Fin 2 → ℂ) → ZInQ.LeafPush2.CPts P.A (RingHom.id ℂ)}
     (hU : ZInQ.LeafPush2.IsUniformization (RingHom.id ℂ) (BPAnalytic.QM.qmLattice τ.im_pos.ne') Φu)
     (hio : IotaCompatible P Φu) : IsHodgeH1 P τ := by
-  obtain ⟨g, Λ, hD, hZ, φ, hφ⟩ := uniformizationLeafAll_proof P.A
+  obtain ⟨g, Λ, hDisc, hZ, φ, hφ⟩ := uniformizationLeafAll_proof P.A
   obtain ⟨u1, u2, u3, u4, u5⟩ := hU
   set Lτ := BPAnalytic.QM.qmLattice τ.im_pos.ne' with hLτ
+  haveI : DiscreteTopology Lτ := by
+    rw [hLτ]; unfold BPAnalytic.QM.qmLattice; infer_instance
   let f : (Fin 2 → ℂ) → BPAnalytic.Torus Λ := fun z => φ.symm (Additive.ofMul (Φu z))
   have hf : ∀ z, φ (f z) = Additive.ofMul (Φu z) := fun z => φ.apply_symm_apply _
   have hfadd : ∀ z w, f (z + w) = f z + f w := by
     intro z w
-    simp only [f, u1, ofMul_mul, map_add]
+    simp only [f, u1]
+    exact map_add φ.symm _ _
   have hf0 : f 0 = 0 := by
     have h := hfadd 0 0
     rw [add_zero] at h
@@ -603,7 +606,7 @@ theorem hodge_of_lattice {P : QML3 ℂ} {τ : UpperHalfPlane}
     · intro h
       have h2 := hf z
       rw [h, map_zero] at h2
-      exact (Additive.ofMul_eq_zero).mp h2.symm
+      exact Additive.ofMul.injective (by rw [← h2]; rfl)
     · intro h
       apply φ.injective
       rw [hf, h, map_zero]
@@ -631,7 +634,8 @@ theorem hodge_of_lattice {P : QML3 ℂ} {τ : UpperHalfPlane}
     have hball : ∀ᶠ z in 𝓝 z0, z ∈ ZInQ.LeafPush2.cDom Φu U ∧ ∀ i,
         ‖BPAnalytic.Uniformization.evalAt P.A U (fs i) (Φu z) -
           BPAnalytic.Uniformization.evalAt P.A U (fs i) (Φu z0)‖ < ε := by
-      refine ((u4 U).mem_nhds hz0).and ?_
+      refine Filter.Eventually.and
+        (show ∀ᶠ z in 𝓝 z0, z ∈ ZInQ.LeafPush2.cDom Φu U from (u4 U).mem_nhds hz0) ?_
       rw [Filter.eventually_all]
       intro i
       exact ((hcont i).eventually (Metric.ball_mem_nhds _ hε)).mono fun z hz => by
@@ -690,8 +694,8 @@ theorem hodge_of_lattice {P : QML3 ℂ} {τ : UpperHalfPlane}
   have hDT : ∀ v, D v = T v := fun v => congrArg (fun L : (Fin 2 → ℂ) →L[ℝ] _ => L v) hD
   have hDf : ∀ v, BPAnalytic.proj Λ (D v) = f v := fun v => by rw [hDT, hTf']
   have hkey : ∀ z, D z ∈ Λ ↔ z ∈ Lτ := fun z => by
-    rw [← hfker, ← hDf]
-    exact (QuotientAddGroup.eq_zero_iff _).symm
+    rw [← hfker, ← hDf, show (0 : BPAnalytic.Torus Λ) = BPAnalytic.proj Λ 0 from rfl,
+      BPAnalytic.proj_eq_iff, sub_zero]
   -- `D` is bijective
   have hDinj : Function.Injective D := by
     have h0 : ∀ y, D y = 0 → y = 0 := by
@@ -727,9 +731,10 @@ theorem hodge_of_lattice {P : QML3 ℂ} {τ : UpperHalfPlane}
     LinearEquiv.ofBijective (D.restrictScalars ℝ : (Fin 2 → ℂ) →L[ℝ] (Fin g → ℂ)).toLinearMap
       ⟨hDinj, hDsurj⟩
   have hTl : ∀ M, ((ellE τ).trans Tl) M = D (ellE τ M) := fun M => rfl
-  refine ⟨g, Λ, hD, φ, hφ, (ellE τ).trans Tl, fun v => ?_, fun M => ?_, fun a M => ?_⟩
+  refine ⟨g, Λ, hDisc, φ, hφ, (ellE τ).trans Tl, fun v => ?_, fun M => ?_, fun a M => ?_⟩
   · obtain ⟨z, rfl⟩ := hDsurj v
-    rw [hkey, HDec.HSyn.G0Split.FibreQM.PeriodGlue.mem_qmLattice_iff]
+    rw [hkey]
+    refine Iff.trans (HDec.HSyn.G0Split.FibreQM.PeriodGlue.mem_qmLattice_iff _ z) ?_
     constructor
     · rintro ⟨b, hb, rfl⟩
       exact ⟨b, hb, by rw [hTl, latVec_eq]⟩

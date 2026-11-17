@@ -11,4 +11,6 @@ import ZInQKernel.Contrib.OneProof.ShimuraY3PrintedLeaves
 #print axioms Y3Fix.ofKer
 #print axioms Y3Fix.toKer
 #print axioms Y3Fix.nonempty_qbar_of_cpt
+#print axioms Y3Fix.print_iff_field
+#print axioms Y3Fix.hodge_iff_lattice
 #check @Y3Fix.shimuraMainThmIDeligneY3AbU_of_print
