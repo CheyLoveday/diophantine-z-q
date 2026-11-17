@@ -20,3 +20,12 @@ Consumers of the field: TailZ34 L81 shimuraFamilyAb_of_U, L101 rayClassCMAb_of_l
 - clause 3 IsShimuraHolFamily at g = 1 (moduli + full holomorphy): read (shimuraFamilyAb_of_mainThmI).
 - clause 4 reciprocity: read (embed_core, connected_of_body).
 - ModuliAtUnits: read (obj_at).
+
+## 17:00 build, #discharges, autofold dry-run (all VERIFIED)
+- `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges +ZInQKernel.Contrib.OneProof.ShimuraY3Print`:
+  success, 14102 jobs; frozenTarget standard axioms (build-summary.txt).
+- discharges.txt: `DISCHARGES [OpenResearchLeaves28.shimuraMainThmIDeligneY3AbU] by Y3ABUPrint.shimuraMainThmIDeligneY3AbU_of_print
+  still assumes: [Y3ABUPrint.Y3FineModuliAb, Y3ABUPrint.DeligneCanonicalModelY3Every]`, axioms standard.
+  `#discharges: 45 open hypotheses, 6687 theorems checked, 14 discharge one`. All four theorems: [propext, Classical.choice, Quot.sound].
+- autofold.json --dry-run: strict 16/21 on 37 -> 18/20 on 38; strictest 16/21 -> 18/20 (-1 GLUE).
+- FoldCheck.lean (dry-run minus line 1) compiles: sixContactMin_of_open39 standard axioms (foldcheck.txt).
