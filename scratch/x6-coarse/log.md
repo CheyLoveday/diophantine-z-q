@@ -33,3 +33,11 @@
   no hypothesis). X6CoarseModuliIdeal now states the Galois clause as GaloisNatural. Rebuilt; axioms of all 41
   theorems standard; #discharges unchanged (x6CoarseModuli, elkiesX6StarEvery discharged); autofold dry-run
   16/18 -> 16/18; FoldDryRun.lean compiles, sixContactMin_of_open56 standard axioms.
+- VERIFIED (compiled): iso_of_quotient_lat — every quotient of (A, iota) by A[I_m] is isomorphic to
+  (A, iota o Ad mu_m), from uniformizationLeafAll (proved), gagaMorphism, mumfordTorsionAlgClosed: base change to C
+  (GR56.bcQ), lattice data (GR56.datQ), HomLatticeCorr (AvSplit.Final.h69), kernels commute with base change
+  (ker_bc via Over.mapPullbackAdj), lifts F of phi and M of iota(mu) have equal lattice preimages, M F^-1 and F M^-1
+  realized (HomLatticeCorr clause 2) and descended (GR56.qmIso_descend). The textbook leaf IsogenyQuotient is
+  removed; the converses (alIdeal_of_alTwist, x6CoarseModuliIdeal_of_twist, ideal_of_elkiesX6StarEvery,
+  atkinLehnerW_eq) now take gagaMorphism and mumfordTorsionAlgClosed. Rebuilt; 52 theorems, all standard axioms;
+  #discharges unchanged; autofold dry-run 16/18 -> 16/18; fold module compiles (standard axioms).
