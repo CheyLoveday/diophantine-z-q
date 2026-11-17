@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.DegEqDetTate.Reduction
+import ZInQKernel.Contrib.OneProof.CharPolyPort.FinrankGeneric
 import ZInQKernel.Contrib.OneProof.MilneQuasiInverse.Flatness
 import ZInQKernel.Contrib.CloudB3W16Torsion.RelativeBridges
 import ZInQKernel.Contrib.CloudB3W16Torsion.Vendor.AnthropicFLT.Theorems.Thm_GoodReductionJacobian_RelativeGroupLaw_isFinite_of_isFinite_endKerStr
@@ -144,7 +145,7 @@ theorem degHomogPolyEndDegree (k : Type) [Field k] [IsAlgClosed k] (A : PkgI3.Ab
 
 attribute [local instance] isIntegral_left
 
-/-- **GLUE (open): the rank of an isogeny at the generic point is its function-field degree.** For an
+/-- **GLUE (proved below): the rank of an isogeny at the generic point is its function-field degree.** For an
 isogeny `ψ` of an abelian variety (finite, surjective, hence flat), Mathlib's rank
 `Scheme.Hom.finrank ψ (ψ η)` of the finite flat morphism at the generic point `ψ η = η` equals
 `degEnd ψ = [K(A) : ψ^*K(A)]`. Locally: for `Spec S → Spec R` finite flat with `R ⊆ S` domains,
@@ -154,7 +155,7 @@ def FinrankGenericEqDegEnd : Prop :=
     PkgI3.AbVar.IsIsogenyMor ψ.hom →
       Scheme.Hom.finrank ψ.hom.left (ψ.hom.left (genericPoint A.X.left)) = degEnd ψ
 
-/-- **GLUE (open): a finite endomorphism of an abelian variety is surjective.** A finite morphism
+/-- **GLUE (proved below, `finiteEndSurjective`): a finite endomorphism of an abelian variety is surjective.** A finite morphism
 preserves dimension, and a proper closed subset of the irreducible `A` has smaller dimension
 (Mumford, *Abelian varieties*, §4 Application 1 setting; dimension theory, Hartshorne II Ex. 3.22). -/
 def FiniteEndSurjective : Prop :=
@@ -201,7 +202,7 @@ theorem finiteEndSurjective : FiniteEndSurjective := by
   exact ⟨(RelativeGroupLaw.surjective_and_endDegree_eq_finrank_of_isFinite_of_flat k A.X.hom (law A)
     (toPt ψ)).1⟩
 
-/-- **GLUE (open), general form: the rank of a finite flat surjective morphism of integral schemes at
+/-- **GLUE (proved below, `finrankGenericPoint`), general form: the rank of a finite flat surjective morphism of integral schemes at
 the generic point is the degree of the function-field extension.** For `f : X ⟶ Y` finite, flat and
 surjective with `X`, `Y` integral, Mathlib's `Scheme.Hom.finrank f` at `f(η_X) = η_Y` equals
 `[K(X) : K(Y)]`, `K(Y) → K(X)` being the stalk map at the generic point. On an affine chart
@@ -252,7 +253,7 @@ theorem degEnd_eq_endDegree (h1 : FinrankGenericEqDegEnd) (h2 : FiniteEndSurject
         (fun t x y => toPt_hom ψ t x y)
     exact hiso ⟨hf, h2 k A ψ hf⟩
 
-/-- **GLUE (open): deg-det's degree equals Anthropic's degree.** For every endomorphism `ψ` of an
+/-- **GLUE (proved below, `degEndEqEndDegree`): deg-det's degree equals Anthropic's degree.** For every endomorphism `ψ` of an
 abelian variety over an algebraically closed field, `degEnd ψ = [K(A) : ψ^*K(A)]` (`0` for a
 non-isogeny) equals `endDegree ψ`, the rank of the kernel group scheme (`0` if the kernel is not
 finite). Mumford, *Abelian varieties*, §4 (degree of an isogeny = order of its kernel scheme;
@@ -288,5 +289,24 @@ theorem degHomogPoly_of_finrankGeneric (h1 : FinrankGenericEqDegEnd) : DegDet.De
 /-- **deg-det's `DegHomogPoly`, every characteristic, from the general `FinrankGenericPoint` (proved).** -/
 theorem degHomogPoly_of_finrankGenericPoint (h : FinrankGenericPoint) : DegDet.DegHomogPoly :=
   degHomogPoly_of_finrankGeneric (finrankGenericEqDegEnd_of_finrankGenericPoint h)
+
+/-! ## 5. Everything proved -/
+
+/-- **`FinrankGenericPoint` (proved)**, from `CharPolyPort.finrank_genericPoint`. -/
+theorem finrankGenericPoint : FinrankGenericPoint := by
+  intro X Y _ _ f _ _ hf
+  exact CharPolyPort.finrank_genericPoint f hf
+
+/-- **`DegEndEqEndDegree` (proved).** -/
+theorem degEndEqEndDegree : DegEndEqEndDegree :=
+  degEndEqEndDegree_of_glue (finrankGenericEqDegEnd_of_finrankGenericPoint finrankGenericPoint)
+    finiteEndSurjective
+
+/-- **deg-det's `DegHomogPoly`, in every characteristic, with no hypothesis (proved).** Over an
+algebraically closed field `k` of any characteristic, `x ↦ degEnd(∑ xᵢ eᵢ)` is a homogeneous rational
+polynomial of degree `2 dim A` (Mumford §19), from Anthropic's FLT degree polynomial and the degree
+comparison above. -/
+theorem degHomogPoly : DegDet.DegHomogPoly :=
+  degHomogPoly_of_degEndEq degEndEqEndDegree
 
 end ZInQ.Contrib.OneProof.DegPolyFLT
