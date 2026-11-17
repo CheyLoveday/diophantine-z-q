@@ -23,3 +23,19 @@
 - `R1fpPropsAbP` (printed level, no ℚ̄-point clause); `np_of_P`/`P_of_np` (TorsionStructure).
 - `field_of_printP : TorsionStructure → Y3FineModuliAbP → DeligneCanonicalModelY3EveryP → ShimuraMainThmIDeligneY3AbU`
   (ℚ̄-point from Ψ(i,1)); converses `y3FineModuliAbP_of_field`, `deligneP_of_field` (compare_iso without point).
+
+## 00:20-00:50 Part B and checks (all VERIFIED)
+- `IsHodgeH1` (H₁/Hodge form of the moduli clause); `lattice_of_hodge` and `hodge_of_lattice` compiled:
+  `hodge_iff_lattice : IsHodgeH1 P τ ↔ (lattice-form clause)`. The converse uses `uniformizationLeafAll_proof`, the
+  continuity of φ⁻¹∘Φu (BP open_map), `BPAnalytic.exists_realLinear_lift`, the local-inverse argument of
+  `IsUniformization.exists_complexLinear`, injectivity (discreteness of Λ_τ), surjectivity (Λ countable).
+- `DeligneCanonicalModelY3EveryH` (H₁ form, over `R1fpPropsAbP`); `deligneH_iff_P`.
+- `shimuraMainThmIDeligneY3AbU_of_print : MumfordTorsionAlgClosed → Y3FineModuliAbP → DeligneCanonicalModelY3EveryH → field`;
+  `print_iff_field` (both directions). All standard axioms.
+- Contributor file `ZInQKernel/Contrib/OneProof/ShimuraY3PrintedLeaves.lean` builds (12982 jobs).
+- `lake build +Main +Discharges +ShimuraY3PrintedLeaves`: success, 14229 jobs (build1.txt).
+- `#discharges` (discharges.txt): DISCHARGES [OpenResearchLeaves31.shimuraMainThmIDeligneY3AbU] by
+  Y3Fix.shimuraMainThmIDeligneY3AbU_of_print, still assumes [AvSplit.MumfordTorsionAlgClosed, Y3Fix.Y3FineModuliAbP,
+  Y3Fix.DeligneCanonicalModelY3EveryH]; 35 open, 9889 theorems checked, 36 discharge one.
+- autofold --dry-run (autofold-dryrun.txt): strict 11/18 on 29 -> 13/17 on 30; strictest 11/18 -> 13/17.
+- FoldCheck.lean (dry-run minus line 1) compiles; sixContactMin_of_open49 standard axioms (foldcheck.txt).
