@@ -255,4 +255,113 @@ theorem exists_holChart [NumberField K] (hT35 : ZInQ.LeafPush2.UniformizationExi
 
 end AlgCharts
 
+/-! ## §4. Change of variables for densities (Mathlib's Jacobian estimates) -/
+
+section Jacobian
+
+variable {g : ℕ}
+
+open scoped NNReal ENNReal in
+/-- **Local Jacobian bounds.** If `G : ℂ^g → ℂ^g` is strictly differentiable at `x` with `ℂ`-linear
+derivative `D`, then for every `ε > 0` there is a ball around `x` on which `G` scales Lebesgue measure by
+a factor in `[|det D|² − ε, |det D|² + ε]` (`|det_ℝ D| = |det_ℂ D|²`). -/
+theorem jacobian_bounds {G : (Fin g → ℂ) → (Fin g → ℂ)} {D : (Fin g → ℂ) →L[ℂ] (Fin g → ℂ)}
+    {x : Fin g → ℂ} (hG : HasStrictFDerivAt G D x) {ε : ℝ} (hε : 0 < ε) :
+    ∃ ρ > 0, ∀ T ⊆ Metric.ball x ρ, volume T ≠ ⊤ ∧ volume (G '' T) ≠ ⊤ ∧
+      (volume (G '' T)).toReal ≤ (‖D.det‖ ^ 2 + ε) * (volume T).toReal ∧
+      (‖D.det‖ ^ 2 - ε) * (volume T).toReal ≤ (volume (G '' T)).toReal := by
+  set d : ℝ := ‖D.det‖ ^ 2 with hd
+  have hd0 : 0 ≤ d := by positivity
+  set A : (Fin g → ℂ) →L[ℝ] (Fin g → ℂ) := D.restrictScalars ℝ
+  have hAd : |A.det| = d := by
+    rw [TorusVolume.det_restrictScalars_eq, abs_of_nonneg (by positivity)]
+  have hup : ∀ᶠ δ in 𝓝[>] (0 : ℝ≥0), ∀ (s : Set (Fin g → ℂ)) (f : (Fin g → ℂ) → (Fin g → ℂ)),
+      ApproximatesLinearOn f A s δ → volume (f '' s) ≤ ENNReal.ofReal (d + ε) * volume s :=
+    addHaar_image_le_mul_of_det_lt (volume : Measure (Fin g → ℂ)) A
+      (m := Real.toNNReal (d + ε)) (by
+        rw [hAd]; exact (ENNReal.ofReal_lt_ofReal_iff (by positivity)).mpr (by linarith))
+  have hlow : ∀ᶠ δ in 𝓝[>] (0 : ℝ≥0), ∀ (s : Set (Fin g → ℂ)) (f : (Fin g → ℂ) → (Fin g → ℂ)),
+      ApproximatesLinearOn f A s δ → ENNReal.ofReal (d - ε) * volume s ≤ volume (f '' s) := by
+    by_cases hdε : ε < d
+    · exact mul_le_addHaar_image_of_lt_det (volume : Measure (Fin g → ℂ)) A
+        (m := Real.toNNReal (d - ε)) (by
+          rw [hAd]; exact (ENNReal.ofReal_lt_ofReal_iff (by linarith)).mpr (by linarith))
+    · filter_upwards with δ s f _
+      rw [ENNReal.ofReal_of_nonpos (by linarith), zero_mul]
+      exact bot_le
+  obtain ⟨δ, ⟨hδu, hδl⟩, hδpos⟩ := ((hup.and hlow).and self_mem_nhdsWithin).exists
+  obtain ⟨s₀, hs₀, hsA⟩ := (hG.restrictScalars ℝ).approximates_deriv_on_nhds (c := δ) (Or.inr hδpos)
+  obtain ⟨ρ, hρ, hρs⟩ := Metric.mem_nhds_iff.mp hs₀
+  refine ⟨ρ, hρ, fun T hT => ?_⟩
+  have hTt : volume T ≠ ⊤ := ne_top_of_le_ne_top measure_ball_lt_top.ne (measure_mono hT)
+  have hTA : ApproximatesLinearOn G A T δ := hsA.mono_set (hT.trans hρs)
+  have hX1 := hδu T G hTA
+  have hX2 := hδl T G hTA
+  have hXt : volume (G '' T) ≠ ⊤ :=
+    ne_top_of_le_ne_top (ENNReal.mul_ne_top ENNReal.ofReal_ne_top hTt) hX1
+  refine ⟨hTt, hXt, ?_, ?_⟩
+  · have := ENNReal.toReal_mono (ENNReal.mul_ne_top ENNReal.ofReal_ne_top hTt) hX1
+    rwa [ENNReal.toReal_mul, ENNReal.toReal_ofReal (by positivity)] at this
+  · by_cases hdε : 0 ≤ d - ε
+    · have := ENNReal.toReal_mono hXt hX2
+      rwa [ENNReal.toReal_mul, ENNReal.toReal_ofReal hdε] at this
+    · exact (mul_nonpos_of_nonpos_of_nonneg (by linarith) ENNReal.toReal_nonneg).trans
+        ENNReal.toReal_nonneg
+
+end Jacobian
+
+/-! ## §5. The print's measure `(i/2)^g η̃ ∧ η̄̃`, density in every holomorphic chart -/
+
+section AnDefs
+
+variable {K : Type} [Field K] {A : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L] [Algebra K L]
+
+/-- **`nu` is the measure `(i/2)^g η̃ ∧ η̄̃` near `p`, read in every holomorphic chart.** Here `η̃` is the
+invariant holomorphic `g`-form on `A_τ(ℂ)^an` with `η̃(1) = η`. If `η = l · df₁ ∧ ⋯ ∧ df_g` at the
+origin, then at `p` the form `η̃` is `l · dF_p` in the algebraic chart `F_p = F(p⁻¹ ·)` (`chartAt`;
+invariance), so in a holomorphic chart `φ` at `p` its coefficient is `l · det D(F_p ∘ φ⁻¹)(φ p)` and
+`(i/2)^g η̃ ∧ η̄̃` has density `|τ l|² |det D(F_p ∘ φ⁻¹)(φ p)|²` with respect to Lebesgue measure
+`dx₁dy₁⋯dx_gdy_g` of the chart (`(i/2) dz ∧ dz̄ = dx ∧ dy`). This is required for **every** holomorphic
+chart `φ` of `A_τ(ℂ)^an` (`IsHolChart`) containing `p`, at the centre `φ p`, with the `ε`-estimate. -/
+def HasAnFormDensityAt (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ}
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) (p : 𝒢.Pts τ) : Prop :=
+  letI := anTop 𝒢 τ
+  letI := anBorel 𝒢 τ
+  ∀ φ : OpenPartialHomeomorph (𝒢.Pts τ) (Fin g → ℂ), IsHolChart 𝒢 τ φ → p ∈ φ.source →
+  ∀ (U : Fin g → 𝒢.G.left.Opens) (hU : ∀ i, 𝒢.genericUnit ∈ U i) (s : ∀ i, Γ(𝒢.G.left, U i))
+    (hm : ∀ i, 𝒢.G.left.presheaf.germ (U i) 𝒢.genericUnit (hU i) (s i) ∈
+      IsLocalRing.maximalIdeal 𝒢.genStalk)
+    (l : L), eta = l • 𝒢.wedge (fun i => ⟨_, hm i⟩) →
+    ∀ ε : ℝ, 0 < ε → ∃ W ∈ 𝓝 p, ∀ E ⊆ W, MeasurableSet E →
+      |(nu E).toReal - ‖τ l‖ ^ 2 * ‖(fderiv ℂ (chartAt 𝒢 τ U s p ∘ φ.symm) (φ p)).det‖ ^ 2 *
+          (volume (φ '' E)).toReal| ≤ ε * (volume (φ '' E)).toReal
+
+/-- **`nu` is the measure `(i/2)^g η̃ ∧ η̄̃` on the complex manifold `A_τ(ℂ)^an`**: a finite Borel measure
+with the density of the form in every holomorphic chart at every point. -/
+def IsAnFormMeasure (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ}
+    (nu : @Measure (𝒢.Pts τ) (anBorel 𝒢 τ)) (eta : 𝒢.hodgeSpace g) : Prop :=
+  @IsFiniteMeasure _ (anBorel 𝒢 τ) nu ∧ ∀ p, HasAnFormDensityAt 𝒢 τ nu eta p
+
+/-- **The print's archimedean Faltings metric** `‖η‖²_τ = (i/2)^g ∫_{A_τ(ℂ)^an} η̃ ∧ η̄̃ = r`, the
+integral over the complex manifold `A_τ(ℂ)^an` (densities in its holomorphic charts): the measure exists
+and every such measure has total mass `r`. -/
+def IsAnMetricSq (𝒢 : GroupModel A L) (τ : L →+* ℂ) {g : ℕ} (eta : 𝒢.hodgeSpace g) (r : ℝ) : Prop :=
+  letI := anBorel 𝒢 τ
+  (∃ nu : Measure (𝒢.Pts τ), IsAnFormMeasure 𝒢 τ nu eta) ∧
+    ∀ nu : Measure (𝒢.Pts τ), IsAnFormMeasure 𝒢 τ nu eta → (nu univ).toReal = r
+
+/-- **Faltings' stable height, with the metric integrated over the complex manifold `A_τ(ℂ)^an`.**
+`ZInQ.HeightFix.IsPrintedStableHeight` verbatim, with `IsPrintedMetricSq` (densities in translated
+algebraic coordinates) replaced by `IsAnMetricSq` (densities in every holomorphic chart of
+`A_τ(ℂ)^an`). -/
+def IsAnStableHeight {K : Type} [Field K] (A : PkgI3.AbVar K) (x : ℝ) : Prop :=
+  ∃ (L : Type) (_ : Field L) (_ : NumberField L) (_ : Algebra K L) (𝒩 : GroupModel A L) (g : ℕ),
+    𝒩.IsNeronModel ∧ IsSemistableRes 𝒩 ∧ A.dim = (g : WithBot ℕ∞) ∧
+    ∃ eta ∈ printedDetLattice 𝒩 g, eta ≠ 0 ∧ secIndex (printedDetLattice 𝒩 g) eta ≠ 0 ∧
+      ∃ r : (L →+* ℂ) → ℝ, (∀ τ, IsAnMetricSq 𝒩 τ eta (r τ)) ∧
+        x = (Real.log (secIndex (printedDetLattice 𝒩 g) eta) -
+          (1 / 2) * ∑ τ : L →+* ℂ, Real.log (r τ)) / Module.finrank ℚ L
+
+end AnDefs
+
 end ZInQ.R3Residual
