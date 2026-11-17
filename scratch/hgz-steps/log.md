@@ -14,3 +14,4 @@ Targets: hGZ = ZInQ.GZAlg.GrossZagierAlgOptCd (binder of ZInQ.OneProof.frozenTar
 - Bridge grossZagierPlaneOptCd_of_curve / grossZagierAlgOptCd_of_curve compiles modulo two sorry'd theorems exists_model (S1), exists_pointAt (S6). Tue Nov 17 12:28:42 AM PST 2026
 - Model.lean: ratFuncHom (T↦jq), isIntegral_jqNF (vendored Phi_N), adjoin_jqNF_eq_top, finiteDimensional_X0Field, exists_model (NormalModelOfFunctionFieldQ_proof): compiled, no sorry. VERIFIED
 - PointTau.lean: ratFn_rep_congr, Otau (valuation subring), evTau (ring hom, local), tendsto_evTau: compiled. VERIFIED
+- exists_pointAt (S6) proved; GZScheme.lean has no sorry; #print axioms grossZagierAlgOptCd_of_curve = [propext, Classical.choice, Quot.sound]. VERIFIED Tue Nov 17 12:38:29 AM PST 2026

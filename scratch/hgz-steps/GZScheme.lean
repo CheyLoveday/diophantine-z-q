@@ -1,7 +1,8 @@
 import ZInQKernel.Contrib.OneProof.GrossZagierScheme.Core
 import ZInQKernel.Contrib.OneProof.GrossZagierScheme.EpsD
 import ZInQKernel.Contrib.OneProof.GrossZagierPlane.Extension
-import ZInQKernel.Contrib.CloudW07JacobiansCurves.NormalModel
+import ZInQKernel.Contrib.OneProof.GrossZagierScheme.Model
+import ZInQKernel.Contrib.OneProof.GrossZagierScheme.PointTau
 
 noncomputable section
 
@@ -207,11 +208,6 @@ def ratToStalk {X : Scheme.{0}} (s : X ⟶ Spec (CommRingCat.of ℚ)) (p : X) :
 
 /-! ## §5. D2: the value of `π` at the point `τ` is `modPt` of the plane model -/
 
-theorem eventually_polyFn_ne_zero {N : ℕ} [NeZero N] {P : MvPolynomial (Fin 2) ℚ}
-    (hP : polyQ N P ≠ 0) (τ : ℍ) : ∀ᶠ z in 𝓝[≠] (τ : ℂ), polyFn N P (ofComplex z) ≠ 0 := by
-  obtain ⟨T, hT⟩ := HasQExp.exists_ne_zero (hasQExp_polyFn N P) hP
-  exact eventually_ne_zero_of_im_gt (fun τ => (holoH_polyFn N P τ).meromorphicAt) hT τ
-
 theorem polyQ_ne_zero_of_rep {N : ℕ} [NeZero N] {g : LaurentSeries ℚ} {P Q : MvPolynomial (Fin 2) ℚ}
     (h : IsRatRep N g P Q) (hg : g ≠ 0) : polyQ N P ≠ 0 := by
   intro h0; apply hg; rw [h.2, h0, zero_div]
@@ -414,15 +410,41 @@ theorem exists_cusp {N : ℕ} [NeZero N] (X : Scheme.{0}) [IsIntegral X]
 
 /-! ## §7. Model existence and points `τ` (to be proved) -/
 
-theorem exists_model (N : ℕ) [NeZero N] : ∃ (X : Scheme.{0}) (_ : IsIntegral X)
-    (sX : X ⟶ Spec (CommRingCat.of ℚ)), IsProper sX ∧ ZInQ.Contrib.CurvesG.IsNormalScheme X ∧
-      topologicalKrullDim X = 1 ∧ Nonempty (X.functionField ≃+* X0Field N) := by
-  sorry
-
+/-- **The point `τ ∈ ℍ` exists on every proper model of `X₀(N)`**: the center of the place
+`ord_τ` (valuative criterion), with the evaluation at `τ` on its residue field. -/
 theorem exists_pointAt {N : ℕ} [NeZero N] (X : Scheme.{0}) [IsIntegral X]
     (sX : X ⟶ Spec (CommRingCat.of ℚ)) [IsProper sX] (e : X.functionField ≃+* X0Field N) (τ : ℍ) :
     ∃ x : Spec (CommRingCat.of ℂ) ⟶ X, IsPointAt N e τ x := by
-  sorry
+  let O' := (Otau (N := N) τ).comap (e : X.functionField →+* X0Field N)
+  obtain ⟨p, θ, hθl, hθ⟩ := exists_center X sX O' (ratToComap e (Otau τ) (rat_mem_Otau τ))
+  let r : O' ≃+* Otau (N := N) τ := RingEquiv.restrict e O' (Otau τ) (fun _ => Iff.rfl)
+  let f : X.presheaf.stalk p →+* ℂ := (evTau τ).comp (r.toRingHom.comp θ)
+  haveI : IsLocalHom f := ⟨fun a ha => by
+    have h1 : IsUnit (r.toRingHom (θ a)) := (isLocalHom_evTau τ).map_nonunit _ ha
+    have h2 : IsUnit (θ a) := (isUnit_map_iff r (θ a)).mp h1
+    exact hθl.map_nonunit _ h2⟩
+  haveI : IsLocalHom (CommRingCat.ofHom f).hom := this
+  refine ⟨Spec.map (CommRingCat.ofHom f) ≫ X.fromSpecStalk p, ?_⟩
+  intro s P Q hr
+  obtain ⟨U, hU, t, rfl⟩ := X.presheaf.exists_germ_eq s
+  have hgerm := Scheme.germ_stalkClosedPointTo_Spec_fromSpecStalk (CommRingCat.ofHom f) U hU
+  have h0 : (Spec.map (CommRingCat.ofHom f) ≫ X.fromSpecStalk p)
+      (IsLocalRing.closedPoint (CommRingCat.of ℂ)) = p := by
+    rw [Scheme.Hom.comp_apply, Spec_closedPoint]; exact Scheme.fromSpecStalk_closedPoint
+  have hpU : p ∈ U := h0 ▸ hU
+  have hval : (Scheme.stalkClosedPointTo (Spec.map (CommRingCat.ofHom f) ≫ X.fromSpecStalk p)).hom
+      (X.presheaf.germ U _ hU t) = f (X.presheaf.germ U p hpU t) := by
+    have := congrArg (fun g => g.hom t) hgerm
+    simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom] at this
+    exact this
+  have halg : algebraMap _ X.functionField (X.presheaf.germ U _ hU t) =
+      algebraMap _ X.functionField (X.presheaf.germ U p hpU t) := by
+    change (X.presheaf.germ U _ hU ≫ X.presheaf.stalkSpecializes (genericPoint_specializes _)).hom t =
+      (X.presheaf.germ U p hpU ≫ X.presheaf.stalkSpecializes (genericPoint_specializes _)).hom t
+    rw [TopCat.Presheaf.germ_stalkSpecializes, TopCat.Presheaf.germ_stalkSpecializes]
+  rw [hval]
+  rw [halg, ← hθ] at hr
+  exact tendsto_evTau τ (r (θ (X.presheaf.germ U p hpU t))) hr
 
 /-! ## §8. The bridge -/
 
@@ -436,6 +458,7 @@ theorem grossZagierPlaneOptCd_of_curve (h : GrossZagierCurveCd) : GZDict2.GrossZ
   intro d hd hsq E' _ hE' hL N _ f hχ hf φ hord Px Qx Py Qy hrx hry _hopt D β hD hD4 hH hβ R _ τ hτ
     K _ _ _ hK δ hδ ιK hιK n hn y hy F G hF hG
   obtain ⟨X, hXi, sX, hprop, hN, hdim, ⟨e⟩⟩ := exists_model N
+  haveI := hprop
   haveI : LocallyOfFiniteType sX := inferInstance
   haveI : IsLocallyNoetherian X := LocallyOfFiniteType.isLocallyNoetherian sX
   have hv := valuationRing_stalk_of_normal X hN hdim
@@ -461,3 +484,7 @@ theorem grossZagierAlgOptCd_of_curve (h : GrossZagierCurveCd) : GZAlg.GrossZagie
   GZDict2.grossZagierAlgOptCd_of_plane (grossZagierPlaneOptCd_of_curve h)
 
 end ZInQ.GZSch
+
+#print axioms ZInQ.GZSch.grossZagierAlgOptCd_of_curve
+#print axioms ZInQ.GZSch.exists_pointAt
+#print axioms ZInQ.GZSch.exists_model
