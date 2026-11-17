@@ -137,6 +137,26 @@ theorem locM_good_units (hp2 : p ≠ 2) (hp3 : p ≠ 3) {L A B : ℚ_[p]} (hL : 
       exact (this.trans ⟨1, one_ne_zero, by ring⟩ : SqEq A (1 * x ^ 2)).of_mul_sq hx0
     exact ⟨1, 1, norm_one, norm_one, ha', hb'.trans ((hxa'.symm.trans e₃).symm.trans ha')⟩
 
+theorem not_dvd_of_sqEq_unit {a : ℤ} (ha : Squarefree a) {u : ℚ_[p]} (hu : ‖u‖ = 1)
+    (h : SqEq (a : ℚ_[p]) u) : ¬ (p : ℤ) ∣ a := by
+  have e := even_valuation_of_sqEq_unit hu h
+  rw [Padic.valuation_intCast] at e
+  exact not_dvd_of_squarefree_of_even_padicValInt ha (Int.even_coe_nat _ |>.mp e)
+
+/-- **`LocalGood`, "only if"**: at `p ∤ 6ℓ`, a locally soluble pair of squarefree integers is
+prime to `p`. -/
+theorem localGood_nec {ℓ : ℕ} {a b : ℤ} (hp6 : ¬ p ∣ 6 * ℓ) (ha : Squarefree a)
+    (hb : Squarefree b) (h : LocM ℚ_[p] ℓ a b) : ¬ (p : ℤ) ∣ a ∧ ¬ (p : ℤ) ∣ b := by
+  have hp2 : p ≠ 2 := by rintro rfl; exact hp6 (Dvd.intro (3 * ℓ) (by ring))
+  have hp3 : p ≠ 3 := by rintro rfl; exact hp6 (Dvd.intro (2 * ℓ) (by ring))
+  have hpl : ¬ (p : ℤ) ∣ (ℓ : ℤ) := fun h' => hp6 (Dvd.dvd.mul_left (by exact_mod_cast h') 6)
+  have hL : ‖((ℓ : ℤ) : ℚ_[p])‖ = 1 := padic_norm_intCast_eq_one hpl
+  have hA0 : (a : ℚ_[p]) ≠ 0 := Int.cast_ne_zero.mpr ha.ne_zero
+  have hB0 : (b : ℚ_[p]) ≠ 0 := Int.cast_ne_zero.mpr hb.ne_zero
+  obtain ⟨u, w, hu, hw, hAu, hBw⟩ :=
+    locM_good_units hp2 hp3 (L := (ℓ : ℚ_[p])) (by simpa using hL) hA0 hB0 h
+  exact ⟨not_dvd_of_sqEq_unit ha hu hAu, not_dvd_of_sqEq_unit hb hw hBw⟩
+
 end Padic
 
 end ZInQ.Manuscript.PoleRC
