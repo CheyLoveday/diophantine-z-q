@@ -73,3 +73,52 @@ Base wip/leaf-fold33b 30674d98 (origin/main c1e4ed1b is an ancestor: not merged)
   (`ZInQ.OneProof.frozenTarget`); OpenStatements 40; DischargesTest rerun: 48 `DISCHARGES` lines as on the base, only
   the bundle name 29 → 30 changes; render_open then `--check`: ok, **32 H, strictest 12/20, 8 others**;
   frontier_crosswalk `--check` ok; autoform check OK (`autoform_1b_move.txt`).
+
+## Step 2: goodmodel-iso (fold G) as a copy reroute
+- `ZInQKernel/OneProof/H/GoodModelIsoCopy.lean` (generated: `python3 scratch/fold33-copy/gen/gen.py
+  scratch/fold33-copy/taint_0_base.txt sga3,gm ZInQKernel/OneProof/H/GoodModelIsoCopy.lean`): the same 65 declarations,
+  copied from the originals with both folds (suffix GM/_gm). Fold G's edit counts equal fold33-combine's gm_fold.py:
+  14 `mumfordGroupLaw` fields narrowed to `GroupLaw.MumfordGroupLawDVR` (gens 14–27), 3 `qmFamilyGroupLaw_of_groupLaw` →
+  `qmFamilyGroupLaw_of_dvr`, 1 `y3Connected_of_leaves` → `y3Connected_of_ab_gl ∘ qmFamilyGroupLaw_of_dvr`, 2 field swaps
+  `mumfordGroupLawConn` → `neronSchemeExtensionDedekind` (gens 28, 29), 1 supplier
+  `mumfordGroupLaw := GoodModelIso.mumfordGroupLawDVR_of_dedekind n.neronSchemeExtensionDedekind`, 1 pass-through;
+  sga3 edits as in step 1. The copy is taken from the originals rather than from NoSGA3Copy (same carriers, same 65
+  declarations; names do not stack). NoSGA3Copy and TailZ49 stay, unchanged, outside frozenTarget's closure.
+- `ZInQKernel/OneProof/H/TailZ50.lean` (top.py gm): `OpenResearchLeaves31` (24 fields: OpenResearchLeaves30 with
+  `mumfordGroupLawConn` → `neronSchemeExtensionDedekind`), `openResearchLeaves29GM_of_OpenResearchLeaves31`,
+  `OpenTextbookLeaves16` (OpenTextbookLeaves15 without `neronSchemeExtensionExists`),
+  `openTextbookLeaves15_of_OpenTextbookLeaves16 (n) (h : NeronSchemeExtensionDedekind)` (supplier
+  `GroupLawNeron.neronSchemeExtensionExists_of_dedekind h`), `sixContactMin_of_open43 (r : OpenResearchLeaves31)
+  (t : OpenTextbookLeaves16) (l : OpenAddedLeaves20) := sixContactMin_of_open40_hf_gm …`. Main: import TailZ50, binders
+  31/16, `sixContactMin_of_open43 r t l`; docstring paragraph. TailZ49's module docstring: path typo fixed (no
+  declaration change).
+- kinds.tsv: rows `mumfordGroupLawConn` (research) and `neronSchemeExtensionExists` (textbook) dropped; row
+  `neronSchemeExtensionDedekind` added (research, published, LEAF/LEAF, flag "locator UNVERIFIED (BLR, Neron models,
+  1.4 Thm 3 with 1.2 Def 1, existence half, affine Dedekind base)", packet R2, tier T4, unverified-locator, area issue
+  #85; the row of goodmodel-iso's spec as fold33-combine wrote it). claims.tsv: the two held project rows (neron-ext,
+  group-law) dropped.
+- Checks (VERIFIED):
+  - `lake build +Main +Discharges +…H.NoSGA3Copy +…H.TailZ49 +…H.GoodModelIsoCopy +…H.TailZ50`: OK, 14196 jobs
+    (`build_2_gm-tail.txt`; GoodModelIsoCopy 11 s).
+  - `#print axioms ZInQ.OneProof.frozenTarget` and `HDec.HSyn.sixContactMin_of_open43`: [propext, Classical.choice, Quot.sound].
+  - Closure (`closure_2_gm.txt`, 270833 constants): none of the SGA 3 VI_B 3.10 names, none of
+    `MumfordConn.MumfordGroupLawConn`, `mumfordGroupLaw_of_conn`, `MumfordRigidity.MumfordGroupLaw`,
+    `qmFamilyGroupLaw_of_groupLaw`; no HomFree, no sorryAx; originals and the NS copies out of it, `OpenResearchLeaves29GM`
+    and `sixContactMin_of_open43` in it; `NeronSchemeExtensionDedekind`, `mumfordGroupLawDVR_of_dedekind`,
+    `neronSchemeExtensionExists_of_dedekind` in it; `NeronC.NeronSchemeExtensionExists` stays as a proved intermediate
+    statement, no bundle field has it as type. Bundles: OpenResearchLeaves31 24 fields, OpenTextbookLeaves16 3,
+    OpenAddedLeaves20 4.
+  - Hash guard (`hashes_1b_move.txt` → `hashes_2_gm.txt`, `hashdiff_2_gm.txt`): before 14705, after 15313, only before 0,
+    only after 608 (566 GoodModelIsoCopy, 42 TailZ50), changed 1 (`ZInQ.OneProof.frozenTarget`). Against the base
+    (`hashes_0_base.txt`): only before 0, only after 1206, changed 1 (frozenTarget).
+  - OpenStatements: 39 open hypotheses.
+  - render_open then `--check`: ok, 39 open hypotheses, all classified; **31 H hypotheses, strictest 11/20, 8 others**.
+  - frontier_crosswalk then `--check`: ok (232 IDs, 30 matched; `neronSchemeExtensionDedekind` has no frontier ID).
+  - DischargesTest rerun: 38 `DISCHARGES` lines (48 before; the 10 dropped are the entries for the removed fields
+    `mumfordGroupLawConn`, `neronSchemeExtensionExists`).
+  - autoform check blueprint: OK, 781 articles, 2531 declaration names resolved (`autoform_2_gm.txt`); the pages naming
+    `OpenResearchLeaves28.mumfordGroupLawConn` and `OpenResearchLeaves28.sga3_VIB_3_10_Nbhd` still resolve, since the
+    originals stay.
+
+Counts (render_open): base 33 H, strictest 13/20 → step 1: 32, 12/20 → step 2: 31, 11/20 (8 others throughout;
+open hypotheses 41 → 40 → 39).
