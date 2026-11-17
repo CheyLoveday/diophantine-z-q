@@ -25,7 +25,7 @@ from copylib import emit, find_decl
 copylib.CTX = re.compile(copylib.CTX.pattern[:-1] + r"|attribute \[-instance)")
 
 H = "ZInQKernel/OneProof/H/"
-TOP = "HDec.HSyn.sixContactMin_of_open72"
+TOP = "HDec.HSyn.sixContactMin_of_open73"  # d2a6b on f3402e89: TailZ80 (bost-gr9 bypass), below the count-neutral TailZ81-83 conversions
 TD = "scratch/d2a6b/taintD-out.txt"
 TD2 = "scratch/d2a6b/taintD2-out.txt"
 R6U = "_root_.HDec.D2A6.R6U"
@@ -91,11 +91,22 @@ def main():
             nodes[k] = (nodes[k][0], nodes[k][1], sorted(set(nodes[k][2]) | set(v[2])))
     carriers = carriers_of(TD, "IX35") | carriers_of(TD2)
     def carrier_file(cs):
+        # d2a6b: bost-gr9 copied the bundles into `HDec.HSyn.GR9` under the same short names (TailZ80): match the
+        # namespace of the declaration, not only its short name
+        short = cs.split(".")[-1]
+        hits = []
         for cand in sorted(os.listdir(H)):
             p = H + cand
-            if cand.endswith(".lean") and re.search(r"^structure " + cs.split(".")[-1] + r" ", open(p).read(), re.M):
-                return p
-        raise SystemExit("no file for carrier " + cs)
+            if not (cand.endswith(".lean") and re.search(r"^structure " + short + r" ", open(p).read(), re.M)):
+                continue
+            for i in find_decl(p, short, ("structure",)):
+                ns = ".".join(n for op, _, _ in copylib.context(p, i)[1:]
+                              for n in [re.sub(r"^namespace ", "", op)] if op.startswith("namespace "))
+                if (ns + "." + short) == cs:
+                    hits.append((p, i))
+        if len(hits) != 1:
+            raise SystemExit(f"carrier {cs}: {len(hits)} declarations {hits}")
+        return hits[0][0]
     cfile = {cs: carrier_file(cs) for cs in carriers}
 
     def parent(n):
@@ -131,15 +142,7 @@ def main():
         short = c.split(".")[-1] if cs is None else cs.split(".")[-1] + "." + c.split(".")[-1]
         items.append((mod2file(mod), short, None, c))
     for s in sorted(carriers):
-        f = None
-        for cand in sorted(os.listdir(H)):
-            p = H + cand
-            if cand.endswith(".lean") and re.search(r"^structure " + s.split(".")[-1] + r" ", open(p).read(), re.M):
-                f = p
-                break
-        if f is None:
-            raise SystemExit("no file for carrier " + s)
-        items.append((f, s.split(".")[-1], ("structure",), s))
+        items.append((cfile[s], s.split(".")[-1], ("structure",), s))
     # module order
     order, seen = [], set()
 
@@ -157,7 +160,7 @@ def main():
                     visit(i)
         order.append(f)
     sys.setrecursionlimit(100000)
-    visit("ZInQKernel.OneProof.H.TailZ79")
+    visit("ZInQKernel.OneProof.H.TailZ80")
     rank = {f: i for i, f in enumerate(order)}
     ren = {}
     for f, s, k, full in items:
@@ -212,7 +215,7 @@ def main():
         raise SystemExit(f"edit counts {n_fix}")
     hdr = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "header.lean")).read()
     open(sys.argv[1], "w").write(hdr + "\n" + "\n".join(blocks) +
-                                 "\n#print axioms HDec.HSyn.sixContactMin_of_open72_u\n")
+                                 "\n#print axioms HDec.HSyn.sixContactMin_of_open73_u\n")
     print(len(blocks), "blocks;", len(copy), "declarations,", len(carriers), "structures; edits", n_fix)
     open("scratch/d2a6b/gen/copied.txt", "w").write("\n".join(log) + "\n")
 

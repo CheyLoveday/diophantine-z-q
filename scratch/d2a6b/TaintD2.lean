@@ -1,6 +1,6 @@
-import ZInQKernel.OneProof.H.TailZ79
+import ZInQKernel.OneProof.H.TailZ83
 import Lean
-/-! d2a6-reroute: carriers by constructor type. In the closure of `sixContactMin_of_open72`, every structure whose
+/-! d2a6-reroute: carriers by constructor type. In the closure of `sixContactMin_of_open76` (d2a6b: rerun on TailZ83), every structure whose
 constructor type mentions `PkgI2.RaynaudCriterionNF` or the types of the IX 3.5 seed fields (`SemistableUnipotent`,
 `SGA7_IX_3_5_ForwardGeom`, `SGA7_IX_3_5_ForwardGeom_Def34`), and every constant whose type mentions one of these
 carriers or `PkgI2.RaynaudCriterionNF` (with its `HDec` value uses). -/
@@ -24,7 +24,7 @@ run_cmd do
   let env ← getEnv
   let mut seen : NameSet := {}
   let mut valUses : Std.HashMap Name (Array Name) := {}
-  let mut todo : Array Name := #[`HDec.HSyn.sixContactMin_of_open72]
+  let mut todo : Array Name := #[`HDec.HSyn.sixContactMin_of_open76]
   while !todo.isEmpty do
     let c := todo.back!
     todo := todo.pop

@@ -3,8 +3,8 @@
 with A6 on the manuscript's `Y₃` leaf `Y3RouteA.Y3FullThreeRepZ30` (y3-route-a) instead of sgr-split's
 `ShimuraIntegralModelRep` (d2a6-reroute's first version, scratch/d2a6-reroute/gen/gen_bypass.py).
 
-The chain (`Contrib/OneProof/D2A6Chain.lean`, gen_chain.py) proves `sixContactMin_of_open72_u` from
-`OpenResearchLeaves53U` = `OpenResearchLeaves53` with the IX 3.5 field replaced by `r6u : D2A6.R6U`, where now
+The chain (`Contrib/OneProof/D2A6Chain.lean`, gen_chain.py) proves `sixContactMin_of_open73_u` from
+`OpenResearchLeaves54U` = `OpenResearchLeaves54` (TailZ80; on f3402e89) with the IX 3.5 field replaced by `r6u : D2A6.R6U`, where now
 `R6U = SZRaynaud.RaynaudWildNF ∧ Y3RouteA.Y3FullThreeRepZ30` (`Contrib/OneProof/D2A6Wrap.lean`). This script writes the
 next research bundle from the current top one, `R0`, field by field:
 
@@ -17,7 +17,7 @@ next research bundle from the current top one, `R0`, field by field:
   `y3FineModuliAbP := Y3RouteA.y3FineModuliAbP_of_z30 n.y3FullThreeRepZ30`), and `--mode add` keeps
   `y3FineModuliAbP` and adds `y3FullThreeRepZ30` (this base alone without y3-route-a's discharge);
 
-then the conversion to `OpenResearchLeaves53U` and the next top theorem. Options:
+then the conversion to `OpenResearchLeaves54U` and the next top theorem. Options:
 
     python3 scratch/d2a6b/gen/gen_bypass.py [--mode absorb|add|post] [--base FILE] [--out FILE] [--rows FILE]
 
@@ -33,8 +33,8 @@ af = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(af)
 import render_open  # noqa: E402 (autofold put scripts/one_proof on sys.path)
 
-CHAIN_R = 'OpenResearchLeaves53'          # the bundle the generated chain copies (its `...U` is the chain's top)
-CHAIN_TOP = 'sixContactMin_of_open72'     # the chain's top theorem (its `_u` copy)
+CHAIN_R = 'OpenResearchLeaves54'          # the bundle the generated chain copies (its `...U` is the chain's top; d2a6b on f3402e89: TailZ80)
+CHAIN_TOP = 'sixContactMin_of_open73'     # the chain's top theorem (its `_u` copy)
 Y3_SPEC = 'scratch/y3-route-a/autofold.json'
 Y3_ROW = 'scratch/y3-route-a/kinds-row.tsv'
 
@@ -166,12 +166,15 @@ def main():
             conv.append('  raynaudSemistableSHOr := _root_.SZRaynaud.raynaudSemistableSHOr_of_sz35 n.silverbergZarhinThm35')
         elif f == 'y3FineModuliAbP' and 'y3FineModuliAbP' not in new_names:
             conv.append('  y3FineModuliAbP := _root_.Y3RouteA.y3FineModuliAbP_of_z30 n.y3FullThreeRepZ30')
+        elif f == 'carayolThmAIrr' and 'carayolThmAIrr' not in new_names:
+            # carirr-refold (TailZ83), as in its conversion `openResearchLeaves56_of_OpenResearchLeaves57`
+            conv.append('  carayolThmAIrr := _root_.CarayolRefold.carayolThmAIrr_of_frob n.carayolThmAFrob')
         elif f in new_names:
             conv.append(f'  {f} := n.{f}')
         else:
             af.die(f'{CHAIN_R} field {f}: no value from {NEWR} (regenerate the chain on this base)')
     unused = [f for f in new_names if f not in chain_names and f not in
-              ('silverbergZarhinThm35', 'elliotWildInertiaTrivial', 'y3FullThreeRepZ30')]
+              ('silverbergZarhinThm35', 'elliotWildInertiaTrivial', 'y3FullThreeRepZ30', 'carayolThmAFrob')]
     if unused:
         af.die(f'{NEWR} fields not read by the conversion: {unused}')
 
@@ -212,14 +215,14 @@ def main():
         '`SZRaynaud.raynaudWildNF_of_leaves` (L814-818; the Néron input from `neronSchemeExtensionDedekind`) and',
         '`y3FullThreeRepZ30` (L443-477); `raynaudSemistableSHOr` from `silverbergZarhinThm35`; `y3FineModuliAbP` from',
         '`y3FullThreeRepZ30` (y3-route-a\'s `y3FineModuliAbP_of_z30`) where it is not a field. -/',
-        f'theorem openResearchLeaves53U_of_{NEWR} (n : {NEWR}) : {CHAIN_R}U where',
+        f'theorem {CHAIN_R[0].lower() + CHAIN_R[1:]}U_of_{NEWR} (n : {NEWR}) : {CHAIN_R}U where',
         *conv,
         '',
         '/-- **G0 with only the open leaves and the open glue** (d2a6b: D2 through L814-818, A6 and the kernel field',
         'through the manuscript\'s model of `Y₃` over ℤ[1/30], L443-477; SGA 7 IX 3.5 and 4.7 removed). -/',
         f'theorem {NEWTOP} (r : {NEWR}) (t : {T0}) (l : {A0}) :',
         '    ZInQ.SixContactMin :=',
-        f'  {CHAIN_TOP}_u (openResearchLeaves53U_of_{NEWR} r) t l',
+        f'  {CHAIN_TOP}_u ({CHAIN_R[0].lower() + CHAIN_R[1:]}U_of_{NEWR} r) t l',
         '',
         'end HSyn',
         '',

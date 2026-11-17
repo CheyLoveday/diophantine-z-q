@@ -25,3 +25,16 @@ Base: fork main d435851d; merged origin/wip/d2a6-reroute (698c8c9e) and origin/w
 - `lake build ZInQKernel.Contrib.OneProof.A6Z30`: success (14376 jobs, 0 errors; build-a6z30.txt). VERIFIED axioms
   [propext, Classical.choice, Quot.sound] for spec_to_Z30_ext, z30ToLocal, hasGoodReduction_of_z30, qmModelG3U_of_z30,
   modelG3G6_of_leavesU_z30.
+
+## Rebase onto fork main f3402e89 (fold-b112; host's late note)
+
+- `git merge f3402e89` clean (merge commit fdd1502a7). New top: TailZ83 `sixContactMin_of_open76` on
+  `OpenResearchLeaves57` (30 fields); `silverbergZarhinThm35` and `y3FullThreeRepZ30` are bundle fields; bost-gr9's
+  bypass (TailZ80) copied the research bundles `OpenResearchLeaves53 … 8EB` into `HDec.HSyn.GR9` (same short names).
+- Chain top moved to TailZ80's `HDec.HSyn.sixContactMin_of_open73` (bundle `OpenResearchLeaves54`): TailZ81-83 are
+  field-by-field conversions (raynaudSemistableSHOr from SZ 3.5, y3FineModuliAbP from Y3Z30, carayolThmAIrr from
+  carayolThmAFrob), so the bypass maps `OpenResearchLeaves57`'s successor directly to `OpenResearchLeaves54U`.
+- gen_chain.py: TOP = open73, module order from TailZ80, carrier files matched by namespace (GR9 copies).
+- gen_bypass.py: CHAIN_R = OpenResearchLeaves54, conversion of `carayolThmAIrr` added; `--mode post` (both
+  `silverbergZarhinThm35` and `y3FullThreeRepZ30` mapped).
+- build-a6z30.txt trimmed to its A6Z30/axioms/"Build completed" lines.

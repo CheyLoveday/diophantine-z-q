@@ -1,6 +1,6 @@
-import ZInQKernel.OneProof.H.TailZ79
+import ZInQKernel.OneProof.H.TailZ83
 import Lean
-/-! d2a6-reroute (adapted from piczero-char0's Taint2.lean): in the closure of `sixContactMin_of_open72`,
+/-! d2a6-reroute (adapted from piczero-char0's Taint2.lean): in the closure of `sixContactMin_of_open76` (d2a6b: rerun on TailZ83),
 (T) constants whose value depends transitively on a seed projection, and (S) constants whose type mentions a
 structure carrying a seed field or `PkgI2.RaynaudCriterionNF`. Two seed sets: IX 3.5 (`sga7_IX_3_5_ForwardGeom_Def34`,
 `sga7_IX_3_5_ForwardGeom`, `semistableUnipotent`, `r6`) and Cor 3.3 (`sga7_IX_Cor3_3_Def34`, `sga7_IX_3_3_SHpre`,
@@ -29,7 +29,7 @@ run_cmd do
   let env ← getEnv
   let mut seen : NameSet := {}
   let mut valUses : Std.HashMap Name (Array Name) := {}
-  let mut todo : Array Name := #[`HDec.HSyn.sixContactMin_of_open72]
+  let mut todo : Array Name := #[`HDec.HSyn.sixContactMin_of_open76]
   while !todo.isEmpty do
     let c := todo.back!
     todo := todo.pop
