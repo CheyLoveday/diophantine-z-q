@@ -32,3 +32,11 @@
   flag_class pending-review, rated_by "r16-thm1b; pending review", area elliotglazer/diophantine-z-q#37).
   render_open --check there: only "kinds.tsv does not classify afShimura, heckeJ1DS / rows no longer open"
   (OpenStatements not regenerated; needs the Lean build).
+
+## Fold checks (VERIFIED, 14:12)
+- lake build ZInQKernel.OneProof.Main + Discharges on the merged tree: success (15987 jobs; frozenTarget standard).
+- FoldCheck.lean compiles; sixContactMin_of_open77: [propext, Classical.choice, Quot.sound].
+- #discharges: 30 open hypotheses, 11497 theorems checked, 18 discharge one; afShimura by
+  R16Thm1b.afShimura_of_thm1Af (still assumes ShimuraThm1Af), heckeJ1DS by R16Thm1.heckeJ1DS_of_bSh (still assumes
+  BShStandardModel); standard axioms.
+## Report docs/research/r16-thm1b.md complete.

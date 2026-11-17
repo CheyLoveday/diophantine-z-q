@@ -127,7 +127,43 @@ its Lean statement; its flag now records this split.
 
 ## 5. Fold (`scratch/r16-thm1b/autofold.json`)
 
-@@FOLD@@
+* Discharges `heckeJ1DS := R16Thm1.heckeJ1DS_of_bSh n.bShStandardModel` and
+  `afShimura := R16Thm1b.afShimura_of_thm1Af n.shimuraThm1Af`. **No generation step**: both are fields of the top
+  bundle `OpenResearchLeaves57` (TailZ83). The round-2 row `shimuraQuotientIsAf` is gone.
+* **Dry run** (in the worktree; `--dry-run` writes nothing): `strict count: 5/24 on 29 -> 5/24 on 29; strictest 5/24
+  -> 5/24`. Count-neutral, no `--allow-rise`. It writes TailZ84 with `OpenResearchLeaves58` and the new top
+  `sixContactMin_of_open77`. Output: `scratch/r16-thm1b/FoldDryRun.lean.txt`.
+* `scratch/r16-thm1b/FoldCheck.lean` (the dry-run module with line 1 stripped) compiles after
+  `lake build ZInQKernel.OneProof.Main` on the merged tree (`frozenTarget` standard there). `HDec.HSyn.sixContactMin_of_open77`
+  depends on `[propext, Classical.choice, Quot.sound]` (`FoldCheck-output.txt`).
+* **`#discharges`** (`scratch/r16-thm1b/DischargesCheck-output.txt`): "30 open hypotheses, 11497 theorems checked,
+  18 discharge one". Among them:
+  * `DISCHARGES [OpenResearchLeaves57.afShimura] by R16Thm1b.afShimura_of_thm1Af`, still assumes
+    `[R16Thm1b.ShimuraThm1Af]`, axioms `[propext, Classical.choice, Quot.sound]`;
+  * `DISCHARGES [OpenResearchLeaves57.heckeJ1DS] by R16Thm1.heckeJ1DS_of_bSh`, still assumes
+    `[R16Thm1.BShStandardModel]`, standard axioms;
+  * round 2's `R16Thm1.afShimura_of_shimura73`, still assuming `[ShimuraThm1Printed, ShimuraQuotientIsAf]`, also
+    appears; it is no longer used by the spec.
+* **Exact kinds rows.** The fold was applied for real on a `git archive HEAD` copy in `/tmp`, not in the worktree.
+  `scratch/r16-thm1b/kinds-diff.txt` has the full rows. Columns: bundle, field, kind, strict, strictest, rated_by,
+  flag_class, area_issue.
+  * Removed: `research afShimura consequence GLUE GLUE` and `research heckeJ1DS consequence GLUE GLUE` (queue11
+    verdicts).
+  * Added: `research shimuraThm1Af consequence GLUE GLUE "r16-thm1b; pending review" pending-review
+    elliotglazer/diophantine-z-q#37`. Flag: "pending review: Shimura 1973 Thm 1 as printed (AI page read: Ker nu
+    p. 525, uniqueness up to isomorphisms over Q p. 526, tangent space and m = 1 from q-expansions p. 527, C from the
+    ideal intersected with End(J) p. 526); on-the-spot steps: C = I_f J (the ideal is ker rho, saturation, Hecke
+    relations in both directions), (ii) for all n from p and p^2 via xi_{p^2} = T_p^2 - p<p> (theorem step),
+    nu-compatible isomorphisms; misprint in the f_sigma sentence before (iv) on p. 526 ('f_sigma | T_n = a_n^sigma f'
+    for 'a_n^sigma f_sigma') recorded in docs/research/r16-thm1b.md". Source: Shimura, J. Math. Soc. Japan 25
+    (1973), 523–544, Theorem 1 and its construction (pp. 525–527; AI page read).
+  * Added: `research bShStandardModel consequence GLUE GLUE "r16-thm1b; pending review" pending-review
+    elliotglazer/diophantine-z-q#37`. Flag: "pending review: bridge B-Sh; rationality of the Hecke ring over Q
+    printed in Shimura 1973 p. 526 (AI page read, no citation on the page); ON THE SPOT: the kernel's IsX1Gen model
+    is Shimura's standard model (defined by citation of Shimura 1971) and xi_p, <d> act by DS's double-coset
+    formulas (convention dictionary)".
+  * In that copy, `render_open.py --check` complains only that OpenStatements is not regenerated (afShimura and
+    heckeJ1DS are still listed as open). Regenerating it needs the Lean build, which is the maintainers' step.
 
 ## Manuscript check
 
