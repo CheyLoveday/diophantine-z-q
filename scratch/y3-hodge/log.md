@@ -30,3 +30,6 @@ unrelated TYZThm21Span files).
   the docstring's "h_τ(i) = J_τ" holds for G = B^{op×} acting on V = B by right multiplication; for Deligne's
   G = B^× acting on V = B by left multiplication (𝒪 on the right), transport by the canonical involution gives
   h_x(i) = J̄_τ = −J_τ (adjugate_Jmat). No statement change needed.
+- Hodge.lean stage 5 (§7 leaf): `DeligneCanonicalModelY3EveryPrint` (Ψ on ℍ^± × G(𝔸_f), fibres DCRelPM, moduli
+  IsHodgeH1Print), `deligneH_of_print : DeligneCanonicalModelY3EveryPrint → Y3Fix.DeligneCanonicalModelY3EveryH`,
+  `shimuraMainThmIDeligneY3AbU_of_printPM`: compiles, 0 errors.

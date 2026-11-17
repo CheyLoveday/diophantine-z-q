@@ -858,4 +858,97 @@ theorem F0_iff (τ : UpperHalfPlane) (M : Matrix (Fin 2) (Fin 2) ℂ) :
 
 end Sign
 
+/-! ## 7. The canonical-model leaf in the print's form -/
+
+section Leaf
+
+open LeafQM.AV.R1UnivRigid ShimuraCFT RayClassCFT
+open NumberField IsDedekindDomain TauCeti.ClassFieldTheory TauCeti.GlobalNumberFields
+
+/-- The holomorphic family `τ ↦ y(τ)` with fibres in the print's `H₁` form (`IsHodgeH1Print`). -/
+def IsShimuraHolFamilyHP (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y)
+    (yτ : UpperHalfPlane → (fieldPt ℂ ⟶ Y)) : Prop :=
+  (∀ τ : UpperHalfPlane, ∃ P : QML3 ℂ, Φ ℂ (yτ τ) = M3.mk P ∧ IsHodgeH1Print P τ) ∧
+  ShimuraSplit.IsHolFamily (X := Y.left) (fun τ => (yτ τ).left)
+
+/-- **The print's uniformization `Ψ : ℍ^± × G(𝔸_f) → Y(ℂ)`**: onto; fibres the print's double cosets
+`B^× \ (ℍ^± × G(𝔸_f) / K₃)` (`DCRelPM`); holomorphic in `τ ∈ ℍ` for every `g`; at `g = 1` the fibres in the
+print's `H₁` form; Shimura's reciprocity law at CM points `z ∈ ℍ` (conventions `ε`, `δ` existential). -/
+def DeligneBodyAtPM (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y)
+    (Ψ : HPM → BAQˣ → (fieldPt ℂ ⟶ Y)) : Prop :=
+    (∀ y : fieldPt ℂ ⟶ Y, ∃ z g, Ψ z g = y) ∧
+    (∀ z g z' g', Ψ z g = Ψ z' g' ↔ DCRelPM z g z' g') ∧
+    (∀ g, ShimuraSplit.IsHolFamily (X := Y.left) (fun τ => (Ψ (toPM τ) g).left)) ∧
+    IsShimuraHolFamilyHP Y Φ (fun τ => Ψ (toPM τ) 1) ∧
+    ∃ (ε : ℤˣ) (δ : Bool),
+      ∀ (K : Type) [Field K] [NumberField K] [IsTotallyComplex K], Module.finrank ℚ K = 2 →
+      ∀ (κ : K →+* ℂ) (q : K →ₐ[ℚ] LeafQM.B) (z : UpperHalfPlane),
+        IsCMPoint q (if δ then κ else (starRingEnd ℂ).comp κ) z →
+      ∀ (σ : ℂ ≃+* ℂ) (s : IdeleGroup (𝓞 K) K), ArtinCondC κ σ s →
+      ∀ g : BAQˣ, galPt σ (Ψ (toPM z) g) = Ψ (toPM z) (qHatU q s ^ (ε : ℤ) * g)
+
+/-- The moduli clause at `[τ, u]`, `u ∈ 𝒪̂^×` (`L_u = 𝒪`), in the print's `H₁` form. -/
+def ModuliAtUnitsHP (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y)
+    (Ψ : HPM → BAQˣ → (fieldPt ℂ ⟶ Y)) : Prop :=
+  ∀ u ∈ OhatU, ∀ τ : UpperHalfPlane, ∃ P : QML3 ℂ, Φ ℂ (Ψ (toPM τ) u) = M3.mk P ∧ IsHodgeH1Print P τ
+
+/-- **LEAF (consequence form) `DeligneCanonicalModelY3EveryPrint`: Shimura's Main Theorem I in Deligne's form for
+`Y₃`, stated as the print states it**, for every witness `(Y, Φ)` of the printed fine-moduli clause list
+`Y3Fix.R1fpPropsAbP` (one object: `Y₃ = Sh_{K₃}(B^×, ℍ^±)`; no existence claim).
+
+*Published statement* (locators recalled, UNVERIFIED; no network): G. Shimura, *Construction of class fields and
+zeta functions of algebraic curves*, Ann. of Math. 85 (1967), Main Theorem I; P. Deligne, *Travaux de Shimura*,
+Sém. Bourbaki 389 (1971), §4 (`Sh_K(ℂ) = G(ℚ) \ X × G(𝔸_f) / K` for `(G, X) = (B^×, ℍ^±)`; the point `[h, g]` is the
+abelian variety `A` with `(H₁(A, ℤ), ι_*, h_A) ≅ (L_g, left multiplication, h)`, `L_g = B ∩ 𝒪̂ g⁻¹`) and §5 (Cor. 5.7 /
+Ex. 5.8: the PEL moduli scheme is the canonical model over `E(G, X) = ℚ`, reciprocity at CM points);
+J. S. Milne, *Introduction to Shimura varieties*, §§5–8, 12–14.
+
+*Lean form*: `Ψ : ℍ^± × (B ⊗ 𝔸_f)^× → Y(ℂ)` onto, with fibres exactly the print's `DCRelPM`; holomorphic on `ℍ`
+for every `g` (on `ℍ⁻` it is then holomorphic too, `Ψ(μτ, g) = Ψ(τ, μ⁻¹g)`); the moduli clause at `[τ, u]`,
+`τ ∈ ℍ`, `u ∈ 𝒪̂^×`, in the print's `H₁` form `IsHodgeH1Print` (genuine `H₁(A(ℂ), ℤ) = π₁(A(ℂ), 0)ᵃᵇ`, its
+`𝒪`-action by functoriality, the complex structure of `Lie A` via a holomorphic homomorphism `e = exp_A ∘ L`);
+reciprocity at CM points of `ℍ`.
+
+*Form*: a consequence of the print (biholomorphism weakened to bijective and holomorphic in `τ`; moduli clause kept
+at `𝒪̂^×` without the polarization and level structure; reciprocity only at CM points of `ℍ`; conventions `ε`, `δ`
+existential). Reading risks: the polarized PEL problem (the polarization is unique and automatic: Lemma P on `H₁`,
+`Y3Hodge.lemmaP_H1`, plus Riemann's theorem, STANDARD); the sign of `h` is fixed by holomorphy (`F0_iff`). -/
+def DeligneCanonicalModelY3EveryPrint : Prop :=
+  ∀ (Y : Over (Spec (CommRingCat.of ℚ))) (Φ : PtEquiv Y), Y3Fix.R1fpPropsAbP Y Φ →
+    ∃ Ψ, DeligneBodyAtPM Y Φ Ψ ∧ ModuliAtUnitsHP Y Φ Ψ
+
+theorem bodyH_of_PM {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {Ψ : HPM → BAQˣ → (fieldPt ℂ ⟶ Y)} (h : DeligneBodyAtPM Y Φ Ψ) :
+    Y3Fix.DeligneBodyAtH Y Φ (fun τ g => Ψ (toPM τ) g) := by
+  obtain ⟨h1, h2, h3, ⟨hm, hh⟩, h5⟩ := h
+  refine ⟨fun y => ?_, fun τ g τ' g' => (h2 _ _ _ _).trans (dcRelPM_iff τ τ' g g'), h3,
+    ⟨fun τ => ?_, hh⟩, h5⟩
+  · obtain ⟨z, g, rfl⟩ := h1 y
+    obtain ⟨τ, g', hrel⟩ := exists_upper z g
+    exact ⟨τ, g', ((h2 z g (toPM τ) g').2 hrel).symm⟩
+  · obtain ⟨P, hP, hH⟩ := hm τ
+    exact ⟨P, hP, (print_iff_hodge P τ).1 hH⟩
+
+theorem unitsH_of_PM {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
+    {Ψ : HPM → BAQˣ → (fieldPt ℂ ⟶ Y)} (h : ModuliAtUnitsHP Y Φ Ψ) :
+    Y3Fix.ModuliAtUnitsH Y Φ (fun τ g => Ψ (toPM τ) g) := by
+  intro u hu τ
+  obtain ⟨P, hP, hH⟩ := h u hu τ
+  exact ⟨P, hP, (print_iff_hodge P τ).1 hH⟩
+
+/-- **The old leaf from the print-form leaf** (GLUE, proved): restrict `Ψ` to `ℍ ⊂ ℍ^±`. Onto by `exists_upper`,
+fibres by `dcRelPM_iff`, moduli clause by `print_iff_hodge`; the other clauses verbatim. -/
+theorem deligneH_of_print (h : DeligneCanonicalModelY3EveryPrint) : Y3Fix.DeligneCanonicalModelY3EveryH := by
+  intro Y Φ hY
+  obtain ⟨Ψ, hb, hU⟩ := h Y Φ hY
+  exact ⟨fun τ g => Ψ (toPM τ) g, bodyH_of_PM hb, unitsH_of_PM hU⟩
+
+/-- The discharge of the research field from the print-form leaf (with y3-fix's `Y3FineModuliAbP` and the
+textbook field `mumfordTorsionAlgClosed`). -/
+theorem shimuraMainThmIDeligneY3AbU_of_printPM (hM : AvSplit.MumfordTorsionAlgClosed)
+    (h1 : Y3Fix.Y3FineModuliAbP) (h2 : DeligneCanonicalModelY3EveryPrint) : ShimuraMainThmIDeligneY3AbU :=
+  Y3Fix.shimuraMainThmIDeligneY3AbU_of_print hM h1 (deligneH_of_print h2)
+
+end Leaf
+
 end Y3Hodge
