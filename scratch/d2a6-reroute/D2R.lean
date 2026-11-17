@@ -76,7 +76,7 @@ theorem isWildInertia_of_wild_gen {K₀ Ω : Type} [Field K₀] [Field Ω] [Alge
     have hc' : f a * f (c : Ω) = 1 := by
       rw [← map_mul]
       have := congrArg Subtype.val hc
-      simp only [Subring.coe_mul, OneMemClass.coe_one] at this
+      simp only [OneMemClass.coe_one] at this
       rw [show ((⟨a, haw⟩ * c : normVS f) : Ω) = a * c from rfl] at this
       rw [this, map_one]
     have hcn : ‖f (c : Ω)‖ ≤ 1 := c.2
@@ -85,7 +85,7 @@ theorem isWildInertia_of_wild_gen {K₀ Ω : Type} [Field K₀] [Field Ω] [Alge
     have h0 : 0 ≤ ‖f a‖ := norm_nonneg _
     nlinarith
   have hva : (normVS f).valuation a < 1 :=
-    ((normVS f).valuation_lt_one_iff ⟨a, haw⟩).mpr hmax
+    ((normVS f).valuation_lt_one_iff ⟨a, haw⟩).mp hmax
   have hvx : 0 < (normVS f).valuation x := by
     rw [zero_lt_iff]
     exact (Valuation.ne_zero_iff _).mpr hx

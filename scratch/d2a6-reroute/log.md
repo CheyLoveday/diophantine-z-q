@@ -22,3 +22,15 @@
   ShimuraGoodReductionNoGuard.lean: for p > 324 a proper smooth curve over Z_(p) with a QMAbScheme representing the
   moduli problem on locally noetherian Z_(p)-schemes); it was a bundle field from leaf-fold22 (TailZ34) and was pruned
   by sgr-fold (TailZ39). VERIFIED (read).
+- Run 2 (11-17 10:22): rebuilt `TailZ79` + `SZRaynaud` (lake build, 15380 jobs, 0 errors; /tmp log).
+- D2R.lean: one fix (`valuation_lt_one_iff ... .mp`); compiles; `#print axioms` of `isWildInertia_of_wild_gen`,
+  `raynaudPlaceFix_of_wildNF`, `torsFix_of_wildNF`, `localGlue_of_descent_wildNF`: [propext, Classical.choice,
+  Quot.sound]. VERIFIED (scratch/d2a6-reroute/d2r-out.txt).
+- A6U.lean (A6 on L529-530 from sgr-split's `ShimuraIntegralModelRep`): `D2A6.hasGoodReduction_of_intModel`
+  (QML3 object over K ⊇ ℚ has good reduction at every valuation subring O of K in which a prime p > 324 is not a
+  unit: classifying point, valuative criterion, pullback of the universal QMAbScheme, rigidity), the copy
+  `HDec.LTGoodRed.goodRedTorsionT` (gen/gen_goodred.py), `HDec.D2A6.qmModelG3U_of`, `modelG3G6_of_leavesU`:
+  all compile, standard axioms. VERIFIED (a6u-out.txt).
+- Third r6 consumer found (not in sz-raynaud's report): the kernel field, `KernelField.kernelFieldExists_of_pieces_hf`
+  via `good_of_QML3 hNOS hRay hTors K PK (T u) (three_mem_T u)` (good reduction of the model outside T(u), B3(v)).
+  It is the same manuscript step L529-530. VERIFIED (read, Contrib/OneProof/HomFreeFiniteAlgClosedReroute/Consumers.lean:1196).

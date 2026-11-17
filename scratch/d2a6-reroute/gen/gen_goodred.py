@@ -18,7 +18,7 @@ NEW3 = """  have hpO : ¬ IsUnit ((p : ℕ) : O) := by
       push_cast at this
       exact this
     have hpi : ((p : K))⁻¹ ∈ O := by
-      rw [eq_inv_of_mul_eq_one_right hc']
+      rw [← eq_inv_of_mul_eq_one_right hc']
       exact c.2
     rw [ValuationSubring.mem_comap, map_inv₀, map_natCast] at hpi
     rw [ValuationSubring.mem_nonunits_iff_or] at hpw
@@ -28,7 +28,7 @@ NEW3 = """  have hpO : ¬ IsUnit ((p : ℕ) : O) := by
 """
 edits = [
     ("theorem goodRedTorsionT : HSyn.LinkedTate.GoodRedTorsion := by",
-     "theorem goodRedTorsionT (T : Finset ℕ) : _root_.D2A6.GoodRedTorsionT T := by"),
+     "theorem goodRedTorsionT (T : Finset ℕ) : _root_.HDec.D2A6.GoodRedTorsionT T := by"),
     (OLD3, NEW3),
     ("(hA O h3)", "(hA O p hp hp3 hpO)"),
 ]

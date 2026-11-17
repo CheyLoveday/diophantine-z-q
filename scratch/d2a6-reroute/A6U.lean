@@ -25,22 +25,27 @@ namespace D2A6
 
 open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open LeafQM LeafQM.AV LeafQM.AV.R1UnivRigid HDec.VertWitness HDec.CurveSplitGR SGRSplit
+open scoped CategoryTheory.Obj
+
+/-- `f^*u` over the first projection (any base change `f`; sgr-split's `map_left_fst` is for field points). -/
+theorem map_left_fst' {S S' : Scheme.{0}} (f : S' ⟶ S) {X Z : Over S} (u : X ⟶ Z) :
+    ((Over.pullback f).map u).left ≫ pullback.fst Z.hom f = pullback.fst X.hom f ≫ u.left := by
+  simp [Over.pullback_map_left]
 
 /-- **The identity of a base change lies over the identity** (proved): for a group object `X` over `S` and
 `f : S' → S`, `η[f^*X] ≫ pr₁ = f ≫ η[X]`. -/
 theorem eta_pullback_fst {S S' : Scheme.{0}} (f : S' ⟶ S) (X : Over S) [GrpObj X] :
     (η[(Over.pullback f).obj X] : 𝟙_ _ ⟶ _).left ≫ pullback.fst X.hom f = f ≫ (η[X] : 𝟙_ _ ⟶ X).left := by
-  rw [Functor.obj.η_def, Over.comp_left, Category.assoc, map_left_fst, ← Category.assoc]
+  rw [Functor.obj.η_def, Over.comp_left, Category.assoc, map_left_fst', ← Category.assoc]
   congr 1
-  have h1 := pullback.condition (f := (𝟙_ (Over S)).hom) (g := f)
   have h2 := Over.w (Functor.LaxMonoidal.ε (Over.pullback f))
-  simp only [Over.tensorUnit_hom] at h1 h2
-  rw [Category.comp_id] at h1
-  change _ ≫ pullback.fst (𝟙 S) f = f
-  rw [h1, ← Category.assoc]
-  change ((Functor.LaxMonoidal.ε (Over.pullback f)).left ≫ ((Over.pullback f).obj (𝟙_ (Over S))).hom) ≫ f = f
-  rw [h2]
-  exact Category.id_comp f
+  have key : (Functor.LaxMonoidal.ε (Over.pullback f)).left ≫ pullback.fst (𝟙_ (Over S)).hom f ≫
+      (𝟙_ (Over S)).hom = f := by
+    rw [pullback.condition, ← Category.assoc]
+    change ((Functor.LaxMonoidal.ε (Over.pullback f)).left ≫ ((Over.pullback f).obj (𝟙_ (Over S))).hom) ≫ f = f
+    rw [h2]
+    simp
+  simpa using key
 
 /-- **Integers prime to `p` are units of a local ring in which `p` is not a unit** (proved). -/
 theorem isUnit_of_not_dvd {R : Type} [CommRing R] [IsLocalRing R] (p : ℕ) [hp : Fact p.Prime]
@@ -126,9 +131,6 @@ theorem hasGoodReduction_of_intModel (hRep : ShimuraIntegralModelRep) {K : Type}
   have ek : e.hom ≫ pullback.fst FO.hom j ≫ pullback.fst 𝒜.F.hom ℓ = k := hpb.isoIsPullback_hom_fst _ _ hpbj
   have eh : e.hom ≫ Fj.hom = PK.A.X.hom := hpb.isoIsPullback_hom_snd _ _ hpbj
   let eO : PK.A.X ≅ Fj := Over.isoMk e eh
-  haveI := PK.A.grp
-  haveI := PK.A.proper
-  haveI := PK.A.geomInt
   have : IsSeparated Fj.hom := by dsimp [Fj]; infer_instance
   have : LocallyOfFiniteType Fj.hom := by dsimp [Fj]; infer_instance
   have h0 : η[PK.A.X] ≫ eO.hom = η[Fj] := by
@@ -140,7 +142,6 @@ theorem hasGoodReduction_of_intModel (hRep : ShimuraIntegralModelRep) {K : Type}
       change _ = η[(Over.pullback j).obj FO].left ≫ _
       rw [← Category.assoc, eta_pullback_fst, Category.assoc, eta_pullback_fst, ← Category.assoc, hℓ,
         ← 𝒜.one_eq]
-      rfl
     · exact (Over.w (η[PK.A.X] ≫ eO.hom)).trans (Over.w η[Fj]).symm
   haveI : IsMonHom eO.hom := _root_.MulRigidity.isMonHom_of_geometricallyIntegral PK.A.X Fj eO.hom h0
   exact (Grp.mkIso' eO).symm
@@ -199,7 +200,7 @@ open G0ModField
 set_option maxHeartbeats 1000000 in
 /-- **`GoodRedTorsionT T`, proved** (d2a6-reroute: lt-goodred's `goodRedTorsion` copied, with DVRs in which `3` is a unit replaced by DVRs in which a prime `p ∉ T` is not a unit; the original's text otherwise: (Mathlib, the copied `bcPt`/`trPt` and neron-lg's DVR
 classification; NOS enters as the hypothesis of the Prop). -/
-theorem goodRedTorsionT (T : Finset ℕ) : _root_.D2A6.GoodRedTorsionT T := by
+theorem goodRedTorsionT (T : Finset ℕ) : _root_.HDec.D2A6.GoodRedTorsionT T := by
   intro hNOS K L L' _ hKL hLL' A hA ℓ _
   letI hNF : NumberField L' := numberField_of_fd L'
   intro p hp hp3 hpl v hv σ' hσ n x hx
@@ -282,7 +283,7 @@ theorem goodRedTorsionT (T : Finset ℕ) : _root_.D2A6.GoodRedTorsionT T := by
       push_cast at this
       exact this
     have hpi : ((p : K))⁻¹ ∈ O := by
-      rw [eq_inv_of_mul_eq_one_right hc']
+      rw [← eq_inv_of_mul_eq_one_right hc']
       exact c.2
     rw [ValuationSubring.mem_comap, map_inv₀, map_natCast] at hpi
     rw [ValuationSubring.mem_nonunits_iff_or] at hpw
@@ -357,7 +358,7 @@ theorem lt_of_notMem_T324 {p : ℕ} (hp : p.Prime) (h : p ∉ T324) : 324 < p :=
   by_contra h'
   exact h (Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega), hp⟩)
 
-theorem T324_subset_T (u : ℚ) : T324 ⊆ HSyn.LinkedTate.T u := by
+theorem T324_subset_T (u : ℚ) : T324 ⊆ T u := by
   intro q hq
   obtain ⟨hq1, hq2⟩ := Finset.mem_filter.mp hq
   exact Finset.mem_union_left _ (ZInQ.Mult.mem_S_mul_of_le hq2 (by
