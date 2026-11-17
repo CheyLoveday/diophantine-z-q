@@ -265,6 +265,9 @@ Neither field can be dropped on this base.
 
 On the cm-branch base (origin/wip/cm-branch, not merged here), NoCM and `R5ptProps` are pruned.
 * `elkiesX6StarEveryIdeal` would then still be read by `HeckeSqrtBranchAny`, unless sgr-direct is also re-routed.
+  `SGRDirect.heckeSqrtBranchAny_of_elkies` (SGRDirectElkies.lean:167) reads Elkies' chart section `s` with
+  `s² = −t_E`, the square root in `ℚ(X*(1))(√−t, …)` (Elkies p. 17). `Y3ToP1j` does not give it. The manuscript's
+  own substitute is the tame local equation `u − c = z²` at L517-526.
 * `x6CoarseModuliIdeal` would still supply the `X₆` witness of the row. The row is `X₆`-shaped: it asserts `∃ X Ψ`
   with a coarse bijection. Dropping it needs the row restated over `Y₃` alone, i.e. the kernel's `R2fpProps` on
   `Y`, and its consumers re-routed. That is a copy-based re-route of the cm-branch kind, not done here.
