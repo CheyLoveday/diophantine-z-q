@@ -32,40 +32,52 @@ theorem supp_mod_two (h : ℓ % 2 = 1) (i : Supp ℓ) : (i : ℕ) % 2 = 1 := by
 theorem supp_ne_three (h : ℓ % 3 ≠ 0) (i : Supp ℓ) : (i : ℕ) ≠ 3 := by
   intro h3; have := supp_dvd i; rw [h3] at this; omega
 
-theorem lsym_natCast (a q : ℕ) : lsym (a : ℤ) q = if IsSquare (a : ZMod q) then 0 else 1 := by
-  simp [lsym]
+theorem lsym_congr {a b : ℤ} {q r : ℕ} (h : IsSquare (a : ZMod q) ↔ IsSquare (b : ZMod r)) :
+    lsym a q = lsym b r := by
+  unfold lsym
+  by_cases hb : IsSquare (b : ZMod r)
+  · rw [if_pos (h.mpr hb), if_pos hb]
+  · rw [if_neg (fun h' => hb (h.mp h')), if_neg hb]
+
+theorem lsym_congr_not {a b : ℤ} {q r : ℕ} (h : IsSquare (a : ZMod q) ↔ ¬ IsSquare (b : ZMod r)) :
+    lsym a q = lsym b r + 1 := by
+  unfold lsym
+  by_cases hb : IsSquare (b : ZMod r)
+  · rw [if_neg (fun h' => h.mp h' hb), if_pos hb]; rfl
+  · rw [if_pos (h.mpr hb), if_neg hb]; decide
+
+theorem lsym_of_isSquare {a : ℤ} {q : ℕ} (h : IsSquare (a : ZMod q)) : lsym a q = 0 := by
+  unfold lsym; rw [if_pos h]
+
+theorem lsym_of_not_isSquare {a : ℤ} {q : ℕ} (h : ¬ IsSquare (a : ZMod q)) : lsym a q = 1 := by
+  unfold lsym; rw [if_neg h]
 
 theorem lsym_neg_one (q : ℕ) [Fact q.Prime] : lsym (-1) q = if q % 4 = 3 then 1 else 0 := by
-  unfold lsym
-  push_cast
-  rw [ZMod.exists_sq_eq_neg_one_iff]
-  by_cases h : q % 4 = 3 <;> simp [h]
-
-theorem zmod2_eq_of_iff_not {P Q : Prop} [Decidable P] [Decidable Q] (h : P ↔ ¬ Q) :
-    ((if P then 0 else 1 : ZMod 2)) = (if Q then 0 else 1) + 1 := by
-  by_cases hQ : Q
-  · have : ¬ P := fun hP => h.mp hP hQ
-    simp [hQ, this]
-  · have : P := h.mpr hQ
-    simp [hQ, this]; decide
+  have h := ZMod.exists_sq_eq_neg_one_iff (p := q)
+  by_cases h3 : q % 4 = 3
+  · rw [if_pos h3]
+    exact lsym_of_not_isSquare (by push_cast; rw [h]; exact not_not.mpr h3)
+  · rw [if_neg h3]
+    exact lsym_of_isSquare (by push_cast; rw [h]; exact h3)
 
 /-- **Quadratic reciprocity, additive form**: `[p/q] = [q/p] + s_p s_q`. -/
 theorem lsym_recip (p q : ℕ) [Fact p.Prime] [Fact q.Prime] (hp : p % 2 = 1) (hq : q % 2 = 1)
     (hpq : p ≠ q) : lsym (p : ℤ) q = lsym (q : ℤ) p + lsym (-1) p * lsym (-1) q := by
-  rw [lsym_natCast, lsym_natCast, lsym_neg_one, lsym_neg_one]
+  rw [lsym_neg_one, lsym_neg_one]
   have hp4 : p % 4 = 1 ∨ p % 4 = 3 := by omega
   have hq4 : q % 4 = 1 ∨ q % 4 = 3 := by omega
   rcases hp4 with hp4 | hp4
   · have := ZMod.exists_sq_eq_prime_iff_of_mod_four_eq_one (p := p) (q := q) hp4 (by omega)
-    simp only [this, hp4]; simp
+    rw [if_neg (by omega), zero_mul, add_zero]
+    exact lsym_congr (by simpa using this.symm)
   · rcases hq4 with hq4 | hq4
     · have := ZMod.exists_sq_eq_prime_iff_of_mod_four_eq_one (p := q) (q := p) hq4 (by omega)
-      simp only [this, hq4]; simp
+      rw [if_neg (show ¬ q % 4 = 3 by omega), mul_zero, add_zero]
+      exact lsym_congr (by simpa using this)
     · have := ZMod.exists_sq_eq_prime_iff_of_mod_four_eq_three (p := q) (q := p) hq4 hp4
         (Ne.symm hpq)
-      simp only [hp4, hq4, if_true, mul_one]
-      classical
-      exact zmod2_eq_of_iff_not this
+      rw [if_pos hp4, if_pos hq4, mul_one]
+      exact lsym_congr_not (by simpa using this)
 
 theorem zmod2_mul_self_add (x : ZMod 2) : x * x + x = 0 := by
   fin_cases x <;> decide
@@ -76,13 +88,15 @@ theorem kmat_transpose (h2 : ℓ % 2 = 1) :
   ext i j
   by_cases hij : i = j
   · subst hij
-    simp only [transpose_apply, add_apply, vecMulVec_apply, diagonal_apply_eq]
+    simp only [transpose_apply, Matrix.add_apply, vecMulVec_apply, diagonal_apply_eq]
     rw [add_assoc, zmod2_mul_self_add, add_zero]
   · have hp := Fact.mk (supp_prime i)
     have hq := Fact.mk (supp_prime j)
     have hij' : (i : ℕ) ≠ j := fun h => hij (Subtype.ext h)
-    simp only [transpose_apply, add_apply, vecMulVec_apply, diagonal_apply_ne _ hij, add_zero,
-      Kmat, if_neg hij, if_neg (Ne.symm hij), sgn]
+    simp only [transpose_apply, Matrix.add_apply, vecMulVec_apply, diagonal_apply_ne _ hij,
+      add_zero]
+    simp only [Kmat, sgn]
+    rw [if_neg (Ne.symm hij), if_neg hij]
     exact lsym_recip i j (supp_mod_two h2 i) (supp_mod_two h2 j) hij'
 
 /-- **`K1 = 0`.** -/
@@ -156,13 +170,13 @@ theorem sum_supp_eq (f : ℕ → ZMod 2) : ∑ i : Supp ℓ, f i = ∑ q ∈ ℓ
 theorem sgn_dot_one (hsf : Squarefree ℓ) (h4 : ℓ % 4 = 3) : sgn ℓ ⬝ᵥ 1 = 1 := by
   classical
   have h : ∀ i : Supp ℓ, sgn ℓ i * (1 : Supp ℓ → ZMod 2) i =
-      (fun q : ℕ => if q % 4 = 3 then (1 : ZMod 2) else 0) i := by
+      if (i : ℕ) % 4 = 3 then (1 : ZMod 2) else 0 := by
     intro i
     have := Fact.mk (supp_prime i)
-    simp [sgn, lsym_neg_one]
-  rw [dotProduct, Finset.sum_congr rfl (fun i _ => h i), sum_supp_eq, Finset.sum_boole]
-  simp only [Nat.cast_id]
-  exact (ZMod.eq_one_iff_odd).mpr (card_filter_mod_four_odd hsf h4)
+    rw [Pi.one_apply, mul_one, sgn, lsym_neg_one]
+  rw [dotProduct, Finset.sum_congr rfl (fun i _ => h i),
+    sum_supp_eq (fun q => if q % 4 = 3 then (1 : ZMod 2) else 0), Finset.sum_boole]
+  exact ZMod.natCast_eq_one_iff_odd.mpr (card_filter_mod_four_odd hsf h4)
 
 theorem isSquare_zmod3_iff (q : ℕ) (hq : q % 3 ≠ 0) : IsSquare (q : ZMod 3) ↔ q % 3 = 1 := by
   rw [← ZMod.natCast_mod q 3]
@@ -179,34 +193,44 @@ theorem lsym_three (q : ℕ) [hq : Fact q.Prime] (h2 : q % 2 = 1) (h3 : q ≠ 3)
     intro h
     have := (Nat.prime_dvd_prime_iff_eq Nat.prime_three hq.out).mp (Nat.dvd_of_mod_eq_zero h)
     exact h3 this.symm
-  have h3' : lsym 3 q = if IsSquare ((3 : ℕ) : ZMod q) then 0 else 1 := by
-    rw [← lsym_natCast]; rfl
   have := Fact.mk Nat.prime_three
-  rw [h3']
   have hq4 : q % 4 = 1 ∨ q % 4 = 3 := by omega
   have hq3' : q % 3 = 1 ∨ q % 3 = 2 := by omega
+  have hz := isSquare_zmod3_iff q hq3
   rcases hq4 with hq4 | hq4
-  · rw [ZMod.exists_sq_eq_prime_iff_of_mod_four_eq_one (p := q) (q := 3) hq4 (by norm_num),
-      isSquare_zmod3_iff q hq3]
-    rcases hq3' with h | h <;> simp [h, hq4]
-  · rw [ZMod.exists_sq_eq_prime_iff_of_mod_four_eq_three (p := q) (q := 3) hq4 (by norm_num) h3,
-      isSquare_zmod3_iff q hq3]
-    rcases hq3' with h | h <;> simp [h, hq4] <;> decide
+  · have h := ZMod.exists_sq_eq_prime_iff_of_mod_four_eq_one (p := q) (q := 3) hq4 (by norm_num)
+    rw [hz] at h
+    rw [if_neg (show ¬ q % 4 = 3 by omega), add_zero]
+    rcases hq3' with h' | h'
+    · rw [if_neg (by omega)]
+      exact lsym_of_isSquare (by simpa using h.mpr h')
+    · rw [if_pos h']
+      exact lsym_of_not_isSquare (by simpa [h'] using h)
+  · have h := ZMod.exists_sq_eq_prime_iff_of_mod_four_eq_three (p := q) (q := 3) hq4
+      (by norm_num) h3
+    rw [hz] at h
+    rw [if_pos hq4]
+    rcases hq3' with h' | h'
+    · rw [if_neg (by omega), zero_add]
+      exact lsym_of_not_isSquare (by simpa [h'] using h)
+    · rw [if_pos h']
+      exact (lsym_of_isSquare (by simpa [h'] using h)).trans (by decide)
 
 /-- **`λᵗ1 = 0`** for squarefree `ℓ ≡ 11 (mod 12)`. -/
 theorem lam_dot_one (hsf : Squarefree ℓ) (h12 : ℓ % 12 = 11) : lam ℓ ⬝ᵥ 1 = 0 := by
   classical
   have h : ∀ i : Supp ℓ, lam ℓ i * (1 : Supp ℓ → ZMod 2) i =
-      (fun q : ℕ => (if q % 3 = 2 then (1 : ZMod 2) else 0) + (if q % 4 = 3 then 1 else 0)) i := by
+      (if (i : ℕ) % 3 = 2 then (1 : ZMod 2) else 0) + (if (i : ℕ) % 4 = 3 then 1 else 0) := by
     intro i
     have := Fact.mk (supp_prime i)
     simp only [lam, Pi.one_apply, mul_one]
     exact lsym_three i (supp_mod_two (by omega) i) (supp_ne_three (by omega) i)
-  rw [dotProduct, Finset.sum_congr rfl (fun i _ => h i), sum_supp_eq, Finset.sum_add_distrib,
+  rw [dotProduct, Finset.sum_congr rfl (fun i _ => h i),
+    sum_supp_eq (fun q => (if q % 3 = 2 then (1 : ZMod 2) else 0) + (if q % 4 = 3 then 1 else 0)),
+    Finset.sum_add_distrib,
     Finset.sum_boole, Finset.sum_boole]
-  simp only [Nat.cast_id]
-  rw [(ZMod.eq_one_iff_odd).mpr (card_filter_mod_three_odd hsf (by omega)),
-    (ZMod.eq_one_iff_odd).mpr (card_filter_mod_four_odd hsf (by omega))]
+  rw [ZMod.natCast_eq_one_iff_odd.mpr (card_filter_mod_three_odd hsf (by omega)),
+    ZMod.natCast_eq_one_iff_odd.mpr (card_filter_mod_four_odd hsf (by omega))]
   decide
 
 /-- **The matrix conditions force the local equations** (line 1068, both signs of the second

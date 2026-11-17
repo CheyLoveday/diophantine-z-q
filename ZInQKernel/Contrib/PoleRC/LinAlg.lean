@@ -28,11 +28,12 @@ open Matrix
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 theorem zmod2_cases (x : ZMod 2) : x = 0 ∨ x = 1 := by
-  fin_cases x <;> simp
+  revert x; decide
 
 theorem zmod2_add_self (x : ZMod 2) : x + x = 0 := by
   fin_cases x <;> decide
 
+omit [Fintype ι] [DecidableEq ι] in
 theorem vec_add_self (x : ι → ZMod 2) : x + x = 0 := funext fun i => zmod2_add_self (x i)
 
 /-- **Duality.** If `λ ∉ im K`, some `w` has `wᵗK = 0` and `wᵗλ = 1`. -/
@@ -72,8 +73,11 @@ theorem card_ker_transpose (K : Matrix ι ι (ZMod 2)) :
   unfold Matrix.rank at h3
   have hk : Module.finrank (ZMod 2) (LinearMap.ker Kᵀ.mulVecLin) =
       Module.finrank (ZMod 2) (LinearMap.ker K.mulVecLin) := by omega
-  rw [Nat.card_eq_fintype_card, Nat.card_eq_fintype_card, Module.card_eq_pow_finrank,
-    Module.card_eq_pow_finrank, hk]
+  have e : ∀ W : Submodule (ZMod 2) (ι → ZMod 2), Nat.card W = 2 ^ Module.finrank (ZMod 2) W := by
+    intro W
+    have := Fintype.ofFinite W
+    rw [Nat.card_eq_fintype_card, Module.card_eq_pow_finrank (K := ZMod 2) (V := W), ZMod.card]
+  rw [e, e, hk]
 
 theorem ncard_le_of_subset_four {V : Type*} (S : Set V) (a b c d : V)
     (h : ∀ x ∈ S, x = a ∨ x = b ∨ x = c ∨ x = d) : S.ncard ≤ 4 := by
@@ -98,7 +102,7 @@ theorem left_ker_mem (K : Matrix ι ι (ZMod 2)) (b : ι → ZMod 2)
     x = 0 ∨ x = 1 ∨ x = w ∨ x = 1 + w := by
   classical
   by_contra hne
-  push_neg at hne
+  push Not at hne
   obtain ⟨hx0, hx1, hxw, hx1w⟩ := hne
   have h10 : (1 : ι → ZMod 2) ≠ 0 := fun h => hw0 (funext fun i =>
     absurd (congrFun h i) one_ne_zero)
@@ -107,7 +111,9 @@ theorem left_ker_mem (K : Matrix ι ι (ZMod 2)) (b : ι → ZMod 2)
     rw [LinearMap.mem_ker, Matrix.mulVecLin_apply, Matrix.mulVec_transpose, hy]
   -- `#ker K ≤ 4`
   have hcardK : Nat.card (LinearMap.ker K.mulVecLin) ≤ 4 := by
-    rw [← Nat.card_coe_set_eq]
+    have e : Nat.card (LinearMap.ker K.mulVecLin) =
+        (LinearMap.ker K.mulVecLin : Set (ι → ZMod 2)).ncard := Nat.card_coe_set_eq _
+    rw [e]
     exact ncard_le_of_subset_four _ 0 1 b (1 + b) fun v hv => hker v hv
   -- five distinct elements of the left kernel
   have h1w0 : (1 : ι → ZMod 2) + w ≠ 0 := fun h => hw1 (by
@@ -138,7 +144,9 @@ theorem left_ker_mem (K : Matrix ι ι (ZMod 2)) (b : ι → ZMod 2)
     · exact hLK _ (by rw [Matrix.add_vecMul, h1K, hw, add_zero])
     · exact hLK _ hx
   have h5 : 5 ≤ Nat.card (LinearMap.ker Kᵀ.mulVecLin) := by
-    rw [← Nat.card_coe_set_eq, ← hS, ← Set.ncard_coe_finset]
+    have e : Nat.card (LinearMap.ker Kᵀ.mulVecLin) =
+        (LinearMap.ker Kᵀ.mulVecLin : Set (ι → ZMod 2)).ncard := Nat.card_coe_set_eq _
+    rw [e, ← hS, ← Set.ncard_coe_finset]
     exact Set.ncard_le_ncard hSsub (Set.toFinite _)
   rw [card_ker_transpose] at h5
   omega
@@ -160,7 +168,7 @@ theorem dimThree_case0 (K : Matrix ι ι (ZMod 2)) (s lam b : ι → ZMod 2)
     rw [← Matrix.mulVec_transpose, hT, hK1, hs1]
     funext i; simp [zmod2_add_self]
   have hv : v ᵥ* K = 0 := by
-    rw [← Matrix.mulVec_transpose, hT, E3, E2]; simp
+    rw [← Matrix.mulVec_transpose, hT, E3, zero_smul, add_zero, E2]
   have hlv : lam ⬝ᵥ v = 0 := by rw [add_dotProduct, E3, add_zero] at E4; exact E4
   obtain ⟨w, hw, hwl⟩ := exists_left_kernel_of_not_mem_range K lam him
   have hw0 : w ≠ 0 := by rintro rfl; simp at hwl

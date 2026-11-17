@@ -39,3 +39,16 @@
 - batch2.py: 30 random (beta, theta) with theta > 1 (1-3 primes, theta = 1 mod 24, mutual local squares):
   slot-shape search found n with the matrix conditions for BOTH n and n*theta in 30/30 cases
   (<= 697 tries each). VERIFIED (computed). Evidence that MatrixRealization is true; not a proof.
+
+## Lean: the dimension-three linear algebra
+- `LinAlg.lean`: `dimThree_linear_algebra` (abstract F_2: K^T = K + ss^T + diag s, K1 = 0, s.1 = 1,
+  lam.1 = 0, ker K in {0,1,b,1+b}, lam not in im K; local equations E1-E4 with sign sigma
+  => v = sigma*1, delta = sigma, K u = 0). Uses duality (Submodule.exists_dual_map_eq_bot_of_notMem)
+  and rank K^T = rank K. COMPILED, standard axioms.
+- `Recip.lean`: for the genuine K (`Kmat`): `kmat_transpose` (quadratic reciprocity),
+  `kmat_mulVec_one`, `sgn_dot_one` (l = 3 mod 4), `lam_dot_one` (l = 11 mod 12), and
+  `kmat_forces : MatrixConditions l beta -> E1..E4 -> v = sigma*1, delta = sigma, K u = 0`.
+  COMPILED, standard axioms. This is the manuscript's line-1068 claim, with the reciprocity identities
+  and the 2-adic equation it leaves implicit (ELLIOT), and both signs of b.
+- #discharges (scratch/pc-from-rc/discharges-output.txt): 34 open hypotheses, 12080 theorems checked;
+  no PoleRC theorem discharges an open hypothesis (Manuscript.PoleCompleteness is not a bundle field). VERIFIED.
