@@ -33,3 +33,8 @@ Base: wip/leaf-fold33b d879bb73. Build tree seeded from ~/dzq-check2 (same HEAD)
   - `ShimuraThm54Local` (new leaf def) and `shimuraMainCM_of_local : ShimuraThm54Local → T5Glue.ShimuraMainCM`;
   - `isAnalyticUnif_of_holo`; axioms of shimuraMainCM_of_local, eq_toPoint_of_holo, locLat_sInvLat,
     toPoint_isAnalyticIso: [propext, Classical.choice, Quot.sound].
+- FoldCheck.lean (imports OneProof.Main + Discharges, inlines HCMLattice.lean, folded Main body
+  `frozenTarget_hCMLocal` with `hCM : ShimuraThm54Local` and `shimuraMainCM_of_local hCM` at both uses): COMPILED, 49 s.
+  `frozenTarget_hCMLocal` axioms: [propext, Classical.choice, Quot.sound]. `#discharges` lists no hCM row
+  (the binder type is now `HCMDict.ShimuraThm54`, and shimuraMainCM_of_local concludes `ShimuraMainCM`) — next:
+  prove `HCMDict.ShimuraThm54` from `ShimuraThm54Local` (needs: sInvLat is a period lattice).
