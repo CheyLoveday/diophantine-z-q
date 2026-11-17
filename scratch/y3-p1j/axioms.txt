@@ -1,0 +1,5 @@
+'Y3P1j.action_of_z30' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Y3P1j.sigmaR_neg_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Y3P1j.isoT' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Y3P1j.hauptmodulOfX6_of_y3ToP1j' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Y3P1j.r1r2W_of_y3ToP1j' depends on axioms: [propext, Classical.choice, Quot.sound]
