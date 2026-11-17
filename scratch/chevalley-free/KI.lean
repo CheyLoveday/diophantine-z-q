@@ -1387,6 +1387,81 @@ theorem cong_of_faithful {S S' : Scheme.{0}} (G : Over S ⥤ Over S') [G.Monoida
 
 end GrpTransfer
 
+section FSD
+
+set_option synthInstance.maxHeartbeats 400000
+
+variable {k : Type} [Field k] {U : Over (Spec (CommRingCat.of k))} [GrpObj U]
+  {B' : PkgI3.AbVar (AlgebraicClosure k)}
+  {k₁ : Type} [Field k₁] [Algebra k k₁] [Algebra k₁ (AlgebraicClosure k)]
+  [IsScalarTower k k₁ (AlgebraicClosure k)]
+
+omit [GrpObj U] in
+theorem isPullback_rr :
+    IsPullback (pullback.snd U.hom (sφ (φbar k))) (rr U k₁) (q₂ k k₁) (pullback.snd U.hom (qq k k₁)) := by
+  have big := IsPullback.of_hasPullback U.hom (sφ (φbar k))
+  have W := IsPullback.of_hasPullback U.hom (qq k k₁)
+  refine IsPullback.of_bot (h₃₁ := U.hom) (v₂₁ := pullback.fst U.hom (qq k k₁)) (v₂₂ := qq k k₁) ?_ ?_ W.flip
+  · have e1 : rr U k₁ ≫ pullback.fst U.hom (qq k k₁) = pullback.fst U.hom (sφ (φbar k)) := by simp [rr]
+    rw [e1, q₂_qq]; exact big.flip
+  · simp [rr]
+
+theorem isPullback_π' (π' : (Over.pullback (sφ (φbar k))).obj U ⟶ B'.X)
+    {X₁ : Over (Spec (CommRingCat.of k₁))} (π₁ : (Over.pullback (qq k k₁)).obj U ⟶ X₁)
+    (c : B'.X.left ⟶ X₁.left) (hc : IsPullback c B'.X.hom X₁.hom (q₂ k k₁))
+    (hcompat : π'.left ≫ c = rr U k₁ ≫ π₁.left) :
+    IsPullback π'.left (rr U k₁) c π₁.left := by
+  refine IsPullback.of_right (h₁₂ := B'.X.hom) (h₂₂ := X₁.hom) (v₁₃ := q₂ k k₁) ?_ hcompat hc.flip
+  rw [Over.w π', Over.w π₁]
+  exact isPullback_rr
+
+/-- `U_{k₁} ×_{k₁} k̄ → U_{k̄}`. -/
+noncomputable def Ecomp (U : Over (Spec (CommRingCat.of k))) (k₁ : Type) [Field k₁] [Algebra k k₁]
+    [Algebra k₁ (AlgebraicClosure k)] [IsScalarTower k k₁ (AlgebraicClosure k)] :
+    (Over.pullback (q₂ k k₁)).obj ((Over.pullback (qq k k₁)).obj U) ⟶
+      (Over.pullback (sφ (φbar k))).obj U :=
+  (((Over.pullbackComp (q₂ k k₁) (qq k k₁)).app U).inv : (Over.pullback (q₂ k k₁)).obj
+      ((Over.pullback (qq k k₁)).obj U) ⟶ (Over.pullback (q₂ k k₁ ≫ qq k k₁)).obj U) ≫
+    Over.homMk (pullback.map U.hom (q₂ k k₁ ≫ qq k k₁) U.hom (sφ (φbar k)) (𝟙 _) (𝟙 _) (𝟙 _) (by simp)
+      (by simp [q₂_qq])) (by simp)
+
+theorem isMonHom_Ecomp :
+    letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+    letI : GrpObj ((Over.pullback (qq k k₁)).obj U) := Functor.grpObjObj
+    letI : GrpObj ((Over.pullback (q₂ k k₁)).obj ((Over.pullback (qq k k₁)).obj U)) := Functor.grpObjObj
+    IsMonHom (Ecomp U k₁) := by
+  letI : GrpObj ((Over.pullback (sφ (φbar k))).obj U) := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback (qq k k₁)).obj U) := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback (q₂ k k₁)).obj ((Over.pullback (qq k k₁)).obj U)) := Functor.grpObjObj
+  letI : GrpObj ((Over.pullback (q₂ k k₁ ≫ qq k k₁)).obj U) := Functor.grpObjObj
+  let iota : (Over.pullback (q₂ k k₁ ≫ qq k k₁)).obj U ≅
+      (Over.pullback (q₂ k k₁)).obj ((Over.pullback (qq k k₁)).obj U) :=
+    (Over.pullbackComp (q₂ k k₁) (qq k k₁)).app U
+  haveI : IsMonHom iota.hom := isMonHom_pullbackComp (q₂ k k₁) (qq k k₁) U
+  haveI : IsMonHom iota.inv := inferInstance
+  haveI := isMonHom_pullbackEq (q₂ k k₁ ≫ qq k k₁) (sφ (φbar k)) q₂_qq U
+  exact CategoryTheory.instIsMonHomComp _ _
+
+theorem Ecomp_left_rr :
+    (Ecomp U k₁).left ≫ rr U k₁ = pullback.fst (pullback.snd U.hom (qq k k₁)) (q₂ k k₁) := by
+  have hv := Over.pullbackComp_hom_app_left_fst_fst (q₂ k k₁) (qq k k₁) U
+  have hinv : ((Over.pullbackComp (q₂ k k₁) (qq k k₁)).app U).inv.left ≫
+      pullback.fst U.hom (q₂ k k₁ ≫ qq k k₁) =
+      pullback.fst (pullback.snd U.hom (qq k k₁)) (q₂ k k₁) ≫ pullback.fst U.hom (qq k k₁) := by
+    rw [← hv, ← Category.assoc, ← Over.comp_left, ← Iso.app_hom, Iso.inv_hom_id]
+    simp
+  apply pullback.hom_ext
+  · simp only [Ecomp, Over.comp_left, Category.assoc, rr, pullback.lift_fst, Over.homMk_left,
+      Category.comp_id]
+    exact hinv
+  · simp only [Category.assoc, rr, pullback.lift_snd]
+    have := Over.w (Ecomp U k₁)
+    change (Ecomp U k₁).left ≫ pullback.snd U.hom (sφ (φbar k)) =
+      pullback.snd (pullback.snd U.hom (qq k k₁)) (q₂ k k₁) at this
+    rw [reassoc_of% this, ← pullback.condition]
+
+end FSD
+
 end ZInQ.ChevFree
 
 #print axioms ZInQ.ChevFree.rig_raw
@@ -1396,3 +1471,6 @@ end ZInQ.ChevFree
 #print axioms ZInQ.ChevFree.KI_of
 #print axioms ZInQ.ChevFree.cong_of_faithful
 #print axioms ZInQ.ChevFree.finite_affine_of_grp
+#print axioms ZInQ.ChevFree.Ecomp_left_rr
+#print axioms ZInQ.ChevFree.isMonHom_Ecomp
+#print axioms ZInQ.ChevFree.isPullback_π'
