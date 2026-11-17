@@ -126,4 +126,42 @@ theorem sec_cover [IsAlgClosed k] (X : AbVar k) (n : ℕ) (hnk : (n : k) ≠ 0)
   rw [hσz] at e
   exact e
 
+/-- A trivialization of `n^*M` exists when `n^*c = 1`. -/
+theorem nonempty_triv_ac {X : AbVar k} {n : ℕ} {c : X.X.left.Pic}
+    (h : Scheme.Pic.map (AC.mul X n).left c = 1) : Nonempty (AC.Triv X n c) := by
+  obtain ⟨e⟩ := Scheme.Pic.eq_iff_nonempty_iso.1 h
+  exact ⟨(Scheme.Pic.oneIso).symm ≪≫ e.symm ≪≫ Scheme.Pic.mkIso _⟩
+
+/-- **The right kernel of Mumford's pairing is trivial** (Mumford §20, the descent half): over `k = k̄`, for `n`
+invertible, if `ψ : 𝒪 ≅ n^*M` has Mumford's formula `1` at every `x ∈ X[n](k)`, then `M ≅ 𝒪`. -/
+theorem formula_nondeg_right [IsAlgClosed k] (X : AbVar k) (n : ℕ) (hnk : (n : k) ≠ 0)
+    (c : X.X.left.Pic) (ψ : AC.Triv X n c)
+    (h : ∀ (x : AC.Kpt X) (hx : x ^ n = 1), AC.formula x hx c ψ = 1) : c = 1 := by
+  have hF : Fact ((n : k) ≠ 0) := ⟨hnk⟩
+  have hM : (AC.modX c).IsQuasicoherent := SheafOfModules.IsInvertible.isQuasicoherent c.isInvertible
+  have hsurj : ⨆ i : {x : AC.Kpt X // x ^ n = 1},
+      @Scheme.Hom.opensRange _ _ (Desc.sec (AC.mul X n).left (tr_left_comp_mul i.1 i.2))
+        (sec_isOpenImmersion i.1 i.2) = ⊤ := by
+    apply le_antisymm le_top
+    intro y _
+    obtain ⟨i, hi⟩ := sec_cover X n hnk y
+    exact TopologicalSpace.Opens.mem_iSup.2 ⟨i, hi⟩
+  have hinv : ∀ i : {x : AC.Kpt X // x ^ n = 1},
+      (pOU (AC.tr i.1).left).inv ≫ (Scheme.Modules.pullback (AC.tr i.1).left).map ψ.hom ≫
+        (Scheme.Modules.pullbackComp (AC.tr i.1).left (AC.mul X n).left).hom.app (AC.modX c) ≫
+        (Scheme.Modules.pullbackCongr (tr_left_comp_mul i.1 i.2)).hom.app (AC.modX c) ≫ ψ.inv = 𝟙 _ := by
+    intro i
+    have hi := h i.1 i.2
+    unfold AC.formula at hi
+    rw [wf_eq_alpha] at hi
+    apply (Scheme.Modules.unitHomAddEquiv (Scheme.Modules.unit _)).injective
+    rw [Scheme.Modules.unitHomAddEquiv_apply, Scheme.Modules.unitHomAddEquiv_apply]
+    exact hi.trans rfl
+  obtain ⟨e⟩ := @Desc.nonempty_iso_of_invariant X.X.left (AC.mul X n).left (mul_cover X n hnk)
+    {x : AC.Kpt X // x ^ n = 1} (fun i => (AC.tr i.1).left) (fun i => tr_left_comp_mul i.1 i.2)
+    (fun i => sec_isOpenImmersion i.1 i.2) hsurj (AC.modX c) hM ψ hinv
+  exact Scheme.Pic.eq_iff_nonempty_iso.2 ⟨e.symm ≪≫ (Scheme.Pic.oneIso).symm⟩
+
 end PhiSurj.AVDesc
+
+#print axioms PhiSurj.AVDesc.formula_nondeg_right
