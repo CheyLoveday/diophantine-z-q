@@ -317,3 +317,18 @@ Base: fork main after w82 (leaf-fold32b 03f2467d + STATUS.md wording, 5e235a40).
     Count unchanged: 39 open; H strictest 10/24 on 34; others h21S, hCM, h33a, hGZ GLUE, hBFH LEAF. Checks (VERIFIED):
     build +Main +Discharges (16077 jobs); frozenTarget standard axioms; check_target.py; OpenStatements 39;
     DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok.
+36. fold-kleiman2 (inbox 15b, 21) replayed: merged kleiman-section2 through fold-kleiman2's merge 5bd559d8 (hygiene:
+    scratch bundle files .lean.txt; KleimanPicZeroProperQuot.lean lands with the leaf), scratch/fold-kleiman2/gen/gen.py
+    --write -> copy reroute TailZ69 (OpenAddedLeaves26, `sixContactMin_of_open62`, 15 declarations copied, none
+    changed): kleimanPicZeroProper -> kleimanPicZeroProper954, kind consequence GLUE, flag "LN-site vs big-site fppf
+    sheafification comparison not in Lean (Def. 4.1 accepts Pic_(fppf), read 11-17)"; claims row dropped.
+    gamma1-basis (inbox 24, wip/gamma1-basis f7046ab6): autofold scratch/leaf-fold33/autofold-gamma1.json -> TailZ70,
+    `sixContactMin_of_open63`: gamma1IntegralSpan (LEAF/GLUE strictest) := Gamma1Basis.gamma1IntegralSpan_of_basis from
+    gamma1IntegralBasis (kind consequence, pending review: strict +1 GLUE until rated, then LEAF/LEAF expected).
+    hcm-lattice (wip/hcm-lattice b3d51684; HCMLattice.lean moved from scratch to Contrib/OneProof; scratch copies
+    .lean.txt), manual Main fold: hCM retyped to ZInQ.Contrib.HCMLattice.ShimuraThm54Local through
+    HCMLattice.shimuraMainCM_of_local (IsAnalyticIso, Weierstrass-map step by Liouville, sInvLat p-components and the
+    local-global principle proved); kind consequence, pending review. Count: 39 open; H strict 10/24 (strictest 10/24)
+    on 34; others h21S, hCM, h33a, hGZ GLUE, hBFH LEAF. Checks (VERIFIED): build +Main +Discharges (16082 jobs);
+    frozenTarget standard axioms; check_target.py; only Main.lean modified among existing OneProof modules;
+    OpenStatements 39; DischargesTest rerun, no error; render_open --check ok; crosswalk --check ok; autoform check ok.
