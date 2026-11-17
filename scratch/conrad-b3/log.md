@@ -18,3 +18,8 @@
 - PR #86 (branch proof/poincare-complement-native-20261117 = 8050603bc, read with git show): FinalUnconditional.lean L24
   `theorem poincareComplement_proof : ZInQ.Contrib.AVB1.PoincareComplement := poincareComplement_of_square L6.NativeTheoremOfTheSquare_proof.{0}`;
   AVB1/Poincare.lean identical to HEAD (git diff empty). VERIFIED by reading; not merged, not compiled.
+
+## Step 3. Compile (merged tree: origin/wip/ht-merge 027f637cd + conrad-b3; .lake/build reflink-copied from ~/dzq-wt/ht-merge, old base build kept as .lake/build-old-base)
+- first build: C8ConradB L107 `Module.finrank_pos` failed (IsTorsionFree ℚ_[p] ↥E synthesis timeout); fixed with `finrank_pos_intermediateField` via `finrank_pos_iff_of_free` + `Module.Free.of_divisionRing`.
+- `lake env lean ZInQKernel/Contrib/OneProof/C8ConradB.lean`: no output (no errors, no warnings). VERIFIED.
+- `lake build ZInQKernel.Contrib.OneProof.C8Printed`: Build completed successfully (13414 jobs); C8ConradB, C8Poincare, C8Printed built. VERIFIED.

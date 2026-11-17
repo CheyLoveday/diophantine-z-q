@@ -70,6 +70,12 @@ theorem htMult_eq_conradHTMult_neg {E : Type*} [Field E] [Algebra ℚ_[p] E] [Fi
     PkgI4.htMult p ρ w = conradHTMult p ρ (-w) / finrank ℚ_[p] E :=
   rfl
 
+/-- `[E : ℚ_p] > 0` for a finite intermediate field (as in `htMult_eq_finrank_Ysp`). -/
+theorem finrank_pos_intermediateField (E : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] E] :
+    0 < finrank ℚ_[p] E := by
+  have : Module.Free ℚ_[p] E := Module.Free.of_divisionRing _ _
+  exact (finrank_pos_iff_of_free ℚ_[p] E).2 inferInstance
+
 end Conventions
 
 /-- **LEAF candidate, CITED (diophantine_zq.tex L760-762; Conrad, *Lifting global representations with local
@@ -102,13 +108,14 @@ weight", diophantine_zq.tex L763-764). With the project's exponent `n` (Conrad's
 theorem locAlgExponentEqWeight_of_conradPropB3 (hB3 : ConradPropB3Qp) : LocAlgExponentEqWeight := by
   intro p _ E _ ψ w n hcont hHT hLA
   have hC := hB3 p E ψ (-n) hcont ((isLocallyAlgebraic_iff_conrad p ψ n).1 hLA)
+  have hd : 0 < finrank ℚ_[p] E := finrank_pos_intermediateField p E
   have h1 : PkgI4.htMult p (charRep ψ) n = 1 := by
     rw [htMult_eq_conradHTMult_neg, hC]
-    exact Nat.div_self Module.finrank_pos
+    exact Nat.div_self hd
   rw [hHT n] at h1
   by_contra hne
-  rw [Multiset.count_singleton, if_neg hne] at h1
-  exact zero_ne_one h1
+  rw [Multiset.count_singleton] at h1
+  simp [hne] at h1
 
 /-- `LocAlgExponentEqWeight` from the merged Conrad leaf. -/
 theorem locAlgExponentEqWeight_of_conradAppB (hC : ConradAppB) : LocAlgExponentEqWeight :=
