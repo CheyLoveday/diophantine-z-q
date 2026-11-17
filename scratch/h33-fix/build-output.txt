@@ -1,0 +1,6 @@
+⚠ [13119/13424] Replayed ZInQKernel.Compiler.Circuits.Builder
+warning: ZInQKernel/Compiler/Circuits/Builder.lean:255:78: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+warning: ZInQKernel/Compiler/Circuits/Builder.lean:255:78: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+Build completed successfully (13747 jobs).
+
+[exited with code 0]

@@ -9,3 +9,4 @@
   E6 = ½(θ3⁴+θ4⁴)(θ2⁴+θ3⁴)(θ4⁴−θ2⁴), j(τ) and j(32τ) as rational functions of the eta model (x,y), rel. err ≤ 5e-7.
 - ThetaE.lean COMPILES (VERIFIED): e4T_eq, e6T_eq (rank one, Mathlib), j_theta, j_eta (j(τ)·jDen(x,y) = jNum(x,y),
   jDen ≠ 0), j32_eta (j(32τ)·j32Den(x) = j32Num(x)). Needed `lake build ...JacobiLambdaDeriv` first (11342 jobs).
+- 00:50 ZInQKernel/Contrib/OneProof/TYZThm33Alg.lean + TYZThm33Alg/ThetaJ.lean: lake build success (VERIFIED, build-output.txt). jq_rel/jq32_rel need maxHeartbeats 4e6 (instance defeq on LaurentSeries ℂ).
