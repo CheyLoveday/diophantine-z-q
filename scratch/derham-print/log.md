@@ -1,0 +1,30 @@
+# derham-print results log
+
+## 2026-11-16 16:00 setup
+- Merged origin/main (c1e4ed1b8, fast-forward); origin/wip/integrate-w82 (5e235a40a) already in HEAD.
+- lean/.lake/build copied from ~/dzq/lean/.lake/build (lean/ZInQ identical, diff -rq empty).
+- claims.tsv: no row for deRhamH1AbVarT (VERIFIED, grep).
+
+## Field (VERIFIED, read)
+- `ZInQ.Contrib.HodgeSplit.DeRhamH1AbVarT` (ZInQKernel/OneProof/H/TailS.lean:1992): for every p, finite F/Q_p and
+  pkg-I4 AbVar A over F, `finrank_{Q_p} (BdR p ⊗ V_p(A)^∨)^{G_F} = [F:Q_p] · finrank V_p(A)^∨`
+  (`IsDeRhamTensorOver p (A.galRep p).dual`). Bundle field `OpenResearchLeaves28.deRhamH1AbVarT` (TailZ45).
+- kinds.tsv: consequence, GLUE/GLUE; flag: Milne 1986 Thm 15.1(a) step (H^1_et = Hom(V_p A, Q_p)) and, for Scholze
+  Cor. 1.8, the rigid comparison.
+
+## Consumers (VERIFIED, grep + read)
+- Only reader: TailX.lean:195 `deRhamComparisonHT_of_leavesT r.hodgeTateDecompAbVar l.tateTwistInvariants
+  l.axSenTate r.deRhamH1AbVarT` (all other occurrences are bundle-to-bundle copies in TailZ*).
+- deRhamComparisonHT_of_leavesT (TailS:2059) converts it by `isDeRhamOver_iff_tensor_dual` to
+  `IsDeRhamOver p (A.galRep p)` (I4Layer:1202: finrank Hom_{G_F}(V, B_dR) = [F:Q_p]·dim V), the first conjunct of
+  R10 (`DeRhamComparisonHT`). Downstream: `PkgI4.DeRhamComparison` is the argument `hR10` of `G9GlueNoT23`
+  (TailA:2017) whose output `G9Out` contains `LocalIsDeRham` (TailA:1948): the de Rham clause is genuinely
+  consumed (G9: r_5 de Rham at 5, for Pan's theorem via Berger).
+- So the consumers need exactly the dimension of D_dR (no Hodge filtration, no D_dR = H^1_dR identification).
+
+## Overlap check (VERIFIED)
+- hodgetate-from-dr (origin/wip/hodgetate-from-dr) consumes hodgeTateDecompAbVar, not this field: no duplication.
+- dict-galois (origin/wip/dict-galois 81d1f67f, not folded: leaf-fold32 took only its r7a part) proved the field from
+  `DeRhamDict.DeRhamVpAbVarT` (V_p A de Rham, Berger 2004 I.3) + `DeRhamDict.BdRInvariantsOver` + mumfordTorsionAlgClosed.
+  Its leaves are read through Berger's B_dR; OPEN.md's kernel-wide B_dR reading says a [1/t] print is a step
+  (t not constructed). This task closes that step in Lean (below) and reuses dict-galois's generic algebra.
