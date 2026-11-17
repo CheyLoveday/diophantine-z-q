@@ -5,24 +5,20 @@ head is one of the clause defs, record whether the body uses the bound variable 
 "used" outside producers means some proof reads the clause. Output: per clause, the constants that use it. -/
 open Lean Meta
 
-partial def scanBinders (clauses : List Name) (e : Expr) (acc : Array (Name × Bool)) : Array (Name × Bool) :=
+partial def scanBinders (clauses : List Name) (e : Expr) : StateM (Std.HashSet Expr × Array (Name × Bool)) Unit := do
+  if (← get).1.contains e then return
+  modify fun (v, a) => (v.insert e, a)
+  let rec note (t b : Expr) : StateM (Std.HashSet Expr × Array (Name × Bool)) Unit :=
+    match t.getAppFn with
+    | .const c _ => if clauses.contains c then modify fun (v, a) => (v, a.push (c, b.hasLooseBVar 0)) else pure ()
+    | _ => pure ()
   match e with
-  | .lam _ t b _ | .forallE _ t b _ =>
-    let acc := scanBinders clauses t acc
-    let acc := match t.getAppFn with
-      | .const c _ => if clauses.contains c then acc.push (c, b.hasLooseBVar 0) else acc
-      | _ => acc
-    scanBinders clauses b acc
-  | .letE _ t v b _ =>
-    let acc := scanBinders clauses t (scanBinders clauses v acc)
-    let acc := match t.getAppFn with
-      | .const c _ => if clauses.contains c then acc.push (c, b.hasLooseBVar 0) else acc
-      | _ => acc
-    scanBinders clauses b acc
-  | .app f a => scanBinders clauses a (scanBinders clauses f acc)
-  | .mdata _ b => scanBinders clauses b acc
-  | .proj _ _ b => scanBinders clauses b acc
-  | _ => acc
+  | .lam _ t b _ | .forallE _ t b _ => do scanBinders clauses t; note t b; scanBinders clauses b
+  | .letE _ t v b _ => do scanBinders clauses t; scanBinders clauses v; note t b; scanBinders clauses b
+  | .app f a => do scanBinders clauses f; scanBinders clauses a
+  | .mdata _ b => scanBinders clauses b
+  | .proj _ _ b => scanBinders clauses b
+  | _ => pure ()
 
 #eval show MetaM Unit from do
   let env ← getEnv
@@ -42,12 +38,14 @@ partial def scanBinders (clauses : List Name) (e : Expr) (acc : Array (Name × B
     stack := stack.pop
     if seen.contains n then continue
     seen := seen.insert n
-    let s := n.toString
-    if (s.startsWith "Mathlib") || (s.startsWith "Lean.") || (s.startsWith "Std.") then continue
+    let inZ := match env.getModuleIdxFor? n with
+      | some i => (env.header.moduleNames[i.toNat]!.toString.startsWith "ZInQKernel")
+      | none => false
+    if !inZ then continue
     match env.find? n with
     | some ci =>
       let v := match ci with | .thmInfo t => t.value | .defnInfo d => d.value | _ => default
-      let res := scanBinders clauses v #[]
+      let ((), (_, res)) := (scanBinders clauses v).run ({}, #[])
       for (c, used) in res do
         if used then uses := uses.insert c ((uses.getD c #[]).push n)
         else carried := carried.insert c (carried.getD c 0 + 1)

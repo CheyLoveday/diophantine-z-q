@@ -17,8 +17,10 @@ open Lean Meta
     stack := stack.pop
     if seen.contains n then continue
     seen := seen.insert n
-    let s := n.toString
-    if (s.startsWith "Mathlib") || (s.startsWith "Lean.") || (s.startsWith "Std.") || (s.startsWith "Init") then continue
+    let inZ := match env.getModuleIdxFor? n with
+      | some i => (env.header.moduleNames[i.toNat]!.toString.startsWith "ZInQKernel")
+      | none => false
+    if !inZ then continue
     order := order.push n
     match env.find? n with
     | some ci =>
@@ -40,6 +42,8 @@ open Lean Meta
         let v := match ci with | .thmInfo t => t.value | .defnInfo d => d.value | _ => default
         if (ci.type.getUsedConstants ++ v.getUsedConstants).any (dirty.contains ·) then
           dirty := dirty.insert n; changed := true
+          if n.isStr && n.getString! == "mk" then
+            dirty := dirty.insert n.getPrefix
       | none => pure ()
   let mut cnt := 0
   for n in order do

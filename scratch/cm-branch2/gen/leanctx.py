@@ -19,7 +19,7 @@ SCOPE_RE = re.compile(r'^(noncomputable\s+)?section\b\s*(\S*)\s*$')
 NS_RE = re.compile(r'^namespace\s+(\S+)\s*$')
 END_RE = re.compile(r'^end\b\s*(\S*)\s*$')
 OPEN_RE = re.compile(r'^open\b')
-CTX_RE = re.compile(r'^(variable\b|set_option\b(?!.*\bin\s*$)|attribute\s*\[local|universe\b|local\s+notation|open\s+scoped\b|noncomputable\s*$)')
+CTX_RE = re.compile(r'^(variable\b|include\b|omit\b|set_option\b(?!.*\bin\s*$)|attribute\s*\[local|universe\b|local\s+notation|noncomputable\s*$)')
 
 
 def context(path, line):
@@ -28,8 +28,17 @@ def context(path, line):
     stack = [('root', '', [])]
     i = 0
     n = min(line - 1, len(L))
+    depth = 0
     while i < n:
         s = L[i]
+        if depth > 0 or s.startswith('/-') or s.startswith('--'):
+            # comment tracking (block comments may nest)
+            if s.startswith('--') and depth == 0:
+                i += 1; continue
+            d0 = depth
+            depth += s.count('/-') - s.count('-/')
+            if depth < 0: depth = 0
+            i += 1; continue
         if s.startswith('namespace '):
             m = NS_RE.match(s)
             if m:
