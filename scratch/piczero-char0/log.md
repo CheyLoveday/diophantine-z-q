@@ -43,3 +43,22 @@
   (pic-smooth's char-0 argument, cartierSmooth_proof supplied).
 - Consumers in char 0: mumfordKLFiniteSectionAC0_of_open, phiAmpleIsogeny0_of_printed, t09SymmIsogenyExists0_of_four,
   Poincare.poincareComplement_of_open0 (proof bodies copied verbatim, only the `intro` patterns gained one `_`).
+
+## Step 2b: the reroute ZInQKernel/Contrib/OneProof/PicZeroAbVarCharZeroReroute.lean (gen/gen.py), VERIFIED compiled
+- 101 copied blocks (carriers OAL4,6,7,8,9,12..20 and TextbookLeavesHF, OTL2HF..4HF; 83 tainted + 16 carrier-typed
+  declarations from taint2_out.txt; part B: G12Det, g12, g12Det_of, g8_g12_hf, tatePairingZl_of_leaves4,
+  detTate_of_leaves4), renamed X -> X_pz / XPZ. Field types swapped to the char-0 forms; t9 dropped.
+- First compile: isDefEq heartbeat timeout in openTextbookLeaves13_of_OpenTextbookLeaves14_hf_pz (the same block alone
+  compiled in 6 s): the copied top-level `open` lines were repeated 766 times (190 x 4), making identifiers ambiguous.
+  Fix in copylib.emit: top-level context lines emitted once. Second compile: clean, 9 s.
+- `HDec.HSyn.sixContactMin_of_open41_pz : OpenResearchLeaves29 → OpenTextbookLeaves15 → OpenAddedLeaves20PZ → SixContactMin`,
+  axioms [propext, Classical.choice, Quot.sound].
+- lake build +PicZeroAbVarCharZeroReroute +Main +Discharges: OK (14167 jobs, 22 s on the copied build).
+
+## Step 2c: FoldCheck.lean (manual fold), VERIFIED compiled
+- OpenAddedLeaves21 = OAL20 - picZeroAbVar + {picLocFinType, identityComponentLFT, kleimanPicZeroProper};
+  openAddedLeaves20PZ_of_OpenAddedLeaves21 (picZeroAbVar0_of_leaves), sixContactMin_of_open42_pz, frozenTarget_pz
+  (Main's binders with l : OpenAddedLeaves21): axioms [propext, Classical.choice, Quot.sound] (foldcheck_out.txt).
+- openAddedLeaves20PZ_of_20 checks OAL20PZ = OAL20 with only picZeroAbVar weakened.
+- Counts (kinds.tsv H rows, autofold.py's `counts`): now 33 fields, strict 13 LEAF / 20 GLUE, strictest 13/20.
+  After: 35 fields, strict 16/19, strictest 16/19 (picZeroAbVar GLUE removed; three LEAF rows flagged unread).
