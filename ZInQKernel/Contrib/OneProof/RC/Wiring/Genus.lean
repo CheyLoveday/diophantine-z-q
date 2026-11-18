@@ -40,7 +40,9 @@ theorem mem_S0_prime {ℓ : ℕ} {p : ℕ} (hp : p ∈ S0 ℓ) : p.Prime := by
 
 /-- **A genus partner exists** (PROVED from lane RC13's `genusPartner`, tex 2404–2408): with
 Hoffstein–Luo (`HoffsteinLuo`), BFH's twist sign (`BFHTwistSign`) and BCDT, root number `−1` for
-`E_ℓ` gives `h_*` at the base support `S₀ = {2, 3} ∪ {p ∣ ℓ}`. -/
+`E_ℓ` gives `h_*` at the base support `S₀ = {2, 3} ∪ {p ∣ ℓ}`. The text obtains `h_*` from BFH
+clause (ii) (App F 8250–8254); this five-prime Hoffstein–Luo route differs but is harmless, since
+`RCLeaves.pre` and `RCLeaves.post` are demanded at every partner. -/
 theorem exists_genusPartner (hHL : Nonvanishing.HoffsteinLuo) (hTS : Nonvanishing.BFHTwistSign)
     (hBCDT : BCDTThmA) {ℓ : ℕ} (hℓ : 0 < ℓ) (hw : RootNumber (Ecurve ℓ) (-1)) :
     ∃ h : ℤ, IsGenusPartner ℓ h := by
@@ -94,12 +96,12 @@ section RoughCompanion
 
 variable {ℓ : ℕ} (W : WData ℓ)
 
-/-- **The fixed support** (definition, tex 1790–1793, 2678–2680): a finite set of primes containing
+/-- **The fixed support** (definition, tex 1974–1975, 2016–2017): a finite set of primes containing
 `2`, `3` and the primes of `ℓ` (hence the primes of `2N`). -/
 def SupportSpec : Prop :=
   (∀ p ∈ W.S, p.Prime) ∧ 2 ∈ W.S ∧ 3 ∈ W.S ∧ ∀ p : ℕ, p.Prime → p ∣ ℓ → p ∈ W.S
 
-/-- **The prepared filter** (definition, tex 2344–2346, 2404–2410, 1836–1845, 10059–10061: the
+/-- **The prepared filter** (definition, tex 2344–2346, 2404–2410, 10059–10061: the
 prepared positive filter containing one; its members are positive, squarefree, `≡ 1 (mod 8)` ("Thus
 `h ≡ 1 (mod 8)`", tex 2346) and prime to the fixed support). -/
 def PreparedSpec : Prop :=
@@ -122,7 +124,7 @@ def AuxFactor (A₀ : ℕ) : Prop :=
         AnalyticRank (Etw ℓ (h * (a * u))) 0 →
           W.Partitionable (h * (a * u))
 
-/-- **The even upper bound (3.3b)** (Proposition `ex:sec7-even-upper`, tex 2273–2318; ELLIOT;
+/-- **The even upper bound (3.3b)** (Proposition `ex:sec7-even-upper`, tex 2295–2341; ELLIOT;
 lane RC11): at a partitionable `d ≠ 0` of Selmer corank zero, `L_*(d) ≠ 0` gives
 `v₂L_*(d) ≤ 2ω(d) + s(d) + C₁`. (Stated with `d ≠ 0`; the text's `d` are nonzero.) -/
 def EvenUpper33b (C₁ : ℤ) : Prop :=
@@ -131,7 +133,7 @@ def EvenUpper33b (C₁ : ℤ) : Prop :=
 
 theorem omega_eq_nonvanishing (n : ℤ) : omega n = Nonvanishing.omega n := rfl
 
-/-- **The rough companion with (F.3)** (PROVED from lane RC13's `roughCompanion`, tex 2320–2401,
+/-- **The rough companion with (F.3)** (PROVED from lane RC13's `roughCompanion`, tex 2343–2401,
 App G 10055–10150), in the form of batch 3's `FinalFamilyField`. Remaining inputs: the prints
 (Hoffstein–Luo, BFH's twist sign; BCDT, Kolyvagin in `Prints`), the GLUE `RootNumberExists`, the
 Kummer glue, the normalization of `L_*`, the support and prepared-filter specifications, the

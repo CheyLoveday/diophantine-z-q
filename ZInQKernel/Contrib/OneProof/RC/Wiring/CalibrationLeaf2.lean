@@ -11,10 +11,13 @@ Proposition `ex:arith-central-calibration` (tex 3987–4141) than `CalibrationLe
 * `hvprim_of_model_and_lengths`: the field `hvprim` from a triangular model of the support
   triangle (Kummer complex → primitive complex), the Kummer coordinate's valuation (tex 4055–4064)
   and the identification of the central quotient block with the moving block `χ Fr_r − r` at the
-  two places above `r` and `2 · 1₂` at each of the `2ω` active places; the total length
-  `2 v₂N + 4ω` is PROVED (`v2_det_quotient`, tex 4066–4080), so the input `hdetW` of
-  `CalibrationLeaf.lean` disappears, and the support triangle `det(D_W) · u_prim = u_K` is PROVED
-  from the model (`triangular_coord`);
+  two places above `r` and `2 · 1₂` at each of the `2ω` active places; the valuation `2 v₂N + 4ω`
+  of the determinant of the explicit block `diag(χFr_r − r, χFr_r − r, 2 · 1_{4ω})` is PROVED
+  (`v2_det_quotient`). That the genuine central quotient block has this determinant is the ELLIOT
+  field `hcentralW`, which replaces `hdetW` of `CalibrationLeaf.lean`. The block of fields
+  `rmov … hcentralW` is equivalent to `v₂ u_prim(0) = 2(j_rc + v₂L) + 2g_𝒜 − s_𝒜 − 4ω` (tex
+  4057–4080; lane RV2's review probe `block_iff_formula`), and the support triangle
+  `det(D_W) · u_prim = u_K` is PROVED from the model (`triangular_coord`);
 * `movingFields_of_nondiv`: `hmne` and `hBexp` (`m ≠ 0`, `v₂ m < B`) from the non-divisibility
   `2^{c_E+1} ∤ a_r − 2χ` and `B ≥ c_E + 1`, which is the output of lane RC17's
   `moving_character_genuine` (tex 4066–4074).
@@ -45,19 +48,24 @@ those of `CalibrationModelP` / `CalibrationModelB` (same names, tex lines, kinds
 
 | field | content | tex | kind | owner |
 |---|---|---|---|---|
-| `kres`, `Wred`, `h2` | at `p ∣ k`: the residue field `𝔽_p`, the good reduction `Ẽ₀` of `E^{(h_x)}`, `p` odd (designated objects) | 4116–4118 | definition | RC15 / RC9 |
-| `hEdix` | `c_p(ℬ) = |Ẽ₀(𝔽_p)[2]|` | 4034–4040, 4119–4127 | PRINT (Edixhoven Thm 5.3, Rem 5.4.1) as GLUE | RC9 / batch 3 Calibration |
-| `rmov`, `amov`, `chimov`, `Bexp`, `cE`, `hchi`, `hrmov`, `hnd`, `hcB` | the moving prime `r ∈ ℕ` with `r ≡ 1 (mod 2^B)`, `χ = χ_h(r) = ±1`, `2^{c_E+1} ∤ a_r − 2χ`, `B ≥ c_E + 1` (lane RC17's `moving_character_genuine` output) | 4066–4074 | ELLIOT | RC4 / RC17 |
-| `nK`, `κ`, `DK`, `X`, `DW` | the triangular model of the support triangle: the primitive complex is the relaxation `[[D_K, X], [0, D_W]]` of the Kummer complex `D_K` at the moving and active places, over `ℚ₂[[t]]` | 4058–4080; 3492–3494 | ELLIOT + GLUE (identification of the model with the Galois cochains) | RC15 / batch 3 Duality |
+| `kres`, `Wred`, `h2` | at `p ∣ k`: a field with `2` invertible and an elliptic curve over it (NOT tied in Lean to `𝔽_p` or to the reduction of `E^{(h_x)}`; genuine witnesses `𝔽_p`, `Ẽ₀`) | 4117–4118 | definition (unanchored) | RC15 / RC9 |
+| `hEdix` | `c_p(ℬ)` is the number of `2`-torsion points of `Wred p`; as stated this is exactly `c_p(ℬ) ∈ {1, 2, 4}` (the consumed `c_p(ℬ) = 2^{t_p}`, `t_p ≤ 2`); genuine instance: Edixhoven, Compositio 81 (1992), Thm 5.3 and Rem. 5.4.1, pp. 299–300, at `𝔽_p`, `Ẽ₀`, giving `c_p(ℬ) = 4` | 4036–4040, 4117–4127 | GLUE consequence of the PRINT (weaker than the print) | RC9 / batch 3 Calibration |
+| `rmov`, `amov`, `chimov`, `Bexp`, `cE`, `hchi`, `hrmov`, `hnd`, `hcB` | the moving prime `r ∈ ℕ` with `r ≡ 1 (mod 2^B)`, `χ = χ_h(r) = ±1`, `2^{c_E+1} ∤ a_r − 2χ`, `B ≥ c_E + 1` (lane RC17's `moving_character_genuine` output); NOTE: `r` need not be prime nor `a = a_r`, `χ = χ_h(r)`; `r = 1`, `a = 3`, `χ = 1` satisfies them; they enter only `hK`, `hcentralW`, where they cancel | 4066–4075 | ELLIOT (vacuous interface) | RC4 / RC17 |
+| `nK`, `κ`, `DK`, `X`, `DW` | a block upper-triangular matrix over `ℚ₂[[t]]` (no identification with Galois cochains is made in Lean); with `hz` … `hcentralW` equivalent to `v₂ u_prim(0) = 2(j_rc + v₂L) + 2g_𝒜 − s_𝒜 − 4ω` | 4057–4080; 3495–3498 | ELLIOT | RC15 |
 | `zK`, `wK`, `zP`, `wP`, `hz`, `hw` | the retained class and functional of the primitive complex restrict to those of the Kummer complex | 4061–4064 | ELLIOT | RC15 |
 | `uK`, `hKc`, `hP` | `u_K` and `u_prim` are the class-functional coordinates of the Kummer and primitive models | 3882–3892 | definition | RC15 |
-| `hadj` | the Kummer model has generic dimensions `(1,1)` (`adj D_K ≠ 0`) | 4010–4019 | ELLIOT | RC15 |
+| `hadj` | the Kummer model has generic dimensions `(1,1)` (`adj D_K ≠ 0`) | 4014–4021 | ELLIOT | RC15 |
 | `hK` | the Kummer coordinate has central valuation `2(j_rc + v₂L + v₂m) + (2g_𝒜 − s_𝒜)` (class and functional free coefficients, torsion disks in degrees one, two, three) | 4055–4064 | ELLIOT | RC15 |
 | `Fmov`, `hFtr`, `hFdet` | the Frobenius at `r` on the Tate module: trace `a_r`, determinant `r` | 4066–4071 | definition | RC15 / RC17 |
 | `hcentralW` | at the centre the quotient block is `diag(χ Fr_r − r, χ Fr_r − r, 2 · 1_{4ω})` (the two places above `r`, and `E[2]` at the two places above each active prime) | 4066–4080 | ELLIOT | RC15 (with the MinimalComplexes area) |
 
 No longer fields compared with `CalibrationModelB`: `detW`, `htri`, `hdetW` (PROVED from the model
-and `v2_det_quotient`), `hmne`, `hBexp` (PROVED by `movingFields_of_nondiv`). -/
+and `v2_det_quotient`), `hmne`, `hBexp` (PROVED by `movingFields_of_nondiv`).
+
+As a leaf, `CalibrationModelC` is (4.6) itself at the address (ELLIOT, conclusion-shaped): its
+fields other than the data, `hsB` and RC19's height relation concern free parameters that do not
+constrain the genuine objects, and from (4.6) at the address it is inhabited by synthetic data
+(lane RV2's review probes `modelC_of_46`, `block_iff_formula`, `milne_met_by_junk`). -/
 structure CalibrationModelC {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : Family)
     (x : Addr Fam.b) : Type 1 where
   /-- `|Ш(𝒜)[2^∞]|` -/
@@ -301,7 +309,7 @@ theorem CalibrationModelC.nonempty_modelP {ℓ : ℕ} {D : RCData ℓ} {vL G₀ 
 
 /-- **The remaining inputs of `RCSteps.calibration`, with the local lengths and the moving fields
 discharged** ((4.6), tex 3987–4141): as `CalibrationInputs`, with `CalibrationModelC` at every
-address. -/
+address. As a leaf this is (4.6) itself at every address (ELLIOT; see `CalibrationModelC`). -/
 def CalibrationInputsC {ℓ : ℕ} (D : RCData ℓ) : Prop :=
   ∃ vL G₀ : ℤ, 0 ≤ vL ∧ ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F →
     ∀ x : Addr F.b, AnalyticRank (Etw ℓ (F.h x)) 1 →

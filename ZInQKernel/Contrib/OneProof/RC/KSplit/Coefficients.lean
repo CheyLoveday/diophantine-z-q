@@ -15,7 +15,8 @@ manuscript with its tex lines and kind:
 
 * `ShellRecurrence` — the good `T(p²)` formula `(E.12)` (tex 8156–8161), `PRINT` for the formula
   (Shimura's `T(p²)` formula in half-integral weight, Ann. of Math. 97 (1973), Theorem 1.7, the
-  locator as Purkait, *Hecke operators in half-integral weight*, arXiv:1208.4326, gives it; the
+  locator as Purkait, *Hecke operators in half-integral weight*, arXiv:1208.4326, gives it, not
+  checked against the printed source; the
   manuscript cites it as "the standard good `T(p²)` formula") and `ELLIOT` for its use here (the
   transported source is a `T(p²)`-eigenform with eigenvalue `η(p)a_p(E^{(k)})`), here as an
   interface on the coefficient sequence;

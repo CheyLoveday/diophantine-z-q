@@ -16,7 +16,7 @@ collected in one structure (`Leaves.lean`). This file fixes the shared vocabular
 * `WData ℓ` — the interface data `RCData ℓ` together with the predicate `Partitionable` of the
   even source (lane RC2, used by lane RC13's rough companion);
 * `WData.IsRoughCompanion h k'` — `k'` is a rough companion of `h` in the form produced by lane
-  RC13's `roughCompanion` (tex 2320–2401: a negative fundamental discriminant `k' ≡ 1 (mod 8)`,
+  RC13's `roughCompanion` (tex 2343–2401: a negative fundamental discriminant `k' ≡ 1 (mod 8)`,
   square and prime at the fixed support and at the primes of `h`, avoiding the primes of `h_*`,
   `hk'` partitionable, `L(E^{(hk')}, 1) ≠ 0`);
 * `sFun ℓ h = s(h)` (tex 1828–1830) as an integer;
@@ -35,13 +35,18 @@ attribute [local instance] Nat.fact_prime_two
 
 /-! ## The genus partner -/
 
-/-- The base support `S₀ = {2, 3} ∪ {p : p ∣ ℓ}` (tex 1790–1793: the primes of `2N` for `E_ℓ`). -/
+/-- The base support `S₀ = {2, 3} ∪ {p : p ∣ ℓ}` (tex 1974–1975: the primes of `2N` for `E_ℓ`). -/
 def S0 (ℓ : ℕ) : Finset ℕ := insert 2 (insert 3 ℓ.primeFactors)
 
 /-- **`h` is a genus partner** in the form of lane RC13's `genusPartner` at `S₀` (with no extra
 avoidance set), tex 2404–2408: `h_* < 0`, `h_* ≡ 1 (mod 8)`, fundamental, a square and prime to `p`
 at every `p ∈ S₀`, `ω(h_*) ≤ 5`, `L(E^{(h_*)}, 1) ≠ 0`. (Then `|h_*| ≥ 7 > 4` and `h_*` is in the
-squareclasses at `2N` of the prepared positive filter containing one, as the text requires.) -/
+squareclasses at `2N` of the prepared positive filter containing one, as the text requires.) It
+carries every property of `h_*` the text uses (tex 2404–2410, 2486–2492, 8209–8212, 8585–8588,
+9121–9134). `ω(h_*) ≤ 5` is not in the text; it only narrows the set of partners at which
+`RCLeaves.pre` and `RCLeaves.post` are demanded. The text obtains `h_*` from BFH clause (ii) (App F
+8250–8254); the Lean uses Hoffstein–Luo through lane RC13's five-prime route; both are valid since
+`pre` and `post` are demanded at every partner. -/
 def IsGenusPartner (ℓ : ℕ) (h : ℤ) : Prop :=
   h < 0 ∧ h % 8 = 1 ∧ Nonvanishing.IsFundamentalDiscriminant h ∧
     (∀ p ∈ S0 ℓ, Nonvanishing.IsSquareAt p (h : ℚ) ∧ ¬ (p : ℤ) ∣ h) ∧
@@ -50,10 +55,10 @@ def IsGenusPartner (ℓ : ℕ) (h : ℤ) : Prop :=
 /-! ## Data -/
 
 /-- **The interface data of round 2**: `RCData ℓ` and the predicate `Partitionable` of the
-even source (Definition `ex:sec7-seed-partition`, tex 2144–2177; lane RC2), which lane RC13's
+even source (Definition `ex:sec7-seed-partition`, tex 2176–2186; lane RC2), which lane RC13's
 rough companion takes as a parameter. -/
 structure WData (ℓ : ℕ) extends RCData ℓ where
-  /-- `Partitionable d`: the even source at `d` is partitionable (tex 2144–2177) -/
+  /-- `Partitionable d`: the even source at `d` is partitionable (tex 2176–2186) -/
   Partitionable : ℤ → Prop
 
 /-- `s(h)` (tex 1828–1830) as an integer. -/
@@ -63,7 +68,7 @@ namespace WData
 
 variable {ℓ : ℕ} (W : WData ℓ)
 
-/-- **`k'` is a rough companion of `h`** (Proposition `ex:sec7-rough-companion`, tex 2320–2401,
+/-- **`k'` is a rough companion of `h`** (Proposition `ex:sec7-rough-companion`, tex 2343–2401,
 App G 10055–10150), in the form produced by lane RC13's `roughCompanion` at the fixed support
 `S` and the avoidance set of the primes of `h_*` (tex 2407–2410). -/
 def IsRoughCompanion (h k' : ℤ) : Prop :=
@@ -197,7 +202,8 @@ def Eq35Target : Prop :=
     W.IsRoughCompanion h k' → (omega k' : ℤ) ≤ A →
       4 * (omega h : ℤ) + sFun ℓ h + sFun ℓ (h * k') - CR ≤ 2 * W.jrc h k'
 
-/-- **Admissible theta parameters lie in the prepared filter** (GLUE, tex 2404–2410, 8408–8429). -/
+/-- **Admissible theta parameters lie in the prepared filter** (GLUE, tex 2404–2410, App F 8209–8212,
+8227–8228). -/
 def PreparedGlue : Prop := ∀ θ : ℕ, ∀ Dd : ℤ, W.admissible θ Dd → W.prepared Dd
 
 /-- **`δ_o` is the attained odd minimum** (tex 2536–2551, App G (F.6), 10151–10256; batch 3's
@@ -206,7 +212,7 @@ def OddMinimumTarget : Prop :=
   IsLeast (AppGEndpoints.DepthSet W.stages W.Mθ (fun θ Dd => vZ (W.aθ θ Dd)) W.admissible) W.δo
 
 /-- **The address input at `δ_o`** (App G `ex:app-odd-stabilization`, `ex:app-simultaneous-address`,
-`ex:app-final-family`, tex 10508–10791; batch 3's `AddressInput`; lane RC2 with RC3's seed). In
+`ex:app-final-family`, tex 10508–10860; batch 3's `AddressInput`; lane RC2 with RC3's seed). In
 Branch 2, for one `C_{e,final}` and the coarse constant `C_coarse = C_gen/2 + C_det` of (F.5). -/
 def AddressTarget (A CR CE Cper Cdet : ℤ) : Prop :=
   ¬ W.OddEmptyUnit → ∃ CeFinal : ℤ,

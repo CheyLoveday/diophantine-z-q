@@ -117,7 +117,9 @@ theorem isogenyIndex_mul {α β : ℤ} (h : α * β = 2) : α.natAbs * β.natAbs
 
 /-- **`Reg_B / Reg_A = 2 / I²`** (tex 4088–4090): with the height adjunction
 `⟨φ x, y⟩_B = ⟨x, ψ y⟩_A` (GLUE: functoriality of the canonical height under dual isogenies) read
-on generators as `α Reg_B = β Reg_A`, and `αβ = 2`, one has `Reg_B α² = 2 Reg_A`. PROVED. -/
+on generators as `α Reg_B = β Reg_A`, and `αβ = 2`, one has `Reg_B α² = 2 Reg_A`. PROVED. In the
+reduction it is applied only to the rational ratio `ρ_Reg` (`RegA := 1`, `RegB := ρ_Reg = 2/α²`,
+`Wiring/Central.lean`); the genuine regulators are real and enter through `milne_valuation_form`. -/
 theorem regulator_ratio {α β : ℤ} {RegA RegB : ℚ} (h : α * β = 2)
     (hadj : (α : ℚ) * RegB = (β : ℚ) * RegA) : RegB * (α : ℚ) ^ 2 = 2 * RegA := by
   have h' : (α : ℚ) * β = 2 := by exact_mod_cast h

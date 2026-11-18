@@ -149,7 +149,7 @@ def genusPoint {Dd : ℤ} (dat : HeegnerDatum E f Lat κ (Dd * hstar) 1 hstar) :
 /-- **GLUE (tex 8274–8294, 9423: "the same `L` kills `T`").** `L` is a positive integer killing every
 torsion point of every native lattice. Elliot's argument: a torsion point `T` of the `χ`-eigen subgroup
 of `E(H₁)` is fixed by `ker χ`, hence lies in `E(F_D)` for the genus field `F_D = ℚ(√D, √h_*)` of degree
-four (tex 8261–8263); the fixed multiplier `B = B₁B₂`, `B_j = ∏_{f ≤ 4} #E(𝔽_{p_j^f})` at two good primes,
+four (tex 8261–8263); the fixed multiplier `B = B₁B₂`, `B_j = ∏_{f ≤ 4} |E(𝔽_{p_j^f})|` at two good primes,
 kills the torsion of `E` over every number field of degree at most four (prime-to-`p_j` torsion injects
 into the reduction, Silverman AEC VII.3.1 — locator UNVERIFIED), and `L` is a multiple of `4 B B_cusp`
 (tex 8295–8297). -/

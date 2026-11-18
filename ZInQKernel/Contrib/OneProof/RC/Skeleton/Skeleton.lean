@@ -7,8 +7,9 @@ import ZInQKernel.Contrib.CloudB3RC53.Assembly
 `branchPackageNode_of_steps` proves the blueprint's node
 `ZInQ.Contrib.CloudB3RC53.BranchPackageNode` (Branch 1, or the fixed-field package
 `FixedFieldPackage` of Branch 2) from the blueprint's printed leaves `Prints` (BCDT, Kolyvagin),
-the Kummer-sequence glue `KummerCorankZero`, and, for each admissible `ℓ`, the finer steps
-`RCSteps (D ℓ)` about interface data `D ℓ` (`Steps.lean`), following Elliot's text:
+the Kummer-sequence glue `KummerCorankZero`, and, for each admissible `ℓ` with
+`corank_{ℤ₂} Sel_{2^∞}(E_ℓ/ℚ) = 1`, the finer steps `RCSteps (D ℓ)` about interface data `D ℓ`
+(`Steps.lean`), following Elliot's text:
 
 1. **Branch split** (lines 2584–2593). If the intrinsic odd limit symbol is a unit at the empty
    configuration (`RCData.OddEmptyUnit`), choose an actual stage carrying that value with
@@ -80,7 +81,7 @@ theorem rc_of_oddEmptyUnit {ℓ : ℕ} (D : RCData ℓ) (S : RCSteps D) (hU : D.
 /-! ## The upper bound `B` at the nonzero addresses -/
 
 /-- **The upper bound `v₂ ũ_x(0) ≤ B` at every nonzero address** (PROVED from (3.9), (3.4), (4.6),
-(4.7) and the normalization of `L_*`; lines 2692–2693, 5728–5732, App G 10871–10884):
+(4.7) and the normalization of `L_*`; lines 2692–2693, 5729–5732, App G 10871–10896):
 `2j_rc(h_x,k) ≤ 4ω(h_x) + C_J` with `C_J = 2C_o + C_e − v₂L_*(h_*) + C_per + 2`, and the finite
 `Ш` and companion terms of (4.6) are nonnegative, so `v₂ ũ_x(0) ≤ C_J + C_cal`. -/
 theorem central_upper_bound {ℓ : ℕ} {D : RCData ℓ} (S : RCSteps D) (hk0 : D.kfin ≠ 0)

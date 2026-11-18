@@ -14,7 +14,9 @@ Every declaration here is `PROVED`.
   `D.uPrim F 0` is (the image of) an element `f ∈ Λ`, there is a `BaseZeroCore D F 1` (over the
   group `ℤ` with the non-torsion point `1`) with generic coordinate `f` and central cycle `f(0)`.
   With `f = 1` the central cycle and the central coordinate are `1 ≠ 0`: without the height formula
-  (a torsion specified point) the inputs do not imply the conclusion of the lemma.
+  (a torsion specified point) the inputs do not imply the conclusion of the lemma. For a torsion
+  specified point the core is equivalent to the conclusion `u_{prim,0}(0) = 0`; the non-vacuity
+  examples use a non-torsion point.
 * `baseTail_hypotheses_of_lambda`: the hypotheses of `baseTail_of_targets` hold when
   `ũ₀ = u_{prim,0}` is (the image of) an element of `Λ` (with `ε = 1`).
 

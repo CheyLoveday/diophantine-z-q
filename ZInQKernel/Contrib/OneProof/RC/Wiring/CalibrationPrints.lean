@@ -196,7 +196,7 @@ theorem exists_isFreeGenerator_baseChange {K : Type*} [Field K] [NumberField K] 
 
 | field | content | tex | kind | owner |
 |---|---|---|---|---|
-| `hmilne` | Cassels' isogeny invariance in Milne's form, with the canonical regulators `Reg_𝒜 = ĥ_𝒜(g_𝒜)`, `Reg_ℬ = ĥ_ℬ(g_ℬ)` for any free generators `g_𝒜` of `𝒜(ℚ) = E^{(h_x)}(K)` and `g_ℬ` of `ℬ(ℚ) = E^{(h_x)}(ℚ) × E^{(h_x k)}(ℚ)`, and self-dual torsion counts | 4027–4030, 4106–4112 | PRINT (Milne ADT I.7.3, (7.3.1)) + GLUE (RC19's pairings are the canonical height pairings of `𝒜`, `ℬ` for their principal polarizations) | RC15 / RC19 |
+| `hmilne` | Cassels' isogeny invariance in Milne's form, with the canonical regulators `Reg_𝒜 = ĥ_𝒜(g_𝒜)`, `Reg_ℬ = ĥ_ℬ(g_ℬ)` for any free generators `g_𝒜` of `𝒜(ℚ) = E^{(h_x)}(K)` and `g_ℬ` of `ℬ(ℚ) = E^{(h_x)}(ℚ) × E^{(h_x k)}(ℚ)`, and self-dual torsion counts; as a leaf field it constrains only free parameters (`shaA`, `tA`, `tB`, `C_𝒜`, `C_ℬ`, `Ω_𝒜`, `ρ_Ω`): with RC19's height relation it holds for every choice of the other data, and its effect is to define `v₂ shaA − 2v₂ tA` | 4027–4030, 4106–4113 | PRINT (Milne ADT I.7.3, (7.3.1)) + GLUE (RC19's pairings are the canonical height pairings of `𝒜`, `ℬ` for their principal polarizations) | RC15 / RC19 |
 
 No longer fields: the free generators, from `Prints` (BCDT Thm A, Kolyvagin Thm 1), Mordell's
 theorem for `E_m` and the index-two descent (`CalibrationModelP.nonempty_modelR`). -/

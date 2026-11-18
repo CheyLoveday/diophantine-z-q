@@ -139,7 +139,8 @@ structure MovingSetting (T : TateImage) (n : ℕ) where
   mem_HL_of_kum : ∀ σ : GF, kum σ = 1 → (σ : T.G) ∈ HL
   /-- the Kummer relations: exponent vectors `b` with `∏_a α_a^{b_a} ∈ F_∞^{×2^n}` -/
   KR : AddSubgroup (Fin t → ℤ)
-  /-- `GLUE` (tex 3551–3557): if `∏ α_a^{b_a}` is a `2^n`-th power in `F_∞`, its root lies in a
+  /-- `ELLIOT/GLUE` (tex 3551–3557; Elliot's argument from textbook valuation facts): if
+  `∏ α_a^{b_a}` is a `2^n`-th power in `F_∞`, its root lies in a
   finite cyclotomic layer, unramified over `K` at the odd nonzero-weight primes; with
   `v_{𝔭_j}(α_a) = m_j^{(a)}` (disjoint conjugate pairs, tex 3542–3543) this gives
   `2^n ∣ ∑_a b_a m_j^{(a)}` at each active `j`.  (Units and dependent radicands are allowed.) -/

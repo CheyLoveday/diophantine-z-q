@@ -21,7 +21,7 @@ PROVED fact.
 * Restriction of coefficient data to a coordinate subcube (`restrictData`), PROVED to
   preserve every predicate of the blueprint's package (`ClearingIdentity`, `PoleBound`,
   `BaseRegular`, `UpperBound`, `BaseZero`). Since the top layer's `FixedFieldPackage` takes the
-  threshold `b₀` of (3.9) ("for every sufficiently large `b`", tex 2679, 10794), the deduction
+  threshold `b₀` of (3.9) ("for every sufficiently large `b`", tex 2678, 10794–10795), the deduction
   uses it only with `max(b, b₀) = b`, where the restriction is the identity transport; it is kept
   so that the proof does not depend on how the threshold is recorded.
 -/
@@ -121,7 +121,7 @@ theorem norm_ge_of_v2_le {y : ℚ_[2]} {m : ℤ} (h : v2 y ≤ (m : WithTop ℤ)
 
 /-! ## Binary addresses and the final family -/
 
-/-- Binary addresses `x ∈ 𝔽₂^b` (lines 2179–2271). -/
+/-- Binary addresses `x ∈ 𝔽₂^b` (lines 2209–2220). -/
 abbrev Addr (b : ℕ) : Type := Fin b → ZMod 2
 
 /-- `q^* = (−1)^{(q−1)/2} q` (the family (3.9)). -/

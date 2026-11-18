@@ -23,13 +23,13 @@ namespace ZInQ.Manuscript.RC.Wiring
 
 open ZInQ.Manuscript ZInQ.Manuscript.SelmerTwoPower ZInQ.Contrib.CloudB3RC53
 
-/-- **The remaining inputs of (3.3b)** (Proposition `ex:sec7-even-upper`, tex 2273–2341; App G
+/-- **The remaining inputs of (3.3b)** (Proposition `ex:sec7-even-upper`, tex 2295–2341; App G
 (F.1)–(F.2), 10079–10129):
 * `unitSym`, `C₀`, (3.3a): the units of the normalized even symbol have `L_*(p) ≠ 0` and
   `v₂L_*(p) ≤ 2ω(p) + C₀` (ELLIOT; tex 2302–2310, (F.1) 10079–10087, App E `ex:app-even-phase`;
   owner RC11; (F.1) gives equality per prepared source, of which there are finitely many, so one
   `C₀` bounds them all);
-* (3.2): lane RC11's `EvenScalar32` for its normalization of `L_*` (ELLIOT; tex 1966–1968, App E
+* (3.2): lane RC11's `EvenScalar32` for its normalization of `L_*` (ELLIOT; tex 1944–1946, App E
   (E.8); owner RC11);
 * the realized cubes: for every partitionable `d` with Selmer corank zero and every dimension, a
   binary family of parameters based at `d` whose nonzero addresses are units of the symbol (ELLIOT;

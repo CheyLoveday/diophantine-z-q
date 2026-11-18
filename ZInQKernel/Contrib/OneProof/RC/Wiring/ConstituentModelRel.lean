@@ -38,9 +38,18 @@ open ZInQ.Contrib.CloudB3RC53.CoefficientDictionary Finset Matrix
 (tex 9641–9771). Fields as batch 3's `ConstituentModel`, except `chebotarev` (relative to `N_U`),
 `chi_surj` (for `U` a set of good primes), `level_red` (replacing `unram`), and the added `N_anti`,
 `N_chi`. Kinds: `stable_t`, `stable_d`,
-`det_orbit`, `level_red`, `kummer`, `chi_surj`, `chebotarev`, `typ_frob`, `bit_frob` GLUE;
-`two_fresh` ELLIOT (the squarefree weight count of (O.9), tex 9741–9745); `N_anti`, `N_chi`
-definition. Owner: RC12 (App F), batch 3 CoefficientDictionary. -/
+`level_red`, `kummer`, `chi_surj`, `chebotarev`, `typ_frob`, `bit_frob` GLUE; `det_orbit` ELLIOT
+(the diamond/trace-orbit calculation, tex 9711–9729); `two_fresh` ELLIOT (the squarefree weight
+count of (O.9), tex 9741–9745); `N_anti`, `N_chi` definition. Owner: RC12 (App F), batch 3
+CoefficientDictionary.
+
+The reduced module is `Λ/𝔪Λ`, where the text uses coefficientwise reduction and assumes no
+saturation of the integral Fourier module (tex 9638–9646, 9712–9717): `det_orbit` and `two_fresh`
+ask for membership in `𝔪Λ`, which needs more than the text's coefficientwise argument (a faithful
+instance takes `O` non-discrete, or `Λ` saturated under the operators). The form fields quantify
+over every `U`, with no good-prime or budget guard, while the text constructs a finite module per
+fixed stage and `U` within the budget (tex 9649–9651, 10208–10234); an instance must specify `F_U`
+outside the budget. -/
 structure ConstituentModelRel {L : Type*} [AddCommGroup L] {ε : L →+ ZMod 2} (T : TypeData L ε)
     (R : Finset ℕ → ZMod 2) (ap : ℕ → ℤ) (B : ℕ) where
   /-- the joint Galois group -/
@@ -77,7 +86,9 @@ structure ConstituentModelRel {L : Type*} [AddCommGroup L] {ε : L →+ ZMod 2} 
   chiType : G →* Multiplicative L
   /-- the character of `ℚ(√s*)` -/
   chiBit : ℕ → G →* Multiplicative (ZMod 2)
-  /-- GLUE (tex 9711–9729): `(d(u) − 1) t(v) F_U ∈ 𝔪Λ` -/
+  /-- ELLIOT (the diamond/trace-orbit calculation, tex 9711–9729): `(d(u) − 1) t(v) F_U ∈ 𝔪Λ`;
+  membership in the lattice quotient needs more than coefficientwise reduction (tex 9638–9646,
+  9712–9732) -/
   det_orbit : ∀ U u v, dV ρ u (tV ρ v (F U : I → K)) - tV ρ v (F U : I → K) ∈
     (m • ⊤ : Submodule O Λ).map Λ.subtype
   /-- ELLIOT (the squarefree weight count of (O.9), tex 9741–9745): `t(g) t(h) F_U ∈ 𝔪Λ` -/

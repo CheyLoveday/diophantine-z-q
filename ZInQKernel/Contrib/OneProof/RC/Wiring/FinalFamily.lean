@@ -54,7 +54,7 @@ def VisAt (Cdet : ℤ) : Prop :=
 
 /-- **The address input, for every choice of the constants supplied by the other inputs** (App G
 `ex:app-odd-stabilization`, `ex:app-simultaneous-address`, `ex:app-final-family`, tex
-10508–10791; ELLIOT; lane RC2 with lane RC3's K-split seed; batch 3 AppGEndpoints). The address
+10508–10860; ELLIOT; lane RC2 with lane RC3's K-split seed; batch 3 AppGEndpoints). The address
 construction uses the coarse bound (F.5), which holds for any constants `A, C_E, C_per, C_R, C_det`
 satisfying (F.3), (3.4), (3.5) and (O.8); so the input is required for exactly those constants. -/
 def AddressLeaf : Prop :=

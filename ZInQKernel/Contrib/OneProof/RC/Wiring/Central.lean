@@ -28,11 +28,11 @@ hypotheses. In particular the following are **not** hypotheses here, but consequ
 | (4.6) itself, with `|ε| ≤ 2v₂L + 2G₀ + 5` | `calibration_46` | 4044–4047 |
 | the base-zero dichotomy and `ũ₀(0) = 0` | `baseZero_node`, over lane RC20's genuine `A = Λ_(t)` (`baseZero_node_genuine`) | 4330–4376 |
 | `ũ_x = (∏ ε_q) u_{prim,x}` from the one-prime (4.7) | `corrected_eq` | 4219–4226 |
-| the integral closed row `w` of the paired functional | batch 3's `twoTermClosedRow_proof` | 3704–3880, 4334–4336 |
+| the integral closed row `w` of the paired functional | batch 3's `twoTermClosedRow_proof` | 3704–3875, 4342–4344 |
 
 The constants `v₂L` and `G₀` of the error bound `C_cal = 2v₂L + 2G₀ + 5` are fixed before the
 family, as the text requires ("The error depends on the fixed old local types and fixed multiplier,
-but not on `h` or `k`", tex 4008–4010).
+but not on `h` or `k`", tex 3999–4000).
 
 The auxiliary objects of each input live in `Type`, inside one existential (`Nonempty` of a
 bundle whose fields are listed, each with its tex lines, kind and owner).
@@ -84,19 +84,19 @@ parameters, fixed before the family.
 
 | field | content | tex | kind | owner |
 |---|---|---|---|---|
-| `shaA`–`tB_ne` | the two-primary orders `|Ш|`, `|tors|` of `𝒜` and `ℬ`, nonzero (finite `Ш` at a known simple zero, by the forward theorem) | 4016–4023 | ELLIOT + PRINT (Kolyvagin Thm 1) | RC9 |
+| `shaA`–`tB_ne` | the two-primary orders `|Ш|`, `|tors|` of `𝒜` and `ℬ`, nonzero (finite `Ш` at a known simple zero, by the forward theorem) | 4020–4021, 4050–4057 | existential orders (genuine witnesses finite by Kolyvagin, `lem:forward-rank`, tex 1086–1093) | RC9 |
 | `Scomp`, `cA`, `cB`, `tp`, `hTS`, `hcpos`, `hcancel`, `hA1`, `hB` | the component numbers: cancellation at split primes, `c_p(𝒜) = 1` (connected Weil restriction), `c_p(ℬ) = 2^{t_p}` at `p ∣ k` | 4118–4135 | ELLIOT + PRINT (Edixhoven Thm 5.3, Rem 5.4.1) | RC15 / RC9 |
 | `htp` | `t_p = dim_{𝔽₂} E[2]^{Fr_p} ≤ 2` | 4136–4138 | ELLIOT | RC15 |
-| `alpha`, `beta`, `hIJ` | the dual isogeny indices with `IJ = 2` | 4080–4084 | ELLIOT | RC15 |
-| `rhoReg`, `hadj` | the height adjunction read on generators: `I·(Reg_ℬ/Reg_𝒜) = J` | 4084–4086 | GLUE (functoriality of the canonical height) | RC15 |
+| `alpha`, `beta`, `hIJ` | the dual isogeny indices with `IJ = 2` | 4082–4088 | ELLIOT | RC15 |
+| `rhoReg`, `hadj` | the height adjunction read on generators: `I·(Reg_ℬ/Reg_𝒜) = J` | 4088–4090 | GLUE (functoriality of the canonical height) | RC15 |
 | `aPull`, `bPull`, `hab` | the integral pullbacks of the Néron differentials, `ab = 4` | 4093–4096 | ELLIOT | RC15 |
 | `gam`, `kap`, `hgam`, `hkap`, `hcv` | the real change of variables, both finite groups of order at most four | 4096–4104 | GLUE | RC15 |
-| `RegA`, `OmA`, `hRegA`, `hOmA`, `rhoOm` | the chosen Néron regulator and period of `𝒜`, nonzero, and the rational period ratio | 4087–4092 | definition | RC15 |
-| `hmilne` | Cassels' isogeny invariance of the Birch–Swinnerton-Dyer quotient, with self-dual torsion counts (principal polarizations) | 4024–4027, 4105–4112 | PRINT (Milne ADT I.7.3, (7.3.1)) + GLUE | RC15 |
-| `hsB` | `Ш(ℬ) = Ш(E^{(h_x)}) × Ш(E^{(h_x k)})`: `s_ℬ = s(h_x) + s(h_x k)` | 4113–4114 | ELLIOT | RC15 |
-| `hgB` | the rational torsion of `ℬ` is bounded by the fixed `G₀` | 4114–4115 | ELLIOT | RC15 |
+| `RegA`, `OmA`, `hRegA`, `hOmA`, `rhoOm` | the chosen Néron regulator and period of `𝒜`, nonzero, and the rational period ratio | 4089–4092 | definition | RC15 |
+| `hmilne` | Cassels' isogeny invariance of the Birch–Swinnerton-Dyer quotient, with self-dual torsion counts (principal polarizations) | 4027–4030, 4106–4113 | PRINT (Milne ADT I.7.3, (7.3.1)) + GLUE | RC15 |
+| `hsB` | `Ш(ℬ) = Ш(E^{(h_x)}) × Ш(E^{(h_x k)})`: `s_ℬ = s(h_x) + s(h_x k)` | 4053–4057 (implicit), and the signs at 4138–4139 | ELLIOT | RC15 |
+| `hgB` | the rational torsion of `ℬ` is bounded by the fixed `G₀` | 4115–4116 | ELLIOT | RC15 |
 | `rmov`–`hBexp` | the moving prime: `r ≡ 1 (mod 2^B)`, `χ = ±1`, `m = a_r − 2χ ≠ 0`, `v₂m < B` (lane RC17's `moving_character_genuine` produces exactly such a prime over the genuine Tate image) | 4066–4074 | ELLIOT | RC4 / RC17 |
-| `hvprim` | determinant multiplicativity in the support triangles: the primitive central value is regular with the computed valuation | 4058–4078, V19 20063–20079 | ELLIOT | RC15 (with the Duality and RankCounts areas) |
+| `hvprim` | determinant multiplicativity in the support triangles: the primitive central value is regular with the computed valuation | 4058–4080 | ELLIOT | RC15 (with the Duality and RankCounts areas) |
 -/
 structure CalibrationModel {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : Family)
     (x : Addr Fam.b) : Type where
@@ -325,17 +325,17 @@ def coordOfFamily {ℓ : ℕ} (D : RCData ℓ) (Fam : Family) : CoordData Fam.b 
 
 | field | content | tex | kind | owner |
 |---|---|---|---|---|
-| `K`, `P` | `K = ℚ(√k)` and the conductor-one ring-class point `P ∈ E(K)` | 4330–4336 | definition | RC15 / RC10 |
-| `hheight` | the conductor-one height formula: `L'(E/K,1) = 0` makes `P` torsion (the application of the print, needing `L(E/K,s) = L(E,s)L(E^{(k)},s)` and `ĥ = 0 ⇔ torsion`) | 4336–4337 | PRINT application (Cai–Shu–Tian Thm 1.1) + GLUE | batch 3 HeegnerCohomology |
-| (the DVR) | `A = Λ_(t)` with residue field `ℚ₂` and fraction field `F = Frac Λ` are **genuine** (lane RC20), not inputs | 4342–4343 | PROVED elsewhere | RC20 |
-| `m`, `Dm` | the two-term model of the primitive complex at the base (DEPARTURE of form: the complex after cancelling the unit disks outside degrees one and two) | 4349–4353 | ELLIOT + GLUE | RC15 / RC7 |
-| `hcentral` | full two-primary Selmer corank one for `E/K` gives central dimensions `(1,1)` | 4342–4348 | ELLIOT | RC15 (with the RankCounts area) |
-| `z`, `hz` | the retained integral cycle | 4332–4334 | ELLIOT | RC15 |
-| `CU`, `e1`, `e2`, `hd` | the identification of degrees one and two of the complex with `A^{m+1}`, under which the differential is `Dm` | 3882–3892 | definition | RC15 |
-| `lam`, `hlam` | the paired functional `λ_z`, `A`-linear and closed (its integral row vector is **derived** from batch 3's bridge, not assumed) | 3704–3880, 4334–4336 | ELLIOT/GLUE | batch 3 PairedFunctional (its unit premise: RC7) |
+| `K`, `P` | `K = ℚ(√k)` and the conductor-one ring-class point `P ∈ E(K)` | 4330–4333, 4345 | definition | RC15 / RC10 |
+| `hheight` | the conductor-one height formula: `L'(E/K,1) = 0` makes `P` torsion (the application of the print, needing `L(E/K,s) = L(E,s)L(E^{(k)},s)` and `ĥ = 0 ⇔ torsion`) | 4345–4346 | PRINT application (Cai–Shu–Tian Thm 1.1) + GLUE | batch 3 HeegnerCohomology |
+| (the DVR) | `A = Λ_(t)` with residue field `ℚ₂` and fraction field `F = Frac Λ` are **genuine** (lane RC20), not inputs | 4341–4342 | PROVED elsewhere | RC20 |
+| `m`, `Dm` | the two-term model of the primitive complex at the base (DEPARTURE of form: the complex after cancelling the unit disks outside degrees one and two) | 4353–4360 | ELLIOT + GLUE | RC15 / RC7 |
+| `hcentral` | full two-primary Selmer corank one for `E/K` gives central dimensions `(1,1)` | 4350–4352 | ELLIOT | RC15 (with the RankCounts area) |
+| `z`, `hz` | the retained integral cycle | 4342–4343, 4347–4348 | ELLIOT | RC15 |
+| `CU`, `e1`, `e2`, `hd` | the identification of degrees one and two of the complex with `A^{m+1}`, under which the differential is `Dm` | 3877–3892, 4353–4360 | definition | RC15 |
+| `lam`, `hlam` | the paired functional `λ_z`, `A`-linear and closed (its integral row vector is **derived** from batch 3's bridge, not assumed) | 3704–3875, 4342–4344 | ELLIOT/GLUE | batch 3 PairedFunctional (its unit premise: RC7) |
 | `uprim`, `hu` | the generic class-functional coordinate of `[z] ⊗ [λ_z]` | 3882–3892 | definition | RC15 |
-| `kappa`, `Lm`, `h45` | the central Kummer comparison and the retained boundary (4.5): `z̄ = i(Lm·P)` | 3911–3915, 4338–4340 | ELLIOT | RC15 / batch 3 Duality |
-| `eps0`, `utilde0`, `h47` | (4.7) at the base: `ũ₀ = ε₀ u_{prim,0}` with `ε₀ ∈ A` | 4365–4368 | ELLIOT | RC15 (also `commonCoordinateTarget_of_inputs` below) |
+| `kappa`, `Lm`, `h45` | the central Kummer comparison and the retained boundary (4.5): `z̄ = i(Lm·P)` | 3899–3902, 3911–3915, 4346–4348 | ELLIOT | RC15 / batch 3 Duality |
+| `eps0`, `utilde0`, `h47` | (4.7) at the base: `ũ₀ = ε₀ u_{prim,0}` with `ε₀ ∈ A` | 4369–4373 | ELLIOT | RC15 (also `commonCoordinateTarget_of_inputs` below) |
 | `wHalf`, `hwHalf` | height-one regularity: `ũ₀ ∈ Λ[1/2]` | 5196–5200, 5703 | ELLIOT | RC16 |
 | `hC` | the package's datum is its central value `ũ₀(0)` | 4366–4370, 5719–5721 | definition (RC20's `hcoef_of_lambdaHalf` replaces the earlier GLUE) | RC15 / RC20 |
 -/
@@ -436,7 +436,7 @@ tex 4142–4328), in the form lane RC15's `corrected_eq` takes them.
 |---|---|---|---|---|
 | `R`, `chi` | the coefficient ring `𝒪[G]` and the character at the address | 4194–4197 | definition | RC15 / RC7 |
 | `Q`, `v`, `g`, `l`, `e`, `ei` | the graph primes, the inertia generators, the quotient factors `l_q`, the point factors `e_q` with their inverses, and `v_q = (l_q/e_q² − 1)/2` | 4151–4222 | definition | RC15 |
-| `hsign` | `x(g_q) = ±1` at every graph prime | 4252–4255 | definition (the universal quadratic character) | RC15 / RC4 |
+| `hsign` | `x(g_q) = ±1` at every graph prime | 2728–2729, 2750–2751 | definition (the universal quadratic character) | RC15 / RC4 |
 | `hratio` | `x(l_q) x(e_q)^{-2} = 1 + 2x(v_q)` (the evaluated form of `l_q/e_q² = 1 + 2v_q`, PROVED by lane RC15 from the Euler-factor identity and `e_q ∈ 𝒪[G]^×`) | 4208–4219 | ELLIOT (the Frobenius model at `q`) | RC15 / RC4 |
 | `hinv` | `e_q` is invertible at the character | 4194–4205 | ELLIOT | RC15 |
 | `urel`, `hutilde` | the relaxed coordinate and `ũ = η u_rel` | 4219–4226 | definition | RC15 |

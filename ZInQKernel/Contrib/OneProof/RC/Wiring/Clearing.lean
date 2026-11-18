@@ -18,8 +18,9 @@ theorem, collected in `ClearingInputs D`. How the inputs of `clearing_nodes` are
 * **The paired-functional exponent is `a = 0`** (Proposition `ex:arith-paired-functional`, tex
   3864–3869; batch 3 PairedFunctional, `pairedFunctionalIntegral_proof`: the closed functional
   `λ_z` is integral over `S = 𝒪[G]` itself). Hence `c_det = 4(h_K + 2c_E + 2t_K)` and
-  `c = v₂ f₀(0) = 4h₁`. The `μ`-coordinates of RC7's `ScalarData` are then the coordinates of that
-  integral closed functional (`scalarData_of_pairedFunctional`, from batch 3's
+  `c = v₂ f₀(0) = 4h₁`. The `μ`-coordinates of RC7's `ScalarData` can be taken to be the coordinates
+  of that integral closed functional (`scalarData_of_pairedFunctional`, not used by
+  `clearingTarget_of_complex`, where the scalar data are existential; from batch 3's
   `exists_closed_pairedFunctional` and `scalarDataMuIntegral_proof`, with the unit premise of the
   tame local models over `𝒪[G]` supplied by lane RC7's augmentation criterion,
   `tame_unit_of_aug`). No PairedFunctional input remains in `ClearingInputs`.
@@ -29,7 +30,7 @@ theorem, collected in `ClearingInputs D`. How the inputs of `clearing_nodes` are
   lane RC16). Elliot's coordinate identity is stated for every such representation of `ũ_x`; this
   is equivalent to RC7's form for one representation (`forall_clearingCoordIdentity_iff`, from
   `uK_eq_of_coeff_eq`: the element `ũ_x` of `Frac 𝒪` does not depend on the representation).
-* **The constants** `d_K, h_K, c_E, t_K` are fixed before the family (tex 5654–5658: "The constants
+* **The constants** `d_K, h_K, c_E, t_K` are fixed before the family (tex 5641–5643: "The constants
   `d_K, t_K, h_K` are fixed only after the final `K` is fixed; `a` and `c_E` precede that choice.
   None depends on the graph or binary dimension."). The auxiliary objects of RC7 (Smith blocks,
   scalar data, `κ, ε, η`, the two generic patterns) are existential per family. They do not depend
@@ -115,7 +116,7 @@ def ClearingBudget {S : Type} [CommRing S] (B : SmithBlocks S O) (dK hK cE tK : 
 end Inputs
 
 /-- **The representation `ũ_x = g_x / 2^{e_x}`** (`g_x ∈ Λ`) of the corrected coordinates of the
-family `F` (tex 5703–5704, 5719–5721): RC7's input `hu` with `u x j = [tʲ] ũ_x`. -/
+family `F` (tex 5703–5706, 5710–5715): RC7's input `hu` with `u x j = [tʲ] ũ_x`. -/
 def UTildeRep {ℓ : ℕ} (D : RCData ℓ) (F : Family) (e : Addr F.b → ℕ) (g : Addr F.b → Lam) :
     Prop :=
   ∀ x j, PowerSeries.coeff j (D.uTilde F x) =
@@ -137,7 +138,7 @@ def ClearingModelOver {O : Type} [CommRing O] [IsDomain O] [Algebra Lam O] (P : 
     ClearingEntryPoles P B ∧ ClearingBudget B dK hK cE tK
 
 /-- **The model inputs of (5.9) over the genuine `𝒪`** (tex 5487–5645): constants
-`d_K, h_K, c_E, t_K` fixed before the family (tex 5654–5658) and, at every final family `F`, the
+`d_K, h_K, c_E, t_K` fixed before the family (tex 5641–5643) and, at every final family `F`, the
 per-family inputs `ClearingModelOver genuinePole` (E3, E2, E1–E2, the entry pole bound, (5.7)).
 Together with `HeightOneTarget D` these are `ClearingInputs D`. -/
 def ClearingModel {ℓ : ℕ} (D : RCData ℓ) : Prop :=
@@ -152,7 +153,7 @@ at every final family, the genuine `𝒪`, and the exponent `a = 0`.
 | conjunct | tex | kind | owner |
 |---|---|---|---|
 | `HeightOneTarget D`: every `ũ_x` of a final family lies in `Λ[1/2]` (RC7's `hu`, E6) | 4909–5205, 5703–5704 | ELLIOT | RC16 (it is the field `RCSteps.height_one`) |
-| `ClearingModel D`: `∃ dK hK cE tK`, before the family | 5251–5267, 5654–5658 | definition | (content in (5.7)) |
+| `ClearingModel D`: `∃ dK hK cE tK`, before the family | 5251–5267, 5641–5643 | definition | (content in (5.7)) |
 | per final family `F`, over the genuine `𝒪`: `∃ B sd κ ε η RankOne Acyclic` | 5509–5603 | definition | RC7 |
 | `ClearingSmithModel B` (E3: `2 < n`, augmentation `A_i ↦ A0 i`) | 5517, 5522–5538 | ELLIOT (+ DEPARTURE D3 of form) | RC7 (open: Selmer-complex model of `D`; print (5.6) Nekovář 7.8.8(ii) UNVERIFIED; GLUE 5409–5411) |
 | `ClearingPatterns` (E2: only two generic patterns) | 5615–5617 | ELLIOT | RC7 (open) |

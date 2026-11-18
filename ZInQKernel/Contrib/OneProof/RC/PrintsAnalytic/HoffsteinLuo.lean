@@ -34,8 +34,11 @@ fundamental discriminants `d` with the above properties and such that `χ_d(p) =
 `p ∈ S`."
 
 The Lean statements are over Tau Ceti's genuine newforms (`Newform.lean`); `(d, N) = 1` is part of
-the print's setting (the theorem's `d` lie in `Δ_w = {d : ±d > 0, μ(d) ≠ 0, d ≡ ν² (mod 4M)}`, §2,
-`N ∣ M`), so it is included in the conclusion.
+the print's setting (the theorem's `d` lie in
+`Δ_w = {d : ±d > 0, μ(d) ≠ 0, d ≡ ν² (mod 4M) for some ν coprime to 4M}`, §2, `N ∣ M`; the `ν`
+clause gives `(d, 4M) = 1`), so it is included in the conclusion; it also follows by putting the
+primes of `N` into `S`. The bound four on `ω(d)` is §3's `r = 4`, whose details are "suppressed"
+(p. 441); the theorem as printed is the leaf.
 
 **Use check.** Hoffstein–Luo is applied to the newform of `A^{q₀}` (weight 2, trivial nebentypus,
 `k ≥ 2` ✓); the splitting set is arbitrary ✓; the bound four on `ω(d)` is absolute ✓ (it does not

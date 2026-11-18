@@ -12,6 +12,12 @@ determinants), with the full unit `ε_p` of (4.7). This file records its inputs 
 `CommonCoordinateTriangles`
 and proves `commonCoordinateInputs_of_triangles : CommonCoordinateInputsT D → CommonCoordinateInputs D`
 (PROVED).
+
+The support-triangle data are existential witnesses, not tied to the Selmer complexes, the
+character at the address or the family's primes, so they do not constrain the genuine objects:
+`CommonCoordinateInputsT` is equivalent to its conclusion `CommonCoordinateTarget` (lane RV2's
+review probes `triangles_iff`, `commonCoordinateInputsT_iff_target`). As a leaf it is Lemma
+`ex:arith-common-coordinate` itself (ELLIOT); the algebra above is proved for the abstract data.
 -/
 
 noncomputable section
@@ -22,20 +28,23 @@ open Matrix ZInQ.Manuscript ZInQ.Manuscript.RC.Central ZInQ.Contrib.CloudB3RC53
   ZInQ.Contrib.CloudB3RC53.CommonCoordinate
 
 /-- **The support-triangle data at one address** (tex 4142–4328; the inputs of batch 3's
-`commonCoordinateModel_of_models`). Kinds and owners:
-* `R`, `chi`, `Q`, `v`, `g`, `l`, `e`, `ei`, `hsign`, `urel`, `U`, `hU`, `hutilde`: the coefficient
-  ring `𝒪[G]`, the character at the address, the graph primes and their factors, the unused primes,
-  `ũ = η u_rel` (definition; tex 4151–4226; owner RC15 / RC7);
-* `hratio`, `hinv`: the Euler-factor identity `l_q/e_q² = 1 + 2v_q` at the character and the
-  invertibility of `e_q` (ELLIOT, the Frobenius model at `q`; tex 4194–4219; owner RC15 / RC4);
-* `qn`, `hodd`, `F`, `a`, `z`, `zi`, `ha`, `hd`, `hl`, `he`: for each unused prime `p` the odd residue
-  cardinality, a Frobenius matrix over `ℚ₂[[t]]` with trace `a_p` and determinant `q_p`, and the
-  identifications of `l_p`, `e_p` with the factors of the model (definition / ELLIOT; tex 4151–4222;
-  owner RC15 / RC4);
-* `u`, `hrel`, `hprim`, `eps`, `hstep`: the coordinates relaxed at `T ⊆ U` (`u U = u_rel`,
-  `u ∅ = u_prim,x`) related at each step by the support triangle in the original integral bases,
-  with basis comparisons of `Λ`-unit determinant, and the resulting full unit `ε_p` (ELLIOT;
-  tex 4166–4193; owner RC15 / batch 3 CommonCoordinate). -/
+`commonCoordinateModel_of_actual_models`). Kinds and owners:
+* all fields are free existential witnesses (not the genuine `𝒪[G]`, the character at `x`, the
+  family's graph primes `F.Q`, `Fr_q`, `a_q`, `z_q`, or the actual complexes): `𝒪` has no ring map
+  to `ℚ₂[[t]]` over `Λ`, and `hinv`/`hratio`/`hutilde` fail for the text's values wherever `η_x`
+  has a pole at `t = 0` (tex 4155, 4229); only `hutilde` and `hprim` touch the data;
+* `hratio`, `hinv`: `v_q = (l_q/e_q² − 1)/2` and `e_q ∈ 𝒪[G]^×` evaluated (ELLIOT; tex 4196–4206,
+  4209–4220; owner RC15 / RC4);
+* `qn`, `hodd`, `F`, `a`, `z`, `zi`, `ha`, `hd`, `hl`, `he`: for each unused prime `p` an odd number,
+  a matrix over `ℚ₂[[t]]` with trace `a p` and determinant `qn p`, and the factors `l_p`, `e_p` read
+  off it (definition; tex 4151–4222; owner RC15 / RC4);
+* `u`, `hrel`, `hprim`, `eps`, `hstep`: the relaxed coordinates (`u U = u_rel`, `u ∅ = u_prim,x`)
+  and at each step the triangular form (the text's Nekovář Prop. 7.8.8(ii), tex 3483–3498), the
+  norm identity (tex 4169–4170, from (4.1)), `λ_R ∘ i = e_q λ_P` (derived in the text from Nekovář
+  6.4.1–6.4.3, tex 4164–4174; ASSUMED here) and `Λ`-unit basis comparisons (tex 4189–4194); one
+  unit `ε_p` per prime at every stage `T` (DEPARTURE: the multi-prime relaxation is not in the
+  text) (ELLIOT; owner RC15 / batch 3 CommonCoordinate).
+Equivalent to `ũ_x = ε u_{prim,x}` for a `Λ`-unit `ε` (lane RV2's review probe `triangles_iff`). -/
 structure CommonCoordinateTriangles {ℓ : ℕ} (D : RCData ℓ) (Fam : Family) (x : Addr Fam.b) :
     Type 1 where
   R : Type
@@ -84,7 +93,8 @@ def CommonCoordinateTriangles.toModel {ℓ : ℕ} {D : RCData ℓ} {Fam : Family
     M.u M.hrel M.hprim M.hstep
 
 /-- **The inputs of (4.7) as support-triangle data** (tex 4142–4328): at every address of a final
-family, one `CommonCoordinateTriangles`. -/
+family, one `CommonCoordinateTriangles`. As a leaf this is (4.7) itself (ELLIOT): it is equivalent
+to `CommonCoordinateTarget` (lane RV2's review probe `commonCoordinateInputsT_iff_target`). -/
 def CommonCoordinateInputsT {ℓ : ℕ} (D : RCData ℓ) : Prop :=
   ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F → ∀ x : Addr F.b,
     Nonempty (CommonCoordinateTriangles D F x)

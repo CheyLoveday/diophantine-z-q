@@ -52,7 +52,10 @@ theorem O11_odd_stage {M δ : ℕ} {η : ℕ → ZMod (2 ^ M)} {Good : ℕ → P
 `CornutJetchevThm31`).** At every stage `θ` and admissible `D` with `(D/ℓ₀) = 1`, the phase-removed
 coefficient is congruent to `c₀ 2^{ω(N)} ζ λ_θ(D)` modulo `2^{M_θ}`, `ζ` odd, `λ_θ(D)` an integer lift
 of `λ_{M_θ}(\overline{LP_D})`. The orientation count behind it is PROVED (`O7_assembly`,
-`orbit_sum`, `orientation_signs`, `cj_kappa_eq_one`, `cj_bijection_of_kappa_one`). -/
+`orbit_sum`, `orientation_signs`, `cj_kappa_eq_one`, `cj_bijection_of_kappa_one`). After phase
+removal (tex 2080–2085) the phase is `±1`; the statement weakens it to an odd integer. The print is
+the 2010 preprint (arXiv:1012.0725; Bull. LMS 45 (2013)); V19 states the same (O.7) (V19
+30909–30923) but proves it by Elliot's own conductor-one argument (V19 31001–31019, 40351–40371). -/
 def ThetaComparison (M : ℕ → ℕ) (aθ lam : ℕ → ℤ → ℤ) (admissible : ℕ → ℤ → Prop) (ω : ℕ) : Prop :=
   ∀ θ D, admissible θ D → ∃ ζ : ℤ, Odd ζ ∧ (2 : ℤ) ^ M θ ∣ aθ θ D - (c0 : ℤ) * 2 ^ ω * ζ * lam θ D
 

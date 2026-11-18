@@ -27,9 +27,13 @@ open Classical in
 scale of the modular parametrization), `K` imaginary quadratic with `disc K ∉ {−3, −4}` in which
 every prime of the level splits, a Heegner form of discriminant `disc K`, a point `y ∈ E(H₁)` over
 the Hilbert class field with `ι(y) = φ(τ)` (the CM point), "the specified point" `P ∈ E(K)` the
-trace of `y` (tex 4334–4337), and the conductor-one factorization `L(E/K,s) = L(E,s)L(E^{(k)},s)`
-(GLUE, tex 5736). Kinds: definition (the Heegner point), GLUE (the factorization); owner RC19 /
-batch 3 HeegnerCohomology. -/
+trace of `y` (tex 4345–4346; the CM points, tex 2915–2932), and the conductor-one factorization
+`L(E/K,s) = L(E,s)L(E^{(k)},s)` (GLUE, tex 5736). Kinds: existence claims — `f` PRINT (BCDT;
+`newformLevel` the conductor by Carayol), `Lat` GLUE (uniformization), non-CM GLUE
+(`j = 35152/9`), `κ` GLUE (Eichler–Shimura, a ℚ-isogeny `E_f → E`), the split hypothesis and the
+Heegner form PROVED-able from `UnitSquareAt` at `2N`, `y` GLUE/PRINT (CM theory: `φ(τ) ∈ E(H₁)`),
+`P` GLUE (Galois descent), the factorization GLUE (Artin formalism; it follows from
+`RCLeaves.artin` at `(1, 1, disc K)` when `k = disc K`); owner RC19 / batch 3 HeegnerCohomology. -/
 def HeegnerData (E : WeierstrassCurve ℚ) (hE : E.IsElliptic) (k : ℚ) (K : Type) [Field K]
     [NumberField K] [DecidableEq K] (P : (E.baseChange K).toAffine.Point) : Prop :=
   haveI := hE

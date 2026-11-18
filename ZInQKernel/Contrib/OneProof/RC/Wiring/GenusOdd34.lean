@@ -19,8 +19,9 @@ the rough companion relation `Companion`, and any `L_*` that is a nonzero real r
 such a rescaling (`lstarScaled_of_centralNormalization`), given entire continuations of the twists
 by negative integers, which the root numbers supply (`cont_of_rootNumberExists`). The valuation
 differences of (3.4) do not depend on the rescaling. GenusOdd also uses that
-`√|h_*| L(E^{(h_*)},1)/Ω⁻`, for the lattice's `Ω⁻`, is a nonzero rational (Manin–Drinfeld, tex 2403),
-a named input of the instance; `Ω⁻ ≠ 0` follows from it.
+`√|h_*| L(E^{(h_*)},1)/Ω⁻`, for the lattice's `Ω⁻`, is a nonzero rational (Birch–Manin rationality
+via modular symbols, with Manin–Drinfeld; not stated in the tex, which has only `L_*(h_*) ≠ 0`, tex
+2404), a named input of the instance; `Ω⁻ ≠ 0` follows from it.
 
 `gz34Target_of_genusOdd` (PROVED) gives `Gz34Target` (both clauses: the rough companions and the
 final `k`) from `Prints`, `ArtinFactorization`, the root numbers and a `GenusOddInstance`: RC11's
@@ -49,17 +50,29 @@ theorem cont_of_rootNumberExists (hRN : Nonvanishing.FromRC8.RootNumberExists)
 2343–2353, 2403–2440, 2595–2603). Kinds and owners:
 * `N`, `hN`: lane RC11's normalization of the interface's `L_*` (GLUE Birch–Manin, tex 1825–1830,
   7175–7177); owner RC11;
-* `f`, `hf`, `Lat`, `hLat`, `hNC`, `κ`, `hκ`: the newform of `E`, a non-CM lattice of `E` and the
-  scale of the modular parametrization (definition; the data of Cai–Shu–Tian's statement);
+* `hE`: `E_ℓ` is elliptic (PROVED-able: `Δ = 2304ℓ⁶ ≠ 0`);
+* `f`, `hf`: the newform of `E` at `newformLevel E` (a consequence of PRINT `Prints.bcdt`:
+  `newformLevel` is an attained `sInf`, `Nat.sInf_mem`; derivable);
+* `Lat`, `hLat`, `hNC`, `κ`, `hκ`: the period lattice of `E` (GLUE: uniformization), non-CM (GLUE:
+  `j(E_ℓ) = 35152/9 ∉ ℤ`), a scale with `κΛ_f ⊆ Lat` (GLUE: Eichler–Shimura; every such `φ_κ` is a
+  `ℚ`-isogeny after the optimal parametrization);
 * `hElkikMD`: `√|h_*| L(E^{(h_*)},1)/Ω⁻`, for the lattice's least positive imaginary period `Ω⁻`,
-  is a nonzero rational (GLUE: Manin–Drinfeld; tex 1826–1827, 2403, 7176–7177); owner batch 3
+  is a nonzero rational (GLUE: Birch–Manin rationality of twisted central values via modular
+  symbols, with the Manin–Drinfeld theorem; tex 1826–1827, 2404, 7175–7179); owner batch 3
   GenusOdd;
-* `hgp`: `h_*` is a genus partner in GenusOdd's sense (ELLIOT/definition, tex 2403–2406; it adds the
-  squares at the level of the newform to lane RC13's partner);
-* `selG`, `selR`, `hselG`, `hselR`: Heegner data at the prepared simple zeros and their companions
-  (definition: the Heegner points of Cai–Shu–Tian's statement, tex 2411–2416);
-* `hprep`, `hjg`, `hjr`, `hcomp`: the interface data are GenusOdd's objects (definition);
-* `hk0`, `hksq`, `hk4`, `hk2N`, `hkcop`: the final `k` (ELLIOT, tex 2595–2603 with 2349–2352). -/
+* `hgp`: `h_*` is a genus partner in GenusOdd's sense (GLUE: a consequence of lane RC13's
+  `IsGenusPartner`, whose base support contains the primes of the level, by Hensel; tex 2404–2406);
+* `selG`, `selR` (definition); `hselG`, `hselR` (GLUE: Heegner data exist — Heegner forms from the
+  square classes at `2N`, the ring class character `χ_{d₁} ∘ N` and its primitivity, and
+  `φ_κ(τ) ∈ E(H_c)` by Shimura reciprocity; tex 2411–2416);
+* `hprep`, `hjg`, `hjr`, `hcomp`: the interface data are GenusOdd's objects (definition). The text
+  gives `j_gen`, `j_rc` and the companion relation only at prepared simple zeros and their
+  companions, while `hjg`, `hjr` are equalities of total functions and `hcomp` is quantified over
+  every `h`: a discharge chooses compatible values elsewhere (the selections `none`); at `h = 0`,
+  `hcomp` forces `¬ W.Partitionable 0` (`CentralNonzero (Etw ℓ 0)` holds for the junk curve
+  `y² = x³`);
+* `hk0`, `hksq`, `hk4`, `hk2N`, `hkcop`: the final `k` (definition: a choice of the data in both
+  branches; the text's `k` of tex 2596–2598 has these properties in Branch 2). -/
 structure GenusOddInstance {ℓ : ℕ} (W : WData ℓ) : Type 1 where
   hE : (Ecurve ℓ).IsElliptic
   f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel (Ecurve ℓ)) : Subgroup (GL (Fin 2) ℝ)) 2
@@ -73,7 +86,8 @@ structure GenusOddInstance {ℓ : ℕ} (W : WData ℓ) : Type 1 where
   N : Even.CentralNormalization (Ecurve ℓ)
   /-- it is the interface's `L_*` -/
   hN : N.Lstar = W.Lstar
-  /-- `L_*(h_*)` over the lattice's `Ω⁻` is a nonzero rational (Manin–Drinfeld) -/
+  /-- `L_*(h_*)` over the lattice's `Ω⁻` is a nonzero rational (Birch–Manin rationality, with
+  Manin–Drinfeld) -/
   hElkikMD : ∃ q : ℚ, q ≠ 0 ∧ (q : ℂ) = Lstar (Ecurve ℓ) Lat W.hstar
   /-- `h_*` is a genus partner in GenusOdd's sense -/
   hgp : GenusPartner (Ecurve ℓ) W.hstar
@@ -85,9 +99,10 @@ structure GenusOddInstance {ℓ : ℕ} (W : WData ℓ) : Type 1 where
     Companion (Ecurve ℓ) Lat W.hstar h k' → (selR h k').isSome
   /-- the prepared filter is GenusOdd's -/
   hprep : ∀ h, W.prepared h → Prepared (Ecurve ℓ) W.hstar h
-  /-- `j_gen` is read off the genus selections -/
+  /-- `j_gen` is read off the genus selections, for the parametrization `φ_κ` of the instance (the
+  text's `π` up to a `ℚ`-isogeny; (3.4) is unaffected since both indices use the same `κ`) -/
   hjg : W.jgen = jgenOf (Ecurve ℓ) f Lat κ W.hstar selG
-  /-- `j_rc` is read off the ring-class selections -/
+  /-- `j_rc` is read off the ring-class selections, for the same parametrization `φ_κ` -/
   hjr : W.jrc = jrcOf (Ecurve ℓ) f Lat κ selR
   /-- a rough companion is a companion in GenusOdd's sense -/
   hcomp : ∀ h k', W.IsRoughCompanion h k' → Companion (Ecurve ℓ) Lat W.hstar h k'

@@ -19,11 +19,12 @@ nonempty-seed part of Proposition `ex:app-nonempty-seeds` (tex 10259–10507).
   `p ≡ 1 (mod 4)` with `(ℓ/p) = −1`, `(k/p) = 1`, `p ∤ 6kℓ`, and
   `v₂(p + 1 − a_p(E^{(k)})) = 2`. This is the whole elementary content of the second paragraph of
   the proof of `ex:sec7-ksplit-seed` (tex 2643–2653) and of tex 10482–10500.
-* `AppGCongruence` (`ELLIOT`, tex 2636–2641, 10319–10481): under the assumed absence of a nonempty
+* `AppGCongruence` (a proposition, refuted by `not_appGCongruence`; the `ELLIOT` step, tex 2636–2641,
+  10319–10481, is the implication `NoSeed → AppGCongruence`): under the assumed absence of a nonempty
   `K`-split unit seed, `a_p(E^{(k)}) ≡ p + 1 (mod 8)` at every fresh good `K`-split prime outside
   the finite support. (For an odd prime `p ∤ k`, `p` splits in `K = ℚ(√k)` iff `(k/p) = 1`; this
   textbook criterion is used to read "`K`-split" as `(k/p) = 1`, `GLUE`.)
-* `ksplit_seed` (`PROVED` from `AppGCongruence`): **Lemma `ex:sec7-ksplit-seed`** — the assumed
+* `ksplit_seed` (`PROVED` from that implication): **Lemma `ex:sec7-ksplit-seed`** — the assumed
   absence of a nonempty `K`-split unit seed is refuted.
 * `appGCongruence_of_traceData`, `app_nonempty_seed` (`PROVED` from the `ELLIOT` interface
   `NoSeedTraceData` of `Coefficients.lean`): the same, with Elliot's App G coefficient calculation

@@ -7,9 +7,10 @@ import ZInQKernel.Contrib.OneProof.RC.Rings.OValuation
 `eq35Inputs_of_genuine` (PROVED): the inputs of (3.5) (`Eq35Inputs`, lane RC16's
 `exLimitsUniformLowerBound`) with the valuation identification `ValuationOfO` discharged over the
 genuine outer ring: `K = Frac 𝒪`, `v = v_𝒪`, `ι : Frac Λ → Frac 𝒪` (lane RC20's
-`valuationOfO_genuine`, tex 3727–3730, 4914–4920). What remains is `Eq35InputsGenuine`: the
-primitive coordinates at the companion pairs, their height-one regularity processes, (4.6) at the
-companion pairs and the outer switching processes over `v_𝒪`.
+`valuationOfO_genuine`, tex 3727–3730, 4914–4920). What remains is `Eq35InputsGenuine`: existential
+witnesses for the primitive coordinates at the companion pairs (not tied to the genuine coordinates
+in Lean), their height-one regularity processes, (4.6) at the companion pairs and the outer
+switching processes over `v_𝒪`.
 -/
 
 noncomputable section

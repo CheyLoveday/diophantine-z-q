@@ -6,8 +6,8 @@ import ZInQKernel.Contrib.OneProof.RC.Determinant.SmithLength
 
 Lane RC11's `E4a_nonneg` (`Membership.lean`, (E.4a), tex 7572–7589) is the arithmetic of
 `v_𝔭(u_x) = v(α) − Σ_i v(d_i) = ℓ_R(H¹/Rz) − ℓ_R H² ≥ 0` over the DVR `R = A_𝔭`, with the step
-`Σ_i v(d_i) = ℓ_R H²` taken as the hypothesis `hsmith` (GLUE in lane RC11's report: "Smith
-decomposition with universal coefficients"; tex 7567–7581: "Let `d_1, …, d_r` be the nonzero
+`Σ_i v(d_i) = ℓ_R H²` taken as the hypothesis `hsmith` (GLUE: the Smith decomposition of a finite
+free model with universal coefficients; tex 7567–7581: "Let `d_1, …, d_r` be the nonzero
 Smith entries of a finite free model … its degree-two cohomology is torsion").
 
 The step is PROVED in the tree by lane RC7 (`Determinant.length_quotient_range_eq_ord_det`, via

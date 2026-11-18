@@ -53,7 +53,10 @@ Contents (every theorem `PROVED`):
    survive the inner limit and the central comparison `i` identifies the specialized cycle, tex
    3919–3921, 3961–3968). `Boundary45Base.central`: `z̄ = L μ κ(P)` for one `μ ∈ ℚ₂` (the limit of
    the moving multipliers `m_i` when `κ(P) ≠ 0`); `Boundary45Base.h45` is the field `h45` of the
-   base model; `Boundary45Base.central_eq_zero_of_torsion` is the use at tex 4346–4348.
+   base model; `Boundary45Base.central_eq_zero_of_torsion` is the use at tex 4346–4348. Since
+   `stage` and `kappa` are existential, `Nonempty (Boundary45Base P n z̄)` is equivalent to
+   `∃ κ L, L ≠ 0 ∧ z̄ = L κ(P)`; for torsion `P` this is `z̄ = 0`. The finite-stage lemmas
+   `boundary45_finite*` illustrate (4.5) and are not consumed.
 -/
 
 noncomputable section
@@ -73,9 +76,10 @@ with kinds:
 * `y1 ∈ E(H_1)` (fixed by `N`) and `yr = y_r`: the CM points `π(x_1)`, `π(x_r)` (tex 2915–2917):
   definition;
 * `a` (`a_r`), `σ` (a Frobenius above `r`) and `hnorm`: the split norm relation (4.1) at
-  `(d, q) = (1, r)`, `Tr_{H_r/H_1} y_r = (a_r − σ_r − σ_r⁻¹) y_1` (PRINT: Cai–Chen–Liu, Trans. AMS
-  370 (2018), Theorem 2.15, p. 3730, through `φ`, as stated by lane RC9 in
-  `HeegnerPointData.NormRelations`, split clause);
+  `(d, q) = (1, r)`, `Tr_{H_r/H_1} y_r = (a_r − σ_r − σ_r⁻¹) y_1` (the content of Cai–Chen–Liu,
+  Trans. AMS 370 (2018), Theorem 2.15, p. 3730, split case, through `φ`, as stated by lane RC9 in
+  `HeegnerPointData.NormRelations`, split clause; not a constraint inside `Boundary45Base`: the
+  trivial stage satisfies it);
 * `incl` (`E(K) ⊂ E(H_r)`, injective), `hP` (`P = Tr_{H_1/K} y_1`, the specified point: the
   unaveraged ring-class point `b₁`), `W`, `hW` (`W = Tr_{H_r/K} y_r ∈ E(K)`, the weighted point of
   the class at the base character and `t = 0`, where `χ₁ Ψ(0) = 1`): definition. -/
@@ -310,7 +314,10 @@ cycle (in the model's central degree-one coordinates), with kinds:
   adjugate identities multiplied by a fixed power of two survive the limit", with tex 3961–3968:
   the retained boundaries (4.5) `z_i(0) − L m_i j_i(b₁) = d v_i`, proved at each stage by
   `boundary45_finite`, survive the inner limit, and the comparison `i` identifies the specialized
-  cycle `z₀`). -/
+  cycle `z₀`).
+Since `stage` and `kappa` are existential, `Nonempty (Boundary45Base P n z̄)` is equivalent to
+`∃ κ L, L ≠ 0 ∧ z̄ = L κ(P)`, and for torsion `P` to `z̄ = 0` (lane RV2's review probes
+`boundary_iff_h45`, `boundary_iff_of_torsion`). -/
 structure Boundary45Base {G : Type} [AddCommGroup G] (P : G) (n : ℕ) (zbar : Fin n → ℚ_[2]) :
     Type 1 where
   /-- the finite stages -/

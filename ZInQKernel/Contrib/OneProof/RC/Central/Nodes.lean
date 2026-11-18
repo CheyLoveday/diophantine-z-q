@@ -18,8 +18,8 @@ their kinds.
 Cai–Shu–Tian, Theorem 1.1 is **not** stated here: it enters as an
 abstract proposition `CSTThm11 : Prop`, to be instantiated by the project's statement
 `ZInQ.Contrib.CloudB3RC53.CST.CSTThm11Split` (Cai, Shu, Tian, "Explicit Gross–Zagier and
-Waldspurger formulae", Algebra & Number Theory 8 (2014) 2523–2572, Theorem 1.1, pp. 2524–2525;
-the project's theorem-application audit, entry A027), together with its use at conductor one
+Waldspurger formulae", Algebra & Number Theory 8 (2014) 2523–2572, Theorem 1.1, pp. 2524–2525),
+together with its use at conductor one
 (`hheight`, PRINT application): `L'(E/K, 1) = 0` makes the conductor-one Heegner point torsion
 (tex 4345–4346, "the conductor-one height formula"). Deriving `hheight` from
 `CST.CSTThm11Split` needs the factorization `L(E/K, s) = L(E, s) L(E^{(k)}, s)` of the

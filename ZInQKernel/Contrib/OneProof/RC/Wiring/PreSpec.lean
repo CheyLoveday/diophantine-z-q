@@ -20,14 +20,15 @@ open ZInQ.Manuscript ZInQ.Contrib.CloudB3RC53 Filter
 
 /-- **The requirements on the construction of the data** (definitions):
 * `support_prime`, `support_base`: the support consists of primes and contains
-  `S₀ ℓ = {2, 3} ∪ primes(ℓ)` (tex 1790–1793);
+  `S₀ ℓ = {2, 3} ∪ primes(ℓ)` (tex 1974–1975);
 * `stages_hyper`: the ultrafilter on the stages is the hyperfilter, a nonprincipal ultrafilter (App G
   10190–10191);
 * `stages_index`: the `θ`-th stage has precision `≥ θ` ((3.7) supplies arbitrarily advanced stages,
   tex 2489–2493, App F 8233, 8400–8401; any such family can be reindexed, batch 3's
   `stages_index_reindex`);
 * `admissible_split`: the stage support is the prepared filter cut by a stage condition holding at
-  `D = 1` (`(D/ℓ₀) = 1`; tex 2404–2410, 2586, App F 8209–8212, 8408–8429);
+  `D = 1` (`(D/ℓ₀) = 1`; tex 2404–2410, 2522, 2531–2533, 2586, App F 8209–8212, 8560–8561, App G
+  10589–10592);
 * `prepared_one`: the prepared filter contains one (tex 2404–2410). -/
 structure PreDataSpec {ℓ : ℕ} (W : WData ℓ) : Prop where
   support_prime : ∀ p ∈ W.S, p.Prime

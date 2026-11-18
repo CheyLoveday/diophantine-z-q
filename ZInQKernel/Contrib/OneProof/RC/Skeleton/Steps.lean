@@ -21,8 +21,8 @@ Dokchitser–Dokchitser, Cai–Shu–Tian) are used, not restated.
 | `RCSteps.lstar_ne_zero_iff` | 1825–1830 | ELLIOT/GLUE | RC11-even |
 | `RCSteps.genus_partner` | 2404–2408 | ELLIOT | RC13-nonvanishing |
 | `RCSteps.visibility` (O.8) | 9407–9445 | ELLIOT + PRINT (CST 1.1; Cornut–Jetchev 3.1) | RC12-odd |
-| `RCSteps.stages_advance` | App G 10190–10191, App F 8233, 8400–8401 | ELLIOT | batch 3 (GenusOdd) |
-| `RCSteps.one_admissible` | 2586 (App F 8209–8212) | ELLIOT | RC12-odd |
+| `RCSteps.stages_advance` | App G 10190–10191, App F 8233, 8400–8401 | definition (PROVED from `PreDataSpec`) | batch 3 (GenusOdd) |
+| `RCSteps.one_admissible` | 2586 (App F 8209–8212) | definition (PROVED from `PreDataSpec`) | RC12-odd |
 | `RCSteps.companion` | 2595–2603 (2720–2721) | ELLIOT | RC2 / RC11 / RC13 |
 | `RCSteps.gz_comparison` (3.4) | 2436–2440, 2692–2693 | PRINT (CST 1.1) + ELLIOT | batch 3 (GenusOdd) |
 | `RCSteps.final_family` (3.9) | 2674–2712, 10792–10858 | ELLIOT | batch 3 (AppGEndpoints), with RC2 / RC3 / RC11 / RC12 / RC13 |
@@ -31,6 +31,12 @@ Dokchitser–Dokchitser, Cai–Shu–Tian) are used, not restated.
 | `RCSteps.height_one` | 4909–5205, 5703–5704 | ELLIOT | RC16-uniform |
 | `RCSteps.clearing` (5.9) | 5487–5645 | ELLIOT | RC7-determinant (batch 3: RankCounts, PairedFunctional) |
 | `RCSteps.base_zero` | 4330–4376 | ELLIOT + PRINT (CST 1.1) | RC15-central |
+
+DEPARTURE (scope): `calibration`, `common_coordinate`, `height_one`, `clearing` and `base_zero` are
+demanded in both branches. The text constructs `k`, the family and the coordinates only in the
+remaining branch (tex 2589–2593; (5.6)–(5.9) are stated "in the branch where the odd empty
+configuration is not a unit", 5209–5211, 5228–5229). A discharge chooses the companion of tex
+2595–2600 in Branch 1 as well; that choice does not use the branch hypothesis.
 
 ## The interface data `RCData ℓ`
 
@@ -41,7 +47,7 @@ the manuscript proves about the genuine object.
 
 | field | manuscript object | tex |
 |---|---|---|
-| `S` | the fixed support (primes of `2N`, `h_*`, `k`, the theta prime, exclusions) | 1790–1793, 2678–2680 |
+| `S` | the fixed support: the primes of `2N`, of `h_*` and of the final `k`, and the fixed exclusions (the stage's theta prime `ℓ₀` is not in `S`; it enters through `admissible θ`). DEPARTURE (order): since `S` contains the primes of `k`, the prepared filter, the stage support, `δ_o` and the constants of (3.3)–(3.6) are formed after `k` is fixed, whereas the text fixes `K` after the odd minimum (2703–2704) and shows that omitting the primes of `k` preserves it (2602–2603, 2611–2612) | 2016–2025, 2376–2378, 2407–2408, 10291–10293 |
 | `prepared h` | `h` lies in the prepared filter containing one (fixed local types at `2N`, prime to the support) | 2404–2410, 2678–2680 |
 | `Lstar h` | normalized central value `L_*(h)` of `E^{(h)}` | 1825–1830 |
 | `jgen h` | index valuation `j_gen(h)` of the genus point `P_h^{gen}` | 2411–2418 |
@@ -50,7 +56,7 @@ the manuscript proves about the genuine object.
 | `stages`, `Mθ`, `aθ`, `admissible` | the nonprincipal ultrafilter on actual theta stages, the precision `M_θ`, the phase-removed odd coefficients `a_{M_θ}(D)`, the stage support `(D/ℓ₀) = 1` | 2491–2551 |
 | `δo` | the odd ultrafilter minimum `δ = δ_o` | 2536–2551 |
 | `kfin` | the final companion `k`, `K = ℚ(√k)` | 2595–2603 |
-| `uPrim F x`, `uTilde F x` | the primitive coordinate `u_{prim,x}` and the corrected coordinate `ũ_x = (η u_{rel})_x`, for the fixed `K` and the binary family `F`, in `ℚ₂[[t]]` (DEPARTURE: regular at `t = 0`; faithful where the text proves regularity, at `x ≠ 0` of a final family and, under Selmer corank one, at `x = 0`, tex 4153–4155, 4922–4923, 5196–5199, 5703–5704) | 3882–3892, 4142–4328 |
+| `uPrim F x`, `uTilde F x` | the primitive coordinate `u_{prim,x}` and the corrected coordinate `ũ_x = (η u_{rel})_x`, for the fixed `K` and the binary family `F`, in `ℚ₂[[t]]` (DEPARTURE: regular at `t = 0`; faithful where the text proves regularity, at `x ≠ 0` of a final family and at `x = 0` under full Selmer corank one for `E/K` (`s₂(E/K) = 1`, which holds in Branch 2 for the chosen `k`, tex 2616–2626), tex 4153–4155, 4922–4923, 5196–5199, 5703–5704) | 3882–3892, 4142–4328 |
 -/
 
 noncomputable section
@@ -91,7 +97,8 @@ structure RCData (ℓ : ℕ) where
   stages : Ultrafilter ℕ
   /-- the precision `M_θ` of stage `θ` -/
   Mθ : ℕ → ℕ
-  /-- the phase-removed odd coefficients `a_{M_θ}(D)` at stage `θ` -/
+  /-- the phase-removed odd coefficients `a_{M_θ}(D)` at stage `θ`: an integer representative
+  modulo `2^{M_θ}` (tex 2080–2082); every reader depends only on the residue -/
   aθ : ℕ → ℤ → ℤ
   /-- the stage support: `D` admissible at stage `θ` with `(D/ℓ₀) = 1` -/
   admissible : ℕ → ℤ → Prop
@@ -121,7 +128,12 @@ def OddEmptyUnit : Prop :=
 `ex:app-final-family`, 10792–10858):
 `F` is admissible (good odd primes outside the support, split in `K`, nonzero `λ_q`), and at every
 nonzero address `h_x` keeps the fixed local types (`prepared`), `ord_{s=1} L(E^{(h_x)},s) = 1`,
-`L_*(h_x k) ≠ 0`, `j_gen(h_x) ≤ ω(h_x) + C_o`, `v₂ L_*(h_x k) ≤ 2ω(h_x) + C_e`. -/
+`L_*(h_x k) ≠ 0`, `j_gen(h_x) ≤ ω(h_x) + C_o`, `v₂ L_*(h_x k) ≤ 2ω(h_x) + C_e`.
+DEPARTURE: the text's family also has a terminal of every nonzero activation (tex 2243–2245,
+10561–10562), so `h_x ≠ 1` at `x ≠ 0`; `FinalFamilyAt` omits this, so the steps quantified over
+final families also range over families with `h_x = 1` at some `x ≠ 0`. The predicate permits
+dimension zero and repeated members: an empty prime set gives `h_x = 1` at every address, and in
+positive dimension its rank-one clause then requires analytic rank one of the base curve. -/
 def FinalFamilyAt (Co Ce : ℤ) (F : Family) : Prop :=
   F.Admissible D.S D.kfin ∧ ∀ x : Addr F.b, x ≠ 0 →
     D.prepared (F.h x) ∧ AnalyticRank (Etw ℓ (F.h x)) 1 ∧ D.Lstar (F.h x * D.kfin) ≠ 0 ∧

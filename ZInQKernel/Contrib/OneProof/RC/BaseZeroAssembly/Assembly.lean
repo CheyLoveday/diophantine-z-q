@@ -20,14 +20,17 @@ hypotheses of Lemma `ex:arith-base-zero` on the companion (tex 4330–4376), for
 
 | field of `BaseZeroModelCST` | replaced by | tex | kind of what remains |
 |---|---|---|---|
-| `kappa`, `Lm`, `h45` | `core.boundary : Boundary45Base P (m+1) z̄` (finite stages with (4.1), the fixed `L`, the central Kummer comparison, the limit at the centre); `h45` is `Boundary45Base.h45` | 3895–3921, 3961–3968, 4345–4348 | PRINT (4.1) per stage + definitions + ELLIOT (the limit, `hlim`) |
+| `kappa`, `Lm`, `h45` | `core.boundary : Boundary45Base P (m+1) z̄` (finite stages with (4.1), the fixed `L`, the central Kummer comparison, the limit at the centre); `h45` is `Boundary45Base.h45` | 3895–3921, 3961–3968, 4345–4348 | ELLIOT (`hlim`); with `κ` free and junk stages admissible, `Boundary45Base ⟺ ∃ κ L, L ≠ 0 ∧ z̄ = Lκ(P)` (the old `h45`); the per-stage (4.1) constrains nothing |
 | `eps0`, `utilde0`, `h47` | **nothing**: (4.7) at `x = 0` is the wiring's `CommonCoordinateTarget D` (`baseTail_of_targets`) | 4369–4373 | PROVED (from the existing leaf `common_coordinate`) |
 | `wHalf`, `hwHalf` | **nothing**: `HeightOneTarget D` at `x = 0` | 5703–5704 | PROVED (from the existing leaves `prim_regular`, `common_coordinate`) |
 | `hC` | **nothing** (`IsTExpansion.central_eq`) | 5703–5706 | PROVED |
 | — | `core.hprimId : IsTExpansion uprim (D.uPrim F 0)` | 3877–3892 | definition (lane RC0's interface identification, as in `PrimRegularityInputs`) |
 
 `BaseZeroLeafInputs D` is `BaseZeroInputsCST D` with `BaseZeroLeafModel` in place of
-`BaseZeroModelCST`. PROVED:
+`BaseZeroModelCST`. As a leaf it is Lemma `ex:arith-base-zero` itself (ELLIOT, conclusion-shaped):
+the stages and `κ` are free, and for a torsion specified point `BaseZeroCore` is equivalent to
+"`u_{prim,0} ∈ Λ_(t)` and `u_{prim,0}(0) = 0`" (lane RV2's review probes `boundary_iff_h45`,
+`core_iff_of_torsion`). PROVED:
 
 * `BaseZeroLeafModel.nonempty_modelCST`: a leaf model, (4.7) at the base and `ũ₀ ∈ Λ[1/2]` give a
   `BaseZeroModelCST`;
@@ -57,7 +60,8 @@ open Matrix
   the generic coordinate; tex 3877–3892, 4341–4369; ELLIOT + GLUE + definition, lanes RC15 / RC7 /
   batch 3, unchanged);
 * `boundary`: the inputs of (4.5) at the base for the central cycle `z̄ = ρ(z)`
-  (`Boundary45Base`; tex 3895–3921, 3961–3968; PRINT (4.1) per stage, definitions, ELLIOT `hlim`);
+  (`Boundary45Base`; tex 3895–3921, 3961–3968; ELLIOT `hlim`; the stages, with their (4.1), and
+  `κ` are free, so `Boundary45Base` is equivalent to `∃ κ L, L ≠ 0 ∧ z̄ = L κ(P)`);
 * `hprimId`: the interface's `u_{prim,0} ∈ ℚ₂[[t]]` is the `t`-expansion of the generic
   coordinate (tex 3877–3892; definition: lane RC0's `IsTExpansion`, the identification already
   used by `PrimRegularityInputs`). -/
@@ -197,7 +201,8 @@ theorem baseZeroTarget_of_leaves {ℓ : ℕ} {D : RCData ℓ} (P : Prints)
 `∏ ε_q ∈ Λ^×`. The one-address form of lane RC0's `commonCoordinateTarget_of_inputs` (lane RC15's
 `corrected_eq`); at `x = 0` it is the text's "`ũ₀ = ε₀ u_{prim,0}` with `ε₀ ∈ Λ^×` by Lemma
 `ex:arith-common-coordinate`" (tex 4369–4373). The model itself is what batch 3's
-`CommonCoordinate.commonCoordinateModel_of_models` builds from the support-triangle models.
+`CommonCoordinate.commonCoordinateModel_of_actual_models` builds from the support-triangle models
+(via `CommonCoordinateTriangles.toModel`).
 PROVED. -/
 theorem common47_of_model {ℓ : ℕ} {D : RCData ℓ} {Fam : Family} {x : Addr Fam.b}
     (M : CommonCoordinateModel D Fam x) :

@@ -105,9 +105,9 @@ and `U · b = a` in `ℚ₂[[t]]`. Both rings embed in the fraction field `ℚ�
 relation says that `u` and `U` have the same image there (remark, not used: some `U` exists
 exactly when `u` has no pole at `t = 0`). It is a partial bijection (`IsTExpansion.unique_left`,
 `IsTExpansion.unique_right`). This is how the interface's power series `u_{prim,x}` (tex
-3877–3892, the coordinate of `[z] ⊗ [λ]`, regular at the centre by Lemma
-`ex:arith-central-specialization`, tex 3895–3985) is identified with the element of `Frac Λ` that
-lane RC16 studies. Kind: definition. -/
+3877–3892, the coordinate of `[z] ⊗ [λ]`, regular at the centre by the height-one regularity at
+`𝔭 = (t)`, tex 5004–5008, 5191–5192, and, at the base, Lemma `ex:arith-base-zero`, tex 4334–4336,
+4350–4368) is identified with the element of `Frac Λ` that lane RC16 studies. Kind: definition. -/
 def IsTExpansion (u : FractionRing Lambda) (U : PowerSeries ℚ_[2]) : Prop :=
   ∃ a b : Lambda, b ≠ 0 ∧
     u * algebraMap Lambda (FractionRing Lambda) b = algebraMap Lambda (FractionRing Lambda) a ∧
@@ -653,7 +653,7 @@ inverse by batch 3's `pairedFunctional_sub_eq_coboundary`. In particular
 interfaces: their content is the form in which the switching steps are discharged, not extra
 logical strength. `OuterSwitchProcessPF` is inhabited (`trivialOuterSwitchProcessPF`). The GLUE
 `ValuationOfO` of `Eq35Inputs` is the genuine `2`-adic valuation of `Λ_(2)`, which is not
-constructed in Lean (RC16's report: Mathlib has no `ℤ`-valued valuation of `Λ_(2)`); so the
+constructed in Lean (Mathlib has no `ℤ`-valued valuation of `Λ_(2)`); so the
 satisfiability of `Eq35Inputs` as a whole is not checked here. -/
 
 section NonVacuity

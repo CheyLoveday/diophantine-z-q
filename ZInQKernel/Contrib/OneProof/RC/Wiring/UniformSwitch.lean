@@ -8,7 +8,7 @@ import ZInQKernel.Contrib.OneProof.RC.Rings.LimitsBridge
 /-!
 # Theorem 5.3, Lane RC0 round 3: the leaves of RC16 from the concrete switching models
 
-Two leaves of `Leaves.lean` carry lane RC16's abstract switching processes
+Two leaves of `Leaves.lean` carried (before this file) lane RC16's abstract switching processes
 (`Wiring/Uniform.lean`, `Wiring/Genuine.lean`):
 
 * `PostLeaves.prim_regular : PrimRegularityInputs W.toRCData` (height-one regularity, through
@@ -27,12 +27,19 @@ minors. This file replaces the abstract processes of the two leaves by these mod
 * `Eq35InputsGenuineS W` (replaces `Eq35InputsGenuine W`), with `RegularityInputsS` for the
   regularity conjunct and the outer switching data `OuterSwitchDataS` for the outer conjunct.
 
+The leaves now read `PostLeaves.prim_regular : PrimRegularityInputsS W.toRCData` and
+`PreLeaves.eq35 : Eq35InputsGenuineG W` (genuine outer models, below).
+
 Conversions (PROVED): `primRegularityInputs_of_S` (to the old leaf), `heightOneTarget_of_inputsS`
 (to `HeightOneTarget D`), `eq35Target_of_inputsGenuineS` (to `Eq35Target W`, through RC16's
 `exLimitsUniformLowerBound` over lane RC20's genuine `𝒪`).
 
-What is smaller, relative to batch 3's `HeightOneSwitchData` / `OuterSwitchData` (which already
-prove `pos` and `terminal`):
+What is restated, relative to batch 3's `HeightOneSwitchData` / `OuterSwitchData` (which already
+prove `pos` and `terminal`). The structures are existential and are not tied to the actual Selmer
+complexes, so they do not constrain the genuine objects: `PrimRegularityInputsS` is equivalent to
+`u_{prim,x} ∈ Λ[1/2]` at every final address (`primRegularityInputsS_iff`) and
+`Eq35InputsGenuineG` to (3.5) itself (lane RV2's review probe `eq35InputsGenuineG_iff`); as leaves
+they are Elliot's steps (ELLIOT), not reductions of them. The restatements:
 
 * `pos` from a **nonzero** actual class (`class_ne_zero`) instead of a primitive one: Elliot's actual
   class is "a nonzero fraction-field multiple" of the primitive vector `v` (tex 4987–4992), and the
@@ -51,7 +58,8 @@ prove `pos` and `terminal`):
   genuine outer model.
 
 What remains is listed with tex lines, kind and owner in the docstrings of `HeightOneSwitchDataS`,
-`OuterSwitchDataS`, `PrimRegularityInputsS` and `Eq35InputsGenuineS`. Non-vacuity (PROVED):
+`OuterSwitchDataS`, `PrimRegularityInputsS` and `Eq35InputsGenuineS`. Equivalences and
+non-vacuity (PROVED):
 `regularityInputsS_iff` (`RegularityInputsS u ↔ u ∈ Λ[1/2]`), `primRegularityInputsS_iff`,
 `exampleOuterDataS` (the outer data over `v_𝒪` are inhabited).
 -/
@@ -72,7 +80,7 @@ section Pos
 
 variable {A F k : Type*} [CommRing A] [Field F] [Field k]
 
-/-- **`pos` from a nonzero actual class** (tex 4986–4992, 5154–5157; semicontinuity, tex 4933): if
+/-- **`pos` from a nonzero actual class** (tex 4986–4992, 5154–5157; semicontinuity, tex 4934): if
 the integral cycle `z` of a two-term model `[A^{n+1} --D--> A^{n+1}]` is nonzero (and `ι : A → F`
 is injective), then `det D = 0`, so `det (D ⊗ k) = ρ(det D) = 0` and the fiber dimension
 `dim_k ker (D ⊗_ρ k)` is at least one. No primitivity of `z` is used. Kind: PROVED. -/
@@ -152,12 +160,15 @@ local ring `A` (`= Λ_𝔭`) with `ι : A → F` (`F = Frac Λ`) and residue map
 kind; owner):
 
 * `Stage`, `stage`: the configurations and their two-term models `[A^{n+1} --D--> A^{n+1}]` with
-  integral actual class `z`, integral closed functional `w` (integral by the paired-functional
-  proposition, batch 3's `TwoTermClosedRow` shape) and the class-functional coordinate
+  integral actual class `z`, integral closed functional `w` at every configuration (ELLIOT input:
+  integrality of the transported paired functional with the added derivative conditions, tex
+  5162–5187; assumed through the type of `w`, not derived from batch 3's
+  `pairedFunctionalHeightOne_proof`) and the class-functional coordinate
   `z ⊗ w = u · adj D` (tex 3877–3892, 4976–4992, 5159–5189; GLUE identification of the Selmer
   complex over `R` with its minimal two-term model and of `u` with the coordinate; owner batch 3
   HeegnerCohomology / RC15).
-* `quadratic`: whether `𝔭 = (t)` or `(t + 2)` (tex 5004–5008; definition).
+* `quadratic`: a free datum (in the text's witness, whether `𝔭 = (t)` or `(t + 2)`, tex
+  5004–5008; not constrained in Lean).
 * `sign`, `sign_invol`: at a quadratic prime, the involution of `V = H¹(C ⊗ k) = ker (D ⊗ k)`
   induced by the action `c ↦ J c(τ⁻¹ · τ)` (tex 5009–5013, 5035–5054; GLUE that it is the actual
   action, owner batch 3 SignSplitting); `V = V_+ ⊕ V_-` is then PROVED.
@@ -202,7 +213,7 @@ namespace HeightOneSwitchDataS
 
 variable {ι : A →+* F} {ρ : A →+* k}
 
-/-- **`s_+ + s_- = s`** (tex 5035–5054): batch 3's `involutionSplitting_proof` applied to the sign
+/-- **`s_+ + s_- = s`** (tex 5009–5024): batch 3's `involutionSplitting_proof` applied to the sign
 involution of `ker (D ⊗ k)`. Kind: PROVED. -/
 theorem sign_sum (P : HeightOneSwitchDataS ι ρ) (hq : P.quadratic) (h2 : (2 : k) ≠ 0)
     (S : P.Stage) :
@@ -339,17 +350,22 @@ variable {ℓ : ℕ} (D : RCData ℓ)
 full-corank-one base, tex 5196–5200). For every final family `F` (any `C_o, C_e`) and every
 address `x` there is `u ∈ Frac Λ` with (tex; kind; owner):
 
-1. `IsTExpansion u (D.uPrim F x)` (tex 3877–3892, 3895–3985; GLUE interface identification; owner
-   RC0, with RC15);
+1. `IsTExpansion u (D.uPrim F x)` (tex 3878–3892; definition, DEPARTURE 3: needs `u` regular at
+   `(t)`, proved at `x ≠ 0` by the regularity clause at `𝔭 = (t)`, tex 5004–5008, 5191–5192, and at
+   `x = 0` by Lemma `ex:arith-base-zero`, tex 4334–4336, 4350–4368, under full Selmer corank one for
+   `E/K`; owner RC0, with RC15);
 2. `RegularityInputsS u`: `u = 0` (tex 5196–5197; ELLIOT; owner RC15 / RC16) or, at every
    height-one prime `𝔭 ≠ (2)`, `HeightOneSwitchDataS` over `Λ_𝔭` starting at `u` (fields as listed
    there: the two-term models and their identification, the sign involution, the nonzero actual
    class, the switch-plane coordinate relation, the sign bookkeeping, the nonquadratic duality and
    detection).
 
-PROVED from it (not inputs): `pos`, `terminal`, `s_+ + s_- = s`, the nonquadratic `U = F`, the
-descent and the intersection formula (RC16), the transfer to `ℚ₂[[t]]`. Non-vacuity:
-`primRegularityInputsS_iff`. Kind: definition. -/
+Equivalent to `∀ Co Ce F, D.FinalFamilyAt Co Ce F → ∀ x, InLamHalf (D.uPrim F x)`
+(`primRegularityInputsS_iff`): the structures are a non-binding presentation of tex 4976–5194 and
+do not constrain the genuine objects, so as a leaf this is Elliot's regularity assertion itself
+(ELLIOT). PROVED for these abstract data: `pos`, `terminal`, `s_+ + s_- = s`, the nonquadratic
+`U = F`, the descent and the intersection formula (RC16), the transfer to `ℚ₂[[t]]`.
+Kind: definition. -/
 def PrimRegularityInputsS : Prop :=
   ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F → ∀ x : Addr F.b,
     ∃ u : FractionRing Lambda, IsTExpansion u (D.uPrim F x) ∧ RegularityInputsS u
@@ -388,14 +404,14 @@ field shape: `minor_link` along the ultrafilter) with the nonquadratic outer swi
 * `Stage`, `stage`: the configurations; each has its outer model `D_out` over `K_out`
   (`= Frac 𝒪_∞`) with the outer image `z_out ≠ 0` of the primitive inner cycles, and inner minimal
   models of one size over `K` (`= Frac 𝒪`) with cycles, closed functionals and complements (tex
-  4935–4940; the fixed size is "fixing the bounded `n` on an outer-large set", tex 4936–4938, from
+  4935–4940; the fixed size is "fixing the bounded `n` on an outer-large set", tex 4938–4939, from
   (5.1); GLUE identification of the completed Selmer models; owners RC6, batch 3 RankCounts /
   HeegnerCohomology).
 * `minor_link`: a nonzero outer maximal minor gives inner minors at one position, nonzero on an
-  outer-large set, integral and not negligible (tex 4706–4714, 4957–4959; GLUE; owner batch 3
+  outer-large set, integral and not negligible (tex 4732–4738, 4958–4960; GLUE; owner batch 3
   `SwitchInputs.minorLinkEventually_proof` proves it when `D_out` is the entrywise image of the
   inner integral models).
-* `cycle_integral`, `functional_bound`: integral inner cycles and `v λ_j ≥ −a` (tex 4960–4961,
+* `cycle_integral`, `functional_bound`: integral inner cycles and `v λ_j ≥ −a` (tex 4962–4963,
   3704–3720, 3864–3869; ELLIOT; owner batch 3 PairedFunctional).
 * `switch`: for `s > 1`, a next configuration with `NonquadInputs` over `K_out` (duality and
   detection, tex 4940–4945) and, on an outer-large set, switch-plane data identifying the old and
@@ -407,7 +423,7 @@ structure OuterSwitchDataS {K : Type*} [Field K] (v : AddValuation K (WithTop �
   Stage : Type
   /-- The outer and inner models of each configuration. -/
   stage : Stage → UniformSwitch.OuterStage Kout K J
-  /-- tex 4706–4714, 4957–4959: the outer minors are the classes of the inner minors. -/
+  /-- tex 4732–4738, 4958–4960: the outer minors are the classes of the inner minors. -/
   minor_link : ∀ S (k0 j0 : Fin ((stage S).m + 1)),
     ((stage S).Dout.submatrix k0.succAbove j0.succAbove).det ≠ 0 →
     ∃ (k1 j1 : Fin ((stage S).n + 1)),
@@ -415,9 +431,9 @@ structure OuterSwitchDataS {K : Type*} [Field K] (v : AddValuation K (WithTop �
       (∀ᶠ j in (𝒰 : Filter J),
         (0 : WithTop ℤ) ≤ v ((((stage S).D j).submatrix k1.succAbove j1.succAbove).det)) ∧
       ¬ OuterNegligible v 𝒰 (fun j => (((stage S).D j).submatrix k1.succAbove j1.succAbove).det)
-  /-- tex 4960–4961: the inner cycles are integral. -/
+  /-- tex 4962: the inner cycles are integral. -/
   cycle_integral : ∀ S j i, (0 : WithTop ℤ) ≤ v ((stage S).z j i)
-  /-- tex 4960–4961, 3864–3869: the functional exponent `a`. -/
+  /-- tex 4962–4963, 3864–3869: the functional exponent `a`. -/
   functional_bound : ∀ S j i, (((-a : ℤ)) : WithTop ℤ) ≤ v ((stage S).lam j i)
   /-- tex 4940–4950: a switch, with batch 3's nonquadratic inputs over `K_out`. -/
   switch : ∀ S, 1 < (stage S).outerDim → ∃ S',
@@ -459,8 +475,9 @@ variable {ℓ : ℕ} (W : WData ℓ)
 instances `(h, k')` of Proposition `ex:sec7-genus-lower`, tex 2418–2446, with `K = Frac 𝒪`,
 `v = v_𝒪`, `ι = ι_𝒪` of lane RC20). Conjuncts (tex; kind; owner):
 
-1. Data `uprim h k' ∈ Frac Λ` (tex 3877–3892, 4911–4913; definition; owner RC15) and `C₀` (the
-   error of (4.6), tex 3999–4000; definition; owner RC15).
+1. An existential witness `uprim h k' ∈ Frac Λ` (read as the primitive coordinate of tex
+   3877–3892, 4911–4913, but not tied to it in Lean; owner RC15) and `C₀` (the error of (4.6), tex
+   3999–4000; definition; owner RC15).
 2. Regularity: `RegularityInputsS (uprim h k')` at every companion pair (tex 4976–5194; fields of
    `HeightOneSwitchDataS`).
 3. (4.6) at every companion pair, verbatim from `Eq35InputsGenuine` (tex 3987–4047; ELLIOT on
@@ -473,7 +490,10 @@ instances `(h, k')` of Proposition `ex:sec7-genus-lower`, tex 2418–2446, with 
 PROVED from it (not inputs): `ValuationOfO` (lane RC20), `pos`, `terminal` (Cramer data, RC16),
 the outer switch drop (batch 3's `relaxedImageFinite_proof`), the equal inner valuations (RC16's
 `switch_equal_valuation`), (5.5), `u_prim ∈ Λ[1/2]` and (5.5) + (4.6) ⇒ (3.5)
-(`exLimitsUniformLowerBound`). Kind: definition. -/
+(`exLimitsUniformLowerBound`). These hold for the abstract witnesses: (5.5) and
+`u_prim ∈ Λ[1/2]` are equivalent to conjuncts 4 and 2 (one-configuration data;
+`regularityInputsS_iff`), and the whole is equivalent to `Eq35Target W` (lane RV2's review probe
+`eq35InputsGenuineG_iff`, with `eq35InputsGenuineS_of_G`). Kind: definition. -/
 def Eq35InputsGenuineS : Prop :=
   ∃ (uprim : ℤ → ℤ → FractionRing Lambda) (C₀ : ℤ),
     (∀ h k' : ℤ, W.prepared h → AnalyticRank (Etw ℓ h) 1 → W.IsRoughCompanion h k' →
@@ -555,7 +575,9 @@ batch 3). The inner models being the completed minimal Selmer models of the ring
 GLUE identification of the data (owners RC6, batch 3 RankCounts / HeegnerCohomology).
 Kind: definition. -/
 structure GenuineOuterStage where
-  /-- The size `n + 1` of the inner models (fixed, tex 4936–4938). -/
+  /-- The size `n + 1` of the inner models (fixed on an outer-large set, tex 4938–4939, by (5.1); a
+  genuine witness pads the other instances, which changes neither the outer model nor the eventual
+  valuations). -/
   n : ℕ
   /-- The integral inner minimal models. -/
   M : J → Matrix (Fin (n + 1)) (Fin (n + 1)) OO
@@ -593,7 +615,7 @@ def GenuineOuterStage.toStage (S : GenuineOuterStage 𝒰) :
   hlam := S.hlam
   hden := S.hden
 
-/-- **`minor_link` for the genuine outer model** (tex 4706–4714, 4957–4959): batch 3's
+/-- **`minor_link` for the genuine outer model** (tex 4732–4738, 4958–4960): batch 3's
 `minorLinkEventually_proof` over `𝒪` with `v_𝒪` (`isPiAdicOn_two_vO`): a nonzero outer maximal
 minor gives the inner minors at the same position, nonzero on an outer-large set, integral and not
 outer-negligible. Kind: PROVED. -/
@@ -617,7 +639,7 @@ variable (𝒰)
 `minor_link` is PROVED (`GenuineOuterStage.minor_link`). Remaining fields (tex; kind; owner):
 
 * `stage`: the genuine configurations (see `GenuineOuterStage`);
-* `cycle_integral`, `functional_bound`: integral inner cycles, `v λ_j ≥ −a` (tex 4960–4961,
+* `cycle_integral`, `functional_bound`: integral inner cycles, `v λ_j ≥ −a` (tex 4962–4963,
   3864–3869; ELLIOT; owner batch 3 PairedFunctional);
 * `switch`: `NonquadInputs` over `Frac 𝒪_∞` (duality and detection, tex 4940–4945) and the
   per-instance switch-plane data with unit volumes (tex 4946–4950; GLUE; owner RC16 `Switch`,
@@ -627,9 +649,9 @@ structure GenuineOuterSwitchData (a : ℕ) where
   Stage : Type
   /-- The genuine configuration of each stage. -/
   stage : Stage → GenuineOuterStage 𝒰
-  /-- tex 4960–4961: the inner cycles are integral. -/
+  /-- tex 4962: the inner cycles are integral. -/
   cycle_integral : ∀ S j i, (0 : WithTop ℤ) ≤ vO ((stage S).z j i)
-  /-- tex 4960–4961, 3864–3869: the functional exponent `a`. -/
+  /-- tex 4962–4963, 3864–3869: the functional exponent `a`. -/
   functional_bound : ∀ S j i, (((-a : ℤ)) : WithTop ℤ) ≤ vO ((stage S).lam j i)
   /-- tex 4940–4950: a switch. -/
   switch : ∀ S, 1 < (stage S).toStage.outerDim → ∃ S',
@@ -657,10 +679,14 @@ section Eq35G
 
 variable {ℓ : ℕ} (W : WData ℓ)
 
-/-- **The inputs of (3.5) with genuine outer models** (the smallest form; replaces
-`Eq35InputsGenuine W`): `Eq35InputsGenuineS W` with the outer conjunct given by
+/-- **The inputs of (3.5) with genuine outer models** (replaces `Eq35InputsGenuine W`; as a leaf
+this is (3.5) itself, ELLIOT: `uprim` is an existential witness not tied to the genuine coordinate,
+the structures do not constrain the genuine objects, and the whole is equivalent to `Eq35Target W`,
+lane RV2's review probe `eq35InputsGenuineG_iff`): `Eq35InputsGenuineS W` with the outer conjunct
+given by
 `GenuineOuterSwitchData (hyperfilter ℕ) a` (outer models over `Frac 𝒪_∞` the images of the inner
-models, so `minor_link` is PROVED). Conjuncts 1–3 (data, regularity `RegularityInputsS`, (4.6)) are
+models, so `minor_link` is PROVED). Conjuncts 1–3 (the witness `uprim`, regularity
+`RegularityInputsS`, (4.6)) are
 those of `Eq35InputsGenuineS`; conjunct 4: for every `A` and every sequence of companion pairs with
 `ω(k') ≤ A`, an exponent `a` and genuine outer switching data whose starting inner coordinates have
 the valuations of `ι_𝒪 (uprim h_j k'_j)` on an outer-large set (tex 4927–4964; fields of

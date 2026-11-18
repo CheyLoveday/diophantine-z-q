@@ -31,9 +31,9 @@ even symbol on the cubes based at `d`, tex 2311–2322) and the values `u_p(0)` 
 fixed-form scalar, with
 * (3.3a) (tex 2302–2310, App E `ex:app-even-phase`; ELLIOT; owner RC11): a unit `p` has
   `p ≠ 0`, `L_*(p) ≠ 0` and `v₂L_*(p) ≤ 2ω(p) + C₀`;
-* (3.2) at corank-zero constituents (tex 1966–1968, App E (E.8); ELLIOT; owner RC11):
+* (3.2) at corank-zero constituents (tex 1941–1946, 1956–1957, App E (E.8); ELLIOT; owner RC11):
   `u_p(0) = 0 ↔ L_*(p) = 0`, and `|v₂u_p(0) − (v₂L_*(p) − 2ω(p) − s(p))| ≤ C_loc` when `L_*(p) ≠ 0`;
-* the missing address on the cubes (tex 2322–2341 with 5690–5714; ELLIOT; owners RC1, RC2): for
+* the missing address on the cubes (tex 2322–2331 with 5666–5684; ELLIOT; owners RC1, RC2): for
   every precision `M` a unit `x` with `u_x(0) = u_d(0)` or `v₂(u_x(0) − u_d(0)) ≥ M − c_E`. -/
 def EvenUpperInputs : Prop :=
   ∃ C₀ Cloc cE : ℤ, ∀ d : ℤ, d ≠ 0 → W.Partitionable d →

@@ -22,16 +22,19 @@ attribute [local instance] Nat.fact_prime_two
 variable {ℓ : ℕ} (D : RCData ℓ)
 
 /-- **The inputs of (O.8) left by lane RC12** (`visibility_of_comparison`), over the data:
-the Kummer values `λ_θ(D)` (integer lifts of `λ_{M_θ}(\overline{L P_D^{gen}})`, tex 2512–2530), the
+the Kummer values `λ_θ(D)` (integer lifts of `λ_{M_θ}(\overline{L P_D^{gen}})`, tex 2495–2496,
+2522–2530), the
 number `ω = ω(N)` and a constant `C`, with
 * (O.7) (`ThetaComparison`; App F `ex:app-theta-comparison`, tex 9101–9405; PRINT Cornut–Jetchev
   Thm 3.1 with Elliot's theta construction, ELLIOT; owner RC12 / RC9);
-* the native-index bound (tex 9425–9431; ELLIOT/GLUE: an integral finite-field Kummer map cannot
-  decrease the index valuation; owner RC12 / batch 3 GenusOdd): at a known simple zero,
+* the native-index bound (tex 9411–9413, 9422–9428; ELLIOT/GLUE: an integral finite-field Kummer
+  map cannot decrease the index valuation; owner RC12 / batch 3 GenusOdd): at a known simple zero,
   `2^k ∣ λ_θ(D)` for `k ≤ min(M_θ, j_gen(D) − C)`;
-* the torsion clause (tex 9440–9444; PRINT Cai–Shu–Tian Thm 1.1: an odd-sign `D` that is not a
-  simple zero has a torsion genus point, killed by `L`; owner CST application / batch 3 GenusOdd):
-  `2^{M_θ} ∣ λ_θ(D)`. -/
+* the torsion clause (tex 9417–9419, 9439–9443; PRINT Cai–Shu–Tian Thm 1.1: an odd-sign `D` that is
+  not a simple zero has a torsion genus point, killed by `L`; owner CST application / batch 3
+  GenusOdd): `2^{M_θ} ∣ λ_θ(D)`. DEPARTURE (harmless): stated for every admissible `D`; every
+  admissible `D` has odd sign (tex 2344–2346: `w(E^{(D)}) = w(E) χ_D(−N) = −1` for `D > 0` a square
+  at `2N`). -/
 def VisibilityInputs : Prop :=
   ∃ (lam : ℕ → ℤ → ℤ) (ω : ℕ) (C : ℤ),
     Odd.ThetaComparison D.Mθ D.aθ lam D.admissible ω ∧

@@ -5,7 +5,8 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.FinalFamily
 
 `exists_oddMinimum` (PROVED from batch 3's `genusLowerF4_proof`, `coarseF5_proof` and
 `oddMinimumF6_proof`): the depth set of the odd coefficients has a least element, from (O.8), the
-inputs of (F.4), the prepared-filter GLUE and the fixed visible witness `D_w` (tex 2460–2500, (3.7)).
+inputs of (F.4), the prepared-filter GLUE and the fixed visible witness `D_w` (tex 2460–2500, (3.7);
+the minimum: App G 10151–10209, §7 2538–2546).
 The skeleton's `δ_o` is then chosen as this least element (`Leaves.lean`), so the requested field
 `odd_minimum` (`OddMinimumTarget`) is a theorem, not a hypothesis.
 -/
@@ -20,10 +21,14 @@ attribute [local instance] Nat.fact_prime_two
 
 variable {ℓ : ℕ} (W : WData ℓ)
 
-/-- **The fixed visible witness** (tex 2460–2500, (3.7) and its use at 2536–2546; ELLIOT, with
-Cai–Shu–Tian Thm 1.1 (PRINT) for the nontorsion of `P_{D_w}^{gen}` and finite Chebotarev; owner
+/-- **The fixed visible witness** ((3.7), tex 2460–2498, 2534–2536; (O.2), App F 8225–8405; the
+valuation, App F 9391–9403; ELLIOT, with PRINT Bump–Friedberg–Hoffstein (Invent. Math. 102 (1990),
+pp. 543–544, clause (i)) for `L'(E^{(D_w)},1) ≠ 0`, PRINT Cai–Shu–Tian Thm 1.1 for the nontorsion of
+`P_{D_w}^{gen}`, PRINT Serre's open image for the Kummer image, and GLUE finite Chebotarev; owner
 batch 3 GenusOdd / lane RC12 (detector)): one admissible `D_w` whose coefficient has one fixed
-valuation `c_w < M_θ` on a set of stages in the ultrafilter. -/
+valuation `c = c_θ + c_w = 9 + ω(N) + c_w < M_θ` on a set of stages in the ultrafilter (the text
+gives it at every stage with `M_θ > c`). BFH supplies the simple-zero parameter before the height
+and detector construction. `D_w` must be prime to `S`, so the final `k` is chosen prime to `D_w`. -/
 def WitnessLeaf : Prop :=
   ∃ Dw c : ℤ, ∀ᶠ θ in (W.stages : Filter ℕ), W.admissible θ Dw ∧
     vZ (W.aθ θ Dw) = (c : WithTop ℤ) ∧ (c : WithTop ℤ) < W.Mθ θ
