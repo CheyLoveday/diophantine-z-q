@@ -15,6 +15,7 @@ tex L2433–2435) is PROVED in `GenusLower.lean` from these.
   `L(E/K, χ_{d₁} ∘ N, s) = L(E^{(d₁)}, s) L(E^{(d₂)}, s)` for `d₁ d₂ = disc(K) c²`.
 * `NeronTateTwist` (implicit at tex L2433–2436, mcheck K3 item (d)): the Néron–Tate height of the
   image of a rational point of the twist `E^{(d)}` in `E(H)` is `[H : ℚ]` times its height.
+  **PROVED** from lane RC19's height results in `HeightDischarge.lean` (`neronTateTwist_proof`).
 * `TwistDescent` (tex L8313–8314 "the standard twist identification"): a point of `E(H)` on which
   `Gal(H/ℚ)` acts through the character of `√d` comes from `E^{(d)}(ℚ)`. **PROVED** in
   `TwistDescentProof.lean` (`twistDescent_proof`); no longer an input.
@@ -56,7 +57,8 @@ def ArtinFactorization : Prop :=
       LSeries (twistedLFunction E (chiAt (conductorOrder K c) χ)) s =
         (qtwist E d₁).LSeries s * (qtwist E d₂).LSeries s
 
-/-- **Néron–Tate height of a twisted rational point** (GLUE, textbook: the canonical height is
+/-- **Néron–Tate height of a twisted rational point** (stated here as GLUE; PROVED in
+`HeightDischarge.lean`, `neronTateTwist_proof`, from lane RC19. Textbook: the canonical height is
 invariant under isomorphism over `H` and multiplies by `[H : F]` under base change, heights being
 relative to the field; Silverman VIII.9). For `E` with `a₁ = a₃ = 0`, `s ∈ H` with `s² = d ≠ 0`
 and `P ∈ E^{(d)}(ℚ)`: `ĥ_H(ψ_s P) = [H : ℚ] ĥ_ℚ(P)` (Tau Ceti's canonical heights, Mathlib's
