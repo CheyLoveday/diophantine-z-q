@@ -20,7 +20,7 @@ Definitions only (and a few PROVED facts about them). They are the objects of Pr
 * `chiD d n = (n / |d|)` (Jacobi symbol): the Kronecker character `χ_d(n)` for a discriminant
   `d ≡ 1 (mod 4)`, the only case used here (all discriminants of (3.4) are odd).
 * `IsQuadRingClassChar K c d χ`: `χ : Pic(O_c) → ℂ^×` is quadratic and equals `χ_d ∘ N_{K/ℚ}` on the
-  primes of `K` prime to the conductor and to `d` (the genus character of (O.1), tex L8213, with
+  primes of `K` prime to the conductor and to `d` (the genus character of (O.1), tex L8213–8217, with
   `d = h_*`, `c = 1`; the ring-class character "weighted by `χ_h`" of tex L2413, with `d = h`,
   `c = |h|`).
 * `heegnerSum`: the unaveraged sum `P_χ = Σ_{t ∈ Pic(O_c)} χ(t) σ_t(y)` of tex L2411–2413 and (O.1),
@@ -130,7 +130,7 @@ variable (K : Type) [Field K] [NumberField K] (c : ℕ) [NeZero c]
 
 /-- **`χ = χ_d ∘ N_{K/ℚ}` on `Pic(O_c)`**: `χ` is quadratic, and `χ([𝔭]) = χ_d(N𝔭)` for every prime
 `𝔭` of `K` prime to the conductor of `O_c` and to `d`. For `c = 1`, `d = h_*` and
-`disc K = h h_*` this is the genus character of (O.1) (tex L8213, `χ_{h_*}(N𝔞)`); for `c = |h|`,
+`disc K = h h_*` this is the genus character of (O.1) (tex L8213–8217, `χ_{h_*}(N𝔞)`); for `c = |h|`,
 `d = h` and `disc K = k'` it is the ring-class character "weighted by `χ_h`" of tex L2413. The
 values at the remaining primes are forced by the group structure (every class contains primes
 prime to any given integer). -/
@@ -159,7 +159,7 @@ abbrev galPt (σ : ringClassField (conductorOrder K c) ≃ₐ[K] ringClassField 
 
 /-- **The unaveraged Heegner sum** `P_χ = Σ_{t ∈ Pic(O_c)} χ(t) σ_t(y)` (tex L2411–2413, (O.1)
 L8212–8215) for a quadratic `χ`, summed over `σ ∈ Gal(H_c/K)` with `t` its Artin preimage: no
-`1/#Pic`, no `1/u`. For the genus point `y` is the conductor-one Heegner point, for the ring-class
+`1/|Pic|`, no `1/u`. For the genus point `y` is the conductor-one Heegner point, for the ring-class
 point the conductor-`c` one (the analytic model of `Prints/CST.lean`). -/
 def heegnerSum (χ : Pic (conductorOrder K c) →* ℂˣ)
     (y : (E.baseChange (ringClassField (conductorOrder K c))).toAffine.Point) :

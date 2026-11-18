@@ -13,7 +13,7 @@ def KummerCorankZero : Prop :=
     Finite (sha A) → Z2Corank (selmerTwoPower A) 0
 ```
 
-Manuscript: `lem:forward-rank` (`diophantine_zq.tex` L1101–1104: "the ordinary Kummer sequence
+Manuscript: `lem:forward-rank` (`diophantine_zq.tex` L1098–1104: "the ordinary Kummer sequence
 `0 → A(ℚ) ⊗ ℚ₂/ℤ₂ → Sel_{2^∞}(A/ℚ) → Ш(A/ℚ)[2^∞] → 0` gives the corank assertion"); Silverman,
 *The Arithmetic of Elliptic Curves*, X.4.
 
@@ -42,7 +42,7 @@ open ZInQ.Manuscript.SelmerTwoPower TauCeti TauCeti.ContCohomology
 
 set_option linter.dupNamespace false in
 /-- **The Kummer sequence in rank zero** (GLUE in the Theorem 5.3 deduction; `lem:forward-rank`,
-tex L1101–1104; Silverman X.4): rank zero and finite `Ш` give `corank Sel_{2^∞} = 0`. Statement
+tex L1098–1104; Silverman X.4): rank zero and finite `Ш` give `corank Sel_{2^∞} = 0`. Statement
 copied verbatim from `ZInQKernel/Contrib/OneProof/RC/Skeleton/Steps.lean` @ 839ff728. -/
 def KummerCorankZero : Prop :=
   ∀ A : WeierstrassCurve ℚ, A.IsElliptic → Module.rank ℤ A.toAffine.Point = 0 →

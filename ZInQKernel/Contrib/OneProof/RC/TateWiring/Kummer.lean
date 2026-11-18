@@ -479,7 +479,8 @@ structure MovingData (E : WeierstrassCurve ℚ) (n : ℕ) where
   cls_gen : ∀ c : Cl, ∃ v : Fin s → ℤ, ∑ j, v j • cls j = c
   m : Fin t → Fin s → ℤ
   m_span : ∀ v : Fin s → ℤ, ∑ j, v j • cls j = 0 → ∃ b : Fin t → ℤ, v = ∑ a, b a • m a
-  /-- `GLUE` (tex 3551–3557), over the genuine Kummer relations -/
+  /-- `ELLIOT/GLUE` (tex 3551–3557; Elliot's argument from textbook valuation facts), over the
+  genuine Kummer relations -/
   KR_val : ∀ b ∈ kd.KR, ∀ j, act j → (2 : ℤ) ^ n ∣ ∑ a, b a * m a j
   /-- `GLUE` (tex 3559–3563, perfect Kummer pairing), over the genuine multipliers (PROVED in the
   tree: lane RC22's `GlueSweep.Tate.kum_surj_genuine`) -/

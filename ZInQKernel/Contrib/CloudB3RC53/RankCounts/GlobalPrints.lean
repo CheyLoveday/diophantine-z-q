@@ -70,8 +70,8 @@ def IsUnramifiedOutside (S : Set (HeightOneSpectrum (𝓞 K)))
 finite subextensions unramified outside `S` (Milne ADT I §4, notation `K_S`). We take the
 supremum over the finite *Galois* subextensions unramified outside `S`: this is the same field,
 since the maximal extension unramified outside `S` is Galois over `K` and is the union of its
-finite Galois subextensions, each of which is unramified outside `S` (standard); with this form
-`K_S/K` is visibly normal (`Inflation.lean`). -/
+finite Galois subextensions, each of which is unramified outside `S` (Milne ADT I §4); in this form
+`K_S/K` is normal by construction (`Inflation.lean`). -/
 def unramifiedOutside (S : Set (HeightOneSpectrum (𝓞 K))) :
     IntermediateField K (AlgebraicClosure K) :=
   ⨆ (L : IntermediateField K (AlgebraicClosure K))
@@ -101,7 +101,7 @@ complex `K` and finite discrete `𝔽₂`-modules.** UNVERIFIED (no print read; 
 carrying the statement is not checked).
 
 Form used (tex 4529, `H^{>2} = 0`): for a number field `K` and a finite set `S` of primes containing
-those above `#M = 2^{dim M}` (and, implicitly, the archimedean places), and a finite discrete
+those above `|M| = 2^{dim M}` (and, implicitly, the archimedean places), and a finite discrete
 `G_S`-module `M`, `H^r(G_S, M) → ⊕_{v real} H^r(K_v, M)` is an isomorphism for `r ≥ 3`; when `K` has
 no real place, `H^r(G_S, M) = 0` for `r ≥ 3`. -/
 def MilneADT_I_4_10_totallyComplex : Prop :=
@@ -116,7 +116,7 @@ def MilneADT_I_4_10_totallyComplex : Prop :=
 Euler–Poincaré characteristic), as cited at tex 4526 (`\cite[I.4.10 and I.5.1]{milne}`),
 specialized to totally complex `K` and finite discrete `𝔽₂`-modules.** UNVERIFIED (no print read).
 
-Milne: for `S` finite containing the archimedean places and the primes dividing `#M`, and `M` a
+Milne: for `S` finite containing the archimedean places and the primes dividing `|M|`, and `M` a
 finite `G_S`-module, the groups `H^r(G_S, M)` are finite and
 `χ(G_S, M) = [H⁰][H²]/[H¹] = ∏_{v arch} [H⁰(G_v, M)] / |[M]|_v`.
 For `K` totally complex every archimedean `v` is complex, `G_v = 1`, `H⁰(G_v, M) = M` and

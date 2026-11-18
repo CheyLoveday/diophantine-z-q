@@ -17,7 +17,10 @@ by its three differentials as matrices over these block decompositions, with `d�
 of the actual differentials (tex 5532–5535: "The entries in this definition are the original
 entries of `D`").
 
-**(5) The identification** (`Identification b dK hK cE tK`, ONE explicit GLUE input; the
+**(5) The identification** (`Identification b dK hK cE tK`, ONE explicit ELLIOT input, Lemma
+`ex:limits-fixed-field-budget`, tex 5207–5484; its fields constrain only the Smith blocks of `D`
+(`aug_eq`), the three Schur fields are independent, and the counts are those of the model Smith
+complex `centralCx B fr`, not of `D_c`; the
 Selmer-complex model of Nekovář, *Selmer complexes*, Astérisque 310, (5.6) and 7.8.8(ii), as the
 manuscript cites them, UNVERIFIED; and the new-local cancellation of tex 5394–5454): a block-form
 complex `D` over `𝒪[G]` that IS the remaining complex, i.e.
@@ -165,7 +168,9 @@ def BudgetInputs {S : Type} [CommRing S] (B : SmithBlocks S OO) (dK hK cE tK : �
     Module.length ℤ_[2] (Submodule.torsion ℤ_[2] H2C) = hK ∧ Module.length ℤ_[2] J ≤ 2 * cE ∧
     Module.finrank ℤ_[2] H1C = 1 ∧ Module.finrank ℤ_[2] H2C = 1
 
-/-- **The single identification of the remaining complex** (GLUE; see the module docstring):
+/-- **The single identification of the remaining complex** (ELLIOT, Lemma
+`ex:limits-fixed-field-budget`, tex 5207–5484; prints Nekovář as cited, UNVERIFIED; see the module
+docstring):
 a block-form complex `D` over `𝒪[G]`, `G = 𝔽₂^b`, with augmentation the old complex over `Λ`
 (Smith blocks `A0` reducing centrally to the Smith entries `s`), sign-evaluated differentials given
 by one new-local Schur family, and the (5.7) counts for its central complex.

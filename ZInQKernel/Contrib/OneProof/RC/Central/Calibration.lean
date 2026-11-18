@@ -138,13 +138,18 @@ theorem isogenyIndex_ne_zero {α β : ℤ} (h : α * β = 2) : α ≠ 0 := by
   rintro rfl
   simp at h
 
-/-- **`Reg_B / Reg_A = 2 / I²`** (tex 4022–4025, 4082–4090), for the real regulators. With the
-height adjunction `⟨φ x, y⟩_B = ⟨x, ψ y⟩_A` ("the sum/difference isogenies are dual", tex 4022–4023)
-read on free generators `g_A`, `g_B` of the two rank-one lattices (`φ g_A ≡ α g_B`,
-`ψ g_B ≡ β g_A` modulo torsion, `Reg_A = ĥ_A(g_A)`, `Reg_B = ĥ_B(g_B)`) as `α Reg_B = β Reg_A`, and
-`αβ = 2` (`ψφ = [2]`), one has `Reg_B α² = 2 Reg_A`. Both hypotheses are PROVED for the genuine
-canonical heights by lane RC19 (`ZInQ.Manuscript.RC.Height.regulator_ratio_sumDiff`, which applies
-this theorem to them). PROVED. -/
+/-- **`Reg_B α² = 2 Reg_A`, the text's `Reg_B / Reg_A = 2 / I²`** (tex 4022–4025, 4082–4090), for
+real `Reg_A`, `Reg_B`. With the height adjunction `⟨φ x, y⟩_B = ⟨x, ψ y⟩_A` ("the sum/difference
+isogenies are dual", tex 4022–4023) read on free generators `g_A`, `g_B` of the two rank-one
+lattices (`φ g_A ≡ α g_B`, `ψ g_B ≡ β g_A` modulo torsion, `Reg_A = ĥ_A(g_A)`, `Reg_B = ĥ_B(g_B)`)
+as `α Reg_B = β Reg_A`, and `αβ = 2` (`ψφ = [2]`), one has `Reg_B α² = 2 Reg_A`. No `Reg_A ≠ 0` is
+assumed; the quotient form `Reg_B / Reg_A = 2/α² = 2/I²` (`I = |α|`) is `regulator_ratio_div`.
+Both hypotheses are PROVED for the genuine canonical heights by lane RC19
+(`ZInQ.Manuscript.RC.Height.regulator_ratio_sumDiff`, which applies this theorem to them). In the
+reduction it is applied, through `regulator_eq_ratCast_mul` and
+`milne_valuation_form_of_adjunction`, to the real regulators `RegA`, `RegB` of
+`Wiring.CalibrationModel`, which `Wiring.CalibrationModelR.nonempty_model` fills with the genuine
+canonical heights; no rational stand-in for the regulators is used. PROVED. -/
 theorem regulator_ratio {α β : ℤ} {RegA RegB : ℝ} (h : α * β = 2)
     (hadj : (α : ℝ) * RegB = (β : ℝ) * RegA) : RegB * (α : ℝ) ^ 2 = 2 * RegA := by
   have h' : (α : ℝ) * β = 2 := by exact_mod_cast h
@@ -176,7 +181,7 @@ theorem regulator_ratio_div {α β : ℤ} {RegA RegB : ℝ} (h : α * β = 2)
   push_cast
   rfl
 
-/-- **`v₂(Reg_B / Reg_A) = v₂(2/I²) = ±1`** (tex 4088–4090, 4108–4109): the two-adic valuation of
+/-- **`v₂(Reg_B / Reg_A) = v₂(2/I²) = ±1`** (tex 4088–4090, 4110): the two-adic valuation of
 the rational number `2/α²`, which is `Reg_B/Reg_A` by `regulator_ratio_div`. PROVED. -/
 theorem padicValRat_regulator_ratio {α β : ℤ} (h : α * β = 2) :
     padicValRat 2 (2 / ((α : ℚ) ^ 2)) = 1 ∨ padicValRat 2 (2 / ((α : ℚ) ^ 2)) = -1 := by

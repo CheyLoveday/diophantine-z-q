@@ -19,7 +19,7 @@ tex L2433–2435) is PROVED in `GenusLower.lean` from these.
   `L(E/K, χ_{d₁} ∘ N, s) = L(E^{(d₁)}, s) L(E^{(d₂)}, s)` for `d₁ d₂ = disc(K) c²`. Reduced to the
   inert clause `LocalFactorInert` with `HasseConvergence` and `ModularNewform`
   (`artinFactorization_of_newform`, `LocalFinal.lean`).
-* `NeronTateTwist` (implicit at tex L2433–2436, mcheck K3 item (d)): the Néron–Tate height of the
+* `NeronTateTwist` (implicit at tex L2433–2436): the Néron–Tate height of the
   image of a rational point of the twist `E^{(d)}` in `E(H)` is `[H : ℚ]` times its height.
   **PROVED** from lane RC19's height results in `HeightDischarge.lean` (`neronTateTwist_proof`).
 * `TwistDescent` (tex L8313–8314 "the standard twist identification"): a point of `E(H)` on which

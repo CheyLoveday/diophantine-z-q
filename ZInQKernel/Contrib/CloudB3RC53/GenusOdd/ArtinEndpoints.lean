@@ -18,7 +18,7 @@ namespace ZInQ.Contrib.CloudB3RC53.GenusOdd
 
 open ZInQ.Contrib.CloudB3RC53.CST
 
-/-- **(3.4) at every `(h, k')` at the genuine objects** (PROVED from `Prints`, `Glue34`): for any
+/-- **(3.4) at every `(h, k')` at the genuine objects** (PROVED from `Prints` and `ArtinFactorization`): for any
 selections of genus and ring-class data defined wherever `h` is a prepared simple zero and `k'` a
 companion, with `C_per = 0`. -/
 theorem gzEveryCompanion_of_artin (P : Prints) (hArtin : ArtinFactorization) {E : WeierstrassCurve ℚ} [E.IsElliptic]
@@ -44,7 +44,7 @@ theorem gzEveryCompanion_of_artin (P : Prints) (hArtin : ArtinFactorization) {E 
   rw [heq]
   ring
 
-/-- **`RCSteps.gz_comparison` at the genuine objects** (PROVED from `Prints`, `Glue34`) for the
+/-- **`RCSteps.gz_comparison` at the genuine objects** (PROVED from `Prints` and `ArtinFactorization`) for the
 curve `E_ℓ`, at a final companion `k` that is a negative odd fundamental discriminant, a unit square
 at every prime of `2N`, prime to `h_*` (tex L2604–2613 with L2349–2352), when `D.prepared` is the
 genuine `Prepared` and `D.Lstar, D.jgen, D.jrc` are `LstarQ, jgenOf, jrcOf` (with `C_per = 0`). -/
@@ -94,7 +94,7 @@ theorem gzComparison_of_artin (P : Prints) (hArtin : ArtinFactorization) {ℓ : 
   ring
 
 /-- **(3.4) at every rough companion for a scaled `L_*`** (PROVED from `Prints` and
-`GlueAfterRC19`): `gzEveryCompanion_of_RC19` with `LstarQ` replaced by any `L'` satisfying
+`ArtinFactorization`): `gzEveryCompanion_of_RC19` with `LstarQ` replaced by any `L'` satisfying
 `LstarScaled`, e.g. lane RC11's normalization; `C_per = 0`. -/
 theorem gzEveryCompanion_of_scaled_artin (P : Prints) (hArtin : ArtinFactorization) {E : WeierstrassCurve ℚ}
     [E.IsElliptic] (h₁ : E.a₁ = 0) (h₃ : E.a₃ = 0)
@@ -123,7 +123,7 @@ theorem gzEveryCompanion_of_scaled_artin (P : Prints) (hArtin : ArtinFactorizati
   have ha : h * k' < 0 := mul_neg_of_pos_of_neg hp.1 hk.1
   rw [heq, (padicValRat_diff_of_scaled hL' ha hgp.1 hLa hLb hElkikMD).1]
 
-/-- **`RCSteps.gz_comparison` for a scaled `L_*`** (PROVED from `Prints` and `GlueAfterRC19`):
+/-- **`RCSteps.gz_comparison` for a scaled `L_*`** (PROVED from `Prints` and `ArtinFactorization`):
 `gzComparison_of_RC19` with `LstarQ` replaced by any `L'` satisfying `LstarScaled`; the extra input
 `omegaMinus Lat ≠ 0` (the period lattice of `E` has a nonzero imaginary period) replaces the
 genuine `L_*(hk) ≠ 0` of the companion relation. -/

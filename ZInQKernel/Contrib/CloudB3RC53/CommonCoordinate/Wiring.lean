@@ -9,7 +9,8 @@ Lane RC0's input for (4.7) (`RC/Wiring/Central.lean`) is, at every address of a 
 — the multi-prime (4.7) and `ε_q ∈ Λ^×` (tex L4166–4193), listed there as "ELLIOT + GLUE (Nekovář
 6.4.1–6.4.3)" — are produced from triangular models of the support triangle at each relaxation step
 (`Bridge.lean`, `Triangular.lean`; the old-part relations are the norm identity and
-`λ_R ∘ i = e_q λ_P`, `Naturality.lean`), with `ε_q = q⁻⁴`. The remaining fields (the ring `𝒪[G]`,
+`λ_R ∘ i = e_q λ_P`, hypotheses of the models; the headline does not import `Naturality.lean`, so on the
+headline's route they are assumed), with `ε_q = q⁻⁴`. The remaining fields (the ring `𝒪[G]`,
 the character, the Euler-factor data `hratio`, `hinv`, the sign data and `ũ = η u_rel`) are taken as
 given, as RC0 lists them.
 

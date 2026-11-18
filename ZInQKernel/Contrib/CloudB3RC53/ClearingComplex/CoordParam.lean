@@ -36,7 +36,8 @@ open ZInQ.Manuscript.RC.Determinant (Lam OO SignGroup SmithBlocks ScalarData evK
 variable {O : Type} [CommRing O] [IsDomain O] [Algebra Lam O] {b : ℕ}
 
 /-- **E1a: the corrected coordinate is the coordinate `c` of the remaining complex**, up to
-`η_x κ_x 2^{-a}`, where `Δ_x ≠ 0`. -/
+`η_x κ_x 2^{-a}`, where `Δ_x ≠ 0` (ELLIOT: with `c` a free parameter, `CoordLink ∧ CoordComputation`
+is E1). -/
 def CoordLink (B : SmithBlocks (MonoidAlgebra O (SignGroup b)) O)
     (κ η : MonoidAlgebra O (SignGroup b)) (a : ℕ) (e : Addr b → ℕ) (g : Addr b → Lam)
     (c : Addr b → FractionRing O) : Prop :=

@@ -8,9 +8,9 @@ Manuscript `diophantine_zq.tex`, tex 4116–4138: "At `p ∣ k`, put `E₀ = E^{
 reduction, and `K_p/ℚ_p` is a tame ramified quadratic extension. By [Edixhoven, Theorem 5.3 and
 Remark 5.4.1, pp. 299–300], the component group of the ramified twist is the fixed subgroup of the
 good special fiber under its descent action `[−1]`: `Φ(E₀^{(k)}) ≃ Ẽ₀[2]` … its rational component
-number is `#E[2]^{Fr_p}`."
+number is `|E[2]^{Fr_p}|`."
 
-`componentFields_of_reductions` (`Calibration/Bookkeeping.lean`) assumed `c_p(ℬ) = #W(k)[2]` for
+`componentFields_of_reductions` (`Calibration/Bookkeeping.lean`) assumed `c_p(ℬ) = |W(k)[2]|` for
 arbitrary fields `k`, curves `W` and numbers. Here:
 
 * `GoodModelAt E p`: a genuine good integral model of `E/ℚ` at `p` (a Weierstrass curve over `ℤ`
