@@ -1,5 +1,6 @@
 import ZInQKernel.OneProof.Discharges
 import ZInQKernel.Contrib.OneProof.CMCurveOrder.Fold
+import ZInQKernel.MainGreenTao
 
 /-! Both the live Main (open76) and the discharge tool's bundle-module filter hide the
 CM field from the stock check. Expose exactly the pre-fold open77 telescope for the

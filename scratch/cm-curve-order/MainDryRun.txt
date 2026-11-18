@@ -1,0 +1,9 @@
+ 19:33:08 up 4 days,  3:11,  6 users,  load average: 5.25, 4.51, 4.11
+               total        used        free      shared  buff/cache   available
+Mem:             235          80          22           0         136         155
+Swap:            255          63         192
+'HDec.CMBranch.FibreSplit.cmCurveOrder324_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.cmCurveOrder_of_324' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder324' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.sixContactMin_of_open78_cm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
