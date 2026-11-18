@@ -98,4 +98,66 @@ def cuspInf : AlgebraicCurve.Place ℚ (FQ M) where
     exact absurd hj (not_le.2 (one_lt_vInf_j M))
   isPrincipalIdealRing' := Valuation.valuationSubring_isPrincipalIdealRing (vInf M)
 
+/-! ### The cusp `∞` is a rational place -/
+
+theorem vInf_lt_one_of_constantCoeff (f : FQ M) (F : PowerSeries ℚ)
+    (hF : HahnSeries.ofPowerSeries ℤ ℚ F = (f : LaurentSeries ℚ))
+    (h0 : PowerSeries.constantCoeff F = 0) : vInf M f < 1 := by
+  obtain ⟨G, hG⟩ := PowerSeries.X_dvd_iff.2 h0
+  have hv : vInf M f = Valued.v (((PowerSeries.X : PowerSeries ℚ) : LaurentSeries ℚ) ^ 1) *
+      Valued.v (HahnSeries.ofPowerSeries ℤ ℚ G) := by
+    change Valued.v (f : LaurentSeries ℚ) = _
+    rw [← hF, hG, pow_one, map_mul, map_mul]
+  rw [hv, LaurentSeries.valuation_X_pow]
+  have hG1 : Valued.v (HahnSeries.ofPowerSeries ℤ ℚ G) ≤ 1 :=
+    (LaurentSeries.val_le_one_iff_eq_coe ℚ _).2 ⟨G, rfl⟩
+  calc WithZero.exp (-((1 : ℕ) : ℤ)) * Valued.v (HahnSeries.ofPowerSeries ℤ ℚ G)
+      ≤ WithZero.exp (-((1 : ℕ) : ℤ)) * 1 := by gcongr
+    _ < 1 := by
+      rw [mul_one, ← WithZero.exp_zero, WithZero.exp_lt_exp]
+      norm_num
+
+theorem mem_maximalIdeal_of_vInf_lt_one (x : (cuspInf M).toValuationSubring)
+    (hx : vInf M x < 1) : x ∈ IsLocalRing.maximalIdeal (cuspInf M).toValuationSubring := by
+  rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+  rintro ⟨u, rfl⟩
+  have hinv : vInf M ((u⁻¹ : (cuspInf M).toValuationSubring ˣ) : FQ M) ≤ 1 :=
+    ((u⁻¹ : (cuspInf M).toValuationSubring ˣ) : (cuspInf M).toValuationSubring).2
+  have hmul : vInf M (u : FQ M) * vInf M ((u⁻¹ : (cuspInf M).toValuationSubring ˣ) : FQ M) = 1 := by
+    rw [← map_mul]
+    have : ((u : (cuspInf M).toValuationSubring) : FQ M) *
+        ((u⁻¹ : (cuspInf M).toValuationSubring ˣ) : FQ M) = 1 := by
+      rw [← Subring.coe_mul, Units.mul_inv]
+      rfl
+    rw [this, map_one]
+  have : vInf M (u : FQ M) * vInf M ((u⁻¹ : (cuspInf M).toValuationSubring ˣ) : FQ M) < 1 :=
+    calc _ ≤ vInf M (u : FQ M) * 1 := by gcongr
+      _ < 1 := by rw [mul_one]; exact hx
+  exact (ne_of_lt this) hmul
+
+theorem algebraMap_residueField_surjective :
+    Function.Surjective (algebraMap ℚ (cuspInf M).ResidueField) := by
+  intro r
+  obtain ⟨x, rfl⟩ := IsLocalRing.residue_surjective r
+  have hx : vInf M (x : FQ M) ≤ 1 := x.2
+  obtain ⟨F, hF⟩ := (vInf_le_one_iff M _).1 hx
+  refine ⟨PowerSeries.constantCoeff F, ?_⟩
+  rw [IsScalarTower.algebraMap_apply ℚ (cuspInf M).toValuationSubring,
+    IsLocalRing.ResidueField.algebraMap_eq, ← sub_eq_zero, ← map_sub,
+    IsLocalRing.residue_eq_zero_iff]
+  refine mem_maximalIdeal_of_vInf_lt_one M _ ?_
+  refine vInf_lt_one_of_constantCoeff M _ (PowerSeries.C (PowerSeries.constantCoeff F) - F) ?_ ?_
+  · rw [map_sub, hF]
+    simp [AlgebraicCurve.Place.coe_algebraMap]
+  · simp
+
+/-- **The cusp `∞` is a rational place of `ℚ(j, j_M)`**: degree one. -/
+theorem cuspInf_deg : (cuspInf M).deg = 1 := by
+  have hbij : Function.Bijective (algebraMap ℚ (cuspInf M).ResidueField) :=
+    ⟨(algebraMap ℚ (cuspInf M).ResidueField).injective, algebraMap_residueField_surjective M⟩
+  rw [AlgebraicCurve.Place.deg,
+    ← (AlgEquiv.ofBijective (Algebra.ofId ℚ (cuspInf M).ResidueField)
+      hbij).toLinearEquiv.finrank_eq,
+    Module.finrank_self]
+
 end ZInQ.Contrib.CloudB3RC53.NewformS13
