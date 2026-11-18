@@ -1,7 +1,7 @@
 """Compare two hash dumps (name module levels typeHash valueHash per constant).
-Usage: python3 scratch/fold-b116/cmp_hashes.py BEFORE AFTER  (files in scratch/fold-b116/)."""
+Usage: python3 scratch/fold-c8/cmp_hashes.py BEFORE AFTER  (files in scratch/fold-c8/)."""
 import sys, collections
-d = 'scratch/fold-b116/'
+d = 'scratch/fold-c8/'
 def load(f):
     return {l.split()[0]: l.split(None, 1)[1] for l in open(d + f) if l.strip()}
 a, b = load(sys.argv[1]), load(sys.argv[2])

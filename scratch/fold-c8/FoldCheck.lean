@@ -30,7 +30,7 @@ run_cmd do
     -- removed by fold-c8 (must be false): the Picard rows, the old top bundles, Tate 1967, the Weil-pairing C8 route
     `T09Pic.PicRepresentableAbVar, `KleimanSite.KleimanPicZeroProper954SiteQ,
     `HDec.HSyn.OpenAddedLeaves27, `HDec.HSyn.OpenResearchLeaves60, `HDec.HSyn.sixContactMin_of_open79,
-    `HDec.G0Galois.C8Conrad.TateTwistInvariantsInertia, `HDec.G0Galois.C8Conrad.ConradAppBQp_unused_marker,
+    `HDec.G0Galois.C8Conrad.TateTwistInvariantsInertia,
     `HDec.HSyn.detTate_of_leaves4_pz, `HDec.HSyn.GR9.sixContactMin_of_open45_pz_eb_sf_u,
     `HDec.HSyn.hodgeTateDecompAbVar_of_open_k954,
     -- the new route (must be true)

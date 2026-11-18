@@ -48,3 +48,27 @@ reflink-copied from the fold-b116 worktree (627782cf; no Lean file differs from 
 - `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.OneProof.H.C8Chain
   ZInQKernel.OneProof.H.TailZ87`: Build completed successfully (16331 jobs, 30 s); frozenTarget
   [propext, Classical.choice, Quot.sound].
+
+## 5. Checks after the fold (VERIFIED, 11-17 16:50; `run_checks.sh 1 hashes_fold0.txt`, output run_checks-fold1.txt)
+- Hash guard (DumpCompact + cmp_hashes.py, cmp_fold1.txt): 21041 -> 21343, only before 0, only after 302 (C8Chain 258,
+  TailZ87 44), changed only `ZInQ.OneProof.frozenTarget`. (run_checks' cmp step first failed on a stale
+  `scratch/fold-b116/` path inside the copied cmp_hashes.py; fixed and rerun by hand, same files.)
+- Closure (FoldCheck-fold1.txt, 296120 constants): `#print axioms ZInQ.OneProof.frozenTarget` = [propext,
+  Classical.choice, Quot.sound]; absent: sorryAx, `T09Pic.PicRepresentableAbVar`, `KleimanSite.KleimanPicZeroProper954SiteQ`,
+  `OpenAddedLeaves27`, `sixContactMin_of_open79`, `C8Conrad.TateTwistInvariantsInertia`, `detTate_of_leaves4_pz`,
+  `GR9.sixContactMin_of_open45_pz_eb_sf_u`, `hodgeTateDecompAbVar_of_open_k954`; constants named
+  `*PicRepresentable*` / `*KleimanPicZeroProper*`: 0. Present: ConradAppB, ConradPropB3Qp, ConradAppBQp,
+  g12DetPZ_of_inputs, twistCharHTWt0_proof, ScholzeH1AbVar, T10_TateDuality, poincareComplement_proof,
+  sixContactMin_of_open79_hm, OpenResearchLeaves61, OpenAddedLeaves28, sixContactMin_of_open80; also
+  OpenResearchLeaves60 and HodgeTateDecompOr (only as the conversion's target, filled from the Scholze leaf; not
+  hypotheses: `#check @frozenTarget` binders are OpenResearchLeaves61, OpenTextbookLeaves18, OpenAddedLeaves28, hPC).
+  Field check: OpenResearchLeaves61 = OpenResearchLeaves60 minus hodgeTateDecompOr (27 -> 26), no type differs.
+- OpenStatements: 30 open hypotheses. render_open: 29 H, strictest 5/24, 1 other; `--check` ok (4 generated files).
+- DischargesTest: 23 DISCHARGES lines (no error). New lines include `OpenAddedLeaves28.scholzeH1AbVar` by
+  `scholzeH1AbVar_of_old`, and `OpenResearchLeaves61.deRhamVpAbVarDirect` by
+  `DeRhamScholze.HTMerge.deRhamVpAbVarDirect_of_scholzeH1Milne` (from the new leaves alone; the row is LEAF/LEAF, so
+  removing it would not lower the GLUE count: not done, noted for the integrator). The hodgeTateDecompOr lines left.
+- frontier_crosswalk: 232 IDs, 3 matched (was 4: H-199 matched picRepresentableAbVar); `--check` ok.
+- autoform check: exit 0 (776 articles, 647 fully proved).
+- gate.sh: AUTOFOLD-DRYRUN-EXIT=0, TREE-UNCHANGED=yes, GATEFOLD-EXIT=0, GATEFOLD-AXIOMS=standard, **GATE=ok**.
+- **render_open count after the fold: 30 open (H 29, strict 5/24, strictest 5/24, 1 other).**
