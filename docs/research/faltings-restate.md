@@ -125,4 +125,9 @@ The reproducers and results are in [`scratch/faltings-restate/`](../../scratch/f
   `python3 scripts/one_proof/autofold.py scratch/faltings-restate/autofold.json --dry-run`
   succeeded; `autofold-dryrun.txt` records the count and the changed lines.
   No fold was applied.
-- The live `#discharges` check awaits a serial rebuild of missing base artifacts.
+- The live `#discharges` check passed. It matched
+  `faltingsSemistableHeightBC_of_faltingsLemma1` to
+  `OpenResearchLeaves61.faltingsSemistableHeightBC` with exactly the three inputs
+  listed above and the standard axioms. See `discharges-out.txt`. It scanned
+  30 open hypotheses, of which 29 are H fields. The live `frozenTarget`
+  also printed only the three standard axioms.
