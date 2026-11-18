@@ -77,7 +77,4 @@ theorem eigenPoint_descends {K : Type} [Field K] [NumberField K] {c : ℕ} [NeZe
       (f := Algebra.ofId F H) (algebraMap F H).injective x₀ y₀).mp hxy),
       Affine.Point.map_some _ _⟩
 
-#print axioms finrank_genusField
-#print axioms eigenPoint_descends
-
 end ZInQ.Manuscript.RC.Stages

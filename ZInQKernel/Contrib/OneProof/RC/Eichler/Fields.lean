@@ -42,11 +42,3 @@ theorem adjoint_of_arrow_equiv {X : Type*} {p : ℕ} [NeZero p]
   rw [← hc, ← hc, Nat.card_congr (dual i j)]
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.finite_classG
-#print axioms ZInQ.Manuscript.RC.Eichler.classWeight
-#print axioms ZInQ.Manuscript.RC.Eichler.classWeight_pos
-#print axioms ZInQ.Manuscript.RC.Eichler.classWeight_dvd
-#print axioms ZInQ.Manuscript.RC.Eichler.adjoint_of_arrow_equiv

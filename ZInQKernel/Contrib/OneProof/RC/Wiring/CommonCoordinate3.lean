@@ -15,8 +15,7 @@ and proves `commonCoordinateInputs_of_triangles : CommonCoordinateInputsT D → 
 
 The support-triangle data are existential witnesses, not tied to the Selmer complexes, the
 character at the address or the family's primes, so they do not constrain the genuine objects:
-`CommonCoordinateInputsT` is equivalent to its conclusion `CommonCoordinateTarget` (lane RV2's
-review probes `triangles_iff`, `commonCoordinateInputsT_iff_target`). As a leaf it is Lemma
+`CommonCoordinateInputsT` is equivalent to its conclusion `CommonCoordinateTarget` . As a leaf it is Lemma
 `ex:arith-common-coordinate` itself (ELLIOT); the algebra above is proved for the abstract data.
 -/
 
@@ -44,7 +43,7 @@ open Matrix ZInQ.Manuscript ZInQ.Manuscript.RC.Central ZInQ.Contrib.CloudB3RC53
   6.4.1–6.4.3, tex 4164–4174; ASSUMED here) and `Λ`-unit basis comparisons (tex 4189–4194); one
   unit `ε_p` per prime at every stage `T` (DEPARTURE: the multi-prime relaxation is not in the
   text) (ELLIOT; owner RC15 / batch 3 CommonCoordinate).
-Equivalent to `ũ_x = ε u_{prim,x}` for a `Λ`-unit `ε` (lane RV2's review probe `triangles_iff`). -/
+Equivalent to `ũ_x = ε u_{prim,x}` for a `Λ`-unit `ε`. -/
 structure CommonCoordinateTriangles {ℓ : ℕ} (D : RCData ℓ) (Fam : Family) (x : Addr Fam.b) :
     Type 1 where
   R : Type
@@ -94,7 +93,7 @@ def CommonCoordinateTriangles.toModel {ℓ : ℕ} {D : RCData ℓ} {Fam : Family
 
 /-- **The inputs of (4.7) as support-triangle data** (tex 4142–4328): at every address of a final
 family, one `CommonCoordinateTriangles`. As a leaf this is (4.7) itself (ELLIOT): it is equivalent
-to `CommonCoordinateTarget` (lane RV2's review probe `commonCoordinateInputsT_iff_target`). -/
+to `CommonCoordinateTarget`. -/
 def CommonCoordinateInputsT {ℓ : ℕ} (D : RCData ℓ) : Prop :=
   ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F → ∀ x : Addr F.b,
     Nonempty (CommonCoordinateTriangles D F x)

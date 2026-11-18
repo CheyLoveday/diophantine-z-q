@@ -1,6 +1,6 @@
 import ZInQKernel.Contrib.OneProof.RC.Eichler.ClassSet
 
-/-! On-the-spot (c), tex 8467–8468 and 9067–9071: the units of a left order are precisely
+/-! Tex 8467–8468 and 9067–9071: the units of a left order are precisely
 the stabilizer of the corresponding right ideal. All the multipliers realizing a fixed
 isomorphism class are a torsor for this stabilizer. -/
 
@@ -53,8 +53,3 @@ def multiplierEquiv (ha : a < 0) (hb : b < 0) {I J : RightIdeal R}
   right_inv v := Subtype.ext (by simp [← mul_assoc])
 
 end ZInQ.Manuscript.RC.Eichler.RightIdeal
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.mem_G_iff_translate
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.multiplierEquiv

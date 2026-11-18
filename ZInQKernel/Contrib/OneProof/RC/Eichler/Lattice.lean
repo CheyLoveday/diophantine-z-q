@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.OneProof.RC.Visibility.Theta
 /-!
 # Lattices in the definite quaternion algebra
 
-Tex 8464–8468, 8563–8564 and 8605–8611. The algebra below is on-the-spot (c).
+Tex 8464–8468, 8563–8564 and 8605–8611. The algebra below is given here.
 We use finitely generated full integer lattices in the rational vector space; a common
 denominator reduces boundedness to a finite box of integer coordinates.
 -/
@@ -174,16 +174,3 @@ theorem finite_norm_le (ha : a < 0) (hb : b < 0)
 end Coordinates
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.FullLattice.span_basis
-#print axioms ZInQ.Manuscript.RC.Eichler.FullLattice.basis
-#print axioms ZInQ.Manuscript.RC.Eichler.FullLattice.ratBasis
-#print axioms ZInQ.Manuscript.RC.Eichler.FullLattice.span_ratBasis
-#print axioms ZInQ.Manuscript.RC.Eichler.weight_pos
-#print axioms ZInQ.Manuscript.RC.Eichler.nrd_sum
-#print axioms ZInQ.Manuscript.RC.Eichler.nrd_pos
-#print axioms ZInQ.Manuscript.RC.Eichler.unitOfNeZero
-#print axioms ZInQ.Manuscript.RC.Eichler.commonDenom
-#print axioms ZInQ.Manuscript.RC.Eichler.finite_norm_le

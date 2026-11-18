@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalWeights.Transport
 
 /-! The division-prime adapter (tex 8462–8465, 8551–8556, 8563–8577).
 The local algebra and maximal-order identification are interface data.
-The extension to the ambient trace-zero space is provenance (c). -/
+The extension to the ambient trace-zero space is given here. -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
 
@@ -30,7 +30,7 @@ structure DivisionLocalModel (C : DivisionCoordinates p D) where
   scalar_compat : ∀ a : ℤ_[p],
     algebraMap ℤ_[p] D a = algebraMap ℚ_[p] D (a : ℚ_[p])
 
-/-- At the division prime, the sibling supplies the completed order and algebra
+/-- At the division prime, the order construction supplies the completed order and algebra
 identifications preserving inclusions, reduced trace, and reduced norm. -/
 structure DivisionIdentification (C : DivisionCoordinates p D) (R B : Type*) [Ring R] [Ring B]
     [Algebra ℤ_[p] R] [Algebra ℚ_[p] B] (incl : R →+* B) (tr : B → ℚ_[p]) (nrd : B → ℚ_[p]) where
@@ -165,13 +165,3 @@ theorem divisionSchwartz_uniformizer {O : Type*} [Ring O] (hp : p % 4 = 3)
 
 end DivisionCoordinates
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights
-#print axioms DivisionCoordinates.zeroInclusion_openEmbedding
-#print axioms DivisionCoordinates.integralZero_compactSpace
-#print axioms DivisionCoordinates.divisionSchwartz_compactOpen
-#print axioms DivisionCoordinates.conjZero_inverse
-#print axioms DivisionCoordinates.scaleZero_inverse
-#print axioms DivisionCoordinates.scaleZero_inclusion
-#print axioms DivisionCoordinates.divisionRule
-#print axioms DivisionCoordinates.divisionSchwartz_uniformizer

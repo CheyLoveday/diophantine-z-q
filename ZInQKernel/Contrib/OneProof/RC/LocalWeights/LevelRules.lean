@@ -2,7 +2,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalWeights.Level
 import ZInQKernel.Contrib.OneProof.RC.LocalWeights.Compact
 
 /-! Unit conjugation, affine scaling and the congruence bound, tex 8502–8504,
-8512–8515, 8525–8531. The congruence bound in affine coordinates is provenance (c). -/
+8512–8515, 8525–8531. The congruence bound in affine coordinates is given here. -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
 
@@ -11,20 +11,21 @@ open Matrix
 variable {p : ℕ} [Fact p.Prime] {e : ℕ}
 variable {O : Type*} [CommRing O]
 
-local notation "red" => PadicInt.toZModPow
-
 /-- Precision at most (k) in the affine coordinate: every selected root branch
 has the same value modulo (p^k) whenever the two matrices do. -/
 theorem levelRoot_congr {y z : eichler p e} {a b : ℤ_[p]} (ha : LevelRoot y a)
     (hb : LevelRoot z b) (he : 0 < e) {k : ℕ} (hk : 0 < k)
-    (h : redMat p k y.val = redMat p k z.val) : red k a = red k b := by
-  have hentries (i j : Fin 2) : red k (y.val i j) = red k (z.val i j) :=
+    (h : redMat p k y.val = redMat p k z.val) :
+    PadicInt.toZModPow k a = PadicInt.toZModPow k b := by
+  have hentries (i j : Fin 2) :
+      PadicInt.toZModPow k (y.val i j) = PadicInt.toZModPow k (z.val i j) :=
     congrFun (congrFun h i) j
-  have hdet : red k y.val.det = red k z.val.det := by
+  have hdet : PadicInt.toZModPow k y.val.det = PadicInt.toZModPow k z.val.det := by
     simp only [Matrix.det_fin_two, map_mul, map_sub]
     rw [hentries 0 0, hentries 1 1, hentries 0 1, hentries 1 0]
-  have hOne (a b : ℤ_[p]) (n : ℕ) (hn : 0 < n) (hh : red n a = red n b) :
-      red 1 a = red 1 b := by
+  have hOne (a b : ℤ_[p]) (n : ℕ) (hn : 0 < n)
+      (hh : PadicInt.toZModPow n a = PadicInt.toZModPow n b) :
+      PadicInt.toZModPow 1 a = PadicInt.toZModPow 1 b := by
     rw [← PadicInt.cast_toZModPow 1 n hn a, ← PadicInt.cast_toZModPow 1 n hn b, hh]
   refine branch_congr k ha.1 hb.1 ha.2.1 ?_ hdet
   exact (hOne _ _ e he ha.2.2).trans
@@ -36,11 +37,11 @@ theorem levelWeight_congr (he : 0 < e) {k : ℕ} (hk : 0 < k)
     (χ : (ZMod (p ^ k))ˣ →* Oˣ) {y z : eichler p e}
     (hy : y.val.trace = 1) (hz : z.val.trace = 1)
     (h : redMat p k y.val = redMat p k z.val) :
-    levelWeight (χ.comp (Units.map (red k).toMonoidHom)) y =
-      levelWeight (χ.comp (Units.map (red k).toMonoidHom)) z := by
-  have h11 : red 1 (y.val 1 1) = red 1 (z.val 1 1) := by
+    levelWeight (χ.comp (Units.map (PadicInt.toZModPow k).toMonoidHom)) y =
+      levelWeight (χ.comp (Units.map (PadicInt.toZModPow k).toMonoidHom)) z := by
+  have h11 : PadicInt.toZModPow 1 (y.val 1 1) = PadicInt.toZModPow 1 (z.val 1 1) := by
     have heq := congrFun (congrFun h 1) 1
-    change red k (y.val 1 1) = red k (z.val 1 1) at heq
+    change PadicInt.toZModPow k (y.val 1 1) = PadicInt.toZModPow k (z.val 1 1) at heq
     rw [← PadicInt.cast_toZModPow 1 k hk (y.val 1 1),
       ← PadicInt.cast_toZModPow 1 k hk (z.val 1 1), heq]
   have hu : IsUnit (2 * y.val 1 1 - 1) ↔ IsUnit (2 * z.val 1 1 - 1) := by
@@ -50,16 +51,16 @@ theorem levelWeight_congr (he : 0 < e) {k : ℕ} (hk : 0 < k)
     obtain ⟨b, hb, -⟩ := (levelRoot_existsUnique he z hz).mpr (hu.mp hunit)
     rw [levelWeight_eq he _ hy ha, levelWeight_eq he _ hz hb]
     have hroot := levelRoot_congr ha hb he hk h
-    have hm : Units.map (red k).toMonoidHom ha.2.1.unit =
-        Units.map (red k).toMonoidHom hb.2.1.unit := by
+    have hm : Units.map (PadicInt.toZModPow k).toMonoidHom ha.2.1.unit =
+        Units.map (PadicInt.toZModPow k).toMonoidHom hb.2.1.unit := by
       apply Units.ext
-      change red k ha.2.1.unit.val = red k hb.2.1.unit.val
+      change PadicInt.toZModPow k ha.2.1.unit.val = PadicInt.toZModPow k hb.2.1.unit.val
       simp only [IsUnit.unit_spec, map_sub, map_mul, hroot]
     simp only [MonoidHom.comp_apply, hm]
   · have hp (u : eichler p e) (htr : u.val.trace = 1) (hn : ¬ IsUnit (2 * u.val 1 1 - 1)) :
         ¬ ∃ a, LevelRoot u a ∧ u.val.trace = 1 := by
       rintro ⟨a, ha, -⟩
-      have heq : red 1 a = red 1 (u.val 1 1) := by
+      have heq : PadicInt.toZModPow 1 a = PadicInt.toZModPow 1 (u.val 1 1) := by
         rw [← PadicInt.cast_toZModPow 1 e he a, ← PadicInt.cast_toZModPow 1 e he (u.val 1 1),
           ha.2.2]
         rfl
@@ -137,7 +138,7 @@ theorem affine_root (v : ℤ_[p]ˣ) (t : ℤ_[p]) (hv : 2 * t = 1 - v.val)
   refine ⟨?_, hgap ▸ v.isUnit.mul ha.2.1, ?_⟩
   · rw [affine_det _ _ hy]
     linear_combination v.val ^ 2 * ha.1 + (v.val * a + t) * hv
-  · change red e (v.val * a + t) = red e (v.val * y.val 1 1 + t)
+  · change PadicInt.toZModPow e (v.val * a + t) = PadicInt.toZModPow e (v.val * y.val 1 1 + t)
     simp only [map_add, map_mul]
     rw [ha.2.2]
     rfl
@@ -177,21 +178,10 @@ theorem levelWeight_scale (he : 0 < e) (χ : ℤ_[p]ˣ →* Oˣ)
 theorem levelWeight_locallyConstant (he : 0 < e) {k : ℕ} (hk : 0 < k)
     (χ : (ZMod (p ^ k))ˣ →* Oˣ) :
     IsLocallyConstant (fun (y : {y : eichler p e // y.val.trace = 1}) =>
-      levelWeight (χ.comp (Units.map (red k).toMonoidHom)) y.val) := by
+      levelWeight (χ.comp (Units.map (PadicInt.toZModPow k).toMonoidHom)) y.val) := by
   refine locallyConstant_of_factors
     ((redMat_locallyConstant p k).comp_continuous
       (continuous_subtype_val.comp continuous_subtype_val)) ?_
   exact fun y z h => levelWeight_congr he hk χ y.property z.property h
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights
-#print axioms levelRoot_congr
-#print axioms levelWeight_congr
-#print axioms levelWeight_conj
-#print axioms affine_offset
-#print axioms affine_trace
-#print axioms affine_root
-#print axioms affine_det
-#print axioms levelWeight_scale
-#print axioms levelWeight_locallyConstant

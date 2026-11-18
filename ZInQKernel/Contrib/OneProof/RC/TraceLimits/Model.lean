@@ -66,7 +66,7 @@ theorem consN_kummer_at_good {chiType : GalQ →* Multiplicative L}
 
 /-- Extending the forms by zero on sets of nongood indices extends the Kummer
 conclusion from good sets to all finite sets, as required by the constituent
-interface (on-the-spot, provenance (c)). -/
+interface (proved here). -/
 theorem consN_kummer_of_good {chiType : GalQ →* Multiplicative L} (F : Finset ℕ → Λ)
     (hzero : ∀ W, ¬ (∀ p ∈ W, T.Good p) → F W = 0)
     (hk : ∀ W, (∀ p ∈ W, T.Good p) → ∀ g, chiType g = 1 →
@@ -246,11 +246,5 @@ def buildConstituentModel (R : Finset ℕ → ZMod 2) (ap : ℕ → ℤ) (B : �
       consN_kummer_at_good hU htyp hunr (ho U) hlevel hS2 hS) U
     finiteIndex := fun U _ _ => consN_finiteIndex U (ho U)
     chebotarev := fun U hU _ => consN_chebotarev T htyp hfrob hunr U hU (ho U) }
-
-#print axioms congruence_of_hecke
-#print axioms consN_supported_of_ramification
-#print axioms consN_kummer_at_good
-#print axioms consN_kummer_of_good
-#print axioms buildConstituentModel
 
 end ZInQ.Manuscript.RC.TraceLimits

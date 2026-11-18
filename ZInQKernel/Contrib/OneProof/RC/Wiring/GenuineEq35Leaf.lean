@@ -45,6 +45,16 @@ PROVED: `eq35Target_of_inputsGG : Eq35InputsGenuineGG W → Eq35Target W` (RC16'
 Ties (PROVED): `outer_start_forced` (the starting outer dimension of every sequence is the outer
 kernel dimension of the fixed actual models, batch 3's `start_outerDim`, and a datum needing no
 switch at the start forces that kernel to be one-dimensional, `outer_collapse_forces`).
+
+**Caveat.** The configuration families and the model family are existential and only required to
+be some genuine Galois Selmer data with `t = X`. With one genuine complex of the homotopy type of
+`[k --0--> k]` at each `𝔭` (true, not formalized), the regularity part is equivalent to
+`uprim h k' ∈ Λ[1/2]` at the companion pairs, Elliot's regularity assertion (ELLIOT). Over the
+actual genuine complexes no switch step can be formed (`fG`: `C¹_cont` is infinite-dimensional), so
+the actual family witnesses the regularity part only when `s(𝔭) = 1`. UNCLEAR/DEPARTURE: batch 3's
+`GenuineSwitchData.primitive` requires the actual class to be primitive, which the text does not
+supply. DEPARTURE: one model family with one size function `nOf` is fixed for all ring instances
+before `A`, stronger than the text's per-`A` bound (tex 4936–4940, 4453–4463).
 -/
 
 noncomputable section
@@ -117,7 +127,9 @@ RC20). Conjuncts (tex; kind; owner):
      (`ex:arith-paired-functional`), admissible complement; tex 4935–4940, 4957–4961, 3864–3869;
      ELLIOT + GLUE; owners RC6, batch 3 RankCounts / HeegnerCohomology / PairedFunctional). The
      common size `nOf l` of the models of one configuration is batch 3's DEPARTURE of form ("fixing
-     the bounded `n` on an outer-large set", tex 4936–4938, from (5.1));
+     the bounded `n` on an outer-large set", tex 4936–4938, from (5.1)); DEPARTURE: this one size
+     function is global over all ring instances and fixed before `A`, stronger than the text's
+     per-`A` bound (tex 4936–4940, 4453–4463);
    * every model is a two-term model of genuine Galois Selmer data over `𝒪`
      (`IsGenuineInstanceModel`; GLUE identification; owners RC26, RC6, batch 3);
    * the computed coordinate of `model i []` has the valuation of `ι_𝒪 (uprim h k')` (tex

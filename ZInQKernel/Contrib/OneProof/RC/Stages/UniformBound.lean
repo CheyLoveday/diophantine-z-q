@@ -158,11 +158,4 @@ theorem uniform_two_prime_bound (C : WeierstrassCurve ℤ) {p q : ℕ} [Fact p.P
     (fun _ hn P hP => numberField_prime_product_kills C hK hp hn P hP)
     (fun _ hn P hP => numberField_prime_product_kills C hK hq hn P hP) hP
 
-#print axioms pointCount_eq
-#print axioms finiteCount_pos
-#print axioms exists_two_good_primes
-#print axioms numberField_product_kills
-#print axioms numberField_prime_product_kills
-#print axioms uniform_two_prime_bound
-
 end ZInQ.Manuscript.RC.Stages

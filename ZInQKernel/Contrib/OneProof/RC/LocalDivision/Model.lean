@@ -97,16 +97,4 @@ noncomputable def divisionRule (p : ℕ) [Fact p.Prime] [Fact (p % 4 = 3)]
     {A : Type*} [CommRing A] : LocalRule (O := A) (coordinates p).RationalZero (order p)ˣ ℤ_[p]ˣ :=
   (coordinates p).divisionRule (localModel p)
 
-#print axioms coordinates
-#print axioms localModel
-#print axioms divisionWeight_eq
-#print axioms divisionWeight_nonzero_iff
-#print axioms norm_residue_nonzero_square
-#print axioms divisionWeight_conj
-#print axioms divisionWeight_scale
-#print axioms divisionWeight_uniformizer
-#print axioms divisionSchwartz_compactOpen
-#print axioms divisionSchwartz_uniformizer
-#print axioms divisionRule
-
 end ZInQ.Manuscript.RC.LocalDivision

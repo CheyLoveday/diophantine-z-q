@@ -134,10 +134,4 @@ theorem stageExclusions_good {ℓ : ℕ} (hℓ : ℓ ≠ 0) {Dw hstar : ℤ}
     intro r hr hd
     exact ((Nat.prime_iff_prime_int.mp hr).dvd_or_dvd hd).elim (hdp r hr) (hℓp r hr)
 
-#print axioms actualStage_torsion_sq
-#print axioms stageExclusions_good
-#print axioms selectedFrobenius
-#print axioms actualStageSequence
-#print axioms witness_on_stages
-
 end ZInQ.Manuscript.RC.Stages

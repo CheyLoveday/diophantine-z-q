@@ -7,7 +7,7 @@ import Mathlib.Topology.LocalAtTarget
 
 The weights on the lattices are extended by zero (tex 8496, 8563–8566).
 At a level prime the lattice is the affine image (x=2y-1) of the trace-one
-part of the Eichler order. The topology in these coordinates is provenance (c).
+part of the Eichler order. The topology in these coordinates is worked out here.
 -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
@@ -18,7 +18,7 @@ variable (p : ℕ) [Fact p.Prime]
 
 /-- In the split identification, trace and norm are matrix trace and determinant.
 At positive level the cyclic quotient is the specified quotient of the column
-lattice, in the coordinate supplied by the sibling. -/
+lattice, in the coordinate supplied by the order construction. -/
 structure SplitIdentification (e : ℕ) (R B : Type*) [Ring R] [Ring B]
     [Algebra ℤ_[p] R] [Algebra ℚ_[p] B] (incl : R →+* B)
     (tr nrd : B → ℚ_[p]) (quotientAction : R →+* ZMod (p ^ e))
@@ -163,17 +163,3 @@ theorem levelSchwartz_compactOpen {O : Type*} [CommRing O] {e k : ℕ}
   exact extendWeight_compactOpen (affineZero_openEmbedding p e) (levelWeight_locallyConstant he hk χ)
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights
-#print axioms openEmbedding_restrictPreimage
-#print axioms integralMat_openEmbedding
-#print axioms integralMat_trace
-#print axioms integralZero_openEmbedding
-#print axioms traceZero_compactSpace
-#print axioms nilSchwartz_compactOpen
-#print axioms eichler_openEmbedding
-#print axioms eichler_compactSpace
-#print axioms affineInclusion_trace_iff
-#print axioms affineZero_openEmbedding
-#print axioms affineOrder_compactSpace
-#print axioms levelSchwartz_compactOpen

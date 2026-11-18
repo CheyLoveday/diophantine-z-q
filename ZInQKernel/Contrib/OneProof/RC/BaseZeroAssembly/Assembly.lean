@@ -29,8 +29,7 @@ hypotheses of Lemma `ex:arith-base-zero` on the companion (tex 4330–4376), for
 `BaseZeroLeafInputs D` is `BaseZeroInputsCST D` with `BaseZeroLeafModel` in place of
 `BaseZeroModelCST`. As a leaf it is Lemma `ex:arith-base-zero` itself (ELLIOT, conclusion-shaped):
 the stages and `κ` are free, and for a torsion specified point `BaseZeroCore` is equivalent to
-"`u_{prim,0} ∈ Λ_(t)` and `u_{prim,0}(0) = 0`" (lane RV2's review probes `boundary_iff_h45`,
-`core_iff_of_torsion`). PROVED:
+"`u_{prim,0} ∈ Λ_(t)` and `u_{prim,0}(0) = 0`". PROVED:
 
 * `BaseZeroLeafModel.nonempty_modelCST`: a leaf model, (4.7) at the base and `ũ₀ ∈ Λ[1/2]` give a
   `BaseZeroModelCST`;

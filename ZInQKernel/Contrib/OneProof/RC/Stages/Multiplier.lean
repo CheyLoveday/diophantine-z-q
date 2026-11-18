@@ -87,9 +87,4 @@ theorem exact_scaled_witness {X Y : Type*} [AddCommGroup X] [AddCommGroup Y]
   exact hP (isOfFinAddOrder_iff_nsmul_eq_zero.mpr
     ⟨n * (L₀ * (m * B)), mul_pos hn (Nat.pos_of_ne_zero hL), hz⟩)
 
-#print axioms exact_scaled_witness
-#print axioms count_dvd_reductionBound
-#print axioms two_good_prime_bound
-#print axioms multiplier_character
-
 end ZInQ.Manuscript.RC.Stages

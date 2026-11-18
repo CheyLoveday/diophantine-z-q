@@ -7,7 +7,7 @@ import Mathlib.Data.Nat.Factorization.Induction
 # The elementary quadratic step
 
 Tex 9745–9750. This file separates the abstract elementary quotient
-argument (on-the-spot, provenance (c)) from the arithmetic identification
+argument (proved here) from the arithmetic identification
 of its characters with radicals supported on the level.
 -/
 
@@ -173,13 +173,5 @@ theorem kummer_of_support {L : Type*} [AddCommGroup L]
   · by_cases hz : p.val = 0
     · simp [hz, sqrtChar_zero]
     · exact sqrtChar_prime_of_bit _ hz (MonoidHom.mem_ker.1 hS.1) (hbit _ hp)
-
-#print axioms sqrtChar_eq_one_of_support
-#print axioms radicalKernel_finiteIndex
-#print axioms radicalKernel_le_squares_sup
-#print axioms sqrtChar_trivial_on_inertia_of_units
-#print axioms supportedQuadratic_of_inertia
-#print axioms sqrtChar_prime_of_bit
-#print axioms kummer_of_support
 
 end ZInQ.Manuscript.RC.TraceLimits

@@ -6,7 +6,7 @@ import Mathlib.Algebra.Squarefree.Basic
 /-!
 # Lifting inertia through a profinite invariant subgroup
 
-On-the-spot, provenance (c), for tex 9748–9750. This is the profinite version
+Tex 9748–9750, proved here. This is the profinite version
 of Mathlib's `Ideal.map_inertia_of_surjective`: the proofs of decomposition
 transitivity and residue stabilizer surjectivity already have profinite forms.
 -/
@@ -105,8 +105,5 @@ theorem ramificationIdx_two_le_of_square {R : Type*} [CommRing R] [IsDedekindDom
     (Ideal.prime_of_isPrime hp0 hp).irreducible (Ideal.prime_of_isPrime hP0 hP).irreducible hP0,
     hemp, Nat.cast_one, mul_one] at hm
   exact_mod_cast hm
-
-#print axioms map_inertia_of_profinite
-#print axioms ramificationIdx_two_le_of_square
 
 end ZInQ.Manuscript.RC.TraceLimits

@@ -15,7 +15,7 @@ Batch 3's ClearingComplex builds this lane's `ClearingModel` (`clearingModel_of_
 
 None of these objects is tied to `E`, `K`, the graph primes of the family or a Selmer complex, so
 they do not constrain the genuine objects: `ClearingInputsCx` follows from a bare common-denominator
-statement (lane RV2's review probe `clearingInputsCx_of_commonDenominator`), and as a leaf it is
+statement, and as a leaf it is
 Proposition `ex:limits-fixed-field-clearing` in the form of its proof (ELLIOT, conclusion-shaped).
 
 `clearingTarget_of_complex` (PROVED) gives `RCSteps.clearing` from these inputs (`ClearingInputsCx`)

@@ -33,7 +33,7 @@ theorem dense_arithmeticFrobenius (avoid : Finset ℕ) :
     q, hq, hqavoid, hf⟩
 
 /-- For a continuous function on a compact group, the set of simultaneous right
-periods modulo an open additive subgroup is open (on-the-spot, provenance (c)). -/
+periods modulo an open additive subgroup is open (proved here). -/
 theorem isOpen_rightPeriods {G A : Type*} [Group G] [TopologicalSpace G]
     [ContinuousMul G] [CompactSpace G] [AddGroup A] [TopologicalSpace A]
     [IsTopologicalAddGroup A] (f : G → A) (hf : Continuous f)
@@ -47,8 +47,5 @@ theorem isOpen_rightPeriods {G A : Type*} [Group G] [TopologicalSpace G]
   convert hc.isOpen_compl using 1
   ext n
   simp [D]
-
-#print axioms dense_arithmeticFrobenius
-#print axioms isOpen_rightPeriods
 
 end ZInQ.Manuscript.RC.TraceLimits

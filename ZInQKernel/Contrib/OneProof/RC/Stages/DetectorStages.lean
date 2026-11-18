@@ -71,7 +71,4 @@ theorem exists_detector_stages {ℓ : ℕ} (hℓ : 0 < ℓ) {Dw hstar : ℤ}
       (stageExclusions ℓ Dw hstar B) hxmem hymem hx hy hsx hsy
       (fun p hp hn => stageExclusions_good hℓ.ne' hDw.ne' hstar₀.ne B hp hn)⟩
 
-#print axioms complexConj_tate_ne_neg
-#print axioms exists_detector_stages
-
 end ZInQ.Manuscript.RC.Stages

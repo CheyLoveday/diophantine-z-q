@@ -77,11 +77,4 @@ theorem residual_isOpen [IsNoetherianRing O] (Λ : Submodule O V) (hΛ : Λ.FG)
   have : N.toAddSubgroup.FiniteIndex := N.toAddSubgroup.finiteIndex_of_finite_quotient
   exact N.toAddSubgroup.isOpen_of_isClosed_of_finiteIndex hN
 
-#print axioms coefficientDVR_compact
-#print axioms lattice_fg_of_integral_coordinates
-#print axioms lattice_closed
-#print axioms residual_closed
-#print axioms residual_quotient_finite
-#print axioms residual_isOpen
-
 end ZInQ.Manuscript.RC.TraceLimits

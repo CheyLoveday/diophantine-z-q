@@ -50,7 +50,7 @@ DEPARTURE (the constituent representations as data). Mathlib has no Galois repre
 attached to modular forms. The field `ρ` therefore carries the representations as data. Their
 existence is Carayol's theorem (PRINT, tex 9773–9797). The properties of them that the proof uses
 enter through these fields, all stated for the operators built from `ρ`:
-`stable_t`, `stable_d`, `cong_t`, `cong_d` and `det_orbit` (GLUE); `two_fresh` and the inputs
+`stable_t`, `stable_d`, `cong_t` and `cong_d` (GLUE); `det_orbit`, `two_fresh` and the inputs
 `reading`, `o12` (ELLIOT).
 
 Kinds: `PROVED` (a Lean proof), `PRINT` (a printed theorem taken as a field), `GLUE` (a
@@ -218,12 +218,14 @@ within the budget `B`, for the type character `chiType` (tex 9638–9668, 9705�
 RC0's `ConstituentModelRel` with `G := G_ℚ`, genuine Frobenius elements (`frob_spec`),
 `chiBit := bitChar`, and `N_U := consN chiType (redTrace …) U` defined. Every identity of the
 trace argument is an identity of coefficientwise reduced expansions (tex 9639–9646, 9716–9717,
-9728–9729; see the module docstring).
+9728–9729; see the module docstring). This constituent interface is not the wired density leaf:
+the leaf asks for density models (`Chebotarev.lean`), which `toGaloisDensityModel` builds from it
+given its inputs, openness and unramifiedness.
 
 Kinds:
 * `ρ`: PRINT ([Carayol, §§0.3–0.7, Théorème A, pp. 409–411], tex 9773–9797, stated as data);
-* `stable_t`, `stable_d`, `cong_t`, `cong_d`, `det_orbit`, `kummer`, `finiteIndex`: GLUE;
-* `two_fresh`: ELLIOT;
+* `stable_t`, `stable_d`, `cong_t`, `cong_d`, `kummer`, `finiteIndex`: GLUE;
+* `det_orbit`, `two_fresh`: ELLIOT;
 * `chebotarev`: PRINT ([Neukirch, Ch. VII, Theorem (13.4)]; tex 9666–9668, 9919–9921);
 * `I`, `K`, `O`, `m`, `Λ`, `C`, `coefK`, `expand`, `expand_spec`, `F`, `read`, `frob_spec`:
   definition (data of the construction, tex 9638–9668).
@@ -280,9 +282,9 @@ structure GaloisConstituentModel (T : TypeData L ε) (R : Finset ℕ → ZMod 2)
   frob : ℕ → GalQ
   /-- definition: `frob q` is a genuine arithmetic Frobenius element at every good prime `q` -/
   frob_spec : ∀ q, T.Good q → IsFrobAt (frob q) q
-  /-- GLUE (tex 9712–9729: the diamond formula; "the conclusion is an identity of coefficientwise
-  reduced expansions", 9716–9717), within the budget: `d(u) t(v) F_U` and `t(v) F_U` have the same
-  reduced expansion -/
+  /-- ELLIOT (tex 9712–9733: the diamond/trace-orbit calculation; "the conclusion is an identity of
+  coefficientwise reduced expansions", 9716–9717), within the budget: `d(u) t(v) F_U` and
+  `t(v) F_U` have the same reduced expansion -/
   det_orbit : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∀ u v,
     redExpOf m expand (latD ρ Λ stable_d u (latT ρ Λ stable_t v (F U))) =
       redExpOf m expand (latT ρ Λ stable_t v (F U))
@@ -458,8 +460,8 @@ theorem trace_mul (g h : GalQ) (x : X.Mexp) :
   apply Subtype.ext
   exact tV_mul X.ρ g h (v : X.I → X.K)
 
-/-- **`det_orbit` on reduced expansions** (tex 9712–9729), within the budget. Kind: PROVED (from
-the GLUE field `det_orbit`). -/
+/-- **`det_orbit` on reduced expansions** (tex 9712–9733), within the budget. Kind: PROVED (from
+the ELLIOT field `det_orbit`). -/
 theorem det_orbit' (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) (u v : GalQ) :
     X.dE u (X.tE v (X.FE U)) = X.tE v (X.FE U) := by
   rw [FE, tE_redM, dE_redM, redM_eq_iff]

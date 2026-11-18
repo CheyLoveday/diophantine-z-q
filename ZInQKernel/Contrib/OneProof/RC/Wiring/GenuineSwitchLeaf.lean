@@ -35,25 +35,19 @@ PROVED here: `RegularityInputsG.mem_lambdaHalf` (batch 3's `regular_of_genuineSw
 height-one prime, then the intersection formula `mem_range_lambdaHalf_iff_forall_height_one`),
 `heightOneTarget_of_inputsG`, `primRegularityInputsS_of_G`, `primRegularityInputs_of_G`.
 
-**What ties the new leaf to the genuine objects** (PROVED, `Ties` section):
+**Caveat.** The configuration family is existential and only required to be some genuine Galois
+Selmer data with `t = X`. With one genuine complex of the homotopy type of `[k --0--> k]` at each
+`𝔭` (true, not formalized), the leaf is equivalent to `∀ F x, InLamHalf (D.uPrim F x)`, i.e.
+Elliot's regularity assertion (ELLIOT). Over the address's own genuine complexes no switch step can
+be formed (`fG`: `C¹_cont` is infinite-dimensional), so the address's family witnesses the leaf only
+when `s(𝔭) = 1`. UNCLEAR/DEPARTURE: batch 3's `GenuineSwitchData.primitive` requires the actual
+class to be primitive, which the text does not supply.
 
-* `RegularityInputsG.fiberDim_forced`: in every witness each stage's fiber dimension is
-  `dim_k H¹` of the genuine continuous-cochain Selmer complex of its configuration, and the actual
-  one is at least one. The stages carry no free dimension.
-* `RegularityInputsG.oneStage_forces`: a witness that needs no switch at the start (fiber dimension
-  one, the old one-stage bypass) forces `dim_k H¹ = 1` for the genuine actual fiber.
-* `isEmpty_genuineSwitchData_of_h1_eq_zero`: over a family whose actual fiber has `H¹ = 0` no datum
-  exists for any coordinate `u`, in particular for `u ∈ ι(Λ_𝔭)`: over a fixed family the leaf is not
-  implied by its conclusion. In `GenuineSwitchNonVacuity.lean`, `exZeroFamily` is such a family
-  which is genuine at `𝔭` (`exZeroFamily_isGenuine`: `K = ℚ`, `S = ∅`, `M = 0`), and
-  `exZeroFamily_no_data` shows that it admits no datum, for every `u`.
-
-What remains (not proved): the identification of the family `Φ` of the leaf with the actual
-primitive scalar Selmer complex of the address at `𝔭` and its derivative switches (GLUE; the
-coefficient module and the actual local conditions of an address are not defined in the tree, so
-`Φ` is an existential whose genuineness is `IsGenuineFamilyAt`), and the GLUE inputs inside the
-switch steps (batch 3's `GenuineMixedStep`, `GenuineNonquadStep`, `GenuineSingleStep`: duality,
-detection, detecting primes, the side involutions, `CoordStep`). See `NOTES.md` of the lane.
+The `Ties` section records structural facts of the witnesses (`RegularityInputsG.fiberDim_forced`,
+`RegularityInputsG.oneStage_forces`, `isEmpty_genuineSwitchData_of_h1_eq_zero`); they constrain the
+witnesses over a fixed family, not the existential family. The GLUE inputs inside the switch steps
+are batch 3's `GenuineMixedStep`, `GenuineNonquadStep`, `GenuineSingleStep` (duality, detection,
+detecting primes, the side involutions, `CoordStep`).
 -/
 
 noncomputable section

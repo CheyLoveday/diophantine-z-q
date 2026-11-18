@@ -7,7 +7,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalDivision.Order
 
 Since two is a unit, the global generators with halves and the standard
 integral quaternion basis generate the same local order. The comparison
-and the transfer of maximality are on-the-spot (c), for tex 8462–8464.
+and the transfer of maximality are proved here, for tex 8462–8464.
 -/
 
 namespace ZInQ.Manuscript.RC.DivisionJoin
@@ -171,18 +171,5 @@ theorem ramified_maximal (q : ℕ) [Fact q.Prime] (hq : q = p) :
     IsMaximalLocalOrder q ((explicitOrderAt p h).completion q) := by
   subst q
   exact completion_maximal p h
-
-#print axioms mem_explicitOrder_cast
-#print axioms mem_explicitOrderAt
-#print axioms integral_half
-#print axioms mapped_coordinates
-#print axioms quaternion_sum
-#print axioms completion_map
-#print axioms orderEquiv
-#print axioms order_compatible
-#print axioms completion_mem_iff
-#print axioms completion_span
-#print axioms completion_maximal
-#print axioms ramified_maximal
 
 end ZInQ.Manuscript.RC.DivisionJoin

@@ -127,10 +127,4 @@ theorem inputs_of_theta {A : FourierData X} (S : ThetaData A) [CharZero X.K]
     (localData : LocalInput A) (htyp : IsTypeChar T chiType) : X.Inputs :=
   ⟨fun _ _ hU hq hqU hB => S.coefficientOne hU hq hqU hB, S.o12_at_one localData htyp⟩
 
-#print axioms representative_trace
-#print axioms representative_bit
-#print axioms ThetaData.omissionSign_flip
-#print axioms ThetaData.o12_at_one
-#print axioms inputs_of_theta
-
 end ZInQ.Manuscript.RC.O12

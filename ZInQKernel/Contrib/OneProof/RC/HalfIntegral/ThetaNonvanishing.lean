@@ -4,7 +4,7 @@ import Mathlib.Analysis.Normed.Ring.InfiniteSum
 
 /-! The ordinary theta function does not vanish on the upper half plane.
 The proof uses the duplication identity for the alternating series and decay
-at infinity (provenance (c)). -/
+at infinity (proved here). -/
 
 noncomputable section
 
@@ -130,10 +130,5 @@ theorem jacobiTheta_ne_zero_of_im_pos {τ : ℂ} (hτ : 0 < τ.im) : jacobiTheta
   have hh := (isBigO_at_im_infty_jacobiTheta_sub_one.comp_tendsto hsm).trans_tendsto hdec
   simp only [Function.comp_def, hzero, zero_sub] at hh
   exact (by norm_num : (-1 : ℂ) ≠ 0) (tendsto_nhds_unique tendsto_const_nhds hh)
-
-#print axioms exp_int_sq_pi
-#print axioms summable_theta_norm
-#print axioms jacobiTheta_mul_add_one
-#print axioms jacobiTheta_ne_zero_of_im_pos
 
 end ZInQ.Manuscript.RC.HalfIntegral

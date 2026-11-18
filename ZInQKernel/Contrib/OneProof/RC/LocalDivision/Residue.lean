@@ -5,7 +5,7 @@ import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.Topology.LocallyConstant.Basic
 
 /-! Reduction modulo the division uniformizer, and the Frobenius action
-(tex 8551–8559). The coordinate proofs are provenance (c). -/
+(tex 8551–8559). The coordinate proofs are given here. -/
 
 namespace ZInQ.Manuscript.RC.LocalDivision
 
@@ -279,30 +279,5 @@ theorem uniformizer_frobenius (x : order p) :
   rw [red_apply (uniformizerOrder x), uniformizer_coords, red_apply x, add_pow_char, mul_pow]
   simp only [← map_pow (algebraMap (ZMod p) (GaloisField p 2)), ZMod.pow_card, beta_frobenius]
   rw [map_neg, map_neg, neg_mul, mul_neg]
-
-#print axioms quadReduction_surj
-#print axioms quadReduction_zero_iff
-#print axioms padicReduction_locallyConstant
-#print axioms residueQuotientEquiv
-#print axioms red_surj
-#print axioms red_ker_maximal
-#print axioms red_i
-#print axioms beta_sq
-#print axioms beta_ne_zero
-#print axioms beta_frobenius
-#print axioms red_apply
-#print axioms red_scalar
-#print axioms red_locallyConstant
-#print axioms red_eq_zero_iff
-#print axioms red_ker_j
-#print axioms integralNorm_red
-#print axioms red_nonunit
-#print axioms trace_line
-#print axioms nrd_j
-#print axioms uniformizer_norm
-#print axioms conjugateInOrder_inverse
-#print axioms uniformizer_conj
-#print axioms uniformizer_coords
-#print axioms uniformizer_frobenius
 
 end ZInQ.Manuscript.RC.LocalDivision

@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.OneProof.RC.Eichler.Local
 # The ideal class set and shortest-vector normalization
 
 Tex 8466–8468. The ideal model uses locally principal full fractional right ideals.
-The shortest-vector argument is on-the-spot (c).
+The shortest-vector argument is given here.
 -/
 
 open Module
@@ -140,16 +140,3 @@ theorem class_card_G_dvd (ha : a < 0) (hb : b < 0) (z : ClassSet R) :
   ((representative z).val.leftOrder ha hb).card_G_dvd ha hb
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.mem_translate
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.translate_one
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.translate_mul
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.locallyPrincipal_translate
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.exists_min_norm
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.exists_normalized
-#print axioms ZInQ.Manuscript.RC.Eichler.idealRel
-#print axioms ZInQ.Manuscript.RC.Eichler.classSet_nonempty
-#print axioms ZInQ.Manuscript.RC.Eichler.classG
-#print axioms ZInQ.Manuscript.RC.Eichler.class_card_G_dvd

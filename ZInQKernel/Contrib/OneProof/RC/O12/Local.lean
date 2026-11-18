@@ -165,10 +165,4 @@ theorem whittaker_sum {K : Type*} [Field K] (W : Matrix (Fin 2) (Fin 2) K → K)
   simp only [whittaker_matrix, hW, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
     nsmul_eq_mul]
 
-#print axioms localPair_exists
-#print axioms localPair_characters
-#print axioms upDifference_supported
-#print axioms o12_charZero
-#print axioms whittaker_sum
-
 end ZInQ.Manuscript.RC.O12

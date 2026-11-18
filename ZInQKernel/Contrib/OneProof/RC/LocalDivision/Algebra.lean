@@ -5,7 +5,7 @@ import Mathlib.Analysis.Normed.Group.Ultra
 import Mathlib.Tactic.Linarith
 
 /-! The explicit quaternion algebra and its reduced trace and norm.
-The coordinate construction is provenance (c). -/
+The coordinate construction is given here. -/
 
 namespace ZInQ.Manuscript.RC.LocalDivision
 
@@ -168,26 +168,5 @@ theorem inv_formula (x : D p) (hx : x ≠ 0) :
     x⁻¹ = algebraMap ℚ_[p] (D p) (nrd x)⁻¹ * star x := by
   change ((unitOfNonzero x hx).val)⁻¹ = _
   exact Units.val_inv_eq_inv_val _ |>.symm
-
-#print axioms scalar_compat
-#print axioms coordHomeomorph
-#print axioms rank_four
-#print axioms tr_apply
-#print axioms tr_continuous
-#print axioms tr_mul_comm
-#print axioms tr_conj
-#print axioms mul_star_eq
-#print axioms star_mul_eq
-#print axioms nrd_mul_star
-#print axioms nrd_formula
-#print axioms nrd_algebraMap
-#print axioms nrd_smul
-#print axioms nrd_continuous
-#print axioms nrd_conj
-#print axioms tr_zero_sq
-#print axioms norm_nrd
-#print axioms nrd_eq_zero
-#print axioms unitOfNonzero
-#print axioms inv_formula
 
 end ZInQ.Manuscript.RC.LocalDivision

@@ -31,7 +31,8 @@ Results (PROVED, standard axioms):
 * `commonCoordinateInputs_of_G : CommonCoordinateInputsG D → CommonCoordinateInputs D` (through
   batch 3's `commonCoordinateInputs_of_natural`), and `commonCoordinateTarget_of_G`;
 * non-vacuity: `trianglesG_of_Q_empty` here (a family without graph primes) and, with one unused
-  prime and a genuine `NaturalStep` at `q = 3`, `nonempty_trianglesG_three`
+  prime and a synthetic `NaturalStep` at `q = 3` (this witness is not a final family under
+  `PreDataSpec`), `nonempty_trianglesG_three`
   (`CommonCoordinate4Witness.lean`).
 -/
 
@@ -90,10 +91,10 @@ family's data. Write `U = unusedAt Fam x`.
 
 | field | content | tex | kind | owner |
 |---|---|---|---|---|
-| `R`, `chi` | the coefficient ring `𝒪[G]` of the family and its evaluation at the character of `x` | 2728, 2747–2751, 4297 | definition | RC15 / RC7 |
+| `R`, `chi` | an existential coefficient ring `R` with `χ : R →+* ℚ₂[[t]]`; it is not `𝒪[G]`: no `t`-preserving ring map `𝒪[G] → ℚ₂[[t]]` exists, and `η_x` may have a pole (tex 4153–4155, 4318–4320) | 2728, 2747–2751, 4297 | definition | RC15 / RC7 |
 | `g` | the inertia generators `g_q ∈ G` of the universal quadratic character | 4283–4285 | definition | RC15 |
 | `hchi` | the character is the quadratic character of `x`: `x(g_q) = (−1)^{λ_q(x)}`, `q ∈ Fam.Q` | 4283–4285 | definition | RC15 / RC4 |
-| `l`, `e`, `ei`, `v` | `l_q`, `e_q`, `e_q⁻¹` and `v_q = (l_q/e_q² − 1)/2` in `𝒪[G]` | 4196–4226 | definition | RC15 |
+| `l`, `e`, `ei`, `v` | `l_q`, `e_q`, `e_q⁻¹` and `v_q = (l_q/e_q² − 1)/2` in `R` | 4196–4226 | definition | RC15 |
 | `hratio` | `x(l_q) x(e_q⁻¹)² = 1 + 2 x(v_q)` at every graph prime | 4208–4220 | ELLIOT (the Frobenius model at `q`, `q² l_q = e_q² + (q−1)(q−1−(z+z⁻¹)e_q)`) | RC15 / RC4 |
 | `hinv` | `e_q` is invertible at the character, at every graph prime | 4196–4207 | ELLIOT (`ē_q = t²/(1+t) ≠ 0`) | RC15 |
 | `urel`, `hutilde` | the relaxed coordinate and `ũ_x = x(η) u_rel,x`, `η = ∏_{q ∈ Q} (1 + v_q(1 + g_q))` | 4219–4227 | definition | RC15 / RC7 |
@@ -103,7 +104,8 @@ family's data. Write `U = unusedAt Fam x`.
 -/
 structure CommonCoordinateTrianglesG {ℓ : ℕ} (D : RCData ℓ) (Fam : Family) (x : Addr Fam.b) :
     Type 1 where
-  /-- the coefficient ring `𝒪[G]` -/
+  /-- an existential coefficient ring `R` (not `𝒪[G]`: no `t`-preserving ring map
+  `𝒪[G] → ℚ₂[[t]]` exists, and `η_x` may have a pole, tex 4153–4155, 4318–4320) -/
   R : Type
   [commR : CommRing R]
   /-- the evaluation at the character of the address -/

@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.Assembly
 # Lane RC24: the odd witness from a bounded-weight sequence of visible indices
 
 Manuscript `diophantine_zq.tex`: Proposition `ex:app-odd-minimum` (tex 10152–10199, in particular
-10188–10199: "Consider the integers `r` for which a bounded-weight sequence of visible `D_M` has
+10190–10199: "Consider the integers `r` for which a bounded-weight sequence of visible `D_M` has
 `v₂ a_M(D_M) − ω(D_M) = r` on a set in the ultrafilter. … Let its attained minimum be `δ_o`"; §7,
 tex 2537–2542), the final companion (tex 2588–2593), Proposition `ex:app-nonempty-seeds`
 (tex 10501–10505) and Proposition `ex:app-odd-stabilization` (tex 10508–10552, in particular
@@ -35,7 +35,7 @@ Conversely the fixed-graph form gives the sequence form (`oddWitnessSeq_of_oddWi
 sequence form (`addressPackageStaged_of_genuine_seq`).
 
 The sequence itself is derived from batch 3's attained odd minimum (`δ_o ∈ DepthSet`) when the
-empty configuration is not a unit, following the round-2 review's probe
+empty configuration is not a unit, following the stabilization argument (tex 10527–10547)
 (`oddWitnessSeq_of_depthMin`, `oddWitness_of_depthMin`; tex 2590–2593: "The bounded-weight witness
 then supplies a least nonempty odd seed"): the witness index `D_θ ≠ 1`, positive, squarefree and
 prime to `m₁ ℓ₀`, is the product of its prime set.
@@ -54,7 +54,7 @@ open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CoefficientDictionary Fil
 /-! ## The input: the witness sequence -/
 
 /-- **The bounded-weight witness sequence of visible indices** (ELLIOT; Proposition
-`ex:app-odd-minimum`, tex 10188–10199: "Consider the integers `r` for which a bounded-weight
+`ex:app-odd-minimum`, tex 10190–10199: "Consider the integers `r` for which a bounded-weight
 sequence of visible `D_M` has `v₂ a_M(D_M) − ω(D_M) = r` on a set in the ultrafilter. The fixed
 witness `D_w` and (O.2),(O.7) make this set nonempty. … Let its attained minimum be `δ_o`"; the
 final companion, tex 2588–2593: "assume that the empty configuration is not a unit. The
@@ -209,7 +209,7 @@ theorem oddWitnessSeq_of_oddWitness {ℓ : ℕ} {W : WData ℓ} (D : LabelData W
   exact ⟨Γ.V.card, U, hev.mono fun θ hθ => hU θ hθ⟩
 
 /-- **Under App F's readings the two witness forms are equivalent** (PROVED;
-`oddWitness_of_seq`, `oddWitnessSeq_of_oddWitness`; tex 10188–10199, 10508–10552). -/
+`oddWitness_of_seq`, `oddWitnessSeq_of_oddWitness`; tex 10190–10199, 10508–10552). -/
 theorem oddWitness_iff_seq {ℓ : ℕ} {W : WData ℓ} (D : LabelData W) (hodd : OddReadings W D) :
     OddWitness W D ↔ OddWitnessSeq W D :=
   ⟨oddWitnessSeq_of_oddWitness D, oddWitness_of_seq D hodd⟩
@@ -219,7 +219,8 @@ theorem oddWitness_iff_seq {ℓ : ℕ} {W : WData ℓ} (D : LabelData W) (hodd :
 /-- **The attained odd minimum supplies a nonempty witness sequence** (PROVED; the final
 companion, tex 2590–2593: "assume that the empty configuration is not a unit. The bounded-weight
 witness then supplies a least nonempty odd seed"; Proposition `ex:app-odd-minimum`, tex
-10188–10199; tex 10501–10505). The proof follows the round-2 review's probe. The minimum
+10190–10199; tex 10501–10505). The proof supplies the bounded-weight witness of the
+stabilization argument (tex 10527–10547). The minimum
 `δ_o ∈ DepthSet` (batch 3's set of the integers `r` attained by a bounded-weight sequence of
 visible admissible `D_θ` with `v₂ a_{M_θ}(D_θ) − ω(D_θ) = r` on a set of the ultrafilter) gives a
 weight bound `Wb` and such a sequence for `r = δ_o`. Since the empty configuration is not a unit
@@ -227,7 +228,7 @@ weight bound `Wb` and such a sequence for `r = δ_o`. Since the empty configurat
 squarefree (`hsf`) and prime to `m₁ ℓ₀` (`hcop`), so `D_θ = ∏ q` over its prime set
 `U θ = primeFactors |D_θ|`, a nonempty set of at most `Wb` good primes of the stage types with
 `|U θ| = ω(D_θ)`; the stage support lies in the intrinsic odd filter (`hsub`: the later
-exclusions only remove primes, tex 2028–2029, 9479–9483), so `Rodd W D θ (U θ) = 1`. -/
+exclusions only remove primes, tex 2027–2029, 9481–9483), so `Rodd W D θ (U θ) = 1`. -/
 theorem oddWitnessSeq_of_depthMin {ℓ : ℕ} {W : WData ℓ} (D : LabelData W)
     (hδ : W.δo ∈ AppGEndpoints.DepthSet W.stages W.Mθ (fun θ Dd => vZ (W.aθ θ Dd))
       W.admissible)
@@ -273,9 +274,9 @@ theorem oddWitnessSeq_of_depthMin {ℓ : ℕ} {W : WData ℓ} (D : LabelData W)
     exact hval
 
 /-- **The attained odd minimum gives the fixed-graph witness** (PROVED; tex 2590–2593: "The
-bounded-weight witness then supplies a least nonempty odd seed"; tex 10188–10199, 10501–10505,
+bounded-weight witness then supplies a least nonempty odd seed"; tex 10190–10199, 10501–10505,
 10541–10547: "The bounded-weight witness remains a witness in these tables"). The proof follows
-the round-2 review's probe: the nonempty witness sequence of the attained minimum
+the stabilization argument (tex 10527–10547): the nonempty witness sequence of the attained minimum
 (`oddWitnessSeq_of_depthMin`), stabilized to one typed graph on the ultrafilter
 (`oddWitness_of_seq`). Hypotheses: `δ_o` attained (`δ_o ∈ DepthSet`), the empty configuration not
 a unit, App F's odd readings, admissible indices positive, squarefree and prime to `m₁ ℓ₀`, and
@@ -291,7 +292,7 @@ theorem oddWitness_of_depthMin {ℓ : ℕ} {W : WData ℓ} (D : LabelData W)
 
 /-- **Lane RC0's `AddressPackageStaged` over the genuine objects, with the witness in the text's
 sequence form** (PROVED from the inputs; tex 2015–2174, 2595–2672, App F 9447–9976, App G
-10188–10199, 10258–10861): `addressPackageStaged_of_genuine` with `OddWitness` supplied by
+10190–10199, 10258–10861): `addressPackageStaged_of_genuine` with `OddWitness` supplied by
 `oddWitness_of_seq`. -/
 theorem addressPackageStaged_of_genuine_seq {ℓ : ℕ} (W : WData ℓ) (D : LabelData W)
     (Rev : Finset ℕ → ZMod 2) (hℓ : Adm ℓ) (hk : Odd W.kfin) (hksf : Squarefree W.kfin)

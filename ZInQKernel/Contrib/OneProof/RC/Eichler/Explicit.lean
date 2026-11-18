@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.OneProof.RC.Eichler.Order
 /-!
 # An explicit order in the algebra `(-1,-ell)`
 
-On-the-spot (c), for tex 8437 and 8462–8464. The integer basis is
+Tex 8437 and 8462–8464, proved here. The integer basis is
 `1, i, (1+j)/2, (i+k)/2` for `ell = 4m - 1`. This file verifies the order;
 the local maximality and ramification of this choice are separate assertions.
 -/
@@ -94,10 +94,3 @@ theorem explicit_anisotropic_real {ell : ℕ} (hell : 0 < ell) :
     sq_eq_zero_iff.mp ((mul_eq_zero.mp ht).resolve_left hp.ne')⟩
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.fromInts_mul
-#print axioms ZInQ.Manuscript.RC.Eichler.explicitOrder
-#print axioms ZInQ.Manuscript.RC.Eichler.explicitOrderAt
-#print axioms ZInQ.Manuscript.RC.Eichler.explicit_anisotropic_real

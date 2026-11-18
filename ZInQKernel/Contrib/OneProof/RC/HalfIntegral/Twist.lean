@@ -7,7 +7,7 @@ import ZInQKernel.Contrib.OneProof.RC.AppE.Galois
 
 The translation sum is a half-integral weight cusp form at level `N³` if the
 theta multiplier is compatible with the translation conjugates. The matrix
-calculation, choice of level, and reindexing proof are provenance (c).
+calculation, choice of level, and reindexing proof are given here.
 -/
 
 noncomputable section
@@ -151,11 +151,5 @@ theorem primitive_twist {N r : ℕ} [NeZero N] [NeZero r]
   rw [hG, he]
   exact ⟨hg, fun n ↦ by
     simpa only [hiwCoeff, hw] using qExpansion_translationSum w hs (hiwForm_analyticAt hg) n⟩
-
-#print axioms translationSum_isHalfIntegralWeightCuspForm
-#print axioms halfIntegralTwist_of_thetaTranslationCompatibility
-#print axioms thetaTranslationCompatibility
-#print axioms halfIntegralTwist
-#print axioms primitive_twist
 
 end ZInQ.Manuscript.RC.HalfIntegral

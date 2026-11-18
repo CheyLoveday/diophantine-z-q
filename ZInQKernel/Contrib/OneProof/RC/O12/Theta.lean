@@ -236,18 +236,6 @@ theorem omission_at_p [CharZero X.K] {U : Finset ℕ} {p r : ℕ} (hpU : p ∈ U
     residue_eq_of_two_dvd (S.theta_mod_two U hU hB (p * r) (Nat.mul_ne_zero hp.1.ne_zero hr.1.ne_zero)),
     residue_eq_of_two_dvd hb2, hb', decode_int_mul, A.read_orbit, S.fresh_residue hV hr hrV hVB, residue_eq_of_two_dvd hc2]
 
-#print axioms residue_two
-#print axioms residue_eq_of_two_dvd
-#print axioms no_div_of_fresh
-#print axioms eta_residue
-#print axioms fresh_normalized
-#print axioms fresh_residue
-#print axioms coefficientOne
-#print axioms even_ap
-#print axioms decode_int_mul
-#print axioms scale_erase
-#print axioms omission_at_p
-
 end ThetaData
 
 end ZInQ.Manuscript.RC.O12

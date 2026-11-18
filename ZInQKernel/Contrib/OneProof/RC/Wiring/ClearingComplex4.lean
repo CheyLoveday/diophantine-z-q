@@ -69,12 +69,9 @@ variable {K : Type} [Field K] [NumberField K] {S S' : Set (HeightOneSpectrum (�
   {hS : S ⊆ S'} [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K S S')]
   {b dK hK cE tK : ℕ}
 
-/-- **E1a in the original determinant basis** (GLUE; tex 5605–5608 with 4219–4222 and
-3877–3892): for every representation `ũ_x = g_x / 2^{e_x}`, where `Δ_x ≠ 0`, the corrected
-coordinate is `η_x` times the coordinate of `[z] ⊗ [λ]` of the sign-evaluated pre-cancellation
-complex `C_x = (C ⊗ 𝒪[G]) ⊗_x Frac 𝒪` in the original determinant basis (lane Torsion's
-Knudsen–Mumford coordinate, orientation `σPre`: the remaining complex's `σBlock` and the identity
-on the cancelled pair), at the exponent `a = 0`. Owner: RC7 / RC15 / batch 3 CoordLink. -/
+/-- Coordinate identification at every representation where Δ_x ≠ 0. For the same actual complex,
+class, functional, correction and retained basis this is the definition of the corrected coordinate
+(tex 3877–3892, 4224, 5605–5615). The existential interface does not supply that provenance. -/
 def OrigCoordLink {ℓ : ℕ} (D : RCData ℓ) (F : Family)
     (M : Identification2G K S S' hS F.b dK hK cE tK)
     (z : Fin M.D.m0 ⊕ Unit ⊕ Fin M.D.m1 → MonoidAlgebra OO (SignGroup F.b))

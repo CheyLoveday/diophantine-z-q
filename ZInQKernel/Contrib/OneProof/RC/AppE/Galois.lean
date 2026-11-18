@@ -13,22 +13,20 @@ The 11/5 manuscript, Appendix E, tex 8086–8134. Let `g` lie in the full good-H
 3. (tex 8090–8093) `g'^τ` has character `ψ^e` and good eigenvalues `η(p)^e a_p(E)`
    (`conj_mem_eigenspace`, from Ramsey's conjugation clause);
 4. (tex 8099–8103) the twist `g' ⊗ ν` has character `ψν² = ψ^e` and the same eigenvalues
-   (`twist_mem_eigenspace`, from the twisting statement `HalfIntegralTwist`, GLUE, see below);
+   (`twist_mem_eigenspace`, from the twisting statement `HalfIntegralTwist`, PROVED in
+   `RC/HalfIntegral/Twist.lean`, see below);
 5. (tex 8104–8113) at a common level both lie in one full eigenspace, so the full-space comparison
    gives `τ(a(D)) = ν(D/D₀) a(D)` (`galois_identity`);
 6. (tex 8114–8132) `ν(D/D₀) = z_D^{e−1}` and `τ(z_D) = z_D^e`, so `a(D)/z_D` is fixed by every `τ`,
    hence rational (`rational_of_ramsey`).
 
-**`HalfIntegralTwist` (GLUE, not proved; a hypothesis of `rational_of_ramsey`).** The manuscript:
-"The twist is modular at a level still supported on `S₀`; this follows as well by writing it as the
-finite additive translation sum using the Gauss sum of the primitive character inducing `ν`"
-(tex 8101–8103). Proving it on lane RC8's definitions needs the transformation formula of the
-theta multiplier `j(γ, z)` on `Γ₀(4)` (`j(γ, z) = ε_d^{-1} (c/d) √(cz+d)`, Shimura 1973, §1), to see
-that `j(γ', z + u'/m) = j(γ, z)` for the conjugate `γ' = T^{u/m} γ T^{−u'/m}`; that formula is not in
-Mathlib (it is the theta transformation law with quadratic reciprocity, a few thousand lines). The
-statement is the standard twisting lemma (Shimura, Ann. of Math. 97 (1973), Lemma 3.6, for
-primitive characters, locator UNVERIFIED; for an imprimitive `ν` add the sieve to indices prime to
-`N`, which is the twist by the trivial character modulo each prime of `N`).
+**`HalfIntegralTwist` (PROVED: `HalfIntegral.halfIntegralTwist`, `RC/HalfIntegral/Twist.lean`, at
+level `N³` with the same prime support; it stays a hypothesis of `rational_of_ramsey` here only
+because this file is imported by `RC/HalfIntegral`).** The manuscript: "The twist is modular at a
+level still supported on `S₀` …" (tex 8101–8103). The statement is the standard twisting lemma
+(Shimura, Ann. of Math. 97 (1973), Lemma 3.6, for primitive characters, locator UNVERIFIED; for an
+imprimitive `ν` add the sieve to indices prime to `N`, which is the twist by the trivial character
+modulo each prime of `N`).
 
 Everything else here is PROVED.
 -/
@@ -41,11 +39,11 @@ open ZInQ.Manuscript ZInQ.Contrib.CloudB3RC53 ZInQ.Manuscript.RC.PrintsAnalytic 
   CongruenceSubgroup
 open scoped MatrixGroups
 
-/-- **Twisting a weight-`3/2` form by a character** (GLUE, missing theory; tex 8099–8103; the
-standard lemma is Shimura, Ann. of Math. 97 (1973), Lemma 3.6, UNVERIFIED). For a cusp form `f` of
-weight `3/2`, level `N > 0` (`4 ∣ N`) and character `ψ`, and a Dirichlet character `ν` modulo `N`,
-the coefficientwise twist `Σ ν(n) a_f(n) qⁿ` is a cusp form of weight `3/2` and character `ψν²` at
-a level `M` with `N ∣ M` and the same prime support as `N`. -/
+/-- **Twisting a weight-`3/2` form by a character** (PROVED in `RC/HalfIntegral/Twist.lean`;
+tex 8099–8103; the standard lemma is Shimura, Ann. of Math. 97 (1973), Lemma 3.6, UNVERIFIED).
+For a cusp form `f` of weight `3/2`, level `N > 0` (`4 ∣ N`) and character `ψ`, and a Dirichlet
+character `ν` modulo `N`, the coefficientwise twist `Σ ν(n) a_f(n) qⁿ` is a cusp form of weight
+`3/2` and character `ψν²` at a level `M` with `N ∣ M` and the same prime support as `N`. -/
 def HalfIntegralTwist : Prop :=
   ∀ N : ℕ, 0 < N → 4 ∣ N → ∀ ψ ν : DirichletCharacter ℂ N, ∀ f : ℍ → ℂ,
     IsHalfIntegralWeightCuspForm 3 N ψ f →
@@ -269,9 +267,9 @@ theorem conj_mem_eigenspace (hR : RamseyAlgebraicModel) {E : WeierstrassCurve �
 
 /-! ## The twisted form (tex 8094–8103) -/
 
-/-- **The twist `g ⊗ ν` lies in the eigenspace of `ψν²`, `ην²`** (tex 8099–8103; PROVED from the
-GLUE `HalfIntegralTwist`): at the level `M` of the twist, the good `T(p²)` eigenvalues of
-`Σ ν(n) a(n) qⁿ` are `η(p)ν(p)² a_p(E)`. -/
+/-- **The twist `g ⊗ ν` lies in the eigenspace of `ψν²`, `ην²`** (tex 8099–8103; PROVED from
+`HalfIntegralTwist`, which is PROVED in `RC/HalfIntegral/Twist.lean`): at the level `M` of the
+twist, the good `T(p²)` eigenvalues of `Σ ν(n) a(n) qⁿ` are `η(p)ν(p)² a_p(E)`. -/
 theorem twist_mem_eigenspace (hT : HalfIntegralTwist) {E : WeierstrassCurve ℚ} {N : ℕ}
     (hN0 : 0 < N) (hN : 4 ∣ N) {ψ η : DirichletCharacter ℂ N} {g : ℍ → ℂ}
     (hg : IsInWaldspurgerEigenspace E N ψ η g) (ν : DirichletCharacter ℂ N) :

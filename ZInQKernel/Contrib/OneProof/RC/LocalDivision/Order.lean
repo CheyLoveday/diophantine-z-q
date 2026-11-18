@@ -2,7 +2,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalDivision.Algebra
 import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 
 /-! The compact open integral quaternion order and its maximality.
-The proof by the reduced norm is provenance (c). -/
+The proof by the reduced norm is given here. -/
 
 namespace ZInQ.Manuscript.RC.LocalDivision
 
@@ -222,25 +222,5 @@ theorem orderUnit_iff_norm (x : order p) : IsUnit x ↔ ‖nrd x.val‖ = 1 := b
       rw [← map_mul, mul_inv_cancel₀ hx, map_one]
     let y : order p := ⟨x.val⁻¹, (mem_order_iff_nrd _).mpr (by rw [hi, norm_inv, h, inv_one])⟩
     exact ⟨⟨x, y, Subtype.ext (mul_inv_cancel₀ hx), Subtype.ext (inv_mul_cancel₀ hx)⟩, rfl⟩
-
-#print axioms includeIntegral
-#print axioms includeIntegral_injective
-#print axioms coe_orderEquiv
-#print axioms includeIntegral_symm
-#print axioms mem_order
-#print axioms finite_order
-#print axioms order_open
-#print axioms order_compact
-#print axioms orderCoord_continuous
-#print axioms norm_le_one_of_weighted_sq
-#print axioms mem_order_iff_nrd
-#print axioms mem_order_iff_valuation
-#print axioms nrd_valuation_mul
-#print axioms norm_nrd_add_le_max
-#print axioms integral_mem_order
-#print axioms maximal_order
-#print axioms exists_integralTrace
-#print axioms normUnits_eq
-#print axioms orderUnit_iff_norm
 
 end ZInQ.Manuscript.RC.LocalDivision

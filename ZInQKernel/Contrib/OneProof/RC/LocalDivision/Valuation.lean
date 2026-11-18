@@ -4,7 +4,7 @@ import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Ring
 
 /-! The norm calculation underlying the division prime (tex 8462–8463,
-8551–8559). The explicit local calculation is provenance (c). -/
+8551–8559). The explicit local calculation is given here. -/
 
 namespace ZInQ.Manuscript.RC.LocalDivision
 
@@ -101,14 +101,5 @@ theorem norm_four (hp : p % 4 = 3) (a b c d : ℚ_[p]) :
   obtain ⟨k, hk⟩ := valuation_pair_even hp a b
   obtain ⟨l, hl⟩ := valuation_pair_even hp c d
   omega
-
-#print axioms neg_one_nonsquare
-#print axioms residue_sum_sq_eq_zero
-#print axioms padic_red_eq_zero_iff
-#print axioms norm_one_add_sq
-#print axioms norm_pair_of_le
-#print axioms norm_pair
-#print axioms valuation_pair_even
-#print axioms norm_four
 
 end ZInQ.Manuscript.RC.LocalDivision

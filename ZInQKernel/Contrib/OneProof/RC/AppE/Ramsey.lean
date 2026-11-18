@@ -32,8 +32,8 @@ functional on the complex good-Hecke eigenspace `V` is nonzero on its algebraic 
 contains a form `g'` with algebraic coefficients and `a_{g'}(D₀) = 1`. The manuscript argues with
 a finite basis of the defining linear equations; the proof here writes a complex eigenvector as
 `Σ_j b_j h_j` with `b_j ∈ ℂ` linearly independent over `ℚ̄` and `h_j` algebraic forms, and reads the
-`ℚ̄`-rational Hecke equations off each `h_j` (same content, linear algebra over `ℚ̄`; provenance
-(c) for the route). The orthogonality of `V` to unary theta series (tex 8053–8059) is not needed
+`ℚ̄`-rational Hecke equations off each `h_j` (same content, linear algebra over `ℚ̄`; a route
+given here). The orthogonality of `V` to unary theta series (tex 8053–8059) is not needed
 in this form: lane RC8's eigenspace is defined inside the whole cusp space (see
 `unary_eigenvalue_ne` for Elliot's eigenvalue inequality).
 -/

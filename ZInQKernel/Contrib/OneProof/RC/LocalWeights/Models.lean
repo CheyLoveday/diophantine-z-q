@@ -8,7 +8,7 @@ import Mathlib.Tactic.Positivity
 # The split local orders for Appendix F
 
 The local coordinates consumed by the weights (tex 8462–8465, 8496–8534, 8536).
-The lattice and quotient coordinates below spell out the cyclic quotient (provenance (c)).
+The lattice and quotient coordinates below spell out the cyclic quotient.
 -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
@@ -76,7 +76,7 @@ theorem level_coordinate (e : ℕ) :
 /-- Trace-zero part of the integral or rational model. -/
 abbrev TraceZero (A : Type*) [AddCommMonoid A] := {x : Mat A // x.trace = 0}
 
-/-- For the split branch the sibling supplies the completed algebra coordinates and the
+/-- For the split branch the order construction supplies the completed algebra coordinates and the
 order coordinates, and identifies their two inclusions. In applications `R` is the order
 after tensoring with `ℤ_[p]` and `B` is the algebra after tensoring with `ℚ_[p]`. -/
 structure SplitCoordinates (e : ℕ) (R B : Type*) [Ring R] [Ring B]
@@ -142,18 +142,3 @@ theorem redMat_locallyConstant (k : ℕ) : IsLocallyConstant (redMat p k) := by
     ((red_locallyConstant p k).isOpen_fiber _).preimage (continuous_apply_apply i j)
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms eichler_zero
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms level_mulVec
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms level_coordinate
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms goodWeight_congr
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms red_eq_iff
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms red_locallyConstant
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms redMat_locallyConstant

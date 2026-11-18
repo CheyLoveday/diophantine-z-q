@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.Constituents
 # The finite trace quotients
 
 Tex 9663–9668, 9524–9554, 9919–9921. The uniformity argument for the right
-periods uses compactness of the absolute Galois group (on-the-spot, provenance (c)).
+periods uses compactness of the absolute Galois group (proved here).
 
 Lane RC24, round 3: adapted to the constituent model on coefficientwise reduced expansions.
 `consN` is now read on the reduced trace orbit `redTrace m expand ρ hst F` (tex 9639–9646,
@@ -139,11 +139,5 @@ theorem galNOpen_of_consN_open {T : TypeData L ε} {R : Finset ℕ → ZMod 2} {
   intro U hU _
   rw [← X.consN_eq_galN U]
   exact (subgroup_isOpen_iff _).1 (h U hU)
-
-#print axioms consN_isOpen
-#print axioms consN_finiteIndex
-#print axioms inertia_le_consN
-#print axioms consN_chebotarev
-#print axioms galNOpen_of_consN_open
 
 end ZInQ.Manuscript.RC.TraceLimits

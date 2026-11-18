@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.TauCeti.NumberTheory.NumberField.Ideal.IntegersRat
 /-!
 # The inertia of a squarefree radical
 
-Tex 9748–9750, on-the-spot (c). First compare the absolute and finite inertia
+Tex 9748–9750, proved here. First compare the absolute and finite inertia
 groups, then use the ramification index forced by the square root of a
 squarefree integer.
 -/
@@ -123,8 +123,5 @@ theorem oddRadicalRamification : OddRadicalRamification := by
   refine ⟨σ, hσ, fun h => hτ (Subtype.ext ?_)⟩
   have hσ' : σ ∈ (AlgEquiv.restrictNormalHom E).ker := E.restrictNormalHom_ker ▸ (hfix σ).2 h
   exact e ▸ MonoidHom.mem_ker.1 hσ'
-
-#print axioms absolute_inertia_maps
-#print axioms oddRadicalRamification
 
 end ZInQ.Manuscript.RC.TraceLimits

@@ -3,7 +3,7 @@ import Mathlib.RingTheory.Nilpotent.Basic
 import Mathlib.Tactic.LinearCombination
 
 /-!
-# Finite quadratic sums for the theta multiplier (provenance (c))
+# Finite quadratic sums for the theta multiplier
 
 The transformation at a cusp by Poisson summation uses a finite quadratic
 sum. The part depending on the top-left entry is invariant under the change
@@ -103,10 +103,5 @@ theorem quadraticFourier_odd (k : ℕ) [NeZero (4 * k)] (a : ZMod (4 * k)) (n : 
       linear_combination a * x * hh + a * hs + hnh
     simp [he, AddChar.map_add_eq_mul, hphase]
   linear_combination hEq / 2
-
-#print axioms quadraticFourier_even
-#print axioms quadraticFourier_unit_sq
-#print axioms quadraticFourier_translate
-#print axioms quadraticFourier_odd
 
 end ZInQ.Manuscript.RC.HalfIntegral

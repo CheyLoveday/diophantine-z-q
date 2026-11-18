@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.Chebotarev
 # Stationary quadratic tests
 
 Tex 2016–2029, 2162–2163, 9748–9750. Extending the Frobenius calculation
-to all Galois elements via a finite compositum is on-the-spot (c).
+to all Galois elements via a finite compositum is given here.
 -/
 
 noncomputable section
@@ -76,9 +76,5 @@ theorem stageChar_detects_radicals (m ℓ : ℕ) [NeZero m] (hℓ : ℓ ≠ 0) (
   · rw [e]
     exact sqrtChar_prime_of_bit g hℓ (MonoidHom.mem_ker.1 h.1) h₂
   · exact congrFun (MonoidHom.mem_ker.1 h.2) ⟨p, hp⟩
-
-#print axioms sqrtChar_eq_kChar
-#print axioms typChar_detects_radicals
-#print axioms stageChar_detects_radicals
 
 end ZInQ.Manuscript.RC.TraceLimits

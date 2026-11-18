@@ -16,7 +16,7 @@ Proposition `ex:arith-central-calibration` (tex 3987–4141) than `CalibrationLe
   (`v2_det_quotient`). That the genuine central quotient block has this determinant is the ELLIOT
   field `hcentralW`, which replaces `hdetW` of `CalibrationLeaf.lean`. The block of fields
   `rmov … hcentralW` is equivalent to `v₂ u_prim(0) = 2(j_rc + v₂L) + 2g_𝒜 − s_𝒜 − 4ω` (tex
-  4057–4080; lane RV2's review probe `block_iff_formula`), and the support triangle
+  4057–4080), and the support triangle
   `det(D_W) · u_prim = u_K` is PROVED from the model (`triangular_coord`);
 * `movingFields_of_nondiv`: `hmne` and `hBexp` (`m ≠ 0`, `v₂ m < B`) from the non-divisibility
   `2^{c_E+1} ∤ a_r − 2χ` and `B ≥ c_E + 1`, which is the output of lane RC17's
@@ -64,8 +64,7 @@ and `v2_det_quotient`), `hmne`, `hBexp` (PROVED by `movingFields_of_nondiv`).
 
 As a leaf, `CalibrationModelC` is (4.6) itself at the address (ELLIOT, conclusion-shaped): its
 fields other than the data, `hsB` and RC19's height relation concern free parameters that do not
-constrain the genuine objects, and from (4.6) at the address it is inhabited by synthetic data
-(lane RV2's review probes `modelC_of_46`, `block_iff_formula`, `milne_met_by_junk`). -/
+constrain the genuine objects, and from (4.6) at the address it is inhabited by synthetic data. -/
 structure CalibrationModelC {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : Family)
     (x : Addr Fam.b) : Type 1 where
   /-- `|Ш(𝒜)[2^∞]|` -/

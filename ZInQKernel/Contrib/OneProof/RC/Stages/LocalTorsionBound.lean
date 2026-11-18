@@ -40,7 +40,4 @@ theorem reduction_product_kills {A F : Type*} [CommRing A] [IsDedekindDomain A] 
   obtain ⟨k, hk⟩ := count_dvd_reductionBound count h₁ h₄
   rw [hk, mul_nsmul, hcount, residue_count_kills u hn hP, nsmul_zero]
 
-#print axioms residue_count_kills
-#print axioms reduction_product_kills
-
 end ZInQ.Manuscript.RC.Stages

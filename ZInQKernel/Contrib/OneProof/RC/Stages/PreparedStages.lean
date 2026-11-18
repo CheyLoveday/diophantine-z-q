@@ -26,6 +26,4 @@ theorem preDataSpec_preparedStages {ℓ : ℕ} (W : WData ℓ) (S : Finset ℕ) 
   ⟨preDataSpec_withStages _ q hS hbase (positivePrepared_one hS),
     stages_advance_withStages _ q _⟩
 
-#print axioms preDataSpec_preparedStages
-
 end ZInQ.Manuscript.RC.Stages

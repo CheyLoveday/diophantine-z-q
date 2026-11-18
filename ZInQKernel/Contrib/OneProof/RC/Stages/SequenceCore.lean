@@ -59,7 +59,4 @@ theorem stageTest_one (q : StageSequence At cw S) (i : ℕ) : stageTest q i 1 :=
   unfold stageTest
   simp
 
-#print axioms stageSequence
-#print axioms stageTest_one
-
 end ZInQ.Manuscript.RC.Stages

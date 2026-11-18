@@ -135,13 +135,4 @@ theorem finiteRow_proj [A.IsElliptic] (b : TateMod A 2 →ₗ[ℤ_[2]] ℤ_[2])
     finiteRow b M (TateModule.proj M t) = PadicInt.toZModPow M (b t) := by
   simp [finiteRow]
 
-#print axioms finiteRow
-#print axioms finiteRow_proj
-#print axioms divisionTower
-#print axioms DivisionTower.divides
-#print axioms DivisionTower.coe_proj_cocycle
-#print axioms DivisionTower.isCocycle
-#print axioms DivisionTower.restriction
-#print axioms DivisionTower.detectingElement
-
 end ZInQ.Manuscript.RC.Stages

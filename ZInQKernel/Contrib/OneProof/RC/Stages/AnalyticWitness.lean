@@ -66,7 +66,4 @@ theorem exists_fixed_discriminants {ℓ : ℕ} (P : Prints) (hAdm : Adm ℓ)
     ⟨by linarith, hsf, fun p hp => ⟨SplitsIn.not_dvd (hS' p hp) (hdsplit p hp),
       isSquareAt_of_splitsIn (hS' p hp) (hdsplit p hp)⟩⟩, hL⟩
 
-#print axioms positivePrepared_one
-#print axioms exists_fixed_discriminants
-
 end ZInQ.Manuscript.RC.Stages

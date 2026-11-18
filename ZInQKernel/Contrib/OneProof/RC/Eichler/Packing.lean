@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.OneProof.RC.Eichler.ClassSet
 /-!
 # Finiteness of the definite ideal class set
 
-On-the-spot (c), for tex 8466. Normalize by a shortest vector. The normalized ideal contains
+Tex 8466, proved here. Normalize by a shortest vector. The normalized ideal contains
 the order and its nonzero vectors have norm at least one. A fine grid in an order fundamental
 parallelepiped bounds the index of the order in every such ideal. Thus a fixed factorial clears
 all normalized ideals into the order, giving bounded-index integral representatives as well.
@@ -240,16 +240,3 @@ theorem finite_classSet (R : Order a b) (ha : a < 0) (hb : b < 0) : Finite (Clas
   Fintype.ofFinite _
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.repr_round
-#print axioms ZInQ.Manuscript.RC.Eichler.round_mem
-#print axioms ZInQ.Manuscript.RC.Eichler.frac_coord
-#print axioms ZInQ.Manuscript.RC.Eichler.nrd_small
-#print axioms ZInQ.Manuscript.RC.Eichler.cell_diff
-#print axioms ZInQ.Manuscript.RC.Eichler.exists_normalized_denominator
-#print axioms ZInQ.Manuscript.RC.Eichler.finite_overlattices
-#print axioms ZInQ.Manuscript.RC.Eichler.finite_normalized
-#print axioms ZInQ.Manuscript.RC.Eichler.finite_classSet
-#print axioms ZInQ.Manuscript.RC.Eichler.classFintype

@@ -8,8 +8,7 @@ import ZInQKernel.Contrib.OneProof.RC.HalfIntegral.ThetaPoisson
 
 Only the comparison needed by tex 8101–8103 is asserted here. The proof
 uses the unevaluated quadratic sum in the Poisson expansion, so no
-quadratic reciprocity formula or square-root sign comparison is needed
-(provenance (c)).
+quadratic reciprocity formula or square-root sign comparison is needed.
 -/
 
 noncomputable section
@@ -195,13 +194,5 @@ theorem theta_ratio_translate {m : ℕ} [NeZero m] (u v : ZMod m) (γ δ : SL(2,
   · have hδ := (conjugate_entries _ _ _ _ he).1
     rw [J_of_c_zero hz, J_of_c_zero (hδ.trans hz)]
   · exact theta_conjugate_pos u v γ δ hc hp he z
-
-#print axioms theta_pos_im
-#print axioms coe_sl_smul
-#print axioms J_of_c_zero
-#print axioms J_at_cusp
-#print axioms conjugate_entries
-#print axioms theta_conjugate_pos
-#print axioms theta_ratio_translate
 
 end ZInQ.Manuscript.RC.HalfIntegral

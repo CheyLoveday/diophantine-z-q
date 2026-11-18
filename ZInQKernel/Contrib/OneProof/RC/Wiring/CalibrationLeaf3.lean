@@ -25,7 +25,7 @@ This file states the leaf with
   valuation `0`, the direct sum of the two-place singular block of (4.4) at the moving prime (central
   Frobenius `Fr_r` with trace `a_r` and determinant `r`, moving scalars with central value
   `χ_h(r) = ±1`) and the minimal model `2 · 1` of `E[2]` at the `2ω(h_x)` active places
-  (tex 4066–4080). The total length `2 v₂ N_r + 4 ω(h_x)` is PROVED from it.
+  (tex 4066–4080). The valuation `2 v₂ N_r + 4ω` of the posited block is PROVED from it.
 
 Results (PROVED, standard axioms):
 
@@ -88,12 +88,17 @@ coordinates and the Kummer valuation, ELLIOT). Changed fields:
 |---|---|---|---|---|
 | `hodd`, `hram` | the companion primes are odd and exactly divide `k` (`K_p/ℚ_p` tame ramified quadratic) | 4117–4118 | definition | RC15 / RC2 |
 | `goodModel` | `E₀ = E^{(h_x)}` has good reduction at each companion prime: an integral Weierstrass model up to a rational change of variables with discriminant prime to `p` | 4116–4117 | ELLIOT ("it has good reduction") | RC15 / RC9 |
-| `hEdix` | `EdixhovenComponentNumberIso`: at an odd `p ∥ k` and any good model up to isomorphism, `c_p(ℬ) = |Ẽ₀(𝔽_p)[2]|` | 4119–4127 | PRINT (Edixhoven Thm 5.3, Rem. 5.4.1) as GLUE | RC9 / batch 3 Calibration |
+| `hEdix` | `EdixhovenComponentNumberIso`: at an odd `p ∥ k` and any good model up to isomorphism, `c_p(ℬ) = |Ẽ₀(𝔽_p)[2]|`; it fixes the free `cB p` at `p ∣ k` (`cBcanonical`); only `c_p(ℬ) ∈ {1,2,4}` is consumed | 4119–4127 | PRINT (Edixhoven Thm 5.3, Rem. 5.4.1) as GLUE | RC9 / batch 3 Calibration |
 | `Fr`, `hFtr`, `hFdet` | the Frobenius at the moving prime over `ℚ₂[[t]]`; its central value has trace `a_r` and determinant `r` | 4066–4071 | definition | RC15 / RC17 |
-| `PW`, `QW`, `hPW`, `hQW`, `eW`, `zmov`, `zmov'`, `Bact`, `hDW`, `hzmov`, `hzmov'`, `hact` | the quotient block `D_W` is `P_W · diag(twoPlaceBlock Fr r z z', B_act) · Q_W` up to relabelling, `v₂ det P_W(0) = v₂ det Q_W(0) = 0`, the moving scalars have central value `χ_h(r)` (the moving character is trivial at the centre), and the active block is the minimal model `2 · 1` of `E[2]` at the `2ω(h_x)` active places | 4066–4080 | ELLIOT (the quotient complex is the direct sum of the local quotients; local conditions of `ex:arith-data`) | RC15 / batch 3 Calibration |
+| `PW`, `QW`, `hPW`, `hQW`, `eW`, `zmov`, `zmov'`, `Bact`, `hDW`, `hzmov`, `hzmov'`, `hact` | the quotient block `D_W` is `P_W · diag(twoPlaceBlock Fr r z z', B_act) · Q_W` up to relabelling, `v₂ det P_W(0) = v₂ det Q_W(0) = 0`, the moving scalars have central value `χ_h(r)` (the moving character is trivial at the centre), and the active block is the minimal model `2 · 1` of `E[2]` at the `2ω(h_x)` active places; all matrices are existential, not identified with Galois cochains; with `rmov … hK` the block is equivalent to `v₂ u_prim(0) = 2(j_rc + v₂L) + 2g_𝒜 − s_𝒜 − 4ω`; `r = 1`, `a_r = 3`, `χ = 1` is admissible | 4066–4080 | ELLIOT (the quotient complex is the direct sum of the local quotients; local conditions of `ex:arith-data`) | RC15 / batch 3 Calibration |
 
 No longer fields compared with `CalibrationModelG`: `Fmov` (it is `Fr(0)`) and `hcentralW` (a
-literal, basis-dependent determinant identity; its valuation is PROVED from the local blocks). -/
+literal, basis-dependent determinant identity; its valuation is PROVED from the local blocks).
+
+The orders, component numbers, moving prime and trace, and Kummer model
+cochains are existential witnesses. The field hK retains the ordinary
+Kummer determinant valuation of tex 4058–4064. The field cE is per-model,
+a weaker requirement than a single Tate-image constant before the family. -/
 structure CalibrationModelH {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : Family)
     (x : Addr Fam.b) : Type 1 where
   /-- `|Ш(𝒜)[2^∞]|` -/
@@ -228,7 +233,8 @@ structure CalibrationModelH {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : 
   hP : CommonCoordinate.IsCoordOn (fromBlocks DK X 0 DW) zP wP (D.uPrim Fam x)
   /-- `u_K` is the coordinate of the Kummer model -/
   hKc : Central.IsClassFunctionalCoord DK zK wK uK
-  /-- the Kummer model has generic dimensions `(1,1)` -/
+  /-- The Kummer differential has nonzero adjugate; this is weaker than
+  saying that its generic cohomology has dimensions (1,1). -/
   hadj : DK.adjugate ≠ 0
   /-- the central valuation of the Kummer coordinate -/
   hK : v2 (central uK) =

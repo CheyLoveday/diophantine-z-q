@@ -1,7 +1,7 @@
 import Mathlib
 
 /-! The integral linear algebra in tex 8327–8347. We use the two elementary
-unipotents explicitly for the full-lattice assertion (provenance (c)). -/
+unipotents explicitly for the full-lattice assertion. -/
 
 noncomputable section
 
@@ -159,13 +159,5 @@ theorem primitive_row_of_involution (B : Module.Basis (Fin 2) ℤ_[2] T)
   intro y
   change B.coord j (C (C y) + C y) = B.coord j (C y + y)
   rw [hC, add_comm y]
-
-#print axioms primitive_row_of_nonzero
-#print axioms primitive_row_of_involution
-#print axioms smul_mem_of_closed
-#print axioms exists_two_pow_mul
-#print axioms full_lattice_of_unipotents
-#print axioms elementary
-#print axioms elementary_apply
 
 end ZInQ.Manuscript.RC.Stages

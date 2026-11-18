@@ -95,11 +95,4 @@ theorem detector_sqrt_signs (F : IntermediateField ℚ Qbar) {h : GalQ}
   rw [complexConj_pos_sqrt hD hx, complexConj_neg_sqrt hk hy, map_neg]
   exact ⟨hh ⟨x, hxf⟩, congrArg Neg.neg (hh ⟨y, hyf⟩)⟩
 
-#print axioms complexConj_sq
-#print axioms complexConj_rootOfUnity
-#print axioms det_complexConj
-#print axioms complexConj_pos_sqrt
-#print axioms complexConj_neg_sqrt
-#print axioms detector_sqrt_signs
-
 end ZInQ.Manuscript.RC.Stages

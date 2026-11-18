@@ -88,10 +88,4 @@ theorem geomTwist_tate_action_eq (E : WeierstrassCurve ℚ) (h₁ : E.a₁ = 0) 
   rw [← ht, ← geomTwist_tate_equivariant E h₁ h₃ D s hs hsD g hg,
     ← geomTwist_tate_equivariant E h₁ h₃ D s hs hsD f hf, h]
 
-#print axioms geomTwist_some
-#print axioms geomTwist
-#print axioms geomTwist_equivariant
-#print axioms geomTwist_tate_equivariant
-#print axioms geomTwist_tate_action_eq
-
 end ZInQ.Manuscript.RC.Stages

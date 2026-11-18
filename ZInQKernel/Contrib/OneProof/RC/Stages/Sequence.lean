@@ -48,8 +48,4 @@ theorem stages_advance_withStages {ℓ : ℕ} (W : WData ℓ) (q : StageSequence
   filter_upwards [hyperfilter_le_cofinite hn] with i hi
   omega
 
-#print axioms withStages
-#print axioms preDataSpec_withStages
-#print axioms stages_advance_withStages
-
 end ZInQ.Manuscript.RC.Stages

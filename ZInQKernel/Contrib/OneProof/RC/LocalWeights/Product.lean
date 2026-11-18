@@ -35,7 +35,7 @@ theorem legendreUnit_inv (p : ℕ) [Fact p.Prime] (v : ℤ_[p]ˣ) :
 
 /-- On odd positive representatives, the unit restriction of the character of
 the negative of a squarefree integer congruent to three modulo four is the product of the Legendre
-symbols at the primes dividing (m). This calculation is provenance (c). -/
+symbols at the primes dividing (m). This calculation is given here. -/
 theorem negativeDiscriminant_unit_character (m d : ℕ) (hm : m % 4 = 3)
     (hs : Squarefree m) (hd : Odd d) :
     jacobiSym (-(m : ℤ)) d = ∏ p ∈ m.primeFactors, jacobiSym d p := by
@@ -113,10 +113,3 @@ theorem finiteWeight_scale (S : Finset ι) (W : ∀ i, LocalRule (O := O) (X i) 
 end Product
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights
-#print axioms legendreUnit_apply
-#print axioms legendreUnit_inv
-#print axioms finiteWeight_conj
-#print axioms finiteWeight_scale
-#print axioms negativeDiscriminant_unit_character

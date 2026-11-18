@@ -3,8 +3,8 @@ import ZInQKernel.Contrib.OneProof.RC.Eichler.Neighbours
 /-!
 # Counting the ideal correspondences in the stage interface
 
-Tex 9040–9042 and 9067–9071. The only input here is the local-to-global line indexing
-(on-the-spot, c), isolated as an equivalence with the actual locally principal subideals.
+Tex 9040–9042 and 9067–9071. The only input here is the local-to-global line indexing,
+isolated as an equivalence with the actual locally principal subideals.
 -/
 
 namespace ZInQ.Manuscript.RC.Eichler
@@ -101,11 +101,3 @@ theorem adjoint {Good : ℕ → Prop} (ha : a < 0) (hb : b < 0)
   exact adjointAt ha hb (lines p hp) i j
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.nbAt
-#print axioms ZInQ.Manuscript.RC.Eichler.arrowFiber
-#print axioms ZInQ.Manuscript.RC.Eichler.adjointAt
-#print axioms ZInQ.Manuscript.RC.Eichler.nb
-#print axioms ZInQ.Manuscript.RC.Eichler.adjoint

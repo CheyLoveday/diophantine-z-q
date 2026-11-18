@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalWeights.Transport
 import Mathlib.Tactic.Abel
 
 /-! The actions on the full rational split models, tex 8498, 8512–8515,
-8527–8534, 8546–8549 and 8573–8577. Transport formulas are provenance (c). -/
+8527–8534, 8546–8549 and 8573–8577. Transport formulas are given here. -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
 
@@ -229,18 +229,3 @@ noncomputable def dyadicRule :
       (fun y => (dyadicWeight_scale v _ y).trans (one_mul _).symm) x
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights
-#print axioms matrixConj_inverse
-#print axioms matrixScale_inverse
-#print axioms integralMat_smul
-#print axioms integralMat_scalar
-#print axioms integralZero_conj
-#print axioms integralZero_scale
-#print axioms goodWeight_extend
-#print axioms goodRule
-#print axioms nilRule
-#print axioms affineZero_conj
-#print axioms affineZero_scale
-#print axioms levelRule
-#print axioms dyadicRule

@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.OneProof.RC.Eichler.Order
 
 The ideal description of the class set in tex 8466–8468 uses full fractional right
 ideals, with local principality imposed in the local model. The left order and transport
-arguments here are on-the-spot (c).
+arguments are given here.
 -/
 
 open Module
@@ -117,10 +117,3 @@ def leftOrder (I : RightIdeal R) (ha : a < 0) (hb : b < 0) : Order a b where
 end RightIdeal
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.FullLattice.multiple_mem
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.ext
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.exists_ne_zero
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.leftOrder

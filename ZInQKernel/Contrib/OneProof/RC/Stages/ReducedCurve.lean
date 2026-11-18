@@ -92,10 +92,4 @@ theorem reducedKappa_surjective [IsSepClosed K] [E.IsElliptic] (hp : p ≠ 2) (M
   unfold reducedKappa
   apply kappa_surjective
 
-#print axioms frob_apply
-#print axioms mem_roots_of_frob_sq
-#print axioms finite_curveFrob_fixedSq
-#print axioms reducedKappa
-#print axioms reducedKappa_surjective
-
 end ZInQ.Manuscript.RC.Stages

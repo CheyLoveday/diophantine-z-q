@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalDivision.Model
 # The detecting-prime identification and weight
 
 The assembled identification uses the explicit completed global order. Pulling the
-weight back along it is on-the-spot (c), for tex 8551–8561.
+weight back along it is proved here, for tex 8551–8561.
 -/
 
 namespace ZInQ.Manuscript.RC.DivisionJoin
@@ -95,17 +95,5 @@ theorem norm_residue_nonzero_square (x : completedOrder p Fact.out)
   change nrd y.val = reducedNorm p x.val
   rw [← (identification p).compatible x]
   exact (identification p).norm x.val
-
-#print axioms identification
-#print axioms reduction
-#print axioms weight
-#print axioms uniformizerAction
-#print axioms trace_transferred
-#print axioms divisionWeight_eq
-#print axioms divisionWeight_nonzero_iff
-#print axioms divisionWeight_conj
-#print axioms divisionWeight_scale
-#print axioms divisionWeight_uniformizer
-#print axioms norm_residue_nonzero_square
 
 end ZInQ.Manuscript.RC.DivisionJoin

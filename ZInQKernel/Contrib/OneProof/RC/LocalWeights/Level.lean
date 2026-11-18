@@ -11,7 +11,7 @@ Use (y=(1+x)/2), including at odd primes where 2 is a unit. On the support
 `y` is in the order, has trace 1, and has two roots `a, 1-a` with unit
 difference `2*a-1`. At positive level the quotient selects the root
 congruent to the bottom-right entry. Congruence estimates in this coordinate
-are provenance (c).
+are given here.
 -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
@@ -19,9 +19,7 @@ open Matrix Polynomial
 
 variable {p : ℕ} [Fact p.Prime]
 
-local notation "red" => PadicInt.toZModPow
-
-theorem unit_iff_red_ne_zero (a : ℤ_[p]) : IsUnit a ↔ red 1 a ≠ 0 := by
+theorem unit_iff_red_ne_zero (a : ℤ_[p]) : IsUnit a ↔ PadicInt.toZModPow 1 a ≠ 0 := by
   rw [← not_iff_not, not_not, PadicInt.not_isUnit_iff, PadicInt.norm_lt_one_iff_dvd]
   simpa using (red_eq_iff p 1 a 0).symm
 
@@ -29,20 +27,22 @@ theorem unit_iff_red_ne_zero (a : ℤ_[p]) : IsUnit a ↔ red 1 a ≠ 0 := by
 modulo (p^k) is bounded by the difference of the constant terms. -/
 theorem branch_congr (k : ℕ) {a b d d' : ℤ_[p]} (ha : a ^ 2 - a + d = 0)
     (hb : b ^ 2 - b + d' = 0) (hu : IsUnit (2 * a - 1))
-    (hab : red 1 a = red 1 b) (hd : red k d = red k d') :
-    red k a = red k b := by
+    (hab : PadicInt.toZModPow 1 a = PadicInt.toZModPow 1 b)
+    (hd : PadicInt.toZModPow k d = PadicInt.toZModPow k d') :
+    PadicInt.toZModPow k a = PadicInt.toZModPow k b := by
   have hunit : IsUnit (a + b - 1) := by
     rw [unit_iff_red_ne_zero] at hu ⊢
     simpa [map_sub, map_add, ← hab, two_mul] using hu
   have hf : (a - b) * (a + b - 1) = d' - d := by linear_combination ha - hb
-  have h := congrArg (red k : ℤ_[p] →+* ZMod (p ^ k)) hf
+  have h := congrArg (PadicInt.toZModPow k : ℤ_[p] →+* ZMod (p ^ k)) hf
   simp only [map_mul, map_sub, hd, sub_self] at h
-  exact sub_eq_zero.mp ((hunit.map (red k)).mul_right_cancel (by simpa using h))
+  exact sub_eq_zero.mp ((hunit.map (PadicInt.toZModPow k)).mul_right_cancel (by simpa using h))
 
 /-- Hensel at a simple residue root of (X^2-X+d). -/
 theorem lift_branch {a d : ℤ_[p]} (hu : IsUnit (2 * a - 1))
-    (h : red 1 (a ^ 2 - a + d) = 0) :
-    ∃ b : ℤ_[p], b ^ 2 - b + d = 0 ∧ red 1 b = red 1 a ∧ IsUnit (2 * b - 1) := by
+    (h : PadicInt.toZModPow 1 (a ^ 2 - a + d) = 0) :
+    ∃ b : ℤ_[p], b ^ 2 - b + d = 0 ∧ PadicInt.toZModPow 1 b = PadicInt.toZModPow 1 a ∧
+      IsUnit (2 * b - 1) := by
   let F : ℤ_[p][X] := X ^ 2 - X + C d
   have heval (b : ℤ_[p]) : F.aeval b = b ^ 2 - b + d := by simp [F]
   have hderiv (b : ℤ_[p]) : F.derivative.aeval b = 2 * b - 1 := by
@@ -62,12 +62,12 @@ theorem lift_branch {a d : ℤ_[p]} (hu : IsUnit (2 * a - 1))
 
 /-- The root selected on the level quotient, expressed as an eigenvalue of (y). -/
 def LevelRoot {e : ℕ} (y : eichler p e) (a : ℤ_[p]) : Prop :=
-  a ^ 2 - a + y.val.det = 0 ∧ IsUnit (2 * a - 1) ∧ red e a = level p e y
+  a ^ 2 - a + y.val.det = 0 ∧ IsUnit (2 * a - 1) ∧ PadicInt.toZModPow e a = level p e y
 
 /-- The bottom-right entry solves the characteristic equation modulo the level. -/
 theorem level_residue_root {e : ℕ} (y : eichler p e) (ht : y.val.trace = 1) :
-    red e ((y.val 1 1) ^ 2 - y.val 1 1 + y.val.det) = 0 := by
-  have hc : red e (y.val 1 0) = 0 := by
+    PadicInt.toZModPow e ((y.val 1 1) ^ 2 - y.val 1 1 + y.val.det) = 0 := by
+  have hc : PadicInt.toZModPow e (y.val 1 0) = 0 := by
     rw [← RingHom.mem_ker, PadicInt.ker_toZModPow, Ideal.mem_span_singleton]
     exact y.property
   rw [Matrix.trace_fin_two] at ht
@@ -80,9 +80,10 @@ the lift is unique. -/
 theorem levelRoot_existsUnique {e : ℕ} (he : 0 < e) (y : eichler p e)
     (ht : y.val.trace = 1) :
     (∃! a, LevelRoot y a) ↔ IsUnit (2 * y.val 1 1 - 1) := by
-  have reduce (a b : ℤ_[p]) (h : red e a = red e b) : red 1 a = red 1 b := by
+  have reduce (a b : ℤ_[p]) (h : PadicInt.toZModPow e a = PadicInt.toZModPow e b) :
+      PadicInt.toZModPow 1 a = PadicInt.toZModPow 1 b := by
     rw [← PadicInt.cast_toZModPow 1 e he a, ← PadicInt.cast_toZModPow 1 e he b, h]
-  have unit_eq (a b : ℤ_[p]) (h : red 1 a = red 1 b) :
+  have unit_eq (a b : ℤ_[p]) (h : PadicInt.toZModPow 1 a = PadicInt.toZModPow 1 b) :
       IsUnit (2 * a - 1) ↔ IsUnit (2 * b - 1) := by
     simp only [unit_iff_red_ne_zero, map_sub, map_mul, map_one, h]
   constructor
@@ -93,14 +94,15 @@ theorem levelRoot_existsUnique {e : ℕ} (he : 0 < e) (y : eichler p e)
       ((level_residue_root y ht).trans (map_zero _).symm)
     rw [map_zero] at hmod
     obtain ⟨a, ha, hamod, hau⟩ := lift_branch h hmod
-    have hamod' : red e a = level p e y := by
+    have hamod' : PadicInt.toZModPow e a = level p e y := by
       have hh := branch_congr e ha (show (y.val 1 1) ^ 2 - y.val 1 1 +
           (y.val 1 1 - (y.val 1 1) ^ 2) = 0 by ring) hau hamod
       apply hh
       simpa [map_add, map_sub, map_pow, sub_eq_add_neg, add_comm, add_left_comm, add_assoc]
         using (eq_neg_of_add_eq_zero_right (by
           simpa only [map_add, map_sub, map_pow] using level_residue_root y ht) :
-            red e y.val.det = -(red e (y.val 1 1) ^ 2 - red e (y.val 1 1)))
+            PadicInt.toZModPow e y.val.det =
+              -(PadicInt.toZModPow e (y.val 1 1) ^ 2 - PadicInt.toZModPow e (y.val 1 1)))
     refine ⟨a, ⟨ha, hau, hamod'⟩, fun b hb => ?_⟩
     apply PadicInt.ext_of_toZModPow.mp
     intro k
@@ -151,18 +153,3 @@ theorem levelWeight_eq {O : Type*} [CommRing O] {e : ℕ} (he : 0 < e)
   simp only [levelWeight, dite_eq_left h, hu]
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms unit_iff_red_ne_zero
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms branch_congr
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms lift_branch
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms level_residue_root
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms levelRoot_existsUnique
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms levelRoot_conj
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms levelWeight_eq

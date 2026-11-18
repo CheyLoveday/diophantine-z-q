@@ -135,13 +135,6 @@ theorem o12_reduced {U : Finset ℕ} {p : ℕ} {P : LocalPair p}
   have e := congrArg (Ideal.Quotient.mk X.m) (A.o12_integral D hp hUp g)
   simpa only [orbitCoeff_eq, map_sub, det] using e
 
-#print axioms goodHecke_of_data
-#print axioms trace_coeff_of_not_dvd
-#print axioms orbitCoeff_eq
-#print axioms read_orbit
-#print axioms o12_integral
-#print axioms o12_reduced
-
 end FourierData
 
 end ZInQ.Manuscript.RC.O12

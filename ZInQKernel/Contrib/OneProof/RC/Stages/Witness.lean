@@ -105,8 +105,4 @@ theorem witnessValuation_withStages {ℓ : ℕ} (W : WData ℓ)
     change a + 1 < a + 1 + 1 + i
     omega) hz
 
-#print axioms kappa_of_specialization
-#print axioms val_exact_two_power
-#print axioms witnessValuation_withStages
-
 end ZInQ.Manuscript.RC.Stages

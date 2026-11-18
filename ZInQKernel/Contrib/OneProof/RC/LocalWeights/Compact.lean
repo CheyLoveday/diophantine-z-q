@@ -3,7 +3,7 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
 /-! Passage from a finite reduction on an integral lattice to a compactly supported
 locally constant function on the ambient trace-zero space (tex 8563–8566;
-the topology bookkeeping is provenance (c)). -/
+the topology bookkeeping is given here). -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
 
@@ -139,10 +139,3 @@ theorem goodWeight_compactOpen {O : Type*} [Zero O] [One O] [Nontrivial O]
       (isCompact_range hi.continuous)
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights
-#print axioms locallyConstant_of_factors
-#print axioms compactOpen_support
-#print axioms extendWeight_spec
-#print axioms extendWeight_compactOpen
-#print axioms goodWeight_compactOpen

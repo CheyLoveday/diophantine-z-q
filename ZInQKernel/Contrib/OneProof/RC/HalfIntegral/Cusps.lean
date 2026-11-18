@@ -7,7 +7,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 The absolute value in the tree's cusp condition allows a change of coordinates by a
 positive determinant matrix without a square-root convention. This expands the
-modularity claim of tex 8101–8103 (provenance (c)).
+modularity claim of tex 8101–8103 (proved here).
 -/
 
 noncomputable section
@@ -73,9 +73,5 @@ theorem ratTranslate_cuspidal {k : ℕ} {f : ℍ → ℂ}
     simpa [UpperHalfPlane.σ, hdg] using h₁.symm
   simp only [Function.comp_apply, hz, hd, norm_mul, Complex.norm_real,
     Real.mul_rpow (norm_nonneg _) (norm_nonneg _), mul_assoc]
-
-#print axioms translateMatrix_smul
-#print axioms rat_translate_cuspCoordinates
-#print axioms ratTranslate_cuspidal
 
 end ZInQ.Manuscript.RC.HalfIntegral

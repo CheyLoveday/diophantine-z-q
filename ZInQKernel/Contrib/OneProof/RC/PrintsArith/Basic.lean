@@ -6,7 +6,7 @@ import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.Hom.Ad
 # Lane RC9 (arithmetic prints of Theorem 5.3): common vocabulary
 
 The arithmetic printed theorems cited in the proof of Theorem 5.3 of the 11/5 manuscript
-(`diophantine_zq.tex`, Sections 7–9 and Appendices E–G) are stated in the sibling files
+(`diophantine_zq.tex`, Sections 7–9 and Appendices E–G) are stated in the files
 `Serre.lean`, `Kato.lean`, `Heegner.lean` and `Local.lean`. This file fixes the genuine objects
 they share.
 

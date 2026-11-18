@@ -152,7 +152,7 @@ theorem DivisionTower.translation_in_auxiliary (d : DivisionTower A Q) (hQ)
 
 /-- The Kummer injection argument using exact rational divisions and Northcott.
 This gives the same contradiction as the rational cohomological injection in
-tex 8325–8327; the finite-level proof avoids constructing rational cohomology (c). -/
+tex 8325–8327; the finite-level proof avoids constructing rational cohomology. -/
 theorem DivisionTower.nonzero_translations [A.IsElliptic] (d : DivisionTower A Q) (hQ)
     (P : (A⁄ℚ).toAffine.Point)
     (hP : Affine.Point.baseChange (W' := A) ℚ Qbar P = Q) (hnt : ¬ IsOfFinAddOrder P)
@@ -211,7 +211,7 @@ def DivisionTower.translationModule [A.IsElliptic] (d : DivisionTower A Q)
     exact d.closed_image hQ
   exact { H with smul_mem' := fun r _ hx => smul_mem_of_closed H hH hx r }
 
-/-- Tex 8327–8328, with explicit unipotents (c). A nonzero translation generates
+/-- Tex 8327–8328, with explicit unipotents. A nonzero translation generates
 a full 2-power lattice under Serre's open congruence subgroup. -/
 theorem DivisionTower.full_translations [A.IsElliptic] (d : DivisionTower A Q) (hQ)
     (hS : SerreThm3) (hA : HasNoCM A)
@@ -292,18 +292,5 @@ theorem DivisionTower.exists_fixed_detector [A.IsElliptic] (d : DivisionTower A 
   refine ⟨a, g, b, hgF, hρ, hb, ?_, hval⟩
   intro v
   exact ⟨v • t, by rw [map_smul, ht, smul_eq_mul, mul_one]⟩
-
-#print axioms DivisionTower.exists_fixed_detector
-#print axioms DivisionTower.nonzero_translations
-#print axioms DivisionTower.conjugate_translation
-#print axioms DivisionTower.translationModule
-#print axioms DivisionTower.full_translations
-#print axioms DivisionTower.full_translations_auxiliary
-#print axioms DivisionTower.continuous_cocycle
-#print axioms DivisionTower.closed_image
-#print axioms DivisionTower.scalar_identity_of_zero_translations
-#print axioms DivisionTower.fixed_divisions_of_zero_translations
-#print axioms fixedPoint_descends
-#print axioms DivisionTower.translation_in_auxiliary
 
 end ZInQ.Manuscript.RC.Stages

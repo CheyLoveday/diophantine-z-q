@@ -2,7 +2,7 @@ import ZInQKernel.Contrib.OneProof.RC.HalfIntegral.ThetaGauss
 import Mathlib.NumberTheory.ModularForms.JacobiTheta.OneVariable
 
 /-!
-# Poisson expansion at a rational point (provenance (c))
+# Poisson expansion at a rational point
 
 Split the ordinary theta series by integer residue classes and apply the
 two-variable functional equation to each shifted Gaussian. At a denominator
@@ -200,11 +200,5 @@ theorem jacobiTheta_at_cusp {k : ℕ} [NeZero (4 * k)] (a d : ℤ) {z : ℂ} (hz
   change (∑' n, f n) = _
   rw [hsplit, h1, add_zero]
   simp_rw [h0, tsum_mul_left, jacobiTheta]
-
-#print axioms shiftedGaussian
-#print axioms pos_im_neg_inv
-#print axioms jacobiTheta_rational_resum
-#print axioms tsum_even_odd
-#print axioms jacobiTheta_at_cusp
 
 end ZInQ.Manuscript.RC.HalfIntegral

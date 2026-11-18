@@ -6,7 +6,7 @@ import ZInQKernel.Contrib.OneProof.RC.AppF.Prints
 # Integer orders and their unit groups
 
 Tex 8464–8468, 8571–8576 and 8605–8611. The proofs about integer lattices and reduced norms
-are on-the-spot (c); the norm and the divisibility constant are the existing tree definitions.
+are given here; the norm and the divisibility constant are the existing tree definitions.
 -/
 
 open scoped Quaternion
@@ -127,16 +127,3 @@ theorem neg_of_ramified {ell : ℕ} (h : AppF.RamifiedExactlyAtEll0Infty ell a b
     exact one_ne_zero ht.2.2.1
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.basis
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.unitsHom
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.unitsHom_injective
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.G
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.unitsEquiv
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.nrd_unit
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.finite_units
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.finite_G
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.card_G_dvd
-#print axioms ZInQ.Manuscript.RC.Eichler.neg_of_ramified

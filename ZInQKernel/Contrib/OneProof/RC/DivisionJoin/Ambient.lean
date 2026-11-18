@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalDivision.Algebra
 # The ambient algebra at the detecting prime
 
 The two quaternion presentations agree coefficient by coefficient. The comparison is
-on-the-spot (c), for tex 8462–8464 and 8496–8497.
+proved here, for tex 8462–8464 and 8496–8497.
 -/
 
 namespace ZInQ.Manuscript.RC.DivisionJoin
@@ -53,13 +53,5 @@ theorem reducedNorm_formula (x : LocalB p) :
     reducedNorm p x = x.re ^ 2 + x.imI ^ 2 + (p : ℚ_[p]) * (x.imJ ^ 2 + x.imK ^ 2) := by
   rw [← ambient_norm p x, nrd_formula]
   rfl
-
-#print axioms ambientEquiv
-#print axioms ambientIntegralEquiv
-#print axioms reducedTrace
-#print axioms reducedNorm
-#print axioms ambient_trace
-#print axioms ambient_norm
-#print axioms reducedNorm_formula
 
 end ZInQ.Manuscript.RC.DivisionJoin

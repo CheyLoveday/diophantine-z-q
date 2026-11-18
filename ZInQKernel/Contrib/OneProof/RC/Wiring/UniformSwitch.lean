@@ -38,7 +38,7 @@ What is restated, relative to batch 3's `HeightOneSwitchData` / `OuterSwitchData
 prove `pos` and `terminal`). The structures are existential and are not tied to the actual Selmer
 complexes, so they do not constrain the genuine objects: `PrimRegularityInputsS` is equivalent to
 `u_{prim,x} ∈ Λ[1/2]` at every final address (`primRegularityInputsS_iff`) and
-`Eq35InputsGenuineG` to (3.5) itself (lane RV2's review probe `eq35InputsGenuineG_iff`); as leaves
+`Eq35InputsGenuineG` to (3.5) itself; as leaves
 they are Elliot's steps (ELLIOT), not reductions of them. The restatements:
 
 * `pos` from a **nonzero** actual class (`class_ne_zero`) instead of a primitive one: Elliot's actual
@@ -492,8 +492,8 @@ the outer switch drop (batch 3's `relaxedImageFinite_proof`), the equal inner va
 `switch_equal_valuation`), (5.5), `u_prim ∈ Λ[1/2]` and (5.5) + (4.6) ⇒ (3.5)
 (`exLimitsUniformLowerBound`). These hold for the abstract witnesses: (5.5) and
 `u_prim ∈ Λ[1/2]` are equivalent to conjuncts 4 and 2 (one-configuration data;
-`regularityInputsS_iff`), and the whole is equivalent to `Eq35Target W` (lane RV2's review probe
-`eq35InputsGenuineG_iff`, with `eq35InputsGenuineS_of_G`). Kind: definition. -/
+`regularityInputsS_iff`), and the whole is equivalent to `Eq35Target W` (with
+`eq35InputsGenuineS_of_G`). Kind: definition. -/
 def Eq35InputsGenuineS : Prop :=
   ∃ (uprim : ℤ → ℤ → FractionRing Lambda) (C₀ : ℤ),
     (∀ h k' : ℤ, W.prepared h → AnalyticRank (Etw ℓ h) 1 → W.IsRoughCompanion h k' →
@@ -681,8 +681,8 @@ variable {ℓ : ℕ} (W : WData ℓ)
 
 /-- **The inputs of (3.5) with genuine outer models** (replaces `Eq35InputsGenuine W`; as a leaf
 this is (3.5) itself, ELLIOT: `uprim` is an existential witness not tied to the genuine coordinate,
-the structures do not constrain the genuine objects, and the whole is equivalent to `Eq35Target W`,
-lane RV2's review probe `eq35InputsGenuineG_iff`): `Eq35InputsGenuineS W` with the outer conjunct
+the structures do not constrain the genuine objects, and the whole is equivalent to
+`Eq35Target W`): `Eq35InputsGenuineS W` with the outer conjunct
 given by
 `GenuineOuterSwitchData (hyperfilter ℕ) a` (outer models over `Frac 𝒪_∞` the images of the inner
 models, so `minor_link` is PROVED). Conjuncts 1–3 (the witness `uprim`, regularity

@@ -9,14 +9,14 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.PreSpec
 The genuine address leaf of `Leaf.lean` with the Galois trace models replaced by the density models
 of `Chebotarev.lean`: the PRINT field `chebotarev` and the GLUE field `finiteIndex` of
 `GaloisTraceModel` are replaced by the openness (a) and the unramifiedness (b) of `N_U` (GLUE,
-tex 9524–9548, 9663–9669), and Chebotarev's theorem is the repository's PROVED density theorem
+tex 9663–9669, 9745–9750), and Chebotarev's theorem is the repository's PROVED density theorem
 (`ZInQ.Contrib.ChebFD.C10.frobDense`, `ZInQ.Contrib.chebotarevExists`; tex 9666–9668, 9712–9717,
 9768–9770, 9896–9898, 9919–9921).
 
 Round 2: the odd reading is read on the intrinsic odd filter (`LabelData.oddAdmissible`); the model
 fields are budgeted (tex 9447–9468, 9649–9654); and the odd witness of the stabilized tables is no
 longer an input: `oddWitness_of_dataSpec` derives it from the attained odd minimum
-`δ_o ∈ depthSet` (tex 2590–2593, 10188–10199, 10501–10505, 10547), so the consumer
+`δ_o ∈ depthSet` (tex 2590–2593, 10190–10199, 10501–10505, 10547), so the consumer
 `addressLeaf_of_densityLeaf` takes the data specification and that membership, both available
 where the leaf is used.
 -/
@@ -34,7 +34,7 @@ variable {ℓ : ℕ} (W : WData ℓ) (D : LabelData W) (Rev : Finset ℕ → ZMo
 
 /-- **Density models of the odd stage source** (the fields of `GaloisDensityModel`: GLUE trace
 identities, ELLIOT readings, tex 9671–9745, 9905–9918; GLUE Kummer, openness, unramifiedness,
-tex 9524–9548, 9663–9669, 9745–9750): for every cutoff, on a set of stages of the ultrafilter
+tex 9663–9669, 9745–9750): for every cutoff, on a set of stages of the ultrafilter
 (tex 10533–10540: "for every |U| ≤ W … at most W+1 vertices"). -/
 def OddDensityModels : Prop :=
   ∀ Wc : ℕ, ∀ᶠ θ in (W.stages : Filter ℕ),
@@ -59,10 +59,13 @@ end Density
 /-! ## The odd witness from the attained minimum -/
 
 /-- **The odd witness of the stabilized tables from the attained odd minimum** (PROVED from
-`oddWitness_of_depthMin`; tex 2590–2593, 10188–10199, 10501–10505, 10547): with the data's
+`oddWitness_of_depthMin`; tex 2590–2593, 10190–10199, 10501–10505, 10547): with the data's
 specification (the stage support is the prepared filter cut by a stage condition; prepared indices
 are positive, squarefree and prime to `W.S`), every visible index lies in the intrinsic odd filter
-(`LabelData.oddAdmissible_iff`) and is a unit at `m₁ ℓ₀` (`OddFilter`). -/
+(`LabelData.oddAdmissible_iff`) and is a unit at `m₁ ℓ₀` (`OddFilter`). This theorem uses
+attainment in the supplied stage support. It does not compare the original intrinsic depth set
+with the depth set after additional stationary exclusions; the preservation assertion of tex
+2609–2612, 10519–10521 and 10549–10551 is separate. -/
 theorem oddWitness_of_dataSpec {ℓ : ℕ} {W : WData ℓ} (D : LabelData W) (hdata : PreDataSpec W)
     (hprep : PreparedSpec W)
     (hδ : W.δo ∈ AppGEndpoints.DepthSet W.stages W.Mθ (fun θ Dd => vZ (W.aθ θ Dd)) W.admissible)
@@ -82,8 +85,15 @@ of the odd stage source and of the transported even source (GLUE trace identitie
 openness, unramifiedness; ELLIOT readings), the odd, prepared and even filters (definition), the
 `K`-split seed (ELLIOT; under the hypotheses of `exists_unit_of_kSplitSeed` equivalent to a nonempty
 `K`-split unit of `Rev`, `kSplitSeed_of_unit`) and the even reading (ELLIOT; (F.1)'s conclusion for
-the chosen reading `Rev`, which the leaf does not otherwise tie to the transported source). The odd
-witness is not an input (`oddWitness_of_dataSpec`). Its scope is Branch 2 (`¬ W.OddEmptyUnit`). -/
+the chosen reading `Rev`; the leaf ties `Rev` to the transported source only through the even
+models, the even filter and this clause). The odd witness is not an input
+(`oddWitness_of_dataSpec`). Its scope is Branch 2 (`¬ W.OddEmptyUnit`).
+The predicate does not itself require attainment of `δ_o`. Its consumer additionally
+requires `PreDataSpec`, `PreparedSpec`, `δ_o ∈ depthSet` and the remaining-branch
+hypothesis. The bare predicate can retain a zero odd source after replacing its odd
+models by zero models, but such a source has empty depth set and cannot satisfy the
+consumer's attainment premise. `oddAdmissible_iff` identifies the intrinsic filter only
+away from `W.S`; the fields do not uniquely determine its values elsewhere. -/
 def AddressDensityLeaf {ℓ : ℕ} (W : WData ℓ) : Prop :=
   ∃ (D : LabelData W) (Rev : Finset ℕ → ZMod 2), FreshPrime W D ∧ OddDensityModels W D ∧
     OddFilter W D ∧ PreparedFilter W D ∧ EvenDensityModels W D Rev ∧

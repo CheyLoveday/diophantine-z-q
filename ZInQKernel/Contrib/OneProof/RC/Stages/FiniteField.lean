@@ -86,7 +86,7 @@ theorem kappa_ker : (kappa F n hdiv htriv).ker =
   · rintro ⟨T, ht⟩
     exact ⟨T.val, (mem_fixedSq F).mp T.property, congrArg Subtype.val ht⟩
 
-/-- The elementary surjectivity proof (provenance (c)): on the finite fixed subgroup,
+/-- The elementary surjectivity proof: on the finite fixed subgroup,
 the quotient by multiplication by n has order equal to the kernel of that multiplication.
 All geometric n-torsion already belongs to the fixed subgroup. -/
 theorem kappa_surjective [Finite (FixedSq F)] :
@@ -126,14 +126,5 @@ theorem lambda_frobenius_plus {B : Type*} [AddCommGroup B]
     (b.comp (kappa F n hdiv htriv)) (fixedFrob F P) =
       (b.comp (kappa F n hdiv htriv)) P := by
   simp only [AddMonoidHom.comp_apply, kappa_equivariant, hb]
-
-#print axioms kappaValue_apply
-#print axioms mem_fixedSq
-#print axioms kappa
-#print axioms kappa_apply
-#print axioms kappa_ker
-#print axioms kappa_surjective
-#print axioms kappa_equivariant
-#print axioms lambda_frobenius_plus
 
 end ZInQ.Manuscript.RC.Stages

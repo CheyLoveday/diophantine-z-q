@@ -2,7 +2,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalWeights.Models
 import ZInQKernel.Contrib.OneProof.RC.Odd.ThetaLocal
 
 /-! The (p ∣ m) weight (tex 8536–8549). The explicit orbit representatives
-for the nonzero nilpotents are provenance (c). -/
+for the nonzero nilpotents are given here. -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
 
@@ -174,16 +174,3 @@ theorem nilSupport_reduction (x : TraceZero ℤ_[p]) (hx : NilSupport p x) :
       exact dvd_sub (mul_dvd_mul (he 0 0) (he 1 1)) (mul_dvd_mul (he 0 1) (he 1 0)))
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms nilBasis_exists
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms nilBasis_sign_eq
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms nilSign_of_basis
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms nilSign_conj
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms nilSign_scale
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms nilSupport_reduction

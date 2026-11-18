@@ -235,16 +235,4 @@ theorem residueSigns_of_agreement {g σ : GalQ} {p : ℕ} [Fact p.Prime] (h2 : p
   exact ⟨by exact_mod_cast (mul_right_cancel₀ hx₀ xeq),
     by exact_mod_cast (mul_right_cancel₀ hy₀ yeq)⟩
 
-#print axioms aux_le_joint
-#print axioms tors_left_le_joint
-#print axioms tors_right_le_joint
-#print axioms global_frob_sq_on_torsion
-#print axioms jointField_finite
-#print axioms normal_of_stable_coords
-#print axioms jointField_isGalois
-#print axioms exists_jointFrob
-#print axioms DivisionTower.proj_cocycle_sq_eq_of_agree
-#print axioms apply_sqrt_of_isFrobAt
-#print axioms residueSigns_of_agreement
-
 end ZInQ.Manuscript.RC.Stages

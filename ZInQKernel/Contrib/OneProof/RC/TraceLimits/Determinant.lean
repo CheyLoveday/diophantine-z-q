@@ -92,6 +92,4 @@ theorem detOrbit_coefficient
     m.sum_mem fun j hj => m.mul_mem_left _ (D.unary_eq j hj _ (fresh_mul_ne_unary hq.1 hqn (hqj j hj)))
   exact (m.sub_mem_iff_left hsum).1 (ha (q * n))
 
-#print axioms detOrbit_coefficient
-
 end ZInQ.Manuscript.RC.TraceLimits

@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.OneProof.RC.Eichler.Ideals
 # Local completions and the level condition
 
 Tex 8462–8469, 8481–8484, 9040–9042. This is the local normal-form definition of
-an Eichler order (on-the-spot, c). It treats every prime dividing the level by the
+an Eichler order. It treats every prime dividing the level by the
 same lower-left congruence, including the prime two.
 -/
 
@@ -131,13 +131,3 @@ theorem self_locallyPrincipal (R : Order a b) : (self R).LocallyPrincipal := by
 end RightIdeal
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.toLocal
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.completion
-#print axioms ZInQ.Manuscript.RC.Eichler.Order.completion_toSubmodule
-#print axioms ZInQ.Manuscript.RC.Eichler.standardLevel_zero
-#print axioms ZInQ.Manuscript.RC.Eichler.IsEichler.local_split
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.LocallyPrincipal
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.self_locallyPrincipal

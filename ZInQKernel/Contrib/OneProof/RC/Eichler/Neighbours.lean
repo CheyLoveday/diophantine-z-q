@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.OneProof.RC.Eichler.Fields
 /-!
 # Duality of the ideal correspondences
 
-Tex 8481–8484 and 9067–9071. On-the-spot (c): an arrow from `i` to `j` is a multiplier
+Tex 8481–8484 and 9067–9071. Here an arrow from `i` to `j` is a multiplier
 of the chosen representative of `j` onto a subideal of the representative of `i`.
 Duality sends the multiplier `u` to `u⁻¹ p`; this exchanges the two index-`p²`
 inclusions between `pI` and `I`.
@@ -204,17 +204,3 @@ theorem finite_integral_bounded (R : Order a b) (M : ℕ) :
         K.val) h))
 
 end ZInQ.Manuscript.RC.Eichler
-
-/-! Axiom audit -/
-
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.scalar_mul
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.scalar_comm
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.lattice_scalar_le
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.relIndex_scalar
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.translate_le_iff
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.relIndex_translate
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.IsNeighbour
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.neighbour_dual
-#print axioms ZInQ.Manuscript.RC.Eichler.RightIdeal.arrowsDual
-#print axioms ZInQ.Manuscript.RC.Eichler.exists_bounded_integral_representative
-#print axioms ZInQ.Manuscript.RC.Eichler.finite_integral_bounded

@@ -28,9 +28,9 @@ PROVED from smaller inputs stated over actual primes and the data `W`:
   Fourier index). The filter is the odd source's OWN filter (`LabelData.oddAdmissible`), not the
   stage support `W.admissible` of the data, which also carries the later prime exclusions of the
   enlarged support (the primes of `k`): "Enlarging `S_lab` records labels and prime exclusions; it
-  does not change the coefficient source" (tex 2028–2029), "The intrinsic odd symbol continues to
+  does not change the coefficient source" (tex 2027–2029), "The intrinsic odd symbol continues to
   omit the primes of `k`" (2603, 10282), "They do not add conditions to that odd symbol"
-  (10596–10597). Round-2 correction: reading the odd source through `W.admissible` vetoes the fresh
+  (10594–10596). Round-2 correction: reading the odd source through `W.admissible` vetoes the fresh
   prime of `k`, a good prime of the odd types, in every set, which together with App F's readings
   and a nonempty witness is contradictory;
 * the even symbol is the restriction to `K`-split labels of the symbol of the even reading `Rev`
@@ -74,7 +74,12 @@ bad primes of `E_ℓ` and `E^{(k)}` inside the respective supports, and the intr
 (`oddAdmissible`) with its link to the stage support of the data (`oddAdmissible_iff`). A genuine
 discharge takes `m₁` to be the modulus of the whole intrinsic odd coefficient support (with `h_*`
 and the sieve primes) and `m₂` that of the transported even source, as the types, `kummer` and the
-filters require (tex 2016–2025, 9471–9478). -/
+filters require (tex 2016–2025, 9471–9478). The address leaf (`AddressDensityLeaf`, with its
+consumer's premises) forces `m₁` to contain every prime at which the odd coefficients vanish,
+otherwise that prime is a good prime vetoed in every set. With `OddFilter` and
+`oddAdmissible_iff` it then forces the intrinsic filter and the stage support `W.admissible` to be
+unit squares at every prime of `m₁`, including the primes of `h_*` (tex 2018–2021, 2042–2043,
+10589–10591). -/
 structure LabelData {ℓ : ℕ} (W : WData ℓ) where
   /-- the common label modulus -/
   m : ℕ
@@ -102,16 +107,19 @@ structure LabelData {ℓ : ℕ} (W : WData ℓ) where
   ℓ₀_prime : ∀ θ, (ℓ₀ θ).Prime
   ℓ₀_cop : ∀ θ, Nat.Coprime (ℓ₀ θ) m
   /-- **the intrinsic odd filter at stage `θ`** (definition; tex 2016–2029, 9471–9483, 2600–2603,
-  10282–10286, 10589–10597): the filter of the intrinsic odd coefficient source itself — its
+  10282–10286, 10589–10596): the filter of the intrinsic odd coefficient source itself — its
   prepared filter at its own coefficient support (before the primes of `k` and the later
   stationary label tests enlarge the support), cut by the moving condition `(D/ℓ₀) = 1`. "Later
   stationary prime-selection tests may enrich the common label alphabet without resieving the
-  intrinsic odd source" (9479–9481). -/
+  intrinsic odd source" (9481–9483). -/
   oddAdmissible : ℕ → ℤ → Prop
-  /-- **the later exclusions only remove primes** (definition; tex 2028–2029: "Enlarging `S_lab`
-  records labels and prime exclusions; it does not change the coefficient source"; 9479–9483,
-  10594–10597): on indices prime to the enlarged support `W.S` (in particular to the primes of
-  `k`), the intrinsic odd filter and the stage support of the data agree -/
+  /-- **the later exclusions only remove primes** (definition; tex 2027–2029: "Enlarging `S_lab`
+  records labels and prime exclusions; it does not change the coefficient source"; 9481–9483,
+  10594–10596): on indices prime to the enlarged support `W.S` (in particular to the primes of
+  `k`), the intrinsic odd filter and the stage support of the data agree. The stage support
+  excludes the primes of `k` but imposes no squareclass condition at them: the stationary
+  `k`-tests are labels of the common alphabet, not filter conditions (tex 2027–2029,
+  10594–10596). A stage support with such a test contradicts the Branch-2 leaf. -/
   oddAdmissible_iff : ∀ θ (d : ℤ), (∀ p ∈ W.S, p.Prime → ¬ (p : ℤ) ∣ d) →
     (oddAdmissible θ d ↔ W.admissible θ d)
 
@@ -181,7 +189,7 @@ open Classical in
 2045–2046: the coefficient symbol `[v₂ a(D) = δ + ω(D)]` on the source's filter at the positive
 Fourier index `D = ∏ p_v`; App F 9675–9678): one exactly when `D = ∏_{q ∈ U} q` lies in the
 intrinsic odd filter `D.oddAdmissible θ` and `v₂ a_{M_θ}(D) = δ_o + |U|`. The filter is the odd
-source's own, not the stage support `W.admissible` (tex 2028–2029, 2603, 10282, 10596–10597; see
+source's own, not the stage support `W.admissible` (tex 2027–2029, 2603, 10282, 10594–10596; see
 the module docstring). -/
 def Rodd {ℓ : ℕ} (W : WData ℓ) (D : LabelData W) (θ : ℕ) (U : Finset ℕ) : ZMod 2 :=
   if D.oddAdmissible θ (∏ q ∈ U, (q : ℤ)) ∧
@@ -214,7 +222,7 @@ def OddReadings : Prop :=
     FixedUFactorization (D.T₁ θ) (Rodd W D θ) (Wc + 1) ∧
       O12Reading (D.T₁ θ) (Rodd W D θ) (apo ℓ) (Wc + 1) ∧ PrimaryReading (D.T₁ θ) (Rodd W D θ) (Wc + 1)
 
-/-- **The bounded-weight witness in the stabilized tables** (ELLIOT; tex 2588–2593, 10188–10199,
+/-- **The bounded-weight witness in the stabilized tables** (ELLIOT; tex 2588–2593, 10190–10199,
 10268–10270, 10501–10505, 10541–10547: "The bounded-weight witness remains a witness in these
 tables"): a nonempty compatible typed graph over the intrinsic odd alphabet whose stage symbol is
 one on a set of stages of the ultrafilter. Round-2 correction: a fixed set of primes reading one
@@ -224,10 +232,15 @@ def OddWitness : Prop :=
   ∃ Γ : Config D.L₁, Γ.Compatible D.ε₁ ∧ Γ.V.Nonempty ∧
     ∀ᶠ θ in (W.stages : Filter ℕ), stageSymbol (D.T₁ θ) (Rodd W D θ) Γ = 1
 
-/-- **The intrinsic odd filter contains one** (definition; tex 2042–2044, 10236–10240,
-10589–10592: "The intrinsic odd filter contains `1`: its fixed unit squareclasses, positive sign,
-and moving condition `(D/ℓ₀) = 1` are those of `1`"): its indices are positive units at `m₁ ℓ₀`
-in the squareclass of one at `m₁` and at `ℓ₀`. -/
+/-- **Necessary conditions for the intrinsic odd filter** (definition; tex 2042–2044,
+10589–10591): every admitted index is positive, is a unit at `m₁ ℓ₀`, and is in the
+squareclass of one at `m₁` and at `ℓ₀`. This implication does not assert that the filter
+contains one or that every index of these types is admitted. With `PreDataSpec`,
+`LabelData.oddAdmissible_iff` implies membership of one at every stage.
+DEPARTURE unless App F's "prescribed unit classes" (tex 8209–8210) include the class of 1 at the
+primes of `h_*`: the stage support carries the added unit-squareclass condition of 1 at those
+primes (tex 8564–8565, 9094–9095). The fixed witness `D_w` satisfies it (tex 8254–8258), and `δ_o`
+is the minimum of that source. -/
 def OddFilter : Prop :=
   ∀ θ : ℕ, ∀ D' : ℤ, D.oddAdmissible θ D' →
     0 < D' ∧ IsSquare (D' : ZMod D.m₁) ∧ IsSquare (D' : ZMod (D.ℓ₀ θ)) ∧
@@ -245,9 +258,9 @@ def EvenReadings : Prop :=
   (∀ B, FixedUFactorization D.T₂ Rev B) ∧ (∀ B, O12Reading D.T₂ Rev (apk W) B) ∧
     (∀ B, PrimaryReading D.T₂ Rev B)
 
-/-- **The even filter contains one** (definition; tex 10264–10265, 10293–10295, 10591–10594: the
-source is "normalized in the unit filter containing `1`"): a unit of the even reading has its index
-in the squareclass of one at the support. -/
+/-- **Necessary filter condition on even units** (definition; tex 10264–10265,
+10293–10295, 10591–10594): a unit reading on good primes has its index in the
+squareclass of one at the support. This does not assert `Rev ∅ = 1`. -/
 def EvenFilter : Prop :=
   ∀ U : Finset ℕ, (∀ q ∈ U, q.Prime ∧ Nat.Coprime q D.m₂) → Rev U = 1 →
     IsSquare (((∏ q ∈ U, (q : ℤ) : ℤ)) : ZMod D.m₂)
@@ -576,7 +589,8 @@ theorem addressPackageStaged_of_genuine {ℓ : ℕ} (W : WData ℓ) (D : LabelDa
 /-- **Label data exist** for every `ℓ > 0` and `k ≠ 0` (PROVED; structural non-vacuity only):
 `m₁ = 24ℓ`, `m₂ = 24|k|ℓ`, `m = m₁m₂`, `ℓ₀ θ` a prime larger than `m`, and the stage support of the
 data as the odd filter. A genuine discharge takes the old odd source's own filter instead (see
-`oddAdmissible_no_veto`). -/
+`oddAdmissible_no_veto`). This odd filter (the stage support) vetoes the fresh prime and cannot
+witness the Branch-2 leaf; it shows structural non-vacuity only. -/
 theorem LabelData.nonempty {ℓ : ℕ} (W : WData ℓ) (hℓ : 0 < ℓ) (hk : W.kfin ≠ 0) :
     Nonempty (LabelData W) := by
   have hka : 0 < W.kfin.natAbs := Int.natAbs_pos.mpr hk
