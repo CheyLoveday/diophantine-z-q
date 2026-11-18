@@ -186,6 +186,7 @@ theorem matGL_sl (g : SL(2, ℤ)) :
 
 #print axioms det_tri
 #print axioms div_spec
+#print axioms det_repMat
 #print axioms repMat_repOf
 #print axioms exists_reduce
 #print axioms reduce_unique
