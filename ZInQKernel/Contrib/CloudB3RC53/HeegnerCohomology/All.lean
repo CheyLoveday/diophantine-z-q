@@ -11,6 +11,7 @@ import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.Cartesian
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.CorDescent
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.MackeyCor
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.KummerPush
+import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.DualityData
 
 /-!
 # HeegnerCohomology: the cohomological layer of `ex:arith-finite-heegner` (tex 2834–3410)
@@ -38,4 +39,6 @@ Index of the area (all `PROVED`, standard axioms):
   `MackeyCorNode`.
 * `KummerPush`: the old Kummer conditions survive the coefficient push (tex 3257–3267); node
   `OldKummerSurvivesNode`.
+* `DualityData`: the local duality data at the derivative places (zero isotropy homotopies, negative
+  Hom vanishing, tex 3359–3364); node `LocalDualityDataNode`.
 -/
