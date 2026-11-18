@@ -19,7 +19,7 @@ places is `O` (`eq_zero_of_forall_mem_polePoints`: its `x`-coordinate would have
 poles).
 
 This is the first step towards the compatibility of the Weil pairing with separable isogenies,
-`e_N(φ S, φ T) = e_N(S, T)^{deg φ}` (Silverman III.8.2).
+`e_N(φ S, φ T) = e_N(S, T)^{deg φ}` (a consequence of Silverman III.8.2).
 
 Classification: PROVED.
 -/

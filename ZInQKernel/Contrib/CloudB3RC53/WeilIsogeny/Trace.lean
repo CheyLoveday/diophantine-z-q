@@ -58,6 +58,7 @@ instance psi_isSeparable {m : ℤ} (n : ℤ) (hm : (m : K) ≠ 0) :
   (Hom.isSeparable_toIsogeny_zsmul_sub_zsmul_id_iff_of_pullbackDifferential_eq_zero
     (piK_pullbackDifferential W) n m (psi_ne_zero W n hm)).mpr hm
 
+omit [IsSepClosed K] in
 theorem pointMap_psi {m : ℤ} (n : ℤ) (hm : (m : K) ≠ 0) (P : (W⁄K).toAffine.Point) :
     (Hom.ofIsogeny (psi W n hm)).pointMap P =
       n • Multiplicative.toAdd (W.pointGaloisAction
@@ -66,6 +67,7 @@ theorem pointMap_psi {m : ℤ} (n : ℤ) (hm : (m : K) ≠ 0) (P : (W⁄K).toAff
     Hom.id_pointMap, piK, pointGaloisAction_frobenius]
   rfl
 
+omit [Algebra.IsAlgebraic F K] in
 theorem degree_psi_one_one :
     (psi W (m := 1) 1 (by simp : ((1 : ℤ) : K) ≠ 0)).degree = Nat.card W.toAffine.Point := by
   rw [psi, ← Hom.degree_ofIsogeny, Hom.ofIsogeny_toIsogeny, one_zsmul, one_zsmul, piK]
