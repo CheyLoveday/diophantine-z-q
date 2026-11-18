@@ -20,3 +20,11 @@
   `javanpeykarThm111JacKEx_of_an` uses the already present Raynaud and Néron fields.
   Both group-iso and Pic⁰ representative invariance compile; all ten declarations
   checked in `CheckJacKEx.txt` use only the standard axioms.
+- VERIFIED (Lean): the generated composite and both dry-run tops report only
+  `propext`, `Classical.choice`, and `Quot.sound`. The old row occurs only in the
+  original top's closure; the existential row and reader occur only in the new
+  top's closure. The Faltings comparison is in both; neither reaches `sorryAx`.
+  See `ClosureCheck.txt`.
+- VERIFIED (computed): the generator and count output reproduce exactly. The
+  in-memory swap preserves 29 H hypotheses (5 LEAF / 24 GLUE) and four other
+  hypotheses under both ratings; see `Counts.txt`.
