@@ -183,7 +183,8 @@ theorem aeval_norm_eq {x y : FQ M} (h : OnCurve M A x y) (p q : ℚ[X]) :
     aeval x (Algebra.norm ℚ[X] (p • (1 : A.toAffine.CoordinateRing) +
         q • WeierstrassCurve.Affine.CoordinateRing.mk A.toAffine Polynomial.X)) =
       (aeval x p + aeval x q * y) *
-        (aeval x p + aeval x q * (-y - algebraMap ℚ (FQ M) A.a₁ * x - algebraMap ℚ (FQ M) A.a₃)) := by
+        (aeval x p + aeval x q *
+          (-y - algebraMap ℚ (FQ M) A.a₁ * x - algebraMap ℚ (FQ M) A.a₃)) := by
   rw [WeierstrassCurve.Affine.CoordinateRing.norm_smul_basis]
   simp only [map_sub, map_mul, map_pow, map_add, aeval_X, aeval_C]
   simp only [OnCurve] at h
@@ -235,5 +236,94 @@ theorem pointAlgHom_injective {x y : FQ M} (h : OnCurve M A x y)
   rw [hp, hq, zero_smul, zero_smul, add_zero]
 
 end Injective
+
+/-! ### The map on function fields and the pull-back of `ω_A` -/
+
+section FunctionField
+
+variable {M : ℕ} [NeZero M] {A : WeierstrassCurve ℚ}
+
+/-- **A nonconstant point of `A` over `F` is a field embedding `ℚ(A) → F`** (the function-field
+form of the nonconstant map `X₀(M) → A`), extending `pointAlgHom`. -/
+def pointFieldHom {x y : FQ M} (h : OnCurve M A x y)
+    (hx : ∃ n : ℤ, n ≠ 0 ∧ (x : LaurentSeries ℚ).coeff n ≠ 0) :
+    A.toAffine.FunctionField →+* FQ M :=
+  IsFractionRing.lift (pointAlgHom_injective h hx)
+
+theorem pointFieldHom_algebraMap {x y : FQ M} (h : OnCurve M A x y)
+    (hx : ∃ n : ℤ, n ≠ 0 ∧ (x : LaurentSeries ℚ).coeff n ≠ 0) (r : A.toAffine.CoordinateRing) :
+    pointFieldHom h hx (algebraMap _ A.toAffine.FunctionField r) = pointAlgHom h r :=
+  IsFractionRing.lift_algebraMap _ r
+
+/-- The pull-back of differentials along a field map `ψ : ℚ(A) → F`. -/
+def pullbackFF (ψ : A.toAffine.FunctionField →+* FQ M) :
+    Ω[A.toAffine.FunctionField⁄ℚ] →ₗ[ℚ] Ω[FQ M⁄ℚ] :=
+  letI : Algebra A.toAffine.FunctionField (FQ M) := ψ.toAlgebra
+  haveI : IsScalarTower ℚ A.toAffine.FunctionField (FQ M) :=
+    IsScalarTower.of_algebraMap_eq fun r => by
+      rw [eq_ratCast (algebraMap ℚ (FQ M)) r, eq_ratCast (algebraMap ℚ A.toAffine.FunctionField) r,
+        RingHom.algebraMap_toAlgebra, map_ratCast]
+  (KaehlerDifferential.map ℚ ℚ A.toAffine.FunctionField (FQ M)).restrictScalars ℚ
+
+theorem pullbackFF_D (ψ : A.toAffine.FunctionField →+* FQ M) (f : A.toAffine.FunctionField) :
+    pullbackFF ψ (KaehlerDifferential.D ℚ _ f) = KaehlerDifferential.D ℚ (FQ M) (ψ f) := by
+  let _ : Algebra A.toAffine.FunctionField (FQ M) := ψ.toAlgebra
+  have : IsScalarTower ℚ A.toAffine.FunctionField (FQ M) :=
+    IsScalarTower.of_algebraMap_eq fun r => by
+      rw [eq_ratCast (algebraMap ℚ (FQ M)) r, eq_ratCast (algebraMap ℚ A.toAffine.FunctionField) r,
+        RingHom.algebraMap_toAlgebra, map_ratCast]
+  exact KaehlerDifferential.map_D ℚ ℚ A.toAffine.FunctionField (FQ M) f
+
+theorem pullbackFF_smul (ψ : A.toAffine.FunctionField →+* FQ M) (a : A.toAffine.FunctionField)
+    (ω : Ω[A.toAffine.FunctionField⁄ℚ]) : pullbackFF ψ (a • ω) = ψ a • pullbackFF ψ ω := by
+  let _ : Algebra A.toAffine.FunctionField (FQ M) := ψ.toAlgebra
+  have : IsScalarTower ℚ A.toAffine.FunctionField (FQ M) :=
+    IsScalarTower.of_algebraMap_eq fun r => by
+      rw [eq_ratCast (algebraMap ℚ (FQ M)) r, eq_ratCast (algebraMap ℚ A.toAffine.FunctionField) r,
+        RingHom.algebraMap_toAlgebra, map_ratCast]
+  change KaehlerDifferential.map ℚ ℚ A.toAffine.FunctionField (FQ M) (a • ω) = _
+  rw [LinearMap.map_smul, ← algebraMap_smul (FQ M) a]
+  rfl
+
+/-- The coordinate functions `X`, `Y` of `ℚ(A)`. -/
+abbrev fX (A : WeierstrassCurve ℚ) : A.toAffine.FunctionField :=
+  algebraMap _ _ (WeierstrassCurve.Affine.CoordinateRing.mk A.toAffine (Polynomial.C Polynomial.X))
+
+abbrev fY (A : WeierstrassCurve ℚ) : A.toAffine.FunctionField :=
+  algebraMap _ _ (WeierstrassCurve.Affine.CoordinateRing.mk A.toAffine Polynomial.X)
+
+/-- **The invariant differential of `A`** in `Ω[ℚ(A)⁄ℚ]`: `ω_A = dX/(2Y + a₁X + a₃)`. -/
+def omegaA (A : WeierstrassCurve ℚ) : Ω[A.toAffine.FunctionField⁄ℚ] :=
+  ((fY A + fY A) + algebraMap ℚ _ A.a₁ * fX A + algebraMap ℚ _ A.a₃)⁻¹ •
+    KaehlerDifferential.D ℚ _ (fX A)
+
+/-- **The pull-back of `ω_A` along the function-field map of a nonconstant point is
+`omegaPull`.** -/
+theorem pullbackFF_omegaA {x y : FQ M} (h : OnCurve M A x y)
+    (hx : ∃ n : ℤ, n ≠ 0 ∧ (x : LaurentSeries ℚ).coeff n ≠ 0) :
+    pullbackFF (pointFieldHom h hx) (omegaA A) = omegaPull A x y := by
+  have hX : pointFieldHom h hx (fX A) = x := by
+    rw [pointFieldHom_algebraMap]
+    exact pointAlgHom_X h
+  have hY : pointFieldHom h hx (fY A) = y := by
+    rw [pointFieldHom_algebraMap]
+    exact pointAlgHom_Y h
+  have hq : ∀ a : ℚ, pointFieldHom h hx (algebraMap ℚ A.toAffine.FunctionField a) =
+      algebraMap ℚ (FQ M) a := fun a => by
+    rw [eq_ratCast (algebraMap ℚ A.toAffine.FunctionField), eq_ratCast (algebraMap ℚ (FQ M)),
+      map_ratCast]
+  rw [omegaA, pullbackFF_smul, pullbackFF_D, map_inv₀, map_add, map_add, map_add, map_mul,
+    hX, hY, hq, hq]
+  rfl
+
+/-- **The `q`-expansion of the pulled-back invariant differential of `A`** along the function-field
+map of a nonconstant point: `θx · (2y + a₁x + a₃)⁻¹`. -/
+theorem qExpDiff_pullbackFF_omegaA {x y : FQ M} (h : OnCurve M A x y)
+    (hx : ∃ n : ℤ, n ≠ 0 ∧ (x : LaurentSeries ℚ).coeff n ≠ 0) :
+    qExpDiff M (pullbackFF (pointFieldHom h hx) (omegaA A)) =
+      ((denomF A x y : LaurentSeries ℚ))⁻¹ * eulerOp (x : LaurentSeries ℚ) := by
+  rw [pullbackFF_omegaA, qExpDiff_omegaPull]
+
+end FunctionField
 
 end ZInQ.Contrib.CloudB3RC53.NewformS13
