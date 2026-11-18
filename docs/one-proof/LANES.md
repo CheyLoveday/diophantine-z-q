@@ -7,8 +7,9 @@ A lane is one unit of project work: one issue (template "Lane"), one owner, one 
 - **New files, one directory.** New Lean goes in new files under the lane's own directory (outside contributors:
   `ZInQKernel/Contrib/OneProof/`). Existing modules change only in folds.
 - **One writer per shared file.** [OWNERS.tsv](../../OWNERS.tsv) names the single writer of each shared or generated
-  file. Generated files (OPEN.md, open-statements.json, pages-wanted.md) are written only by the folds. claims.tsv is
-  written only by the claims sync. A change to someone else's file goes through its owner.
+  file. Generated files (OPEN.md, open-statements.json, pages-wanted.md) are written only by the integrator with
+  render_open.py: in folds, and OPEN.md also after a volatile.tsv edit. claims.tsv is written only by the claims sync.
+  A change to someone else's file goes through its owner.
 - **See what is coming.** [fold-queue.tsv](fold-queue.tsv) lists what is about to land, and
   `volatile.tsv` (in this directory, once the integrator first uses it) lists board rows that a queued fold will remove
   or rename: do not start work on those. After editing volatile.tsv, the integrator re-renders OPEN.md in the same

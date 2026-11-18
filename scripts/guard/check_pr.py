@@ -66,7 +66,8 @@ def listed(label, extra):
     names = set()
     body = HTML_COMMENT.sub('', os.environ.get('PR_BODY') or '')
     for src in (body, f'{label}: {extra}' if extra else ''):
-        for m in re.finditer(rf'^[ \t]*{label}:[ \t]*(.*)$', src, re.M):
+        # a bullet and backticks around the label are allowed: `Removes-rows: a`, `Removes-rows:` a, - Removes-rows: a
+        for m in re.finditer(rf'^[ \t]*(?:[-*+][ \t]+)?`?{label}:`?[ \t]*(.*)$', src, re.M):
             names |= {n.strip(' `') for n in re.split(r'[,\s]+', m.group(1)) if n.strip(' `')}
     return names
 
