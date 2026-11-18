@@ -62,6 +62,8 @@ def LocalCohomologyF2 : Prop :=
       Subsingleton (contCohomology (ZMod 2) (Gal(AlgebraicClosure K/K)) (ZMod 2) n)
 
 
+omit [DistribMulAction (Gal(AlgebraicClosure K/K)) (ZMod 2)] [SMulCommClass (Gal(AlgebraicClosure K/K)) (ZMod 2) (ZMod 2)]
+  [ContinuousSMul (Gal(AlgebraicClosure K/K)) (ZMod 2)] in
 /-- A Frobenius lift fixing `√ϖ` and a tame generator moving it. -/
 theorem exists_phi_sigma (hp : ringChar 𝓀[K] ≠ 2) :
     ∃ φ σ : Gal(AlgebraicClosure K/K), IsArithFrobeniusLift K φ ∧ φ (sqrtUnif K) = sqrtUnif K ∧
@@ -78,6 +80,7 @@ theorem exists_phi_sigma (hp : ringChar 𝓀[K] ≠ 2) :
   refine ⟨φ, σ, hφ, hφα, hσI, ?_⟩
   rw [apply_eq_kummerVal_mul (sqrtUnif_ne_zero K), hσprim.eq_neg_one_of_two_right, neg_one_mul]
 
+omit [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 /-- The character of a continuous `1`-cocycle with trivial `𝔽₂` coefficients. -/
 theorem cocycle_additive (y : (contCochains (ZMod 2) (Gal(AlgebraicClosure K/K)) (ZMod 2)).X 1) (hy : ((contCochains (ZMod 2) (Gal(AlgebraicClosure K/K)) (ZMod 2)).d 1 2).hom y = 0)
     (g h : Gal(AlgebraicClosure K/K)) :
@@ -280,5 +283,166 @@ theorem tameF2L_quasiIso (hp : ringChar 𝓀[K] ≠ 2) (hq : Odd q) (hL : LocalC
   · exact tameF2L_quasiIsoAt_neg hp hq m
 
 end Full
+
+section Unr
+
+variable [DistribMulAction (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2)] [SMulCommClass (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2) (ZMod 2)]
+  [ContinuousSMul (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2)]
+
+omit [DistribMulAction (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2)] [SMulCommClass (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2) (ZMod 2)]
+  [ContinuousSMul (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2)] in
+theorem locallyCompactSpace_unr : LocallyCompactSpace (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) :=
+  have : T2Space (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) := krullTopology_t2
+  have : R1Space (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) := T2Space.r1Space
+  have : WeaklyLocallyCompactSpace (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) := ⟨fun _ => ⟨Set.univ, isCompact_univ, Filter.univ_mem⟩⟩
+  WeaklyLocallyCompactSpace.locallyCompactSpace
+
+omit [DistribMulAction (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2)] [SMulCommClass (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2) (ZMod 2)]
+  [ContinuousSMul (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2)] in
+theorem urBar_frob :
+    urBar K (frobElt (maximalUnramifiedGaloisGroupEquivZHat K (AlgebraicClosure K))) = 1 := by
+  unfold urBar frobElt
+  rw [ContinuousMulEquiv.apply_symm_apply, zHat.lift_gen, toAdd_ofAdd]
+
+theorem tU_eq_zero (n : ℤ) (h0 : n ≠ 0) (h1 : n ≠ 1) (x : (tU (ZMod 2) (LinearMap.id : ZMod 2 →ₗ[ZMod 2] ZMod 2)).X n) : x = 0 :=
+  @Subsingleton.elim _ (ZInQ.Contrib.CloudB3RC53.ClearingComplex.tUX_subsingleton
+    (S := ZMod 2) (M := ZMod 2) n h0 h1) x 0
+
+theorem tU_toCC_d (i j : ℤ) (h : i + 1 = j) (x : (tU (ZMod 2) (LinearMap.id : ZMod 2 →ₗ[ZMod 2] ZMod 2)).X i) :
+    (((tU (ZMod 2) (LinearMap.id : ZMod 2 →ₗ[ZMod 2] ZMod 2)).toCC).d i j).hom x = (tU (ZMod 2) (LinearMap.id : ZMod 2 →ₗ[ZMod 2] ZMod 2)).d i j h x :=
+  PairedFunctional.GCx.toCC_d_hom _ i j h x
+
+/-- **The unramified comparison is a quasi-isomorphism** (`Gal(K^{ur}/K) ≃ ℤ̂`). PROVED. -/
+theorem tameF2U_quasiIso : QuasiIso (SelmerDuality.GHom.toCC (tameF2U (K := K))) := by
+  have := locallyCompactSpace_unr (K := K)
+  set E := maximalUnramifiedGaloisGroupEquivZHat K (AlgebraicClosure K)
+  refine ⟨fun n => ?_⟩
+  rcases n with (_ | _ | m) | m
+  · -- degree 0
+    refine quasiIsoAt_of_elem _ (-1) 0 1 (by simp) (by simp) ?_ ?_
+    · intro (y : (contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).X 0) hy
+      refine ⟨(contFun (k := ZMod 2) y Fin.elim0 : ZMod 2), ?_, 0, ?_⟩
+      · refine (tU_toCC_d 0 1 rfl _).trans ?_
+        change (contFun (k := ZMod 2) y Fin.elim0 - contFun (k := ZMod 2) y Fin.elim0 : ZMod 2) = 0
+        exact sub_self _
+      · have key : lin0U (K := K) (contFun (k := ZMod 2) y Fin.elim0) = y := by
+          refine contCochains_ext fun v => ?_
+          rw [Subsingleton.elim v Fin.elim0]
+          rfl
+        rw [map_zero]
+        exact key.trans (add_zero y).symm
+    · intro x _ z hxz
+      have hz0 : z = 0 := rfl
+      rw [hz0, map_zero] at hxz
+      have hval := congrArg (fun c : (contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).X 0 => contFun (k := ZMod 2) c Fin.elim0) hxz
+      change (x : ZMod 2) = 0 at hval
+      refine ⟨0, ?_⟩
+      rw [map_zero]
+      exact hval.symm
+  · -- degree 1
+    refine quasiIsoAt_of_elem _ 0 1 2 (by simp) (by simp) ?_ ?_
+    · intro (y : (contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).X 1) hy
+      have hy' : ((contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).d 1 2).hom y = 0 := (natCx_toCC_d 1 y).symm.trans hy
+      set zf : (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) → ZMod 2 := fun g => contFun (k := ZMod 2) y (fun _ => g)
+      have hadd : ∀ g h, zf (g * h) = zf g + zf h := fun g h => by
+        have := congrArg (fun c => contFun (k := ZMod 2) (G := Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (M := ZMod 2) c ![g, h]) hy'
+        beta_reduce at this
+        rw [contFun_d12, smul_zmod_two, contFun_zero_apply] at this
+        linear_combination -this
+      have hZ : zf ∈ ContCohomology.Z1 (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2) :=
+        ContCohomology.mem_Z1_iff.2 ⟨continuous_contFun_one y, fun g h => by
+          rw [hadd, smul_zmod_two, add_comm]⟩
+      set a := zf (frobElt E)
+      have hW : (fun g => a * urBar K g) ∈ ContCohomology.Z1 (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2) :=
+        ContCohomology.mem_Z1_iff.2 ⟨(continuous_of_discreteTopology
+          (f := fun x : ZMod 2 => a * x)).comp continuous_urBar, fun g h => by
+            simp only [urBar_mul, smul_zmod_two]; ring⟩
+      have heq : (fun g => a * urBar K g) = zf :=
+        ContCohomology.eq_of_mem_Z1_of_eqOn_of_topologicalClosure_closure_eq_top hW hZ
+          (closure_frob_eq_top E) (fun g hg => by
+            rw [Set.mem_singleton_iff] at hg
+            subst hg
+            change a * urBar K (frobElt E) = a
+            rw [urBar_frob, mul_one])
+      refine ⟨(a : ZMod 2), ?_, 0, ?_⟩
+      · exact (tU_toCC_d 1 2 rfl _).trans rfl
+      · have key : lin1U (K := K) a = y := by
+          refine contCochains_ext fun v => ?_
+          rw [fin1_eq'' v]
+          change a * urBar K (v 0) = zf (v 0)
+          exact congrFun heq (v 0)
+        rw [map_zero]
+        exact key.trans (add_zero y).symm
+    · intro x _ (z : (contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).X 0) hxz
+      have hxz' := hxz.trans (natCx_toCC_d 0 z)
+      have hdz : ((contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).d 0 1).hom z = 0 := by
+        refine contCochains_ext fun v => ?_
+        rw [fin1_eq'' v, contFun_d01, smul_zmod_two, sub_self]
+        rfl
+      rw [hdz] at hxz'
+      have hval := congrArg (fun c : (contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).X 1 => contFun (k := ZMod 2) c
+        (fun _ => frobElt E)) hxz'
+      change (show ZMod 2 from x) * urBar K (frobElt E) = 0 at hval
+      rw [urBar_frob, mul_one] at hval
+      refine ⟨0, ?_⟩
+      rw [map_zero]
+      exact hval.symm
+  · -- degrees ≥ 2
+    refine quasiIsoAt_of_elem _ ((m + 1 : ℕ) : ℤ) ((m + 2 : ℕ) : ℤ) ((m + 2 + 1 : ℕ) : ℤ)
+      (by simp; omega) (by simp) ?_ ?_
+    · intro (y : (contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).X (m + 2)) hy
+      have hy' : ((contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).d (m + 2) (m + 2 + 1)).hom y = 0 := (natCx_toCC_d (m + 2) y).symm.trans hy
+      have hsub := subsingleton_contCohomology_ge_two E (ZMod 2) (ZMod 2) (m + 2) (by omega)
+      have hex : (contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2)).ExactAt (m + 2) :=
+        (HomologicalComplex.exactAt_iff_isZero_homology _ _).2 (ModuleCat.isZero_of_subsingleton _)
+      rw [HomologicalComplex.exactAt_iff' _ (m + 1) (m + 2) (m + 2 + 1) (by simp) (by simp),
+        ShortComplex.moduleCat_exact_iff] at hex
+      obtain ⟨z, hz⟩ := hex y hy'
+      have h2 : (((natCx (contCochains (ZMod 2) Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K) (ZMod 2))).toCC).d ((m + 1 : ℕ) : ℤ) ((m + 2 : ℕ) : ℤ)).hom (-z) = -y :=
+        (natCx_toCC_d (m + 1) (-z)).trans ((map_neg _ z).trans (congrArg Neg.neg hz))
+      refine ⟨0, map_zero _, -z, ?_⟩
+      refine (map_zero _).trans ?_
+      rw [h2]
+      exact (add_neg_cancel y).symm
+    · intro x _ _ _
+      refine ⟨0, ?_⟩
+      exact (map_zero _).trans (tU_eq_zero _ (by omega) (by omega) x).symm
+  · -- negative degrees
+    refine quasiIsoAt_of_elem _ (Int.negSucc m - 1) (Int.negSucc m) (Int.negSucc m + 1)
+      (by simp) (by simp) ?_ ?_
+    · intro y _
+      refine ⟨0, map_zero _, 0, ?_⟩
+      have hy : y = 0 := rfl
+      rw [hy, map_zero, map_zero, add_zero]
+    · intro x _ _ _
+      refine ⟨0, ?_⟩
+      exact (map_zero _).trans (tU_eq_zero _ (by omega) (by omega) x).symm
+
+end Unr
+
+section Assembly
+
+variable [DistribMulAction (Gal(AlgebraicClosure K/K)) (ZMod 2)] [SMulCommClass (Gal(AlgebraicClosure K/K)) (ZMod 2) (ZMod 2)]
+  [ContinuousSMul (Gal(AlgebraicClosure K/K)) (ZMod 2)]
+  [DistribMulAction (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2)] [SMulCommClass (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2) (ZMod 2)]
+  [ContinuousSMul (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2)]
+
+/-- **`TameModelQIso` for trivial `𝔽₂` coefficients** (`M = 𝔽₂`, `Φ = 1`, `q` odd, `p` odd): the
+tame model and the unramified model are quasi-isomorphic models of the genuine local cochains of
+`G_K` and of `Gal(K^{ur}/K)`, compatibly with inflation along a restriction `π`. PROVED from the
+print `LocalCohomologyF2` (used only for the degrees `≥ 2` of the full local complex). -/
+def tameModelQIsoF2 (hp : ringChar 𝓀[K] ≠ 2) {q : ℕ} (hq : Odd q)
+    (π : Gal(AlgebraicClosure K/K) →ₜ* Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (hπ : ∀ g, π g = restrictMaximalUnramifiedHom K g)
+    (hL : LocalCohomologyF2 K) :
+    TameModelQIso (ZMod 2) (LinearMap.id : ZMod 2 →ₗ[ZMod 2] ZMod 2) q
+      (natCx (contCochains (ZMod 2) (Gal(AlgebraicClosure K/K)) (ZMod 2)))
+      (natCx (contCochains (ZMod 2) (Gal(maximalUnramifiedExtension K (AlgebraicClosure K)/K)) (ZMod 2))) (natHom (inflF2 π)) where
+  fL := SelmerDuality.GHom.toCC (tameF2L hp hq)
+  fU := SelmerDuality.GHom.toCC (tameF2U (K := K))
+  qisL := tameF2L_quasiIso hp hq hL
+  qisU := tameF2U_quasiIso
+  comm := tameF2_comm hp hq π hπ
+
+end Assembly
 
 end ZInQ.Contrib.CloudB3RC53.TameModel
