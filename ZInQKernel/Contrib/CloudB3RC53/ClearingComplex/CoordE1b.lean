@@ -237,7 +237,7 @@ theorem coordComputation_km :
 for the Knudsen–Mumford coordinate** (PROVED; E1b and E2 are theorems). -/
 theorem clearingModel_of_km {ℓ : ℕ} (Dd : RCData ℓ)
     (h : ∃ dK hK cE tK : ℕ, ∀ Co Ce : ℤ, ∀ F : Family, Dd.FinalFamilyAt Co Ce F →
-      ∃ (M : NewLocalModel F.b dK hK cE tK)
+      ∃ (M : Identification2 F.b dK hK cE tK)
         (z : Fin M.D.m0 ⊕ Unit ⊕ Fin M.D.m1 → MonoidAlgebra OO (SignGroup F.b))
         (μ : Fin M.D.m1 ⊕ Unit ⊕ Fin M.D.m2 → MonoidAlgebra OO (SignGroup F.b))
         (hz : M.D.d1 *ᵥ z = 0) (hμ : μ ᵥ* M.D.d1 = 0) (κ η : MonoidAlgebra OO (SignGroup F.b)),
@@ -247,7 +247,7 @@ theorem clearingModel_of_km {ℓ : ℕ} (Dd : RCData ℓ)
   obtain ⟨dK, hK, cE, tK, hF⟩ := h
   exact clearingModel_of_newLocal Dd ⟨dK, hK, cE, tK, fun Co Ce F hFam => by
     obtain ⟨M, z, μ, hz, hμ, κ, η, hlink⟩ := hF Co Ce F hFam
-    exact ⟨M, sdOf M.D z μ M.oldC.Ai M.s M.s_ne M.central, κ, -1, η, cOf M.D z μ hz hμ,
-      coordComputation_km M.D z μ hz hμ M.oldC.Ai M.s M.s_ne M.central, hlink⟩⟩
+    exact ⟨M, sdOf M.D z μ M.oldC.Ai M.s M.s_ne (central_of_full _ M.s M.central_full), κ, -1, η, cOf M.D z μ hz hμ,
+      coordComputation_km M.D z μ hz hμ M.oldC.Ai M.s M.s_ne (central_of_full _ M.s M.central_full), hlink⟩⟩
 
 end ZInQ.Contrib.CloudB3RC53.ClearingComplex

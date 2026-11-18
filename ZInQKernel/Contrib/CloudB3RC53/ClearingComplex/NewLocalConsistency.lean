@@ -1,13 +1,16 @@
 import ZInQKernel.Contrib.CloudB3RC53.ClearingComplex.NewLocalModel
 
 /-!
-# Consistency of the new-local model
+# Consistency of the second identification (nonempty new-local family)
 
-The GLUE input `NewLocalModel b dK hK cE tK` is used as a hypothesis (`clearingModel_of_newLocal`).
-This file checks that its fields are jointly satisfiable (`newLocalModel_trivial`, PROVED): the
-trivial pre-cancellation complex (no Smith disks, no new places, `D¹ = H₁`, `D² = H₂`, all
-differentials zero), with Selmer data `G = C`, `U = L = 0` for the family, the trivial support
-change (old part into the full complex) at augmentation, and central ranks `(0, 1, 1, 0)`.
+The GLUE input `Identification2 b dK hK cE tK` is used as a hypothesis (`clearingModel_of_km`).
+This file checks that its fields are jointly satisfiable with a NONEMPTY family of new places
+(`identification2_example`, PROVED): one new place with coefficient module `Λ`, Frobenius `1 + t`
+(the graph-wide prescription "scalar `1 + t`", tex 5241–5243) and `q = 1`, built as a genuine
+`UnramifiedNewPlace` (`tamePlace`: the tame model `M --(Φ−1, 0)--> M ⊕ M --(0, Φ−q)--> M` and the
+unramified condition `[Φ − 1]`); its local block is `Φ − q = t`, with `det = t¹ · 1 + 2 · 0`
+(`d_q = 1`); the pre-cancellation complex has this block in degrees two and three and the old part
+`D¹ = H₁ → D² = H₂` zero; central ranks `(0, 1, 1, 0)`.
 -/
 
 noncomputable section
@@ -57,10 +60,10 @@ theorem sum_val_σ_empty (i : ℕ) : ∑ j, ((σ B) i j).valuation = 0 := by
 
 include hn hm in
 /-- **The (5.7) counts for Smith data without disks**, with all constants `0`. -/
-theorem budgetInputs_of_empty : BudgetInputs B 0 0 0 0 := by
+theorem budgetInputs_of_empty : BudgetInputsAt B fr₀ 0 0 0 0 := by
   have hamp : ∀ i, 3 ≤ i → i < B.n → B.m i = 0 := fun i _ _ => hm i
   have hmTot : B.mTot = 0 := by simp [SmithBlocks.mTot, hm]
-  refine ⟨fr₀, ?_, (centralH B) fr₀ 1, (centralH B) fr₀ 2, PUnit, PUnit, inferInstance,
+  refine ⟨?_, (centralH B) fr₀ 1, (centralH B) fr₀ 2, PUnit, PUnit, inferInstance,
     inferInstance, inferInstance, inferInstance, inferInstance, inferInstance, inferInstance,
     inferInstance, LinearEquiv.refl _ _, LinearMap.id, 0, 0, 0,
     ⟨Function.injective_id, ?_, ?_, ?_, ?_⟩, ?_, ?_, ?_, ?_, ?_, ?_⟩
@@ -139,90 +142,244 @@ theorem trivSupportChange_square (G Gp : GCx S) (g : GHom G Gp) :
 
 end TrivSel
 
-/-! ### The trivial new-local model -/
+/-! ### The tame model of an unramified new place -/
+
+section Tame
+
+variable {S : Type} [CommRing S] (M : Type) [AddCommGroup M] [Module S M] (Φ : M →ₗ[S] M) (q : ℕ)
+
+/-- The modules of the full local complex `M → M ⊕ M → M` (degrees `0, 1, 2`). -/
+def tLX (S : Type) [CommRing S] (M : Type) [AddCommGroup M] [Module S M] : ℤ → ModuleCat S
+  | 0 => ModuleCat.of S M
+  | 1 => ModuleCat.of S (M × M)
+  | 2 => ModuleCat.of S M
+  | _ => ModuleCat.of S PUnit
+
+/-- Its differentials `(Φ − 1, 0)` and `(0, Φ − q)`. -/
+def tLd : (i : ℤ) → tLX S M i →ₗ[S] tLX S M (i + 1)
+  | 0 => (Φ - LinearMap.id).prod (0 : M →ₗ[S] M)
+  | 1 => (Φ - (q : S) • LinearMap.id) ∘ₗ LinearMap.snd S M M
+  | _ => 0
+
+theorem tLd_tLd (i : ℤ) (x : tLX S M i) : tLd M Φ q (i + 1) (tLd M Φ q i x) = 0 := by
+  match i with
+  | 0 =>
+    change (Φ - (q : S) • (LinearMap.id : M →ₗ[S] M)) (0 : M) = 0
+    exact map_zero _
+  | 1 => rfl
+  | 2 => rfl
+  | Int.ofNat (n + 3) => rfl
+  | Int.negSucc n =>
+    change tLd M Φ q (Int.negSucc n + 1) 0 = 0
+    exact map_zero _
+
+/-- The full local complex `L_q`. -/
+def tL : GCx S where
+  X := tLX S M
+  d i j h := by subst h; exact tLd M Φ q i
+  d_d i j k hij hjk x := by subst hij hjk; exact tLd_tLd M Φ q i x
+
+/-- The modules of the unramified condition `M → M` (degrees `0, 1`). -/
+def tUX (S : Type) [CommRing S] (M : Type) [AddCommGroup M] [Module S M] : ℤ → ModuleCat S
+  | 0 => ModuleCat.of S M
+  | 1 => ModuleCat.of S M
+  | _ => ModuleCat.of S PUnit
+
+def tUd : (i : ℤ) → tUX S M i →ₗ[S] tUX S M (i + 1)
+  | 0 => Φ - LinearMap.id
+  | _ => 0
+
+theorem tUd_tUd (i : ℤ) (x : tUX S M i) : tUd M Φ (i + 1) (tUd M Φ i x) = 0 := by
+  match i with
+  | 0 => rfl
+  | 1 => rfl
+  | Int.ofNat (n + 2) => rfl
+  | Int.negSucc n =>
+    change tUd M Φ (Int.negSucc n + 1) 0 = 0
+    exact map_zero _
+
+/-- The unramified local condition `U_q = [Φ − 1]`. -/
+def tU : GCx S where
+  X := tUX S M
+  d i j h := by subst h; exact tUd M Φ i
+  d_d i j k hij hjk x := by subst hij hjk; exact tUd_tUd M Φ i x
+
+def tι : (i : ℤ) → tUX S M i →ₗ[S] tLX S M i
+  | 0 => LinearMap.id
+  | 1 => LinearMap.inl S M M
+  | _ => 0
+
+theorem tι_comm (i : ℤ) (x : tUX S M i) :
+    tι M (i + 1) (tUd M Φ i x) = tLd M Φ q i (tι M i x) := by
+  match i with
+  | 0 => rfl
+  | 1 =>
+    change (0 : tLX S M 2) = (Φ - (q : S) • (LinearMap.id : M →ₗ[S] M)) (0 : M)
+    exact (map_zero _).symm
+  | 2 => rfl
+  | Int.ofNat (n + 3) => rfl
+  | Int.negSucc n =>
+    change tι M (Int.negSucc n + 1) 0 = tLd M Φ q (Int.negSucc n) 0
+    rw [map_zero, map_zero]
+
+/-- The inclusion of the unramified summand. -/
+def tιH : GHom (tU M Φ) (tL M Φ q) where
+  f i j h := by subst h; exact tι M i
+  comm i i₁ j j₁ hij h₁ h₂ hj x := by
+    subst hij hj h₁
+    exact tι_comm M Φ q i x
+
+theorem tLX_subsingleton (n : ℤ) (h0 : n ≠ 0) (h1 : n ≠ 1) (h2 : n ≠ 2) :
+    Subsingleton (tLX S M n) := by
+  match n with
+  | 0 => exact absurd rfl h0
+  | 1 => exact absurd rfl h1
+  | 2 => exact absurd rfl h2
+  | Int.ofNat (k + 3) => exact (inferInstance : Subsingleton PUnit)
+  | Int.negSucc k => exact (inferInstance : Subsingleton PUnit)
+
+theorem tUX_subsingleton (n : ℤ) (h0 : n ≠ 0) (h1 : n ≠ 1) :
+    Subsingleton (tUX S M n) := by
+  match n with
+  | 0 => exact absurd rfl h0
+  | 1 => exact absurd rfl h1
+  | Int.ofNat (k + 2) => exact (inferInstance : Subsingleton PUnit)
+  | Int.negSucc k => exact (inferInstance : Subsingleton PUnit)
+
+/-- **The tame model of an unramified new place** (lane SelmerDuality's `UnramifiedNewPlace`):
+coefficient module `M`, Frobenius `Φ`, residue cardinality `q` (odd). -/
+def tamePlace (hq : Odd q) : SelmerDuality.UnramifiedNewPlace S where
+  M := ModuleCat.of S M
+  Φ := Φ
+  q := q
+  q_odd := hq
+  Lq := tL M Φ q
+  Uq := tU M Φ
+  ιq := tιH M Φ q
+  eL0 := LinearEquiv.refl S M
+  eL1 := LinearEquiv.refl S (M × M)
+  eL2 := LinearEquiv.refl S M
+  Lq_zero := tLX_subsingleton M
+  Lq_d0 _ := rfl
+  Lq_d1 _ := rfl
+  eU0 := LinearEquiv.refl S M
+  eU1 := LinearEquiv.refl S M
+  Uq_zero := tUX_subsingleton M
+  Uq_d _ := rfl
+  ιq_0 _ := rfl
+  ιq_1 _ := rfl
+
+end Tame
+
+/-! ### A model with one new place -/
 
 variable {b : ℕ}
 
-/-- The trivial pre-cancellation complex over `Λ[G]`. -/
-def preTriv (b : ℕ) : PreComplex (MonoidAlgebra Lam (SignGroup b)) where
+/-- The new place: `M = Λ`, `Φ = 1 + t`, `q = 1`. -/
+def placeEx : SelmerDuality.UnramifiedNewPlace Lam :=
+  tamePlace Lam ((1 + PowerSeries.X : Lam) • LinearMap.id) 1 odd_one
+
+/-- `t ∈ Λ[G]`. -/
+def tG (b : ℕ) : MonoidAlgebra Lam (SignGroup b) := MonoidAlgebra.single 1 PowerSeries.X
+
+/-- The pre-cancellation complex: old part `H₁ --0--> H₂`, one new local summand with block `t`. -/
+def preEx (b : ℕ) : PreComplex (MonoidAlgebra Lam (SignGroup b)) where
   m0 := 0
   m1 := 0
   m2 := 0
-  N := Empty
+  N := Unit × Unit
   c0 := 0
   X := 0
   Y := 0
   P := 0
   Q := 0
   T := 0
-  B := 0
+  B := of fun _ _ => tG b
   c1_c0 := by simp
-  c2_c1 := by simp
+  c2_c1 := by
+    rw [fromBlocks_mul_fromRows]
+    simp
 
-instance : IsEmpty (preTriv b).N := inferInstanceAs (IsEmpty Empty)
+/-- The local block `(t)`. -/
+def AEx : Unit → Matrix Unit Unit Lam := fun _ => of fun _ _ => PowerSeries.X
 
-/-- The (empty) new local blocks. -/
-def ATriv : Empty → Matrix Empty Empty Lam := fun q => q.elim
+theorem hAEx : ∀ q, AEx q = LinearMap.toMatrix (Module.Basis.singleton Unit Lam)
+    (Module.Basis.singleton Unit Lam) (placeEx.Φ - ((placeEx.q : ℕ) : Lam) • LinearMap.id) := by
+  intro q
+  refine Matrix.ext fun i j => ?_
+  rw [LinearMap.toMatrix_apply, Module.Basis.singleton_apply, Module.Basis.singleton_repr]
+  change PowerSeries.X = (((1 + PowerSeries.X : Lam) • (LinearMap.id : Lam →ₗ[Lam] Lam) -
+    ((1 : ℕ) : Lam) • (LinearMap.id : Lam →ₗ[Lam] Lam)) : Lam →ₗ[Lam] Lam) (1 : Lam)
+  simp only [LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply, smul_eq_mul]
+  ring
 
-def eTriv (b : ℕ) : (preTriv b).N ≃ Empty × Empty := Equiv.equivOfIsEmpty _ _
+theorem hdetEx : ∀ q : Unit, (AEx q).det =
+    (PowerSeries.X : Lam) ^ (fun _ : Unit => 1) q * ((fun _ : Unit => (1 : Lamˣ)) q : Lam) +
+      2 * (fun _ : Unit => (0 : Lam)) q := by
+  intro q
+  simp [AEx, Matrix.det_unique]
 
-theorem hdetTriv : ∀ q : Empty, (ATriv q).det =
-    (PowerSeries.X : Lam) ^ (fun q : Empty => (q.elim : ℕ)) q *
-      ((fun q : Empty => (q.elim : Lamˣ)) q : Lam) + 2 * (fun q : Empty => (q.elim : Lam)) q :=
-  fun q => q.elim
+theorem hB0Ex : ((preEx b).B.submatrix (Equiv.refl _).symm (Equiv.refl _).symm).map aug =
+    Matrix.blockDiagonal AEx := by
+  ext ⟨i, q⟩ ⟨j, q'⟩
+  simp [preEx, tG, AEx, Matrix.blockDiagonal_apply, ZInQ.Manuscript.RC.Determinant.aug]
 
-theorem hB0Triv : ((preTriv b).B.submatrix (eTriv b).symm (eTriv b).symm).map aug =
-    Matrix.blockDiagonal ATriv := by
-  ext i; exact i.1.elim
+theorem hYEx : (preEx b).Y.map (augR b) = 0 := Matrix.map_zero _ (map_zero _)
+theorem hTEx : (preEx b).T.map (augR b) = 0 := Matrix.map_zero _ (map_zero _)
 
-theorem hYTriv : (preTriv b).Y.map (augR b) = 0 := by
-  ext i; exact (show Empty from i).elim
-
-theorem hTTriv : (preTriv b).T.map (augR b) = 0 := by
-  ext i; exact (show Empty from i).elim
-
-/-- The remaining complex of the trivial model. -/
-abbrev remTriv (b : ℕ) : BlockComplex (MonoidAlgebra OO (SignGroup b)) :=
-  remOf ATriv (fun q => q.elim) (fun q => q.elim) (fun q => q.elim) (fun q => q.elim) hdetTriv
-    (preTriv b) (eTriv b) hB0Triv
-
-theorem preTriv_old_mi (i : ℕ) : (((preTriv b).map (augR b)).old hYTriv hTTriv).mi i = 0 := by
+theorem preEx_old_mi (i : ℕ) : (((preEx b).map (augR b)).old hYEx hTEx).mi i = 0 := by
   rcases i with _ | _ | _ | i <;> rfl
 
-/-- **Consistency of the new-local model** (PROVED): the trivial model satisfies every field. -/
-def newLocalModel_trivial (b : ℕ) : NewLocalModel b 0 0 0 0 where
-  Qn := Empty
-  ιn := Empty
-  A := ATriv
-  dq := fun q => q.elim
-  hd := fun q => q.elim
-  v := fun q => q.elim
-  w := fun q => q.elim
-  hdet := hdetTriv
-  C := preTriv b
-  eN := eTriv b
-  hB0 := hB0Triv
-  hT0 := hTTriv
-  hY0 := hYTriv
+theorem central_fullEx :
+    let D := ((preEx b).map (augR b)).old hYEx hTEx
+    D.d0.map PowerSeries.constantCoeff =
+        (smithForm (preEx b).m0 (preEx b).m1 (preEx b).m2 (fun _ => 1) (fun _ => 1)
+          (fun _ => 1)).d0 ∧
+      D.d1.map PowerSeries.constantCoeff =
+        (smithForm (preEx b).m0 (preEx b).m1 (preEx b).m2 (fun _ => 1) (fun _ => 1)
+          (fun _ => 1)).d1 ∧
+      D.d2.map PowerSeries.constantCoeff =
+        (smithForm (preEx b).m0 (preEx b).m1 (preEx b).m2 (fun _ => 1) (fun _ => 1)
+          (fun _ => 1)).d2 := by
+  refine ⟨?_, ?_, ?_⟩
+  · ext i j; exact j.elim0
+  · ext (i | i | i) (j | j | j)
+    all_goals first | exact i.elim0 | exact j.elim0 | rfl
+  · ext i j; exact i.elim0
+
+/-- **Consistency of the second identification with a nonempty new-local family** (PROVED). -/
+def identification2_example (b : ℕ) : Identification2 b 0 0 0 0 where
+  Qn := Unit
+  ιn := Unit
+  NP := fun _ => placeEx
+  bas := fun _ => Module.Basis.singleton Unit Lam
+  A := AEx
+  hA := hAEx
+  dq := fun _ => 1
+  hd := fun _ => by norm_num
+  v := fun _ => 1
+  w := fun _ => 0
+  hdet := hdetEx
+  C := preEx b
+  eN := Equiv.refl _
+  hB0 := hB0Ex
+  hT0 := hTEx
+  hY0 := hYEx
   s := fun _ _ => 1
   s_ne := fun _ _ => one_ne_zero
-  central := fun i => by
-    ext j
-    have h1 := preTriv_old_mi (b := b) i
-    have h2 := j.2
-    omega
+  central_full := central_fullEx
   budget := budgetInputs_of_empty _ rfl fun i => by rcases i with _ | _ | _ | i <;> rfl
   sel := trivSelG _
   ψ := (trivSelGIso _).hom
   qis := trivSelG_qis _
-  sc := trivSupportChange _ _ (((preTriv b).map (augR b)).oldIncl hYTriv hTTriv)
+  sc := trivSupportChange _ _ (((preEx b).map (augR b)).oldIncl hYEx hTEx)
   ψ0 := (trivSelGIso _).hom
   qis0 := trivSelG_qis _
   ψold := (trivSelGIso _).hom
   qisOld := trivSelG_qis _
   square := trivSupportChange_square _ _ _
 
-theorem newLocalModel_nonempty (b : ℕ) : Nonempty (NewLocalModel b 0 0 0 0) :=
-  ⟨newLocalModel_trivial b⟩
+theorem identification2_nonempty (b : ℕ) : Nonempty (Identification2 b 0 0 0 0) :=
+  ⟨identification2_example b⟩
 
 end ZInQ.Contrib.CloudB3RC53.ClearingComplex

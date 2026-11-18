@@ -15,28 +15,35 @@ manuscript's construction, phrased against lane SelmerDuality's `SupportChangeDa
 * `PreComplex.map`, `PreComplex.old`, `PreComplex.oldIncl`: coefficient change of a pre-cancellation
   complex; when `Y = T = 0` (upper triangular: the old summands form a subcomplex), the old part
   and its inclusion (a chain map);
-* `NewLocalModel b dK hK cE tK` (GLUE; every field is a statement about the finite free model or a
+* `Identification2 b dK hK cE tK` (GLUE; every field is a statement about the finite free model or a
   Selmer-complex comparison):
+  - a NONEMPTY family of new places `q` (the active primes), each with its unramified local data at
+    augmentation (lane SelmerDuality's `UnramifiedNewPlace`: the tame model `L_q` and the
+    unramified condition `U_q`), and the local block `A_q` the matrix of the actual local
+    differential `Φ_q − q` (tex 5455–5463: "`A_q` is the direct sum of the two rank-two singular
+    differentials at the conjugate graph places");
   - a pre-cancellation complex `C` over `Λ[G]` (tex 5394, 5414–5420: "All matrices and their
     inverses at this step lie in `Λ[G]`"), whose new local block augments to the block diagonal of
     new local blocks `A_q` with `det A_q = t^{d_q} v_q + 2w_q`, `d_q ≤ 4` (tex 5420–5430), with
     `T₀ = 0` and `Y₀ = 0` (tex 5421: `B₀ = A`, `T₀ = 0`; the old part is a subcomplex of the upper
     triangular model, tex 5399–5401, 5238);
-  - the augmented old part is in central Smith form (tex 5522–5532: "centrally the only nonzero
-    differentials are the Smith disks") with nonzero Smith entries, and the (5.7) counts hold for
-    its Smith data (tex 5355–5392);
+  - the augmented old part is in central Smith form: its whole central reduction is `smithForm`,
+    the complex whose only nonzero blocks are the Smith disks (tex 5522–5532: "centrally the only
+    nonzero differentials are the Smith disks"), with nonzero Smith entries; the (5.7) counts hold
+    for its central complex at the free ranks `(0, 1, 1, 0)` of the block form (tex 5355–5392);
   - the family Selmer complex: Selmer data `sel` over `𝒪[G]` and a quasi-isomorphism from `C ⊗ 𝒪[G]`
     to its Selmer complex (tex 5394–5397: "`C` the retained finite free family model");
   - the support-change triangle (5.6) at augmentation (tex 5236–5240, 5397–5403): support-change data
     `sc` over `Λ`, quasi-isomorphisms from the augmented `C` to `selCx sc.Dp` and from the augmented
     old part to `selCx sc.D`, commuting with the support comparison `supportMap sc`.
-* `NewLocalModel.toSelmerIdentification` (PROVED): the remaining complex is the cancellation of the
+* `Identification2.toSelmerIdentification` (PROVED): the remaining complex is the cancellation of the
   new local block over `𝒪[G]` (invertible: RC7's `matrix_isUnit_of_isUnit_aug` and
   `newLocal_family_pole_genuine`), and every field of `SelmerIdentification` follows: augmentation
-  (`T₀ = 0`), poles (sign-evaluated Schur complements; adjacent differentials unchanged), budget
+  (`aug_full`: all three augmented differentials are the old ones, from `T₀ = 0`), poles (one
+  cancellation: sign-evaluated Schur complements; adjacent differentials unchanged), budget
   (the old Smith data), and the quasi-isomorphism (`PreComplex.incl_quasiIso` composed with the
   family model).
-* `clearingModel_of_newLocal` (PROVED): RC0's `ClearingModel` from `NewLocalModel` and E1 (with the
+* `clearingModel_of_newLocal` (PROVED): RC0's `ClearingModel` from `Identification2` and E1 (with the
   coordinate parameter).
 
 Not derived (interface gaps, recorded as ELLIOT): the identification of the augmentation of
@@ -231,10 +238,64 @@ def remOf {Qn ιn : Type} [Fintype Qn] [DecidableEq Qn] [Fintype ιn] [Decidable
     BlockComplex (MonoidAlgebra OO (SignGroup b)) :=
   (C.map (φO b)).cancel (isUnit_B_of A dq hd v w hdet C eN hB0)
 
+/-! ### The central Smith form and the budget at fixed free ranks -/
+
+/-- **The central Smith form** (tex 5522–5532: "centrally the only nonzero differentials are the
+Smith disks `E_i → B_{i+1}`"): the block complex over `ℤ₂` whose only nonzero blocks are the
+diagonal Smith blocks. -/
+def smithForm (m0 m1 m2 : ℕ) (s0 : Fin m0 → ℤ_[2]) (s1 : Fin m1 → ℤ_[2]) (s2 : Fin m2 → ℤ_[2]) :
+    BlockComplex ℤ_[2] where
+  m0 := m0
+  m1 := m1
+  m2 := m2
+  d0 := fromRows (Matrix.diagonal s0) 0
+  d1 := fromBlocks 0 (fromCols 0 (Matrix.diagonal s1)) 0 0
+  d2 := fromCols 0 (fromCols 0 (Matrix.diagonal s2))
+  d1_d0 := by rw [fromBlocks_mul_fromRows]; simp
+  d2_d1 := by rw [fromCols_mul_fromBlocks]; simp
+
+/-- The (5.7) counts at given free ranks `fr` (the body of `BudgetInputs`). -/
+def BudgetInputsAt {S : Type} [CommRing S] (B : SmithBlocks S OO) (fr : ℕ → ℕ)
+    (dK hK cE tK : ℕ) : Prop :=
+  ∃ (_ : ∑ k : Fin 4, Module.finrank ℤ_[2] (RankCounts.centralCx B fr k) ≤ 2 * dK + 12)
+    (H1C H2C J H3C : Type) (_ : AddCommGroup H1C) (_ : Module ℤ_[2] H1C) (_ : AddCommGroup H2C)
+    (_ : Module ℤ_[2] H2C) (_ : AddCommGroup J) (_ : Module ℤ_[2] J) (_ : AddCommGroup H3C)
+    (_ : Module ℤ_[2] H3C)
+    (_ : (RankCounts.centralH B) fr 1 ≃ₗ[ℤ_[2]] H1C)
+    (i : H2C →ₗ[ℤ_[2]] (RankCounts.centralH B) fr 2) (j : (RankCounts.centralH B) fr 2 →ₗ[ℤ_[2]] J)
+    (δ : J →ₗ[ℤ_[2]] H3C) (l : H3C →ₗ[ℤ_[2]] (RankCounts.centralH B) fr 3),
+    (Function.Injective i ∧ Function.Exact i j ∧ Function.Exact j δ ∧ Function.Exact δ l ∧
+      Function.Surjective l) ∧
+    Module.length ℤ_[2] (Submodule.torsion ℤ_[2] H1C) = tK ∧ Module.length ℤ_[2] H3C = tK ∧
+    Module.length ℤ_[2] (Submodule.torsion ℤ_[2] H2C) = hK ∧ Module.length ℤ_[2] J ≤ 2 * cE ∧
+    Module.finrank ℤ_[2] H1C = 1 ∧ Module.finrank ℤ_[2] H2C = 1
+
+theorem budgetInputs_of_at {S : Type} [CommRing S] {B : SmithBlocks S OO} {fr : ℕ → ℕ}
+    {dK hK cE tK : ℕ} (h : BudgetInputsAt B fr dK hK cE tK) : BudgetInputs B dK hK cE tK :=
+  ⟨fr, h⟩
+
+/-- The central Smith blocks from the central Smith form. -/
+theorem central_of_full (D : BlockComplex Lam) (s : (i : ℕ) → Fin (D.mi i) → ℤ_[2])
+    (h : D.d0.map PowerSeries.constantCoeff = (smithForm D.m0 D.m1 D.m2 (s 0) (s 1) (s 2)).d0 ∧
+      D.d1.map PowerSeries.constantCoeff = (smithForm D.m0 D.m1 D.m2 (s 0) (s 1) (s 2)).d1 ∧
+      D.d2.map PowerSeries.constantCoeff = (smithForm D.m0 D.m1 D.m2 (s 0) (s 1) (s 2)).d2) :
+    ∀ i, (D.Ai i).map PowerSeries.constantCoeff = Matrix.diagonal (s i) := by
+  obtain ⟨h0, h1, h2⟩ := h
+  intro i
+  match i with
+  | 0 => exact Matrix.ext fun j k => congrArg (fun N => N (Sum.inl j) k) h0
+  | 1 => exact Matrix.ext fun j k => congrArg (fun N => N (Sum.inl j) (Sum.inr (Sum.inr k))) h1
+  | 2 => exact Matrix.ext fun j k => congrArg (fun N => N j (Sum.inr (Sum.inr k))) h2
+  | _ + 3 => exact Matrix.ext fun j => j.elim0
+
 /-! ### The new-local model -/
 
-/-- **The new-local model of the family** (GLUE; see the module docstring). -/
-structure NewLocalModel (b : ℕ) (dK hK cE tK : ℕ) where
+/-- **The identification of the remaining complex** (GLUE, second version; see the module
+docstring): one pre-cancellation family model with a nonempty family of new places whose local
+blocks are the actual unramified local differentials `Φ_q − q`, the old part in central Smith form,
+the (5.7) counts at the free ranks `(0, 1, 1, 0)` of the block form, the family Selmer model and
+the support change at augmentation. -/
+structure Identification2 (b : ℕ) (dK hK cE tK : ℕ) where
   /-- the new places and the index of a local block -/
   Qn : Type
   ιn : Type
@@ -242,8 +303,17 @@ structure NewLocalModel (b : ℕ) (dK hK cE tK : ℕ) where
   [dQ : DecidableEq Qn]
   [fι : Fintype ιn]
   [dι : DecidableEq ιn]
+  /-- the new places are the active primes: there is at least one -/
+  [nQ : Nonempty Qn]
+  [nι : Nonempty ιn]
+  /-- the unramified local data at the new places (augmentation; lane SelmerDuality) -/
+  NP : Qn → SelmerDuality.UnramifiedNewPlace Lam
+  /-- bases of their coefficient modules -/
+  bas : ∀ q, Module.Basis ιn Lam (NP q).M
   /-- the new local blocks over `Λ` -/
   A : Qn → Matrix ιn ιn Lam
+  /-- they are the local differentials `Φ_q − q` of the new places (tex 5455–5463) -/
+  hA : ∀ q, A q = LinearMap.toMatrix (bas q) (bas q) ((NP q).Φ - ((NP q).q : Lam) • LinearMap.id)
   dq : Qn → ℕ
   hd : ∀ q, dq q ≤ 4
   v : Qn → Lamˣ
@@ -262,12 +332,20 @@ structure NewLocalModel (b : ℕ) (dK hK cE tK : ℕ) where
   /-- the central Smith entries of the augmented old part -/
   s : (i : ℕ) → Fin (((C.map (augR b)).old hY0 hT0).mi i) → ℤ_[2]
   s_ne : ∀ i j, s i j ≠ 0
-  /-- the augmented old part is in central Smith form (tex 5522–5532) -/
-  central : ∀ i, (((C.map (augR b)).old hY0 hT0).Ai i).map PowerSeries.constantCoeff =
-    Matrix.diagonal (s i)
-  /-- the (5.7) counts for the old Smith data (tex 5355–5392) -/
-  budget : BudgetInputs ((remOf A dq hd v w hdet C eN hB0).toSmithBlocks (O := OO)
-    ((C.map (augR b)).old hY0 hT0).Ai s s_ne central) dK hK cE tK
+  /-- the augmented old part is in central Smith form: centrally the only nonzero differentials
+  are the Smith disks (tex 5522–5532) -/
+  central_full :
+    ((C.map (augR b)).old hY0 hT0).d0.map PowerSeries.constantCoeff =
+        (smithForm C.m0 C.m1 C.m2 (s 0) (s 1) (s 2)).d0 ∧
+      ((C.map (augR b)).old hY0 hT0).d1.map PowerSeries.constantCoeff =
+        (smithForm C.m0 C.m1 C.m2 (s 0) (s 1) (s 2)).d1 ∧
+      ((C.map (augR b)).old hY0 hT0).d2.map PowerSeries.constantCoeff =
+        (smithForm C.m0 C.m1 C.m2 (s 0) (s 1) (s 2)).d2
+  /-- the (5.7) counts for the central complex of the old Smith data at the free ranks
+  `(0, 1, 1, 0)` of the block form (tex 5355–5392) -/
+  budget : BudgetInputsAt ((remOf A dq hd v w hdet C eN hB0).toSmithBlocks (O := OO)
+    ((C.map (augR b)).old hY0 hT0).Ai s s_ne
+      (central_of_full _ s central_full)) fr₀ dK hK cE tK
   /-- the family Selmer data over `𝒪[G]` -/
   sel : SelData (MonoidAlgebra OO (SignGroup b))
   /-- `C ⊗ 𝒪[G]` is a model of the family Selmer complex (tex 5394–5397) -/
@@ -285,11 +363,11 @@ structure NewLocalModel (b : ℕ) (dK hK cE tK : ℕ) where
   square : ψold ≫ SelmerDuality.GHom.toCC (SelmerDuality.supportMap sc) =
     SelmerDuality.GHom.toCC ((C.map (augR b)).oldIncl hY0 hT0) ≫ ψ0
 
-namespace NewLocalModel
+namespace Identification2
 
-attribute [instance] fQ dQ fι dι
+attribute [instance] fQ dQ fι dι nQ nι
 
-variable {dK hK cE tK : ℕ} (M : NewLocalModel b dK hK cE tK)
+variable {dK hK cE tK : ℕ} (M : Identification2 b dK hK cE tK)
 
 /-- The new local block as a family over `ι × Q`. -/
 abbrev Bsub : Matrix (M.ιn × M.Qn) (M.ιn × M.Qn) (MonoidAlgebra Lam (SignGroup b)) :=
@@ -311,6 +389,13 @@ theorem d2_map_aug : M.D.d2.map (augS b) = (M.C.P.map (augR b)).map (algebraMap 
   rw [Matrix.map_sub _ (map_sub _), Matrix.map_mul, Matrix.map_mul, map_φO_aug, map_φO_aug M.C.T,
     M.hT0,
     Matrix.map_zero _ (map_zero _), Matrix.mul_zero, sub_zero]
+
+/-- **Full augmentation compatibility** (PROVED from `T₀ = 0`): the augmentation of the remaining
+complex is the old complex, for all three differentials (tex 5424–5425, 5517). -/
+theorem aug_full : M.D.d0.map (augS b) = M.oldC.d0.map (algebraMap Lam OO) ∧
+    M.D.d1.map (augS b) = M.oldC.d1.map (algebraMap Lam OO) ∧
+    M.D.d2.map (augS b) = M.oldC.d2.map (algebraMap Lam OO) :=
+  ⟨map_φO_aug M.C.c0, map_φO_aug M.C.X, M.d2_map_aug⟩
 
 /-- **The augmentation of the remaining complex is the old complex** (PROVED from `T₀ = 0`). -/
 theorem aug_eq (i : ℕ) :
@@ -376,12 +461,12 @@ def toIdentification : Identification b dK hK cE tK where
   A0 := M.oldC.Ai
   s := M.s
   s_ne := M.s_ne
-  central := M.central
+  central := central_of_full _ M.s M.central_full
   aug_eq := M.aug_eq
   poles0 := isNewLocalSchur_lam M.C.c0
   poles1 := isNewLocalSchur_lam M.C.X
   poles2 := M.poles2
-  budget := M.budget
+  budget := budgetInputs_of_at M.budget
 
 /-- The comparison of the remaining complex with the family Selmer complex is a quasi-isomorphism. -/
 theorem comp_qis : QuasiIso (SelmerDuality.GHom.toCC (PreComplex.incl M.isUnit_B) ≫ M.ψ) := by
@@ -398,13 +483,13 @@ def toSelmerIdentification : SelmerIdentification b dK hK cE tK where
   φ := SelmerDuality.GHom.toCC (PreComplex.incl M.isUnit_B) ≫ M.ψ
   qis := M.comp_qis
 
-end NewLocalModel
+end Identification2
 
 /-- **RC0's `ClearingModel` from the new-local model and E1** (PROVED; E1 with the coordinate
 parameter, `CoordParam.lean`). -/
 theorem clearingModel_of_newLocal {ℓ : ℕ} (Dd : RCData ℓ)
     (h : ∃ dK hK cE tK : ℕ, ∀ Co Ce : ℤ, ∀ F : Family, Dd.FinalFamilyAt Co Ce F →
-      ∃ (M : NewLocalModel F.b dK hK cE tK) (sd : ScalarData M.toIdentification.B)
+      ∃ (M : Identification2 F.b dK hK cE tK) (sd : ScalarData M.toIdentification.B)
         (κ ε η : MonoidAlgebra OO (SignGroup F.b)) (c : Addr F.b → FractionRing OO),
         CoordComputation M.toIdentification.B sd ε c M.D.RankOnePattern M.D.AcyclicPattern ∧
         ∀ (e : Addr F.b → ℕ) (g : Addr F.b → Lam), UTildeRep Dd F e g →
