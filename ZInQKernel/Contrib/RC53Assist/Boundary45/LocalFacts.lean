@@ -39,7 +39,6 @@ and apply the retained-boundary lifting theorem. No assertion is made
 for orthogonal zero local conditions with nonzero local invariants.
 -/
 
-set_option maxHeartbeats 600000
 
 noncomputable section
 

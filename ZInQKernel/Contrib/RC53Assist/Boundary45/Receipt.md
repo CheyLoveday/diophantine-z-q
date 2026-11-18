@@ -1,5 +1,16 @@
 # Boundary (4.5): verified local hypotheses
 
+
+## Update after independent review (2026-11-18)
+
+The file hashes and sizes recorded further below refer to an earlier, instrumented edition of the sources; the shipped sources are:
+
+- `LocalFacts.lean`: 16297 bytes, SHA-256 `8c6efef340e07cc8a8893073b2fce514ee293f50d638e97cb2a3c30b2651b57d`
+- `InflationFacts.lean`: 5172 bytes, SHA-256 `826e54a99af23d187c3088952c1f1b62ce2d387a3e530927e7327013926a5fb2`
+- `RetainedStage.lean`: 5456 bytes, SHA-256 `8dc57582e8083ea98e949e994d10038f3ed90d09b56db3a37faf85434e331bba`
+
+The unneeded `maxHeartbeats` option was removed from `LocalFacts.lean` and `InflationFacts.lean`. The consumed form of the local facts is the pair of fields `honto`/`hinj` of `RetainedStage45` (fed to `InnerLimit45Base.ofStages`), not `boundary45_finite_of_construction`; `RetainedStage.lean` adds `retainedStageOfLocalFacts` and `mixedRetainedStage`, which fill those fields verbatim, and `not_localFacts_zero_into_const`, which shows the predicate is not vacuous. The independent review also compiled the Kummer-span case against the repository's `kummerActualSelData`. Still open: matching the actual finite stages with `mixedStageSelData`; note that `RetainedStage45` works in the fibre t = 0 over Z/2^i while `mixedStageSelData` is over (Z/2^n)[t]/t^n. The compiler logs cited below are not part of the shipped files.
+
 ## Result and scope
 
 Two individually checked Lean files prove the representative-level local facts for continuous cocycle conditions, full conditions, the existing unramified condition, and the mixed finite-stage pattern. A further theorem proves the same two facts for genuine continuous inflation with the invariant coefficient subgroup. The finite-boundary adapter consumes exactly the original two local inputs.

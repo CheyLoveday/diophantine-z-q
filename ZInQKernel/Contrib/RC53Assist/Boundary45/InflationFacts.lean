@@ -23,7 +23,6 @@ unramified local condition is described at lines 3471-3498. All proofs
 use existing continuous-cohomology lemmas. There is no printed leaf.
 -/
 
-set_option maxHeartbeats 600000
 
 noncomputable section
 
