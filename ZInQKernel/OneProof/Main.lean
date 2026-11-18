@@ -202,8 +202,8 @@ hypothesis by its proof; the theorem's statement then loses that hypothesis.
 namespace ZInQ.OneProof
 
 /-- **Theorem 1.1, from every statement still open:** the open H bundles, the manuscript's Theorem 5.3 (the restricted
-converse, a lemma of the manuscript), the Cassels–Tate pairing on the curves `E_ℓ`, the printed leaf BCDT Theorem A
-and a consequence of Kolyvagin's Theorem 1 (through Shimura's construction and Faltings' isogeny theorem). Pole
+converse, the manuscript's own theorem (not a printed leaf)), the Cassels–Tate pairing on the curves `E_ℓ`, the printed
+leaf BCDT Theorem A and a consequence of Kolyvagin's Theorem 1 (through Shimura's construction and Faltings' isogeny theorem). Pole
 completeness PC (the manuscript's Theorem 5.2) is proved from the last four, with Lemma 5.4 proved from the pairing
 (`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`). -/
 theorem _root_.ZInQ.OneProof.frozenTarget
