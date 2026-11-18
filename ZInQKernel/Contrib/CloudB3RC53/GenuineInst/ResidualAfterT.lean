@@ -118,7 +118,11 @@ variable (K : Type) [Field K] [NumberField K]
   [hEw : ∀ w, ((Ew w).baseChange (w.adicCompletion K)).IsElliptic]
 
 open Classical in
-/-- **RC6's `ResidualRankCounts` with the transfer after inverting `t`** (tex 4453–4648): as
+/-- **Superseded** by `residualRankCounts_afterT'` (`ResidualAfterT2.lean`): this form accepts
+erased-differential models (C3: `hred`, `hbc`, `e` never compare differentials) and omits degree
+`3` (C4: the counts sum over `s ⊆ [0, 2]` while the models live in `[0, 3]`).
+
+**RC6's `ResidualRankCounts` with the transfer after inverting `t`** (tex 4453–4648): as
 `residualRankCounts_genuine` (the counts `kummer`, `hcond`, `hG`, `hL` from the genuine producers),
 with `transfer` from `transfer_after_inverting_t` at `𝔽₂[[t]] → 𝔽₂((t))`: the smaller-support free
 model `P` over `𝔽₂[[t]]` whose reduction modulo `t` has the ranks of the residual model `Dsel`
