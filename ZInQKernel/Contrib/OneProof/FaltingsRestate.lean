@@ -43,4 +43,36 @@ theorem faltingsHeightBaseChange : FaltingsHeightBaseChange := by
   intro K _ _ A L _ _ _ G _ L' _ _ _ _ _ G' hG'
   exact Contrib.HeightBC.modelHeightBaseChange K A L L' G G' hG'
 
+/-- **Consequence (GLUE).** The Néron comparison needed for height: two semistable
+Néron models over an extension admit a common open subgroup model after base change.
+This is SS2 restricted to cases where both models are semistable. It follows from
+SGA 7 I, Exp. IX, Cor. 3.3, p. 348 (page read; uncited in the manuscript), or
+from Faltings 1983, Lemma 1, p. 350 (page read), with the semiabelian dictionary.
+The common open subgroup need only contain an open neighbourhood of the identity;
+this statement does not require a global identity-component construction. -/
+def SemistableNeronIdentification : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (A : PkgI3.AbVar K) (L : Type)
+    [Field L] [NumberField L] [Algebra K L] (N : GroupModel A L), N.IsNeronModel → IsSemistable N →
+    ∀ (L' : Type) [Field L'] [NumberField L'] [Algebra K L'] [Algebra L L']
+      [IsScalarTower K L L'] (N' : GroupModel A L'), N'.IsNeronModel → IsSemistable N' →
+      ∃ U V : GroupModel A L', IsBaseChangeOf V N ∧ IsOpenSubgroupModel U N' ∧ IsOpenSubgroupModel U V
+
+/-- SS2 supplies the comparison without needing target semistability. -/
+theorem semistableNeronIdentification_of_ss2 (h : SemistableNeronBaseChange) :
+    SemistableNeronIdentification := by
+  intro K _ _ A L _ _ _ N hN hs L' _ _ _ _ _ N' hN' _
+  exact h K A L N hN hs L' N' hN'
+
+/-- Corollary 3.3 supplies SS2 by the existing localization argument. -/
+theorem semistableNeronIdentification_of_cor33 (h : GaRigidity.SGA7.SGA7_IX_Cor3_3_Def34) :
+    SemistableNeronIdentification :=
+  semistableNeronIdentification_of_ss2
+    (SGA3Nbhd.semistableNeronBaseChange_noSGA3 GapBLR.blr_1_2_4
+      (SGA3Nbhd.NF.sga7_IX_3_3_of_SH'
+        (SGA3Nbhd.Pre.sga7_IX_3_3_SH_of_pre'
+          (SGA33Steps.shpre_of_cor33 (GaRigidity.SGA7.sga7_IX_Cor3_3_of_def34 h))
+          geomConnOfRationalPoint_proof)
+        NeronSH.neronBaseChangeStrictHenselization_proof geomConnOfRationalPoint_proof)
+      geomConnOfRationalPoint_proof)
+
 end ZInQ.FaltingsRestate
