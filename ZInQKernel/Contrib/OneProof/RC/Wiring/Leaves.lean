@@ -463,7 +463,12 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   Selmer dimension; a closed functional is a paired functional for a degenerate pairing); the gain
   is that `hcentral`, `hlim` and `hlam` are now proofs from the steps of the text. For a torsion `P`
   the core is equivalent to "`u_{prim,0} ∈ Λ_(t)` and `u_{prim,0}(0) = 0`", the lemma's conclusion
-  (tex 4346–4348, 4362–4369). -/
+  (tex 4346–4348, 4362–4369).
+  The new core remains equivalent to the previous square-root core under its Selmer premise.
+  Its `CU` fields specify only a matrix window, and its `cz`, pairing and chain map are not
+  tied to the same actual retained class or orthogonal-comparison inverse. The named-step
+  interpretation is an obligation of the discharge, not an additional identification proved
+  by these fields. -/
   base_zero : BaseZeroLeafInputsText W.toRCData
 
 /-- **Every remaining hypothesis of Theorem 5.3 beyond the blueprint's `Prints`.** -/
