@@ -13,3 +13,10 @@
 - VERIFIED (Lean): the normalized coefficient recurrences and the composite
   operator laws extend clause (ii) from prime and good-square indices to every
   positive index. The reverse restriction uses the independently stated square relation.
+- VERIFIED (Lean): every competitor kills the annihilator, including cancellation in
+  rationalized endomorphisms. It therefore factors through the constructed quotient.
+  `KerConnected` makes the factor an isomorphism if it is finite.
+- Scoped stop: `SameDimSurjectiveFinite` states exactly the finiteness input; the missing
+  Lean argument is generic fibre dimension and its transport to other fibres.
+- VERIFIED (Lean): the print form and the two named GLUE inputs imply the exact
+  `R16Thm1b.ShimuraThm1Af` type.

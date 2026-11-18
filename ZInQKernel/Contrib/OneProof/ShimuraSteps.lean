@@ -584,6 +584,48 @@ theorem compat_all (hN : 2 ≤ N) (hf : IsNormalizedEigenform f χ)
     HeckeCompat ν (ξ n) (θ (ak f n)) :=
   xi_mem hN hf h (compatRing ν θ) (hcl.2.1.1) (diamond_compat hN hf hcl) n
 
+theorem incl_eq_zero {e : AbVar.End A} (h : incl A e = 0) : e = 0 := by
+  let T : AbVar.End A →ₗ[ℤ] A.End0 := TensorProduct.mk ℤ ℚ (AbVar.End A) 1
+  let : IsLocalizedModule (nonZeroDivisors ℤ) T :=
+    IsLocalization.tensorProduct_isLocalizedModule (nonZeroDivisors ℤ) ℚ
+  have he : T e = T 0 := by
+    change incl A e = (1 : ℚ) ⊗ₜ[ℤ] (0 : AbVar.End A)
+    rw [TensorProduct.tmul_zero, h]
+  obtain ⟨c, hc⟩ := (IsLocalizedModule.eq_iff_exists (nonZeroDivisors ℤ) T).mp he
+  change (c : ℤ) • e = (c : ℤ) • (0 : AbVar.End A) at hc
+  rw [smul_zero] at hc
+  have hn : 0 < (c : ℤ).natAbs :=
+    Int.natAbs_pos.mpr (nonZeroDivisors.ne_zero c.property)
+  apply hom_nsmul_eq_zero _ hn e
+  rw [← natCast_zsmul]
+  rcases Int.natAbs_eq (c : ℤ) with h' | h'
+  · rwa [← h']
+  · have hh := congrArg Neg.neg h'
+    rw [neg_neg] at hh
+    rw [← hh, neg_smul, hc, neg_zero]
+
+/-- A competitor satisfying (i)–(iii) kills the kernel's annihilator.
+In fact its restricted (ii) is sufficient; no geometry of quotients is used. -/
+theorem killsIf_of_clauses (hN : 2 ≤ N) (hf : IsNormalizedEigenform f χ)
+    (hcl : ShimuraClauses f tp δ A ν θ) : KillsIf χ f tp δ ν := by
+  intro w hw
+  have hle : ((heckeJ tp δ).prod (evK hN hf)).range.toSubring ≤ compatRing ν θ := by
+    rw [kernel_range hN hf]
+    apply Subring.closure_le.mpr
+    rintro _ (⟨p, rfl⟩ | ⟨d, rfl⟩)
+    · exact hcl.2.1.1 p
+    · exact diamond_compat hN hf hcl d
+  have hw' : evK hN hf w = 0 := Subtype.ext (by simpa [evK_coe hN hf w] using hw)
+  have h : HeckeCompat ν (heckeJ tp δ w) (θ (evK hN hf w)) :=
+    hle ⟨w, rfl⟩
+  rw [hw', map_zero] at h
+  obtain ⟨m, e, hm, he, hc⟩ := h
+  have he' : e = 0 := incl_eq_zero (by simpa using he.symm)
+  rw [he'] at hc
+  have hz : m • comp (heckeJ tp δ w) ν = 0 :=
+    hc.trans (map_zero (postC ν))
+  exact congrArg Hom.hom (hom_nsmul_eq_zero m hm _ hz)
+
 end Compatibility
 
 /-- The three printed clauses: quotient by a connected kernel, intertwining
@@ -649,5 +691,44 @@ def ShimuraThm1AsPrinted : Prop :=
           ∀ (A' : AbVar ℚ) (ν' : AbVar.Hom J A') (θ' : coeffField f →+* A'.End0),
             PrintedClauses ξ f ν' θ' →
               ∃ ψ : AbVar.Hom A A', IsIso ψ.hom
+
+/-- Scoped remaining geometry for step 3: a surjective homomorphism of
+equal-dimensional abelian varieties over ℚ is finite (and so is an isogeny).
+This is the finite-kernel criterion used in the dimension argument for
+Shimura 1973, Thm. 1 (p. 526); treated here as on-the-spot glue. The ordinary
+argument uses the dimension of the generic fibre, translation of geometric
+fibres, and proper quasi-finite implies finite. It needs no construction of a
+new quotient. -/
+def SameDimSurjectiveFinite : Prop :=
+  ∀ (A A' : AbVar ℚ) (ψ : AbVar.Hom A A'), A.dim = A'.dim →
+    Surjective ψ.hom.left → IsFinite ψ.hom.left
+
+/-- The constructed quotient maps to any competitor, whose map kills
+`I_f J`. Equal dimensions make the induced map an isogeny under the scoped
+geometry input; the competitor's `KerConnected` then makes it an isomorphism. -/
+theorem compatible_iso (hfin : SameDimSurjectiveFinite)
+    {A A' : AbVar ℚ} {ν : AbVar.Hom J A} {ν' : AbVar.Hom J A'}
+    (hQ : IsAfQuotient χ f tp δ A ν) (hK : KillsIf χ f tp δ ν')
+    (hs : Surjective ν'.hom.left) (hc : KerConnected ν') (hd : A.dim = A'.dim) :
+    ∃ ψ : AbVar.Hom A A', IsIso ψ.hom ∧ ν.hom ≫ ψ.hom = ν'.hom := by
+  obtain ⟨ψ, hψ, -⟩ := hQ.2.2 A' ν' hK
+  have hsψ : Surjective ψ.hom.left := by
+    refine ⟨fun y => ?_⟩
+    obtain ⟨x, hx⟩ := hs.surj y
+    exact ⟨ν.hom.left x, by simpa only [← Scheme.Hom.comp_apply, ← Over.comp_left, hψ] using hx⟩
+  exact ⟨ψ, hc A ν ψ hQ.1 ⟨hfin _ _ ψ hd hsψ, hsψ⟩ hψ, hψ⟩
+
+/-- The existing row follows from the printed construction and the remaining
+bridge inputs. The quotient and all Hecke tests are transported in Lean. -/
+theorem shimuraThm1Af_of_printed (hP : ShimuraThm1AsPrinted) (hH : ShimuraHeckeRelations)
+    (hF : SameDimSurjectiveFinite) : R16Thm1b.ShimuraThm1Af := by
+  intro N χ f hN hf X _ jX tX hC hX P₀ J aj hJ tp δ ht hd
+  obtain ⟨ξ, hξ, hr⟩ := hH N hN X jX tX hC hX P₀ J aj hJ tp δ ht hd
+  obtain ⟨hK, A, ν, θ, hc, hQ, -⟩ := hP N χ f hN hf X jX tX hC hX P₀ J aj hJ ξ hξ
+  have hA := isAfQuotient_of_print hN hf.1 hr hc.1.1 hQ
+  refine ⟨hK, A, ν, θ, clauses_of_printed hr hc, hA, ?_⟩
+  intro A' ν' θ' hc'
+  exact compatible_iso hF hA (killsIf_of_clauses hN hf.1 hc') hc'.1.1 hc'.1.2
+    (hc.2.2.trans hc'.2.2.symm)
 
 end ShimuraSteps
