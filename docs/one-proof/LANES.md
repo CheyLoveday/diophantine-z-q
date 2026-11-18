@@ -18,3 +18,14 @@ A lane is one unit of project work: one issue (template "Lane"), one owner, one 
   `Removes-rows:` line of its body. It also warns when the change touches files with an owner, and when the generated
   files are out of date.
 - **Decisions** are recorded once, in [docs/DECISIONS.md](../DECISIONS.md), with a link to where they were made.
+
+## Standing lanes
+
+These lanes run continuously. A new lane checks its footprint against them, and each piece of work inside them is
+still claimed in public (on #14 or #83) before it starts.
+
+| Lane | Owner | Writes | Board rows | Depends on | Done when |
+|---|---|---|---|---|---|
+| Contributor agents working from #14 | project | One new file per claimed field under `ZInQKernel/Contrib/OneProof/`, named after the field. Statement checks are reported as comments on #14, with no files. | The one field each agent has claimed on #14. | A `Claiming <field> at <commit>` comment on #14 for a row that is `open` and not held. Never a row or lane of #83. | The fold shows the field discharged, or the check is recorded in reviews.tsv. |
+| Theorem 5.3 (#83) | project | `ZInQKernel/Contrib/OneProof/RC/` and `ZInQKernel/Contrib/CloudB3RC53/` | `hPC` until #90 lands, then `hRC` | #90 | `hRC` rests only on printed results, through pull requests to `main`. |
+| Appendices E and F pieces (#83) | project | `ZInQKernel/Contrib/OneProof/RC/AppE/` and `ZInQKernel/Contrib/OneProof/RC/AppF/` | none of their own; they feed `hRC` | the Theorem 5.3 lane's integration branch | Their statements land on that integration branch. |
