@@ -1,11 +1,11 @@
 import Mathlib
 
 /-!
-# Duality area: derived reduction of the Kummer condition (tex L3416–3418, L3433–3435)
+# Duality area: derived reduction of the Kummer condition (tex L3416–3418, L3429–3431)
 
 Lemma `ex:arith-local-kummer`, tex L3416–3418: "the condition `U_F = B(F)^∧_2[−1] → RΓ(F, T₂B)`
 includes the finite two-primary torsion. Its reduction modulo `2^a` has `B(F)[2^a]` in degree zero
-and `B(F)/2^a B(F)` in degree one" (again at L3433–3435, "derived reduction modulo `2^a`").
+and `B(F)/2^a B(F)` in degree one" (again at L3429–3431, "derived reduction modulo `2^a`").
 
 This is Elliot's own step. It is algebraic: if `M = B(F)^∧_2` is presented by an injective map
 `f : P₁ → P₀` (a two-term model `[P₁ → P₀]` of `M[−1]` in degrees zero and one, e.g. a free
