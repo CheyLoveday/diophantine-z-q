@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.CloudB3RC53.ClearingComplex.ActualZero
+import ZInQKernel.Contrib.CloudB3RC53.ClearingComplex.FullConditionFamily
 
 /-!
 # An actual instance of `Identification3` with no new places (`Q = ∅`)
@@ -19,7 +20,8 @@ The fields of `Identification3` are filled with the genuine Galois objects of la
   (`atPlace`); then the genuine Selmer complexes are isomorphic to the models
   (`selModelMap`), which gives `ψf`, `ψ0`, `ψold` (isomorphisms) and the square.
 
-`identification3Actual b : Identification3 K S S hS b 0 0 0 0` (PROVED, no hypotheses).
+`identification3Actual b : Identification3 K S S hS b 0 0 0 0` (PROVED, no hypotheses), and
+`identification3QActual F hF : Identification3Q K S S hS F 0 0 0 0` for every family with `F.Q = ∅`.
 
 CAVEAT. This witnesses the consistency of the interface with the genuine data types (genuine
 groups, genuine cochain complexes, genuine full and unramified conditions, Nekovář's finite
@@ -271,6 +273,50 @@ theorem squareA :
   rw [SelmerDuality.GHom.toCC_comp]
   refine SelmerDuality.GHom.toCC_ext fun i x => ?_
   refine Prod.ext rfl (Prod.ext (Prod.ext rfl (funext fun q => isEmptyElim q)) rfl)
+
+/-! ### The instance -/
+
+/-- **An actual instance of `Identification3`** over the genuine Galois objects with no new
+places (PROVED; no hypotheses). See the module docstring for the caveat. -/
+def identification3Actual : Identification3 KA SA SA hSA b 0 0 0 0 where
+  toFullCore := coreA b
+  Mf := PUnit
+  Δf := ΔfA b
+  hfull v hv := absurd v.2 hv
+  ψf := SelmerDuality.GHom.toCC (ψfA b)
+  qisf := ψfA_quasiIso b
+  R₀ := ZMod 2
+  ρ := ρA
+  p := 2
+  hset := hsetA
+  hS' := SA_finite
+  M₀ := PUnit
+  ψur := ψurA
+  hψur := hψurA
+  Δ₀ := Δ₀A b
+  ψ0 := ψ0A b
+  qis0 := ψ0A_quasiIso b
+  ψold := SelmerDuality.GHom.toCC (σurA b)
+  qisOld := σurA_quasiIso b
+  square := squareA b
+  Φq q := isEmptyElim q
+  qq q := isEmptyElim q
+  qq_odd q := isEmptyElim q
+  bas q := isEmptyElim q
+  hA q := isEmptyElim q
+  tame q := isEmptyElim q
+
+theorem identification3_nonempty : Nonempty (Identification3 KA SA SA hSA b 0 0 0 0) :=
+  ⟨identification3Actual b⟩
+
+/-- **The family version**: for every family with no primes (`F.Q = ∅`), an actual
+`Identification3Q` (the new places, none, identified with `F.Q`). PROVED. -/
+def identification3QActual (F : ZInQ.Manuscript.RC.Family) (hF : F.Q = ∅) :
+    Identification3Q KA SA SA hSA F 0 0 0 0 where
+  toIdentification3 := identification3Actual F.b
+  eQ := @Equiv.equivOfIsEmpty _ _ _ (by rw [hF]; exact inferInstanceAs (IsEmpty (∅ : Finset ℕ)))
+  lies v := isEmptyElim v
+  hqq v := isEmptyElim v
 
 end ActualQEmpty
 
