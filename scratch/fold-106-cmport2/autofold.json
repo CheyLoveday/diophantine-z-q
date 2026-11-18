@@ -1,0 +1,12 @@
+{
+  "name": "pr106 + cm-port2",
+  "imports": ["ZInQKernel.Contrib.OneProof.CMCurveOrderLiveNOS"],
+  "discharges": [
+    {"field": "deRhamVpAbVarDirect",
+     "proof": "_root_.DeRhamScholze.HTMerge.deRhamVpAbVarDirect_of_scholzeH1Milne {l}.scholzeH1AbVar {l}.t10TateDuality",
+     "leaves": []},
+    {"field": "cmFibreSplit",
+     "proof": "_root_.HDec.CMBranch.FibreSplit.cmFibreSplit_of_liveInputs_nos {n}.neronSchemeExtensionDedekind {n}.silverbergZarhinThm35 {n}.elliotWildInertiaTrivial {n}.y3FullThreeRepZ30 {n}.deligneCanonicalModelY3EveryPrint {n}.y3ToP1j",
+     "leaves": []}
+  ]
+}
