@@ -60,7 +60,8 @@ theorem degree_frobeniusMap_sub_id :
     Isogeny.Hom.ofIsogeny_toIsogeny, Isogeny.Hom.sub_pointMap, Isogeny.Hom.zsmul_pointMap,
     Isogeny.Hom.zsmul_pointMap, one_zsmul, one_zsmul, Isogeny.Hom.id_pointMap, sub_eq_zero]
 
-/-- **`deg(1 − π) = #E(F)`** over a separably closed field (Silverman V.1.1). PROVED. -/
+/-- **`deg(1 − π) = #E(F)`** over a separably closed field (as in the proof of Silverman V.1.1).
+PROVED. -/
 theorem degree_id_sub_frobeniusMap :
     (Isogeny.Hom.id (W.map f) - Isogeny.Hom.ofIsogeny (frobeniusMap W f)).degree =
       Nat.card W.Point := by
