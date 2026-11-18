@@ -5,3 +5,6 @@
 - `Consumers.lean`: `lake env lean -j1` passed; all seven theorem audits: `propext`, `Classical.choice`, `Quot.sound`.
 - `Stage.lean`: `readings_on_of_stage` yields `ReadingsOn` from the two pointwise identities. `root_readings_of_stage` gives all prescribed-prime readings via the extra `ExcludedAtOne` comparison at the root.
 - `Stage.lean`: `lake env lean -j1` passed; all four theorem audits (including two private helpers): `propext`, `Classical.choice`, `Quot.sound`.
+- `Window.lean`: `poolOfTest` takes the root as the pool; `commonSpace` extends the two constructor guards using the existing zero extension; `expansions_on_window` identifies the actual theta coefficients on every subset. `readings_on_window` and `root_readings_on_window` provide the two window-family premises after quantifying over tested roots.
+- `Window.lean`: `lake env lean -j1` passed; all three theorem audits: `propext`, `Classical.choice`, `Quot.sound`.
+- Scoped stop: the per-root `Blocks`/`Attachment` existential in the report; stage, formwise, two-fresh and local inputs remain as listed there.
