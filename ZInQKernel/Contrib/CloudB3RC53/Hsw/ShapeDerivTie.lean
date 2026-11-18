@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.CloudB3RC53.Hsw.ShapeUrTie
+import ZInQKernel.Contrib.CloudB3RC53.Hsw.ShapeUrTieGen
 import ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ConeFinite
 import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.DerivativeCoords
 
@@ -17,8 +17,11 @@ finite plane to the unramified classes. That tie, through `ShapeUrTie.lean` and
 * `derivSwitch_hrep`: the representatives of `hUrRep_of_vanish`, from two hypotheses. First,
   every local cocycle at `q` is relaxed (`hrelq`). Second, the coordinates `eR` send the classes of
   cocycles vanishing on `ker(urRes)` onto the finite plane (`hcoord`).
-* `derivSwitch_switchCoordinates_char2`: `SwitchCoordinates` for `derivSwitch F eR` over any field
-  of characteristic two. Nondegeneracy (local Tate duality) is the only remaining input.
+* `derivSwitch_switchCoordinates_char2`, `derivSwitch_switchCoordinates_of_two_ne_zero`:
+  `SwitchCoordinates` for `derivSwitch F eR` over any field of characteristic two (polarized
+  pairing), resp. with `2 ≠ 0` (`c`-symmetric pairing, `c² = 1`). Nondegeneracy (local Tate
+  duality) is the only remaining input. `derivSwitch_switchCoordinates_of_two_ne_zero_ur`: the
+  same for unramified, not necessarily trivial, actions at `q` (through a compatible `ψ`).
 
 ## The tame instance over `𝔽₂`
 
@@ -159,6 +162,91 @@ theorem derivSwitch_switchCoordinates_char2 (h2 : (2 : k) = 0)
         (galoisPairData K S k β hβ (derivSwitch F eR).ΔS (derivSwitch F eR).ΔR I) tr ε (-(-1)) J :=
   genuine_switchCoordinates_char2_vanish h2 (derivSwitch F eR) β γ hβ hγ hpol I tr htr hUS2 hε
     hJ2 q htriv htrivT (derivSwitch_hrep F q hrelq eR hcoord) hnd
+
+/-- **`SwitchCoordinates` for the switch of a derivative family when `2 ≠ 0`** (`PROVED` from
+the inputs; any coefficient field with `2 ≠ 0`, e.g. the characteristic-zero fibres). Inputs:
+* a `c`-symmetric equivariant self-pairing with `c² = 1` (`σ = −c`);
+* isotropy data;
+* strict complexes vanishing in degree two;
+* trivial action of `G_{K_q}` on `M` and `T`;
+* `hrelq`, `hcoord`: the coordinates `eR` send the finite side (cocycles vanishing on inertia,
+  at `q`) onto the finite plane.
+
+Nondegeneracy of the residue form (local Tate duality) is the only remaining input. -/
+theorem derivSwitch_switchCoordinates_of_two_ne_zero (h2 : (2 : k) ≠ 0)
+    (eR : F.Wrel.toCC.homology 1 ≃ₗ[k] (Fin 2 → k) × (Fin 2 → k))
+    (β : M →ₗ[k] M →ₗ[k] T) (hβ : ∀ (g : GKS K S) (a b : M), β (g • a) (g • b) = g • β a b)
+    (c : k) (hc : ∀ x y, β x y = c • β y x) (hc2 : c * c = 1)
+    (I : GaloisIsotropyData K S k β hβ (derivSwitch F eR).ΔS (derivSwitch F eR).ΔR)
+    (tr : (coneCx (galoisPairData K S k β hβ (derivSwitch F eR).ΔS
+      (derivSwitch F eR).ΔR I).resE).X 3 →ₗ[k] k)
+    (htr : ∀ z, tr ((coneCx (galoisPairData K S k β hβ (derivSwitch F eR).ΔS
+      (derivSwitch F eR).ΔR I).resE).d 2 3 rfl z) = 0)
+    (hUS2 : ∀ v (x : (F.str v).cx.X 2), x = 0) {ε : k} (hε : ε ≠ 0)
+    {J : Matrix (Fin 2) (Fin 2) k} (hJ2 : J * J = 1)
+    (htriv : ∀ (g : Gloc K q.1) (m : M), locMap K S q.1 g • m = m)
+    (htrivT : ∀ (g : Gloc K q.1) (m : T), locMap K S q.1 g • m = m)
+    (hcoord : ∀ a, a ∈ finPlane k (Fin 2 → k) (Fin 2 → k) →
+      ∃ (z : (galLv (k := k) K S M q).X 1) (hz : (galLv (k := k) K S M q).d 1 2 rfl z = 0),
+        (∀ g, urRes K q.1 g = 1 → cFun z (fun _ => g) = 0) ∧
+          gClass (derivSwitch F eR).toQuasi (relSingle F q hrelq z hz)
+            (relSingle_d F q hrelq z hz) = a)
+    (hnd : ∀ t (ht : (derivSwitch F eR).toQuasi.D.U.d 1 2 rfl t = 0),
+      (∀ u (_hu : (derivSwitch F eR).toQuasi.D.U.d 1 2 rfl u = 0),
+        resForm (derivSwitch F eR).toQuasi (piCx (derivSwitch F eR).US)
+          (piMap (derivSwitch F eR).φ)
+          (galoisPairData K S k β hβ (derivSwitch F eR).ΔS (derivSwitch F eR).ΔR I) tr t u = 0) →
+        gClass (derivSwitch F eR).toQuasi t ht = 0) :
+    ∃ Φ : ((Fin 2 → k) × (Fin 2 → k)) ≃ₗ[k] ((Fin 2 → k) × (Fin 2 → k)),
+      (finPlane k (Fin 2 → k) (Fin 2 → k)).map Φ.toLinearMap =
+        finPlane k (Fin 2 → k) (Fin 2 → k) ∧
+      ({ derivSwitch F eR with eR := (derivSwitch F eR).eR.trans Φ } :
+        GenuineSwitch K S k M).SwitchCoordinates
+        (galoisPairData K S k β hβ (derivSwitch F eR).ΔS (derivSwitch F eR).ΔR I) tr ε (-c) J :=
+  genuine_switchCoordinates_of_localDuality (derivSwitch F eR) β hβ c hc I tr htr hUS2 hε hJ2
+    (genuine_finIso_of_ur (derivSwitch F eR) β hβ c hc I tr htr hUS2 q 1 (urCompat_one q htriv)
+      (urCompat_one_T q htrivT)
+      (hUrRep_of_vanish (derivSwitch F eR) q htriv (derivSwitch_hrep F q hrelq eR hcoord)))
+    hnd (Or.inl ⟨h2, hc2⟩)
+
+/-- **The same, for unramified (not necessarily trivial) actions at `q`** (`PROVED` from the
+inputs; any field with `2 ≠ 0`). The triviality of the action is replaced by a continuous
+`ψ : Gal(K_q^ur/K_q) → G_{K,S}` through which the actions of `G_{K_q}` on `M` and `T` factor. This
+is the situation at the switching primes, where Frobenius acts nontrivially. -/
+theorem derivSwitch_switchCoordinates_of_two_ne_zero_ur (h2 : (2 : k) ≠ 0)
+    (eR : F.Wrel.toCC.homology 1 ≃ₗ[k] (Fin 2 → k) × (Fin 2 → k))
+    (β : M →ₗ[k] M →ₗ[k] T) (hβ : ∀ (g : GKS K S) (a b : M), β (g • a) (g • b) = g • β a b)
+    (c : k) (hc : ∀ x y, β x y = c • β y x) (hc2 : c * c = 1)
+    (I : GaloisIsotropyData K S k β hβ (derivSwitch F eR).ΔS (derivSwitch F eR).ΔR)
+    (tr : (coneCx (galoisPairData K S k β hβ (derivSwitch F eR).ΔS
+      (derivSwitch F eR).ΔR I).resE).X 3 →ₗ[k] k)
+    (htr : ∀ z, tr ((coneCx (galoisPairData K S k β hβ (derivSwitch F eR).ΔS
+      (derivSwitch F eR).ΔR I).resE).d 2 3 rfl z) = 0)
+    (hUS2 : ∀ v (x : (F.str v).cx.X 2), x = 0) {ε : k} (hε : ε ≠ 0)
+    {J : Matrix (Fin 2) (Fin 2) k} (hJ2 : J * J = 1) (ψ : GUr K q.1 →ₜ* GKS K S)
+    (hψ : ∀ g (m : M), ψ (urRes K q.1 g) • m = locMap K S q.1 g • m)
+    (hψT : ∀ g (m : T), ψ (urRes K q.1 g) • m = locMap K S q.1 g • m)
+    (hcoord : ∀ a, a ∈ finPlane k (Fin 2 → k) (Fin 2 → k) →
+      ∃ (z : (galLv (k := k) K S M q).X 1) (hz : (galLv (k := k) K S M q).d 1 2 rfl z = 0),
+        (∀ g, urRes K q.1 g = 1 → cFun z (fun _ => g) = 0) ∧
+          gClass (derivSwitch F eR).toQuasi (relSingle F q hrelq z hz)
+            (relSingle_d F q hrelq z hz) = a)
+    (hnd : ∀ t (ht : (derivSwitch F eR).toQuasi.D.U.d 1 2 rfl t = 0),
+      (∀ u (_hu : (derivSwitch F eR).toQuasi.D.U.d 1 2 rfl u = 0),
+        resForm (derivSwitch F eR).toQuasi (piCx (derivSwitch F eR).US)
+          (piMap (derivSwitch F eR).φ)
+          (galoisPairData K S k β hβ (derivSwitch F eR).ΔS (derivSwitch F eR).ΔR I) tr t u = 0) →
+        gClass (derivSwitch F eR).toQuasi t ht = 0) :
+    ∃ Φ : ((Fin 2 → k) × (Fin 2 → k)) ≃ₗ[k] ((Fin 2 → k) × (Fin 2 → k)),
+      (finPlane k (Fin 2 → k) (Fin 2 → k)).map Φ.toLinearMap =
+        finPlane k (Fin 2 → k) (Fin 2 → k) ∧
+      ({ derivSwitch F eR with eR := (derivSwitch F eR).eR.trans Φ } :
+        GenuineSwitch K S k M).SwitchCoordinates
+        (galoisPairData K S k β hβ (derivSwitch F eR).ΔS (derivSwitch F eR).ΔR I) tr ε (-c) J :=
+  genuine_switchCoordinates_of_localDuality (derivSwitch F eR) β hβ c hc I tr htr hUS2 hε hJ2
+    (genuine_finIso_of_ur (derivSwitch F eR) β hβ c hc I tr htr hUS2 q ψ hψ hψT
+      (hUrRep_of_vanish_gen (derivSwitch F eR) q ψ hψ (derivSwitch_hrep F q hrelq eR hcoord)))
+    hnd (Or.inl ⟨h2, hc2⟩)
 
 end Generic
 
