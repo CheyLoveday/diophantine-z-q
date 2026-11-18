@@ -18,7 +18,19 @@ follows (tex 4057–4064): the ordinary Kummer complex has torsion lengths `g_�
 one, two, three; a torsion disk with cokernel of length `e` in degree `i` contributes `(−1)^{i+1} e`
 to the inverse determinant coordinate; the central class `Lm P` and its paired functional each have
 free coordinate valuation `j_rc + v₂(Lm)`. This file carries out that derivation from the
-Knudsen–Mumford coordinate of the ordinary Kummer complex.
+Knudsen–Mumford coordinate of a rational Kummer model.
+
+**Status: conditional bookkeeping.** The identification `I` is over `ℚ₂[[t]]`, where the three
+disks are units, so their integral orders are invisible to it; `CentralDiskOrders` asserts the
+orders of three chosen cyclic modules `ℤ₂/(x_i)`, not identified with the torsion of an integral
+Kummer complex or with the actual torsion and Tate–Shafarevich groups; and the field `link` is the
+coordinate equation `u_K = I.coord`, not an identification of the leaf's two-term model with the
+genuine complex. So `KummerCoordinateBlock.hK` computes the coordinate valuation from these
+inputs, and the field `hK` of the leaf is **not** discharged arithmetically by it: it remains an
+ELLIOT input. The obstructions are recorded, compiled, as `Recorded.redisk2`,
+`Recorded.manufactureShaBlock`, `Recorded.manufactured_sha_valuation`, `Recorded.link_iff_uK_eq`
+and `Recorded.changeDifferential`; the repair that reads the disk lengths from the genuine
+finite-level Kummer Selmer complexes of the address is `KummerCoordinateBlockG`.
 
 Mathematical content.
 
@@ -46,10 +58,10 @@ Mathematical content.
   the core coordinate `u₀` is a unit at the centre; and the disk orders `CentralDiskOrders`.
 * `KummerCoordinateBlock.uK_eq`: the Kummer coordinate `u_K` of the leaf is the Knudsen–Mumford
   coordinate of `I` (uniqueness of the class-functional coordinate when `adj D_K ≠ 0`).
-* `KummerCoordinateBlock.hK`: **the field `hK` of the calibration leaf, in its exact form**, from
-  the block, `m ≠ 0`, `z_K ⊗ w_K = u_K adj D_K` and `adj D_K ≠ 0`. The disk signs
-  `(−1)^{i+1}` are those of the Knudsen–Mumford coordinate (the torsion of `kummerModel`), not an
-  input.
+* `KummerCoordinateBlock.hK`: the type of the field `hK` of the calibration leaf, from the block
+  (conditional bookkeeping, see the status above), `m ≠ 0`, `z_K ⊗ w_K = u_K adj D_K` and
+  `adj D_K ≠ 0`. The disk signs `(−1)^{i+1}` are those of the Knudsen–Mumford coordinate (the
+  torsion of `kummerModel`), not an input.
 * `KummerCoordinateBlock.hK_eq`: the same valuation in the manuscript's form
   `2 j_rc + 2 v₂(Lm) + 2 g_𝒜 − s_𝒜`.
 * `link_core`, `link_of_cancellation`, `KummerCoordinateBlock.ofCancellation`: the link holds
@@ -64,7 +76,8 @@ Mathematical content.
   `CalibrationModelHK.toModelH`, `CalibrationModelHK.nonempty_modelP`, `calibrationInputsH_of_HK`,
   `calibrationInputs_of_HK`, `calibrationTarget_of_HK`.
 
-Kinds: PROVED (the inputs are the fields of the block, each with its manuscript lines).
+Kinds: PROVED, conditional on the fields of the block (each with its manuscript lines); the
+block is conditional bookkeeping, not an arithmetic discharge of `hK`.
 -/
 
 noncomputable section
@@ -119,13 +132,12 @@ theorem central_unit_ne_zero (δ : (PowerSeries ℚ_[2])ˣ) : central (δ : Powe
 
 /-! ### The torsion disks of the ordinary Kummer complex -/
 
-/-- **The central integral torsion disks of the ordinary Kummer complex and their orders**
-(tex 4005–4016, 4057–4060). The disks `δ₁, δ₂, δ₃` (cokernels in degrees one, two, three) are
-integral at the centre, `δ_i(0) = x_i ∈ ℤ₂`, and the cokernels of the central integral disks have
-the orders of the torsion groups of the ordinary Kummer complex: `|𝒜(ℚ)_tors[2^∞]| = tA` in degree
-one (universal coefficients and the degree-zero identifications), `|Ш(𝒜)[2^∞]| = shaA` in degree
-two (Selmer modulo its maximal divisible subgroup, finite `Ш`), `tA` in degree three
-(self-duality). -/
+/-- **Declared orders of the central disks (conditional bookkeeping)** (tex 4005–4016,
+4057–4060). The disks `δ₁, δ₂, δ₃` (cokernels in degrees one, two, three) are integral at the
+centre, `δ_i(0) = x_i ∈ ℤ₂`, and the chosen cyclic modules `ℤ₂/(x_i)` are declared to have the
+orders `tA`, `shaA`, `tA`. Nothing here identifies them with the torsion of an integral Kummer
+complex or with `𝒜(ℚ)_tors[2^∞]`, `Ш(𝒜)[2^∞]` (`Recorded.manufactureShaBlock`); the integral
+version is `DiskTie` with `DiskArith`. -/
 structure CentralDiskOrders (δ₁ δ₂ δ₃ : (PowerSeries ℚ_[2])ˣ) (tA shaA : ℕ) where
   /-- the central value of the degree-one disk -/
   x₁ : ℤ_[2]
@@ -184,11 +196,12 @@ leaf, the integers `j = j_rc(h,k)`, `vL = v₂L`, `m = a_r − 2χ_h(r)`, and th
 |---|---|---|---|
 | `S`, `hSfin`, `M`, `Δ`, `hinj` | the ordinary Kummer complex is the genuine Galois Selmer complex over `K` of a topological `ℚ₂[[t]][G_{K,S}]`-module `M` with local conditions `Δ` that are subcomplexes of the local cochains, `S` finite | 3455–3463, 4005 | definition |
 | `I` | its Knudsen–Mumford model (`GenuineKummerModelIdentification`): core `[R^n → R^n]` with acyclic augmentation, class `a z₀`, functional `b λ₀`, `z₀ ⊗ λ₀ = u₀ adj D_c`, disks `δ₁, δ₂, δ₃`, and a quasi-isomorphism to the genuine Selmer complex in the retained bases carrying class and functional | 3877–3892, 4057–4060 | GLUE (identification) |
-| `link` | the two-term model of the leaf computes the coordinate of `I` in the retained bases (discharged structurally by `link_of_cancellation`) | 3889–3890 | GLUE |
+| `link` | coordinate transfer: equivalent to `u_K = I.coord` (`Recorded.link_iff_uK_eq`), not an identification of the two-term model (`Recorded.changeDifferential`); `link_of_cancellation` gives it from a rational cancellation datum | 3889–3890 | GLUE |
 | `aP`, `bP`, `ha`, `hb`, `haP`, `hbP` | the class and functional free coefficients are `m · a_P`, `m · b_P` with `v₂ a_P(0) = v₂ b_P(0) = j + v₂L` | 3898–3906, 4061–4062 | ELLIOT (Lemma `ex:arith-central-specialization`) |
 | `hu₀` | the core coordinate is a unit at the centre | 4061–4064 | ELLIOT |
-| `disks` | the central integral disks have cokernels of orders `tA`, `shaA`, `tA` | 4005–4016, 4057–4058 | ELLIOT |
--/
+| `disks` | declared orders `tA`, `shaA`, `tA` of the chosen cyclic modules `ℤ₂/(x_i)` (conditional bookkeeping: freely assignable, `Recorded.manufactureShaBlock`) | 4005–4016, 4057–4058 | ELLIOT (not identified) |
+
+Conditional bookkeeping: see the status in the module documentation. -/
 structure KummerCoordinateBlock (K : Type) [Field K] [NumberField K] {n : ℕ}
     (DK : Matrix (Fin n) (Fin n) (PowerSeries ℚ_[2])) (zK wK : Fin n → PowerSeries ℚ_[2])
     (j vL m : ℤ) (tA shaA : ℕ) : Type 1 where

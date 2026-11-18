@@ -81,6 +81,13 @@ Mathematical content (all objects at precision `i`, coefficient ring `A_i = (ℤ
   `GenuineLengthBlockModel`; `CalibrationModelHL.nonempty_modelP` (to `CalibrationModelP`),
   `calibrationInputsP_of_HL`, `calibrationTarget_of_HL` (PROVED).
 
+**Status.** The presentations genuinely constrain the matrices. The length inputs `lenMov`,
+`lenMov'`, `lenAct` of `GenuineLengthBlockModel` are exactly the local determinant valuations of
+the presenting blocks (`Recorded.genuine_length_iff_local_det`): they are explicit arithmetic
+suppliers, not derived here. `GenuineLengthBlockModel` does not require its moving number to be
+prime, nor tie `a_r`, `χ` to the curve (`Recorded.compositeMovingNumber`); the ties are
+`MovingPrimeData`, a field of the leaf `CalibrationModelHKL2`.
+
 Kinds: definitions and PROVED theorems, and one PRINT leaf (`MilneLocalDualityOrder`, used only
 in `length_H2_of_H0`). The inputs are the presentations (each identifies a local quotient of the
 actual Kummer condition with its two-term model, tex 4066–4080), for `GenuineLengthBlockModel`
