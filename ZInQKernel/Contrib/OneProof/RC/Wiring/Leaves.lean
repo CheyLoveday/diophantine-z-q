@@ -32,7 +32,7 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.UniformSwitch
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35Leaf
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineSwitchPK
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35Pad
-import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate5Wiring
+import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate6
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf3
 import ZInQKernel.Contrib.OneProof.RC.Wiring.StageData
 
@@ -115,11 +115,12 @@ witnesses:
 * `PostLeaves.calibration`: the good models and Edixhoven's print are tied to the genuine twists;
   the local-block Kummer model is equivalent to the pre-Milne valuation formula, and the Milne,
   period, moving-prime and Kummer-model data are existential witnesses;
-* `PostLeaves.common_coordinate`: over the text's objects (`CommonCoordinateInputsL`: the local
-  objects and `η_x` are definitions evaluated in `F = Frac Λ`; only the primitive coordinate and the
-  product `η_x u_{rel,x}` are regular); on data with primitive coordinates in `F` it is equivalent
-  to (4.7) together with `ε_x = 1` where no graph prime is unused, and its step models are
-  existential;
+* `PostLeaves.common_coordinate`: over the text's objects with the actual Frobenius
+  (`CommonCoordinateInputsLF`: the local objects, `η_x` and the matrix of `ρ_T(Fr_q)` in lane RC28's
+  basis are definitions, evaluated in `F = Frac Λ`; only the primitive coordinate and the product
+  `η_x u_{rel,x}` are regular; `tr ρ_T(Fr_q) = a_q` is the GLUE `FrobeniusTrace`); on data with
+  primitive coordinates in `F` it is equivalent to (4.7) together with `ε_x = 1` where no graph
+  prime is unused (`commonCoordinateInputsLF_iff`), and its step models are existential;
 * `PreLeaves.eq35` and `PostLeaves.prim_regular`: the configuration families are existential and
   only required to be some genuine Galois Selmer data with `t = X`; with one genuine complex of the
   homotopy type of `[k --0--> k]` at each `𝔭` (true, not formalized), they are equivalent to
@@ -350,29 +351,35 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   departure: this field is also requested in Branch 1; the manuscript constructs these objects only
   in the remaining branch (see `RC/Skeleton/Steps.lean`). -/
   calibration : CalibrationInputsH W.toRCData
-  /-- The inputs of (4.7) over the text's objects (`CommonCoordinateInputsL`; Lemma
-  `ex:arith-common-coordinate`, tex 4142–4328): at every address of a final family, the
-  class-functional coordinates in `F = Frac Λ` relaxed at the subsets of the unused primes `U_x`,
-  the primitive one regular at `t = 0` with `t`-expansion `u_{prim,x}` (definition + ELLIOT), each
-  relaxation step at an unused prime the support triangle in the original integral bases over `F`
-  with the actual `z = x(ε(F̃r_q))(1 + t)`, `a_q` (Mathlib's coefficient of `L(E, s)`) and `q`
-  (`NaturalStep`; ELLIOT + GLUE Nekovář 6.4.1–6.4.3; a Frobenius matrix over `ℤ₂` of trace `a_q` and
-  determinant `q`, GLUE), and the product `ũ_x = η_x u_{rel,x}` regular with `t`-expansion `ũ_x`
-  (definition). No free ring: `g_q`, the Frobenius lift, `e_q`, `l_q`, `v_q` and `η_x` are
-  definitions evaluated in `F` (`e_q(x)⁻¹`, `v_q(x)` and `η_x` may have a pole at `t = 0`,
-  `etaF_not_regular_single`), and `x(η) = η_x` for the universal `η ∈ 𝒪[G]` (`eval_etaU`; tex
-  4148–4149, 4196–4231, 4297–4327; owners RC32, RC15, RC20, RC7, batch 3 CommonCoordinate). PROVED
-  from it: `λ_R ∘ i = e_q λ_P` and (4.7) at each step, the multi-prime (4.7), `ũ_x = ε_x u_{prim,x}`
-  in `F`, and (4.7) for the interface's power series (`commonCoordinateTarget_of_L`).
-  Conclusion-shaped: on data whose primitive coordinates come from `F` the leaf is equivalent to
-  (4.7) together with `ε_x = 1` where no graph prime is unused (`commonCoordinateInputsL_iff`); it
-  is not implied by (4.7) alone (`commonCoordinateInputsL_not_of_target`); the step models are
-  existential and not tied to the actual Selmer complexes, so it is still conclusion-shaped in that
-  sense. The gain over the previous leaf: the coefficient ring, the evaluations and the poles are
-  the text's (the earlier reading with an existential ring `R` in place of `𝒪[G]`, for which no
-  `t`-preserving ring map `𝒪[G] → ℚ₂[[t]]` exists, is gone). Scope departure: this field is also
-  requested in Branch 1 (see `RC/Skeleton/Steps.lean`). -/
-  common_coordinate : CommonCoordinateInputsL W.toRCData
+  /-- The inputs of (4.7) over the text's objects with the actual Frobenius
+  (`CommonCoordinateInputsLF`; Lemma `ex:arith-common-coordinate`, tex 4142–4328): `E_ℓ` elliptic,
+  a coefficient datum of `𝕋` (a number field `K`, a set `S` of its primes, `K̄ ≃ ℚ̄`,
+  `E[2^∞] ⊆ E(K_S)`; definition + GLUE Néron–Ogg–Shafarevich, AEC VII.7.1), the GLUE
+  `FrobeniusTrace (E_ℓ)` (`tr ρ_T(Fr_q) = a_q` at the good odd primes: Eichler–Shimura over `𝔽_q`,
+  Silverman AEC V.2.3.1, VII.3.1(b), VII.4.1, Remark V.2.6), and at every address of a final
+  family: the graph primes good (definition), the class-functional coordinates in `F = Frac Λ`
+  relaxed at the subsets of the unused primes `U_x`, the primitive one regular at `t = 0` with
+  `t`-expansion `u_{prim,x}` (definition + ELLIOT), each relaxation step at an unused prime the
+  support triangle in the original integral bases over `F` with the actual matrix `frobMat C p` of
+  `ρ_T(Fr_p)` in lane RC28's basis of `T₂E` over `K_S` (`det = p` PROVED, `tr = a_p` from the
+  GLUE), the actual `z = x(ε(F̃r_q))(1 + t)`, `a_q` (Mathlib's coefficient of `L(E, s)`) and `q`
+  (`NaturalStep`; ELLIOT + GLUE Nekovář 6.4.1–6.4.3), and the product `ũ_x = η_x u_{rel,x}`
+  regular with `t`-expansion `ũ_x` (definition). No free ring and no free Frobenius matrix: `g_q`,
+  the Frobenius lift, `e_q`, `l_q`, `v_q`, `η_x` and `ρ_T(Fr_q)` are definitions; `e_q(x)⁻¹`,
+  `v_q(x)` and `η_x` are evaluated in `F` and may have a pole at `t = 0`
+  (`etaF_not_regular_single`); `x(η) = η_x` for the universal `η ∈ 𝒪[G]` (`eval_etaU`);
+  `ē_q = t²/(1+t)` (`resG_eU_mul`) (tex 4148–4149, 4196–4231, 4297–4327; owners RC32, RC28, RC17,
+  RC15, RC20, RC7, batch 3 CommonCoordinate). PROVED from it: the round-one leaf
+  (`commonCoordinateInputsL_of_LF`), hence `λ_R ∘ i = e_q λ_P` and (4.7) at each step, the
+  multi-prime (4.7), `ũ_x = ε_x u_{prim,x}` in `F`, and (4.7) for the interface's power series
+  (`commonCoordinateTarget_of_LF`). Conclusion-shaped: on data whose primitive coordinates come
+  from `F` (with good graph primes, under the GLUE) the leaf is equivalent to (4.7) together with
+  `ε_x = 1` where no graph prime is unused (`commonCoordinateInputsLF_iff`); it is not implied by
+  (4.7) alone (`commonCoordinateInputsLF_not_of_target`); the step models are existential and not
+  tied to the actual Selmer complexes; the coefficient datum is existential (the text's is
+  `K = ℚ(√k)`; only `tr` and `det` of `ρ_T(Fr_q)` enter (4.7)). Scope departure: this field is
+  also requested in Branch 1 (see `RC/Skeleton/Steps.lean`). -/
+  common_coordinate : CommonCoordinateInputsLF W.toRCData
   /-- The inputs of height-one regularity of the primitive coordinates (`PrimRegularityInputsGPK`):
   at every height-one prime `𝔭 ≠ (2)`, a configuration family genuine at `𝔭` (lane RC26's Galois
   Selmer fibers with finite support and subcomplex conditions, the genuine moving variable) and
@@ -581,13 +588,13 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
         ⟨hp.data_spec.support_prime, hp.data_spec.support_base, hp.data_spec.stages_hyper,
           hp.data_spec.stages_index, hp.data_spec.admissible_split, hp.data_spec.prepared_one⟩
         hp.prepared_spec hδ.1 hq.address)
-  have h47 : CommonCoordinateTarget W₂.toRCData := commonCoordinateTarget_of_L hq.common_coordinate
+  have h47 : CommonCoordinateTarget W₂.toRCData := commonCoordinateTarget_of_LF hq.common_coordinate
   have hheight : HeightOneTarget W₂.toRCData :=
     heightOneTarget_of_inputsGPK _ hq.prim_regular h47
   have hclear : ClearingTarget W₂.toRCData :=
     clearingTarget_of_G3Q2 _ hheight hq.clearing_model
   have hbz : BaseZeroTarget W₂.toRCData :=
-    baseZeroTarget_of_L P hq.common_coordinate
+    baseZeroTarget_of_LF P hq.common_coordinate
       (primRegularityInputs_of_GPK _ hq.prim_regular)
       (baseZeroLeafInputs_of_text L.artin hq.base_zero)
   exact rcSteps_of_targets _ hL₂ hG₂ hvis₂ hstages hone
