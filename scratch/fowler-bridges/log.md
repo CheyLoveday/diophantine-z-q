@@ -13,3 +13,5 @@
   for any finite ℤ-basis, and both printed discriminant conditions are lemmas.
 - VERIFIED (Lean): the same discriminant file compiled with the local `toOrder` adapter. The remaining
   imports of the contribution do not require the wider class field application.
+- VERIFIED (Lean): `FowlerBridgesIdeals.lean` compiled, including Picard finiteness and positivity,
+  fractional-ideal lattice rank two, and properness iff invertibility.
