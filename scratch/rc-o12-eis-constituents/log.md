@@ -4,3 +4,11 @@
 - Mathlib's generic holomorphic Eisenstein construction assumes weight at least three; its level-one weight-two series does not supply the primitive character-pair theorem.
 - `TraceLimits.dense_arithmeticFrobenius`, `TSkolemKW.hsynBrauerNesbitt`: available with no new printed inputs.
 - `Forms.lean`: `mapPair_coeff`, `coeff_one`, `BaseForm.atLevel_character`, `BaseForm.atLevel_coeff`, `ColumnRealization.expansion`. Passed `lake env lean -j1`; seven axiom checks, including two private helpers; only `propext`, `Classical.choice`, `Quot.sound`.
+- `mapPair_coeff`: coefficient transport. `BaseForm.atLevel_character`: pullback of nebentypus. `BaseForm.atLevel_coeff` and `ColumnRealization.expansion`: positive coefficients of the scaled analytic copy and its model column.
+- `normalizedRep_good`: primitive good trace and product determinant at arithmetic Frobenius. `normalizedRep_semisimple`: invariant complements from the inertia flip. `RepInput.split`: full model conjugacy from unramifiedness, continuous trace, cofinite good traces and semisimplicity.
+- `Galois.lean`: passed `lake env lean -j1`; nine clean axiom checks.
+- `degree_coprime_of_level`: level exponent at most one forces the old degree prime to the operator prime. `realized_branch`: exact existing Eisenstein conclusions with the constructed coordinate family.
+- `withEisensteinUp_complement`, `withEisensteinUp_eq_ambient`, `withEisensteinUp_atOne_iff`: complementary projection, comparison to a supplied ambient action, and equivalence of full and complementary Fourier comparisons.
+- `Branch.lean`: passed `lake env lean -j1`; six clean axiom checks.
+- Totals: three files, 22 audits (only `propext`, `Classical.choice`, `Quot.sound`); no new printed leaf or changes to existing modules. Resource gate checked before every invocation.
+- Scoped stop: primitive holomorphic weight-two Dirichlet-pair theorem, actual theta basis membership and labels, good-prime attachment of those columns, complementary Fourier data.
