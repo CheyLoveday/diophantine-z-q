@@ -1,0 +1,18 @@
+'NOSNarrow.perfect_of_sep' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NOSNarrow.nosForward_proof' depends on axioms: [propext, Classical.choice, Quot.sound]
+'NOSNarrow.nosForward_of_r7a' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G4WeilRes.point_fixed_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G4WeilRes.inertiaFixesHomsMon_hf_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G4WeilRes.inertiaFixesHomsMon_of_leaves_hf_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G0ModField.KernelField.kernelField_of_model_hf_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G0ModField.KernelField.good_of_QML3U_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.G0ModField.KernelField.kernelFieldExists_of_pieces_hf_u_nos' depends on axioms: [propext,
+'HDec.G0ModField.KernelField.kernelFieldExists_of_leaves_hf_u_nos' depends on axioms: [propext,
+'HDec.G0ModField.KernelField.kernelFieldExists_of_leaves_FS5_hf_u_nos' depends on axioms: [propext,
+'HDec.G0ModField.KernelField.kernelFieldExists_of_split_hf_u_nos' depends on axioms: [propext,
+'HDec.G0ModField.KernelField.kernelFieldExists_of_split_hf_u'_nos' depends on axioms: [propext,
+'HDec.G0ModField.KernelField.kernelFieldExists_of_split_hf_u''_nos' depends on axioms: [propext,
+'HDec.LTGoodRed.goodRedTorsionT_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.D2A6.qmModelG3U_of_z30_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.D2A6.modelG3G6_of_leavesU_z30_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.modelG3G6_of_leaves3U_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
