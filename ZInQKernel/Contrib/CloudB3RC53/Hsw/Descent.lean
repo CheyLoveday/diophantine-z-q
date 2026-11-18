@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.CloudB3RC53.Hsw.Coordinates
+import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.TruncIsotropy
 
 /-!
 # RC53 `hsw`: descent of the cone-trace cup product to `H¹(W_rel)`
@@ -35,6 +36,8 @@ classes `[g t], [g u] ∈ H¹(W_rel)`, and is bilinear there. That is `ResiduePa
   condition. Suppose there is a homotopy `h'` on `U_rel × U_str`, the reverse order of `Q.hU`,
   with `d h' = ι u ∪ ι f t'`, and suppose it agrees with `Q.hU` on strict × strict cochains
   (`ReverseIsotropy`). Then `StrictOrth` holds, and so does the descent.
+* `exists_residuePairing_trunc`: the same descent for `SelPairDataTrunc`, i.e. for the truncated
+  `hsw` of `switchAdjunction_of_trunc`.
 * Non-vacuity (LESSON 2): `symReverse` is a `ReverseIsotropy` instance in a model with a nonzero
   local cup product (`symForm_ne_zero`, `strictOrth_symQ`).
 
@@ -401,6 +404,29 @@ theorem exists_residuePairing_of_reverseIsotropy (R : QuasiRelaxedLocalization k
     ∃ P, ResiduePairing R Ustr f Q tr P :=
   exists_residuePairing R Ustr f Q tr hfg hf hg hex htr
     (strictOrth_of_reverseIsotropy R.D Ustr f Q tr htr Rv)
+
+/-- **The descent for truncated pairing data** (`SelPairDataTrunc`, the input of
+`switchAdjunction_of_trunc`), `PROVED`. Suppose `StrictOrth` holds for the `τ≥2` data and trace.
+Then the left-hand side of the truncated `hsw`, stated with the original cup formula `selCupFunT`
+and trace `tr0`, is a residue pairing. -/
+theorem exists_residuePairing_trunc (R : QuasiRelaxedLocalization k) (Ustr : GCx k)
+    (f : GHom Ustr R.D.U) (Q : SelPairDataTrunc (restrictData R.D f) R.D)
+    (tr0 : (coneCx Q.resE).X 3 →ₗ[k] k) (htr0 : ∀ z, tr0 ((coneCx Q.resE).d 2 3 rfl z) = 0)
+    (hfg : ∀ n (u : Ustr.X n), R.gR.f n n rfl (f.f n n rfl u) = 0)
+    (hf : ∀ n, Function.Injective (f.f n n rfl)) (hg : ∀ n, Function.Surjective (R.gR.f n n rfl))
+    (hex : ∀ n (u : R.D.U.X n), R.gR.f n n rfl u = 0 → ∃ u', f.f n n rfl u' = u)
+    (hSO : StrictOrth R.D Ustr f Q.toSelPairData (Q.trT tr0 htr0)) :
+    ∃ P : LinearMap.BilinForm k ((Fin 2 → k) × (Fin 2 → k)),
+      ∀ (t u : R.D.U.X 1) (s : Ustr.X 2) (_ht : R.D.U.d 1 2 rfl t = 0)
+        (_hu : R.D.U.d 1 2 rfl u = f.f 2 2 rfl s) (ct cu : LinearMap.ker (R.Wrel.d 1 2 rfl))
+        (_hct : ct.1 = R.gR.f 1 1 rfl t) (_hcu : cu.1 = R.gR.f 1 1 rfl u),
+        tr0 (selCupFunT Q 2 1 3 rfl ((0 : R.D.G.X 2), s, -(R.D.ι.f 1 (2 - 1) (by omega) u))
+            ((0 : R.D.G.X 1), t, (0 : R.D.L.X (1 - 1)))) =
+          P (R.eR (cls1 R.Wrel ct)) (R.eR (cls1 R.Wrel cu)) := by
+  obtain ⟨P, hP⟩ := exists_residuePairing R Ustr f Q.toSelPairData (Q.trT tr0 htr0) hfg hf hg hex
+    (Q.trT_kills tr0 htr0) hSO
+  exact ⟨P, fun t u s ht hu ct cu hct hcu =>
+    (trT_selCupFun Q tr0 htr0 2 1 rfl _ _).symm.trans (hP t u s ht hu ct cu hct hcu)⟩
 
 /-! ### `StrictOrth` is an extra input -/
 
