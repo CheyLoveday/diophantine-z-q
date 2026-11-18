@@ -11,10 +11,16 @@
 | `trace_unique`, `trace_index` | Trace is unique by the fibre over 1; each Galois element has that trace. Lean exit 0; uniqueness has standard three axioms. |
 | `sign_xr`, `sign_sq` | Second bit sign is multiplicative and has square 1. Lean exit 0. |
 | `trace_sign_at_zero`, `exists_inertia_trace_three` | Inertia sign is positive over 0; a CM(−24) chart point has a stabilizer of trace 3. Lean exit 0; standard three axioms. |
-
-
 | `mem_inertia_iff` | Mathlib inertia is equivalent to chart inertia. Lean exit 0. |
 | `squarefree_eigenvector` | A nontrivial sign character gives a nonzero sign eigenvector with squarefree polynomial square. Lean exit 0; standard three axioms. |
 | `prime_support`, `radicand_mem_of_neg` | A prime dividing the squarefree radicand has nontrivial sign inertia; a negative inertia element forces the radicand into the underlying prime. Lean exit 0; standard three axioms for `prime_support`. |
 
 Build cache: root cache present, upstream dependency cache copied into the worktree; direct Lean uses those caches. Host load and available memory checked before each invocation.
+
+| Declaration | Result |
+|---|---|
+| `exists_residue_hom` | Quotient by a prime over a rational linear prime extends evaluation to a geometric point. Lean exit 0. |
+| `inertia_trivial_of_ramificationIdx_eq_one` | Index 1 forces trivial inertia in the characteristic-zero chart. Lean exit 0. |
+| `cm_objects` | Existing Y₃ row gives CM(−4), CM(−3), CM(−24) pairs. Lean exit 0. |
+| `SGRDirect.heckeSqrtBranchAny_of_y3` | Sign character, CM, and finite branch support give the unchanged square-root statement. Lean exit 0. |
+| `SGRDirect.heckeSqrtBranchAny_proof` | Only argument: `Y3P1j.Y3ToP1j`. Lean exit 0; axioms: `propext`, `Classical.choice`, `Quot.sound`. |
