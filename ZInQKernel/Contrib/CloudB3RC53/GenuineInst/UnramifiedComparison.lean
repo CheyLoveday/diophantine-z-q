@@ -3,8 +3,7 @@ import ZInQKernel.Contrib.OneProof.RC.SelmerComplex.TauCetiComparison
 import ZInQKernel.Contrib.CloudB3RC53.UnramifiedComplex.CdOne
 
 /-!
-# Genuine instantiations, part 3: the unramified condition is a quasi-isomorphism onto the
-unramified part
+# Genuine instantiations, part 3: the unramified condition on `H⁰`, `H¹` and in degrees `≥ 2`
 
 Manuscript `diophantine_zq.tex`, tex 3478–3487 (the unramified complex `[Φ−1]` as the condition at
 the new places) and tex 4699–4701 (it has the degree-zero invariants of the full local complex and
@@ -31,8 +30,13 @@ its place form `urToLocal_galois` are compared with `urH0Equiv`, `urH1Equiv` and
   `urH0Equiv`-value) and **`urClass1_contH1`** (`H¹`: inflation-pushforward of `urH1Equiv`). The
   statement on the homology of the `ℤ`-indexed local complex `(natCx …).toCC` awaits the
   continuous-cochain bridge;
-* node `UrToLocalOntoUnramified` at a place of a number field (`π = resUr`, surjective), together
-  with the vanishing in degrees `≥ 2` on both sides (`CdOne`).
+* node `UrToLocalOntoUnramified` at a place of a number field (`π = resUr`, surjective): the
+  `H¹` statement above, together with the vanishing in degrees `≥ 2` of the cohomology of the
+  two-term complex and of `Gal(K_w^ur/K_w)` with coefficients in `W` (`CdOne`). This is **not** a
+  quasi-isomorphism statement: it says nothing about `H⁰` beyond `urToLocal_zero_invariant`, nothing
+  about `Hⁿ(G_{K_w}, M)` for `n ≥ 2`, and no unramified subcomplex of the local complex is defined.
+  The quasi-isomorphism `[W --(Φ−1)--> W] ⟶ C^•_cont(Gal(K_w^ur/K_w), W)` is the clearing lane's
+  `urSelf_galois_quasiIso` (TameModel/UnramifiedQIso); see `UrToLocalFactorization`.
 
 **Classification.** PROVED.
 -/
@@ -331,15 +335,19 @@ open NumberField IsDedekindDomain ZInQ.Contrib.CloudB3RC53.RankCounts
 
 attribute [local instance] TopRep.distribMulAction TopRep.smulCommClass
 
-/-- **(PROVED) The unramified condition `urToLocal_galois` is a quasi-isomorphism onto the
-unramified part** (tex 3478–3487, 4699–4701), at a place `w ∈ S` of a number field, for a finite
+/-- **(PROVED) The unramified condition `urToLocal_galois` on `H¹`, and vanishing in degrees `≥ 2`
+of its source** (tex 3478–3487, 4699–4701), at a place `w ∈ S` of a number field, for a finite
 discrete `Gal(K_w^ur/K_w)`-module `W` identified with the coefficients `M` by a `G_{K_w}`-equivariant
-bijection `f`:
-* on `H¹`, the induced map `y ↦ inflation∘f (urH1Equiv y)` (`urToLocal_H1`) is injective with image
+bijection `f`. Exactly:
+* on `H¹`, the induced map `y ↦ inflation∘f (urH1Equiv y)` (`urToLocal_H1`) is injective, with image
   the inflated (unramified) classes `explicitMap1 (resUr) f`;
-* in every degree `n ≥ 2` both `Hⁿ(U_w^ur)` and `Hⁿ(Gal(K_w^ur/K_w), W)` vanish (`CdOne`).
-(On `H⁰`, `urToLocal` sends `W^{Gal(K_w^ur/K_w)} = ker (Φ − 1)` to the invariants by `f`:
-`urToLocal_zero_apply`, `urToLocal_zero_invariant`.) -/
+* for every `n ≥ 2`, `Hⁿ` of the two-term complex `[W --(Φ−1)--> W]` is zero and
+  `Hⁿ(Gal(K_w^ur/K_w), W)` (Mathlib's continuous cohomology) is zero (`CdOne`).
+This is not a quasi-isomorphism statement: nothing is asserted on `H⁰` (where `urToLocal` sends
+`ker (Φ − 1)` to `G_{K_w}`-invariants: `urToLocal_zero_apply`, `urToLocal_zero_invariant`), nothing
+about `Hⁿ(G_{K_w}, M)`, `n ≥ 2`, and no unramified subcomplex of the local complex is defined. The
+quasi-isomorphism onto `C^•_cont(Gal(K_w^ur/K_w), W)` is `urSelf_galois_quasiIso`, and
+`urToLocal_galois` factors through it followed by inflation (`UrToLocalFactorization`). -/
 def UrToLocalOntoUnramified : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (S : Set (HeightOneSpectrum (𝓞 K))) (w : Places K S)
     (k : Type) [CommRing k] [TopologicalSpace k] (M : Type) [AddCommGroup M] [Module k M]
