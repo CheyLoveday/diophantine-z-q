@@ -1,0 +1,20 @@
+{
+  "name": "faltings-restate",
+  "imports": ["ZInQKernel.Contrib.OneProof.FaltingsRestate"],
+  "discharges": [
+    {
+      "field": "faltingsSemistableHeightBC",
+      "proof": "_root_.ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_faltingsLemma1 {n}.faltingsLemma1DVR {n}.silverbergZarhinThm35 {n}.neronSchemeExtensionDedekind",
+      "leaves": [
+        {
+          "name": "faltingsLemma1DVR",
+          "type": "_root_.ZInQ.FaltingsRestate.FaltingsLemma1DVR",
+          "doc": "Faltings 1983, p. 350, Lemma 1, specialized to the spectrum of a DVR and its generic point: a generic-fibre homomorphism of semiabelian schemes with abelian generic fibres extends uniquely as a homomorphism. Semiabelian special fibres are connected extensions of abelian varieties by tori over the residue field. This supplies the Néron identity-component comparison when both models are semistable. The separate height invariance of a semiabelian model and its base change is proved from the kernel's height base change theorem.",
+          "kind": "published",
+          "flag": "AI page read by the reading desk: p. 350, Lemma 1; the base is a DVR and the models have abelian generic fibres",
+          "source": "Faltings, Invent. Math. 73 (1983), 349–366, p. 350, Lemma 1; cited in diophantine_zq.tex L11084–11086"
+        }
+      ]
+    }
+  ]
+}
