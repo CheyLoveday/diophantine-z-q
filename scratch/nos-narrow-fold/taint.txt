@@ -1,0 +1,963 @@
+closure size 298881
+carriers [HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c, HDec.HSyn.OpenResearchLeaves60_y3x6, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c, HDec.HSyn.OpenResearchLeaves5EBU_y3c, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c, HDec.HSyn.OpenResearchLeaves59_y3x6, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c, HDec.HSyn.ResearchLeaves3EBU_y3c, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c, HDec.HSyn.OpenResearchLeaves2EBU_y3c, HDec.HSyn.OpenResearchLeaves63, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c, HDec.HSyn.OpenResearchLeaves54SFU_y3x6, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6, HDec.HSyn.OpenResearchLeaves64, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c, HDec.HSyn.OpenResearchLeaves7EBU_y3c]
+value-tainted 97
+C ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c
+C ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6
+C ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64
+C ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6
+C ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c
+C ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c
+tainted 97
+value-or-type tainted 958
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.afCharpolyDS965
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.bShStandardModel
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.bergerSurveyF
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.carayolThmAFrob
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.cmFibreSplit
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.cmHeight62
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.cmPotentialGood
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.cmjDegree
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.deRhamVpAbVarDirect
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.deligneCanonicalModelY3EveryPrint
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.dsThm965Printed
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.dsThm966Printed
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.elliotWildInertiaTrivial
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.fowlerProp27
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.gaudronRemondSec9LowerAnSS
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.gaudronRemondThm14AnSS
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.heckeSqrtBranchAny
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.javanpeykarThm111An
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.mk
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.modularHTCoeff
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.panPrintedF
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.pazukiCor13Upper
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.r9a
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.r9b
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.shimuraThm1Af
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.silverbergZarhinThm35
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.y3FullThreeRepZ30
+S ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.y3ToP1j
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.afCharpolyDS965
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.bShStandardModel
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.bergerSurveyF
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.carayolThmAFrob
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.cmFibreSplit
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.cmHeight62
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.cmPotentialGood
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.cmjDegree
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.deRhamVpAbVarDirect
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.deligneCanonicalModelY3EveryPrint
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.dsThm965Printed
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.dsThm966Printed
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.elliotWildInertiaTrivial
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.fowlerProp27
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.gaudronRemondSec9LowerAnSS
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.gaudronRemondThm14AnSS
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.javanpeykarThm111An
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.modularHTCoeff
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.panPrintedF
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.pazukiCor13Upper
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.r9a
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.r9b
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.shimuraThm1Af
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.silverbergZarhinThm35
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.y3FullThreeRepZ30
+S ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.y3ToP1j
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.G0AssembleMod.newformLeaves_of3_hf_pz_eb_u_y3c
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.G0RevIsog.reverseIsogeny_of_leaves3_eb_u_y3c
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.G0Split.hom_of_common3_hf_pz_eb_u_y3c
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.bdRInvariantsPrinted
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.carayolThmA
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.deRhamVpAbVarPrinted
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.raynaudSemistableSHOr
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.h5fin
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r10
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r13
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r14
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r15
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r18
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r19
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r1b
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r1r2
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r1rec
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r21
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r22
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r4
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r5
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r5count
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r6
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.h5fin
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r10
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r13
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r14
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r15
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r18
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r19
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r1b
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r1r2
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r1rec
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r21
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r22
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r4
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r5
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r5count
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r6
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.h5fin
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.igusaChi10
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.igusaPsi4
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r15
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r18
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r19
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r1r2
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r1rec
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r21
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r22
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r5
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r5count
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r6
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.shimuraFamily
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.h5
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.h5fin
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r10
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r13
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r14
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r15
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r18
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r19
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r1r2
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r21
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r22
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.ResearchLeaves3EBU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.rayClassCMAb
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.shimuraFamilyAb
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.rayClassCMAb
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.shimuraFamilyAb
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.rayClassCMAb
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.shimuraFamilyAb
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.dsThm965Weak
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.dsThm965Weak
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.dsThm965Weak
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.neronBaseChangeStrictHenselization
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.blr_7_2_1
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.eigenformCoeffFieldFinite
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.raynaudSemistableSHOr
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.eigenformCoeffFieldFinite
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.raynaudSemistableSHOr
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.eigenformCoeffFieldFinite
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.raynaudSemistableSHOr
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.raynaudSemistableSHOr
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.carayolThmA
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r16CoreY
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.raynaudSemistableSHOr
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.CMBranch.nonCMBranch_of_u_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.G0Galois.g8_g12_of_leaves3_hf_pz_eb_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.G0AssembleMod.afterG7NC_of3_hf_pz_eb_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.blr_1_2_4
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.gonzalezRotgerCountX6Ab
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.igusaChi10
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.igusaPsi4
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.rayClassCMAb
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.shimuraFamilyAb
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.strictHenselizationPair
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.blr_1_2_4
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.gonzalezRotgerCountX6Ab
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.igusaChi10
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.igusaPsi4
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.rayClassCMAb
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.shimuraFamilyAb
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.strictHenselizationPair
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.gonzalezRotgerCountX6Ab
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.rayClassCMAb
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.shimuraFamilyAb
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.strictHenselizationPair
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.heckeSqrtY3
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.mumfordGroupLaw
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r6u
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.rayClassCMAb
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.raynaudSemistableSH
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.shimuraFamilyAb
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.strictHenselizationPair
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.y3row
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.igusaChi10
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.igusaPsi4
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r15
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r1r2
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r1rec
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r5
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r5count
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r6
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.semistableReductionThmIF
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.shimuraFamily
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.deRhamH1AbVarT
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.dsThm965
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.dsThm966
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.gonzalezRotgerCountX6
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.igusaChi10
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.igusaPsi4
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.mk
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r11r12
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r16
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r17
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r1r2
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r6
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r9a
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r9b
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.semistableReductionThmIF
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.shimuraFamily
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.addedLeaves7_of_open8_pz_eb_sf_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.addedLeaves9_of_open14_hf_gm_pz_eb_sf_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.heightRowsNo20_of8_hf_eb_sf_u_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.openGlue7_of_OpenGlue8_hf_gm_pz_eb_sf_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.r20Lower_of8_hf_eb_sf_u_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.raynaudCriterionNF_of14_hf_gm_eb_sf_u_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.raynaudSemistable_of14_hf_gm_eb_sf_u_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.ss1_ss3_of14NF_hf_gm_pz_eb_sf_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.x6Rows_of_open14_hf_gm_pz_eb_sf_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.addedLeaves4_of_open6_hf_pz_eb_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.addedLeaves6_of_open7_hf_pz_eb_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.cmDescends_of6_hf_pz_eb_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.glue4_of_open6_hf_pz_eb_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.qmHauptmodul_of6_pz_eb_u_c8_y3c
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.bdRInvariantsPrinted
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.carayolThmA
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.deRhamVpAbVarPrinted
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.heckeSqrtBranchAny
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.hodgeTateDecompAbVar
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.mk
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r11r12
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r16CoreY
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r6u
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r9a
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r9b
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.raynaudSemistableSHOr
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.y3ToP1j
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.bdRInvariantsPrinted
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.bostLowerBound
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.carayolThmA
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.deRhamVpAbVarPrinted
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.eigenformHTNew
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.gaudronRemondThm14
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.gonzalezRotgerProp56X6
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.heckeSqrtBranchAny
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.javanpeykarBound
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.mk
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r11r12
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r16CoreY
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r6u
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r9a
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r9b
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.raynaudSemistableSHOr
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.shimuraMainThmIDeligneY3AbU
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.y3ToP1j
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.afCharpolyDS965
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.afShimura
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.bergerSurveyF
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.carayolThmAIrr
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.deRhamVpAbVarDirect
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.deligneCanonicalModelY3EveryPrint
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.gaudronRemondSec9LowerAnSS
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.gaudronRemondThm14AnSS
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.heckeJ1DS
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.heckeSqrtBranchAny
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.hodgeTateDecompOr
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.javanpeykarThm111An
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.mk
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.modularHTCoeff
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.panPrintedF
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.r6u
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.r9a
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.r9b
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.raynaudSemistableSHOr
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.y3FineModuliAbP
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.y3ToP1j
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.afCharpolyDS965
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.afShimura
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.bergerSurveyF
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.carayolThmAFrob
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.deRhamVpAbVarDirect
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.deligneCanonicalModelY3EveryPrint
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.elliotWildInertiaTrivial
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.gaudronRemondSec9LowerAnSS
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.gaudronRemondThm14AnSS
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.heckeJ1DS
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.heckeSqrtBranchAny
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.hodgeTateDecompOr
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.javanpeykarThm111An
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.mk
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.modularHTCoeff
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.panPrintedF
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.r9a
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.r9b
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.silverbergZarhinThm35
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.y3FullThreeRepZ30
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.y3ToP1j
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.afCharpolyDS965
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.bShStandardModel
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.bergerSurveyF
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.carayolThmAFrob
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.deRhamVpAbVarDirect
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.deligneCanonicalModelY3EveryPrint
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.dsThm965Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.dsThm966Printed
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.elliotWildInertiaTrivial
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.faltingsSemistableHeightBC
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.gaudronRemondSec9LowerAnSS
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.gaudronRemondThm14AnSS
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.heckeSqrtBranchAny
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.hodgeTateDecompOr
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.javanpeykarThm111An
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.mk
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.modularHTCoeff
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.neronSchemeExtensionDedekind
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.panPrintedF
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.pazukiCor13Upper
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.r9a
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.r9b
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.shimuraThm1Af
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.silverbergZarhinThm35
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.y3FullThreeRepZ30
+S ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.y3ToP1j
+T ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.OpenResearchLeaves63.neronOggShafarevichSep USES [HDec.HSyn.OpenResearchLeaves63]
+T ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.openResearchLeaves60_y3x6_of_OpenResearchLeaves63 USES [HDec.HSyn.OpenResearchLeaves63, HDec.HSyn.OpenResearchLeaves60_y3x6.mk, HDec.HSyn.OpenResearchLeaves63.r9a, HDec.HSyn.OpenResearchLeaves63.r9b, HDec.HSyn.OpenResearchLeaves63.pazukiCor13Upper, HDec.HSyn.OpenResearchLeaves63.neronSchemeExtensionDedekind, HDec.HSyn.OpenResearchLeaves63.neronOggShafarevichSep, HDec.HSyn.OpenResearchLeaves63.dsThm965Printed, HDec.HSyn.OpenResearchLeaves63.dsThm966Printed, HDec.HSyn.OpenResearchLeaves63.panPrintedF, HDec.HSyn.OpenResearchLeaves63.afCharpolyDS965, HDec.HSyn.OpenResearchLeaves63.deRhamVpAbVarDirect, HDec.HSyn.OpenResearchLeaves63.modularHTCoeff, HDec.HSyn.OpenResearchLeaves63.faltingsSemistableHeightBC, HDec.HSyn.OpenResearchLeaves63.elliotWildInertiaTrivial, HDec.HSyn.OpenResearchLeaves63.bergerSurveyF, HDec.HSyn.OpenResearchLeaves63.deligneCanonicalModelY3EveryPrint, HDec.HSyn.OpenResearchLeaves63.gaudronRemondSec9LowerAnSS, HDec.HSyn.OpenResearchLeaves63.gaudronRemondThm14AnSS, HDec.HSyn.OpenResearchLeaves63.javanpeykarThm111An, HDec.HSyn.OpenResearchLeaves63.silverbergZarhinThm35, HDec.HSyn.OpenResearchLeaves63.y3FullThreeRepZ30, HDec.HSyn.OpenResearchLeaves63.carayolThmAFrob, HDec.HSyn.OpenResearchLeaves63.bShStandardModel, HDec.HSyn.OpenResearchLeaves63.shimuraThm1Af, HDec.HSyn.OpenResearchLeaves63.y3ToP1j, HDec.HSyn.OpenResearchLeaves63.heckeSqrtBranchAny]
+T ZInQKernel.OneProof.H.TailZ89 HDec.HSyn.sixContactMin_of_open82 USES [HDec.HSyn.OpenResearchLeaves63, HDec.HSyn.GR9.sixContactMin_of_open45_pz_eb_sf_u_hm_cm_y3c, HDec.HSyn.GR9.openResearchLeaves31_of_OpenResearchLeaves32_eb_cf_sf_u_y3c, HDec.HSyn.GR9.openResearchLeaves32_of_OpenResearchLeaves33_eb_cf_sf_u_y3c, HDec.HSyn.GR9.openResearchLeaves33_of_OpenResearchLeaves34_eb_cf_sf_u_y3c, HDec.HSyn.GR9.openResearchLeaves34_y3c_of_35EBCFSFU_y3x6, HDec.HSyn.GR9.openResearchLeaves35EBCFSFU_y3x6_of_36_y3x6, HDec.HSyn.GR9.openResearchLeaves36EBCFSFU_y3x6_of_54SFU_y3x6, HDec.HSyn.openResearchLeaves54SFU_y3x6_of_59_y3x6, HDec.HSyn.openResearchLeaves59_y3x6_of_60_y3x6, HDec.HSyn.openResearchLeaves60_y3x6_of_OpenResearchLeaves63, HDec.HSyn.OpenResearchLeaves63.cmFibreSplit, HDec.HSyn.OpenResearchLeaves63.fowlerProp27, HDec.HSyn.OpenResearchLeaves63.cmjDegree, HDec.HSyn.OpenResearchLeaves63.cmPotentialGood, HDec.HSyn.OpenResearchLeaves63.cmHeight62]
+T ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.OpenResearchLeaves64.neronOggShafarevichSep USES [HDec.HSyn.OpenResearchLeaves64]
+T ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.openResearchLeaves63_of_OpenResearchLeaves64 USES [HDec.HSyn.OpenResearchLeaves64, HDec.HSyn.OpenResearchLeaves63.mk, HDec.HSyn.OpenResearchLeaves64.r9a, HDec.HSyn.OpenResearchLeaves64.r9b, HDec.HSyn.OpenResearchLeaves64.pazukiCor13Upper, HDec.HSyn.OpenResearchLeaves64.neronSchemeExtensionDedekind, HDec.HSyn.OpenResearchLeaves64.neronOggShafarevichSep, HDec.HSyn.OpenResearchLeaves64.dsThm965Printed, HDec.HSyn.OpenResearchLeaves64.dsThm966Printed, HDec.HSyn.OpenResearchLeaves64.panPrintedF, HDec.HSyn.OpenResearchLeaves64.afCharpolyDS965, HDec.HSyn.OpenResearchLeaves64.deRhamVpAbVarDirect, HDec.HSyn.OpenResearchLeaves64.modularHTCoeff, HDec.HSyn.OpenResearchLeaves64.faltingsSemistableHeightBC, HDec.HSyn.OpenResearchLeaves64.elliotWildInertiaTrivial, HDec.HSyn.OpenResearchLeaves64.bergerSurveyF, HDec.HSyn.OpenResearchLeaves64.deligneCanonicalModelY3EveryPrint, HDec.HSyn.OpenResearchLeaves64.gaudronRemondSec9LowerAnSS, HDec.HSyn.OpenResearchLeaves64.gaudronRemondThm14AnSS, HDec.HSyn.OpenResearchLeaves64.javanpeykarThm111An, HDec.HSyn.OpenResearchLeaves64.silverbergZarhinThm35, HDec.HSyn.OpenResearchLeaves64.y3FullThreeRepZ30, HDec.HSyn.OpenResearchLeaves64.carayolThmAFrob, HDec.HSyn.OpenResearchLeaves64.bShStandardModel, HDec.HSyn.OpenResearchLeaves64.shimuraThm1Af, HDec.HSyn.OpenResearchLeaves64.cmFibreSplit, HDec.HSyn.OpenResearchLeaves64.fowlerProp27, HDec.HSyn.OpenResearchLeaves64.cmjDegree, HDec.HSyn.OpenResearchLeaves64.cmPotentialGood, HDec.HSyn.OpenResearchLeaves64.cmHeight62, HDec.HSyn.OpenResearchLeaves64.y3ToP1j]
+T ZInQKernel.OneProof.H.TailZ90 HDec.HSyn.sixContactMin_of_open83 USES [HDec.HSyn.OpenResearchLeaves64, HDec.HSyn.sixContactMin_of_open82, HDec.HSyn.openResearchLeaves63_of_OpenResearchLeaves64]
+T ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.neronOggShafarevichSep USES [HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves2EBU_y3c.r7a USES [HDec.HSyn.OpenResearchLeaves2EBU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves5EBU_y3c.r7a USES [HDec.HSyn.OpenResearchLeaves5EBU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.OpenResearchLeaves7EBU_y3c.r7a USES [HDec.HSyn.OpenResearchLeaves7EBU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.researchLeaves2_of_open5_eb_u_y3c USES [HDec.HSyn.OpenResearchLeaves5EBU_y3c, HDec.HSyn.OpenResearchLeaves2EBU_y3c.mk, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r1r2, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r1b, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r1rec, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r4, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r5, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r5count, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r6, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r7a, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r9a, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r9b, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r10, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r11r12, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r13, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r14, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r15, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r16, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r17, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r18, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r19, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r21, HDec.HSyn.OpenResearchLeaves5EBU_y3c.r22, HDec.HSyn.OpenResearchLeaves5EBU_y3c.h5fin]
+T ZInQKernel.OneProof.H.Y3Copy3 HDec.HSyn.researchLeaves3_of_open2_eb_u_y3c USES [HDec.HSyn.OpenResearchLeaves2EBU_y3c, HDec.HSyn.ResearchLeaves3EBU_y3c.mk, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r1r2, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r1rec, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r4, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r5, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r5count, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r6, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r7a, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r9a, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r9b, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r10, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r11r12, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r13, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r14, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r15, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r16, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r18, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r19, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r21, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r22, HDec.HSyn.OpenResearchLeaves2EBU_y3c.h5fin]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.neronOggShafarevichSep USES [HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.neronOggShafarevichSep USES [HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.neronOggShafarevichSep USES [HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.neronOggShafarevichSep USES [HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.neronOggShafarevichSep USES [HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves18_of_OpenResearchLeaves19_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.shimuraFamilyAb, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.rayClassCMAb, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.neronBaseChangeStrictHenselization]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves19_of_OpenResearchLeaves20_hf_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.shimuraFamilyAb, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.rayClassCMAb, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.neronBaseChangeStrictHenselization, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.heckeSqrtY3]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves20_of_OpenResearchLeaves21_hf_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.neronBaseChangeStrictHenselization, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.r6u]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves21_of_OpenResearchLeaves22_hf_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.neronBaseChangeStrictHenselization, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves22_of_OpenResearchLeaves23_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.neronBaseChangeStrictHenselization, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.r16CoreY]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves23_of_OpenResearchLeaves24_hf_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.neronBaseChangeStrictHenselization, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.heckeSqrtY3]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves24_of_OpenResearchLeaves25_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.dsThm965Weak, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.neronBaseChangeStrictHenselization, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.heckeSqrtY3]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves25_of_OpenResearchLeaves26_hf_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.neronBaseChangeStrictHenselization, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.dsThm965Weak]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves26_of_OpenResearchLeaves27_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.neronBaseChangeStrictHenselization, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.dsThm965Weak]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves27_of_OpenResearchLeaves28_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.neronOggShafarevichSep, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.dsThm966Printed, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.neronSchemeExtensionDedekind, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.raynaudSemistableSHOr, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.blr_7_2_1, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.dsThm965Printed, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.eigenformCoeffFieldFinite]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves28_of_OpenResearchLeaves29_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves28GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.raynaudSemistableSHOr, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.neronSchemeExtensionDedekind, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.neronOggShafarevichSep, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.dsThm965Printed, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.eigenformCoeffFieldFinite, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.dsThm966Printed]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves29GM_of_OpenResearchLeaves31_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves29GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.raynaudSemistableSHOr, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.neronSchemeExtensionDedekind, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.neronOggShafarevichSep, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.dsThm965Printed, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.eigenformCoeffFieldFinite, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.dsThm966Printed]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves31_of_OpenResearchLeaves32_eb_cf_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.raynaudSemistableSHOr, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.neronSchemeExtensionDedekind, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.neronOggShafarevichSep, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.dsThm965Printed, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.dsThm966Printed]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves32_of_OpenResearchLeaves33_eb_cf_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves32EBCFSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.carayolThmA, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.raynaudSemistableSHOr, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.neronSchemeExtensionDedekind, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.neronOggShafarevichSep, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.dsThm965Printed, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.dsThm966Printed]
+T ZInQKernel.OneProof.H.Y3Copy4 HDec.HSyn.GR9.openResearchLeaves33_of_OpenResearchLeaves34_eb_cf_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves33EBCFSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.deRhamVpAbVarPrinted, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.bdRInvariantsPrinted, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.raynaudSemistableSHOr, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.neronSchemeExtensionDedekind, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.neronOggShafarevichSep, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.dsThm965Printed, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.dsThm966Printed, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.carayolThmA]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r7a USES [HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.openResearchLeaves14_of_OpenResearchLeaves15_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.shimuraFamilyAb, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.igusaPsi4, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.igusaChi10, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.gonzalezRotgerCountX6Ab, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.blr_1_2_4, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.rayClassCMAb, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.strictHenselizationPair]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.openResearchLeaves15_of_OpenResearchLeaves16_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.shimuraFamilyAb, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.gonzalezRotgerCountX6Ab, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.rayClassCMAb, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.strictHenselizationPair]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.openResearchLeaves16_of_OpenResearchLeaves17_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.shimuraFamilyAb, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.rayClassCMAb, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.strictHenselizationPair]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.openResearchLeaves17_of_OpenResearchLeaves18_gm_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.shimuraFamilyAb, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.r6u, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.y3row, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.heckeSqrtY3, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.rayClassCMAb, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.raynaudSemistableSH, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.neronBaseChangeStrictHenselization, HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c.gonzalezRotgerProp56X6]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.researchLeaves7_of_open8_hf_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c, HDec.HSyn.OpenResearchLeaves7EBU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r1r2, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.shimuraFamily, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r1rec, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.igusaPsi4, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.igusaChi10, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r5, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r5count, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r6, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r15, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.r17, HDec.HSyn.GR9.heightRowsNo20_of8_hf_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.researchLeaves8_of_open9_hf_eb_sf_u_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r1r2, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.shimuraFamily, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.igusaPsi4, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.igusaChi10, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.gonzalezRotgerCountX6, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r6, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.semistableReductionThmIF, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.gaudronRemondThm14]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.researchLeaves9_of_open14_hf_gm_pz_eb_sf_u_c8_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c, HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c.mk, HDec.HSyn.GR9.x6Rows_of_open14_hf_gm_pz_eb_sf_u_c8_y3c, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.shimuraFamilyAb, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.igusaPsi4, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.igusaChi10, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r7a, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r9a, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r9b, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.deRhamH1AbVarT, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r11r12, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.dsThm965, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.dsThm966, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r16, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.r17, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c.gonzalezRotgerCountX6Ab]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open10_hf_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open9_hf_pz_eb_sf_u_c8_cm_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open11_hf_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open10_hf_pz_eb_sf_u_c8_cm_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open17_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open11_hf_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.researchLeaves9_of_open14_hf_gm_pz_eb_sf_u_c8_y3c, HDec.HSyn.GR9.addedLeaves9_of_open14_hf_gm_pz_eb_sf_u_c8_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open18_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open17_hf_gm_pz_eb_sf_u_c8_cm_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open19_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open18_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves14_of_OpenResearchLeaves15_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open20_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open19_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves15_of_OpenResearchLeaves16_gm_eb_sf_u_y3c, HDec.HSyn.GR9.raynaudCriterionNF_of14_hf_gm_eb_sf_u_y3c, HDec.HSyn.GR9.openResearchLeaves14_of_OpenResearchLeaves15_gm_eb_sf_u_y3c, HDec.HSyn.GR9.ss1_ss3_of14NF_hf_gm_pz_eb_sf_u_c8_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open21_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open20_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves16_of_OpenResearchLeaves17_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open22_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open21_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves17_of_OpenResearchLeaves18_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open23_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open22_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves18_of_OpenResearchLeaves19_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open24_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open23_hf_gm_pz_eb_sf_u_c8_cm_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open25_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open24_hf_gm_pz_eb_sf_u_c8_cm_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open26_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open25_hf_gm_pz_eb_sf_u_c8_cm_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open27_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open26_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves19_of_OpenResearchLeaves20_hf_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open28_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open27_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves20_of_OpenResearchLeaves21_hf_gm_eb_sf_u_y3c, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.mumfordGroupLaw, HDec.HSyn.GR9.OpenResearchLeaves21GMEBSFU_y3c.shimuraMainThmIDeligneY3AbU]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open29_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves22GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open28_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves21_of_OpenResearchLeaves22_hf_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open30_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves23GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open29_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves22_of_OpenResearchLeaves23_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open31_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves24GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open30_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves23_of_OpenResearchLeaves24_hf_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open32_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open31_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves24_of_OpenResearchLeaves25_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open33_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves25GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open32_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openGlue7_of_OpenGlue8_hf_gm_pz_eb_sf_u_c8_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open34_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open33_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves25_of_OpenResearchLeaves26_hf_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open35_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open34_hf_gm_pz_eb_sf_u_c8_cm_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open36_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves26GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open35_hf_gm_pz_eb_sf_u_c8_cm_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open8_hf_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3c, HDec.HSyn.sixContactMin_of_open7_hf_pz_eb_u_c8_cm_y3c, HDec.HSyn.GR9.researchLeaves7_of_open8_hf_eb_sf_u_y3c, HDec.HSyn.GR9.addedLeaves7_of_open8_pz_eb_sf_u_c8_y3c, HDec.HSyn.GR9.r20Lower_of8_hf_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.GR9.sixContactMin_of_open9_hf_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open8_hf_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.researchLeaves8_of_open9_hf_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.researchLeaves5_of_open7_pz_eb_u_c8_y3c USES [HDec.HSyn.OpenResearchLeaves7EBU_y3c, HDec.HSyn.OpenResearchLeaves5EBU_y3c.mk, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r1r2, HDec.HSyn.OpenResearchLeaves7EBU_y3c.shimuraFamily, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r1rec, HDec.HSyn.OpenResearchLeaves7EBU_y3c.igusaPsi4, HDec.HSyn.OpenResearchLeaves7EBU_y3c.igusaChi10, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r5, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r5count, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r6, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r7a, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r9a, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r9b, HDec.HSyn.OpenResearchLeaves7EBU_y3c.hodgeTateDecompAbVar, HDec.HSyn.OpenResearchLeaves7EBU_y3c.deRhamH1AbVarT, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r11r12, HDec.HSyn.OpenResearchLeaves7EBU_y3c.eigenformHTNew, HDec.HSyn.OpenResearchLeaves7EBU_y3c.dsThm965, HDec.HSyn.OpenResearchLeaves7EBU_y3c.dsThm966, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r15, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r16, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r17, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r18, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r19, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r21, HDec.HSyn.OpenResearchLeaves7EBU_y3c.r22, HDec.HSyn.OpenResearchLeaves7EBU_y3c.h5fin]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.sixContactMin_of_open4_cm_u_c8_y3c USES [HDec.HSyn.OpenResearchLeaves2EBU_y3c, HDec.HSyn.ResearchLeaves3EBU_y3c, HDec.HSyn.researchLeaves3_of_open2_eb_u_y3c, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r1r2, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r7a, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r6, HDec.HSyn.G0AssembleMod.afterG7NC_of3_hf_pz_eb_u_c8_y3c, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r14, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r10, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r17, HDec.HSyn.G0RevIsog.reverseIsogeny_of_leaves3_eb_u_y3c, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r1b, HDec.HSyn.OpenResearchLeaves2EBU_y3c.r4, HDec.HSyn.ResearchLeaves3EBU_y3c.r1r2, HDec.CMBranch.nonCMBranch_of_u_y3c, HDec.HSyn.ResearchLeaves3EBU_y3c.h5, HDec.HSyn.ResearchLeaves3EBU_y3c.r22, HDec.HSyn.ResearchLeaves3EBU_y3c.r19]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.sixContactMin_of_open4_hf_pz_eb_u_c8_cm_y3c USES [HDec.HSyn.OpenResearchLeaves2EBU_y3c, HDec.HSyn.sixContactMin_of_open4_cm_u_c8_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.sixContactMin_of_open6_hf_pz_eb_u_c8_cm_y3c USES [HDec.HSyn.OpenResearchLeaves5EBU_y3c, HDec.HSyn.sixContactMin_of_open4_hf_pz_eb_u_c8_cm_y3c, HDec.HSyn.researchLeaves2_of_open5_eb_u_y3c, HDec.HSyn.addedLeaves4_of_open6_hf_pz_eb_u_c8_y3c, HDec.HSyn.glue4_of_open6_hf_pz_eb_u_c8_y3c]
+T ZInQKernel.OneProof.H.Y3Copy5 HDec.HSyn.sixContactMin_of_open7_hf_pz_eb_u_c8_cm_y3c USES [HDec.HSyn.OpenResearchLeaves7EBU_y3c, HDec.HSyn.sixContactMin_of_open6_hf_pz_eb_u_c8_cm_y3c, HDec.HSyn.researchLeaves5_of_open7_pz_eb_u_c8_y3c, HDec.HSyn.addedLeaves6_of_open7_hf_pz_eb_u_c8_y3c]
+T ZInQKernel.OneProof.H.Y3Copy6 HDec.HSyn.GR9.sixContactMin_of_open37_hf_gm_pz_eb_sf_u_c8_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves27GMEBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open36_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves26_of_OpenResearchLeaves27_gm_eb_sf_u_y3c]
+T ZInQKernel.OneProof.H.Y3Copy6 HDec.HSyn.GR9.sixContactMin_of_open45_pz_eb_sf_u_hm_cm_y3c USES [HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c, HDec.HSyn.GR9.sixContactMin_of_open37_hf_gm_pz_eb_sf_u_c8_cm_y3c, HDec.HSyn.GR9.openResearchLeaves27_of_OpenResearchLeaves28_gm_eb_sf_u_y3c, HDec.HSyn.GR9.openResearchLeaves28_of_OpenResearchLeaves29_gm_eb_sf_u_y3c, HDec.HSyn.GR9.openResearchLeaves29GM_of_OpenResearchLeaves31_eb_sf_u_y3c, HDec.HSyn.GR9.OpenResearchLeaves31EBSFU_y3c.neronSchemeExtensionDedekind]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.neronOggShafarevichSep USES [HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.neronOggShafarevichSep USES [HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.openResearchLeaves34_y3c_of_35EBCFSFU_y3x6 USES [HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6, HDec.HSyn.GR9.OpenResearchLeaves34EBCFSFU_y3c.mk, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r9a, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r9b, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.hodgeTateDecompAbVar, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r11r12, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.y3ToP1j, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r6u, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.heckeSqrtBranchAny, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.raynaudSemistableSHOr, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.neronSchemeExtensionDedekind, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.neronOggShafarevichSep, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.dsThm965Printed, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.dsThm966Printed, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.carayolThmA, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.deRhamVpAbVarPrinted, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.bdRInvariantsPrinted]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.openResearchLeaves35EBCFSFU_y3x6_of_36_y3x6 USES [HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6, HDec.HSyn.GR9.OpenResearchLeaves35EBCFSFU_y3x6.mk, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r9a, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r9b, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r11r12, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.eigenformHTNew, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.bostLowerBound, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.javanpeykarBound, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.pazukiCor13Upper, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.gaudronRemondThm14, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.gonzalezRotgerProp56X6, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r6u, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.shimuraMainThmIDeligneY3AbU, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.r16CoreY, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.faltingsSemistableHeightBC, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.raynaudSemistableSHOr, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.neronSchemeExtensionDedekind, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.neronOggShafarevichSep, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.dsThm965Printed, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.dsThm966Printed, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.carayolThmA, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.deRhamVpAbVarPrinted, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.bdRInvariantsPrinted, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.y3ToP1j, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.heckeSqrtBranchAny]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.GR9.openResearchLeaves36EBCFSFU_y3x6_of_54SFU_y3x6 USES [HDec.HSyn.OpenResearchLeaves54SFU_y3x6, HDec.HSyn.GR9.OpenResearchLeaves36EBCFSFU_y3x6.mk, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.r9a, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.r9b, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.panPrintedF, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.bergerSurveyF, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.dsThm965Printed, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.dsThm966Printed, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.modularHTCoeff, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.gaudronRemondSec9LowerAnSS, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.javanpeykarThm111An, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.pazukiCor13Upper, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.gaudronRemondThm14AnSS, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.r6u, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.y3FineModuliAbP, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.deligneCanonicalModelY3EveryPrint, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.heckeJ1DS, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.afShimura, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.afCharpolyDS965, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.faltingsSemistableHeightBC, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.raynaudSemistableSHOr, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.neronSchemeExtensionDedekind, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.neronOggShafarevichSep, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.carayolThmAIrr, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.deRhamVpAbVarDirect, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.hodgeTateDecompOr, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.y3ToP1j, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.heckeSqrtBranchAny]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves54SFU_y3x6.neronOggShafarevichSep USES [HDec.HSyn.OpenResearchLeaves54SFU_y3x6]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves59_y3x6.neronOggShafarevichSep USES [HDec.HSyn.OpenResearchLeaves59_y3x6]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.OpenResearchLeaves60_y3x6.neronOggShafarevichSep USES [HDec.HSyn.OpenResearchLeaves60_y3x6]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.openResearchLeaves54SFU_y3x6_of_59_y3x6 USES [HDec.HSyn.OpenResearchLeaves59_y3x6, HDec.HSyn.OpenResearchLeaves54SFU_y3x6.mk, HDec.HSyn.OpenResearchLeaves59_y3x6.r9a, HDec.HSyn.OpenResearchLeaves59_y3x6.r9b, HDec.HSyn.OpenResearchLeaves59_y3x6.pazukiCor13Upper, HDec.HSyn.OpenResearchLeaves59_y3x6.silverbergZarhinThm35, HDec.HSyn.OpenResearchLeaves59_y3x6.neronSchemeExtensionDedekind, HDec.HSyn.OpenResearchLeaves59_y3x6.neronOggShafarevichSep, HDec.HSyn.OpenResearchLeaves59_y3x6.dsThm965Printed, HDec.HSyn.OpenResearchLeaves59_y3x6.dsThm966Printed, HDec.HSyn.OpenResearchLeaves59_y3x6.carayolThmAFrob, HDec.HSyn.OpenResearchLeaves59_y3x6.panPrintedF, HDec.HSyn.OpenResearchLeaves59_y3x6.heckeJ1DS, HDec.HSyn.OpenResearchLeaves59_y3x6.afShimura, HDec.HSyn.OpenResearchLeaves59_y3x6.afCharpolyDS965, HDec.HSyn.OpenResearchLeaves59_y3x6.y3FullThreeRepZ30, HDec.HSyn.OpenResearchLeaves59_y3x6.deRhamVpAbVarDirect, HDec.HSyn.OpenResearchLeaves59_y3x6.hodgeTateDecompOr, HDec.HSyn.OpenResearchLeaves59_y3x6.modularHTCoeff, HDec.HSyn.OpenResearchLeaves59_y3x6.faltingsSemistableHeightBC, HDec.HSyn.OpenResearchLeaves59_y3x6.elliotWildInertiaTrivial, HDec.HSyn.OpenResearchLeaves59_y3x6.bergerSurveyF, HDec.HSyn.OpenResearchLeaves59_y3x6.deligneCanonicalModelY3EveryPrint, HDec.HSyn.OpenResearchLeaves59_y3x6.gaudronRemondSec9LowerAnSS, HDec.HSyn.OpenResearchLeaves59_y3x6.gaudronRemondThm14AnSS, HDec.HSyn.OpenResearchLeaves59_y3x6.javanpeykarThm111An, HDec.HSyn.OpenResearchLeaves59_y3x6.y3ToP1j, HDec.HSyn.OpenResearchLeaves59_y3x6.heckeSqrtBranchAny]
+T ZInQKernel.OneProof.H.Y3Open HDec.HSyn.openResearchLeaves59_y3x6_of_60_y3x6 USES [HDec.HSyn.OpenResearchLeaves60_y3x6, HDec.HSyn.OpenResearchLeaves59_y3x6.mk, HDec.HSyn.OpenResearchLeaves60_y3x6.r9a, HDec.HSyn.OpenResearchLeaves60_y3x6.r9b, HDec.HSyn.OpenResearchLeaves60_y3x6.pazukiCor13Upper, HDec.HSyn.OpenResearchLeaves60_y3x6.neronSchemeExtensionDedekind, HDec.HSyn.OpenResearchLeaves60_y3x6.neronOggShafarevichSep, HDec.HSyn.OpenResearchLeaves60_y3x6.dsThm965Printed, HDec.HSyn.OpenResearchLeaves60_y3x6.dsThm966Printed, HDec.HSyn.OpenResearchLeaves60_y3x6.panPrintedF, HDec.HSyn.OpenResearchLeaves60_y3x6.bShStandardModel, HDec.HSyn.OpenResearchLeaves60_y3x6.shimuraThm1Af, HDec.HSyn.OpenResearchLeaves60_y3x6.afCharpolyDS965, HDec.HSyn.OpenResearchLeaves60_y3x6.deRhamVpAbVarDirect, HDec.HSyn.OpenResearchLeaves60_y3x6.hodgeTateDecompOr, HDec.HSyn.OpenResearchLeaves60_y3x6.modularHTCoeff, HDec.HSyn.OpenResearchLeaves60_y3x6.faltingsSemistableHeightBC, HDec.HSyn.OpenResearchLeaves60_y3x6.elliotWildInertiaTrivial, HDec.HSyn.OpenResearchLeaves60_y3x6.bergerSurveyF, HDec.HSyn.OpenResearchLeaves60_y3x6.deligneCanonicalModelY3EveryPrint, HDec.HSyn.OpenResearchLeaves60_y3x6.gaudronRemondSec9LowerAnSS, HDec.HSyn.OpenResearchLeaves60_y3x6.gaudronRemondThm14AnSS, HDec.HSyn.OpenResearchLeaves60_y3x6.javanpeykarThm111An, HDec.HSyn.OpenResearchLeaves60_y3x6.silverbergZarhinThm35, HDec.HSyn.OpenResearchLeaves60_y3x6.y3FullThreeRepZ30, HDec.HSyn.OpenResearchLeaves60_y3x6.carayolThmAFrob, HDec.HSyn.OpenResearchLeaves60_y3x6.y3ToP1j, HDec.HSyn.OpenResearchLeaves60_y3x6.heckeSqrtBranchAny]
+T ZInQKernel.OneProof.Main ZInQ.OneProof.frozenTarget USES [HDec.HSyn.OpenResearchLeaves64, HDec.HSyn.sixContactMin_of_open83]

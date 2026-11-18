@@ -1,0 +1,28 @@
+BUILD ZInQKernel.Contrib.HeightBC.H5GlueReduction
+BUILT ZInQKernel.Contrib.HeightBC.H5GlueReduction 28.2s
+BUILD ZInQKernel.HDecomp.Faltings.H5Neron
+BUILT ZInQKernel.HDecomp.Faltings.H5Neron 10.5s
+BUILD ZInQKernel.OneProof.H.TailY
+BUILT ZInQKernel.OneProof.H.TailY 9.0s
+BUILD ZInQKernel.OneProof.H.TailZ7
+BUILT ZInQKernel.OneProof.H.TailZ7 15.4s
+BUILD ZInQKernel.Contrib.BrauerT14T15.GlobalT14
+BUILT ZInQKernel.Contrib.BrauerT14T15.GlobalT14 9.3s
+BUILD ZInQKernel.Contrib.LocalKW.LocalKW
+BUILT ZInQKernel.Contrib.LocalKW.LocalKW 4.2s
+BUILD ZInQKernel.Contrib.KroneckerWeber.Leaves
+BUILT ZInQKernel.Contrib.KroneckerWeber.Leaves 4.8s
+BUILD ZInQKernel.Hypotheses.Pole
+BUILT ZInQKernel.Hypotheses.Pole 4.1s
+BUILD ZInQKernel.Contrib.RLeaf.TateCuspTorsion
+'ZInQ.RLeaf.TateCuspTorsion.tateLaurentTorsion' depends on axioms: [propext, Classical.choice, Quot.sound]
+BUILT ZInQKernel.Contrib.RLeaf.TateCuspTorsion 6.6s
+BUILD ZInQKernel.Contrib.RLeaf.TateCuspMuN
+'ZInQ.RLeaf.tateMuN' depends on axioms: [propext, Classical.choice, Quot.sound]
+BUILT ZInQKernel.Contrib.RLeaf.TateCuspMuN 10.5s
+BUILD ZInQKernel.OneProof.H.TailZ14
+BUILT ZInQKernel.OneProof.H.TailZ14 33.6s
+BUILD ZInQKernel.Contrib.OneProof.UnipotentForward
+BUILT ZInQKernel.Contrib.OneProof.UnipotentForward 9.6s
+BUILD ZInQKernel.Contrib.OneProof.NeronOggShafarevich
+BUILT ZInQKernel.Contrib.OneProof.NeronOggShafarevich 17.2s
