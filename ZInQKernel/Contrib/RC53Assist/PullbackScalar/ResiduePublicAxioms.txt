@@ -1,0 +1,780 @@
+ZInQKernel/Contrib/RC53Assist/PullbackScalar/ResiduePublicAxiomAudit.lean:12477:6: warning: Variable name `K` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _K
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+ZInQKernel/Contrib/RC53Assist/PullbackScalar/ResiduePublicAxiomAudit.lean:12487:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.kaehlerMap_smul`:
+  [FiniteDimensional K L]
+  [Algebra.IsSeparable K L]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional K L] [Algebra.IsSeparable K L] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Derivation.laurentSeriesLieAlgebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Derivation.laurentSeriesLieRing' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Derivation.laurentSeries_commutator_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Ideal.Quotient.mk_powLift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Ideal.Quotient.powLift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Ideal.Quotient.powLift.congr_simp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Ideal.Quotient.powLift_mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'IsIntegrallyClosedIn.of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.coeff_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.coeff_derivative_order_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.coeff_derivative_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.coeff_derivative_sub_zsmul_single_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.coeff_neg_one_map_mul_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.continuous_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.derivative_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.derivative_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.derivative_eq_zero_iff_eq_single' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.derivative_eq_zero_iff_exists_C' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.derivative_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.derivative_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.derivative_single_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.derivative_single_mul_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.lie_smul_laurentSeriesDerivation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.orderTop_derivative_eq_order_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.orderTop_derivative_eq_order_sub_one_of_cast_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'LaurentSeries.orderTop_derivative_eq_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.orderTop_le_orderTop_derivative_add_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.valuation_derivative_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LaurentSeries.valuation_derivative_sub_zsmul_single_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PowerSeries.coe_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PowerSeries.coeff_neg_one_coe_zpow_mul_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PowerSeries.coeff_succ_pow_succ_eq_coeff_pow_mul_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PowerSeries.coeff_sum_C_mul_X_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PowerSeries.derivative_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PowerSeries.trunc_eq_zero_iff_le_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Algebra.trace_mem_of_mem_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Algebra.trace_quotient_map_mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Algebra.trace_sub_one_mem_of_mul_self_sub_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Algebra.trace_sub_sum_mem_of_forall_mul_sub_sum_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.IsFunctionField.D_eq_zero_iff_mem_fieldRange_frobenius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.IsFunctionField.exists_pow_eq_and_adjoin_eq_top_of_finrank_prime_of_not_isSeparable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.IsFunctionField.finrank_fieldRange_frobenius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.IsFunctionField.isSeparable_adjoin_iff_notMem_fieldRange_frobenius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.IsFunctionField.of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.IsFunctionField.transcendental_and_isSeparable_adjoin_of_not_dvd_ord' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.LaurentSeries.coeff_algebraMap_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.LaurentSeries.isScalarTower_powerSeries' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.LaurentSeries.isUnit_powerSeriesPart' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.LaurentSeries.valuation_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.LaurentSeries.valuation_coe_of_isUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.LaurentSeries.valuation_eq_exp_neg_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.Completion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsEisensteinAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsEisensteinAt.casesOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsEisensteinAt.mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsEisensteinAt.natDegree_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsEisensteinAt.ord_coeff_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsEisensteinAt.ord_leadingCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsEisensteinAt.rec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsEisensteinAt.recOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsEisensteinAt.valuation_coeff_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.IsTotallyRamified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.adjoin_eq_top_of_isTotallyRamified_of_ord_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.adjoin_range_algebraMap_residueField_eq_top_of_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.algebraMap_trace_sub_mem_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.coeff_laurentSeriesExpansionResidueField_eq_algebraMap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.coeff_laurentSeriesExpansionResidueField_eq_coeff_powerSeriesExpansionResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.coeff_laurentSeriesExpansionResidueField_eq_of_sub_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.coeff_laurentSeriesExpansionResidueField_eq_zero_of_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.coeff_laurentSeriesExpansion_eq_coeff_powerSeriesExpansion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.coeff_laurentSeriesExpansion_eq_of_sub_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.coeff_laurentSeriesExpansion_eq_of_sub_sum_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.coeff_laurentSeriesExpansion_eq_zero_of_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.coeff_laurentSeriesExpansion_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.coeff_neg_one_completionEquivLaurentSeriesResidueField_mul_derivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.coeff_powerSeriesExpansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.coeff_zero_laurentSeriesExpansionResidueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completeSpace_completionIntegers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionEmbedding_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionEmbedding_mem_filtration_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionEmbedding_sub_completionResidueFieldSection_mem_filtration_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionEquivLaurentSeries' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionEquivLaurentSeriesResidueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionEquivLaurentSeriesResidueField_apply_integer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionEquivLaurentSeriesResidueField_completionResidueFieldSection' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionEquivLaurentSeriesResidueField_uniformizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionEquivLaurentSeries_apply_integer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionEquivLaurentSeries_symm_apply_powerSeries' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionEquivLaurentSeries_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionFiltrationMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionFiltrationMap_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionFiltrationQuotientEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionFiltrationQuotientEquiv_apply_mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionIntegersEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionIntegersEmbedding_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionIntegersEquivPowerSeries' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionIntegersEquivPowerSeriesResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionIntegersEquivPowerSeriesResidueField_completionResidueFieldSection' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionIntegersEquivPowerSeriesResidueField_eq_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionIntegersEquivPowerSeriesResidueField_uniformizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionIntegersEquivPowerSeries_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionIntegersEquivPowerSeries_completionIntegersEmbedding' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionIntegersEquivPowerSeries_uniformizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionIntegersHomeomorphPowerSeries' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionIntegersHomeomorphPowerSeries_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionIntegersHomeomorphPowerSeries_symm_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionLaurentCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionLaurentCoeff_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionLaurentCoeff_coe_integer_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionLaurentCoeff_completionEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionLaurentCoeff_completionEquivLaurentSeries_symm_single' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionLaurentCoeff_ext_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionPlace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionPlace_powerSeriesExpansion_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.completionPlace_valuation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionResidueFieldSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionResidueFieldSection_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionResidue_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionResidue_coe_integer_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionResidue_completionEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.completionResidue_completionEquivLaurentSeries_symm_derivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.constantCoeff_completionIntegersEquivPowerSeriesResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.constantCoeff_completionIntegersEquivPowerSeriesResidueField_completionIntegersEmbedding' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.constantCoeff_powerSeriesExpansionResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.continuous_completionIntegersEquivPowerSeries' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.continuous_completionIntegersEquivPowerSeries_symm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.degree_completionPlace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.degree_eq_one_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.denseRange_completionEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.derivativeOfSeparating_mem_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.derivativeOfSeparating_mem_integers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.derivativeOfSeparating_sub_zsmul_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.differentExponent_eq_multiplicity_center' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.differentExponent_eq_ord_aeval_derivative_minpoly' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.differentExponent_eq_ord_aeval_derivative_minpoly_of_isIntegralClosure' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.differentExponent_eq_zero_of_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.differentExponent_eq_zero_of_valuation_aeval_derivative_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.differentExponent_le_ord_aeval_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.differentExponent_le_ord_two_mul_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.eq_completionResidueFieldSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.eq_of_isTotallyRamified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.existsUnique_sub_sum_mem_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.exists_completionResidueFieldSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.exists_constantCompositum_eq_top_and_forall_degree_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.exists_filtration_sub_completionEmbedding_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.exists_forall_sub_mem_completionPlace_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.exists_ord_sub_algebraMap_eq_one_of_ord_aeval_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.exists_powerSeries_eq_algEquivOfAlgEquiv_iff_mem_integers' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.exists_powerSeries_eq_completionEquivLaurentSeriesResidueField_iff_mem_integers' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.exists_powerSeries_eq_completionEquivLaurentSeries_iff_mem_integers' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.exists_sub_algebraMap_mem_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.exists_sub_completionEmbedding_mem_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.exists_trunc_powerSeriesExpansionResidueField_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.finite_setOf_forall_irreducible_ord_aeval_ne_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.finite_setOf_forall_ord_sub_algebraMap_ne_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.formallyEtale_completionPlace_residueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.infinite_setOf_isSeparable_residueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.instAlgebraCompletion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isAdicComplete_completionIntegers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isClosed_completionPlace_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isEisensteinAt_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isIntegralBasis_constantBasis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isIntegrallyClosedIn_of_degree_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isLocalHom_completionIntegersEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isSeparable_completionPlace_residueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isTotallyRamified_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isTotallyRamified_of_isEisensteinAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isUniformizer_completionEmbedding_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.isUnramifiedAt_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.iterate_derivativeOfSeparating_mem_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.iterate_derivativeOfSeparating_sub_zsmul_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.kaehlerResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidueOfPerfectField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidueOfPerfectField_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidueOfPerfectField_eq_kaehlerResidue' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.kaehlerResidueOfPerfectField_eq_traceResidue_coord' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.kaehlerResidueOfPerfectField_smul_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidueOfPerfectField_smul_eq_repartitionDualComponent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.kaehlerResidueResidueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidueResidueField_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidueResidueField_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidueResidueField_eq_kaehlerResidueResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.kaehlerResidueResidueField_smul_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidue_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidue_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidue_eq_kaehlerResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidue_eq_traceResidue_coord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerResidue_smul_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerTraceResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerTraceResidue_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerTraceResidue_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerTraceResidue_eq_kaehlerResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerTraceResidue_eq_kaehlerTraceResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.kaehlerTraceResidue_smul_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentCoeff_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentCoeff_ext_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansionResidueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansionResidueField.congr_simp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansionResidueField_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansionResidueField_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansionResidueField_derivativeOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.laurentSeriesExpansionResidueField_uniformizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.laurentSeriesExpansionResidueField_zpow_uniformizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.laurentSeriesExpansion_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansion_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansion_derivativeOfSeparating' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansion_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.laurentSeriesExpansion_zpow_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.linearMap_ext_zpow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.mem_filtration_iff_coeff_powerSeriesExpansion_eq_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.mem_filtration_iff_le_order_completionIntegersEquivPowerSeriesResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.mem_filtration_iff_le_order_powerSeriesExpansion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.mem_filtration_iff_le_order_powerSeriesExpansionResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.natDegree_mul_ord_eq_ramificationIdx' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.ord_completionEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.ord_completionEquivLaurentSeries' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.ord_derivativeOfSeparating_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.ord_eq_one_of_isEisensteinAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.order_completionIntegersEquivPowerSeriesResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.order_powerSeriesExpansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.powerSeriesExpansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.powerSeriesExpansion.congr_simp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.powerSeriesExpansionResidueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.powerSeriesExpansionResidueField_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.powerSeriesExpansionResidueField_eq_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.powerSeriesExpansionResidueField_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.powerSeriesExpansion_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.powerSeriesExpansion_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.powerSeriesExpansion_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.ramificationIdx_eq_one_of_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.relativeDegree_eq_one_of_isTotallyRamified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueFieldEquivCompletion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueFieldEquivCompletion_apply_residue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueFieldEquivCompletion_symm_residue_completionIntegersEmbedding' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.residueResidueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueResidueField_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueResidueField_derivativeOfSeparating' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueResidueField_eq_algebraMap_residue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueResidueField_eq_coeff_laurentSeriesExpansionResidueField_mul_derivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.residueResidueField_eq_coeff_powerSeriesExpansionResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.residueResidueField_eq_of_sub_mem_integers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueResidueField_eq_residueResidueField_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.residueResidueField_eq_residueResidueField_mul_derivativeOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.residueResidueField_eq_zero_of_mem_integers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueResidueField_inv_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueResidueField_mul_inv_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residueResidueField_zpow_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_completionResidueFieldSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_derivativeOfSeparating' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_eq_coeff_laurentSeriesExpansion_mul_derivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.residue_eq_coeff_powerSeriesExpansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_eq_of_sub_mem_integers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_eq_residue_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_eq_residue_mul_derivativeOfSeparating' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_eq_zero_of_mem_integers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_inv_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_trace' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.residue_zpow_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.restrict_ratFunc_eq_infty_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.setOf_restrict_eq_eq_singleton_of_isTotallyRamified' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.span_range_algebraMap_residueField_eq_top_of_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.sub_completionResidueFieldSection_mem_filtration_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.sub_mem_filtration_iff_coeff_powerSeriesExpansion_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.sub_sum_coeff_completionIntegersEquivPowerSeriesResidueField_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.sub_sum_coeff_completionIntegersEquivPowerSeriesResidueField_symm_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.sub_sum_coeff_completionIntegersEquivPowerSeries_symm_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.sub_sum_coeff_powerSeriesExpansion_mem_filtration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.sub_sum_truncatedExpansion_mem_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.traceResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.traceResidue_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.traceResidue_coord_smul_eq_repartitionDualComponent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.traceResidue_derivativeOfSeparating' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.traceResidue_eq_residue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.traceResidue_eq_traceResidue_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.traceResidue_eq_traceResidue_mul_derivativeOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.traceResidue_mul_inv_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.trace_sub_sum_mem_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.transcendental_and_isSeparable_adjoin_of_not_dvd_ord' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.transcendental_and_isSeparable_adjoin_of_ord_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.truncatedExpansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion.congr_simp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_algebraMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_castLE' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_castSucc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_eq_iff_sub_mem_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.truncatedExpansion_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.valuation_algEquivOfAlgEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.valuation_completionEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.valuation_completionEquivLaurentSeries' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.valuation_completionEquivLaurentSeriesResidueField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.Place.valuation_laurentSeriesExpansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.Place.valuation_laurentSeriesExpansionResidueField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.RatFunc.finrank_adjoin_X_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.RatFunc.isPurelyInseparable_adjoin_X_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.adjoin_image_eq_top_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.adjoin_range_algebraMap_of_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.algHom_derivativeOfSeparating' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.coe_constantBasis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.coe_iterateFrobeniusEquivPowers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.coe_weilDifferentialOfSeparating_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.constantBasis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.constantBasis_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.constantBasis_repr_algebraMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.constantCompositum_eq_iSup_adjoin_finset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.constantCompositum_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.constantCompositum_ratFunc_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.coord_kaehlerDifferentialEquivWeilDifferentialOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.divisorClass_neg_two_zsmul_ofPoint_infty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.divisorClass_neg_two_zsmul_poles_add_different_eq_canonicalClass' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.eq_ratFuncWeilDifferential' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.eq_residueFieldSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.essFiniteType_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.exists_finiteDimensional_constantSubfield_of_fg_le_constantCompositum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.exists_finiteDimensional_constantSubfield_of_finiteDimensional_le_constantCompositum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.exists_finiteDimensional_constantSubfield_of_finset_subset_constantCompositum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.exists_finiteDimensional_constantSubfield_of_mem_constantCompositum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.exists_finiteDimensional_lt_card_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.exists_finiteDimensional_normal_splits_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.exists_finset_of_mem_constantCompositum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.exists_residueFieldSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.extended_dual_one_eq_dual_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.finiteDimensional_base_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.finiteDimensional_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.finite_support_kaehlerResidueOfPerfectField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.finite_support_traceResidue_coord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.finite_support_traceResidue_kaehlerBasisOfSeparating_coord' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.finrank_le_finrank_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.finsum_kaehlerResidueOfPerfectField_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.finsum_residue_adicOfIrreducible_X_sub_C' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.finsum_residue_adicOfIrreducible_X_sub_C_of_isAlgClosed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.finsum_traceResidue_coord_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.finsum_traceResidue_kaehlerBasisOfSeparating_coord_eq_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.formallySmooth_of_perfectField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.frobeniusPowers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.frobeniusPowers_toSubfield' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.hahnSeries_isScalarTower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.hahnSeries_leadingCoeff_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.hahnSeries_orderTop_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.hahnSeries_smulCommClass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.isAlgebraic_constantCompositum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.isAlgebraic_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.isGreatest_ratFuncWeilDifferential' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.isIntegrallyClosedIn_of_isTotallyRamified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.isLocalization_algebraMapSubmonoid_of_isIntegralClosure' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.isPurelyInseparable_frobeniusPowers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.isPurelyInseparable_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.isSeparable_adjoin_algebraMap_of_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.isSeparable_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.iterateFrobeniusEquivPowers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.iterateFrobeniusEquivPowers_algebraMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.kaehlerDifferentialEquivWeilDifferentialOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.kaehlerDifferentialEquivWeilDifferentialOfSeparating_D' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.kaehlerDifferentialEquivWeilDifferentialOfSeparating_D_self' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.kaehlerDifferentialEquivWeilDifferentialOfSeparating_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.kaehlerDifferentialEquivWeilDifferentialOfSeparating_symm_weilDifferentialOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.laurentSeriesDerivation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.laurentSeriesDerivation_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.laurentSeries_algebraMap_mul_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.linearDisjoint_fieldRange_of_finrank_constantCompositum_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.linearDisjoint_fieldRange_of_forall_finrank_constantCompositum_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.map_differentIdeal_eq_differentIdeal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.mem_frobeniusPowers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.multiplicity_differentIdeal_eq_multiplicity_under' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.prod_prod_Ici_eq_prod_prod_Ioi_mul_prod_diag' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.prod_prod_Ioi_append' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.prod_prod_Ioi_append_of_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.prod_prod_Ioi_comp_perm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.prod_prod_Ioi_eq_of_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.prod_prod_Ioi_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.prod_prod_Ioi_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.prod_prod_Ioi_snoc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.prod_prod_Ioi_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.ratFuncWeilDifferential' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.ratFuncWeilDifferential_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.ratFuncWeilDifferential_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.relfinrank_adjoin_pow_adjoin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.repartitionDualComponent_eq_traceResidue_coord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.repartitionDualComponent_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.repartitionDualComponent_inj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.repartitionDualComponent_kaehlerDifferentialEquivWeilDifferentialOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.repartitionDualComponent_ratFuncWeilDifferential_adicOfIrreducible_X_sub_C' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_ratFuncWeilDifferential_algebraMap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_ratFuncWeilDifferential_infty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_ratFuncWeilDifferential_inv_X' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_ratFuncWeilDifferential_of_ne_infty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_ratFuncWeilDifferential_zpow' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_weilDifferentialCotrace_ratFuncWeilDifferential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_weilDifferentialCotrace_ratFuncWeilDifferential_eq_traceResidue' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_weilDifferentialOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.repartitionDualComponent_weilDifferentialOfSeparating_eq_traceResidue' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.residueComparison_differentIdeal_eq_span_aeval_derivative_minpoly' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.residueFieldSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.residue_residueFieldSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.separableClosure_eq_bot_of_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.span_range_algebraMap_comp_of_constantCompositum_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.span_traceDual_one_eq_traceDual_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.sum_fin_product_eq_sum_antidiagonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.sum_sum_Ioi_append_of_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.sum_sum_Ioi_comp_perm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.sum_univ_prod_eq_sum_lt_add_swap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.traceDual_constantBasis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.trace_algebraMap_of_constantCompositum_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.weilDifferentialBasisOfSeparating' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.weilDifferentialBasisOfSeparating_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.weilDifferentialCotrace_ratFuncWeilDifferential' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.weilDifferentialCotrace_ratFuncWeilDifferential_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.weilDifferentialCotrace_weilDifferentialOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.weilDifferentialDivisor_ratFuncWeilDifferential' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.weilDifferentialDivisor_weilDifferentialCotrace_ratFuncWeilDifferential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.weilDifferentialDivisor_weilDifferentialOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.weilDifferentialOfSeparating' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.weilDifferentialOfSeparating.congr_simp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.weilDifferentialOfSeparating_def' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.weilDifferentialOfSeparating_eq_derivativeOfSeparating_smul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.weilDifferentialOfSeparating_eq_derivativeOfSeparating_smul_of_ord_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'TauCeti.weilDifferentialOfSeparating_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TauCeti.weilDifferentialOrder_weilDifferentialOfSeparating_eq_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Valuation.natCast_dvd_ord_pow_sub_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Valuation.natCast_pow_dvd_ord_of_mem_fieldRange_iterateFrobenius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Valuation.not_mem_fieldRange_iterateFrobenius_of_not_natCast_pow_dvd_ord' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Valuation.ord_iterateFrobenius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WeierstrassCurve.Affine.kaehlerDifferentialEquivWeilDifferentialOfSeparating_invariantDifferential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'WeierstrassCurve.Affine.kaehlerDifferentialEquivWeilDifferentialOfSeparating_invariantDifferential_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'WeierstrassCurve.Affine.weilDifferentialDivisor_invariantDifferential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.ComparisonFamily' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.ComparisonType' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.CotraceCompatibility' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.LocalExactRegularity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.ResidueComparisonFact' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.comparisonFamily' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.comparisonFamily_cotraceCompatible' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.comparisonFamily_localExactRegularity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.constant_regular_multiple' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.cotrace_separating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.isSeparable_adjoin_transcendental' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.isogenyScalarRationalGlue_proof' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.kaehlerMap_smul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.normalizedComparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.normalizedComparison_D' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.normalizedComparison_cotrace' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.normalizedComparison_invariant_regular' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.normalizedComparison_local_D' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.pullbackCoefficientConstantGlue_proof' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.rationalResidueComparisonFact' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.regular_divisor_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.separatingParameter' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.separatingParameter_isSeparable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ResidueComparison.separatingParameter_transcendental' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
