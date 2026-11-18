@@ -3,7 +3,28 @@ import ZInQKernel.Contrib.OneProof.RC.SelmerComplex.Selmer
 /-!
 # RC53 cup-one: graded commutativity of the cup product in degrees `(1, 1)`
 
-Draft.
+This file gives the Steenrod cup-one product on inhomogeneous cochains in the degrees needed at a
+switched place (`H¹ × H¹ → H²`).
+
+For a bilinear pairing `β : M × M → T` and `1`-cochains `a, b`, the cup-one product is
+
+  `(a ∪₁ b)(g) = β(a(g), b(g))`   (`cupOneFun`).
+
+Suppose `β` is `G`-equivariant and `c`-symmetric (`β x y = c • β y x`; the Weil pairing has
+`c = −1`), and `b` is a `1`-cocycle. Then
+
+  `d(a ∪₁ b) = −a ∪ b − c • (b ∪ a) + X(da, b)`,
+  `X(x, b)(g₀, g₁) = β(x(g₀, g₁), b(g₀) + g₀ • b(g₁))`   (`dFun_cupOneFun`).
+
+So the cup product of `1`-cochains is graded-commutative up to an explicit homotopy. The correction
+term `X` vanishes when `a` is also a cocycle.
+
+* `dFun_one`, `cupFun_one_one_apply`: the differential and the cup product in low degrees.
+* `dFun_cupOneFun`: the coboundary formula on inhomogeneous cochains.
+* `contCupOne`, `contX2`, `contCupOne_d`: the same on continuous cochains `C^•_cont(G, −)` (the
+  cochains of `Cochains.lean`).
+
+All results are `PROVED`. No new axioms.
 -/
 
 noncomputable section
