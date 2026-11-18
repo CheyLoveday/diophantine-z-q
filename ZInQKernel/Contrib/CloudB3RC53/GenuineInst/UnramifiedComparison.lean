@@ -21,8 +21,16 @@ its place form `urToLocal_galois` are compared with `urH0Equiv`, `urH1Equiv` and
   followed by inflation along `π` and `f` (`explicitMap1 π f`);
 * `explicitMap1_injective`, **`urToLocal_H1_injective_range`**: for `π` surjective and `f`
   bijective it is injective, with image the inflated classes — the unramified part `H¹_ur`;
+* `homologyπ_h0Iso_hom`, `h0Iso_homologyπ`, `h0Equiv_homologyπ`: `h0Iso` and `urH0Equiv` on classes
+  (a `0`-cycle with value `x` goes to `x ∈ ker (Φ − 1)`, resp. the invariant `x`);
 * `urToLocal_zero_apply`, `urToLocal_zero_invariant`: in degree `0`, `x ∈ ker (Φ − 1) = W^H` goes
   to the invariant `f x`;
+* on the other team's genuine continuous cohomology (`ℕ`-indexed `contCochains`, through their
+  `contH0AddEquiv`, `contH1AddEquiv`): `urClass0`, `urClass1` (the classes of the images under
+  `urToLocal`), **`urClass0_contH0`** (`H⁰`: the class of the image of a `0`-cycle is `f` of its
+  `urH0Equiv`-value) and **`urClass1_contH1`** (`H¹`: inflation-pushforward of `urH1Equiv`). The
+  statement on the homology of the `ℤ`-indexed local complex `(natCx …).toCC` awaits the
+  continuous-cochain bridge;
 * node `UrToLocalOntoUnramified` at a place of a number field (`π = resUr`, surjective), together
   with the vanishing in degrees `≥ 2` on both sides (`CdOne`).
 
@@ -69,6 +77,45 @@ theorem h1Iso_homologyπ (c : (frobCx Φ).cycles 1) :
     (h1Iso Φ).hom (((frobCx Φ).homologyπ 1).hom c) = Submodule.Quotient.mk (cycVal1 Φ c) :=
   congrArg (fun g => g.hom c) (homologyπ_h1Iso_hom Φ)
 
+/-- **`h0Iso` on classes**: the class of a `0`-cycle `c` of `[W --(Φ−1)--> W]` goes to its value
+in `ker (Φ − 1)`. -/
+theorem homologyπ_h0Iso_hom : (frobCx Φ).homologyπ 0 ≫ (h0Iso Φ).hom ≫
+    ModuleCat.ofHom (LinearMap.ker (Φ - 1)).subtype =
+    (frobCx Φ).iCycles 0 ≫ (HomologicalComplex.doubleXIso₀ (ModuleCat.ofHom (Φ - 1)) rel01).hom := by
+  have e : (h0Iso Φ).hom = ((frobCx Φ).isoHomologyπ (-1) 0 prev0 (frobCx_d_prev Φ)).inv ≫
+      ((frobCx Φ).cyclesIsoSc' (-1) 0 1 prev0 next0).hom ≫ (ShortComplex.cyclesIsoKernel _).hom ≫
+      (kernelIsoOfEq (frobCx_d01 Φ)).hom ≫
+      (kernelIsIsoComp (HomologicalComplex.doubleXIso₀ _ rel01).hom
+        (ModuleCat.ofHom (Φ - 1) ≫ (HomologicalComplex.doubleXIso₁ _ rel01 (by decide)).inv)).hom ≫
+      (kernelCompMono (ModuleCat.ofHom (Φ - 1))
+        (HomologicalComplex.doubleXIso₁ _ rel01 (by decide)).inv).hom ≫
+      (ModuleCat.kernelIsoKer _).hom := rfl
+  rw [e]
+  have h1 : (frobCx Φ).homologyπ 0 ≫ ((frobCx Φ).isoHomologyπ (-1) 0 prev0 (frobCx_d_prev Φ)).inv = 𝟙 _ := by
+    have := ((frobCx Φ).isoHomologyπ (-1) 0 prev0 (frobCx_d_prev Φ)).hom_inv_id
+    rwa [HomologicalComplex.isoHomologyπ_hom] at this
+  simp only [Category.assoc]
+  rw [reassoc_of% h1]
+  unfold frobCx at *
+  simp [kernelCompMono_hom, kernelIsIsoComp_hom, ModuleCat.kernelIsoKer_hom_ker_subtype,
+    ShortComplex.cyclesIsoKernel_hom]
+  rw [show ModuleCat.ofHom (LinearMap.ker (Φ - 1)).subtype =
+    ModuleCat.ofHom (LinearMap.ker (ModuleCat.ofHom (Φ - 1)).hom).subtype from rfl,
+    ModuleCat.kernelIsoKer_hom_ker_subtype]
+  simp only [kernel.lift_ι, Category.assoc]
+  erw [kernelIsoOfEq_hom_comp_ι_assoc, kernel.lift_ι_assoc,
+    HomologicalComplex.cyclesIsoSc'_hom_iCycles_assoc]
+
+/-- The value in `W` of a `0`-cycle of `[W --(Φ−1)--> W]`. -/
+abbrev cycVal0 (c : (frobCx Φ).cycles 0) : W :=
+  (HomologicalComplex.doubleXIso₀ (ModuleCat.ofHom (Φ - 1)) rel01).hom.hom
+    (((frobCx Φ).iCycles 0).hom c)
+
+theorem h0Iso_homologyπ (c : (frobCx Φ).cycles 0) :
+    (((h0Iso Φ).hom (((frobCx Φ).homologyπ 0).hom c) : LinearMap.ker (Φ - 1)) : W) =
+      cycVal0 Φ c :=
+  congrArg (fun g => g.hom c) (homologyπ_h0Iso_hom Φ)
+
 end H1Iso
 
 section Agree
@@ -96,6 +143,18 @@ theorem h1Equiv_homologyπ (c : (frobCx (frob e X)).cycles 1) :
   change _ = h1ToCoinv e X (QuotientAddGroup.mk _)
   rw [h1ToCoinv_mk]
   exact congrArg _ (urCocycle_frob e X _).symm
+
+/-- **`urH0Equiv` on classes**: the class of a `0`-cycle with value `x` goes to the invariant `x`
+(`ContinuousCohomology.zeroIso`). PROVED. -/
+theorem h0Equiv_homologyπ (c : (frobCx (frob e X)).cycles 0) :
+    (((ContinuousCohomology.zeroIso X).hom
+        (h0Equiv e X (((frobCx (frob e X)).homologyπ 0).hom c)) : X.ρ.invariants) : X.V) =
+      cycVal0 (frob e X) c := by
+  have h := h0Iso_homologyπ (frob e X) c
+  simp only [h0Equiv, LinearEquiv.trans_apply]
+  rw [← h]
+  erw [Iso.inv_hom_id_apply]
+  rfl
 
 variable {M : Type} [AddCommGroup M] [Module k M] [DistribMulAction G M] [SMulCommClass G k M]
   [TopologicalSpace M] [DiscreteTopology M] [ContinuousSMul G M]
@@ -130,6 +189,78 @@ theorem urToLocal_H1 (c : (frobCx (frob e X)).cycles 1)
   funext g
   erw [cocyclesMap1_apply]
   exact urToLocal_one_apply e π X f hf c g
+
+include hf in
+/-- `urLin₁ x` is a `1`-cocycle of the (`ℕ`-indexed) genuine complex `C^•_cont(G, M)`. -/
+theorem urLin₁_d (x : X.V) : ((contCochains k G M).d 1 2).hom (urLin₁ e π X f x) = 0 := by
+  have h := congrArg (fun φ => ModuleCat.Hom.hom φ x) (urToLocal_cocycle e π X f hf 2 (by simp))
+  simp only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_zero, LinearMap.zero_apply,
+    ModuleCat.hom_ofHom] at h
+  exact (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC_d_hom (natCx (contCochains k G M)) 1 2 rfl (urLin₁ e π X f x)).symm.trans h
+
+include π hf in
+/-- `urLin₀ y` is a `0`-cocycle for `y ∈ ker (Φ − 1)`. -/
+theorem urLin₀_d (y : X.V) (hy : y ∈ LinearMap.ker (frob e X - 1)) :
+    ((contCochains k G M).d 0 1).hom (urLin₀ (G := G) X f y) = 0 := by
+  have h := congrArg (fun φ => ModuleCat.Hom.hom φ y) (urToLocal_comm e π X f hf)
+  change ((locCC (k := k) (G := G) (M := M)).d 0 1).hom (urLin₀ (G := G) X f y) =
+    urLin₁ e π X f ((frob e X - 1) y) at h
+  rw [LinearMap.mem_ker.mp hy, map_zero] at h
+  exact (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC_d_hom (natCx (contCochains k G M)) 0 1 rfl (urLin₀ (G := G) X f y)).symm.trans h
+
+/-- The degree-`1` map `W → H¹_cont(G, M)` on the genuine continuous cohomology, `x ↦ [urLin₁ x]`
+(the class of the image of `x` under `urToLocal`). -/
+def urClass1 : ModuleCat.of k X.V ⟶ contCohomology k G M 1 :=
+  (contCochains k G M).liftCycles (ModuleCat.ofHom (urLin₁ e π X f)) 2 (by simp)
+    (by ext x; exact urLin₁_d e π X f hf x) ≫ (contCochains k G M).homologyπ 1
+
+/-- The degree-`0` map `ker (Φ − 1) → H⁰_cont(G, M)`, `y ↦ [urLin₀ y]`. -/
+def urClass0 : ModuleCat.of k (LinearMap.ker (frob e X - 1)) ⟶ contCohomology k G M 0 :=
+  (contCochains k G M).liftCycles
+    (ModuleCat.ofHom ((urLin₀ (G := G) X f).comp (LinearMap.ker (frob e X - 1)).subtype)) 1
+    (by simp) (by ext y; exact urLin₀_d e π X f hf y.1 y.2) ≫ (contCochains k G M).homologyπ 0
+
+/-- **On the genuine `H⁰_cont`**: the class of the image of a `0`-cycle with value `x` is the
+invariant `f x`, i.e. `urToLocal` on `H⁰` is `urH0Equiv` (`h0Equiv_homologyπ`) followed by `f`,
+read through the other team's `contH0AddEquiv`. PROVED. -/
+theorem urClass0_contH0 (c : (frobCx (frob e X)).cycles 0) :
+    ((contH0AddEquiv k G M ((urClass0 e π X f hf).hom
+      ⟨cycVal0 (frob e X) c, by
+        rw [← h0Iso_homologyπ]; exact ((h0Iso (frob e X)).hom _).2⟩)) : M) =
+      f (cycVal0 (frob e X) c) := by
+  rw [urClass0, ModuleCat.hom_comp, LinearMap.comp_apply, contH0AddEquiv_homologyπ]
+  have := congrArg (fun φ => ModuleCat.Hom.hom φ (⟨cycVal0 (frob e X) c, by
+        rw [← h0Iso_homologyπ]; exact ((h0Iso (frob e X)).hom _).2⟩ :
+          LinearMap.ker (frob e X - 1)))
+    (HomologicalComplex.liftCycles_i (contCochains k G M)
+      (ModuleCat.ofHom ((urLin₀ (G := G) X f).comp (LinearMap.ker (frob e X - 1)).subtype)) 1
+      (by simp) (by ext y; exact urLin₀_d e π X f hf y.1 y.2))
+  simp only [ModuleCat.hom_comp, LinearMap.comp_apply] at this
+  exact (congrArg (fun y => asFun k G M ((contSubCx k G M).el y :
+    (groupCohomology.inhomogeneousCochains (rep k G M)).X 0) Fin.elim0) this).trans rfl
+
+/-- **On the genuine `H¹_cont`**: the class of the image of a `1`-cycle `c` under `urToLocal` is
+`explicitMap1 π f (urH1Equiv [c])` through the other team's `contH1AddEquiv`: the `H¹` map induced by
+`urToLocal` on genuine continuous cohomology is `urH1Equiv` followed by inflation and `f`. PROVED. -/
+theorem urClass1_contH1 (c : (frobCx (frob e X)).cycles 1) :
+    contH1AddEquiv k G M ((urClass1 e π X f hf).hom (cycVal1 (frob e X) c)) =
+      explicitMap1 H X.V G M π f.toAddMonoidHom continuous_of_discreteTopology hf
+        (X.explicitH1AddEquivContinuousCohomologyOfDiscrete.symm
+          (h1Equiv e X (((frobCx (frob e X)).homologyπ 1).hom c))) := by
+  rw [h1Equiv_homologyπ, urClass1, ModuleCat.hom_comp, LinearMap.comp_apply,
+    contH1AddEquiv_homologyπ]
+  erw [explicitMap1_mk]
+  change H1pi G M _ = H1pi G M _
+  congr 1
+  apply Subtype.ext
+  funext g
+  erw [cocyclesMap1_apply]
+  have := congrArg (fun φ => ModuleCat.Hom.hom φ (cycVal1 (frob e X) c))
+    (HomologicalComplex.liftCycles_i (contCochains k G M) (ModuleCat.ofHom (urLin₁ e π X f)) 2
+      (by simp) (by ext x; exact urLin₁_d e π X f hf x))
+  simp only [ModuleCat.hom_comp, LinearMap.comp_apply] at this
+  exact (congrArg (fun y => asFun k G M ((contSubCx k G M).el y :
+    (groupCohomology.inhomogeneousCochains (rep k G M)).X 1) (fun _ => g)) this).trans rfl
 
 /-- Inflation-pushforward `explicitMap1 π f` is injective for `π` surjective and `f` bijective. PROVED. -/
 theorem explicitMap1_injective (hπ : Function.Surjective π) (hfb : Function.Bijective f) :
