@@ -41,7 +41,11 @@ Results (all PROVED):
    (`OuterSwitchStep.transfer`), so `GenuineOuterSwitchData.padTo`: the switching data of `G` are
    switching data of `G.padTo cap hle`, with the same derivative-prime labels.
 4. `eq35InputsGenuineA_of_bounded`: the leaf from `Eq35InputsGenuineABounded W`, the same statement
-   with `nOf l ≤ eq51Cap ℓ A |l|`; `eq35InputsGenuineA_iff_bounded`: the two are equivalent.
+   with `nOf l ≤ eq51Cap ℓ A |l|`; `eq35InputsGenuineA_iff_bounded`: the two are equivalent. The
+   bound is on the matrix index `nOf`; each free term has rank `nOf + 1`. The text's total-rank
+   estimate `2 * (nOf + 1) ≤ eq51Cap` implies this weaker bound. The exact-size auxiliary form
+   pads the index to the cap and may exceed the text's literal total-rank cap, while retaining a
+   bound depending only on `E`, `A` and `j`.
 -/
 
 noncomputable section
@@ -853,7 +857,10 @@ variable {ℓ : ℕ} (W : WData ℓ)
 
 /-- **The inputs of (3.5) with the text's size bound** (tex 4453–4460, 4936–4938, 4954–4956): the
 leaf `Eq35InputsGenuineA W` with `nOf l ≤ eq51Cap ℓ A |l|` in place of `nOf l = eq51Cap ℓ A |l|`;
-all other conjuncts verbatim. Kind: definition. -/
+all other conjuncts verbatim. Kind: definition. The bound is on the matrix index `nOf`; each free
+term has rank `nOf + 1`. The text's total-rank estimate `2 * (nOf + 1) ≤ eq51Cap` implies this
+weaker bound. The exact-size auxiliary form pads the index to the cap and may exceed the text's
+literal total-rank cap, while retaining a bound depending only on `E`, `A` and `j`. -/
 def Eq35InputsGenuineABounded : Prop :=
   ∃ (uprim : ℤ → ℤ → FractionRing Lambda) (C₀ : ℤ),
     (∀ h k' : ℤ, W.prepared h → AnalyticRank (Etw ℓ h) 1 → W.IsRoughCompanion h k' →

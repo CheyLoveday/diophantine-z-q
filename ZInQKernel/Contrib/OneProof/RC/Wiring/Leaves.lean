@@ -124,13 +124,19 @@ witnesses:
   `u_{prim,x} ∈ F` (the GLUE is a conjunct of the leaf, not a hypothesis; the pinned Frobenius
   adds nothing else), and its step models are existential;
 * `PreLeaves.eq35` and `PostLeaves.prim_regular`: the configuration families are existential and
-  only required to be some genuine Galois Selmer data with `t = X`; with one genuine complex of the
-  homotopy type of `[k --0--> k]` at each `𝔭` (true, not formalized), they are equivalent to
-  their targets (`regularityInputsGPK_iff_of_unitFibre`); over the address's own genuine complexes
-  no switch step can be formed (`C¹_cont` is infinite-dimensional), so the address's family
-  witnesses the regularity part only when `s(𝔭) = 1`;
+  only required to be some genuine Galois Selmer data with `t = X`. Under existence of a genuine
+  one-stage residue fibre at every height-one prime (one genuine complex of the homotopy type of
+  `[k --0--> k]` at each `𝔭`; true, not formalized), the regularity leaf is equivalent to
+  `InLamHalf` at every requested address (`regularityInputsGPK_iff_of_unitFibre`). A full
+  equivalence of the eq35 leaf with (3.5) additionally requires genuine outer-model realizations;
+  the residue-fibre statement alone does not provide those integral `𝒪` complexes. Over the
+  address's own genuine complexes no switch step can be formed (`C¹_cont` is
+  infinite-dimensional), so the address's family witnesses the regularity part only when
+  `s(𝔭) = 1`;
 * `PostLeaves.clearing_model`: the full-condition triangle (5.6) is modelled, with the two
-  conjugate new places over each prime of the family (`Identification3Q2`); the family-Selmer
+  conjugate new places over each prime of the family (`Identification3Q2`), but
+  `clearingInputsG3_of_G3Q2` discards the two-place data, so their faithfulness carries no weight
+  in the deduction; the family-Selmer
   clause is met by every complex; the deduction uses only the cancellation core, the derived Selmer
   identification and the coordinate identification `OrigCoordLink3`, which is the definition of the
   corrected coordinate only for the actual complex, class, functional, correction and retained
@@ -198,7 +204,7 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   /-- The fixed support and the prepared filter (`StageSupport`: the support consists of primes and
   contains `2, 3`, the primes of `ℓ` and the primes of `h_*`; the prepared filter uses intrinsic
   unit tests and only prime exclusions at the enlarged support, `preparedSeparated`) (definitions;
-  tex 1974–1975, 2404–2410, 2460–2461, App F 8227–8228, 8246–8258; owner RC0). It replaces the
+  tex 1974–1975, 2404–2410, 2461–2462, App F 8226–8228, 8246–8258; owner RC0). It replaces the
   former leaves `data_spec : PreDataSpec W` and `prepared_spec : PreparedSpec W`, both now PROVED:
   the data specification from it and the stage link of `odd_staged` (`PreLeaves.data_spec`, by the
   stage construction's `preDataSpec_withStages`), and `PreparedSpec` from it alone
@@ -236,14 +242,16 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   Cornut–Jetchev; tex 9101–9445); owners RC11, batch 3 GenusOdd, RC13, RC23. Then the fixed witness
   with the stages of the Appendix F construction (tex 2460–2536, 8225–8405): `D_w` in the prepared
   filter with its selected genus datum (definitions), the exact witness (a rational point `R` of
-  `E^{(D_w)}` whose twist is `L P_{D_w}`, `ExactWitnessOn`; ELLIOT, tex 2462–2466, 8295–8306,
-  PROVED by the construction's `exact_twist_of_genusPoint` at a multiplier `L₀ · 4B`,
-  `StageDataNonVacuity`), the outputs of the detector construction at `R` (the point `Q = R` over
-  `ℚ̄`, a division tower, the auxiliary field, the detecting element with square trivial on the
-  Tate module of `E`, the fixed row with value `2^{a+1}` at its square, an actual detecting
-  sequence; ELLIOT, Proposition `ex:app-detector`, PROVED by the construction's
-  `exists_detector_stages` from a nontorsion rational point, PRINT Serre and GLUE no CM,
-  `StageDataNonVacuity`), the stage fields of the data being the construction at that sequence
+  `E^{(D_w)}` whose twist is `L P_{D_w}`, `ExactWitnessOn`; ELLIOT, tex 2462–2466, 8295–8306; a
+  leaf field; its existence at the multiplier `L₀ · 4B` is PROVED by `exists_exactWitnessOn_Ecurve`
+  (from `Prints`, `StageDataNonVacuity`; not used by the deduction)), the outputs of the detector
+  construction at `R` (the point `Q = R` over `ℚ̄`, a division tower, the auxiliary field, the
+  detecting element with square trivial on the Tate module of `E`, the fixed row with value
+  `2^{a+1}` at its square, an actual detecting sequence; ELLIOT, Proposition `ex:app-detector`;
+  leaf fields; their existence for a nontorsion rational point of `A = E^{(D_w)}`, given Serre's
+  open image (`SerreThm3`, PRINT, not in `Prints`) and the absence of CM, is PROVED by
+  `exists_detector_stages` (`StageDataNonVacuity`; not used by the deduction)), the stage fields
+  of the data being the construction at that sequence
   (`StagesFrom`, definitions; owner RC0), and the stage maps at the selected datum being the actual
   stage map at the places of the selected Frobenius elements (`hev`, `actualStageMapOn`: reduction
   into the square-fixed group, the finite Kummer map, the inverse torsion specialization through
@@ -275,7 +283,11 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   Galois Selmer data over `𝒪`, the actual models' coordinates having the valuations of `ι_𝒪 u_prim`,
   with batch 3's `GenuineOuterSwitchData` (switch GLUE between the determined stages) for every
   sequence of those pairs (ELLIOT + GLUE; tex 2441–2446, 3987–4047, 4453–4460, 4909–5202; owners
-  RC16, RC15, RC6, RC26, batch 3 SwitchInputs). PROVED from them: the primitive kernel vectors (tex
+  RC16, RC15, RC6, RC26, batch 3 SwitchInputs). The bound is on the matrix index `nOf`; each free
+  term has rank `nOf + 1`. The text's total-rank estimate `2 * (nOf + 1) ≤ eq51Cap` implies this
+  weaker bound. The exact-size auxiliary form pads the index to the cap and may exceed the text's
+  literal total-rank cap, while retaining a bound depending only on `E`, `A` and `j`. PROVED from
+  them: the primitive kernel vectors (tex
   4987–4992: saturation of `ker d` over the DVR `Λ_𝔭`, the RC53 group's
   `exists_primitiveKernelVector`), `pos` from them, `minor_link`, the integral cycles and
   functionals, the nonzero outer class, the Cramer terminal step, the equal inner valuations,
@@ -409,11 +421,13 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   4350–4351); the leaf asserts it at the base of every final family without that hypothesis. For
   the chosen `k` it holds (tex 2598–2599, 2616–2626); in Branch 1 the leaf asserts it of free data.
   Caveat on the discharge: the configuration families must NOT be taken over the finite-level actual
-  coefficient modules `M_i = (T₂E ⊗ A_i)(χ_hΨ_i)` (tex 2780–2830): over the residue fields `k(𝔭)`
+  coefficient modules `M_i = (T₂E ⊗ A_i)(χ_hΨ_i)` (tex 2723–2727): over the residue fields `k(𝔭)`
   these give only zero fibres, so a leaf tied to them is vacuous (lane RC28's
   `regularityInputsActual_iff`: `RegularityInputsActual u ↔ u = 0`, for batch 3's structure; the
   new structure has the same emptiness at `H¹ = 0`, `isEmpty_genuineSwitchDataPK_of_h1_eq_zero`).
-  The actual fibres must come from the `Λ`-adic module (`RC/LambdaCoef`, in progress). -/
+  The actual fibres must come from the `Λ`-adic module; `RC/LambdaCoef` provides conditional
+  fixed-character constructions; their identification with the retained inner-limit diagrams
+  remains open. -/
   prim_regular : PrimRegularityInputsGPK W.toRCData
   /-- The inputs of (5.9) over the full-condition triangle (5.6) (`ClearingInputsG3Q2`): the fixed
   field `K` and the constants before the family; at every final family a full-condition
@@ -429,13 +443,16 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   prime, `card (S' − S) = 2 · card Q`; tex 5247, 5456–5457; `Q = ∅` admitted); the actual cycle, the
   closed functional and the correction `η` over `𝒪[G]` (data); and the coordinate identification
   `OrigCoordLink3`: where `Δ_x ≠ 0`, the corrected coordinate is `η_x` times the Knudsen–Mumford
-  coordinate of `[z] ⊗ [λ]` of the pre-cancellation complex (GLUE) (tex 5234–5238, 5355–5645,
+  coordinate of `[z] ⊗ [λ]` of the pre-cancellation complex (ELLIOT, Elliot's E1 for the chosen
+  model) (tex 5234–5238, 5208–5645,
   3470–3499, 3877–3892, 4219–4224; owners RC7, RC15, RC26, batch 3 ClearingComplex / CoordLink /
   RankCounts / PairedFunctional). PROVED from them: `κ = det(B)⁻¹` (the Knudsen–Mumford coordinate
   of `C` is `det(B)⁻¹` times that of the cancelled complex), E1a, E1b for the Knudsen–Mumford
   coordinate, the Smith model, the generic patterns, the entry poles, the budget (5.7), and (5.9) by
   lane RC7 over RC20's genuine `𝒪`, with the exponent `a = 0` (`clearingTarget_of_G3Q2`, through the
-  RC53 group's `clearingTarget_of_G3`). Caveats: the family-Selmer clause (`Mf`, `Δf`, `hfull`,
+  RC53 group's `clearingTarget_of_G3`). Caveats: `clearingInputsG3_of_G3Q2` discards the two-place
+  data (`below`, `lies`, `two`, `hqq`), so their faithfulness carries no weight in the deduction;
+  the family-Selmer clause (`Mf`, `Δf`, `hfull`,
   `ψf`) is met by every complex, and `M₀`, `Δ₀` are not related to `Mf`, `Δf`; the deduction uses
   only the cancellation core, the derived Selmer identification and `OrigCoordLink3` (neither `ψ0`,
   `ψold`, `square`, `tame` nor the PRINT `NekovarProp788ii` is in its closure); for the same actual
@@ -464,7 +481,8 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
     hypothesis `SelmerCorankOneOverK` (lane RC30's `hcentral_of_selmer`);
   * the pairing with its Leibniz identity (GLUE), the chain map `ψ` and the cocycle `c z` of
     Proposition `ex:arith-paired-functional`: the functional is `PD(·, ψ(c z))` (definition, tex
-    3752–3754) and its closedness is PROVED (tex 3860–3863; the RC53 group's `baseLam_closed`);
+    3742–3749, 3845–3849) and its closedness is PROVED (tex 3860–3863; the RC53 group's
+    `baseLam_closed`);
   * the coordinate statement for the row of that functional (Definition `ex:arith-coordinate`,
     tex 3877–3892);
   * the retained inner-limit data of (4.5) at the base (`InnerLimit45Base`; tex 3912–3921,
@@ -518,7 +536,8 @@ structure RCLeaves where
 
 /-- Absolute convergence of `L(E, s)` on `Re s > 3/2` (PROVED, no print and no field of `RCLeaves`:
 batch 3's `hasseConvergence_proved`, from Hasse's bound, Silverman AEC, second edition, Theorem
-V.1.1, proved through the Frobenius isogeny; used uncited at tex 1590 and 6323). -/
+V.1.1, proved through the Frobenius isogeny; the convergence is not stated in the text; Hasse's
+bound itself is cited at tex 1590–1591 and 6323–6324, for point counts). -/
 theorem RCLeaves.hasse (_L : RCLeaves) : PrintsAnalytic.HasseConvergence :=
   ZInQ.Contrib.CloudB3RC53.Hasse.hasseConvergence_proved
 

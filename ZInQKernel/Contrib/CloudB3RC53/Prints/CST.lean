@@ -51,12 +51,12 @@ instances, L2433–2436; L8269: nonvanishing ⇔ nontorsion).
   `φ : X₀(N) → E` over `ℚ`** are absent from Mathlib and Tau Ceti. The statement replaces them by
   the complex-analytic model and quantifies over every algebraic `y` with `ι(y) = φ(τ)`. The
   dictionary (Shimura's theory of CM points and the Eichler–Shimura construction) is a
-  translation, not a Lean theorem: provenance (c), on the spot. For non-CM `E` every analytic `φ`
-  allowed here is `n β ∘ φ₀` with `φ₀` algebraic over `ℚ` and `β` a `ℚ`-isogeny (the reason for
-  the non-CM hypothesis).
+  translation, not a Lean theorem (translation GLUE), on the spot. For non-CM `E` every analytic
+  `φ` allowed here is `n β ∘ φ₀` with `φ₀` algebraic over `ℚ` and `β` a `ℚ`-isogeny (the reason
+  for the non-CM hypothesis).
 * **The Rankin–Selberg `L(s, f × θ_χ)`** is absent; `twistedLFunction` is the Euler product of
   `E/K` twisted by `χ`. Their equality (automorphic induction of `χ`; local factors at `𝔭 ∣ c`
-  equal to `1` for primitive `χ`) is a translation, provenance (c), SPECULATIVE at `𝔭 ∣ c`.
+  equal to `1` for primitive `χ`) is a translation (translation GLUE), SPECULATIVE at `𝔭 ∣ c`.
 * **The constant** `8π²(f, f)/deg φ` (Tau Ceti has Petersson products,
   `CuspForm.peterssonInnerCosets`, but `deg φ` needs `X₀(N)`): replaced by the existential `C > 0`,
   a consequence. This is WEAKER than the printed exact constant: fixed rescalings of the height are

@@ -7,7 +7,7 @@ import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.Frobenius
 # Theorem 5.3, Lane RC32 round 2: the actual Frobenius matrix at a graph prime
 
 Lemma `ex:arith-common-coordinate` (tex 4209–4213): at an unused good split prime `q`, "the
-Frobenius at `q` has trace `a_q` and determinant `q`" on `T = T₂E` (tex 2780: `T₂E` with its
+Frobenius at `q` has trace `a_q` and determinant `q`" on `T = T₂E` (tex 2836–2838: `T₂E` with its
 `G_{K,S}`-action `ρ_T`). The round-one leaf (`CommonCoordinate5.lean`) took a free `ℤ₂`-matrix
 with these trace and determinant. Here the matrix is the actual one:
 
@@ -97,7 +97,7 @@ attribute [instance] TateCoef.field TateCoef.numberField TateCoef.full
 variable {E : WeierstrassCurve ℚ} [E.IsElliptic]
 
 /-- **The matrix of `ρ_T(Fr_q)` on `T₂E` in lane RC28's basis `tateBasis` over `K_S`**
-(definition; tex 2780, 4209–4213): the transported action `rhoKMatrix` of `frobQ q`. -/
+(definition; tex 2836–2838, 4209–4213): the transported action `rhoKMatrix` of `frobQ q`. -/
 def frobMat (C : TateCoef E) (q : ℕ) : Matrix (Fin 2) (Fin 2) ℤ_[2] :=
   rhoKMatrix C.S E C.e (frobQ q)
 
@@ -129,7 +129,7 @@ theorem trace_frobMat (C : TateCoef E) (hT : FrobeniusTrace E) {q : ℕ} (hq : q
   rw [frobMat, trace_rhoKMatrix, trace_tateMatrix]
   exact hT q hq hq2 hgood (frobQ q) (isFrobAtC10_frobQ hq)
 
-/-- **The native Galois action** (tex 2780): when `Fr_q` fixes (the image of) `K`, as at the
+/-- **The native Galois action** (tex 2836–2838): when `Fr_q` fixes (the image of) `K`, as at the
 text's split primes, `frobMat C q` is the matrix of the native action of the Frobenius
 `e⁻¹ Fr_q e ∈ G_{K,S}` (`gksOfQ`) on lane RC28's `T₂E` over `K_S`, in `tateBasis`. PROVED
 (`gksOfQ_smul_eq_rhoK`). -/

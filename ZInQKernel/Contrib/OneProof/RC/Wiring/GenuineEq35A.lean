@@ -25,7 +25,11 @@ the text never states (the final review's R3-5).
    outer dimension and the switch steps (`GenuineEq35Pad.lean`; blocks `[𝒪 --1--> 𝒪]` would change
    the coordinate by the sign `(-1)^k`); so the models are the text's models up to that padding,
    not necessarily minimal. The leaf in the text's form, with the sizes at most the cap, is
-   `Eq35InputsGenuineABounded`, equivalent to this one (`eq35InputsGenuineA_iff_bounded`).
+   `Eq35InputsGenuineABounded`, equivalent to this one (`eq35InputsGenuineA_iff_bounded`). The
+   bound is on the matrix index `nOf`; each free term has rank `nOf + 1`. The text's total-rank
+   estimate `2 * (nOf + 1) ≤ eq51Cap` implies this weaker bound. The exact-size auxiliary form
+   pads the index to the cap and may exceed the text's literal total-rank cap, while retaining a
+   bound depending only on `E`, `A` and `j`.
 
 PROVED: `eq35Target_of_inputsA` ((3.5) for each `A`, RC16's `exLimitsUniformLowerBound` over lane
 RC20's genuine `𝒪`), `eq55_of_inputsA` ((5.5) through batch 3's `uniform_lower_bound_of_genuine`),

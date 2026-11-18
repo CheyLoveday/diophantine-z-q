@@ -10,8 +10,10 @@ tex 4976–5200 (the fibres at height-one primes). Lane RC28's example: `E_1 : y
 `ℚ`, the prime `𝔭 = (t)` of `Λ` (residue field `k((t)) = ℚ₂`).
 
 The structures used as hypotheses by the PRINTs and their corollaries have the following
-instances here; two of them only outside a valid setting (the trace packet at `S = ∅` and the
-Tate twist at `S = Set.univ`), as stated in their bullets:
+instances here. Only the trace packet is exhibited solely outside a valid setting (at `S = ∅`);
+the Tate twist is unconditional at `S = Set.univ` (not finite) and holds at `S6` through
+`nekovarFibre_hypotheses_E1`; the global traces with `InducesIsoH3` have no Lean instance (they
+come from the PRINT `NekovarFibreTraces`). Details in the bullets:
 
 * `NekovarFibreSetting ℚ S6` for `S6` = the primes above `6` (finite, contains the prime above `2`;
   `E_1` has good reduction outside `2·3`): PROVED.

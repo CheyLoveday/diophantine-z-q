@@ -17,12 +17,9 @@ localization-duality diagrams give `U = U^⊥` … this is the exactness in [Nek
 quadratic" (tex 2839), "There are no real places of `K`" (tex 4584).
 
 **Source.** J. Nekovář, *Selmer complexes*, Astérisque 310 (2006). Every locator below was read by
-lane RC31 from page images of the printed edition (Numdam scan); quotations are verbatim. The case
-`R = Λ/𝔭` of 5.6.1 described below passed three independent source-level reviews
-(I: the ring `R`, `𝒮` and admissibility, conditional on the lattice topologies of `V_𝔭` and of its
-dual, which are PROVED in `Comparison.lean`; II: the dualizing complex, `n = 0`, and the local and
-global degrees `−2`, `−3`; III: the real-place step, at statement level). These were readings of
-the source, not compile checks.
+lane RC31 from page images of the printed edition (Numdam scan); quotations are verbatim. In the
+case `R = Λ/𝔭` of 5.6.1 described below, admissibility is conditional on the lattice topologies of
+`V_𝔭` and of its dual, which are PROVED in `Comparison.lean`.
 
 * 2.1 (p. 51): "Throughout Chapters 2–11 (with the exception of Sect. 2.10), `R` will be a complete
   Noetherian local ring with maximal ideal `𝔪` and residue field `k = R/𝔪`." Chapter 5 (p. 113):
