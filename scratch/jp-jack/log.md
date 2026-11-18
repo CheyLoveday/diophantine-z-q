@@ -9,3 +9,9 @@
 - VERIFIED (build): the initial cache predates the base; imports used here were recovered
   from local artifacts whose Lean sources match byte for byte. The old top will be
   rebuilt explicitly from the checked-in `TailZ93.lean` and `Main.lean`.
+- VERIFIED (Lean): `javanpeykarBound_of_jacK` reads the narrowed row directly. The
+  old geometric-Jacobian model is absent from this reader's proof. Its axiom output
+  is in `CheckReader.txt`.
+- VERIFIED (process): a superseded cache rebuild survived its first stop attempt and
+  overlapped with the next Lean checks. This violated the single-process limit. The
+  old job was terminated; the remaining checks ran with an exclusive process lock.
