@@ -24,3 +24,10 @@ Build cache: root cache present, upstream dependency cache copied into the workt
 | `cm_objects` | Existing Y₃ row gives CM(−4), CM(−3), CM(−24) pairs. Lean exit 0. |
 | `SGRDirect.heckeSqrtBranchAny_of_y3` | Sign character, CM, and finite branch support give the unchanged square-root statement. Lean exit 0. |
 | `SGRDirect.heckeSqrtBranchAny_proof` | Only argument: `Y3P1j.Y3ToP1j`. Lean exit 0; axioms: `propext`, `Classical.choice`, `Quot.sound`. |
+
+| Check | Result |
+|---|---|
+| `HeckeSqrtFold.lean` | Lean exit 0. `OpenResearchLeaves60Y3` has 30 fields; the next `SixContactMin` theorem has the standard three axioms. |
+| `MainDryRun.lean` | Lean exit 0. `ZInQ.OneProof.frozenTarget` has the standard three axioms. Output: `maindryrun-out.txt`. |
+| `Discharges.lean` | Lean exit 0. `heckeSqrtBranchAny_proof` discharges the target from the existing `Y3P1j.Y3ToP1j`. A comparison of the two elaborated open lists confirms 34 → 33 including pole completeness, only the target removed. Output excerpt: `discharges.txt`. |
+| H only, strict and strictest | Before 5 LEAF / 28 GLUE on 33; after 5 LEAF / 27 GLUE on 32. No new kinds rows. |
