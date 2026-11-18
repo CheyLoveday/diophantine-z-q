@@ -116,10 +116,12 @@ lists axioms only: the open hypotheses are premises in the theorem's statement, 
 [`scripts/one_proof/check_axioms.py`](scripts/one_proof/check_axioms.py) checks that output.
 
 A cold build is long. The default `lake build` does not build this theorem, so name the target as above. On a
-12-core, 18 GB machine, 694 of the 5,225 project modules built in 41 minutes; on GitHub's hosted runners a cold
-build has not yet finished within a job. Allow roughly 20 GB of disk and use a short checkout path, because Lake
-writes a file of several megabytes per module that embeds absolute paths. Clone with
-`git clone --depth 1 --single-branch`: the fork has several hundred branches.
+12-core, 18 GB machine, 694 of the 5,225 project modules built in 41 minutes. On GitHub's hosted runners the first
+cold build, of this target and the discharges target, took about seven and a half hours of build time over two
+runs (16,331 Lake jobs); a run that starts from the previous build of `main` takes 10 to 14 minutes when a push
+changes few files. Allow about 50 GB of disk: the finished hosted build is 37 GiB for this repository and 6.7 GiB
+for Mathlib. Use a short checkout path, because Lake writes a file of several megabytes per module that embeds
+absolute paths. Clone with `git clone --depth 1 --single-branch`: the fork has several hundred branches.
 
 ## More
 
@@ -134,7 +136,8 @@ writes a file of several megabytes per module that embeds absolute paths. Clone 
   its README.
 - The previous, longer README, with the earlier five-hypothesis theorem and its trust statements, is
   [here](https://github.com/Deicyde/diophantine-z-q/blob/222c98bfaaade688e1c0afdef7c857ce59ab6081/README.md).
-- [Blueprint site](https://deicyde.github.io/diophantine-z-q/) (a snapshot from 2026-11-13).
+- [Blueprint site](https://deicyde.github.io/diophantine-z-q/) (redeployed after each main build cache run that
+  passes on `main`).
 - Licence: the fork's own material is under the Apache License 2.0 ([LICENSE](LICENSE)). It does not cover the
   manuscripts, `construction/` and `lean/`, which came from upstream, or the vendored libraries
   ([NOTICE](NOTICE), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).
