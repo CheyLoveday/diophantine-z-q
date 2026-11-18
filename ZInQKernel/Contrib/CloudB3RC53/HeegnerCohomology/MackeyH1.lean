@@ -101,7 +101,7 @@ theorem orbitCochain_eq [DecidableEq (G ⧸ H)] (s : G) (hs : ((s : G) : G ⧸ H
     (hb : ∀ x y : H, b (x * y) = b x + ρ x (b y)) :
     ∃ w : TwM H ρ θ, orbitCochain H ρ θ r hr t b =
       cochainsCor1 D (TwM H ρ θ) (stab H D δ₀) t ht (bTrans H ρ θ s hs b) + d0 D (TwM H ρ θ) w := by
-  obtain ⟨w, hw⟩ := orbitTerm_eq_cor_add_coboundary H ρ θ r hr t ht s hs b hb
+  obtain ⟨w, -, hw⟩ := orbitTerm_eq_cor_add_coboundary H ρ θ r hr t ht s hs b hb
   refine ⟨⟨w⟩, funext fun d => TwM.ext' ?_⟩
   rw [orbitCochain, hw d, Pi.add_apply, TwM.val_add, d0_apply, TwM.val_sub, Subgroup.smul_def,
     TwM.val_smul]
