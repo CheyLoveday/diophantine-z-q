@@ -7,3 +7,5 @@
 - VERIFIED: `ShimuraPointDictField.lean` compiles. The localization of the image of the integral polynomial ring gives a ring map from the model's function field to punctured germs. The comparison includes denominators vanishing at the parameter and the exceptional Weber branches.
 - VERIFIED: `ShimuraPointDictGeometry.lean` compiles. The properness lift induces a surjective stalk map to the chosen valuation subring, and the section and stalk evaluations agree. The separatedness argument compares lifts from the same valuation subring.
 - VERIFIED: the field and geometry scans cover 20 theorems and report only `propext`, `Classical.choice` and `Quot.sound`.
+- VERIFIED: `ShimuraPointDict.lean` proves existence and uniqueness with the exact `AtTau` predicate. It supplies `HeckePin.X1TauPoints` and `HeckePin.ConstOnTauPoints`. The composite assembly now has only the two action laws as additional inputs.
+- VERIFIED: `lake env lean scratch/shimura-point-dict/Integration.lean` checks the exact interfaces. Across the four contribution modules all 40 theorem scans report only `propext`, `Classical.choice` and `Quot.sound`; see `Axioms-output.txt`.
