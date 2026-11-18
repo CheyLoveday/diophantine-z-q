@@ -34,8 +34,10 @@ manuscript's construction, phrased against lane SelmerDuality's `SupportChangeDa
   - the family Selmer complex: Selmer data `sel` over `𝒪[G]` and a quasi-isomorphism from `C ⊗ 𝒪[G]`
     to its Selmer complex (tex 5394–5397: "`C` the retained finite free family model");
   - the support-change triangle (5.6) at augmentation (tex 5236–5240, 5397–5403): support-change data
-    `sc` over `Λ`, quasi-isomorphisms from the augmented `C` to `selCx sc.Dp` and from the augmented
-    old part to `selCx sc.D`, commuting with the support comparison `supportMap sc`.
+    `sc` over `Λ` whose new local complexes and conditions are those of the new places
+    (`SupportChangeFamily`: `L⁺ = L ⊕ ∏_q L_q`, `U⁺ = U ⊕ ∏_q U_q`, compatible with `ι`),
+    quasi-isomorphisms from the augmented `C` to `selCx sc.Dp` and from the augmented old part to
+    `selCx sc.D`, commuting with the support comparison `supportMap sc`.
 * `Identification2.toSelmerIdentification` (PROVED): the remaining complex is the cancellation of the
   new local block over `𝒪[G]` (invertible: RC7's `matrix_isUnit_of_isUnit_aug` and
   `newLocal_family_pole_genuine`), and every field of `SelmerIdentification` follows: augmentation
@@ -46,11 +48,11 @@ manuscript's construction, phrased against lane SelmerDuality's `SupportChangeDa
 * `clearingModel_of_newLocal` (PROVED): RC0's `ClearingModel` from `Identification2` and E1 (with the
   coordinate parameter).
 
-Not derived (interface gaps, recorded as ELLIOT): the identification of the augmentation of
-`sel` with `sc.Dp` needs a coefficient-change interface for `SelData` (none exists); the central
-counts (5.7) for the old Smith data are not derived from `sc`'s cohomology (RankCounts' central
-complex is not linked to `selCx`); the new local quotient is not matched with
-`SupportChangeUnramified` (that interface has one new place).
+Not derived (interface gaps, recorded as ELLIOT): the identification of the augmentation of the
+family Selmer data `sel` with `sc.Dp` needs a coefficient-change interface for `SelData` (none
+exists); the (5.7) lengths and ranks are assumed for the central complex, which is identified with
+the central fibre of the old complex (`CentralFibre.lean`) but not with `sc`'s cohomology.
+Consistency: `identification2_example` (`PlaceSupport.lean`), with one genuine new place.
 -/
 
 noncomputable section
