@@ -74,6 +74,19 @@ theorem exists_finBasis (hF : SwitchedAt F q (sideOfSet (I : Set (Gv q))))
     exact this
   exact Prod.ext h1 (hsnd _)
 
+/-- **In the switch family the side and strict conditions agree in degree two** (both are `0` at
+`q`, both the old condition elsewhere). PROVED. -/
+theorem switchFam_side_le_str_two (q : ι) (old : ∀ v, SubFam (locCx Gv Mv v))
+    (T : ∀ v, Set (Gv v)) (v : ι) :
+    ((switchFam Gv Mv q old T).side v).S 2 ≤ ((switchFam Gv Mv q old T).str v).S 2 := by
+  by_cases h : v = q
+  · subst h
+    simp only [switchFam, ↓reduceIte]
+    change (⊥ : Submodule (ZMod 2) _) ≤ _
+    exact bot_le
+  · simp only [switchFam, switchStr, h, ↓reduceIte]
+    exact le_rfl
+
 end Generic
 
 variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
@@ -137,5 +150,71 @@ theorem cone_dims_finite_switched {q : Places K S} {I : Subgroup (Gloc K q.1)}
     (Mv := genMv (K := K) (S := S) (M := M)) φ σ eM hF T
   exact cone_dims_finite_derived F (switchedER F hF φ σ eM T) hε hσ hJ2 Q tr htr hγ hsw bR hv hA
     hB a hspan ha hside2 bF hι
+
+open Classical in
+/-- The switching author's switch family at `q`, as a family of the genuine local complexes. -/
+abbrev swFam (q : Places K S)
+    (old : ∀ v, SubFam (locCx (genGv (K := K) (S := S)) (genMv (K := K) (S := S) (M := M)) v))
+    (T' : ∀ v : Places K S, Set (Gloc K v.1)) : DerivFamily (galLv (k := ZMod 2) K S M) :=
+  switchFam (genGv (K := K) (S := S)) (genMv (K := K) (S := S) (M := M)) q old T'
+
+open Classical in
+theorem swFam_switchedAt {q : Places K S}
+    (old : ∀ v, SubFam (locCx (genGv (K := K) (S := S)) (genMv (K := K) (S := S) (M := M)) v))
+    (T' : ∀ v : Places K S, Set (Gloc K v.1)) {I : Subgroup (Gloc K q.1)}
+    (hT : T' q = (I : Set (Gloc K q.1))) :
+    SwitchedAt (Gv := genGv (K := K) (S := S)) (Mv := genMv (K := K) (S := S) (M := M))
+      (swFam q old T') q (sideOfSet (I : Set (Gloc K q.1))) := by
+  rw [← hT]
+  exact switchFam_switchedAt q old T'
+
+open Classical in
+/-- **The generic dimensions `(1, 1)` of the genuine finite-side cone of the switch family** (tex
+L4835–4906, L5027–5037, L5068–5083): for the switching author's `switchFam` at `q` (old conditions
+`old` elsewhere, finite side `T q = I`), `cone_dims_finite_switched` with the agreement of side and
+strict conditions in degree two PROVED (`switchFam_side_le_str_two`). Remaining: the duality data,
+the classes `A, B`, and the old class spanning `H¹(C_F)` with nonzero finite localization.
+PROVED. -/
+theorem cone_dims_switchFam {q : Places K S}
+    (old : ∀ v, SubFam (locCx (genGv (K := K) (S := S)) (genMv (K := K) (S := S) (M := M)) v))
+    (T' : ∀ v : Places K S, Set (Gloc K v.1)) {I : Subgroup (Gloc K q.1)}
+    (hT : T' q = (I : Set (Gloc K q.1)))
+    (φ σ : Gloc K q.1) (eM : ResMod (locMap K S q.1) M ≃ₗ[ZMod 2] (Fin 2 → ZMod 2))
+    (T : TameCoordinates (M := ResMod (locMap K S q.1) M) I φ σ)
+    {ε σ' : ZMod 2} {J : Matrix (Fin 2) (Fin 2) (ZMod 2)} (hε : ε ≠ 0) (hσ : σ' ≠ 0)
+    (hJ2 : J * J = 1)
+    (Q : SelPairData (derivSwitch (swFam q old T') (switchedER (swFam q old T')
+        (swFam_switchedAt old T' hT) φ σ eM T)).Dstr
+      (derivSwitch (swFam q old T') (switchedER (swFam q old T')
+        (swFam_switchedAt old T' hT) φ σ eM T)).toQuasi.D)
+    (tr : (coneCx Q.resE).X 3 →ₗ[ZMod 2] ZMod 2)
+    (htr : ∀ z, tr ((coneCx Q.resE).d 2 3 rfl z) = 0)
+    (hγ : QuasiIso (GHom.toCC (selmerDualityMap Q tr htr)))
+    (hsw : (derivSwitch (swFam q old T') (switchedER (swFam q old T')
+        (swFam_switchedAt old T' hT) φ σ eM T)).SwitchCoordinates Q tr ε σ' J)
+    (bR : Basis (Fin 2) (ZMod 2)
+      ((selCx (derivSwitch (swFam q old T') (switchedER (swFam q old T')
+        (swFam_switchedAt old T' hT) φ σ eM T)).toQuasi.D).toCC.homology 1))
+    {v : Fin 2 → ZMod 2} (hv : v ≠ 0)
+    (hA : genLam (derivSwitch (swFam q old T') (switchedER (swFam q old T')
+        (swFam_switchedAt old T' hT) φ σ eM T)) (bR 0) = (v, 0))
+    (hB : genLam (derivSwitch (swFam q old T') (switchedER (swFam q old T')
+        (swFam_switchedAt old T' hT) φ σ eM T)) (bR 1) = (0, J *ᵥ v))
+    (a : (derivFiniteSES (swFam q old T') (switchedER (swFam q old T')
+        (swFam_switchedAt old T' hT) φ σ eM T)).X₂.homology 1)
+    (hspan : ∀ y : (derivFiniteSES (swFam q old T') (switchedER (swFam q old T')
+        (swFam_switchedAt old T' hT) φ σ eM T)).X₂.homology 1, ∃ c : ZMod 2, y = c • a)
+    (ha : (HomologicalComplex.homologyMap (derivFiniteSES (swFam q old T')
+        (switchedER (swFam q old T') (swFam_switchedAt old T' hT) φ σ eM T)).g
+          1).hom a ≠ 0) :
+    finrank (ZMod 2) ((derivFiniteSES (swFam q old T') (switchedER (swFam q old T')
+        (swFam_switchedAt old T' hT) φ σ eM T)).X₂.homology 1) = 1 ∧
+      finrank (ZMod 2) ((derivFiniteSES (swFam q old T')
+        (switchedER (swFam q old T') (swFam_switchedAt old T' hT) φ σ eM T)).X₂.homology
+          2) = 1 :=
+  cone_dims_finite_switched (swFam q old T') (swFam_switchedAt old T' hT) φ σ eM T
+    hε hσ hJ2 Q tr htr hγ hsw bR hv hA hB a hspan ha
+    (switchFam_side_le_str_two (Gv := genGv (K := K) (S := S))
+      (Mv := genMv (K := K) (S := S) (M := M)) q old T')
 
 end ZInQ.Contrib.CloudB3RC53.GenuineInst
