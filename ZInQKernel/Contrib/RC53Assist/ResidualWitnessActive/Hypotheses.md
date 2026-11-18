@@ -1,9 +1,11 @@
 # Active residual witness: hypothesis inventory
 
-The two targets are the constructors `ZInQ.Contrib.CloudB3RC53.Mattuck.residualRankCounts_genuine`
+The targets are the constructors `ZInQ.Contrib.CloudB3RC53.Mattuck.residualRankCounts_genuine`
 and `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_actual` (manuscript Lemma
-`ex:limits-residual-bound`, tex 4453–4648). Both are applied in `Witness.lean` to the instance below
-(`activeGenuineCounts`, `activeActualCounts`). This file marks every input of the two constructors
+`ex:limits-residual-bound`, tex 4453–4648), and the transfer-after-inverting-`t` constructor
+`ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_afterT` (tex 4598–4647). All three are
+applied in `Witness.lean` to the instance below (`activeGenuineCounts`, `activeActualCounts`,
+`activeAfterTCounts`). This file marks every input of the two constructors
 as GENUINE (the hypothesis carries content at this instance: its premises are realized, or its
 data are nonzero genuine objects) or VACUOUS/TRIVIAL (it holds for a degenerate reason), with the
 theorem of `Witness.lean` that shows it.
@@ -80,29 +82,59 @@ theorem of `Witness.lean` that shows it.
 All other inputs are those of the table above; `activeActualCounts_strict` and
 `two_le_genericRank` give `2 ≤ genericRank < rankTot` for this constructor as well.
 
+## The inputs of `residualRankCounts_afterT` (transfer after inverting `t`)
+
+The constructor `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_afterT` (on the branch
+that adds `GenuineInst/ResidualAfterT.lean`; applied here through a verbatim copy, section
+`AfterTCopy`) shares the arithmetic, residual-model, `eG`, `hUm` and `hLm` inputs above, all with
+the same values (`activeAfterTCounts`). It has no support-change or change-of-condition input and
+does not use Nekovář 7.8.8(ii). Its transfer inputs at this instance:
+
+| Input | Value at the instance | Status | Evidence |
+|---|---|---|---|
+| `P` (free over `𝔽₂[[t]]`) | the residual cone extended to `𝔽₂[[t]]` | GENUINE as a model: free, finite, its reduction modulo `t` has the ranks of the residual cone; the constant extension (see below) | `afterP`, `afterP_free`, `afterP_finite` |
+| `hred` | ranks of `P` = ranks of the residual cone | GENUINE | `afterP_hred` |
+| `P'`, `hbc` | the base change of `P` to `𝔽₂((t))`; `hbc` is the identity | GENUINE | `afterP'` |
+| `a`, `b` and the bounds of `P'`, `L` | `[0, 3]` | GENUINE | `afterP'_ge`, `afterP'_le`, `afterL_ge`, `afterL_le` |
+| `L`, `hLmin` | the cohomology of the generic original-support model `Q'`, zero differential | GENUINE: `2 ≤ Σ dim L` | `afterL`, `afterL_minimal`, `two_le_afterT_genericRank` |
+| `e : L ≃ P'` | through `Q'`: representatives `L → Q'` and the inclusion `P' → Q'` | GENUINE: the inclusion is a quasi-isomorphism because the active comparison blocks above `13` are acyclic after inverting `t`, and they are not acyclic over `𝔽₂[[t]]` | `afterE`, `afterIncl_quasiIso`, `activeW'_acyclic`, `activeW_not_acyclic`, `afterT_active_case` |
+
+The active comparison block at a place above `13` is `[𝔽₂[[t]]² --((1+t)^e − 1)--> 𝔽₂[[t]]²]` in
+degrees `1, 2` (the text's reduction of (4.4), `C = 0`, `A = D = ((1+t)^e − 1) I₂`), with `e = 1` at
+a chosen place and `e = −1` at the other places above `13`. Its entry vanishes modulo `t` (so the
+reduction of the block is the non-acyclic `𝔽₂` quotient) and is `t` times a unit. The integral
+original-support model is `Q = P ⊕ W`, its base change `Q'`, and `0 → P' → Q' → W' → 0` is the
+generic change of condition. Result: `2 ≤ genericRank ≤ rankTot`, `genericRank ≤ 294`.
+
 ## What remains vacuous, trivial or formal, and why
 
-1. **The text's active change of condition is not available over `𝔽₂`.** The text replaces the
-   unramified condition by the full condition at the active primes and obtains acyclicity of the
-   quotient only after inverting `t` (tex 4619–4631). Both constructors have coefficients `𝔽₂`,
-   where `t = 0` cannot be inverted, and there the quotient is not acyclic: at a place above `13`
-   the unramified condition has `h¹ = 2` and the full local complex `h¹ = 4`, so no injection with
-   acyclic cokernel exists (`active_unramified_not_full`, `active_full_change_not_acyclic`). The
-   witness therefore uses the only kind of change with acyclic quotient: the active unramified
-   conditions thickened by the contractible cone of their identity. `hW` holds genuinely for it, but
-   it is not the text's "after inverting `t`" case, which needs an interface over `𝔽₂((t))`.
-2. **`hA` is trivial**: `k = −1` has no prime factor, so `ω(k) = 0 ≤ A = 0`. This is forced by
+1. **Over `𝔽₂` the text's change of condition at active primes does not exist.** At a place above
+   `13`, `h¹` of the unramified condition is `2` and `h¹` of the full local complex is `4`, so no
+   injection with acyclic cokernel exists (`active_unramified_not_full`,
+   `active_full_change_not_acyclic`). For `residualRankCounts_genuine` and `residualRankCounts_actual`
+   (coefficients `𝔽₂`) the witness thickens the unramified conditions at the active places by the
+   contractible cone of their identity; `hW` holds for it but is not the text's case. The text's
+   case is witnessed through `residualRankCounts_afterT` (previous section).
+2. **The `𝔽₂[[t]]`-models are model-level.** The smaller-support model over `𝔽₂[[t]]` is the
+   constant extension of the residual cone. The global character with Frobenius `(1+t)^e` at the
+   active places (which produces the entries of the active blocks) is not constructed: it needs class
+   field theory. The active blocks are the text's explicit reduction of (4.4), not computed from
+   Galois cochains with `𝔽₂[[t]]` coefficients (which, with the inner limit, are not formalized).
+   The integral original-support model is the split extension `P ⊕ W`; the connecting map of the
+   text's extension is not modelled (after inverting `t` any gluing gives the same result, since
+   `W'` is acyclic).
+3. **`hA` is trivial**: `k = −1` has no prime factor, so `ω(k) = 0 ≤ A = 0`. This is forced by
    `K = ℚ(i)`, which the manuscript excludes from its final companion choices; the target types
    accept it.
-3. **The Kummer coefficient map** `ι_v : E₁₁(K̄_v)[2] ≅ M` is an `𝔽₂`-linear isomorphism between two
+4. **The Kummer coefficient map** `ι_v : E₁₁(K̄_v)[2] ≅ M` is an `𝔽₂`-linear isomorphism between two
    modules with trivial Galois action (`Tv_trivial`, `smallM_facts`), chosen abstractly; it is not
    the comparison along a decomposition embedding `K_S → K̄_v`. The Kummer complex built from it has
    exactly Mattuck's dimensions (`oldKummer_places_exact`).
-4. **The moving prime** `5` carries the full condition; its finite character is invisible at the
+5. **The moving prime** `5` carries the full condition; its finite character is invisible at the
    residue field (tex 4600: "reduction modulo `t` kills that character").
-5. `N = 66` is a support parameter; no equality with the conductor of `E₁₁` is asserted.
+6. `N = 66` is a support parameter; no equality with the conductor of `E₁₁` is asserted.
 
-No other input of either constructor is vacuous at this instance.
+No other input of the three constructors is vacuous at this instance.
 
 ## Printed inputs, unchanged
 

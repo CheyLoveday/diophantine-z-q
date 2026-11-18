@@ -57,11 +57,31 @@ reached through the support change and the change of condition; it is nonzero an
 smaller rank than the residual cone: `2 ≤ genericRank < rankTot` for both constructors
 (`two_le_genericRank`, `activeGenuineCounts_strict`, `activeActualCounts_strict`).
 
-**What is not available.** Over `𝔽₂` the change from the unramified to the full condition at an
+**The case over `𝔽₂`.** Over `𝔽₂` the change from the unramified to the full condition at an
 active place has a non-acyclic quotient (`active_full_change_not_acyclic`, from `h¹ = 2` against
-`h¹ = 4`); the text obtains acyclicity only after inverting `t`, which an interface with
-coefficients `𝔽₂` cannot express. The change of condition used here thickens the unramified
-conditions at the active places by the contractible cone of their identity.
+`h¹ = 4`). For the constructors with coefficients `𝔽₂` the change of condition used here thickens
+the unramified conditions at the active places by the contractible cone of their identity.
+
+**After inverting `t`.** The constructor `residualRankCounts_afterT` (a verbatim copy, section
+`AfterTCopy`) takes the transfer over `𝔽₂[[t]]` and `𝔽₂((t))`, as in the text (tex 4612–4631). It
+is applied to the same instance (`activeAfterTCounts`) with:
+* the smaller-support free model `P` over `𝔽₂[[t]]`: the residual cone extended to `𝔽₂[[t]]`, whose
+  reduction modulo `t` has the ranks of the residual cone (`afterP_hred`), and its base change `P'`
+  to `𝔽₂((t))`;
+* at each place above `13`, the active comparison block `[𝔽₂[[t]]² --((1+t)^e − 1)--> 𝔽₂[[t]]²]` in
+  degrees `1, 2` (the reduction of (4.4), with `e = 1` at a chosen place and `e = −1` at the other
+  places above `13`); its entry vanishes modulo `t` and is `t` times a unit (`activeC_constantCoeff`,
+  `activeC_eq_X_mul`); the blocks are not acyclic over `𝔽₂[[t]]` (`activeW_not_acyclic`) and their
+  base change to `𝔽₂((t))` is acyclic (`activeW'_acyclic`);
+* the integral original-support model `Q = P ⊕ W` and its base change `Q'`, with the generic change
+  of condition `0 → P' → Q' → W' → 0` (`afterSES_shortExact`); the inclusion `P' → Q'` is a
+  quasi-isomorphism because the active blocks are acyclic after inverting `t` (`afterIncl_quasiIso`);
+* the generic minimal model `L`, the cohomology of `Q'`, and the homotopy equivalence `L ≃ P'`
+  obtained through `Q'` (`afterE`).
+It gives `2 ≤ genericRank ≤ rankTot` and `genericRank ≤ 294` (`residualRankCounts_afterT_active`,
+`two_le_afterT_genericRank`). The smaller-support model over `𝔽₂[[t]]` is the constant extension of
+the residual cone: the global character over `S` with Frobenius `(1+t)^e` at the active places is
+not constructed (it requires class field theory), and the gluing of `Q` is split.
 
 The printed inputs (Milne, ADT I.4.10, I.5.1, I.2.8, I.2.3; Nekovář 7.8.8(ii)) remain explicit
 hypotheses of the statements; no new proposition is introduced.
@@ -4083,3 +4103,941 @@ theorem two_le_genericRank (h410 : MilneADT_I_4_10_totallyComplex)
 
 end ZInQ.Contrib.RC53Assist.ResidualWitnessActive
 
+/-! ## Base change and the active comparison blocks over `𝔽₂[[t]]` -/
+
+namespace ZInQ.Contrib.RC53Assist.ResidualWitnessActive
+
+open CategoryTheory CategoryTheory.Limits TensorProduct
+  ZInQ.Contrib.CloudB3RC53.PairedFunctional
+  ZInQ.Contrib.CloudB3RC53.SelmerDuality
+  ZInQ.Manuscript.RC.SelmerComplex
+
+/-! ### Base change of relation-indexed complexes -/
+
+section BaseChange
+
+variable {R : Type} [CommRing R] (A : Type) [CommRing A] [Algebra R A]
+
+/-- The degreewise base change `A ⊗_R C` of a complex. -/
+def bcG (C : GCx R) : GCx A where
+  X n := ModuleCat.of A (A ⊗[R] C.X n)
+  d i j h := (C.d i j h).baseChange A
+  d_d i j k hij hjk x := by
+    have h0 : (C.d j k hjk).comp (C.d i j hij) = 0 := LinearMap.ext (C.d_d i j k hij hjk)
+    change ((C.d j k hjk).baseChange A ∘ₗ (C.d i j hij).baseChange A) x = 0
+    rw [← LinearMap.baseChange_comp, h0, LinearMap.baseChange_zero]
+    rfl
+
+/-- The degreewise base change of a chain map. -/
+def bcHom {C D : GCx R} (f : GHom C D) : GHom (bcG A C) (bcG A D) where
+  f i j h := (f.f i j h).baseChange A
+  comm i i₁ j j₁ hij h₁ h₂ hj x := by
+    have hc : (f.f i₁ j₁ hj).comp (C.d i i₁ h₁) = (D.d j j₁ h₂).comp (f.f i j hij) :=
+      LinearMap.ext (f.comm i i₁ j j₁ hij h₁ h₂ hj)
+    change ((f.f i₁ j₁ hj).baseChange A ∘ₗ (C.d i i₁ h₁).baseChange A) x =
+      ((D.d j j₁ h₂).baseChange A ∘ₗ (f.f i j hij).baseChange A) x
+    rw [← LinearMap.baseChange_comp, ← LinearMap.baseChange_comp, hc]
+
+/-- **A homotopy from `c` to `0`, relation-indexed**: `d h + h d = c` on `C`. -/
+structure CHomotopy (C : GCx R) (c : R) where
+  h : ∀ i j : ℤ, j + 1 = i → C.X i →ₗ[R] C.X j
+  spec : ∀ (i j k : ℤ) (hji : j + 1 = i) (hik : i + 1 = k) (x : C.X i),
+    C.d j i hji (h i j hji x) + h k i hik (C.d i k hik x) = c • x
+
+/-- **Base change inverting `c` makes the complex acyclic.** -/
+theorem bcG_acyclic_of_homotopy {C : GCx R} {c : R} (H : CHomotopy C c)
+    (hc : IsUnit (algebraMap R A c)) : GAcyclic (bcG A C) := by
+  obtain ⟨u, hu⟩ := hc
+  have key : ∀ (i j k : ℤ) (hji : j + 1 = i) (hik : i + 1 = k) (x : A ⊗[R] C.X i),
+      (C.d j i hji).baseChange A ((H.h i j hji).baseChange A x) +
+        (H.h k i hik).baseChange A ((C.d i k hik).baseChange A x) = algebraMap R A c • x := by
+    intro i j k hji hik x
+    induction x using TensorProduct.inductionOn with
+    | tmul a m =>
+      rw [LinearMap.baseChange_tmul, LinearMap.baseChange_tmul, LinearMap.baseChange_tmul,
+        LinearMap.baseChange_tmul, ← TensorProduct.tmul_add, H.spec i j k hji hik m,
+        TensorProduct.tmul_smul, algebraMap_smul]
+    | add x y hx hy =>
+      rw [map_add, map_add, map_add, map_add, smul_add, ← hx, ← hy]
+      abel
+  intro i j k hij hjk x hx
+  refine ⟨((u⁻¹ : Aˣ) : A) • (H.h j i hij).baseChange A x, ?_⟩
+  have h1 := key j i k hij hjk x
+  have hx' : (C.d j k hjk).baseChange A x = 0 := hx
+  rw [hx', map_zero, add_zero, ← hu] at h1
+  change (C.d i j hij).baseChange A (((u⁻¹ : Aˣ) : A) • (H.h j i hij).baseChange A x) = x
+  rw [map_smul, h1, smul_smul, Units.inv_mul, one_smul]
+
+end BaseChange
+
+/-! ### The active comparison blocks -/
+
+section Blocks
+
+variable {S : Type} [CommRing S]
+
+/-- `S²` placed in degree one, zero elsewhere. -/
+def degOne (S : Type) [CommRing S] : GCx S where
+  X n := ModuleCat.of S (Fin (if n = 1 then 2 else 0) → S)
+  d _ _ _ := 0
+  d_d _ _ _ _ _ _ := rfl
+
+/-- Multiplication by a scalar, as a chain map of a complex to itself. -/
+def smulGHom (c : S) (B : GCx S) : GHom B B where
+  f i j h := c • (idGHom B).f i j h
+  comm i i₁ j j₁ hij h₁ h₂ hj x := by
+    subst hij hj
+    change c • B.d i i₁ h₁ x = B.d i i₁ h₂ (c • x)
+    rw [map_smul]
+
+/-- **The active comparison block** `[S² --c--> S²]` in degrees `1, 2`: the cone of
+multiplication by `c` on `S²` in degree one. -/
+abbrev activeCone (S : Type) [CommRing S] (c : S) : GCx S := coneCx (smulGHom c (degOne S))
+
+theorem toCC_smulGHom_comp (c c' : S) (B : GCx S) :
+    GHom.toCC (smulGHom c B) ≫ GHom.toCC (smulGHom c' B) = GHom.toCC (smulGHom (c' * c) B) := by
+  ext n x
+  change c' • (c • x) = (c' * c) • x
+  rw [smul_smul]
+
+theorem toCC_smulGHom_one (B : GCx S) : GHom.toCC (smulGHom (1 : S) B) = 𝟙 _ := by
+  ext n x
+  change (1 : S) • x = x
+  rw [one_smul]
+
+/-- **If `c` is a unit, the active block is acyclic** (multiplication by `c` is an isomorphism, so
+its cone is acyclic). -/
+theorem activeCone_acyclic_of_isUnit {c : S} (hc : IsUnit c) :
+    GAcyclic (activeCone S c) := by
+  obtain ⟨u, rfl⟩ := hc
+  have : IsIso (GHom.toCC (smulGHom (u : S) (degOne S))) :=
+    ⟨⟨GHom.toCC (smulGHom ((u⁻¹ : Sˣ) : S) (degOne S)), by
+      rw [toCC_smulGHom_comp, Units.inv_mul, toCC_smulGHom_one], by
+      rw [toCC_smulGHom_comp, Units.mul_inv, toCC_smulGHom_one]⟩⟩
+  exact coneCx_acyclic_of_quasiIso _ inferInstance
+
+theorem degOne_X_subsingleton (n : ℤ) (hn : n ≠ 1) : Subsingleton ((degOne S).X n) :=
+  ⟨fun a b => funext fun i => by
+    have := i.2
+    simp only [ite_eq_right hn] at this
+    exact absurd this (Nat.not_lt_zero _)⟩
+
+/-- **If `c` is not a unit, the active block is not acyclic**: `e₀` in degree two is a cycle that is
+not a boundary. -/
+theorem activeCone_not_acyclic {c : S} (hc : ¬ IsUnit c) : ¬ GAcyclic (activeCone S c) := by
+  intro h
+  have h3 : Subsingleton ((activeCone S c).X 3) := by
+    have := degOne_X_subsingleton (S := S) 3 (by decide)
+    have := degOne_X_subsingleton (S := S) (3 - 1) (by decide)
+    change Subsingleton ((degOne S).X 3 × (degOne S).X (3 - 1))
+    infer_instance
+  let i0 : Fin (if (2 : ℤ) - 1 = 1 then 2 else 0) := ⟨0, by simp⟩
+  let e0 : (degOne S).X (2 - 1) := Pi.single i0 1
+  obtain ⟨y, hy⟩ := h 1 2 3 rfl rfl ((0 : (degOne S).X 2), e0) (Subsingleton.elim _ _)
+  have h2 := congrArg Prod.snd hy
+  change c • ((idGHom (degOne S)).f 1 (2 - 1) (by omega) y.1) - 0 = e0 at h2
+  have h4 := congrFun h2 i0
+  rw [sub_zero] at h4
+  have h5 : e0 i0 = 1 := Pi.single_eq_same i0 1
+  rw [h5] at h4
+  apply hc
+  exact IsUnit.of_mul_eq_one _ h4
+
+/-- **The homotopy `d h + h d = c` on the active block**: `h (e, z) = (z, 0)`. -/
+def activeHomotopy (c : S) : CHomotopy (activeCone S c) c where
+  h i j hji := (LinearMap.inl S _ _).comp
+    (((idGHom (degOne S)).f (i - 1) j (by omega)).comp (LinearMap.snd S _ _))
+  spec i j k hji hik x := by
+    obtain ⟨e, z⟩ := x
+    subst hji hik
+    refine Prod.ext ?_ ?_
+    · change (0 : (degOne S).X (j + 1)) + (idGHom (degOne S)).f (j + 1 + 1 - 1) (j + 1) (by omega)
+          (c • (idGHom (degOne S)).f (j + 1) (j + 1 + 1 - 1) (by omega) e - 0) = c • e
+      rw [zero_add, sub_zero, map_smul, idGHom_f_f, idGHom_f_self]
+    · change c • (idGHom (degOne S)).f j (j + 1 - 1) (by omega)
+          ((idGHom (degOne S)).f (j + 1 - 1) j (by omega) z) - 0 + 0 = c • z
+      rw [sub_zero, add_zero, idGHom_f_f, idGHom_f_self]
+
+end Blocks
+
+end ZInQ.Contrib.RC53Assist.ResidualWitnessActive
+
+/-! ## The transfer after inverting `t`
+
+The declarations of this namespace are a verbatim copy of those of the module
+`ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ResidualAfterT` (manuscript tex 4598–4647), which is
+not part of this build; only the namespace is changed. They are compiled with the default
+elaboration options. -/
+
+section AfterTCopySection
+
+set_option maxHeartbeats 200000
+set_option backward.isDefEq.respectTransparency true
+
+namespace ZInQ.Contrib.RC53Assist.ResidualWitnessActive.AfterTCopy
+
+open ZInQ.Contrib.CloudB3RC53.GenuineInst
+
+open NumberField IsDedekindDomain CategoryTheory ZInQ.Manuscript.RC.Limits
+  ZInQ.Contrib.CloudB3RC53.RankCounts ZInQ.Contrib.CloudB3RC53.PairedFunctional
+  ZInQ.Manuscript.RC.SelmerComplex ZInQ.Contrib.CloudB3RC53.SelmerDuality
+  ZInQ.Contrib.CloudB3RC53.ResidualTransfer ZInQ.Contrib.CloudB3RC53.Mattuck TensorProduct
+
+/-- **The transfer after a base change to a field** (tex 4598–4631, model level): a minimal model
+`L` over the field `R'` homotopy equivalent to the base change `P'` of a bounded free model `P` over
+`R` has total rank at most that of `P`. PROVED. -/
+theorem transfer_after_inverting_t {R R' : Type} [CommRing R] [StrongRankCondition R] [Field R']
+    [Algebra R R'] (P : CochainComplex (ModuleCat.{0} R) ℤ) [∀ i, Module.Free R (P.X i)]
+    [∀ i, Module.Finite R (P.X i)] (P' L : CochainComplex (ModuleCat.{0} R') ℤ) (a b : ℤ)
+    [P'.IsStrictlyGE a] [P'.IsStrictlyLE b] [L.IsStrictlyGE a] [L.IsStrictlyLE b]
+    [∀ i, Module.Finite R' (P'.X i)] [∀ i, Module.Finite R' (L.X i)]
+    (hbc : ∀ n, Nonempty (P'.X n ≃ₗ[R'] R' ⊗[R] P.X n))
+    (hLmin : ∀ i j x, (L.d i j).hom x ∈
+      IsLocalRing.maximalIdeal R' • (⊤ : Submodule R' (L.X j)))
+    (e : HomotopyEquiv L P') (s : Finset ℤ) (genericRank rankTot : ℕ)
+    (hgen : genericRank = ∑ n ∈ s, Module.finrank R' (L.X n))
+    (htot : rankTot = ∑ n ∈ s, Module.finrank R (P.X n)) : genericRank ≤ rankTot := by
+  have h := transferOfModels_final L P' a b hLmin e s genericRank
+    (∑ n ∈ s, Module.finrank R' (P'.X n)) hgen rfl
+  have heq : ∑ n ∈ s, Module.finrank R' (P'.X n) = ∑ n ∈ s, Module.finrank R (P.X n) :=
+    Finset.sum_congr rfl fun n _ => by
+      rw [(hbc n).some.finrank_eq, Module.finrank_baseChange]
+  rw [htot, ← heq]
+  exact h
+
+section NonVacuity
+
+/-- The complex with every term `0` (`PUnit`) over a ring `R`. -/
+def punitCx (R : Type) [CommRing R] : CochainComplex (ModuleCat.{0} R) ℤ where
+  X _ := ModuleCat.of R PUnit
+  d _ _ := 0
+
+instance punitCx_subsingleton (R : Type) [CommRing R] (i : ℤ) : Subsingleton ((punitCx R).X i) :=
+  inferInstanceAs (Subsingleton PUnit)
+
+instance punitCx_free (R : Type) [CommRing R] (i : ℤ) : Module.Free R ((punitCx R).X i) :=
+  inferInstanceAs (Module.Free R PUnit)
+
+instance punitCx_finite (R : Type) [CommRing R] (i : ℤ) : Module.Finite R ((punitCx R).X i) :=
+  inferInstanceAs (Module.Finite R PUnit)
+
+instance punitCx_ge (R : Type) [CommRing R] : (punitCx R).IsStrictlyGE 0 :=
+  (CochainComplex.isStrictlyGE_iff _ 0).2 fun _ _ => ModuleCat.isZero_of_subsingleton _
+
+instance punitCx_le (R : Type) [CommRing R] : (punitCx R).IsStrictlyLE 0 :=
+  (CochainComplex.isStrictlyLE_iff _ 0).2 fun _ _ => ModuleCat.isZero_of_subsingleton _
+
+/-- **Non-vacuity of the hypotheses of `transfer_after_inverting_t`** at `𝔽₂[[t]] → 𝔽₂((t))`:
+the zero complexes (total ranks `0 ≤ 0`). PROVED. -/
+theorem transfer_after_inverting_t_nonvacuous :
+    0 ≤ 0 :=
+  transfer_after_inverting_t (punitCx (PowerSeries (ZMod 2)))
+    (punitCx (LaurentSeries (ZMod 2))) (punitCx (LaurentSeries (ZMod 2))) 0 0
+    (fun n => ⟨LinearEquiv.ofSubsingleton _ _⟩)
+    (fun i j x => by rw [Subsingleton.elim x 0, map_zero]; exact Submodule.zero_mem _)
+    (HomotopyEquiv.refl _) {0} 0 0
+    (by rw [Finset.sum_singleton, Module.finrank_zero_of_subsingleton])
+    (by rw [Finset.sum_singleton, Module.finrank_zero_of_subsingleton])
+
+end NonVacuity
+
+variable (K : Type) [Field K] [NumberField K]
+  (Ew : ∀ w : HeightOneSpectrum (𝓞 K), WeierstrassCurve (w.adicCompletionIntegers K))
+  [hEw : ∀ w, ((Ew w).baseChange (w.adicCompletion K)).IsElliptic]
+
+open Classical in
+/-- **RC6's `ResidualRankCounts` with the transfer after inverting `t`** (tex 4453–4648): as
+`residualRankCounts_genuine` (the counts `kummer`, `hcond`, `hG`, `hL` from the genuine producers),
+with `transfer` from `transfer_after_inverting_t` at `𝔽₂[[t]] → 𝔽₂((t))`: the smaller-support free
+model `P` over `𝔽₂[[t]]` whose reduction modulo `t` has the ranks of the residual model `Dsel`
+(`hred`; only its ranks are used), its base change `P'` to `𝔽₂((t))` (`hbc`), and the generic
+minimal model `L` over
+`𝔽₂((t))` homotopy equivalent to `P'` (`e`; the text's tex 4626–4631, an input). No acyclicity
+hypothesis over `ZMod 2`. PROVED. -/
+def residualRankCounts_afterT (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8) (h23 : MilneADT_I_2_3_trivial)
+    (k : ℤ) (α : 𝓞 K) (hα : IsQuadraticRadicand K k α)
+    (hK : IsTotallyComplex K) (N : ℕ) (hN : N ≠ 0) (A : ℕ) (hA : k.natAbs.primeFactors.card ≤ A)
+    (r : ℕ) (hr : r.Prime) (D : Finset ℕ) (hD : ∀ p ∈ D, p.Prime) (hDodd : ∀ p ∈ D, p ≠ 2)
+    (cond : Ideal (𝓞 K) → LocalCondition)
+    (hcondD : ∀ P : Ideal (𝓞 K), cond P = .derivRelaxed → ∃ q ∈ D, P ∈ primesAbove K q)
+    (hfull : ∀ w : HeightOneSpectrum (𝓞 K), cond w.asIdeal = .oldKummer →
+      Nat.card (Submodule.torsionBy ℤ ((Ew w).baseChange (w.adicCompletion K)).toAffine.Point 2) =
+        4)
+    (w : InfinitePlace K) (hw : w.IsComplex)
+    -- the residual model and its identifications
+    (Sloc : Set (HeightOneSpectrum (𝓞 K)))
+    (Dsel : SelData (ZMod 2))
+    [∀ n, Module.Finite (ZMod 2) (Dsel.G.X n)] [∀ n, Module.Finite (ZMod 2) (Dsel.U.X n)]
+    [∀ n, Module.Finite (ZMod 2) (Dsel.L.X n)]
+    (s : Finset ℤ) (hs : s ⊆ Finset.Icc 0 2)
+    (eG : ∀ n ∈ s, Dsel.G.X n ≃ₗ[ZMod 2]
+      genH K (primesAboveSet K (chargedPrimes N r D)) n.toNat)
+    (hUm : ∑ n ∈ s, Module.finrank (ZMod 2) (Dsel.U.X n) ≤ ∑ p ∈ chargedPrimes N r D,
+      condSum K (genCondDimFun2 K Sloc cond (kummerDimOfCurves K Ew (kd2OfCurves K Ew))) p)
+    (hLm : ∑ n ∈ s, Module.finrank (ZMod 2) (Dsel.L.X (n - 1)) ≤
+      ∑ p ∈ chargedPrimes N r D, genLocSum K Sloc p)
+    -- the transfer after inverting `t`
+    (P : CochainComplex (ModuleCat.{0} (PowerSeries (ZMod 2))) ℤ)
+    [∀ i, Module.Free (PowerSeries (ZMod 2)) (P.X i)]
+    [∀ i, Module.Finite (PowerSeries (ZMod 2)) (P.X i)]
+    (hred : ∀ n ∈ s, Module.finrank (PowerSeries (ZMod 2)) (P.X n) =
+      Module.finrank (ZMod 2) ((selCx Dsel).X n))
+    (P' L : CochainComplex (ModuleCat.{0} (LaurentSeries (ZMod 2))) ℤ) (a b : ℤ)
+    [P'.IsStrictlyGE a] [P'.IsStrictlyLE b] [L.IsStrictlyGE a] [L.IsStrictlyLE b]
+    [∀ i, Module.Finite (LaurentSeries (ZMod 2)) (P'.X i)]
+    [∀ i, Module.Finite (LaurentSeries (ZMod 2)) (L.X i)]
+    (hbc : ∀ n, Nonempty (P'.X n ≃ₗ[LaurentSeries (ZMod 2)]
+      LaurentSeries (ZMod 2) ⊗[PowerSeries (ZMod 2)] P.X n))
+    (hLmin : ∀ i j x, (L.d i j).hom x ∈
+      IsLocalRing.maximalIdeal (LaurentSeries (ZMod 2)) •
+        (⊤ : Submodule (LaurentSeries (ZMod 2)) (L.X j)))
+    (e : HomotopyEquiv L P') :
+    ResidualRankCounts :=
+  haveI : ∀ i, Module.Finite (ZMod 2) ((selCx Dsel).toCC.X i) := fun i => by
+    change Module.Finite (ZMod 2) (Dsel.G.X i × Dsel.U.X i × Dsel.L.X (i - 1))
+    infer_instance
+  residualRankCounts_mattuck K Ew h410 h51 h28 h23 k α hα hK N hN A hA r hr D hD hDodd cond hcondD
+    hfull w hw Dsel s (∑ n ∈ s, Module.finrank (ZMod 2) ((selCx Dsel).X n)) rfl
+    (hG_of_genuineModel K _ Dsel s hs eG)
+    (hL_of_genuineModel2 K Sloc hr hD cond (kummerDimOfCurves K Ew (kd2OfCurves K Ew)) Dsel s
+      (archTotal K w) hUm hLm)
+    (∑ n ∈ s, Module.finrank (LaurentSeries (ZMod 2)) (L.X n))
+    (transfer_after_inverting_t P P' L a b hbc hLmin e s _ _ rfl
+      (Finset.sum_congr rfl fun n hn => (hred n hn).symm))
+
+end ZInQ.Contrib.RC53Assist.ResidualWitnessActive.AfterTCopy
+
+end AfterTCopySection
+
+/-! ## The active blocks after inverting `t` -/
+
+namespace ZInQ.Contrib.RC53Assist.ResidualWitnessActive
+
+open CategoryTheory CategoryTheory.Limits NumberField IsDedekindDomain TensorProduct
+  ZInQ.Contrib.CloudB3RC53.PairedFunctional
+  ZInQ.Contrib.CloudB3RC53.SelmerDuality
+  ZInQ.Contrib.CloudB3RC53.GenuineInst
+  ZInQ.Contrib.CloudB3RC53.RankCounts
+  ZInQ.Contrib.CloudB3RC53.Mattuck
+  ZInQ.Contrib.CloudB3RC53.ResidualTransfer
+  ZInQ.Manuscript.RC.SelmerComplex
+  ZInQ.Manuscript.RC.Limits
+
+/-! ### The coefficient rings `𝔽₂[[t]]` and `𝔽₂((t))` -/
+
+/-- `𝔽₂[[t]]`. -/
+abbrev Rt : Type := PowerSeries (ZMod 2)
+
+/-- `𝔽₂((t))`. -/
+abbrev Kt : Type := LaurentSeries (ZMod 2)
+
+theorem zmod2_units_eq_one (v : (ZMod 2)ˣ) : v = 1 := by
+  revert v
+  decide
+
+/-- `1 + t` is a unit of `𝔽₂[[t]]`. -/
+def onePlusT : Rtˣ :=
+  (PowerSeries.isUnit_iff_constantCoeff.mpr (by simp) : IsUnit (1 + PowerSeries.X : Rt)).unit
+
+theorem onePlusT_val : (onePlusT : Rt) = 1 + PowerSeries.X := rfl
+
+/-- **The entry `(1 + t)^e − 1` of the reduction of (4.4) at an active place** (tex 4619–4625). -/
+def activeC (e : ℤ) : Rt := ((onePlusT ^ e : Rtˣ) : Rt) - 1
+
+/-- The entry vanishes modulo `t`: the reduction modulo `t` of the active block is zero. -/
+theorem activeC_constantCoeff (e : ℤ) : PowerSeries.constantCoeff (activeC e) = 0 := by
+  have h : PowerSeries.constantCoeff ((onePlusT ^ e : Rtˣ) : Rt) = 1 := by
+    have := zmod2_units_eq_one (Units.map (PowerSeries.constantCoeff (R := ZMod 2)).toMonoidHom
+      (onePlusT ^ e))
+    exact congrArg Units.val this
+  rw [activeC, map_sub, h, map_one, sub_self]
+
+/-- **Before inverting `t` the entry is not a unit.** -/
+theorem activeC_not_isUnit (e : ℤ) : ¬ IsUnit (activeC e) := by
+  rw [PowerSeries.isUnit_iff_constantCoeff, activeC_constantCoeff]
+  exact not_isUnit_zero
+
+theorem onePlusT_ne_one : onePlusT ≠ 1 := by
+  intro h
+  have h1 := congrArg Units.val h
+  rw [onePlusT_val, Units.val_one, add_eq_left] at h1
+  exact PowerSeries.X_ne_zero h1
+
+/-- The exponents at the active places are `±1`. -/
+theorem activeC_ne_zero {e : ℤ} (he : e = 1 ∨ e = -1) : activeC e ≠ 0 := by
+  intro h
+  have h1 : onePlusT ^ e = 1 := Units.ext (sub_eq_zero.mp h)
+  rcases he with rfl | rfl
+  · exact onePlusT_ne_one (by simpa using h1)
+  · exact onePlusT_ne_one (by simpa using h1)
+
+/-- **`((1 + t)^e − 1)/t` is a unit** for `e = ±1` (tex 4623–4624). -/
+theorem activeC_eq_X_mul {e : ℤ} (he : e = 1 ∨ e = -1) :
+    ∃ v : Rtˣ, activeC e = PowerSeries.X * (v : Rt) := by
+  rcases he with rfl | rfl
+  · refine ⟨1, ?_⟩
+    rw [activeC, zpow_one, onePlusT_val, Units.val_one, mul_one]
+    ring
+  · refine ⟨-onePlusT⁻¹, ?_⟩
+    have hu : (onePlusT : Rt) * ((onePlusT⁻¹ : Rtˣ) : Rt) = 1 := Units.mul_inv onePlusT
+    rw [activeC, zpow_neg, zpow_one, Units.val_neg]
+    rw [onePlusT_val] at hu
+    have h2 : (2 : Rt) = 0 := by
+      have h : (2 : ZMod 2) = 0 := by decide
+      have := congrArg (PowerSeries.C (R := ZMod 2)) h
+      rwa [map_ofNat, map_zero] at this
+    linear_combination (-1 : Rt) * hu +
+      (-1 + ((onePlusT⁻¹ : Rtˣ) : Rt) + ((onePlusT⁻¹ : Rtˣ) : Rt) * PowerSeries.X) * h2
+
+/-- **After inverting `t` the entry is a unit** (`𝔽₂((t))` is a field). -/
+theorem activeC_isUnit_generic {e : ℤ} (he : e = 1 ∨ e = -1) :
+    IsUnit (algebraMap Rt Kt (activeC e)) := by
+  refine isUnit_iff_ne_zero.mpr fun h => activeC_ne_zero he ?_
+  apply HahnSeries.ofPowerSeries_injective (Γ := ℤ) (R := ZMod 2)
+  rw [map_zero]
+  exact h
+
+/-! ### The active places -/
+
+instance : Finite (NewPlaces SmallK SmallS SmallS') :=
+  (smallS'_finite.subset Set.sdiff_subset).to_subtype
+
+noncomputable instance : Fintype (NewPlaces SmallK SmallS SmallS') := Fintype.ofFinite _
+
+/-- A chosen (oriented) place above `13`. -/
+def orientedPlace : NewPlaces SmallK SmallS SmallS' := Classical.choice newPlaces_nonempty
+
+/-- The exponent: `1` at the oriented place, `−1` at the other places above `13`. -/
+def activeExp (q : NewPlaces SmallK SmallS SmallS') : ℤ := if q = orientedPlace then 1 else -1
+
+theorem activeExp_cases (q : NewPlaces SmallK SmallS SmallS') :
+    activeExp q = 1 ∨ activeExp q = -1 := by
+  unfold activeExp
+  split_ifs <;> simp
+
+/-- **The active comparison blocks over `𝔽₂[[t]]`**: at each place above `13`,
+`[𝔽₂[[t]]² --((1+t)^e − 1)--> 𝔽₂[[t]]²]` in degrees `1, 2`. -/
+abbrev activeW : GCx Rt := piCx fun q : NewPlaces SmallK SmallS SmallS' =>
+  activeCone Rt (activeC (activeExp q))
+
+/-- **The same blocks after inverting `t`**: the base change of `activeW` to `𝔽₂((t))`. -/
+abbrev activeW' : GCx Kt := bcG Kt activeW
+
+/-- Homotopies on the factors give a homotopy on the product, for the product of the scalars. -/
+def piHomotopy {S : Type} [CommRing S] {ι : Type} [Fintype ι] (A : ι → GCx S) (c : ι → S)
+    (H : ∀ q, CHomotopy (A q) (c q)) : CHomotopy (piCx A) (∏ q, c q) where
+  h i j hji := LinearMap.pi fun q =>
+    (∏ q' ∈ Finset.univ.erase q, c q') • ((H q).h i j hji).comp (LinearMap.proj q)
+  spec i j k hji hik x := by
+    funext q
+    change (A q).d j i hji ((∏ q' ∈ Finset.univ.erase q, c q') • (H q).h i j hji (x q)) +
+      (∏ q' ∈ Finset.univ.erase q, c q') • (H q).h k i hik ((A q).d i k hik (x q)) =
+        (∏ q, c q) • x q
+    rw [map_smul, ← smul_add, (H q).spec i j k hji hik (x q), smul_smul,
+      Finset.prod_erase_mul _ _ (Finset.mem_univ q)]
+
+/-- The product of the entries of the active blocks. -/
+def activeProd : Rt := ∏ q : NewPlaces SmallK SmallS SmallS', activeC (activeExp q)
+
+theorem activeProd_isUnit_generic : IsUnit (algebraMap Rt Kt activeProd) := by
+  rw [activeProd, map_prod]
+  exact isUnit_iff_ne_zero.mpr (Finset.prod_ne_zero_iff.mpr fun q _ =>
+    (activeC_isUnit_generic (activeExp_cases q)).ne_zero)
+
+theorem piCx_acyclic {S : Type} [CommRing S] {ι : Type} (A : ι → GCx S)
+    (h : ∀ v, GAcyclic (A v)) : GAcyclic (piCx A) := by
+  intro i j k hij hjk x hx
+  have hv : ∀ v, (A v).d j k hjk (x v) = 0 := fun v => congrFun hx v
+  choose y hy using fun v => h v i j k hij hjk (x v) (hv v)
+  exact ⟨fun v => y v, funext hy⟩
+
+theorem acyclic_of_piCx {S : Type} [CommRing S] {ι : Type} (A : ι → GCx S)
+    (h : GAcyclic (piCx A)) (v : ι) : GAcyclic (A v) := by
+  intro i j k hij hjk x hx
+  let X : (piCx A).X j := Pi.single (M := fun w => (A w).X j) v x
+  have hX : (piCx A).d j k hjk X = 0 := by
+    funext w
+    by_cases hw : w = v
+    · subst hw
+      change (A w).d j k hjk (Pi.single (M := fun w => (A w).X j) w x w) = 0
+      rw [Pi.single_eq_same]
+      exact hx
+    · change (A w).d j k hjk (Pi.single (M := fun w => (A w).X j) v x w) = 0
+      rw [Pi.single_eq_of_ne hw, map_zero]
+  obtain ⟨y, hy⟩ := h i j k hij hjk X hX
+  refine ⟨y v, ?_⟩
+  have := congrFun hy v
+  change (A v).d i j hij (y v) = Pi.single (M := fun w => (A w).X j) v x v at this
+  rwa [Pi.single_eq_same] at this
+
+/-- **The active comparison cones are not acyclic before inverting `t`.** -/
+theorem activeW_not_acyclic : ¬ activeW.toCC.Acyclic := by
+  rw [acyclic_toCC_iff]
+  intro h
+  exact activeCone_not_acyclic (activeC_not_isUnit (activeExp orientedPlace))
+    (acyclic_of_piCx _ h orientedPlace)
+
+/-- **After inverting `t` every active comparison cone is acyclic** (tex 4626–4631): the base
+change of the active blocks to `𝔽₂((t))` is acyclic, by the homotopy `d h + h d = ∏ ((1+t)^e − 1)`
+and the invertibility of that product in `𝔽₂((t))`. -/
+theorem activeW'_acyclic : activeW'.toCC.Acyclic := by
+  rw [acyclic_toCC_iff]
+  exact bcG_acyclic_of_homotopy Kt
+    (piHomotopy _ (fun q => activeC (activeExp q)) fun q => activeHomotopy _)
+    activeProd_isUnit_generic
+
+end ZInQ.Contrib.RC53Assist.ResidualWitnessActive
+
+/-! ## The free models over `𝔽₂[[t]]` and `𝔽₂((t))` and the constructor -/
+
+namespace ZInQ.Contrib.RC53Assist.ResidualWitnessActive
+
+open CategoryTheory CategoryTheory.Limits NumberField IsDedekindDomain TensorProduct
+  ZInQ.Contrib.CloudB3RC53.PairedFunctional
+  ZInQ.Contrib.CloudB3RC53.SelmerDuality
+  ZInQ.Contrib.CloudB3RC53.GenuineInst
+  ZInQ.Contrib.CloudB3RC53.RankCounts
+  ZInQ.Contrib.CloudB3RC53.Mattuck
+  ZInQ.Contrib.CloudB3RC53.ResidualTransfer
+  ZInQ.Manuscript.RC.SelmerComplex
+  ZInQ.Manuscript.RC.Limits
+
+theorem homology_subsingleton_of_X' {S : Type} [CommRing S]
+    {C : CochainComplex (ModuleCat.{0} S) ℤ} (n : ℤ)
+    (h : Subsingleton (C.X n)) : Subsingleton (C.homology n) := by
+  have : Subsingleton ((C.sc n).X₂) := h
+  have hex : C.ExactAt n := (C.sc n).exact_of_isZero_X₂ (ModuleCat.isZero_of_subsingleton _)
+  exact ModuleCat.subsingleton_of_isZero
+    ((HomologicalComplex.exactAt_iff_isZero_homology _ _).1 hex)
+
+theorem homology_finite_of_X' {S : Type} [Field S] {C : CochainComplex (ModuleCat.{0} S) ℤ}
+    (n : ℤ) [Module.Finite S (C.X n)] : Module.Finite S (C.homology n) := by
+  have : Module.Finite S (C.cycles n) :=
+    Module.Finite.of_injective _ ((ModuleCat.mono_iff_injective (C.iCycles n)).1 inferInstance)
+  exact Module.Finite.of_surjective _ ((ModuleCat.epi_iff_surjective (C.homologyπ n)).1 inferInstance)
+
+/-! ### The free models over `𝔽₂[[t]]` and `𝔽₂((t))` -/
+
+/-- **The smaller-support free model over `𝔽₂[[t]]`**: the residual cone over `𝔽₂` extended to
+`𝔽₂[[t]]`. Its reduction modulo `t` is the residual cone. -/
+abbrev afterP_G : GCx Rt := bcG Rt (selCx actSel)
+
+abbrev afterP : CochainComplex (ModuleCat.{0} Rt) ℤ := afterP_G.toCC
+
+/-- Its base change to `𝔽₂((t))`. -/
+abbrev afterP'_G : GCx Kt := bcG Kt afterP_G
+
+abbrev afterP' : CochainComplex (ModuleCat.{0} Kt) ℤ := afterP'_G.toCC
+
+/-- **The original-support model over `𝔽₂[[t]]`**: the smaller-support model together with the
+active comparison blocks at the places above `13` (the singular quotients of the change from the
+unramified to the full condition). -/
+abbrev afterQ_G : GCx Rt := prodCx afterP_G activeW
+
+/-- **The generic original-support model over `𝔽₂((t))`**: the base change of the integral one. -/
+abbrev afterQ'_G : GCx Kt := bcG Kt afterQ_G
+
+abbrev afterQ' : CochainComplex (ModuleCat.{0} Kt) ℤ := afterQ'_G.toCC
+
+/-- The inclusion of the smaller-support model, over `𝔽₂((t))`. -/
+def afterIncl : GHom afterP'_G afterQ'_G := bcHom Kt (prodLift (idGHom afterP_G) (zeroGHom _ _))
+
+/-- The projection onto the active blocks, over `𝔽₂((t))`. -/
+def afterProj : GHom afterQ'_G activeW' := bcHom Kt (prodSnd afterP_G activeW)
+
+/-- `0 → P' → Q' → W' → 0`, the generic change of condition. -/
+def afterSES : ShortComplex (CochainComplex (ModuleCat.{0} Kt) ℤ) :=
+  ShortComplex.mk (GHom.toCC afterIncl) (GHom.toCC afterProj) (by
+    rw [GHom.toCC_comp]
+    ext i x
+    change ((LinearMap.snd Rt _ _).baseChange Kt ∘ₗ
+      (LinearMap.inl Rt (afterP_G.X i) (activeW.X i)).baseChange Kt) x = 0
+    rw [← LinearMap.baseChange_comp, LinearMap.snd_comp_inl, LinearMap.baseChange_zero]
+    rfl)
+
+theorem afterSES_shortExact : afterSES.ShortExact := by
+  refine HomologicalComplex.shortExact_of_degreewise_shortExact _ fun i => ?_
+  let ι := (LinearMap.inl Rt (afterP_G.X i) (activeW.X i)).baseChange Kt
+  let π := (LinearMap.snd Rt (afterP_G.X i) (activeW.X i)).baseChange Kt
+  let ρ := (LinearMap.fst Rt (afterP_G.X i) (activeW.X i)).baseChange Kt
+  let σ := (LinearMap.inr Rt (afterP_G.X i) (activeW.X i)).baseChange Kt
+  have hρι : ∀ x, ρ (ι x) = x := fun x => by
+    change ((LinearMap.fst Rt _ _).baseChange Kt ∘ₗ (LinearMap.inl Rt _ _).baseChange Kt) x = x
+    rw [← LinearMap.baseChange_comp, LinearMap.fst_comp_inl, LinearMap.baseChange_id]
+    rfl
+  have hπσ : ∀ x, π (σ x) = x := fun x => by
+    change ((LinearMap.snd Rt _ _).baseChange Kt ∘ₗ (LinearMap.inr Rt _ _).baseChange Kt) x = x
+    rw [← LinearMap.baseChange_comp, LinearMap.snd_comp_inr, LinearMap.baseChange_id]
+    rfl
+  have hsplit : ∀ x, ι (ρ x) + σ (π x) = x := fun x => by
+    change ((LinearMap.inl Rt _ _).baseChange Kt ∘ₗ (LinearMap.fst Rt _ _).baseChange Kt) x +
+      ((LinearMap.inr Rt _ _).baseChange Kt ∘ₗ (LinearMap.snd Rt _ _).baseChange Kt) x = x
+    rw [← LinearMap.baseChange_comp, ← LinearMap.baseChange_comp, ← LinearMap.add_apply,
+      ← LinearMap.baseChange_add]
+    have hid : LinearMap.inl Rt (afterP_G.X i) (activeW.X i) ∘ₗ LinearMap.fst Rt _ _ +
+        LinearMap.inr Rt (afterP_G.X i) (activeW.X i) ∘ₗ LinearMap.snd Rt _ _ = LinearMap.id := by
+      refine LinearMap.ext fun x => ?_
+      obtain ⟨a, b⟩ := x
+      simp
+    rw [hid, LinearMap.baseChange_id]
+    rfl
+  refine { exact := ?_, mono_f := ?_, epi_g := ?_ }
+  · rw [ShortComplex.moduleCat_exact_iff]
+    intro z hz
+    refine ⟨ρ z, ?_⟩
+    have hz' : π z = 0 := hz
+    have := hsplit z
+    rw [hz', map_zero, add_zero] at this
+    exact this
+  · rw [ModuleCat.mono_iff_injective]
+    intro a b h
+    have h' : ι a = ι b := h
+    rw [← hρι a, ← hρι b, h']
+  · rw [ModuleCat.epi_iff_surjective]
+    intro w
+    exact ⟨σ w, hπσ w⟩
+
+/-- **The text's transfer after inverting `t`**: since every active comparison block is acyclic over
+`𝔽₂((t))`, the generic smaller-support model includes into the generic original-support model by a
+quasi-isomorphism (tex 4626–4631). -/
+theorem afterIncl_quasiIso : QuasiIso (GHom.toCC afterIncl) :=
+  quasiIso_f_of_shortExact_acyclic afterSES_shortExact activeW'_acyclic
+
+/-! ### Bounds and finiteness -/
+
+theorem afterP'_X_subsingleton (h410 : MilneADT_I_4_10_totallyComplex) (h28 : MilneADT_I_2_8)
+    (n : ℤ) (hn : n < 0 ∨ 3 < n) : Subsingleton (afterP'.X n) := by
+  have h1 : Subsingleton ((selCx actSel).X n) := actP_X_subsingleton h410 h28 n hn
+  have : Unique (Rt ⊗[ZMod 2] (selCx actSel).X n) := TensorProduct.uniqueRight
+  have : Unique (Kt ⊗[Rt] (Rt ⊗[ZMod 2] (selCx actSel).X n)) := TensorProduct.uniqueRight
+  change Subsingleton (Kt ⊗[Rt] (Rt ⊗[ZMod 2] (selCx actSel).X n))
+  infer_instance
+
+theorem activeW_X_subsingleton (n : ℤ) (h1 : n ≠ 1) (h2 : n ≠ 2) :
+    Subsingleton (activeW.X n) := by
+  have := degOne_X_subsingleton (S := Rt) n h1
+  have := degOne_X_subsingleton (S := Rt) (n - 1) (by omega)
+  change Subsingleton (∀ q : NewPlaces SmallK SmallS SmallS',
+    (degOne Rt).X n × (degOne Rt).X (n - 1))
+  infer_instance
+
+theorem afterQ'_X_subsingleton (h410 : MilneADT_I_4_10_totallyComplex) (h28 : MilneADT_I_2_8)
+    (n : ℤ) (hn : n < 0 ∨ 3 < n) : Subsingleton (afterQ'.X n) := by
+  have h1 : Subsingleton ((selCx actSel).X n) := actP_X_subsingleton h410 h28 n hn
+  have : Unique (Rt ⊗[ZMod 2] (selCx actSel).X n) := TensorProduct.uniqueRight
+  have h2 : Subsingleton (activeW.X n) := activeW_X_subsingleton n (by omega) (by omega)
+  have : Subsingleton (afterP_G.X n × activeW.X n) := by
+    change Subsingleton ((Rt ⊗[ZMod 2] (selCx actSel).X n) × activeW.X n)
+    infer_instance
+  have : Unique (Kt ⊗[Rt] (afterP_G.X n × activeW.X n)) := TensorProduct.uniqueRight
+  change Subsingleton (Kt ⊗[Rt] (afterP_G.X n × activeW.X n))
+  infer_instance
+
+theorem afterP'_ge (h410 : MilneADT_I_4_10_totallyComplex) (h28 : MilneADT_I_2_8) :
+    afterP'.IsStrictlyGE 0 := by
+  rw [CochainComplex.isStrictlyGE_iff]
+  intro n hn
+  have := afterP'_X_subsingleton h410 h28 n (Or.inl hn)
+  exact ModuleCat.isZero_of_subsingleton _
+
+theorem afterP'_le (h410 : MilneADT_I_4_10_totallyComplex) (h28 : MilneADT_I_2_8) :
+    afterP'.IsStrictlyLE 3 := by
+  rw [CochainComplex.isStrictlyLE_iff]
+  intro n hn
+  have := afterP'_X_subsingleton h410 h28 n (Or.inr hn)
+  exact ModuleCat.isZero_of_subsingleton _
+
+/-- **The generic minimal model**: the cohomology of the generic original-support model, with zero
+differential. -/
+abbrev afterL : CochainComplex (ModuleCat.{0} Kt) ℤ := (homologyModel afterQ').toCC
+
+theorem afterL_ge (h410 : MilneADT_I_4_10_totallyComplex) (h28 : MilneADT_I_2_8) :
+    afterL.IsStrictlyGE 0 := by
+  rw [CochainComplex.isStrictlyGE_iff]
+  intro n hn
+  have : Subsingleton (afterL.X n) :=
+    homology_subsingleton_of_X' n (afterQ'_X_subsingleton h410 h28 n (Or.inl hn))
+  exact ModuleCat.isZero_of_subsingleton _
+
+theorem afterL_le (h410 : MilneADT_I_4_10_totallyComplex) (h28 : MilneADT_I_2_8) :
+    afterL.IsStrictlyLE 3 := by
+  rw [CochainComplex.isStrictlyLE_iff]
+  intro n hn
+  have : Subsingleton (afterL.X n) :=
+    homology_subsingleton_of_X' n (afterQ'_X_subsingleton h410 h28 n (Or.inr hn))
+  exact ModuleCat.isZero_of_subsingleton _
+
+theorem afterP_free (n : ℤ) : Module.Free Rt (afterP.X n) := by
+  change Module.Free Rt (Rt ⊗[ZMod 2] (selCx actSel).X n)
+  infer_instance
+
+theorem afterP_finite (h410 : MilneADT_I_4_10_totallyComplex) (h51 : MilneADT_I_5_1_totallyComplex)
+    (h28 : MilneADT_I_2_8) (n : ℤ) : Module.Finite Rt (afterP.X n) := by
+  have := actP_finite h410 h51 h28 n
+  change Module.Finite Rt (Rt ⊗[ZMod 2] (selCx actSel).toCC.X n)
+  infer_instance
+
+theorem afterP'_finite (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8) (n : ℤ) :
+    Module.Finite Kt (afterP'.X n) := by
+  have := afterP_finite h410 h51 h28 n
+  change Module.Finite Kt (Kt ⊗[Rt] afterP.X n)
+  infer_instance
+
+theorem afterQ'_finite (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8) (n : ℤ) :
+    Module.Finite Kt (afterQ'.X n) := by
+  have h1 : Module.Finite Rt (afterP_G.X n) := afterP_finite h410 h51 h28 n
+  have hd : ∀ m, Module.Finite Rt ((degOne Rt).X m) := fun m => by
+    change Module.Finite Rt (Fin _ → Rt)
+    infer_instance
+  have := hd n
+  have := hd (n - 1)
+  have : Module.Finite Rt (activeW.X n) := by
+    change Module.Finite Rt (∀ q : NewPlaces SmallK SmallS SmallS',
+      (degOne Rt).X n × (degOne Rt).X (n - 1))
+    infer_instance
+  change Module.Finite Kt (Kt ⊗[Rt] (afterP_G.X n × activeW.X n))
+  infer_instance
+
+theorem afterL_finite (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8) (n : ℤ) :
+    Module.Finite Kt (afterL.X n) := by
+  have := afterQ'_finite h410 h51 h28 n
+  exact homology_finite_of_X' (C := afterQ') n
+
+theorem afterL_minimal (i j : ℤ) (x : afterL.X i) :
+    (afterL.d i j).hom x ∈
+      IsLocalRing.maximalIdeal Kt • (⊤ : Submodule Kt (afterL.X j)) := by
+  rw [homologyModel_d]
+  exact Submodule.zero_mem _
+
+/-- The reduction modulo `t` of the smaller-support model has the ranks of the residual cone. -/
+theorem afterP_hred (n : ℤ) :
+    Module.finrank Rt (afterP.X n) = Module.finrank (ZMod 2) ((selCx actSel).X n) :=
+  Module.finrank_baseChange
+
+/-- **The homotopy equivalence `L ≃ P'`**, through the generic original-support model `Q'`: the
+cohomology representatives `L → Q'` and the inclusion `P' → Q'`, a quasi-isomorphism because the
+active comparison blocks are acyclic after inverting `t`. -/
+def afterE (h410 : MilneADT_I_4_10_totallyComplex) (h28 : MilneADT_I_2_8) :
+    HomotopyEquiv afterL afterP' := by
+  haveI := afterL_ge h410 h28
+  haveI := afterL_le h410 h28
+  haveI := afterP'_ge h410 h28
+  haveI := afterP'_le h410 h28
+  haveI := homologyModelTo_quasiIso afterQ'
+  haveI := afterIncl_quasiIso
+  exact (homotopyEquiv_of_zigzag afterL afterP' afterQ' 0 3 (homologyModelTo afterQ')
+    (GHom.toCC afterIncl)).some
+
+/-! ### The constructor with the transfer after inverting `t` -/
+
+/-- **`residualRankCounts_afterT` on the active instance.** -/
+def activeAfterTCounts (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8)
+    (h23 : MilneADT_I_2_3_trivial) : ResidualRankCounts := by
+  letI : ∀ n, Module.Finite (ZMod 2) (actSel.G.X n) := actSel_G_finite h410 h51
+  letI : ∀ n, Module.Finite (ZMod 2) (actSel.U.X n) := actSel_U_finite h28
+  letI : ∀ n, Module.Finite (ZMod 2) (actSel.L.X n) := actSel_L_finite h28
+  letI : ∀ n, Module.Free Rt (afterP.X n) := afterP_free
+  letI : ∀ n, Module.Finite Rt (afterP.X n) := afterP_finite h410 h51 h28
+  letI : afterP'.IsStrictlyGE 0 := afterP'_ge h410 h28
+  letI : afterP'.IsStrictlyLE 3 := afterP'_le h410 h28
+  letI : afterL.IsStrictlyGE 0 := afterL_ge h410 h28
+  letI : afterL.IsStrictlyLE 3 := afterL_le h410 h28
+  letI : ∀ n, Module.Finite Kt (afterP'.X n) := afterP'_finite h410 h51 h28
+  letI : ∀ n, Module.Finite Kt (afterL.X n) := afterL_finite h410 h51 h28
+  exact AfterTCopy.residualRankCounts_afterT SmallK smallLocalModels h410 h51 h28 h23
+    (-1) smallAlpha smallAlpha_radicand smallK_complex 66 (by decide) 0 (by simp) 5 (by decide)
+    actD actD_prime actD_odd actCond actCond_derivative actCond_full_torsion
+    smallInfinitePlace smallInfinitePlace_complex SmallS actSel actDegrees
+    (Finset.Subset.refl _) actEG (act_hUm h28) (act_hLm h28) afterP
+    (fun n _ => afterP_hred n) afterP' afterL 0 3 (fun n => ⟨LinearEquiv.refl _ _⟩)
+    afterL_minimal (afterE h410 h28)
+
+theorem activeAfterTCounts_genericRank (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8)
+    (h23 : MilneADT_I_2_3_trivial) :
+    (activeAfterTCounts h410 h51 h28 h23).genericRank =
+      ∑ n ∈ actDegrees, Module.finrank Kt (afterQ'.homology n) := rfl
+
+theorem activeAfterTCounts_rankTot (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8)
+    (h23 : MilneADT_I_2_3_trivial) :
+    (activeAfterTCounts h410 h51 h28 h23).rankTot =
+      ∑ n ∈ actDegrees, Module.finrank (ZMod 2) ((selCx actSel).X n) := rfl
+
+/-- **Non-vacuity of the constructor with the transfer after inverting `t`, on the active
+instance.** -/
+theorem residualRankCounts_afterT_active (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8)
+    (h23 : MilneADT_I_2_3_trivial) :
+    (activeAfterTCounts h410 h51 h28 h23).genericRank ≤
+        (activeAfterTCounts h410 h51 h28 h23).rankTot ∧
+      (activeAfterTCounts h410 h51 h28 h23).genericRank ≤ 294 := by
+  refine ⟨(activeAfterTCounts h410 h51 h28 h23).transfer, ?_⟩
+  have hb := (activeAfterTCounts h410 h51 h28 h23).genericRank_le
+  change (activeAfterTCounts h410 h51 h28 h23).genericRank ≤
+    residualBoundConstant (2 * 66).primeFactors.card 0 actD.card at hb
+  rwa [activeBound] at hb
+
+/-- **The text's active case, after inverting `t`** (tex 4612–4631): at the places above `13` the
+entries `(1+t)^e − 1` of the reduction of (4.4) vanish modulo `t` and are `t` times a unit; the
+active comparison blocks are not acyclic over `𝔽₂[[t]]` but are acyclic over `𝔽₂((t))`; hence the
+generic smaller-support model includes into the generic original-support model (the base change of
+the integral one) by a quasi-isomorphism. -/
+theorem afterT_active_case :
+    Nonempty (NewPlaces SmallK SmallS SmallS') ∧
+      (∀ q, PowerSeries.constantCoeff (activeC (activeExp q)) = 0 ∧
+        ∃ v : Rtˣ, activeC (activeExp q) = PowerSeries.X * (v : Rt)) ∧
+      ¬ activeW.toCC.Acyclic ∧ activeW'.toCC.Acyclic ∧ QuasiIso (GHom.toCC afterIncl) :=
+  ⟨newPlaces_nonempty, fun q => ⟨activeC_constantCoeff _, activeC_eq_X_mul (activeExp_cases q)⟩,
+    activeW_not_acyclic, activeW'_acyclic, afterIncl_quasiIso⟩
+
+end ZInQ.Contrib.RC53Assist.ResidualWitnessActive
+
+/-! ## The generic rank is positive -/
+
+namespace ZInQ.Contrib.RC53Assist.ResidualWitnessActive
+
+open CategoryTheory CategoryTheory.Limits NumberField IsDedekindDomain TensorProduct
+  ZInQ.Contrib.CloudB3RC53.PairedFunctional
+  ZInQ.Contrib.CloudB3RC53.SelmerDuality
+  ZInQ.Contrib.CloudB3RC53.GenuineInst
+  ZInQ.Contrib.CloudB3RC53.RankCounts
+  ZInQ.Contrib.CloudB3RC53.Mattuck
+  ZInQ.Contrib.CloudB3RC53.ResidualTransfer
+  ZInQ.Manuscript.RC.SelmerComplex
+  ZInQ.Manuscript.RC.Limits
+
+/-! ### The generic minimal model is nonzero -/
+
+/-- The rank of a twice base-changed map is at most the rank of the map. -/
+theorem finrank_range_bc_bc_le {V W : Type} [AddCommGroup V] [Module (ZMod 2) V]
+    [AddCommGroup W] [Module (ZMod 2) W] [Module.Finite (ZMod 2) V] [Module.Finite (ZMod 2) W]
+    (f : V →ₗ[ZMod 2] W) :
+    Module.finrank Kt (LinearMap.range ((f.baseChange Rt).baseChange Kt)) ≤
+      Module.finrank (ZMod 2) (LinearMap.range f) := by
+  let g := ((LinearMap.range f).subtype.baseChange Rt).baseChange Kt
+  have hfac : (f.baseChange Rt).baseChange Kt = g ∘ₗ (f.rangeRestrict.baseChange Rt).baseChange Kt := by
+    rw [← LinearMap.baseChange_comp, ← LinearMap.baseChange_comp]
+    rfl
+  have hle : LinearMap.range ((f.baseChange Rt).baseChange Kt) ≤ LinearMap.range g := by
+    rw [hfac]
+    exact LinearMap.range_comp_le_range _ _
+  calc Module.finrank Kt (LinearMap.range ((f.baseChange Rt).baseChange Kt))
+      ≤ Module.finrank Kt (LinearMap.range g) := Submodule.finrank_mono hle
+    _ ≤ Module.finrank Kt (Kt ⊗[Rt] (Rt ⊗[ZMod 2] LinearMap.range f)) :=
+        LinearMap.finrank_range_le g
+    _ = Module.finrank (ZMod 2) (LinearMap.range f) := by
+        rw [Module.finrank_baseChange, Module.finrank_baseChange]
+
+/-- If nothing comes into degree `0`, then `H⁰` contains the kernel of the outgoing differential
+(over any field). -/
+theorem finrank_ker_le_homology_zero' {S : Type} [Field S]
+    (C : CochainComplex (ModuleCat.{0} S) ℤ)
+    [Module.Finite S (C.X 0)] (h : Subsingleton (C.X (-1))) :
+    Module.finrank S (LinearMap.ker (C.d 0 1).hom) ≤ Module.finrank S (C.homology 0) := by
+  have hd : C.d (-1) 0 = 0 := by
+    ext x
+    rw [Subsingleton.elim x 0, map_zero]
+    rfl
+  rw [← (C.isoHomologyπ (-1) 0 (by simp) hd).toLinearEquiv.finrank_eq]
+  have hinjC := (ModuleCat.mono_iff_injective (C.iCycles 0)).1 inferInstance
+  have : Module.Finite S (C.cycles 0) := Module.Finite.of_injective _ hinjC
+  let k : ModuleCat.of S (LinearMap.ker (C.d 0 1).hom) ⟶ C.X 0 :=
+    ModuleCat.ofHom (LinearMap.ker (C.d 0 1).hom).subtype
+  have hk : k ≫ C.d 0 1 = 0 := by
+    ext x
+    exact x.2
+  let l := C.liftCycles k 1 (by simp) hk
+  have hl : Function.Injective l.hom := by
+    intro x y hxy
+    have := congrArg (C.iCycles 0).hom hxy
+    have h1 := congrArg (fun f => f.hom x) (C.liftCycles_i k 1 (by simp) hk)
+    have h2 := congrArg (fun f => f.hom y) (C.liftCycles_i k 1 (by simp) hk)
+    simp only [ModuleCat.hom_comp, LinearMap.comp_apply] at h1 h2
+    exact Subtype.ext (h1.symm.trans (this.trans h2))
+  exact LinearMap.finrank_le_finrank_of_injective hl
+
+/-- The rank of the degree-zero differential of the residual cone is at most `2·#S`. -/
+theorem finrank_range_actP_d_le (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8) :
+    Module.finrank (ZMod 2) (LinearMap.range ((selCx actSel).toCC.d 0 1).hom) ≤
+      2 * Fintype.card (Places SmallK SmallS) := by
+  have hfin := actP_finite h410 h51 h28
+  have := actSel_L_finite h28 (1 - 1)
+  let ψ : (selCx actSel).toCC.X 0 →ₗ[ZMod 2] actSel.L.X (1 - 1) :=
+    ((LinearMap.snd (ZMod 2) _ _).comp (LinearMap.snd (ZMod 2) _ _)).comp
+      ((selCx actSel).toCC.d 0 1).hom
+  have hker : LinearMap.ker ((selCx actSel).toCC.d 0 1).hom = LinearMap.ker ψ := by
+    ext c
+    rw [LinearMap.mem_ker, LinearMap.mem_ker]
+    constructor
+    · intro h
+      change (((selCx actSel).toCC.d 0 1).hom c).2.2 = 0
+      rw [h]
+      rfl
+    · intro h
+      have h' : (((selCx actSel).toCC.d 0 1).hom c).2.2 = 0 := h
+      rw [GCx.toCC_d_hom _ 0 1 rfl] at h' ⊢
+      obtain ⟨a, u, x⟩ := c
+      exact Prod.ext rfl (Prod.ext rfl h')
+  have h1 := LinearMap.finrank_range_add_finrank_ker ((selCx actSel).toCC.d 0 1).hom
+  have h2 := LinearMap.finrank_range_add_finrank_ker ψ
+  have hr : Module.finrank (ZMod 2) (LinearMap.range ψ) ≤ Module.finrank (ZMod 2) (actSel.L.X 0) :=
+    Submodule.finrank_le _
+  rw [finrank_actL_zero h28] at hr
+  rw [hker] at h1
+  omega
+
+/-- **The generic minimal model has at least two-dimensional `H⁰`.** -/
+theorem two_le_afterL_zero (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8) :
+    2 ≤ Module.finrank Kt (afterL.X 0) := by
+  have hfin := actP_finite h410 h51 h28
+  have hP'fin := afterP'_finite h410 h51 h28
+  have := hfin 1
+  have := hfin 0
+  -- `H⁰(Q') ≅ H⁰(P')`
+  have hq : IsIso (HomologicalComplex.homologyMap (GHom.toCC afterIncl) 0) := by
+    have := afterIncl_quasiIso
+    exact (quasiIsoAt_iff_isIso_homologyMap _ _).1 inferInstance
+  change 2 ≤ Module.finrank Kt (afterQ'.homology 0)
+  rw [← (asIso (HomologicalComplex.homologyMap (GHom.toCC afterIncl) 0)).toLinearEquiv.finrank_eq]
+  have hsub : Subsingleton (afterP'.X (-1)) := afterP'_X_subsingleton h410 h28 (-1) (Or.inl (by norm_num))
+  refine le_trans ?_ (finrank_ker_le_homology_zero' afterP' hsub)
+  -- the differential of `P'` is the double base change of that of the residual cone
+  have e1 : ((selCx actSel).toCC.d 0 1).hom = (selCx actSel).d 0 1 rfl :=
+    LinearMap.ext fun x => GCx.toCC_d_hom (selCx actSel) 0 1 rfl x
+  have e2 : (afterP'.d 0 1).hom = afterP'_G.d 0 1 rfl :=
+    LinearMap.ext fun x => GCx.toCC_d_hom afterP'_G 0 1 rfl x
+  have hd : (afterP'.d 0 1).hom =
+      ((((selCx actSel).toCC.d 0 1).hom.baseChange Rt).baseChange Kt) := by
+    rw [e2, e1]
+    rfl
+  have hrn := LinearMap.finrank_range_add_finrank_ker (afterP'.d 0 1).hom
+  have hdim : Module.finrank Kt (afterP'.X 0) = 2 + 2 * Fintype.card (Places SmallK SmallS) := by
+    change Module.finrank Kt (Kt ⊗[Rt] (Rt ⊗[ZMod 2] (selCx actSel).toCC.X 0)) = _
+    rw [Module.finrank_baseChange, Module.finrank_baseChange, finrank_actP_zero h410 h51 h28]
+  have hr : Module.finrank Kt (LinearMap.range (afterP'.d 0 1).hom) ≤
+      Module.finrank (ZMod 2) (LinearMap.range ((selCx actSel).toCC.d 0 1).hom) := by
+    rw [hd]
+    exact finrank_range_bc_bc_le ((selCx actSel).toCC.d 0 1).hom
+  have hr2 := finrank_range_actP_d_le h410 h51 h28
+  rw [hdim] at hrn
+  omega
+
+/-- **The generic rank is positive**: `2 ≤ genericRank ≤ rankTot`, and `genericRank ≤ 294`. -/
+theorem two_le_afterT_genericRank (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8)
+    (h23 : MilneADT_I_2_3_trivial) :
+    2 ≤ (activeAfterTCounts h410 h51 h28 h23).genericRank := by
+  rw [activeAfterTCounts_genericRank]
+  exact (two_le_afterL_zero h410 h51 h28).trans (Finset.single_le_sum
+    (f := fun n => Module.finrank Kt (afterQ'.homology n)) (fun _ _ => Nat.zero_le _)
+    (show (0 : ℤ) ∈ actDegrees by decide))
+
+end ZInQ.Contrib.RC53Assist.ResidualWitnessActive

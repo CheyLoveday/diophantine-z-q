@@ -2,12 +2,19 @@
 
 ## Result
 
-`Witness.lean` applies both RC53 residual-count constructors,
-`ZInQ.Contrib.CloudB3RC53.Mattuck.residualRankCounts_genuine` and
-`ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_actual`, to one instance in which the
+`Witness.lean` applies three RC53 residual-count constructors to one instance in which the
 derivative labels, the old Kummer labels, the local conditions, the support change and the residual
-model carry content (`activeGenuineCounts`, `activeActualCounts`). The instance and the status of
-every input are in `Hypotheses.md`. Summary:
+model carry content:
+
+* `ZInQ.Contrib.CloudB3RC53.Mattuck.residualRankCounts_genuine` (`activeGenuineCounts`) and
+  `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_actual` (`activeActualCounts`), with
+  coefficients `𝔽₂`: `2 ≤ genericRank < rankTot`, `genericRank ≤ 294`;
+* `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_afterT` (`activeAfterTCounts`, through a
+  verbatim copy), the transfer after inverting `t`: `2 ≤ genericRank ≤ rankTot`,
+  `genericRank ≤ 294`, with the active comparison blocks at the places above `13` non-acyclic over
+  `𝔽₂[[t]]` and acyclic over `𝔽₂((t))`.
+
+The instance and the status of every input are in `Hypotheses.md`. Summary:
 
 * `K = ℚ(i)`, `E₁₁ : y² = x(x − 11)(x + 33)`, `N = 66`, moving prime `5`, derivative prime `7`,
   active prime `13`; `S` = places above `{2, 3, 5, 7, 11}`, `S'` adds the places above `13`;
@@ -20,51 +27,64 @@ every input are in `Hypotheses.md`. Summary:
   quasi-isomorphism (`formalMap_quasiIso`, valid for arbitrary local conditions over a field).
 * `hcondD` and `hfull` are used with realized premises; `hUm` holds with equality, its left side is
   at least `2`, and the old Kummer rows have exactly Mattuck's dimension with nonzero `H¹`; `hLm`
-  has left side at least `2`; the support change has new places; the change of condition has a
-  nonzero acyclic quotient; the minimal model is reached through the genuine support change and the
-  change of condition.
-* Both constructors give `2 ≤ genericRank < rankTot` and `genericRank ≤ 294`
-  (`56·3 + 8·0 + 56·1 + 70`).
-* Not available: the text's change from the unramified to the full condition at an active place has
-  a non-acyclic quotient over `𝔽₂` (proved: `active_full_change_not_acyclic`); its acyclicity in the
-  text needs the inversion of `t`. The witness uses the contractible thickening instead.
+  has left side at least `2`.
+* Over `𝔽₂` the text's change from the unramified to the full condition at an active place has a
+  non-acyclic quotient (`active_full_change_not_acyclic`); the first two constructors are applied
+  with a contractible thickening instead. The text's case is the third constructor: the free model
+  over `𝔽₂[[t]]`, the active blocks `[𝔽₂[[t]]² --((1+t)^e − 1)--> 𝔽₂[[t]]²]` above `13`, and the
+  homotopy equivalence of the generic minimal model with the base change of the free model, obtained
+  through the generic original-support model (`afterT_active_case`, `afterE`).
+* Model-level parts (see `Hypotheses.md`): the `𝔽₂[[t]]` smaller-support model is the constant
+  extension of the residual cone, the active blocks are the text's reduction of (4.4) rather than
+  Galois cochains with `𝔽₂[[t]]` coefficients, and the integral original-support model is a split
+  extension.
 
 ## Verification performed
 
 * Base revision `6ea158a404343c90a445c129cd0d1f3a0d4b8ddc` (detached worktree; the consumers'
   modules were already compiled). No existing file was edited and no prerequisite module was
-  built. The only repository operations were one read-only query of the current revision and of
-  the working-tree status at the start; nothing was committed, checked out or changed. Nobody was
-  contacted.
+  built. Repository operations: at the start, one read-only query of the current revision and of
+  the working-tree status of the worktree; later, as instructed, a fetch of the branch that adds
+  `GenuineInst/ResidualAfterT.lean` (revision `40dafaff0c0cb5339234e30ee5cb214d334fa7b3`) into a
+  remote-tracking ref of the integration checkout, a read of that file, and read-only comparisons
+  of that revision with the base. Nothing was committed, checked out or changed in a working tree.
+  Nobody was contacted.
 * `Witness.lean` was compiled as a single file with the repository's environment, six Lean worker
-  threads, CPU affinity 64–79 and niceness 10: exit status 0, no errors and no warnings, about 65
+  threads, CPU affinity 64–79 and niceness 10: exit status 0, no errors and no warnings, about 75
   seconds.
-* Options: `maxHeartbeats 400000` (the only heartbeat setting) and
-  `backward.isDefEq.respectTransparency false` (as in the earlier residual witness), the latter
-  after the copied Kummer section.
+* Options: `maxHeartbeats 400000` and `backward.isDefEq.respectTransparency false` (as in the
+  earlier residual witness), the latter after the copied Kummer section. The copied
+  `ResidualAfterT` section is compiled with the default options (`maxHeartbeats 200000`,
+  `respectTransparency true`), set inside its own section.
 * Source guard: no `sorry`, `admit`, `axiom`, `native_decide`, `implemented_by`, notation, macro,
   syntax, `#eval`, `run_cmd`, `#check` or `#print` in `Witness.lean`. Finite facts are proved by
   `decide` and `norm_num`. No new proposition is assumed: the printed inputs are the existing
   explicit hypotheses. The only new `Prop`-valued definition is the abbreviation `Good C`
   ("finite cohomology vanishing outside degrees `0, 1, 2`"), proved for every complex it is applied
-  to; `ModelMap` is a structure of data.
+  to; `ModelMap` and `CHomotopy` are structures of data.
 * Public text guard: no internal tool, platform or session names and no filesystem paths in the
   shipped files.
-* Axiom audit: a separate copy of `Witness.lean` followed by `#print axioms` for each of its 367
-  named declarations (all public theorems, definitions, abbreviations and named instances,
-  including the copied Kummer section). Every report is a subset of
-  `[propext, Classical.choice, Quot.sound]`; 359 use exactly these three. `Axioms.txt` is the
-  complete list. The audit copy is not shipped.
-* The section `LocalKummer` is a verbatim copy of the declarations of the module
-  `ZInQKernel.Contrib.OneProof.RC.CoefModules.Kummer` (source file 60382 bytes, SHA-256
-  `e16fd9b3aa8c3156a16d41f90ac8f92e40f8656edf206e127b5ad45196003cb3`), whose compiled form is not part
-  of the build; only the namespace is changed. Its other dependencies are compiled modules.
+* Axiom audit: a separate copy of `Witness.lean` followed by `#print axioms` for each of its 452
+  named theorems, definitions, abbreviations and named instances (including both copied sections).
+  Every report is a subset of `[propext, Classical.choice, Quot.sound]`; 436 use exactly these
+  three. `Axioms.txt` is the complete list. The audit copy is not shipped.
+* Copied sections, each a verbatim copy of the declarations of a module whose compiled form is not
+  part of this build, with only the namespace changed:
+  * `LocalKummer`: `ZInQKernel.Contrib.OneProof.RC.CoefModules.Kummer` (60382 bytes, SHA-256
+    `e16fd9b3aa8c3156a16d41f90ac8f92e40f8656edf206e127b5ad45196003cb3`);
+  * `AfterTCopy`: `ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ResidualAfterT` at revision
+    `40dafaff0c0cb5339234e30ee5cb214d334fa7b3` (11165 bytes, SHA-256
+    `1c74454da1aea7339c515d2a4632f9cde3e61821d408d33f0d41f9cc017d8077`). Its only import,
+    `Mattuck/ResidualGenuine.lean`, and that file's direct dependencies are byte-identical between
+    the base and that revision. Compiling against the module itself needs a worktree at that
+    revision.
 
 ## Main statements
 
 Namespace `ZInQ.Contrib.RC53Assist.ResidualWitnessActive`. In the first group `k` is a field and
 `GS, Gv, loc, M, Δ` are arbitrary Galois-type data (as in the repository's `selData`); `v` is a
-finite place of `ℚ(i)`. Each statement below has axioms `[propext, Classical.choice, Quot.sound]`.
+finite place of `ℚ(i)`; `R → A` is an algebra and `S` a commutative ring; `Rt = 𝔽₂[[t]]`,
+`Kt = 𝔽₂((t))`. Each statement below has axioms `[propext, Classical.choice, Quot.sound]`.
 
 ```lean
 theorem homologyModelTo_quasiIso (C : CochainComplex (ModuleCat.{0} k) ℤ) :
@@ -223,6 +243,65 @@ theorem active_full_change_not_acyclic (h28 : MilneADT_I_2_8) (h23 : MilneADT_I_
     (hsurj : ∀ i, Function.Surjective (g.f i i rfl))
     (hex : ∀ i u, g.f i i rfl u = 0 → ∃ u', f.f i i rfl u' = u) :
     ¬ W.toCC.Acyclic
+
+theorem bcG_acyclic_of_homotopy {C : GCx R} {c : R} (H : CHomotopy C c)
+    (hc : IsUnit (algebraMap R A c)) : GAcyclic (bcG A C)
+
+theorem activeCone_acyclic_of_isUnit {c : S} (hc : IsUnit c) :
+    GAcyclic (activeCone S c)
+
+theorem activeCone_not_acyclic {c : S} (hc : ¬ IsUnit c) : ¬ GAcyclic (activeCone S c)
+
+theorem activeC_constantCoeff (e : ℤ) : PowerSeries.constantCoeff (activeC e) = 0
+
+theorem activeC_not_isUnit (e : ℤ) : ¬ IsUnit (activeC e)
+
+theorem activeC_eq_X_mul {e : ℤ} (he : e = 1 ∨ e = -1) :
+    ∃ v : Rtˣ, activeC e = PowerSeries.X * (v : Rt)
+
+theorem activeC_isUnit_generic {e : ℤ} (he : e = 1 ∨ e = -1) :
+    IsUnit (algebraMap Rt Kt (activeC e))
+
+theorem activeW_not_acyclic : ¬ activeW.toCC.Acyclic
+
+theorem activeW'_acyclic : activeW'.toCC.Acyclic
+
+theorem afterSES_shortExact : afterSES.ShortExact
+
+theorem afterIncl_quasiIso : QuasiIso (GHom.toCC afterIncl)
+
+theorem afterP_hred (n : ℤ) :
+    Module.finrank Rt (afterP.X n) = Module.finrank (ZMod 2) ((selCx actSel).X n)
+
+theorem afterT_active_case :
+    Nonempty (NewPlaces SmallK SmallS SmallS') ∧
+      (∀ q, PowerSeries.constantCoeff (activeC (activeExp q)) = 0 ∧
+        ∃ v : Rtˣ, activeC (activeExp q) = PowerSeries.X * (v : Rt)) ∧
+      ¬ activeW.toCC.Acyclic ∧ activeW'.toCC.Acyclic ∧ QuasiIso (GHom.toCC afterIncl)
+
+theorem activeAfterTCounts_genericRank (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8)
+    (h23 : MilneADT_I_2_3_trivial) :
+    (activeAfterTCounts h410 h51 h28 h23).genericRank =
+      ∑ n ∈ actDegrees, Module.finrank Kt (afterQ'.homology n)
+
+theorem activeAfterTCounts_rankTot (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8)
+    (h23 : MilneADT_I_2_3_trivial) :
+    (activeAfterTCounts h410 h51 h28 h23).rankTot =
+      ∑ n ∈ actDegrees, Module.finrank (ZMod 2) ((selCx actSel).X n)
+
+theorem residualRankCounts_afterT_active (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8)
+    (h23 : MilneADT_I_2_3_trivial) :
+    (activeAfterTCounts h410 h51 h28 h23).genericRank ≤
+        (activeAfterTCounts h410 h51 h28 h23).rankTot ∧
+      (activeAfterTCounts h410 h51 h28 h23).genericRank ≤ 294
+
+theorem two_le_afterT_genericRank (h410 : MilneADT_I_4_10_totallyComplex)
+    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8)
+    (h23 : MilneADT_I_2_3_trivial) :
+    2 ≤ (activeAfterTCounts h410 h51 h28 h23).genericRank
 ```
 
 ## The target declarations
@@ -231,9 +310,11 @@ theorem active_full_change_not_acyclic (h28 : MilneADT_I_2_8) (h23 : MilneADT_I_
   `41da1457b6701d6a8b150223a7e9afe23bc4f838d50f3fea01027345477d33dd`)
 * `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_actual` (source 16216 bytes, SHA-256
   `e40818f9ec3bb06b69a37af56e9c71eaa23fb0764dd5e12b2660ddc7b3e9a657`)
+* `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_afterT` (source 11165 bytes, SHA-256
+  `1c74454da1aea7339c515d2a4632f9cde3e61821d408d33f0d41f9cc017d8077`, revision `40dafaff`)
 
 ## File identities
 
-* `Witness.lean`: 204147 bytes; SHA-256 `0c36b8b49ccc1a6318dd2648d7c8565df497d6120252c954706aa7594228a18e`.
-* `Hypotheses.md`: 9546 bytes; SHA-256 `7ee43b7f56a2888275739727f19aa700bd4272f89006cd6311b39c586a80d305`.
-* `Axioms.txt`: 38469 bytes; SHA-256 `a4d2192bd5dbcc540c18570d0d91d0a1b60b459503c58bd6e12309f1ac228bb1`.
+* `Witness.lean`: 251621 bytes; SHA-256 `d2c18bd8744e5a32fbe8d7e41dd69eae59583ecab49f771ee45b60b55ec47ebf`.
+* `Hypotheses.md`: 12517 bytes; SHA-256 `f0edf2bec3f6f7e9496346cd5189923f40519ef680673c250ea0317fa0928835`.
+* `Axioms.txt`: 46302 bytes; SHA-256 `20c1c0d231b0108f419d2973a48b5eaaac0986576c9733f73fe02cc30bd22d19`.
