@@ -19,7 +19,7 @@ constant on the cosets of `ker(urRes)`.
   `genuine_finIso_of_ur` with the vanishing of `H²(Gal(K_q^ur/K_q), T)` as an explicit input
   instead of `[Finite T]`.
 
-Scope: none of this reaches the characteristic-zero switching fibres (`reviews/UrTie.md`). Their
+Scope: none of this reaches the characteristic-zero switching fibres. Their
 `𝔭`-adic coefficient modules are neither finite nor discrete. Over a field of characteristic zero
 there is no nonzero finite module, and no nonzero discrete torsion module.
 

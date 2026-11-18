@@ -25,9 +25,10 @@ finite plane to the unramified classes. That tie, through `ShapeUrTie.lean` and
 
 **Scope (residual case only).** All three theorems assume a finite target module `T`, which is
 how `localSumPair_urAt` obtains `H²(Gal(K_q^ur/K_q), T) = 0`. Over a field of characteristic zero
-a finite module is zero, so these theorems do not apply at the characteristic-zero fibres; the
-earlier characteristic-zero claim is withdrawn (`reviews/UrTie.md`, finding 5). Two further facts
-bear on this:
+a finite module is zero (a nonzero `t` would give an injection `a ↦ a • t` of the infinite field
+into `T`), so these hypotheses force `T = 0`. The theorems therefore say nothing at the
+characteristic-zero fibres, and no characteristic-zero claim is made. Two further facts bear on
+this:
 * at a single derivative prime with characteristic-zero coefficients the singular part vanishes
   (`q = ℓ² ≠ 1`), and the `2 + 2` switch shape exists only in the inner limit `ℓᵢ → −1`
   (tex L5033–5035);
@@ -181,9 +182,9 @@ theorem derivSwitch_switchCoordinates_char2 (h2 : (2 : k) = 0)
 (`PROVED` from the inputs; a coefficient field with `2 ≠ 0` and a finite target module `T`, i.e.
 the residual case). Scope: the section assumes `[Finite T]`, which is needed for the vanishing
 of `H²(Gal(K_q^ur/K_q), T)` in `localSumPair_urAt`. Over a field of characteristic zero a finite
-module is zero, so this theorem says nothing at the characteristic-zero fibres; that claim is
-withdrawn (`reviews/UrTie.md`, finding 5). See also `genuine_finIso_of_ur_cd`, which takes the `H²`
-vanishing as an input. Inputs:
+module is zero, so these hypotheses force `T = 0` there, and this theorem makes no
+characteristic-zero claim. See also `genuine_finIso_of_ur_cd`, which takes the `H²` vanishing as
+an input. Inputs:
 * a `c`-symmetric equivariant self-pairing with `c² = 1` (`σ = −c`);
 * isotropy data;
 * strict complexes vanishing in degree two;
