@@ -171,3 +171,8 @@ Mathlib v4.35.0. The axiom checks for the 30 new theorems report only
 `IsDiamond` statement is proved unconditionally under the fixed
 model and Jacobian hypotheses. The prime trace reduction is
 conditional, so there is no discharge output for the open row.
+
+The serial offline build
+`lake --offline --no-cache build +ZInQKernel.Contrib.OneProof.BShStandard`
+built all four new modules and exited successfully. Its output
+independently confirmed all 30 axiom scans.

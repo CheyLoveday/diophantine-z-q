@@ -13,3 +13,5 @@
 - `exists_diamonds`: exact `IsDiamond` at every unit under the fixed model hypotheses.
 - `exists_hecke_of_trace`: `IsPrimeTrace` yields `IsHeckeT`. `bShStandardModel_of_primeTraces`: supplying the trace morphisms for all primes and models gives the unchanged row.
 - Open: marked cyclic quotient comparison over the generic field, then specialization of the resulting prime traces. No discharge for `bShStandardModel`.
+- `lake --offline --no-cache build +ZInQKernel.Contrib.OneProof.BShStandard`: success; built `BShStandardWeber`, `BShStandardGeometry`, `BShStandardField`, `BShStandard`.
+- Build axiom scan: 30 results, each exactly `propext`, `Classical.choice`, `Quot.sound`.
