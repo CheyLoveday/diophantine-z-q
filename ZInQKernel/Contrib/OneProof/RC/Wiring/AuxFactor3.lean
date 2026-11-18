@@ -16,20 +16,23 @@ prepared types) proves `AuxFactor W A₀`. They are, with tex lines and kinds:
 2. the type conductor is supported on the fixed support `S` (definition; tex 2016–2020: types are
    read by characters at the fixed support, which contains two);
 3. one even source `A τ` for every total type `τ` (finitely many: `𝓛` is finite; tex
-   10131–10132), with
+   10131–10132; only negative parameters use it, so `A τ` is the sign-`−1` source of type `τ`), with
    * the coefficient rules (ELLIOT; Lemma `ex:sec7-coefficient-rules`, tex 2102–2136, realized in
      App F, Proposition `ex:app-coefficient-rules`, tex 9447–9976);
    * zero off its filter (definition; Definition `ex:sec7-symbol`, tex 2068–2079);
-   * at every **prepared** total type (`PreparedType`: the total type of a negative squarefree
-     `d ≡ 1 (mod 8)` prime to the support with `L(E^{(d)},1) ≠ 0`, the types of the companions
-     `hk'` actually produced, tex 10096–10098, 10131–10132), a unit seed (ELLIOT; tex 10131–10132:
-     "Prepare these sources and nonempty seeds for every total type at the fixed support"). Prepared
-     types are negative (`ε τ = 1`, `preparedType_eps`), so their unit seeds are nonempty (tex
-     10089–10091);
+   * at every **prepared** total type (`PreparedType`: the total types of negative squarefree
+     `d ≡ 1 (mod 8)` prime to the support with `L(E^{(d)},1) ≠ 0`; they include every type that
+     actually occurs, tex 10139, since `L_*(hk') ≠ 0`), a unit seed (ELLIOT: `|d|` is a reference
+     with `L_*(σD₀) ≠ 0` for the source of its type, whose `v₂a(D) − ω(D)` has an attained minimum,
+     App E 7793–7808, App G 10083–10087). DEPARTURE (a needed narrowing): the text prepares seeds
+     "for every total type" (tex 2360–2361, 10131–10132); at a negative type of root number `−1`,
+     `L_*` vanishes on the filter and there is no source or unit. Prepared types are nonzero
+     (`total_ne_zero_of_neg`: `ε τ = 1`), so their unit seeds are nonempty (tex 10096–10098);
 4. the meaning of `W.Partitionable` on the filter (definition; Definition `ex:sec7-seed-partition`,
    tex 2181–2185, 2296–2297, read through the dictionary, tex 2031–2044): a negative squarefree `d`
    prime to the support whose typed graph of primes is a partitionable list for the source of its
-   total type is partitionable. Only this direction is required.
+   total type is partitionable. Only this direction (a forward implication) is required; the leaves
+   bound `W.Partitionable` only from below.
 
 `auxFactor_of_inputs : SupportSpec W → AuxFactorInputs W → ∃ A₀, AuxFactor W A₀` (PROVED) is the
 dictionary argument with dummies only for the prepared types: one dummy for each anchor of a minimum
@@ -41,8 +44,8 @@ squarefree, `≡ 1 (mod 8)`, prime to the support; tex 2344–2346, 10059–1006
 companion with `L(E^{(h·au)},1) ≠ 0`. `SupportSpec W` comes from the data specification
 (`preFields_of_dataSpec`); of it only "the support consists of primes" and `2 ∈ S` are used.
 
-The restrictions to the filter (clause 4, the negative squarefree `d` prime to the support; the
-prepared `h`; the prepared types) are the text's: the earlier form, which read only the prime set of
+The restrictions to the filter (clause 5 of `AuxFactorInputs`, the negative squarefree `d` prime to
+the support; the prepared `h`; the prepared types) are the text's: the earlier form, which read only the prime set of
 `|d|` and quantified over every `h > 0` and every total type, forced `Partitionable` at `d³`, `q²d`
 and `−d` and asked for unit seeds at types of root number `−1`, and was inconsistent with the cube
 clause of the even upper bound.
@@ -56,7 +59,8 @@ open ZInQ.Manuscript ZInQ.Contrib.CloudB3RC53
 
 /-- **A prepared total type** (tex 10096–10098, 10131–10132): the total type (for the dictionary's
 type data `T`) of the typed graph of the primes of a negative squarefree `d ≡ 1 (mod 8)` prime to
-the support with `L(E^{(d)},1) ≠ 0`, i.e. the type of a companion `hk'` actually produced. -/
+the support with `L(E^{(d)},1) ≠ 0`, including the types of the companions `hk'` actually produced
+(tex 10139). -/
 def PreparedType {ℓ : ℕ} (W : WData ℓ) {L : Type} [AddCommGroup L] {ε : L →+ ZMod 2}
     (T : CoefficientDictionary.TypeData L ε) (τ : L) : Prop :=
   ∃ d : ℤ, d < 0 ∧ d % 8 = 1 ∧ Squarefree d ∧ (∀ p ∈ W.S, ¬ (p : ℤ) ∣ d) ∧
@@ -74,11 +78,14 @@ CoefficientDictionary), and one even source `A τ` for each total type `τ`, suc
    2102–2136, realized in App F, tex 9447–9976; owner RC2 with batch 3 CoefficientDictionary);
 3. each `A τ` is zero off its filter `τ` (definition; tex 2068–2079; owner RC2);
 4. each prepared total type `τ` has a unit seed for `A τ` (ELLIOT; tex 10131–10132; nonemptiness
-   is automatic for these negative types, tex 10089–10098; owner RC2 / batch 3 AuxFactor);
+   is automatic for these negative types, tex 10096–10098; owner RC2 / batch 3 AuxFactor).
+   DEPARTURE: the text asks for seeds at every total type (tex 2360–2361, 10131–10132), which is
+   false at negative types of root number `−1` (no unit there); the clause asks only at the
+   prepared types, which include every type that occurs (tex 10139);
 5. a negative squarefree `d` prime to the support whose typed graph of primes is a partitionable
    list for the source of its total type satisfies `W.Partitionable d` (definition; Definition
    `ex:sec7-seed-partition`, tex 2181–2185, 2296–2297, with the dictionary, tex 2031–2044; a
-   requirement on the construction of `W`, owner RC0). -/
+   requirement on the construction of `W`, owner RC0; a forward implication only). -/
 def AuxFactorInputs {ℓ : ℕ} (W : WData ℓ) : Prop :=
   ∃ (L : Type) (_ : AddCommGroup L) (_ : Fintype L) (ε : L →+ ZMod 2)
     (T : CoefficientDictionary.TypeData L ε) (A : L → Symbols.Config L → ZMod 2),
@@ -160,8 +167,8 @@ theorem total_ne_zero_of_neg {L : Type} [AddCommGroup L] {ε : L →+ ZMod 2}
 open ZInQ.Manuscript.RC.Symbols ZInQ.Contrib.CloudB3RC53.CoefficientDictionary
   ZInQ.Contrib.CloudB3RC53.AuxFactor Finset in
 /-- **`AuxFactor` from the dictionary, with dummies only for the prepared types** (tex
-10089–10098, 10131–10139; the argument of batch 3's `auxFactor_of_dictionary` restricted to the
-types of the companions actually produced). PROVED. -/
+10096–10105, 10131–10139; batch 3's dictionary argument, restricted to the prepared types, which
+include those of the companions actually produced). PROVED. -/
 theorem auxFactor_of_prepared {ℓ : ℕ} (W : WData ℓ) (hS : ∀ p ∈ W.S, p.Prime) (hS2 : 2 ∈ W.S)
     {L : Type} [AddCommGroup L] [Fintype L] {ε : L →+ ZMod 2} (T : TypeData L ε)
     (hmS : ∀ p : ℕ, p.Prime → p ∣ T.m → p ∈ W.S)
@@ -325,8 +332,10 @@ theorem coefficientRules_zero {L : Type} [AddCommGroup L] (ε : L →+ ZMod 2) :
 /-- **Every clause but the prepared seeds is satisfiable** (PROVED): for every `W` with
 `SupportSpec W`, batch 3's sign type data (`𝓛 = ZMod 2`, conductor `4`) and the zero symbol
 satisfy clauses 1, 2, 3 and 5 of `AuxFactorInputs` (clause 5 vacuously: no list is partitionable
-for the zero symbol). The seed clause 4 fails for the zero symbol, which has no unit; it carries,
-with its coupling to `W.Partitionable` through clause 5, the content of the leaf. -/
+for the zero symbol). The seed clause 4 fails for the zero symbol, which has no unit, as soon as a
+prepared type exists (with the prints one does: a negative companion with nonvanishing central
+value, prime to the support); it carries, with its coupling to `W.Partitionable` through clause 5,
+the content of the leaf. -/
 theorem auxFactorInputs_clauses_but_seeds {ℓ : ℕ} (W : WData ℓ) (hS : SupportSpec W) :
     (∀ p : ℕ, p.Prime → p ∣ CoefficientDictionary.signTypeData.m → p ∈ W.S) ∧
     (∀ _τ : ZMod 2, Symbols.CoefficientRules (AddMonoidHom.id (ZMod 2))

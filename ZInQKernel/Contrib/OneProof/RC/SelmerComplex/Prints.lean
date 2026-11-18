@@ -43,8 +43,7 @@ a perfect `G_{K,S}`-equivariant pairing `β : M × M' → T` with `T ≅ R(1)` (
 Traces are quantified over all traces inducing an isomorphism on `H³_c` (resp. `H²` locally):
 Nekovář's `r_S` is one of them, and any two differ, up to homotopy, by a unit of `R`
 (Hom from a complex with `H^{>3} = 0` to the injective `R[−3]` is `Hom(H³, R)`), which does not
-change quasi-isomorphy. Locators are those of the printed edition (read through the Numdam scan;
-see the lane report for the reading notes).
+change quasi-isomorphy. Locators are those of the printed edition (read through the Numdam scan).
 -/
 
 noncomputable section

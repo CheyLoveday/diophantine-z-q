@@ -23,6 +23,14 @@ also defines `λ_θ(D) = lamOf`, tex 2512–2530, 9112–9113):
 PROVED from it: `visibilityInputs_of_oddInstance` (RC23's `visibilityInputs_of_models`; admissible
 parameters are prepared by the data specification and the instance) and
 `witnessLeaf_of_oddInstance` (RC23's `witnessLeaf_of_models`).
+
+Conclusion-shaped part: the point side is genuine (`λ = lamOf`, the stage map of `L` times the
+genuine genus point, with the same selection as (3.4)), but the theta side `T` and the comparison
+argument `hcore` exist for every integer `λ` and every `a_θ ≡ c₀ λ (mod 2^{M_θ})` on the admissible
+set (lane RV2's review probes `free_theta`, `oddInstance_of_congruence`), so together they are (O.7)
+itself, an ELLIOT leaf; `a_θ` is pinned only modulo `2^{M_θ}` on the admissible set. NOTE: `hO2`
+needs `D_w` admissible in the final data's filter, so `k` must avoid the primes of `D_w` (the text,
+tex 2596–2598, does not say so explicitly).
 -/
 
 noncomputable section

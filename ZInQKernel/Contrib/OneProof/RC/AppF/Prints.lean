@@ -6,8 +6,8 @@ import Mathlib
 Manuscript (11/5), Appendix F, proof of Proposition `ex:app-theta-form`: "By [Voight, Main Theorem
 14.6.1], there is a quaternion algebra `B/ℚ` ramified exactly at `ℓ₀` and infinity."
 
-The printed theorem (Voight, *Quaternion algebras*, Main Theorem 14.6.1 — locator UNVERIFIED, no
-network) says that for a global field, a finite set of noncomplex places of even cardinality is
+The printed theorem (Voight, *Quaternion algebras*, Main Theorem 14.6.1 — locator UNVERIFIED)
+says that for a global field, a finite set of noncomplex places of even cardinality is
 the ramification set of a quaternion algebra, unique up to isomorphism. Elliot uses the instance
 `Σ = {ℓ₀, ∞}` over `ℚ`, and this leaf states exactly that instance. Ramification of
 `B = (a, b)_ℚ` at a place `v` is expressed as anisotropy over `ℚ_v` of the reduced norm form

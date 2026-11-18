@@ -67,10 +67,9 @@ theorem cont_of_rootNumberExists (hRN : Nonvanishing.FromRC8.RootNumberExists)
   `φ_κ(τ) ∈ E(H_c)` by Shimura reciprocity; tex 2411–2416);
 * `hprep`, `hjg`, `hjr`, `hcomp`: the interface data are GenusOdd's objects (definition). The text
   gives `j_gen`, `j_rc` and the companion relation only at prepared simple zeros and their
-  companions, while `hjg`, `hjr` are equalities of total functions and `hcomp` is quantified over
-  every `h`: a discharge chooses compatible values elsewhere (the selections `none`); at `h = 0`,
-  `hcomp` forces `¬ W.Partitionable 0` (`CentralNonzero (Etw ℓ 0)` holds for the junk curve
-  `y² = x³`);
+  companions, while `hjg`, `hjr` are equalities of total functions: a discharge chooses compatible
+  values elsewhere (the selections `none`). `hcomp` is asked only at prepared `h`, the scope of the
+  text's companions (tex 2404–2410), so it says nothing at `h = 0`;
 * `hk0`, `hksq`, `hk4`, `hk2N`, `hkcop`: the final `k` (definition: a choice of the data in both
   branches; the text's `k` of tex 2596–2598 has these properties in Branch 2). -/
 structure GenusOddInstance {ℓ : ℕ} (W : WData ℓ) : Type 1 where
@@ -104,8 +103,8 @@ structure GenusOddInstance {ℓ : ℕ} (W : WData ℓ) : Type 1 where
   hjg : W.jgen = jgenOf (Ecurve ℓ) f Lat κ W.hstar selG
   /-- `j_rc` is read off the ring-class selections, for the same parametrization `φ_κ` -/
   hjr : W.jrc = jrcOf (Ecurve ℓ) f Lat κ selR
-  /-- a rough companion is a companion in GenusOdd's sense -/
-  hcomp : ∀ h k', W.IsRoughCompanion h k' → Companion (Ecurve ℓ) Lat W.hstar h k'
+  /-- a rough companion of a prepared `h` is a companion in GenusOdd's sense -/
+  hcomp : ∀ h k', W.prepared h → W.IsRoughCompanion h k' → Companion (Ecurve ℓ) Lat W.hstar h k'
   /-- the final `k`: negative, squarefree, `≡ 1 (mod 4)`, a unit square at `2N`, prime to `h_*` -/
   hk0 : W.kfin < 0
   hksq : Squarefree W.kfin
@@ -143,7 +142,7 @@ theorem gz34Target_of_genusOdd {ℓ : ℕ} {W : WData ℓ} (P : Prints) (hArtin 
   have hall := gzEveryCompanion_of_scaled_artin P hArtin (E := Ecurve ℓ) rfl rfl I.hf
     I.hLat I.hNC I.hκ I.hgp ⟨q, hq⟩ I.selG I.selR I.hselG I.hselR hsc
   refine ⟨0, fun h k' hp hz hk => ?_, fun h hp hz hLk hq => ?_⟩
-  · obtain ⟨ε, hε, heq⟩ := hall h k' (I.hprep h hp) hz (I.hcomp h k' hk)
+  · obtain ⟨ε, hε, heq⟩ := hall h k' (I.hprep h hp) hz (I.hcomp h k' hp hk)
     refine ⟨ε, hε, ?_⟩
     rw [I.hjg, I.hjr]
     exact heq
