@@ -25,11 +25,9 @@ open NumberField IsDedekindDomain
 namespace ZInQ.Contrib.CloudB3RC53.RankCounts.KummerS
 variable {K : Type} [Field K] [CharZero K]
 
-local notation "Ω" => AlgebraicClosure K
-local notation "GK" => (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K)
 
 omit [CharZero K] in
-theorem smul_sq_root {x : Ω} (hx : ∃ a : K, x ^ 2 = algebraMap K Ω a) (σ : GK) :
+theorem smul_sq_root {x : (AlgebraicClosure K)} (hx : ∃ a : K, x ^ 2 = algebraMap K (AlgebraicClosure K) a) (σ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K)) :
     σ x = x ∨ σ x = -x := by
   obtain ⟨a, ha⟩ := hx
   have h : (σ x) ^ 2 = x ^ 2 := by rw [← map_pow, ha, AlgEquiv.commutes]
@@ -38,19 +36,19 @@ theorem smul_sq_root {x : Ω} (hx : ∃ a : K, x ^ 2 = algebraMap K Ω a) (σ : 
   · left; exact sub_eq_zero.mp h1
   · right; exact eq_neg_of_add_eq_zero_left h1
 
-theorem neg_ne_self {x : Ω} (hx : x ≠ 0) : -x ≠ x := by
+theorem neg_ne_self {x : (AlgebraicClosure K)} (hx : x ≠ 0) : -x ≠ x := by
   intro h
-  have : (2 : Ω) * x = 0 := by rw [two_mul]; nth_rewrite 1 [← h]; ring
+  have : (2 : (AlgebraicClosure K)) * x = 0 := by rw [two_mul]; nth_rewrite 1 [← h]; ring
   rcases mul_eq_zero.mp this with h2 | h2
   · exact two_ne_zero h2
   · exact hx h2
 
 open Classical in
 /-- The Kummer character `σ ↦ σ(x)/x ∈ {±1}`, with values in `𝔽₂` written multiplicatively. -/
-def kcharFun (x : Ω) (σ : GK) : Multiplicative (ZMod 2) :=
+def kcharFun (x : (AlgebraicClosure K)) (σ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K)) : Multiplicative (ZMod 2) :=
   if σ x = x then 1 else Multiplicative.ofAdd 1
 
-theorem kcharFun_mul {x : Ω} (hx0 : x ≠ 0) (hx : ∃ a : K, x ^ 2 = algebraMap K Ω a) (σ τ : GK) :
+theorem kcharFun_mul {x : (AlgebraicClosure K)} (hx0 : x ≠ 0) (hx : ∃ a : K, x ^ 2 = algebraMap K (AlgebraicClosure K) a) (σ τ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K)) :
     kcharFun x (σ * τ) = kcharFun x σ * kcharFun x τ := by
   have hneg := neg_ne_self hx0
   rcases smul_sq_root hx τ with hτ | hτ <;> rcases smul_sq_root hx σ with hσ | hσ <;>
@@ -59,30 +57,30 @@ theorem kcharFun_mul {x : Ω} (hx0 : x ≠ 0) (hx : ∃ a : K, x ^ 2 = algebraMa
   all_goals decide
 
 /-- The Kummer character as a continuous homomorphism. -/
-def kchar (x : Ω) (hx0 : x ≠ 0) (hx : ∃ a : K, x ^ 2 = algebraMap K Ω a) :
-    GK →ₜ* Multiplicative (ZMod 2) where
+def kchar (x : (AlgebraicClosure K)) (hx0 : x ≠ 0) (hx : ∃ a : K, x ^ 2 = algebraMap K (AlgebraicClosure K) a) :
+    (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) →ₜ* Multiplicative (ZMod 2) where
   toFun := kcharFun x
   map_one' := by simp [kcharFun]
   map_mul' := kcharFun_mul hx0 hx
   continuous_toFun := by
-    let f : GK →* Multiplicative (ZMod 2) := ⟨⟨kcharFun x, by simp [kcharFun]⟩, kcharFun_mul hx0 hx⟩
+    let f : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) →* Multiplicative (ZMod 2) := ⟨⟨kcharFun x, by simp [kcharFun]⟩, kcharFun_mul hx0 hx⟩
     change Continuous f
     apply continuous_of_continuousAt_one
     have hfd : FiniteDimensional K (IntermediateField.adjoin K {x}) :=
       IntermediateField.adjoin.finiteDimensional (Algebra.IsIntegral.isIntegral x)
-    have hU : IsOpen (((IntermediateField.adjoin K {x})).fixingSubgroup : Set GK) := IntermediateField.fixingSubgroup_isOpen _
+    have hU : IsOpen (((IntermediateField.adjoin K {x})).fixingSubgroup : Set (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K)) := IntermediateField.fixingSubgroup_isOpen _
     rw [ContinuousAt, map_one, nhds_discrete (Multiplicative (ZMod 2)), Filter.tendsto_pure]
     filter_upwards [hU.mem_nhds (Subgroup.one_mem _)] with σ hσ
     have : σ x = x := (IntermediateField.mem_fixingSubgroup_iff _ _).mp hσ x
       (IntermediateField.mem_adjoin_simple_self K x)
     simp [f, kcharFun, this]
 
-theorem kchar_apply (x : Ω) (hx0 : x ≠ 0) (hx : ∃ a : K, x ^ 2 = algebraMap K Ω a) (σ : GK) :
+theorem kchar_apply (x : (AlgebraicClosure K)) (hx0 : x ≠ 0) (hx : ∃ a : K, x ^ 2 = algebraMap K (AlgebraicClosure K) a) (σ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K)) :
     kchar x hx0 hx σ = kcharFun x σ := rfl
 
 /-- The Kummer character only depends on the square. -/
-theorem kchar_eq_of_sq_eq {x y : Ω} (hx0 : x ≠ 0) (hy0 : y ≠ 0)
-    (hx : ∃ a : K, x ^ 2 = algebraMap K Ω a) (hy : ∃ a : K, y ^ 2 = algebraMap K Ω a)
+theorem kchar_eq_of_sq_eq {x y : (AlgebraicClosure K)} (hx0 : x ≠ 0) (hy0 : y ≠ 0)
+    (hx : ∃ a : K, x ^ 2 = algebraMap K (AlgebraicClosure K) a) (hy : ∃ a : K, y ^ 2 = algebraMap K (AlgebraicClosure K) a)
     (h : y ^ 2 = x ^ 2) : kchar y hy0 hy = kchar x hx0 hx := by
   have : (y - x) * (y + x) = 0 := by ring_nf; rw [h]; ring
   rcases mul_eq_zero.mp this with h1 | h1
@@ -94,9 +92,9 @@ theorem kchar_eq_of_sq_eq {x y : Ω} (hx0 : x ≠ 0) (hy0 : y ≠ 0)
     rw [show σ (-x) = -σ x from map_neg σ x, neg_inj]
 
 
-theorem kchar_mul_root {x y : Ω} (hx0 : x ≠ 0) (hy0 : y ≠ 0)
-    (hx : ∃ a : K, x ^ 2 = algebraMap K Ω a) (hy : ∃ a : K, y ^ 2 = algebraMap K Ω a)
-    (hxy0 : x * y ≠ 0) (hxy : ∃ a : K, (x * y) ^ 2 = algebraMap K Ω a) :
+theorem kchar_mul_root {x y : (AlgebraicClosure K)} (hx0 : x ≠ 0) (hy0 : y ≠ 0)
+    (hx : ∃ a : K, x ^ 2 = algebraMap K (AlgebraicClosure K) a) (hy : ∃ a : K, y ^ 2 = algebraMap K (AlgebraicClosure K) a)
+    (hxy0 : x * y ≠ 0) (hxy : ∃ a : K, (x * y) ^ 2 = algebraMap K (AlgebraicClosure K) a) :
     kchar (x * y) hxy0 hxy = kchar x hx0 hx * kchar y hy0 hy := by
   ext σ
   have hneg := neg_ne_self hxy0
@@ -110,50 +108,50 @@ theorem kchar_mul_root {x y : Ω} (hx0 : x ≠ 0) (hy0 : y ≠ 0)
   all_goals decide
 
 omit [CharZero K] in
-theorem exists_root (a : Kˣ) : ∃ x : Ω, x ^ 2 = algebraMap K Ω a :=
+theorem exists_root (a : Kˣ) : ∃ x : (AlgebraicClosure K), x ^ 2 = algebraMap K (AlgebraicClosure K) a :=
   IsAlgClosed.exists_pow_nat_eq _ two_pos
 
 /-- A chosen square root of `a` in `K̄`. -/
-def root (a : Kˣ) : Ω := (exists_root a).choose
+def root (a : Kˣ) : (AlgebraicClosure K) := (exists_root a).choose
 
 omit [CharZero K] in
-theorem root_sq (a : Kˣ) : root a ^ 2 = algebraMap K Ω a := (exists_root a).choose_spec
+theorem root_sq (a : Kˣ) : root a ^ 2 = algebraMap K (AlgebraicClosure K) a := (exists_root a).choose_spec
 
 omit [CharZero K] in
 theorem root_ne_zero (a : Kˣ) : root a ≠ 0 := by
   intro h
   have := root_sq a
   rw [h, zero_pow two_ne_zero] at this
-  exact a.ne_zero ((algebraMap K Ω).injective (by rw [← this, map_zero]))
+  exact a.ne_zero ((algebraMap K (AlgebraicClosure K)).injective (by rw [← this, map_zero]))
 
 /-- The Kummer character of `a ∈ K^×`. -/
-def kummerChar (a : Kˣ) : GK →ₜ* Multiplicative (ZMod 2) :=
+def kummerChar (a : Kˣ) : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) →ₜ* Multiplicative (ZMod 2) :=
   kchar (root a) (root_ne_zero a) ⟨a, root_sq a⟩
 
-theorem kummerChar_eq (a : Kˣ) {x : Ω} (hx0 : x ≠ 0) (hx : x ^ 2 = algebraMap K Ω a) :
+theorem kummerChar_eq (a : Kˣ) {x : (AlgebraicClosure K)} (hx0 : x ≠ 0) (hx : x ^ 2 = algebraMap K (AlgebraicClosure K) a) :
     kummerChar a = kchar x hx0 ⟨a, hx⟩ :=
   kchar_eq_of_sq_eq hx0 (root_ne_zero a) _ _ (by rw [root_sq, hx])
 
 /-- **The Kummer homomorphism** `K^× → Hom_cont(Gal(K̄/K), 𝔽₂)`. -/
-def kummerHom : Kˣ →* (GK →ₜ* Multiplicative (ZMod 2)) where
+def kummerHom : Kˣ →* ((AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) →ₜ* Multiplicative (ZMod 2)) where
   toFun := kummerChar
   map_one' := by
-    have h1 : (1 : Ω) ^ 2 = algebraMap K Ω (1 : Kˣ) := by simp
+    have h1 : (1 : (AlgebraicClosure K)) ^ 2 = algebraMap K (AlgebraicClosure K) (1 : Kˣ) := by simp
     rw [kummerChar_eq 1 one_ne_zero h1]
     ext σ; simp [kchar_apply, kcharFun]
   map_mul' a b := by
-    have hab : (root a * root b) ^ 2 = algebraMap K Ω ((a * b : Kˣ) : K) := by
+    have hab : (root a * root b) ^ 2 = algebraMap K (AlgebraicClosure K) ((a * b : Kˣ) : K) := by
       rw [mul_pow, root_sq, root_sq, Units.val_mul, map_mul]
     rw [kummerChar_eq (a * b) (mul_ne_zero (root_ne_zero a) (root_ne_zero b)) hab]
     exact kchar_mul_root _ _ _ _ _ _
 
 
-instance : IsGalois K Ω := inferInstance
+instance : IsGalois K (AlgebraicClosure K) := inferInstance
 
 /-- An element of `K̄` fixed by every automorphism lies in `K`. -/
-theorem mem_range_of_forall_fixed {z : Ω} (h : ∀ σ : GK, σ z = z) :
-    ∃ c : K, algebraMap K Ω c = z := by
-  have hmem : z ∈ IntermediateField.fixedField (⊥ : IntermediateField K Ω).fixingSubgroup := by
+theorem mem_range_of_forall_fixed {z : (AlgebraicClosure K)} (h : ∀ σ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K), σ z = z) :
+    ∃ c : K, algebraMap K (AlgebraicClosure K) c = z := by
+  have hmem : z ∈ IntermediateField.fixedField (⊥ : IntermediateField K (AlgebraicClosure K)).fixingSubgroup := by
     rintro ⟨σ, -⟩; exact h σ
   rw [InfiniteGalois.fixedField_fixingSubgroup, IntermediateField.mem_bot] at hmem
   exact hmem
@@ -163,9 +161,9 @@ theorem kummerHom_eq_one_iff (a : Kˣ) :
     kummerHom a = 1 ↔ a ∈ (powMonoidHom 2 : Kˣ →* Kˣ).range := by
   constructor
   · intro h
-    have hfix : ∀ σ : GK, σ (root a) = root a := by
+    have hfix : ∀ σ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K), σ (root a) = root a := by
       intro σ
-      have := congrArg (fun χ : GK →ₜ* Multiplicative (ZMod 2) => χ σ) h
+      have := congrArg (fun χ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) →ₜ* Multiplicative (ZMod 2) => χ σ) h
       change kcharFun (root a) σ = (1 : Multiplicative (ZMod 2)) at this
       by_contra hne
       simp only [kcharFun, hne, ↓reduceIte] at this
@@ -174,12 +172,12 @@ theorem kummerHom_eq_one_iff (a : Kˣ) :
     have hc0 : c ≠ 0 := by
       rintro rfl; rw [map_zero] at hc; exact root_ne_zero a hc.symm
     refine ⟨Units.mk0 c hc0, Units.ext ?_⟩
-    apply (algebraMap K Ω).injective
+    apply (algebraMap K (AlgebraicClosure K)).injective
     simp only [powMonoidHom_apply, Units.val_pow_eq_pow_val, Units.val_mk0, map_pow, hc, root_sq]
   · rintro ⟨c, rfl⟩
-    have hx : (algebraMap K Ω c) ^ 2 = algebraMap K Ω ((powMonoidHom 2 c : Kˣ) : K) := by
+    have hx : (algebraMap K (AlgebraicClosure K) c) ^ 2 = algebraMap K (AlgebraicClosure K) ((powMonoidHom 2 c : Kˣ) : K) := by
       simp [map_pow]
-    have h0 : algebraMap K Ω c ≠ 0 := by simp
+    have h0 : algebraMap K (AlgebraicClosure K) c ≠ 0 := by simp
     change kummerChar _ = 1
     rw [kummerChar_eq _ h0 hx]
     ext σ; simp [kchar_apply, kcharFun]
@@ -201,14 +199,14 @@ theorem kummerHom_surjective : Function.Surjective (kummerHom (K := K)) := by
     push Not at h
     exact hχ (by ext σ; rw [h σ]; rfl)
   have hσ0' : χ σ0 = Multiplicative.ofAdd 1 := (mz2_cases _).resolve_left hσ0
-  let H : Subgroup GK := χ.toMonoidHom.ker
-  have hHc : IsClosed (H : Set GK) := by
-    have : (H : Set GK) = χ ⁻¹' {1} := by ext σ; simp [H, MonoidHom.mem_ker]
+  let H : Subgroup (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) := χ.toMonoidHom.ker
+  have hHc : IsClosed (H : Set (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K)) := by
+    have : (H : Set (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K)) = χ ⁻¹' {1} := by ext σ; simp [H, MonoidHom.mem_ker]
     rw [this]; exact IsClosed.preimage χ.continuous isClosed_singleton
   let L := IntermediateField.fixedField H
   have hfixL : (L.fixingSubgroup) = H :=
     InfiniteGalois.fixingSubgroup_fixedField ⟨H, hHc⟩
-  have hfix : ∀ σ : GK, χ σ = 1 → ∀ z ∈ L, σ z = z := fun σ hσ z hz =>
+  have hfix : ∀ σ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K), χ σ = 1 → ∀ z ∈ L, σ z = z := fun σ hσ z hz =>
     (IntermediateField.mem_fixedField_iff H z).mp hz σ (by simpa [H, MonoidHom.mem_ker] using hσ)
   have hL : L ≠ ⊥ := by
     intro hL
@@ -217,7 +215,7 @@ theorem kummerHom_surjective : Function.Surjective (kummerHom (K := K)) := by
     rw [hfixL] at this
     simpa [H, MonoidHom.mem_ker] using this
   obtain ⟨z, hzL, hzK⟩ := IsConcreteLE.exists_of_lt (bot_lt_iff_ne_bot.mpr hL)
-  have hmove : ∀ σ : GK, χ σ ≠ 1 → σ z = σ0 z := by
+  have hmove : ∀ σ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K), χ σ ≠ 1 → σ z = σ0 z := by
     intro σ hσ
     have hσ' := (mz2_cases (χ σ)).resolve_left hσ
     have h1 : χ (σ0⁻¹ * σ) = 1 := by rw [map_mul, map_inv, hσ', hσ0']; decide
@@ -226,7 +224,7 @@ theorem kummerHom_surjective : Function.Surjective (kummerHom (K := K)) := by
     have := congrArg σ0 this
     simpa using this
   set y := z - σ0 z with hydef
-  have hy : ∀ σ : GK, σ y = if χ σ = 1 then y else -y := by
+  have hy : ∀ σ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K), σ y = if χ σ = 1 then y else -y := by
     intro σ
     have hσσ0 : σ (σ0 z) = (σ * σ0) z := rfl
     by_cases hσ : χ σ = 1
@@ -244,7 +242,7 @@ theorem kummerHom_surjective : Function.Surjective (kummerHom (K := K)) := by
       · exact hfix σ hσ z hzL
       · rw [hmove σ hσ, hz0])
     exact ⟨c, hc⟩
-  have hysq : ∀ σ : GK, σ (y ^ 2) = y ^ 2 := by
+  have hysq : ∀ σ : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K), σ (y ^ 2) = y ^ 2 := by
     intro σ; rw [map_pow, hy σ]; split_ifs <;> ring
   obtain ⟨c, hc⟩ := mem_range_of_forall_fixed hysq
   have hc0 : c ≠ 0 := by
@@ -266,14 +264,14 @@ theorem ker_kummerHom : (kummerHom (K := K)).ker = (powMonoidHom 2 : Kˣ →* K�
 
 /-- **Kummer theory for `n = 2`**: `K^×/K^{×2} ≃ Hom_cont(Gal(K̄/K), 𝔽₂)`. -/
 noncomputable def kummerQuot :
-    (Kˣ ⧸ (powMonoidHom 2 : Kˣ →* Kˣ).range) ≃* (GK →ₜ* Multiplicative (ZMod 2)) :=
+    (Kˣ ⧸ (powMonoidHom 2 : Kˣ →* Kˣ).range) ≃* ((AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) →ₜ* Multiplicative (ZMod 2)) :=
   (QuotientGroup.quotientMulEquivOfEq ker_kummerHom.symm).trans
     (QuotientGroup.quotientKerEquivOfSurjective _ kummerHom_surjective)
 
 theorem kummerQuot_mk (a : Kˣ) : kummerQuot (QuotientGroup.mk a) = kummerChar a := rfl
 
 /-- The Kummer character of `a` is trivial on `Gal(K̄/E)` iff `√a ∈ E` (infinite Galois theory). -/
-theorem kummerChar_trivial_iff (a : Kˣ) (E : IntermediateField K Ω) :
+theorem kummerChar_trivial_iff (a : Kˣ) (E : IntermediateField K (AlgebraicClosure K)) :
     (∀ σ ∈ E.fixingSubgroup, kummerChar a σ = 1) ↔ root a ∈ E := by
   constructor
   · intro h
@@ -294,7 +292,6 @@ theorem kummerChar_trivial_iff (a : Kˣ) (E : IntermediateField K Ω) :
 section GS
 variable {K : Type} [Field K] [NumberField K] (S : Set (HeightOneSpectrum (𝓞 K)))
 
-local notation "M2" => Multiplicative (ZMod 2)
 
 omit [NumberField K] in
 theorem mem_fixingSubgroup_iff_resAbs (σ : AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) :
@@ -308,8 +305,8 @@ theorem mem_fixingSubgroup_iff_resAbs (σ : AlgebraicClosure K ≃ₐ[K] Algebra
     simpa [resAbs_apply_coe] using this
 
 /-- Pulling back characters of `G_{K,S}` to `Gal(K̄/K)`. -/
-def pullS (χ : GaloisGroupS K S →ₜ* M2) :
-    {χ' : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) →ₜ* M2 //
+def pullS (χ : GaloisGroupS K S →ₜ* (Multiplicative (ZMod 2))) :
+    {χ' : (AlgebraicClosure K ≃ₐ[K] AlgebraicClosure K) →ₜ* (Multiplicative (ZMod 2)) //
       ∀ σ ∈ (unramifiedOutside K S).fixingSubgroup, χ' σ = 1} :=
   ⟨χ.comp ⟨resAbs K S, InfiniteGalois.restrictNormalHom_continuous _⟩, fun σ hσ => by
     change χ (resAbs K S σ) = 1
@@ -330,7 +327,7 @@ theorem pullS_bijective : Function.Bijective (pullS S) := by
       have := hχ _ h'
       rw [map_mul, map_inv, inv_mul_eq_one] at this
       exact this
-    let f : GaloisGroupS K S →* M2 :=
+    let f : GaloisGroupS K S →* (Multiplicative (ZMod 2)) :=
       { toFun := fun τ => χ (resAbs_surjective K S τ).choose
         map_one' := by
           rw [hconst _ 1 (by rw [(resAbs_surjective K S 1).choose_spec, map_one]), map_one]
@@ -357,7 +354,7 @@ two stage statements, `|Hom_cont(G_{K,S}, 𝔽₂)| = |K(S,2)|` when `S` contain
 PROVED. -/
 theorem card_hom_eq_card_selmer (hSqrt : SqrtMemOfSelmer) (hSel : SelmerOfSqrtMem)
     (hS2 : ∀ v : HeightOneSpectrum (𝓞 K), (2 : 𝓞 K) ∈ v.asIdeal → v ∈ S) :
-    Nat.card (GaloisGroupS K S →ₜ* M2) =
+    Nat.card (GaloisGroupS K S →ₜ* (Multiplicative (ZMod 2))) =
       Nat.card (IsDedekindDomain.selmerGroup (R := 𝓞 K) (K := K) (S := S) (n := 2)) := by
   rw [Nat.card_congr (Equiv.ofBijective _ (pullS_bijective S))]
   let e := (kummerQuot (K := K)).toEquiv
