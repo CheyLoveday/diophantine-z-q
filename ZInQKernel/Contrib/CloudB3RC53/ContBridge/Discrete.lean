@@ -30,6 +30,12 @@ open ZInQ.Manuscript.RC.SelmerComplex (SubCx contCochains contCohomology contSub
 
 universe u
 
+/-- For a discrete coefficient ring and a discrete module the scalar action is continuous, so the
+hypothesis `ContinuousSMul k M` below is automatic in that case (use with `haveI`). -/
+theorem continuousSMul_of_discrete (k M : Type*) [TopologicalSpace k] [DiscreteTopology k]
+    [TopologicalSpace M] [DiscreteTopology M] [SMul k M] : ContinuousSMul k M :=
+  ⟨continuous_of_discreteTopology⟩
+
 section A6
 
 variable (k G M : Type u) [CommRing k] [TopologicalSpace k] [Group G] [TopologicalSpace G]
