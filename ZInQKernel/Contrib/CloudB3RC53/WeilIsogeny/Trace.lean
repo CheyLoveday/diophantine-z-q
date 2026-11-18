@@ -37,10 +37,12 @@ def traceFrob : ℤ := Fintype.card F + 1 - Nat.card W.toAffine.Point
 def piK : Hom (W⁄K).toAffine (W⁄K).toAffine :=
   Hom.ofIsogeny (Frobenius.frobeniusMap W.toAffine (algebraMap F K))
 
+omit [W.IsElliptic] [DecidableEq K] [IsSepClosed K] [Algebra.IsAlgebraic F K] in
 theorem piK_pullbackDifferential :
     (piK W (K := K)).pullbackDifferential (invariantDifferential (W⁄K).toAffine) = 0 :=
   Frobenius.hom_pullbackDifferential_frobeniusMap W.toAffine (algebraMap F K)
 
+omit [DecidableEq K] [IsSepClosed K] [Algebra.IsAlgebraic F K] in
 /-- `n π − m ≠ 0` when `m ≠ 0` in `K`. -/
 theorem psi_ne_zero {m : ℤ} (n : ℤ) (hm : (m : K) ≠ 0) :
     n • piK W (K := K) - m • Hom.id (W⁄K).toAffine ≠ 0 :=
@@ -108,7 +110,6 @@ theorem weilPairing_degree {m : ℤ} (n : ℤ) (hm : (m : K) ≠ 0)
   rw [degree_psi_one_one] at h11
   have htr : e A T + e S B = traceFrob W • e S T := by
     rw [traceFrob]
-    push_cast
     linear_combination (norm := module) h11
   rw [hexp n hm, htr]
   module

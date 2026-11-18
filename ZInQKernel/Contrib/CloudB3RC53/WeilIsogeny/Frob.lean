@@ -24,6 +24,7 @@ namespace ZInQ.Contrib.CloudB3RC53.WeilIsogeny
 variable {F : Type*} [Field F] [Fintype F] (W : WeierstrassCurve F) [W.IsElliptic]
   {K : Type*} [Field K] [DecidableEq K] [Algebra F K] [IsSepClosed K] [Algebra.IsAlgebraic F K]
 
+omit [IsSepClosed K] in
 /-- **The base-changed Frobenius acts on points as the arithmetic Frobenius.** PROVED. -/
 theorem pointGaloisAction_frobenius (P : (W⁄K).toAffine.Point) :
     Multiplicative.toAdd (W.pointGaloisAction (FiniteField.frobeniusAlgEquivOfAlgebraic F K)) P =
