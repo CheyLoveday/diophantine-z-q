@@ -3,9 +3,9 @@ import ZInQKernel.Contrib.CloudB3RC53.Hsw.ShapeUrTie
 /-!
 # RC53 `hsw` shape: inflation for unramified (not necessarily trivial) actions
 
-`ShapeUrTie.lean` assumed that `G_{K_q}` acts trivially on the coefficients. At the switching
-primes the coefficient module is unramified at `q`, but Frobenius acts nontrivially. This file
-removes the triviality assumption. Let `ψ : Gal(K_q^ur/K_q) → G_{K,S}` be a continuous homomorphism
+`ShapeUrTie.lean` assumed that `G_{K_q}` acts trivially on the coefficients. This file removes
+that assumption, for coefficient modules that are unramified at `q` with a possibly nontrivial
+Frobenius action. Let `ψ : Gal(K_q^ur/K_q) → G_{K,S}` be a continuous homomorphism
 with `ψ (urRes g) • m = loc_q g • m`, i.e. the action of `G_{K_q}` factors through `urRes`. For
 example, `ψ = loc_q ∘ s` for a continuous section `s` of `urRes` through a Frobenius lift, when
 inertia acts trivially. Then a local `1`-cocycle at `q` vanishing on `ker(urRes)` is inflated
@@ -13,7 +13,15 @@ from `Gal(K_q^ur/K_q)` along `ψ`. Inertia acts trivially by the compatibility, 
 constant on the cosets of `ker(urRes)`.
 
 * `exists_infl_of_vanish_gen`, `urAt_of_vanish_gen`, `hUrRep_of_vanish_gen`: the generalizations of
-  `exists_infl_of_vanish`, `urAt_of_vanish`, `hUrRep_of_vanish` (any coefficient field).
+  `exists_infl_of_vanish`, `urAt_of_vanish`, `hUrRep_of_vanish` (any coefficient field; the
+  coefficients are discrete, as everywhere in the genuine cochains).
+* `localSumPair_urAt_of_cd`, `genuine_finIso_of_ur_cd`: `localSumPair_urAt` and
+  `genuine_finIso_of_ur` with the vanishing of `H²(Gal(K_q^ur/K_q), T)` as an explicit input
+  instead of `[Finite T]`.
+
+Scope: none of this reaches the characteristic-zero switching fibres (`reviews/UrTie.md`). Their
+`𝔭`-adic coefficient modules are neither finite nor discrete. Over a field of characteristic zero
+there is no nonzero finite module, and no nonzero discrete torsion module.
 
 All results are `PROVED`. No new axioms.
 -/
@@ -154,5 +162,98 @@ theorem hUrRep_of_vanish_gen (X : GenuineSwitch K S k M) (q : Places K S)
   have hd : X.toQuasi.D.L.d 1 2 rfl (X.toQuasi.D.ι.f 1 1 rfl t) = 0 := by
     rw [← X.toQuasi.D.ι.comm 1 2 1 2 rfl rfl rfl rfl, ht, map_zero]
   exact congrFun hd q
+
+
+/-! ### Beyond finite coefficients -/
+
+section CdInput
+
+variable {T : Type} [AddCommGroup T] [Module k T] [DistribMulAction (GKS K S) T]
+  [SMulCommClass (GKS K S) k T] [TopologicalSpace T] [DiscreteTopology T]
+  [ContinuousSMul (GKS K S) T]
+
+/-- **The local cup product of two unramified classes at `q` is a coboundary, given
+`H²(Gal(K_q^ur/K_q), T) = 0`** (`PROVED`). This is `localSumPair_urAt` with the
+cohomological-dimension input `hcd` explicit instead of `[Finite T]`. For finite `T` it is
+`ur_subsingleton_contCohomology_ge_two`. For discrete torsion `T`, integral coefficients give
+`subsingleton_contCohomology_of_torsion`; the transfer to `k`-coefficients is not done here. Over a
+field of characteristic zero a nonzero discrete torsion `k`-module does not exist, and the `𝔭`-adic
+fibres are neither finite nor discrete. So no characteristic-zero instance is provided. -/
+theorem localSumPair_urAt_of_cd (β : M →ₗ[k] M →ₗ[k] T)
+    (hβ : ∀ (g : GKS K S) (a b : M), β (g • a) (g • b) = g • β a b) (q : Places K S)
+    (ψ : GUr K q.1 →ₜ* GKS K S) (hψ : ∀ g (m : M), ψ (urRes K q.1 g) • m = locMap K S q.1 g • m)
+    (hψT : ∀ g (m : T), ψ (urRes K q.1 g) • m = locMap K S q.1 g • m)
+    (hcd : Subsingleton (contCohomology k (GUr K q.1) (ResMod ψ T) 2))
+    (x y : (localSumCx k (GKS K S) (fun v : Places K S => Gloc K v.1) (fun v => locMap K S v.1)
+      M).X 1) (hx : UrAt q ψ hψ x) (hy : UrAt q ψ hψ y) :
+    ∃ C, (localSumPair k (GKS K S) (fun v : Places K S => Gloc K v.1) (fun v => locMap K S v.1) β
+        hβ (continuous_pairing β)).P 1 1 2 rfl x y =
+      (localSumCx k (GKS K S) (fun v : Places K S => Gloc K v.1) (fun v => locMap K S v.1)
+        T).d 1 2 rfl C := by
+  classical
+  obtain ⟨⟨a', ha', hxq⟩, hx0⟩ := hx
+  obtain ⟨⟨b', hb', hyq⟩, hy0⟩ := hy
+  obtain ⟨c, hc⟩ := infl_cup_coboundary (k := k) (G := Gloc K q.1) (H := GUr K q.1)
+    (MH := ResMod ψ M) (TH := ResMod ψ T) (MG := ResMod (locMap K S q.1) M)
+    (TG := ResMod (locMap K S q.1) T) (urRes K q.1) (resModId ψ (locMap K S q.1) M)
+    continuous_of_discreteTopology (fun g m => hψ g m)
+    (resModId ψ (locMap K S q.1) T) continuous_of_discreteTopology (fun g m => hψT g m)
+    (resPairing k (GKS K S) β ψ) (resPairing_continuous k (GKS K S) β (continuous_pairing β) ψ)
+    (resPairing k (GKS K S) β (locMap K S q.1))
+    (resPairing_continuous k (GKS K S) β (continuous_pairing β) (locMap K S q.1))
+    (fun _ _ => rfl) (fun h a b => hβ (ψ h) a b) hcd a' b' ha' hb'
+  refine ⟨Pi.single q c, ?_⟩
+  funext v
+  by_cases hv : v = q
+  · subst hv
+    change (localPair k (GKS K S) (fun v : Places K S => Gloc K v.1) (fun v => locMap K S v.1) β
+        hβ (continuous_pairing β) v).P 1 1 2 rfl (x v) (y v) =
+      (localCx k (GKS K S) (fun v : Places K S => Gloc K v.1) (fun v => locMap K S v.1) T v).d 1 2
+        rfl (Pi.single (M := fun v => (localCx k (GKS K S) (fun v : Places K S => Gloc K v.1)
+          (fun v => locMap K S v.1) T v).X 1) v c v)
+    rw [hxq, hyq]
+    exact hc.trans (congrArg ((contCochains k (Gloc K v.1) (ResMod (locMap K S v.1) T)).d 1 2).hom
+      (Pi.single_eq_same (M := fun v => (localCx k (GKS K S) (fun v : Places K S => Gloc K v.1)
+          (fun v => locMap K S v.1) T v).X 1) v c).symm)
+  · change (localPair k (GKS K S) (fun v : Places K S => Gloc K v.1) (fun v => locMap K S v.1) β
+        hβ (continuous_pairing β) v).P 1 1 2 rfl (x v) (y v) =
+      (localCx k (GKS K S) (fun v : Places K S => Gloc K v.1) (fun v => locMap K S v.1) T v).d 1 2
+        rfl (Pi.single (M := fun v => (localCx k (GKS K S) (fun v : Places K S => Gloc K v.1)
+          (fun v => locMap K S v.1) T v).X 1) q c v)
+    rw [hx0 v hv, map_zero, LinearMap.zero_apply]
+    exact ((congrArg ((contCochains k (Gloc K v.1) (ResMod (locMap K S v.1) T)).d 1 2).hom
+      (Pi.single_eq_of_ne (M := fun v => (localCx k (GKS K S) (fun v : Places K S => Gloc K v.1)
+          (fun v => locMap K S v.1) T v).X 1) hv c)).trans (map_zero _)).symm
+
+/-- **The finite plane is isotropic, given `H²(Gal(K_q^ur/K_q), T) = 0`** (`PROVED`):
+`genuine_finIso_of_ur` with `hcd` explicit instead of `[Finite T]`. -/
+theorem genuine_finIso_of_ur_cd (X : GenuineSwitch K S k M) (β : M →ₗ[k] M →ₗ[k] T)
+    (hβ : ∀ (g : GKS K S) (a b : M), β (g • a) (g • b) = g • β a b) (c : k)
+    (hc : ∀ x y, β x y = c • β y x) (I : GaloisIsotropyData K S k β hβ X.ΔS X.ΔR)
+    (tr : (coneCx (galoisPairData K S k β hβ X.ΔS X.ΔR I).resE).X 3 →ₗ[k] k)
+    (htr : ∀ z, tr ((coneCx (galoisPairData K S k β hβ X.ΔS X.ΔR I).resE).d 2 3 rfl z) = 0)
+    (hUS2 : ∀ v (x : (X.US v).X 2), x = 0) (q : Places K S) (ψ : GUr K q.1 →ₜ* GKS K S)
+    (hψ : ∀ g (m : M), ψ (urRes K q.1 g) • m = locMap K S q.1 g • m)
+    (hψT : ∀ g (m : T), ψ (urRes K q.1 g) • m = locMap K S q.1 g • m)
+    (hcd : Subsingleton (contCohomology k (GUr K q.1) (ResMod ψ T) 2))
+    (hUrRep : ∀ a, a ∈ finPlane k (Fin 2 → k) (Fin 2 → k) →
+      ∃ (t : X.toQuasi.D.U.X 1) (ht : X.toQuasi.D.U.d 1 2 rfl t = 0),
+        gClass X.toQuasi t ht = a ∧ UrAt q ψ hψ (X.toQuasi.D.ι.f 1 1 rfl t)) :
+    ∀ t u (ht : X.toQuasi.D.U.d 1 2 rfl t = 0) (hu : X.toQuasi.D.U.d 1 2 rfl u = 0),
+      gClass X.toQuasi t ht ∈ finPlane k (Fin 2 → k) (Fin 2 → k) →
+      gClass X.toQuasi u hu ∈ finPlane k (Fin 2 → k) (Fin 2 → k) →
+      resForm X.toQuasi (piCx X.US) (piMap X.φ) (galoisPairData K S k β hβ X.ΔS X.ΔR I) tr t u =
+        0 := by
+  intro t u ht hu htF huF
+  obtain ⟨P, hP⟩ := exists_residuePairing X.toQuasi (piCx X.US) (piMap X.φ) _ tr X.hfg X.φ_inj
+    X.g_surj X.ex htr (genuine_strictOrth X β hβ c hc I tr htr hUS2)
+  obtain ⟨t', ht', et, hurt⟩ := hUrRep _ htF
+  obtain ⟨u', hu', eu, huru⟩ := hUrRep _ huF
+  rw [← residuePairing_gClass X.toQuasi (piCx X.US) (piMap X.φ) _ tr hP t u ht hu, ← et, ← eu,
+    residuePairing_gClass X.toQuasi (piCx X.US) (piMap X.φ) _ tr hP t' u' ht' hu']
+  obtain ⟨C, hC⟩ := localSumPair_urAt_of_cd β hβ q ψ hψ hψT hcd _ _ huru hurt
+  exact resForm_eq_zero_of_cup X.toQuasi (piCx X.US) (piMap X.φ) _ tr htr t' u' C hC
+
+end CdInput
 
 end ZInQ.Contrib.CloudB3RC53.Hsw

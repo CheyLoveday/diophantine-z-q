@@ -18,10 +18,24 @@ finite plane to the unramified classes. That tie, through `ShapeUrTie.lean` and
   every local cocycle at `q` is relaxed (`hrelq`). Second, the coordinates `eR` send the classes of
   cocycles vanishing on `ker(urRes)` onto the finite plane (`hcoord`).
 * `derivSwitch_switchCoordinates_char2`, `derivSwitch_switchCoordinates_of_two_ne_zero`:
-  `SwitchCoordinates` for `derivSwitch F eR` over any field of characteristic two (polarized
+  `SwitchCoordinates` for `derivSwitch F eR` over a field of characteristic two (polarized
   pairing), resp. with `2 ≠ 0` (`c`-symmetric pairing, `c² = 1`). Nondegeneracy (local Tate
   duality) is the only remaining input. `derivSwitch_switchCoordinates_of_two_ne_zero_ur`: the
   same for unramified, not necessarily trivial, actions at `q` (through a compatible `ψ`).
+
+**Scope (residual case only).** All three theorems assume a finite target module `T`, which is
+how `localSumPair_urAt` obtains `H²(Gal(K_q^ur/K_q), T) = 0`. Over a field of characteristic zero
+a finite module is zero, so these theorems do not apply at the characteristic-zero fibres; the
+earlier characteristic-zero claim is withdrawn (`reviews/UrTie.md`, finding 5). Two further facts
+bear on this:
+* at a single derivative prime with characteristic-zero coefficients the singular part vanishes
+  (`q = ℓ² ≠ 1`), and the `2 + 2` switch shape exists only in the inner limit `ℓᵢ → −1`
+  (tex L5033–5035);
+* the `𝔭`-adic coefficient modules there are neither finite nor discrete.
+
+`genuine_finIso_of_ur_cd` (`ShapeUrTieGen.lean`) takes the `H²` vanishing as an explicit input.
+It covers any discrete target for which that vanishing is available, but still not `𝔭`-adic
+`V_P`.
 
 ## The tame instance over `𝔽₂`
 
@@ -163,8 +177,13 @@ theorem derivSwitch_switchCoordinates_char2 (h2 : (2 : k) = 0)
   genuine_switchCoordinates_char2_vanish h2 (derivSwitch F eR) β γ hβ hγ hpol I tr htr hUS2 hε
     hJ2 q htriv htrivT (derivSwitch_hrep F q hrelq eR hcoord) hnd
 
-/-- **`SwitchCoordinates` for the switch of a derivative family when `2 ≠ 0`** (`PROVED` from
-the inputs; any coefficient field with `2 ≠ 0`, e.g. the characteristic-zero fibres). Inputs:
+/-- **`SwitchCoordinates` for the switch of a derivative family when `2 ≠ 0`, finite target**
+(`PROVED` from the inputs; a coefficient field with `2 ≠ 0` and a finite target module `T`, i.e.
+the residual case). Scope: the section assumes `[Finite T]`, which is needed for the vanishing
+of `H²(Gal(K_q^ur/K_q), T)` in `localSumPair_urAt`. Over a field of characteristic zero a finite
+module is zero, so this theorem says nothing at the characteristic-zero fibres; that claim is
+withdrawn (`reviews/UrTie.md`, finding 5). See also `genuine_finIso_of_ur_cd`, which takes the `H²`
+vanishing as an input. Inputs:
 * a `c`-symmetric equivariant self-pairing with `c² = 1` (`σ = −c`);
 * isotropy data;
 * strict complexes vanishing in degree two;
@@ -209,10 +228,12 @@ theorem derivSwitch_switchCoordinates_of_two_ne_zero (h2 : (2 : k) ≠ 0)
       (hUrRep_of_vanish (derivSwitch F eR) q htriv (derivSwitch_hrep F q hrelq eR hcoord)))
     hnd (Or.inl ⟨h2, hc2⟩)
 
-/-- **The same, for unramified (not necessarily trivial) actions at `q`** (`PROVED` from the
-inputs; any field with `2 ≠ 0`). The triviality of the action is replaced by a continuous
-`ψ : Gal(K_q^ur/K_q) → G_{K,S}` through which the actions of `G_{K_q}` on `M` and `T` factor. This
-is the situation at the switching primes, where Frobenius acts nontrivially. -/
+/-- **The same, for unramified (not necessarily trivial) actions at `q`, finite target**
+(`PROVED` from the inputs; a field with `2 ≠ 0` and finite `T`, i.e. the residual case). The
+triviality of the action is replaced by a continuous `ψ : Gal(K_q^ur/K_q) → G_{K,S}` through which
+the actions of `G_{K_q}` on `M` and `T` factor. The same scope restriction as for
+`derivSwitch_switchCoordinates_of_two_ne_zero` applies: it is not a characteristic-zero
+statement. -/
 theorem derivSwitch_switchCoordinates_of_two_ne_zero_ur (h2 : (2 : k) ≠ 0)
     (eR : F.Wrel.toCC.homology 1 ≃ₗ[k] (Fin 2 → k) × (Fin 2 → k))
     (β : M →ₗ[k] M →ₗ[k] T) (hβ : ∀ (g : GKS K S) (a b : M), β (g • a) (g • b) = g • β a b)
