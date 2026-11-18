@@ -13,7 +13,11 @@ sys.path.insert(0, os.path.dirname(__file__))
 import leanctx
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
 TOPFILE, TOPNAME, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
-FILES = [os.path.join(ROOT, TOPFILE), os.path.join(ROOT, 'ZInQKernel/OneProof/H/C8Chain.lean')]
+import glob
+# the head's TailZ file, every later research-only autofold TailZ (k >= 87), and fold-c8's chain
+FILES = sorted({os.path.join(ROOT, TOPFILE)} | {f for f in glob.glob(os.path.join(ROOT, 'ZInQKernel/OneProof/H/TailZ*.lean'))
+               if re.fullmatch(r'TailZ(\d+)\.lean', os.path.basename(f)) and int(re.findall(r'\d+', os.path.basename(f))[0]) >= 87
+               and 'fold-cm' not in open(f).read()}) + [os.path.join(ROOT, 'ZInQKernel/OneProof/H/C8Chain.lean')]
 BASE = 'sixContactMin_of_open4_hf_pz_eb_u_c8'
 
 def find(name):
