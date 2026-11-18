@@ -1,6 +1,6 @@
 # cm-port2: fold the CM fibre split through the proper integral Y₃ model
 
-The CM order port supplies the unchanged `HDec.CMBranch.CMFibreSplit` from
+**VERIFIED (Lean).** The CM order port supplies the unchanged `HDec.CMBranch.CMFibreSplit` from
 the open83 research fields. The generated fold removes that field and introduces
 no leaf or glue field. The port is on fork main `c3624d0e3` (clean merge
 `6954f7422`).
@@ -32,7 +32,7 @@ moduli model; the good-reduction theorem reads only the latter.
 | Néron–Ogg–Shafarevich | `neronOggShafarevich_of_sep` on the existing `neronOggShafarevichSep`. |
 | Yu dichotomy (T27), Hom lattice (T6), torsion (T5) | `yuB6Alg_of'`, `homFreeFiniteC` and `AvSplit.Final.h25` from the existing uniformization, GAGA and torsion proofs. |
 
-**On-the-spot (Lean glue).** [LiveInputs.lean](../../ZInQKernel/Contrib/OneProof/CMCurveOrder/LiveInputs.lean)
+**On-the-spot (Lean glue).** [CMCurveOrderLive.lean](../../ZInQKernel/Contrib/OneProof/CMCurveOrderLive.lean)
 takes the inputs of the existing bundle conversions directly, so it does not
 need an old bundle that already contains the goal. The fine moduli model and
 Deligne form give the same connectedness and ray-class statements that the
@@ -99,4 +99,14 @@ open84. The [scratch headline](../../scratch/cm-port2/MainDryRun.lean) keeps
 been edited. The integrator can use the generated proof or run the same spec
 without `--dry-run` in the integration worktree.
 
-Lean checks pending; see the [results log](../../scratch/cm-port2/log.md).
+**VERIFIED (Lean 4.35.0).** The provider and generated fold compiled, and
+`Statements.lean` proved the three definitional equalities by `Iff.rfl`.
+The [axiom output](../../scratch/cm-port2/axioms.txt) reports only `propext`,
+`Classical.choice` and `Quot.sound` for the new `FrozenTarget`, the new
+`SixContactMin` and the CM proofs. The stock `#discharges` check against
+unmodified Main reports `DISCHARGES [OpenResearchLeaves64.cmFibreSplit]` by
+`cmFibreSplit_of_liveInputs`, with exactly seven existing research inputs;
+the field-binder check also reports `DISCHARGES [cmFibreSplit]`.
+[Transcripts](../../scratch/cm-port2/discharges.txt) and
+[results log](../../scratch/cm-port2/log.md). The checks ran one Lean
+process at a time with the local dependency caches, not a cold build.

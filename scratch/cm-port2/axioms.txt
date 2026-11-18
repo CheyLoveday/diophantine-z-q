@@ -1,0 +1,7 @@
+'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.cmHomFieldModel_of_R6U' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.cmCurveOrder324_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.cmMatrixUnitSplit_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder324_R6U' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.sixContactMin_of_open84' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.OneProof.cmPort2FrozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,6 +1,6 @@
 {
   "name": "cm-port2",
-  "imports": ["ZInQKernel.Contrib.OneProof.CMCurveOrder.LiveInputs"],
+  "imports": ["ZInQKernel.Contrib.OneProof.CMCurveOrderLive"],
   "discharges": [
     {
       "field": "cmFibreSplit",
