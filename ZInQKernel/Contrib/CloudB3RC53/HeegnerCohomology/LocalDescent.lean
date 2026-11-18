@@ -12,7 +12,7 @@ an elliptic curve `B/F`,
 
 `H¹(Gal(F'/F), B₀(F')) = 0`,  `c_B H¹(Gal(F'/F), B(F')) = 0`,
 
-`c_B = #Φ_B(k̄_F)`.  His proof (tex 3041–3057): reduce a cocycle to the connected smooth special
+`c_B = |Φ_B(k̄_F)|`.  His proof (tex 3041–3057): reduce a cocycle to the connected smooth special
 fibre, where Lang's theorem kills `H¹`; lift the coboundary through the smooth reduction map; the
 remaining cocycle lies in the formal group, whose successive quotients are additive copies of the
 residue field `k'` of `F'`, induced modules by the normal basis theorem; correct successively; the
@@ -300,7 +300,7 @@ p. 124, `UNVERIFIED`], all surjective, equivariant, with kernels `B_{i+1}(F')`; 
 Lang's theorem [Lang 1956, Theorem 1 and its corollary, `UNVERIFIED`; an RC print] with
 inflation–restriction to the finite residue extension; `hInd` is the vanishing for the induced
 module `k'` (`galois_additive_coboundary` for `Gal(k'/k) ≅ Gal(F'/F)`); `hcB` says that the
-component group `B(F')/B₀(F') ⊂ Φ_B(k̄)` is killed by `c_B = #Φ_B(k̄)`.  Conclusions:
+component group `B(F')/B₀(F') ⊂ Φ_B(k̄)` is killed by `c_B = |Φ_B(k̄)|`.  Conclusions:
 `H¹(Gal(F'/F), B₀(F')) = 0` and `c_B H¹(Gal(F'/F), B(F')) = 0`. -/
 def H10Node : Prop :=
   ∀ (Γ V : Type) [Group Γ] [AddCommGroup V] [DistribMulAction Γ V] (F : ℕ → AddSubgroup V)

@@ -13,7 +13,8 @@ Lemma `ex:arith-common-coordinate`, tex L4185–4193:
 > inverse limits are `Λ`-units, and `q^{-4}` is one also.
 
 `Triangular.lean` proves (4.7) in the bases of the triangular model, with `ε_q = q⁻⁴`. Here the
-actual coordinates are those of the **original** models `D_R`, `D_P`, related to the triangular
+coordinates are those of models `D_R`, `D_P` given as hypotheses (not identified with the Selmer
+complexes), related to the triangular
 model by integral changes of bases `P_R D_R Q_R = [[D_P', X], [0, D_W]]`, `P_P D_P Q_P = D_P'`
 (determinants `c_R = det P_R det Q_R`, `c_P = det P_P det Q_P`, `Λ`-units: signs and determinants
 of unit disks). By the base-change formula for the class-functional coordinate (the general-index

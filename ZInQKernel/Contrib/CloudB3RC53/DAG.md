@@ -10,6 +10,8 @@ Assembly (no `sorry`, standard axioms):
 ```
 restrictedConverseGenuine_of_nodes :
   Prints → BranchPackageNode → MissingAddressNode → RestrictedConverseGenuine
+ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves :
+  Prints → RCLeaves → RestrictedConverseGenuine        -- the reduction
 ```
 
 The status column below records the state when each row was written; several rows have since
@@ -34,12 +36,12 @@ calibration, common coordinate, central specialization, base zero; RC16 switches
 
 | node | Lean | tex | depends on | owner | status |
 |---|---|---|---|---|---|
-| Theorem 5.3 | `restrictedConverseGenuine_of_nodes` | 1771–1776, 5666–5741 | Prints, BranchPackageNode, MissingAddressNode, the rows below | TOP | PROVED (from the two open nodes) |
+| Theorem 5.3 | `restrictedConverseGenuine_of_nodes` | 1771–1776, 5666–5741 | Prints, BranchPackageNode, MissingAddressNode, the rows below | TOP | PROVED from `Prints` and `RCLeaves` (`RC.Wiring.restrictedConverseGenuine_of_leaves`; both nodes discharged) |
 | root number −1 | `RootNumberNode`, `rootNumberNode_proof` | 1792–1796 | DD Thm 1.8; rational 2-torsion of `E_ℓ` (`PoleRC`) | TOP | PROVED |
 | `L(E,1) = 0` | `CentralValueZeroNode`, `centralValueZeroNode_proof` | (not a sentence of the text; used implicitly at 5734–5736, 10922–10924, from the root number −1 of 1792–1796) | functional equation at `s = 1` | TOP | PROVED |
 | final deduction | `FinalRankDeductionNode`, `finalRankDeductionNode_proof` | 5734–5736, 10922–10924 | root number −1; order of a product | TOP | PROVED |
-| missing address (5.10)–(5.11) | `MissingAddressNode`; `ZInQ.Manuscript.RC.Boolean.missingAddressNode` | 5666–5735 | Boolean bit degree, cube parity, Gauss lemma for `𝒪` | RC1 | PROVED (on `rc/thm53-proof-20261117`) |
-| Branch 1 or Branch-2 package | `BranchPackageNode` (`FixedFieldPackage`) | 2587–2602, 2595–2715, 2718–5664, App E–G | every row below | RC0 | reduced by RC0 (`ZInQ.Manuscript.RC.branchPackageNode_of_steps`) to `Prints`, one Kummer GLUE and the 13 fields of `RCSteps`; fields OPEN. At this layer the coefficient data `C` are existential and are not tied to the genuine coordinates `ũ_x`: constant data inhabit the package as soon as `L(E^{(k)},1) ≠ 0` and `¬ ProductOrderGeTwo E k`, so, given `Prints`, `BranchPackageNode` is equivalent to Theorem 5.3. The reduction to Elliot's steps is lane RC0's `restrictedConverseGenuine_of_steps'` (now `RC.Wiring.restrictedConverseGenuine_of_leaves`), whose `RCSteps.clearing` ties `C.u x j = [tʲ] ũ_x`. |
+| missing address (5.10)–(5.11) | `MissingAddressNode`; `ZInQ.Manuscript.RC.Boolean.missingAddressNode` | 5666–5735 | Boolean bit degree, cube parity, Gauss lemma for `𝒪` | RC1 | PROVED |
+| Branch 1 or Branch-2 package | `BranchPackageNode` (`FixedFieldPackage`) | 2587–2602, 2595–2715, 2718–5664, App E–G | every row below | RC0 | PROVED from `Prints` and `RCLeaves` (`RC.Wiring.branchPackageNode_of_leaves`; the 13 `RCSteps` fields are theorems from the leaves, `rcSteps_of_leaves`; the Kummer statement is proved, `kummerCorankZero_proof`). At this layer the coefficient data `C` are existential and are not tied to the genuine coordinates `ũ_x`: constant data inhabit the package as soon as `L(E^{(k)},1) ≠ 0` and `¬ ProductOrderGeTwo E k`, so, given `Prints`, `BranchPackageNode` is equivalent to Theorem 5.3. The reduction to Elliot's steps is lane RC0's `restrictedConverseGenuine_of_steps'` (now `RC.Wiring.restrictedConverseGenuine_of_leaves`), whose `RCSteps.clearing` ties `C.u x j = [tʲ] ũ_x`. |
 
 `FixedFieldPackage` fields and their sources:
 
@@ -65,8 +67,8 @@ RC2/RC11/RC13; `calibration`, `common_coordinate`, `base_zero`: RC15; `height_on
 | ex:sec7-nonvanishing | 1969–2004 | HL, BFH, Desjardins, ex:app-five-prime | RC13 | STATED-DEFS → OPEN once HL/BFH/Desjardins are stated |
 | ex:sec7-typed-graph, ex:sec7-symbol | 2006–2070 | (3.2), (3.8) | RC2 | STATED-DEFS (typed residue graphs, coefficient symbols) |
 | ex:sec7-coefficient-rules | 2102–2119 | ex:app-coefficient-rules | RC12 | STATED-DEFS |
-| ex:sec7-realization | 2151–2142 | CRT, Dirichlet, reciprocity | RC2 | OPEN once stated (finite) |
-| ex:sec7-seed-certificate | 2188–2177 | coefficient rules | RC2 | OPEN once stated (finite) |
+| ex:sec7-realization | 2151–2174 | CRT, Dirichlet, reciprocity | RC2 | OPEN once stated (finite) |
+| ex:sec7-seed-certificate | 2188–2207 | coefficient rules | RC2 | OPEN once stated (finite) |
 | ex:sec7-one/two-symbol-address | 2222–2271 | ex:app-simultaneous-address | RC2 | finite cores OPEN |
 | ex:sec7-even-upper (3.3b) | 2295–2318 | (3.2), seeds, Boolean bit degree | RC11 | inequality core OPEN |
 | ex:sec7-rough-companion (3.3) | 2343–2401 | HL, forward rank zero, (3.3b) | RC13 | STATED-DEFS (`L_*`) |
@@ -142,13 +144,13 @@ RC2/RC11/RC13; `calibration`, `common_coordinate`, `base_zero`: RC15; `height_on
 
 ## Printed leaves (cited results)
 
-Stated in `Prints` (all UNVERIFIED, pending reading):
+Stated in `Prints` (read; locators in each docstring):
 
 | leaf | locator as cited | used at |
 |---|---|---|
 | `PoleS12.BCDTThmA` | BCDT, Thm A and Introduction conds (1)–(6) | 1779 |
-| `KolyvaginThm1Printed` | Kolyvagin, MPI/90-69, Thm 1, pp. 4–5 | lem:forward-rank; 2617, 4020, 5250, 7626, 7780, 8272, 10111, 10279 |
-| `DokchitserThm18` | Dokchitser–Dokchitser, Crelle 658, Thm 1.8 | 1795–1797, 8249 |
+| `KolyvaginThm1Printed` | Kolyvagin, MPI/90-69, Thm 1, pp. 4–5 | lem:forward-rank; 2386–2387, 2616–2617, 4020, 4052, 5264–5266, 7625–7627, 7780–7781, 8267, 10140, 10279 |
+| `DokchitserThm18` | Dokchitser–Dokchitser, Crelle 658, Thm 1.8 | 1792–1796, 8248–8250 |
 | `CST.CSTThm11Split` | Cai–Shu–Tian, ANT 8 (2014), Thm 1.1 | 2428, 8268–8272, 9437–9444, 4337–4339 |
 
 Cited, not yet stated (definitions needed in parentheses):

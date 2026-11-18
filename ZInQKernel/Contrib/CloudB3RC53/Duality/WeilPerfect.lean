@@ -11,8 +11,8 @@ perfectness of the Weil pairing `e_m : E[m] × E[m] → μ_m` itself: both adjoi
 `E[m] → Hom(E[m], μ_m)` are bijective (`weilPairing_perfect`).
 
 Proof: `e_m` is nondegenerate (`WeierstrassCurve.torsionCoeffWeilPairing_nondegenerate`) and
-alternating, so both adjoints are injective; and `#Hom(T, μ_m) ≤ #T` for a finite abelian group
-`T`, since `μ_m ≃ ℤ/m` embeds in `ℂˣ` and a finite abelian group has at most `#T` complex
+alternating, so both adjoints are injective; and `|Hom(T, μ_m)| ≤ |T|` for a finite abelian group
+`T`, since `μ_m ≃ ℤ/m` embeds in `ℂˣ` and a finite abelian group has at most `|T|` complex
 characters (`AddChar.card_addChar_le`).
 
 **Classification.** GLUE, PROVED.
@@ -22,7 +22,7 @@ namespace ZInQ.Contrib.CloudB3RC53.Duality
 
 open TauCeti
 
-/-- A finite abelian group `T` has at most `#T` homomorphisms to `ℤ/n`. -/
+/-- A finite abelian group `T` has at most `|T|` homomorphisms to `ℤ/n`. -/
 theorem natCard_addMonoidHom_zmod_le (T : Type*) [AddCommGroup T] [Finite T] (n : ℕ) [NeZero n] :
     Nat.card (T →+ ZMod n) ≤ Nat.card T := by
   have hinj : Function.Injective

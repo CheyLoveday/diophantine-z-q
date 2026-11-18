@@ -26,7 +26,7 @@ and RankCounts areas)". This file proves:
 * `hvprim_of_triangular_model`: the same with the support triangle given as a triangular model
   (`triangular_coord`);
 * `card_twoTorsion_eq_two_pow` (genuine objects): for an elliptic curve over a field of
-  characteristic `≠ 2`, `#E(K)[2] = 2^t` with `t ≤ 2` — the exponent `t_p = dim_{𝔽₂} E[2]^{Fr_p}`
+  characteristic `≠ 2`, `|E(K)[2]| = 2^t` with `t ≤ 2` — the exponent `t_p = dim_{𝔽₂} E[2]^{Fr_p}`
   of tex L4029–4033, L4118–4138 (RC0's fields `hB`, `htp` with `tp p` this exponent, once the
   component number is identified with `#Ẽ(𝔽_p)[2]`, Edixhoven Thm 5.3 and Rem 5.4.1: GLUE, the
   component groups of Néron models are not in the library).
@@ -114,7 +114,7 @@ theorem hvprim_of_triangular_model {n : ℕ} {κ : Type*} [Fintype κ] [Decidabl
 
 /-! ### The two-torsion exponent `t_p` -/
 
-/-- **`#E(K)[2] = 2^t` with `t ≤ 2`** for an elliptic curve over a field in which `2` is
+/-- **`|E(K)[2]| = 2^t` with `t ≤ 2`** for an elliptic curve over a field in which `2` is
 invertible (genuine objects): `E(K)[2]` embeds in `E(Kˢ)[2]`, which has four elements. This is the
 exponent `t_p = dim_{𝔽₂} E[2]^{Fr_p}` of tex L4029–4033, L4118–4138 at a residue field `𝔽_p`. -/
 theorem card_twoTorsion_eq_two_pow {K : Type*} [Field K] [DecidableEq K] (W : WeierstrassCurve K)

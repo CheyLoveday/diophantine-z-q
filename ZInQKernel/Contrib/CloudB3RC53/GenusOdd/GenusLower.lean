@@ -5,11 +5,11 @@ import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.Arith
 /-!
 # GenusOdd: Proposition `ex:sec7-genus-lower`, identity (3.4) (tex L2403–2439)
 
-**Known issue K3** (`docs/research/mcheck-rc-app.md`, section K3): (3.4) needs Cai–Shu–Tian
+**Known issue K3**: (3.4) needs Cai–Shu–Tian
 Theorem 1.1 in a form whose conductor factor is `c √|disc K|` with no other dependence on `c` or
 `K`, with the unaveraged sum and the height relative to `K`. That form is exactly the printed leaf
-`Prints.cst` (`CST.CSTThm11Split`), stated UNVERIFIED (pending reading) in `Prints/CST.lean`; it is
-used here as stated and is **not** reconstructed or re-proved (ruling recorded in the RC53 notes).
+`Prints.cst` (`CST.CSTThm11Split`), stated in `Prints/CST.lean` (Theorem 1.1 read, arXiv:1408.1733v2,
+p. 2); it is used here as stated and is **not** reconstructed or re-proved.
 No Gross–Zagier argument of our own enters.
 
 ## The objects (tex L2403–2415)

@@ -17,8 +17,8 @@ types, over `PowerSeries ℚ_[2]`, with `eps q = q⁻⁴`:
 
 * `commonCoordinate_h47_of_models`: from triangular models of the support triangle at each
   relaxation step (`prod_relax_of_models`, `Triangular.lean`), whose old-part cycle and functional
-  relations are the norm identity and `λ_R ∘ i = e_q λ_P` (`pairedFunctional_natural`,
-  `Naturality.lean`; the content of Nekovář 6.4.1–6.4.3, proved for the abstract model);
+  relations are the norm identity and `λ_R ∘ i = e_q λ_P` (hypotheses of the models;
+  the headline does not import `Naturality.lean`, so on the headline's route they are assumed);
 * `lamUnit_inv_odd_pow`: for odd `q`, `ε_q = q⁻⁴` is a `Λ`-unit (tex L4192–4193: "`q^{-4}` is one
   also").
 

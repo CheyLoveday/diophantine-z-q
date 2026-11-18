@@ -10,7 +10,7 @@ interfaces take the functional's integrality through argument types rather than 
 hypothesis. This file restates those argument shapes verbatim, as conclusions about the closed
 functional `λ_z = pairedFunctional pd2 e.inv (c z)` produced by `PairedFunctionalIntegral`. The
 interface files are not imported; the copied text and its source are recorded in each docstring
-(RC interface files at `79c2699a5`).
+(RC interface files, copied verbatim).
 
 Nodes (GLUE, PROVED):
 * `exists_closed_pairedFunctional`: the hypotheses of `PairedFunctionalIntegral` give an

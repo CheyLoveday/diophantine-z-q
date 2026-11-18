@@ -92,7 +92,8 @@ end BlockComplex
 
 /-! ### The identification against `SelData` -/
 
-/-- **The single identification, phrased against `SelData`** (GLUE): the fields of
+/-- **The single identification, phrased against `SelData`** (ELLIOT; while `SelData` is abstract
+the Selmer clause is vacuous: `trivialSel` meets it for every `D`): the fields of
 `Identification`, together with Selmer data `sel` over `𝒪[G]` and a quasi-isomorphism from the
 remaining complex `D` to the Selmer complex of `sel` (the new-local cancellation is a homotopy
 equivalence, tex 5509–5513).

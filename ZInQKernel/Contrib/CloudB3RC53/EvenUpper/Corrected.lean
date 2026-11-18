@@ -13,6 +13,9 @@ chosen after the Boolean comparison. All `PROVED`:
 * `evenUpperRC11InputsNI_of`: RC0's inputs give the corrected ones;
 * `evenUpper33b_of_RC11InputsNI`: `∃ C₁, EvenUpper33b W C₁` from the corrected inputs, through
   `evenUpperInputsAt_of'` and the proved Kummer sequence in rank zero.
+
+Since round 4, RC0's `EvenUpperRC11Inputs` body equals `EvenUpperRC11InputsNI`, and
+`evenUpperRC11InputsNI_of` is the identity: this file is kept as an alias of that body.
 -/
 
 noncomputable section

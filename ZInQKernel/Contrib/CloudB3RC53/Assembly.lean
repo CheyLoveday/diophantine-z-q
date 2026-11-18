@@ -11,7 +11,9 @@ import ZInQKernel.Contrib.CloudB3RC53.Nodes
 * `restrictedConverseGenuine_of_nodes`: **Theorem 5.3** from `Prints`, `BranchPackageNode` and
   `MissingAddressNode`, following tex L5666–5741: choose `M, b` as in (5.10); if `L'(E/K, 1) = 0`
   the base-zero lemma gives `ũ_0(0) = 0`, and the missing address `x ≠ 0` then has
-  `v₂ ũ_x(0) ≥ M - 2c > B`, contradicting the upper bound.
+  `v₂ ũ_x(0) ≥ M - 2c > B`, contradicting the upper bound. (`BranchPackageNode` is equivalent to
+  Theorem 5.3 given `Prints`; it is discharged by `RC.Wiring.branchPackageNode_of_leaves`, and the
+  reduction is `RC.Wiring.restrictedConverseGenuine_of_leaves`.)
 -/
 
 noncomputable section
@@ -78,7 +80,10 @@ theorem finalRankDeductionNode_proof : FinalRankDeductionNode := by
     simp [this]
 
 /-- **Theorem 5.3 (`hyp:RC`) from the printed leaves and the two open nodes**, following the
-manuscript's top-level argument (tex L1792–1796, L2587–2602, L5666–5741). -/
+manuscript's top-level argument (tex L1792–1796, L2584–2603, L5647–5739). (`BranchPackageNode`
+is equivalent to Theorem 5.3 given `Prints`; it is discharged by
+`RC.Wiring.branchPackageNode_of_leaves`, and the reduction is
+`RC.Wiring.restrictedConverseGenuine_of_leaves`.) -/
 theorem restrictedConverseGenuine_of_nodes (P : Prints) (hBr : BranchPackageNode)
     (hMA : MissingAddressNode) : RestrictedConverseGenuine := by
   intro ℓ hℓ hsf hmod hSel

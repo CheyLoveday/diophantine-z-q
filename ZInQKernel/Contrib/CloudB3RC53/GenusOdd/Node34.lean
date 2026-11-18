@@ -5,8 +5,8 @@ import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.GenusLower
 
 * `GenusLower34` / `genusLower34_proof` (Proposition `ex:sec7-genus-lower`, (3.4), tex L2418–2439):
   PROVED from `Prints` and the GLUE `Glue34`, plus the rationality of the fixed `L_*(h_*)`
-  (Manin–Drinfeld, cited through Elkik in the RC print list; explicit hypothesis `hElkikMD`).
-  **Known issue K3** (mcheck-rc-app.md): `Prints.cst` is used as stated, not reconstructed.
+  (Birch–Manin rationality via modular symbols, with Manin–Drinfeld; explicit hypothesis
+  `hElkikMD`). **Known issue K3**: `Prints.cst` is used as stated, not reconstructed.
 * `GzEveryCompanion` / `gzEveryCompanion_genuine`: (3.4) at every `(h, k')`, the hypothesis of
   `AppGEndpoints.FinalFamilyField` (text copied from the AppGEndpoints lane, `RCTarget.lean`), at
   the genuine `Prepared`, `AnalyticRank · 1`, `LstarQ`, `jgenOf`, `jrcOf`, `Companion`, `C_per = 0`.

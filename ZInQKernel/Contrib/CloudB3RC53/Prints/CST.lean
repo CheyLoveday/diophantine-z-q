@@ -12,8 +12,9 @@ twice", with the conditions of L2429–2432) and at L8268–8272 (proof of Propo
 `ex:app-detector`: "the unaveraged height formula", with Rankin derivative
 `L'(E^{(D_w)},1) L(E^{(h_*)},1) ≠ 0`, so `P_{D_w}` is nontorsion). Bibitem L11181–11183:
 L. Cai, J. Shu and Y. Tian, "Explicit Gross–Zagier and Waldspurger formulae", Algebra & Number
-Theory 8 (2014), arXiv:1408.1733. **Not read for this file**: every clause below is
-UNVERIFIED (pending reading). No proof of the theorem and no Gross–Zagier argument is written here.
+Theory 8 (2014), arXiv:1408.1733. Theorem 1.1 was read (arXiv:1408.1733v2, p. 2); the clauses
+below are its special case `µ(N, D) = 0`, `u = 1`. No proof of the theorem and no Gross–Zagier
+argument is written here.
 
 ## What is stated: `CSTThm11Split`
 
@@ -38,8 +39,8 @@ A special case (never stronger) of Theorem 1.1, in the domain the manuscript use
 
 Conclusion: there is `C > 0` depending only on `(E, f, Lat, κ)` such that
 `L'(1, E, χ) = C / (c √|D|) · ĥ_K(P_χ)` for all such `(K, c, χ, [A,B,C], ι, y)`. The print has
-`C = 8π² (f, f)_{Γ₀(N)} / deg φ` (Theorem 1.1 of arXiv:1408.1733v2, p. 2, with `µ(N,D) = 0` and `u = 1`;
-UNVERIFIED): the Petersson norm and `deg φ` are fixed by `(E, f, Lat, κ)`, so the existential `C`
+`C = 8π² (f, f)_{Γ₀(N)} / deg φ` (Theorem 1.1 of arXiv:1408.1733v2, p. 2, with `µ(N,D) = 0` and `u = 1`):
+the Petersson norm and `deg φ` are fixed by `(E, f, Lat, κ)`, so the existential `C`
 is a consequence of the print, and it is what both manuscript uses need (L2428: the ratio of two
 instances, L2433–2436; L8269: nonvanishing ⇔ nontorsion).
 
@@ -281,8 +282,9 @@ level `N` and discriminant `Dc²`, every embedding `ι : H_c → ℂ` and every 
 `ĥ_K(Σ_t χ(t) P_t) = [H_c : K]⁻¹ Σ_{t,t'} χ(t) conj χ(t') ⟨P_t, P_{t'}⟩_{H_c}`.
 
 Provenance (b), cited by the manuscript (bibitem `cst`, L11181–11183; cited L2428, L8269).
-Rating: printed form, special case, over written-fresh definitions; UNVERIFIED (pending reading),
-counts GLUE. -/
+Rating: PRINT, special case of arXiv:1408.1733v2, Theorem 1.1, p. 2, over written-fresh
+definitions. The analytic CM-point/parametrization and local-series dictionaries are GLUE
+translations. -/
 def CSTThm11Split : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic]
     (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2),

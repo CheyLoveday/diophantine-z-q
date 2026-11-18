@@ -3,25 +3,27 @@ import ZInQKernel.Contrib.CloudB3RC53.Prints
 /-!
 # RC53 blueprint: the top-level nodes of the proof of Theorem 5.3
 
-The top-level deduction of Theorem 5.3 (tex L1792–1796, L2593–2602, L5666–5741; restated at
+The top-level deduction of Theorem 5.3 (tex L1792–1796, L2584–2603, L5647–5739; restated at
 L10862–10935) is:
 
 1. **Root number.** Selmer parity gives `w(E_ℓ) = -1` (`RootNumberNode`, tex L1792–1796), so
    `L(E_ℓ, 1) = 0` (`CentralValueZeroNode`).
 2. **Branch 1 / Branch 2** (`BranchPackageNode`, Sections 7–9 and Appendices E–G). Either the
    odd limit symbol is a unit at the empty configuration, and visibility (O.8) at `D = 1` gives
-   `ord_{s=1} L(E_ℓ, s) = 1` directly (tex L2587–2592); or there is a final companion `k` with
+   `ord_{s=1} L(E_ℓ, s) = 1` directly (tex L2584–2589); or there is a final companion `k` with
    `L(E^{(k)}, 1) ≠ 0` and, for every precision `M` and binary dimension `b` chosen as in (5.10),
    the corrected coordinates `ũ_x` (`x ∈ 𝔽₂^b`) with the fixed-field clearing identity (5.9), the
    uniform upper bound `v₂ ũ_x(0) ≤ B` at `x ≠ 0` from (3.9), (3.4), (4.6), (4.7), and the
-   base-zero lemma `ex:arith-base-zero`. This package is `FixedFieldPackage`.
+   base-zero lemma `ex:arith-base-zero`. This package is `FixedFieldPackage`. Its coefficient data
+   are existential at this layer (see `FixedFieldPackage`); the tie to the genuine `ũ_x` is
+   `RCSteps.clearing` in the reduction `RC.Wiring.restrictedConverseGenuine_of_leaves`.
 3. **Missing address** (`MissingAddressNode`, tex L5666–5735, (5.10)–(5.11)): from the clearing
    identity, the pole bound, the regular base and the numerical choices (5.10), some `x ≠ 0` has
    `v₂(ũ_x(0) - ũ_0(0)) ≥ M - 2c`.
 4. **Final deduction** (`FinalRankDeductionNode`, tex L5734–5736, L10922–10924): with the root
    number `−1` of step 1, if `L'(E/K,1) ≠ 0` and `L(E^{(k)},1) ≠ 0`, then `ord_{s=1} L(E,s) = 1`.
 
-The coordinates `ũ_x` live in `Λ[1/2]`, `Λ = ℤ₂[[t]]` (tex L5719–5721), and `f, d` in `𝒪[G]`,
+The coordinates `ũ_x` live in `Λ[1/2]`, `Λ = ℤ₂[[t]]` (tex L2747–2748, L5703–5704), and `f, d` in `𝒪[G]`,
 where `𝒪` is the `2`-adic completion of `Λ_{(2)}` (Laurent series `Σ_{i ∈ ℤ} aᵢ tⁱ`, `aᵢ ∈ ℤ₂`,
 `aᵢ → 0` as `i → -∞`) and `G = 𝔽₂^b` is the sign group. They are recorded by coefficients:
 `CoordData.F g i` is the `tⁱ`-coefficient of the `g`-component of `f`, likewise `D` for `d`, and
@@ -83,7 +85,7 @@ structure CoordData (b : ℕ) where
 
 /-- **The clearing identity (5.9)** `f_x ũ_x = d_x` at every character `x`, with `f ∈ 𝒪[G]`
 (coefficients tending to `0` at `-∞`) and `ũ_x ∈ Λ[1/2]` (bounded denominators), as a convergent
-convolution of coefficients (tex L5491–5496, L5719–5729). -/
+convolution of coefficients (tex L5492–5497, L5710–5715). -/
 def ClearingIdentity {b : ℕ} (C : CoordData b) : Prop :=
   (∀ g, Tendsto (C.F g) atBot (𝓝 0)) ∧
   (∃ e : ℕ, ∀ x j, ‖C.u x j‖ ≤ (2 : ℝ) ^ e) ∧
@@ -101,19 +103,19 @@ def BaseRegular {b : ℕ} (C : CoordData b) (c : ℕ) : Prop :=
   (∀ i : ℤ, i < 0 → signEval C.F 0 i = 0) ∧ signEval C.F 0 0 ≠ 0 ∧
     (signEval C.F 0 0).valuation = c
 
-/-- **The uniform upper bound at nonzero addresses** (tex L5730–5733, from (3.9), (3.4), (4.6)
+/-- **The uniform upper bound at nonzero addresses** (tex L5729–5732, from (3.9), (3.4), (4.6)
 and (4.7)): `v₂ ũ_x(0) ≤ B` for every `x ≠ 0`. -/
 def UpperBound {b : ℕ} (C : CoordData b) (B : ℕ) : Prop :=
   ∀ x, x ≠ 0 → (2 : ℝ) ^ (-(B : ℤ)) ≤ ‖C.u x 0‖
 
-/-- **The base-zero conclusion** (Lemma `ex:arith-base-zero`, tex L4321–4373): if
+/-- **The base-zero conclusion** (Lemma `ex:arith-base-zero`, tex L4330–4376): if
 `L'(E/K, 1) = 0`, then `ũ_0(0) = 0`. -/
 def BaseZero {b : ℕ} (E : WeierstrassCurve ℚ) (k : ℚ) (C : CoordData b) : Prop :=
   ProductOrderGeTwo E k → C.u 0 0 = 0
 
 /-- **The fixed-field package of the remaining branch** (Branch 2). A final companion `k` with
 `L(E^{(k)}, 1) ≠ 0` (tex L2595–2600), constants `B`, `c_det` and a pole bound `L_T(M)` fixed
-before the binary dimension (tex L5497–5499, L5655–5662, L5730–5731), and, for every `M, b` as in
+before the binary dimension (tex L5497–5499, L5641–5643, L5650–5653, L5729–5730), and, for every `M, b` as in
 (5.10) with `b` beyond a threshold `b₀`, coefficient data with the clearing identity, the pole bound, a regular base with
 `c ≤ c_det`, the upper bound `B` and the base-zero conclusion.
 
@@ -135,7 +137,7 @@ structure FixedFieldPackage (E : WeierstrassCurve ℚ) where
   /-- `L_T(M) = 16(d_K + 5)M`. -/
   LT : ℕ → ℕ
   /-- The threshold beyond which the binary family (3.9) exists ("for every sufficiently large
-  `b`", tex L2679, L10794). -/
+  `b`", tex L2678, L10794–10795). -/
   b0 : ℕ
   /-- For every `M, b` as in (5.10) with `b ≥ b₀`, the coefficient data. -/
   coord : ∀ M b : ℕ, cdet < M → B + 2 * cdet < M → (LT M + 2) * (2 ^ M - 1) < b → b0 ≤ b →
@@ -145,8 +147,8 @@ structure FixedFieldPackage (E : WeierstrassCurve ℚ) where
 /-- **Branch 1 or the fixed-field package** (Sections 7–9 and Appendices E–G): for `ℓ` in the
 domain of Theorem 5.3 with `corank_{ℤ₂} Sel_{2^∞}(E_ℓ/ℚ) = 1`, either `E_ℓ` has analytic rank one
 (Branch 1: the odd limit symbol is a unit at the empty configuration and (O.8) applies at `D = 1`,
-tex L2587–2592, L10258–10273), or the fixed-field package of Branch 2 exists. This node bundles
-Elliot's constructions of Sections 7–9 and Appendices E–G; `DAG.md` lists its sub-nodes.
+tex L2584–2589, L10258–10273), or the fixed-field package of Branch 2 exists. This node is the
+conclusion of Elliot's constructions of Sections 7–9 and Appendices E–G; `DAG.md` lists its sub-nodes.
 
 At this layer the coefficient data `C` are existential and are not tied to the genuine coordinates
 `ũ_x`: constant data inhabit the package as soon as `L(E^{(k)},1) ≠ 0` and `¬ ProductOrderGeTwo E

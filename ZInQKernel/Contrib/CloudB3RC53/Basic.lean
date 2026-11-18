@@ -16,9 +16,9 @@ objects that the top-level deduction of the proof talks about:
   convention of `ZInQ.Manuscript.AnalyticRankOne` (`analyticRank_one_iff`).
 * `completedL N F s = N^{s/2} (2π)^{-s} Γ(s) F(s)` and `RootNumber E w`: the functional equation
   `Λ(2 - s) = w Λ(s)` on the critical strip `0 < Re s < 2` (where `Γ` has no pole), for some level
-  `N > 0` and some entire continuation of `L(E, s)`. The sign `w` is the root number of tex L1797.
+  `N > 0` and some entire continuation of `L(E, s)`. The sign `w` is the root number of tex L1792–1796.
 * `ProductOrderGeTwo E k`: `ord_{s=1} L(E,s) L(E^{(k)},s) ≥ 2`, i.e. `L'(E/K, 1) = 0` for
-  `K = ℚ(√k)` once `L(E,1) = 0` (tex L4321–4326, L5732–5741, with `L(E/K,s) = L(E,s) L(E^{(k)},s)`
+  `K = ℚ(√k)` once `L(E,1) = 0` (tex L4330–4334, L5734–5736, with `L(E/K,s) = L(E,s) L(E^{(k)},s)`
   read as the definition of the left side; the base change `L`-function of `E/K` is not in
   Mathlib).
 
@@ -71,15 +71,15 @@ def completedL (N : ℕ) (F : ℂ → ℂ) (s : ℂ) : ℂ :=
 `0 < Re s < 2`. (On the strip `Γ(s)` and `Γ(2 - s)` have no poles, so no convention for `Γ` at
 its poles enters; the identity theorem extends the equation to all of `ℂ` for the genuine `Λ`.)
 For the conductor `N` of `E` this is the functional equation of a modular elliptic curve, and `w`
-is the global root number `w(E) ∈ {±1}` of tex L1797. -/
+is the global root number `w(E) ∈ {±1}` of tex L1792–1796. -/
 def RootNumber (E : WeierstrassCurve ℚ) (w : ℤ) : Prop :=
   ∃ N : ℕ, 0 < N ∧ ∃ F : ℂ → ℂ, IsLContinuation E F ∧
     ∀ s : ℂ, 0 < s.re → s.re < 2 → completedL N F (2 - s) = (w : ℂ) * completedL N F s
 
 /-- **`ord_{s=1} L(E,s) L(E^{(k)},s) ≥ 2`**: some entire function agrees with the product of the
 two `L`-series on `Re s > 3/2` and vanishes to order at least two at `s = 1`. With
-`L(E/ℚ(√k), s) = L(E, s) L(E^{(k)}, s)` (tex L5739–5740) this is `L'(E/K, 1) = 0` when
-`L(E/K, 1) = 0`, the hypothesis of Lemma `ex:arith-base-zero` (tex L4321–4326). -/
+`L(E/ℚ(√k), s) = L(E, s) L(E^{(k)}, s)` (tex L5736) this is `L'(E/K, 1) = 0` when
+`L(E/K, 1) = 0`, the hypothesis of Lemma `ex:arith-base-zero` (tex L4330–4334). -/
 def ProductOrderGeTwo (E : WeierstrassCurve ℚ) (k : ℚ) : Prop :=
   ∃ F : ℂ → ℂ, Differentiable ℂ F ∧
     (∀ s : ℂ, 3 / 2 < s.re → F s = E.LSeries s * (qtwist E k).LSeries s) ∧
