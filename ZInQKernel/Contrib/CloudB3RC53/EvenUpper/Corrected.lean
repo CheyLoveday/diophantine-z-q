@@ -32,13 +32,10 @@ def EvenUpperRC11InputsNI {ℓ : ℕ} (W : WData ℓ) : Prop :=
       ∀ b : ℕ, ∃ fam : Even.BinaryFamily N₀, b ≤ fam.b ∧ fam.h 0 = d ∧
         ∀ x, x ≠ 0 → unitSym (fam.h x))
 
-/-- RC0's inputs give the corrected ones (`PROVED`). -/
+/-- RC0's inputs are the corrected ones (`PROVED`: RC0's `EvenUpperRC11Inputs` no longer asks
+the cube parameters to be distinct, so the two bodies are identical). -/
 theorem evenUpperRC11InputsNI_of {ℓ : ℕ} (W : WData ℓ) (h : EvenUpperRC11Inputs W) :
-    EvenUpperRC11InputsNI W := by
-  obtain ⟨unitSym, C₀, N₀, h33a, h32, hcubes⟩ := h
-  refine ⟨unitSym, C₀, N₀, h33a, h32, fun d hd hp hc b => ?_⟩
-  obtain ⟨fam, hb, h0, -, hu⟩ := hcubes d hd hp hc b
-  exact ⟨fam, hb, h0, hu⟩
+    EvenUpperRC11InputsNI W := h
 
 /-- **(3.3b) from the corrected inputs** (`PROVED`: `evenUpperInputsAt_of'` and
 `evenUpper33b_of_inputsAt`, with the Kummer sequence in rank zero proved). -/

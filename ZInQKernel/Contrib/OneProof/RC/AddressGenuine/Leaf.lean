@@ -1,6 +1,6 @@
 import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.Assembly
 import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.GaloisModel
-import ZInQKernel.Contrib.OneProof.RC.Wiring.Leaves
+import ZInQKernel.Contrib.OneProof.RC.Wiring.CompanionLeaf
 
 /-!
 # Theorem 5.3, Lane RC24: the address leaf over the genuine objects

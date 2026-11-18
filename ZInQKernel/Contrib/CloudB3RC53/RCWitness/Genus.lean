@@ -64,7 +64,7 @@ theorem preDataSpec_W₀ (ℓ : ℕ) (c a : ℤ) : PreDataSpec (W₀ ℓ c a) wh
 
 theorem preparedSpec_W₀ (ℓ : ℕ) (c a : ℤ) : PreparedSpec (W₀ ℓ c a) := by
   rintro h rfl
-  refine ⟨one_pos, fun p hp hd => ?_⟩
+  refine ⟨one_pos, squarefree_one, rfl, fun p hp hd => ?_⟩
   have hp' : p.Prime := (preDataSpec_W₀ ℓ c a).support_prime p hp
   have : (p : ℤ) ∣ 1 := hd
   exact hp'.one_lt.ne' (by exact_mod_cast Int.eq_one_of_dvd_one (by positivity) this)
