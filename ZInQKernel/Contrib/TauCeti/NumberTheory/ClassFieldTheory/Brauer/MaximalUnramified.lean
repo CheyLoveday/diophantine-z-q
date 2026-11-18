@@ -139,6 +139,8 @@ private theorem exists_relBrInfl_eq_layerInv_eq (f g : ℕ+) (hfg : (f : ℕ) �
     have : IsUnramified K (𝓤 g) := isUnramified_unramifiedExtension g.ne_zero
     have : ValuativeExtension (𝓤 f) (𝓤 g) :=
       algebraicExtension_valuativeExtension_tower K (𝓤 f) (𝓤 g)
+    rw [← unramifiedInv_eq_layerInv K g,
+        ← unramifiedInv_eq_layerInv K f]
     exact unramifiedInv_map K (𝓤 f) (𝓤 g) y
 
 /-- The classes inflated from the degree-`f` unramified extension are inflated from the degree-`g`
