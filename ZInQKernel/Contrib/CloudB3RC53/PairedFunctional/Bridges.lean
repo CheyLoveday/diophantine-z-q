@@ -107,7 +107,7 @@ theorem twoTermClosedRow_proof : TwoTermClosedRow := by
 /-- **RC16 `hβ`: the functional exponent bound** (consumer: `RC/Uniform/OuterContradiction.lean`
 `terminal_lower_bound`, hypothesis
 `(hβ : ∀ᶠ j in (𝒰 : Filter ι), (((-a : ℤ)) : WithTop ℤ) ≤ v (β j))`, tex 4957–4962; gap B2-b of the
-host check). Let `v : AddValuation K (WithTop ℤ)` and, for each index `j`, an integral ring `S j`
+independent manuscript check). Let `v : AddValuation K (WithTop ℤ)` and, for each index `j`, an integral ring `S j`
 with a map `φ j : S j → K` landing in the valuation ring (`0 ≤ v (φ j s)`), a closed `S j`-linear
 functional `lam j` (the integral representative of `ex:arith-paired-functional`, with exponent
 `a = 0`, tex L3864–3869) and a vector `x j`. Then `β j = φ j (lam j (x j))` satisfies `hβ` for

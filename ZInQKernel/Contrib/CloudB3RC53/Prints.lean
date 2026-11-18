@@ -7,7 +7,7 @@ import ZInQKernel.Contrib.OneProof.PoleS12.Leaves
 
 `RC53.Prints` bundles one `Prop` per cited published result that this blueprint states over
 genuine definitions. Each is stated in the printed form in which the manuscript cites it, with its
-locator as the manuscript gives it. No print was read for this file (no network): **every locator
+locator as the manuscript gives it. No print was read for this file: **every locator
 is UNVERIFIED (pending reading)**, so each leaf counts as GLUE until a statement check clears it.
 
 Project rule (issue #74, decision 3): Gross–Zagier enters only through the printed leaves
@@ -32,7 +32,6 @@ open ZInQ.Manuscript ZInQ.Manuscript.SelmerTwoPower ZInQ.Manuscript.PoleS12
 bibitem: V. A. Kolyvagin, "On the Mordell–Weil group and the Shafarevich–Tate group of modular
 elliptic curves", MPIM preprint MPI/90-69 (1990)). A modular elliptic curve `E/ℚ` with
 `ord_{s=1} L(E, s) = r ≤ 1` has `rank E(ℚ) = r` and finite `Ш(E/ℚ)` (`SelmerTwoPower.sha`).
-Same statement as the fleet's `KolyvCST.KolyvaginThm1Printed` (branch `wip/kolyv-cst-printed`).
 UNVERIFIED (pending reading). Used in the proof of Theorem 5.3 through `lem:forward-rank`
 (tex L2376, L2617, L4020, L5250, L7626, L7780, L8272, L10111, L10279). -/
 def KolyvaginThm1Printed : Prop :=
@@ -57,14 +56,14 @@ def DokchitserThm18 : Prop :=
 Fields are added as further prints are stated (see `DAG.md`). -/
 structure Prints : Prop where
   /-- Breuil–Conrad–Diamond–Taylor, Theorem A (tex L1779 `\cite[Theorem A and Introduction,
-  conditions (1)–(6)]{bcdt}`): every elliptic curve over `ℚ` is modular. The fleet's
+  conditions (1)–(6)]{bcdt}`): every elliptic curve over `ℚ` is modular. This is
   `PoleS12.BCDTThmA`. UNVERIFIED. -/
   bcdt : BCDTThmA
   /-- Kolyvagin, Theorem 1 (`r ≤ 1`). UNVERIFIED. -/
   kolyvagin : KolyvaginThm1Printed
   /-- Dokchitser–Dokchitser, Theorem 1.8. UNVERIFIED. -/
   dd : DokchitserThm18
-  /-- Cai–Shu–Tian, Theorem 1.1, split case (the fleet's `CSTThm11Split`). UNVERIFIED. -/
+  /-- Cai–Shu–Tian, Theorem 1.1, split case (`CSTThm11Split`). UNVERIFIED. -/
   cst : CST.CSTThm11Split
 
 end ZInQ.Contrib.CloudB3RC53
