@@ -1,0 +1,41 @@
+{
+  "name": "cm-curve-order",
+  "mode": "hand-fold relative to cm-fold-rebase open77; use the new research bundle and top directly if integrating on open76",
+  "imports": ["ZInQKernel.Contrib.OneProof.CMCurveOrder.Fold"],
+  "replaces": {
+    "at": "HDec.HSyn.sixContactMin_of_open77_cm r t l",
+    "by": "HDec.HSyn.sixContactMin_of_open78_cm r t l",
+    "bundle_change": "HDec.HSyn.OpenResearchLeaves58CM -> HDec.HSyn.OpenResearchLeaves59CMFS"
+  },
+  "discharged": [
+    {
+      "bundle": "research",
+      "field": "cmFibreSplit",
+      "type": "_root_.HDec.CMBranch.CMFibreSplit",
+      "kind": "glue",
+      "flag": "ELLIOT (thm:height, L520–562 and L582–586); now proved from the chain's existing inputs",
+      "by": "HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder324 at open4 in HDec.HSyn.sixContactMin_of_open4_hf_pz_eb_cmorder",
+      "uses_existing": [
+        "hYu: YuB6Alg (T27)",
+        "t.t6: HomFreeFiniteC (T6)",
+        "G2: fibreCoverExists_of_propTSAll' t.t5 (...) unramifiedConjugates_proved",
+        "r.r7a: NeronOggShafarevich",
+        "r.r6: RaynaudCriterionNF",
+        "t.t5: TorsionStructure"
+      ],
+      "new_leaves": [],
+      "new_glue": []
+    }
+  ],
+  "leaves": [],
+  "glue": [],
+  "proved_here": [
+    "HDec.CMBranch.FibreSplit.cmCurveOrder324_of (verbatim CMCurveOrder from commit 324f0655a)",
+    "HDec.CMBranch.FibreSplit.cmCurveOrder_of_324 (surface specialization for the current consumer)",
+    "HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder324"
+  ],
+  "counts": {
+    "before": "H strict LEAF/GLUE 5/28 on 33",
+    "after": "H strict LEAF/GLUE 5/27 on 32"
+  }
+}
