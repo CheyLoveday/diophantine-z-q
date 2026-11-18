@@ -339,7 +339,7 @@ theorem genuine_switchCoordinates_char2_ur (h2 : (2 : k) = 0) (X : GenuineSwitch
 
 end Genuine
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section NonVacuity
 
