@@ -1,5 +1,10 @@
 # Derived Kummer: local duality and the remaining comparison interface
 
+
+## Correction after independent review (2026-11-18)
+
+The premise `hred` of `actualCup_divisible_of_print` and `kummerTruncIsotropy_from_print` is, as typed, equivalent to pointwise vanishing of the integral function it is applied to, once the printed local duality is supplied (`reductionPremise_iff_zero` in `Circularity.lean`). It therefore restates the trace-vanishing goal and is not an independent reduction-identification input: these two declarations are conditional wrappers around the still-open trace-vanishing statement. What is needed instead is a set of fixed, genuine finite-level coefficient, cochain and class reduction maps, their Kummer-image identifications and the cup-invariant compatibility for those maps, from which the displayed equality is derived. The finite-duality results (the exact Kummer annihilator, the mod-two comparisons, the degree-zero identification) and the comparison algebra are unaffected. The `MANIFEST.json` and standalone audit sources mentioned below are not shipped with this edition.
+
 ## Result and scope
 
 The three production modules compile individually. They prove the exact Kummer annihilator assertion, the actual quotient-to-dual comparison over F₂, its degree-two component dual to the retained rational two-torsion, and the canonical degree-zero torsion identification. They also supply a torsion-preserving comparison for a presented derived reduction and the comparison-cone algebra needed by derived Nakayama.
