@@ -59,10 +59,14 @@ polynomial. It is retired and kept at the tag
 - **One theorem, [`ZInQ.OneProof.frozenTarget`](ZInQKernel/OneProof/Main.lean), proves `ZInQ.FrozenTarget` from
   30 open hypotheses, statements not yet proved in Lean.** Lean's kernel checks it with no `sorry` and only the
   standard axioms `propext`, `Classical.choice` and `Quot.sound`. Everything else, including every finite
-  computation, is proved in Lean. So far only the project's own machines have run this check: no hosted runner or
-  third party has finished a build of the theorem ([#62](https://github.com/Deicyde/diophantine-z-q/issues/62)).
-  The [main build cache](.github/workflows/main-build-cache.yml) workflow builds it after each push to `main` and,
-  once a build finishes, fails unless the axioms are among these three.
+  computation, is proved in Lean. Since 2026-11-18 GitHub's hosted runners run this check too: the
+  [main build cache](.github/workflows/main-build-cache.yml) workflow builds the theorem after a push to `main`
+  that changes Lean and fails unless its axioms are among these three. Its
+  [first passing run](https://github.com/Deicyde/diophantine-z-q/actions/runs/44219370755) was at `be73b91c`, and
+  its [run list](https://github.com/Deicyde/diophantine-z-q/actions/workflows/main-build-cache.yml) shows the
+  commits it has passed on since ([#62](https://github.com/Deicyde/diophantine-z-q/issues/62)). The
+  [build-cost table](docs/one-proof/CONTRIBUTING.md#what-it-costs-to-build) has no build by anyone outside the
+  project yet.
 - **The hypotheses are premises, not axioms:** Lean proves "if they all hold, then ℤ is Diophantine in ℚ". 29 belong
   to the six-contact height estimate (the manuscript's Theorem 4.1). The other one is pole completeness (the
   manuscript's Theorem 5.2), which is the manuscript's own claim and not a published theorem. Of the 29, 12 are
