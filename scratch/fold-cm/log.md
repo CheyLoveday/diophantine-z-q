@@ -64,3 +64,29 @@ OpenStatements 34; render_open: **33 H hypotheses, strict 5/28, strictest 5/28**
 the copied structures), no error; autoform check exit 0 (776 articles, 647 fully proved); gate.sh GATE=ok.
 Remaining GR-named constants in the closure (48): bundle fields `gonzalezRotgerX6Ab` (filled from x6CoarseModuli) and
 `gonzalezRotgerProp56X6` of the `_r5` copies (component 2's scope).
+
+## 7. Component 2 folded (VERIFIED)
+Merge 9a2bbbe3f (037839574): clean, all files added; hygiene: scratch/y3-x6b/MainDryRun.lean renamed .lean.txt; no host
+path, no vendored code. Generators: gen_y3live.py (y3-x6b's gen_y3b.py imported; GR9 entries replaced by the live
+`_sf_u_c8` / `_sf_u` copies; suffix `_y3c` since y3-x6b's `_y3` names exist in Contrib/OneProof/Y3X6/Copy*) ->
+OneProof/H/Y3Copy1-6 (274 blocks; first compile failed on one reference to the deleted live 35->34 conversion inside
+the `_cm` top chain theorems; those three (open72_sf_u_hm_cm, open79_hm_cm, open80_cm) added to DELETE; second compile
+EXIT 0); gen_top_y3.py -> OneProof/H/Y3Open.lean + TailZ89.lean (OpenResearchLeaves63, sixContactMin_of_open82; standard
+axioms first try; TailZ89 imports TailZ88 so no constant leaves the environment); fold_main2.py -> Main.lean + kinds.tsv
+(-x6CoarseModuliIdeal, -elkiesX6StarEveryIdeal; +y3ToP1j consequence with flag beginning 'pending review', +heckeSqrtBranchAny
+glue with flag beginning 'on-the-spot: the Y3-only argument ... is not in the manuscript').
+Checks (run_checks-fold2.txt): build EXIT 0 (16364 jobs); frozenTarget standard; hash guard 22561 -> 24772, only
+frozenTarget changed, 0 removed, 2211 new (Y3Copy1-6, Y3Open, TailZ89); closure 295296: every X6 clause def (X6Props,
+R2X6Props, CMExists, X6Surj, R2X6PropsIff), X6 leaf (X6CoarseModuliIdeal, ElkiesX6StarEveryIdeal, X6CoarseModuli,
+ElkiesX6StarEvery, ElkiesX6StarPrinted, ElkiesX6StarFunctionField, ElkiesEquationsX6Ab, BabaGranathRationalAb, GonzalezRotgerX6)
+and producer (x6Rows_of_leavesW, gonzalezRotgerX6Ab_r5_of_coarse, x6ModuliWitness_of_coarse, elkies_coordinate), R1R2fpRepW(_r5),
+R1R2fp, X6ConicModel, R5ptProps, every Gonzalez-Rotger 5.12 constant, the NoCM base, OpenResearchLeaves61/62, open80/81 absent;
+Y3ToP1j, R1R2fpY3, HeckeSqrtBranchAny, CM statements present. Field check: 63 = 62 - x6CoarseModuliIdeal -
+elkiesX6StarEveryIdeal + y3ToP1j + heckeSqrtBranchAny. ClosureX6.lean -> closure-x6.txt (62 name matches, each classified in
+the report: 23 projections `gonzalezRotgerProp56X6`/`gonzalezRotgerCountX6(Ab)` of type GR56.R5fpCountLe, filled by the proved
+`EichlerBound.r5fpCountLe_of_two`; quaternion elements `x6`, `x6i` (LeafQCheck, PeriodGlue); `X6ConicModel_y3c := True` and its
+carried fields; `x6Rows_of_open14_..._y3c` (patched: builds R1R2fpY3 from y3row); GRCountX6 helpers of the proved count;
+FS5NoCM auxiliary `_proof_1` terms, `FS5NoCM.CMOptimalEmbedding` (lower added bundles), `CMBranch.NoCMAt`, `ConjMapsNoCM` (proved)).
+OpenStatements 34; render_open: **33 H hypotheses, strict 5/28, strictest 5/28** = the integrator's expected count;
+--check ok; crosswalk 232 IDs, 3 matched, --check ok; DischargesTest 135 DISCHARGES lines, no error; autoform exit 0
+(776 articles, 647 fully proved); gate.sh GATE=ok.
