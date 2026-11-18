@@ -97,6 +97,9 @@ CLAIM_END = re.compile(r'\s+at\s|;|:|\.\s|\.$|\s-{1,2}\s|\u2014|\u2013\s')
 TAG = re.compile(r'<!--.*?(?:-->|$)|</?[A-Za-z][\w-]*(?:\s[^<>]*)?/?>', re.S)
 ABS_PATH = re.compile(r'(?<![\w.:/\\~-])(?:~/|/|[A-Za-z]:[\\/])[^\s/\\]*(?:[\\/][^\s/\\]*)+')
 PATH_TAIL = '.,;:!?)]}>\'"`'           # punctuation after a path, kept when the path is replaced
+# render_open.py's built-in 'a local path' hygiene pattern: a token matching it anywhere would fail the folds'
+# render_open.py --check, so public_text replaces the whole token (ABS_PATH misses paths glued to ':' or '.').
+LOCAL_PATH = re.compile(r'/Users/|/home/(?!runner/)\w+/|\.swarm-worktrees')
 QUOTES = '"\'\u201c\u201d\u2018\u2019'
 
 
@@ -602,7 +605,7 @@ def public_text(text):
         tail = m.group(0)[len(m.group(0).rstrip(PATH_TAIL)):]
         return '[path]' + tail
     text = ABS_PATH.sub(path, TAG.sub(' ', text or ''))
-    text = ' '.join(text.split()).lstrip(QUOTES + ' ')
+    text = ' '.join('[path]' if LOCAL_PATH.search(t) else t for t in text.split()).lstrip(QUOTES + ' ')
     return text if len(text) <= STATUS_MAX else text[:STATUS_MAX - 3].rstrip() + '...'
 
 

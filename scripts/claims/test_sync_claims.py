@@ -394,6 +394,13 @@ class PublicText(unittest.TestCase):
         text = 'H-98/H-102, and/or /tmp, docs/one-proof/OPEN.md, https://github.com/a/b/c'
         self.assertEqual(sc.public_text(text), text)
 
+    def test_local_path_backstop(self):
+        # paths glued to ':' or '.' escape ABS_PATH; render_open's own pattern must still never get through
+        out = sc.public_text('see file:///home/alice/x.log and dir/.swarm-worktrees/y, also x:/Users/al/z')
+        self.assertEqual(out, 'see [path] and [path] also [path]')
+        self.assertNotRegex(out, sc.LOCAL_PATH)
+        self.assertEqual(sc.public_text('runner path /home/runner/work/x stays a path'), 'runner path [path] stays a path')
+
     def test_length_and_empty(self):
         long = sc.public_text('word ' * 100)
         self.assertEqual((len(long), long[-3:]), (sc.STATUS_MAX, '...'))
