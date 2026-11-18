@@ -13,19 +13,19 @@ The phrase "every total type" at lines 10131--10132 is read in the context of
 these prepared negative sources (lines 10057 and 10096), not as nonvanishing in
 every possible local filter. No seed is requested at an unprepared type.
 
-The combinatorial claim is proved below from unit seeds at prepared types only.
-Its seed input is reduced further to retained squarefree coefficients with a
-nonzero reference, a lower bound, and the actual symbol reading at the attained
-minimum. The minimum is proved to exist; it is not an input. The coefficient
-lower bound is also derived from the two valuation statements (E.9) and (E.11).
-The dictionary proves the reading identity whenever the symbol is its reading
-of that fixed normalized source.
+`PreparedUnitCertificate` is an abstract prime-unit certificate. Its coefficients
+and index predicate are arbitrary, and a singleton predicate suffices. The
+proved equivalence `preparedUnitCertificate_iff_primeUnits` records that exact
+content. This certificate does not specify a modular form, its phase-removed
+coefficients, or the original local-squareclass filter of Appendix E.
 
-The source input below is a data specification, not a new printed theorem.
-Producing it for the actual even forms remains an explicit mathematical
-obligation: the reference and phase-normalized source of Appendix E, the
-valuation comparisons, and the identification of the fixed symbol. There are
-no additional analytic nonvanishing assumptions and no new printed leaves.
+The combinatorial clause and its exact auxiliary-factor bridge are proved from
+prepared units. The generic minimum and valuation lemmas below are conditional
+algebraic helpers, not a construction of the genuine even source. A separate
+binding to the actual fixed even form, original filter, same-source valuation
+facts, and dictionary is required for a genuine-source-to-seed discharge.
+The earlier coefficient-input name is retained only for compatibility with its
+published abstract interface. No new printed theorem is introduced.
 -/
 
 set_option maxHeartbeats 600000
@@ -41,15 +41,15 @@ open ZInQ.Manuscript ZInQ.Manuscript.RC.Symbols ZInQ.Manuscript.RC.Wiring
 variable {L : Type} [AddCommGroup L] {ε : L →+ ZMod 2}
 
 /-- A least normalized coefficient depth: attainment and a lower bound on all
-retained nonzero coefficients. Appendix G, lines 10083--10087. -/
+retained nonzero values of an arbitrary coefficient function. -/
 def LeastCoefficientDepth (a : ℕ → ℚ_[2]) (F : ℕ → Prop) (δ : ℤ) : Prop :=
   (∃ D : ℕ, F D ∧ a D ≠ 0 ∧
     Padic.valuation (a D) - (D.primeFactors.card : ℤ) = δ) ∧
   ∀ D : ℕ, F D → a D ≠ 0 →
     δ ≤ Padic.valuation (a D) - (D.primeFactors.card : ℤ)
 
-/-- The attained minimum follows from a nonzero reference and an integer lower
-bound. No unit or minimum is assumed. Appendix G, lines 10083--10087. -/
+/-- A nonzero value and an integer lower bound imply an attained minimum.
+This is a generic algebraic helper, not the genuine even-source minimizer. -/
 theorem leastCoefficientDepth_exists (a : ℕ → ℚ_[2]) (F : ℕ → Prop) (c : ℤ)
     (href : ∃ D : ℕ, F D ∧ a D ≠ 0)
     (hlow : ∀ D : ℕ, F D → a D ≠ 0 →
@@ -62,10 +62,9 @@ theorem leastCoefficientDepth_exists (a : ℕ → ℚ_[2]) (F : ℕ → Prop) (c
     (by obtain ⟨D, hF, ha⟩ := href; exact ⟨_, D, hF, ha, rfl⟩)
   exact ⟨δ, hatt, fun D hF ha => hmin _ ⟨D, hF, ha, rfl⟩⟩
 
-/-- The valuation part of (E.9) and the same-source equality (E.11) imply the
-coefficient-depth lower bound. Here `C` is the lower-bound constant after
-omitting the nonnegative term `s(D)`. Both comparisons remain explicit inputs;
-this theorem proves only their arithmetic consequence. -/
+/-- Arithmetic consequence of the displayed valuation comparisons (E.9) and
+(E.11). With arbitrary functions `a` and `vL`, these comparisons do not by
+themselves bind either function to the actual even form or central values. -/
 theorem coefficientDepth_lowerBound_of_E9_E11 (a : ℕ → ℚ_[2]) (F : ℕ → Prop)
     (vL : ℕ → ℤ) (κ C : ℤ)
     (hE11 : ∀ D : ℕ, F D → a D ≠ 0 → vL D = 2 * Padic.valuation (a D) + κ)
@@ -77,23 +76,22 @@ theorem coefficientDepth_lowerBound_of_E9_E11 (a : ℕ → ℚ_[2]) (F : ℕ →
   have hle := hE9 D hF ha
   omega
 
-/-- Retained indices of a negative source: positive squarefree indices seven
-modulo eight, good at the type conductor, with the prescribed total type.
-This records the filter, not an analytic nonvanishing assertion. -/
+/-- Necessary conditions on an arbitrary retained-index predicate. This
+one-way condition permits a singleton predicate and does not assert equality
+with the original support or local-squareclass filter of an even form. -/
 def NegativeCoefficientFilter (T : TypeData L ε) (τ : L) (F : ℕ → Prop) : Prop :=
   ∀ D : ℕ, F D → 0 < D ∧ Squarefree D ∧ D % 8 = 7 ∧
     (∀ p ∈ D.primeFactors, T.Good p) ∧
     (primeConfig D.primeFactors T.typ).total = τ
 
-/-- The actual symbol on retained prime configurations is the coefficient
-symbol of the same source at the same normalized depth. This is a definition
-of the required reading identity, not a coefficient-rule hypothesis. -/
+/-- An abstract reading identity on an arbitrary index predicate. This
+identity alone does not identify `a` with coefficients of a genuine form. -/
 def NormalizedPrimeReading (T : TypeData L ε) (A : Config L → ZMod 2)
     (a : ℕ → ℚ_[2]) (F : ℕ → Prop) (δ : ℤ) : Prop :=
   ∀ D : ℕ, F D → A (primeConfig D.primeFactors T.typ) = coeffSymbol a δ F D
 
-/-- The dictionary discharges the reading identity. The lower bound, the
-reference and the choice of minimum are not used in this definitional bridge. -/
+/-- The dictionary proves the reading identity for its specified symbol,
+conditionally on fixed-`U` factorization. It does not construct the form. -/
 theorem normalizedPrimeReading_of_dictionary (T : TypeData L ε) (τ : L)
     (a : ℕ → ℚ_[2]) (F : ℕ → Prop) (δ : ℤ)
     (hF : NegativeCoefficientFilter T τ F)
@@ -105,16 +103,12 @@ theorem normalizedPrimeReading_of_dictionary (T : TypeData L ε) (τ : L)
   change coeffSymbol a δ F (∏ p ∈ D.primeFactors, p) = coeffSymbol a δ F D
   rw [Nat.prod_primeFactors_of_squarefree hsf]
 
-/-- Minimal source-level ingredients for the prepared types. The source and
-filter are fixed first. The lower bound and nonzero reference imply a unique
-attained least depth; at that depth `A τ` must read this same source. In
-particular, the last field does not assert that a minimum or a unit exists.
-All quantification over total types is restricted to `PreparedType`.
-
-The four obligations are separated: filter specification, nonzero reference,
-coefficient lower bound, and normalized reading. None is called a printed
-existence theorem for the actual form. -/
-def PreparedEvenSourceInput {ℓ : ℕ} (W : WData ℓ) (T : TypeData L ε)
+/-- An abstract prime-unit certificate for the prepared types. The arbitrary
+coefficient function, index predicate, lower bound and reading can all be
+manufactured from one allowed prime unit at each prepared type. The exact
+equivalence is `preparedUnitCertificate_iff_primeUnits`. This is not a genuine
+Appendix E source specification or a source-level discharge. -/
+def PreparedUnitCertificate {ℓ : ℕ} (W : WData ℓ) (T : TypeData L ε)
     (A : L → Config L → ZMod 2) : Prop :=
   ∀ τ : L, PreparedType W T τ →
     ∃ (a : ℕ → ℚ_[2]) (F : ℕ → Prop) (c : ℤ),
@@ -125,15 +119,73 @@ def PreparedEvenSourceInput {ℓ : ℕ} (W : WData ℓ) (T : TypeData L ε)
       ∀ δ : ℤ, LeastCoefficientDepth a F δ →
         NormalizedPrimeReading T (A τ) a F δ
 
-/-- The exact prepared-seed input of the auxiliary-factor interface follows
-from the source-level ingredients. A least-depth index gives an actual unit
-on its compatible graph of good prime factors. -/
-theorem preparedSeedInput_of_evenSourceInput {ℓ : ℕ} (W : WData ℓ)
+/-- Compatibility name for the published abstract certificate. Despite its
+older name, this proposition does not specify a genuine even source. -/
+abbrev PreparedEvenSourceInput {ℓ : ℕ} (W : WData ℓ) (T : TypeData L ε)
+    (A : L → Config L → ZMod 2) : Prop := PreparedUnitCertificate W T A
+
+/-- Exact certificate content: allowed prime-configuration units, with no
+coefficient rules, modular form, valuation comparison or analytic input needed.
+The reverse implication uses a singleton index predicate. -/
+theorem preparedUnitCertificate_iff_primeUnits {ℓ : ℕ} (W : WData ℓ)
+    (T : TypeData L ε) (A : L → Config L → ZMod 2) :
+    PreparedUnitCertificate W T A ↔
+      ∀ τ : L, PreparedType W T τ →
+        ∃ D : ℕ, 0 < D ∧ Squarefree D ∧ D % 8 = 7 ∧
+          (∀ p ∈ D.primeFactors, T.Good p) ∧
+          (primeConfig D.primeFactors T.typ).total = τ ∧
+          A τ (primeConfig D.primeFactors T.typ) = 1 := by
+  classical
+  constructor
+  · intro h τ hτ
+    obtain ⟨a, F, c, hF, href, hlow, hread⟩ := h τ hτ
+    obtain ⟨δ, hδ⟩ := leastCoefficientDepth_exists a F c href hlow
+    obtain ⟨D, hD, ha, hdepth⟩ := hδ.1
+    obtain ⟨hpos, hsf, hseven, hgood, htotal⟩ := hF D hD
+    refine ⟨D, hpos, hsf, hseven, hgood, htotal, ?_⟩
+    rw [hread δ hδ D hD]
+    unfold coeffSymbol
+    apply ite_eq_left
+    exact ⟨hD, ha, by linarith⟩
+  · intro h τ hτ
+    obtain ⟨D₀, hpos, hsf, hseven, hgood, htotal, hunit⟩ := h τ hτ
+    let a : ℕ → ℚ_[2] := fun D => if D = D₀ then 1 else 0
+    let F : ℕ → Prop := fun D => D = D₀
+    let c : ℤ := Padic.valuation (a D₀) - (D₀.primeFactors.card : ℤ)
+    have ha₀ : a D₀ ≠ 0 := by simp [a]
+    refine ⟨a, F, c, ?_, ⟨D₀, rfl, ha₀⟩, ?_, ?_⟩
+    · intro D hD
+      change D = D₀ at hD
+      subst D
+      exact ⟨hpos, hsf, hseven, hgood, htotal⟩
+    · intro D hD _
+      change D = D₀ at hD
+      subst D
+      exact le_rfl
+    · intro δ hδ D hD
+      change D = D₀ at hD
+      subst D
+      have hδc : δ = c := by
+        obtain ⟨D, hD, _, hdepth⟩ := hδ.1
+        change D = D₀ at hD
+        subst D
+        exact hdepth.symm
+      rw [hunit]
+      symm
+      unfold coeffSymbol
+      apply ite_eq_left
+      refine ⟨rfl, ha₀, ?_⟩
+      dsimp [c] at hδc
+      linarith
+
+/-- The abstract certificate supplies the exact prepared-seed input. This
+projection is not a construction of coefficients of an actual even form. -/
+theorem preparedSeedInput_of_unitCertificate {ℓ : ℕ} (W : WData ℓ)
     (T : TypeData L ε) (A : L → Config L → ZMod 2)
-    (hsrc : PreparedEvenSourceInput W T A) :
+    (hcert : PreparedUnitCertificate W T A) :
     ∀ τ : L, PreparedType W T τ → ∃ Γ : Config L, IsUnitSeed ε (A τ) Γ := by
   intro τ hτ
-  obtain ⟨a, F, c, hF, href, hlow, hread⟩ := hsrc τ hτ
+  obtain ⟨a, F, c, hF, href, hlow, hread⟩ := hcert τ hτ
   obtain ⟨δ, hδ⟩ := leastCoefficientDepth_exists a F c href hlow
   obtain ⟨D, hD, ha, hdepth⟩ := hδ.1
   obtain ⟨_, _, _, hgood, _⟩ := hF D hD
@@ -231,16 +283,15 @@ theorem preparedSeedInput_of_clauseFour {ℓ : ℕ} (W : WData ℓ)
   obtain ⟨_, Γ₀, hmin, _, _, _⟩ := h4 τ hτ
   exact ⟨Γ₀, hmin.1⟩
 
-/-- The prepared fourth clause is proved from the separated coefficient-source
-ingredients. The least depth, nonempty minimum seeds, independence of bits and
-anchor contraction are all conclusions, not additional leaves. -/
-theorem preparedClauseFour_of_evenSourceInput {ℓ : ℕ} (W : WData ℓ)
+/-- The abstract prime-unit certificate supplies the prepared combinatorial
+clause. This is conditional on units, not a genuine-source-to-seed discharge. -/
+theorem preparedClauseFour_of_unitCertificate {ℓ : ℕ} (W : WData ℓ)
     (T : TypeData L ε) (hmS : ∀ p : ℕ, p.Prime → p ∣ T.m → p ∈ W.S)
     (A : L → Config L → ZMod 2) (hA : ∀ τ : L, CoefficientRules ε (A τ))
     (hoff : ∀ τ : L, VanishesOffFilter (A τ) τ)
-    (hsrc : PreparedEvenSourceInput W T A) : PreparedClauseFour W T A :=
+    (hcert : PreparedUnitCertificate W T A) : PreparedClauseFour W T A :=
   preparedClauseFour_of_preparedSeeds W T hmS A hA hoff
-    (preparedSeedInput_of_evenSourceInput W T A hsrc)
+    (preparedSeedInput_of_unitCertificate W T A hcert)
 
 /-- Direct integration: replacing the fourth input by the faithful prepared
 clause produces the existing auxiliary factor. The other inputs are unchanged. -/
@@ -256,5 +307,22 @@ theorem auxFactor_of_clauseFour {ℓ : ℕ} (W : WData ℓ)
     ∃ A₀ : ℕ, AuxFactor W A₀ :=
   auxFactor_of_prepared W hS hS2 T hmS A hA hoff
     (preparedSeedInput_of_clauseFour W T A h4) hspec
+
+/-- Compatibility theorem for the earlier abstract certificate interface.
+The older name does not turn its premise into a genuine even source. -/
+theorem preparedSeedInput_of_evenSourceInput {ℓ : ℕ} (W : WData ℓ)
+    (T : TypeData L ε) (A : L → Config L → ZMod 2)
+    (hcert : PreparedEvenSourceInput W T A) :
+    ∀ τ : L, PreparedType W T τ → ∃ Γ : Config L, IsUnitSeed ε (A τ) Γ :=
+  preparedSeedInput_of_unitCertificate W T A hcert
+
+/-- Compatibility theorem for the earlier abstract certificate interface.
+The genuine source binding is a separate mathematical obligation. -/
+theorem preparedClauseFour_of_evenSourceInput {ℓ : ℕ} (W : WData ℓ)
+    (T : TypeData L ε) (hmS : ∀ p : ℕ, p.Prime → p ∣ T.m → p ∈ W.S)
+    (A : L → Config L → ZMod 2) (hA : ∀ τ : L, CoefficientRules ε (A τ))
+    (hoff : ∀ τ : L, VanishesOffFilter (A τ) τ)
+    (hcert : PreparedEvenSourceInput W T A) : PreparedClauseFour W T A :=
+  preparedClauseFour_of_unitCertificate W T hmS A hA hoff hcert
 
 end ZInQ.Contrib.RC53Assist.AuxFactor
