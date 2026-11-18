@@ -40,6 +40,12 @@ groups inside `G_{K,S}`:
 * `PlaceTame.exists_at`, `exists_galSides` (PROVED; LESSON 2 non-vacuity): at a place `q` with
   finite residue field of odd characteristic and trivial `M ≃ 𝔽₂²`, the tame coordinates of
   `G_{K_q}` give genuine finite and singular quasi sides for every configuration.
+
+**Caveat (residue field `𝔽₂`).** The genuine instances in this file are specialised to the residue
+field `𝔽₂`. They are not applicable at the height-one primes `𝔭 ≠ (2)` of `Λ` where the switching
+runs (tex L4976: `R = Λ_𝔭`, residue field of characteristic `0`): there is no ring map
+`Λ_𝔭 → ZMod 2` (`isEmpty_ringHom_zmod_two_heightOne`). See `GaloisWiringQuad.lean` for the
+field-generic version.
 -/
 
 noncomputable section
@@ -101,7 +107,9 @@ theorem condAt_galCond (A₀ Ad : ∀ v, SubFam (galLv (k := ZMod 2) K S M v))
 /-! ### The finite and singular switch at a place `q ∉ c` -/
 
 /-- The per-place tame data at the places of `S`: inertia `I_v`, a Frobenius lift `φ_v`, a tame
-generator `σ_v`, and coordinates `M ≃ 𝔽₂²` (tex L5027–5037). -/
+generator `σ_v`, and coordinates `M ≃ 𝔽₂²` (tex L5027–5037). Specialised to residue field `𝔽₂`;
+not applicable at height-one primes `≠ (2)` where switching runs (`isEmpty_ringHom_zmod_two_heightOne`);
+see `GaloisWiringQuad.lean` for the field-generic version. -/
 structure PlaceTame where
   /-- Inertia at `v`. -/
   I : ∀ v : Places K S, Subgroup (Gloc K v.1)

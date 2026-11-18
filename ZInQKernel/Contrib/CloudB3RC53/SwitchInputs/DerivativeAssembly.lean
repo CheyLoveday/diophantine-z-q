@@ -33,6 +33,12 @@ team's lane:
 Remaining (not done here): the naturality transport of the explicit `H¹` models to `H¹` of the
 induced chain maps of `dblCx` complexes, and the single-place assembly of `QuasiSwitchSide` inside
 `galoisSelData` (see the lane notes).
+
+**Caveat (residue field `𝔽₂`).** The genuine instances in this file are specialised to the residue
+field `𝔽₂`. They are not applicable at the height-one primes `𝔭 ≠ (2)` of `Λ` where the switching
+runs (tex L4976: `R = Λ_𝔭`, residue field of characteristic `0`): there is no ring map
+`Λ_𝔭 → ZMod 2` (`isEmpty_ringHom_zmod_two_heightOne`). See `GaloisWiringQuad.lean` for the
+field-generic version.
 -/
 
 noncomputable section
