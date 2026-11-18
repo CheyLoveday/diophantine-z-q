@@ -1,5 +1,10 @@
 # Retained absolute cochains and the tame comparison
 
+
+## Superseded (2026-11-18)
+
+The first edition `CoefficientComparison.lean` described below is superseded by `CoefficientComparisonEdition2.lean` (same declarations and namespaces, with the source corrections of `ComparisonEdition2Findings.md`) and has been removed from the tree so that the two editions are never imported together; it remains in the repository history. `ComparisonAudit.txt` is the historical audit of the first edition.
+
 ## Result and scope
 
 Route B is assembled for the actual primitive height-one coefficient fibres, conditional on three explicit manuscript-cited Nekovář premises and the remaining nonprimitive local unit tests. The continuous smaller/larger-support coefficient identification is proved, not assumed. The retained absolute-local inflation map is constructed in all degrees, and the homotopy inverse is proved from the cited quasi-isomorphism. At actual primitive old primes the resulting contraction is for the actual full continuous-cochain condition, not just its proposed tame model.

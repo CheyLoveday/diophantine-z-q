@@ -1,6 +1,7 @@
 import ZInQKernel.Contrib.OneProof.RC.LambdaCoef.Rank
 import ZInQKernel.Contrib.OneProof.RC.KummerMaps.Iota
 import ZInQKernel.Contrib.CloudB3RC53.TameQuotient.TameCharacter
+import ZInQKernel.Contrib.TauCeti.NumberTheory.LocalField.FiniteExtension.IntermediateField
 import ZInQKernel.Contrib.OneProof.RC.SelmerComplex.UnramifiedFactorization
 import ZInQKernel.Contrib.CloudB3RC53.ContBridge.ComplexIso
 import ZInQKernel.Contrib.RC53Assist.StrictSymmFull.FullReduction
@@ -17,10 +18,14 @@ lattices and their two-power neighbourhoods, so the resulting fibre
 identification uses the given lattice topologies.
 
 The absolute local quotient and the descended coefficient action are specified
-in all degrees. Three explicit cited premises from Nekovář supply the local
-tame structure and two quasi-isomorphisms. Homotopy inverses over the coefficient
-field are proved separately. The small tame complex uses the full geometric
-norm and geometric Frobenius of the cited formulas.
+in all degrees. Three manuscript-cited CONSEQUENCE inputs from Nekovář supply
+the tame frame and two quasi-isomorphisms, with their coefficient and cochain
+translations stated explicitly. Identification of the radical kernel with the
+maximal-tame wild kernel and its odd pro-order are separate named GLUE inputs
+from a source not cited in the manuscript. Only prime-to-two pro-order is used.
+Homotopy inverses over the coefficient field are proved separately. The small
+tame complex uses the full geometric norm and geometric Frobenius of the cited
+formulas.
 
 For actual old primitive places these comparisons supply the full-condition
 contractions without an operator-unit premise. The reduction preserves the
@@ -29,8 +34,11 @@ then hold on the actual reduced continuous switch, with its unchanged lattice
 coefficient topology. The other old-place unit tests remain explicit.
 
 Manuscript support: 2780–2785, 2813–2815 and 5055–5061.
-Cited source: Nekovář, Selmer complexes, 3.7.4(ii), 4.1.4, 7.1.1,
-7.2.1 and 7.2.3. No strict-symmetry premise is used.
+Cited source: Nekovář, Selmer complexes, 3.3.4, 3.4.1.1–3.4.1.2,
+3.7.2, 4.1.4, 7.1.1, 7.2.1 and 7.2.3.
+Uncited GLUE locators: Neukirch–Schmidt–Wingberg, electronic second edition
+2.3, (7.5.1), p. 409, and the footnote to (7.5.2), p. 410.
+No strict-symmetry premise is used.
 -/
 
 set_option autoImplicit false
@@ -590,7 +598,58 @@ theorem wildKernel_inertia (v : HeightOneSpectrum (𝓞 K)) (σ : wildKernel v) 
   exact wildKernel_fixes v σ x ((show maximalUnramifiedExtension (v.adicCompletion K)
     (AlgebraicClosure (v.adicCompletion K)) ≤ tameRadicalField v from le_sup_left) hx)
 
+/-- A finite local subextension is tame precisely when its ramification index
+is prime to the residue characteristic. The spectral valuation is fixed. -/
+def finiteTame (v : HeightOneSpectrum (𝓞 K))
+    (E : IntermediateField (v.adicCompletion K) (AlgebraicClosure (v.adicCompletion K))) : Prop :=
+  ∃ hfinite : Module.Finite (v.adicCompletion K) E,
+    letI : Module.Finite (v.adicCompletion K) E := hfinite
+    letI : ValuativeRel E := finiteIntermediateFieldValuativeRel
+      (v.adicCompletion K) (AlgebraicClosure (v.adicCompletion K)) E
+    letI : TopologicalSpace E := finiteIntermediateFieldTopology
+      (v.adicCompletion K) (AlgebraicClosure (v.adicCompletion K)) E
+    letI : IsNonarchimedeanLocalField E := finiteIntermediateField_isNonarchimedeanLocalField
+      (v.adicCompletion K) (AlgebraicClosure (v.adicCompletion K)) E
+    IsTamelyRamified (v.adicCompletion K) E
+
+/-- The maximal tame extension is the compositum of all finite tame local
+subextensions, independently of the uniformizer-radical description. -/
+def maximalTameField (v : HeightOneSpectrum (𝓞 K)) :
+    IntermediateField (v.adicCompletion K) (AlgebraicClosure (v.adicCompletion K)) :=
+  ⨆ (E : IntermediateField (v.adicCompletion K) (AlgebraicClosure (v.adicCompletion K)))
+    (_h : finiteTame v E), E
+
+/-- The wild inertia kernel in the maximal-tame-extension definition. -/
+def maximalTameKernel (v : HeightOneSpectrum (𝓞 K)) : Subgroup (Gloc K v) :=
+  show Subgroup (Gloc K v) from (maximalTameField v).fixingSubgroup
+
 end ActualTameKernel
+
+/-- Kind: GLUE, not manuscript-cited. Neukirch–Schmidt–Wingberg,
+Cohomology of Number Fields, electronic second edition 2.3, p. 410, footnote
+to (7.5.2), together with normality of the maximal tame extension.
+The uniformizer-radical compositum is K_v^t, and its normal fixing core is
+Gal(K̄_v/K_v^t). This identification is separate from the pro-order input and
+is not a printed assertion of Nekovář 7.1.1 or 7.2.1. -/
+def NSWWildKernelIdentification : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)),
+    ActualTameKernel.tameRadicalField v = ActualTameKernel.maximalTameField v ∧
+      ActualTameKernel.wildKernel v = ActualTameKernel.maximalTameKernel v
+
+/-- Kind: GLUE, not manuscript-cited. Neukirch–Schmidt–Wingberg,
+Cohomology of Number Fields, electronic second edition 2.3, (7.5.1), p. 409.
+Only its needed consequence is assumed: wild inertia has pro-order prime
+to two at an odd place. The stronger pro-residue-characteristic assertion
+is not part of this input. The kernel is the fixer of the defined maximal
+tame extension; transferring this fact to the radical kernel requires the
+separate NSWWildKernelIdentification input. -/
+def NSWOddWildProOrder : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)),
+    ringChar 𝓀[v.adicCompletion K] ≠ 2 →
+      ∀ U : OpenNormalSubgroup (ActualTameKernel.maximalTameKernel v),
+        (Nat.card (ActualTameKernel.maximalTameKernel v ⧸ U.toSubgroup)).Coprime 2
 
 section ActualLocalQuotient
 
@@ -831,11 +890,22 @@ theorem actual_old_primitive_kernel_trivial
 
 end ActualPrimitiveKernel
 
-/-- Specialized cited input: Nekovář, Selmer complexes, Lemma 4.1.4 (p. 96),
-with residual characteristic two, together with the localized-coefficient
-identification of Proposition 3.7.4(ii) (p. 94). The coefficient topology, action
-and inflation map below are fixed actual ones. This input asserts only the
-quasi-isomorphism; the homotopy inverse is proved separately. -/
+/-- Kind: CONSEQUENCE. Nekovář, Selmer complexes, Lemma 4.1.4,
+Astérisque p. 96, after the following coefficient and cochain translations.
+Take R = Λ/P, a complete Noetherian local ring with residue field F₂, not
+R = k(P). The stable finite-type lattice L = Λ · (1 ⊗ T₂E) and its dilates
+2^(-m)L exhaust V = k(P) ⊗ T₂E. Hence V is ind-admissible by 3.3.4
+(p. 79), also as a localized module in the sense of 3.7.2 (p. 94).
+For the compact local group or its closed-normal quotient, every continuous
+cochain has compact image contained in one lattice dilate. Conversely each
+finite-type admissible submodule lies in such a dilate. Thus the given
+continuous-cochain complex is exactly 3.4.1.1 with differential 3.4.1.2
+(p. 82), and changing from R-linear to k(P)-linear scalars does not change
+cohomology. Kernel triviality identifies M^H with this same V, so the actual
+inflation is the map in 4.1.4. These translations are part of the stated
+consequence; no discreteness is imposed on V. Proposition 3.7.4(ii) (p. 94)
+is correct but unnecessary for this direct ind-admissible application and
+is not used. The homotopy inverse is proved separately. -/
 def Nekovar414Fibre : Prop :=
   ∀ (K : Type) [Field K] [NumberField K]
     (S : Set (IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)))
@@ -1038,32 +1108,69 @@ theorem frame_comparison_homotopy (F : TameFrame v N) (C : FrameComparison v N W
 
 end TameFrame
 
-/-- Specialized local-structure input from Nekovář 7.2.1 (p. 156): the actual
-wild fixing kernel is pro-residue-characteristic and the tame quotient admits
-the indicated procyclic-inertia/geometric-Frobenius frame. It is separate from
-both cohomological comparison inputs and contains no contraction. -/
+/-- Kind: CONSEQUENCE. Nekovář, Selmer complexes, 7.2.1,
+Astérisque p. 156, with the wild/tame notation of 7.1.1 (p. 155).
+After NSWWildKernelIdentification identifies the radical kernel with
+Gal(K̄_v/K_v^t), the topological tame inertia generator and geometric
+Frobenius lift of 7.2.1 lift to the actual local absolute group. Their
+images have dense inertia and satisfy t f = f t^L. Only this frame is
+asserted here. Odd wild pro-order is the separate, weaker named GLUE
+input NSWOddWildProOrder; no pro-ell assertion is attributed to Nekovář. -/
 def Nekovar721Structure : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K]
-    (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)),
-    ringChar 𝓀[v.adicCompletion K] ≠ 2 →
-      TauCeti.IsProP (ringChar 𝓀[v.adicCompletion K]) (ActualTameKernel.wildKernel v) ∧
+  NSWWildKernelIdentification →
+    ∀ (K : Type) [Field K] [NumberField K]
+      (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)),
+      ringChar 𝓀[v.adicCompletion K] ≠ 2 →
         Nonempty (TameFrame v (ActualTameKernel.wildKernel v))
 
-/-- The cited local structure discharges the exact wild pro-order requirement
-for every actual odd old place, rather than assuming it for a freely chosen kernel. -/
-theorem actual_wild_primeToTwo (h721 : Nekovar721Structure)
+/-- The identified maximal-tame wild kernel has exactly the needed odd
+pro-order by the separate named GLUE fact, not by a Nekovář print. -/
+theorem actual_wild_primeToTwo
+    (hident : NSWWildKernelIdentification) (horder : NSWOddWildProOrder)
     {K : Type} [Field K] [NumberField K]
     (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K))
     (hodd : ringChar 𝓀[v.adicCompletion K] ≠ 2) :
-    PrimeToTwoKernel v (ActualTameKernel.wildKernel v) :=
-  primeToTwoKernel_of_proOdd v (ActualTameKernel.wildKernel v) (ActualTameKernel.wildKernel_closed v)
-    (ringChar 𝓀[v.adicCompletion K]) (CharP.prime_ringChar _) hodd (h721 K v hodd).1
+    PrimeToTwoKernel v (ActualTameKernel.wildKernel v) := by
+  refine ⟨ActualTameKernel.wildKernel_closed v, ?_⟩
+  rw [(hident K v).2]
+  exact horder K v hodd
 
-/-- Second specialized cited input: Nekovář Proposition 7.2.3 (pp. 158–160),
-with its specified formulas and the localized coefficient identification of
-3.7.4(ii). The actual quotient, coefficient topology and tame frame are fixed.
-This statement asserts only the formula-preserving quasi-isomorphism. -/
+/-- The weakened old conjunction used by the comparison: odd pro-order and
+an actual tame frame. This package is assembled from distinct source inputs. -/
+def RetainedTameStructure : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K]
+    (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)),
+    ringChar 𝓀[v.adicCompletion K] ≠ 2 →
+      PrimeToTwoKernel v (ActualTameKernel.wildKernel v) ∧
+        Nonempty (TameFrame v (ActualTameKernel.wildKernel v))
+
+/-- The actual conjunction requires both named GLUE facts and the separately
+sourced Nekovář frame consequence. It contains no stronger pro-ell clause. -/
+theorem retainedTameStructure_of_sources
+    (hident : NSWWildKernelIdentification) (horder : NSWOddWildProOrder)
+    (h721 : Nekovar721Structure) : RetainedTameStructure := by
+  intro K _ _ v hodd
+  exact ⟨actual_wild_primeToTwo hident horder v hodd, h721 hident K v hodd⟩
+
+/-- Kind: CONSEQUENCE. Nekovář, Selmer complexes, Proposition 7.2.3,
+Astérisque p. 158 (proof pp. 158–160), with C(M) in 7.2.1 (pp. 156–157)
+and procyclic cohomology in 7.2.2 (pp. 157–158).
+Take R = Λ/P with residue characteristic two, not R = k(P). The actual
+V = k(P) ⊗ T₂E is the union of its stable finite-type lattice dilates and
+is ind-admissible by 3.3.4 (p. 79) and 3.7.2 (p. 94). Compactness of the
+actual quotient confines every continuous cochain to a lattice dilate;
+conversely finite-type admissible submodules fit in one. This identifies
+the supplied complex with 3.4.1.1 and its differential with 3.4.1.2
+(p. 82). NSWWildKernelIdentification is a separate named input identifying
+G_v/wildKernel with Gal(K_v^t/K_v). The frame uses actual lifts of the
+printed tame generator and geometric Frobenius. The formulas, full norm,
+summation range and signs below are exactly those of 7.2.3; higher target
+terms are zero. The external kernel identification is not hidden in this
+consequence. Proposition 3.7.4(ii) (p. 94) is correct but unused in the
+direct ind-admissible application. Only a formula-preserving
+quasi-isomorphism is asserted; the homotopy inverse is proved separately. -/
 def Nekovar723Fibre : Prop :=
+  NSWWildKernelIdentification →
   ∀ (K : Type) [Field K] [NumberField K]
     (S : Set (IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)))
     (W : WeierstrassCurve K) [W.IsElliptic] [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
@@ -1081,6 +1188,7 @@ def Nekovar723Fibre : Prop :=
 /-- Assemble the retained absolute-to-tame comparison from the two cited
 quasi-isomorphisms. The inverse-to-absolute leg is precisely inflation. -/
 theorem retained_absolute_tame_homotopy
+    (hident : NSWWildKernelIdentification)
     (h414 : Nekovar414Fibre) (h723 : Nekovar723Fibre)
     {K : Type} [Field K] [NumberField K]
     {S : Set (IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K))}
@@ -1102,7 +1210,7 @@ theorem retained_absolute_tame_homotopy
       Nonempty (HomotopyEquiv (absoluteFull W P α v.1).toCC
         (frameTameComplex v.1 (ActualTameKernel.wildKernel v.1) W P α F)) := by
   obtain ⟨A, hA⟩ := absolute_inflation_homotopy h414 W P α v.1 (ActualTameKernel.wildKernel v.1)
-  obtain ⟨C⟩ := h723 K S W P α v.1 hodd F
+  obtain ⟨C⟩ := h723 hident K S W P α v.1 hodd F
   obtain ⟨B, hB⟩ := frame_comparison_homotopy v.1 (ActualTameKernel.wildKernel v.1) W P α F C
   exact ⟨A, C, B, hA, hB, ⟨A.symm.trans B⟩⟩
 
@@ -1132,10 +1240,11 @@ def FrameUnitTests : Prop :=
 
 /-- The displayed inertia/Frobenius contraction is transported through the
 retained all-degree absolute/tame comparison for the actual old place. -/
-theorem absolute_contraction_of_frame (h414 : Nekovar414Fibre) (h723 : Nekovar723Fibre)
+theorem absolute_contraction_of_frame (hident : NSWWildKernelIdentification)
+    (h414 : Nekovar414Fibre) (h723 : Nekovar723Fibre)
     (hodd : ringChar 𝓀[v.1.adicCompletion K] ≠ 2) (hunit : FrameUnitTests W P α v F) :
     Nonempty (ZInQ.Contrib.RC53Assist.StrictSymmFull.Contraction (absoluteFull W P α v.1)) := by
-  obtain ⟨A, C, B, _, _, ⟨e⟩⟩ := retained_absolute_tame_homotopy h414 h723 W P α v hodd F
+  obtain ⟨A, C, B, _, _, ⟨e⟩⟩ := retained_absolute_tame_homotopy hident h414 h723 W P α v hodd F
   have hm : Nonempty (Homotopy (𝟙 (frameTameComplex v.1 (ActualTameKernel.wildKernel v.1) W P α F)) 0) :=
     tameComplexContractible_proof (ResAt P)
       (QuotientCoefficients W P α v.1 (ActualTameKernel.wildKernel v.1)) _ _ _ _ hunit
@@ -1308,6 +1417,7 @@ open ZInQ.Manuscript.RC.Wiring (ResAt)
 specified tame contraction supply a contraction of the actual full absolute
 cochains. Neither a homotopy comparison nor a unit operator is assumed. -/
 theorem actual_old_primitive_absolute_contraction
+    (hident : NSWWildKernelIdentification) (horder : NSWOddWildProOrder)
     (h414 : Nekovar414Fibre) (h721 : Nekovar721Structure) (h723 : Nekovar723Fibre)
     {K : Type} [Field K] [NumberField K]
     {S₀ S : Set (HeightOneSpectrum (𝓞 K))} (hS : S₀ ⊆ S)
@@ -1329,13 +1439,13 @@ theorem actual_old_primitive_absolute_contraction
     rw [he] at hodd
     exact (by decide : ¬ (2 : ℕ).Coprime 2) hodd
   have hk := actual_old_primitive_kernel_trivial (S₀ := S₀) (S := S) W s hs hs0 hS P ξ₀ v hv₀ hodd hh0 hv
-  have hp := actual_wild_primeToTwo h721 v.1 hneq
-  obtain ⟨F⟩ := (h721 K v.1 hneq).2
+  have hp := actual_wild_primeToTwo hident horder v.1 hneq
+  obtain ⟨F⟩ := h721 hident K v.1 hneq
   have hσ := frame_primitive_fibre_scalar s hs hs0 v.1 hodd hh0 hv
     (S₀ := S₀) W P hS ξ₀ hv₀ F
   have hu := frameUnitTests_of_primitive W P
     (lambdaChar (quadChar s hs hs0) (ξ₀.comp (inflMap K hS).toMonoidHom)) v F hσ
-  exact absolute_contraction_of_frame W P _ v F h414 h723 hneq hu
+  exact absolute_contraction_of_frame W P _ v F hident h414 h723 hneq hu
 
 end PrimitiveAbsolute
 
@@ -1358,6 +1468,7 @@ def fullSubContraction {k : Type} [Field k] {L : GCx k}
 /-- The primitive contraction is for the genuine retained full local condition,
 not just for an independently chosen cochain or tame-model object. -/
 theorem actual_old_primitive_full_condition_contraction
+    (hident : NSWWildKernelIdentification) (horder : NSWOddWildProOrder)
     (h414 : Nekovar414Fibre) (h721 : Nekovar721Structure) (h723 : Nekovar723Fibre)
     {K : Type} [Field K] [NumberField K]
     {S₀ S : Set (HeightOneSpectrum (𝓞 K))} (hS : S₀ ⊆ S)
@@ -1376,7 +1487,7 @@ theorem actual_old_primitive_full_condition_contraction
       (SubFam.top (localCx (ResAt P) (GKS K S) (fun w : Places K S => Gloc K w.1)
         (fun w => locMap K S w.1)
         (VP K S W P (lambdaChar (quadChar s hs hs0) (ξ₀.comp (inflMap K hS).toMonoidHom))) v)).cx) := by
-  obtain ⟨C⟩ := actual_old_primitive_absolute_contraction h414 h721 h723 hS W P s hs hs0 ξ₀ v hv₀ hodd hh0 hv
+  obtain ⟨C⟩ := actual_old_primitive_absolute_contraction hident horder h414 h721 h723 hS W P s hs hs0 ξ₀ v hv₀ hodd hh0 hv
   exact ⟨fullSubContraction C⟩
 
 end ActualFullCondition
@@ -1775,16 +1886,17 @@ structure OtherPlaceInputs (v : Places K S) where
 omit [HasFullTwoTorsion K S₀ W] in
 /-- The remaining arithmetic tests also yield the actual retained full-cochain
 contraction by the specified comparisons, with no circular symmetry premise. -/
-theorem other_place_contraction (h414 : Nekovar414Fibre) (h721 : Nekovar721Structure)
-    (h723 : Nekovar723Fibre) (v : Places K S)
+theorem other_place_contraction
+    (hident : NSWWildKernelIdentification) (horder : NSWOddWildProOrder)
+    (h414 : Nekovar414Fibre) (h723 : Nekovar723Fibre) (v : Places K S)
     (O : OtherPlaceInputs hS W P s hs hs0 ξ₀ v) :
     Nonempty (Contraction (SubFam.top (localCx (ResAt P) (GKS K S)
       (fun w : Places K S => Gloc K w.1) (fun w => locMap K S w.1)
       (VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)) v)).cx) := by
   have hk := O.kernel
-  have hp := actual_wild_primeToTwo h721 v.1 O.odd
+  have hp := actual_wild_primeToTwo hident horder v.1 O.odd
   obtain ⟨C⟩ := absolute_contraction_of_frame W P (coefficientCharacter hS s hs hs0 ξ₀) v O.frame
-    h414 h723 O.odd O.units
+    hident h414 h723 O.odd O.units
   exact ⟨fullSubContraction C⟩
 
 variable (q : Places K S)
@@ -1796,6 +1908,7 @@ variable (q : Places K S)
 and the precise remaining nonprimitive tame unit tests. The given full
 conditions and all nonremoved local conditions are retained literally. -/
 def actualRetainedReduction
+    (hident : NSWWildKernelIdentification) (horder : NSWOddWildProOrder)
     (h414 : Nekovar414Fibre) (h721 : Nekovar721Structure) (h723 : Nekovar723Fibre)
     (hq : q ∉ E)
     (hfull : ∀ v, v ∈ E → old v = SubFam.top (localCx (ResAt P) (GKS K S)
@@ -1812,9 +1925,9 @@ def actualRetainedReduction
     rw [hfull v hv]
     by_cases hpr : v ∈ Eprim
     · let A := hprim v hpr
-      exact Classical.choice (actual_old_primitive_full_condition_contraction h414 h721 h723 hS W P
+      exact Classical.choice (actual_old_primitive_full_condition_contraction hident horder h414 h721 h723 hS W P
         s hs hs0 ξ₀ v A.outside A.odd A.radicand_nonzero A.uniformizer)
-    · exact Classical.choice (other_place_contraction hS W P s hs hs0 ξ₀ h414 h721 h723 v (hother v hv hpr))
+    · exact Classical.choice (other_place_contraction hS W P s hs hs0 ξ₀ hident horder h414 h723 v (hother v hv hpr))
   bounded := hbounded
 
 variable (side : ∀ v : Places K S, Set (Gloc K v.1))
@@ -1832,6 +1945,7 @@ variable (side : ∀ v : Places K S, Set (Gloc K v.1))
 produce the contraction license, and its reduced genuine isotropy satisfies
 both strict-symmetry conventions on the unchanged lattice coefficient topology. -/
 theorem actual_reduced_switch_symmetry
+    (hident : NSWWildKernelIdentification) (horder : NSWOddWildProOrder)
     (h414 : Nekovar414Fibre) (h721 : Nekovar721Structure) (h723 : Nekovar723Fibre)
     (hq : q ∉ E)
     (hfull : ∀ v, v ∈ E → old v = SubFam.top (localCx (ResAt P) (GKS K S)
@@ -1852,12 +1966,13 @@ theorem actual_reduced_switch_symmetry
         (continuousRelaxedData q (eraseFull E old) side) X'.Ustr X'.fr Q' Cd ∧
       ZInQ.Contrib.CloudB3RC53.Hsw.StrictSymm
         (continuousRelaxedData q (eraseFull E old) side) X'.Ustr X'.fr Q'.toSelPairData Cd.trunc := by
-  let R := actualRetainedReduction hS W P s hs hs0 ξ₀ q old E Eprim h414 h721 h723 hq hfull hprim hother hbounded
+  let R := actualRetainedReduction hS W P s hs hs0 ξ₀ q old E Eprim hident horder h414 h721 h723 hq hfull hprim hother hbounded
   exact ⟨R, ContinuousReduction.reduced_strictSymmetry q old E side β hβ hβc R I c hc⟩
 
 /-- The RC26 place-wise formula is assembled for the same actual reduced
 switch and the same contraction license, on the retained coefficient topology. -/
 theorem actual_reduced_switch_rc26
+    (hident : NSWWildKernelIdentification) (horder : NSWOddWildProOrder)
     (h414 : Nekovar414Fibre) (h721 : Nekovar721Structure) (h723 : Nekovar723Fibre)
     (hq : q ∉ E)
     (hfull : ∀ v, v ∈ E → old v = SubFam.top (localCx (ResAt P) (GKS K S)
@@ -1881,7 +1996,7 @@ theorem actual_reduced_switch_rc26
             ((X'.rel v).incl.f 1 1 rfl ((continuousLocalInclusion q (eraseFull E old) side v).f 1 1 rfl t₁)) ∈
           LinearMap.range ((localCx (ResAt P) (GKS K S) (fun v : Places K S => Gloc K v.1)
             (fun v => locMap K S v.1) T v).d 1 2 rfl) := by
-  let R := actualRetainedReduction hS W P s hs hs0 ξ₀ q old E Eprim h414 h721 h723 hq hfull hprim hother hbounded
+  let R := actualRetainedReduction hS W P s hs hs0 ξ₀ q old E Eprim hident horder h414 h721 h723 hq hfull hprim hother hbounded
   exact ⟨R, ContinuousReduction.reduced_rc26_strictSymm q old E side β hβ hβc R I c⟩
 
 end ZInQ.Contrib.RC53Assist.StrictSymmFull.ActualSwitchAssembly
