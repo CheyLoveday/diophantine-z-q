@@ -49,7 +49,7 @@ requires degreewise isomorphisms of the full local complex at `q` with the 3-ter
 `M → M ⊕ M → M`; genuine continuous cochains `C^•(G_{K_q}, M)` are only quasi-isomorphic to it (they
 are nonzero in every degree `≥ 0`), so `supportComparisonHomotopyEquiv` and `transferOfSupportChange`
 have consistent hypotheses (zero witnesses) that are not instantiable by genuine continuous
-cochains; re-pointing to the genuine Galois support data is pending.
+cochains; see `ZInQ.Contrib.CloudB3RC53.GenuineInst.transfer_final_genuine`.
 -/
 
 namespace ZInQ.Contrib.CloudB3RC53.ResidualTransfer

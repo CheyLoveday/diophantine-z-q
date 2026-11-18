@@ -36,8 +36,8 @@ nodes take `S : Type` (the text's `𝔽₂((t))[G]` and `𝔽₂((t))` are such)
 Caveat: `SupportChangeInput` takes `SupportChangeUnramified` (through `UnramifiedNewPlace`), which
 requires degreewise isomorphisms of the full local complex at `q` with the 3-term tame model;
 genuine continuous cochains are only quasi-isomorphic to it, so `transferOfSupportChange_final` and
-`transfer_final` are not instantiable by genuine continuous cochains; re-pointing to the genuine
-Galois support data is pending.
+`transfer_final` are not instantiable by genuine continuous cochains; see
+`ZInQ.Contrib.CloudB3RC53.GenuineInst.transfer_final_genuine`.
 -/
 
 namespace ZInQ.Contrib.CloudB3RC53.ResidualTransfer
