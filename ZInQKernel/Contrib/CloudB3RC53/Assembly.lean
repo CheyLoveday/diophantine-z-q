@@ -13,8 +13,6 @@ import ZInQKernel.Contrib.CloudB3RC53.Nodes
   the base-zero lemma gives `ũ_0(0) = 0`, and the missing address `x ≠ 0` then has
   `v₂ ũ_x(0) ≥ M - 2c > B`, contradicting the upper bound. (`BranchPackageNode` is equivalent to
   Theorem 5.3 given `Prints`; it is discharged by `RC.Wiring.branchPackageNode_of_leaves`, and the
-  reduction is `RC.Wiring.restrictedConverseGenuine_of_leaves`.) (`BranchPackageNode` is equivalent to
-  Theorem 5.3 given `Prints`; it is discharged by `RC.Wiring.branchPackageNode_of_leaves`, and the
   reduction is `RC.Wiring.restrictedConverseGenuine_of_leaves`.)
 -/
 
