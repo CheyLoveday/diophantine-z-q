@@ -26,7 +26,7 @@ isotropy homotopy:
 * `genuine_strictOrth`, `genuine_exists_residuePairing`: for the genuine switch, with any
   isotropy data and strict condition complexes vanishing in degree two, `StrictOrth` holds. The
   left-hand side of `hsw` is then a residue pairing `P(eR[g t], eR[g u])`.
-* Non-vacuity (LESSON 2):
+* Non-vacuity:
   * `weil_cSymm`: the Weil pairing is `c`-symmetric with `c = −1`.
   * `exGenuineSwitch_US2`, `exIsotropy`, `exGenuine_residuePairing`: all hypotheses at once on the
     example switch with the trivial module.
