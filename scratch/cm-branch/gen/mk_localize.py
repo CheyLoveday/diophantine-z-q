@@ -366,5 +366,5 @@ end MC2
 end
 end HDec
 '''
-open('/home/jackmccarthy/dzq-wt/cm-branch/ZInQKernel/Contrib/OneProof/CMBranch/Localize.lean','w').write(s)
+open('ZInQKernel/Contrib/OneProof/CMBranch/Localize.lean','w').write(s)
 print(len(s.split('\n')))

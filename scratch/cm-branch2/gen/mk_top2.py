@@ -31,7 +31,7 @@ for name,t,callee in reversed(chain):
     assert body.count(callee)==1,(name,callee)
     body=body.replace(callee,callee+'_cm2 (c := c)')
     out.append(f'/-- `{name}` with the base switched to `sixContactMin_of_open4_hf_pz_eb_cm2` (cm-branch2). -/\n'+sig+body)
-hdr=open('scratch/cm-branch2/gen/top2_header.lean').read()
+hdr=open('scratch/cm-branch2/gen/top2_header.lean.txt').read()
 ftr='''
 end HSyn
 end

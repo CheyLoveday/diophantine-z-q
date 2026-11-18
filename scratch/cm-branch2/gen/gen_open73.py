@@ -1,7 +1,7 @@
 """cm-branch2: the next bundle generation without gonzalezRotgerThm512X6RCF and with the CM-branch inputs
 (ZInQKernel/Contrib/OneProof/CMBranch/Open73.lean). Copies, verbatim except the field lines named below."""
 import re
-ROOT='/home/jackmccarthy/dzq-wt/cm-branch2/'
+ROOT='./'  # run from the repository root
 def read(p): return open(ROOT+p).read().split('\n')
 def block(lines, start_pat):
     i=[k for k,l in enumerate(lines) if re.match(start_pat,l)]

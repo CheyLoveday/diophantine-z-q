@@ -42,3 +42,25 @@ not installed). So 84.1 is NOT live.
 * Dirty scan of the base top (`DirtyLive.lean` -> `dirty-live.tsv`, 6.7 min): 963 dirty of 97078 ZInQKernel constants;
   722 in D2A6Chain, 130 in C8Chain, 1 TailZ87, 0 in SSFChain; the 109 in the original tree are covered by
   cm-branch2's `_r5` copies or are the deleted GR/FS5 producers (checked by name).
+
+## 6. Component 1 folded (VERIFIED)
+Generators (scratch/fold-cm/gen/): mk_top_live.py -> OneProof/H/CMTopLive.lean (31 chain theorems open80 ... open6
+`_cm`, c : CMInputs3 threaded; base `sixContactMin_of_open4_hf_pz_eb_u_c8_cm` from CMBranchUC8); DirtyCM.lean ->
+dirty-cm.tsv (939 dirty of 97067); gen_r5live.py -> OneProof/H/CMR5_1, CMR5_2, CMR5 (117 new `_r5` copies, 74 reused
+from cm-branch2's CMBranch/R5Prune*; the 3 cm-fold-rebase patches applied 5/1/1 times); gen_open81.py -> OneProof/H/CMOpen.lean
+(60, 59, 54SFU, GR9 36EBCFSFU, 35EBCFSFU without the GR field) and TailZ88.lean (OpenResearchLeaves62,
+sixContactMin_of_open81); fold_main1.py -> Main.lean + kinds.tsv (-gonzalezRotgerThm512X6RCF, +cmFibreSplit glue,
++fowlerProp27, cmjDegree, cmPotentialGood, cmHeight62 with flags beginning 'pending review').
+Every generated module compiled on the first try. Merge hygiene: CMBranchMain.lean, top2_header.lean, MainDryRun.lean
+renamed .lean.txt; host paths removed from cm-branch/gen/mk_localize.py, cm-branch2/gen/gen_open73.py.
+Checks (run_checks-fold1.txt): build Main + Discharges + new modules EXIT 0 (16353 jobs); frozenTarget standard axioms;
+hash guard 21343 -> 22561, only frozenTarget changed, 1218 new (CMR5_1 428, CMR5_2 514, CMR5 45, CMOpen 161, CMTopLive 32,
+TailZ88 38); closure 295824: sorryAx, GonzalezRotgerThm512X6RCF, GonzalezRotgerThm512X6, gonzalezRotgerThm512X6_of_rcf,
+r5ptProps_of_thm512, gonzalezRotgerX6Ab_of_print, R5ptProps, FS5NoCM.R1R2fpFullProps, the NoCM bases
+open4_hf_pz_eb(_u_c8), OpenResearchLeaves61, open80 absent; the five CM statements, coxProperLattice_proof,
+HeightAdditivityUpper, ReducedCMPeriod, open81 present. Field check: 62 = 61 - gonzalezRotgerThm512X6RCF + 5 CM fields.
+OpenStatements 34; render_open: **33 H hypotheses, strict 5/28, strictest 5/28** (expected 5/28 on 33 after both; +4 vs
+5/24 on 29); --check ok; crosswalk 232 IDs, 3 matched, --check ok; DischargesTest 131 DISCHARGES lines (projection noise of
+the copied structures), no error; autoform check exit 0 (776 articles, 647 fully proved); gate.sh GATE=ok.
+Remaining GR-named constants in the closure (48): bundle fields `gonzalezRotgerX6Ab` (filled from x6CoarseModuli) and
+`gonzalezRotgerProp56X6` of the `_r5` copies (component 2's scope).
