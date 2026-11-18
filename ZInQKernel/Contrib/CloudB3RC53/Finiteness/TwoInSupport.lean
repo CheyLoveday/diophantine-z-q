@@ -68,6 +68,21 @@ in `S`.
 * `h2_of_hasFullTwoTorsion_of_sup` (`PROVED` from (ii)): so (ii) is the only remaining input for
   `h2`.
 
+## Fragments of (ii)
+
+The classical proof of (ii): for a prime `Q` of `𝓞_M`, `M = L₁ ⊔ L₂` (finite Galois over `K`),
+above `v ∉ S`, an element `σ` of the inertia group of `Q` in `Gal(M/K)` restricts to the inertia
+group of `Q ∩ 𝓞_{L_i}` in `Gal(L_i/K)`, which is trivial (Tau Ceti's
+`Ideal.isUnramifiedAt_iff_inertia_eq_bot`); so `σ` is trivial on `L₁` and on `L₂`, hence `σ = 1`,
+and `M` is unramified at `Q`.
+* `algEquiv_sup_eq_one` (`PROVED`): an automorphism of `L₁ ⊔ L₂` trivial on `L₁` and on `L₂` is
+  the identity.
+* `map_mem_inertia_comap` (`PROVED`): inertia restricts into inertia along any ring map compatible
+  with a group homomorphism.
+The remaining plumbing is the instantiation for rings of integers of intermediate fields of `K̄`:
+the restriction `Gal(M/K) → Gal(L_i/K)`, its compatibility with `𝓞_{L_i} → 𝓞_M`, and the passage
+between `IsUnramifiedOutside` and `Algebra.IsUnramifiedAt` at every prime.
+
 Classification: `PROVED` from the named inputs; `TwoPowerRootsRamified`,
 `FiniteUnramifiedSupport` and `UnramifiedOutsideSup` are stated, not proved, and each follows from
 the next.
@@ -420,5 +435,45 @@ theorem h2_of_hasFullTwoTorsion_of_sup (h : UnramifiedOutsideSup)
   h2_of_hasFullTwoTorsion_of_finiteUnramifiedSupport (finiteUnramifiedSupport_of_sup h) W
 
 end Compositum
+
+/-! ### Fragments of (ii) -/
+
+/-- **An automorphism of a compositum trivial on both factors is the identity** (`PROVED`). For
+intermediate fields `L₁, L₂` of `E/F` and an `F`-automorphism `σ` of `L₁ ⊔ L₂` fixing every element
+of `L₁` and of `L₂`, `σ = 1`: the fixed field of `σ` contains `L₁` and `L₂`, hence `L₁ ⊔ L₂`. -/
+theorem algEquiv_sup_eq_one {F E : Type*} [Field F] [Field E] [Algebra F E]
+    (L₁ L₂ : IntermediateField F E) (σ : ↥(L₁ ⊔ L₂) ≃ₐ[F] ↥(L₁ ⊔ L₂))
+    (h₁ : ∀ (x : E) (hx : x ∈ L₁), σ ⟨x, le_sup_left (b := L₂) hx⟩ = ⟨x, le_sup_left (b := L₂) hx⟩)
+    (h₂ : ∀ (x : E) (hx : x ∈ L₂), σ ⟨x, le_sup_right (a := L₁) hx⟩ =
+      ⟨x, le_sup_right (a := L₁) hx⟩) :
+    σ = 1 := by
+  set T := IntermediateField.fixedField (Subgroup.zpowers σ)
+  have hfix : ∀ y : ↥(L₁ ⊔ L₂), σ y = y → y ∈ T := by
+    intro y hy
+    rw [IntermediateField.mem_fixedField_iff]
+    intro f hf
+    have hst : σ ∈ MulAction.stabilizer (↥(L₁ ⊔ L₂) ≃ₐ[F] ↥(L₁ ⊔ L₂)) y := hy
+    exact (Subgroup.zpowers_le.2 hst) hf
+  have hle : L₁ ⊔ L₂ ≤ T.map (L₁ ⊔ L₂).val := by
+    refine sup_le (fun x hx => ?_) (fun x hx => ?_)
+    · exact ⟨⟨x, le_sup_left (b := L₂) hx⟩, hfix _ (h₁ x hx), rfl⟩
+    · exact ⟨⟨x, le_sup_right (a := L₁) hx⟩, hfix _ (h₂ x hx), rfl⟩
+  refine AlgEquiv.ext fun y => ?_
+  obtain ⟨z, hz, hzy⟩ := hle y.2
+  have hzy' : z = y := Subtype.ext hzy
+  subst hzy'
+  exact (IntermediateField.mem_fixedField_iff _ _).1 hz σ (Subgroup.mem_zpowers σ)
+
+/-- **Inertia restricts into inertia** (`PROVED`). Let `f : A → B` be a ring map, `G` act on `B`
+and `H` on `A`, and `φ : G → H` compatible with `f` (`f (φ g • a) = g • f a`). If `g` lies in the
+inertia group of an ideal `Q` of `B`, then `φ g` lies in the inertia group of `f⁻¹(Q)`. -/
+theorem map_mem_inertia_comap {A B G H : Type*} [CommRing A] [CommRing B] [Group G] [Group H]
+    [MulAction G B] [MulAction H A] (f : A →+* B) (φ : G →* H)
+    (hcompat : ∀ (g : G) (a : A), f (φ g • a) = g • f a) (Q : Ideal B) {g : G}
+    (hg : g ∈ Q.inertia G) : φ g ∈ (Q.comap f).inertia H := by
+  rw [Ideal.mem_inertia] at hg ⊢
+  intro a
+  rw [Ideal.mem_comap, map_sub, hcompat]
+  exact hg (f a)
 
 end ZInQ.Contrib.CloudB3RC53.Finiteness
