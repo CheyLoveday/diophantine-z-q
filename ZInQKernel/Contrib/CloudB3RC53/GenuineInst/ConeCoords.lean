@@ -119,7 +119,12 @@ complexes switched at `q` with the finite side (inertia `I`, Frobenius and tame 
 tame coordinates `T`), with the coordinates `eRAt`, the duality data, the classes `A, B`, the old
 class spanning `H¹(C_F)` with nonzero finite localization, and side and strict agreeing in degree
 two: `dim H¹(C_F) = dim H²(C_F) = 1`. The finite-plane coordinates are DERIVED
-(`exists_finBasis`). PROVED. -/
+(`exists_finBasis`). PROVED.
+
+Caveat (scope): this is the coefficient field `𝔽₂`. At the switching primes (height-one
+`𝔭 ≠ (2)` of `Λ`, residue characteristic `0`) there is no ring map `Λ_𝔭 → 𝔽₂`
+(`isEmpty_ringHom_zmod_two_heightOne`), so this theorem does not apply to the switching fibres;
+there use the field-generic `cone_dims_finite_derived` / `cone_dims_finite_of_plane`. -/
 theorem cone_dims_finite_switched {q : Places K S} {I : Subgroup (Gloc K q.1)}
     (hF : SwitchedAt (Gv := genGv (K := K) (S := S)) (Mv := genMv (K := K) (S := S) (M := M)) F q
       (sideOfSet (I : Set (Gloc K q.1))))
@@ -174,7 +179,12 @@ L4835–4906, L5027–5037, L5068–5083): for the switching author's `switchFam
 `old` elsewhere, finite side `T q = I`), `cone_dims_finite_switched` with the agreement of side and
 strict conditions in degree two PROVED (`switchFam_side_le_str_two`). Remaining: the duality data,
 the classes `A, B`, and the old class spanning `H¹(C_F)` with nonzero finite localization.
-PROVED. -/
+PROVED.
+
+Caveat (scope): this is the coefficient field `𝔽₂`. At the switching primes (height-one
+`𝔭 ≠ (2)` of `Λ`, residue characteristic `0`) there is no ring map `Λ_𝔭 → 𝔽₂`
+(`isEmpty_ringHom_zmod_two_heightOne`), so this theorem does not apply to the switching fibres;
+there use the field-generic `cone_dims_finite_derived` / `cone_dims_finite_of_plane`. -/
 theorem cone_dims_switchFam {q : Places K S}
     (old : ∀ v, SubFam (locCx (genGv (K := K) (S := S)) (genMv (K := K) (S := S) (M := M)) v))
     (T' : ∀ v : Places K S, Set (Gloc K v.1)) {I : Subgroup (Gloc K q.1)}
@@ -216,5 +226,76 @@ theorem cone_dims_switchFam {q : Places K S}
     hε hσ hJ2 Q tr htr hγ hsw bR hv hA hB a hspan ha
     (switchFam_side_le_str_two (Gv := genGv (K := K) (S := S))
       (Mv := genMv (K := K) (S := S) (M := M)) q old T')
+
+/-! ### Over any coefficient field, with the plane equation as an input -/
+
+section PlaneGeneric
+
+variable {k : Type} [Field k]
+
+/-- **A basis on the finite plane from the plane equation** (over any field): if
+`ψ : V → k² × k²` is injective with image the finite plane `F_v ⊕ 0`, then `V` has a basis `e_j`
+with `ψ e_j = (e_j, 0)`. PROVED. -/
+theorem exists_finBasis_of_plane {V : Type} [AddCommGroup V] [Module k V]
+    (ψ : V →ₗ[k] (Fin 2 → k) × (Fin 2 → k)) (hinj : Function.Injective ψ)
+    (hrange : LinearMap.range ψ = finPlane k (Fin 2 → k) (Fin 2 → k)) :
+    ∃ bF : Basis (Fin 2) k V, ∀ j, ψ (bF j) = (Pi.single j 1, 0) := by
+  have hsnd : ∀ x, (ψ x).2 = 0 := fun x => by
+    have : ψ x ∈ finPlane k (Fin 2 → k) (Fin 2 → k) := hrange ▸ ⟨x, rfl⟩
+    exact mem_finPlane.mp this
+  let E := LinearEquiv.ofBijective (LinearMap.fst _ _ _ ∘ₗ ψ) ⟨fun x y h => hinj (by
+      refine Prod.ext h ?_
+      rw [hsnd x, hsnd y]), fun a => by
+      have : ((a, 0) : (Fin 2 → k) × (Fin 2 → k)) ∈ LinearMap.range ψ := by
+        rw [hrange]; exact mem_finPlane.mpr rfl
+      obtain ⟨x, hx⟩ := this
+      exact ⟨x, by rw [LinearMap.comp_apply, hx]; rfl⟩⟩
+  refine ⟨(Pi.basisFun k (Fin 2)).map E.symm, fun j => ?_⟩
+  have h1 : (ψ ((Pi.basisFun k (Fin 2)).map E.symm j)).1 = Pi.single j 1 := by
+    have := E.apply_symm_apply (Pi.basisFun k (Fin 2) j)
+    rw [Pi.basisFun_apply] at this
+    rw [Basis.map_apply, Pi.basisFun_apply]
+    exact this
+  exact Prod.ext h1 (hsnd _)
+
+variable {K : Type} [Field K] [NumberField K] {S' : Set (HeightOneSpectrum (𝓞 K))}
+  {M' : Type} [AddCommGroup M'] [Module k M'] [DistribMulAction (GKS K S') M']
+  [SMulCommClass (GKS K S') k M'] [TopologicalSpace M'] [DiscreteTopology M']
+  [ContinuousSMul (GKS K S') M']
+  (F : DerivFamily (galLv (k := k) K S' M'))
+  (eR : F.Wrel.toCC.homology 1 ≃ₗ[k] (Fin 2 → k) × (Fin 2 → k))
+
+/-- **The plane equation for the finite side** (tex L5027–5037), over any coefficient field: the
+image of `H¹(W₁)` in the coordinates `eR` of `H¹(W_rel)` is the finite plane. Named input (the
+switching author's `range_H1i_eRAt` proves it over `𝔽₂` in the tame coordinates). -/
+def FinitePlaneEquation : Prop :=
+  (LinearMap.range (H1 F.i)).map eR.toLinearMap = finPlane k (Fin 2 → k) (Fin 2 → k)
+
+/-- **The generic dimensions of the genuine finite-side cone over any coefficient field, from the
+plane equation** (tex L4835–4906, L5027–5037): `cone_dims_finite_derived` with the finite-plane
+coordinates derived from `FinitePlaneEquation` (and the injectivity of `H¹(i)`,
+`DerivFamily.quasiFacts`). Applies to the switching fibres (residue characteristic `0`). PROVED. -/
+theorem cone_dims_finite_of_plane {ε σ : k} {J : Matrix (Fin 2) (Fin 2) k} (hε : ε ≠ 0)
+    (hσ : σ ≠ 0) (hJ2 : J * J = 1)
+    (Q : SelPairData (derivSwitch F eR).Dstr (derivSwitch F eR).toQuasi.D)
+    (tr : (coneCx Q.resE).X 3 →ₗ[k] k) (htr : ∀ z, tr ((coneCx Q.resE).d 2 3 rfl z) = 0)
+    (hγ : QuasiIso (GHom.toCC (selmerDualityMap Q tr htr)))
+    (hsw : (derivSwitch F eR).SwitchCoordinates Q tr ε σ J)
+    (bR : Basis (Fin 2) k ((selCx (derivSwitch F eR).toQuasi.D).toCC.homology 1))
+    {v : Fin 2 → k} (hv : v ≠ 0)
+    (hA : genLam (derivSwitch F eR) (bR 0) = (v, 0))
+    (hB : genLam (derivSwitch F eR) (bR 1) = (0, J *ᵥ v))
+    (a : (derivFiniteSES F eR).X₂.homology 1)
+    (hspan : ∀ y : (derivFiniteSES F eR).X₂.homology 1, ∃ c : k, y = c • a)
+    (ha : (HomologicalComplex.homologyMap (derivFiniteSES F eR).g 1).hom a ≠ 0)
+    (hside2 : ∀ w, (F.side w).S 2 ≤ (F.str w).S 2)
+    (hplane : FinitePlaneEquation F eR) :
+    finrank k ((derivFiniteSES F eR).X₂.homology 1) = 1 ∧
+      finrank k ((derivFiniteSES F eR).X₂.homology 2) = 1 := by
+  obtain ⟨bF, hι⟩ := exists_finBasis_of_plane (eR.toLinearMap ∘ₗ H1 F.i)
+    (eR.injective.comp F.quasiFacts.2.1) (by rw [LinearMap.range_comp]; exact hplane)
+  exact cone_dims_finite_derived F eR hε hσ hJ2 Q tr htr hγ hsw bR hv hA hB a hspan ha hside2 bF hι
+
+end PlaneGeneric
 
 end ZInQ.Contrib.CloudB3RC53.GenuineInst

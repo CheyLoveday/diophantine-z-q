@@ -17,7 +17,7 @@ compatible `f : W → M` (`f (π g • x) = g • f x`), the other team's unrami
 (`urToLocal_eq_urSelf_comp`), where `urSelf` is the clearing lane's quasi-isomorphism
 (`urSelf_quasiIso`) and `infl` is the cochain map of the compatible pair `(π, f)`
 (`contCochainsMap π f`, inflation for `π` a quotient map). At a place `w ∈ S` of a number field
-(`urToLocal_galois_eq`, node `UrToLocalFactorization`): `urToLocal_galois` is the quasi-isomorphism
+(node `UrToLocalFactorization`): `urToLocal_galois` is the quasi-isomorphism
 `[W --(Φ_w−1)--> W] ≃_{qis} C^•_cont(Gal(K_w^ur/K_w), W)` followed by inflation along
 `resUr : G_{K_w} → Gal(K_w^ur/K_w)` composed with `f`. This is the precise sense in which the
 unramified condition is "the unramified part" of the local complex.

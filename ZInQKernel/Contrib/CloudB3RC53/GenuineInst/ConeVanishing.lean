@@ -21,7 +21,8 @@ class `A` with nonzero localization, that kernel is `0`.
   `C_F`, from the duality data (`γ`, switch coordinates), the localization data of `A`, `B`
   (tex L4892–4894), the old class spanning `H¹(C_F)` with nonzero finite localization (tex
   L4892), the agreement of side and strict conditions in degree two, and the finite-plane
-  coordinates. The generic-vanishing hypotheses of `cone_dims_finite` are DERIVED.
+  coordinates. The vanishing it uses (`H¹(C_str) = 0`, `H²(W₁) = 0`) is DERIVED; the other
+  vanishing hypotheses of `cone_dims_finite` are not needed for the dimensions.
 
 **Classification.** PROVED.
 -/

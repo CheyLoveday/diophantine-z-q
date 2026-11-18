@@ -18,7 +18,7 @@ infinite-dimensional): the proof is
 * the differentials of `dualCx` are `±` the dual maps.
 
 Used for `dim H²(C_str) = dim H¹(C_rel)` through the Selmer duality quasi-isomorphism
-`C_str ≃ Hom(C_rel, k)[−3]` (`ConeDims.lean`).
+`C_str ≃ Hom(C_rel, k)[−3]` (`ConeDuality.lean`).
 -/
 
 noncomputable section
