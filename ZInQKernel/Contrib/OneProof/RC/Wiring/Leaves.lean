@@ -378,7 +378,9 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   (`commonCoordinateTarget_of_LF`). Conclusion-shaped: for `ℓ > 0` and a support containing `S₀`
   (PROVED, `PreDataSpec.support_base`) the leaf is equivalent to the GLUE `FrobeniusTrace (E_ℓ)`
   together with (4.7), `ε_x = 1` where no graph prime is unused, and `u_{prim,x} ∈ F` (the GLUE is
-  a conjunct of the leaf, not a hypothesis; the pinned Frobenius adds nothing else); it is not
+  a conjunct of the leaf, not a hypothesis; the pinned Frobenius adds nothing else;
+  `commonCoordinateInputsLF_iff_of_support` with `commonCoordinateInputsL_iff_exact`, and in general
+  `commonCoordinateInputsLF_iff_exact`, all PROVED in `CommonCoordinate6Exact.lean`); it is not
   implied by (4.7) alone (`commonCoordinateInputsLF_not_of_target`) (only through `ε_x = 1` at the
   empty family); the step models are existential and not tied to the actual Selmer complexes; the
   coefficient datum is existential (the text's is `K = ℚ(√k)`; only `tr` and `det` of
