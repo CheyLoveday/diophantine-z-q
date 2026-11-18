@@ -1,0 +1,11 @@
+{
+  "name": "cm-port2",
+  "imports": ["ZInQKernel.Contrib.OneProof.CMCurveOrderLive"],
+  "discharges": [
+    {
+      "field": "cmFibreSplit",
+      "proof": "_root_.HDec.CMBranch.FibreSplit.cmFibreSplit_of_liveInputs {n}.neronSchemeExtensionDedekind {n}.neronOggShafarevichSep {n}.silverbergZarhinThm35 {n}.elliotWildInertiaTrivial {n}.y3FullThreeRepZ30 {n}.deligneCanonicalModelY3EveryPrint {n}.y3ToP1j",
+      "leaves": []
+    }
+  ]
+}
