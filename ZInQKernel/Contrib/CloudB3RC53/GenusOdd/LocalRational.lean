@@ -13,7 +13,7 @@ For a number field `K`, a prime `p` and a prime `𝔭 ∣ p` of `K`, and any rin
   `𝓞_𝔭` has characteristic `p` and `N𝔭` elements;
 * (P4) `exists_sub_mem_integers`: `K_𝔭 = K + 𝓞_𝔭` (density of `K`);
 * (P5) `exists_rat_sub_mem_integers`: if `N𝔭 = p` and `𝔭² ∤ p` then `K_𝔭 = ℚ + 𝓞_𝔭`
-  (`ℤ → 𝓞_K/𝔭ⁿ` is onto, as `#(𝓞_K/𝔭ⁿ) = pⁿ` and `𝔭ⁿ ∩ ℤ = pⁿℤ`);
+  (`ℤ → 𝓞_K/𝔭ⁿ` is onto, as `|𝓞_K/𝔭ⁿ| = pⁿ` and `𝔭ⁿ ∩ ℤ = pⁿℤ`);
 * (P6) `exists_rat_associated`: if `𝔭² ∤ p`, every `x ≠ 0` of `K_𝔭` is `ι q` times a unit, `q ∈ ℚ`
   (a power of `p`, `v_𝔭(p) = 1`);
 * (P7) `mem_primesAbove_rat`, `absNorm_rat`, `unramifiedOver_rat`: the place `v` of `ℚ` is a prime
@@ -178,7 +178,7 @@ theorem charP_residueField (hp : p.Prime) (h𝔭 : 𝔭 ∈ primesAbove K p) :
     adicCompletionIntegers.isUnit_iff_valued_eq_one, hcast]
   exact hlt
 
-/-- **(P3)** `#(residue field of 𝓞_𝔭) = N𝔭` (PROVED). -/
+/-- **(P3)** `|residue field of 𝓞_𝔭| = N𝔭` (PROVED). -/
 theorem natCard_residueField' :
     Nat.card (IsLocalRing.ResidueField (𝔭.adicCompletionIntegers K)) = Ideal.absNorm 𝔭.asIdeal :=
   natCard_residueField_adicCompletionIntegers 𝔭

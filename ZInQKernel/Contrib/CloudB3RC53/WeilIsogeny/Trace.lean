@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.CloudB3RC53.Frobenius.DegreeOneSub
 /-!
 # `deg(n π − m) = m² − a m n + q n²`
 
-Let `W` be an elliptic curve over a finite field `F` with `q` elements, `a = q + 1 − #W(F)`, and
+Let `W` be an elliptic curve over a finite field `F` with `q` elements, `a = q + 1 − |W(F)|`, and
 `π` the base change of its Frobenius to a separably closed algebraic extension `K`. For integers
 `m, n` with `m ≠ 0` in `K`, the morphism `n π − m` is a separable isogeny `ψ_{m,n}` (Tau Ceti's
 differential criterion; `π^* ω = 0`) and
@@ -13,7 +13,7 @@ differential criterion; `π^* ω = 0`) and
 
 Proof: for `S, T ∈ W[N]` (`N` invertible), the compatibility of the Weil pairing with separable
 isogenies (`weilPairing_torsionMap`), bilinearity, `e_N(π S, π T) = e_N(S, T)^q`
-(`weilPairing_frobenius`) and the case `m = n = 1` (`deg(π − 1) = #W(F)`) give
+(`weilPairing_frobenius`) and the case `m = n = 1` (`deg(π − 1) = |W(F)|`) give
 `e_N(S, T)^{deg ψ} = e_N(S, T)^{m² − amn + qn²}` (`weilPairing_degree`). At a prime `N = ℓ ≠ p` some
 `e_ℓ(S, T)` is a primitive `ℓ`-th root of unity (nondegeneracy), so `ℓ` divides the difference of
 the exponents; as `ℓ` is arbitrary, the exponents agree.
@@ -30,7 +30,7 @@ namespace ZInQ.Contrib.CloudB3RC53.WeilIsogeny
 variable {F : Type*} [Field F] [Fintype F] (W : WeierstrassCurve F) [W.IsElliptic]
   {K : Type*} [Field K] [DecidableEq K] [Algebra F K] [IsSepClosed K] [Algebra.IsAlgebraic F K]
 
-/-- The trace of Frobenius `a = q + 1 − #W(F)`. -/
+/-- The trace of Frobenius `a = q + 1 − |W(F)|`. -/
 def traceFrob : ℤ := Fintype.card F + 1 - Nat.card W.toAffine.Point
 
 /-- The Frobenius of `W` base-changed to `K`, as an endomorphism of `W_K`. -/

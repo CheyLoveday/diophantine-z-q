@@ -32,7 +32,7 @@ theorem ns5 (x : ZMod 5) (hx : x = 0 ∨ x = 1 ∨ x = 2) :
   rw [Affine.nonsingular_iff, Affine.equation_iff]
   rcases hx with rfl | rfl | rfl <;> decide
 
-/-- **`#Ẽ₀(𝔽₅)[2] = 4`** (PROVED). -/
+/-- **`|Ẽ₀(𝔽₅)[2]| = 4`** (PROVED). -/
 theorem card_twoTorsion_five :
     Nat.card (AddSubgroup.torsionBy model5.red.toAffine.Point (2 : ℕ)) = 4 := by
   have := isElliptic_red model5

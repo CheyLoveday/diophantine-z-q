@@ -21,7 +21,7 @@ arbitrary fields `k`, curves `W` and numbers. Here:
   over the actual objects with the print's hypotheses in the type: for an odd prime `p` with
   `p ∥ k` (so `ℚ_p(√k)/ℚ_p` is tame ramified quadratic) and a good integral model of
   `E₀ = E^{(h)}` at `p`, the component number `cB p` of `ℬ` (RC0's field: `c_p(E^{(h)}) ·
-  c_p(E^{(hk)})`, the first factor being `1` at good reduction) is `#Ẽ₀(𝔽_p)[2]`. Néron models
+  c_p(E^{(hk)})`, the first factor being `1` at good reduction) is `|Ẽ₀(𝔽_p)[2]|`. Néron models
   and component groups are not in the library, so `cB` stays RC0's number field.
 * `componentFields_of_edixhoven`: RC0's fields `hB`, `htp` (`c_p(ℬ) = 2^{t_p}`, `t_p ≤ 2`) from the
   print over those objects. PROVED.
@@ -109,7 +109,7 @@ library).** For the fixed curve `E₀ = E^{(h)}` and the companion `k`: at an od
 `p ∥ k` (so `ℚ_p(√k)/ℚ_p` is a tame ramified quadratic extension) where `E₀` has a good integral
 model, the component group of the ramified twist `E₀^{(k)} = E^{(hk)}` is `Ẽ₀[2]`, so the component
 number `cB p` of `ℬ = E^{(h)} × E^{(hk)}` (the first factor contributing `1` at good reduction) is
-`#Ẽ₀(𝔽_p)[2]`, the rational two-torsion of the reduction of that model. The model-free form is
+`|Ẽ₀(𝔽_p)[2]|`, the rational two-torsion of the reduction of that model. The model-free form is
 `EdixhovenComponentNumberIso` (`EdixhovenModel.lean`). -/
 def EdixhovenComponentNumber (ℓ : ℕ) (h : ℚ) (k : ℤ) (cB : ℕ → ℕ) : Prop :=
   ∀ p : ℕ, ∀ hp : p.Prime, p ≠ 2 → (p : ℤ) ∣ k → ¬ ((p : ℤ) ^ 2 ∣ k) →
@@ -193,7 +193,7 @@ structure CalibrationModelG {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : 
   with discriminant prime to `p` (tex 4116–4117) -/
   goodModel : ∀ p ∈ D.kfin.natAbs.primeFactors, GoodModelAt (qtwist (Ecurve ℓ) (Fam.h x : ℚ)) p
   /-- **PRINT (Edixhoven, Thm 5.3 and Rem 5.4.1) as GLUE**, over the actual objects: the
-  component number of `ℬ` at a companion prime is `#Ẽ₀(𝔽_p)[2]` -/
+  component number of `ℬ` at a companion prime is `|Ẽ₀(𝔽_p)[2]|` -/
   hEdix : EdixhovenComponentNumber ℓ (Fam.h x : ℚ) D.kfin cB
   /-- the field `K = ℚ(√k)` -/
   K : Type

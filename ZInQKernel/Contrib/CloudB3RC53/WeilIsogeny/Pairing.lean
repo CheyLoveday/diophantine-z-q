@@ -18,7 +18,7 @@ character of `[N]` at `G` (`Gᴺ = φ^* g₂ᴺ` is a pullback along `[N]` becau
 `[N]`). The divisor of `G` is `[N]^* (∑_{R ∈ ker φ} ((T + R) − (R)))` (`pb_weilPairingDivisor`),
 which is also the divisor of `g₁^{deg φ} · [N]^* H`, for `g₁` the Weil function of `T` on `W₁` and
 `H` a function with divisor `∑_{R ∈ ker φ} ((T + R) − (T) − (R) + (O))`
-(`exists_principal_eq_ofPoint_add_sub`), using `#ker φ = deg φ`. The Kummer character depends only
+(`exists_principal_eq_ofPoint_add_sub`), using `|ker φ| = deg φ`. The Kummer character depends only
 on the divisor, is multiplicative, and is trivial on pullbacks along `[N]`; so
 `τ_S G / G = (τ_S g₁ / g₁)^{deg φ} = e_N(S, T)^{deg φ}`.
 
@@ -92,7 +92,7 @@ theorem principal_pow {W : WeierstrassCurve.Affine F} (g : W.FunctionFieldˣ) (d
   | zero => simp
   | succ d ih => rw [pow_succ, Divisor.principal_mul, ih, succ_nsmul]
 
-/-- **`#ker φ = deg φ`**, for the kernel as the finite set of points sent to `O`. PROVED. -/
+/-- **`|ker φ| = deg φ`**, for the kernel as the finite set of points sent to `O`. PROVED. -/
 theorem card_kerFinset :
     (Hom.finite_setOf_pointMap_eq (Hom.ofIsogeny_ne_zero φ) 0).toFinset.card = φ.degree := by
   have := W₁.toAffine.isIntegrallyClosed_coordinateRing

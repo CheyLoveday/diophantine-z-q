@@ -11,7 +11,7 @@ import Mathlib.NumberTheory.LSeries.Convolution
 elliptic curve `E/ℚ`) follows from Hasse's bound over finite fields:
 
 * `HasseBound` (PRINT; Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Theorem V.1.1): for
-  an elliptic curve `E` over a finite field with `q` elements, `|#E(𝔽_q) − q − 1| ≤ 2√q`.
+  an elliptic curve `E` over a finite field with `q` elements, `||E(𝔽_q)| − q − 1| ≤ 2√q`.
 * `exists_localPolynomial_roots`: at every prime `p`, Mathlib's local polynomial of `E` is
   `(1 − αT)(1 − βT)` with `|α|, |β| ≤ √p` (good reduction: `HasseBound` for the reduction;
   multiplicative or additive reduction: `1 ∓ T` or `1`).
@@ -31,7 +31,7 @@ namespace ZInQ.Contrib.CloudB3RC53.Hasse
 
 /-- **Node `HasseBound`** (PRINT: J. Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., GTM
 106, Theorem V.1.1 (Hasse); the manuscript uses Hasse's bound uncited at tex 1590 and 6323): for an
-elliptic curve `E` over a finite field `𝔽_q`, `|#E(𝔽_q) − q − 1| ≤ 2√q`. Here `#E(𝔽_q)` counts the
+elliptic curve `E` over a finite field `𝔽_q`, `||E(𝔽_q)| − q − 1| ≤ 2√q`. Here `|E(𝔽_q)|` counts the
 point at infinity (`W.toAffine.Point` is the affine points together with `O`). -/
 def HasseBound : Prop :=
   ∀ (F : Type) [Field F] [Fintype F] (W : WeierstrassCurve F) [W.IsElliptic],

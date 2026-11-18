@@ -4,7 +4,7 @@ import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 /-!
 # Hasse's bound
 
-For an elliptic curve `E` over a finite field `𝔽_q`, `|#E(𝔽_q) − q − 1| ≤ 2√q`
+For an elliptic curve `E` over a finite field `𝔽_q`, `||E(𝔽_q)| − q − 1| ≤ 2√q`
 (`hasseBoundProved_proof`; Silverman, *The Arithmetic of Elliptic Curves*, Theorem V.1.1).
 
 * `degree_psi`: `deg(n π − m) = m² − a m n + q n²` whenever `m ≠ 0` in `\bar{𝔽}_q`: by
@@ -115,7 +115,7 @@ theorem sq_traceFrob_le (L : Type*) [Field L] [DecidableEq L] [Algebra F L] [IsS
     omega
 
 omit [W.IsElliptic] [DecidableEq K] [IsSepClosed K] [Algebra.IsAlgebraic F K] in
-/-- **Hasse's bound** `|#E(𝔽_q) − q − 1| ≤ 2√q` (Silverman V.1.1). PROVED. -/
+/-- **Hasse's bound** `||E(𝔽_q)| − q − 1| ≤ 2√q` (Silverman V.1.1). PROVED. -/
 theorem hasse_bound_of_sq (h : traceFrob W ^ 2 ≤ 4 * (Fintype.card F : ℤ)) :
     |(Nat.card W.toAffine.Point : ℝ) - Fintype.card F - 1| ≤ 2 * √(Fintype.card F : ℝ) := by
   have e : (Nat.card W.toAffine.Point : ℝ) - Fintype.card F - 1 = -(traceFrob W : ℝ) := by
@@ -127,7 +127,7 @@ theorem hasse_bound_of_sq (h : traceFrob W ^ 2 ≤ 4 * (Fintype.card F : ℤ)) :
 
 /-- **Node `HasseBoundProved`** (Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Theorem
 V.1.1; the statement of the PRINT `HasseBound` of `Hasse/Convergence.lean`): for an
-elliptic curve `E` over a finite field `𝔽_q`, `|#E(𝔽_q) − q − 1| ≤ 2√q`. PROVED
+elliptic curve `E` over a finite field `𝔽_q`, `||E(𝔽_q)| − q − 1| ≤ 2√q`. PROVED
 (`hasseBoundProved_proof`). -/
 def HasseBoundProved : Prop :=
   ∀ (F : Type) [Field F] [Fintype F] (W : WeierstrassCurve F) [W.IsElliptic],
