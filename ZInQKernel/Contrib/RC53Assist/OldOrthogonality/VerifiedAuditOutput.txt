@@ -1,0 +1,1386 @@
+ZInQKernel/Contrib/RC53Assist/OldOrthogonality/Audit.lean:726:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap_coe`:
+  [NumberField K]
+  [W.IsElliptic]
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NumberField K] [W.IsElliptic] [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/OldOrthogonality/Audit.lean:731:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.inclTors_torsionSupportMap`:
+  [NumberField K]
+  [W.IsElliptic]
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NumberField K] [W.IsElliptic] [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/OldOrthogonality/Audit.lean:739:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap_injective`:
+  [NumberField K]
+  [W.IsElliptic]
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NumberField K] [W.IsElliptic] [NeZero n] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/OldOrthogonality/Audit.lean:801:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportMap_tmul`:
+  [W.IsElliptic]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [W.IsElliptic] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/OldOrthogonality/Audit.lean:1164:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ZInQKernel/Contrib/RC53Assist/OldOrthogonality/Audit.lean:1266:27: warning: This simp argument is unused:
+  LinearMap.zero_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.dual_factor_of_ker : ∀ {k : Type} [inst : CommRing.{0} k]
+  [Module.Injective.{0, 0} k k] {V W : Type} [inst_2 : AddCommGroup.{0} V] [inst_3 : Module.{0, 0} k V]
+  [inst_4 : AddCommGroup.{0} W] [inst_5 : Module.{0, 0} k W] (g : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) V W)
+  (f : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) V k),
+  (∀ (v : V), Eq.{1} (g v) 0 → Eq.{1} (f v) 0) → ∃ z, ∀ (v : V), Eq.{1} (z (g v)) (f v)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.dual_factor_of_ker' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.dual_extend_of_injective : ∀ {k : Type} [inst : CommRing.{0} k]
+  [Module.Injective.{0, 0} k k] {V W : Type} [inst_2 : AddCommGroup.{0} V] [inst_3 : Module.{0, 0} k V]
+  [inst_4 : AddCommGroup.{0} W] [inst_5 : Module.{0, 0} k W] (ι : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) V W),
+  Function.Injective.{1, 1} ⇑ι →
+    ∀ (φ : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) V k), ∃ z, ∀ (v : V), Eq.{1} (z (ι v)) (φ v)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.dual_extend_of_injective' does not depend on any axioms
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.trunc01_finish : ∀ {k : Type} [inst : CommRing.{0} k]
+  {U U' L L' E : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} k}
+  (iU : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U L)
+  (iU' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U' L')
+  (P : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.{0} L L' E)
+  (J : ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0} iU iU' P)
+  (trv : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} E 2)) k)
+  (htrv :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} E 1)),
+      Eq.{1} (trv ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} E 1 2 rfl.{1}) z)) 0)
+  (htrv2 :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} E (HSub.hSub.{0, 0, 0} 2 1))),
+      Eq.{1}
+        (trv
+          ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} E (HSub.hSub.{0, 0, 0} 2 1) 2
+              (Decidable.byContradiction fun a =>
+                ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.trunc01_finish._proof_1 a))
+            z))
+        0),
+  ZInQ.Contrib.CloudB3RC53.SelmerDuality.GAcyclic.{0}
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx.{0}
+        (ZInQ.Contrib.CloudB3RC53.SelmerDuality.adjHom.{0} P 2 trv htrv2)) →
+    (∀ (n : ℤ), Ne.{1} n 0 → Subsingleton.{1} ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U n)) →
+      ∀ (i j l : ℤ) (hij : Eq.{1} (HAdd.hAdd.{0, 0, 0} i 1) j) (hjl : Eq.{1} (HAdd.hAdd.{0, 0, 0} j 1) l),
+        LE.le.{0} 2 j →
+          ∀ (u : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U j))
+            (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} L (HSub.hSub.{0, 0, 0} j 1)))
+            (φ :
+              ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                  (ZInQ.Contrib.CloudB3RC53.SelmerDuality.dualCx.{0} U' 3) (HSub.hSub.{0, 0, 0} j 1))),
+            Eq.{1}
+                ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx.{0}
+                      (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} iU iU' P J trv htrv))
+                    j l hjl)
+                  (Prod.mk.{0, 0} (Prod.mk.{0, 0} u x) φ))
+                0 →
+              ∀
+                (z :
+                  Module.Dual.{0, 0} k
+                    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} L'
+                        (HSub.hSub.{0, 0, 0} 3 (HSub.hSub.{0, 0, 0} j 1)))),
+                (∀
+                    (y :
+                      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U'
+                          (HSub.hSub.{0, 0, 0} 3 (HSub.hSub.{0, 0, 0} j 1)))),
+                    Eq.{1}
+                      (z
+                        ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} iU'
+                            (HSub.hSub.{0, 0, 0} 3 (HSub.hSub.{0, 0, 0} j 1))
+                            (HSub.hSub.{0, 0, 0} 3 (HSub.hSub.{0, 0, 0} j 1)) rfl.{1})
+                          y))
+                      ((ZInQ.Contrib.CloudB3RC53.SelmerDuality.asDual.{0} φ) y)) →
+                  (∀
+                      (y :
+                        ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} L'
+                            (HSub.hSub.{0, 0, 0} 3 (HSub.hSub.{0, 0, 0} l 1)))),
+                      Eq.{1}
+                        (trv
+                          (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0} P (HSub.hSub.{0, 0, 0} j 1)
+                                (HSub.hSub.{0, 0, 0} 3 (HSub.hSub.{0, 0, 0} l 1)) 2
+                                (Decidable.byContradiction fun a =>
+                                  ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.trunc01_finish._proof_2 i j l hjl
+                                    a))
+                              x)
+                            y))
+                        (HSMul.hSMul.{0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.sgn (HSub.hSub.{0, 0, 0} j 2))
+                          (z
+                            ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} L'
+                                (HSub.hSub.{0, 0, 0} 3 (HSub.hSub.{0, 0, 0} l 1))
+                                (HSub.hSub.{0, 0, 0} 3 (HSub.hSub.{0, 0, 0} j 1))
+                                (Decidable.byContradiction fun a =>
+                                  ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.trunc01_finish._proof_3 i j l hjl
+                                    a))
+                              y)))) →
+                    ∃ c',
+                      Eq.{1}
+                        ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx.{0}
+                              (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} iU iU' P J trv htrv))
+                            i j hij)
+                          c')
+                        (Prod.mk.{0, 0} (Prod.mk.{0, 0} u x) φ)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.trunc01_finish' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.trunc01_quasiIso : ∀ {k : Type} [inst : CommRing.{0} k]
+  {U U' L L' E : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} k}
+  (iU : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U L)
+  (iU' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U' L')
+  (P : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.{0} L L' E)
+  (J : ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0} iU iU' P)
+  (trv : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} E 2)) k)
+  (htrv :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} E 1)),
+      Eq.{1} (trv ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} E 1 2 rfl.{1}) z)) 0)
+  [Module.Injective.{0, 0} k k]
+  (htrv2 :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} E (HSub.hSub.{0, 0, 0} 2 1))),
+      Eq.{1}
+        (trv
+          ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} E (HSub.hSub.{0, 0, 0} 2 1) 2
+              (Decidable.byContradiction fun a =>
+                ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.trunc01_finish._proof_1 a))
+            z))
+        0),
+  ZInQ.Contrib.CloudB3RC53.SelmerDuality.GAcyclic.{0}
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx.{0}
+        (ZInQ.Contrib.CloudB3RC53.SelmerDuality.adjHom.{0} P 2 trv htrv2)) →
+    ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.TruncShape01 iU iU' →
+      QuasiIso.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+          (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} iU iU' P J trv htrv))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.trunc01_quasiIso' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.natCx_subsingleton_neg : ∀ {k : Type} [inst : Field.{0} k]
+  (Kc : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} k) ℕ) (n : ℤ),
+  LT.lt.{0} n 0 →
+    Subsingleton.{1}
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0} Kc) n)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.natCx_subsingleton_neg' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.subsingleton_of_eq_bot : ∀ {k : Type} [inst : Field.{0} k]
+  {V : Type} [inst_1 : AddCommGroup.{0} V] [inst_2 : Module.{0, 0} k V] (p : Submodule.{0, 0} k V),
+  Eq.{1} p Bot.bot.{0} → Subsingleton.{1} ↥p
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.subsingleton_of_eq_bot' depends on axioms: [propext,
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strRelK_truncShape01 : ∀ {k : Type} [inst : Field.{0} k]
+  {ι : Type} [inst_1 : DecidableEq.{1} ι] {Gv : ι → Type} [inst_2 : (v : ι) → Group.{0} (Gv v)]
+  [inst_3 : (v : ι) → TopologicalSpace.{0} (Gv v)] [inst_4 : ∀ (v : ι), IsTopologicalGroup.{0} (Gv v)] {Mv : ι → Type}
+  [inst_5 : (v : ι) → AddCommGroup.{0} (Mv v)] [inst_6 : (v : ι) → Module.{0, 0} k (Mv v)]
+  [inst_7 : (v : ι) → DistribMulAction.{0, 0} (Gv v) (Mv v)]
+  [inst_8 : ∀ (v : ι), SMulCommClass.{0, 0, 0} (Gv v) k (Mv v)] [inst_9 : (v : ι) → TopologicalSpace.{0} (Mv v)]
+  [inst_10 : ∀ (v : ι), ContinuousAdd.{0} (Mv v)] [inst_11 : ∀ (v : ι), ContinuousConstSMul.{0, 0} k (Mv v)]
+  [inst_12 : ∀ (v : ι), ContinuousSMul.{0, 0} (Gv v) (Mv v)] (q : ι)
+  (old :
+    (v : ι) → ZInQ.Contrib.CloudB3RC53.SwitchInputs.SubFam (ZInQ.Contrib.CloudB3RC53.SwitchInputs.locCxK k Gv Mv v)),
+  ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.TruncShape01
+    (ZInQ.Contrib.CloudB3RC53.SelmerDuality.ghomComp.{0}
+      (ZInQ.Contrib.CloudB3RC53.SwitchInputs.SubFam.inclLe (ZInQ.Contrib.CloudB3RC53.SwitchInputs.switch_hsrK q old q))
+      (ZInQ.Contrib.CloudB3RC53.SwitchInputs.switchRelK k Gv Mv q old q).incl)
+    (ZInQ.Contrib.CloudB3RC53.SwitchInputs.switchRelK k Gv Mv q old q).incl
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strRelK_truncShape01' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.ringTruncation_shape : ∀ {R : Type} [inst : CommRing.{0} R]
+  (C C' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R),
+  (∀ (n : ℤ), LT.lt.{0} n 0 → Subsingleton.{1} ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n)) →
+    (∀ (n : ℤ), LT.lt.{0} n 0 → Subsingleton.{1} ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C' n)) →
+      ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.TruncShape01
+        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strictTruncation C).incl
+        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.relaxedTruncation C').incl
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.ringTruncation_shape' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strict_relaxed_local_complement : ∀ {R : Type}
+  [inst : CommRing.{0} R] [Module.Injective.{0, 0} R R] {C C' E : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  (P : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.{0} C C' E)
+  (J :
+    ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0}
+      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strictTruncation C).incl
+      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.relaxedTruncation C').incl P)
+  (trv : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} E 2)) R)
+  (htrv :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} E 1)),
+      Eq.{1} (trv ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} E 1 2 rfl.{1}) z)) 0),
+  (∀ (n : ℤ), LT.lt.{0} n 0 → Subsingleton.{1} ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n)) →
+    (∀ (n : ℤ), LT.lt.{0} n 0 → Subsingleton.{1} ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C' n)) →
+      QuasiIso.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.SelmerDuality.adjHom.{0} P 2 trv htrv)) →
+        QuasiIso.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+            (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0}
+              (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strictTruncation C).incl
+              (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.relaxedTruncation C').incl P J trv htrv))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strict_relaxed_local_complement' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeAt_local_complement : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {R : Type} [inst_2 : CommRing.{0} R] {M M' T : Type} [inst_3 : AddCommGroup.{0} M] [inst_4 : Module.{0, 0} R M]
+  [inst_5 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_6 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) R M] [inst_7 : TopologicalSpace.{0} M]
+  [inst_8 : DiscreteTopology.{0} M] [inst_9 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_10 : AddCommGroup.{0} M'] [inst_11 : Module.{0, 0} R M']
+  [inst_12 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M']
+  [inst_13 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) R M']
+  [inst_14 : TopologicalSpace.{0} M'] [inst_15 : DiscreteTopology.{0} M']
+  [inst_16 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M'] [inst_17 : AddCommGroup.{0} T]
+  [inst_18 : Module.{0, 0} R T] [inst_19 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) T]
+  [inst_20 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) R T] [inst_21 : TopologicalSpace.{0} T]
+  [inst_22 : DiscreteTopology.{0} T] [inst_23 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) T]
+  (β : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M' T))
+  (hβ :
+    ∀ (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (a : M) (b : M'),
+      Eq.{1} ((β (HSMul.hSMul.{0, 0, 0} g a)) (HSMul.hSMul.{0, 0, 0} g b)) (HSMul.hSMul.{0, 0, 0} g ((β a) b)))
+  [Module.Injective.{0, 0} R R] (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+  (trv :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+      (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} (ZInQ.Manuscript.RC.CoefModules.locAt K S R T v) 2)) R)
+  (htrv :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} (ZInQ.Manuscript.RC.CoefModules.locAt K S R T v) 1)),
+      Eq.{1}
+        (trv
+          ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} (ZInQ.Manuscript.RC.CoefModules.locAt K S R T v) 1 2
+              rfl.{1})
+            z))
+        0)
+  (J :
+    ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0}
+      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeStrictAt v).i
+      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeRelaxedAt v).i
+      (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K β hβ v)),
+  QuasiIso.{0, 1, 0}
+      (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+        (ZInQ.Contrib.CloudB3RC53.SelmerDuality.adjHom.{0} (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K β hβ v) 2 trv
+          htrv)) →
+    QuasiIso.{0, 1, 0}
+      (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+        (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0}
+          (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeStrictAt v).i
+          (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeRelaxedAt v).i
+          (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K β hβ v) J trv htrv))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeAt_local_complement' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeOverride_horth : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {R : Type} [inst_2 : CommRing.{0} R] {M M' T : Type} [inst_3 : AddCommGroup.{0} M] [inst_4 : Module.{0, 0} R M]
+  [inst_5 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_6 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) R M] [inst_7 : TopologicalSpace.{0} M]
+  [inst_8 : DiscreteTopology.{0} M] [inst_9 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_10 : AddCommGroup.{0} M'] [inst_11 : Module.{0, 0} R M']
+  [inst_12 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M']
+  [inst_13 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) R M']
+  [inst_14 : TopologicalSpace.{0} M'] [inst_15 : DiscreteTopology.{0} M']
+  [inst_16 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M'] [inst_17 : AddCommGroup.{0} T]
+  [inst_18 : Module.{0, 0} R T] [inst_19 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) T]
+  [inst_20 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) R T] [inst_21 : TopologicalSpace.{0} T]
+  [inst_22 : DiscreteTopology.{0} T] [inst_23 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) T]
+  (β : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M' T))
+  (hβ :
+    ∀ (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (a : M) (b : M'),
+      Eq.{1} ((β (HSMul.hSMul.{0, 0, 0} g a)) (HSMul.hSMul.{0, 0, 0} g b)) (HSMul.hSMul.{0, 0, 0} g ((β a) b)))
+  [Module.Injective.{0, 0} R R] [inst_25 : Fintype.{0} (ZInQ.Manuscript.RC.SelmerComplex.Places K S)]
+  (Q : Finset.{0} (ZInQ.Manuscript.RC.SelmerComplex.Places K S))
+  (oldA : (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) → ZInQ.Manuscript.RC.CoefModules.CondAt K S R M v)
+  (oldB : (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) → ZInQ.Manuscript.RC.CoefModules.CondAt K S R M' v)
+  (I :
+    ZInQ.Manuscript.RC.SelmerComplex.GaloisTruncIsotropyData K S R β hβ
+      (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M
+        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strictOverrideAt Q oldA))
+      (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M'
+        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.relaxedOverrideAt Q oldB)))
+  (trv :
+    (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+        (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} (ZInQ.Manuscript.RC.CoefModules.locAt K S R T v) 2)) R)
+  (htrv :
+    ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+      (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} (ZInQ.Manuscript.RC.CoefModules.locAt K S R T v) 1)),
+      Eq.{1}
+        ((trv v)
+          ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} (ZInQ.Manuscript.RC.CoefModules.locAt K S R T v) 1 2
+              rfl.{1})
+            z))
+        0),
+  (∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+      (J :
+        ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0} (oldA v).i (oldB v).i
+          (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K β hβ v)),
+      QuasiIso.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+          (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} (oldA v).i (oldB v).i
+            (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K β hβ v) J (trv v) (htrv v)))) →
+    (∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S),
+        Membership.mem.{0, 0} Q v →
+          QuasiIso.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+              (ZInQ.Contrib.CloudB3RC53.SelmerDuality.adjHom.{0} (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K β hβ v)
+                2 (trv v) (htrv v)))) →
+      ∀
+        (tr :
+          LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+            (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                (ZInQ.Manuscript.RC.SelmerComplex.galoisCompactTT K S R β hβ
+                  (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M
+                    (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strictOverrideAt Q oldA))
+                  (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M'
+                    (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.relaxedOverrideAt Q oldB))
+                  I)
+                3))
+            R)
+        (htr :
+          ∀
+            (z :
+              ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                  (ZInQ.Manuscript.RC.SelmerComplex.galoisCompactTT K S R β hβ
+                    (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M
+                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strictOverrideAt Q oldA))
+                    (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M'
+                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.relaxedOverrideAt Q oldB))
+                    I)
+                  2)),
+            Eq.{1}
+              (tr
+                ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                    (ZInQ.Manuscript.RC.SelmerComplex.galoisCompactTT K S R β hβ
+                      (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M
+                        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strictOverrideAt Q oldA))
+                      (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M'
+                        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.relaxedOverrideAt Q oldB))
+                      I)
+                    2 3 rfl.{1})
+                  z))
+              0),
+        (∀
+            (z :
+              ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                  (ZInQ.Manuscript.RC.SelmerComplex.localSumCx.{0} R (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                    (fun v => ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                    (fun v => ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v) T)
+                  (HSub.hSub.{0, 0, 0} 3 1))),
+            Eq.{1}
+              (tr
+                (Prod.mk.{0, 0} 0
+                  ((Submodule.mkQ.{0, 0}
+                      (ZInQ.Contrib.CloudB3RC53.SwitchInputs.truncSub.{0}
+                        (ZInQ.Manuscript.RC.SelmerComplex.localSumCx.{0} R (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) ⋯
+                          ⋯ T)
+                        (HSub.hSub.{0, 0, 0} 3 1)))
+                    z)))
+              (∑ v, (trv v) (z v))) →
+          ZInQ.Manuscript.RC.SelmerComplex.OrthogonalComplementsT K β hβ
+            (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M
+              (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.strictOverrideAt Q oldA))
+            (ZInQ.Manuscript.RC.CoefModules.ofCondAt K S R M'
+              (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.relaxedOverrideAt Q oldB))
+            I tr htr
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeOverride_horth' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.orthogonalComplementsT_actual_derivatives : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (i : ℕ) [inst_3 : NeZero.{0} i]
+  (s : ZInQ.Manuscript.RC.CoefModules.KS K S₀) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((Algebra.algebraMap.{0, 0} K (ZInQ.Manuscript.RC.CoefModules.KS K S₀)) h))
+  (hs0 : Ne.{1} s 0) (hFull : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 i))
+  (P : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  [inst_4 : TopologicalSpace.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  [inst_5 : DiscreteTopology.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_6 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ (HPow.hPow.{0, 0, 0} 2 i))
+  (hα :
+    ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Membership.mem.{0, 0} P v →
+        ZInQ.Manuscript.RC.KummerMaps.IsLocallyQuadAt i α (ZInQ.Manuscript.RC.CoefModules.quadChar s hs hs0) v)
+  [inst_7 : Fintype.{0} (ZInQ.Manuscript.RC.SelmerComplex.Places K S)]
+  (Q : Finset.{0} (ZInQ.Manuscript.RC.SelmerComplex.Places K S)),
+  ZInQ.Contrib.CloudB3RC53.Duality.MilneLocalTateDualityKummerCharZero →
+    ZInQ.Manuscript.RC.SelmerComplex.NekovarProp524 K →
+      ZInQ.Manuscript.RC.KummerMaps.NekovarProp756 K →
+        NumberField.IsTotallyComplex.{0} K →
+          Set.Finite.{0} S →
+            Set.Finite.{0} S₀ →
+              (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+                  Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 →
+                    Membership.mem.{0, 0} S₀ v) →
+                ∀
+                  (I :
+                    ZInQ.Manuscript.RC.SelmerComplex.GaloisTruncIsotropyData K S
+                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                      (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W i s hs hs0 hFull
+                        P α hα Q)
+                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS W i s hs hs0 hFull
+                        P α hα Q))
+                  (trv :
+                    (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                        (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                            (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                              (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ))
+                              v)
+                            2))
+                        (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)),
+                  (∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+                      (z :
+                        ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                            (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                              (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ))
+                              v)
+                            1)),
+                      Eq.{1}
+                        ((trv v)
+                          ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                              (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                  (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ))
+                                v)
+                              1 2 rfl.{1})
+                            z))
+                        0) →
+                    (∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S),
+                        ZInQ.Manuscript.RC.SelmerComplex.InducesIsoH2 (trv v)) →
+                      ∀
+                        (tr :
+                          LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                            (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                                (ZInQ.Manuscript.RC.SelmerComplex.galoisCompactTT K S
+                                  (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                  (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                                  (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                                  (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W i s
+                                    hs hs0 hFull P α hα Q)
+                                  (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS W i s
+                                    hs hs0 hFull P α hα Q)
+                                  I)
+                                3))
+                            (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                        (htr :
+                          ∀
+                            (z :
+                              ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                                  (ZInQ.Manuscript.RC.SelmerComplex.galoisCompactTT K S
+                                    (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                    (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                                    (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                                    (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W i s
+                                      hs hs0 hFull P α hα Q)
+                                    (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS W i
+                                      s hs hs0 hFull P α hα Q)
+                                    I)
+                                  2)),
+                            Eq.{1}
+                              (tr
+                                ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                                    (ZInQ.Manuscript.RC.SelmerComplex.galoisCompactTT K S
+                                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                      (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                                      (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W i
+                                        s hs hs0 hFull P α hα Q)
+                                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS W
+                                        i s hs hs0 hFull P α hα Q)
+                                      I)
+                                    2 3 rfl.{1})
+                                  z))
+                              0),
+                        (∀
+                            (z :
+                              ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                                  (ZInQ.Manuscript.RC.SelmerComplex.localSumCx.{0}
+                                    (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                    (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                    (fun v => ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                                    (fun v => ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                                    (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                      (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                        hμ)))
+                                  (HSub.hSub.{0, 0, 0} 3 1))),
+                            Eq.{1}
+                              (tr
+                                (Prod.mk.{0, 0} 0
+                                  ((Submodule.mkQ.{0, 0}
+                                      (ZInQ.Contrib.CloudB3RC53.SwitchInputs.truncSub.{0}
+                                        (ZInQ.Manuscript.RC.SelmerComplex.localSumCx.{0}
+                                          (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                          (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                          (fun v => ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                                          (fun v => ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                                          (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                            (ZInQ.Manuscript.RC.CoefModules.Tate1
+                                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ)))
+                                        (HSub.hSub.{0, 0, 0} 3 1)))
+                                    z)))
+                              (∑ v, (trv v) (z v))) →
+                          ZInQ.Manuscript.RC.SelmerComplex.OrthogonalComplementsT K
+                            (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                            (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                            (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W i s hs hs0
+                              hFull P α hα Q)
+                            (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS W i s hs hs0
+                              hFull P α hα Q)
+                            I tr htr
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.orthogonalComplementsT_actual_derivatives' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.selmerDuality_actual_derivatives : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (i : ℕ) [inst_3 : NeZero.{0} i]
+  (s : ZInQ.Manuscript.RC.CoefModules.KS K S₀) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((Algebra.algebraMap.{0, 0} K (ZInQ.Manuscript.RC.CoefModules.KS K S₀)) h))
+  (hs0 : Ne.{1} s 0) (hFull : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 i))
+  (P : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  [inst_4 : TopologicalSpace.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  [inst_5 : DiscreteTopology.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_6 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ (HPow.hPow.{0, 0, 0} 2 i))
+  (hα :
+    ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Membership.mem.{0, 0} P v →
+        ZInQ.Manuscript.RC.KummerMaps.IsLocallyQuadAt i α (ZInQ.Manuscript.RC.CoefModules.quadChar s hs hs0) v)
+  [inst_7 : Fintype.{0} (ZInQ.Manuscript.RC.SelmerComplex.Places K S)]
+  (Q : Finset.{0} (ZInQ.Manuscript.RC.SelmerComplex.Places K S)),
+  ZInQ.Contrib.CloudB3RC53.Duality.MilneLocalTateDualityKummerCharZero →
+    ZInQ.Manuscript.RC.SelmerComplex.NekovarProp524 K →
+      ZInQ.Manuscript.RC.SelmerComplex.NekovarProp543T K →
+        ZInQ.Manuscript.RC.KummerMaps.NekovarProp756 K →
+          NumberField.IsTotallyComplex.{0} K →
+            Set.Finite.{0} S →
+              Set.Finite.{0} S₀ →
+                (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+                    Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 →
+                      Membership.mem.{0, 0} S₀ v) →
+                  ∀
+                    (I :
+                      ZInQ.Manuscript.RC.SelmerComplex.GaloisTruncIsotropyData K S
+                        (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                        (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W i s hs hs0
+                          hFull P α hα Q)
+                        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS W i s hs hs0
+                          hFull P α hα Q))
+                    (trv :
+                      (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                        LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                          (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                              (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                  (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ))
+                                v)
+                              2))
+                          (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)),
+                    (∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+                        (z :
+                          ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                              (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                  (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ))
+                                v)
+                              1)),
+                        Eq.{1}
+                          ((trv v)
+                            ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                                (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                  (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                    (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                      hμ))
+                                  v)
+                                1 2 rfl.{1})
+                              z))
+                          0) →
+                      (∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S),
+                          ZInQ.Manuscript.RC.SelmerComplex.InducesIsoH2 (trv v)) →
+                        ∀
+                          (tr :
+                            LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                              (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                                  (ZInQ.Manuscript.RC.SelmerComplex.galoisCompactTT K S
+                                    (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                    (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                                    (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                                    (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W i s
+                                      hs hs0 hFull P α hα Q)
+                                    (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS W i
+                                      s hs hs0 hFull P α hα Q)
+                                    I)
+                                  3))
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                          (htr :
+                            ∀
+                              (z :
+                                ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                                    (ZInQ.Manuscript.RC.SelmerComplex.galoisCompactTT K S
+                                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                      (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                                      (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W i
+                                        s hs hs0 hFull P α hα Q)
+                                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS W
+                                        i s hs hs0 hFull P α hα Q)
+                                      I)
+                                    2)),
+                              Eq.{1}
+                                (tr
+                                  ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                                      (ZInQ.Manuscript.RC.SelmerComplex.galoisCompactTT K S
+                                        (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                        (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                                        (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                                        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W
+                                          i s hs hs0 hFull P α hα Q)
+                                        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS
+                                          W i s hs hs0 hFull P α hα Q)
+                                        I)
+                                      2 3 rfl.{1})
+                                    z))
+                                0),
+                          (∀
+                              (z :
+                                ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                                    (ZInQ.Manuscript.RC.SelmerComplex.localSumCx.{0}
+                                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                      (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                      (fun v => ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                                      (fun v => ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                                      (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                        (ZInQ.Manuscript.RC.CoefModules.Tate1
+                                          (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ)))
+                                    (HSub.hSub.{0, 0, 0} 3 1))),
+                              Eq.{1}
+                                (tr
+                                  (Prod.mk.{0, 0} 0
+                                    ((Submodule.mkQ.{0, 0}
+                                        (ZInQ.Contrib.CloudB3RC53.SwitchInputs.truncSub.{0}
+                                          (ZInQ.Manuscript.RC.SelmerComplex.localSumCx.{0}
+                                            (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                            (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                            (fun v => ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                                            (fun v => ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                                            (ZInQ.Manuscript.RC.CoefModules.InflMod hS
+                                              (ZInQ.Manuscript.RC.CoefModules.Tate1
+                                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ)))
+                                          (HSub.hSub.{0, 0, 0} 3 1)))
+                                      z)))
+                                (∑ v, (trv v) (z v))) →
+                            ZInQ.Manuscript.RC.SelmerComplex.InducesIsoH3 tr →
+                              QuasiIso.{0, 1, 0}
+                                (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+                                  (ZInQ.Contrib.CloudB3RC53.SelmerDuality.selmerDualityMap.{0}
+                                    (ZInQ.Manuscript.RC.SelmerComplex.galoisPairDataT K S
+                                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                      (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ)
+                                      (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ)
+                                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageStrictConditions hS W i
+                                        s hs hs0 hFull P α hα Q)
+                                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageRelaxedConditions hS W
+                                        i s hs hs0 hFull P α hα Q)
+                                      I)
+                                    tr htr))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.selmerDuality_actual_derivatives' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageDerivative_local_complement : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (i : ℕ) [NeZero.{0} i]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i)),
+  ZInQ.Manuscript.RC.SelmerComplex.NekovarProp524 K →
+    NumberField.IsTotallyComplex.{0} K →
+      Set.Finite.{0} S →
+        (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+            Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+          ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 i) →
+            ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+              (trv :
+                LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                  (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                      (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                        (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ) v)
+                      2))
+                  (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+              (htrv :
+                ∀
+                  (z :
+                    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                        (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                          (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ) v)
+                        1)),
+                  Eq.{1}
+                    (trv
+                      ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                          (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                            (ZInQ.Manuscript.RC.CoefModules.Tate1 (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hμ) v)
+                          1 2 rfl.{1})
+                        z))
+                    0),
+              ZInQ.Manuscript.RC.SelmerComplex.InducesIsoH2 trv →
+                ∀
+                  (J :
+                    ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0}
+                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeStrictAt v).i
+                      (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeRelaxedAt v).i
+                      (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K
+                        (ZInQ.Manuscript.RC.CoefModules.weilPairingData W i α hμ)
+                        (ZInQ.Manuscript.RC.CoefModules.weilPairingM_smul W hμ
+                          (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) α)
+                        v)),
+                  QuasiIso.{0, 1, 0}
+                    (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+                      (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0}
+                        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeStrictAt v).i
+                        (ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.derivativeRelaxedAt v).i
+                        (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K
+                          (ZInQ.Manuscript.RC.CoefModules.weilPairingData W i α hμ)
+                          (ZInQ.Manuscript.RC.CoefModules.weilPairingM_smul W hμ
+                            (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) α)
+                          v)
+                        J trv htrv))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.Truncations.stageDerivative_local_complement' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.pointFields_comp : ∀ {F L : Type} [inst : Field.{0} F]
+  [inst_1 : Field.{0} L] [inst_2 : DecidableEq.{1} L] [inst_3 : Algebra.{0, 0} F L] (V : WeierstrassCurve.{0} F)
+  (A B : IntermediateField.{0, 0} F L) [inst_4 : DecidableEq.{1} ↥A] [inst_5 : DecidableEq.{1} ↥B] (hAB : LE.le.{0} A B)
+  (p : WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} V ↥A))),
+  Eq.{1}
+    ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} (IntermediateField.val.{0, 0} B))
+      ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} (IntermediateField.inclusion.{0, 0} hAB)) p))
+    ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} (IntermediateField.val.{0, 0} A)) p)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.pointFields_comp' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.pointSupport_comp : ∀ {K : Type} [inst : Field.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K)
+  (p :
+    WeierstrassCurve.Affine.Point.{0}
+      (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} W (ZInQ.Manuscript.RC.CoefModules.KS K S₀)))),
+  Eq.{1}
+    ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} (ZInQ.Manuscript.RC.CoefModules.inclS K S))
+      ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} (ZInQ.Manuscript.RC.KummerMaps.cycloInflIncl hS)) p))
+    ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} (ZInQ.Manuscript.RC.CoefModules.inclS K S₀)) p)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.pointSupport_comp' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap_coe : ∀ {K : Type} [inst : Field.{0} K]
+  [NumberField.{0} K] {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (hS : S₀ ⊆ S) (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (n : ℕ) [NeZero.{0} n]
+  (t : ZInQ.Manuscript.RC.CoefModules.TorsS K S₀ W ↑n),
+  Eq.{1} (↑((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W n) t))
+    ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} (ZInQ.Manuscript.RC.KummerMaps.cycloInflIncl hS)) ↑t)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap_coe' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.inclTors_torsionSupportMap : ∀ {K : Type}
+  [inst : Field.{0} K] [NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (n : ℕ) [NeZero.{0} n]
+  (t : ZInQ.Manuscript.RC.CoefModules.TorsS K S₀ W ↑n),
+  Eq.{1}
+    ((ZInQ.Manuscript.RC.CoefModules.inclTors W n)
+      ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W n) t))
+    ((ZInQ.Manuscript.RC.CoefModules.inclTors W n) t)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.inclTors_torsionSupportMap' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap_injective : ∀ {K : Type}
+  [inst : Field.{0} K] [NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (n : ℕ) [NeZero.{0} n],
+  Function.Injective.{1, 1} ⇑(ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W n)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap_injective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.fullTorsion_afterSupport : ∀ {K : Type}
+  [inst : Field.{0} K] [NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))},
+  S₀ ⊆ S →
+    ∀ (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (n : ℕ) [NeZero.{0} n],
+      ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W n → ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W n
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.fullTorsion_afterSupport' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap_smul : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (n : ℕ) [NeZero.{0} n]
+  (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (t : ZInQ.Manuscript.RC.CoefModules.TorsS K S₀ W ↑n),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W n)
+      (HSMul.hSMul.{0, 0, 0} ((ZInQ.Manuscript.RC.SelmerComplex.inflMap K hS) g) t))
+    (HSMul.hSMul.{0, 0, 0} g
+      ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W n) t))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport_apply : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S) (i : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S),
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport hS i α) g)
+    (α ((ZInQ.Manuscript.RC.SelmerComplex.inflMap K hS) g))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportMap_tmul : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (i : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  (a : ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+  (t : ZInQ.Manuscript.RC.CoefModules.TorsS K S₀ W ↑(HPow.hPow.{0, 0, 0} 2 i)),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportMap hS W i α)
+      ((ZInQ.Manuscript.RC.CoefModules.CoefMod.equiv (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) α
+          (ZInQ.Manuscript.RC.CoefModules.TorsS K S₀ W ↑(HPow.hPow.{0, 0, 0} 2 i)))
+        (TensorProduct.tmul.{0, 0, 0} ℤ a t)))
+    ((ZInQ.Manuscript.RC.CoefModules.CoefMod.equiv (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+        (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport hS i α)
+        (ZInQ.Manuscript.RC.CoefModules.TorsS K S W ↑(HPow.hPow.{0, 0, 0} 2 i)))
+      (TensorProduct.tmul.{0, 0, 0} ℤ a
+        ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W (HPow.hPow.{0, 0, 0} 2 i))
+          t)))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportMap_tmul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv_apply : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (i : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  (hFull : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 i))
+  (x : ZInQ.Manuscript.RC.CoefModules.MinS hS W i α),
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv hS W i α hFull) x)
+    ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportMap hS W i α) x)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportMap_smul : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (i : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (z : ZInQ.Manuscript.RC.CoefModules.MinS hS W i α),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportMap hS W i α)
+      (HSMul.hSMul.{0, 0, 0} g z))
+    (HSMul.hSMul.{0, 0, 0} g
+      ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportMap hS W i α) z))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportMap_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.rootLogChange_apply : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {n : ℕ}
+  [inst_2 : NeZero.{0} n] (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ n)
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S n) (z : ZMod n),
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.rootLogChange hμ₀ hμ) z)
+    (HMul.hMul.{0, 0, 0} z ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.rootLogChange hμ₀ hμ) 1))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.rootLogChange_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.rootLogChange_one_isUnit : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {n : ℕ}
+  [inst_2 : NeZero.{0} n] (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ n)
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S n),
+  IsUnit.{0} ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.rootLogChange hμ₀ hμ) 1)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.rootLogChange_one_isUnit' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.supportLogUnit_val : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {n : ℕ}
+  [inst_2 : NeZero.{0} n] (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ n)
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S n),
+  Eq.{1} (↑(ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.supportLogUnit hμ₀ hμ))
+    ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.rootLogChange hμ₀ hμ) 1)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.supportLogUnit_val' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.logBar_afterSupport : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {n : ℕ}
+  [inst_2 : NeZero.{0} n] (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ n)
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S n)
+  (w : Additive.{0} ↥(rootsOfUnity.{0} n (AlgebraicClosure.{0} K))),
+  Eq.{1} ((ZInQ.Manuscript.RC.CoefModules.logBar hμ) w)
+    (HMul.hMul.{0, 0, 0} (↑(ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.supportLogUnit hμ₀ hμ))
+      ((ZInQ.Manuscript.RC.CoefModules.logBar hμ₀) w))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.logBar_afterSupport' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.cycS_afterSupport : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {n : ℕ}
+  [inst_2 : NeZero.{0} n] (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ n)
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S n) (hS : S₀ ⊆ S)
+  (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S),
+  Eq.{1} ((ZInQ.Manuscript.RC.CoefModules.cycS hμ) g)
+    ((ZInQ.Manuscript.RC.CoefModules.cycS hμ₀) ((ZInQ.Manuscript.RC.SelmerComplex.inflMap K hS) g))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.cycS_afterSupport' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.tateSupportEquiv_smul : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {n : ℕ}
+  [inst_2 : NeZero.{0} n] (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ n)
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S n) (A : Type) [inst_3 : CommRing.{0} A]
+  [inst_4 : Algebra.{0, 0} (ZMod n) A] (hS : S₀ ⊆ S) (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+  (z : ZInQ.Manuscript.RC.CoefModules.InflMod hS (ZInQ.Manuscript.RC.CoefModules.Tate1 A hμ₀)),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.tateSupportEquiv hμ₀ hμ A hS)
+      (HSMul.hSMul.{0, 0, 0} g z))
+    (HSMul.hSMul.{0, 0, 0} g
+      ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.tateSupportEquiv hμ₀ hμ A hS) z))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.tateSupportEquiv_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.weilS_afterSupport : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (n : ℕ) [inst_3 : NeZero.{0} n]
+  (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ n)
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S n) (x y : ZInQ.Manuscript.RC.CoefModules.TorsS K S₀ W ↑n),
+  Eq.{1}
+    (((ZInQ.Manuscript.RC.CoefModules.weilS W hμ)
+        ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W n) x))
+      ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W n) y))
+    (HMul.hMul.{0, 0, 0} (↑(ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.supportLogUnit hμ₀ hμ))
+      (((ZInQ.Manuscript.RC.CoefModules.weilS W hμ₀) x) y))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.weilS_afterSupport' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.weilA_afterSupport : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (n : ℕ) [inst_3 : NeZero.{0} n]
+  (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ n)
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S n) (A : Type) [inst_4 : CommRing.{0} A]
+  [inst_5 : Algebra.{0, 0} (ZMod n) A]
+  (x y : TensorProduct.{0, 0, 0} ℤ A (ZInQ.Manuscript.RC.CoefModules.TorsS K S₀ W ↑n)),
+  Eq.{1}
+    (((ZInQ.Manuscript.RC.CoefModules.weilA W hμ A)
+        ((LinearMap.baseChange.{0, 0, 0, 0} A
+            (AddMonoidHom.toIntLinearMap.{0, 0}
+              (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W n)))
+          x))
+      ((LinearMap.baseChange.{0, 0, 0, 0} A
+          (AddMonoidHom.toIntLinearMap.{0, 0}
+            (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.torsionSupportMap hS W n)))
+        y))
+    (HMul.hMul.{0, 0, 0} (↑(ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.supportUnit hμ₀ hμ A))
+      (((ZInQ.Manuscript.RC.CoefModules.weilA W hμ₀ A) x) y))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.weilA_afterSupport' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport_charInv : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S) (i : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))),
+  Eq.{1}
+    (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport hS i
+      (ZInQ.Manuscript.RC.CoefModules.charInv α))
+    (ZInQ.Manuscript.RC.CoefModules.charInv
+      (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport hS i α))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport_charInv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv_smul : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (i : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  (hFull : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 i))
+  (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (x : ZInQ.Manuscript.RC.CoefModules.MinS hS W i α),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv hS W i α hFull)
+      (HSMul.hSMul.{0, 0, 0} g x))
+    (HSMul.hSMul.{0, 0, 0} g
+      ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv hS W i α hFull) x))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.dualCoefficientSupportEquiv_smul : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (i : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  (hFull : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 i))
+  (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+  (x : ZInQ.Manuscript.RC.CoefModules.MinS hS W i (ZInQ.Manuscript.RC.CoefModules.charInv α)),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.dualCoefficientSupportEquiv hS W i α hFull)
+      (HSMul.hSMul.{0, 0, 0} g x))
+    (HSMul.hSMul.{0, 0, 0} g
+      ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.dualCoefficientSupportEquiv hS W i α hFull) x))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.dualCoefficientSupportEquiv_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv_pairing : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (i : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  (hFull : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 i))
+  (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ (HPow.hPow.{0, 0, 0} 2 i))
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i))
+  (x : ZInQ.Manuscript.RC.CoefModules.MinS hS W i α)
+  (y : ZInQ.Manuscript.RC.CoefModules.MinS hS W i (ZInQ.Manuscript.RC.CoefModules.charInv α)),
+  Eq.{1}
+    (((ZInQ.Manuscript.RC.CoefModules.weilPairingData W i
+          (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport hS i α) hμ)
+        ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv hS W i α hFull) x))
+      ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.dualCoefficientSupportEquiv hS W i α hFull) y))
+    ((ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.tateSupportEquiv hμ₀ hμ
+        (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) hS)
+      (((ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ₀) x) y))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.coefficientSupportEquiv_pairing' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso.condition_apply : ∀ {R : Type}
+  [inst : CommRing.{0} R] {C D U : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  (E : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso C D)
+  (ι : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U C) (i j : ℤ) (h : Eq.{1} i j)
+  (u : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U i)),
+  Eq.{1} ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} (E.condition ι) i j h) u)
+    ((E.e j) ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} ι i j h) u))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso.condition_apply' depends on axioms: [propext,
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport : ∀ {R : Type}
+  [inst : CommRing.{0} R] {U U' C C' D D' T T' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  (EA : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso C D)
+  (EB : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso C' D')
+  (ι : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U C)
+  (ι' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U' C')
+  (P : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.{0} C C' T)
+  (P' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.{0} D D' T')
+  (J : ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0} ι ι' P)
+  (J' : ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0} (EA.condition ι) (EB.condition ι') P')
+  (tr : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} T 2)) R)
+  (htr :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} T 1)),
+      Eq.{1} (tr ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} T 1 2 rfl.{1}) z)) 0)
+  (tr' : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} T' 2)) R)
+  (htr' :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} T' 1)),
+      Eq.{1} (tr' ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} T' 1 2 rfl.{1}) z)) 0),
+  (∀ (n : ℤ) (u : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U n))
+      (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C (HSub.hSub.{0, 0, 0} n 1)))
+      (y : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U' (HSub.hSub.{0, 0, 0} 3 n))),
+      Eq.{1}
+        (tr'
+          (HAdd.hAdd.{0, 0, 0}
+            (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0} P' (HSub.hSub.{0, 0, 0} n 1)
+                  (HSub.hSub.{0, 0, 0} 3 n) 2
+                  (Decidable.byContradiction fun a =>
+                    ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport._proof_1 n a))
+                ((EA.e (HSub.hSub.{0, 0, 0} n 1)) x))
+              ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} (EB.condition ι') (HSub.hSub.{0, 0, 0} 3 n)
+                  (HSub.hSub.{0, 0, 0} 3 n) rfl.{1})
+                y))
+            (((ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.h.{0} J' n (HSub.hSub.{0, 0, 0} 3 n) 2
+                  (Decidable.byContradiction fun a =>
+                    ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport._proof_2 n a))
+                u)
+              y)))
+        (tr
+          (HAdd.hAdd.{0, 0, 0}
+            (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0} P (HSub.hSub.{0, 0, 0} n 1)
+                  (HSub.hSub.{0, 0, 0} 3 n) 2
+                  (Decidable.byContradiction fun a =>
+                    ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport._proof_1 n a))
+                x)
+              ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} ι' (HSub.hSub.{0, 0, 0} 3 n)
+                  (HSub.hSub.{0, 0, 0} 3 n) rfl.{1})
+                y))
+            (((ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.h.{0} J n (HSub.hSub.{0, 0, 0} 3 n) 2
+                  (Decidable.byContradiction fun a =>
+                    ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport._proof_2 n a))
+                u)
+              y)))) →
+    Eq.{1}
+      (CategoryTheory.CategoryStruct.comp.{0, 1} (CategoryTheory.Iso.hom.{0, 1} (EA.conditionCone ι).toCCIso)
+        (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+          (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} (EA.condition ι) (EB.condition ι') P' J' tr' htr')))
+      (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+        (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} ι ι' P J tr htr))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComplement_transport : ∀ {R : Type}
+  [inst : CommRing.{0} R] {U U' C C' D D' T T' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  (EA : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso C D)
+  (EB : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso C' D')
+  (ι : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U C)
+  (ι' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U' C')
+  (P : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.{0} C C' T)
+  (P' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.{0} D D' T')
+  (J : ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0} ι ι' P)
+  (J' : ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0} (EA.condition ι) (EB.condition ι') P')
+  (tr : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} T 2)) R)
+  (htr :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} T 1)),
+      Eq.{1} (tr ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} T 1 2 rfl.{1}) z)) 0)
+  (tr' : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} T' 2)) R)
+  (htr' :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} T' 1)),
+      Eq.{1} (tr' ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} T' 1 2 rfl.{1}) z)) 0),
+  (∀ (n : ℤ) (u : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U n))
+      (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C (HSub.hSub.{0, 0, 0} n 1)))
+      (y : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U' (HSub.hSub.{0, 0, 0} 3 n))),
+      Eq.{1}
+        (tr'
+          (HAdd.hAdd.{0, 0, 0}
+            (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0} P' (HSub.hSub.{0, 0, 0} n 1)
+                  (HSub.hSub.{0, 0, 0} 3 n) 2
+                  (Decidable.byContradiction fun a =>
+                    ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport._proof_1 n a))
+                ((EA.e (HSub.hSub.{0, 0, 0} n 1)) x))
+              ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} (EB.condition ι') (HSub.hSub.{0, 0, 0} 3 n)
+                  (HSub.hSub.{0, 0, 0} 3 n) rfl.{1})
+                y))
+            (((ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.h.{0} J' n (HSub.hSub.{0, 0, 0} 3 n) 2
+                  (Decidable.byContradiction fun a =>
+                    ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport._proof_2 n a))
+                u)
+              y)))
+        (tr
+          (HAdd.hAdd.{0, 0, 0}
+            (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0} P (HSub.hSub.{0, 0, 0} n 1)
+                  (HSub.hSub.{0, 0, 0} 3 n) 2
+                  (Decidable.byContradiction fun a =>
+                    ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport._proof_1 n a))
+                x)
+              ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} ι' (HSub.hSub.{0, 0, 0} 3 n)
+                  (HSub.hSub.{0, 0, 0} 3 n) rfl.{1})
+                y))
+            (((ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.h.{0} J n (HSub.hSub.{0, 0, 0} 3 n) 2
+                  (Decidable.byContradiction fun a =>
+                    ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComparison_transport._proof_2 n a))
+                u)
+              y)))) →
+    QuasiIso.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+          (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} ι ι' P J tr htr)) →
+      QuasiIso.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+          (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} (EA.condition ι) (EB.condition ι') P' J' tr' htr'))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComplement_transport' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.coefficientCochainIso_cup : ∀ {R : Type}
+  [inst : CommRing.{0} R] {G : Type} [inst_1 : Group.{0} G] [inst_2 : TopologicalSpace.{0} G]
+  [inst_3 : IsTopologicalGroup.{0} G] {A B T A' B' T' : Type} [inst_4 : AddCommGroup.{0} A] [inst_5 : Module.{0, 0} R A]
+  [inst_6 : DistribMulAction.{0, 0} G A] [inst_7 : SMulCommClass.{0, 0, 0} G R A] [inst_8 : TopologicalSpace.{0} A]
+  [inst_9 : DiscreteTopology.{0} A] [inst_10 : ContinuousSMul.{0, 0} G A] [inst_11 : AddCommGroup.{0} B]
+  [inst_12 : Module.{0, 0} R B] [inst_13 : DistribMulAction.{0, 0} G B] [inst_14 : SMulCommClass.{0, 0, 0} G R B]
+  [inst_15 : TopologicalSpace.{0} B] [inst_16 : DiscreteTopology.{0} B] [inst_17 : ContinuousSMul.{0, 0} G B]
+  [inst_18 : AddCommGroup.{0} T] [inst_19 : Module.{0, 0} R T] [inst_20 : DistribMulAction.{0, 0} G T]
+  [inst_21 : SMulCommClass.{0, 0, 0} G R T] [inst_22 : TopologicalSpace.{0} T] [inst_23 : DiscreteTopology.{0} T]
+  [inst_24 : ContinuousSMul.{0, 0} G T] [inst_25 : AddCommGroup.{0} A'] [inst_26 : Module.{0, 0} R A']
+  [inst_27 : DistribMulAction.{0, 0} G A'] [inst_28 : SMulCommClass.{0, 0, 0} G R A']
+  [inst_29 : TopologicalSpace.{0} A'] [inst_30 : DiscreteTopology.{0} A'] [inst_31 : ContinuousSMul.{0, 0} G A']
+  [inst_32 : AddCommGroup.{0} B'] [inst_33 : Module.{0, 0} R B'] [inst_34 : DistribMulAction.{0, 0} G B']
+  [inst_35 : SMulCommClass.{0, 0, 0} G R B'] [inst_36 : TopologicalSpace.{0} B'] [inst_37 : DiscreteTopology.{0} B']
+  [inst_38 : ContinuousSMul.{0, 0} G B'] [inst_39 : AddCommGroup.{0} T'] [inst_40 : Module.{0, 0} R T']
+  [inst_41 : DistribMulAction.{0, 0} G T'] [inst_42 : SMulCommClass.{0, 0, 0} G R T']
+  [inst_43 : TopologicalSpace.{0} T'] [inst_44 : DiscreteTopology.{0} T'] [inst_45 : ContinuousSMul.{0, 0} G T']
+  (eA : LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) A A') (eB : ⋯), ⋯
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.coefficientCochainIso_cup' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso.pullTrace_kills : ∀ {R : Type}
+  [inst : CommRing.{0} R] {C D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  (E : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso C D)
+  (tr : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} D 2)) R),
+  (∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} D 1)),
+      Eq.{1} (tr ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} D 1 2 rfl.{1}) z)) 0) →
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C 1)),
+      Eq.{1} ((E.pullTrace tr) ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C 1 2 rfl.{1}) z)) 0
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso.pullTrace_kills' depends on axioms: [propext,
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso.pullTrace_induces : ∀ {R : Type}
+  [inst : CommRing.{0} R] {C D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  (E : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso C D)
+  (tr : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} D 2)) R),
+  ZInQ.Manuscript.RC.SelmerComplex.InducesIsoH2 tr → ZInQ.Manuscript.RC.SelmerComplex.InducesIsoH2 (E.pullTrace tr)
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso.pullTrace_induces' depends on axioms: [propext,
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComplement_transport_zero : ∀ {R : Type}
+  [inst : CommRing.{0} R] {U U' C C' E D D' F : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  (EA : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso C D)
+  (EB : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso C' D')
+  (ET : ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso E F)
+  (ι : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U C)
+  (ι' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U' C')
+  (P : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.{0} C C' E)
+  (P' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.{0} D D' F)
+  (J : ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0} ι ι' P)
+  (J' : ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0} (EA.condition ι) (EB.condition ι') P')
+  (tr : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} F 2)) R)
+  (htr :
+    ∀ (z : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} F 1)),
+      Eq.{1} (tr ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} F 1 2 rfl.{1}) z)) 0),
+  (∀ (a b : ℤ) (hab : Eq.{1} (HAdd.hAdd.{0, 0, 0} a b) 3)
+      (u : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U a))
+      (y : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U' b)),
+      Eq.{1} (((ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.h.{0} J a b 2 hab) u) y) 0) →
+    (∀ (a b : ℤ) (hab : Eq.{1} (HAdd.hAdd.{0, 0, 0} a b) 3)
+        (u : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U a))
+        (y : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} U' b)),
+        Eq.{1} (((ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.h.{0} J' a b 2 hab) u) y) 0) →
+      (∀ (a b c : ℤ) (hab : Eq.{1} (HAdd.hAdd.{0, 0, 0} a b) c)
+          (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C a))
+          (y : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C' b)),
+          Eq.{1} ((ET.e c) (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0} P a b c hab) x) y))
+            (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0} P' a b c hab) ((EA.e a) x)) ((EB.e b) y))) →
+        QuasiIso.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+              (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} ι ι' P J (ET.pullTrace tr)
+                (ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.ComplexIso.pullTrace_kills ET tr htr))) →
+          QuasiIso.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+              (ZInQ.Manuscript.RC.KummerMaps.orthLocalMap.{0} (EA.condition ι) (EB.condition ι') P' J' tr htr))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.LocalTransport.localComplement_transport_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.StageOrthogonality.localSupport_cup : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (i : ℕ) [inst_3 : NeZero.{0} i]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  [inst_5 : TopologicalSpace.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  [inst_6 : DiscreteTopology.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  (hFull : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 i))
+  (hμ₀ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S₀ (HPow.hPow.{0, 0, 0} 2 i))
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i))
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) (a b c : ℤ) (hab : Eq.{1} (HAdd.hAdd.{0, 0, 0} a b) c)
+  (x :
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+          (ZInQ.Manuscript.RC.CoefModules.MinS hS W i α) v)
+        a))
+  (y :
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+          (ZInQ.Manuscript.RC.CoefModules.MinS hS W i (ZInQ.Manuscript.RC.CoefModules.charInv α)) v)
+        b)),
+  Eq.{1}
+    (((ZInQ.Contrib.RC53Assist.OldOrthogonality.StageOrthogonality.localSupportT hS i hμ₀ hμ v).e c)
+      (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0}
+            (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K (ZInQ.Manuscript.RC.KummerMaps.actLBeta hS W i α hμ₀)
+              (ZInQ.Manuscript.RC.KummerMaps.actLBeta_smul hS W i α hμ₀) v)
+            a b c hab)
+          x)
+        y))
+    (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0}
+          (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K
+            (ZInQ.Manuscript.RC.CoefModules.weilPairingData W i
+              (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport hS i α) hμ)
+            (ZInQ.Manuscript.RC.CoefModules.weilPairingM_smul W hμ (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+              (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport hS i α))
+            v)
+          a b c hab)
+        (((ZInQ.Contrib.RC53Assist.OldOrthogonality.StageOrthogonality.localSupportA hS W i α hFull v).e a) x))
+      (((ZInQ.Contrib.RC53Assist.OldOrthogonality.StageOrthogonality.localSupportB hS W i α hFull v).e b) y))
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.StageOrthogonality.localSupport_cup' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.OldOrthogonality.StageOrthogonality.transportedOld_h_zero : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W] (i : ℕ) [NeZero.{0} i]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  [inst_5 : TopologicalSpace.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  [inst_6 : DiscreteTopology.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  (hFull : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 i))
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i))
+  (s : ZInQ.Manuscript.RC.CoefModules.KS K S₀) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((Algebra.algebraMap.{0, 0} K (ZInQ.Manuscript.RC.CoefModules.KS K S₀)) h))
+  (hs0 : Ne.{1} s 0) (P : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (hα :
+    ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Membership.mem.{0, 0} P v →
+        ZInQ.Manuscript.RC.KummerMaps.IsLocallyQuadAt i α (ZInQ.Manuscript.RC.CoefModules.quadChar s hs hs0) v)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+  (J :
+    ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.{0}
+      (ZInQ.Contrib.RC53Assist.OldOrthogonality.StageOrthogonality.transportedOldA hS W i α hFull s hs hs0 P hα v).i
+      (ZInQ.Contrib.RC53Assist.OldOrthogonality.StageOrthogonality.transportedOldB hS W i α hFull s hs hs0 P hα v).i
+      (ZInQ.Manuscript.RC.KummerMaps.orthGaloisPair K
+        (ZInQ.Manuscript.RC.CoefModules.weilPairingData W i
+          (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport hS i α) hμ)
+        (ZInQ.Manuscript.RC.CoefModules.weilPairingM_smul W hμ (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+          (ZInQ.Contrib.RC53Assist.OldOrthogonality.SupportCoefficients.characterAfterSupport hS i α))
+        v))
+  (a b : ℤ) (hab : Eq.{1} (HAdd.hAdd.{0, 0, 0} a b) 3)
+  (u :
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Manuscript.RC.KummerMaps.actLCondA hS W i s hs hs0 hFull P α hα v).U a))
+  (y :
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Manuscript.RC.KummerMaps.actLCondB hS W i s hs hs0 hFull P α hα v).U b)),
+  Eq.{1} (((ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy.h.{0} J a b 2 hab) u) y) 0
+'ZInQ.Contrib.RC53Assist.OldOrthogonality.StageOrthogonality.transportedOld_h_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
