@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.Realize
 import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.Symbols
+import ZInQKernel.Contrib.CloudB3RC53.FrobCount.ApModFour
 
 /-!
 # Theorem 5.3, Lane RC24: the address package over genuine label alphabets and prime realizations
@@ -356,15 +357,19 @@ theorem LabelData.T₂_m : D.T₂.m = D.m₂ := by simp [LabelData.T₂, typeDat
 theorem LabelData.T₂_typ : D.T₂.typ = fun p : ℕ => sqClassOf D.m₂ (p : ℤ) := by
   funext p; simp [LabelData.T₂, typeData_typ]
 
-/-- **`a_p(E_ℓ)` is even at the good primes of every stage** (PROVED: lane RC24 `apEven_of`;
-the primes of `6ℓ` divide `m₁`). -/
+/-- **`a_p(E_ℓ)` is even at the good primes of every stage** (PROVED through the manuscript's form
+of (O.9), `a_p ≡ p + 1 (mod 4)` at every good prime, tex 9585, 9593–9594: batch 3's
+`apEven_curve_typeData` = `apEven_of_apModFour` ∘ `apModFour_curve_typeData`; the primes of `6ℓ`
+divide `m₁`). -/
 theorem LabelData.apEven₁ (θ : ℕ) : ApEven (D.T₁ θ) (apo ℓ) :=
-  apEven_of (D.T₁ θ) (m := (ℓ : ℤ)) fun p hp hd => by
+  ZInQ.Contrib.CloudB3RC53.FrobCount.apEven_curve_typeData (D.T₁ θ) (ℓ : ℤ) fun p hp hd => by
     rw [D.T₁_m]; exact Dvd.dvd.mul_right (D.bad₁ p hp hd) _
 
-/-- **`a_p(E^{(k)})` is even at the good primes of the even source** (PROVED). -/
+/-- **`a_p(E^{(k)})` is even at the good primes of the even source** (PROVED through the
+manuscript's form of (O.9), as `LabelData.apEven₁`). -/
 theorem LabelData.apEven₂ : ApEven D.T₂ (apk W) :=
-  apEven_of D.T₂ (m := W.kfin * ℓ) fun p hp hd => by rw [D.T₂_m]; exact D.bad₂ p hp hd
+  ZInQ.Contrib.CloudB3RC53.FrobCount.apEven_curve_typeData D.T₂ (W.kfin * ℓ) fun p hp hd => by
+    rw [D.T₂_m]; exact D.bad₂ p hp hd
 
 /-- **The total type of a stage realization in the odd filter is zero** (PROVED; tex 2042–2044,
 10589–10596). -/

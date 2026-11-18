@@ -26,10 +26,12 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.ClearingComplex4
 import ZInQKernel.Contrib.OneProof.RC.GlueSweep.AnaLevel
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf2
 import ZInQKernel.Contrib.OneProof.RC.BaseZeroAssembly.Assembly
+import ZInQKernel.Contrib.OneProof.RC.Wiring.BaseZeroSqrt
 import ZInQKernel.Contrib.OneProof.RC.Wiring.UniformSwitch
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35Leaf
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate4
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf3
+import ZInQKernel.Contrib.OneProof.RC.Wiring.StageData
 
 /-!
 # Theorem 5.3, Lane RC0: every remaining hypothesis in one structure
@@ -52,20 +54,21 @@ with Selmer corank one:
    scaled central value), `final_family` (batch 3's `finalFamilyField_proof`, with (F.3) from RC13's
    `roughCompanion`, (3.3b) from batch 3's EvenUpper over RC11's (3.2) with the Boolean comparison
    from RC1, the auxiliary factor by the dictionary argument at the prepared types, (3.5) by RC16
-   from the ELLIOT leaf `eq35` on batch 3's genuine switching data, the stages from the data
-   specification, and the address input from lane RC24's construction (budgeted density models)
-   over genuine `G_ℚ`, Frobenius elements and characters, Chebotarev from the repository's density
-   theorem, the odd source read on its own filter and the odd witness derived from `δ_o`),
-   `calibration` (from
-   the ELLIOT leaf `calibration`, with RC19's regulator relation and the free generators from
-   `Prints`), `common_coordinate` (the ELLIOT leaf `common_coordinate`, through batch 3's natural
-   support-triangle steps), `base_zero` (lane RC25's `BaseZeroAssembly.baseZeroTarget_of_leaves`,
-   through RC0's `baseZeroTarget_of_inputs` and RC15's `baseZero_node_genuine` over RC20's `Λ_(t)`,
-   the height formula by RC19, with (4.7) and `ũ₀ ∈ Λ[1/2]` at the base from `common_coordinate` and
-   `prim_regular`, from the ELLIOT leaf `base_zero`), `height_one` (RC16's descent from the ELLIOT
-   leaf `prim_regular`, on batch 3's genuine switching data, and (4.7)), `clearing` (RC7's (5.9) and
-   the repaired budget (5.7) from the leaf `clearing_model`, over batch 3's identification with lane
-   RC26's genuine Selmer complexes); see "Conclusion-shaped leaves" below;
+   from the ELLIOT leaf `eq35` on batch 3's genuine switching data, the stages from the Appendix F
+   stage construction (`StageData.lean`: the data specification `PreDataSpec` is PROVED from the
+   fixed support and the stage link), and the address input from lane RC24's construction (budgeted
+   density models) over genuine `G_ℚ`, Frobenius elements and characters, Chebotarev from the
+   repository's density theorem, the odd source read on its own filter and the odd witness derived
+   from `δ_o`), `calibration` (from the ELLIOT leaf `calibration`, with RC19's regulator relation
+   and the free generators from `Prints`), `common_coordinate` (the ELLIOT leaf `common_coordinate`,
+   through batch 3's natural support-triangle steps), `base_zero` (lane RC25's
+   `BaseZeroAssembly.baseZeroTarget_of_leaves`, through RC0's `baseZeroTarget_of_inputs` and RC15's
+   `baseZero_node_genuine` over RC20's `Λ_(t)`, the height formula by RC19, with (4.7) and
+   `ũ₀ ∈ Λ[1/2]` at the base from `common_coordinate` and `prim_regular`, from the ELLIOT leaf
+   `base_zero`), `height_one` (RC16's descent from the ELLIOT leaf `prim_regular`, on batch 3's
+   genuine switching data, and (4.7)), `clearing` (RC7's (5.9) and the repaired budget (5.7) from
+   the leaf `clearing_model`, over batch 3's identification with lane RC26's genuine Selmer
+   complexes); see "Conclusion-shaped leaves" below;
 5. the skeleton's Branch 1 / fixed-field package (`rc_of_oddEmptyUnit`, `fixedFieldPackage_of_steps`),
    with the Kummer sequence in rank zero proved by batch 3 (`kummerCorankZero_proof`); Branch 1 reads
    the visibility step at `D = 1` only (tex 2584–2589), but `rcSteps_of_leaves` builds every step
@@ -96,8 +99,10 @@ each leaf's discharge.
 (kind ELLIOT): their interface structures are existential witnesses that do not, or only partly,
 constrain the genuine objects, so the PROVED statements about those structures concern the abstract
 witnesses:
-* `PreLeaves.odd`: the point side is genuine, but its theta side and comparison argument exist for
-  every `λ` with `a_θ ≡ c₀ λ (mod 2^{M_θ})`, so together they are (O.7) itself;
+* `PreLeaves.odd_staged`: the point side is genuine, but its theta side and comparison argument
+  exist for every `λ` with `a_θ ≡ c₀ λ (mod 2^{M_θ})`, so together they are (O.7) itself; its stage
+  part is the Appendix F construction, with (O.2) at the witness PROVED from
+  `WitnessSpecialization`;
 * `PostLeaves.address`: `KSplitSeed` is equivalent to the conclusion of the seed lemma, and
   `EvenReading` is (F.1)'s conclusion for the chosen reading `Rev`;
 * `PostLeaves.base_zero`: for a torsion specified point its core is equivalent to the conclusion of
@@ -129,7 +134,11 @@ witnesses:
   falsified, but the leaves are asked of more families than the text constructs;
 * the companion's primes lie in the fixed support before `δ_o` (`CompanionLeaf`); the address leaf
   reads the odd source on its own filter (lane RC24's intrinsic odd filter), so the fresh prime of
-  `k` no longer vetoes the odd readings (lane RV2's B1, fixed).
+  `k` no longer vetoes the odd readings (fixed);
+* closed: the coefficient dictionary's input (O.9) is consumed in the manuscript's form
+  `a_p ≡ p + 1 (mod 4)` at every good prime (tex 9585, 9593–9594), proved for the actual curves
+  (batch 3's `apModFour_curve_typeData`) and passed to the dictionary's weaker `ApEven` by
+  `apEven_of_apModFour` (`AddressGenuine.LabelData.apEven₁`, `apEven₂`).
 -/
 
 noncomputable section
@@ -171,16 +180,15 @@ theorem addressLeaf_of_densityLeaf_branch {ℓ : ℕ} {W : WData ℓ} (hℓ : Ad
 /-- **The leaves that do not involve `δ_o`** (at an admissible `ℓ` with Selmer corank one and a
 genus partner `h_*`), each with tex lines, kind and owner. -/
 structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
-  /-- The data are built to specification (`PreDataSpec`: the support consists of primes and
-  contains `2, 3` and the primes of `ℓ`; the hyperfilter on the stages; `M_θ ≥ θ`; the stage support
-  is the prepared filter cut by a stage condition holding at `D = 1`; the prepared filter contains
-  one) (definitions; tex 1974–1975, 2016, 2404–2410, 2522, 2531–2533, 2586, App F 8209–8212, 8233,
-  8400–8401, App G 10190–10191, 10589–10592; owner RC0, as batch 3's `PreFieldsSpec`). It gives the
-  support, the stages and the stage support (`preFields_of_dataSpec`). -/
-  data_spec : PreDataSpec W
-  /-- The prepared filter is positive, squarefree, `≡ 1 (mod 8)` and prime to the support
-  (definition; tex 2344–2346, 2404–2410, App G 10059–10062). -/
-  prepared_spec : PreparedSpec W
+  /-- The fixed support and the prepared filter (`StageSupport`: the support consists of primes and
+  contains `2, 3`, the primes of `ℓ` and the primes of `h_*`; the prepared filter is the positive
+  unit-squareclass filter containing one over the support, `positivePrepared`) (definitions; tex
+  1974–1975, 2404–2410, 2460–2461, App F 8222, 8246–8256; owner RC0). It replaces the former leaves
+  `data_spec : PreDataSpec W` and `prepared_spec : PreparedSpec W`, both now PROVED: the data
+  specification from it and the stage link of `odd_staged` (`PreLeaves.data_spec`, by the stage
+  construction's `preDataSpec_preparedStages`), and `PreparedSpec` from it alone
+  (`PreLeaves.prepared_spec`). -/
+  stage_support : StageSupport W
   /-- The specification of the data behind the partitionable auxiliary factor (`AuxFactorInputs`:
   the type data, the conductor on the support, the even sources per total type with RC2's
   coefficient rules and vanishing off their filter, a unit seed at every prepared total type, and
@@ -201,23 +209,35 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   is the level of `E_ℓ`, tex 1836–1837, 1864–1869); with `N₀ = 0` the families are constant, so the
   cube clause then holds only at bases that are already units; not needed for soundness. -/
   even_upper : EvenUpperRC11Inputs W
-  /-- The odd side's genuine objects (`OddInstance`): GenusOdd's objects of (3.4) — lane RC11's
-  normalization of `L_*` (GLUE Birch–Manin; tex 1825–1830, 7175–7177), the newform data of `E`,
-  `L_*(h_*)` over the lattice's `Ω⁻` a nonzero rational (GLUE Manin–Drinfeld, tex 2404), the
-  Heegner selections and the identification of the interface data (definitions), the genus
-  partner's squares at the level and the final `k`'s conditions (ELLIOT; tex 2404–2416,
-  2595–2603) — and, at the same genus selection, lane RC23's visibility models: the multiplier
-  killing native torsion (ELLIOT + PRINT Silverman AEC VII.3.1), the stage maps (interface data),
-  the odd sign of admissible parameters (GLUE: the twist root-number formula), the theta side and
-  the comparison argument of (O.7) (ELLIOT + PRINT Cornut–Jetchev; tex 9101–9445), and (O.2) at the
-  fixed witness (tex 2460–2546, 8225–8405); owners RC11, batch 3 GenusOdd, RC13, RC23, and the
-  theta-form construction of App F.
-  PROVED from it: (3.4) (`gz34Target_of_genusOdd`), (O.8)'s inputs
+  /-- The odd side's genuine objects with the constructed stages (`OddStagedInstance`, in
+  `StageData.lean`): GenusOdd's objects of (3.4) — lane RC11's normalization of `L_*` (GLUE
+  Birch–Manin; tex 1825–1830, 7175–7177), the newform data of `E`, `L_*(h_*)` over the lattice's
+  `Ω⁻` a nonzero rational (GLUE Manin–Drinfeld, tex 2404), the Heegner selections and the
+  identification of the interface data (definitions), the genus partner's squares at the level and
+  the final `k`'s conditions (ELLIOT; tex 2404–2416, 2595–2603) — and, at the same genus selection,
+  lane RC23's visibility models: the multiplier killing native torsion (ELLIOT + PRINT Silverman AEC
+  VII.3.1), the stage maps (interface data), the odd sign of admissible parameters (GLUE: the twist
+  root-number formula), the theta side and the comparison argument of (O.7) (ELLIOT + PRINT
+  Cornut–Jetchev; tex 9101–9445); owners RC11, batch 3 GenusOdd, RC13, RC23. Then the fixed witness
+  with the stages of the Appendix F construction (tex 2460–2536, 8225–8405): `D_w` in the prepared
+  filter with its selected genus datum (definitions), the outputs of the detector construction (a
+  Galois-fixed point of `E^{(D_w)}`, a division tower, the auxiliary field, the detecting element,
+  the fixed row with value `2^{a+1}` at its square, an actual detecting sequence; ELLIOT,
+  Proposition `ex:app-detector`, PROVED by the construction's `exists_detector_stages` from a
+  nontorsion rational point, PRINT Serre and GLUE no CM, `StageDataNonVacuity`),
+  the stage fields of the data being the construction at that sequence (`StagesFrom`, definitions;
+  owner RC0), and the specialization identity `WitnessSpecialization` (ELLIOT + GLUE, tex
+  8392–8398; the open input; owner: the Appendix F stage construction, `RC/Stages/Witness.lean`).
+  PROVED from it: (O.2) at the witness (`OddStagedInstance.witnessValuation`, by the construction's
+  `witnessValuation_withStages`; formerly the field `OddInstance.hO2` of this leaf), hence
+  `OddInstance` (`PreLeaves.odd`), (3.4) (`gz34Target_of_genusOdd`), (O.8)'s inputs
   (`visibilityInputs_of_oddInstance`) and the fixed witness (`witnessLeaf_of_oddInstance`).
   Conclusion-shaped part: the theta side and the comparison argument exist for every `λ` with
   `a_θ ≡ c₀ λ (mod 2^{M_θ})`, so together they are (O.7) itself; the point side `λ = lamOf` is
-  genuine. -/
-  odd : Nonempty (OddInstance W)
+  genuine. Caveat: the one field `ev` (the stage maps) is read at every admissible parameter, by
+  `lamOf` in the comparison argument, and at the witness by `WitnessSpecialization`; a stage map
+  defined only at the selected datum of `D_w` and zero elsewhere cannot serve both. -/
+  odd_staged : Nonempty (OddStagedInstance W)
   /-- The inputs of (3.5) on batch 3's genuine switching data (`Eq35InputsGenuineGG`): the primitive
   coordinates at the companion pairs with batch 3's `GenuineSwitchData` over configuration families
   genuine at every height-one prime (`RegularityInputsG`: lane RC26's Galois fibers, the genuine
@@ -239,6 +259,26 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   size function `nOf` is fixed for all ring instances before `A`, stronger than the text's per-`A`
   bound (tex 4936–4940, 4453–4463). -/
   eq35 : Eq35InputsGenuineGG W
+
+/-- **The data specification from the leaves** (PROVED: the fixed support and the stage link of the
+staged odd instance, by the stage construction's `preDataSpec_preparedStages`; formerly the leaf
+`PreLeaves.data_spec`). -/
+theorem PreLeaves.data_spec {ℓ : ℕ} {W : WData ℓ} (hp : PreLeaves W) : PreDataSpec W :=
+  let ⟨I⟩ := hp.odd_staged
+  (I.preDataSpec hp.stage_support).1
+
+/-- **The prepared filter is positive, squarefree, `≡ 1 (mod 8)` and prime to the support**
+(PROVED from the fixed support, `StageSupport.preparedSpec`; formerly the leaf
+`PreLeaves.prepared_spec`; tex 2344–2346, 2404–2410, App G 10059–10062). -/
+theorem PreLeaves.prepared_spec {ℓ : ℕ} {W : WData ℓ} (hp : PreLeaves W) : PreparedSpec W :=
+  hp.stage_support.preparedSpec
+
+/-- **The odd instance from the leaves** (PROVED: (O.2) at the witness from the stage construction
+and `WitnessSpecialization`, `OddStagedInstance.toOddInstance`; formerly the leaf
+`PreLeaves.odd`). -/
+theorem PreLeaves.odd {ℓ : ℕ} {W : WData ℓ} (hp : PreLeaves W) : Nonempty (OddInstance W) :=
+  let ⟨I⟩ := hp.odd_staged
+  ⟨I.toOddInstance⟩
 
 /-- **The leaves at the chosen `h_*` and `δ_o`**, each with tex lines, kind and owner. -/
 structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
@@ -315,7 +355,12 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   class to be primitive, which the text does not supply. DEPARTURE (scope at `x = 0`): the text
   proves the base clause only at full Selmer corank one for `E/K` (tex 4922–4923, 5196–5199,
   4350–4351); the leaf asserts it at the base of every final family without that hypothesis. For the
-  chosen `k` it holds (tex 2598–2599, 2616–2626); in Branch 1 the leaf asserts it of free data. -/
+  chosen `k` it holds (tex 2598–2599, 2616–2626); in Branch 1 the leaf asserts it of free data.
+  Caveat on the discharge: the configuration families must NOT be taken over the finite-level actual
+  coefficient modules `M_i = (T₂E ⊗ A_i)(χ_hΨ_i)` (tex 2780–2830): over the residue fields `k(𝔭)`
+  these give only zero fibres, so a leaf tied to them is vacuous (lane RC28's
+  `regularityInputsActual_iff`: `RegularityInputsActual u ↔ u = 0`). The actual fibres must come
+  from the `Λ`-adic module (`RC/LambdaCoef`, in progress). -/
   prim_regular : PrimRegularityInputsG W.toRCData
   /-- The inputs of (5.9) over the genuine Selmer complexes (`ClearingInputsG`): the fixed field
   `K` and the constants before the family; at every final family batch 3's `Identification2G` (the
@@ -338,18 +383,21 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   not model the full-condition singular-quotient triangle (5.6) of tex 5234–5238, 5398–5403. Scope
   departure: this field is also requested in Branch 1 (see `RC/Skeleton/Steps.lean`). -/
   clearing_model : ClearingInputsG W.toRCData
-  /-- **Lemma `ex:arith-base-zero` at the base** (`BaseZeroLeafInputs`; ELLIOT, tex 4330–4376;
+  /-- **Lemma `ex:arith-base-zero` at the base** (`BaseZeroLeafInputsSqrt`; ELLIOT, tex 4330–4376;
   owners RC15, RC19, RC25, batch 3 HeegnerCohomology, RankCounts), with the height formula
   (Cai–Shu–Tian Thm 1.1 from `Prints`, lane RC19), (4.7) at the base, `ũ₀ ∈ Λ[1/2]` and the
   package's datum PROVED (lane RC25's `baseZeroTarget_of_leaves`, from `common_coordinate` and
-  `prim_regular`; tex 4369–4373, 5703–5706). Inputs: the conductor-one Heegner data (`HeegnerData`;
-  PRINT/GLUE: BCDT, uniformization, Eichler–Shimura, CM theory, Galois descent, Artin formalism;
-  tex 2836–2838, 2915–2932, 5736) and a `BaseZeroCore`. Conclusion-shaped: the stages are
-  unconstrained (a trivial stage meets the per-stage (4.1)), `Boundary45Base` is equivalent to
+  `prim_regular`; tex 4369–4373, 5703–5706). Inputs: the conductor-one Heegner data in the form
+  `HeegnerDataSqrt` (PRINT/GLUE: BCDT, uniformization, Eichler–Shimura, CM theory, Galois descent;
+  tex 2836–2838, 2915–2932), with `K = ℚ(√k)` split at `2` (definition, tex 2599, 2720) in place of
+  the conductor-one factorization `L(E/K,s) = L(E,s)L(E^{(k)},s)`, which is PROVED from
+  `RCLeaves.artin` (lane RC27's `lFactorizationConductorOne_of_artin`, `baseZeroLeafInputs_of_sqrt`;
+  tex 4345–4346, 5736), and a `BaseZeroCore`. Conclusion-shaped: the stages are unconstrained (a
+  trivial stage meets the per-stage (4.1)), `Boundary45Base` is equivalent to
   `∃ κ L, L ≠ 0 ∧ z̄ = L κ(P)` (the old `h45`), and for a torsion `P` the core is equivalent to
-  "`u_{prim,0} ∈ Λ_(t)` and `u_{prim,0}(0) = 0`", the lemma's conclusion (tex 4346–4348,
-  4362–4369); so the model does not constrain the genuine objects beyond that conclusion. -/
-  base_zero : BaseZeroAssembly.BaseZeroLeafInputs W.toRCData
+  "`u_{prim,0} ∈ Λ_(t)` and `u_{prim,0}(0) = 0`", the lemma's conclusion (tex 4346–4348, 4362–4369);
+  so the model does not constrain the genuine objects beyond that conclusion. -/
+  base_zero : BaseZeroLeafInputsSqrt W.toRCData
 
 /-- **Every remaining hypothesis of Theorem 5.3 beyond the blueprint's `Prints`.** -/
 structure RCLeaves where
@@ -469,7 +517,8 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
     ⟨Cper, h34k⟩ hfam (calibrationTarget_of_H P hadm.1 hq.calibration) h47 hheight
     (clearingTarget_of_G _ hheight hq.clearing_model) (BaseZeroAssembly.baseZeroTarget_of_leaves P
       (commonCoordinateInputs_of_G hq.common_coordinate)
-      (primRegularityInputs_of_G _ hq.prim_regular) hq.base_zero)
+      (primRegularityInputs_of_G _ hq.prim_regular)
+      (baseZeroLeafInputs_of_sqrt L.artin hq.base_zero))
 
 /-! ## The node and Theorem 5.3 -/
 
