@@ -191,8 +191,7 @@ support change of [Nekovář, Proposition 7.8.8(ii)] as the GLUE input `SupportC
 are bounded complexes of free modules, the support comparison is the forward map of a homotopy
 equivalence (a quasi-isomorphism of bounded free complexes has an integral homotopy inverse,
 `QuasiIsoFreeHomotopyInverse`). Caveat: the hypothesis `SupportChangeUnramified` (through
-`UnramifiedNewPlace`) is not instantiable by genuine continuous cochains; re-pointing to the genuine
-Galois support data is pending.
+`UnramifiedNewPlace`) is not instantiable by genuine continuous cochains; see `ZInQ.Contrib.CloudB3RC53.GenuineInst.transfer_final_genuine`.
 Classification: PROVED (from the GLUE input). -/
 theorem supportComparisonHomotopyEquiv {S : Type u} [CommRing S] (T : SupportChangeData S)
     (H : SupportChangeUnramified T) (hSC : SupportChangeInput T H) (a b : ℤ)
@@ -218,7 +217,7 @@ theorem supportComparisonHomotopyEquiv {S : Type u} [CommRing S] (T : SupportCha
 Then, given RC6's `MinimalModelsExist S` (PROVED: `minimalModelsExist_proof`; discharged in
 `transferOfSupportChange_final`), `genericRank ≤ rankTot`. Caveat: the hypothesis
 `SupportChangeUnramified` (through `UnramifiedNewPlace`) is not instantiable by genuine continuous
-cochains; re-pointing to the genuine Galois support data is pending.
+cochains; see `ZInQ.Contrib.CloudB3RC53.GenuineInst.transfer_final_genuine`.
 Classification: PROVED (from the inputs in its type). -/
 theorem transferOfSupportChange {S : Type u} [CommRing S] [IsLocalRing S]
     (hMM : MinimalModelsExist S) (T : SupportChangeData S) (H : SupportChangeUnramified T)

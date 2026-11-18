@@ -65,7 +65,7 @@ theorem transferOfModels_final {S : Type u} [CommRing S] [IsLocalRing S]
 /-- **The field `transfer` from the support change, `MinimalModelsExist` discharged** (tex
 L4598–4647). Remaining inputs: `SupportChangeInput` (GLUE) and `hact`. Caveat: the hypothesis
 `SupportChangeUnramified` (through `UnramifiedNewPlace`) is not instantiable by genuine continuous
-cochains; re-pointing to the genuine Galois support data is pending.
+cochains; see `ZInQ.Contrib.CloudB3RC53.GenuineInst.transfer_final_genuine`.
 Classification: PROVED. -/
 theorem transferOfSupportChange_final {S : Type u} [CommRing S] [IsLocalRing S]
     (T : SupportChangeData S) (H : SupportChangeUnramified T)
@@ -219,8 +219,7 @@ Caveat: the hypothesis `SupportChangeUnramified` (through `UnramifiedNewPlace`) 
 isomorphisms of the full local complex at `q` with the 3-term tame model `M → M ⊕ M → M`; genuine
 continuous cochains `C^•(G_{K_q}, M)` are only quasi-isomorphic to it (they are nonzero in every
 degree `≥ 0`), so the hypotheses are consistent (zero witnesses, `transfer_final_nonvacuous`) but
-not instantiable by genuine continuous cochains; re-pointing to the genuine Galois support data is
-pending. Classification: PROVED (from the inputs in its type). -/
+not instantiable by genuine continuous cochains; see `ZInQ.Contrib.CloudB3RC53.GenuineInst.transfer_final_genuine`. Classification: PROVED (from the inputs in its type). -/
 theorem transfer_final {S : Type} [CommRing S] [IsLocalRing S]
     (T : SupportChangeData S) (H : SupportChangeUnramified T)
     (hSC : SupportChangeInput T H) (a b : ℤ)
