@@ -49,24 +49,27 @@ def toFour : FourCx K (Fin C.m0) (Fin C.m0 ⊕ Unit ⊕ Fin C.m1)
 
 end PreComplex'
 
-variable (C : ClearingComplex.PreComplex K) (hB : IsUnit C.B.det)
+section Ring
+
+variable {R : Type} [CommRing R] (C : ClearingComplex.PreComplex R) (hB : IsUnit C.B.det)
 
 /-- **The transported functional** `μ = λ ∘ incl = λ_D − λ_N B⁻¹ T` on `D²`. -/
-def transportFun (lam : (Fin C.m1 ⊕ Unit ⊕ Fin C.m2) ⊕ C.N → K) :
-    Fin C.m1 ⊕ Unit ⊕ Fin C.m2 → K :=
+def transportFun (lam : (Fin C.m1 ⊕ Unit ⊕ Fin C.m2) ⊕ C.N → R) :
+    Fin C.m1 ⊕ Unit ⊕ Fin C.m2 → R :=
   (lam ∘ Sum.inl) - ((lam ∘ Sum.inr) ᵥ* C.B⁻¹) ᵥ* C.T
 
-theorem hz_cancel {z : Fin C.m0 ⊕ Unit ⊕ Fin C.m1 → K} (hz : (PreComplex'.toFour C).d1 *ᵥ z = 0) :
-    (C.cancel hB).toFour.d1 *ᵥ z = 0 := by
-  have h : fromRows C.X C.Y *ᵥ z = 0 := hz
+theorem hz_cancel {z : Fin C.m0 ⊕ Unit ⊕ Fin C.m1 → R}
+    (hz : fromRows C.X C.Y *ᵥ z = 0) :
+    (C.cancel hB).d1 *ᵥ z = 0 := by
+  have h := hz
   rw [fromRows_mulVec] at h
   funext i
   exact congrFun h (Sum.inl i)
 
-theorem hμ_cancel {lam : (Fin C.m1 ⊕ Unit ⊕ Fin C.m2) ⊕ C.N → K}
-    (hlam : lam ᵥ* (PreComplex'.toFour C).d1 = 0) :
-    transportFun C lam ᵥ* (C.cancel hB).toFour.d1 = 0 := by
-  have h : lam ᵥ* fromRows C.X C.Y = 0 := hlam
+theorem hμ_cancel {lam : (Fin C.m1 ⊕ Unit ⊕ Fin C.m2) ⊕ C.N → R}
+    (hlam : lam ᵥ* fromRows C.X C.Y = 0) :
+    transportFun C lam ᵥ* (C.cancel hB).d1 = 0 := by
+  have h := hlam
   have hsplit : lam ᵥ* fromRows C.X C.Y = (lam ∘ Sum.inl) ᵥ* C.X + (lam ∘ Sum.inr) ᵥ* C.Y := by
     funext j; simp [vecMul, dotProduct, Fintype.sum_sum_type]
   rw [hsplit, PreComplex.Y_eq hB] at h
@@ -75,6 +78,8 @@ theorem hμ_cancel {lam : (Fin C.m1 ⊕ Unit ⊕ Fin C.m2) ⊕ C.N → K}
   rw [vecMul_neg] at h
   rw [← sub_eq_add_neg] at h
   exact h
+
+end Ring
 
 /-! ### Relabelling for the cancellation of `N --B--> N` -/
 
@@ -119,7 +124,9 @@ def σPre : (Fin m0 ⊕ Unit) ⊕ ((Fin m1 ⊕ Unit ⊕ Fin m2) ⊕ N) ≃
 
 /-! ### The cancellation -/
 
-variable {C} (z : Fin C.m0 ⊕ Unit ⊕ Fin C.m1 → K)
+variable {C : ClearingComplex.PreComplex K} (hB : IsUnit C.B.det)
+
+variable (z : Fin C.m0 ⊕ Unit ⊕ Fin C.m1 → K)
   (lam : (Fin C.m1 ⊕ Unit ⊕ Fin C.m2) ⊕ C.N → K) (hz : (PreComplex'.toFour C).d1 *ᵥ z = 0)
   (hlam : lam ᵥ* (PreComplex'.toFour C).d1 = 0)
 
