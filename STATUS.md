@@ -25,7 +25,7 @@ describe the fork main they name):
 **29 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves61`), plus one manuscript hypothesis outside the H part (`hPC`: pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end of docs/one-proof/OPEN.md.
 
 * **Strict count: 5 published / 24 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
-* By kind: consequence 18, published 11.
+* By kind: consequence 19, published 10.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->
 
