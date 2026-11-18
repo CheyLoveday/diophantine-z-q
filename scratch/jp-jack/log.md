@@ -15,3 +15,8 @@
 - VERIFIED (process): a superseded cache rebuild survived its first stop attempt and
   overlapped with the next Lean checks. This violated the single-process limit. The
   old job was terminated; the remaining checks ran with an exclusive process lock.
+- VERIFIED (Lean): the existential row has a reader and is equivalent to the
+  universal form with the existing witness existence and uniqueness inputs.
+  `javanpeykarThm111JacKEx_of_an` uses the already present Raynaud and Néron fields.
+  Both group-iso and Pic⁰ representative invariance compile; all ten declarations
+  checked in `CheckJacKEx.txt` use only the standard axioms.
