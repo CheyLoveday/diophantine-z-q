@@ -768,8 +768,8 @@ attribute [local instance] conjTransportNV_finiteTors
 /-- **(f) Non-vacuity of the dual transport at a fixed place**: for `K = ℚ(i)`, `S` the places
 above `2`, `E = E_1`, `N = 2`, `A = ℤ/2`, `α = 1`, an actual complex conjugation `C` (nontrivial
 on `K`) and the fixed place `v` above `2`, every hypothesis of `conjTransportDual` is discharged
-(`hW`, `FullTorsion`, `hα`, `hvw`, `hg`, the instances), and the dual of the full condition is an
-injective local condition. Kind: PROVED. -/
+(`hW`, `FullTorsion`, `hα`, `hvw`, `hg`, the instances), and the conjugate transport of the full
+condition is an injective local condition. Kind: PROVED. -/
 theorem conjTransportDual_nonvacuous :
     ∃ (C : ActualConj (CyclotomicField 4 ℚ) conjTransportNVPlaces)
       (v : Places (CyclotomicField 4 ℚ) conjTransportNVPlaces) (hfix : conjPlace C.κ v.1 = v.1),

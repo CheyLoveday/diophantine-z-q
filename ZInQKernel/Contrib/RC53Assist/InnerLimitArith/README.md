@@ -9,6 +9,8 @@ not be counted as discharged arithmetic.
 
 ## Genuine producers (no arithmetic input beyond the stated prints)
 
+(Reclassified after a second independent review, 2026-11-18.)
+
 * Actual continuous cochains and their evaluation, cocycle and coboundary identities
   (`evalOne`, `evalOne_mul`, `evalOne_d_zero`, `evalTwo_d`), tame coordinates of actual
   one-cocycles (`tameCoord`, `tameCoordH1`), the actual unramified condition in tame coordinates
@@ -24,19 +26,29 @@ not be counted as discharged arithmetic.
   specialization of `ρ_T(τ)`), `det_conjMatrixK`, `conjMatrixK_sq`.
 * Flatness and freeness of the actual stage cochain and Selmer cochain modules
   (`StageFlat.lean`).
-* `StageInputs.lean`, from the prints named there: finiteness of the cohomology of the actual
-  Selmer complexes with finite coefficients, at every stage for the actual module `M_i`
-  (`galoisSelmerCohomologyFinite_of_prints`, `stageSelmerCohomologyFinite`, from Milne I.2.3 and
-  I.4.10); chain-level reciprocity of the trace on the compact cone (`trace_reciprocity`,
-  `trace_localization_of_cocycle`); Nekovář's global duality and Selmer duality at the stage
-  `A_i` for `M_i`, `M_i(α⁻¹)` and the Weil pairing (`stageGlobalDuality`, `stageSelmerDuality`,
-  `exists_stageTrace`, from Nekovář 5.4.1 and 5.4.3).
-* `ArithLabel.lean`: one compatible arithmetic label (`CompatibleArithmeticLabel`) for the curve
-  `E`, its base change `E_K`, the conjugation, the derivative primes and the stage primes with
-  residue size `ℓ_i²`; the twisted derivative congruence (`CompatibleArithmeticLabel.htriv`) and
-  the realized derivative matrices with `J = conjMatrix` at every fibre are derived from it.
+* `StageInputs.lean`, from the prints named there: chain-level reciprocity of the trace on the
+  compact cone (`trace_reciprocity`, `trace_localization_of_cocycle`); Nekovář's global duality at
+  the stage `A_i` for `M_i`, `M_i(α⁻¹)` and the Weil pairing (`stageGlobalDuality`,
+  `exists_stageTrace`, from Nekovář 5.4.1 and 5.4.3, as imported).
 
 ## Conditional adapters (inputs are open obligations)
+
+* `StageInputs.lean`: finiteness of the cohomology of the actual Selmer complexes with finite
+  coefficients (`galoisSelmerCohomologyFinite_of_prints`, `stageSelmerCohomologyFinite`, from
+  Milne, ADT I, Theorem 2.1 and Corollary 4.15) is conditional on finiteness of the cohomology
+  of the specified local conditions; `stageSelmerDuality` keeps the orthogonality of the old
+  conditions as an input. `LocalDegreeTwoCoordinate` is an isomorphism-witness contract, and
+  `LocalDegreeTwoNormalized` alone does not certify a coordinate (an independent review compiled
+  a normalized map on a trivial group that kills no coboundary): the actual continuous
+  characters and the normalized cup cocycles must be bound, as the separate normalized
+  coordinate does.
+* `ArithLabel.lean`: `CompatibleArithmeticLabel` is a bundle; defining it constructs no
+  inhabitant, and `residue_size` repackages its `above` and `inert` fields. The derived fields
+  (`htriv`, the realized derivative matrices with `J = conjMatrix`) are genuine consequences
+  of the bundle. Inhabitants are built by the separate constructors from actual finite-stage
+  kernel elements (the Frobenius match from inert primes, the character condition by a refined
+  Chebotarev selection, and the stage primes as the inert primes above the selected rational
+  primes); detection of prescribed classes and the evaluation transport (5.4) remain open.
 
 * `realizedDerivative`, `realizedDerivativeK`, `RealizedLabel.derivative`: the input `htriv`
   (the Frobenius of the stage prime acts trivially on `𝕋 / I_i 𝕋`) is equivalent to the

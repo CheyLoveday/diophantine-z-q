@@ -8,9 +8,11 @@ import Mathlib.NumberTheory.Padics.MahlerBasis
 /-!
 # Lane RC28 round 2, part 2: `Λ = ℤ₂[[t]]`, its topology, and the `Λ`-adic character `α = χ_h Ψ`
 
-Manuscript `diophantine_zq.tex` (11/5), tex 2780–2795 (the moving character `Ψ = (1+t)^ξ`, here for
-a supplied continuous `ℤ₂`-valued character `ξ`, no ring-class tower is supplied here; `α = χ_h Ψ`)
-and tex 4976–5200 (`R = Λ_𝔭`).
+Manuscript `diophantine_zq.tex` (11/5): `Λ = ℤ₂[[t]]` at tex 1834 and 2747; the text's finite
+moving characters `Ψ_i = (1+t)^{ξ_i}` and `α_i = χ_h Ψ_i` at tex 2780–2791. Here
+`Ψ = (1+t)^ξ` is built from a supplied continuous `ℤ₂`-valued character `ξ` (no ring-class tower
+is supplied here) and `α = χ_h Ψ`; neither is a global moving character asserted at
+tex 2780–2785. Tex 4976–5200: `R = Λ_𝔭`.
 
 * `Λ = Lambda = ℤ_[2]⟦t⟧` (the tree's `ZInQ.Manuscript.RC.Uniform.Lambda`) with the product
   topology on coefficients (Mathlib's `PowerSeries.WithPiTopology`; it is the `(2, t)`-adic topology),
@@ -104,7 +106,7 @@ theorem continuous_movingChar (ξ : GKS K S →* Multiplicative ℤ_[2])
     Continuous fun σ => ((movingChar ξ σ : Lambdaˣ) : Lambda) :=
   continuous_onePlusTPow.comp hξ
 
-/-- **The `Λ`-adic character `α = χ · Ψ`** (tex 2780–2785, `α = χ_h Ψ`). -/
+/-- **The `Λ`-adic character `α = χ · Ψ`** (the text's finite `α_i = χ_h Ψ_i`: tex 2780–2791). -/
 def lambdaChar (χ : GKS K S →* ℤˣ) (ξ : GKS K S →* Multiplicative ℤ_[2]) : GKS K S →* Lambdaˣ :=
   charMul ((intUnitsTo Lambda).comp χ) (movingChar ξ)
 

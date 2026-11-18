@@ -4,7 +4,8 @@ import ZInQKernel.Contrib.CloudB3RC53.ClearingComplex.FullConditionFamily
 /-!
 # Theorem 5.3, Lane RC0: the clearing leaf over the full-condition triangle (5.6)
 
-Proposition `ex:arith-clearing`, (5.9) (tex 5355–5645), over the triangle (5.6) (tex 5234–5238,
+Proposition `ex:limits-fixed-field-clearing`, (5.9) (tex 5487–5645, with the budget of Lemma
+`ex:limits-fixed-field-budget`, tex 5208–5486), over the triangle (5.6) (tex 5234–5238,
 5398–5403). The leaf `PostLeaves.clearing_model` is `ClearingInputsG3Q2`: the RC53 group's
 `ClearingInputsG3` (`CloudB3RC53/ClearingComplex/FullConditionE1a.lean`) with its full-condition
 identification in the form `Identification3Q2`, whose new places lie over the primes of the family,
@@ -15,7 +16,9 @@ so `card (S' − S) = 2 · card Q` (`Identification3Q2.card_newPlaces`).
 
 * `Identification3Q2`, `Identification3Q2.card_newPlaces`;
 * `ClearingInputsG3Q2` (the leaf);
-* `clearingInputsG3_of_G3Q2` (PROVED): the RC53 group's `ClearingInputsG3` from it;
+* `clearingInputsG3_of_G3Q2` (PROVED): the RC53 group's `ClearingInputsG3` from it; it discards
+  the two-place data (`below`, `lies`, `two`, `hqq`), so their faithfulness carries no weight in
+  the deduction;
 * `clearingTarget_of_G3Q2` (PROVED): `RCSteps.clearing` from it and height-one regularity, through
   the RC53 group's `clearingTarget_of_G3` (`κ = det(B)⁻¹`, E1a, lane RC7's (5.9)).
 -/
@@ -61,13 +64,15 @@ theorem Identification3Q2.card_newPlaces [Fintype (NewPlaces K S S')]
   ring
 
 /-- **The inputs of (5.9) over the full-condition triangle (5.6), with the two conjugate new places
-over each prime of the family** (tex 5234–5238, 5247, 5355–5645, 3470–3499, 3877–3892, 5456–5457):
+over each prime of the family** (tex 5234–5238, 5247, 5208–5645, 3470–3499, 3877–3892, 5456–5457):
 a number field `K` and the constants, and at every final family `F` a full-condition
 identification `Identification3Q2` (ELLIOT for the inherited cancellation core: the lifted family
 model, `B₀ = diag(A_q)`, `T₀ = 0`, the central Smith form, the budget (5.7), tex 5394–5430,
 5522–5543; GLUE for the Galois comparisons; the new places, two over each prime of `F.Q`), the
 actual cycle, the closed functional and the correction `η` over `𝒪[G]` (data), and the coordinate
-identification `OrigCoordLink3` (GLUE). Caveats: the family-Selmer clause (`Mf`, `Δf`, `hfull`,
+identification `OrigCoordLink3` (ELLIOT, Elliot's E1 for the chosen model). Caveats:
+`clearingInputsG3_of_G3Q2` discards the two-place data (`below`, `lies`, `two`, `hqq`), so their
+faithfulness carries no weight in the deduction; the family-Selmer clause (`Mf`, `Δf`, `hfull`,
 `ψf`) is met by every complex, and `M₀`, `Δ₀` are not related to `Mf`, `Δf`; the deduction
 `clearingTarget_of_G3Q2` uses only the cancellation core, the derived Selmer identification and
 `OrigCoordLink3` (neither `ψ0`, `ψold`, `square`, `tame` nor the PRINT `NekovarProp788ii` is in its
@@ -85,7 +90,8 @@ def ClearingInputsG3Q2 {ℓ : ℕ} (D : RCData ℓ) : Prop :=
         OrigCoordLink3 D F M.toIdentification3 z lam hz hlam η
 
 /-- **The RC53 group's `ClearingInputsG3` from the leaf** (PROVED: forget the primes below the new
-places). -/
+places). It discards the two-place data (`below`, `lies`, `two`, `hqq`): their faithfulness to the
+text carries no weight in the deduction, which uses only `ClearingInputsG3`. -/
 theorem clearingInputsG3_of_G3Q2 {ℓ : ℕ} {D : RCData ℓ} (h : ClearingInputsG3Q2 D) :
     ClearingInputsG3 D := by
   obtain ⟨K, _, _, dK, hK, cE, tK, hF⟩ := h

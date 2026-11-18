@@ -60,7 +60,9 @@ pair (`binaryKummerAtS`, `binDDualAt`)).
   **`binD_isLocalRing`** (PROVED: `A[G]` is local when `A` has a residue map to `𝔽₂` with nilpotent
   kernel — every element is a unit or `1` minus a unit), `binD_isLocalRing_acoef`;
 * **`binD_selfInjective`** (PROVED: a nondegenerate Frobenius form `λ` on `A` gives the
-  nondegenerate form `x ↦ λ(x_1)` on `A[G]`, the other group's `selfInjective_of_frobeniusForm`),
+  nondegenerate form `x ↦ λ(x_1)` on `A[G]`,
+  `ZInQ.Contrib.CloudB3RC53.SelmerDuality.selfInjective_of_frobeniusForm`
+  (`CloudB3RC53/SelmerDuality/SelfInjective.lean`)),
   `binD_selfInjective_acoef` (with the top-coefficient form of `A_i`), `binD_finite_acoef`;
 * **`binD_nekovarFiniteSetting`** (PROVED): Nekovář's finite standing hypotheses for `A_i[G]`;
 * `binDBasis`, `binDBasis_apply`: the `ℤ/2^i`-basis `t^k [g]` of `A_i[G]`
@@ -163,8 +165,9 @@ def binDIsoAt (hα : IsLocallyQuadAtGen (S := S₀) R α (quadChar s hs hs0) v.1
 
 open scoped Classical in
 /-- Definition (Nekovář 6.2.2; tex 3418–3419, 3437–3439). **The isotropy homotopies of the Kummer
-pair over `R` at `v`** (the other group's `LocalTruncIsotropy` for the Galois-equivariant inflated
-Weil pairing). -/
+pair over `R` at `v`** (`ZInQ.Contrib.CloudB3RC53.Duality.LocalTruncIsotropy`
+(`CloudB3RC53/Duality/KummerTruncIsotropy.lean`) for the Galois-equivariant inflated Weil
+pairing). -/
 def binDTrunc (hα : IsLocallyQuadAtGen (S := S₀) R α (quadChar s hs hs0) v.1) : Type :=
   LocalTruncIsotropy (genKummerAtS hS R W (2 ^ i) s hs hs0 α hFull v hα).i
     (genKummerAtS hS R W (2 ^ i) s hs hs0 (charInv α) hFull v (isLocallyQuadAtGen_charInv hα)).i
@@ -462,8 +465,9 @@ theorem binD_isLocalRing (ρ : A →+* ZMod 2) (hρ : ∀ a, ρ a = 0 → IsNilp
 /-- PROVED (tex 3465–3467: a top-coefficient functional tests a finite Frobenius ring's
 perfection). **A nondegenerate Frobenius form on `A` gives self-injectivity of
 `A[G]`** (`G` finite): `x ↦ λ(x_1)` is nondegenerate on `A[G]` (`(x · y[g⁻¹])_1 = x_g y`), and a
-finite commutative ring with a nondegenerate Frobenius form is self-injective (the other group's
-`selfInjective_of_frobeniusForm`). -/
+finite commutative ring with a nondegenerate Frobenius form is self-injective
+(`ZInQ.Contrib.CloudB3RC53.SelmerDuality.selfInjective_of_frobeniusForm`
+(`CloudB3RC53/SelmerDuality/SelfInjective.lean`)). -/
 theorem binD_selfInjective [Finite A] [Finite G] (lam : A →+ AddCircle (1 : ℚ))
     (hlam : ∀ a, (∀ c, lam (a * c) = 0) → a = 0) :
     Module.Injective (MonoidAlgebra A G) (MonoidAlgebra A G) := by

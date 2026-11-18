@@ -477,8 +477,9 @@ omit [IsOpenKer α] in
 /-- PROVED (tex 2812–2813, inflated `M_i`). **The transported Kummer coefficient map is a unit
 multiple of the Kummer coefficient map at `v`**: `conjToInv ∘ ι^τ = u • ι_v` in `M_{i,0}(α⁻¹)`, with
 `u = α(h̄₀)⁻¹ ε`, `ε = ±1` the square-root sign of round 2 (`conjK_compTorsEquiv_sign` over `S₀`).
-Hypotheses `hW` (lane RC28's DEPARTURE 3), `hκh` (ELLIOT tex 2798–2802, the twist datum is fixed by
-`τ`, as `hW`), `hFull₀` (GLUE, lane RC28), `hα₀` (ELLIOT tex 2786–2795). -/
+Hypotheses `hW` (definition/GLUE: `W.map κ = W` for a rational curve; lane RC28's DEPARTURE 3),
+`hκh` (definition/GLUE: `κ h = h` for a rational twist, tex 2798–2802), `hFull₀` (GLUE, lane
+RC28), `hα₀` (ELLIOT tex 2786–2795: the anticyclotomic moving-character relation). -/
 theorem conjC_iota_eq (hα₀ : ∀ σ, α ((conjInflConj C hS₀).conj σ) = (α σ)⁻¹) (v : Places K S) :
     ∃ u : (Acoef i)ˣ, ∀ t : TorsAlg (v.1.adicCompletion K) (localTwist W h v.1) (2 ^ i),
       conjTransportCoefEquiv (S := S) (conjCInvEquiv C hS hS₀ W hW i α) v.1
@@ -834,8 +835,9 @@ def conjCCondB : ∀ v : Places K S, v.1 ∈ S₀ →
     (locConjPlaceS C v))
 
 include hP in
-/-- PROVED. `τv ∈ P ↔ v ∈ P` (hypothesis `hP`: `κ`-stability of `P`, ELLIOT tex 2750–2753: `P` is
-the set of places above `2N`, a set of places above rational primes; non-vacuous
+/-- PROVED. `τv ∈ P ↔ v ∈ P` (hypothesis `hP`: `κ`-stability of `P`, definition/GLUE, tex
+2750–2753: `P` is the set of places above `2N`, a set of places above rational primes, so this is
+rational-prime support stability, not an independent ELLIOT step; non-vacuous
 `conjC_stable_nonvacuous`). -/
 theorem conjC_mem_conjPlace_iff (v : Places K S) : (locConjPlaceS C v).1 ∈ P ↔ v.1 ∈ P :=
   (hP v.1 (conjPlace C.κ v.1) rfl).symm
@@ -1049,8 +1051,11 @@ conditions ARE the orthogonal complements of the actual conditions**, in lane RC
 at `S − S₀` on `M_i`; `ΔB` = the transport from `τv` of Kummer/zero at `S₀`, unramified at `S − S₀`
 on `τ^*M_i`; `β` the text's pairing `(v, w) ↦ e(v, ρ_T(τ)w)`; `I` the zero isotropy homotopies.
 Hypotheses: the standing setting (`hK`, `hSfin`, `hS₀fin`, `h2₀`, tex 2750–2753; `hS₀`, `hP`
-`κ`-stability, ELLIOT tex 2750–2753, 3479–3498; `hκh` ELLIOT tex 2798–2802; `hW` lane RC28 DEPARTURE
-3; `hα₀` ELLIOT tex 2786–2795; `hFull₀` GLUE lane RC28; `hαP` lane RC29's local triviality at `P`,
+`κ`-stability, i.e. rational-prime support stability, definition/GLUE, tex 2750–2753, 3479–3498;
+`hκh`, i.e. `κ h = h` for a rational twist, definition/GLUE, tex 2798–2802; `hW`, i.e.
+`W.map κ = W` for a rational curve, definition/GLUE, lane RC28 DEPARTURE 3 (not independent
+ELLIOT steps for the genuine objects); `hα₀` ELLIOT tex 2786–2795, the anticyclotomic
+moving-character relation; `hFull₀` GLUE lane RC28; `hαP` lane RC29's local triviality at `P`,
 tex 2751–2753; `IsOpenKer α`), local traces inducing `H² ≅ A_i` at every place (`htrv2`, Nekovář
 5.2.1, lane RC26) and a global trace whose local part is `∑_v tr_v` (`hsum`, Nekovář 5.4.1, lane
 RC26). -/

@@ -167,7 +167,7 @@ theorem stage_sq_torsion (i : ℕ) (t : GeomPoint (C⁄ℚ))
   rw [Affine.Point.map_map]
   exact actualStage_torsion_sq q i hσ ⟨t, AddSubgroup.torsionBy.nsmul_iff.mpr ht⟩
 
-/-- **The actual local stage at stage `i`** (definition; tex 8358–8394): reduction at the place
+/-- **The actual local stage at stage `i`** (definition; tex 8362–8395): reduction at the place
 of the selected Frobenius, composed with the split twist by the witness root. -/
 def actualLocalStage (i : ℕ) :
     LocalStage (qtwist (C⁄ℚ) (Dw : ℚ)) (a + 1 + 1 + i) (selectedFrobenius q i).val :=

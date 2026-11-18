@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.TauCeti.FieldTheory.FunctionField.Differential.Dimensi
 /-!
 # Reading translation S2 of the Shimura leaf: the differential line of a Weierstrass curve
 
-The peer package `RC53Assist/NewformPeriods` reads Shimura 1973, Theorem 1 (clause (iv), the
+The package `RC53Assist/NewformPeriods` reads Shimura 1973, Theorem 1 (clause (iv), the
 differential clause) through consequence translations S1–S5 (its README). Translation S2 reads:
 "one-dimensional abelian varieties over `ℚ` are elliptic curves with Weierstrass equations, and
 `D_A = ℂ ω_A`, `ω_A = dx/(2y + a₁x + a₃)`". It has no Lean statement of its own: the leaf

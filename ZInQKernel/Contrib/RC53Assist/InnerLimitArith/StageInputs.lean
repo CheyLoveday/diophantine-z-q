@@ -11,8 +11,9 @@ Selmer complexes. This file states them with exact types and proves those that f
 results of the tree and from printed theorems cited by the manuscript.
 
 * Finiteness of Galois cohomology with finite coefficients: `MilneLocalFiniteness` (PRINT,
-  Milne, *Arithmetic duality theorems*, I.2.3, cited at lines 3442 and 4547) and
-  `MilneGlobalFiniteness` (PRINT, Milne I.4.10, cited at line 4526). From them, by the exact
+  Milne, *Arithmetic duality theorems*, I, Theorem 2.1, p. 27; the manuscript cites I.2.3 at lines
+  3442 and 4547) and `MilneGlobalFiniteness` (PRINT, Milne I, Corollary 4.15, p. 62; the manuscript
+  cites I.4.10 at line 4526). From them, by the exact
   sequences of the Selmer cone, a shift and finite products, the cohomology of the actual Selmer
   complex with finite coefficients is finite (`galoisSelmerCohomologyFinite_of_prints`), in
   particular at every coefficient stage for the actual module `M_i`, which has two-power order
@@ -56,10 +57,11 @@ open scoped TensorProduct
 
 section Finiteness
 
-/-- **PRINT — Milne, *Arithmetic duality theorems*, 2nd ed., Chapter I, Corollary 2.3** (cited in
-the manuscript at lines 3442 and 4547): for a finite place `v` of a number field and a finite
-discrete `G_{K_v}`-module `M`, the continuous cohomology groups `H^n(K_v, M)` are finite. Stated
-for the continuous cochain complexes used by the Selmer data. -/
+/-- **PRINT — Milne, *Arithmetic duality theorems*, 2nd ed., Chapter I, Theorem 2.1, last sentence
+(p. 27)** (the manuscript cites Corollary 2.3, local duality, at lines 3442 and 4547): for a finite
+place `v` of a number field and a finite discrete `G_{K_v}`-module `M`, the continuous cohomology
+groups `H^n(K_v, M)` are finite. Stated for the continuous cochain complexes used by the Selmer
+data. -/
 def MilneLocalFiniteness : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K)) (R : Type) [CommRing R]
     (M : Type) [AddCommGroup M] [Module R M] [DistribMulAction (Gloc K v) M]
@@ -67,10 +69,10 @@ def MilneLocalFiniteness : Prop :=
     [ContinuousSMul (Gloc K v) M], Finite M →
     ∀ n : ℤ, Finite ((natCx (contCochains R (Gloc K v) M)).toCC.homology n)
 
-/-- **PRINT — Milne, *Arithmetic duality theorems*, 2nd ed., Chapter I, Theorem 4.10 (a)** (cited
-in the manuscript at line 4526 with I.5.1): for a finite set `S` of finite primes of a number field
-containing the primes dividing `#M`, and a finite discrete `G_{K,S}`-module `M`, the continuous
-cohomology groups `H^n(G_{K,S}, M)` are finite. -/
+/-- **PRINT — Milne, *Arithmetic duality theorems*, 2nd ed., Chapter I, Corollary 4.15 (p. 62)**
+(the manuscript cites Theorem 4.10, Poitou-Tate, at line 4526 with I.5.1): for a finite set `S` of
+finite primes of a number field containing the primes dividing `#M`, and a finite discrete
+`G_{K,S}`-module `M`, the continuous cohomology groups `H^n(G_{K,S}, M)` are finite. -/
 def MilneGlobalFiniteness : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (S : Set (HeightOneSpectrum (𝓞 K))), S.Finite →
     ∀ (R : Type) [CommRing R] (M : Type) [AddCommGroup M] [Module R M]
