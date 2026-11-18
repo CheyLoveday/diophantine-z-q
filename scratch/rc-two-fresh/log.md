@@ -1,0 +1,7 @@
+- Base: `2481181053ae50cea6b6c2b9118de0f2e17f09ae`.
+- Target: `buildConstituentModel.h2fresh` binder, tex 9741–9745.
+- Stage: `OddStageSource`, `O9_odd_stage`, and `OddStageSource.precision`; lift through `O ⧸ (2^M)` at exponent `max(0, δ + |U| + 2)`.
+- Inputs: O.12 `theta_mod_two` and `H_off_unary` on the same `F_U, H_U`; constructor `ops, D, hD`; stage window for nonzero forms.
+- Fresh index: `q₂ * (q₁ * n)`, avoid `S ∪ U ∪ n.primeFactors`, second prime additionally avoids the first; arbitrary Frobenius lifts via unramifiedness.
+- Statements: `fresh_squarefree_weight`, `ne_unary_of_oddPart`, `map_TL`, `dvd_of_stage_dvd`, `fresh_normalizations`, `two_hecke_coeff`, `dense_twoFreshTests`, `continuous_twoTraces`, `h2fresh`; types summarized in `docs/research/rc-two-fresh.md`.
+- Compile: `Stage.lean` passed `lake env lean -j1`; all five theorem axiom checks report only `propext`, `Classical.choice`, and `Quot.sound`. `Main.lean` dependency build underway.
