@@ -3,8 +3,10 @@ import ZInQKernel.Contrib.CloudB3RC53.PairedFunctional.CentralDeterminants
 /-!
 # The central Frobenius determinants are nonzero, without the Hasse bound
 
-Proposition `ex:arith-paired-functional`, tex L3758–3760, and tex L5186–5187 ("the central
-Frobenius determinants are nonzero and hence units in `R`").
+Proposition `ex:arith-paired-functional`, tex L3763–3764 ("the nonzero central Frobenius
+determinants give integral adjugate contractions"); Lemma `ex:arith-central-specialization`, tex
+L3929–3930; Proposition `ex:limits-uniform-lower-bound`, tex L5185–5186 ("the central Frobenius
+determinants are nonzero and hence units in `R`").
 
 `ELLIOT` gap: the text gives no reason. `PairedFunctional/CentralDeterminants.lean` fills it with
 the Hasse bound `a_r² ≤ 4r`, taken as a hypothesis (Hasse's theorem is not in the library). This
@@ -126,8 +128,8 @@ theorem card_point_le : Nat.card (Point W) ≤ 2 * Fintype.card F + 1 := by
   have h2 := card_equation_le W
   omega
 
-/-- **The central Frobenius determinants from point counts** (tex L3758–3760, L5186–5187):
-for a Weierstrass curve `W` over a finite field with `q` elements and `Φ ∈ M₂(ℤ)` with
+/-- **The central Frobenius determinants from point counts** (tex L3763–3764, L3929–3930,
+L5185–5186): for a Weierstrass curve `W` over a finite field with `q` elements and `Φ ∈ M₂(ℤ)` with
 `det Φ = q` and `tr Φ = ±(q + 1 − #W(k))`, `det(Φ − 1) ≠ 0` and `det(Φ − q) ≠ 0`. -/
 def CentralFrobeniusDeterminantsNonzeroCount : Prop :=
   ∀ (F : Type) [Field F] [Fintype F] (W : WeierstrassCurve.Affine F)
