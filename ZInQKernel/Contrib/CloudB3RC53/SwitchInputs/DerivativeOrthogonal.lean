@@ -45,6 +45,12 @@ from the PRINT `NekovarFibreLocalDuality`, Nekovář 5.6.3(i)):
   isotropy data and the local traces of one packet; `galRelSwitch_horth_of_print` (PROVED from
   the PRINT and `hold`): `horth` with only the old places left as hypotheses.
 
+**The step bundle** (alongside `FibreDualityWiring.lean`, whose structures are unchanged):
+`FibreSwitchDualityHoldK` (`FibreSwitchDualityK` with a trace packet and `hold` in place of
+`horth`), `FibreSwitchDualityHoldK.toK`, `.dual` (PROVED from the PRINTs),
+`FibreNonquadStepsHoldK`, `FibreNonquadStepsHoldK.toFibre` and `regular_of_fibreStepsHold`
+(PROVED wiring, from `NekovarFibreGlobalDuality` and `NekovarFibreLocalDuality`).
+
 **(3) Finding: the singular side at a characteristic-zero fibre is not self-orthogonal.** For the
 standard conditions (`PlaceTameK.std`: `finCond = sideOfSetK I_v`, `singCond = sideOfSetK {φ_v}`)
 `hold` asks the finite side, resp. the singular side, to be its own orthogonal complement at each
@@ -87,7 +93,7 @@ open ZInQ.Manuscript.RC.KummerMaps (orthLocalMap orthNeg orthPlaceMap orth_local
   orthLocalMap_apply orthNeg_f_apply)
 open ZInQ.Contrib.CloudB3RC53.Duality (LocalTruncIsotropy)
 open ZInQ.Manuscript.RC.FibreDuality (NekovarFibreLocalDuality NekovarFibreSetting IsLatticeTop
-  IsTateTwistFibre)
+  IsTateTwistFibre NekovarFibreGlobalDuality)
 open ZInQ.Manuscript.RC.Uniform (Lambda)
 open ZInQ.Manuscript.RC.Wiring (ResAt)
 open ZInQ.Manuscript.RC.LambdaCoef (IsHeightOneOdd)
@@ -558,6 +564,171 @@ theorem galRelSwitch_horth_of_print [Fintype (Places K S)] (hL : NekovarFibreLoc
     (galRelSwitch_placeMap_q β hβ hβc C c q Tq hL hset hM hTl hT hb hb' I L) hold
 
 end Fibre
+
+/-! ### The fibre step bundle with `hold` in place of `horth` -/
+
+section Bundle
+
+open ZInQ.Manuscript.RC.Uniform ZInQ.Contrib.CloudB3RC53.UniformSwitch
+
+variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
+  [Fintype (Places K S)]
+  {P : Ideal Lambda} [P.IsPrime] [IsHeightOneOdd P]
+  {M T : Type}
+  [AddCommGroup M] [Module (ResAt P) M] [Module Lambda M] [IsScalarTower Lambda (ResAt P) M]
+  [DistribMulAction (GKS K S) M] [SMulCommClass (GKS K S) (ResAt P) M] [TopologicalSpace M]
+  [IsTopologicalAddGroup M] [ContinuousConstSMul (ResAt P) M] [ContinuousSMul (GKS K S) M]
+  [AddCommGroup T] [Module (ResAt P) T] [Module Lambda T] [IsScalarTower Lambda (ResAt P) T]
+  [DistribMulAction (GKS K S) T] [SMulCommClass (GKS K S) (ResAt P) T] [TopologicalSpace T]
+  [IsTopologicalAddGroup T] [ContinuousConstSMul (ResAt P) T] [ContinuousSMul (GKS K S) T]
+  (β : M →ₗ[ResAt P] M →ₗ[ResAt P] T)
+  (hβ : ∀ (g : GKS K S) (a b : M), β (g • a) (g • b) = g • β a b)
+  (hβc : Continuous fun x : M × M => β x.1 x.2)
+  (C : SwitchCondsK (ResAt P) K S M) (c : Finset (Places K S)) (q : Places K S)
+  (Tq : TameCoordinatesTrivialK (ResAt P) (gMvK K S M q) (C.D.I q) (C.D.φ q) (C.D.σ q))
+
+/-- **The fibre duality data at one switch step, with the local complement criterion reduced to
+the old places** (tex L5055–5075): as `FibreSwitchDualityK`, but the trace comes with one packet
+of local traces `L` normalizing it (`hsum`) and the field `horth` is replaced by `hold` — each old
+condition `old c v`, `v ≠ q`, is its own orthogonal complement under the per-place local duality
+map. The switch place is discharged by `galRelSwitch_placeMap_q` (PRINT
+`NekovarFibreLocalDuality`), see `FibreSwitchDualityHoldK.toK`. Classification: hypothesis
+(structure); `hold` FAILS for the standard singular side at a characteristic-zero fibre
+(finding (3)). No non-vacuity instance: like `FibreSwitchDualityK`, it is a conditional interface
+whose inputs (with `TameCoordinatesTrivialK`) are not jointly satisfiable at one genuine
+characteristic-zero derivative place (`GenericNonVacuity.not_tameCoordinatesTrivialK_of_tame`,
+finding (3)); its intended instances are the inner-limit objects. -/
+structure FibreSwitchDualityHoldK where
+  /-- Truncated isotropy data for (strict, relaxed). -/
+  I : GalTruncIsotropyData S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
+    (galRelSwitch C c q Tq).ΔR
+  /-- One packet of local traces. -/
+  L : FibreLocalTraces S (ResAt P) T
+  /-- The trace on the truncated compact cone. -/
+  tr : (galCompactTT S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
+    (galRelSwitch C c q Tq).ΔR I).X 3 →ₗ[ResAt P] ResAt P
+  /-- The trace kills coboundaries. -/
+  htr : ∀ z, tr ((galCompactTT S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
+    (galRelSwitch C c q Tq).ΔR I).d 2 3 rfl z) = 0
+  /-- The trace induces `H³_c ≅ k(𝔭)`. -/
+  htr3 : InducesIsoH3 tr
+  /-- The trace is normalized by the local traces. -/
+  hsum : L.Normalizes tr
+  /-- The old conditions are self-orthogonal at the places `v ≠ q`. -/
+  hold : ∀ v, v ≠ q → QuasiIso (GHom.toCC (switchPlaceMap β hβ hβc (galRelSwitch C c q Tq) I
+    L.trv (fun v z => L.htrv v z) v))
+  /-- The switch-pairing constant `ε`. -/
+  ε : ResAt P
+  /-- The switch-pairing constant `σ`. -/
+  σ : ResAt P
+  /-- The switch-pairing matrix `J`. -/
+  J : Matrix (Fin 2) (Fin 2) (ResAt P)
+  hε : ε ≠ 0
+  hσ : σ ≠ 0
+  hJ2 : J * J = 1
+  /-- The switch coordinates (ELLIOT). -/
+  hsw : (galRelSwitch C c q Tq).SwitchCoordinates (galPairDataT S (ResAt P) β hβ hβc
+    (galRelSwitch C c q Tq).ΔS (galRelSwitch C c q Tq).ΔR I) tr ε σ J
+
+variable {β hβ hβc C c q Tq}
+
+/-- **The bundle with `hold` gives `FibreSwitchDualityK`** (tex L5062–5070): its field `horth` is
+`galRelSwitch_horth_of_print`. Classification: PROVED from the PRINT `NekovarFibreLocalDuality`. -/
+def FibreSwitchDualityHoldK.toK (d : FibreSwitchDualityHoldK β hβ hβc C c q Tq)
+    (hL : NekovarFibreLocalDuality K) (hset : NekovarFibreSetting K S)
+    (hM : IsLatticeTop (GKS K S) M) (hTl : IsLatticeTop (GKS K S) T)
+    (hT : IsTateTwistFibre K S P T)
+    (hb : Function.Bijective β) (hb' : Function.Bijective β.flip) :
+    FibreSwitchDualityK β hβ hβc C c q Tq where
+  I := d.I
+  tr := d.tr
+  htr := d.htr
+  htr3 := d.htr3
+  horth := galRelSwitch_horth_of_print β hβ hβc C c q Tq hL hset hM hTl hT hb hb' d.I d.L d.tr
+    d.htr d.hsum d.hold
+  ε := d.ε
+  σ := d.σ
+  J := d.J
+  hε := d.hε
+  hσ := d.hσ
+  hJ2 := d.hJ2
+  hsw := d.hsw
+
+/-- **The named duality input from the bundle with `hold`** (tex L5062–5070). Classification:
+PROVED from the PRINTs `NekovarFibreGlobalDuality` and `NekovarFibreLocalDuality`. -/
+theorem FibreSwitchDualityHoldK.dual (d : FibreSwitchDualityHoldK β hβ hβc C c q Tq)
+    (hG : NekovarFibreGlobalDuality K) (hL : NekovarFibreLocalDuality K)
+    (hset : NekovarFibreSetting K S)
+    (hM : IsLatticeTop (GKS K S) M) (hTl : IsLatticeTop (GKS K S) T)
+    (hT : IsTateTwistFibre K S P T)
+    (hb : Function.Bijective β) (hb' : Function.Bijective β.flip) :
+    LocalizationDualityInput d.ε d.σ d.J d.hε d.hσ d.hJ2 (galRelK C c q Tq).U :=
+  (d.toK hL hset hM hTl hT hb hb').dual hG hset hM hTl hT hb hb'
+
+variable {A F : Type} [CommRing A] [Field F] {ι : A →+* F} (ρ : A →+* ResAt P)
+
+open Classical
+
+variable (β hβ hβc C) (c₀ : Finset (Places K S)) (t : A)
+  (zAct : (selCx (galoisSelData K S (ResAt P) M
+    (condAt K S (ResAt P) M (galCond K S M C.A₀) (galCond K S M C.Ad) c₀))).toCC.X 1)
+  (hzAct : ((selCx (galoisSelData K S (ResAt P) M
+    (condAt K S (ResAt P) M (galCond K S M C.A₀) (galCond K S M C.Ad) c₀))).toCC.d 1 2).hom
+      zAct = 0)
+  (lamAct : (selCx (galoisSelData K S (ResAt P) M
+    (condAt K S (ResAt P) M (galCond K S M C.A₀) (galCond K S M C.Ad) c₀))).toCC.X 2
+      →ₗ[ResAt P] ResAt P)
+  (hlamAct : ∀ y, lamAct (((selCx (galoisSelData K S (ResAt P) M
+    (condAt K S (ResAt P) M (galCond K S M C.A₀) (galCond K S M C.Ad) c₀))).toCC.d 1 2).hom
+      y) = 0)
+
+/-- **The genuine nonquadratic steps at a fibre with the bundle with `hold`** (tex L4997–5003,
+L5055–5086): `FibreNonquadStepsK` with `FibreSwitchDualityK` replaced by
+`FibreSwitchDualityHoldK`. Classification: GLUE (input). -/
+def FibreNonquadStepsHoldK (stage : Finset (Places K S) → TwoTermStage ι) : Prop :=
+  ∀ c : Finset (Places K S),
+    Reach (galΦK C A c₀ t zAct hzAct lamAct hlamAct).next c₀ c →
+    ¬ (galΦK C A c₀ t zAct hzAct lamAct hlamAct).quadratic ρ →
+    1 < (stage c).fiberDim ρ →
+    ∃ (q : Places K S) (_ : q ∉ c)
+      (Tq : TameCoordinatesTrivialK (ResAt P) (gMvK K S M q) (C.D.I q) (C.D.φ q) (C.D.σ q)),
+      C.AdmissibleAt q ∧ Nonempty (CoordStep ι (stage c).u (stage (insert q c)).u) ∧
+      Nonempty (FibreSwitchDualityHoldK β hβ hβc C c q Tq) ∧
+        finPlane (ResAt P) (Fin 2 → ResAt P) (Fin 2 → ResAt P) ≤ (galRelK C c q Tq).U
+
+variable {β hβ hβc C ρ c₀ t zAct hzAct lamAct hlamAct}
+
+/-- **The steps with `hold` give the steps of `FibreDualityWiring.lean`** (the switch place
+discharged by the local duality PRINT). Classification: PROVED from the PRINT
+`NekovarFibreLocalDuality`. -/
+theorem FibreNonquadStepsHoldK.toFibre {stage : Finset (Places K S) → TwoTermStage ι}
+    (H : FibreNonquadStepsHoldK β hβ hβc C ρ c₀ t zAct hzAct lamAct hlamAct stage)
+    (hL : NekovarFibreLocalDuality K) (hset : NekovarFibreSetting K S)
+    (hM : IsLatticeTop (GKS K S) M) (hTl : IsLatticeTop (GKS K S) T)
+    (hT : IsTateTwistFibre K S P T)
+    (hb : Function.Bijective β) (hb' : Function.Bijective β.flip) :
+    FibreNonquadStepsK β hβ hβc C ρ c₀ t zAct hzAct lamAct hlamAct stage := by
+  intro c hc hnq h1
+  obtain ⟨q, hq, Tq, hadm, hcs, ⟨d⟩, hdet⟩ := H c hc hnq h1
+  exact ⟨q, hq, Tq, hadm, hcs, ⟨d.toK hL hset hM hTl hT hb hb'⟩, hdet⟩
+
+/-- **Regularity at a fibre with the bundle with `hold`** (tex L4976–5195): as
+`regular_of_fibreSteps`, with the step field `FibreNonquadStepsHoldK`. Classification: PROVED from
+the PRINTs `NekovarFibreGlobalDuality`, `NekovarFibreLocalDuality` and the stated inputs. -/
+theorem regular_of_fibreStepsHold [IsLocalRing A] (hι : Function.Injective ι)
+    (hρ : ∀ x ∈ IsLocalRing.maximalIdeal A, ρ x = 0) {u : F}
+    (hG : NekovarFibreGlobalDuality K) (hL : NekovarFibreLocalDuality K)
+    (hset : NekovarFibreSetting K S)
+    (hM : IsLatticeTop (GKS K S) M) (hTl : IsLatticeTop (GKS K S) T)
+    (hT : IsTateTwistFibre K S P T)
+    (hb : Function.Bijective β) (hb' : Function.Bijective β.flip)
+    (X : GaloisInputsK C ρ c₀ t zAct hzAct lamAct hlamAct ι u)
+    (H : FibreNonquadStepsHoldK β hβ hβc C ρ c₀ t zAct hzAct lamAct hlamAct X.stage) :
+    ∃ a : A, ι a = u :=
+  regular_of_fibreSteps hι hρ hG hset hM hTl hT hb hb' X
+    (H.toFibre hL hset hM hTl hT hb hb')
+
+end Bundle
 
 /-! ### (3) The self-pairing at a place with trivial Frobenius -/
 
