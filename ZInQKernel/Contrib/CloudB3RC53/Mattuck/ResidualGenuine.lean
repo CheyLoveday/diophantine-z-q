@@ -25,6 +25,11 @@ quasi-isomorphism `pP` and the minimal model `L`), the condition assignment and 
 `residualRankCounts_mattuck`), the support-change data of `transfer_final_genuine`, and the PRINT
 leaves.
 
+Caveat: the supports are not forced to agree. In the intended instance the smaller support `S` of
+the support change, the support `Sloc` of the local counts and the support of `eG` are all
+`primesAboveSet K (chargedPrimes N r D)`, with `M` the residual module `W`; the statement takes them
+as independent parameters, so a consumer must supply consistent data.
+
 **Classification.** PROVED (from the inputs listed).
 -/
 
