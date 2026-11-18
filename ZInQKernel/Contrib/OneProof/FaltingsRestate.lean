@@ -75,4 +75,65 @@ theorem semistableNeronIdentification_of_cor33 (h : GaRigidity.SGA7.SGA7_IX_Cor3
         NeronSH.neronBaseChangeStrictHenselization_proof geomConnOfRationalPoint_proof)
       geomConnOfRationalPoint_proof)
 
+private theorem height_eq_of_two_semistable (h : SemistableNeronIdentification)
+    (K : Type) [Field K] [NumberField K] (A : PkgI3.AbVar K) (L L' : Type)
+    [Field L] [NumberField L] [Algebra K L] [Field L'] [NumberField L'] [Algebra K L']
+    [Algebra L L'] [IsScalarTower K L L'] (N : GroupModel A L) (N' : GroupModel A L')
+    (hN : N.IsNeronModel) (hs : IsSemistable N) (hN' : N'.IsNeronModel)
+    (hs' : IsSemistable N') : N'.height = N.height := by
+  obtain ⟨U, V, hV, hUN', hUV⟩ := h K A L N hN hs L' N' hN' hs'
+  calc
+    N'.height = U.height := (Contrib.HeightBC.openSubgroupHeight K A L' U N' hUN').symm
+    _ = V.height := Contrib.HeightBC.openSubgroupHeight K A L' U V hUV
+    _ = N.height := Contrib.HeightBC.modelHeightBaseChange K A L L' N V hV
+
+/-- Compare the heights over a common larger semistable field, using minimality for
+the intermediate Néron model. No persistence of semistability is required. -/
+theorem faltingsSemistableHeightBC_of_identification (h : SemistableNeronIdentification)
+    (hSS : SemistableReductionThmIF) (hN1 : NeronModelExists) : FaltingsSemistableHeightBC := by
+  intro K _ _ A L _ _ _ N hN hs L' _ _ _ _ _ N' hN'
+  obtain ⟨K₀, hfin, hK₀⟩ := hSS K A
+  haveI : FiniteDimensional K K₀ := hfin
+  haveI : Module.Finite K L' := Module.Finite.of_restrictScalars_finite ℚ K L'
+  let e : L' →ₐ[K] AlgebraicClosure K := IsAlgClosed.lift
+  let E : IntermediateField K (AlgebraicClosure K) := e.fieldRange ⊔ K₀
+  haveI : FiniteDimensional K e.fieldRange :=
+    LinearEquiv.finiteDimensional (AlgEquiv.ofInjectiveField e).toLinearEquiv
+  haveI : FiniteDimensional K E := IntermediateField.finiteDimensional_sup _ _
+  haveI : NumberField E := NumberField.of_module_finite K E
+  let f : L' →ₐ[K] E := (IntermediateField.inclusion le_sup_left).comp
+    (AlgEquiv.ofInjectiveField e).toAlgHom
+  letI : Algebra L' E := f.toRingHom.toAlgebra
+  letI : IsScalarTower K L' E := IsScalarTower.of_algebraMap_eq fun x => (f.commutes x).symm
+  letI : Algebra L E := ((algebraMap L' E).comp (algebraMap L L')).toAlgebra
+  letI : IsScalarTower L L' E := IsScalarTower.of_algebraMap_eq fun _ => rfl
+  haveI : IsScalarTower K L E := IsScalarTower.to₁₂₄ K L L' E
+  obtain ⟨N'', hN''⟩ := hN1 K A E
+  have hs'' : IsSemistable N'' := hK₀ E le_sup_right N'' hN''
+  have hei : N''.height = N.height := height_eq_of_two_semistable h K A L E N N'' hN hs hN'' hs''
+  obtain ⟨V, hV⟩ := groupModelBaseChangeExists K A L L' N
+  obtain ⟨V', hV'⟩ := groupModelBaseChangeExists K A L' E N'
+  apply le_antisymm
+  · calc
+      N'.height ≤ V.height := Contrib.HeightBC.neronModelMinimal K A L' N' V hN'
+      _ = N.height := Contrib.HeightBC.modelHeightBaseChange K A L L' N V hV
+  · calc
+      N.height = N''.height := hei.symm
+      _ ≤ V'.height := Contrib.HeightBC.neronModelMinimal K A E N'' V' hN''
+      _ = N'.height := Contrib.HeightBC.modelHeightBaseChange K A L' E N' V' hV'
+
+/-- The old field from the separate Néron comparison and the two existing fields
+for Raynaud's criterion and existence of Néron models. -/
+theorem faltingsSemistableHeightBC_of_leaves (h : SemistableNeronIdentification)
+    (hR : SZRaynaud.SilverbergZarhinThm35) (hD : Contrib.GroupLawNeron.NeronSchemeExtensionDedekind) :
+    FaltingsSemistableHeightBC :=
+  let hE := Contrib.GroupLawNeron.neronSchemeExtensionExists_of_dedekind hD
+  faltingsSemistableHeightBC_of_identification h
+    (semistableReductionThmIF_of_raynaud (SZRaynaud.raynaudSemistable_of_sz35 hR)
+      Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof
+      Contrib.OneProof.MulEtale.mulEtaleAbelianScheme_proof
+      (GapNeron.neronSchemeModelExistsNF hE)
+      (ReductGlue.semistableLocalGlobal_leaf GapBLR.neronLocalizesDVR_proved))
+    (Contrib.NeronC.neronModelExists_of_extension hE)
+
 end ZInQ.FaltingsRestate
