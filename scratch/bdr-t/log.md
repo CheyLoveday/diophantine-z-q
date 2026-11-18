@@ -32,3 +32,10 @@
   `bdREquivAwayT_intertwines` applies `transport_extends` with the
   explicitly typed KerTheta ring map, then uses `ext_of_extends`.
   `awayTAction` packages the action laws. The axiom checks all passed.
+- VERIFIED (Lean): `awayTEquivAwayXi` composes the two localization
+  equivalences. `fontaineT_reading` collects nonvanishing, the uniformizer
+  assertions, both cyclotomic laws, the equivariant equivalence with
+  `B_dR^+[1/t]`, and the comparison with `B_dR^+[1/xi]`.
+  `lake env lean ZInQKernel/Contrib/OneProof/BdRT.lean` passed without
+  diagnostics beyond the ten axiom printouts; each listed exactly
+  `propext`, `Classical.choice`, and `Quot.sound`.

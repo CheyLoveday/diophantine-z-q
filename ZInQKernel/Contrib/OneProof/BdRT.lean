@@ -151,6 +151,29 @@ def awayTAction : GQp p →* (AwayT →+* AwayT) := by
     obtain ⟨x, rfl⟩ := e.surjective u
     simp only [RingHom.mul_def, RingHom.comp_apply, ← he, bdrAct_mul]
 
+/-- The two localizations, at `t` and at `ξ`, agree over `B_dR^+`. -/
+def awayTEquivAwayXi : AwayT ≃ₐ[BPlus] Localization.Away (varpi p) :=
+  (bdREquivAwayT Z).symm.trans (ZInQ.Contrib.G9.BdrKer.Cp.bdREquivAway p)
+
+/-- The period ring dictionary and the cyclotomic law, for the same `t = log[ε]`. -/
+theorem fontaineT_reading :
+    let t := tt p Z
+    let m := IsLocalRing.maximalIdeal BPlus
+    t ≠ 0 ∧ t ∈ m ∧ t ∉ m ^ 2 ∧ m = Ideal.span {t} ∧
+    (∀ σ : GQp p, DR.bdrPlusMap p (oAct p σ) t = qpToPlus p (cycPow p σ 1) * t) ∧
+    (∀ σ : GQp p, bdrAct p σ (algebraMap BPlus (BdR p) t) =
+      qpToBdR p (cycPow p σ 1) * algebraMap BPlus (BdR p) t) ∧
+    (∃ e : BdR p ≃ₐ[BPlus] AwayT,
+      ∀ (σ : GQp p) (x : BdR p), e (bdrAct p σ x) = awayTAct p Z σ (e x)) ∧
+    Nonempty (AwayT ≃ₐ[BPlus] Localization.Away (varpi p)) := by
+  refine ⟨tt_ne_zero Z, tt_mem Z, ?_, ?_, bdrPlusMap_tt p Z, bdrAct_tt p Z,
+    ⟨bdREquivAwayT Z, bdREquivAwayT_intertwines p Z⟩, ⟨awayTEquivAwayXi p Z⟩⟩
+  · rw [ZInQ.Contrib.G9.BdrKer.Cp.maximalIdeal_BDeRhamPlus, Ideal.span_singleton_pow]
+    exact tt_not_mem_sq Z
+  · obtain ⟨u, hu, h⟩ := tt_eq_varpi_mul_unit Z
+    rw [ZInQ.Contrib.G9.BdrKer.Cp.maximalIdeal_BDeRhamPlus, h,
+      Ideal.span_singleton_mul_right_unit hu]
+
 end
 
 end DeRhamPrint.BdRT
@@ -163,3 +186,5 @@ end DeRhamPrint.BdRT
 #print axioms DeRhamPrint.BdRT.awayTAct_comp
 #print axioms DeRhamPrint.BdRT.bdREquivAwayT_intertwines
 #print axioms DeRhamPrint.BdRT.awayTAction
+#print axioms DeRhamPrint.BdRT.awayTEquivAwayXi
+#print axioms DeRhamPrint.BdRT.fontaineT_reading
