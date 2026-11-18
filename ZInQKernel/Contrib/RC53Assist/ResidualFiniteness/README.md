@@ -4,8 +4,8 @@
 `InnerLimitArith/StageInputs.lean` (the finiteness hypothesis of the finite free model of the
 retained inner-limit lemma, manuscript lines 4391–4414) for the actual stage Selmer complexes at
 `A_i = (ℤ/2^i)[t]/t^i`. The only inputs beyond the data are the finiteness prints
-`MilneLocalFiniteness` and `MilneGlobalFiniteness` (Milne, *Arithmetic duality theorems*, I.2.3 and
-I.4.10), already used by `stageSelmerCohomologyFinite`.
+`MilneLocalFiniteness` and `MilneGlobalFiniteness` (Milne, *Arithmetic duality theorems*, I, Theorem 2.1 and
+Corollary 4.15), already used by `stageSelmerCohomologyFinite`.
 
 ## Route
 

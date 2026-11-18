@@ -10,7 +10,8 @@ every coefficient stage `A_i = (ℤ/2^i)[t]/t^i` to a stage complex `C` whose re
 `H^n(k ⊗_{A_i} C)` is finite over the residue field `k` in every degree
 (`ResidualCohomologyFinite`). This file proves this for the actual stage Selmer complexes, from the
 finiteness prints `MilneLocalFiniteness` and `MilneGlobalFiniteness` (Milne, *Arithmetic duality
-theorems*, I.2.3 and I.4.10), through the base-change comparison of continuous cochains.
+theorems*, I, Theorem 2.1 and Corollary 4.15), through the base-change comparison of continuous
+cochains.
 
 ## The base-change comparison for continuous cochains
 
@@ -1086,7 +1087,7 @@ theorem residue_card_primes_mem
 
 /-- **The residual cohomology of the actual global complex `C^•_cont(G_{K,S}, M)` is finite**:
 `k ⊗_A C^•_cont(G_{K,S}, M) ≅ C^•_cont(G_{K,S}, k ⊗_A M)`, and `k ⊗_A M` is a finite discrete
-module whose order divides `#M`, so Milne I.4.10 applies to it. -/
+module whose order divides `#M`, so Milne I, Corollary 4.15 applies to it. -/
 theorem globalCx_residualCohomologyFinite (hglob : MilneGlobalFiniteness) (hS : S.Finite)
     (hM : ∀ v : HeightOneSpectrum (𝓞 K), ((Nat.card M : ℕ) : 𝓞 K) ∈ v.asIdeal → v ∈ S) :
     ResidualCohomologyFinite (globalCx A (GKS K S) M) := by
@@ -1100,7 +1101,7 @@ theorem globalCx_residualCohomologyFinite (hglob : MilneGlobalFiniteness) (hS : 
       inferInstance (residue_card_primes_mem K S M hM) n)
 
 /-- **The residual cohomology of the actual local complex `C^•_cont(G_{K_v}, M)` is finite**
-(Milne I.2.3 for the finite discrete module `k ⊗_A M`). -/
+(Milne I, Theorem 2.1, for the finite discrete module `k ⊗_A M`). -/
 theorem localCx_residualCohomologyFinite (hloc : MilneLocalFiniteness) (v : Places K S) :
     ResidualCohomologyFinite
       (localCx A (GKS K S) (fun v : Places K S => Gloc K v.1) (fun v => locMap K S v.1) M v) := by
@@ -1170,7 +1171,8 @@ variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 
 coefficient module `M_i = (E[2^i] ⊗ A_i)(α)` over `A_i = (ℤ/2^i)[t]/t^i`, a finite `S` containing
 the primes above `2`, and local conditions whose residual cohomology is finite, every residual
 cohomology group `H^n(k ⊗_{A_i} C_U(M_i))` is finite over the residue field `k` (from the
-finiteness prints Milne I.2.3 and I.4.10, applied to the finite discrete module `k ⊗_{A_i} M_i`). -/
+finiteness prints Milne I, Theorem 2.1 and Corollary 4.15, applied to the finite discrete module
+`k ⊗_{A_i} M_i`). -/
 theorem stageSelmer_residualCohomologyFinite (hloc : MilneLocalFiniteness)
     (hglob : MilneGlobalFiniteness) (hSfin : S.Finite)
     (h2 : ∀ v : HeightOneSpectrum (𝓞 K), (2 : 𝓞 K) ∈ v.asIdeal → v ∈ S)
@@ -1204,7 +1206,7 @@ theorem stageRelaxedSelmer_residualCohomologyFinite (hloc : MilneLocalFiniteness
 /-- **The stage Selmer complexes with the Kummer conditions have finite residual cohomology**:
 at every `v ∈ S` the Kummer condition `[C⁰_cont(G_{K_v}, M_i) → Z_v ⊔ B¹]` attached to an
 elliptic curve `B_v` over `K_v` and an equivariant map `ι_v : B_v[m] → M_i` has finite terms, since
-`H¹(K_v, M_i)` is finite (Milne I.2.3). -/
+`H¹(K_v, M_i)` is finite (Milne I, Theorem 2.1). -/
 theorem stageKummerSelmer_residualCohomologyFinite (hloc : MilneLocalFiniteness)
     (hglob : MilneGlobalFiniteness) (hSfin : S.Finite)
     (h2 : ∀ v : HeightOneSpectrum (𝓞 K), (2 : 𝓞 K) ∈ v.asIdeal → v ∈ S)
