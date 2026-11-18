@@ -6,12 +6,11 @@ import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.OuterIntegral
 Proposition `ex:limits-uniform-lower-bound`, proof, tex L4927–4972 (the outer switching), with the
 outer ring (5.3) of tex L4706–4714.
 
-**Why this file.** The truth check of the switch area (review `GlueTruth`, Part B, item D2) found
-`OuterSwitchData` / `OuterSwitchStep` conclusion-shaped: their stages are free, so a one-stage
-datum (outer dimension one, inner functional chosen so that the coordinate is `uprim (inst j)`)
-inhabits the hypothesis of `uniform_lower_bound_of_switchData` for every sequence, i.e. the
-hypothesis is equivalent to the uniform bound itself. Here the stages are no longer data of the
-hypothesis:
+**Why this file.** `OuterSwitchData` / `OuterSwitchStep` alone are conclusion-shaped: their stages
+are free, so a one-stage datum (outer dimension one, inner functional chosen so that the coordinate
+is `uprim (inst j)`) inhabits the hypothesis of `uniform_lower_bound_of_switchData` for every
+sequence, i.e. the hypothesis is equivalent to the uniform bound itself. Here the stages are no
+longer data of the hypothesis:
 
 * `InstanceModel ϖ K n`: the minimal-model data of ONE instance — an integral two-term model `M`
   over the DVR `R`, the selected outer model's class `zR` (an integral cycle, primitive: some
@@ -261,10 +260,11 @@ theorem GenuineOuterSwitchData.start_outerDim {Inst P : Type} {G : GenuineOuterM
           (algebraMap (OInf 𝒰 ϖ) (FractionRing (OInf 𝒰 ϖ)))).mulVecLin) :=
   rfl
 
-/-- **The one-stage collapse is no longer available** (review `GlueTruth` D2): if the genuine data
-need no switch at the start (outer dimension one), then the outer kernel of the ACTUAL minimal models
-of the instances has dimension one — a condition on the instances, not a free choice of stage.
-PROVED. -/
+/-- **The one-stage collapse is no longer available**: with free stages, a one-stage datum (outer
+dimension one) would inhabit the switching hypothesis for every sequence; here, if the genuine data
+need no switch at the start (outer dimension one), then the outer kernel of the ACTUAL minimal
+models of the instances has dimension one — a condition on the instances, not a free choice of
+stage. PROVED. -/
 theorem GenuineOuterSwitchData.outer_collapse_forces {Inst P : Type}
     {G : GenuineOuterModels ϖ K Inst P} {inst : J → Inst} (H : GenuineOuterSwitchData 𝒰 G inst)
     (hinj : Function.Injective (algebraMap R K)) (hv : IsPiAdicOn ϖ v) (a : ℕ)
