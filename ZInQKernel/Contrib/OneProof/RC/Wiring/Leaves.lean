@@ -26,7 +26,7 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.ClearingComplex4
 import ZInQKernel.Contrib.OneProof.RC.GlueSweep.AnaLevel
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf2
 import ZInQKernel.Contrib.OneProof.RC.BaseZeroAssembly.Assembly
-import ZInQKernel.Contrib.OneProof.RC.Wiring.BaseZeroSqrt
+import ZInQKernel.Contrib.OneProof.RC.Wiring.BaseZeroText
 import ZInQKernel.Contrib.OneProof.RC.Wiring.UniformSwitch
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35Leaf
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate4
@@ -65,7 +65,8 @@ with Selmer corank one:
    `BaseZeroAssembly.baseZeroTarget_of_leaves`, through RC0's `baseZeroTarget_of_inputs` and RC15's
    `baseZero_node_genuine` over RC20's `Λ_(t)`, the height formula by RC19, with (4.7) and
    `ũ₀ ∈ Λ[1/2]` at the base from `common_coordinate` and `prim_regular`, from the ELLIOT leaf
-   `base_zero`), `height_one` (RC16's descent from the ELLIOT leaf `prim_regular`, on batch 3's
+   `base_zero` on the text's named steps: lane RC30's inner limit and central comparison, the paired
+   functional), `height_one` (RC16's descent from the ELLIOT leaf `prim_regular`, on batch 3's
    genuine switching data, and (4.7)), `clearing` (RC7's (5.9) and the repaired budget (5.7) from
    the leaf `clearing_model`, over batch 3's identification with lane RC26's genuine Selmer
    complexes); see "Conclusion-shaped leaves" below;
@@ -313,13 +314,15 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   character, and the triangular Kummer model whose quotient block is the direct sum of the local
   blocks at the moving and active places, up to changes of basis with central unit determinants
   (ELLIOT; tex 3987–4141; owners RC15, RC9, RC19, RC4/RC17, batch 3 Calibration). PROVED from them:
-  the isogeny and regulator data (RC19's `regulator_inputs_sumDiff`), the free generators (from
-  `Prints`), the component fields, the moving-prime fields, the quotient length `2v₂N + 4ω` and
-  `hvprim` (batch 3's Calibration). Conclusion-shaped in part: the local-block Kummer model is
-  equivalent to the pre-Milne valuation formula, and the Milne, period, moving-prime and
-  Kummer-model data are existential parameters not tied to the genuine `𝒜`, Néron models or
-  cochain complexes. Scope departure: this field is also requested in Branch 1; the manuscript
-  constructs these objects only in the remaining branch (see `RC/Skeleton/Steps.lean`). -/
+  the isogeny and regulator data (RC19's `regulator_inputs_sumDiff`, with `alpha = I`, `beta = J`
+  the cardinalities of the actual cokernels of `diffMap`, `sumMap` on the torsion-free quotients:
+  `CalibrationModelR.nonempty_model_index`), the free generators (from `Prints`), the component
+  fields, the moving-prime fields, the quotient length `2v₂N + 4ω` and `hvprim` (batch 3's
+  Calibration). Conclusion-shaped in part: the local-block Kummer model is equivalent to the
+  pre-Milne valuation formula, and the Milne, period, moving-prime and Kummer-model data are
+  existential parameters not tied to the genuine `𝒜`, Néron models or cochain complexes. Scope
+  departure: this field is also requested in Branch 1; the manuscript constructs these objects only
+  in the remaining branch (see `RC/Skeleton/Steps.lean`). -/
   calibration : CalibrationInputsH W.toRCData
   /-- The inputs of (4.7) at every address, tied to the family and the address
   (`CommonCoordinateInputsG`): an existential coefficient ring `R` with `χ : R →+* ℚ₂[[t]]` (it is
@@ -383,21 +386,40 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   not model the full-condition singular-quotient triangle (5.6) of tex 5234–5238, 5398–5403. Scope
   departure: this field is also requested in Branch 1 (see `RC/Skeleton/Steps.lean`). -/
   clearing_model : ClearingInputsG W.toRCData
-  /-- **Lemma `ex:arith-base-zero` at the base** (`BaseZeroLeafInputsSqrt`; ELLIOT, tex 4330–4376;
-  owners RC15, RC19, RC25, batch 3 HeegnerCohomology, RankCounts), with the height formula
-  (Cai–Shu–Tian Thm 1.1 from `Prints`, lane RC19), (4.7) at the base, `ũ₀ ∈ Λ[1/2]` and the
-  package's datum PROVED (lane RC25's `baseZeroTarget_of_leaves`, from `common_coordinate` and
-  `prim_regular`; tex 4369–4373, 5703–5706). Inputs: the conductor-one Heegner data in the form
-  `HeegnerDataSqrt` (PRINT/GLUE: BCDT, uniformization, Eichler–Shimura, CM theory, Galois descent;
-  tex 2836–2838, 2915–2932), with `K = ℚ(√k)` split at `2` (definition, tex 2599, 2720) in place of
-  the conductor-one factorization `L(E/K,s) = L(E,s)L(E^{(k)},s)`, which is PROVED from
-  `RCLeaves.artin` (lane RC27's `lFactorizationConductorOne_of_artin`, `baseZeroLeafInputs_of_sqrt`;
-  tex 4345–4346, 5736), and a `BaseZeroCore`. Conclusion-shaped: the stages are unconstrained (a
-  trivial stage meets the per-stage (4.1)), `Boundary45Base` is equivalent to
-  `∃ κ L, L ≠ 0 ∧ z̄ = L κ(P)` (the old `h45`), and for a torsion `P` the core is equivalent to
-  "`u_{prim,0} ∈ Λ_(t)` and `u_{prim,0}(0) = 0`", the lemma's conclusion (tex 4346–4348, 4362–4369);
-  so the model does not constrain the genuine objects beyond that conclusion. -/
-  base_zero : BaseZeroLeafInputsSqrt W.toRCData
+  /-- **Lemma `ex:arith-base-zero` at the base, on the text's named steps**
+  (`BaseZeroLeafInputsText`; ELLIOT, tex 4330–4376; owners RC15, RC19, RC25, RC30, batch 3
+  HeegnerCohomology, RankCounts, BaseZeroLam), with the height formula (Cai–Shu–Tian Thm 1.1 from
+  `Prints`, lane RC19), (4.7) at the base, `ũ₀ ∈ Λ[1/2]` and the package's datum PROVED (lane
+  RC25's `baseZeroTarget_of_leaves`, from `common_coordinate` and `prim_regular`; tex 4369–4373,
+  5703–5706). Inputs:
+  * the conductor-one Heegner data in the form `HeegnerDataSqrt` (PRINT/GLUE: BCDT,
+    uniformization, Eichler–Shimura, CM theory, Galois descent; tex 2836–2838, 2915–2932), with
+    `K = ℚ(√k)` split at `2` (definition, tex 2599, 2720) in place of the factorization
+    `L(E/K,s) = L(E,s)L(E^{(k)},s)`, which is PROVED from `RCLeaves.artin` (lane RC27's
+    `lFactorizationConductorOne_of_artin`; tex 4345–4346, 5736);
+  * the two-term model of the primitive complex at the base and its retained cycle (ELLIOT +
+    GLUE; tex 4341–4369);
+  * the central comparison: the central degree-one cohomology is
+    `V₂ Sel_{2^∞}(E/ℚ) × V₂ Sel_{2^∞}(E^{(k)}/ℚ)` (`CentralSelmerComparison`; ELLIOT + GLUE; tex
+    4350–4352, 3952–3962, 5305–5311), from which `rank ρ(Dm) = m` is PROVED with the lemma's
+    hypothesis `SelmerCorankOneOverK` (lane RC30's `hcentral_of_selmer`);
+  * the pairing with its Leibniz identity (GLUE), the chain map `ψ` and the cocycle `c z` of
+    Proposition `ex:arith-paired-functional`: the functional is `PD(·, ψ(c z))` (definition, tex
+    3752–3754) and its closedness is PROVED (tex 3860–3863; the RC53 group's `baseLam_closed`);
+  * the coordinate statement for the row of that functional (Definition `ex:arith-coordinate`,
+    tex 3877–3892);
+  * the retained inner-limit data of (4.5) at the base (`InnerLimit45Base`; tex 3912–3921,
+    3952–3968; the stage boundaries ELLIOT, the inner limit PROVED, the comparison definitions),
+    from which the limit statement `hlim` is PROVED (lane RC30's `toBoundary45Base`);
+  * `hprimId` (definition).
+  Conclusion-shaped: as abstract inputs these are equivalent to the fields they replace (an
+  `InnerLimit45Base` exists iff `z̄ = L κ(P)` with `L ≠ 0`, lane RC30's
+  `nonempty_innerLimit45Base_iff`; the central comparison exists iff the central kernel has the
+  Selmer dimension; a closed functional is a paired functional for a degenerate pairing); the gain
+  is that `hcentral`, `hlim` and `hlam` are now proofs from the steps of the text. For a torsion `P`
+  the core is equivalent to "`u_{prim,0} ∈ Λ_(t)` and `u_{prim,0}(0) = 0`", the lemma's conclusion
+  (tex 4346–4348, 4362–4369). -/
+  base_zero : BaseZeroLeafInputsText W.toRCData
 
 /-- **Every remaining hypothesis of Theorem 5.3 beyond the blueprint's `Prints`.** -/
 structure RCLeaves where
@@ -518,7 +540,7 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
     (clearingTarget_of_G _ hheight hq.clearing_model) (BaseZeroAssembly.baseZeroTarget_of_leaves P
       (commonCoordinateInputs_of_G hq.common_coordinate)
       (primRegularityInputs_of_G _ hq.prim_regular)
-      (baseZeroLeafInputs_of_sqrt L.artin hq.base_zero))
+      (baseZeroLeafInputs_of_text L.artin hq.base_zero))
 
 /-! ## The node and Theorem 5.3 -/
 
