@@ -25,8 +25,7 @@ Results (PROVED):
 
 So for the untruncated target the homotopy class is not determined by `Hom(M ⊗ M, ℤ₂)`; for the
 truncated target `τ≥2` it is (`derivedKummerStep_trunc`), and the class here vanishes there (its
-only
-component into degrees `≥ 2` is the zero `(1, 1)` component).
+only component into degrees `≥ 2` is the zero `(1, 1)` component).
 
 **Classification.** PROVED.
 -/

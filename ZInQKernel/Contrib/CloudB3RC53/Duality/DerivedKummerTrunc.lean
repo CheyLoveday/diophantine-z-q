@@ -11,10 +11,9 @@ a null-homotopy. The possible ambiguity group in degree minus one vanishes."
 
 Nekovář's construction (6.2–6.3) needs the null-homotopy only after the canonical truncation
 `τ≥2` of the local target (`SwitchInputs/TruncIsotropy.lean`). This file proves the step at chain
-level for that target. Let `U, U'` be models of the conditions concentrated in degrees `0, 1` (a
-free
-resolution `[P₁ → P₀]` of `M`, or any two-term model), `T` a target vanishing in degrees `≤ 1` (as
-`τ≥2 E_L` does), and `P : U × U' → T` a pairing of complexes (`GPair`):
+level for that target. Let `U, U'` be models of the conditions concentrated in degrees `0, 1`
+(a free resolution `[P₁ → P₀]` of `M`, or any two-term model), `T` a target vanishing in degrees
+`≤ 1` (as `τ≥2 E_L` does), and `P : U × U' → T` a pairing of complexes (`GPair`):
 
 * `pair_eq_zero_of_11`: `P` is determined by its bidegree `(1, 1)` component `U¹ × U'¹ → T²`;
 * `pair11_boundary_left/right`, `pair11_descends`: that component vanishes on boundaries, so it is a
