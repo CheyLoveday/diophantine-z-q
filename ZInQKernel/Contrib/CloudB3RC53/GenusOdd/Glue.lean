@@ -16,7 +16,8 @@ tex L2433–2435) is PROVED in `GenusLower.lean` from these.
 * `NeronTateTwist` (implicit at tex L2433–2436, mcheck K3 item (d)): the Néron–Tate height of the
   image of a rational point of the twist `E^{(d)}` in `E(H)` is `[H : ℚ]` times its height.
 * `TwistDescent` (tex L8313–8314 "the standard twist identification"): a point of `E(H)` on which
-  `Gal(H/ℚ)` acts through the character of `√d` comes from `E^{(d)}(ℚ)`.
+  `Gal(H/ℚ)` acts through the character of `√d` comes from `E^{(d)}(ℚ)`. **PROVED** in
+  `TwistDescentProof.lean` (`twistDescent_proof`); no longer an input.
 * `GenusTheory` (tex L8211–8215, L8257–8259 "The conductor-one genus character … cuts out
   `F_D = ℚ(√D, √h_*)`"): the ring class field is Galois over `ℚ` and contains `√d₁`, `√d₂`, on
   which `Gal(H_c/K)` acts by `χ`, and complex conjugation fixes one and negates the other.
@@ -67,7 +68,8 @@ def NeronTateTwist : Prop :=
       (twistEmb E d s (twistVC_smul E h₁ h₃ hs hsd) P).canonicalHeight =
         (Module.finrank ℚ H : ℝ) * P.canonicalHeight
 
-/-- **Galois descent for the twist** (GLUE, textbook: Galois descent of points, as in Tau Ceti's
+/-- **Galois descent for the twist** (stated here as a GLUE statement; PROVED in
+`TwistDescentProof.lean`, `twistDescent_proof`. Textbook: Galois descent of points, as in Tau Ceti's
 `GaloisDescent` for quadratic extensions; Silverman X.2). Let `H/ℚ` be finite Galois containing a
 quadratic field `K`, `ρ ∈ Gal(H/ℚ)` not `K`-linear (so `Gal(H/K)` and `ρ` generate `Gal(H/ℚ)`),
 and `s ∈ H` with `s² = d ≠ 0`. A point `x ∈ E(H)` with `g x = ε_s(g) x` for `g ∈ Gal(H/K)` and for
