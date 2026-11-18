@@ -5,3 +5,5 @@
 - Local prerequisite: restored the ignored `lean/.lake/build` artifacts for the local package. Offline Lake target for Tau Ceti division-polynomial `Descent` built successfully.
 - `BShStandardWeber`: compiled with Lean 4.35.0; all 11 axiom checks report only `propext`, `Classical.choice`, `Quot.sound`.
 - `diamond_fraction`: polynomials in `ℚ[J][T]` depending only on the integer lift of the diamond residue; denominator nonzero whenever both generic Weber tests hold.
+- `BShStandardField`: compiled with Lean 4.35.0; all eight axiom checks report only `propext`, `Classical.choice`, `Quot.sound`.
+- `exists_diamond_fieldMap`: rational pullback on the model function field, with equivalence of the finite germ values at each source and translated parameter, including exceptional parameters.
