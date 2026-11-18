@@ -131,13 +131,17 @@ witnesses:
   one-stage residue fibre at every height-one prime (one genuine complex of the homotopy type of
   `[k --0--> k]` at each `𝔭`; true, not formalized), the regularity leaf is equivalent to
   `InLamHalf` at every requested address (`regularityInputsGPK_iff_of_unitFibre` with
-  `regularity_GPK_to_HPK`). A full equivalence of the eq35 leaf with (3.5) additionally requires
+  `regularity_GPK_to_HPK`, and `RegularityInputsHPK.mem_lambdaHalf` for the converse). A full
+  equivalence of the eq35 leaf with (3.5) additionally requires
   genuine outer-model realizations; the residue-fibre statement alone does not provide those
   integral `𝒪` complexes. The regularity parts use homology-level switch data
-  (`HomologySwitchDataPK`: homotopy equivalences from the fibres' Selmer complexes to the stages'
-  two-term fibres), so the infinite dimension of `C¹_cont` is no obstruction there; these homotopy
-  equivalences are existential, and the outer models of the eq35 leaf still use finite cochain
-  models;
+  (`HomologySwitchDataPK`: its switch steps ask only for finite-dimensional side cohomology, not for
+  the finite-dimensional cochain modules `fG`, `fL`, `fF`, `fS` of the earlier steps), so the
+  infinite dimension of `C¹_cont` is no obstruction there; the stage models are, as before,
+  existential homotopy equivalences from the fibres' Selmer complexes to the stages' two-term
+  fibres. The outer models of the eq35 leaf are unchanged: their switch steps (`OuterSwitchStep`)
+  carry an existential Selmer-level datum (`SelmerNonquadStep`) with finite-dimensional cochain
+  modules, not tied to the genuine complexes and met by finite models;
 * `PostLeaves.clearing_model`: the full-condition triangle (5.6) is modelled, with the two
   conjugate new places over each prime of the family (`Identification3Q2`), but
   `clearingInputsG3_of_G3Q2` discards the two-place data, so their faithfulness carries no weight
@@ -158,7 +162,8 @@ witnesses:
   reads the odd source on its own filter (lane RC24's intrinsic odd filter), so the fresh prime of
   `k` no longer vetoes the odd readings (fixed);
 * closed: the model family of (3.5) is chosen for each `A`, at the companion pairs with
-  `ω(k') ≤ A`, with sizes at most the cap of (5.1) (`Eq35InputsGenuineABounded`; tex
+  `ω(k') ≤ A`, with sizes at most the cap of (5.1) (`Eq35InputsGenuineABoundedH`, whose outer clause
+  is that of `Eq35InputsGenuineABounded`; tex
   2442–2446, 4453–4460, 4910); before, one family with one size function was fixed for all ring
   instances before `A`, a bound the text does not state;
 * closed: the coefficient dictionary's input (O.9) is consumed in the manuscript's form
@@ -279,9 +284,11 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   /-- The inputs of (3.5) in the text's quantifier order and form (`Eq35InputsGenuineABoundedH`):
   chosen before `A`, the primitive coordinates at the companion pairs with homology-level switch
   data `HomologySwitchDataPK` (each stage model a homotopy equivalence from the fibre's Selmer
-  complex to the stage's two-term fibre, not an isomorphism of cochain modules; the actual classes
-  nonzero instead of primitive; the quasi-mixed, quasi-nonquadratic and quasi-single steps with
-  sides equal to the fibres) over configuration families genuine at every height-one prime
+  complex to the stage's two-term fibre, as in the earlier form; the actual classes nonzero instead
+  of primitive; the quasi-mixed, quasi-nonquadratic and quasi-single steps with sides equal to the
+  fibres, which ask only for finite-dimensional side cohomology and cohomology-level local
+  coordinates, not for finite-dimensional cochain modules or `W_rel¹ ≃ k² × k²`) over
+  configuration families genuine at every height-one prime
   (`RegularityInputsHPK`: lane RC26's Galois fibers, the genuine moving variable) and (4.6) at the
   companion pairs; then for every `A`,
   a family of switched models over `𝒪` for the companion pairs with `ω(k') ≤ A`, of size at most the
@@ -300,8 +307,9 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   `exists_primitiveKernelVector`), `pos` from them, `minor_link`, the integral cycles and
   functionals, the nonzero outer class, the Cramer terminal step, the equal inner valuations,
   regularity (`regular_of_homologyPK`, through the RC53 group's `regular_of_switchDataPK`), and
-  RC16's (3.5) over RC20's genuine valuation (`eq35Target_of_inputsAH`). The earlier form with
-  isomorphisms of cochain modules implies this one (`Eq35InputsGenuineABounded.toH`). Caveats: the
+  RC16's (3.5) over RC20's genuine valuation (`eq35Target_of_inputsAH`). The earlier form, whose
+  switch steps demand finite-dimensional cochain modules (`fG`, `fL`, `fF`, `fS`) and cochain-level
+  local coordinates, implies this one (`Eq35InputsGenuineABounded.toH`). Caveats: the
   configuration family is existential and only required to be some genuine Galois Selmer data with
   `t = X`. With one genuine complex of the homotopy type of `[k --0--> k]` at each `𝔭` (true, not
   formalized), its regularity part is equivalent to `uprim h k' ∈ Λ[1/2]` at the companion pairs,
@@ -309,8 +317,10 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   the infinite-dimensional continuous cochains of the genuine fibres are allowed in the regularity
   part; its homotopy equivalences are existential, not tied to the text's finite free models (the
   intended source is the graded finite free models of `RC/Limits`). The outer model family is
-  existential as well and still uses finite cochain models: the genuine Galois Selmer data in
-  `IsGenuineInstanceModel` are not tied to the instance `i`. -/
+  existential as well: the genuine Galois Selmer data in `IsGenuineInstanceModel` are not tied to
+  the instance `i`, and the outer switch steps (`OuterSwitchStep`) carry an existential Selmer-level
+  datum `SelmerNonquadStep` with finite-dimensional cochain modules (`fG`, `fL`, `fF`, `fS`), not
+  tied to the genuine complexes and met by finite models (unchanged from the earlier form). -/
   eq35 : Eq35InputsGenuineABoundedH W
 
 /-- **The data specification from the leaves** (PROVED: the fixed support and the stage link of the
@@ -380,19 +390,23 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   (`CommonCoordinateInputsRD`; Lemma `ex:arith-common-coordinate`, tex 4142–4328): `E_ℓ` elliptic,
   a coefficient datum of `𝕋` (a number field `K`, a set `S` of its primes, `K̄ ≃ ℚ̄`,
   `E[2^∞] ⊆ E(K_S)`; definition + GLUE Néron–Ogg–Shafarevich, AEC VII.7.1), the two classical
-  inputs (R) `TateReductionComparison` (at a good prime `p ≠ ℓ` an arithmetic Frobenius of `ℚ_p`
-  acts on `T_ℓ(E/ℚ̄_p)` as the `p`-power Frobenius on `T_ℓ` of the reduction; Silverman AEC
-  VII.3.1(b), p. 192, and VII.4.1, p. 195) and (D) `DetEqDegree` (the determinant on `T_ℓ` of an
-  endomorphism of a curve over `𝔽_p` is its degree; AEC III.8.6, p. 99) (GLUE; both stated in the
-  RC53 group's `ModularWeil/FrobeniusTrace.lean`), from which `tr ρ_T(Fr_q) = a_q` at the good odd
-  primes is PROVED (`frobeniusTrace_of_RD_only`, through the decomposition-group lift
-  `decompositionFrobeniusQ_proof`), and at every address of a final
+  GLUE inputs (R) `TateReductionComparison` (for an elliptic curve `E/ℚ` with good reduction at
+  `p`, and a prime `m ≠ p`, an arithmetic Frobenius of `ℚ_p` acts on `T_m(E/ℚ̄_p)` as the `p`-power
+  Frobenius on the Tate module of the reduction of the chosen minimal local equation; Silverman AEC
+  VII.3.1(b), p. 192, VII.4.1, p. 195; also VII.7.1) and (D) `DetEqDegree` (for an elliptic curve
+  over `𝔽_p` and a prime `m ≠ p`, every geometric endomorphism of its base change to `𝔽̄_p` acts on
+  `T_m` with determinant equal to its total degree, including inseparable endomorphisms and the
+  convention `degree 0 = 0`; AEC III.8.6, p. 99), both stated in the RC53 group's
+  `ModularWeil/FrobeniusTrace.lean` (here `m = 2`), from which `tr ρ_T(Fr_q) = a_q` at good odd
+  primes is PROVED (`frobeniusTrace_of_RD_only`, through `decompositionFrobeniusQ_proof`), and at
+  every address of a final
   family: the graph primes good (definition), the class-functional coordinates in `F = Frac Λ`
   relaxed at the subsets of the unused primes `U_x`, the primitive one regular at `t = 0` with
   `t`-expansion `u_{prim,x}` (definition + ELLIOT), (4.7) at each relaxation step at an unused
   prime, as an existential triangular model over `F` (`NaturalStep`; ELLIOT), with the actual
   matrix `frobMat C p` of `ρ_T(Fr_p)` in lane RC28's basis of `T₂E` over `K_S` (`det = p` PROVED,
-  `tr = a_p` from the GLUE), the actual `z = x(ε(F̃r_q))(1 + t)`, `a_q` (Mathlib's coefficient of
+  `tr = a_p` PROVED from (R) and (D)), the actual `z = x(ε(F̃r_q))(1 + t)`, `a_q`
+  (Mathlib's coefficient of
   `L(E, s)`) and `q` in its two-place block, and the product `ũ_x = η_x u_{rel,x}`
   regular with `t`-expansion `ũ_x` (definition). No free ring and no free Frobenius matrix: `g_q`,
   the Frobenius lift, `e_q`, `l_q`, `v_q`, `η_x` and `ρ_T(Fr_q)` are definitions; `e_q(x)⁻¹`,
@@ -409,7 +423,7 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   nothing else; `commonCoordinateInputsRD_iff_of_support`, and in general
   `commonCoordinateInputsRD_iff_exact`, PROVED in `CommonCoordinate8.lean`, through
   `commonCoordinateInputsL_iff_exact` of `CommonCoordinate6Exact.lean`); it is not
-  implied by (4.7) alone (`commonCoordinateInputsLF_not_of_target`) (only through `ε_x = 1` at the
+  implied by (4.7) alone (`commonCoordinateInputsRD_not_of_target`) (only through `ε_x = 1` at the
   empty family); the step models are existential and not tied to the actual Selmer complexes; the
   coefficient datum is existential (the text's is `K = ℚ(√k)`; only `tr` and `det` of
   `ρ_T(Fr_q)` enter (4.7)). Scope departure: this field is also requested in Branch 1 (see
@@ -428,8 +442,9 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   primitive kernel vectors (tex 4987–4992: saturation of `ker d` over the DVR `Λ_𝔭`, the RC53
   group's `exists_primitiveKernelVector`), `pos` from them, the terminal step, `s₊ + s₋ = s`, the
   nonquadratic `U = F`, regularity (`regular_of_homologyPK`, through the RC53 group's
-  `regular_of_switchDataPK`) and the intersection formula. The earlier form with isomorphisms of
-  cochain modules implies this one (`regularity_GPK_to_HPK`). Caveat: the configuration family is
+  `regular_of_switchDataPK`) and the intersection formula. The earlier form, whose switch steps
+  demand finite-dimensional cochain modules (`fG`, `fL`, `fF`, `fS`) and cochain-level local
+  coordinates, implies this one (`regularity_GPK_to_HPK`). Caveat: the configuration family is
   existential and only required to be some genuine Galois Selmer data with `t = X`. With one
   genuine complex of the homotopy type of `[k --0--> k]` at each `𝔭` (true, not formalized), the
   leaf is equivalent to `∀ F x, InLamHalf (D.uPrim F x)`, i.e. Elliot's regularity assertion

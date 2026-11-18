@@ -18,8 +18,11 @@ formed and the actual family witnesses the regularity part only when `s(𝔭) = 
 homology-level steps of the RC53 group, which ask only for finiteness of cohomology. All other
 conjuncts are verbatim (the data before `A`, (4.6), and for every `A` the outer model family with
 sizes at most the cap of (5.1), genuine two-term models, the coordinate clause and the outer
-switching data; the outer models are already tied to genuine Galois Selmer data by homotopy
-equivalences, `IsGenuineInstanceModel`, and their switch steps involve only the finite models).
+switching data; the outer models are related to some genuine Galois Selmer data by homotopy
+equivalences, `IsGenuineInstanceModel`, not tied to the instance; their switch steps
+`OuterSwitchStep` carry an existential Selmer-level datum `X : SelmerNonquadStep` with cochain
+finiteness `fG`, `fL`, `fF`, `fS`, not tied to the genuine complexes and met by finite models;
+unchanged from the cochain-level leaf).
 
 PROVED:
 * `eq35Target_of_inputsAH`: (3.5) for each `A` from the new leaf (RC16's
