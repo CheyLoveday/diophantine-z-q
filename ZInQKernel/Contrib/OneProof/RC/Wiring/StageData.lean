@@ -3,6 +3,7 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.Genus
 import ZInQKernel.Contrib.OneProof.RC.Nonvanishing.Realization
 import ZInQKernel.Contrib.OneProof.RC.Stages.PreparedStages
 import ZInQKernel.Contrib.OneProof.RC.Stages.Witness
+import ZInQKernel.Contrib.OneProof.RC.Wiring.StageWitness
 
 /-!
 **Theorem 5.3, Lane RC0 round 6: the stage data from the Appendix F stage construction.**
@@ -23,32 +24,45 @@ construction of `RC/Stages` (Appendix F, tex 8225–8405; App G 10190–10191):
   gives `PreDataSpec W` and the advancing precision (`preDataSpec_of_stagesFrom`, PROVED from the
   construction's `preDataSpec_preparedStages`).
 * `OddStagedInstance W`: the odd models (`OddModels`) together with the fixed witness `D_w`, its
-  selected genus datum, the outputs of the detector construction (a Galois-fixed point `Q` on
-  `A = E^{(D_w)}`, a division tower, the auxiliary field, `σ`, the row `b` with
-  `b c_Q(σ²) = 2^{a+1}`, an actual detecting sequence `q`), the stage link `StagesFrom W q`, and the
-  open input `WitnessSpecialization` (tex 8392–8398). (O.2) at the witness is PROVED from it
-  (`OddStagedInstance.witnessValuation`, by the construction's `witnessValuation_withStages`), so
-  `OddInstance` is PROVED (`OddStagedInstance.toOddInstance`).
+  selected genus datum, the exact witness (a rational point of `A = E^{(D_w)}` whose twist is
+  `L P_{D_w}`, tex 2462–2466, 8295–8306), the outputs of the detector construction at that point
+  (the point `Q`, a division tower, the auxiliary field, `σ` with `σ²` trivial on the Tate module
+  of `E`, the row `b` with `b c_Q(σ²) = 2^{a+1}`, an actual detecting sequence `q`), the stage link
+  `StagesFrom W q`, and the stage maps at the selected datum being the actual stage map
+  (`actualStageMapOn`, `RC/Wiring/StageWitness.lean`). The specialization identity
+  `WitnessSpecialization` (tex 8392–8398), formerly the open input, is PROVED from them
+  (`OddStagedInstance.witnessSpecialization`, by the witness specialization of `RC/WitnessSpec`),
+  hence (O.2) at the witness (`OddStagedInstance.witnessValuation`, by the construction's
+  `witnessValuation_withStages`), so `OddInstance` is PROVED (`OddStagedInstance.toOddInstance`).
 
 Order of choices (tex 2460–2467, 8246–8260). `RCLeaves.data ℓ h` is chosen after the genus
 partner `h_*`; the support enlargement by the primes of `h_*`, the witness `D_w`, the multiplier,
 the detector and the stage sequence are all made after `h_*`, so they may depend on it, and the
 stage fields of `data ℓ h` are the construction at that sequence. The odd models are chosen after
 the data, and `OddStagedInstance` asks that its `D_w` and its stage maps be the ones of that same
-construction (the stage maps are tied to the sequence through `WitnessSpecialization`).
+construction (at the selected datum the stage maps are the actual stage map at the places of the
+sequence's Frobenius elements, `hev`).
 
-Remaining input. `WitnessSpecialization` (tex 8392–8398; ELLIOT + GLUE: Elliot's good-reduction
-step "Good reduction identifies the reduction of the global division cocycle with this exact map",
-whose GLUE is reduction of points at the chosen Chebotarev place, Frobenius equivariance of
-reduction on the division point and the prime-to-`p` torsion, and reduction of the split twist
-identification; owner: the Appendix F stage construction, `RC/Stages/Witness.lean`). As there, the
-point `Q` is a parameter: the text's `Q` is the rational point corresponding to `L P_{D_w}` (tex
-2462–2466, 8295–8306), which the Lean statement does not force.
+The witness specialization (round 8). Elliot's good-reduction step at the witness (tex
+8392–8398, "Good reduction identifies the reduction of the global division cocycle with this
+exact map") is PROVED by the witness specialization of `RC/WitnessSpec` (reduction at the place
+of the selected Frobenius, its equivariance on the division point, the prime-to-`p` torsion
+specialization, the split twist by the witness root and the quadratic ring class residue). It is
+wired here by asking (`hev`) that the stage maps BE that actual map at the selected datum
+`(D_w, dat)`; with the exact witness `w`, the point `Q` equal to its rational point (`hQw`, so
+`Q` is now the text's point) and `σ²` trivial on the Tate module of `E` (`hσ`, a detector output),
+`WitnessSpecialization` follows (`OddStagedInstance.witnessSpecialization`).
 
-Caveat for a discharge. The one field `ev` (the stage maps) is read at every admissible parameter,
-by `lamOf` in the comparison argument `hcore`, and at the witness by `WitnessSpecialization`. Both requirements permit zero stage maps away from the witness when the coefficients and
-  theta models are replaced by matching witness-supported data. They do not identify the maps
-  with reduction at the constructed primes.
+Remaining reading. The stage maps `ev` at every other entry `(θ, D, dat')`, `(D, dat') ≠ (D_w, dat)`,
+stay interface data, read only by `lamOf` in the comparison argument `hcore` at the admissible
+`D ≠ D_w` (the text's `x ↦ b(κ_{M_θ}(x̄))` at the same chosen places, tex 8378–8398, 8439–8456,
+9283–9290, which is not constructed there). `hev` constrains no such entry: the construction's
+total map is zero off the selected datum, but only its selected entry is asked of `ev`
+(`StageDataNonVacuity.lean`: `StageKummer.pinAt`). At `D = D_w` the comparison argument reads the
+actual map, as in the text. As before, the comparison argument permits zero stage maps away from
+the witness when the coefficients and theta models are replaced by matching witness-supported
+data; away from the selected datum nothing identifies the maps with reduction at the constructed
+primes.
 -/
 
 noncomputable section
@@ -158,18 +172,28 @@ end Link
 * `Dw`, `hDw`, `dat`, `hdat`: the fixed witness, in the prepared filter, and its selected
   conductor-one genus datum (definitions; tex 2460–2462, 8249–8256; the selection exists at a
   prepared simple zero by `GenusOddInstance.hselG`);
-* `Q`, `hQ`, `d`, `F₀`, `σ`, `a`, `b`, `hvalue`, `B`, `q`: the outputs of the detector
-  construction, a Galois-fixed point of `A`, a compatible division tower, the auxiliary field, the
-  detecting element `σ = hτ`, the fixed row `b` with `b c_Q(σ²) = 2^{a+1}` (`c_w = a + 1`), a
-  finite exclusion and an actual detecting sequence at precisions `a + 2 + θ` (ELLIOT, Proposition
+* `w`: the exact witness, an embedding of the datum's ring class field, a root of `D_w` in it and a
+  rational point `R` of `A` whose twist by that root is `L P_{D_w}` (`ExactWitnessOn`; ELLIOT, tex
+  2462–2466, 8295–8306, PROVED by the construction's `exact_twist_of_genusPoint` when `L` is a
+  multiple `L₀ · 4B` of the uniform bound, tex 8295–8297; owner: the Appendix F stage
+  construction);
+* `Q`, `hQw`, `hQ`, `d`, `F₀`, `σ`, `hσ`, `a`, `b`, `hvalue`, `B`, `q`: the outputs of the detector
+  construction at `R`: the point `Q = R` over `ℚ̄` (`hQw`), Galois fixed, a compatible division
+  tower, the auxiliary field, the detecting element `σ = hτ` with `σ²` trivial on the Tate module
+  of `E` (`hσ`), the fixed row `b` with `b c_Q(σ²) = 2^{a+1}` (`c_w = a + 1`), a finite exclusion
+  and an actual detecting sequence at precisions `a + 2 + θ` (ELLIOT, Proposition
   `ex:app-detector`, tex 2468–2493, 8295–8405, PROVED by the construction's
   `exists_detector_stages` from a nontorsion rational point of `A`, PRINT Serre, GLUE no CM and a
-  definitional auxiliary field, see `RC/Wiring/StageDataNonVacuity.lean`; owner: the Appendix F
-  stage construction);
+  definitional auxiliary field, see `RC/Wiring/StageDataNonVacuity.lean`; `hσ` from its
+  `tateRep E σ = tateRep E τ`, `sq_trivial_of_tateRep_eq_conj`; owner: the Appendix F stage
+  construction);
 * `hstages`: the stage fields of `W` are the construction at `q` (definitions, `StagesFrom`);
-* `hred`: the specialization identity at the witness, `WitnessSpecialization` (ELLIOT + GLUE;
-  tex 8392–8398; owner: the Appendix F stage construction, `RC/Stages/Witness.lean`; the open
-  input). -/
+* `hev`: at the selected datum the stage maps are the actual stage map at the places of the
+  selected Frobenius elements (`actualStageMapOn`: reduction into the square-fixed group, the
+  finite Kummer map, the inverse torsion specialization through the split twist by the root of `w`,
+  and the row `b`; definitions, tex 8378–8398, 8439–8456; owner RC0). It replaces the former open
+  input `hred : WitnessSpecialization …`, now PROVED (`witnessSpecialization`). The other entries
+  of `ev` are not constrained by it; they are read only by `hcore`. -/
 structure OddStagedInstance {ℓ : ℕ} (W : WData ℓ) : Type 1 extends OddModels W where
   /-- `E_ℓ` is elliptic -/
   [eE : (Ecurve ℓ).IsElliptic]
@@ -181,10 +205,14 @@ structure OddStagedInstance {ℓ : ℕ} (W : WData ℓ) : Type 1 extends OddMode
   dat : HeegnerDatum (Ecurve ℓ) f Lat κ (Dw * W.hstar) 1 W.hstar
   /-- it is the selected one -/
   hdat : selG Dw = some dat
+  /-- the exact witness: a rational point of `A` whose twist is `L P_{D_w}` -/
+  w : ExactWitnessOn (Ecurve ℓ) rfl rfl dat L
   /-- `A = E^{(D_w)}` is elliptic -/
   [eA : (qtwist (Ecurve ℓ) Dw).IsElliptic]
   /-- the witness point of `A`, over `ℚ̄` -/
   Q : GeomPoint (qtwist (Ecurve ℓ) Dw)
+  /-- it is the rational point of the exact witness -/
+  hQw : Q = WitnessSpec.rationalGeomPoint (qtwist (Ecurve ℓ) Dw) w.rational
   /-- it is Galois fixed -/
   hQ : ∀ g : GalQ,
     WeierstrassCurve.Affine.Point.map (W' := qtwist (Ecurve ℓ) Dw) g.toAlgHom Q = Q
@@ -194,6 +222,8 @@ structure OddStagedInstance {ℓ : ℕ} (W : WData ℓ) : Type 1 extends OddMode
   F₀ : IntermediateField ℚ Qbar
   /-- the detecting element -/
   σ : GalQ
+  /-- its square acts trivially on the Tate module of `E_ℓ` -/
+  hσ : tateRep (Ecurve ℓ) 2 (σ * σ) = 1
   /-- the exponent, `c_w = a + 1` -/
   a : ℕ
   /-- the fixed integral row -/
@@ -206,17 +236,31 @@ structure OddStagedInstance {ℓ : ℕ} (W : WData ℓ) : Type 1 extends OddMode
   q : StageSequence (ActualAt (qtwist (Ecurve ℓ) Dw) (Ecurve ℓ) Q F₀ σ Dw W.hstar) (a + 1) B
   /-- the stage fields of the data are the construction at `q` -/
   hstages : StagesFrom W q
-  /-- the specialization identity at the witness -/
-  hred : WitnessSpecialization (L := L) dat ev d hQ (fun i => (selectedFrobenius q i).val)
-    (finiteRow b)
+  /-- at the selected datum the stage maps are the actual stage map -/
+  hev : ∀ i, ev i Dw dat = actualStageMapOn (EcurveZ ℓ) (EcurveZ_baseChange ℓ) rfl rfl dat w hQw
+    q hσ b hstages.Mθ_eq i Dw dat
 
 namespace OddStagedInstance
 
 variable {ℓ : ℕ} {W : WData ℓ}
 
+/-- **The specialization identity at the witness** (PROVED; formerly the open input `hred`; tex
+8392–8398): the stage maps agree at the selected datum with the actual stage map (`hev`), which
+satisfies it (`actualStageMapOn_spec`, from the witness specialization of `RC/WitnessSpec`). -/
+theorem witnessSpecialization (I : OddStagedInstance W) :
+    letI := I.eE
+    letI := I.eA
+    WitnessSpecialization (L := I.L) I.dat I.ev I.d I.hQ
+      (fun i => (selectedFrobenius I.q i).val) (finiteRow I.b) := by
+  have := I.eE
+  have := I.eA
+  exact witnessSpecialization_of_agree I.hev
+    (actualStageMapOn_spec (EcurveZ ℓ) (EcurveZ_baseChange ℓ) rfl rfl I.dat I.w I.hQw I.d I.hQ
+      I.q I.hσ I.b I.hstages.Mθ_eq)
+
 /-- **(O.2) at the fixed witness, read on `λ`** (PROVED: the construction's
-`witnessValuation_withStages`, transported along `StagesFrom.withStages_eq`; tex 2490–2493,
-2534–2536, 8392–8398): on every stage `D_w` is admissible and `v₂ λ_θ(D_w) = a + 1`. -/
+`witnessValuation_withStages` with `witnessSpecialization`, transported along
+`StagesFrom.withStages_eq`; tex 2490–2493, 2534–2536, 8392–8398): on every stage `D_w` is admissible and `v₂ λ_θ(D_w) = a + 1`. -/
 theorem witnessValuation (I : OddStagedInstance W) :
     Visibility.WitnessValuation W (Visibility.lamOf W.Mθ I.L I.selG I.ev) I.Dw (I.a + 1) := by
   have := I.eE
@@ -230,7 +274,7 @@ theorem witnessValuation (I : OddStagedInstance W) :
     subst hV
     intro ev hred
     exact witnessValuation_withStages W I.d I.hQ I.q I.hDw I.selG I.dat I.hdat ev I.b I.hvalue hred
-  exact key W I.hstages.withStages_eq I.ev I.hred
+  exact key W I.hstages.withStages_eq I.ev I.witnessSpecialization
 
 /-- **The odd instance** (PROVED): the models, the witness `D_w`, `c_w = a + 1` and (O.2) from
 `witnessValuation`. -/
