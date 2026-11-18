@@ -17,3 +17,8 @@
   fractional-ideal lattice rank two, and properness iff invertibility.
 - VERIFIED (Lean): `FowlerBridges.lean` compiled. `card_pic_eq_properClassNumber` identifies the finite
   count, and `fowlerProp27_of_print` proves the live row from the one printed proposition.
+- VERIFIED (Lean): `FowlerBridgesForms.lean` compiled as a scoped specification. It proves positivity,
+  identifies the quotient relation with determinant-one substitutions, and derives the form count
+  conditional on `CoxFormClassEquivalence`. That equivalence is unproved and is not used by Fowler.
+- VERIFIED (Lean): `Axioms.lean` compiled; every listed declaration depends only on
+  `propext`, `Classical.choice` and `Quot.sound`. See `axioms-output.txt`.
