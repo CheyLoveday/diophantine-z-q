@@ -19,6 +19,7 @@ open _root_.ZInQ ZInQ ZInQ.JHeight HDec.LeafQM.AV HDec.ZInQ.DefFaltings
 open HSyn HSyn.G0Split
 open _root_.CMBranch
 open TwistDescentXC TwistDescentHFD G0ModField G0ModField.KernelField
+open scoped Quaternion TensorProduct
 
 /-- A8 for a CM fibre (`thm:height`, L540–561). The Hom-field construction is
 unchanged; for good reduction use the integral model in `R6U` and
@@ -33,7 +34,7 @@ theorem cmHomFieldModel_of_R6U (hCover : G0ModField.FibreCoverExists)
     (G4WeilRes.galUnramifiedOutside_iff K (T u)).mpr hramK
   obtain ⟨r, hr, G, hG, E, hfE, hgE, hEG, hramE, hfix⟩ :=
     kernelField_of_model_hf hHFF hNOS K hKF PK.A (conj_dim K PK.A PK.surface) (T u) hK
-      (good_of_QML3U hNOS hRay hTors K PK (T u) (_root_.D2A6.T324_subset_T u))
+      (good_of_QML3U hNOS hRay hTors K PK (T u) (_root_.HDec.D2A6.T324_subset_T u))
   haveI : IsGalois ℚ ↥(E ⊔ K) := IsGalois.mk
   have hE : Module.finrank ℚ E ≤ 3 ^ (r ^ 2) := hEG ▸ GlueRepo.TorsionFree.card_le_three_pow G
   have hdeg : Module.finrank ℚ ↥(E ⊔ K) ≤ heightD :=

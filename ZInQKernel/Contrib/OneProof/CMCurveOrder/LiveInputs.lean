@@ -14,8 +14,8 @@ namespace HDec.CMBranch.FibreSplit
 
 open HSyn
 
-/-- The printed-form (Y₃) model and its canonical-model identification, the
-manuscript's map to the (j)-line, and the live Néron, NOS, and wild inertia
+/-- The full-level-three model and its canonical-model identification, the
+manuscript's map to the `j`-line, and the live Néron, NOS, and wild inertia
 inputs suffice for the unchanged CM split (`thm:height`, L520–561, L582–586,
 L814–818). All are already fields of the open83 research bundle. -/
 theorem cmFibreSplit_of_liveInputs

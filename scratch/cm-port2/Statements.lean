@@ -38,9 +38,9 @@ def CMCurveOrder324 : Prop :=
       ∃ (k : Type) (_ : Field k) (_ : NumberField k) (R : Subring k),
         IsImagQuadOrder k R ∧ IsCMBy E k R
 
-example : CMFibreSplit ↔ HDec.CMBranch.CMFibreSplit := Iff.rfl
-example : CMHomFieldModel ↔ FibreSplit.CMHomFieldModel := Iff.rfl
-example : CMCurveOrder324 ↔ FibreSplit.CMCurveOrder324 := Iff.rfl
+example : CMFibreSplit ↔ _root_.HDec.CMBranch.CMFibreSplit := Iff.rfl
+example : CMHomFieldModel ↔ _root_.HDec.CMBranch.FibreSplit.CMHomFieldModel := Iff.rfl
+example : CMCurveOrder324 ↔ _root_.HDec.CMBranch.FibreSplit.CMCurveOrder324 := Iff.rfl
 
 #print axioms HDec.CMBranch.FibreSplit.cmHomFieldModel_of_R6U
 #print axioms HDec.CMBranch.FibreSplit.cmCurveOrder324_of
