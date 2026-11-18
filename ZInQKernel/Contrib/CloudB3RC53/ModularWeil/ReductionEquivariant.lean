@@ -23,7 +23,8 @@ field of `L`):
 
 This generalizes the inertia case `WeierstrassCurve.reducePoint_some_apply_of_mem_inertia`
 (where `σ̄ = 1`) of the vendored library
-`ZInQKernel/Contrib/CloudB2X0Transitive/Vendor/AnthropicFLT` (vendored from `anthropics/fermats-last-theorem` at commit
+`ZInQKernel/Contrib/CloudB2X0Transitive/Vendor/AnthropicFLT`
+(vendored from `anthropics/fermats-last-theorem` at commit
 `6e837e75355538c7f80bab5b956861e86c4eacc2`, licence Apache-2.0), whose reduction map
 `WeierstrassCurve.reducePoint` and decomposition-group lemmas are used as infrastructure.
 
