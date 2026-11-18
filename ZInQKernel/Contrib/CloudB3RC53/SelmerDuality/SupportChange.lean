@@ -26,13 +26,20 @@ Over the Selmer complexes `selCx` of `PairedFunctional/SelmerPairing.lean`
   `g : G_S → G_{S∪q}`, a map of local complexes `λ`, a map of local conditions `μ` and a
   factorization `r` of the new restrictions of inflated classes through the new local condition
   (`res⁺ ∘ g = λ ∘ res + ι⁺ ∘ r`, `ι⁺ ∘ μ = λ ∘ ι`); it is a chain map.
-* `Nekovar788ii` (PRINT, UNVERIFIED; Nekovář, *Selmer complexes*, Proposition 7.8.8(ii), as cited
-  at tex L3480): when the coefficient module is unramified at the new places and the new local
-  conditions are the unramified ones, `j` is a quasi-isomorphism.
+* `UnramifiedNewPlace`, `SupportChangeUnramified`: the hypotheses of the support change that are
+  expressible on the abstract data — the old local complexes and conditions are retained (`λ`, `μ`
+  split injective), the cokernels are the local complex and local condition at one new place `q`,
+  the coefficient module is unramified there (inertia acts trivially, the tame model (4.4) at
+  augmentation `g = 1`), and the new condition is the unramified one `[Φ − 1]` inside
+  `[Φ − 1] ⊕ [Φ − q][−1]`.
+* `SupportChangeInput` (GLUE input: the conclusion of Nekovář, *Selmer complexes*, Proposition
+  7.8.8(ii), as cited at tex L3480, assumed for the abstract model under these hypotheses): `j` is a
+  quasi-isomorphism. It is not a printed leaf: the identification of the abstract complexes with the
+  continuous cochains of `G_{K,S}`, `G_{K,S∪q}` and of the local Galois groups is left open.
 
-The five uses listed at tex L3484–3489 are instances of `Nekovar788ii` for the actual Galois
+The five uses listed at tex L3484–3489 are instances of `SupportChangeInput` for the actual Galois
 cochain complexes; they are not statable here (no Galois cochain complexes of all degrees in the
-library), and enter consumers as instances of the print.
+library), and enter consumers as instances of the input.
 -/
 
 noncomputable section
@@ -186,11 +193,73 @@ def supportMap (T : SupportChangeData S) : GHom (selCx T.D) (selCx T.Dp) where
     refine Prod.ext rfl (Prod.ext rfl ?_)
     abel_nf
 
-/-- **PRINT** (UNVERIFIED; Nekovář, *Selmer complexes*, Proposition 7.8.8(ii), as cited at tex
-L3480): for support-change data in which the coefficient module is unramified at the new places
-and the new local conditions there are the unramified ones (and the old conditions are retained),
-the support comparison `j : C_S(U) → C_{S∪q}(U⁺)` is a quasi-isomorphism. -/
-def Nekovar788ii (T : SupportChangeData S) : Prop := QuasiIso (GHom.toCC (supportMap T))
+/-- **The unramified local data at a new place `q`** (tex L3470–3479 at augmentation, L3480–3489):
+a coefficient module `M` with Frobenius `Φ` on which inertia acts trivially (`g = 1`), the full
+local complex `L_q` identified with the tame model (4.4) at `g = 1`,
+`M --(Φ−1, 0)--> M ⊕ M --(0, Φ−q)--> M` in degrees `0, 1, 2`, the local condition `U_q`
+identified with the unramified complex `[Φ − 1]` in degrees `0, 1`, and `ι_q : U_q → L_q` the
+inclusion of the unramified summand. -/
+structure UnramifiedNewPlace (S : Type u) [CommRing S] where
+  /-- The coefficient module at `q`. -/
+  M : ModuleCat.{u} S
+  /-- Frobenius. -/
+  Φ : M →ₗ[S] M
+  /-- The residue cardinality `q` (odd). -/
+  q : ℕ
+  q_odd : Odd q
+  /-- The full local complex at `q`. -/
+  Lq : GCx S
+  /-- The unramified local condition at `q`. -/
+  Uq : GCx S
+  /-- Its inclusion. -/
+  ιq : GHom Uq Lq
+  eL0 : Lq.X 0 ≃ₗ[S] M
+  eL1 : Lq.X 1 ≃ₗ[S] M × M
+  eL2 : Lq.X 2 ≃ₗ[S] M
+  Lq_zero : ∀ n : ℤ, n ≠ 0 → n ≠ 1 → n ≠ 2 → Subsingleton (Lq.X n)
+  /-- `d⁰ = (Φ − 1, 0)` (tex L3472, `C = g − 1 = 0`). -/
+  Lq_d0 : ∀ x, eL1 (Lq.d 0 1 rfl x) = (Φ (eL0 x) - eL0 x, 0)
+  /-- `d¹ = (0, Φ − q)` (tex L3472–3477, `N_q(1) = q`). -/
+  Lq_d1 : ∀ y, eL2 (Lq.d 1 2 rfl y) = Φ (eL1 y).2 - (q : S) • (eL1 y).2
+  eU0 : Uq.X 0 ≃ₗ[S] M
+  eU1 : Uq.X 1 ≃ₗ[S] M
+  Uq_zero : ∀ n : ℤ, n ≠ 0 → n ≠ 1 → Subsingleton (Uq.X n)
+  /-- The unramified complex `[Φ − 1]`. -/
+  Uq_d : ∀ x, eU1 (Uq.d 0 1 rfl x) = Φ (eU0 x) - eU0 x
+  /-- `ι_q` is the inclusion of the unramified summand. -/
+  ιq_0 : ∀ x, eL0 (ιq.f 0 0 rfl x) = eU0 x
+  ιq_1 : ∀ x, eL1 (ιq.f 1 1 rfl x) = (eU1 x, 0)
+
+/-- **The hypotheses of the support change expressible on the abstract data** (tex L3480–3489):
+the old local complexes and conditions are retained as direct summands (`λ`, `μ` have
+retractions), and their complements are the full local complex and the unramified local condition
+at one new place `q` with unramified coefficients (`UnramifiedNewPlace`): degreewise exact
+`0 → L --λ--> L⁺ --p_L--> L_q → 0` and `0 → U --μ--> U⁺ --p_U--> U_q → 0`, compatible with
+`ι⁺` and `ι_q`. -/
+structure SupportChangeUnramified (T : SupportChangeData S) where
+  /-- The new place. -/
+  P : UnramifiedNewPlace S
+  /-- Projection of the new local complexes onto the new place. -/
+  pL : GHom T.Dp.L P.Lq
+  /-- Projection of the new local conditions onto the new place. -/
+  pU : GHom T.Dp.U P.Uq
+  lam_retract : ∀ i, ∃ ρ : T.Dp.L.X i →ₗ[S] T.D.L.X i, ∀ x, ρ (T.lam.f i i rfl x) = x
+  mu_retract : ∀ i, ∃ ρ : T.Dp.U.X i →ₗ[S] T.D.U.X i, ∀ x, ρ (T.mu.f i i rfl x) = x
+  pL_surj : ∀ i, Function.Surjective (pL.f i i rfl)
+  pU_surj : ∀ i, Function.Surjective (pU.f i i rfl)
+  L_exact : ∀ i (y : T.Dp.L.X i), pL.f i i rfl y = 0 ↔ ∃ x, T.lam.f i i rfl x = y
+  U_exact : ∀ i (v : T.Dp.U.X i), pU.f i i rfl v = 0 ↔ ∃ u, T.mu.f i i rfl u = v
+  ι_compat : ∀ i (v : T.Dp.U.X i), pL.f i i rfl (T.Dp.ι.f i i rfl v) = P.ιq.f i i rfl (pU.f i i rfl v)
+
+/-- **GLUE input: the support change for the abstract model** (the conclusion of Nekovář,
+*Selmer complexes*, Proposition 7.8.8(ii), as cited at tex L3480, assumed here for the abstract
+model): under the expressible hypotheses `SupportChangeUnramified` (old conditions retained, one new
+place with unramified coefficients and the unramified condition), the support comparison
+`j : C_S(U) → C_{S∪q}(U⁺)` is a quasi-isomorphism. Not a printed leaf: the identification of the
+abstract complexes with the Galois cochains of `G_{K,S}`, `G_{K,S∪q}` and `G_{K_q}` is left open.
+Classification: GLUE (assumed input). -/
+def SupportChangeInput (T : SupportChangeData S) (_H : SupportChangeUnramified T) : Prop :=
+  QuasiIso (GHom.toCC (supportMap T))
 
 /-! ### Non-vacuity -/
 
@@ -222,15 +291,15 @@ abbrev idSupportData (D : SelData S) : SupportChangeData S where
     subst h
     rfl
 
-/-- **Non-vacuity of `Nekovar788ii`**: for the trivial support change the comparison is the
-identity, hence a quasi-isomorphism. PROVED. -/
-theorem nekovar788ii_id (D : SelData S) : Nekovar788ii (idSupportData D) := by
+/-- For the trivial support change the comparison is the identity, hence a quasi-isomorphism
+(a sanity check of `supportMap`). PROVED. -/
+theorem supportMap_id_quasiIso (D : SelData S) :
+    QuasiIso (GHom.toCC (supportMap (idSupportData D))) := by
   have h : GHom.toCC (supportMap (idSupportData D)) = 𝟙 _ := by
     ext i c
     obtain ⟨a, u, x⟩ := c
     change ((a, u + 0, x) : D.G.X i × D.U.X i × D.L.X (i - 1)) = (a, u, x)
     rw [add_zero]
-  unfold Nekovar788ii
   rw [h]
   infer_instance
 
