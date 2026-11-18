@@ -28,6 +28,14 @@ the pre-cancellation complex `C_x` down to its two-term core:
 * `coordLink_of_triangles_core` (PROVED): E1a (`CoordLink`) from the (4.7) data, the integral core
   and `PreCoreLink` only.
 
+**Caveat (round 4).** The core route takes an integral core with exact augmentation at EVERY
+address (`core : Addr → IntegralCore`, `hcore : ∀ x, …`). RC0's `integralCore_coord_ne_zero` /
+`uTilde_ne_zero_of_core` (`RC/Wiring/ClearingComplex4Bridge.lean`) show that this forces `ũ_x ≠ 0`
+everywhere, which fails at generically acyclic constituents (tex 3889–3890, 5612–5615): as stated,
+this route applies only to families with no degenerate constituent. RC0's input is now ONE GLUE,
+`OrigCoordLink` (`RC/Wiring/ClearingComplex4.lean`); `CoordLink/OrigCoord.lean`
+(`origCoordLink_of_cases`) reduces it by cases, using the core only where `c^{orig}_x ≠ 0`.
+
 **Classification.** PROVED (`PreCoreLink` is the named GLUE).
 -/
 
