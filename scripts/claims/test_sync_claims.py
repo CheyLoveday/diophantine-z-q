@@ -276,6 +276,28 @@ class Write(unittest.TestCase):
         for f in BATCH2[1:]:
             self.assertEqual(by[f]['hold'], 'held', f)
 
+    def test_project_claims_mode(self):
+        # default: project claims with no row are only reported
+        _, by0, out0 = self.write()
+        missing = sorted({line.split(':')[0].strip() for line in out0.splitlines()
+                          if 'project claim with no claims.tsv row' in line})
+        shutil.copy(CLAIMS, self.claims)
+        code, out = run('--write', '--today', '2026-11-14', '--project-claims', claims=self.claims)
+        self.assertEqual(code, 0)
+        _, rows = sc.read_tsv(self.claims)
+        by = {r['field']: r for r in rows}
+        # an interest row backed by a project claim becomes held, with the claim's link
+        r = by['mumfordTorsionAlgClosed']
+        self.assertEqual((r['hold'], r['holder_kind'], r['public_holder']), ('held', 'project', 'project'))
+        self.assertTrue(r['claim_url'].startswith('https://github.com/'), r['claim_url'])
+        # project claims with no row get a held project row
+        for f in missing:
+            self.assertIn(f, by, f)
+            self.assertEqual((by[f]['hold'], by[f]['holder_kind']), ('held', 'project'), f)
+        # rows with no project claim line are still left alone
+        self.assertEqual(by['shimuraFamilyAb'], by0['shimuraFamilyAb'])
+        self.assertEqual(by['milneIsogenyQuasiInverse']['hold'], by0['milneIsogenyQuasiInverse']['hold'])
+
     def test_outside_rows(self):
         _, by, out = self.write()
         # a held outside row with no parsed claim is not downgraded; the other claimant is reported

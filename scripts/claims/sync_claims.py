@@ -590,10 +590,12 @@ def release_status(h, lapsed):
     return (h['release'] or {}).get('blocker') or 'released'
 
 
-def plan(header, rows, st, data, threads, fields, lapsed=None):
+def plan(header, rows, st, data, threads, fields, lapsed=None, project_claims=False):
     """The new header and rows of claims.tsv, plus what changed and what the integrator should look at.
 
     lapsed maps (field, holder key) to the ping date for claims the lapse rule releases.
+    project_claims: also write project rows from the project's own public claim and release lines (the claims-sync
+    workflow, the only writer of claims.tsv, runs with it). Project rows without such lines are still left alone.
     """
     lapsed = lapsed or {}
     header = list(header) + [c for c in NEW_COLUMNS if c not in header]
@@ -621,6 +623,18 @@ def plan(header, rows, st, data, threads, fields, lapsed=None):
                          'interest' if r['holder_kind'] == 'project' else 'released')
         cur = r.get('claim_url') or ''
         before = snap(r)
+        if r['holder_kind'] == 'project' and project_claims and h and r['hold'] != 'held':
+            r.update(hold='held', claim_url=h['claim']['url'], status='claimed',
+                     since=h['claim']['date'].strftime('%Y-%m-%d'), issue=h['claim']['thread'])
+            changes.append((f, r['public_holder'], before, snap(r)))
+            out.append(r)
+            continue
+        if (r['holder_kind'] == 'project' and project_claims and not h and r['hold'] == 'held'
+                and (f, k) in released):
+            r.update(hold='released', status=release_status(released[(f, k)], None))
+            changes.append((f, r['public_holder'], before, snap(r)))
+            out.append(r)
+            continue
         if r['holder_kind'] == 'project':
             # the integrator manages project rows: report, never change
             if h and r['hold'] != 'held':
@@ -665,7 +679,7 @@ def plan(header, rows, st, data, threads, fields, lapsed=None):
             continue
         r = by_field.get(f)
         hold, status = ('released', release_status(h, lapsed[(f, k)])) if (f, k) in lapsed else ('held', 'claimed')
-        if k == PROJECT_HOLDER:
+        if k == PROJECT_HOLDER and not (project_claims and r is None):
             if r is None:
                 notes.append(f'{f}: project claim with no claims.tsv row (for the integrator): {h["claim"]["url"]}')
             continue
@@ -880,6 +894,9 @@ def main(argv=None):
     mode.add_argument('--write', action='store_true', help='update claims.tsv in place')
     mode.add_argument('--check', nargs='+', metavar='FIELD', help='refuse fields not free for a project brief')
     mode.add_argument('--sweep', action='store_true', help='print the ping and release queue')
+    ap.add_argument('--project-claims', action='store_true',
+                    help="with --write: also write project rows from the project's public claim lines "
+                         '(the claims-sync workflow, the only writer of claims.tsv)')
     ap.add_argument('--today', metavar='YYYY-MM-DD',
                     help='count the lapse policy from this date at 00:00 UTC (default: now)')
     ap.add_argument('--claims', default=os.path.join(DOCS, 'claims.tsv'))
@@ -917,7 +934,8 @@ def main(argv=None):
         return 0
     lapsed = {(s, k): ping for a_, s, k, h, url, last, ping in lapse(st, events, threads, now, cfg)
               if a_ == 'release'}
-    new_header, new_rows, info = plan(header, rows, st, data, threads, fields, lapsed)
+    new_header, new_rows, info = plan(header, rows, st, data, threads, fields, lapsed,
+                                      project_claims=a.project_claims)
     if a.write:
         write_tsv(a.claims, new_header, new_rows)
         print(f'wrote {a.claims}: {len(new_rows)} rows, {len(info["adds"])} added, '

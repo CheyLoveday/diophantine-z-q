@@ -33,3 +33,5 @@ jobs:
       - name: Generated contributor files up to date (warning only)
         continue-on-error: true
         run: python scripts/one_proof/render_open.py --check
+      - name: Claims sync unit tests (fixtures only, no network)
+        run: python -I -m unittest discover -s scripts/claims -p 'test_*.py'
