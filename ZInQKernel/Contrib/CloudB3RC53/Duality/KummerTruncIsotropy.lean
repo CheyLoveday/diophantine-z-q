@@ -2,9 +2,9 @@ import ZInQKernel.Contrib.CloudB3RC53.Duality.DerivedKummerTrunc
 import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.TruncIsotropy
 
 /-!
-# Duality area: Kummer-condition isotropy into `τ≥2` (tex L3443–3450)
+# Duality area: Kummer-condition isotropy into `τ≥2` (tex L3445–3451)
 
-Lemma `ex:arith-local-kummer`, tex L3443–3450, at one place, for the `τ≥2` local target of
+Lemma `ex:arith-local-kummer`, tex L3445–3451, at one place, for the `τ≥2` local target of
 Nekovář's construction (*Selmer complexes*, Sections 6.2–6.3; `SwitchInputs/TruncIsotropy.lean`).
 
 **The interface.** `LocalTruncIsotropy ι ι' P` is a small placeholder for the per-place `τ≥2`
@@ -160,7 +160,7 @@ theorem cocycle_of_trunc (t : E.X 2) (ht : (truncGe2 E).d 2 3 rfl ((truncSub E 2
 
 variable {ι : GHom U L} {ι' : GHom U' L'} {P : GPair L L' E}
 
-/-- **Kummer-condition isotropy into `τ≥2`, finite level** (tex L3443–3450; PROVED): for conditions
+/-- **Kummer-condition isotropy into `τ≥2`, finite level** (tex L3445–3451; PROVED): for conditions
 concentrated in degrees `0, 1` and a local trace whose kernel on degree-two cocycles consists of
 coboundaries (`InducesIsoH2`, first half), if the trace of every `(1, 1)` cup value
 `ι u ∪ ι' v` vanishes, the zero family is a `τ≥2` isotropy homotopy. -/
@@ -207,7 +207,7 @@ def truncTrace (trv : E.X 2 →ₗ[ℤ_[2]] ℤ_[2]) (htrv : ∀ y, trv (E.d 1 2
     rintro _ ⟨y, rfl⟩
     exact htrv y)
 
-/-- **Kummer-condition isotropy into `τ≥2` over `ℤ₂`** (tex L3443–3450: "finite isotropy makes every
+/-- **Kummer-condition isotropy into `τ≥2` over `ℤ₂`** (tex L3445–3451: "finite isotropy makes every
 value divisible by every power of two, hence zero"; PROVED via `derivedKummerStep_trunc`): for
 conditions concentrated in degrees `0, 1`, a local trace killing coboundaries whose kernel on
 degree-two cocycles consists of coboundaries, and `(1, 1)` cup values whose traces are divisible by
