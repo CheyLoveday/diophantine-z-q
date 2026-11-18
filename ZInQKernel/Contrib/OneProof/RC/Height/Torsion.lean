@@ -9,8 +9,9 @@ The manuscript (`diophantine_zq.tex`, 11/5 version) uses the vanishing criterion
 Néron–Tate height in both directions:
 
 * base-zero lemma, tex 4345–4346: "The conductor-one height formula makes the specified point
-  torsion when `L'(E/K,1) = 0`" (`ĥ = 0 ⇒` torsion; this needs Northcott finiteness);
-* tex 2464, 8268–8272, 9439–9440: "The explicit height formula makes `P` nontorsion" (`ĥ ≠ 0 ⇒`
+  torsion when `L'(E/K,1) = 0`" (`ĥ = 0 ⇒` torsion; this needs Northcott finiteness); likewise
+  tex 9439–9440, the torsion genus point at an odd-sign `D` that is not a simple zero;
+* tex 2464, 8268–8272: "The explicit height formula makes `P` nontorsion" (`ĥ ≠ 0 ⇒`
   nontorsion, i.e. torsion `⇒ ĥ = 0`).
 
 The vendored canonical height proves `ĥ(P) = 0 ↔ P` torsion under a `Northcott` hypothesis for the

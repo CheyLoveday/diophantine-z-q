@@ -317,7 +317,7 @@ theorem exists_finiteFreeModel_data (hnil : IsNilpotent (maximalIdeal A)) [Modul
 
 Let `A` be a local ring whose maximal ideal is nilpotent (e.g. an Artin local ring), `M` a flat
 `A`-module with a differential `d` (`d² = 0`) whose residual cohomology `ker(d ⊗ k)/im(d ⊗ k)` is
-finite-dimensional.  Then there are a finite type `ι` with `#ι = dim_k` (residual cohomology), a
+finite-dimensional.  Then there are a finite type `ι` with `|ι| = dim_k` (residual cohomology), a
 differential `d_C` on the finite free module `A^{(ι)}`, and `A`-linear `i : A^{(ι)} → M`,
 `p : M → A^{(ι)}`, `h : M → M` forming normalized deformation retract data:
 `p i = 1`, `1 − i p = d h + h d`, `d i = i d_C`, `p d = d_C p`, `d_C² = 0`, `h² = h i = p h = 0`.

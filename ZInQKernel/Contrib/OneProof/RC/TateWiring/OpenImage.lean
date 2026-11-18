@@ -93,7 +93,7 @@ theorem serre_z_matrix (hS : SerreThm3) (hE : HasNoCM E) :
   rw [h, hg, smul_pow, one_pow]
 
 /-- The `2^k`-torsion of `E(ℚ̄)` is the `k`-th level of the Tate tower, and every point of it is
-the `k`-th component of a point of `T₂E` (vendored Tau Ceti: `#E[2^k] = (2^k)²`). -/
+the `k`-th component of a point of `T₂E` (vendored Tau Ceti: `|E[2^k]| = (2^k)²`). -/
 theorem exists_proj_eq (k : ℕ) (P : (E⁄Qbar).toAffine.Point) (hP : 2 ^ k • P = 0) :
     ∃ x : TateMod E 2, (TauCeti.TateModule.proj k x : (E⁄Qbar).toAffine.Point) = P := by
   have hcard : ∀ m : ℕ, Nat.card (TauCeti.TateModuleLevel 2 (E⁄Qbar).toAffine.Point m) =

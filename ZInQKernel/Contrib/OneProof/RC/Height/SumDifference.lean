@@ -14,7 +14,7 @@ lines 4020–4025 and 4082–4091:
 
 Here `A = Res_{K/ℚ}(E^{(h)}_K)` and `B = E^{(h)} × E^{(hk)}`, `K = ℚ(√k)`.
 
-**Form (DEPARTURE, recorded in the report).** Abelian surfaces, Weil restriction and dual abelian
+**Form (DEPARTURE).** Abelian surfaces, Weil restriction and dual abelian
 varieties are not available in Lean, so `A` and `B` are represented by their groups of rational
 points with their canonical height pairings: `A(ℚ) = E^{(h)}(K)` with the Néron–Tate pairing of
 `E^{(h)}` relative to `K` (the vendored pairing over the number field `K`), and
@@ -39,7 +39,7 @@ Every declaration in this file is PROVED.
 * `regulator_ratio_sumDiff`: with rank-one free generators `g_A`, `g_B` (rank one is an input:
   the forward theorems at known simple zeros, tex 4020–4021), there are `α, β ∈ ℤ` with
   `φ g_A ≡ α g_B`, `ψ g_B ≡ β g_A` modulo torsion, `αβ = 2` (so `IJ = 2` for `I = |α|`, `J = |β|`)
-  and `Reg_B α² = 2 Reg_A`, i.e. `Reg_B / Reg_A = 2/I²` (tex 4082–4086).
+  and `Reg_B α² = 2 Reg_A`, i.e. `Reg_B / Reg_A = 2/I²` (tex 4082–4090).
 -/
 
 open Height

@@ -17,10 +17,10 @@ PROVED here (abstractly, over the data the text constructs):
   and, for `M ≥ 2`, `ℓ₀ ≡ 3 (mod 4)`, `(m/ℓ₀) = (−1/ℓ₀)(h_*/ℓ₀) = 1` (tex 8371–8376, 8437–8438),
   and the inert condition `(D h_*/ℓ₀) = −1` used for Cornut–Jetchev's H.3 (tex 9205–9209).
 
-Not formalized (kinds as stated in the report): the witness choice through Dokchitser–Dokchitser
+Not formalized (kinds in parentheses): the witness choice through Dokchitser–Dokchitser
 Thm 1.8 and Bump–Friedberg–Hoffstein clauses (i)–(ii) pp. 543–544 (PRINT, lanes RC8/batch 3),
 nontorsion of `P_{D_w}` via Cai–Shu–Tian Thm 1.1 (PRINT, stated elsewhere), the torsion multiplier
-`B = ∏ #E(𝔽_{p_j^f})` and Serre's open image (GLUE/PRINT), Chebotarev (GLUE), and the Weil-pairing
+`B = ∏ |E(𝔽_{p_j^f})|` and Serre's open image (GLUE/PRINT), Chebotarev (GLUE), and the Weil-pairing
 identity `det ρ(Fr_{ℓ₀}) = ℓ₀` (GLUE). They enter below as hypotheses.
 -/
 

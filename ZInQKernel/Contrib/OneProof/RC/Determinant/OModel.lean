@@ -15,7 +15,8 @@ This file builds `𝒪` as that `2`-adic completion presented as an inverse limi
 Modulo `2ⁿ`, inverting the elements of `Λ` outside `(2)` inverts exactly `t`: such an element
 is `2b + tᵏu` with `u` a unit of `Λ`, and `2` is nilpotent modulo `2ⁿ`.  Hence
 `Λ_{(2)}/2ⁿ = (ℤ/2ⁿ)[[t]][t⁻¹] = (ℤ/2ⁿ)((t))`, the Laurent series ring
-`LaurentSeries (ZMod (2 ^ n))`.
+`LaurentSeries (ZMod (2 ^ n))`. (This identification is proved as `lambdaTwoQuotLaurentEquiv` in
+`Rings/Completion.lean`, which also identifies `OO` with Mathlib's `AdicCompletion (2) Λ_{(2)}`.)
 
 ## Main definitions and results
 

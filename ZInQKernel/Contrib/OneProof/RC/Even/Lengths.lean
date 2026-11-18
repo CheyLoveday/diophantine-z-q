@@ -121,7 +121,7 @@ variable {R : Type*} [CommRing R]
 
 /-- **The free-index decomposition** (tex 7644–7651; PROVED): for a submodule `K ≤ M`,
 `ℓ(M/K) + ℓ(K ∩ M_tors) = ℓ(M_tors) + ℓ(M/(K + M_tors))` in `ℕ∞`. With
-`g = ℓ(M_tors)`, `k = ℓ(K ∩ M_tors)` (the torsion length of `K`, see `torsion_submodule_eq`) and
+`g = ℓ(M_tors)`, `k = ℓ(K ∩ M_tors)` (the torsion length of `K`, see `length_torsion_submodule`) and
 the free index `m = ℓ(M/(K + M_tors))`, this is `ℓ(M/K) = (g − k) + m`. -/
 theorem length_quot_eq_torsion_add_free {M : Type*} [AddCommGroup M] [Module R M]
     (K : Submodule R M) :

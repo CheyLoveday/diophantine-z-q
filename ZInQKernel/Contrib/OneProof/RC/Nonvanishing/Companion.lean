@@ -289,7 +289,7 @@ before `h` and before the exclusion set. The inputs:
   every `p ∈ S ∪ primes(h)`, squarefree) makes `hk'` partitionable.
 * `hforward` (PRINT; `lem:forward-rank`, Kolyvagin Thm 1 / Kato Cor 14.3; tex 2386): nonvanishing
   gives Selmer corank zero.
-* `h33b` (ELLIOT; (3.3b), tex 2273–2340, App G (F.2) 10107–10129; lane RC2-symbols/RC11-even): a
+* `h33b` (ELLIOT; (3.3b), tex 2295–2341, App G (F.2) 10107–10129; lane RC2-symbols/RC11-even): a
   partitionable parameter of Selmer corank zero has `v₂L_*(d) − 2ω(d) − s(d) ≤ C₁`.
 
 `vL d` stands for `v₂L_*(d)` and `s d` for `s(d)`; `Partitionable` and `CorankZero` are the

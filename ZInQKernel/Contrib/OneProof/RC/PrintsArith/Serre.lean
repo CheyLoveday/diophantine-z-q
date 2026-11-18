@@ -33,7 +33,8 @@ form a neighbourhood basis of `1` in the product of the `ℓ`-adic groups `GL(T_
 Contents:
 * `SerreThm3` (PRINT);
 * `serre_two_adic`, `serre_scalar` (PROVED from `SerreThm3`): the forms used at tex 2882–2887;
-* `DetTateTwoCyclotomic` (GLUE: `det ρ₂ = χ₂`, Weil pairing) and `serre_SL2_part` (PROVED from
+* `DetTateTwoCyclotomic` (GLUE here: `det ρ₂ = χ₂`, Weil pairing; proved for elliptic `E` as
+  `ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoCyclotomic`) and `serre_SL2_part` (PROVED from
   `SerreThm3` and the GLUE): the form used at tex 3597–3605;
 * `CMjInteger` (GLUE: CM `j`-invariants are algebraic integers) and `curve_hasNoCM` (PROVED from
   the GLUE): `E_ℓ` has no CM because `j(E_ℓ) = 35152/9` (tex 1765–1767, 1012–1013).
@@ -133,7 +134,8 @@ theorem serre_scalar (hS : SerreThm3) (E : WeierstrassCurve ℚ) [E.IsElliptic]
 /-- **GLUE (not proved here): `det ρ₂ = χ₂`.** The determinant of `ρ₂(σ)` is the `2`-adic
 cyclotomic character of `σ` (Weil pairing; Serre 1972, p. 300, citing his McGill notes,
 pp. I-3, I-4), in the direction used: if `det ρ₂(σ) = 1`, then `σ` fixes every `2`-power root of
-unity. -/
+unity. Proved for every elliptic `E/ℚ` from the Weil pairing:
+`ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoCyclotomic`. -/
 def DetTateTwoCyclotomic (E : WeierstrassCurve ℚ) : Prop :=
   ∀ σ : GalQ, LinearMap.det (tateRep E 2 σ) = 1 →
     ∀ (k : ℕ) (ζ : Qbar), ζ ^ (2 ^ k) = 1 → σ ζ = ζ

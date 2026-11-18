@@ -7,7 +7,7 @@ import ZInQKernel.Contrib.OneProof.RC.Symbols.Forest
 # Lane RC2: network operators (tex 10625–10655)
 
 Manuscript paragraph "Network operators and their degree" (tex 10625–10655), with the network
-operator of `Core` (rooted forests, tex 2635–2655).
+operator of `Core` (rooted forests, tex 10635–10655).
 
 * `netOp_expansion`: a network of primary auxiliary vertices acts on a symbol by its operator.
   Expand in the bits incident to the auxiliary vertices (Möbius expansion over the present

@@ -4,13 +4,13 @@ import Mathlib
 # Lane RC15 (central): the class-functional coordinate of a two-term complex, and its
 # specialization over a local domain
 
-Definition `ex:arith-coordinate` of the 11/5 manuscript (`diophantine_zq.tex`, lines 3882–3892):
+Definition `ex:arith-coordinate` of the 11/5 manuscript (`diophantine_zq.tex`, lines 3877–3892):
 for a constituent whose generic cohomology has dimensions `(1,1)` in degrees one and two, the
 class-functional coordinate `u` is the coordinate of `[z] ⊗ [λ]` in the determinant line
 `𝒟 = det⁻¹ C ≅ H¹(C) ⊗ H²(C)^*`, in the retained integral determinant basis; for a generically
 acyclic constituent `u = 0`.
 
-**Model (DEPARTURE of form, recorded in the report).** The coordinate is computed on the two-term
+**Model (DEPARTURE of form).** The coordinate is computed on the two-term
 finite free complex `C = [A^n --D--> A^n]` in degrees one and two, with the standard bases as the
 retained basis. This is the form the manuscript's own computations reach after cancelling the
 unit disks outside degrees one and two (V19 tex 20064–20067; the Schur/Cramer formula
@@ -32,7 +32,7 @@ Every declaration in this file is `PROVED`.
   coordinate exists).
 * `adjugate_ne_zero_of_rank`, `rank_eq_of_adjugate_ne_zero`: over a field, `rank D = n − 1` iff
   `det D = 0` and `adj D ≠ 0`; so "dimensions `(1,1)`" is the adjugate condition.
-* `coord_specializes` (tex 4359–4364; V19 `lem:v10-determinant-specialization`, 19985–20003):
+* `coord_specializes` (tex 4363–4369; V19 `lem:v10-determinant-specialization`, 19985–20003):
   over a local domain, if the central adjugate is nonzero, the generic coordinate of an integral
   cycle and an integral closed functional is integral (regular at the centre) and specializes to
   the coordinate of their central tensor; `coord_central_eq_zero`: if the central cycle is zero
@@ -55,7 +55,7 @@ theorem exists_entry_ne_zero {R : Type*} [Zero R] {m : ℕ} {M : Matrix (Fin m) 
     by_contra hjk
     exact h' ⟨j, k, hjk⟩)
 
-/-- **The class-functional coordinate** (Definition `ex:arith-coordinate`, tex 3882–3892) of a
+/-- **The class-functional coordinate** (Definition `ex:arith-coordinate`, tex 3877–3892) of a
 cycle `z` (`D z = 0`) and a closed functional `λ` (`λ D = 0`) of the two-term complex
 `[K^n --D--> K^n]` in degrees one and two, in the standard determinant basis: `u` with
 `z ⊗ λ = u · adj D`. -/
@@ -238,7 +238,7 @@ section Specialization
 
 variable {A F k : Type*} [CommRing A] [IsLocalRing A] [Field F] [Field k] {n : ℕ}
 
-/-- **Regularity and specialization of the coordinate** (tex 4359–4364; V19 Lemma
+/-- **Regularity and specialization of the coordinate** (tex 4363–4369; V19 Lemma
 `lem:v10-determinant-specialization`, 19985–20003). Let `A` be a local domain with an injection
 `ι` into a field `F` (the generic point) and a reduction `ρ` to a field `k` killing the maximal
 ideal (the centre). Let `D` be the integral differential, `z` an integral cycle and `λ` an
@@ -281,7 +281,7 @@ theorem coord_specializes (ι : A →+* F) (hι : Function.Injective ι) (ρ : A
   simp only [vecMulVec_apply, Matrix.smul_apply, smul_eq_mul, hmapρ, map_apply]
   rw [← map_mul, hA, map_mul]
 
-/-- **The central coordinate vanishes when the central cycle does** (tex 4364–4365: "That tensor
+/-- **The central coordinate vanishes when the central cycle does** (tex 4367–4368: "That tensor
 is zero because `[z]_0 = 0`"). PROVED. -/
 theorem coord_central_eq_zero {D : Matrix (Fin n) (Fin n) k} {z w : Fin n → k} {u : k}
     (hu : IsClassFunctionalCoord D z w u) (hadj : D.adjugate ≠ 0) (hz : z = 0) : u = 0 := by

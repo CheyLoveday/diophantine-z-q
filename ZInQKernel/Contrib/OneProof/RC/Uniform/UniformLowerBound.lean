@@ -185,11 +185,12 @@ theorem mem_lambda_of_regularAt_two {x : FractionRing Lambda} (hx : RegularAt 2 
   rw [hxa, hc, map_mul, mul_comm]
 
 /-- The identification of the valuation of `𝒪` on `Frac Λ` (`GLUE`). `𝒪 = (Λ_(2))^` is the completion of
-the discrete valuation ring `Λ_(2)` (tex 3729–3730; `Λ` is a UFD, `lambda_ufd`, and `(2)` is a
+the discrete valuation ring `Λ_(2)` (tex 3727–3728; `Λ` is a UFD, `lambda_ufd`, and `(2)` is a
 height-one prime, so `Λ_(2)` is a DVR with uniformizer `2`: Matsumura, *Commutative Ring Theory*,
 Thm 11.5 (UNVERIFIED locator)). For the embedding `ι : Frac Λ → K = Frac 𝒪` and the valuation `v` of
 `𝒪`, an element is `𝒪`-integral iff it lies in `Λ_(2)`, and `v 2 = 1`. Kind: GLUE (a property of the
-genuine `v₂`, not constructed here). -/
+genuine `v₂`, not constructed here; PROVED for the genuine `𝒪` as `valuationOfO_genuine`,
+`Rings/OValuation.lean`). -/
 structure ValuationOfO (v : AddValuation K (WithTop ℤ)) (ι : FractionRing Lambda →+* K) : Prop where
   /-- `𝒪 ∩ Frac Λ = Λ_(2)`. -/
   integral_iff : ∀ x, (0 : WithTop ℤ) ≤ v (ι x) ↔ RegularAt 2 x

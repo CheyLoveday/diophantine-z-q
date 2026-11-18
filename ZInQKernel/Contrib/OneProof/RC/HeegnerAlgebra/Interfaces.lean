@@ -24,9 +24,10 @@ explicit:
 * `H19_assembled`: the singular coordinate relation `s_new = J f_old` at precision `2^m`.
 
 Locators of printed sources are given as the manuscript gives them.  Those for Nekovář were read
-in the Astérisque 310 text: (4.1.4.1), p. 96, and Sections 8.1.1–8.1.6, pp. 189–194, are correct;
-the others are `UNVERIFIED` here (lane RC9 states Cai–Chen–Liu, Elkik, Serre, Lang and Silverman as
-printed leaves).
+in the Astérisque 310 text: (4.1.4.1), p. 96, and Sections 8.1.1–8.1.6, pp. 189–194, are correct.
+Lane RC9 read Cai–Chen–Liu (Trans. AMS 370, Theorem 2.15, p. 3730), Elkik (Astérisque 183,
+Théorème, p. 59) and Serre (Invent. Math. 15, §4.4, Théorème 3, p. 299) in print and states them as
+printed leaves; Lang 1956 and Silverman's book were not read, and their locators are `UNVERIFIED`.
 -/
 
 namespace ZInQ.Manuscript.RC.HeegnerAlgebra
@@ -104,7 +105,7 @@ theorem LocalDescentInput.kummer {Pt Pt' HV HV' HB HB' Hinf : Type*} [AddCommGro
   H11_kummer_at_old D.κ D.j D.exK D.κ' D.j' D.hκ' D.res D.resB D.hcomm D.infl D.exInf D.cB
     D.hH10 m0 v hv
 
-/-- `PRINT` (Cai–Chen–Liu, Trans. AMS 370, Theorem 2.15, stated by lane RC9; `UNVERIFIED` here),
+/-- `PRINT` (Cai–Chen–Liu, Trans. AMS 370, Theorem 2.15, p. 3730, read and stated by lane RC9),
 the inert norm relations (4.1), tex 2914–2936, together with the Artin identification (H5)
 (`GLUE`, tex 2969–2985), in the form used by (H7): the points `y J = y_{f n_J}` (`J ⊆ I`) live in
 the module `P = E(M_I)` over the commutative group ring `𝒜 = ℤ[Gal(M_I/H_f)]`; `σ i`, `D i`,

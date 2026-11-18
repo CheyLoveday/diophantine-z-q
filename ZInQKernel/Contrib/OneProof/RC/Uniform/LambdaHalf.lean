@@ -474,7 +474,7 @@ theorem valuation_central_ge_sharp (C : ℕ) : ∃ u : LambdaHalf,
 /-! ## 3. (5.5) + (4.6) ⇒ (3.5) -/
 
 /-- **`∑_{p ∣ k} t_p ≤ 2A`** (tex 5201, `PROVED`). `P` is the finset of companion primes `p ∣ k`,
-so `#P = ω(k) ≤ A`, and `t_p ≤ 2` (tex 4000, 4039: `t_p = dim_{𝔽₂} E[2]^{Fr_p} ≤ 2`). -/
+so `|P| = ω(k) ≤ A`, and `t_p ≤ 2` (tex 4000, 4039: `t_p = dim_{𝔽₂} E[2]^{Fr_p} ≤ 2`). -/
 theorem sum_t_le {P : Finset ℕ} {t : ℕ → ℤ} {A : ℕ} (ht : ∀ p ∈ P, t p ≤ 2)
     (hP : P.card ≤ A) : ∑ p ∈ P, t p ≤ 2 * (A : ℤ) := by
   have h1 : ∑ p ∈ P, t p ≤ P.card • (2 : ℤ) := Finset.sum_le_card_nsmul P t 2 ht
@@ -484,7 +484,7 @@ theorem sum_t_le {P : Finset ℕ} {t : ℕ → ℤ} {A : ℕ} (ht : ∀ p ∈ P,
 
 /-- **(4.6) with the companion sum absorbed** (tex 4045-4047 and 5200-5202, `PROVED`).
 (4.6): `v₂ u_prim(0) = 2 j_rc(h,k) - 4ω(h) - s(h) - s(hk) - ∑_{p ∣ k} t_p + O_{E,π}(1)`, written
-as `|v - (2 j_rc - 4ω - sh - shk - ∑_{p ∈ P} t p)| ≤ C₀`. With `0 ≤ t_p ≤ 2` and `#P ≤ A`
+as `|v - (2 j_rc - 4ω - sh - shk - ∑_{p ∈ P} t p)| ≤ C₀`. With `0 ≤ t_p ≤ 2` and `|P| ≤ A`
 ("Only after a bound on `ω(k)` is imposed may the companion sum be absorbed", tex 4001-4002):
 `|v - (2 j_rc - 4ω - sh - shk)| ≤ C₀ + 2A`. -/
 theorem eq46_absorbed {j_rc ω sh shk v C₀ : ℤ} {P : Finset ℕ} {t : ℕ → ℤ} {A : ℕ}
@@ -504,8 +504,8 @@ Inputs: (4.6) as `|v - (2 j_rc - 4ω - sh - shk - ∑_{p ∈ P} t p)| ≤ C₀` 
 and (5.5) at the centre as `-C ≤ v`, where `v = v₂ u_prim(0)` (see `valuation_central_ge`).
 Conclusion with `C_R := C + C₀`.
 
-Only `t_p ≥ 0` is needed for this direction (a presentation point noted in the manuscript
-check: the bound `∑ t_p ≤ 2A` is not needed here). The companion sum enters (4.6) with a minus
+Only `t_p ≥ 0` is needed for this direction (the bound `∑ t_p ≤ 2A` of tex 5201 is not
+needed here). The companion sum enters (4.6) with a minus
 sign, so dropping it only weakens the upper bound for `v`. Elliot's hypotheses
 `0 ≤ t_p ≤ 2`, `ω(k) ≤ A` give `ht` by `fun p hp => (h p hp).1`. His literal route through
 `∑ t_p ≤ 2A` (`sum_t_le`) and the absorbed two-sided form (`eq46_absorbed`) is

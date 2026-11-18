@@ -6,7 +6,7 @@ import ZInQKernel.Contrib.OneProof.RC.Rings.LambdaHalfCoeff
 
 Manuscript (`diophantine_zq.tex`, 11/5 version): tex 4914–4920 (`v₂ u_prim ≥ −C`, `u_prim ∈ Λ[1/2]`, the
 valuation of `𝒪`), tex 5486–5507 and 5605–5629 (Proposition `ex:limits-fixed-field-clearing`, (5.9)),
-tex 5491–5496 ("`ũ_x ∈ Λ[1/2]`"), tex 5698–5705.
+tex 5703–5704 ("`ũ_x ∈ Λ[1/2]`"), tex 5698–5705.
 
 * `iotaO_lambdaHalfToFrac` : the two embeddings of `Λ[1/2]` in `Frac 𝒪` agree (`ι ∘ (Λ[1/2] ⊂ Frac Λ)` and
   `halfToFracO`);
@@ -64,7 +64,7 @@ theorem neg_le_vO_iff (C : ℕ) (u : LambdaHalf) :
       exact_mod_cast (show -(C : ℤ) ≤ m by omega)
 
 /-- **Proposition `ex:limits-fixed-field-clearing`, (5.9), with genuine coordinates `ũ_x ∈ Λ[1/2]`**
-(tex 5486–5507, 5605–5629, 5491–5496; PROVED from RC7's named inputs). Lane RC7's
+(tex 5486–5507, 5605–5629, 5703–5704; PROVED from RC7's named inputs). Lane RC7's
 `clearing_nodes_genuine` with its auxiliary data `u, e, g, hu` (`ũ_x = g_x / 2^{e_x}`) replaced by the
 family `ũ : Addr b → Λ[1/2]` and `C.u x j := [tʲ] ũ_x` (`coeffHalf`); the coordinate hypotheses `hrank`,
 `hacyc` (RC7's ELLIOT inputs E1–E2) are stated on the image `halfToFracO (ũ x)` of `ũ_x` in `Frac 𝒪`.

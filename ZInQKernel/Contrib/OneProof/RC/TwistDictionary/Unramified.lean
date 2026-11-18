@@ -128,7 +128,7 @@ theorem kronecker_prime_eq_one_or {p : ℕ} (hp : p.Prime) {D : ℤ} (hpD : ¬ (
     exact legendreSym.eq_one_or_neg_one p (by rwa [Ne, ZMod.intCast_zmod_eq_zero_iff_dvd])
 
 /-- **Points of the twisted reduction** (PROVED): over `ZMod p`, `p ∤ D`,
-`#(twistInt V D c')(𝔽_p) = p + 1 − χ_D(p) (p + 1 − #V(𝔽_p))`. -/
+`|(twistInt V D c')(𝔽_p)| = p + 1 − χ_D(p) (p + 1 − |V(𝔽_p)|)`. -/
 theorem natCard_twist_residue (p : ℕ) [hp : Fact p.Prime] (V : WeierstrassCurve (ZMod p))
     [V.IsElliptic] {D : ℤ} (hpD : ¬ (p : ℤ) ∣ D) (c' : ZMod p)
     (hc' : (D : ZMod p) = 1 + 4 * c') (h2 : p = 2 → c' = (((D - 1) / 4 : ℤ) : ZMod p))

@@ -10,12 +10,12 @@ functional is the Kummer-dual functional of the same transported point,
 coefficients have valuation `j_rc(h,k) + v₂(Lm)`.
 
 **Form.** The identity is stated on cohomology over the residue field (`ℚ₂` in the text): the three
-comparison maps `i, s, q` are quasi-isomorphisms (tex 3958–3959), so `s` and `q` are taken as linear
-equivalences, and the retained duality homotopies (tex 3960–3963) become the two equalities `hPD`
+comparison maps `i, s, q` are quasi-isomorphisms (tex 3957–3961), so `s` and `q` are taken as linear
+equivalences, and the retained duality homotopies (tex 3962–3966) become the two equalities `hPD`
 and `hc`. The cochain-level homotopies themselves are not modelled (DEPARTURE of form).
 
 Every declaration in this file is `PROVED`; the inputs (4.5) and the two homotopy identities are
-hypotheses (ELLIOT, tex 3911–3915 and 3960–3963).
+hypotheses (ELLIOT, tex 3911–3915 and 3962–3966).
 
 * `central_functional_identity` (tex 3964–3971):
   `(λ_z)₀(i x) = PD_R(i x, j₀⁻¹ c(z₀)) = PD_K(x, s(qs)⁻¹ q c_K(LmP)) = PD_K(x, c_K(LmP))`.
@@ -49,7 +49,7 @@ theorem central_functional_identity {A₀ K₀ Kc R₀ Rc S₀ : Type*} [CommRin
   congr 1
   simp [LinearEquiv.trans_symm]
 
-/-- `s ∘ (q ∘ s)⁻¹ ∘ q = id` (tex 3968–3970): the step that needs `s` and `q` to be
+/-- `s ∘ (q ∘ s)⁻¹ ∘ q = id` (tex 3970–3973): the step that needs `s` and `q` to be
 quasi-isomorphisms separately, not only their composite. PROVED. -/
 theorem comparison_cancel {A₀ Kc Rc S₀ : Type*} [CommRing A₀] [AddCommGroup Kc] [Module A₀ Kc]
     [AddCommGroup Rc] [Module A₀ Rc] [AddCommGroup S₀] [Module A₀ S₀]

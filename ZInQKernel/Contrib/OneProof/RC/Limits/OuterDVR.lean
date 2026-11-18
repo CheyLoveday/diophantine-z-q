@@ -37,7 +37,8 @@ This file formalizes the algebra in the last paragraph of the proof of Lemma
   least power of the uniformizer lying in the ideal, i.e. an element of least valuation.
 * "Uniformizer two" is stated for the image of `ϖ` (Elliot: `ϖ = 2`, whose image is `2`).
 * Elliot's `𝒪` is replaced by an arbitrary DVR `R`. The concrete ring `Λ_(2)` is treated in section
-  `ScalarRing`; passing from `Λ_(2)` to its `2`-adic completion `𝒪` is GLUE (not formalized).
+  `ScalarRing`; passing from `Λ_(2)` to its `2`-adic completion `𝒪` is GLUE here (not formalized);
+  `outerDVR_genuine` (`Rings/LimitsBridge.lean`) applies the construction to the genuine `𝒪` directly.
 
 ## Main results (all PROVED)
 

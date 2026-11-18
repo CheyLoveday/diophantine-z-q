@@ -9,22 +9,24 @@ import ZInQKernel.Contrib.OneProof.RC.Central.Calibration
 The shared top layer of the proof of Theorem 5.3 (namespace `ZInQ.Contrib.CloudB3RC53`) asks, in
 `FixedFieldPackage.coord`, for coefficient data `C : CoordData b` with, among others,
 `UpperBound C B` (tex 5730–5733: `v₂ ũ_x(0) ≤ B` at `x ≠ 0`, from (3.9), (3.4), (4.6), (4.7)) and
-`BaseZero E k C` (Lemma `ex:arith-base-zero`, tex 4319–4373: `L'(E/K,1) = 0 ⇒ ũ₀(0) = 0`). This
+`BaseZero E k C` (Lemma `ex:arith-base-zero`, tex 4330–4376: `L'(E/K,1) = 0 ⇒ ũ₀(0) = 0`). This
 file produces both nodes from the results of this lane and from inputs stated as hypotheses with
 their kinds.
 
 ## Cai–Shu–Tian
 
-Following the lane's instruction, Cai–Shu–Tian, Theorem 1.1 is **not** stated here: it enters as an
+Cai–Shu–Tian, Theorem 1.1 is **not** stated here: it enters as an
 abstract proposition `CSTThm11 : Prop`, to be instantiated by the project's statement
 `ZInQ.Contrib.CloudB3RC53.CST.CSTThm11Split` (Cai, Shu, Tian, "Explicit Gross–Zagier and
 Waldspurger formulae", Algebra & Number Theory 8 (2014) 2523–2572, Theorem 1.1, pp. 2524–2525;
 the project's theorem-application audit, entry A027), together with its use at conductor one
 (`hheight`, PRINT application): `L'(E/K, 1) = 0` makes the conductor-one Heegner point torsion
-(tex 4336–4337, "the conductor-one height formula"). Deriving `hheight` from
+(tex 4345–4346, "the conductor-one height formula"). Deriving `hheight` from
 `CST.CSTThm11Split` needs the factorization `L(E/K, s) = L(E, s) L(E^{(k)}, s)` of the
 character-one `twistedLFunction` and `ĥ = 0 ⇔ torsion` (both GLUE); that derivation belongs with
-the other applications of the print (the genus and odd-form inputs, tex 2403–2591).
+the other applications of the print (the genus and odd-form inputs, tex 2403–2591). It is
+`hheight_of_CST` (`Height/BaseZeroCST.lean`, with the factorization as a hypothesis), composed with
+`baseZero_node` as `baseZero_node_of_CST` (`Height/Discharge.lean`).
 
 * `baseZero_node` (`BaseZero E k C`): PROVED from `baseZero_core` and the inputs.
 * `F8_of_calibration` (tex 10886–10891, (F.8)): the corrected central value has the calibrated
@@ -39,7 +41,7 @@ namespace ZInQ.Manuscript.RC.Central
 
 open ZInQ.Contrib.CloudB3RC53 Matrix
 
-/-- **`BaseZero` from Lemma `ex:arith-base-zero`** (tex 4319–4373).
+/-- **`BaseZero` from Lemma `ex:arith-base-zero`** (tex 4330–4376).
 
 Objects: `K = ℚ(√k)` and the conductor-one Heegner point `P ∈ E(K)`; the DVR `A` (the manuscript's
 `Λ_{(t)}`, residue field `ℚ₂`, residue map `ρ`) with fraction field `F`; the two-term model `D` of
@@ -50,14 +52,15 @@ model); the corrected coordinate `ũ₀`.
 
 Inputs (kinds):
 * `hCST : CSTThm11` and `hheight` (PRINT and its application): see the module docstring;
-* `hcentral` (ELLIOT, tex 4346–4348): full Selmer corank one for `E/K` (tex 2617–2647) gives central
+* `hcentral` (ELLIOT, tex 4350–4352): full Selmer corank one for `E/K` (tex 2616–2626) gives central
   dimensions `(1,1)`;
 * `hu` (definition): `uprim` is the class-functional coordinate of `(z, w)` on the model;
-* `h45` (ELLIOT, the retained boundary (4.5), tex 3911–3915, 4338–4340): `z̄ = i(Lm P)`;
-* `h47` (ELLIOT, (4.7) and the correction `η` at the base, tex 4365–4368; the algebra is
+* `h45` (ELLIOT, the retained boundary (4.5), tex 3911–3915, 4346–4348): `z̄ = i(Lm P)`;
+* `h47` (ELLIOT, (4.7) and the correction `η` at the base, tex 4370–4373; the algebra is
   `corrected_eq`): `ũ₀ = ε₀ u_{prim,0}` with `ε₀ ∈ A`;
 * `hcoef` (GLUE, identification of the package's datum): `C.u 0 0` is the value of `ũ₀` at
-  `t = 0`, i.e. the residue of any integral representative.
+  `t = 0`, i.e. the residue of any integral representative. Discharged for `ũ₀ ∈ Λ[1/2]` by
+  `hcoef_of_lambdaHalf` in `Rings/LambdaT.lean` (used in `baseZero_node_genuine`).
 
 PROVED: `L'(E/K,1) = 0` (`ProductOrderGeTwo E k`) gives `C.u 0 0 = 0`. -/
 theorem baseZero_node {E : WeierstrassCurve ℚ} {k : ℚ} {b : ℕ} (C : CoordData b)
@@ -106,7 +109,7 @@ theorem F8_of_calibration {b : ℕ} (C : CoordData b) (uprim0 e : (Fin b → ZMo
 
 /-- **`UpperBound` from (F.8) and (3.9) + (3.4)** (tex 5730–5733, 10869–10893). At every `x ≠ 0`:
 `ũ_x(0) ≠ 0` with `v₂ ũ_x(0) = 2 j_x − 4ω_x − s_x − s'_x − T_x + ε_x` ((F.8): (4.6) transported by
-(4.7)), `2 j_x ≤ 4ω_x + C_J` ((3.9) with (3.4), tex 2695–2705, 10869–10875), `|ε_x| ≤ C_cal`, and
+(4.7)), `2 j_x ≤ 4ω_x + C_J` ((3.9) with (3.4), tex 2687–2693, 10869–10875), `|ε_x| ≤ C_cal`, and
 the finite-`Ш` lengths and the companion sum are nonnegative (they "have negative sign and may be
 discarded for this upper bound", tex 5731–5732). Then `UpperBound C B` for every
 `B ≥ C_J + C_cal`. PROVED. -/

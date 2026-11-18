@@ -18,9 +18,8 @@ only on the squareclasses (`w_iso`), and `∏_{p ∣ u} (−1/p) = χ₄(|u|)` d
 which is fixed by the real sign and the class mod `8`. No formula `w(E^{(d)}) = w(E)χ_d(−N)` is
 used, so parameters `≡ 3, 7 (mod 8)` (field discriminant `4u`) are covered.
 
-`fivePrime_of_mem`, `nonvanishing_even_of_mem`, `nonvanishing_odd_of_mem`: Propositions
-`ex:app-five-prime` and `ex:sec7-nonvanishing` with the root number of the filter read off a
-single parameter.
+`fivePrime_of_mem`, `nonvanishing_odd_of_mem`: Propositions `ex:app-five-prime` and
+`ex:sec7-nonvanishing` (odd case) with the root number of the filter read off a single parameter.
 -/
 
 namespace ZInQ.Manuscript.RC.Nonvanishing

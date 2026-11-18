@@ -18,7 +18,7 @@ Proposition `ex:app-central-calibration` (tex 7614–7787). This file proves:
 * `card_active_le_omega`, `omega_le_card_active_add` — `ω(h)` differs from the number of active
   good primes by at most `ω(N)` (the bad primes dividing `h`);
 * `E8_of_E7_K3` — **(E.8)** (tex 7755–7775): from (E.7) and (K3), the unused-prime terms
-  `v₂ #E^h(𝔽_q)` cancel against `g_q`, every active good prime contributes `g_q = 2`, the remaining
+  `v₂ |E^h(𝔽_q)|` cancel against `g_q`, every active good prime contributes `g_q = 2`, the remaining
   local types are bounded, and
   `|v₂ u_h^{ev}(0) − (v₂ L_*(h) − 2ω(h) − s(h))| ≤ C_loc`
   with `C_loc` depending only on the fixed local data (not on the active or unused primes);
@@ -157,12 +157,12 @@ theorem omega_le_card_active_add (h : ℤ) {N : ℕ} (hN : N ≠ 0) :
 the active good primes `act`, the unused good primes `unused` and the fixed places `fix` (two and
 the bad primes). Assume
 * (E.7): `v₂u = v₂exp − s − Σ_{v ∈ S} g_v + 2g + 1 − r₁ − e₂`,
-* (K3): `v₂exp = v₂L + Σ_{q ∈ unused} n_q + ε_rec` with `|ε_rec| ≤ C_E`, where `n_q = v₂ #E^h(𝔽_q)`,
+* (K3): `v₂exp = v₂L + Σ_{q ∈ unused} n_q + ε_rec` with `|ε_rec| ≤ C_E`, where `n_q = v₂ |E^h(𝔽_q)|`,
 * `g_q = n_q` at unused good primes, `g_q = 2` at active good primes,
 * `0 ≤ g_v ≤ C_fix` at the fixed places, `0 ≤ g ≤ C_g`, `0 ≤ r₁ ≤ C_r`, `|e₂| ≤ C_e`.
 
 Then the unused terms cancel and
-`|v₂u − (v₂L − 2·#act − s)| ≤ C_E + #fix·C_fix + 2C_g + 1 + C_r + C_e`:
+`|v₂u − (v₂L − 2·|act| − s)| ≤ C_E + |fix|·C_fix + 2C_g + 1 + C_r + C_e`:
 the bound does not involve the active or unused primes. -/
 theorem E8_of_E7_K3 (act unused fix : Finset ℕ) (hdau : Disjoint act unused)
     (hdaf : Disjoint act fix) (hduf : Disjoint unused fix)
@@ -188,8 +188,8 @@ theorem E8_of_E7_K3 (act unused fix : Finset ℕ) (hdau : Disjoint act unused)
   rw [abs_le]
   constructor <;> linarith [hg.1, hg.2, hr.1, hr.2]
 
-/-- **(E.8) with `ω(h)`** (tex 7774–7775; PROVED): if `|v₂u − (v₂L − 2·#act − s)| ≤ C` and
-`#act ≤ ω(h) ≤ #act + ω(N)`, then `|v₂u − (v₂L − 2ω(h) − s)| ≤ C + 2ω(N)`. -/
+/-- **(E.8) with `ω(h)`** (tex 7774–7775; PROVED): if `|v₂u − (v₂L − 2·|act| − s)| ≤ C` and
+`|act| ≤ ω(h) ≤ |act| + ω(N)`, then `|v₂u − (v₂L − 2ω(h) − s)| ≤ C + 2ω(N)`. -/
 theorem E8_omega {v2u v2L s C : ℤ} {nact om omN : ℕ}
     (h : |v2u - (v2L - 2 * (nact : ℤ) - s)| ≤ C) (h1 : nact ≤ om) (h2 : om ≤ nact + omN) :
     |v2u - (v2L - 2 * (om : ℤ) - s)| ≤ C + 2 * omN := by

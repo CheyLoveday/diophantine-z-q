@@ -30,8 +30,9 @@ This file builds the `TateImage` from those genuine objects.
   Mathlib's `cyclotomicCharacter`).
 * `tateBasis E` (lane RC9): a `ℤ₂`-basis of `T₂E`; `tateMatrix E σ`: the matrix of `ρ_T(σ)` in that
   basis; `rhoGL E : G_ℚ →* GL₂(ℤ₂)`: the image of `G_ℚ` in `GL₂(ℤ₂)`.
-* `DetTateTwoEqCyclotomic E` (GLUE, the hypothesis of the final statements): the identity
-  `det ρ_T = χ_cyc` over Mathlib's `cyclotomicCharacter` (Weil pairing).  Its converse direction
+* `DetTateTwoEqCyclotomic E` (GLUE here, the hypothesis of the final statements;
+  proved in `Discharge.lean`): the identity `det ρ_T = χ_cyc` over Mathlib's
+  `cyclotomicCharacter` (Weil pairing).  Its converse direction
   `DetTateTwoCyclotomicConverse E` (an automorphism fixing `μ_{2^∞}` has `det ρ_T = 1`) is the
   direction this file uses (`DetTateTwoEqCyclotomic.converse`, PROVED); the other direction gives
   lane RC9's `DetTateTwoCyclotomic` back (`DetTateTwoEqCyclotomic.forward`, PROVED).
@@ -44,7 +45,7 @@ This file builds the `TateImage` from those genuine objects.
 * `tr_tateImage_ρ` (PROVED): the trace used in the interface (`cheb`, tex 3686) is the basis-free
   trace of `ρ_T(σ)`.
 
-Kinds as in the brief: `PROVED` (a Lean proof), `PRINT` (a printed theorem taken as a leaf),
+Kinds: `PROVED` (a Lean proof), `PRINT` (a printed theorem taken as a leaf),
 `GLUE` (a textbook fact not proved here).  The PRINT and GLUE statements are `Prop`s taken as
 hypotheses, never assumed globally.
 -/
@@ -90,7 +91,7 @@ p. 300, the paragraph after Corollaire 2 (read from the published scan): the com
 Weil pairing (Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., §III.8: `UNVERIFIED`, not
 read for this lane).  This is the hypothesis of the final statements of this lane.  Used through
 its converse direction (`DetTateTwoEqCyclotomic.converse`): `ρ_T` maps `G_{ℚ(μ_{2^∞})}` into
-`SL₂(ℤ₂)`. -/
+`SL₂(ℤ₂)`. It holds for every elliptic `E/ℚ`: `detTateTwoEqCyclotomic_holds` (`Discharge.lean`). -/
 def DetTateTwoEqCyclotomic (E : WeierstrassCurve ℚ) : Prop :=
   ∀ σ : GalQ, LinearMap.det (tateRep E 2 σ) = (cyclotomicCharacter Qbar 2 σ.toRingEquiv : ℤ_[2])
 

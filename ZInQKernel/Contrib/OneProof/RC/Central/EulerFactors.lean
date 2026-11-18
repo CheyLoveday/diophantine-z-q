@@ -4,28 +4,28 @@ import Mathlib
 # Lane RC15 (central): the Euler-factor identities of Lemma `ex:arith-common-coordinate`
 
 The exact algebra behind (4.7) in the 11/5 manuscript (`diophantine_zq.tex`, Lemma
-`ex:arith-common-coordinate`, lines 4142–4317), and the moving-prime identity used in the
+`ex:arith-common-coordinate`, lines 4142–4328), and the moving-prime identity used in the
 calibration (4.6) (Proposition `ex:arith-central-calibration`, lines 4066–4078).
 
 All statements are over an arbitrary commutative ring `R` (in the manuscript `R = 𝒪[G]`,
 `𝒪 = (ℤ₂[[t]]_{(2)})^`, `G` a finite elementary abelian two-group), with the Frobenius at the unused
 prime `q` an actual `2 × 2` matrix `F` with `tr F = a_q`, `det F = q`, a scalar Frobenius value
 `z` with inverse `zi = z⁻¹`, and `qi = q⁻¹` (the manuscript inverts `q` only after the inner limit
-and localization at `(2)`, tex 4282–4284; here `qi` is a hypothesis-carried inverse).
+and localization at `(2)`, tex 4318–4320; here `qi` is a hypothesis-carried inverse).
 
 Every declaration in this file is `PROVED`.
 
 * `det_smul_sub_smul_one`, `det_one_sub_smul`: the two characteristic-polynomial evaluations.
-* `quotientDet_eq` (tex 4183–4184): `δ_q = det(z Fr_q − q) det(z⁻¹ Fr_q − q) = q⁴ l_q`.
+* `quotientDet_eq` (tex 4178–4182): `δ_q = det(z Fr_q − q) det(z⁻¹ Fr_q − q) = q⁴ l_q`.
 * `sq_mul_quotientFactor` (tex 4214–4215): `q² l_q = e_q² + (q − 1)(q − 1 − (z + z⁻¹) e_q)`.
-* `sq_mul_quotientFactor_expanded` (tex 4279–4280): `q² l_q = (q−1)² + a_q² − a_q(q+1)s_q + q s_q²`.
-* `quotientFactor_mul_inv_sq` (tex 4216–4218, 4279–4282): for odd `q = 1 + 2m` and a unit
+* `sq_mul_quotientFactor_expanded` (tex 4310–4312): `q² l_q = (q−1)² + a_q² − a_q(q+1)s_q + q s_q²`.
+* `quotientFactor_mul_inv_sq` (tex 4216–4218, 4310–4318): for odd `q = 1 + 2m` and a unit
   `e_q`, `l_q / e_q² = 1 + 2 v_q` with the manuscript's
   `v_q = (q−1)/(2q²e_q²)·(−(q+1)e_q² + (q−1) − s_q e_q)`; so `l_q/e_q² − 1 ∈ 2R`.
-* `pointFactor_swap`, `quotientFactor_swap` (tex 4170–4171, 4271–4272): conjugation and
+* `pointFactor_swap`, `quotientFactor_swap` (tex 4170–4171, 4307–4308): conjugation and
   orientation reversal `z ↦ z⁻¹` leave `e_q` and `l_q` unchanged.
 * `residue_pointFactor`, `residue_quotientFactor`, `residue_pointFactor_ne_zero`
-  (tex 4197–4205, 4284–4288): modulo `(2, I_G)`, `ē_q = t²/(1+t) ≠ 0` and `l̄_q = t⁴/(1+t)²`.
+  (tex 4197–4205, 4320–4325): modulo `(2, I_G)`, `ē_q = t²/(1+t) ≠ 0` and `l̄_q = t⁴/(1+t)²`.
 * `isUnit_pointFactor` (tex 4205): in a local ring whose maximal ideal the reduction kills,
   `e_q` is a unit.
 * `movingNorm_eq`, `padicValInt_movingNorm` (tex 4066–4074): `N_i = (r_i − 1) − χ_h(r_i) m_i`, and
@@ -41,7 +41,7 @@ section EulerFactors
 variable {R : Type*} [CommRing R]
 
 /-- The point factor `e_q = a_q − z − z⁻¹` at an unused good split prime `q`
-(tex 4151, 4166), with `zi = z⁻¹`. -/
+(tex 4145, 4158), with `zi = z⁻¹`. -/
 def pointFactor (a z zi : R) : R := a - z - zi
 
 /-- The two-place quotient factor `l_q = det(1 − q⁻¹ z Fr_q) · det(1 − q⁻¹ z⁻¹ Fr_q)`
@@ -49,7 +49,7 @@ def pointFactor (a z zi : R) : R := a - z - zi
 def quotientFactor (F : Matrix (Fin 2) (Fin 2) R) (qi z zi : R) : R :=
   (1 - (qi * z) • F).det * (1 - (qi * zi) • F).det
 
-/-- The two quotient determinants `δ_q = det(z Fr_q − q) · det(z⁻¹ Fr_q − q)` (tex 4183–4184). -/
+/-- The two quotient determinants `δ_q = det(z Fr_q − q) · det(z⁻¹ Fr_q − q)` (tex 4178–4182). -/
 def quotientDet (F : Matrix (Fin 2) (Fin 2) R) (q z zi : R) : R :=
   (z • F - q • (1 : Matrix (Fin 2) (Fin 2) R)).det * (zi • F - q • (1 : Matrix (Fin 2) (Fin 2) R)).det
 
@@ -72,7 +72,7 @@ theorem mul_det_one_sub_smul {F : Matrix (Fin 2) (Fin 2) R} {q qi a : R} (z : R)
   rw [det_one_sub_smul, ha, hd]
   linear_combination (-(z * a) + z ^ 2 * q * qi + z ^ 2) * hq
 
-/-- **`δ_q = q⁴ l_q`** (tex 4183–4184): the two quotient determinants are `q⁴` times the
+/-- **`δ_q = q⁴ l_q`** (tex 4178–4182): the two quotient determinants are `q⁴` times the
 two-place quotient factor, for a Frobenius matrix with trace `a_q` and determinant `q`. PROVED. -/
 theorem quotientDet_eq {F : Matrix (Fin 2) (Fin 2) R} {q qi a : R} (z zi : R)
     (hq : q * qi = 1) (ha : F.trace = a) (hd : F.det = q) :
@@ -104,7 +104,7 @@ theorem sq_mul_quotientFactor {F : Matrix (Fin 2) (Fin 2) R} {q qi a z zi : R}
   linear_combination (a ^ 2 - a * (z + zi) + z * zi + 1 - 2 * q) * hz
 
 /-- **The expanded form** `q² l_q = (q − 1)² + a_q² − a_q (q + 1) s_q + q s_q²`, `s_q = z + z⁻¹`
-(tex 4278–4280). PROVED. -/
+(tex 4310–4312). PROVED. -/
 theorem sq_mul_quotientFactor_expanded {F : Matrix (Fin 2) (Fin 2) R} {q qi a z zi : R}
     (hq : q * qi = 1) (hz : z * zi = 1) (ha : F.trace = a) (hd : F.det = q) :
     q ^ 2 * quotientFactor F qi z zi =
@@ -113,7 +113,7 @@ theorem sq_mul_quotientFactor_expanded {F : Matrix (Fin 2) (Fin 2) R} {q qi a z 
   unfold pointFactor
   ring
 
-/-- **Integrality of the correction** (tex 4216–4219, 4278–4283): for odd `q = 1 + 2m` with
+/-- **Integrality of the correction** (tex 4216–4219, 4310–4318): for odd `q = 1 + 2m` with
 inverse `qi` and a point factor `e_q` with inverse `ei`, `l_q / e_q² = 1 + 2 v_q` with
 `v_q = m (−(q+1) e_q² + (q − 1) − s_q e_q) q⁻² e_q⁻²`, which is the manuscript's
 `v_q = (q−1)/(2q²e_q²)·(−(q+1)e_q² + (q−1) − s_q e_q)` (here `(q − 1)/2 = m`). Hence
@@ -134,11 +134,11 @@ theorem quotientFactor_mul_inv_sq {F : Matrix (Fin 2) (Fin 2) R} {q qi a z zi ei
     + ((-(q + 1) * e ^ 2 + (q - 1) - (z + zi) * e) * qi ^ 2 * ei ^ 2) * hodd
 
 /-- **Conjugation fixes the point factor** (tex 4170–4171): `z ↦ z⁻¹` gives `e_q^c = e_q`;
-the same swap is the orientation reversal of tex 4271–4272. PROVED. -/
+the same swap is the orientation reversal of tex 4307–4308. PROVED. -/
 theorem pointFactor_swap (a z zi : R) : pointFactor a zi z = pointFactor a z zi := by
   unfold pointFactor; ring
 
-/-- **Orientation reversal fixes the quotient factor** (tex 4271–4272): replacing `z` by `z⁻¹`
+/-- **Orientation reversal fixes the quotient factor** (tex 4307–4308): replacing `z` by `z⁻¹`
 leaves `l_q` unchanged. PROVED. -/
 theorem quotientFactor_swap (F : Matrix (Fin 2) (Fin 2) R) (qi z zi : R) :
     quotientFactor F qi zi z = quotientFactor F qi z zi := by
@@ -178,7 +178,7 @@ theorem residue_pointFactor_ne_zero (ρ : R →+* k) {a z zi : R} {t : k} (hz : 
   rw [h0, zero_mul] at this
   exact ht0 (pow_eq_zero_iff (n := 2) (by norm_num) |>.mp this.symm)
 
-/-- **`l̄_q = t⁴/(1 + t)²`** (tex 4284–4288): under the same reduction, with `ρ(q) = 1`,
+/-- **`l̄_q = t⁴/(1 + t)²`** (tex 4320–4325): under the same reduction, with `ρ(q) = 1`,
 `ρ(l_q) (1 + t)² = t⁴`; in particular the residual `t`-order of the two-place determinant
 `q⁴ l_q` is four. PROVED. -/
 theorem residue_quotientFactor (ρ : R →+* k) {F : Matrix (Fin 2) (Fin 2) R} {q qi a z zi : R}
@@ -207,7 +207,7 @@ theorem residue_quotientFactor (ρ : R →+* k) {F : Matrix (Fin 2) (Fin 2) R} {
 /-- **`e_q` is a unit of `𝒪[G]`** (tex 4205): if `R` is local and the reduction `ρ` modulo the
 maximal ideal `(2, I_G)` sends `a_q ↦ 0` and `z ↦ 1 + t` with `t ≠ 0`, `1 + t ≠ 0`, then
 `e_q ∈ R^×`. That `𝒪[G]` is local with maximal ideal `(2, I_G)` and residue field `𝔽₂((t))` is the
-setting of tex 4194–4197, carried here as the hypotheses on `R` and `ρ`. PROVED. -/
+setting of tex 4198–4204, carried here as the hypotheses on `R` and `ρ`. PROVED. -/
 theorem isUnit_pointFactor [IsLocalRing R] (ρ : R →+* k)
     (hρ : ∀ x ∈ IsLocalRing.maximalIdeal R, ρ x = 0) {a z zi : R} {t : k} (hz : z * zi = 1)
     (ha : ρ a = 0) (hzt : ρ z = 1 + t) (ht : 1 + t ≠ 0) (ht0 : t ≠ 0) :
@@ -221,7 +221,7 @@ end EulerFactors
 section MovingPrime
 
 /-- **`N_i = r_i + 1 − χ_h(r_i) a_{r_i} = (r_i − 1) − χ_h(r_i) m_i`** with
-`m_i = a_{r_i} − 2χ_h(r_i)` (tex 4069–4071; `m_i` as in (4.5), tex 3912). PROVED. -/
+`m_i = a_{r_i} − 2χ_h(r_i)` (tex 4069–4071; `m_i` as in (4.5), tex 3915). PROVED. -/
 theorem movingNorm_eq (r a χ : ℤ) (hχ : χ ^ 2 = 1) :
     r + 1 - χ * a = (r - 1) - χ * (a - 2 * χ) := by
   linear_combination (-2 : ℤ) * hχ

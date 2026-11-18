@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.OneProof.RC.PrintsArith.Basic
 /-!
 # Heegner points, cusps and CM reduction: Cai–Chen–Liu, Elkik (Manin–Drinfeld), Cornut–Jetchev
 
-Lane RC9. The finite Heegner descent (`ex:arith-finite-heegner`, tex 2834–3393) and the odd theta
+Lane RC9. The finite Heegner descent (`ex:arith-finite-heegner`, tex 2834–3410) and the odd theta
 comparison (App. F, `ex:app-theta-comparison`, tex 9103–9405) cite three prints about modular
 curves and CM points:
 

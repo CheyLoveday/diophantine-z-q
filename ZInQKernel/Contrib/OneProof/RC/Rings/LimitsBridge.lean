@@ -68,7 +68,7 @@ theorem mem_infinitesimals_iff_outerNegligible {ι : Type*} (U : Ultrafilter ι)
     filter_upwards [h (n : ℤ)] with j hj
     exact (pow_dvd_iff_le_dvrAddVal (K := FractionRing OO) irreducible_two_OO n (x j)).mpr hj
 
-/-- **Tex 4706–4714, 4724–4727 (PROVED).** For a sequence of elements of the genuine `𝒪`: its class in
+/-- **Tex 4720–4724, 4724–4727 (PROVED).** For a sequence of elements of the genuine `𝒪`: its class in
 `𝒪_∞` is nonzero iff the sequence is not `OuterNegligible` for `v_𝒪` (the reading of RC16's predicate as
 "a nonzero element of `𝒪_∞`"). -/
 theorem toOInf_ne_zero_iff_not_outerNegligible {ι : Type*} (U : Ultrafilter ι) (x : ι → OO) :

@@ -10,7 +10,7 @@ import ZInQKernel.Contrib.CloudB3RC53.Assembly
 Each theorem below is the exact form in which the manuscript uses one of the analytic prints,
 PROVED in Lean from the leaf (and, where named, from the shared blueprint's proved nodes).
 
-* tex L1792–1796 (with L5736–5741): "root number `-1`", i.e. **odd analytic order** —
+* tex L1792–1796 (with L5734–5736): "root number `-1`", i.e. **odd analytic order** —
   `analyticOrder_odd_of_selmerCorankOne` (from the blueprint's `rootNumberNode_proof`, i.e.
   Dokchitser–Dokchitser Theorem 1.8, and the parity lemma `rootNumber_odd_of_neg_one`).
 * tex L1985–1991 and App G L10016–10027: Hoffstein–Luo for the twists `E_ℓ^{(q₀)} = E_{q₀ℓ}` of the
@@ -28,7 +28,7 @@ open ZInQ.Manuscript ZInQ.Manuscript.SelmerTwoPower ZInQ.Contrib.CloudB3RC53
 
 /-! ### tex L1792–1796: root number `-1`, i.e. odd order -/
 
-/-- **Root number `-1` gives odd analytic order** (PROVED; tex L1792–1796 with L5736–5741). From
+/-- **Root number `-1` gives odd analytic order** (PROVED; tex L1792–1796 with L5734–5736). From
 the shared printed leaves (`Prints`, in particular Dokchitser–Dokchitser Theorem 1.8 through the
 blueprint's `rootNumberNode_proof`): for `ℓ` in the domain of Theorem 5.3 with
 `corank_{ℤ₂} Sel_{2^∞}(E_ℓ/ℚ) = 1`, every entire continuation of `L(E_ℓ, s)` vanishes at `s = 1` to

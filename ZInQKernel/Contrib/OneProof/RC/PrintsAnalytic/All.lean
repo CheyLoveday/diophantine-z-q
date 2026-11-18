@@ -21,7 +21,8 @@ the shared vocabulary `ZInQ.Contrib.CloudB3RC53` (`qtwist`, `IsLContinuation`, `
   ones in `Bridges.lean`); `DesjardinsRootNumberFilter` (global-consequence form);
   `WaldspurgerCor2`, `WaldspurgerNonvanishing` (print not read); `ModularNewform` (BCDT Theorem A
   condition (2), Milne Theorem 11.19 / Proposition 11.21).
-* GLUE: `HasseConvergence`, `TwistDictionary`.
+* GLUE: `HasseConvergence`, `TwistDictionary` (the latter PROVED as `twistDictionary`,
+  `TwistDictionary/Dictionary.lean`).
 * Dokchitser–Dokchitser Theorem 1.8, BCDT Theorem A, Kolyvagin Theorem 1 and Cai–Shu–Tian
   Theorem 1.1 are the shared blueprint's leaves (`ZInQ.Contrib.CloudB3RC53.Prints`) and are not
   restated.

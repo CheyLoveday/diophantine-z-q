@@ -9,7 +9,7 @@ The shared top layer (namespace `ZInQ.Contrib.CloudB3RC53`, file `Nodes.lean`) r
 through `ClearingIdentity`, `PoleBound` and `BaseRegular`.  This file produces exactly those
 propositions from `fixed_field_clearing` (`Output.lean`), for the actual elements `f = 2^a Δ⁴` and
 `d = η Δ Q` of the group ring `MonoidAlgebra O (Multiplicative 𝔽₂^b)` and the given coordinates
-`ũ_x = g_x / 2^{e_x} ∈ Λ[1/2]` (manuscript `diophantine_zq.tex`, tex 5486–5664; App G 10901–10914).
+`ũ_x = g_x / 2^{e_x} ∈ Λ[1/2]` (manuscript `diophantine_zq.tex`, tex 5487–5645; App G 10901–10914).
 
 * `sgnChar x : Multiplicative 𝔽₂^b →* ℤˣ` is the sign character `g ↦ (-1)^{⟨x, g⟩}`; its values are
   the shared layer's `sgn x g` (`sgnChar_coe`).
@@ -22,7 +22,7 @@ namespace ZInQ.Manuscript.RC.Determinant
 
 open Matrix Finset Filter Topology
 
-/-- Binary addresses `x ∈ 𝔽₂^b` (tex 2179–2271). -/
+/-- Binary addresses `x ∈ 𝔽₂^b` (tex 2209–2220). -/
 abbrev Addr (b : ℕ) : Type := Fin b → ZMod 2
 
 /-- The sign group `G = 𝔽₂^b`, written multiplicatively for the group ring. -/
@@ -39,7 +39,7 @@ private theorem sgn_mul_aux (A B : ZMod 2) :
     (if A + B = 0 then (1 : ℤˣ) else -1) = (if A = 0 then 1 else -1) * (if B = 0 then 1 else -1) := by
   fin_cases A <;> fin_cases B <;> decide
 
-/-- The sign character `g ↦ (-1)^{⟨x, g⟩}` of the address `x` (tex 2179–2271, 5666–5667). -/
+/-- The sign character `g ↦ (-1)^{⟨x, g⟩}` of the address `x` (tex 2209–2220, 5666–5667). -/
 def sgnChar {b : ℕ} (x : Addr b) : SignGroup b →* ℤˣ where
   toFun g := if (∑ i, x i * (Multiplicative.toAdd g) i) = 0 then 1 else -1
   map_one' := by simp

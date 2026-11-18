@@ -9,8 +9,9 @@ one central Smith disk `[ℤ₂ --2--> ℤ₂]` in degree zero (so `Δ = 2`, `h�
 pattern at every address, and the coordinate `ũ_x = 2` forced by Elliot's formula
 `ũ_x = η κ α (2^{-a} β) T` with `η = κ = ε = 1`, `a = 0`, `α = β = 1`, `T = δ_0 = 2`.
 The conclusion then provides genuine coefficient data with `BaseRegular C 4`.
-The hypotheses of `newLocal_inv_pole_genuine` are satisfiable by the residual block of tex 5456–5463
-in the simplest case `A_q = 1` (`d_q = 0`).
+The hypotheses of `newLocal_inv_pole_genuine` are satisfiable in the simplest case `A_q = 1`
+(`d_q = 0`); this is not the block of tex 5456–5463, whose residual determinant `t⁴/(1+t)²` has
+order four.
 Everything here is PROVED.
 -/
 

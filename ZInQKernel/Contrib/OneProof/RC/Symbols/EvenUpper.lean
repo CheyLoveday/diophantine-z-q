@@ -49,7 +49,7 @@ theorem even_upper_cubes {ε : L →+ ZMod 2} {A : Config L → ZMod 2} (hA : Co
 * `hmiss`: on the cubes of `even_upper_cubes` (based at `d₀`, units at nonzero addresses) the
   common scalar has bounded Boolean bit degrees, so for every precision `M` a large cube has a
   nonzero address `x` with `v₂(u_x(0) - u_0(0)) ≥ M - c_E` (ELLIOT: Section 9 Boolean bit-degree
-  lemma and cube parity, tex 5690–5714, with the uniform clearing (E.5)).
+  lemma and cube parity, tex 5666–5726, with the uniform clearing (E.5)).
 Conclusion (3.3b): `L_*(d₀) ≠ 0` and `v₂ L_*(d₀) - 2ω(d₀) - s(d₀) ≤ C₀ + 2 C_loc`; the constant
 depends only on the source. Valuations of nonzero 2-adic numbers are `Padic.valuation`. -/
 theorem even_upper_valuation {P : Type*} (unit corank0 Lnz : P → Prop) (u : P → ℚ_[2])

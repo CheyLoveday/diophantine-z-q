@@ -48,7 +48,7 @@ theorem two_not_mem_of_height_one (P : Ideal Lambda) [P.IsPrime] (h : P.height =
     (hP2 : P ≠ Ideal.span {2}) : (2 : Lambda) ∉ P := fun h2 =>
   hP2 (Ideal.eq_span_singleton_of_height_eq_one h h2 prime_two_lambda)
 
-/-- **Tex 4977–4980 (and tex 3755–3757 "`−2`, a unit at `𝔭 ≠ (2)`"), PROVED.** At a height-one
+/-- **Tex 4977–4980 (and tex 3761–3762 "`−2`, a unit at `𝔭 ≠ (2)`"), PROVED.** At a height-one
 prime `𝔭 ≠ (2)`, `2` is a unit of `Λ_𝔭`. -/
 theorem isUnit_two_atPrime_of_height_one (P : Ideal Lambda) [P.IsPrime] (h : P.height = 1)
     (hP2 : P ≠ Ideal.span {2}) : IsUnit (2 : Localization.AtPrime P) := by

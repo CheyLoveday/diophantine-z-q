@@ -124,8 +124,8 @@ Hypotheses and their kinds, all with trivial coefficients `𝔽₂` resp. `W = E
 * `hW1`, `hW0` (GLUE): `W = 𝔽₂²` is trivial, so `h¹(W) = 2·h¹(𝔽₂)` and `h⁰(G_{K,S₀}, W) = 2`.
 * `hEuler` (PRINT, Milne, *Arithmetic Duality Theorems*, 2nd ed. 2006, Ch. I, Thm 5.1, p. 67,
   applied over the imaginary quadratic field `K`, tex 4525–4530; hypothesis check: `S₀` contains
-  the places above `2`, so `#W = 4` is a unit in `R_{K,S₀}`): `χ(G_S, W) = ∏_{v arch} #H⁰(G_v, W) /
-  |#W|_v = 4/16`, i.e. `h⁰ − h¹ + h² = −2` (one complex place, `[K:ℚ] = 2`); Milne ADT I, Thm 4.10(c),
+  the places above `2`, so `|W| = 4` is a unit in `R_{K,S₀}`): `χ(G_S, W) = ∏_{v arch} |H⁰(G_v, W)| /
+  ‖|W|‖_v = 4/16`, i.e. `h⁰ − h¹ + h² = −2` (one complex place, `[K:ℚ] = 2`); Milne ADT I, Thm 4.10(c),
   pp. 56–57, gives `H^r(G_S, W) ≅ ∏_{v real} H^r(K_v, W) = 0` for `r ≥ 3` (no real place), which is
   why the total residual cohomology is `h⁰ + h¹ + h²`.
 
@@ -168,7 +168,7 @@ theorem global_estimate_weak (s dQ dK h1S0F2 h0 h1 h2 : ℕ)
 Inputs: `hH0` (GLUE: `W` is trivial, so `H⁰ = W`); `hH2` (PRINT: local duality, Milne ADT, 2nd ed.,
 Ch. I, Cor. 2.3, p. 28: `H²(K_w, W) ≅ H⁰(K_w, W^D)^*`, and `W^D = Hom(W, μ₂)` is again trivial of
 dimension 2); `hχ` (PRINT: local Euler characteristic, Milne ADT I, Thm 2.8, p. 31:
-`χ(G, W) = (R : #W·R)⁻¹`, i.e. `h⁰ − h¹ + h² = −2 d_w` for `#W = 4`).  These three inputs are
+`χ(G, W) = (R : |W|·R)⁻¹`, i.e. `h⁰ − h¹ + h² = −2 d_w` for `|W| = 4`).  These three inputs are
 derived from the PRINT propositions over Mathlib's continuous cohomology in
 `LocalPrints.local_cohomology_dims`. -/
 theorem local_dims (d h0 h1 h2 : ℕ) (hH0 : h0 = 2) (hH2 : h2 = 2)
@@ -541,7 +541,8 @@ structure GlobalCountsSchreier (s : ℕ) where
   schreier : dK ≤ 2 * (dQ - 1) + 1
   /-- `h¹(G_{K,S₀}, 𝔽₂)` -/
   h1S0F2 : ℕ
-  /-- GLUE (tex 4538–4540): the pro-2 quotient of `G_{K,S₀}` is a quotient, `h¹ ≤ #generators` -/
+  /-- GLUE (tex 4538–4540): the pro-2 quotient of `G_{K,S₀}` is a quotient, `h¹` is at most the
+  number of generators -/
   quot : h1S0F2 ≤ dK
   /-- `h⁰, h¹, h²` of `G_{K,S₀}` with coefficients `W` -/
   h0 : ℕ

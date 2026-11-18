@@ -51,7 +51,7 @@ universe u v
 PROVED (`exists_finiteFreeModel`).
 
 Over a local ring `A` with nilpotent maximal ideal, a (total) complex `(M, d)` of flat modules with
-finite residual cohomology admits a finite free model `A^{(ι)}`, `#ι = dim_k H(M ⊗ k)`, with actual
+finite residual cohomology admits a finite free model `A^{(ι)}`, `|ι| = dim_k H(M ⊗ k)`, with actual
 inclusion `i`, projection `p` and contraction homotopy `h`.  Transport of every fixed finite
 diagram of maps and homotopies is `retractTransport` and its lemmas in `Perturbation`. -/
 theorem ex_limits_inner_limit_finiteFreeModel {A : Type u} [CommRing A] [IsLocalRing A]
@@ -146,7 +146,7 @@ theorem ex_limits_inner_limit_homotopy_inverse {m n : Type*} [Fintype m] [Fintyp
 /-! ## Lemma `ex:limits-residual-bound` -/
 
 /-- **Lemma `ex:limits-residual-bound`** (tex 4453–4610).  PROVED from the named cohomological
-counts `ResidualRankCounts` (`ResidualRankCounts.rank_le`):
+counts `ResidualRankCounts` (`ResidualRankCounts.genericRank_le`):
 
   `N(E, A, j) ≤ 56 ω(2N) + 8A + 56j + 70`,  `j = |D|`.
 

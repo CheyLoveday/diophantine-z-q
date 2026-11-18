@@ -20,7 +20,7 @@ whose `x`-coordinate is the Vélu map above; the naïve-height estimate
 `|h((x² + a x + b)/x) − 2 h(x)| ≤ C` is `abs_logHeight₁_velu_sub_le'` (`FieldVelu.lean`). The
 construction of the 2-isogeny as an additive map on points is the textbook formula and is not
 redone here (the statement takes `φ` as data; it is used nowhere in the steps of this lane's tex
-lines, see the report).
+lines).
 
 Every declaration in this file is PROVED.
 

@@ -9,8 +9,8 @@ definition (Mathlib's `Height.AdmissibleAbsValues`; for a number field `K` the p
 local degrees, so `ĥ` is the height relative to `K`).
 
 The functoriality facts used by the manuscript (`diophantine_zq.tex`, the 11/5 version) at (3.4)
-(lines 2427–2439), at the calibration (4.6) (lines 3989–4140) and in the base-zero lemma (lines
-4319–4373) all have the same shape: an additive map of point groups multiplies the naïve height by
+(lines 2427–2439), at the calibration (4.6) (lines 3987–4141) and in the base-zero lemma (lines
+4330–4376) all have the same shape: an additive map of point groups multiplies the naïve height by
 a constant `d` up to a bounded error, hence multiplies the canonical height by `d` exactly. This
 file proves that principle once (`canonicalHeight_map_eq_of_abs_naiveHeight_sub_le`), its polarized
 form for the Néron–Tate pairing, and the elementary facts every application needs.

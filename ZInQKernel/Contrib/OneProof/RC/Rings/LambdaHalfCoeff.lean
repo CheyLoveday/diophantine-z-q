@@ -12,7 +12,7 @@ Manuscript `diophantine_zq.tex` (11/5 version). Put `Λ = ℤ₂[[t]]` and `𝒪
 
 1. **Coefficients.** `halfToPowerSeries : Λ[1/2] →+* ℚ₂[[t]]` (injective) and
    `coeffHalf u j = [tʲ] u ∈ ℚ₂`. The coefficient sequence of every `u ∈ Λ[1/2]` satisfies RC16's
-   `CoeffsInLambdaHalf` and has bounded denominators (tex 5491–5496, 4916), and conversely
+   `CoeffsInLambdaHalf` and has bounded denominators (tex 5492–5497, 4916), and conversely
    `Λ[1/2]` is exactly the ring of `ℚ₂`-power series with bounded denominators
    (`mem_range_halfToPowerSeries_iff`). The constant coefficient is the central specialization
    (`coeffHalf_zero_eq_centralSpecialization`).
@@ -22,7 +22,7 @@ Manuscript `diophantine_zq.tex` (11/5 version). Put `Λ = ℤ₂[[t]]` and `𝒪
    "no negative powers of `t`" (tex 5703–5704).
 3. **(E.5)** `A ∩ 𝒪 = Λ` (tex 7600–7609): `halfToFracO_mem_range_iff`, its corollary for
    `2^c u`, and the coefficientwise intersection in the group basis of `A[G]`
-   (`exists_map_eq_two_pow_smul`, `mem_range_map_iff_two_pow_smul`).
+   (`exists_map_eq_two_pow_smul`, `map_mem_range_map_iff`).
 
 Everything in this file is `PROVED`; no `GLUE` and no `ELLIOT` statement.
 
@@ -77,7 +77,7 @@ theorem halfToPowerSeries_injective : Function.Injective halfToPowerSeries := by
   · rw [algebraMap_lambdaHalf_injective h]
   · exact congrArg _ (PowerSeries.map_injective _ (fun a b hab => PadicInt.ext hab) h)
 
-/-- The `tʲ`-coefficient `[tʲ] u ∈ ℚ₂` of `u ∈ Λ[1/2]` (tex 5491–5496: the top layer records `ũ_x`
+/-- The `tʲ`-coefficient `[tʲ] u ∈ ℚ₂` of `u ∈ Λ[1/2]` (tex 5492–5497: the top layer records `ũ_x`
 by these coefficients). -/
 noncomputable def coeffHalf (u : LambdaHalf) (j : ℕ) : ℚ_[2] :=
   PowerSeries.coeff j (halfToPowerSeries u)
@@ -89,7 +89,7 @@ theorem coeffHalf_algebraMap (f : Lambda) (j : ℕ) :
   rw [coeffHalf, halfToPowerSeries_algebraMap, PowerSeries.coeff_map]
   rfl
 
-/-- Coefficients of `u` and `u · 2^e = g` (`PROVED`; tex 5491–5496): `[tʲ]u · 2^e = [tʲ]g`. -/
+/-- Coefficients of `u` and `u · 2^e = g` (`PROVED`; tex 5492–5497): `[tʲ]u · 2^e = [tʲ]g`. -/
 theorem coeffHalf_mul_two_pow_of_mul {u : LambdaHalf} {e : ℕ} {g : Lambda}
     (h : u * algebraMap Lambda LambdaHalf (2 ^ e) = algebraMap Lambda LambdaHalf g) (j : ℕ) :
     coeffHalf u j * (2 : ℚ_[2]) ^ e = ((PowerSeries.coeff j g : ℤ_[2]) : ℚ_[2]) := by
@@ -99,26 +99,26 @@ theorem coeffHalf_mul_two_pow_of_mul {u : LambdaHalf} {e : ℕ} {g : Lambda}
     show (2 : PowerSeries ℚ_[2]) ^ e = PowerSeries.C ((2 : ℚ_[2]) ^ e) by
       rw [map_pow, map_ofNat], PowerSeries.coeff_mul_C]
 
-/-- **Coefficients of `g / 2^e`** (`PROVED`; tex 5491–5496): if `u · 2^e = g` with `g ∈ Λ`, then
+/-- **Coefficients of `g / 2^e`** (`PROVED`; tex 5492–5497): if `u · 2^e = g` with `g ∈ Λ`, then
 `[tʲ]u = [tʲ]g / 2^e`. -/
 theorem coeffHalf_eq_of_mul_two_pow {u : LambdaHalf} {e : ℕ} {g : Lambda}
     (h : u * algebraMap Lambda LambdaHalf (2 ^ e) = algebraMap Lambda LambdaHalf g) (j : ℕ) :
     coeffHalf u j = ((PowerSeries.coeff j g : ℤ_[2]) : ℚ_[2]) / 2 ^ e := by
   rw [← coeffHalf_mul_two_pow_of_mul h j, mul_div_cancel_right₀ _ (pow_ne_zero _ two_ne_zero)]
 
-/-- **`ũ ∈ Λ[1/2]` in coefficient form** (`PROVED`; tex 5491–5496, 5719–5721): the coefficient
+/-- **`ũ ∈ Λ[1/2]` in coefficient form** (`PROVED`; tex 5492–5497, 5703–5704): the coefficient
 sequence of every `u ∈ Λ[1/2]` satisfies RC16's `CoeffsInLambdaHalf`. -/
 theorem coeffsInLambdaHalf_coeffHalf (u : LambdaHalf) : CoeffsInLambdaHalf (coeffHalf u) := by
   obtain ⟨f, m, hf⟩ := exists_mul_two_pow_eq u
   exact ⟨f, m, coeffHalf_mul_two_pow_of_mul hf⟩
 
-/-- **Bounded denominators** (`PROVED`; tex 4916, 5491–5496, 7607–7608: "an element of `A` has
+/-- **Bounded denominators** (`PROVED`; tex 4916, 5492–5497, 7607–7608: "an element of `A` has
 bounded powers of two as denominators in its power-series coefficients"). -/
 theorem coeffHalf_bounded (u : LambdaHalf) : ∃ e : ℕ, ∀ j, ‖coeffHalf u j‖ ≤ (2 : ℝ) ^ e :=
   norm_le_of_coeffsInLambdaHalf (coeffsInLambdaHalf_coeffHalf u)
 
 /-- **`CoeffsInLambdaHalf` is exactly the coefficient sequences of `Λ[1/2]`** (`PROVED`;
-tex 5491–5496, 6841): RC16's coefficient predicate holds for `c` iff `c` is the coefficient
+tex 5492–5497, 6841): RC16's coefficient predicate holds for `c` iff `c` is the coefficient
 sequence of some genuine `u ∈ Λ[1/2]`. -/
 theorem coeffsInLambdaHalf_iff (c : ℕ → ℚ_[2]) :
     CoeffsInLambdaHalf c ↔ ∃ u : LambdaHalf, ∀ j, c j = coeffHalf u j := by
@@ -216,7 +216,7 @@ theorem halfToFracO_injective : Function.Injective halfToFracO := by
   · rw [algebraMap_lambdaHalf_injective h]
   · exact congrArg _ (lamToO_injective (IsFractionRing.injective OO (FractionRing OO) h))
 
-/-- **`halfToFracO` is RC7's `uK`** (`PROVED`; tex 5491–5496, 5698–5705): if `u · 2^e = g` with
+/-- **`halfToFracO` is RC7's `uK`** (`PROVED`; tex 5492–5497, 5698–5705): if `u · 2^e = g` with
 `g ∈ Λ`, then the image of `u` in `Frac 𝒪` is `uK e g = g / 2^e`. -/
 theorem halfToFracO_eq_uK {u : LambdaHalf} {e : ℕ} {g : Lambda}
     (h : u * algebraMap Lambda LambdaHalf (2 ^ e) = algebraMap Lambda LambdaHalf g) :
@@ -231,7 +231,7 @@ theorem halfToFracO_eq_uK {u : LambdaHalf} {e : ℕ} {g : Lambda}
   rw [uK, eq_div_iff h2, h1]
   rfl
 
-/-- **Wiring for RC7's `hu`** (`PROVED`; tex 5491–5496, 5698–5705): every `u ∈ Λ[1/2]` is
+/-- **Wiring for RC7's `hu`** (`PROVED`; tex 5492–5497, 5698–5705): every `u ∈ Λ[1/2]` is
 `g / 2^e` with `g ∈ Λ`, simultaneously in coefficient form (`[tʲ]u = [tʲ]g / 2^e`, the form of
 RC7's hypothesis `hu` of `clearing_nodes_genuine`) and in `Frac 𝒪` (`halfToFracO u = uK e g`, the
 form of its hypotheses `hrank`, `hacyc`). -/
@@ -242,7 +242,7 @@ theorem exists_coeffHalf_uK (u : LambdaHalf) :
   obtain ⟨g, e, h⟩ := exists_mul_two_pow_eq u
   exact ⟨e, g, coeffHalf_eq_of_mul_two_pow h, halfToFracO_eq_uK h⟩
 
-/-- **Wiring for RC7's `hu`, family version** (`PROVED`; tex 5491–5496, 5698–5705): for any family
+/-- **Wiring for RC7's `hu`, family version** (`PROVED`; tex 5492–5497, 5698–5705): for any family
 `ũ : ι → Λ[1/2]` (e.g. `ι = Addr b`, the corrected coordinates `ũ_x`) there are `e x`, `g x` with
 `coeffHalf (ũ x) j = [tʲ](g x) / 2^{e x}` for all `x, j` — exactly RC7's hypothesis `hu` for
 `u := fun x j => coeffHalf (ũ x) j` — and `halfToFracO (ũ x) = uK (e x) (g x)`. -/
@@ -379,12 +379,12 @@ theorem map_lambda_injective {G : Type*} :
 /-- The element `1/2 ∈ Λ[1/2]`. -/
 noncomputable def half : LambdaHalf := IsLocalization.Away.invSelf (2 : Lambda)
 
-/-- `(1/2) · 2 = 1` in `Λ[1/2]` (`PROVED`; non-vacuity for tex 5491–5496, 7600–7609). -/
+/-- `(1/2) · 2 = 1` in `Λ[1/2]` (`PROVED`; non-vacuity for tex 5492–5497, 7600–7609). -/
 theorem half_mul_two : half * algebraMap Lambda LambdaHalf (2 ^ 1) = algebraMap Lambda LambdaHalf 1 := by
   rw [pow_one, map_one, mul_comm]
   exact IsLocalization.Away.mul_invSelf (2 : Lambda)
 
-/-- The coefficients of `1/2` (`PROVED`; non-vacuity for tex 5491–5496): `[t⁰](1/2) = 1/2`, all
+/-- The coefficients of `1/2` (`PROVED`; non-vacuity for tex 5492–5497): `[t⁰](1/2) = 1/2`, all
 other coefficients vanish. -/
 theorem coeffHalf_half (j : ℕ) : coeffHalf half j = if j = 0 then (2 : ℚ_[2])⁻¹ else 0 := by
   rw [coeffHalf_eq_of_mul_two_pow half_mul_two, PowerSeries.coeff_one, pow_one]

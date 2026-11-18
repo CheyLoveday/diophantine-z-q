@@ -6,10 +6,10 @@ import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
 # Lane RC18-twist: points of quadratic twists over finite fields
 
 * `natCard_point_twistInt_of_ringChar_ne_two`: over a finite field `𝔽_q` of odd characteristic,
-  `#W^{(D)}(𝔽_q) = q + 1 − χ(D) (q + 1 − #W(𝔽_q))` (points at infinity included), i.e.
+  `|W^{(D)}(𝔽_q)| = q + 1 − χ(D) (q + 1 − |W(𝔽_q)|)` (points at infinity included), i.e.
   `a(W^{(D)}) = χ(D) a(W)` for the quadratic character `χ` of `𝔽_q`.
 * `natCard_point_twistInt_zmod_two`: over `𝔽₂`, the Artin–Schreier twist `twistInt W 1 c` has
-  `#W^{tw}(𝔽₂) = 3 − ε (3 − #W(𝔽₂))`, `ε = 1` if `c = 0` and `ε = −1` if `c = 1`.
+  `|W^{tw}(𝔽₂)| = 3 − ε (3 − |W(𝔽₂)|)`, `ε = 1` if `c = 0` and `ε = −1` if `c = 1`.
 
 ## Method
 
@@ -80,7 +80,7 @@ theorem natCard_point_twistK (hk : ringChar k ≠ 2) (W : WeierstrassCurve k) {d
 end OddCharacteristic
 
 /-- **Points of a quadratic twist over a finite field of odd characteristic** (PROVED):
-`#W^{(D)}(𝔽_q) = q + 1 − χ(D) (q + 1 − #W(𝔽_q))` for `D = 1 + 4c ≠ 0`, `χ` the quadratic character
+`|W^{(D)}(𝔽_q)| = q + 1 − χ(D) (q + 1 − |W(𝔽_q)|)` for `D = 1 + 4c ≠ 0`, `χ` the quadratic character
 of `𝔽_q` (points at infinity included). -/
 theorem natCard_point_twistInt_of_ringChar_ne_two {k : Type*} [Field k] [Fintype k]
     [DecidableEq k] (hk : ringChar k ≠ 2) (W : WeierstrassCurve k) [W.IsElliptic] {D c : k}
@@ -131,7 +131,7 @@ theorem card_filter_twistInt_zmod_two : ∀ a₁ a₂ a₃ a₄ a₆ c : ZMod 2,
 end CharacteristicTwo
 
 /-- **The Artin–Schreier twist over `𝔽₂`** (PROVED): over `ZMod 2`, `twistInt W 1 c` has
-`#W^{tw}(𝔽₂) = 3 − ε (3 − #W(𝔽₂))` with `ε = 1` for `c = 0` and `ε = −1` for `c = 1`. -/
+`|W^{tw}(𝔽₂)| = 3 − ε (3 − |W(𝔽₂)|)` with `ε = 1` for `c = 0` and `ε = −1` for `c = 1`. -/
 theorem natCard_point_twistInt_zmod_two (W : WeierstrassCurve (ZMod 2)) [W.IsElliptic]
     (c : ZMod 2) :
     (Nat.card (twistInt W 1 c).toAffine.Point : ℤ) =

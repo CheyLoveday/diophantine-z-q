@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.CloudB3RC53.Basic
 /-!
 # Lane RC19 (height): the conductor-one height formula makes the specified point torsion
 
-Lemma `ex:arith-base-zero` of the 11/5 manuscript (`diophantine_zq.tex`, lines 4319–4373), proof,
+Lemma `ex:arith-base-zero` of the 11/5 manuscript (`diophantine_zq.tex`, lines 4330–4376), proof,
 lines 4345–4346: "The conductor-one height formula makes the specified point torsion when
 `L'(E/K,1) = 0`." Lane RC15 (`RC/Central/Nodes.lean`, `baseZero_node`) takes this step as the
 hypothesis
@@ -13,20 +13,21 @@ hypothesis
   `hheight : CSTThm11 → ProductOrderGeTwo E k → IsOfFinAddOrder P`
 
 and leaves its derivation from the project's statement of Cai–Shu–Tian, Theorem 1.1
-(`ZInQ.Contrib.CloudB3RC53.CST.CSTThm11Split`) open (RC15 report, gap G3: "needs the factorization
+(`ZInQ.Contrib.CloudB3RC53.CST.CSTThm11Split`) open: it needs the factorization
 `L(E/K,s) = L(E,s)L(E^{(k)},s)` of the character-one `twistedLFunction`, `ĥ = 0 ⇔ torsion`, and the
-conductor-one Heegner hypotheses"). This file proves `hheight` from:
+conductor-one Heegner hypotheses. This file proves `hheight` from:
 
 * `CSTThm11Split` (PRINT: L. Cai, J. Shu, Y. Tian, *Explicit Gross–Zagier and Waldspurger
   formulae*, Algebra & Number Theory 8 (2014) 2523–2572, Theorem 1.1, pp. 2524–2525; stated in the
-  blueprint, UNVERIFIED there) at conductor `c = 1` and trivial character `χ = 1` (which is
+  blueprint; read as Theorem 1.1, p. 2, of arXiv:1408.1733v2 in lane RV1, journal pages unchecked)
+  at conductor `c = 1` and trivial character `χ = 1` (which is
   primitive of conductor one);
 * the conductor-one Heegner data (`K` imaginary quadratic, `D ∉ {−3, −4}`, every prime of the
   level split, a Heegner form `[A, B, C]` of discriminant `D`, a point `y ∈ E(H₁)` with
   `ι(y) = φ(τ)`), as in the print's hypotheses; "the specified point" `P ∈ E(K)` is the trace
-  `P_{H₁} = Σ_{σ ∈ Gal(H₁/K)} σ y` of the Heegner point (tex 4334–4337);
+  `P_{H₁} = Σ_{σ ∈ Gal(H₁/K)} σ y` of the Heegner point (tex 4345: "the specified point");
 * `LFactorizationConductorOne` (GLUE, the factorization `L(E/K, s) = L(E, s) L(E^{(k)}, s)` of the
-  character-one `twistedLFunction`, with `K = ℚ(√k)`; tex 5739–5740 reads it as the definition of
+  character-one `twistedLFunction`, with `K = ℚ(√k)`; tex 5736 reads it as the definition of
   the left side); this is not a height fact and is kept as an explicit hypothesis;
 * `ĥ = 0 ⇔ torsion` over the number field `H₁` (PROVED, `Torsion.lean`).
 
@@ -49,7 +50,7 @@ namespace ZInQ.Manuscript.RC.Height
 
 open WeierstrassCurve WeierstrassCurve.Affine ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CST
 
-/-- **The conductor-one `L`-factorization** (GLUE; tex 5739–5740): the character-one twisted
+/-- **The conductor-one `L`-factorization** (GLUE; tex 5736): the character-one twisted
 `L`-function of `E/K` (Euler product over the primes of `K` of Mathlib's local factors of `E/K`) is
 `L(E, s) L(E^{(k)}, s)` on `Re s > 3/2`, for `K = ℚ(√k)`. -/
 def LFactorizationConductorOne (E : WeierstrassCurve ℚ) (K : Type) [Field K] [NumberField K]
@@ -162,7 +163,7 @@ theorem hheight_of_CST (E : WeierstrassCurve ℚ) [E.IsElliptic] (k : ℚ)
 
 open Classical in
 /-- **The height formula makes the trace nontorsion at a known simple zero** (tex 2464,
-8268–8272, 9439–9440): if some entire continuation `F` of `L(E, s) L(E^{(k)}, s)` has `F'(1) ≠ 0`,
+8268–8272): if some entire continuation `F` of `L(E, s) L(E^{(k)}, s)` has `F'(1) ≠ 0`,
 then the specified point `P ∈ E(K)` (the trace of the conductor-one Heegner point) is not torsion.
 PROVED. -/
 theorem not_isOfFinAddOrder_of_CST (E : WeierstrassCurve ℚ) [E.IsElliptic] (k : ℚ)

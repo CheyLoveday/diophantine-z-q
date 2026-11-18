@@ -235,9 +235,9 @@ theorem coeff_mul_ofPowerSeries_eq_sum {R : Type*} [CommRing R] (x : LaurentSeri
 
 end OModel
 
-/-- **Tex 5626–5638 (PROVED).**  Modulo `2^M`, the partial sums of the convolution series for
-`[tⁿ](y g)` over any finite set containing `{0, …, n + L}` are exact, where `-L` bounds the
-negative support of `y mod 2^M`. -/
+/-- **Tex 5626–5638, 5710–5718 (PROVED).**  Modulo `2^M`, the partial sums of the convolution
+series for `[tⁿ](y g)` over any finite set containing `{0, …, n + L}` are exact, where `-L`
+bounds the negative support of `y mod 2^M`. -/
 theorem toZModPow_sum_coeffZ_mul (y : OO) (g : PowerSeries ℤ_[2]) (n : ℤ) (M L : ℕ)
     (hL : ∀ j : ℤ, j < -(L : ℤ) → (proj M y).coeff j = 0) (S : Finset ℕ)
     (hS : Finset.range (n + L + 1).toNat ⊆ S) :
@@ -255,7 +255,7 @@ theorem toZModPow_sum_coeffZ_mul (y : OO) (g : PowerSeries ℤ_[2]) (n : ℤ) (M
     rw [Finset.mem_sdiff, Finset.mem_range] at hk
     rw [map_mul, toZModPow_coeffZ, hL (n - k) (by omega), zero_mul]
 
-/-- **Tex 5626–5638 (PROVED).**  Convolution with a power series `g ∈ Λ`:
+/-- **Tex 5710–5714 (PROVED).**  Convolution with a power series `g ∈ Λ`:
 `[tⁿ](y g) = ∑_{k ≥ 0} [t^{n-k}]y · [tᵏ]g`, a convergent series in `ℤ₂` (its terms tend to `0`
 since `[t^{n-k}]y → 0` as `k → ∞`). -/
 theorem hasSum_coeffZ_mul_algebraMap (y : OO) (g : PowerSeries ℤ_[2]) (n : ℤ) :
@@ -277,7 +277,7 @@ theorem hasSum_coeffZ_mul_algebraMap (y : OO) (g : PowerSeries ℤ_[2]) (n : ℤ
     _ = (1 / 2 : ℝ) ^ M := by rw [zpow_neg, zpow_natCast, one_div, inv_pow, Nat.cast_ofNat]
     _ < ε := hM
 
-/-- **Tex 5626–5638 (PROVED).**  The convolution series of `hasSum_coeffZ_mul_algebraMap`,
+/-- **Tex 5710–5714 (PROVED).**  The convolution series of `hasSum_coeffZ_mul_algebraMap`,
 viewed in `ℚ₂`. -/
 theorem hasSum_coeffZ_mul_algebraMap_padic (y : OO) (g : PowerSeries ℤ_[2]) (n : ℤ) :
     HasSum (fun k : ℕ => (coeffZ y (n - k) : ℚ_[2]) * ((PowerSeries.coeff k g : ℤ_[2]) : ℚ_[2]))

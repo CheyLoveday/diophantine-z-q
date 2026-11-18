@@ -111,7 +111,8 @@ of `Manuscript.AnalyticRankOne`. -/
 def HasseConvergence : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → ∀ s : ℂ, 3 / 2 < s.re → LSeriesSummable (lcoeff E) s
 
-/-- **The coefficients of a quadratic twist** (GLUE, textbook; not printed in the manuscript).
+/-- **The coefficients of a quadratic twist** (GLUE here, textbook; not printed in the manuscript;
+PROVED as `twistDictionary` in `TwistDictionary/Dictionary.lean`).
 If `f : Newform N 2` is the newform of `E` and `D` is a fundamental discriminant prime to `N`, then
 `a_n(E^{(D)}) = χ_D(n) a_n(E)` for every `n ≥ 1`, i.e. `L(E^{(D)}, s) = L(s, f, χ_D)`. At a prime
 `p ∤ DN` the reduction of `E^{(D)}` is good with trace `χ_D(p) a_p`; at `p ∣ D` it is additive

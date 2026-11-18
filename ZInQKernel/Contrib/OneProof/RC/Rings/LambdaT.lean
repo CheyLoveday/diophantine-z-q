@@ -204,7 +204,7 @@ theorem exists_representative (w : LambdaHalf) :
 /-! ## 5. `BaseZero` over the genuine `A = Λ_(t)` -/
 
 open ZInQ.Contrib.CloudB3RC53 Matrix in
-/-- **`BaseZero` from Lemma `ex:arith-base-zero` over the genuine `A = Λ_(t)`** (tex 4319–4373;
+/-- **`BaseZero` from Lemma `ex:arith-base-zero` over the genuine `A = Λ_(t)`** (tex 4330–4376;
 `A = Λ_(t)` with residue field `ℚ₂` and fraction field `F`: tex 4342–4343, 4353). PROVED.
 
 RC15's `baseZero_node` instantiated with `A := LambdaT`, `F := FractionRing Lambda`

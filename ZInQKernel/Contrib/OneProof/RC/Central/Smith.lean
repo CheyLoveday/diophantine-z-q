@@ -3,7 +3,7 @@ import Mathlib
 /-!
 # Lane RC15 (central): the DVR/Smith argument of Lemma `ex:arith-base-zero`
 
-The 11/5 manuscript (`diophantine_zq.tex`, lines 4346–4358):
+The 11/5 manuscript (`diophantine_zq.tex`, lines 4350–4364):
 
 > Full Selmer corank one gives central dimensions `(1,1)` in degrees one and two and zero in every
 > other degree. […] Over the DVR `A`, a bounded finite free complex decomposes, by successive Smith
@@ -14,7 +14,7 @@ The 11/5 manuscript (`diophantine_zq.tex`, lines 4346–4358):
 > two. […] In the second case the generic and central dimensions agree in every degree. Hence no
 > disk with `r > 0` occurs.
 
-**Form (recorded in the report).** A bounded complex of finite free `A`-modules is a sequence of
+**Form.** A bounded complex of finite free `A`-modules is a sequence of
 matrices `d i : A^{r i} → A^{r (i+1)}`, `i ∈ ℕ`, with `d (i+1) ∘ d i = 0`. Its Smith reduction
 has, between degrees `i` and `i + 1`, exactly `rank_F (d i)` disks, of which
 `rank_F (d i) − rank_k (d̄ i)` have `r > 0`; these counts are what the argument uses, and they are
@@ -201,7 +201,7 @@ end Cohomology
 
 section Dichotomy
 
-/-- **The dichotomy, as arithmetic of the disk counts** (tex 4350–4358). With
+/-- **The dichotomy, as arithmetic of the disk counts** (tex 4350–4364). With
 `hF i + ρF i + ρF (i−1) = r i` (generic), `hk i + ρk i + ρk (i−1) = r i` (central) and
 `ρk ≤ ρF` (semicontinuity), central dimensions `(1,1)` in degrees one and two and zero elsewhere
 leave two generic possibilities: acyclic, or `(1,1)` with `ρF = ρk` in every degree (no disk with
@@ -255,7 +255,7 @@ variable {A F k : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
   [Field F] [Algebra A F] [IsFractionRing A F] [Field k]
 
 /-- **The base-zero dichotomy for an actual bounded finite free complex over a DVR**
-(tex 4346–4358). Let `d` be a complex of finite free `A`-modules (`d (i+1) * d i = 0`), with
+(tex 4350–4364). Let `d` be a complex of finite free `A`-modules (`d (i+1) * d i = 0`), with
 generic and central base changes along `A → F` and `ρ : A → k`. If its central cohomology has
 dimensions `(1,1)` in degrees one and two and vanishes in every other degree, then either the
 generic complex is acyclic, or its generic dimensions are `(1,1)` in degrees one and two and
@@ -279,7 +279,7 @@ theorem bounded_complex_dichotomy (ρ : A →+* k) (r : ℕ → ℕ)
     (cohDim_add r (fun i => (d i).map (algebraMap A F)) hdF)
     (cohDim_add r (fun i => (d i).map ρ) hdk) hk1 hk2 hk0
 
-/-- **The disk count** (tex 4349–4351): `dim_k H^i(C ⊗ k) = dim_F H^i(C ⊗ F) + δ_i + δ_{i−1}`,
+/-- **The disk count** (tex 4355–4357): `dim_k H^i(C ⊗ k) = dim_F H^i(C ⊗ F) + δ_i + δ_{i−1}`,
 where `δ_i = rank_F d_i − rank_k d̄_i` is the number of disks with `r > 0` between degrees `i` and
 `i + 1`. PROVED. -/
 theorem cohDim_residue_eq (ρ : A →+* k) (r : ℕ → ℕ) (d : ∀ i, Matrix (Fin (r (i + 1))) (Fin (r i)) A)

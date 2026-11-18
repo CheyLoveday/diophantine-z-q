@@ -11,7 +11,7 @@ Lane RC9. Three local facts cited in Section 8 of the manuscript (`diophantine_z
   **Theorem 5.3 (p. 299) and Remark 5.4.1 (p. 300)** (read: Numdam scan). Use: tex 4117–4130 in
   `ex:arith-central-calibration`: at `p ∣ k`, the component group of the ramified twist of the
   good-reduction curve `E₀ = E^{(h)}` is `Ẽ₀[2]`, so its rational component number is
-  `#E[2]^{Fr_p}` (`t_p = 2` for `E_ℓ`).
+  `|E[2]^{Fr_p}|` (`t_p = 2` for `E_ℓ`).
 * **Lang**, *Algebraic groups over finite fields*, Amer. J. Math. 78 (1956), 555–563,
   **Theorem 1 and its corollary** (print NOT read: not freely available; statement from the standard
   secondary sources, UNVERIFIED as a locator). Use: tex 3043–3046, (H10): `H¹` of the connected
@@ -50,7 +50,7 @@ instance (p : ℕ) [Fact p.Prime] : DecidableEq ℚ_[p] := Classical.decEq _
 `p`-integral coefficients: the index of the subgroup of points whose reduction (on the given integral
 model) is a nonsingular point of the reduced curve (vendored Tau Ceti
 `WeierstrassCurve.Affine.nonsingularReduction`, Silverman VII.2). For a minimal model this is the
-Tamagawa number `c_p = #Φ(𝔽_p)` (Kodaira–Néron; Silverman, *Advanced Topics*, IV.9.2; GLUE). -/
+Tamagawa number `c_p = |Φ(𝔽_p)|` (Kodaira–Néron; Silverman, *Advanced Topics*, IV.9.2; GLUE). -/
 def componentIndex (p : ℕ) [Fact p.Prime] (W : WeierstrassCurve ℚ_[p])
     [WeierstrassCurve.IsIntegral (Padic.mulValuation (p := p)).valuationSubring W] : ℕ :=
   (WeierstrassCurve.Affine.nonsingularReduction (Padic.mulValuation (p := p)) W.toAffine).index
@@ -67,7 +67,7 @@ acting by `[-1]`, so `Φ ≅ Ẽ₀[2]` (tex 4121–4124).
 Lean form (DEPARTURE: Néron models and component groups are absent from Mathlib): for `E₀/ℤ` with
 `p ∤ Δ(E₀)`, `p` odd, `k` squarefree with `p ∣ k`, the twisted model `qtwist E₀ k` (the shared top
 layer's `E₀^{(k)}`; `p`-integral, and minimal since `v_p(Δ) = 6 < 12`) has rational component index
-`#Ẽ₀(𝔽_p)[2]`. This combines the print with (GLUE) `[E(ℚ_p) : E₀(ℚ_p)] = #Φ(𝔽_p)` for a minimal
+`|Ẽ₀(𝔽_p)[2]|`. This combines the print with (GLUE) `[E(ℚ_p) : E₀(ℚ_p)] = |Φ(𝔽_p)|` for a minimal
 model and `Φ ≅ Ẽ₀[2]` as finite étale `𝔽_p`-group schemes (tex 4125–4127). For `E₀ = E_{hℓ}` and
 `p ∣ k`, `p ∤ 6hℓ`, the right side is `4` (full rational two-torsion), `t_p = 2`. The use matches
 the print's hypotheses (`μ₂ ⊆ ℤ_p`, `2` prime to `p`, `ℚ_p(√k)/ℚ_p` totally ramified of degree 2). -/

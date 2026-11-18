@@ -44,7 +44,6 @@ section Generic
 variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
   {K : Type*} [Field K] [Algebra R K] [IsFractionRing R K]
 
-local notation "vK" => valuation K (IsDiscreteValuationRing.maximalIdeal R)
 
 omit [IsDomain R] [IsDiscreteValuationRing R] [IsFractionRing R K] in
 /-- The base change of `twistInt` to the fraction field is a change of variables of `twistK`. -/
@@ -60,7 +59,7 @@ theorem baseChange_twistInt (h2 : (2 : K) ≠ 0) (W : WeierstrassCurve R) {D c :
   rw [twistInt_map, ← twistInt_eq_smul_twistK _ h2 hDc']
 
 /-- A unit of `R` has valuation `1`. -/
-theorem vK_algebraMap_of_isUnit {D : R} (hD : IsUnit D) : vK (algebraMap R K D) = 1 := by
+theorem vK_algebraMap_of_isUnit {D : R} (hD : IsUnit D) : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) (algebraMap R K D) = 1 := by
   rw [valuation_of_algebraMap, intValuation_eq_one_iff]
   exact IsLocalRing.notMem_maximalIdeal.mpr hD
 
@@ -123,18 +122,18 @@ theorem isMinimal_twistInt (h2 : (2 : K) ≠ 0) (M : WeierstrassCurve K) [hM : I
   have := hIM
   have aux : ∀ (X : WeierstrassCurve K) [IsIntegral R X],
       ((valuation_Δ_aux R X : { v : WithZero (Multiplicative ℤ) // v ≤ 1 }) :
-        WithZero (Multiplicative ℤ)) = vK X.Δ :=
+        WithZero (Multiplicative ℤ)) = (valuation K (IsDiscreteValuationRing.maximalIdeal R)) X.Δ :=
     fun X _ => valuation_Δ_aux_eq_of_isIntegral R X
   rw [← Subtype.coe_le_coe, aux, aux] at hle ⊢
-  have key' : vK M.Δ ≤ vK ((C₁ * C₅ * C₃ * C₄⁻¹) • M).Δ →
-      vK ((C₁ * C₅ * C₃ * C₄⁻¹) • M).Δ ≤ vK M.Δ := by
+  have key' : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) M.Δ ≤ (valuation K (IsDiscreteValuationRing.maximalIdeal R)) ((C₁ * C₅ * C₃ * C₄⁻¹) • M).Δ →
+      (valuation K (IsDiscreteValuationRing.maximalIdeal R)) ((C₁ * C₅ * C₃ * C₄⁻¹) • M).Δ ≤ (valuation K (IsDiscreteValuationRing.maximalIdeal R)) M.Δ := by
     intro h
     have := key (by rw [← Subtype.coe_le_coe, aux, aux]; exact h)
     rwa [← Subtype.coe_le_coe, aux, aux] at this
-  have hvT : vK T.Δ = vK M.Δ := by
+  have hvT : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) T.Δ = (valuation K (IsDiscreteValuationRing.maximalIdeal R)) M.Δ := by
     rw [hT, baseChange_twistInt_Δ _ hDc, baseChange_integralModel_eq, map_mul, map_pow,
       vK_algebraMap_of_isUnit hD, one_pow, one_mul]
-  have hvT' : vK ((C₁ * C₅ * C₃ * C₄⁻¹) • M).Δ = vK (j • T).Δ := by
+  have hvT' : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) ((C₁ * C₅ * C₃ * C₄⁻¹) • M).Δ = (valuation K (IsDiscreteValuationRing.maximalIdeal R)) (j • T).Δ := by
     rw [hM', baseChange_twistInt_Δ _ hDc, hJ, map_mul, map_pow, vK_algebraMap_of_isUnit hD,
       one_pow, one_mul]
   rw [hvT, ← hvT'] at hle ⊢

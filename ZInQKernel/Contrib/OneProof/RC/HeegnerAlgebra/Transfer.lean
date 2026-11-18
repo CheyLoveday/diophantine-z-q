@@ -16,7 +16,7 @@ paragraph 7 "The actual coefficient push and its local conditions", tex lines 32
   Nekovář 8.1.4 in degree one, `PROVED`).
 * (4.2) in common coordinates, tex 3268–3277: the weights `ρ_T(r_δ)` turn the transported
   relations `s' = ρ(r_δ)⁻¹ J ρ(r_δ) f'` into `s = J f` (`PROVED`).
-* Gap B1-b (`maps/mcheck-rc-deep.md`), tex 3281–3295: the twisted split norm relation
+* Gap B1-b (implicit in the text), tex 3281–3295: the twisted split norm relation
   `a_q - θ(σ_q) - θ(σ_q)⁻¹` needs `θ` to factor through `Δ_{f/q}`; with that hypothesis it is
   `PROVED` (`B1b_twisted_split_norm`), and a counterexample shows the hypothesis cannot be dropped
   (`B1b_hypothesis_needed`).

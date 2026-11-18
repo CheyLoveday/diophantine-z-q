@@ -5,13 +5,13 @@ import ZInQKernel.Contrib.OneProof.RC.Central.EulerFactors
 # Lane RC15 (central): the universal integral correction `η` and the corrected coordinate
 
 The algebra of the second half of Lemma `ex:arith-common-coordinate` (11/5 manuscript,
-`diophantine_zq.tex`, lines 4142–4317; restated in Appendix G, lines 10876–10885): from the
+`diophantine_zq.tex`, lines 4142–4328; restated in Appendix G, lines 10876–10885): from the
 single-prime support identity (4.7) `l_q u_rel = e_q² ε_q u_prim` to
 `ũ_x = ε_x u_{prim,x}` with `ε_x ∈ Λ^×`, for the one universal correction
 `η = ∏_{q ∈ Q} (1 + v_q (1 + g_q)) ∈ 𝒪[G]` and `ũ = η u_rel`.
 
 Every declaration in this file is `PROVED`; the cohomological input (4.7) itself enters as a
-hypothesis (its statement, with tex lines, is `CommonCoordinate47` in `Statements.lean`).
+hypothesis (`htri` of `single_prime_47`, `hstep` of `prod_relax`, `h47` of `corrected_eq`).
 
 * `correctionFactor`, `eta`: `1 + v_q(1 + g_q)` and their product over `Q` (tex 4219–4222,
   10878).
@@ -23,7 +23,7 @@ hypothesis (its statement, with tex lines, is `CommonCoordinate47` in `Statement
 * `prod_relax` (ELLIOT gap filled, see the docstring): iterating (4.7) one unused prime at a time
   gives `(∏ l_q) u_rel = (∏ e_q² ε_q) u_prim` over all unused primes of a character.
 * `corrected_eq` (tex 4222–4226): `ũ_x = η_x u_{rel,x} = (∏_{q unused} ε_q) u_{prim,x}`.
-* `correction_lift_independent`, `ratio_agree_mod` (tex 4256–4271): the correction does not depend
+* `correction_lift_independent`, `ratio_agree_mod` (tex 4297–4308): the correction does not depend
   on the choice of Frobenius lift `z_q ↦ g_q z_q`, in `R = 𝒪[G]` before evaluation.
 * `central_transfer`, `padicValuation_central_transfer`,
   `valuation_constantCoeff_of_isUnit` (tex 4155–4158, 4227–4231): a `Λ`-unit multiplier preserves
@@ -89,7 +89,7 @@ theorem single_prime_47 {K : Type*} [CommRing K] {urel uprim e δ l q qi ε' : K
 
 /-- **Iterating (4.7) over the unused primes of one character.** ELLIOT (gap filled here):
 the text states (4.7) at one unused prime (tex 4185–4188) and then multiplies the correction
-factors over `Q` (tex 4222, 4289–4291); the multi-prime identity is obtained by relaxing the
+factors over `Q` (tex 4222, 4325–4327); the multi-prime identity is obtained by relaxing the
 unused primes one at a time. Here `u T` is the coordinate relaxed at the unused primes in `T`
 and primitive at the others (`u ∅ = u_prim`, `u U = u_rel`), and `hstep` is (4.7) at `q ∉ T`:
 `l_q u(T ∪ {q}) = e_q² ε_q u(T)`. Then `(∏_{q ∈ U} l_q) u_rel = (∏_{q ∈ U} e_q² ε_q) u_prim`.
@@ -142,7 +142,7 @@ theorem corrected_eq {ι K : Type*} [DecidableEq ι] [CommRing K] (x : R →+* K
     linear_combination (ε q * (x (e q) * x (ei q) + 1)) * this
   rw [h1, mul_assoc, h47, ← mul_assoc, h2]
 
-/-- **The correction is independent of the Frobenius lift** (tex 4262–4271): in a ring without
+/-- **The correction is independent of the Frobenius lift** (tex 4297–4308): in a ring without
 two-torsion, if `g² = 1`, `r = 1 + 2v`, `r' = 1 + 2v'` and `r' − r ∈ (g − 1)R` (the two ratios
 agree in `R/(g − 1)`), then `(1 + g)(v' − v) = 0` and the correction factors agree. PROVED. -/
 theorem correction_lift_independent (h2 : ∀ y : R, 2 * y = 0 → y = 0) {g v v' r r' : R}
@@ -160,8 +160,8 @@ theorem correction_lift_independent (h2 : ∀ y : R, 2 * y = 0 → y = 0) {g v v
   unfold correctionFactor
   linear_combination hv
 
-/-- **The two ratios agree modulo `g_q − 1`** (tex 4262–4264): changing the Frobenius lift
-replaces `z_q` by `g_q z_q` (tex 4246–4251). If the two choices `(z, zi)` and `(z', zi')` agree
+/-- **The two ratios agree modulo `g_q − 1`** (tex 4298–4301): changing the Frobenius lift
+replaces `z_q` by `g_q z_q` (tex 4290–4291). If the two choices `(z, zi)` and `(z', zi')` agree
 modulo `g − 1`, the point factors, quotient factors and the ratios `r = l ei²`, `r' = l' ei'²`
 (with `e ei = 1`, `e' ei' = 1`) agree modulo `g − 1`. PROVED. -/
 theorem ratio_agree_mod {F : Matrix (Fin 2) (Fin 2) R} {qi a z zi z' zi' ei ei' g : R}

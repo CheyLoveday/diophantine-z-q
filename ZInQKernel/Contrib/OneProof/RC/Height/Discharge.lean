@@ -6,13 +6,13 @@ import ZInQKernel.Contrib.OneProof.RC.Central.Calibration
 /-!
 # Lane RC19 (height): discharging lane RC15's height inputs
 
-Lane RC15 (`RC/Central/`, report `RC15-central.md`) leaves two height facts as hypotheses:
+Lane RC15 (`RC/Central/`) leaves two height facts as hypotheses:
 
 1. **The height adjunction** behind `Reg_B / Reg_A = 2/I²` (tex 4082–4091; RC15's
    `Calibration.regulator_ratio` takes it as `hadj : α Reg_B = β Reg_A`, and `calibration_46` takes
    the result as `hReg : v₂(Reg_B / Reg_A) = ±1`; RC15 marks the adjunction GLUE).
 2. **`hheight`** in `Nodes.baseZero_node` (tex 4345–4346: "the conductor-one height formula makes
-   the specified point torsion"; RC15 gap G3).
+   the specified point torsion").
 
 This file discharges both from this lane's results:
 

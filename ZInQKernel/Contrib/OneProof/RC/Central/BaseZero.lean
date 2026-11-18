@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.OneProof.RC.Central.Smith
 /-!
 # Lane RC15 (central): Lemma `ex:arith-base-zero`, the DVR core
 
-The 11/5 manuscript (`diophantine_zq.tex`, lines 4319–4373; V19 lines 20410–20460):
+The 11/5 manuscript (`diophantine_zq.tex`, lines 4330–4376; V19 lines 20410–20460):
 
 > Use the base `h₀ = 1` […] with `L(E^{(k)},1) ≠ 0` and full two-primary Selmer corank one for `E/K`.
 > If `L'(E/K,1) = 0`, then `u_{prim,0}(0) = ũ₀(0) = 0` […]. The primitive coordinate is regular
@@ -16,7 +16,7 @@ the part of the proof after "the specialization of the actual cycle `z` [is] zer
 generic possibilities, regularity at `(t)` and vanishing at the centre, for the primitive
 coordinate and for the corrected coordinate `ũ₀ = ε₀ u_{prim,0}` with `ε₀` a unit.
 
-**Form (DEPARTURE, recorded in the report).** The primitive complex is represented by its two-term
+**Form (DEPARTURE).** The primitive complex is represented by its two-term
 model `[A^{m+1} --D--> A^{m+1}]` in degrees one and two: the actual bounded finite free complex after
 cancelling its unit disks outside degrees one and two, which Nakayama's lemma permits because the
 central cohomology vanishes there (V19 tex 20064–20067; GLUE, textbook minimal-complex reduction
@@ -26,7 +26,7 @@ model it is `twoTerm_dichotomy` below.
 
 Every declaration in this file is `PROVED`.
 
-* `twoTerm_dichotomy` (tex 4350–4358): with central dimensions `(1,1)` (`rank D̄ = m`), the
+* `twoTerm_dichotomy` (tex 4350–4364): with central dimensions `(1,1)` (`rank D̄ = m`), the
   generic complex is acyclic (`det D` a unit of `F`) or has dimensions `(1,1)` with
   `rank_F D = rank_k D̄` (no disk with `r > 0`).
 * `baseZero_core` (tex 4359–4373): if moreover the central cycle vanishes, `z̄ = 0`, then the
@@ -34,7 +34,7 @@ Every declaration in this file is `PROVED`.
   corrected coordinate `ũ₀ = ι(ε₀) u_{prim,0}` is regular with value `0` at the centre.
 * `simpleZero_specialization` (V19 tex 20063–20079): at a known simple zero the generic coordinate
   is regular and specializes to the central tensor (the V19 justification behind (4.6)).
-* `kummer_eq_zero_of_isOfFinAddOrder` (tex 4337–4338): a torsion point has zero rational Kummer
+* `kummer_eq_zero_of_isOfFinAddOrder` (tex 4345–4346): a torsion point has zero rational Kummer
   class (any additive map into a `ℚ₂`-vector space kills torsion).
 -/
 
@@ -69,7 +69,7 @@ theorem isUnit_det_of_rank_eq {𝕜 : Type*} [Field 𝕜] {n : ℕ} (D : Matrix 
 variable {A F : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
   [Field F] [Algebra A F] [IsFractionRing A F] {k : Type*} [Field k]
 
-/-- **The two generic possibilities on the two-term model** (tex 4350–4358): if the central
+/-- **The two generic possibilities on the two-term model** (tex 4350–4364): if the central
 dimensions are `(1,1)` (`rank_k D̄ = m` for `D̄ = D mod 𝔪`), then either the generic complex is
 acyclic (`det D` is a unit of `F`), or `rank_F D = m = rank_k D̄`: generic dimensions `(1,1)` and no
 disk `[A --t^r--> A]` with `r > 0`. PROVED (semicontinuity `rank_map_residue_le`). -/
@@ -95,11 +95,11 @@ theorem twoTerm_dichotomy (ρ : A →+* k) {m : ℕ} (D : Matrix (Fin (m + 1)) (
 /-- **Lemma `ex:arith-base-zero`, the DVR core** (tex 4330–4373). Let `A` be a DVR with fraction
 field `F` (`ι = algebraMap A F`) and a residue map `ρ` to a field killing the maximal ideal.
 Let `[A^{m+1} --D--> A^{m+1}]` be the two-term model of the primitive complex at the base, with
-central dimensions `(1,1)` (`hcentral`, from full Selmer corank one: tex 4346–4348), an integral
+central dimensions `(1,1)` (`hcentral`, from full Selmer corank one: tex 4350–4352), an integral
 cycle `z` and an integral closed functional `λ` (`w`; integral by the paired-functional
-proposition, tex 4334–4336), and let `uprim` be the generic class-functional coordinate. If the
-central cycle vanishes (`hz0`, tex 4336–4340), then `uprim` is regular at the centre and zero
-there; and for the `Λ`-unit `ε₀` of (4.7) at the base (tex 4365–4368; only `ε₀ ∈ A` is used here)
+proposition, tex 4343–4344), and let `uprim` be the generic class-functional coordinate. If the
+central cycle vanishes (`hz0`, tex 4346–4348), then `uprim` is regular at the centre and zero
+there; and for the `Λ`-unit `ε₀` of (4.7) at the base (tex 4370–4373; only `ε₀ ∈ A` is used here)
 the corrected coordinate `ũ₀ = ι(ε₀) uprim` is regular and zero at the centre. The two cases are those of the text:
 acyclic (coordinate `0` by definition) and `(1,1)` (no positive disk, integral base change).
 PROVED. -/
@@ -172,7 +172,7 @@ theorem simpleZero_specialization (ρ : A →+* k) (hρ : ∀ x ∈ IsLocalRing.
   exact coord_specializes (algebraMap A F) hι ρ hρ D z w uprim hu
     (adjugate_ne_zero_of_rank _ hcentral)
 
-/-- **A torsion point has zero rational Kummer class** (tex 4337–4338: "Thus its rational Kummer
+/-- **A torsion point has zero rational Kummer class** (tex 4345–4346: "Thus its rational Kummer
 class vanishes"): an additive map from the point group into a `ℚ₂`-vector space (here any
 `ℚ`-vector space) kills every point of finite order. PROVED. -/
 theorem kummer_eq_zero_of_isOfFinAddOrder {G V : Type*} [AddCommGroup G] [AddCommGroup V]

@@ -6,7 +6,7 @@ import ZInQKernel.Contrib.CloudB3RC53.Nodes
 The shared top layer records the corrected coordinates `ũ_x ∈ Λ[1/2]` by their `t`-coefficients
 (`CoordData.u x j`, the `tʲ`-coefficient of `ũ_x`), and the clearing identity
 `ClearingIdentity C` asks in its second clause for bounded denominators,
-`∃ e : ℕ, ∀ x j, ‖C.u x j‖ ≤ 2^e` ("`ũ_x ∈ Λ[1/2]` (bounded denominators)", tex 5491–5496, 5719–5721).
+`∃ e : ℕ, ∀ x j, ‖C.u x j‖ ≤ 2^e` ("`ũ_x ∈ Λ[1/2]` (bounded denominators)", tex 5492–5497, 5703–5704).
 
 Height-one regularity (Proposition `ex:limits-uniform-lower-bound`, tex 4976–5195, assembled in
 `UniformLowerBound.lean` of this lane) gives `u ∈ Λ[1/2]` for the primitive coordinates; the corrected

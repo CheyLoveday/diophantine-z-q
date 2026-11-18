@@ -15,10 +15,10 @@ Manuscript (11/5), Proposition `ex:limits-uniform-lower-bound`, proof, tex lines
 
 What is formalized here (all `PROVED`):
 
-* `OuterNegligible`: the ideal of (5.3) (tex 4706–4712): sequences whose valuation tends to infinity
+* `OuterNegligible`: the ideal of (5.3) (tex 4720–4724): sequences whose valuation tends to infinity
   along the outer ultrafilter; a sequence is a nonzero element of `𝒪_∞` iff it is not negligible.
 * `exists_eventually_valuation_eq`: "A nonzero element has valuation one fixed nonnegative integer on
-  a set in `𝒰`" (tex 4713–4714), for the sequence of inner minors.
+  a set in `𝒰`" (tex 4726–4727), for the sequence of inner minors.
 * `terminal_lower_bound`: from `u_j Δ_j = ±α_jβ_j` (the Cramer/Schur formula, proved in
   `Determinant.lean` for every nonzero maximal minor), `α_j` integral, `v β_j ≥ −a` and `Δ` nonzero
   in `𝒪_∞`, one gets `v u_j ≥ −a−b` on an outer-large set.
@@ -52,7 +52,7 @@ section Outer
 
 variable {K : Type*} [Field K] (v : AddValuation K (WithTop ℤ)) {ι : Type*} (𝒰 : Ultrafilter ι)
 
-/-- The ideal of the outer quotient (5.3), tex 4706–4712:
+/-- The ideal of the outer quotient (5.3), tex 4720–4724:
 `𝒪_∞ = (∏_𝒰 𝒪_j) / {(x_j) : v₂(x_j) →_𝒰 ∞}`. A sequence `x` represents zero in `𝒪_∞` iff
 `OuterNegligible v 𝒰 x`. Kind: definition. -/
 def OuterNegligible (x : ι → K) : Prop :=
@@ -90,7 +90,7 @@ theorem exists_eventually_eq_of_bounded (f : ι → WithTop ℤ) :
           exact_mod_cast this)
       exact ⟨b, Nat.lt_succ_of_lt hb, hbe⟩
 
-/-- tex 4713–4714 ("A nonzero element has valuation one fixed nonnegative integer on a set in `𝒰`"),
+/-- tex 4726–4727 ("A nonzero element has valuation one fixed nonnegative integer on a set in `𝒰`"),
 for an integral sequence: if `x` is integral on an outer-large set and is not negligible (a nonzero
 element of `𝒪_∞`), then its valuation is one fixed natural number `b` on an outer-large set.
 This is "Its inner minors have one finite valuation `b` on an outer-large set" (tex 4958–4959).
@@ -122,7 +122,7 @@ theorem valuation_sign {s : K} (hs : s = 1 ∨ s = -1) : v s = 0 := by
 `u_j = ±α_jβ_j/Δ_j` in the multiplied-out form `u_j Δ_j = ±α_jβ_j` (proved for every nonzero maximal
 minor in `Determinant.lean`, `classFunctionalCoord_cramer`), `α_j` an integral surviving cycle
 coordinate, `v β_j ≥ −a` (the fixed functional exponent of `ex:arith-paired-functional`, kept after the
-switches, gap B2-b), and the inner minors `Δ_j` integral and nonzero in `𝒪_∞`, one gets
+switches as checked at tex 5162–5189), and the inner minors `Δ_j` integral and nonzero in `𝒪_∞`, one gets
 `v₂ u_j ≥ −a − b` on an outer-large set. Kind: PROVED. -/
 theorem terminal_lower_bound (a : ℕ) (u α β Δ s : ι → K) (hs : ∀ j, s j = 1 ∨ s j = -1)
     (hcr : ∀ᶠ j in (𝒰 : Filter ι), u j * Δ j = s j * (α j * β j))
@@ -245,7 +245,7 @@ theorem outer_contradiction {a : ℕ} (P : OuterSwitchProcess v 𝒰 a) (u : ι 
 ultrafilter `hyperfilter ℕ` there is a switching process whose starting configuration has the primitive
 coordinates' valuations (the starting configuration is the minimal model itself; its outer kernel
 dimension is at least one because the inner generic kernels have rank one, tex 4927–4940). The constant
-is not effective (it comes from an ultrafilter contradiction; map D6). Kind: PROVED from the inputs. -/
+is not effective (it comes from an ultrafilter contradiction). Kind: PROVED from the inputs. -/
 theorem uniform_lower_bound_of_switchProcess {Inst : Type*} (uprim : Inst → K)
     (inputs : ∀ inst : ℕ → Inst, ∃ (a : ℕ) (P : OuterSwitchProcess v (Filter.hyperfilter ℕ) a)
       (S₀ : P.Stage), ∀ᶠ j in ((Filter.hyperfilter ℕ : Ultrafilter ℕ) : Filter ℕ),

@@ -12,7 +12,7 @@ paragraph 4 "Descend once, before twisting", tex 3004–3017 (H8).
 Astérisque 310, (4.1.4.1)) as abstract exactness data `FiveTerm`.  This file proves its first
 two exactness properties for Mathlib's group cohomology `groupCohomology A n` of a group `G`
 (an abstract, i.e. discrete, group) with coefficients `A : Rep k G` over a commutative ring `k`,
-and a normal subgroup `S` of `G`.  In the manuscript's notation `G = G_B`, `S = G_M`,
+and a normal subgroup `S` of `G`.  In the manuscript's terms `G = G_B`, `S = G_M`,
 `G ⧸ S = Γ`, `A = V` and `A^S = V^{G_M}`.  Mathlib's `groupCohomology.H1InfRes A S` is the short
 complex `H¹(G ⧸ S, A^S) → H¹(G, A) → H¹(S, A)` (inflation, restriction).
 

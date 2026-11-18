@@ -17,13 +17,13 @@ PROVED here:
 * the dyadic weight: `e_{ux} = u e_x + (1 − u)/2`; the only idempotents of `ℤ/2^e` are `0, 1`
   (tex 8517–8531) — `dyadic_affine`, `idempotent_zmod_two_pow`;
 * `α(−1) = (∏ w_{p^e} χ_{h_*}(p)^e)(∏_{p∣m}(−1/p))(−1/ℓ₀) = 1` from `w(E) = −∏ w_{p^e}`,
-  `w(E^{h_*}) = w(E) χ_{h_*}(−N) = +1`, `m ≡ 3 (mod 4)`, `ℓ₀ ≡ 3 (mod 4)` (tex 8579–8592; the map's
-  fill F-b: the final factor is `(−1/ℓ₀)`) — `alpha_neg_one`;
+  `w(E^{h_*}) = w(E) χ_{h_*}(−N) = +1`, `m ≡ 3 (mod 4)`, `ℓ₀ ≡ 3 (mod 4)` (tex 8579–8592; the
+  final factor, written `(−1)` at tex 8583, is `(−1/ℓ₀)`) — `alpha_neg_one`;
 * the characters: `(m/d)/χ_{h_*}(d) = (−1/d)` for `h_* = −m` (tex 8916–8920, (O.5)) —
   `psi_div_eta`;
 * the recurrence (O.6) from the Brandt identity `H(p²n) + s(−n/p)H(n) + ps²H(n/p²) =
   sχ_{h_*}(p)a_pH(n)` (tex 9076–9093), and the moving step of the neighbour operator by
-  self-adjointness `N_ij/w_i = N_ji/w_j` (tex 9067–9075; the map's fill F-a) — `O6_of_brandt`,
+  self-adjointness `N_ij/w_i = N_ji/w_j` (tex 9067–9075, written out here) — `O6_of_brandt`,
   `brandt_adjoint`;
 * the nonintegral neighbour: `p | a, c`, `p ∤ b`, `p² | −a² − bc` force `p² | c` (tex 9052–9054) —
   `nilpotent_neighbor`; the integral + nonintegral bookkeeping (tex 9059–9064) — `neighbor_sum`.
@@ -208,7 +208,7 @@ theorem neighbor_sum {K : Type*} [CommRing K] (sinv s Hp2n Hn Hnp2 leg pK : K) :
     (sinv * Hp2n - Hn) + ((1 + leg) * Hn + pK * s * Hnp2) =
       sinv * Hp2n + leg * Hn + pK * s * Hnp2 := by ring
 
-/-- **PROVED (tex 9067–9075; fill F-a of the App F check).** Moving the neighbour operator onto
+/-- **PROVED (tex 9067–9075, written out here).** Moving the neighbour operator onto
 `P_M` by self-adjointness: if `N_ij / w_i = N_ji / w_j`, then
 `∑_i (P_i χ_i / w_i) ∑_j N_ij θ_j = ∑_j θ_j (1/w_j) ∑_i N_ji P_i χ_i`. -/
 theorem brandt_adjoint {K : Type*} [Field K] {ι : Type*} [Fintype ι] (N : ι → ι → K)
@@ -228,7 +228,7 @@ variable {R : Type*} [CommRing R]
 `H(p²n) + s(−n/p)H(n) + ps²H(n/p²) = s χ_{h_*}(p) a_p H(n)` at every index (`p ∤ m`), with
 `χ_{h_*}(p)² = 1`, the extracted coefficients `a(n) = H(mn)` satisfy
 `a(p²n) = {η(p)a_p − ψ(p)(−n/p)} a(n) − p η(p)² a(n/p²)` with `η(p) = sχ_{h_*}(p)`,
-`ψ(p) = s(m/p)`. In the notation of `RecAt`: `RecAt p (s χ) ε a_p a` whenever `(m/p) = ε χ`. -/
+`ψ(p) = s(m/p)`. In terms of `RecAt`: `RecAt p (s χ) ε a_p a` whenever `(m/p) = ε χ`. -/
 theorem O6_of_brandt {p : ℕ} [hp : Fact p.Prime] (H : ℕ → R) {m : ℕ} (hpm : ¬ p ∣ m)
     (s χp : R) (ap ε : ℤ) (hχ2 : χp ^ 2 = 1) (hε : ((legendreSym p m : ℤ) : R) = (ε : R) * χp)
     (hH : ∀ n : ℕ, H (p ^ 2 * n) + s * (legendreSym p (-(n : ℤ)) : R) * H n +

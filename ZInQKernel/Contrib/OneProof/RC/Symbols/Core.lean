@@ -6,7 +6,7 @@ import Mathlib
 Manuscript: Definition `ex:sec7-typed-graph` (tex 2015–2066), Definition `ex:sec7-symbol`
 (2068–2100), Lemma `ex:sec7-coefficient-rules` (2102–2136).
 
-Abstract model (DEPARTURE of form, recorded in the lane report):
+Abstract model (DEPARTURE of form):
 * vertices are named by natural numbers; a configuration is a finite vertex set with types and
   residue bits;
 * the type alphabet `L` is the group of realizable types, with the sign coordinate
@@ -128,7 +128,7 @@ def netEdges (Γ : Config L) (T X : Finset ℕ) : Finset (Sym2 ℕ) :=
   ((X ×ˢ (T ∪ X)).filter (fun p => p.1 ≠ p.2 ∧ Γ.z p.1 p.2 = 1)).image (fun p => s(p.1, p.2))
 
 /-- Rooted forests of the network: forests on `T ∪ X` in which every auxiliary vertex is
-connected to a terminal (tex 2635–2640). -/
+connected to a terminal (tex 10635–10640). -/
 def IsRootedForest (T X : Finset ℕ) (S : Finset (Sym2 ℕ)) : Prop :=
   IsForest (T ∪ X) S ∧ ∀ x ∈ X, ∃ a ∈ T, conn S x a
 
@@ -138,7 +138,7 @@ noncomputable def starForest (T : Finset ℕ) (S : Finset (Sym2 ℕ)) : Finset (
   (T.filter (fun a => rep T S a ≠ a)).image (fun a => s(rep T S a, a))
 
 open Classical in
-/-- **The network operator** (tex 2635–2655): the sum over rooted forests of the forest
+/-- **The network operator** (tex 10635–10655): the sum over rooted forests of the forest
 difference of their terminal partition. -/
 noncomputable def netOp (Γ : Config L) (T X : Finset ℕ) : MvPolynomial (Sym2 ℕ) (ZMod 2) :=
   ∑ S ∈ (netEdges Γ T X).powerset.filter (IsRootedForest T X),
@@ -152,11 +152,11 @@ noncomputable def act (p : MvPolynomial (Sym2 ℕ) (ZMod 2))
   ∑ m ∈ p.support, p.coeff m *
     (if ∀ e, m e ≤ 1 then ∑ W ∈ m.support.powerset, f (symmDiff U W) else 0)
 
-/-- Grounded Laplacian of the network on `X` over `ZMod 2` (tex 2641). -/
+/-- Grounded Laplacian of the network on `X` over `ZMod 2` (tex 10641). -/
 noncomputable def lap (Γ : Config L) (T X : Finset ℕ) : Matrix X X (ZMod 2) :=
   fun i j => if i = j then ∑ u ∈ (T ∪ X).erase i, Γ.z i u else Γ.z i j
 
-/-- Attachment column of the terminal `a` (tex 2641). -/
+/-- Attachment column of the terminal `a` (tex 10641). -/
 def attach (Γ : Config L) (X : Finset ℕ) (a : ℕ) : X → ZMod 2 := fun i => Γ.z i a
 
 /-! ### Addresses (`ex:sec7-address`, tex 2209–2220) -/

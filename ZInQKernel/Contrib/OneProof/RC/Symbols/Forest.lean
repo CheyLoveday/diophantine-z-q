@@ -57,22 +57,22 @@ theorem card_eq_of_iso {Γ Δ : Config L} (h : Γ.IsIso Δ) : Γ.V.card = Δ.V.c
 /-! ### Flips -/
 
 omit [AddCommGroup L] in
-/-- A change of bits keeps the vertices (tex 2107–2111). Kind: PROVED (helper). -/
+/-- A change of bits keeps the vertices (tex 2120–2122). Kind: PROVED (helper). -/
 @[simp] theorem flipBy_V (Γ : Config L) (U : Finset (Sym2 ℕ)) : (Γ.flipBy U).V = Γ.V := rfl
 omit [AddCommGroup L] in
-/-- A change of bits keeps the types (tex 2107–2111). Kind: PROVED (helper). -/
+/-- A change of bits keeps the types (tex 2120–2122). Kind: PROVED (helper). -/
 @[simp] theorem flipBy_t (Γ : Config L) (U : Finset (Sym2 ℕ)) : (Γ.flipBy U).t = Γ.t := rfl
 omit [AddCommGroup L] in
-/-- A flip keeps the vertices (tex 2113–2116). Kind: PROVED (helper). -/
+/-- A flip keeps the vertices (tex 2120–2122). Kind: PROVED (helper). -/
 @[simp] theorem flip_V (Γ : Config L) (v w : ℕ) : (Γ.flip v w).V = Γ.V := rfl
 omit [AddCommGroup L] in
-/-- A flip keeps the types (tex 2113–2116). Kind: PROVED (helper). -/
+/-- A flip keeps the types (tex 2120–2122). Kind: PROVED (helper). -/
 @[simp] theorem flip_t (Γ : Config L) (v w : ℕ) : (Γ.flip v w).t = Γ.t := rfl
 
 /-- Characteristic two: a repeated difference cancels (tex 10625–10627). Kind: PROVED (helper). -/
 theorem zmod2_add_self (x : ZMod 2) : x + x = 0 := CharTwo.add_self_eq_zero x
 
-/-- A change of independent bits keeps reciprocity compatibility (tex 2037–2041, 2113–2116). Kind:
+/-- A change of independent bits keeps reciprocity compatibility (tex 2037–2041, 2120–2122). Kind:
 PROVED (helper). -/
 theorem flipBy_compatible {Γ : Config L} (hΓ : Γ.Compatible ε) (U : Finset (Sym2 ℕ)) :
     (Γ.flipBy U).Compatible ε := by
@@ -109,7 +109,7 @@ theorem flipBy_insert (Γ : Config L) {e : Sym2 ℕ} {U : Finset (Sym2 ℕ)} (he
   · simp [hab]
 
 omit [AddCommGroup L] in
-/-- One flip, written with indicator functions (tex 2113–2116). Kind: PROVED (helper). -/
+/-- One flip, written with indicator functions (tex 2120–2122). Kind: PROVED (helper). -/
 theorem flip_z {Γ : Config L} {v w : ℕ} (hvw : v ≠ w) (a b : ℕ) :
     (Γ.flip v w).z a b = Γ.z a b +
       ((if a = v ∧ b = w then 1 else 0) + (if a = w ∧ b = v then 1 else 0)) := by
@@ -226,7 +226,7 @@ theorem sum_sum_indicator (B B' : Finset ℕ) (v w : ℕ) :
   rw [Finset.sum_ite_eq']
   by_cases hv : v ∈ B <;> by_cases hw : w ∈ B' <;> simp [hv, hw]
 
-/-- Effect of one flip on a contraction (tex 2113–2120). Kind: PROVED (helper). -/
+/-- Effect of one flip on a contraction (tex 2119–2125). Kind: PROVED (helper). -/
 theorem cmap_flip_z {Γ : Config L} {f : ℕ → ℕ} {v w : ℕ} (hvw : v ≠ w) (r r' : ℕ) :
     (cmap (Γ.flip v w) f).z r r' = (cmap Γ f).z r r' +
       ((if v ∈ Γ.V.filter (fun u => f u = r) ∧ w ∈ Γ.V.filter (fun u => f u = r') then 1 else 0) +
@@ -247,7 +247,7 @@ theorem cmap_flip_same {Γ : Config L} {f : ℕ → ℕ} {v w : ℕ} (hvw : v �
     simp only [Finset.mem_filter, hf]; tauto
   rw [if_congr this rfl rfl, zmod2_add_self, add_zero]
 
-/-- A flip between two fibres is the flip of the contraction (tex 2113–2120). Kind: PROVED (helper).
+/-- A flip between two fibres is the flip of the contraction (tex 2119–2125). Kind: PROVED (helper).
 -/
 theorem cmap_flip_diff {Γ : Config L} {f : ℕ → ℕ} {v w : ℕ} (hv : v ∈ Γ.V) (hw : w ∈ Γ.V)
     (hf : f v ≠ f w) : cmap (Γ.flip v w) f = (cmap Γ f).flip (f v) (f w) := by
@@ -305,7 +305,7 @@ theorem merge_image {V : Finset ℕ} {f : ℕ → ℕ} {a b : ℕ} (hab : a ≠ 
     exact ⟨u, hu, by unfold merge; rw [ite_eq_right hxb]⟩
 
 /-- Contracting two labels of a contraction is the contraction along the merged labelling (tex
-2050–2054, 2113–2120). Kind: PROVED (helper). -/
+2050–2054, 2119–2125). Kind: PROVED (helper). -/
 theorem merge_iso {Γ : Config L} {f : ℕ → ℕ} {a b : ℕ} (hab : a ≠ b) (ha : a ∈ Γ.V.image f) :
     (cmap Γ (merge f a b)).IsIso ((cmap Γ f).contract a b) := by
   have hdisj : Disjoint (Γ.V.filter (fun u => f u = a)) (Γ.V.filter (fun u => f u = b)) :=
@@ -620,7 +620,7 @@ theorem zmod2_eq_one_of_ne_zero : ∀ x : ZMod 2, x ≠ 0 → x = 1 := by decide
 /-- Values in the two-element field (tex 2068–2079). Kind: PROVED (helper). -/
 theorem zmod2_eq_add_one_of_ne : ∀ x y : ZMod 2, x ≠ y → x = y + 1 := by decide
 
-/-- Solving a contraction identity in characteristic two (tex 2113–2120). Kind: PROVED (helper). -/
+/-- Solving a contraction identity in characteristic two (tex 2119–2125). Kind: PROVED (helper). -/
 theorem zmod2_eq_of_add {x y z : ZMod 2} (h : x + y = z) : y = z + x := by
   rw [← h, add_comm x y, add_assoc, zmod2_add_self, add_zero]
 
@@ -745,7 +745,7 @@ theorem ForestAux.minSeed_flipBy (hA : CoefficientRules ε A) {Γ : Config L}
     rw [zmod2_eq_of_add hc, h0, h1, zero_add]
 
 /-- Minimum seeds: the value is independent of all internal pair bits and depends only on the
-vertex types (tex 2192–2200). Kind: PROVED. -/
+vertex types (tex 2189–2200). Kind: PROVED. -/
 theorem minSeed_bits_irrelevant (hA : CoefficientRules ε A) {Γ : Config L}
     (hmin : IsMinSeed ε A Γ) {Δ : Config L} (hΔ : Δ.Compatible ε) (hV : Δ.V = Γ.V)
     (ht : ∀ v ∈ Γ.V, Δ.t v = Γ.t v) : A Δ = 1 := by

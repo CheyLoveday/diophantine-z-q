@@ -12,7 +12,7 @@ other applications of Section `sec:nonvan` in the proof:
   `E_ℓ` (tex 1968–2004), with the twists written as `curve (u * ℓ)`.
 * `rootNumber_curve_twist`: in the filter containing one at `S ⊇ {2, 3} ∪ primes(ℓ)`, the root
   number of `E^{(h)}` is `sgn(h) w(E)` (BFH p. 543); so with `w(E) = −1` (Dokchitser–Dokchitser,
-  tex 1793–1797) the positive filter is odd (tex 2346: "`w(E^{(h)}) = −1`") and the negative one
+  tex 1792–1796) the positive filter is odd (tex 2346: "`w(E^{(h)}) = −1`") and the negative one
   even.
 * `genusPartner`: a negative genus partner `h_*` with `L(E^{(h_*)}, 1) ≠ 0`, odd fundamental,
   `|h_*| > 4`, in the squareclasses of the prepared filter containing one at every `p ∈ S`
@@ -137,7 +137,7 @@ theorem rootNumber_curve_twist (hTS : BFHTwistSign) (hBCDT : BCDTThmA) {ℓ : �
 /-! ### The genus partner and the fixed witness -/
 
 /-- **The genus partner `h_*`** (tex 2404–2410; via Proposition `ex:sec7-nonvanishing`). With
-`w(E_ℓ) = −1` (Dokchitser–Dokchitser, tex 1793–1797), for any finite `S ⊇ {2, 3} ∪ primes(ℓ)` and
+`w(E_ℓ) = −1` (Dokchitser–Dokchitser, tex 1792–1796), for any finite `S ⊇ {2, 3} ∪ primes(ℓ)` and
 any finite avoidance set `B` there is a negative odd fundamental discriminant `h_*`,
 `h_* ≡ 1 (mod 8)` (so `|h_*| > 4` and `ℚ(√h_*) ≠ ℚ(i), ℚ(√−3)`), a square of `ℚ_p` at every
 `p ∈ S` (the squareclasses of the prepared filter containing one), prime to `S ∪ B`, with

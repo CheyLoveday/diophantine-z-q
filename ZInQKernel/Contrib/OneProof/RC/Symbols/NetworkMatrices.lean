@@ -628,11 +628,11 @@ theorem cvec_spec (b : ℕ) (hb : 0 < b) :
     · exact h.1
     · exact absurd rfl hp
 
-/-- The anchor columns pair to zero with `r` (tex 10696–10697). Kind: PROVED. -/
+/-- The anchor columns pair to zero with `r` (tex 10693–10694). Kind: PROVED. -/
 theorem grp_rvec {b : ℕ} (i : Fin b) : grp i ⬝ᵥ rvec b = 0 := by
   rw [grp_dot, gA_rvec]
 
-/-- `cᵀ r = 1` (tex 10697). Kind: PROVED. -/
+/-- `cᵀ r = 1` (tex 10694). Kind: PROVED. -/
 theorem cvec_rvec (b : ℕ) (hb : 0 < b) : cvec b hb ⬝ᵥ rvec b = 1 := by
   rw [cvec, vvec_dot, gC_rvec]
 
@@ -652,31 +652,31 @@ lemma single_mulVec_apply {n : ℕ} (i₀ j₀ : Fin n) (y : Fin n → ZMod 2) (
   rw [single_mulVec, Function.update_apply, one_mul]
   rfl
 
-/-- Row sums of `I + P` vanish (tex 10691–10692). Kind: PROVED (helper). -/
+/-- Row sums of `I + P` vanish (tex 10688–10689). Kind: PROVED (helper). -/
 lemma T1_rowsum {n : ℕ} (j : Fin n) : ∑ i, (1 + Pcyc n) j i = 0 := by
   simp only [Matrix.add_apply, Finset.sum_add_distrib, Pcyc_rowsum, one_apply, Finset.sum_ite_eq,
     Finset.mem_univ, ite_true]
   decide
 
-/-- Column sums of `I + P` vanish (tex 10691–10692). Kind: PROVED (helper). -/
+/-- Column sums of `I + P` vanish (tex 10688–10689). Kind: PROVED (helper). -/
 lemma T1_colsum {n : ℕ} (j : Fin n) : ∑ i, (1 + Pcyc n) i j = 0 := by
   simp only [Matrix.add_apply, Finset.sum_add_distrib, Pcyc_colsum, one_apply, Finset.sum_ite_eq',
     Finset.mem_univ, ite_true]
   decide
 
-/-- `1ᵀ (I + P)ᵀ = 0` (tex 10691–10692). Kind: PROVED (helper). -/
+/-- `1ᵀ (I + P)ᵀ = 0` (tex 10688–10689). Kind: PROVED (helper). -/
 lemma sum_T1T_mulVec {n : ℕ} (x : Fin n → ZMod 2) : ∑ i, ((1 + Pcyc n)ᵀ *ᵥ x) i = 0 := by
   simp only [mulVec, dotProduct, transpose_apply]
   rw [Finset.sum_comm]
   simp only [← Finset.sum_mul, T1_rowsum, zero_mul, Finset.sum_const_zero]
 
-/-- `1ᵀ (I + P) = 0` (tex 10691–10692). Kind: PROVED (helper). -/
+/-- `1ᵀ (I + P) = 0` (tex 10688–10689). Kind: PROVED (helper). -/
 lemma sum_T1_mulVec {n : ℕ} (y : Fin n → ZMod 2) : ∑ i, ((1 + Pcyc n) *ᵥ y) i = 0 := by
   simp only [mulVec, dotProduct]
   rw [Finset.sum_comm]
   simp only [← Finset.sum_mul, T1_colsum, zero_mul, Finset.sum_const_zero]
 
-/-- A function invariant under the cyclic successor is constant (tex 10691–10692). Kind: PROVED
+/-- A function invariant under the cyclic successor is constant (tex 10688–10689). Kind: PROVED
     (helper). -/
 lemma const_of_succ {n : ℕ} (hn : 0 < n) (f : Fin n → ZMod 2) (h : ∀ i, f i = f (csucc i)) :
     ∀ i, f i = f ⟨0, hn⟩ := by
@@ -699,7 +699,7 @@ lemma zmod2_aux2 {a b c t : ZMod 2} (h1 : a + b + c = 0) (h2 : a + b = 0) (h3 : 
   revert a b c t; decide
 
 /-- Kernel of the singular network in group coordinates: `ker T = ker Tᵀ = span 1` and the
-diagonal entry of `B` kills the lower component (tex 10691–10694). Kind: PROVED (helper). -/
+diagonal entry of `B` kills the lower component (tex 10688–10691). Kind: PROVED (helper). -/
 lemma sing_core {n : ℕ} (hn : 0 < n) (z : Phys n → ZMod 2) (h1 : ∀ i, gA z i = 0)
     (h2 : ∀ i, ((1 + Pcyc n) *ᵥ gB z) i = 0)
     (h3 : ∀ i, ((1 + Pcyc n)ᵀ *ᵥ gC z) i + (Matrix.single ⟨0, hn⟩ ⟨0, hn⟩ 1 *ᵥ gB z) i = 0) :
@@ -749,7 +749,7 @@ lemma sing_ker {n : ℕ} (hn : 0 < n) (z : Phys n → ZMod 2) (hz : Qsing n hn *
     change gC (Qsing n hn *ᵥ z) i = 0
     rw [hz]; simp [gC]
 
-/-- A matrix with one row replaced, applied to a column (tex 10694–10696). Kind: PROVED (helper). -/
+/-- A matrix with one row replaced, applied to a column (tex 10691–10693). Kind: PROVED (helper). -/
 lemma updateRow_mulVec_apply {ι : Type*} [Fintype ι] [DecidableEq ι] (A : Matrix ι ι (ZMod 2))
     (p₀ : ι) (w v : ι → ZMod 2) (p : ι) :
     (A.updateRow p₀ w *ᵥ v) p = if p = p₀ then w ⬝ᵥ v else (A *ᵥ v) p := by
@@ -758,7 +758,7 @@ lemma updateRow_mulVec_apply {ι : Type*} [Fintype ι] [DecidableEq ι] (A : Mat
   · simp [mulVec, h]
 
 /-- The principal cofactor of the singular network at the first coordinate is one, so
-`adj Q ≠ 0` (tex 10694–10696). Kind: PROVED (helper). -/
+`adj Q ≠ 0` (tex 10691–10693). Kind: PROVED (helper). -/
 lemma Qsing_adj_diag {n : ℕ} (hn : 0 < n) :
     (Qsing n hn).adjugate (⟨0, hn⟩, 0) (⟨0, hn⟩, 0) = 1 := by
   rw [adjugate_apply]

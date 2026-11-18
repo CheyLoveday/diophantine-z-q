@@ -4,7 +4,7 @@ import Mathlib
 # Lane RC15 (central): the determinant and isogeny bookkeeping of (4.6)
 
 Proposition `ex:arith-central-calibration` of the 11/5 manuscript (`diophantine_zq.tex`,
-lines 3989–4140): at known simple zeros,
+lines 3987–4141): at known simple zeros,
 
   `v₂ u_prim(0) = 2 j_rc(h,k) − 4ω(h) − s(h) − s(hk) − Σ_{p ∣ k} t_p + O_{E,π}(1)`.   (4.6)
 
@@ -20,10 +20,11 @@ hypotheses with their kinds:
   `Coordinate.lean`);
 * the local quotient lengths: `v₂ N_i` at each of the two places above the moving prime
   (ELLIOT, tex 4066–4071; `v₂ N_i = v₂ m_i` is PROVED in `EulerFactors.lean`) and `2` at each of
-  the two places above an active prime (GLUE, `dim_{𝔽₂} E[2]^{Fr_p} = 2`, tex 4029–4033, 4076–4078);
-* the regulator ratio from dual isogenies with `ψφ = [2]` (the height adjunction is GLUE);
+  the two places above an active prime (GLUE, `dim_{𝔽₂} E[2]^{Fr_p} = 2`, tex 4032–4036, 4076–4078);
+* the regulator ratio from dual isogenies with `ψφ = [2]` (the height adjunction is GLUE here;
+  `regulator_inputs_sumDiff` in `Height/Discharge.lean` derives these inputs);
 * the pullbacks `φ^*ω_B = a ω_A`, `ψ^*ω_A = b ω_B` with `ab = 4`, the real change of variables
-  `|a| Ω_A = (#ker φ_ℝ / #coker φ_ℝ) Ω_B` with both orders at most four (GLUE, tex 4093–4104);
+  `|a| Ω_A = (|ker φ_ℝ| / |coker φ_ℝ|) Ω_B` with both orders at most four (GLUE, tex 4093–4104);
 * **Cassels' isogeny invariance in Milne's form** (PRINT: J. S. Milne, *Arithmetic Duality
   Theorems*, 2nd ed., BookSurge 2006, Chapter I, §7, Theorem 7.3, p. 97, and its proof,
   pp. 97–99, which reduces the invariance of the Birch–Swinnerton-Dyer quotient to the duality
@@ -32,7 +33,7 @@ hypotheses with their kinds:
   `s_A − s_B = 2g_A − 2g_B + v₂(Reg_B/Reg_A) + v₂(Ω_B/Ω_A) + v₂(C_B/C_A)` by
   `milne_valuation_form`;
 * the component numbers: cancellation at split primes, `c_p(A) = 1` (connected Weil restriction)
-  and `c_p(E^{(hk)}) = #E[2]^{Fr_p} = 2^{t_p}` at `p ∣ k` (PRINT: B. Edixhoven, "Néron models and
+  and `c_p(E^{(hk)}) = |E[2]^{Fr_p}| = 2^{t_p}` at `p ∣ k` (PRINT: B. Edixhoven, "Néron models and
   tame ramification", Compositio Math. 81 (1992) 291–306, Theorem 5.3, pp. 299–300, and
   Remark 5.4.1, p. 300: the component group of the Néron model over `D` is the group of connected
   components of `(A'_k)^{μ_n}`; read; tex 4119–4124; the print leaf is lane RC9's; the
@@ -62,17 +63,17 @@ open scoped BigOperators
 /-- **Milne, *Arithmetic Duality Theorems*, I.7.3 and (7.3.1)** (PRINT, abstract interface: the
 Birch–Swinnerton-Dyer invariants of abelian varieties over `ℚ` are not in Mathlib). For isogenous
 abelian varieties `A`, `B` over `ℚ` with finite Tate–Shafarevich groups, the quotient
-`#Ш · Reg · Ω · C / (#tors · #tors^t)` is the same for `A` and `B` (the proof of Theorem 7.3,
+`|Ш| · Reg · Ω · C / (|tors| · |tors^t|)` is the same for `A` and `B` (the proof of Theorem 7.3,
 pp. 97–99, establishes this from duality, (7.3.1), without assuming the conjectural equality with
-the leading term; tex 4024–4027). Here `shaX = #Ш(X)`, `tX = #X(ℚ)_tors`, `tXd = #X^t(ℚ)_tors`,
+the leading term; tex 4024–4027). Here `shaX = |Ш(X)|`, `tX = |X(ℚ)_tors|`, `tXd = |X^t(ℚ)_tors|`,
 `CX` the product of the component numbers, `RegX`, `ΩX` the regulator and period for the chosen
 Néron differentials. -/
 def MilneIsogenyInvariance (shaA shaB tA tAd tB tBd CA CB : ℕ) (RegA RegB ΩA ΩB : ℝ) : Prop :=
   (shaA : ℝ) * RegA * ΩA * CA / (tA * tAd) = (shaB : ℝ) * RegB * ΩB * CB / (tB * tBd)
 
 /-- **The two-adic form of the isogeny invariance** (tex 4105–4112). With self-dual torsion
-counts (`#A^t(ℚ)_tors = #A(ℚ)_tors`, `A` and `B` principally polarized: GLUE), rational ratios
-`Reg_B = ρ_Reg Reg_A`, `Ω_B = ρ_Ω Ω_A`, and `s_X = v₂ #Ш(X)`, `g_X = v₂ #X(ℚ)_tors`:
+counts (`|A^t(ℚ)_tors| = |A(ℚ)_tors|`, `A` and `B` principally polarized: GLUE), rational ratios
+`Reg_B = ρ_Reg Reg_A`, `Ω_B = ρ_Ω Ω_A`, and `s_X = v₂ |Ш(X)|`, `g_X = v₂ |X(ℚ)_tors|`:
 `s_A − s_B = 2g_A − 2g_B + v₂ ρ_Reg + v₂ ρ_Ω + v₂(C_B/C_A)`. PROVED. -/
 theorem milne_valuation_form {shaA shaB tA tB CA CB : ℕ} {RegA ΩA : ℝ} {ρReg ρΩ : ℚ}
     (hshaA : shaA ≠ 0) (hshaB : shaB ≠ 0) (htA : tA ≠ 0) (htB : tB ≠ 0) (hCA : CA ≠ 0)
@@ -110,11 +111,11 @@ theorem milne_valuation_form {shaA shaB tA tB CA CB : ℕ} {RegA ΩA : ℝ} {ρR
 /-! ### The regulator ratio -/
 
 /-- **`ψφ = [2]` on rank-one free lattices**: with `φ(g_A) = α g_B` and `ψ(g_B) = β g_A`,
-`αβ = 2`; the indices `I = |α|`, `J = |β|` satisfy `IJ = 2` (tex 4080–4084). PROVED. -/
+`αβ = 2`; the indices `I = |α|`, `J = |β|` satisfy `IJ = 2` (tex 4082–4088). PROVED. -/
 theorem isogenyIndex_mul {α β : ℤ} (h : α * β = 2) : α.natAbs * β.natAbs = 2 := by
   rw [← Int.natAbs_mul, h]; rfl
 
-/-- **`Reg_B / Reg_A = 2 / I²`** (tex 4084–4086): with the height adjunction
+/-- **`Reg_B / Reg_A = 2 / I²`** (tex 4088–4090): with the height adjunction
 `⟨φ x, y⟩_B = ⟨x, ψ y⟩_A` (GLUE: functoriality of the canonical height under dual isogenies) read
 on generators as `α Reg_B = β Reg_A`, and `αβ = 2`, one has `Reg_B α² = 2 Reg_A`. PROVED. -/
 theorem regulator_ratio {α β : ℤ} {RegA RegB : ℚ} (h : α * β = 2)
@@ -122,7 +123,7 @@ theorem regulator_ratio {α β : ℤ} {RegA RegB : ℚ} (h : α * β = 2)
   have h' : (α : ℚ) * β = 2 := by exact_mod_cast h
   linear_combination (α : ℚ) * hadj + RegA * h'
 
-/-- **`v₂(Reg_B / Reg_A) = v₂(2/I²) = ±1`** (tex 4085–4086, 4108–4109). PROVED. -/
+/-- **`v₂(Reg_B / Reg_A) = v₂(2/I²) = ±1`** (tex 4088–4090, 4108–4109). PROVED. -/
 theorem padicValRat_regulator_ratio {α β : ℤ} (h : α * β = 2) :
     padicValRat 2 (2 / ((α : ℚ) ^ 2)) = 1 ∨ padicValRat 2 (2 / ((α : ℚ) ^ 2)) = -1 := by
   have hdvd : α ∣ 2 := ⟨β, h.symm⟩
@@ -167,7 +168,7 @@ theorem padicValNat_le_two_of_le_four {x : ℕ} (h1 : 1 ≤ x) (h4 : x ≤ 4) :
   omega
 
 /-- **The period ratio has bounded two-adic valuation** (tex 4096–4104): with
-`|a| Ω_A = (κ/γ) Ω_B` (`κ = #ker φ_ℝ`, `γ = #coker φ_ℝ`, both in `[1, 4]`) and
+`|a| Ω_A = (κ/γ) Ω_B` (`κ = |ker φ_ℝ|`, `γ = |coker φ_ℝ|`, both in `[1, 4]`) and
 `a ∈ {±1, ±2, ±4}`, the rational ratio `Ω_B / Ω_A = |a| γ / κ` has `|v₂| ≤ 4`. PROVED. -/
 theorem padicValRat_period_ratio {a : ℤ} {γ κ : ℕ} {ΩA ΩB : ℝ} (hΩA : ΩA ≠ 0)
     (ha : a = 1 ∨ a = -1 ∨ a = 2 ∨ a = -2 ∨ a = 4 ∨ a = -4)
@@ -221,8 +222,8 @@ theorem padicValRat_component_ratio {S T : Finset ℕ} (hTS : T ⊆ S) (cA cB t 
   rw [hratio, padicValRat.pow 2, h22, mul_one]
   push_cast; rfl
 
-/-- In the full rational two-torsion case, `c_p(E^{(hk)}) = #E[2]^{Fr_p} = 4 = 2^{t_p}` with
-`t_p = 2` (tex 4029–4033, 4136). PROVED. -/
+/-- In the full rational two-torsion case, `c_p(E^{(hk)}) = |E[2]^{Fr_p}| = 4 = 2^{t_p}` with
+`t_p = 2` (tex 4036–4040, 4136). PROVED. -/
 theorem tp_eq_two {c : ℕ} (h : c = 4) : c = 2 ^ 2 := by rw [h]; norm_num
 
 /-! ### The torsion and local contributions -/

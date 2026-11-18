@@ -19,11 +19,11 @@ the outputs used later in the proof of Theorem 5.3:
   `CentralNormalization.lstar_ne_zero_iff` PROVED), `BinaryFamily` (a family of quadratic
   characters `χ_x = χ_0(x ∘ ε)` with one real sign and fixed squareclasses at `2N`);
 * `EvenScalar32` — **Proposition `ex:sec7-even-scalar`, (3.2)** (tex 1832–1844, 1945–1946);
-* `unusedFactor_central` — the unused-prime factor (3.1)/(K9) at the centre is `#E^h(𝔽_q)/q`, of
-  valuation `v₂ #E^h(𝔽_q)` (PROVED);
+* `unusedFactor_central` — the unused-prime factor (3.1)/(K9) at the centre is `|E^h(𝔽_q)|/q`, of
+  valuation `v₂ |E^h(𝔽_q)|` (PROVED);
 * `CentralLengthInput` with `CentralLengthInput.E7` — the Kummer-duality bookkeeping (E.6)–(E.7)
   of Proposition `ex:app-central-calibration` (tex 7631–7754), PROVED from its exact sequences;
-* `CentralLocalInput` with `CentralLocalInput.E8` — (E.8) (tex 7755–7775), PROVED;
+* `ConstituentOutput` with `ConstituentOutput.E8` — (E.8) (tex 7755–7775), PROVED;
 * `BinaryFamily.support`, `unused_disjoint_fixed` — the unused primes of every constituent are good
   (tex 7313–7315; PROVED from the local squareclass condition);
 * `EvenFamilyOutput`, `AppEOutputs` — what Propositions `ex:app-kato-system` (K1)–(K3),
@@ -32,9 +32,9 @@ the outputs used later in the proof of Theorem 5.3:
 * `evenScalar32_of_appE` — **(3.2) from Appendix E** (PROVED);
 * `EvenLowerBound`, `evenLowerBound_of_evenScalar32` — **(E.9)** (tex 7782–7785; PROVED, with the
   forward rank-zero theorem as input);
-* `EvenFormInput`, `EvenFormInput.E11`, `EvenFormInput.minimum` — Proposition
-  `ex:app-even-phase`: (E.11) and the finite attained minimum of `v₂ a(D) − ω(D)` (tex 7792–8200;
-  PROVED from the form's interface).
+* Proposition `ex:app-even-phase`, (E.11) and the finite attained minimum of `v₂ a(D) − ω(D)`
+  (tex 7792–8200): in `EvenPhase.lean` (`EvenPhaseData`, `EvenPhaseData.E11`,
+  `EvenPhaseData.minimum`).
 -/
 
 noncomputable section
@@ -340,9 +340,9 @@ theorem CentralLengthInput.E7 (C : CentralLengthInput) :
 
 /-- **The unused-prime factor (3.1)/(K9) at the centre** (tex 1876–1877, 7012–7015, 7202–7203;
 PROVED): at `t = 0` the cyclotomic Frobenius is trivial, and
-`E_q(χ)(0) = 1 − a_q χ(q)/q + 1/q = (q + 1 − χ(q) a_q)/q`, which is `#E^h(𝔽_q)/q` because
+`E_q(χ)(0) = 1 − a_q χ(q)/q + 1/q = (q + 1 − χ(q) a_q)/q`, which is `|E^h(𝔽_q)|/q` because
 `a_q(E^h) = χ_h(q) a_q(E)` (GLUE). For odd `q` its two-adic valuation is that of `q + 1 − χ(q)a_q`,
-the `v₂ #E^h(𝔽_q)` of (K3). -/
+the `v₂ |E^h(𝔽_q)|` of (K3). -/
 theorem unusedFactor_central {q : ℕ} (hq : Odd q) (a χ : ℤ) :
     ((1 : ℚ) - (a * χ : ℤ) / q + 1 / q) = ((q : ℚ) + 1 - (χ * a : ℤ)) / q ∧
       padicValRat 2 (((q : ℚ) + 1 - (χ * a : ℤ)) / q) = padicValRat 2 ((q : ℚ) + 1 - (χ * a : ℤ)) := by
@@ -374,7 +374,7 @@ fixed local types. ELLIOT/GLUE inputs (each field names its source):
 * `sumG` — the local `H²` term of (E.6) is `⊕_{v ∈ S_f} H²(ℚ_v,T)` of length `Σ_v g_v`;
 * `K3` — (K3) for the retained class `z = F_E(Z_F)_h`, smoothing and old-support factors absorbed
   into `ε_rec` (tex 6880–6887, 7755–7766);
-* `unusedEq` — `g_q = v₂ #E^h(𝔽_q)` at unused good primes (GLUE: at a good odd prime reduction is an
+* `unusedEq` — `g_q = v₂ |E^h(𝔽_q)|` at unused good primes (GLUE: at a good odd prime reduction is an
   isomorphism on `2`-primary torsion; tex 7767);
 * `actEq` — `g_q = 2` at active good primes (tex 1963, 7768–7769: inertia acts by `−1`, so the
   invariants are `E[2]`; PROVED supports: `fixed_iff_two_nsmul_eq_zero`,
@@ -386,7 +386,7 @@ structure ConstituentOutput (act unused fix : Finset ℕ) (CE Cfix Cg Cr Ce : �
   len : CentralLengthInput
   /-- `g_v = ℓ E^h(ℚ_v)[2^∞]` -/
   gv : ℕ → ℤ
-  /-- `v₂ #E^h(𝔽_q)` -/
+  /-- `v₂ |E^h(𝔽_q)|` -/
   nq : ℕ → ℤ
   /-- `v₂ L_*(h)` -/
   v2L : ℤ
@@ -404,7 +404,7 @@ structure ConstituentOutput (act unused fix : Finset ℕ) (CE Cfix Cg Cr Ce : �
 
 /-- **(E.8) at one constituent** (tex 7755–7775; PROVED from `CentralLengthInput.E7` and
 `E8_of_E7_K3`): the unused-prime terms cancel, every active good prime contributes `−2`, and
-`|v₂ u_h(0) − (v₂ L_*(h) − 2·#act − s(h))| ≤ C_E + #fix·C_fix + 2C_g + 1 + C_r + C_e`. -/
+`|v₂ u_h(0) − (v₂ L_*(h) − 2·|act| − s(h))| ≤ C_E + |fix|·C_fix + 2C_g + 1 + C_r + C_e`. -/
 theorem ConstituentOutput.E8 {act unused fix : Finset ℕ} {CE Cfix Cg Cr Ce : ℤ}
     (hdau : Disjoint act unused) (hdaf : Disjoint act fix) (hduf : Disjoint unused fix)
     (O : ConstituentOutput act unused fix CE Cfix Cg Cr Ce) :

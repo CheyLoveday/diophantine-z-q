@@ -13,9 +13,12 @@ field `L`, a field of characteristic zero, with the coefficient ring `𝒪 = �
 every property of the operators that the computation uses is a hypothesis, named after the
 manuscript with its tex lines and kind:
 
-* `ShellRecurrence` — the good `T(p²)` formula `(E.12)` (tex 8156–8161), `PRINT` (Shimura's
-  formula for `T(p²)` on half-integral weight; the manuscript cites it as "the standard good
-  `T(p²)` formula"), here as an interface on the coefficient sequence;
+* `ShellRecurrence` — the good `T(p²)` formula `(E.12)` (tex 8156–8161), `PRINT` for the formula
+  (Shimura's `T(p²)` formula in half-integral weight, Ann. of Math. 97 (1973), Theorem 1.7, the
+  locator as Purkait, *Hecke operators in half-integral weight*, arXiv:1208.4326, gives it; the
+  manuscript cites it as "the standard good `T(p²)` formula") and `ELLIOT` for its use here (the
+  transported source is a `T(p²)`-eigenform with eigenvalue `η(p)a_p(E^{(k)})`), here as an
+  interface on the coefficient sequence;
 * the normalization `a(1) = 1` (tex 10291–10292, 10460) and the positive-twist character convention
   `ψ/η = χ_{−1}`, i.e. `ψ(p) = η(p)(−1/p)` (tex 10361, 10457), `ELLIOT`;
 * integrality of `H` (`(O.11)`, tex 10342, 9626–9632), `ELLIOT`;
@@ -124,8 +127,10 @@ def Hp (a η : ℕ → L) (S p n : ℕ) : L :=
   (Bp a (η p) p n - Bp a (η p) p 1 * unaryTheta η S 1 n -
     Bp a (η p) p p * unaryTheta η S p n) / 2
 
-/-- **The good `T(p²)` formula `(E.12)` at the prime `p`** (tex 8156–8161; `PRINT` interface:
-Shimura's `T(p²)` formula for half-integral weight, as the manuscript uses it):
+/-- **The good `T(p²)` formula `(E.12)` at the prime `p`** (tex 8156–8161; `PRINT` for the
+formula: Shimura's `T(p²)` formula for half-integral weight, Ann. of Math. 97 (1973), Theorem 1.7;
+`ELLIOT` for its use: the transported source is a `T(p²)`-eigenform with eigenvalue `η(p)a_p`, where
+`a_p` is the eigenvalue of the weight-two form of `E^{(k)}`, Mathlib's coefficient by modularity):
 `a(p²n) = {η(p)a_p − ψ(p)(−n/p)}a(n) − pη(p)²a(n/p²)` for every `n`, with `a(n/p²) = 0` unless
 `p² ∣ n`. -/
 def ShellRecurrence (a : ℕ → L) (ηp ψp : L) (ap : ℤ) (p : ℕ) [Fact p.Prime] : Prop :=
@@ -624,7 +629,7 @@ even source (coefficients `a`, characters `η`, `ψ(p)`, support `S`), its `ELLI
 properties,
 and the Galois-trace data `t(φ)f`, `d(φ)f` with the fresh prime `p'`. Fields:
 * `ha1`: normalization at index one (tex 10291–10292);
-* `hrec`: `(E.12)` at `p` (tex 8156–8161, `PRINT` interface);
+* `hrec`: `(E.12)` at `p` (tex 8156–8161; `PRINT` formula, Shimura 1973, Theorem 1.7; `ELLIOT` use);
 * `hψ`: `ψ/η = χ_{−1}` at `p` (positive twist convention, tex 10361, 10457);
 * `hη1`, `hηO`, `hηinv`, `hη0`: the character values are integral, `η(1) = 1`, the phase `η(p)` is a
   unit;

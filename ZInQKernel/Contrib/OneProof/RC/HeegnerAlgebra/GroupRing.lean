@@ -15,7 +15,7 @@ paragraph 3 "The relative group and invariant derivative class", tex lines 2969�
 * (H7), tex 2992–3002: if `2^a ∣ a_ℓ` and `2^a ∣ ℓ + 1` for all `ℓ ∈ I`, the Kummer class
   `δ_a(C_π D_I y_{f n_I})` is `Gal(M_I/H_f)`-invariant: `PROVED` abstractly, with the Kummer map,
   the norm relations (4.1) and the Artin identification (H5) as hypotheses.
-* Gap B1-a (`maps/mcheck-rc-deep.md`): the divisibility must hold for *every* `ℓ ∈ I`, not only for
+* Gap B1-a (implicit in the text): the divisibility must hold for *every* `ℓ ∈ I`, not only for
   the new prime; it is an explicit hypothesis of `H7_derivative_invariant` and is discharged from
   (H12) for every retained prime in `Precision.lean` (`B1a_of_H12`).
 -/

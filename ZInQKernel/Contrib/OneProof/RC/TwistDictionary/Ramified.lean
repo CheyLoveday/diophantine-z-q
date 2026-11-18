@@ -33,15 +33,14 @@ section Generic
 variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
   {K : Type*} [Field K] [Algebra R K] [IsFractionRing R K]
 
-local notation "vK" => valuation K (IsDiscreteValuationRing.maximalIdeal R)
 
 /-- An element of `R` has valuation `1` exactly when it is a unit. -/
-theorem vK_algebraMap_eq_one_iff (r : R) : vK (algebraMap R K r) = 1 ↔ IsUnit r := by
+theorem vK_algebraMap_eq_one_iff (r : R) : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) (algebraMap R K r) = 1 ↔ IsUnit r := by
   rw [valuation_of_algebraMap, intValuation_eq_one_iff]
   exact IsLocalRing.notMem_maximalIdeal
 
 /-- An element of `K` of valuation `1` is the image of a unit of `R`. -/
-theorem exists_isUnit_of_vK_eq_one {x : K} (hx : vK x = 1) :
+theorem exists_isUnit_of_vK_eq_one {x : K} (hx : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) x = 1) :
     ∃ w : R, IsUnit w ∧ algebraMap R K w = x := by
   obtain ⟨w, hw⟩ := IsDiscreteValuationRing.exists_lift_of_le_one hx.le
   refine ⟨w, ?_, hw⟩
@@ -53,16 +52,16 @@ theorem not_hasMultiplicativeReduction_of_twist (h2 : (2 : K) ≠ 0) (M : Weiers
     [M.HasGoodReduction R] {d : K} (_hd : d ≠ 0) (W : WeierstrassCurve K) (C : VariableChange K)
     (hW : W = C • twistK M d) [IsMinimal R W] : ¬ W.HasMultiplicativeReduction R := by
   intro hmult
-  have hMΔ : vK M.Δ = 1 := ‹M.HasGoodReduction R›.goodReduction
-  have hMc : vK M.c₄ ≤ 1 := by
+  have hMΔ : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) M.Δ = 1 := ‹M.HasGoodReduction R›.goodReduction
+  have hMc : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) M.c₄ ≤ 1 := by
     rw [← integralModel_c₄_eq R M]; exact valuation_le_one _ _
-  have hc : vK W.c₄ = 1 := hmult.multiplicativeReduction
-  have hΔ : vK W.Δ < 1 := hmult.badReduction
+  have hc : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) W.c₄ = 1 := hmult.multiplicativeReduction
+  have hΔ : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) W.Δ < 1 := hmult.badReduction
   have hj : W.c₄ ^ 3 * M.Δ = M.c₄ ^ 3 * W.Δ := by
     rw [hW, variableChange_c₄, variableChange_Δ, twistK_c₄ M h2, twistK_Δ M h2]; ring
-  have hj' := congrArg vK hj
+  have hj' := congrArg (valuation K (IsDiscreteValuationRing.maximalIdeal R)) hj
   simp only [map_mul, map_pow, hc, hMΔ, one_pow, one_mul] at hj'
-  have hlt : vK M.c₄ ^ 3 * vK W.Δ < 1 :=
+  have hlt : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) M.c₄ ^ 3 * (valuation K (IsDiscreteValuationRing.maximalIdeal R)) W.Δ < 1 :=
     lt_of_le_of_lt (mul_le_of_le_one_left zero_le (pow_le_one₀ zero_le hMc)) hΔ
   exact hlt.ne hj'.symm
 
@@ -74,13 +73,13 @@ theorem not_hasGoodReduction_of_twist (h2 : (2 : K) ≠ 0) (M : WeierstrassCurve
     (W : WeierstrassCurve K) (C : VariableChange K) (hW : W = C • twistK M d) [IsMinimal R W] :
     ¬ W.HasGoodReduction R := by
   intro hgood
-  have hMΔ : vK M.Δ = 1 := ‹M.HasGoodReduction R›.goodReduction
-  have hWΔ : vK W.Δ = 1 := hgood.goodReduction
+  have hMΔ : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) M.Δ = 1 := ‹M.HasGoodReduction R›.goodReduction
+  have hWΔ : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) W.Δ = 1 := hgood.goodReduction
   have hu : ((C.u⁻¹ : Kˣ) : K) * (C.u : K) = 1 := by simp
   have hrel : W.Δ = (((C.u⁻¹ : Kˣ) : K) ^ 2 * d) ^ 6 * M.Δ := by
     rw [hW, variableChange_Δ, twistK_Δ M h2]; ring
-  have h6 : vK (((C.u⁻¹ : Kˣ) : K) ^ 2 * d) ^ 6 = 1 := by
-    have := congrArg vK hrel
+  have h6 : (valuation K (IsDiscreteValuationRing.maximalIdeal R)) (((C.u⁻¹ : Kˣ) : K) ^ 2 * d) ^ 6 = 1 := by
+    have := congrArg (valuation K (IsDiscreteValuationRing.maximalIdeal R)) hrel
     rw [hWΔ, map_mul, map_pow, hMΔ, mul_one] at this
     exact this.symm
   obtain ⟨w, hw, hwx⟩ := exists_isUnit_of_vK_eq_one (eq_one_of_pow_eq_one_withZero (by norm_num) h6)
@@ -94,8 +93,6 @@ section TwoAdic
 
 variable (v : HeightOneSpectrum (NumberField.RingOfIntegers ℚ))
 
-local notation "vK" => valuation (v.adicCompletion ℚ)
-  (IsDiscreteValuationRing.maximalIdeal (v.adicCompletionIntegers ℚ))
 
 /-- `2 ≠ 0` in `ℚ_v` (PROVED). -/
 theorem two_ne_zero_adicCompletion : (2 : v.adicCompletion ℚ) ≠ 0 := by
@@ -213,19 +210,19 @@ theorem not_hasGoodReduction_twist_two (hv : natGenerator v = 2)
     ¬ W.HasGoodReduction (v.adicCompletionIntegers ℚ) := by
   intro hgood
   have h2 := two_ne_zero_adicCompletion v
-  have hMΔ : vK M.Δ = 1 := ‹M.HasGoodReduction _›.goodReduction
-  have hWΔ : vK W.Δ = 1 := hgood.goodReduction
+  have hMΔ : (valuation (v.adicCompletion ℚ) (IsDiscreteValuationRing.maximalIdeal (v.adicCompletionIntegers ℚ))) M.Δ = 1 := ‹M.HasGoodReduction _›.goodReduction
+  have hWΔ : (valuation (v.adicCompletion ℚ) (IsDiscreteValuationRing.maximalIdeal (v.adicCompletionIntegers ℚ))) W.Δ = 1 := hgood.goodReduction
   have hmu : IsUnit (m : v.adicCompletionIntegers ℚ) :=
     (ZInQ.Literature.isUnit_intCast_iff v m).mpr (by rw [hv]; push_cast; omega)
-  have hvm : vK (m : v.adicCompletion ℚ) = 1 := by
+  have hvm : (valuation (v.adicCompletion ℚ) (IsDiscreteValuationRing.maximalIdeal (v.adicCompletionIntegers ℚ))) (m : v.adicCompletion ℚ) = 1 := by
     rw [← map_intCast (algebraMap (v.adicCompletionIntegers ℚ) (v.adicCompletion ℚ)),
       vK_algebraMap_eq_one_iff]
     exact hmu
   have hrelΔ : W.Δ = ((C.u⁻¹ : (v.adicCompletion ℚ)ˣ) : v.adicCompletion ℚ) ^ 12 *
       ((m : v.adicCompletion ℚ) ^ 6 * M.Δ) := by
     rw [hW, variableChange_Δ, twistK_Δ M h2]
-  have hvu : vK ((C.u⁻¹ : (v.adicCompletion ℚ)ˣ) : v.adicCompletion ℚ) = 1 := by
-    have := congrArg vK hrelΔ
+  have hvu : (valuation (v.adicCompletion ℚ) (IsDiscreteValuationRing.maximalIdeal (v.adicCompletionIntegers ℚ))) ((C.u⁻¹ : (v.adicCompletion ℚ)ˣ) : v.adicCompletion ℚ) = 1 := by
+    have := congrArg (valuation (v.adicCompletion ℚ) (IsDiscreteValuationRing.maximalIdeal (v.adicCompletionIntegers ℚ))) hrelΔ
     rw [hWΔ, map_mul, map_mul, map_pow, map_pow, hvm, hMΔ, one_pow, one_mul, mul_one] at this
     exact eq_one_of_pow_eq_one_withZero (by norm_num) this.symm
   obtain ⟨w, hwu, hw⟩ := exists_isUnit_of_vK_eq_one hvu
@@ -330,10 +327,10 @@ theorem ne_sq_mul_unit_of_odd_pow {D : ℤ} {k : ℕ} (hk : Odd k) {e : ℤ}
   have hDR : (D : v.adicCompletion ℚ) =
       algebraMap (v.adicCompletionIntegers ℚ) (v.adicCompletion ℚ) (π ^ k * e) := by
     rw [hDe, map_mul, map_pow, map_intCast, map_natCast]; push_cast; rfl
-  have hwv : vK (algebraMap _ (v.adicCompletion ℚ) w) = 1 := (vK_algebraMap_eq_one_iff w).mpr hw
-  have hxle : vK x ≤ 1 := by
+  have hwv : (valuation (v.adicCompletion ℚ) (IsDiscreteValuationRing.maximalIdeal (v.adicCompletionIntegers ℚ))) (algebraMap _ (v.adicCompletion ℚ) w) = 1 := (vK_algebraMap_eq_one_iff w).mpr hw
+  have hxle : (valuation (v.adicCompletion ℚ) (IsDiscreteValuationRing.maximalIdeal (v.adicCompletionIntegers ℚ))) x ≤ 1 := by
     refine le_of_not_gt fun hlt => ?_
-    have h1 : vK (D : v.adicCompletion ℚ) ≤ 1 := by rw [hDR]; exact valuation_le_one _ _
+    have h1 : (valuation (v.adicCompletion ℚ) (IsDiscreteValuationRing.maximalIdeal (v.adicCompletionIntegers ℚ))) (D : v.adicCompletion ℚ) ≤ 1 := by rw [hDR]; exact valuation_le_one _ _
     rw [hx, map_mul, map_pow, hwv, mul_one] at h1
     exact absurd h1 (not_le.mpr (one_lt_pow₀ hlt two_ne_zero))
   obtain ⟨y, rfl⟩ := IsDiscreteValuationRing.exists_lift_of_le_one hxle

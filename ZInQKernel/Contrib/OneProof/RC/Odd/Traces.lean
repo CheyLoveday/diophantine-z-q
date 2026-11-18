@@ -6,7 +6,7 @@ import Mathlib
 Manuscript (11/5), Appendix F, proof of Proposition `ex:app-coefficient-rules`:
 * "`d(u)t(v) = t(v)`, `t(u)t(v) = t(uv) + t(uv^{−1})`, `t(1) = 0`. The middle equality follows from
   the characteristic-zero matrix identity `tr(A)tr(B) = tr(AB) + det(B) tr(AB^{−1})` … the last
-  follows from `tr(1) = 2`" (tex 9729–9739) — `trace_mul_trace`, `trace_mul_trace_units`;
+  follows from `tr(1) = 2`" (tex 9729–9739) — `trace_mul_trace_adj`, `trace_mul_trace_units`;
 * "It follows that `t(g)t(h)F_U = 0` after reduction. Applying the middle identity to `t(gh)t(h)`
   gives `t(gh²)F_U = t(g)F_U`. Invariance under all squares … gives factorization through the
   elementary quadratic quotient" (tex 9745–9750) — `trace_square_invariance`,

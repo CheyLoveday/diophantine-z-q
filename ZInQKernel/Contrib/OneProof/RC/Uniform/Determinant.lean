@@ -1,7 +1,7 @@
 import Mathlib
 
 /-!
-# Lane RC16 (job `det`): the class-functional coordinate of a square two-term complex
+# Lane RC16: the class-functional coordinate of a square two-term complex
 
 Formalizes the linear algebra behind the terminal step of the proof of (5.5):
 

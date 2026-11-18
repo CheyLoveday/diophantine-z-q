@@ -10,8 +10,8 @@ numbers are those of the volume).
 Uses in the manuscript (`diophantine_zq.tex`):
 * tex 1104–1108 (`lem:forward-rank`): the `r = 0` finiteness from **Cor. 14.3** "applied to the
   modular quotient `J₁(N) ↠ A` over `ℚ` and the trivial character"; with Kolyvagin's Theorem 1 it
-  gives `corank Sel_{2^∞} = 0` for the companion twists (tex 2604–2647: `s₂(E^{(k)}/ℚ) = 0`), and
-  finite `Ш` in the calibration (tex 4020–4021, 5250).
+  gives `corank Sel_{2^∞} = 0` for the companion twists (tex 2595–2626, 5264–5266:
+  `s₂(E^{(k)}/ℚ) = 0`), and finite `Ш` in the calibration (tex 4020–4021).
 * tex 1884–1893 and App. E ¶7 (tex 7206–7255): the divisibility **Thm. 13.4(2)** at height-one
   primes not containing `2`, with its hypotheses (i)–(v) checked; (i) via **Thm. 13.5(2)**
   (Rohrlich, tex 7215–7221).
@@ -94,7 +94,7 @@ theorem z2Corank_zero_of_finite (M : Type) [AddCommGroup M] [Finite M] : Z2Coran
 
 /-- **The `r = 0` half of `lem:forward-rank` (tex 1086–1108)**, PROVED from Kato's Cor. 14.3 and
 BCDT: an elliptic curve `E/ℚ` with `L(E, 1) ≠ 0` has finite `E(ℚ)`, finite `Ш(E/ℚ)`, and
-`corank_{ℤ₂} Sel_{2^∞}(E/ℚ) = 0`. Used for the companion twist at tex 2627–2647
+`corank_{ℤ₂} Sel_{2^∞}(E/ℚ) = 0`. Used for the companion twist at tex 2616–2626
 (`s₂(E^{(k)}/ℚ) = 0`). -/
 theorem forward_rank_zero (hK : KatoCor14_3) (hB : BCDTThmA) (E : WeierstrassCurve ℚ)
     (hE : E.IsElliptic) (hL : AnalyticRank E 0) :
@@ -103,7 +103,7 @@ theorem forward_rank_zero (hK : KatoCor14_3) (hB : BCDTThmA) (E : WeierstrassCur
   exact ⟨h1, h2, z2Corank_zero_of_finite _⟩
 
 /-- **The same, with BCDT taken from the shared top layer's `Prints`** (PROVED): for the companion
-twist at tex 2627–2647, `L(E^{(k)}, 1) ≠ 0` gives `corank_{ℤ₂} Sel_{2^∞}(E^{(k)}/ℚ) = 0`
+twist at tex 2616–2626, `L(E^{(k)}, 1) ≠ 0` gives `corank_{ℤ₂} Sel_{2^∞}(E^{(k)}/ℚ) = 0`
 (`s₂(E^{(k)}/ℚ) = 0`) and finite `Ш(E^{(k)}/ℚ)`; here `E^{(k)} = qtwist E k`. -/
 theorem forward_rank_zero_twist (P : Prints) (hK : KatoCor14_3) (E : WeierstrassCurve ℚ) (k : ℚ)
     (hE : (qtwist E k).IsElliptic) (hL : AnalyticRank (qtwist E k) 0) :

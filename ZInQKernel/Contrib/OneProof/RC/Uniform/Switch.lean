@@ -6,7 +6,7 @@ import Mathlib
 This file formalizes, as linear algebra over a field `K` (the "stated fraction or test field" of
 the manuscript), the lemma `ex:limits-derivative-switch`
 ("Derivative local conditions and determinant-preserving switch", manuscript lines 4833-4907),
-including the gap B2-a (the equal-valuation claim, lines 4900-4906) of the step-by-step check.
+including the gap B2-a (the equal-valuation claim, lines 4900-4906, written out here).
 
 * Part 1 (lines 4834-4842, 4853-4874): the graded local model
   `L_v = D⁰ ⊕ (F_v ⊕ S_v)[-1] ⊕ D²[-2]` with zero differential, the four local conditions
@@ -544,7 +544,7 @@ Dimension bookkeeping with the exact sequence `0 → K₀ → V' → U ∩ S_v �
 `V' = H¹(C_S)` is the new generic `H¹`, and `U` is the relaxed localization image. Conclusion:
 `dim V' = 1` and every nonzero `B ∈ V'` spans it.
 `PROVED` from the hypotheses; `U = U^⊥` is the cited duality (`GLUE`, Nekovář 6.3.3-6.3.4), and the
-exact sequence is the cone-triangle sequence (stated as hypotheses, as asked). -/
+exact sequence is the cone-triangle sequence (stated as hypotheses). -/
 theorem switch_new_H1_spanned {ε σ : K} (hε : ε ≠ 0) (hσ : σ ≠ 0)
     {J : Matrix (Fin 2) (Fin 2) K} (hJ2 : J * J = 1) {v : Fin 2 → K} (hv : v ≠ 0)
     (U : Submodule K ((Fin 2 → K) × (Fin 2 → K)))
