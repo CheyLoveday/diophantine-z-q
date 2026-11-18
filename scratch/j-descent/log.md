@@ -53,3 +53,11 @@
   `propext`, `Classical.choice`, and `Quot.sound`.
 - VERIFIED (source imports): the contribution's transitive import graph excludes
   the headline and the excluded library.
+- VERIFIED (Lean): `lake env lean scratch/j-descent/Discharges.lean` reports
+  33 open headline hypotheses. The new candidate matches `OpenResearchLeaves66.cmjDegree`
+  with exactly `CMPeriodShortWeierstrassComparison` and `CMjDegreePrint` still assumed;
+  it uses only the standard axioms.
+- VERIFIED (dry run): the copied and updated spec ran with `--dry-run` only.
+  The counts are 4 LEAF / 25 GLUE now and would be 5 LEAF / 24 GLUE in both
+  strict and strictest with a provider for the comparison. Its proof name is a
+  placeholder in the preview. No changes to the live statements, files, or counts.
