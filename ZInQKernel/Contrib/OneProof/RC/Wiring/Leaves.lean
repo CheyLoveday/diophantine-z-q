@@ -20,10 +20,14 @@ import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.DensityLeaf
 import ZInQKernel.Contrib.OneProof.RC.Wiring.OddModels
 import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.LocalFinal
 import ZInQKernel.Contrib.OneProof.RC.Wiring.ClearingComplex3
+import ZInQKernel.Contrib.OneProof.RC.Wiring.ClearingComplex4
 import ZInQKernel.Contrib.OneProof.RC.GlueSweep.AnaLevel
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf2
 import ZInQKernel.Contrib.OneProof.RC.BaseZeroAssembly.Assembly
 import ZInQKernel.Contrib.OneProof.RC.Wiring.UniformSwitch
+import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35Leaf
+import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate4
+import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf3
 
 /-!
 # Theorem 5.3, Lane RC0: every remaining hypothesis in one structure
@@ -91,6 +95,18 @@ def WData.depthSet {ℓ : ℕ} (W : WData ℓ) : Set ℤ :=
 
 /-! The final companion leaf `CompanionLeaf` and `companionTarget_of` are in `CompanionLeaf.lean`. -/
 
+/-- **The address leaf from the density leaf in the remaining branch** (PROVED: lane RC24's
+`addressPackageStagedLeaf_of_genuineLeaf` and `addressGenuineLeaf_of_densityLeaf`, used only where
+the staged package is asked for, `¬ W.OddEmptyUnit`). -/
+theorem addressLeaf_of_densityLeaf_branch {ℓ : ℕ} {W : WData ℓ} (hℓ : Adm ℓ)
+    (hcomp : CompanionLeaf W)
+    (h : ¬ W.OddEmptyUnit → ZInQ.Manuscript.RC.AddressGenuine.AddressDensityLeaf W) :
+    AddressLeaf W :=
+  addressLeaf_of_stagedPackage W fun A CE CR Cper Cdet h33 h34 h35 hvis hU =>
+    ZInQ.Manuscript.RC.AddressGenuine.addressPackageStagedLeaf_of_genuineLeaf hℓ hcomp
+      (ZInQ.Manuscript.RC.AddressGenuine.addressGenuineLeaf_of_densityLeaf (h hU))
+      A CE CR Cper Cdet h33 h34 h35 hvis hU
+
 /-! ## The leaves -/
 
 /-- **The leaves that do not involve `δ_o`** (at an admissible `ℓ` with Selmer corank one and a
@@ -132,18 +148,22 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   the hosts. PROVED from it: (3.4) (`gz34Target_of_genusOdd`), (O.8)'s inputs
   (`visibilityInputs_of_oddInstance`) and the fixed witness (`witnessLeaf_of_oddInstance`). -/
   odd : Nonempty (OddInstance W)
-  /-- The inputs of (3.5) over the genuine `𝒪` (`Eq35InputsGenuineG`): the primitive coordinates at
-  the companion pairs with the height-one switching data (`RegularityInputsS`), (4.6) at the
-  companion pairs, and the concrete outer switching data over `𝒪` (`GenuineOuterSwitchData`:
-  integral inner minimal models of one size, the outer model in `Frac 𝒪_∞`, integral cycles, the
-  functional bound `v λ ≥ −a`, the switch data) (ELLIOT + GLUE; tex 2441–2446, 3987–4047,
-  4909–5202; owners RC16, RC15, RC6, batch 3 UniformSwitch / SwitchInputs). PROVED from them:
-  `pos`, the Cramer terminal step, the inner minors' link along the ultrafilter, the equal inner
-  valuations, and RC16's (3.5) over RC20's genuine valuation. Caveat: the switching data's stages
-  are linked to the genuine configuration only through the starting coordinate, so the regularity
-  part of this leaf is currently equivalent to the regularity it is meant to imply
-  (`regularityInputsS_iff`); batch 3 is tying each stage to the genuine Selmer fibre model. -/
-  eq35 : Eq35InputsGenuineG W
+  /-- The inputs of (3.5) on batch 3's genuine switching data (`Eq35InputsGenuineGG`): the primitive
+  coordinates at the companion pairs with batch 3's `GenuineSwitchData` over configuration families
+  genuine at every height-one prime (`RegularityInputsG`: lane RC26's Galois fibers, the genuine
+  moving variable), (4.6) at the companion pairs, and ONE family of switched minimal models over `𝒪`
+  for all ring instances, each a two-term model of genuine Galois Selmer data over `𝒪`, the actual
+  models' coordinates having the valuations of `ι_𝒪 u_prim`, with batch 3's
+  `GenuineOuterSwitchData` (switch GLUE between the determined stages) for every sequence of
+  companion pairs (ELLIOT + GLUE; tex 2441–2446, 3987–4047, 4909–5202; owners RC16, RC15, RC6, RC26,
+  batch 3 SwitchInputs). PROVED from them: `pos`, `minor_link`, the integral cycles and functionals,
+  the nonzero outer class, the Cramer terminal step, the equal inner valuations, regularity
+  (`regular_of_genuineSwitchData`), and RC16's (3.5) over RC20's genuine valuation. Remaining
+  freedom: the configuration families and the model family are existentials identified with the
+  actual Selmer complexes by GLUE (the coefficient modules and local conditions of the instances
+  are not defined in the tree); their stage dimensions are the genuine ones
+  (`RegularityInputsG.fiberDim_forced`, `outer_start_forced`). -/
+  eq35 : Eq35InputsGenuineGG W
 
 /-- **The leaves at the chosen `h_*` and `δ_o`**, each with tex lines, kind and owner. -/
 structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
@@ -151,7 +171,9 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   at `2N` (ELLIOT; tex 2595–2603, 2720–2721; owner RC2 / RC11 / RC13), recorded by the properties the
   deduction uses, with `L_*(k) ≠ 0` (a unit of the symbol has a nonzero coefficient). -/
   companion : CompanionLeaf W
-  /-- The inputs of the address construction at `δ_o` over the genuine Galois objects (lane RC24's
+  /-- In the remaining branch (`¬ W.OddEmptyUnit`, the scope of the address construction: tex
+  2588–2593, 10268–10270, 10501–10505; the odd-empty-unit branch needs no address), the inputs of
+  the address construction at `δ_o` over the genuine Galois objects (lane RC24's
   `AddressDensityLeaf`): the label data, a fresh prime of `k`, density models of the odd stage
   source on a set of stages of the ultrafilter and of the transported even source at every budget
   (ELLIOT trace identities and readings, tex 9671–9745, 9905–9918; GLUE Kummer, openness and
@@ -160,43 +182,58 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   10079–10861, App F 9447–9976; owners RC24, RC2, RC12, RC11, RC3, batch 3). Everything else of
   the address package is PROVED over genuine `G_ℚ`, Frobenius elements and characters, Chebotarev
   by the repository's density theorem (`addressLeaf_of_densityLeaf`). -/
-  address : ZInQ.Manuscript.RC.AddressGenuine.AddressDensityLeaf W
-  /-- The inputs of (4.6) at every address (`CalibrationInputsC`): the two-primary Ш and torsion
-  orders (ELLIOT + PRINT Kolyvagin), the component groups at `p ∣ k` through the reduction (PRINT
-  Edixhoven Thm 5.3, Rem. 5.4.1, as GLUE), the pullback and comparison data, Cassels–Milne isogeny
-  invariance at the genuine canonical regulators (PRINT Milne ADT I.7.3 + GLUE), the moving prime in
-  the output form of RC17's moving character, and the triangular Kummer model with its central
-  quotient block (ELLIOT; tex 3987–4141; owners RC15, RC9, RC19, RC4/RC17, batch 3 Duality). PROVED
-  from them: the isogeny and regulator data (RC19's `regulator_inputs_sumDiff`), the free
-  generators (from `Prints`), the component fields, the moving-prime fields, and `hvprim` with
-  Elliot's total length `2v₂N + 4ω` (batch 3's Calibration). -/
-  calibration : CalibrationInputsC W.toRCData
-  /-- The inputs of (4.7) at every address as support-triangle data (`CommonCoordinateTriangles`):
-  the coefficient ring, the character and the graph-prime factors (definition), the Euler-factor
-  identity (ELLIOT, the Frobenius model at `q`), the Frobenius matrices at the unused primes, and
-  the triangular models of the support triangle at each relaxation step (ELLIOT; tex 4142–4328;
-  owners RC15, RC4, batch 3 CommonCoordinate). The multi-prime (4.7) and `ε_q ∈ Λ^×` are PROVED
-  from them (batch 3's `commonCoordinateModel_of_models`), replacing the earlier GLUE. -/
-  common_coordinate : CommonCoordinateInputsT W.toRCData
-  /-- The inputs of height-one regularity of the primitive coordinates (`PrimRegularityInputsS`): at
-  every height-one prime `𝔭 ≠ (2)`, concrete two-term switching data (`HeightOneSwitchDataS`: the
-  two-term models with integral class and closed functional, the sign involution, the nonzero
-  class, and the switch steps with their (5.5a) and detection inputs) (ELLIOT + GLUE; tex
-  4976–5197; owners RC16, batch 3 UniformSwitch / SwitchInputs / HeegnerCohomology). PROVED from
-  them: `pos`, the terminal step, `s₊ + s₋ = s`, the nonquadratic `U = F`, and RC16's regularity.
-  Caveat: the stages are linked to the genuine configuration only through the starting coordinate,
-  so this leaf is currently equivalent to its target (`primRegularityInputsS_iff`,
-  `regularityInputsS_iff`: every `u_{prim,x}` lies in `Λ[1/2]`); batch 3 is tying each stage to the
-  genuine Selmer fibre model. -/
-  prim_regular : PrimRegularityInputsS W.toRCData
-  /-- The inputs of (5.9) from the remaining complex (`ClearingInputsCx`): the identification of the
-  remaining complex over `𝒪[G]` (block form, augmentation the old complex, new-local Schur
-  differentials, the (5.7) counts, a quasi-isomorphism to a Selmer complex; GLUE), the coordinate
-  link (E1a, GLUE) and Elliot's determinant computation (E1b, ELLIOT) (tex 5355–5645; owners RC7,
-  batch 3 ClearingComplex / RankCounts). PROVED from them: the Smith model, the generic patterns,
-  the entry poles, the budget (5.7), and (5.9) by lane RC7 over RC20's genuine `𝒪`, with the
-  exponent `a = 0` and the `μ`-coordinates from batch 3's PairedFunctional. -/
-  clearing_model : ClearingInputsCx W.toRCData
+  address : ¬ W.OddEmptyUnit → ZInQ.Manuscript.RC.AddressGenuine.AddressDensityLeaf W
+  /-- The inputs of (4.6) at every address (`CalibrationInputsH`): the two-primary Ш and torsion
+  orders (ELLIOT + PRINT Kolyvagin), the component groups at `p ∣ k` through good models up to
+  isomorphism and Edixhoven's print in its model-free form (PRINT Edixhoven Thm 5.3, Rem. 5.4.1, as
+  GLUE), the pullback and comparison data, Cassels–Milne isogeny invariance at the genuine canonical
+  regulators (PRINT Milne ADT I.7.3 + GLUE), the moving prime in the output form of RC17's moving
+  character, and the triangular Kummer model whose quotient block is the direct sum of the local
+  blocks at the moving and active places, up to changes of basis with central unit determinants
+  (ELLIOT; tex 3987–4141; owners RC15, RC9, RC19, RC4/RC17, batch 3 Calibration). PROVED from them:
+  the isogeny and regulator data (RC19's `regulator_inputs_sumDiff`), the free generators (from
+  `Prints`), the component fields, the moving-prime fields, the quotient length `2v₂N + 4ω` and
+  `hvprim` (batch 3's Calibration). -/
+  calibration : CalibrationInputsH W.toRCData
+  /-- The inputs of (4.7) at every address, tied to the family and the address
+  (`CommonCoordinateInputsG`): the coefficient ring and its evaluation at the character of `x`, with
+  `x(g_q) = (−1)^{λ_q(x)}` at the family's graph primes (definition), the Euler-factor identity and
+  the invertibility of `e_q` (ELLIOT, the Frobenius model at `q`), the Frobenius matrices of
+  determinant `p` at the unused primes `λ_p(x) = 0`, and at each relaxation step the support
+  triangle in the original integral bases with functionals from retained Selmer data
+  (`NaturalStep`; ELLIOT + GLUE; tex 4142–4328; owners RC15, RC4, batch 3 CommonCoordinate). PROVED
+  from them: `x(g_q) = ±1`, the unused primes, `λ_R ∘ i = e_q λ_P`, the multi-prime (4.7) and
+  `ε_q ∈ Λ^×` (batch 3's `commonCoordinateInputs_of_natural`). -/
+  common_coordinate : CommonCoordinateInputsG W.toRCData
+  /-- The inputs of height-one regularity of the primitive coordinates (`PrimRegularityInputsG`): at
+  every height-one prime `𝔭 ≠ (2)`, a configuration family genuine at `𝔭` (lane RC26's Galois
+  Selmer fibers with finite support and subcomplex conditions, the genuine moving variable) and
+  batch 3's `GenuineSwitchData` over it starting at `u_{prim,x}` (homotopy equivalences of the
+  genuine fibers with the stages' two-term fibers, the actual class and functional at the start, the
+  sign involutions, primitive vectors, and the switches along the configuration sequence with their
+  GLUE step data) (ELLIOT + GLUE; tex 4976–5197; owners RC16, RC26, RC15, batch 3 SwitchInputs /
+  SignSplitting / ExactSequences). PROVED from them: `pos`, the terminal step, `s₊ + s₋ = s`, the
+  nonquadratic `U = F`, regularity (`regular_of_genuineSwitchData`) and the intersection formula.
+  Remaining freedom: the family is an existential identified with the address's actual primitive
+  scalar Selmer complex by GLUE; its fiber dimensions are the genuine `dim H¹`
+  (`RegularityInputsG.fiberDim_forced`), and over a fixed genuine family the data are not implied
+  by the target (`exZeroFamily_no_data`). -/
+  prim_regular : PrimRegularityInputsG W.toRCData
+  /-- The inputs of (5.9) over the genuine Selmer complexes (`ClearingInputsG`): the fixed field
+  `K` and the constants before the family; at every final family batch 3's `Identification2G` (the
+  pre-cancellation family model with one nonempty block of new local differentials indexed by the
+  new places, `T₀ = Y₀ = 0`, the central Smith form, the (5.7) counts, a quasi-isomorphism to lane
+  RC26's genuine family Selmer complex, the genuine support change of Nekovář 7.8.8(ii) and the
+  tame model as a quasi-isomorphic model of the genuine local cochains; GLUE), the actual cycle,
+  the closed functional and the universal correction `η` over `𝒪[G]` (data), and one coordinate
+  identification in the original determinant basis, `ũ_x = η_x · c^{orig}_x` where `Δ_x ≠ 0`
+  (`OrigCoordLink`, GLUE) (tex 5355–5645, 3470–3499, 3877–3892, 4219–4222; owners RC7, RC15,
+  RC26, batch 3 ClearingComplex / CoordLink / RankCounts / PairedFunctional). The support
+  comparison is a quasi-isomorphism by the PRINT `NekovarProp788ii` (not an input). PROVED from
+  them: the cancellation factor `κ = det B`, the transported functional `μ = λ ∘ incl`, E1a, E1b
+  for the Knudsen–Mumford coordinate, the Smith model, the generic patterns, the entry poles, the
+  budget (5.7), and (5.9) by lane RC7 over RC20's genuine `𝒪`, with the exponent `a = 0`. -/
+  clearing_model : ClearingInputsG W.toRCData
   /-- The inputs of the base-zero lemma left by lane RC25's `baseZeroTarget_of_leaves` (lane RC15's
   `baseZero_node` over lane RC20's `Λ_(t)`, the height formula by lane RC19 from Cai–Shu–Tian Thm 1.1
   and the conductor-one Heegner data): the two-term model with central dimensions `(1,1)`, the
@@ -289,7 +326,7 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
   obtain ⟨Cdet, hCdet⟩ := hvis
   obtain ⟨A, CE, h33⟩ := hF3
   obtain ⟨Cper, h34, h34k⟩ := gz34Target_of_genusOdd P L.artin L.rootNumberExists I
-  have h35 : Eq35Target W₁ := eq35Target_of_inputsGenuineG W₁ hp.eq35
+  have h35 : Eq35Target W₁ := eq35Target_of_inputsGG W₁ hp.eq35
   obtain ⟨CR, h35A⟩ := h35 A
   obtain ⟨δ, hδ⟩ := exists_oddMinimum W₁ h33 h34 h35A hCdet hglue
     (witnessLeaf_of_oddInstance Io hstages)
@@ -303,17 +340,17 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
   have hfam : FinalFamilyTarget W₂.toRCData :=
     finalFamilyTarget_of W₂ hvis₂ hstages ⟨A, CE, h33⟩ ⟨Cper, h34, h34k⟩ h35
       hglue hδ
-      (ZInQ.Manuscript.RC.AddressGenuine.addressLeaf_of_densityLeaf hadm hq.companion hq.address)
+      (addressLeaf_of_densityLeaf_branch hadm hq.companion hq.address)
   have h47 : CommonCoordinateTarget W₂.toRCData :=
-    commonCoordinateTarget_of_inputs (commonCoordinateInputs_of_triangles hq.common_coordinate)
+    commonCoordinateTarget_of_inputs (commonCoordinateInputs_of_G hq.common_coordinate)
   have hheight : HeightOneTarget W₂.toRCData :=
-    heightOneTarget_of_inputsS _ hq.prim_regular h47
+    heightOneTarget_of_inputsG _ hq.prim_regular h47
   exact rcSteps_of_targets _ hL₂ hG₂ hvis₂ hstages hone
     (companionTarget_of hL₂ hq.companion)
-    ⟨Cper, h34k⟩ hfam (calibrationTarget_of_C P hadm.1 hq.calibration) h47 hheight
-    (clearingTarget_of_complex _ hheight hq.clearing_model) (BaseZeroAssembly.baseZeroTarget_of_leaves P
-      (commonCoordinateInputs_of_triangles hq.common_coordinate)
-      (primRegularityInputs_of_S _ hq.prim_regular) hq.base_zero)
+    ⟨Cper, h34k⟩ hfam (calibrationTarget_of_H P hadm.1 hq.calibration) h47 hheight
+    (clearingTarget_of_G _ hheight hq.clearing_model) (BaseZeroAssembly.baseZeroTarget_of_leaves P
+      (commonCoordinateInputs_of_G hq.common_coordinate)
+      (primRegularityInputs_of_G _ hq.prim_regular) hq.base_zero)
 
 /-! ## The node and Theorem 5.3 -/
 
