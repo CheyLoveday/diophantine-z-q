@@ -182,9 +182,9 @@ theorem addressLeaf_of_densityLeaf_branch {ℓ : ℕ} {W : WData ℓ} (hℓ : Ad
 genus partner `h_*`), each with tex lines, kind and owner. -/
 structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   /-- The fixed support and the prepared filter (`StageSupport`: the support consists of primes and
-  contains `2, 3`, the primes of `ℓ` and the primes of `h_*`; the prepared filter is the positive
-  unit-squareclass filter containing one over the support, `positivePrepared`) (definitions; tex
-  1974–1975, 2404–2410, 2460–2461, App F 8222, 8246–8256; owner RC0). It replaces the former leaves
+  contains `2, 3`, the primes of `ℓ` and the primes of `h_*`; the prepared filter uses intrinsic unit tests and only prime exclusions at the enlarged
+  support, `preparedSeparated`) (definitions; tex
+  1974–1975, 2404–2410, 2460–2461, App F 8227–8228, 8246–8258; owner RC0). It replaces the former leaves
   `data_spec : PreDataSpec W` and `prepared_spec : PreparedSpec W`, both now PROVED: the data
   specification from it and the stage link of `odd_staged` (`PreLeaves.data_spec`, by the stage
   construction's `preDataSpec_preparedStages`), and `PreparedSpec` from it alone
@@ -236,8 +236,9 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   Conclusion-shaped part: the theta side and the comparison argument exist for every `λ` with
   `a_θ ≡ c₀ λ (mod 2^{M_θ})`, so together they are (O.7) itself; the point side `λ = lamOf` is
   genuine. Caveat: the one field `ev` (the stage maps) is read at every admissible parameter, by
-  `lamOf` in the comparison argument, and at the witness by `WitnessSpecialization`; a stage map
-  defined only at the selected datum of `D_w` and zero elsewhere cannot serve both. -/
+  `lamOf` in the comparison argument, and at the witness by `WitnessSpecialization`; both requirements permit stage maps that vanish away from `D_w` when matching
+  witness-supported coefficients and theta models are supplied. The fields do not identify
+  `ev` with reduction at the constructed primes. -/
   odd_staged : Nonempty (OddStagedInstance W)
   /-- The inputs of (3.5) on batch 3's genuine switching data (`Eq35InputsGenuineGG`): the primitive
   coordinates at the companion pairs with batch 3's `GenuineSwitchData` over configuration families

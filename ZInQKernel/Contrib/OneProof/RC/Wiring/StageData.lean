@@ -13,9 +13,9 @@ witness (`OddInstance.hO2 : WitnessValuation …`, ELLIOT + PRINT). Both are now
 construction of `RC/Stages` (Appendix F, tex 8225–8405; App G 10190–10191):
 
 * `StageSupport W` (definitions): the fixed support consists of primes and contains `S₀` and the
-  primes of `h_*` (tex 1974–1975, 2460–2461, 8250–8254), and the prepared filter is the positive
-  unit-squareclass filter containing one over that support (`positivePrepared`, tex 2404–2410,
-  2460–2461, 8222, 8246–8248). `StageSupport.preparedSpec` (PROVED) gives the old leaf
+  primes of `h_*` (tex 1974–1975, 2460–2461, 8250–8254), and the prepared filter imposes positive unit-squareclass tests at the intrinsic support and only
+  coprimality at its later enlargement (`preparedSeparated`, tex 2027–2029, 2460–2462,
+  8247–8248, 8254–8258, 10594–10596). `StageSupport.preparedSpec` (PROVED) gives the old leaf
   `PreparedSpec` (the square class at `2` forces `≡ 1 (mod 8)`).
 * `StagesFrom W q` (definitions): the stage fields of `W` are the construction at a stage sequence
   `q`: the hyperfilter, `M_θ = c_w + 1 + θ` and the prepared filter cut by the Legendre test of the
@@ -46,9 +46,9 @@ point `Q` is a parameter: the text's `Q` is the rational point corresponding to 
 2462–2466, 8295–8306), which the Lean statement does not force.
 
 Caveat for a discharge. The one field `ev` (the stage maps) is read at every admissible parameter,
-by `lamOf` in the comparison argument `hcore`, and at the witness by `WitnessSpecialization`. A
-stage map defined only at the selected datum of `D_w` and zero elsewhere meets the second but not
-the first at the other parameters, so it cannot discharge both.
+by `lamOf` in the comparison argument `hcore`, and at the witness by `WitnessSpecialization`. Both requirements permit zero stage maps away from the witness when the coefficients and
+  theta models are replaced by matching witness-supported data. They do not identify the maps
+  with reduction at the constructed primes.
 -/
 
 noncomputable section
@@ -62,34 +62,51 @@ open TauCeti ZInQ.Manuscript ZInQ.Manuscript.SelmerTwoPower ZInQ.Manuscript.RC.P
 
 /-! The fixed support and the prepared filter. -/
 
+/-- Unit tests at the intrinsic support; prime exclusions at the enlarged support. -/
+def preparedSeparated (Sunit Sexcl : Finset ℕ) (D : ℤ) : Prop :=
+  positivePrepared Sunit D ∧ ∀ p ∈ Sexcl, ¬ (p : ℤ) ∣ D
+
 /-- **The fixed support and the prepared filter** (definitions; owner RC0):
 * `support_prime`, `support_base`: the support consists of primes and contains
   `S₀ ℓ = {2, 3} ∪ primes(ℓ)` (tex 1974–1975);
 * `support_hstar`: it contains the primes of `h_*`, adjoined before the witness is chosen (tex
   2405–2408, 2460–2461, App F 8250–8254);
-* `prepared_eq`: the prepared filter is the positive unit-squareclass filter containing one over
-  the support (`positivePrepared`: positive, squarefree, prime to the support, a square at every
-  prime of the support; tex 2404–2410, 2460–2461, App F 8222, 8246–8248, 8255–8256). -/
+* `prepared_eq`: unit-squareclass tests use an intrinsic support containing the base primes and
+  the primes of `h_*`, disjoint from the primes of `k`; the enlarged support imposes only prime
+  exclusions (tex 2027–2029, 2460–2462, 8247–8248, 8254–8258, 10594–10596). The primes of `k`,
+  adjoined to the support afterwards (tex 2600–2603), add no squareclass condition: the stationary
+  `k`-tests do not add conditions to the odd symbol. -/
 structure StageSupport {ℓ : ℕ} (W : WData ℓ) : Prop where
   support_prime : ∀ p ∈ W.S, p.Prime
   support_base : S0 ℓ ⊆ W.S
   support_hstar : W.hstar.natAbs.primeFactors ⊆ W.S
-  prepared_eq : W.prepared = positivePrepared W.S
+  prepared_eq : ∃ Sunit : Finset ℕ,
+    Sunit ⊆ W.S ∧ S0 ℓ ⊆ Sunit ∧ W.hstar.natAbs.primeFactors ⊆ Sunit ∧
+    Disjoint Sunit W.kfin.natAbs.primeFactors ∧
+    W.prepared = preparedSeparated Sunit W.S
+
+theorem preparedSeparated_one {Sunit Sexcl : Finset ℕ}
+    (hunit : Sunit ⊆ Sexcl) (hS : ∀ p ∈ Sexcl, p.Prime) :
+    preparedSeparated Sunit Sexcl 1 := by
+  refine ⟨positivePrepared_one (fun p hp => hS p (hunit hp)), fun p hp => ?_⟩
+  intro hd
+  exact (hS p hp).ne_one (Nat.dvd_one.mp (Int.natCast_dvd.mp hd))
 
 /-- **The old leaf `PreparedSpec` from the support** (PROVED): a prepared parameter is positive,
 squarefree and prime to the support, and the square class at `2 ∈ S₀` gives `≡ 1 (mod 8)`. -/
 theorem StageSupport.preparedSpec {ℓ : ℕ} {W : WData ℓ} (hS : StageSupport W) :
     PreparedSpec W := by
+  obtain ⟨Sunit, hunit, hbase, hh, hdisj, heq⟩ := hS.prepared_eq
   intro d hd
-  rw [hS.prepared_eq] at hd
-  obtain ⟨hpos, hsf, hd⟩ := hd
-  have h2 : 2 ∈ W.S := hS.support_base (by simp [S0])
-  obtain ⟨h2d, hsq⟩ := hd 2 h2
-  have h2d' : ¬ (2 : ℤ) ∣ d := by exact_mod_cast h2d
+  rw [heq] at hd
+  obtain ⟨⟨hpos, hsf, hlocal⟩, havoid⟩ := hd
+  have h2 : 2 ∈ Sunit := hbase (by simp [S0])
+  obtain ⟨h2d, hsq⟩ := hlocal 2 h2
+  have h2d' : ¬ (2 : ℤ) ∣ d := h2d
   have hodd : Odd d := Int.odd_iff.mpr (by omega)
   have h8 := Nonvanishing.modEq_eight_of_isSquareAt_two hodd odd_one (by simpa using hsq)
   have h8' : d % 8 = 1 % 8 := h8
-  exact ⟨hpos, hsf, by omega, fun p hp => (hd p hp).1⟩
+  exact ⟨hpos, hsf, by omega, havoid⟩
 
 /-! The stage fields from a stage sequence. -/
 
@@ -114,21 +131,20 @@ theorem StagesFrom.withStages_eq (h : StagesFrom W q) : withStages W q W.prepare
   unfold withStages
   rw [← h1, ← h2, ← h3]
 
-/-- **The data are the construction's `withPreparedStages` at their own support and `h_*`**
-(PROVED). -/
-theorem StagesFrom.withPreparedStages_eq (hS : StageSupport W) (h : StagesFrom W q) :
-    withPreparedStages W W.S W.hstar q = W := by
-  show withStages W q (positivePrepared W.S) = W
-  rw [← hS.prepared_eq]
-  exact h.withStages_eq
-
 /-- **The data specification and the advancing precision from the construction** (PROVED: the
-construction's `preDataSpec_preparedStages`). -/
-theorem preDataSpec_of_stagesFrom (hS : StageSupport W) (h : StagesFrom W q) :
+construction's `preDataSpec_withStages` and `stages_advance_withStages`, for the data's own
+prepared filter). -/
+theorem preDataSpec_of_stagesFrom {ℓ : ℕ} {W : WData ℓ}
+    {At : ℕ → ℕ → Prop} {cw : ℕ} {B : Finset ℕ} {q : StageSequence At cw B}
+    (hS : StageSupport W) (h : StagesFrom W q) :
     PreDataSpec W ∧ Tendsto W.Mθ (W.stages : Filter ℕ) atTop := by
-  have hW := h.withPreparedStages_eq hS
-  obtain ⟨h1, h2⟩ := preDataSpec_preparedStages W W.S W.hstar q hS.support_prime hS.support_base
-  rw [hW] at h1 h2
+  obtain ⟨Sunit, hunit, hbase, hh, hdisj, heq⟩ := hS.prepared_eq
+  have hone : W.prepared 1 := by
+    rw [heq]
+    exact preparedSeparated_one hunit hS.support_prime
+  have h1 := preDataSpec_withStages W q hS.support_prime hS.support_base hone
+  have h2 := stages_advance_withStages W q W.prepared
+  rw [h.withStages_eq] at h1 h2
   exact ⟨h1, h2⟩
 
 end Link
@@ -231,5 +247,25 @@ theorem preDataSpec (I : OddStagedInstance W) (hS : StageSupport W) :
   preDataSpec_of_stagesFrom hS I.hstages
 
 end OddStagedInstance
+
+def withPreparedStagesSeparated {ℓ : ℕ} (W : WData ℓ) (Sunit Sexcl : Finset ℕ)
+    (hstar : ℤ) {At : ℕ → ℕ → Prop} {cw : ℕ} {B : Finset ℕ}
+    (q : StageSequence At cw B) : WData ℓ :=
+  withStages { W with S := Sexcl, hstar := hstar } q (preparedSeparated Sunit Sexcl)
+
+theorem stageSupport_withPreparedStagesSeparated {ℓ : ℕ} (W : WData ℓ)
+    {Sunit Sexcl : Finset ℕ} {hstar : ℤ}
+    {At : ℕ → ℕ → Prop} {cw : ℕ} {B : Finset ℕ} (q : StageSequence At cw B)
+    (hS : ∀ p ∈ Sexcl, p.Prime) (hunit : Sunit ⊆ Sexcl) (hbase : S0 ℓ ⊆ Sunit)
+    (hh : hstar.natAbs.primeFactors ⊆ Sunit)
+    (hdisj : Disjoint Sunit W.kfin.natAbs.primeFactors) :
+    StageSupport (withPreparedStagesSeparated W Sunit Sexcl hstar q) :=
+  ⟨hS, hbase.trans hunit, hh.trans hunit, Sunit, hunit, hbase, hh, hdisj, rfl⟩
+
+theorem preparedSeparated_self (S : Finset ℕ) :
+    preparedSeparated S S = positivePrepared S := by
+  funext D
+  apply propext
+  exact ⟨fun h => h.1, fun h => ⟨h, fun p hp => (h.2.2 p hp).1⟩⟩
 
 end ZInQ.Manuscript.RC.Wiring
