@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.CloudB3RC53.Torsion.Operations
 /-!
 # Torsion, part 10: derived Nakayama for based complexes over a local ring
 
-Lemma `ex:arith-local-kummer`, tex L3453–3454: "Reduction modulo two, including the torsion in
+Lemma `ex:arith-local-kummer`, tex L3452–3453: "Reduction modulo two, including the torsion in
 degree zero, gives the perfect quotient-to-dual comparison; derived Nakayama lifts it." This is one
 of Elliot's own steps in the derived Kummer lemma (the duality cross-check lists L3445–3456 as
 open apart from the cup step).
@@ -112,7 +112,7 @@ theorem HasDeg.nonsing_inv {m : Type*} [Fintype m] [DecidableEq m] {U : Matrix m
   simp only [hne', ↓reduceIte, zero_mul] at e
   exact hij e
 
-/-- **Derived Nakayama for based complexes** (tex L3453–3454): a based complex over a local ring
+/-- **Derived Nakayama for based complexes** (tex L3452–3453): a based complex over a local ring
 whose reduction modulo the maximal ideal is contractible is contractible. PROVED. -/
 theorem nakayama_contraction (C : BasedCx R κe κo)
     (hbar : Contraction (C.map (IsLocalRing.residue R))) : Nonempty (Contraction C) := by
