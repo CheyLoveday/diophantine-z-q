@@ -18,7 +18,9 @@ team's `Identification3Q2` (`RC/Wiring/ClearingFull.lean`); this file is an auxi
 * `hqq : ∀ v, qq v = eQ v` — the residue cardinality of the tame model at `v` is that prime.
 
 Consequences (PROVED, for this variant): `isEmpty_newPlaces_iff` (no new places iff `Q = ∅`),
-`card_newPlaces` (`#(S' − S) = #Q`), `eNQ` (the singular summands are indexed by `ι × Q`), and
+`card_newPlaces` (`#(S' − S) = #Q` for this one-place variant; in the text's setting, with the
+two conjugate places over each split `q`, it is `#(S' − S) = 2 · #Q`), `eNQ` (the singular
+summands are indexed by `ι × Q`), and
 `tame_singular_quasiIso_Q`: for every `q ∈ Q` the genuine singular quotient at the chosen place
 over `q` is quasi-isomorphic to `[M₀ --(Φ − q)--> M₀]` in degrees one and two, with this `q`.
 -/
@@ -58,7 +60,9 @@ theorem isEmpty_newPlaces_iff : IsEmpty (NewPlaces K S S') ↔ F.Q = ∅ := by
   rw [Equiv.isEmpty_congr M.eQ, Finset.isEmpty_coe_sort]
 
 include M in
-/-- **The number of new places is the number of primes of the family.** -/
+/-- **The number of new places is the number of primes of the family** (for this one-place
+variant; in the text's setting, with two conjugate places over each split prime, it is twice the
+number of primes). -/
 theorem card_newPlaces : Fintype.card (NewPlaces K S S') = F.Q.card := by
   rw [Fintype.card_congr M.eQ, Fintype.card_coe]
 
