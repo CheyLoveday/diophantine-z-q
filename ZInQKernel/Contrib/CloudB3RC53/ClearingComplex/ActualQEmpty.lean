@@ -21,7 +21,9 @@ The fields of `Identification3` are filled with the genuine Galois objects of la
   (`selModelMap`), which gives `ψf`, `ψ0`, `ψold` (isomorphisms) and the square.
 
 `identification3Actual b : Identification3 K S S hS b 0 0 0 0` (PROVED, no hypotheses), and
-`identification3QActual F hF : Identification3Q K S S hS F 0 0 0 0` for every family with `F.Q = ∅`.
+`identification3QActual F hF : Identification3Q K S S hS F 0 0 0 0` for every family with `F.Q = ∅`
+(the auxiliary one-place-per-prime variant `Identification3Q`, which is not the text's two-place
+setting; at `Q = ∅` there are no new places, so the one- and two-place conditions are both empty).
 
 CAVEAT. This witnesses the consistency of the interface with the genuine data types (genuine
 groups, genuine cochain complexes, genuine full and unramified conditions, Nekovář's finite
@@ -309,8 +311,11 @@ def identification3Actual : Identification3 KA SA SA hSA b 0 0 0 0 where
 theorem identification3_nonempty : Nonempty (Identification3 KA SA SA hSA b 0 0 0 0) :=
   ⟨identification3Actual b⟩
 
-/-- **The family version**: for every family with no primes (`F.Q = ∅`), an actual
-`Identification3Q` (the new places, none, identified with `F.Q`). PROVED. -/
+/-- **The auxiliary one-place-per-prime variant at `Q = ∅`**: for every family with no primes, an
+actual `Identification3Q` (the new places, none, identified with `F.Q`). PROVED. `Identification3Q`
+is not the text's family identification (the text has two conjugate places over each split prime,
+tex 5247, 5456–5457; the text-faithful structure is the integration team's `Identification3Q2`);
+at `Q = ∅` both have no new places. -/
 def identification3QActual (F : ZInQ.Manuscript.RC.Family) (hF : F.Q = ∅) :
     Identification3Q KA SA SA hSA F 0 0 0 0 where
   toIdentification3 := identification3Actual F.b
