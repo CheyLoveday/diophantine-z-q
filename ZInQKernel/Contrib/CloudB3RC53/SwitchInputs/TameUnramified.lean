@@ -44,6 +44,12 @@ map `[z] ↦ (z(φ), z(σ))` need not be bijective. Here:
   `[W --(Φ−1)--> W] ≃_qis C^•_cont(H, W)` (`urSelf_galois_quasiIso`), so **the finite side's
   cocycles are exactly the inflations of the images of the quasi-isomorphism `urSelf`** (identified
   as subspaces of `Z¹(G, M)`).
+
+**Caveat (residue field `𝔽₂`).** The genuine instances in this file are specialised to the residue
+field `𝔽₂`. They are not applicable at the height-one primes `𝔭 ≠ (2)` of `Λ` where the switching
+runs (tex L4976: `R = Λ_𝔭`, residue field of characteristic `0`): there is no ring map
+`Λ_𝔭 → ZMod 2` (`isEmpty_ringHom_zmod_two_heightOne`). See `GaloisWiringQuad.lean` for the
+field-generic version.
 -/
 
 noncomputable section

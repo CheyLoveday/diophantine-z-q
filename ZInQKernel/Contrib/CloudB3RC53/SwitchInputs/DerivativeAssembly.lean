@@ -33,6 +33,12 @@ team's lane:
 Remaining (not done here): the naturality transport of the explicit `H¹` models to `H¹` of the
 induced chain maps of `dblCx` complexes, and the single-place assembly of `QuasiSwitchSide` inside
 `galoisSelData` (see the lane notes).
+
+**Caveat (residue field `𝔽₂`).** The genuine instances in this file are specialised to the residue
+field `𝔽₂`. They are not applicable at the height-one primes `𝔭 ≠ (2)` of `Λ` where the switching
+runs (tex L4976: `R = Λ_𝔭`, residue field of characteristic `0`): there is no ring map
+`Λ_𝔭 → ZMod 2` (`isEmpty_ringHom_zmod_two_heightOne`). See `GaloisWiringQuad.lean` for the
+field-generic version.
 -/
 
 noncomputable section
@@ -313,17 +319,17 @@ theorem exCoc1_ev (m₁ m₂ : ExM) (g : ExG) :
     ev1 (exCoc1 m₁ m₂) g = (Multiplicative.toAdd g).1 • m₁ + (Multiplicative.toAdd g).2 • m₂ := rfl
 
 /-- The cocycle in `Z¹`. -/
-def exCoc (m₁ m₂ : ExM) : Z1 ExG ExM :=
+def exCocDA (m₁ m₂ : ExM) : Z1 ExG ExM :=
   ⟨exCoc1 m₁ m₂, mem_Z1_of_additive exTriv _ (fun g h => by
     rw [exCoc1_ev, exCoc1_ev, exCoc1_ev, toAdd_mul, Prod.fst_add, Prod.snd_add, add_smul, add_smul]
     abel)⟩
 
-theorem exCoc_ev (m₁ m₂ : ExM) (g : ExG) :
-    ev1 ((exCoc m₁ m₂ : Z1 ExG ExM) : (contCochains (ZMod 2) ExG ExM).X 1) g =
+theorem exCocDA_ev (m₁ m₂ : ExM) (g : ExG) :
+    ev1 ((exCocDA m₁ m₂ : Z1 ExG ExM) : (contCochains (ZMod 2) ExG ExM).X 1) g =
       (Multiplicative.toAdd g).1 • m₁ + (Multiplicative.toAdd g).2 • m₂ := rfl
 
 /-- A cocycle vanishing at `φ` and `σ` vanishes everywhere. -/
-theorem exCoc_zero_of (z : Z1 ExG ExM)
+theorem exCocDA_zero_of (z : Z1 ExG ExM)
     (hφ : ev1 (z : (contCochains (ZMod 2) ExG ExM).X 1) exφ = 0)
     (hσ : ev1 (z : (contCochains (ZMod 2) ExG ExM).X 1) exσ = 0) (g : ExG) :
     ev1 (z : (contCochains (ZMod 2) ExG ExM).X 1) g = 0 := by
@@ -363,11 +369,11 @@ theorem exTameCoordinates : TameCoordinates (M := ExM) (Subgroup.zpowers exσ) e
           funext x
           have hx : x = fun _ => x 0 := by funext i; fin_cases i; rfl
           rw [hx]
-          exact exCoc_zero_of z hy.1 hy.2 (x 0)
+          exact exCocDA_zero_of z hy.1 hy.2 (x 0)
         rw [hz, Submodule.mem_bot, Submodule.Quotient.mk_zero]
     · rintro ⟨m₁, m₂⟩
-      refine ⟨Submodule.Quotient.mk (exCoc m₁ m₂), ?_⟩
-      rw [coordQ_mk, exCoc_ev, exCoc_ev]
+      refine ⟨Submodule.Quotient.mk (exCocDA m₁ m₂), ?_⟩
+      rw [coordQ_mk, exCocDA_ev, exCocDA_ev]
       simp [exφ, exσ]
   hI := by
     intro z hz h hh

@@ -29,6 +29,12 @@ Nodes:
   `K` with odd residue characteristic, both quasi switch sides (finite plane, singular plane) over
   one relaxed localization of `C^•_cont(G_K, 𝔽₂²)` (`genFinSide`, `genSingSide`); `TameCoordinates`
   from `tameCoordinatesTrivial_galois`, `SwitchedAt` from `switchFam_switchedAt`.
+
+**Caveat (residue field `𝔽₂`).** The genuine instances in this file are specialised to the residue
+field `𝔽₂`. They are not applicable at the height-one primes `𝔭 ≠ (2)` of `Λ` where the switching
+runs (tex L4976: `R = Λ_𝔭`, residue field of characteristic `0`): there is no ring map
+`Λ_𝔭 → ZMod 2` (`isEmpty_ringHom_zmod_two_heightOne`). See `GaloisWiringQuad.lean` for the
+field-generic version.
 -/
 noncomputable section
 
