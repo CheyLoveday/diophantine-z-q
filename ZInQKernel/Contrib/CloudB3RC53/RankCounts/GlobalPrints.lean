@@ -19,7 +19,7 @@ structure `ResidualRankCounts`, without a Galois group, because "`G_{K,S}` … n
 Mathlib". This file supplies:
 
 * `unramifiedOutside K S` (genuine): the maximal extension `K_S` of `K` inside an algebraic closure
-  that is unramified at every prime outside `S`, as the supremum of the finite subextensions
+  that is unramified at every prime outside `S`, as the supremum of the finite Galois subextensions
   unramified outside `S` (ramification index one at every prime above a prime `v ∉ S`); and
   `GaloisGroupS K S = Gal(K_S/K)` with Mathlib's Krull topology. No condition is imposed at
   infinite places: as in Milne, `S` is understood to contain the archimedean places.
@@ -67,11 +67,15 @@ def IsUnramifiedOutside (S : Set (HeightOneSpectrum (𝓞 K)))
     Q.LiesOver v.asIdeal → Q.ramificationIdx (𝓞 K) = 1
 
 /-- **`K_S`**: the maximal subextension of `K̄/K` unramified outside `S`, the compositum of all
-finite subextensions unramified outside `S` (Milne ADT I §4, notation `K_S`). -/
+finite subextensions unramified outside `S` (Milne ADT I §4, notation `K_S`). We take the
+supremum over the finite *Galois* subextensions unramified outside `S`: this is the same field,
+since the maximal extension unramified outside `S` is Galois over `K` and is the union of its
+finite Galois subextensions, each of which is unramified outside `S` (standard); with this form
+`K_S/K` is visibly normal (`Inflation.lean`). -/
 def unramifiedOutside (S : Set (HeightOneSpectrum (𝓞 K))) :
     IntermediateField K (AlgebraicClosure K) :=
   ⨆ (L : IntermediateField K (AlgebraicClosure K))
-    (_ : FiniteDimensional K L ∧ IsUnramifiedOutside K S L), L
+    (_ : FiniteDimensional K L ∧ Normal K L ∧ IsUnramifiedOutside K S L), L
 
 /-- **`G_S = G_{K,S} = Gal(K_S/K)`**, with Mathlib's Krull topology (a profinite group). -/
 abbrev GaloisGroupS (S : Set (HeightOneSpectrum (𝓞 K))) : Type :=
