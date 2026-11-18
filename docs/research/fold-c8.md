@@ -100,7 +100,57 @@ What the fold does:
 
 ## 3. Checks after the fold (VERIFIED; files `scratch/fold-c8/*-fold1.txt`)
 
-CHECKS_PLACEHOLDER
+* **Build.** `lake build ZInQKernel.OneProof.Main ZInQKernel.OneProof.Discharges ZInQKernel.OneProof.H.C8Chain
+  ZInQKernel.OneProof.H.TailZ87` succeeds (16331 jobs). Before that, the component modules were built:
+  `C8Printed`, `C8CFT`, `ScholzeH1AbVar` and PR #86's `CloudR2Poincare.FinalUnconditional` (16329 jobs). PR #86's
+  `L1/Source20261116/ResidueFieldModels.lean` alone takes 2123 s.
+* **Axioms.** `#print axioms ZInQ.OneProof.frozenTarget` gives `[propext, Classical.choice, Quot.sound]`. The same holds
+  for `sixContactMin_of_open80`, `sixContactMin_of_open79_hm`, `openResearchLeaves60_of_OpenResearchLeaves61`,
+  `poincareComplement_proof`, `hodgeTateDecompOr_of_scholzeH1Milne`, `hodgeTateDecompAbVar_of_scholzeH1`,
+  `g12DetPZ_of_inputs`, `c8Inputs_of_leaves`, `twistCharHTWt0_proof` and `locAlgExponentEqWeight_of_conradPropB3`
+  (`axioms-out.txt`).
+* **Hash guard** (DumpCompact + cmp_hashes): 21041 → 21343 constants. 302 are new (C8Chain 258, TailZ87 44). Only
+  `ZInQ.OneProof.frozenTarget` changed (`cmp_fold1.txt`).
+* **Closure** (`FoldCheck-fold1.txt`, 296120 constants):
+  - Absent: `sorryAx`, `T09Pic.PicRepresentableAbVar`, `KleimanSite.KleimanPicZeroProper954SiteQ`,
+    `OpenAddedLeaves27`, `sixContactMin_of_open79`, `C8Conrad.TateTwistInvariantsInertia` (Tate 1967),
+    `detTate_of_leaves4_pz` and `hodgeTateDecompAbVar_of_open_k954`. The closure has 0 constants named
+    `*PicRepresentable*` or `*KleimanPicZeroProper*`.
+  - The hypotheses of `frozenTarget` are `OpenResearchLeaves61`, `OpenTextbookLeaves18`, `OpenAddedLeaves28` and `hPC`.
+    `HodgeTateDecompOr` and `OpenResearchLeaves60` remain in the closure only as the target of the conversion; they
+    are not hypotheses.
+  - Field check: `OpenResearchLeaves61` has `OpenResearchLeaves60`'s fields minus `hodgeTateDecompOr`, and no field
+    type differs.
+* **`#discharges`** on the folded tree: 30 open hypotheses, 23 discharge one. The removed fields have no row, since
+  they are not open. On the base, ht-merge's run showed `hodgeTateDecompOr` discharged by
+  `hodgeTateDecompOr_of_scholzeH1Milne` from the two new leaves (`scratch/ht-merge/discharges_out.txt`). The Picard
+  rows leave through the reroute, not through a discharging theorem; the closure check is the evidence.
+* **OpenStatements:** 30. **render_open:** 29 H, strict 5/24, strictest 5/24, 1 other; `--check` ok.
+  **frontier_crosswalk:** 232 IDs, 3 matched (was 4: H-199 matched `picRepresentableAbVar`); `--check` ok.
+  **DischargesTest** was rerun: 23 DISCHARGES lines, no error. **autoform check** exits 0 (776 articles, 647 fully
+  proved). **`scratch/lane74/gate.sh`** gives GATE=ok.
+* **Follow-up noticed, not done:** DischargesTest now matches `OpenResearchLeaves61.deRhamVpAbVarDirect` by
+  `DeRhamScholze.HTMerge.deRhamVpAbVarDirect_of_scholzeH1Milne`, which uses the two new leaves alone. That row is
+  LEAF/LEAF, so removing it would not lower the GLUE count (it would make 4/24 on 28). The decision is the
+  integrator's.
+
+### AllContrib / clash check (VERIFIED; `scratch/fold-c8/log.md` §6)
+
+* Every one of the 6640 `ZInQKernel/Contrib` modules has an olean. The 31 missing ones were built first.
+* **ClashScan** (contrib-clashes' olean scan with Lean 4.35's duplicate rule) over all Contrib modules plus
+  `OneProof.Main` and `TailZ87`: 19043 modules, 856345 constants. **There are 7 fatal clashes, all pre-existing, and
+  none involves a module of this branch:**
+  - six are `HDecomp.Textbook.Different` against `Contrib.Different.Local` (fixed on wip/contrib-clashes, not on this
+    base);
+  - one is `WeierstrassCurve.Affine.divisorSum` (the CloudB2X0Transitive vendored FLT def against the Tau Ceti axiom).
+* **CloudB3W17bReduced against PR #86:** no fatal clash. There is one accepted duplicate,
+  `TopCat.Presheaf.stalkCongr.eq_1`: both vendor Stacks' `Perfect.BaseChangeStalk`.
+* **Real co-import:**
+  - the base `AllContrib.lean` list builds;
+  - **the base list + every PR #86 module + all 26 CloudB3W17bReduced modules imports cleanly (exit 0)**;
+  - the base list + the C8 / Scholze modules fails on the `divisorSum` clash. That failure is pre-existing: the base
+    list + the unchanged base chain `OneProof.H.TailZ86` fails the same way, and the C8 modules import the chain.
+* `AllContrib.lean` is not edited. The C8 modules can join it once the chain-vs-AllContrib clashes are fixed.
 
 ## 4. What remains
 
