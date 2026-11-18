@@ -34,7 +34,7 @@ open ZInQ.Contrib.CloudB3RC53.SelmerDuality (restrictData)
 open ZInQ.Manuscript.RC.Determinant (Lam OO SignGroup aug)
 open ZInQ.Manuscript.RC.SelmerComplex (GKS galoisSelData NewPlaces GaloisLocalConditions
   NekovarFiniteSetting Places natCx contCochains ResMod prodLift urFactor urFactor_spec locMap
-  inflMap)
+  inflMap piCx natHom)
 open ActualQEmpty (KA ρA)
 
 namespace ActualOnePlace
@@ -188,6 +188,251 @@ def coreB : FullCore (NewPlaces KA S₂ S₂') b 0 0 0 0 where
   s_ne := fun _ _ => one_ne_zero
   central_full := central_fullB b
   budget := budgetInputs_of_empty _ rfl fun i => by rcases i with _ | _ | _ | i <;> rfl
+
+/-! ### Vanishing complexes -/
+
+theorem bijective_of_subsingleton {R A B : Type} [CommRing R] [AddCommGroup A] [Module R A]
+    [AddCommGroup B] [Module R B] (f : A →ₗ[R] B) (hA : Subsingleton A) (hB : Subsingleton B) :
+    Function.Bijective f :=
+  ⟨fun a a' _ => hA.elim a a', fun y => ⟨0, hB.elim _ _⟩⟩
+
+theorem subsingleton_tLX {R : Type} [CommRing R] (n : ℤ) :
+    Subsingleton (tLX R PUnit n) := by
+  match n with
+  | 0 => exact (inferInstance : Subsingleton PUnit)
+  | 1 => exact (inferInstance : Subsingleton (PUnit × PUnit))
+  | 2 => exact (inferInstance : Subsingleton PUnit)
+  | Int.ofNat (k + 3) => exact (inferInstance : Subsingleton PUnit)
+  | Int.negSucc k => exact (inferInstance : Subsingleton PUnit)
+
+theorem subsingleton_tUX {R : Type} [CommRing R] (n : ℤ) :
+    Subsingleton (tUX R PUnit n) := by
+  match n with
+  | 0 => exact (inferInstance : Subsingleton PUnit)
+  | 1 => exact (inferInstance : Subsingleton PUnit)
+  | Int.ofNat (k + 2) => exact (inferInstance : Subsingleton PUnit)
+  | Int.negSucc k => exact (inferInstance : Subsingleton PUnit)
+
+/-! ### The genuine Selmer data of the zero module -/
+
+/-- The family model `C ⊗ 𝒪[G]`. -/
+abbrev famB : GCx (MonoidAlgebra OO (SignGroup b)) := ((coreB b).C.map (φO b)).toGCx
+
+/-- The family local conditions over `S'`: the family model at `v₂`, zero condition map. -/
+def ΔfB : GaloisLocalConditions KA S₂' (MonoidAlgebra OO (SignGroup b)) PUnit :=
+  ⟨fun v => atPlace w₂' (famB b) v, fun _ => zeroGHom _ _⟩
+
+theorem subsingleton_famG (n : ℤ) :
+    Subsingleton ((galoisSelData KA S₂' (MonoidAlgebra OO (SignGroup b)) PUnit (ΔfB b)).G.X n) :=
+  subsingleton_natCx_contCochains (k := MonoidAlgebra OO (SignGroup b)) (G := GKS KA S₂')
+    (M := PUnit) n
+
+theorem subsingleton_famL (n : ℤ) :
+    Subsingleton ((galoisSelData KA S₂' (MonoidAlgebra OO (SignGroup b)) PUnit (ΔfB b)).L.X n) := by
+  refine subsingleton_piCx _ (fun v m => ?_) n
+  haveI : Subsingleton (ResMod (locMap KA S₂' v.1) PUnit) := inferInstanceAs (Subsingleton PUnit)
+  exact subsingleton_natCx_contCochains m
+
+/-- The family local conditions are full at the new place. -/
+theorem hfullB : ∀ v : Places KA S₂', v.1 ∉ S₂ →
+    ∀ n : ℤ, Function.Bijective (((ΔfB b).i v).f n n rfl) := by
+  intro v hv n
+  refine bijective_of_subsingleton _ ⟨fun x y => funext fun e => ?_⟩ ?_
+  · exact absurd (congrArg Subtype.val e.down ▸ two_mem_v₂) hv
+  · haveI : Subsingleton (ResMod (locMap KA S₂' v.1) PUnit) := inferInstanceAs (Subsingleton PUnit)
+    exact subsingleton_natCx_contCochains n
+
+/-- **`ψf`** (an isomorphism). -/
+def ψfB : GHom (famB b) (selCx (galoisSelData KA S₂' _ PUnit (ΔfB b))) :=
+  selModelMap _ (atPlaceMap w₂' (famB b)) (subsingleton_famG b) (subsingleton_famL b)
+
+theorem ψfB_quasiIso : QuasiIso (SelmerDuality.GHom.toCC (ψfB b)) :=
+  bijGHom_quasiIso _ (selModelMap_bijective _ _ _ _ (atPlaceMap_bijective w₂' (famB b)))
+
+/-! ### The augmented side over `𝔽₂` -/
+
+/-- The augmented model modulo `ρ`. -/
+abbrev CρB : FullPreComplex (ZMod 2) := ((coreB b).C.map (augR b)).map ρA
+
+theorem hYρB : (CρB b).Y = 0 := FullPreComplex.map_Y_zero _ ρA (coreB b).hY0
+theorem hTρB : (CρB b).T = 0 := FullPreComplex.map_T_zero _ ρA (coreB b).hT0
+
+instance isEmptyCρN : IsEmpty (CρB b).N :=
+  inferInstanceAs (IsEmpty (Empty × NewPlaces KA S₂ S₂'))
+
+/-- Its old part. -/
+abbrev oldB : BlockComplex (ZMod 2) := (CρB b).old (hYρB b) (hTρB b)
+
+/-- The old local conditions: the old model at `v₂`, zero condition map. -/
+def Δ₀B : GaloisLocalConditions KA S₂ (ZMod 2) PUnit :=
+  ⟨fun v => atPlace w₂ (oldB b).toGCx v, fun _ => zeroGHom _ _⟩
+
+/-- The genuine unramified factorization at the new place (lane RC26, PROVED). -/
+def ψurB : ∀ q : NewPlaces KA S₂ S₂', ZInQ.Contrib.CloudB3RC53.RankCounts.GUr KA q.1 →ₜ* GKS KA S₂ :=
+  fun q => urFactor KA q
+
+theorem hψurB : ∀ (q : NewPlaces KA S₂ S₂') g,
+    locMap KA S₂ q.1 g = ψurB q (ZInQ.Manuscript.RC.SelmerComplex.urRes KA q.1 g) :=
+  fun q g => urFactor_spec KA q g
+
+/-- The genuine full-condition data. -/
+abbrev fullB : SelData (ZMod 2) := galoisFullData KA hS₂ (ZMod 2) PUnit (Δ₀B b)
+
+/-- The genuine unramified data. -/
+abbrev urB : SelData (ZMod 2) :=
+  restrictData (fullB b) (galoisUrInFull KA hS₂ (ZMod 2) PUnit ψurB hψurB (Δ₀B b))
+
+theorem subsingleton_fullG (n : ℤ) : Subsingleton ((fullB b).G.X n) := by
+  haveI : Subsingleton (ResMod (inflMap KA hS₂) PUnit) := inferInstanceAs (Subsingleton PUnit)
+  exact subsingleton_natCx_contCochains n
+
+theorem subsingleton_newL (n : ℤ) :
+    Subsingleton ((piCx fun q : NewPlaces KA S₂ S₂' =>
+      natCx (contCochains (ZMod 2) (ZInQ.Manuscript.RC.SelmerComplex.Gloc KA q.1)
+        (ResMod (locMap KA S₂' q.1) (ResMod (inflMap KA hS₂) PUnit)))).X n) := by
+  refine subsingleton_piCx _ (fun q m => ?_) n
+  haveI : Subsingleton (ResMod (locMap KA S₂' q.1) (ResMod (inflMap KA hS₂) PUnit)) :=
+    inferInstanceAs (Subsingleton PUnit)
+  exact subsingleton_natCx_contCochains m
+
+theorem subsingleton_newU (n : ℤ) :
+    Subsingleton ((piCx fun q : NewPlaces KA S₂ S₂' =>
+      natCx (contCochains (ZMod 2) (ZInQ.Contrib.CloudB3RC53.RankCounts.GUr KA q.1)
+        (ResMod (ψurB q) PUnit))).X n) := by
+  refine subsingleton_piCx _ (fun q m => ?_) n
+  haveI : Subsingleton (ResMod (ψurB q) PUnit) := inferInstanceAs (Subsingleton PUnit)
+  exact subsingleton_natCx_contCochains m
+
+theorem subsingleton_fullL (n : ℤ) : Subsingleton ((fullB b).L.X n) := by
+  refine ⟨fun x y => Prod.ext ?_ ((subsingleton_newL n).elim _ _)⟩
+  refine (subsingleton_piCx _ (fun v m => ?_) n).elim _ _
+  haveI : Subsingleton (ResMod (locMap KA S₂' v.1) (ResMod (inflMap KA hS₂) PUnit)) :=
+    inferInstanceAs (Subsingleton PUnit)
+  exact subsingleton_natCx_contCochains m
+
+def φfullB : GHom (oldB b).toGCx (fullB b).U :=
+  prodLift (atPlaceMap w₂ (oldB b).toGCx) (zeroGHom _ _)
+
+def φurB : GHom (oldB b).toGCx (urB b).U :=
+  prodLift (atPlaceMap w₂ (oldB b).toGCx) (zeroGHom _ _)
+
+theorem φfullB_bijective (n : ℤ) : Function.Bijective ((φfullB b).f n n rfl) := by
+  refine ⟨fun x y h => (atPlaceMap_bijective w₂ _ n).1 (congrArg Prod.fst h), fun c => ?_⟩
+  obtain ⟨x, hx⟩ := (atPlaceMap_bijective w₂ (oldB b).toGCx n).2 c.1
+  exact ⟨x, Prod.ext hx ((subsingleton_newL n).elim _ _)⟩
+
+theorem φurB_bijective (n : ℤ) : Function.Bijective ((φurB b).f n n rfl) := by
+  refine ⟨fun x y h => (atPlaceMap_bijective w₂ _ n).1 (congrArg Prod.fst h), fun c => ?_⟩
+  obtain ⟨x, hx⟩ := (atPlaceMap_bijective w₂ (oldB b).toGCx n).2 c.1
+  exact ⟨x, Prod.ext hx ((subsingleton_newU n).elim _ _)⟩
+
+def σfullB : GHom (oldB b).toGCx (selCx (fullB b)) :=
+  selModelMap (fullB b) (φfullB b) (subsingleton_fullG b) (subsingleton_fullL b)
+
+def σurB : GHom (oldB b).toGCx (selCx (urB b)) :=
+  selModelMap (urB b) (φurB b) (subsingleton_fullG b) (subsingleton_fullL b)
+
+theorem σfullB_quasiIso : QuasiIso (SelmerDuality.GHom.toCC (σfullB b)) :=
+  bijGHom_quasiIso _ (selModelMap_bijective _ _ _ _ (φfullB_bijective b))
+
+theorem σurB_quasiIso : QuasiIso (SelmerDuality.GHom.toCC (σurB b)) :=
+  bijGHom_quasiIso _ (selModelMap_bijective _ _ _ _ (φurB_bijective b))
+
+instance isIso_oldInclB :
+    IsIso (SelmerDuality.GHom.toCC (FullPreComplex.oldIncl (hYρB b) (hTρB b))) :=
+  FullPreComplex.isIso_oldIncl _ _
+
+def ψ0B : (CρB b).toGCx.toCC ⟶ (selCx (fullB b)).toCC :=
+  inv (SelmerDuality.GHom.toCC (FullPreComplex.oldIncl (hYρB b) (hTρB b))) ≫
+    SelmerDuality.GHom.toCC (σfullB b)
+
+theorem ψ0B_quasiIso : QuasiIso (ψ0B b) := by
+  have := σfullB_quasiIso b
+  unfold ψ0B
+  infer_instance
+
+theorem squareB :
+    SelmerDuality.GHom.toCC (σurB b) ≫
+        (galoisFullSES KA hS₂ (ZMod 2) PUnit ψurB hψurB (Δ₀B b)).f =
+      SelmerDuality.GHom.toCC (FullPreComplex.oldIncl (hYρB b) (hTρB b)) ≫ ψ0B b := by
+  unfold ψ0B
+  rw [IsIso.hom_inv_id_assoc]
+  change SelmerDuality.GHom.toCC (σurB b) ≫ SelmerDuality.GHom.toCC
+      (SelmerDuality.changeMap (fullB b) (galoisUrInFull KA hS₂ (ZMod 2) PUnit ψurB hψurB (Δ₀B b))) =
+    _
+  rw [SelmerDuality.GHom.toCC_comp]
+  refine SelmerDuality.GHom.toCC_ext fun i x => ?_
+  exact Prod.ext rfl (Prod.ext (Prod.ext rfl ((subsingleton_newL i).elim _ _)) rfl)
+
+/-! ### The tame field at the new place -/
+
+/-- The tame model of the zero module is a quasi-isomorphic model of the genuine local and
+unramified complexes of the zero module at `q` (all terms vanish). -/
+def tameB (q : NewPlaces KA S₂ S₂') : TameModelQIso PUnit (0 : PUnit →ₗ[ZMod 2] PUnit) 1
+    (natCx (contCochains (ZMod 2) (ZInQ.Manuscript.RC.SelmerComplex.Gloc KA q.1)
+      (ResMod (locMap KA S₂' q.1) (ResMod (inflMap KA hS₂) PUnit))))
+    (natCx (contCochains (ZMod 2) (ZInQ.Contrib.CloudB3RC53.RankCounts.GUr KA q.1)
+      (ResMod (ψurB q) PUnit)))
+    (natHom (ZInQ.Manuscript.RC.SelmerComplex.urCond (k := ZMod 2) (GS := GKS KA S₂)
+      (GS' := GKS KA S₂') (M := PUnit) (infl := inflMap KA hS₂)
+      (Gq := fun q : NewPlaces KA S₂ S₂' => ZInQ.Manuscript.RC.SelmerComplex.Gloc KA q.1)
+      (locq := fun q => locMap KA S₂' q.1)
+      (Gur := fun q : NewPlaces KA S₂ S₂' => ZInQ.Contrib.CloudB3RC53.RankCounts.GUr KA q.1)
+      (π := fun q => ZInQ.Manuscript.RC.SelmerComplex.urRes KA q.1) (ψ := ψurB)
+      (fun q g => (ZInQ.Manuscript.RC.SelmerComplex.locMap_compat KA hS₂ q.1 g).trans
+        (hψurB q g)) q)) where
+  fL := SelmerDuality.GHom.toCC (zeroGHom _ _)
+  fU := SelmerDuality.GHom.toCC (zeroGHom _ _)
+  qisL := by
+    refine bijGHom_quasiIso _ fun n => bijective_of_subsingleton _ (subsingleton_tLX n) ?_
+    haveI : Subsingleton (ResMod (locMap KA S₂' q.1) (ResMod (inflMap KA hS₂) PUnit)) :=
+      inferInstanceAs (Subsingleton PUnit)
+    exact subsingleton_natCx_contCochains n
+  qisU := by
+    refine bijGHom_quasiIso _ fun n => bijective_of_subsingleton _ (subsingleton_tUX n) ?_
+    haveI : Subsingleton (ResMod (ψurB q) PUnit) := inferInstanceAs (Subsingleton PUnit)
+    exact subsingleton_natCx_contCochains n
+  comm := by
+    rw [SelmerDuality.GHom.toCC_comp, SelmerDuality.GHom.toCC_comp]
+    refine SelmerDuality.GHom.toCC_ext fun i x => ?_
+    have : Subsingleton (ResMod (locMap KA S₂' q.1) (ResMod (inflMap KA hS₂) PUnit)) :=
+      inferInstanceAs (Subsingleton PUnit)
+    exact (subsingleton_natCx_contCochains i).elim _ _
+
+/-! ### The instance -/
+
+/-- **An actual instance of `Identification3` with one new place** (PROVED; no hypotheses). -/
+def identification3OnePlace : Identification3 KA S₂ S₂' hS₂ b 0 0 0 0 where
+  toFullCore := coreB b
+  Mf := PUnit
+  Δf := ΔfB b
+  hfull := hfullB b
+  ψf := SelmerDuality.GHom.toCC (ψfB b)
+  qisf := ψfB_quasiIso b
+  R₀ := ZMod 2
+  ρ := ρA
+  p := 2
+  hset := hsetB
+  hS' := S₂'_finite
+  M₀ := PUnit
+  ψur := ψurB
+  hψur := hψurB
+  Δ₀ := Δ₀B b
+  ψ0 := ψ0B b
+  qis0 := ψ0B_quasiIso b
+  ψold := SelmerDuality.GHom.toCC (σurB b)
+  qisOld := σurB_quasiIso b
+  square := squareB b
+  Φq _ := 0
+  qq _ := 1
+  qq_odd _ := odd_one
+  bas _ := @Module.Basis.empty Empty (ZMod 2) PUnit _ _ _ _ _
+  hA _ := Matrix.ext fun i => isEmptyElim (α := Empty) i
+  tame q := tameB q
+
+theorem identification3OnePlace_nonempty :
+    Nonempty (Identification3 KA S₂ S₂' hS₂ b 0 0 0 0) ∧ Nonempty (NewPlaces KA S₂ S₂') :=
+  ⟨⟨identification3OnePlace b⟩, nonempty_new⟩
 
 end ActualOnePlace
 
