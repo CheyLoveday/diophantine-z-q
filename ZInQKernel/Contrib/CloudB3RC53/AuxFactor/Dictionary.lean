@@ -22,15 +22,24 @@ entire fixed support and `h` … For the total type that actually occurs, `hk'` 
   RC2's coefficient rules (`hA`), vanishing off their filter (`hoff`), and a prepared unit seed
   (`hseed`), nonempty when the type is not negative (for negative types, `ε τ = 1`, nonemptiness is
   automatic: `negative_unitSeed_nonempty`);
-* `hspec` — the meaning of `W.Partitionable` (Definition `ex:sec7-seed-partition`, tex
-  2144–2185, read through the dictionary): `d` is partitionable when the typed graph of its primes
-  (`primeConfig`, RC2) is a partitionable list for the source of its total type;
+* `hspec` — a sufficient condition for `W.Partitionable` (round-3 shape): every nonzero `d` whose
+  typed graph of primes (`primeConfig`, RC2) is a partitionable list for the source of its total
+  type is partitionable. This reads only the prime set of `|d|`; the text's notion (Definition
+  `ex:sec7-seed-partition`, tex 2144–2185, 2296–2297) is restricted to parameters in the filter;
 * `hmS` — the type conductor is supported on `S` (the types live at the fixed support), and
   `SupportSpec` (`hS`, `hS2`).
 
 The arithmetic of the realization (CRT and Dirichlet) is RC2's `finite_realization_nat`, through
 `dummy_realization`; the combinatorics is RC2's `partitionable_of_anchors` with the minimum seeds
 of `exists_minSeed`.
+
+**Superseded (round 4): use `auxFactor_of_prepared`** (`RC/Wiring/AuxFactor3.lean`). That is the
+corrected form: unit seeds only at the prepared total types, and `hspec` only on the filter
+(negative, squarefree, prime to the support; tex 2296–2297). The round-3 hypotheses kept here
+(`hseed` at every total type, `hspec` at every `d ≠ 0` read through the prime set of `|d|`) force
+`W.Partitionable` at `d³`, `q²d` and `−d`, and are not satisfiable together with the even-upper
+cube clause; unit seeds at every total type also fail at filters of root number `−1`. The theorem
+remains true and is kept for history.
 -/
 
 namespace ZInQ.Contrib.CloudB3RC53.AuxFactor
@@ -66,7 +75,9 @@ theorem not_dvd_of_isSquareAt {p : ℕ} (hp : p.Prime) {x : ℤ} (hsf : Squarefr
 variable {L : Type} [AddCommGroup L] [Fintype L] {ε : L →+ ZMod 2}
 
 /-- **RC0's leaf `AuxFactor` from the coefficient dictionary** (tex 10089–10098, 10131–10139),
-`PROVED` (see the module docstring for the inputs). -/
+`PROVED` (see the module docstring for the inputs). **Superseded (round 4): use
+`auxFactor_of_prepared`**; the round-3 hypotheses `hseed`, `hspec` here are not satisfiable for
+genuine data (module docstring). -/
 theorem auxFactor_of_dictionary {ℓ : ℕ} (W : Wiring.WData ℓ) (hS : ∀ p ∈ W.S, p.Prime)
     (hS2 : 2 ∈ W.S) (T : TypeData L ε) (hmS : ∀ p : ℕ, p.Prime → p ∣ T.m → p ∈ W.S)
     (A : L → Config L → ZMod 2) (hA : ∀ τ, CoefficientRules ε (A τ))

@@ -17,7 +17,10 @@ the input `hdummy` of RC13's `roughCompanion`).  `auxFactor_wiring` (`PROVED`) p
   that actually occurs, `hk'` is partitionable"): when the dummy primes realize the seed-anchor
   classes, every `k' = au` of the companion's shape makes `hk'` partitionable.  Its combinatorial
   core, for the typed graph of `hk'`, is `negative_partitionable` (`Pieces.lean`: negative types,
-  minimum seeds, anchors plus a nonempty remainder);
+  minimum seeds, anchors plus a nonempty remainder). Since round 4, `hDict` is asked only at the
+  prepared `h` (positive, squarefree, `≡ 1 (mod 8)`, prime to the support; tex 2344–2346,
+  10059–10061) and only when `L(E^{(hk')}, 1) ≠ 0` (the companions actually produced, tex
+  2380–2385), the shape of `Wiring.AuxFactor`;
 * `hS`: the support consists of primes (`SupportSpec`).
 -/
 
@@ -29,14 +32,17 @@ open ZInQ.Manuscript ZInQ.Manuscript.RC Finset
 classes and the dictionary input `hDict`. -/
 theorem auxFactor_wiring {ℓ : ℕ} (W : Wiring.WData ℓ) (hS : ∀ p ∈ W.S, p.Prime)
     (m : ℕ) (hm : 0 < m) (hm2 : 2 ∣ m) (A₀ : ℕ) (cls : ℕ → ZMod m) (hcls : ∀ i, IsUnit (cls i))
-    (hDict : ∀ (h : ℤ) (q : ℕ → ℕ), (∀ i < A₀, (q i).Prime ∧ ((q i : ℕ) : ZMod m) = cls i) →
+    (hDict : ∀ (h : ℤ) (q : ℕ → ℕ), 0 < h → Squarefree h → h % 8 = 1 →
+      (∀ p ∈ W.S, ¬ (p : ℤ) ∣ h) → (∀ i < A₀, (q i).Prime ∧ ((q i : ℕ) : ZMod m) = cls i) →
       ∀ u : ℤ, (∏ i ∈ range A₀, (q i : ℤ)) * u < 0 → ((∏ i ∈ range A₀, (q i : ℤ)) * u) % 8 = 1 →
         Squarefree ((∏ i ∈ range A₀, (q i : ℤ)) * u) →
         (∀ p ∈ W.S ∪ h.natAbs.primeFactors,
           Nonvanishing.IsSquareAt p (((∏ i ∈ range A₀, (q i : ℤ)) * u : ℤ) : ℚ)) →
+        ZInQ.Contrib.CloudB3RC53.AnalyticRank
+          (Etw ℓ (h * ((∏ i ∈ range A₀, (q i : ℤ)) * u))) 0 →
         W.Partitionable (h * ((∏ i ∈ range A₀, (q i : ℤ)) * u))) :
     Wiring.AuxFactor W A₀ := by
-  intro h hh0 _ _ _ X hX
+  intro h hh0 hhsq hh8 hhS X hX
   obtain ⟨q, -, hq, ha0, hasf, haω, haSX, hah⟩ := dummy_realization m hm hm2 A₀ cls hcls W.S X h
   refine ⟨∏ i ∈ range A₀, (q i : ℤ), ha0, hasf, haω, fun p hp => ?_, hah hh0.ne', ?_⟩
   · have hpp : p.Prime := by
@@ -44,8 +50,8 @@ theorem auxFactor_wiring {ℓ : ℕ} (W : Wiring.WData ℓ) (hS : ∀ p ∈ W.S,
       · exact hS p hp
       · exact hX p hp
     exact haSX p hp hpp
-  · exact fun u hu h8 hsf hsq _ =>
-      hDict h q (fun i hi => ⟨(hq i hi).1, (hq i hi).2.2.2.2⟩) u hu h8 hsf hsq
+  · exact fun u hu h8 hsf hsq hcn =>
+      hDict h q hh0 hhsq hh8 hhS (fun i hi => ⟨(hq i hi).1, (hq i hi).2.2.2.2⟩) u hu h8 hsf hsq hcn
 
 open ZInQ.Manuscript.SelmerTwoPower in
 /-- **RC0's leaf `EvenUpper33b W C₁` from (F.1)–(F.2)** (tex 10079–10129, 2273–2341), `PROVED`
