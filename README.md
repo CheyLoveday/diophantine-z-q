@@ -40,8 +40,11 @@ pole polynomial, as the manuscript's Section 5.1 does:
 - consequences of the two printed theorems behind its Lemma 5.5: the modularity theorem of Breuil, Conrad, Diamond
   and Taylor (Theorem A), and Kolyvagin's Theorem 1.
 
-Proving Theorem 5.3 in Lean, from the manuscript's Sections 7–9 and Appendices E–G, is
-[#83](https://github.com/Deicyde/diophantine-z-q/issues/83).
+Theorem 5.3 stays one hypothesis of the main theorem. Separately,
+[#110](https://github.com/Deicyde/diophantine-z-q/pull/110) reduces it, along the manuscript's Sections 7–9 and
+Appendices E–G, to step-level hypotheses (`ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves`). Some of
+those still state their step's conclusion directly and are being restated over the manuscript's objects. Proving the
+steps in Lean is [#83](https://github.com/Deicyde/diophantine-z-q/issues/83).
 Apart from these hypotheses, the main theorem departs from the manuscript in two smaller steps, both proved: route AP
 replaces Proposition 6.2 by Szemerédi's theorem in the primes together with a density theorem for the good primes
 (Proposition D), and the catalogue bound is proved in the weaker form CAT₈. Deriving the height estimate from the
