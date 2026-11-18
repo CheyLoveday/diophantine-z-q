@@ -18,3 +18,8 @@
   `scratch/bdr-t/CheckBase.lean`. The fourth textual copy of `BdR` was
   read in `ZInQKernel/OneProof/H/TailC.lean`, outside the import closure
   as required.
+- VERIFIED (Lean): `DeRhamPrint.BdRT.tt_eq_logTeich` identifies the two
+  logarithms for every `RootSystem p`. The coefficient comparison uses
+  `IsUnit.map_ringInverse`; the tail after degree `n` lies in
+  `(xi)^(n+1)`. The axiom check gave `propext`, `Classical.choice`,
+  and `Quot.sound`.
