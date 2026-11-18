@@ -13,4 +13,8 @@
 | `trace_sign_at_zero`, `exists_inertia_trace_three` | Inertia sign is positive over 0; a CM(−24) chart point has a stabilizer of trace 3. Lean exit 0; standard three axioms. |
 
 
+| `mem_inertia_iff` | Mathlib inertia is equivalent to chart inertia. Lean exit 0. |
+| `squarefree_eigenvector` | A nontrivial sign character gives a nonzero sign eigenvector with squarefree polynomial square. Lean exit 0; standard three axioms. |
+| `prime_support`, `radicand_mem_of_neg` | A prime dividing the squarefree radicand has nontrivial sign inertia; a negative inertia element forces the radicand into the underlying prime. Lean exit 0; standard three axioms for `prime_support`. |
+
 Build cache: root cache present, upstream dependency cache copied into the worktree; direct Lean uses those caches. Host load and available memory checked before each invocation.
