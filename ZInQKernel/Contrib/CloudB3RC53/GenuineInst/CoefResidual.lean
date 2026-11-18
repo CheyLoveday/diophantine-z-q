@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.CloudB3RC53.GenuineInst.CoefDerivative
+import ZInQKernel.Contrib.OneProof.RC.CoefModules.NonVacuity
 
 /-!
 # Genuine instantiations, part 19: the residual module of the actual `M_i` is `𝔽₂²`
@@ -21,7 +22,12 @@ The residual module of `M_i` is `𝔽₂ ⊗_{A_i} M_i`, along the residue map `
   `FullTorsion` at `2^{j+1}`, `2^j` and `2` (RC28's Néron–Ogg–Shafarevich GLUE hypothesis);
 * `torsTwoEquiv`, `residualFin2`: `E(K_S)[2] ≅ 𝔽₂²`, hence `𝔽₂ ⊗_{A_{j+1}} M_{j+1} ≅ 𝔽₂²`; with
   trivial Galois action on `E(K_S)[2]` (tex 4479–4480) the residual action is trivial in these
-  coordinates (`residualFin2_resAct`).
+  coordinates (`residualFin2_resAct`); `residualLinearFin2`: the same as an `𝔽₂`-linear
+  equivalence;
+* `ResidualCoefModuleF2` (node, PROVED): the combined statement;
+* Non-vacuity (`residualFin2_hyps_cubicCurve`): for `y² = (x − e₁)(x − e₂)(x − e₃)` with distinct
+  `e_k ∈ K` the hypotheses hold at `j = 0` (`smul_torsTwo_cubicCurve`: trivial action on
+  `E(K_S)[2]`).
 
 **Classification.** Definitions and PROVED statements; the only hypotheses are `FullTorsion`
 (GLUE, as in RC28) and, for `residualFin2_resAct`, the trivial action on `E(K_S)[2]`.
@@ -353,6 +359,108 @@ theorem residualFin2_resAct (hT : FullTorsion K S W (2 ^ (j + 1)))
     torsTwoEquiv K S W h2 (residualEquiv j α hT hM h2 x)
   rw [residualEquiv_resAct, htriv]
 
+/-- **`𝔽₂ ⊗_{A_{j+1}} M_{j+1} ≅ 𝔽₂²` as `𝔽₂`-vector spaces** (`residualFin2` is additive between
+`𝔽₂`-modules, hence `𝔽₂`-linear). -/
+def residualLinearFin2 (hT : FullTorsion K S W (2 ^ (j + 1))) (hM : FullTorsion K S W (2 ^ j))
+    (h2 : FullTorsion K S W 2) :
+    ZMod 2 ⊗[Acoef (j + 1)] Mcoef K S W (j + 1) α ≃ₗ[ZMod 2] (Fin 2 → ZMod 2) :=
+  LinearEquiv.ofBijective ((residualFin2 j α hT hM h2).toAddMonoidHom.toZModLinearMap 2)
+    (residualFin2 j α hT hM h2).bijective
+
+omit [NumberField K] in
+theorem residualLinearFin2_apply (hT : FullTorsion K S W (2 ^ (j + 1)))
+    (hM : FullTorsion K S W (2 ^ j)) (h2 : FullTorsion K S W 2)
+    (x : ZMod 2 ⊗[Acoef (j + 1)] Mcoef K S W (j + 1) α) :
+    residualLinearFin2 j α hT hM h2 x = residualFin2 j α hT hM h2 x := rfl
+
 end Actual
+
+section NonVacuity
+
+/-! ### Non-vacuity: the hypotheses of `residualFin2_resAct` hold for `y² = (x−e₁)(x−e₂)(x−e₃)` -/
+
+open NumberField IsDedekindDomain WeierstrassCurve ZInQ.Manuscript.RC.SelmerComplex
+
+variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
+
+/-- **`G_{K,S}` acts trivially on `E(K_S)[2]`** for `E : y² = (x − e₁)(x − e₂)(x − e₃)` with
+`e_k ∈ K`: a `2`-torsion point is `0` or `(e_k, 0)`. PROVED. -/
+theorem smul_torsTwo_cubicCurve (e₁ e₂ e₃ : K) (σ : GKS K S)
+    (P : TorsS K S (cubicCurve e₁ e₂ e₃) ((2 : ℕ) : ℤ)) : σ • P = P := by
+  obtain ⟨Q, hQ⟩ := P
+  apply Subtype.ext
+  rw [coe_smul_torsS]
+  rcases Q with _ | ⟨x, y, h⟩
+  · exact map_zero _
+  have h2Q : (2 : ℤ) • (Affine.Point.some _ _ h :
+      ((cubicCurve e₁ e₂ e₃).baseChange (KS K S)).toAffine.Point) = 0 :=
+    (Submodule.mem_torsionBy_iff _ _).mp hQ
+  rw [two_zsmul, add_eq_zero_iff_eq_neg, Affine.Point.neg_some, Affine.Point.some.injEq] at h2Q
+  have hy : y = 0 := by
+    have h2y := h2Q.2
+    simp only [Affine.negY, WeierstrassCurve.baseChange, WeierstrassCurve.map_a₁,
+      WeierstrassCurve.map_a₃, cubicCurve, map_zero, zero_mul, sub_zero] at h2y
+    have h2 : (2 : KS K S) ≠ 0 := by
+      rw [← map_ofNat (algebraMap K (KS K S)) 2]
+      exact (map_ne_zero _).mpr two_ne_zero
+    have : (2 : KS K S) * y = 0 := by linear_combination h2y
+    exact (mul_eq_zero.mp this).resolve_left h2
+  subst hy
+  have heq := h.1
+  rw [Affine.equation_iff'] at heq
+  simp only [WeierstrassCurve.baseChange, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂,
+    WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, cubicCurve,
+    map_zero, map_neg, map_add, map_mul] at heq
+  have hfac : (x - algebraMap K (KS K S) e₁) * (x - algebraMap K (KS K S) e₂) *
+      (x - algebraMap K (KS K S) e₃) = 0 := by linear_combination -heq
+  have hx : ∃ e : K, x = algebraMap K (KS K S) e := by
+    rcases mul_eq_zero.mp hfac with h12 | h3
+    · rcases mul_eq_zero.mp h12 with h1 | h2
+      · exact ⟨e₁, sub_eq_zero.mp h1⟩
+      · exact ⟨e₂, sub_eq_zero.mp h2⟩
+    · exact ⟨e₃, sub_eq_zero.mp h3⟩
+  obtain ⟨e, rfl⟩ := hx
+  rw [Affine.Point.map_some, Affine.Point.some.injEq]
+  exact ⟨AlgHom.commutes _ e, map_zero _⟩
+
+/-- **Non-vacuity of the hypotheses of `residualFin2_resAct`** (at `j = 0`): for every number
+field `K`, every `S` and distinct `e₁, e₂, e₃ ∈ K`, the curve `y² = (x − e₁)(x − e₂)(x − e₃)`
+satisfies `FullTorsion` at `2^1`, `2^0`, `2` and has trivial Galois action on `E(K_S)[2]`.
+PROVED. -/
+theorem residualFin2_hyps_cubicCurve {e₁ e₂ e₃ : K} (h12 : e₁ ≠ e₂) (h13 : e₁ ≠ e₃)
+    (h23 : e₂ ≠ e₃) :
+    FullTorsion K S (cubicCurve e₁ e₂ e₃) (2 ^ (0 + 1)) ∧
+      FullTorsion K S (cubicCurve e₁ e₂ e₃) (2 ^ 0) ∧ FullTorsion K S (cubicCurve e₁ e₂ e₃) 2 ∧
+      ∀ (σ : GKS K S) (P : TorsS K S (cubicCurve e₁ e₂ e₃) ((2 : ℕ) : ℤ)), σ • P = P :=
+  ⟨fullTorsion_two_cubicCurve h12 h13 h23, fullTorsion_one _,
+    fullTorsion_two_cubicCurve h12 h13 h23, smul_torsTwo_cubicCurve e₁ e₂ e₃⟩
+
+end NonVacuity
+
+section Node
+
+open NumberField IsDedekindDomain WeierstrassCurve ZInQ.Manuscript.RC.SelmerComplex
+
+/-- **Node: the residual module of the actual coefficient module is `𝔽₂²` with trivial action.**
+Manuscript tex 2724–2727 (`M_i = (T_2E ⊗ A_i)(α_i)`) and tex 4479–4480 (the residual
+representation is `E[2]`, trivial since `E[2]` is rational). Claim: for every number field `K`,
+`S`, Weierstrass curve `W`, `i = j + 1 ≥ 1` and character `α : G_{K,S} → A_i^×`, if `E[2^i]`,
+`E[2^{i-1}]`, `E[2]` are defined over `K_S` (`FullTorsion`) and `G_{K,S}` acts trivially on
+`E(K_S)[2]`, then `𝔽₂ ⊗_{A_i} M_i ≅ 𝔽₂²` as `𝔽₂`-vector spaces, and every `σ ∈ G_{K,S}` acts as
+the identity on it. Kind: PROVED (`residualCoefModuleF2_proof`); non-vacuity of the hypotheses:
+`residualFin2_hyps_cubicCurve`. -/
+def ResidualCoefModuleF2 : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (S : Set (HeightOneSpectrum (𝓞 K)))
+    (W : WeierstrassCurve K) (j : ℕ) (α : GKS K S →* (Acoef (j + 1))ˣ),
+    FullTorsion K S W (2 ^ (j + 1)) → FullTorsion K S W (2 ^ j) → FullTorsion K S W 2 →
+    (∀ (σ : GKS K S) (P : TorsS K S W ((2 : ℕ) : ℤ)), σ • P = P) →
+    ∃ e : ZMod 2 ⊗[Acoef (j + 1)] Mcoef K S W (j + 1) α ≃ₗ[ZMod 2] (Fin 2 → ZMod 2),
+      ∀ (σ : GKS K S) x, e (resAct (j + 1) α _ σ x) = e x
+
+theorem residualCoefModuleF2_proof : ResidualCoefModuleF2 := by
+  intro K _ _ S W j α hT hM h2 htriv
+  exact ⟨residualLinearFin2 j α hT hM h2, fun σ x => residualFin2_resAct j α hT hM h2 htriv σ x⟩
+
+end Node
 
 end ZInQ.Contrib.CloudB3RC53.GenuineInst
