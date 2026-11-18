@@ -468,4 +468,186 @@ theorem isAfQuotient_of_print (hN : 2 ≤ N) (hf : IsNormalizedEigenform f χ)
 
 end Quotient
 
+section Compatibility
+
+variable {A : AbVar ℚ} {ν : AbVar.Hom J A} {θ : coeffField f →+* A.End0}
+
+abbrev incl (A : AbVar ℚ) : AbVar.End A →+* A.End0 :=
+  (Algebra.TensorProduct.includeRight (R := ℤ) (A := ℚ) (B := AbVar.End A)).toRingHom
+
+theorem compat_zero : HeckeCompat ν 0 0 := by
+  refine ⟨1, 0, one_pos, by simp, ?_⟩
+  rw [one_nsmul]
+  exact (map_zero (preC ν)).trans (map_zero (postC ν)).symm
+
+theorem compat_one : HeckeCompat ν 1 1 := by
+  refine ⟨1, 1, one_pos, ?_, ?_⟩
+  · change 1 • (1 : A.End0) = incl A 1
+    rw [one_smul, map_one]
+  · rw [one_nsmul]; exact rel_one ν
+
+theorem common_denominator {E : Type*} [AddCommMonoid E] (m n : ℕ) (u v : E) :
+    (m * n) • (u + v) = n • (m • u) + m • (n • v) := by
+  rw [nsmul_add, smul_smul, smul_smul, Nat.mul_comm n m]
+
+theorem compat_add {s t : AbVar.End J} {x y : A.End0}
+    (hs : HeckeCompat ν s x) (ht : HeckeCompat ν t y) : HeckeCompat ν (s + t) (x + y) := by
+  obtain ⟨m, a, hm, hax, ha⟩ := hs
+  obtain ⟨n, b, hn, hby, hb⟩ := ht
+  change m • x = incl A a at hax
+  change n • y = incl A b at hby
+  change m • preC ν s = postC ν a at ha
+  change n • preC ν t = postC ν b at hb
+  refine ⟨m * n, n • a + m • b, Nat.mul_pos hm hn, ?_, ?_⟩
+  · change (m * n) • (x + y) = incl A (n • a + m • b)
+    rw [common_denominator, map_add, map_nsmul, map_nsmul, hax, hby]
+  · change (m * n) • preC ν (s + t) = postC ν (n • a + m • b)
+    rw [map_add, common_denominator, map_add, map_nsmul, map_nsmul, ha, hb]
+
+theorem compat_neg {t : AbVar.End J} {x : A.End0}
+    (ht : HeckeCompat ν t x) : HeckeCompat ν (-t) (-x) := by
+  obtain ⟨m, e, hm, hx, h⟩ := ht
+  change m • x = incl A e at hx
+  refine ⟨m, -e, hm, ?_, ?_⟩
+  · change m • (-x) = incl A (-e)
+    rw [smul_neg, hx, map_neg]
+  · change m • preC ν (-t) = postC ν (-e)
+    rw [map_neg, map_neg, smul_neg]
+    exact congrArg Neg.neg h
+
+theorem compat_mul {s t : AbVar.End J} {x y : A.End0}
+    (hs : HeckeCompat ν s x) (ht : HeckeCompat ν t y) : HeckeCompat ν (s * t) (x * y) := by
+  obtain ⟨m, a, hm, hax, ha⟩ := hs
+  obtain ⟨n, b, hn, hby, hb⟩ := ht
+  change m • x = incl A a at hax
+  change n • y = incl A b at hby
+  refine ⟨m * n, a * b, Nat.mul_pos hm hn, ?_, ?_⟩
+  · change (m * n) • (x * y) = incl A (a * b)
+    rw [map_mul, ← hax, ← hby, smul_mul_smul_comm]
+  · have hr := rel_mul (show R16Thm1.Rel ν (m • s) a from (map_nsmul (preC ν) _ _).trans ha)
+      (show R16Thm1.Rel ν (n • t) b from (map_nsmul (preC ν) _ _).trans hb)
+    change preC ν ((m • s) * (n • t)) = _ at hr
+    rw [smul_mul_smul_comm, map_nsmul] at hr
+    exact hr
+
+theorem compat_cancel {t : AbVar.End J} {x : A.End0} {n : ℕ} (hn : 0 < n)
+    (h : HeckeCompat ν (n • t) (n • x)) : HeckeCompat ν t x := by
+  obtain ⟨m, e, hm, hx, he⟩ := h
+  change m • preC ν (n • t) = _ at he
+  rw [map_nsmul, smul_smul] at he
+  exact ⟨m * n, e, Nat.mul_pos hm hn, by simpa only [smul_smul] using hx, he⟩
+
+/-- The pairs that intertwine with `ν` form a subring. -/
+def compatRing (ν : AbVar.Hom J A) (θ : coeffField f →+* A.End0) :
+    Subring (AbVar.End J × coeffField f) where
+  carrier := {te | HeckeCompat ν te.1 (θ te.2)}
+  zero_mem' := by change HeckeCompat ν 0 (θ 0); rw [map_zero]; exact compat_zero
+  one_mem' := by change HeckeCompat ν 1 (θ 1); rw [map_one]; exact compat_one
+  add_mem' := by
+    intro a b ha hb
+    change HeckeCompat ν (a.1 + b.1) (θ (a.2 + b.2))
+    rw [map_add]
+    exact compat_add ha hb
+  neg_mem' := by
+    intro a ha
+    change HeckeCompat ν (-a.1) (θ (-a.2))
+    rw [map_neg]
+    exact compat_neg ha
+  mul_mem' := by
+    intro a b ha hb
+    change HeckeCompat ν (a.1 * b.1) (θ (a.2 * b.2))
+    rw [map_mul]
+    exact compat_mul ha hb
+
+/-- The prime and good-square cases of (ii) imply the diamond relation, with no
+prior quotient property: clear the scalar `p` in the intertwining equation. -/
+theorem diamond_compat (hN : 2 ≤ N) (hf : IsNormalizedEigenform f χ)
+    (hcl : ShimuraClauses f tp δ A ν θ) (d : (ZMod N)ˣ) :
+    HeckeCompat ν (δ d) (θ (dk hN hf d)) := by
+  obtain ⟨p, _, hp, _, _, hd, -⟩ := two_primes hN d
+  have hT : (tp p, ak f p) ∈ compatRing ν θ := hcl.2.1.1 p
+  have hS : (xiSq tp δ p hp, ak f ((p : ℕ) * p)) ∈ compatRing ν θ := hcl.2.1.2 p hp
+  have hsub := (compatRing ν θ).sub_mem ((compatRing ν θ).mul_mem hT hT) hS
+  have ha := ak_good hN hf p hp 0
+  have ha1 : ak f 1 = 1 := Subtype.ext hf.2.1
+  simp only [Nat.zero_add, pow_one, pow_two, pow_zero, ha1, hd, _root_.mul_one] at ha
+  change HeckeCompat ν (tp p * tp p - xiSq tp δ p hp)
+    (θ (ak f p * ak f p - ak f ((p : ℕ) * p))) at hsub
+  rw [ha, xiSq, hd, sub_sub_cancel, sub_sub_cancel, ← nsmul_eq_mul,
+    ← nsmul_eq_mul, map_nsmul] at hsub
+  exact compat_cancel p.2.pos hsub
+
+/-- Clause (ii) at all positive indices, proved by the good and bad prime-power
+recurrences and coprime multiplicativity (step 2). -/
+theorem compat_all (hN : 2 ≤ N) (hf : IsNormalizedEigenform f χ)
+    (h : HeckeRelations tp δ ξ) (hcl : ShimuraClauses f tp δ A ν θ) (n : ℕ) :
+    HeckeCompat ν (ξ n) (θ (ak f n)) :=
+  xi_mem hN hf h (compatRing ν θ) (hcl.2.1.1) (diamond_compat hN hf hcl) n
+
+end Compatibility
+
+/-- The three printed clauses: quotient by a connected kernel, intertwining
+at every positive Hecke index, and dimension equal to the coefficient degree. -/
+def PrintedClauses (ξ : ℕ → AbVar.End J) (f : CF N 2) {A : AbVar ℚ}
+    (ν : AbVar.Hom J A) (θ : coeffField f →+* A.End0) : Prop :=
+  (Surjective ν.hom.left ∧ KerConnected ν) ∧
+  (∀ n : ℕ, 0 < n → HeckeCompat ν (ξ n) (θ (ak f n))) ∧
+  A.dim = ((Module.finrank ℚ (coeffField f) : ℕ) : WithBot ℕ∞)
+
+/-- Restrict the printed (ii) to the prime and good-square tests. -/
+theorem clauses_of_printed (h : HeckeRelations tp δ ξ) {A : AbVar ℚ} {ν : AbVar.Hom J A}
+    {θ : coeffField f →+* A.End0} (hc : PrintedClauses ξ f ν θ) :
+    ShimuraClauses f tp δ A ν θ := by
+  refine ⟨hc.1, ⟨?_, ?_⟩, hc.2.2⟩
+  · intro p
+    change HeckeCompat ν (tp p) (θ (ak f p))
+    rw [← h.prime p]
+    exact hc.2.1 p p.2.pos
+  · intro p hp
+    change HeckeCompat ν (xiSq tp δ p hp) (θ (ak f ((p : ℕ) * p)))
+    rw [← xi_sq h p hp]
+    exact hc.2.1 _ (Nat.mul_pos p.2.pos p.2.pos)
+
+/-- Conversely, the restricted tests give the printed clauses (step 2). -/
+theorem printed_of_clauses (hN : 2 ≤ N) (hf : IsNormalizedEigenform f χ)
+    (h : HeckeRelations tp δ ξ) {A : AbVar ℚ} {ν : AbVar.Hom J A}
+    {θ : coeffField f →+* A.End0} (hc : ShimuraClauses f tp δ A ν θ) :
+    PrintedClauses ξ f ν θ :=
+  ⟨hc.1, fun n _ => compat_all hN hf h hc n, hc.2.2⟩
+
+/-- Shimura 1973, Theorem 1 and its construction, at `Γ₁(N))
+(J. Math. Soc. Japan 25 (1973), 523–544; AI page read pp. 525–527;
+manuscript L770–773 and L11053–11057).
+
+* pp. 525–526: the constructed `A = J/C` with `C = ker ν`.
+  `PrintQuotient` encodes the quotient through its universal property and
+  the family of images defining `C`: use the annihilator of the eigenline,
+  intersect the rational ideal with `End(J)`, and sum the images.
+* (i) is surjectivity and `KerConnected` (the tree's isogeny criterion for
+  a connected kernel); (ii) uses the independent `ξ_n` for every positive
+  index and the tree's integral encoding of the rational intertwining;
+  (iii) is `dim A = [K_f : ℚ]`, with the printed multiplicity `m = 1`
+  from q-expansions (p. 527).
+* p. 526: among such triples, the abelian variety is unique up to an
+  isomorphism over ℚ; no condition on its composite with `ν` is asserted.
+
+This is the portion of the print used for the quotient row. The cotangent-space
+clause (iv) and the total Euler identity are omitted. The existing standard
+model interface is retained; the Hecke correspondence dictionary is supplied
+separately. The p. 526 misprint in the conjugate-form sentence is recorded in
+the report and is outside these clauses. -/
+def ShimuraThm1AsPrinted : Prop :=
+  ∀ (N : ℕ) (χ : DirichletCharacter ℂ N) (f : CF N 2), 2 ≤ N → IsNewform f χ →
+    ∀ (X : Over SpecQ) [IsIntegral X.left] (jX tX : X.left.functionField),
+    IsCurve X → IsX1Gen N X jX tX →
+    ∀ (P₀ : RatPt X) (J : AbVar ℚ) (aj : X ⟶ J.X), IsJacobian X P₀ J aj →
+    ∀ ξ : ℕ → AbVar.End J,
+      XiAction (N := N) jX tX aj ξ →
+      FiniteDimensional ℚ (coeffField f) ∧
+        ∃ (A : AbVar ℚ) (ν : AbVar.Hom J A) (θ : coeffField f →+* A.End0),
+          PrintedClauses ξ f ν θ ∧ PrintQuotient ξ f ν ∧
+          ∀ (A' : AbVar ℚ) (ν' : AbVar.Hom J A') (θ' : coeffField f →+* A'.End0),
+            PrintedClauses ξ f ν' θ' →
+              ∃ ψ : AbVar.Hom A A', IsIso ψ.hom
+
 end ShimuraSteps

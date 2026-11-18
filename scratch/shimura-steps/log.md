@@ -10,3 +10,6 @@
 - VERIFIED (Lean): the positive integer multiple of an endomorphism has the same
   scheme-theoretic image. The two generated subrings agree integrally, and the image
   families and quotient universal properties agree under `HeckeRelations`.
+- VERIFIED (Lean): the normalized coefficient recurrences and the composite
+  operator laws extend clause (ii) from prime and good-square indices to every
+  positive index. The reverse restriction uses the independently stated square relation.
