@@ -1,25 +1,26 @@
 import ZInQKernel.Contrib.CloudB3RC53.ClearingComplex.FullConditionTame
 
 /-!
-# The new places of the full-condition identification are the primes of the family
+# An auxiliary one-place-per-prime variant of the full-condition identification
 
-Manuscript `diophantine_zq.tex`, the triangle (5.6) (tex 5234–5238:
-`C_old → (C_b)₀ → ⊕_{q ∈ Q} Q_q → C_old[1]`, one singular quotient per prime `q` of the family,
-at the chosen place over `q`), tex 5394–5403 ("after augmentation the representation is unramified
-at `Q`").
+**Not the text's family identification.** In the text each prime `q` of the family splits in `K`
+and contributes the TWO conjugate graph places over it (tex 5247: "the two-place local
+determinant"; tex 5456–5457: "`A_q` is the direct sum of the two rank-two singular differentials at
+the conjugate graph places"). The structure below instead identifies the new places with `F.Q`
+bijectively, i.e. it allows exactly ONE new place over each prime; any instance with two new
+places over the same `q` is excluded. The text-faithful two-place structure is the integration
+team's `Identification3Q2` (`RC/Wiring/ClearingFull.lean`); this file is an auxiliary variant.
 
-`Identification3Q K S S' hS F dK hK cE tK` extends `Identification3` (unchanged) by the
-identification of its new places with the family's primes `F.Q`:
+`Identification3Q K S S' hS F dK hK cE tK` extends `Identification3` (unchanged) by:
 
 * `eQ : NewPlaces K S S' ≃ F.Q` — one new place per prime of the family;
 * `lies : ∀ v, (eQ v : ℕ) ∈ v` — the new place `v` lies over the prime `eQ v`;
-* `hqq : ∀ v, qq v = eQ v` — the residue cardinality of the tame model at `v` is that prime (the
-  primes of `Q` split in `K`, `Family.Admissible`).
+* `hqq : ∀ v, qq v = eQ v` — the residue cardinality of the tame model at `v` is that prime.
 
-Consequences (PROVED): `isEmpty_newPlaces_iff` (no new places iff `Q = ∅`), `card_newPlaces`
-(`#(S' − S) = #Q`), `eNQ` (the singular summands are indexed by `ι × Q`), and
-`tame_singular_quasiIso_Q`: for every `q ∈ Q` the genuine singular quotient at the place over `q`
-is quasi-isomorphic to `[M₀ --(Φ − q)--> M₀]` in degrees one and two, with this `q`.
+Consequences (PROVED, for this variant): `isEmpty_newPlaces_iff` (no new places iff `Q = ∅`),
+`card_newPlaces` (`#(S' − S) = #Q`), `eNQ` (the singular summands are indexed by `ι × Q`), and
+`tame_singular_quasiIso_Q`: for every `q ∈ Q` the genuine singular quotient at the chosen place
+over `q` is quasi-isomorphic to `[M₀ --(Φ − q)--> M₀]` in degrees one and two, with this `q`.
 -/
 
 noncomputable section
@@ -33,8 +34,10 @@ open ZInQ.Manuscript.RC.SelmerComplex (NewPlaces)
 variable (K : Type) [Field K] [NumberField K] (S S' : Set (HeightOneSpectrum (𝓞 K)))
   (hS : S ⊆ S')
 
-/-- **The full-condition identification with its new places identified with the family's primes**
-(GLUE, additive over `Identification3`). -/
+/-- **Auxiliary one-place-per-prime variant** (GLUE, additive over `Identification3`): the new
+places are identified bijectively with the family's primes. NOT the text's setting, which has two
+conjugate places over each split prime (tex 5247, 5456–5457); see the integration team's
+`Identification3Q2` (`RC/Wiring/ClearingFull.lean`) for the text-faithful two-place structure. -/
 structure Identification3Q [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K S S')]
     (F : Family) (dK hK cE tK : ℕ) extends Identification3 K S S' hS F.b dK hK cE tK where
   /-- one new place per prime of the family -/

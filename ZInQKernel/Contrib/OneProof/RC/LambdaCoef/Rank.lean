@@ -22,6 +22,14 @@ Manuscript `diophantine_zq.tex` (11/5), tex 2780–2785 (`𝕋 = (T_2E ⊗ Λ)(�
 Kinds: definitions and PROVED.
 -/
 
+/-!
+This is a conditional construction for one supplied continuous Λ-valued character on a fixed
+G_{K,S}. Its finite levels are the compatible reductions of that character. The manuscript's
+moving characters have conductor primes varying with precision and need not be reductions of
+one character (tex 2737–2741, 4269–4277). No identification with the retained inner-limit Selmer
+diagrams is proved here.
+-/
+
 noncomputable section
 
 namespace ZInQ.Manuscript.RC.LambdaCoef

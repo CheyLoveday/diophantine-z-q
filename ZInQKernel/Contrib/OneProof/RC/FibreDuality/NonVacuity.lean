@@ -9,15 +9,20 @@ Manuscript `diophantine_zq.tex`, tex 1760–1830 (the curves `E_ℓ : y² = x(x�
 tex 4976–5200 (the fibres at height-one primes). Lane RC28's example: `E_1 : y² = x(x−1)(x+3)` over
 `ℚ`, the prime `𝔭 = (t)` of `Λ` (residue field `k((t)) = ℚ₂`).
 
-Every structure used as a hypothesis by the PRINTs and their corollaries has an instance here:
+The structures used as hypotheses by the PRINTs and their corollaries have the following
+instances here; two of them only outside a valid setting (the trace packet at `S = ∅` and the
+Tate twist at `S = Set.univ`), as stated in their bullets:
 
 * `NekovarFibreSetting ℚ S6` for `S6` = the primes above `6` (finite, contains the prime above `2`;
   `E_1` has good reduction outside `2·3`): PROVED.
 * `HasTwoPowerRoots ℚ Set.univ` (through `E_1`'s full `2`-power torsion over `K̄`, lane RC28's
   `hasFullTwoTorsion_univ`): PROVED.
 * `IsLatticeTop` and `IsTateTwistFibre` for the twist `k((t))(1) = Tate1P`: PROVED
-  (`IsTateTwistFibre` at `S = Set.univ`, where `μ_{2^∞} ⊆ K_S` is PROVED).
-* `FibreLocalTraces` (one trace packet): the empty packet for `S = ∅`: PROVED.
+  (`IsTateTwistFibre` at `S = Set.univ`, where `μ_{2^∞} ⊆ K_S` is PROVED) (`S = Set.univ` is not
+  finite; at `S6` this holds under the GLUE, `nekovarFibre_hypotheses_E1`).
+* `FibreLocalTraces` (one trace packet): only the empty packet for `S = ∅`, which is outside
+  `NekovarFibreSetting` (`above_two`); at a valid `S` (e.g. `S6`) the packet and the global traces
+  with `InducesIsoH3` are supplied only by the PRINT `NekovarFibreTraces` (no Lean instance).
 * the truncated isotropy data of (relaxed, strict) and (strict, relaxed) for the fibres:
   `relaxedStrictTruncIsotropy`, `strictRelaxedTruncIsotropy` (`Duality.lean`).
 * **`E_1` at `(t)` over `S6`**: `IsLatticeTop` for `V_(t)(α)` and `V_(t)(α⁻¹)` (unconditional,

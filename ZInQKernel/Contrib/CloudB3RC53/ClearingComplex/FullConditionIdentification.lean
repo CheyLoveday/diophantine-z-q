@@ -39,8 +39,12 @@ as there: `FullCore.toIdentification` (poles in degree one),
 `toSelmerIdentification`, `support_qis` (from the PRINT `NekovarProp788ii`) and
 `clearingInputsCx_of_km3` (the body of RC0's `ClearingInputsCx`).
 
-Kinds: `Identification3` is GLUE (the same named inputs as `Identification2G`, with the
-corrected degrees and the full-condition comparison); all other declarations are PROVED.
+Kinds: `Identification3` is ELLIOT for the inherited `FullCore` fields (the lifted family model,
+`B₀ = diag(A_q)`, `T₀ = 0`, the central Smith form, the budget (5.7); tex 5394–5430, 5522–5543)
+and GLUE for the Galois comparisons. The family clause (`Mf`, `Δf`, `hfull`, `ψf`) is met by
+every model once `S ≠ ∅` (zero coefficients, the model as the local condition at one old place).
+`clearingTarget_of_G3` consumes only `FullCore` and the family clause (through
+`toSelmerIdentification`), not `ψ0`, `ψold`, `square`, `tame`. All other declarations are PROVED.
 -/
 
 noncomputable section
@@ -208,8 +212,11 @@ end FullCore
 variable (K : Type) [Field K] [NumberField K] (S S' : Set (HeightOneSpectrum (𝓞 K)))
   (hS : S ⊆ S')
 
-/-- **The identification with the full-condition triangle (5.6)** (GLUE; see the module
-docstring). The new places may be empty. -/
+/-- **The identification with the full-condition triangle (5.6)** (ELLIOT for the inherited
+`FullCore` fields: the lifted family model, `B₀ = diag(A_q)`, `T₀ = 0`, the central Smith form, the
+budget (5.7), tex 5394–5430, 5522–5543; GLUE for the Galois comparisons; the family clause is met
+by every model once `S ≠ ∅`; `clearingTarget_of_G3` consumes only `FullCore` and the family
+clause; see the module docstring). The new places may be empty. -/
 structure Identification3 [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K S S')]
     (b : ℕ) (dK hK cE tK : ℕ) extends FullCore (NewPlaces K S S') b dK hK cE tK where
   /-- the family coefficient module (a topological `𝒪[G][G_{K,S'}]`-module) -/

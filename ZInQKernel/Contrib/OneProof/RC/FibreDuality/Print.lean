@@ -125,6 +125,11 @@ becomes acyclic in `D(_{R[1/2]}Mod)`". In the text `K` is imaginary quadratic (t
    `K_S ⊇ μ_{2^∞}`) together with the lattice topology of `T`; `J(1) = J ⊗_{ℤ₂} ℤ₂(1)` in
    Nekovář 5.2.1.
 4. Nekovář's topology on an admissible `R_𝒮[G]`-module is encoded by `IsLatticeTop` (above).
+5. ROUTE. The text applies the integral duality over `R = Λ_𝔭` to its actual primitive scalar
+   Selmer complex and passes to `k = Frac(Λ/𝔭)` by `C ⊗_R k` (tex 4977–4990; integral uses at
+   tex 5166–5179). These PRINTs give the duality for the Galois cochains of the fibre `V_𝔭` over
+   `k(𝔭)` (5.6.3 at `R = Λ/𝔭`). Neither the identification `C ⊗^L_R k ≃ C_{U ⊗ k}(V_𝔭)` for the
+   text's local conditions nor the `Λ_𝔭`-linear duality is supplied here.
 -/
 
 noncomputable section
@@ -241,8 +246,11 @@ local conditions with truncated isotropy data, and any global trace on
 `Cone(C(G_{K,S}, T) → ⊕_v τ_{≥2} C(G_v, T))[−1]` killing coboundaries and inducing
 `H³_c(G_{K,S}, T) ≅ k(𝔭)`, the global duality map
 `C(G_{K,S}, X) → Hom_{k(𝔭)}(C_c(G_{K,S}, X'), k(𝔭))[−3]`,
-`a ↦ ((b, y) ↦ tr(a ∪ b, (−1)^i res a ∪ y))` (Nekovář's `cβ_{J,X}` of 5.4.2) is a
-quasi-isomorphism.
+`a ↦ ((b, y) ↦ tr(a ∪ b, (−1)^i res a ∪ y))` (Nekovář's `β_{c,J,X}` of 5.4.2, p. 127, built from
+`∪_c` ("using `U_c` instead of `cU`"), with values in `D_{J[−3]}(RΓ_{c,cont}(G_{K,S}, D_J(X)(1)))`;
+5.6.3(ii) asserts that `_cβ_{J,X}`, `_cβ'_{J,X}`, `β_{c,J,X}` and `β'_{c,J,X}` are isomorphisms) is
+a quasi-isomorphism. It does not depend on `ΔA`, `ΔB`, `I`: they enter only through the cup product
+of `(a, 0, 0)` with `(b, 0, y)`, where the local-condition terms vanish.
 
 Hypotheses side by side with the print: `NekovarFibreSetting` = 5.1 (`S` finite, `S ⊇ S_2`;
 `(P)` replaced by `2 ∈ k(𝔭)ˣ` through 5.7.6); `[P.IsPrime] [IsHeightOneOdd P]` = `R = Λ/𝔭` a
