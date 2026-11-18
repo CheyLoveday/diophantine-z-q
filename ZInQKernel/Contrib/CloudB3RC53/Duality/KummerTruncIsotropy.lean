@@ -29,8 +29,8 @@ isotropy data: local conditions `ι : U → L`, `ι' : U' → L'`, a local cup p
   is a `τ≥2` isotropy homotopy.
 * **`kummerTruncIsotropy` (PROVED, finite level, any coefficient ring)**: for conditions
   concentrated in degrees `0, 1` and a local trace `trv : E² → R` whose kernel on the degree-two
-  cocycles consists of coboundaries (the first half of `InducesIsoH2`, `RC/SelmerComplex/Prints.lean`), if
-  `trv (ι u ∪ ι' v) = 0` for all `(1, 1)` classes, the zero family is a `τ≥2` isotropy homotopy.
+  cocycles consists of coboundaries (the first half of `InducesIsoH2`,
+  `RC/SelmerComplex/Prints.lean`), if `trv (ι u ∪ ι' v) = 0` for all `(1, 1)` classes, the zero family is a `τ≥2` isotropy homotopy.
 * **`kummerTruncIsotropy_two` (PROVED, `ℤ₂`)**: the same with `trv` killing coboundaries and the
   hypothesis weakened to "every value `trv (ι u ∪ ι' v)` is divisible by every power of two"
   (finite isotropy), via `derivedKummerStep_trunc` applied to `τ≥2 E`.
