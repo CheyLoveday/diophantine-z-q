@@ -89,7 +89,9 @@ The autofold preview replaces the single hypothesis, leaving 29 H rows and chang
 5 LEAF / 24 GLUE in both strict and strictest counts. It was run with `--dry-run` only; the
 [recorded output](../../scratch/fowler-bridges/autofold-output.txt) keeps the count and the relevant generated lines.
 The [axiom checks](../../scratch/fowler-bridges/axioms-output.txt) report only `propext`, `Classical.choice` and
-`Quot.sound` for every checked declaration.
+`Quot.sound` for every checked declaration. [`#discharges`](../../scratch/fowler-bridges/discharges-output.txt)
+checked the base headline (33 open hypotheses, including the four outside H) and reports
+`OpenResearchLeaves66.fowlerProp27` by `fowlerProp27_of_print`, with only `FowlerProp27Print` still assumed.
 
 ## Known issues
 

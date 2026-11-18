@@ -1,7 +1,7 @@
- 02:42:31 up 2 days,  1:09,  7 users,  load average: 23.11, 27.78, 23.47
+ 02:55:50 up 2 days,  1:22,  6 users,  load average: 17.37, 22.06, 22.51
                total        used        free      shared  buff/cache   available
-Mem:             235          88          40           0         109         147
-Swap:            255          76         179
+Mem:             235          86          40           0         111         149
+Swap:            255          77         178
 'HDec.CMBranch.FowlerBridges.toOrder' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.CMBranch.FowlerBridges.exists_intBasis_of_isImagQuadOrder' depends on axioms: [propext,
  Classical.choice,
@@ -27,5 +27,11 @@ Swap:            255          76         179
 'HDec.CMBranch.FowlerBridges.PrimitivePositiveForm.eval_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.CMBranch.FowlerBridges.properFormSetoid_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HDec.CMBranch.FowlerBridges.card_pic_eq_card_properFormClasses_of' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FowlerBridgesIdeals.0.HDec.CMBranch.FowlerBridges.exists_noninteger' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FowlerBridgesIdeals.0.HDec.CMBranch.FowlerBridges.mul_mem_of_mem_pair' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]

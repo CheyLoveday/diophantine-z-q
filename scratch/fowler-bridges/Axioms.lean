@@ -19,3 +19,10 @@ import ZInQKernel.Contrib.OneProof.FowlerBridgesForms
 #print axioms HDec.CMBranch.FowlerBridges.PrimitivePositiveForm.eval_pos
 #print axioms HDec.CMBranch.FowlerBridges.properFormSetoid_iff
 #print axioms HDec.CMBranch.FowlerBridges.card_pic_eq_card_properFormClasses_of
+
+open Lean Elab Command in
+run_cmd do
+  for lemmaName in #[`HDec.CMBranch.FowlerBridges.exists_noninteger,
+      `HDec.CMBranch.FowlerBridges.mul_mem_of_mem_pair] do
+    let name := mkPrivateNameCore `ZInQKernel.Contrib.OneProof.FowlerBridgesIdeals lemmaName
+    elabCommand (← `(command| #print axioms $(mkIdent name):ident))

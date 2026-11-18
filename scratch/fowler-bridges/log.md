@@ -22,3 +22,8 @@
   conditional on `CoxFormClassEquivalence`. That equivalence is unproved and is not used by Fowler.
 - VERIFIED (Lean): `Axioms.lean` compiled; every listed declaration depends only on
   `propext`, `Classical.choice` and `Quot.sound`. See `axioms-output.txt`.
+- VERIFIED (Lean): recompiled the base headline against the current sources and checked `Discharges.lean`.
+  The scan found `fowlerProp27_of_print` for `OpenResearchLeaves66.fowlerProp27` and listed only
+  `FowlerProp27Print` as an assumption. The recorded output contains the matching result and scan totals.
+- VERIFIED (Lean): both private helper theorems were checked separately as well; their axiom sets are standard.
+- VERIFIED (dry run): the final read-only preview reproduced 4/25 → 5/24 in both columns.
