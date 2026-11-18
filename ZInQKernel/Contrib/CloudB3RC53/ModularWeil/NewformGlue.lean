@@ -11,28 +11,30 @@ with the coefficients of `L(E, s)`) has, at some level `M`, a normalized full He
 trivial character whose coefficients are `aₙ = E.LFunction n`.
 
 **What is a print, and what is proved.**
-* `LiCarayolNewformOfModular` (PRINT, consequence form; locators UNVERIFIED): the newform
-  theory of W.-C. W. Li, *Newforms and functional equations*, Math. Ann. **212** (1975), Theorem 3
-  and §3 (bibitem `li-newforms`): the decomposition of `S₂(Γ₀(N))` into newforms of levels
+* `LiCarayolNewformOfModular` (PRINT, consequence form; statement not read against the papers
+  here, UNVERIFIED as a reading): the newform theory of W.-C. W. Li, *Newforms and functional
+  equations*, Math. Ann. **212** (1975), 285–315 (bibitem `li-newforms`, tex L11050–11052; the
+  manuscript's locator: p. 296): the decomposition of `S₂(Γ₀(N))` into newforms of levels
   `M ∣ N` and their images, with multiplicity one, so the eigenvalue system of a form on `Γ₀(N)`
   that is a Hecke eigenform away from `N` is that of a unique newform of some level `M ∣ N`;
   together with H. Carayol, *Sur les représentations ℓ-adiques associées aux formes modulaires
-  de Hilbert*, Ann. Sci. ÉNS **19** (1986) (bibitem `carayol`): the level of that newform is the
-  conductor of `E`, and its coefficients at the primes dividing the level are those of the local
-  factors of `L(E, s)`. The Lean statement keeps the consequence used here: for a modular `E`
-  there are `M ∣ N` and a newform of level `M`, weight `2` and trivial nebentypus (Tau Ceti's
-  `HeckeRing.GL2.Newform`, Miyake's primitive form) whose coefficients are `E.LFunction n` for
-  every `n ≥ 1`. The identification of the level with the conductor is not used and is not
-  stated (Mathlib has no conductor of an elliptic curve). Nothing beyond the two papers is
-  added.
+  de Hilbert*, Ann. Sci. ÉNS **19** (1986), 409–468 (bibitem `carayol`, tex L11205–11208; the
+  manuscript's locator: Theorem A): the level of that newform is the conductor of `E`, and its
+  coefficients at the primes dividing the level are those of the local factors of `L(E, s)`.
+  The Lean statement keeps the consequence used here: for a modular `E` there are `M ∣ N` and
+  a newform of level `M`, weight `2` and trivial nebentypus (Tau Ceti's `HeckeRing.GL2.Newform`,
+  Miyake's primitive form) whose coefficients are `E.LFunction n` for every `n ≥ 1`. The
+  identification of the level with the conductor is not used and is not stated (Mathlib has no
+  conductor of an elliptic curve). Nothing beyond the two papers is added.
 * **`newformOfModularCurveGlue_of_print` (PROVED)**: `LiCarayolNewformOfModular →
   NewformOfModularCurveGlue`. The full eigen-ness at every `Tₙ`, the primes dividing the level
   included, is Tau Ceti's theorem `Newform.toEigenform` (Diamond–Shurman Theorem 5.8.2, Miyake
   Theorem 4.6.13), and the passage from `Γ₁(M)` with trivial character to `Γ₀(M)` is
   `cuspFormCharSpaceOneEquiv`. Both preserve the underlying function on `ℍ`.
 
-**Classification.** `LiCarayolNewformOfModular` PRINT (consequence form, locators UNVERIFIED);
-the reduction PROVED.
+**Classification.** `LiCarayolNewformOfModular` PRINT (consequence form; the manuscript's
+locators Li p. 296 and Carayol Theorem A, statement not read against the papers here); the
+reduction PROVED.
 -/
 
 noncomputable section
@@ -42,8 +44,10 @@ namespace ZInQ.Contrib.CloudB3RC53.ModularWeil
 open CongruenceSubgroup UpperHalfPlane HeckeRing.GL2
 open ZInQ.Contrib.RC53Assist.NewformPeriods ZInQ.Manuscript.PoleS12
 
-/-- **Li 1975 (Theorem 3, §3) and Carayol 1986: the newform of a modular elliptic curve**
-(PRINT, consequence form; bibitems `li-newforms`, `carayol`; locators UNVERIFIED). If `E/ℚ` has a
+/-- **Li 1975 and Carayol 1986: the newform of a modular elliptic curve** (PRINT, consequence
+form; bibitems `li-newforms`, `carayol`; the manuscript's locators: Li, Math. Ann. 212 (1975),
+p. 296, tex L11050–11052, and Carayol, Ann. Sci. ÉNS 19 (1986), Theorem A, tex L11205–11208;
+statement not read against the papers here, UNVERIFIED as a reading). If `E/ℚ` has a
 weight-two cusp form on `Γ₀(N)`, `N > 0`, with the coefficients of `L(E, s)`, then for some
 `M ∣ N` there is a newform of level `M`, weight `2` and trivial nebentypus whose coefficients are
 `E.LFunction n` for every `n ≥ 1`. -/
