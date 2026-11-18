@@ -183,6 +183,15 @@ theorem genusLower36Core_proof : GenusLower36Core := by
   have := (abs_le.mp hε).2
   linarith
 
+/-- Non-vacuity of `GenusLower36Core`'s hypotheses: they hold simultaneously (all quantities `0`,
+`A = 0`). -/
+theorem genusLower36Core_hyps_nonvacuous :
+    ∃ (jg jr vk vs ωh ωk sh shk A CE CR Cper : ℤ), ωk ≤ A ∧
+      vk ≤ 2 * ωh + 2 * ωk + shk + CE ∧
+      (∃ ε : ℤ, |ε| ≤ 2 ∧ 2 * jr - 2 * jg = vk - vs + Cper + ε) ∧
+      4 * ωh + sh + shk - CR ≤ 2 * jr :=
+  ⟨0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, le_rfl, le_rfl, ⟨0, by norm_num, by norm_num⟩, le_rfl⟩
+
 /-! ### The stage filter -/
 
 /-- The field `RCSteps.stages_advance` (text of `Steps.lean` at 839ff728, data as parameters). -/
