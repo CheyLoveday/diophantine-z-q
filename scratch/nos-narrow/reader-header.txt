@@ -1,0 +1,53 @@
+import ZInQKernel.OneProof.H.D2A6Chain
+import ZInQKernel.Contrib.OneProof.NeronOggShafarevich
+
+/-! # Good reduction implies trivial inertia on prime-to-residue-characteristic torsion
+
+The kernel field (diophantine_zq.tex L557–560) and A6/G11 (L752–753) use only this implication.
+The proofs below carry that implication through the two readers. The perfect-residue-field
+criterion records the reported print hypothesis; the bypass does not assume it.
+-/
+
+set_option linter.style.longLine false
+set_option linter.style.haveILetI false
+
+namespace NOSNarrow
+
+open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
+open PkgI2 (IsAbelianVariety HasGoodReduction InertiaTrivialOn)
+
+/-- Print-form record (UNVERIFIED): Serre–Tate §1 assumes a perfect residue field
+(recalled, and so described in Milne's survey, arXiv:1210.7459 §2.7; the paper itself
+was not read). BLR §7.4 Thm 5 gives the Tate-module form over any discrete valuation
+ring (UNVERIFIED). Serre–Tate 1968 is absent from the manuscript's bibliography
+(diophantine_zq.tex L11009–11247). The two torsion equivalences use a separable
+closure and the same definitions as `NOSSepDict.NeronOggShafarevichSep`. -/
+def NeronOggShafarevichSepPerfect : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+    [PerfectField (IsLocalRing.ResidueField O)]
+    (Ks : Type) [Field Ks] [Algebra K Ks] [IsSepClosure K Ks]
+    (w : ValuationSubring Ks), w.comap (algebraMap K Ks) = O →
+    ∀ (A : Grp (Over (Spec (.of K)))) [IsAbelianVariety A],
+      (HasGoodReduction A O ↔
+        ∀ m : ℕ, 0 < m → IsUnit (m : O) → InertiaTrivialOn A w m) ∧
+      (HasGoodReduction A O ↔
+        {m : ℕ | 0 < m ∧ IsUnit (m : O) ∧ InertiaTrivialOn A w m}.Infinite)
+
+theorem perfect_of_sep (h : NOSSepDict.NeronOggShafarevichSep) : NeronOggShafarevichSepPerfect :=
+  fun K _ O _ _ Ks _ _ _ w hw A _ => h K O Ks w hw A
+
+/-- The uncited implication used at diophantine_zq.tex L557–559 and L752–753 (provenance (a)). -/
+def NOSForward : Prop :=
+  ∀ (K : Type) [Field K] (O : ValuationSubring K) [IsDiscreteValuationRing O]
+    (w : ValuationSubring (AlgebraicClosure K)),
+    w.comap (algebraMap K (AlgebraicClosure K)) = O →
+    ∀ (A : Grp (Over (Spec (.of K)))) [IsAbelianVariety A],
+      HasGoodReduction A O → ∀ m : ℕ, 0 < m → IsUnit (m : O) → InertiaTrivialOn A w m
+
+theorem nosForward_proof : NOSForward :=
+  fun _ _ O _ w hw A _ => NOSProof.inertiaTrivialOn_of_goodReduction O w hw A
+
+theorem nosForward_of_r7a (h : PkgI2.NeronOggShafarevich.{0}) : NOSForward :=
+  fun K _ O _ w hw A _ => (h K O w hw A).1.mp
+
+end NOSNarrow
