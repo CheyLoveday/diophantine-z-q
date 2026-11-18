@@ -61,11 +61,9 @@ instances, L2433–2436; L8269: nonvanishing ⇔ nontorsion).
   but `deg φ` needs `X₀(N)`): replaced by the existential `C > 0`, a consequence. This is WEAKER
   than the printed exact constant: fixed rescalings of the height are absorbed into `C`, but there
   is no exact numerical identity.
-* **The height normalisation.** Tau Ceti's canonical height is built from the height of the
-  `x`-coordinate (full-`x`), which is twice the half-`x` normalisation of the print (as reported by
-  the source check; the print's normalisation is not re-read here). The existential `C` absorbs the
-  factor `2`, but any use of the exact printed formula needs a proved normalisation port (a
-  positive constant), which is not written here.
+* **The height normalisation.** Tau Ceti's canonical height is the full-`x` height, twice the
+  common half-`x` convention; whether the printed `ĥ` is half-`x` is not settled by the text, and
+  the exact normalisation port is unwritten (the existential `C` absorbs a fixed rescaling).
 
 ## Classification
 
