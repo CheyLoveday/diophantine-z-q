@@ -49,6 +49,21 @@ lift and a tame generator of `G_{K_q}` satisfy this relation modulo the wild ine
 phenomenon, not available as stated at the characteristic-zero fibres. The duality input
 (`LocalizationDualityInput`, `DualityFromSelmer` in the quadratic candidates) is a named input; no
 finite-discrete duality is used.
+
+**Modelling constraint (the switch coordinates at a single derivative prime).** The `2 + 2`
+switch coordinates (finite and singular planes `F`, `S` of dimension two each, the shape used by
+`QuasiNonquadStep`, (5.5a) and `RelaxedImageFinite`) exist only when `q ≡ 1` in the coefficient
+field. At a single inert derivative prime `ℓ` the Frobenius of the completion is `Φ = J² = 1` and
+the residue norm is `q = ℓ²`, so `H¹ ≅ coker(Φ − 1) × ker(Φ − q)` (`UnrCoords.coordEquivUnr`).
+With `k = k(𝔭)` of characteristic zero, `q = ℓ² ≠ 1` kills the singular part
+(`singular_zero_of_q_ne_one`), and `two_plus_two_iff_q_eq_one` / `two_plus_two_iff_ell` show the
+`2 + 2` shape holds iff `(q : k) = 1`. Elliot's shape is reached in the inner limit, where the
+retained congruences give `ℓᵢ → −1` (tex L5033–5035). So the switch must be formalised on
+inner-limit / `Λ`-adic objects across the derivative primes, not on `V_𝔭` at one prime.
+Planned duality route: the named duality input of this chain can be discharged by the fibre duality
+five lemma `selmerDuality_of_global_local` (modulo the print `NekovarFibreGlobalDuality`, Nekovář
+5.6.3(ii) localised at `Λ/𝔭`) once it lands, provided the inner-limit objects are `k(𝔭)`-linear and
+lattice-topologised.
 -/
 
 noncomputable section
