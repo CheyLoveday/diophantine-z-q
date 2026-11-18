@@ -44,10 +44,12 @@ Readings that apply to every statement built on a shared kernel definition.
   extending the action on the positive ring by `DeRhamPrint.BdRT.awayTAct_comp` and matching the kernel's `bdrAct`
   by `DeRhamPrint.BdRT.bdREquivAwayT_intertwines`. A print defining B_dR as B_dR^+[1/t] is now matched by proved
   lemmas (TDict.bdREquivAwayT, BdRT.fontaineT_reading), so reading a statement through that definition no longer
-  makes it GLUE. The row that reaches `B_dR` is `deRhamVpAbVarDirect` (LEAF;
-  `DeRhamPrint.Direct.DeRhamVpAbVarDirect` over `DeRhamPrint.Direct.ddrF`); its rating is unchanged (its LEAF rests
-  on Berger 2004, outside the manuscript's bibliography; re-route pending). Fontaine, *Astérisque* 223, Exp. II is
-  outside the manuscript's bibliography and unread. Berger 2002 §1.2 is UNVERIFIED as a locator for this definition.
+  makes it GLUE. The row whose statement reaches `B_dR` is `scholzeH1AbVar` (`DeRhamScholze.HTMerge.ScholzeH1AbVar`,
+  over `DeRhamScholze.ddrFam`, `D_dR = (B_dR ⊗ W)^{G_F}`, and `DeRhamScholze.filD`, `Fil^j D_dR = D_dR ∩ (t^j B_dR^+
+  ⊗ W)`); its rating is unchanged. `deRhamVpAbVarDirect` is no longer a row: it is derived from `scholzeH1AbVar` and
+  `t10TateDuality` (`DeRhamScholze.HTMerge.deRhamVpAbVarDirect_of_scholzeH1Milne`, fork PR #106). Fontaine,
+  *Astérisque* 223, Exp. II is outside the manuscript's bibliography and unread. Berger 2002 §1.2 is UNVERIFIED as a
+  locator for this definition.
 
 ## How to help
 
