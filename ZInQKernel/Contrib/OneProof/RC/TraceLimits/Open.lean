@@ -10,7 +10,9 @@ periods uses compactness of the absolute Galois group (proved here).
 Lane RC24, round 3: adapted to the constituent model on coefficientwise reduced expansions.
 `consN` is now read on the reduced trace orbit `redTrace m expand ρ hst F` (tex 9639–9646,
 9716–9729). Openness uses that the kernel of coefficientwise reduction contains the open `𝔪Λ`.
-`galNOpen_of_consN_open` takes the budget argument of `GalNOpen`.
+`galNOpen_of_consN_open` takes the budget argument of `GalNOpen`. Round 4: the abstract module
+of the constituent model is `Mst` (no congruence hypothesis on the operators), and
+`galN_eq_N` identifies its `galN` with `consN` within the budget.
 -/
 
 noncomputable section
@@ -132,12 +134,12 @@ for the reduced operators and forms. -/
 theorem galNOpen_of_consN_open {T : TypeData L ε} {R : Finset ℕ → ZMod 2} {ap : ℕ → ℤ} {B : ℕ}
     (X : GaloisConstituentModel T R ap B chiType)
     (h : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → IsOpen (X.N U : Set GalQ)) :
-    letI := X.modMexp
-    GalNOpen T chiType X.tE X.FE B := by
-  letI := X.modMexp
-  change GalNOpen T chiType X.tE X.FE B
-  intro U hU _
-  rw [← X.consN_eq_galN U]
+    letI := X.modMst
+    GalNOpen T chiType X.tK X.FK B := by
+  letI := X.modMst
+  change GalNOpen T chiType X.tK X.FK B
+  intro U hU hUB
+  rw [X.galN_eq_N U hU hUB]
   exact (subgroup_isOpen_iff _).1 (h U hU)
 
 end ZInQ.Manuscript.RC.TraceLimits

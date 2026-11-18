@@ -16,8 +16,6 @@ variable {T : TypeData L ε} {R : Finset ℕ → ZMod 2} {ap : ℕ → ℤ} {B :
 variable {chiType : GalQ →* Multiplicative L}
 variable {X : GaloisConstituentModel T R ap B chiType}
 
-attribute [local instance] GaloisConstituentModel.modMexp
-
 /-- The manuscript's local structure at an added prime, with the comparison
 to the Fourier operator on the same forms. See `LocalBlocks.newLine` for
 the exact use of the Casselman and Carayol prints (tex 9799–9864). -/
@@ -31,8 +29,8 @@ variable (X) in
 subset of (U) (tex 9919–9921). -/
 theorem representative_trace {U V : Finset ℕ} {r : ℕ} {x h n : GalQ}
     (hVU : V ⊆ U) (hn : n ∈ X.N U) (hr : X.frob r = h * x * h⁻¹ * n) :
-    X.tE (X.frob r) (X.FE V) = X.tE x (X.FE V) := by
-  rw [hr, X.level V _ n (X.N_anti U V hVU hn), X.t_class]
+    X.redE (X.tΛ (X.frob r) (X.F V)) = X.redE (X.tΛ x (X.F V)) := by
+  rw [hr, X.level_red V _ n (X.N_anti U V hVU hn), X.tΛ_conj]
 
 variable (X) in
 /-- The same representative gives the retained quadratic labels (tex
@@ -81,9 +79,10 @@ theorem o12_at_one {A : FourierData X} (S : ThetaData A) [CharZero X.K]
       bitChar p τ = Multiplicative.ofAdd 1 ∧
       chiType φ = Multiplicative.ofAdd (T.typ p) ∧
       (∀ s ∈ U, s ≠ p → bitChar s φ = Multiplicative.ofAdd (legBit p s)) ∧
-      (Cp (ap p) (-κ0) : ZMod 2) * X.readE (U.erase p) (X.tE (g * τ * φ) (X.FE (U.erase p))) -
-      (Cp (ap p) κ0 : ZMod 2) * X.readE (U.erase p) (X.tE (g * φ) (X.FE (U.erase p))) =
-      X.readE U (X.tE (g * τ) (X.FE U)) - X.readE U (X.tE g (X.FE U)) := by
+      (Cp (ap p) (-κ0) : ZMod 2) *
+          X.read (U.erase p) (X.redE (X.tΛ (g * τ * φ) (X.F (U.erase p)))) -
+      (Cp (ap p) κ0 : ZMod 2) * X.read (U.erase p) (X.redE (X.tΛ (g * φ) (X.F (U.erase p)))) =
+      X.read U (X.redE (X.tΛ (g * τ) (X.F U))) - X.read U (X.redE (X.tΛ g (X.F U))) := by
   classical
   let hp := hU p hpU
   let : Fact p.Prime := ⟨hp.1⟩
@@ -106,11 +105,12 @@ theorem o12_at_one {A : FourierData X} (S : ThetaData A) [CharZero X.K]
   obtain ⟨hκ, hc₀⟩ := S.omission_at_p hpU hU hr₀ hr₀U hB
   obtain ⟨-, hc₁⟩ := S.omission_at_p hpU hU hr₁ hr₁U hB
   change A.decode (A.orbitCoeff U (X.frob r₁) ⟨p, hp.1.ne_zero⟩) =
-    (Cp (ap p) (S.omissionSign p V r₁) : ZMod 2) * X.readE V (X.tE (X.frob r₁) (X.FE V)) at hc₁
+    (Cp (ap p) (S.omissionSign p V r₁) : ZMod 2) *
+      X.read V (X.redE (X.tΛ (X.frob r₁) (X.F V))) at hc₁
   rw [hsign] at hc₁
   have eqCoeff {r : ℕ} {x h n : GalQ} (hn : n ∈ X.N U) (e : X.frob r = h * x * h⁻¹ * n) :
       A.orbitCoeff U (X.frob r) ⟨p, hp.1.ne_zero⟩ = A.orbitCoeff U x ⟨p, hp.1.ne_zero⟩ :=
-    congrArg (fun v : X.Mexp => v.val (A.index ⟨p, hp.1.ne_zero⟩))
+    congrArg (fun v : X.C → X.O ⧸ X.m => v (A.index ⟨p, hp.1.ne_zero⟩))
       (representative_trace X (Finset.Subset.refl U) hn e)
   rw [eqCoeff hn₀ e₀, representative_trace X (Finset.erase_subset p U) hn₀ e₀] at hc₀
   rw [eqCoeff hn₁ e₁, representative_trace X (Finset.erase_subset p U) hn₁ e₁] at hc₁

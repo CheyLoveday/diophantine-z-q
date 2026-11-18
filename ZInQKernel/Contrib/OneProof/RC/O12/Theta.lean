@@ -17,8 +17,6 @@ variable {T : TypeData L ε} {R : Finset ℕ → ZMod 2} {ap : ℕ → ℤ} {B :
 variable {chiType : GalQ →* Multiplicative L}
 variable {X : GaloisConstituentModel T R ap B chiType}
 
-attribute [local instance] GaloisConstituentModel.modMexp
-
 /-- The multiplier (2^{-n_U-1}) of the undivided coefficient in (K),
 where (n_U = δ + |U|). Integer exponents allow a negative source depth. -/
 def scale (K : Type) [Field K] (δ : ℤ) (U : Finset ℕ) : K :=
@@ -128,7 +126,7 @@ include S in
 added vertex (tex 9670–9704). -/
 theorem coefficientOne {U : Finset ℕ} {q : ℕ} (hU : ∀ s ∈ U, T.Good s)
     (hq : T.Good q) (hqU : q ∉ U) (hB : (insert q U).card ≤ B) :
-    R (insert q U) = X.readE U (X.tE (X.frob q) (X.FE U)) := by
+    R (insert q U) = X.read U (X.redE (X.tΛ (X.frob q) (X.F U))) := by
   classical
   have hb : U.card + 1 ≤ B := by simpa only [Finset.card_insert_of_notMem hqU] using hB
   obtain ⟨b, hbK, hb2⟩ := S.fresh_normalized hU hq hqU hb
@@ -176,7 +174,8 @@ theorem omission_at_p [CharZero X.K] {U : Finset ℕ} {p r : ℕ} (hpU : p ∈ U
     let κ := S.omissionSign p (U.erase p) r
     (κ = 1 ∨ κ = -1) ∧
       A.decode (A.orbitCoeff U (X.frob r) ⟨p, (hU p hpU).1.ne_zero⟩) =
-        (Cp (ap p) κ : ZMod 2) * X.readE (U.erase p) (X.tE (X.frob r) (X.FE (U.erase p))) := by
+        (Cp (ap p) κ : ZMod 2) *
+          X.read (U.erase p) (X.redE (X.tΛ (X.frob r) (X.F (U.erase p)))) := by
   classical
   let hp := hU p hpU
   let : Fact p.Prime := ⟨hp.1⟩

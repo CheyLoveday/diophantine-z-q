@@ -10,9 +10,14 @@ Tex 9638–9750. This constructor keeps the lattice fixed.
 Lane RC24, round 3: adapted to the constituent model on coefficientwise reduced expansions
 (tex 9639–9646, 9716–9717, 9728–9729). Its `det_orbit` is now the coefficientwise identity, so
 `detOrbit_coefficient` discharges it directly and the lattice comparison `DetectsDetOrbit` is no
-longer used by the constructor. The congruence fields `cong_t`, `cong_d` are proved from the good
-Hecke formula, a coefficientwise diamond hypothesis, continuity and density
-(`congruence_of_hecke`).
+longer used by the constructor.
+
+Lane RC24, round 4: the constituent model no longer has congruence fields. The text proves the
+integrality of the diamond translates with correction coefficients (tex 9655–9660), evaluates
+its identities in `Λ` and then reduces (tex 9898–9900); it does not assert that the diamond
+operators preserve coefficientwise congruences on `Λ`. The round-3 lemma `congruence_of_hecke`
+and its hypothesis `hdiam`, which assumed such a preservation, are removed. The constructor now
+needs only the coefficientwise identities.
 -/
 
 noncomputable section
@@ -110,56 +115,6 @@ def DetectsDetOrbit (F : Finset ℕ → Λ)
     (∀ n : ℕ, n ≠ 0 → (D U).coeff n x ∈ m) →
       (x : I → K) ∈ (m • ⊤ : Submodule O Λ).map Λ.subtype
 
-/-- **The scalar trace and determinant operators preserve coefficientwise congruences** (tex
-9658–9668: good Hecke operations act on coefficients by `(T_q f)[n] = f[qn] + q(⟨q⟩f)[n/q]`, and
-the scalar operators are their limits by Chebotarev and continuity). If every positive
-coefficient of `v` lies in `𝔪`, so does every positive coefficient of `t(g) v` and `d(g) v`, for
-every `g ∈ G_ℚ`. The inputs are the Hecke formula, the same property for the good diamond
-operators, continuity, and closedness of `𝔪`. Kind: PROVED (lane RC24, round 3; the density
-argument of `detOrbit_coefficient`). -/
-theorem congruence_of_hecke [TopologicalSpace K] [IsTopologicalRing K] [TopologicalSpace O]
-    (hfrob : ∀ q, T.Good q → IsFrobAt (frob q) q)
-    (hcont : ContinuousOperators ρ Λ) (hunr : UnramifiedConstituents T avoid ρ)
-    (ops : GoodOperators T avoid frob ρ Λ)
-    (hst : ∀ g, ∀ v ∈ Λ, tV ρ g v ∈ Λ) (hsd : ∀ g, ∀ v ∈ Λ, dV ρ g v ∈ Λ)
-    (coeff : ℕ → Λ →ₗ[O] O)
-    (hhecke : ∀ q, T.Good q → q ∉ avoid → HeckeFourier coeff (ops.hecke q) (ops.diamond q) q)
-    (hdiam : ∀ q, T.Good q → q ∉ avoid → ∀ v : Λ, (∀ n, n ≠ 0 → coeff n v ∈ m) →
-      ∀ n, n ≠ 0 → coeff n (ops.diamond q v) ∈ m)
-    (hm : IsClosed (m : Set O)) (hcoeff : ∀ n, Continuous (coeff n))
-    (v : Λ) (hv : ∀ n, n ≠ 0 → coeff n v ∈ m) (g : GalQ) :
-    (∀ n, n ≠ 0 → coeff n ⟨tV ρ g v, hst g _ v.2⟩ ∈ m) ∧
-      (∀ n, n ≠ 0 → coeff n ⟨dV ρ g v, hsd g _ v.2⟩ ∈ m) := by
-  constructor
-  · intro n hn
-    refine (dense_frobeniusTests T avoid).induction
-      (P := fun g => coeff n ⟨tV ρ g v, hst g _ v.2⟩ ∈ m) ?_
-      (hm.preimage ((hcoeff n).comp ((hcont.trace v).subtype_mk _))) g
-    rintro h ⟨q, hq, hqa, hfq⟩
-    have et : (⟨tV ρ h v, hst h _ v.2⟩ : Λ) = ops.hecke q v := by
-      apply Subtype.ext
-      change tV ρ h v = _
-      rw [(operators_eq_at_frobenius T hunr hq hqa hfq (hfrob q hq)).1, ops.trace_eq q hq hqa]
-    show coeff n ⟨tV ρ h v, hst h _ v.2⟩ ∈ m
-    rw [et, hhecke q hq hqa n v]
-    refine m.add_mem (hv _ (Nat.mul_ne_zero hq.1.ne_zero hn)) ?_
-    split_ifs with hd
-    · refine m.mul_mem_left _ (hdiam q hq hqa v hv _ ?_)
-      exact (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero hn) hd) hq.1.pos).ne'
-    · exact m.zero_mem
-  · intro n hn
-    refine (dense_frobeniusTests T avoid).induction
-      (P := fun g => coeff n ⟨dV ρ g v, hsd g _ v.2⟩ ∈ m) ?_
-      (hm.preimage ((hcoeff n).comp ((hcont.det v).subtype_mk _))) g
-    rintro h ⟨q, hq, hqa, hfq⟩
-    have ed : (⟨dV ρ h v, hsd h _ v.2⟩ : Λ) = (q : O) • ops.diamond q v := by
-      apply Subtype.ext
-      change dV ρ h v = _
-      rw [(operators_eq_at_frobenius T hunr hq hqa hfq (hfrob q hq)).2, ops.det_eq q hq hqa]
-    show coeff n ⟨dV ρ h v, hsd h _ v.2⟩ ∈ m
-    rw [ed, map_smul, smul_eq_mul]
-    exact m.mul_mem_left _ (hdiam q hq hqa v hv n hn)
-
 variable [TopologicalSpace K] [IsTopologicalRing K] [T2Space K]
 variable [TopologicalSpace O] [CompactSpace O] [IsNoetherianRing O]
 variable [ContinuousSMul O K] [Finite (O ⧸ m)]
@@ -171,7 +126,7 @@ existing `Inputs` can be supplied directly to `GaloisConstituentModel.toGaloisTr
 Lane RC24, round 3: the model is on coefficientwise reduced expansions at the positive Fourier
 indices `C = {n // n ≠ 0}`, with expansion `expand v n = coeff n v` (the Fourier coefficients of
 `D U` are this family for every `U`, `hD`). Its `det_orbit` is `detOrbit_coefficient`, with no
-lattice comparison. Its congruence fields come from `congruence_of_hecke`. `two_fresh` is the
+lattice comparison. Round 4: no congruence hypothesis on the operators. `two_fresh` is the
 reduced-expansion statement of tex 9741–9745 within the budget, and `read` is a functional on
 reduced expansions. -/
 def buildConstituentModel (R : Finset ℕ → ZMod 2) (ap : ℕ → ℤ) (B : ℕ)
@@ -187,8 +142,6 @@ def buildConstituentModel (R : Finset ℕ → ZMod 2) (ap : ℕ → ℤ) (B : �
     (hspec : ∀ (v : Λ) (n : {n : ℕ // n ≠ 0}), algebraMap O K (coeff n v) = coefK v n)
     (D : ∀ U, DeterminantFourierData ops m (F U)) (hD : ∀ U, (D U).coeff = coeff)
     (hcoeff : ∀ n, Continuous (coeff n))
-    (hdiam : ∀ q, T.Good q → q ∉ avoid → ∀ v : Λ, (∀ n, n ≠ 0 → coeff n v ∈ m) →
-      ∀ n, n ≠ 0 → coeff n (ops.diamond q v) ∈ m)
     (read : Finset ℕ → ({n : ℕ // n ≠ 0} → O ⧸ m) →+ ZMod 2)
     (h2fresh : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∀ g h,
       ∀ n : ℕ, n ≠ 0 → coeff n ⟨tV ρ g (tV ρ h (F U)),
@@ -211,8 +164,6 @@ def buildConstituentModel (R : Finset ℕ → ZMod 2) (ap : ℕ → ℤ) (B : �
       funext n
       rw [redExpOf_apply]
       exact Ideal.Quotient.eq_zero_iff_mem.mpr (h n.1 n.2)
-  have hcong := congruence_of_hecke (m := m) hfrob hcont hunr ops hs.1 hs.2 coeff
-    (fun q hq hqa => hD ∅ ▸ (D ∅).hecke_eq q hq hqa) hdiam hm hcoeff
   have ho U := consN_isOpen (F := F) (expand := expand) hchi (residual_isOpen Λ hΛ m) hs.1 hcont U
   exact {
     I := I
@@ -228,8 +179,6 @@ def buildConstituentModel (R : Finset ℕ → ZMod 2) (ap : ℕ → ℤ) (B : �
     coefK := coefK
     expand := expand
     expand_spec := hspec
-    cong_t := fun g v hv => (hred _).mpr ((hcong v ((hred v).mp hv) g).1)
-    cong_d := fun g v hv => (hred _).mpr ((hcong v ((hred v).mp hv) g).2)
     F := F
     read := read
     frob := frob
@@ -246,5 +195,6 @@ def buildConstituentModel (R : Finset ℕ → ZMod 2) (ap : ℕ → ℤ) (B : �
       consN_kummer_at_good hU htyp hunr (ho U) hlevel hS2 hS) U
     finiteIndex := fun U _ _ => consN_finiteIndex U (ho U)
     chebotarev := fun U hU _ => consN_chebotarev T htyp hfrob hunr U hU (ho U) }
+
 
 end ZInQ.Manuscript.RC.TraceLimits

@@ -16,8 +16,6 @@ variable {T : TypeData L ε} {R : Finset ℕ → ZMod 2} {ap : ℕ → ℤ} {B :
 variable {chiType : GalQ →* Multiplicative L}
 variable (X : GaloisConstituentModel T R ap B chiType)
 
-attribute [local instance] GaloisConstituentModel.modMexp
-
 abbrev PosIndex := {n : ℕ // n ≠ 0}
 
 /-- The positive Fourier coordinates and coefficient-one reading of the model.
@@ -75,19 +73,19 @@ theorem trace_coeff_of_not_dvd (H : A.FormwiseHecke) {U : Finset ℕ} {q n : ℕ
 
 /-- The reduced coefficient of the trace orbit. -/
 def orbitCoeff (U : Finset ℕ) (g : GalQ) (n : PosIndex) : X.O ⧸ X.m :=
-  (X.tE g (X.FE U)).val (A.index n)
+  X.redE (X.tΛ g (X.F U)) (A.index n)
 
 /-- The positive coefficient of the reduced trace orbit is the residue of
 the corresponding integral coefficient (tex 9638–9646). -/
 theorem orbitCoeff_eq (U : Finset ℕ) (g : GalQ) (n : PosIndex) :
     A.orbitCoeff U g n = Ideal.Quotient.mk X.m (A.coeff n (X.tΛ g (X.F U))) := by
-  unfold orbitCoeff GaloisConstituentModel.FE
-  rw [X.tE_redM, X.redM_coe, redExpOf_apply, A.expand_coeff]
+  unfold orbitCoeff
+  rw [redExpOf_apply, A.expand_coeff]
 
 /-- Apply the manuscript's coefficient-one reading to the reduced orbit. -/
 theorem read_orbit (U : Finset ℕ) (g : GalQ) :
-    X.readE U (X.tE g (X.FE U)) = A.decode (A.orbitCoeff U g ⟨1, one_ne_zero⟩) := by
-  rw [A.orbitCoeff_eq, GaloisConstituentModel.FE, X.tE_redM, X.readE_redM]
+    X.read U (X.redE (X.tΛ g (X.F U))) = A.decode (A.orbitCoeff U g ⟨1, one_ne_zero⟩) := by
+  rw [A.orbitCoeff_eq]
   exact A.read_at_one U _
 
 /-- The Fourier comparison needed for the actual `U_p^{(2)}`. The matrix
