@@ -23,8 +23,16 @@ PROVED from smaller inputs stated over actual primes and the data `W`:
 * the realization relation is the genuine prime realization (`Realize.lean`): `D = ∏ q^*` over
   distinct good `K`-split primes with the prescribed classes and residue bits;
 * the odd stage table at stage `θ` is the stage symbol (`Symbols.lean`) of the genuine reading
-  `Rodd W θ U = [D admissible at θ ∧ v₂ a_θ(D) = δ_o + |U|]`, `D = ∏_{q ∈ U} q` (Definition
-  `ex:sec7-symbol`, the coefficient symbol of the data at the positive Fourier index);
+  `Rodd W D θ U = [D in the intrinsic odd filter at θ ∧ v₂ a_θ(D) = δ_o + |U|]`, `D = ∏_{q ∈ U} q`
+  (Definition `ex:sec7-symbol`, the coefficient symbol of the intrinsic odd source at the positive
+  Fourier index). The filter is the odd source's OWN filter (`LabelData.oddAdmissible`), not the
+  stage support `W.admissible` of the data, which also carries the later prime exclusions of the
+  enlarged support (the primes of `k`): "Enlarging `S_lab` records labels and prime exclusions; it
+  does not change the coefficient source" (tex 2028–2029), "The intrinsic odd symbol continues to
+  omit the primes of `k`" (2603, 10282), "They do not add conditions to that odd symbol"
+  (10596–10597). Round-2 correction: reading the odd source through `W.admissible` vetoes the fresh
+  prime of `k`, a good prime of the odd types, in every set, which together with App F's readings
+  and a nonempty witness is contradictory;
 * the even symbol is the restriction to `K`-split labels of the symbol of the even reading `Rev`
   (tex 2023–2024: "Additional fixed splitting conditions restrict us to their actual realizable
   types").
@@ -42,9 +50,10 @@ keep its conjuncts 7 and 9) cannot be discharged faithfully on the even side, wh
 follows from the rules of the full even symbol (`coefficientRules_comp`).
 
 The inputs of `addressPackageStaged_of_genuine` (kinds and tex lines in their docstrings):
-`LabelData` (definition), `FreshPrime` (ELLIOT), `OddReadings` (ELLIOT, App F), `OddWitness`
-(ELLIOT), `OddFilter`, `PreparedFilter`, `EvenFilter` (definition), `EvenReadings` (ELLIOT, App F),
-`KSplitSeed` (ELLIOT, App G), `EvenReading` (ELLIOT/PRINT, Waldspurger).
+`LabelData` (definition, including the intrinsic odd filter), `FreshPrime` (ELLIOT), `OddReadings`
+(ELLIOT, App F), `OddWitness` (ELLIOT: the fixed-graph unit witness of the stabilized tables),
+`OddFilter`, `PreparedFilter`, `EvenFilter` (definition), `EvenReadings` (ELLIOT, App F),
+`KSplitSeed` (ELLIOT, App G), `EvenReading` (ELLIOT, Waldspurger comparison).
 -/
 
 noncomputable section
@@ -61,7 +70,11 @@ open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CoefficientDictionary Fil
 eight), the intrinsic odd modulus `m₁ ∣ m` (the old odd support), the even modulus `m₂ ∣ m` (the
 support of the transported source, containing `4|k|`), the moving theta prime `ℓ₀ θ` of stage `θ`
 (prime to `m`: "Choose every later moving theta prime `ℓ₀` away from `k`", tex 2602–2603), and the
-bad primes of `E_ℓ` and `E^{(k)}` inside the respective supports. -/
+bad primes of `E_ℓ` and `E^{(k)}` inside the respective supports, and the intrinsic odd filter
+(`oddAdmissible`) with its link to the stage support of the data (`oddAdmissible_iff`). A genuine
+discharge takes `m₁` to be the modulus of the whole intrinsic odd coefficient support (with `h_*`
+and the sieve primes) and `m₂` that of the transported even source, as the types, `kummer` and the
+filters require (tex 2016–2025, 9471–9478). -/
 structure LabelData {ℓ : ℕ} (W : WData ℓ) where
   /-- the common label modulus -/
   m : ℕ
@@ -88,6 +101,19 @@ structure LabelData {ℓ : ℕ} (W : WData ℓ) where
   ℓ₀ : ℕ → ℕ
   ℓ₀_prime : ∀ θ, (ℓ₀ θ).Prime
   ℓ₀_cop : ∀ θ, Nat.Coprime (ℓ₀ θ) m
+  /-- **the intrinsic odd filter at stage `θ`** (definition; tex 2016–2029, 9471–9483, 2600–2603,
+  10282–10286, 10589–10597): the filter of the intrinsic odd coefficient source itself — its
+  prepared filter at its own coefficient support (before the primes of `k` and the later
+  stationary label tests enlarge the support), cut by the moving condition `(D/ℓ₀) = 1`. "Later
+  stationary prime-selection tests may enrich the common label alphabet without resieving the
+  intrinsic odd source" (9479–9481). -/
+  oddAdmissible : ℕ → ℤ → Prop
+  /-- **the later exclusions only remove primes** (definition; tex 2028–2029: "Enlarging `S_lab`
+  records labels and prime exclusions; it does not change the coefficient source"; 9479–9483,
+  10594–10597): on indices prime to the enlarged support `W.S` (in particular to the primes of
+  `k`), the intrinsic odd filter and the stage support of the data agree -/
+  oddAdmissible_iff : ∀ θ (d : ℤ), (∀ p ∈ W.S, p.Prime → ¬ (p : ℤ) ∣ d) →
+    (oddAdmissible θ d ↔ W.admissible θ d)
 
 namespace LabelData
 
@@ -151,12 +177,14 @@ end LabelData
 /-! ## The genuine readings -/
 
 open Classical in
-/-- **The odd reading of the data at stage `θ`** (Definition `ex:sec7-symbol`, tex 2068–2086,
-2045–2046: the coefficient symbol `[v₂ a(D) = δ + ω(D)]` on the filter at the positive Fourier index
-`D = ∏ p_v`; App F 9675–9678): one exactly when `D = ∏_{q ∈ U} q` is admissible at `θ` and
-`v₂ a_{M_θ}(D) = δ_o + |U|`. -/
-def Rodd {ℓ : ℕ} (W : WData ℓ) (θ : ℕ) (U : Finset ℕ) : ZMod 2 :=
-  if W.admissible θ (∏ q ∈ U, (q : ℤ)) ∧
+/-- **The intrinsic odd reading at stage `θ`** (Definition `ex:sec7-symbol`, tex 2068–2086,
+2045–2046: the coefficient symbol `[v₂ a(D) = δ + ω(D)]` on the source's filter at the positive
+Fourier index `D = ∏ p_v`; App F 9675–9678): one exactly when `D = ∏_{q ∈ U} q` lies in the
+intrinsic odd filter `D.oddAdmissible θ` and `v₂ a_{M_θ}(D) = δ_o + |U|`. The filter is the odd
+source's own, not the stage support `W.admissible` (tex 2028–2029, 2603, 10282, 10596–10597; see
+the module docstring). -/
+def Rodd {ℓ : ℕ} (W : WData ℓ) (D : LabelData W) (θ : ℕ) (U : Finset ℕ) : ZMod 2 :=
+  if D.oddAdmissible θ (∏ q ∈ U, (q : ℤ)) ∧
       vZ (W.aθ θ (∏ q ∈ U, (q : ℤ))) = (((U.card : ℤ) + W.δo : ℤ) : WithTop ℤ) then 1 else 0
 
 /-- `a_p(E_ℓ)`, Mathlib's Dirichlet coefficient of `L(E_ℓ, s)` at `p`. -/
@@ -183,20 +211,27 @@ the fixed-`U` factorization, (O.12) at coefficient one with the product-label ru
 isolation, for the genuine stage types and the genuine odd reading. -/
 def OddReadings : Prop :=
   ∀ Wc : ℕ, ∀ᶠ θ in (W.stages : Filter ℕ),
-    FixedUFactorization (D.T₁ θ) (Rodd W θ) (Wc + 1) ∧
-      O12Reading (D.T₁ θ) (Rodd W θ) (apo ℓ) (Wc + 1) ∧ PrimaryReading (D.T₁ θ) (Rodd W θ) (Wc + 1)
+    FixedUFactorization (D.T₁ θ) (Rodd W D θ) (Wc + 1) ∧
+      O12Reading (D.T₁ θ) (Rodd W D θ) (apo ℓ) (Wc + 1) ∧ PrimaryReading (D.T₁ θ) (Rodd W D θ) (Wc + 1)
 
-/-- **The bounded-weight witness** (ELLIOT; tex 2588–2593, 10268–10270, 10501–10505, 10547): a
-nonempty set of good primes whose odd reading is one on a set of stages of the ultrafilter. -/
+/-- **The bounded-weight witness in the stabilized tables** (ELLIOT; tex 2588–2593, 10188–10199,
+10268–10270, 10501–10505, 10541–10547: "The bounded-weight witness remains a witness in these
+tables"): a nonempty compatible typed graph over the intrinsic odd alphabet whose stage symbol is
+one on a set of stages of the ultrafilter. Round-2 correction: a fixed set of primes reading one
+on a set of stages would be stronger than the text, which supplies a bounded-weight SEQUENCE of
+visible indices (10190–10192) and fixes only its typed graph by stabilization. -/
 def OddWitness : Prop :=
-  ∃ U : Finset ℕ, U.Nonempty ∧ (∀ q ∈ U, q.Prime ∧ Nat.Coprime q D.m₁) ∧
-    ∀ᶠ θ in (W.stages : Filter ℕ), (∀ q ∈ U, q ≠ D.ℓ₀ θ) ∧ Rodd W θ U = 1
+  ∃ Γ : Config D.L₁, Γ.Compatible D.ε₁ ∧ Γ.V.Nonempty ∧
+    ∀ᶠ θ in (W.stages : Filter ℕ), stageSymbol (D.T₁ θ) (Rodd W D θ) Γ = 1
 
-/-- **The odd filter contains one** (definition; tex 2042–2044, 10236–10240, 10589–10591: "its
-fixed unit squareclasses, positive sign, and moving condition `(D/ℓ₀) = 1` are those of `1`"). -/
+/-- **The intrinsic odd filter contains one** (definition; tex 2042–2044, 10236–10240,
+10589–10592: "The intrinsic odd filter contains `1`: its fixed unit squareclasses, positive sign,
+and moving condition `(D/ℓ₀) = 1` are those of `1`"): its indices are positive units at `m₁ ℓ₀`
+in the squareclass of one at `m₁` and at `ℓ₀`. -/
 def OddFilter : Prop :=
-  ∀ θ : ℕ, ∀ D' : ℤ, W.admissible θ D' →
-    0 < D' ∧ IsSquare (D' : ZMod D.m₁) ∧ IsSquare (D' : ZMod (D.ℓ₀ θ))
+  ∀ θ : ℕ, ∀ D' : ℤ, D.oddAdmissible θ D' →
+    0 < D' ∧ IsSquare (D' : ZMod D.m₁) ∧ IsSquare (D' : ZMod (D.ℓ₀ θ)) ∧
+      Nat.Coprime D'.natAbs (D.m₁ * D.ℓ₀ θ)
 
 /-- **The prepared filter is the squareclass of one** (definition; tex 2404–2410, 2686,
 10795–10804: "All fixed local types are retained"). -/
@@ -220,16 +255,21 @@ def EvenFilter : Prop :=
 /-- **The `K`-split seed** (ELLIOT; Lemma `ex:sec7-ksplit-seed`, tex 2628–2654, App G
 10319–10481): if the even reading vanishes on every nonempty set of good `K`-split primes, then the
 App G congruence `a_p(E^{(k)}) ≡ p + 1 (mod 8)` holds at the good `K`-split primes outside a finite
-support (lane RC3's form; RC3 proves its contradiction). -/
+support (lane RC3's form; RC3 proves its contradiction). Given `Adm ℓ`, odd squarefree `k` and
+`FreshPrime`, this clause is equivalent to the existence of a nonempty `K`-split unit of `Rev`
+(`exists_unit_of_kSplitSeed`, `kSplitSeed_of_unit`); the seed lemma remains ELLIOT. -/
 def KSplitSeed : Prop :=
   ∃ Sev : Finset ℕ,
     (∀ U : Finset ℕ, U.Nonempty →
       (∀ q ∈ U, q.Prime ∧ Nat.Coprime q D.m₂ ∧ jacobiSym W.kfin q = 1) → Rev U = 0) →
     KSplit.AppGCongruenceB3 ℓ W.kfin Sev
 
-/-- **The even reading** (ELLIOT/PRINT: Waldspurger comparison for the transported source,
-(E.11), (F.1); tex 8136–8146, 10079–10094, 10288–10322, 10854–10855): at a unit of the even reading
-on good `K`-split primes, `L_*(Dk) ≠ 0` and `v₂ L_*(Dk) ≤ 2ω(D) + C_{e,final}`, `D = ∏ q`. -/
+/-- **The even reading** (ELLIOT: the transported source's uniform central-value upper bound,
+derived in the manuscript with the Waldspurger comparison (E.11), (F.1); tex 8136–8146,
+10079–10094, 10288–10322, 10854–10855; not a separately smaller GLUE input): at a unit of the even
+reading on good `K`-split primes, `L_*(Dk) ≠ 0` and `v₂ L_*(Dk) ≤ 2ω(D) + C_{e,final}`,
+`D = ∏ q`. This is (F.1)'s conclusion for the chosen reading `Rev`; the leaf ties `Rev` to the
+transported source only through the even models, the even filter and this clause. -/
 def EvenReading : Prop :=
   ∃ CeFinal : ℤ, ∀ U : Finset ℕ,
     (∀ q ∈ U, q.Prime ∧ Nat.Coprime q D.m₂ ∧ jacobiSym W.kfin q = 1) → Rev U = 1 →
@@ -273,10 +313,11 @@ theorem symb_eq_one {L : Type*} [AddCommGroup L] {ε : L →+ ZMod 2} {T : TypeD
   · exact ⟨hr.choose, hr.choose_spec, h⟩
   · exact absurd h (by decide)
 
-/-- A value `1` of the odd reading: admissibility and the exact valuation (PROVED; definition of
-`Rodd`). -/
-theorem rodd_eq_one {ℓ : ℕ} {W : WData ℓ} {θ : ℕ} {U : Finset ℕ} (h : Rodd W θ U = 1) :
-    W.admissible θ (∏ q ∈ U, (q : ℤ)) ∧
+/-- A value `1` of the odd reading: the intrinsic odd filter and the exact valuation (PROVED;
+definition of `Rodd`). -/
+theorem rodd_eq_one {ℓ : ℕ} {W : WData ℓ} {D : LabelData W} {θ : ℕ} {U : Finset ℕ}
+    (h : Rodd W D θ U = 1) :
+    D.oddAdmissible θ (∏ q ∈ U, (q : ℤ)) ∧
       vZ (W.aθ θ (∏ q ∈ U, (q : ℤ))) = (((U.card : ℤ) + W.δo : ℤ) : WithTop ℤ) := by
   classical
   unfold Rodd at h
@@ -413,7 +454,7 @@ theorem addressPackageStaged_of_genuine {ℓ : ℕ} (W : WData ℓ) (D : LabelDa
   refine ⟨hℓ, hk, hksf, ⟨q₀, hq₀, hq₀k, fun hdvd => hq₀m₁ (D.bad₁ q₀ hq₀ ?_)⟩, CeFinal,
     D.L, D.L₁, D.L₂, inferInstance, hfin, inferInstance, inferInstance, inferInstance,
     inferInstance, inferInstance, D.ε, D.ε₁, D.ε₂, D.π₁, D.π₂,
-    fun θ => stageSymbol (D.T₁ θ) (Rodd W θ), fun Γ => symb D.T₂ Rev (Γ.mapType D.ι₂),
+    fun θ => stageSymbol (D.T₁ θ) (Rodd W D θ), fun Γ => symb D.T₂ Rev (Γ.mapType D.ι₂),
     D.Realizes, ?h6, ?h7a, ?h7b, ?h7c, ?h7d, ?h8, ?h9, ?h11, ?h12, ?h13, ?h14, ?h15, ?h16, ?h17,
     ?h18⟩
   · -- q₀ ∣ 2ℓ ⇒ q₀ ∣ 6ℓ
@@ -445,42 +486,18 @@ theorem addressPackageStaged_of_genuine {ℓ : ℕ} (W : WData ℓ) (D : LabelDa
   case h8 =>
     intro Wc
     filter_upwards [hodd Wc] with θ hθ
-    exact rulesUpTo_stageSymbol (D.T₁ θ) (Rodd W θ) (apo ℓ) Wc hθ.1 hθ.2.1 (D.apEven₁ θ) hθ.2.2
+    exact rulesUpTo_stageSymbol (D.T₁ θ) (Rodd W D θ) (apo ℓ) Wc hθ.1 hθ.2.1 (D.apEven₁ θ) hθ.2.2
   case h9 =>
     exact coefficientRules_comp (L' := D.L₂) D.ι₂
       (coefficientRules_symb D.T₂ Rev (apk W) hev.1 hev.2.1 D.apEven₂ hev.2.2)
-  case h11 =>
-    obtain ⟨U, hUne, hUgood, hUev⟩ := hwit
-    obtain ⟨β, hβ⟩ := label_type_stabilizes W.stages
-      (fun θ => fun q : U => legBit ((q : ℕ) : ℤ) (D.ℓ₀ θ))
-    let Γ₁ : Config D.L₁ :=
-      ⟨U, fun q => (sqClassOf D.m₁ q, if h : q ∈ U then β ⟨q, h⟩ else 0), fun v w => legBit v w⟩
-    have hreal : ∀ θ, (∀ q ∈ U, q ≠ D.ℓ₀ θ) →
-        (fun q : U => legBit ((q : ℕ) : ℤ) (D.ℓ₀ θ)) = β → IsReal (D.T₁ θ) Γ₁ id := by
-      intro θ hne hb
-      refine ⟨Set.injOn_id _, fun v hv => ⟨⟨(hUgood v hv).1, ?_⟩, ?_⟩, fun v _ w _ _ => rfl⟩
-      · rw [D.T₁_m]
-        exact Nat.Coprime.mul_right (hUgood v hv).2
-          ((Nat.coprime_primes (hUgood v hv).1 (D.ℓ₀_prime θ)).mpr (hne v hv))
-      · have hbv := congrFun hb ⟨v, hv⟩
-        simp only [Γ₁, id, D.T₁_typ, dite_eq_left hv]
-        exact Prod.ext rfl hbv
-    have hevt := (hUev.and hβ).and (hodd U.card)
-    obtain ⟨θ₀, hθ₀⟩ := hevt.exists
-    have hcomp : Γ₁.Compatible D.ε₁ :=
-      compatible_of_real (D.T₁ θ₀) (hreal θ₀ hθ₀.1.1.1 hθ₀.1.2)
-    refine ⟨Γ₁, hcomp, hUne, ?_⟩
-    filter_upwards [hevt] with θ hθ
-    rw [stageSymbol_eq_reading (D.T₁ θ) (Rodd W θ) hθ.2.1 hcomp (Nat.le_succ _)
-      (hreal θ hθ.1.1.1 hθ.1.2)]
-    simpa [Γ₁] using hθ.1.1.2
+  case h11 => exact hwit
   case h12 =>
     intro Γ _ hev1
     obtain ⟨θ, hθ⟩ := hev1.exists
     obtain ⟨f, hf⟩ := stageSymbol_realized hθ
     have hR := stageSymbol_reads hθ hf
     obtain ⟨hadm, -⟩ := rodd_eq_one hR
-    obtain ⟨-, hsq₁, hsqℓ⟩ := hofilt θ _ hadm
+    obtain ⟨-, hsq₁, hsqℓ, -⟩ := hofilt θ _ hadm
     exact D.total_eq_zero_odd hf hsq₁ hsqℓ
   case h13 =>
     intro Γ hΓ
@@ -512,8 +529,8 @@ theorem addressPackageStaged_of_genuine {ℓ : ℕ} (W : WData ℓ) (D : LabelDa
     obtain ⟨f, _, hDf, hcard, _, hodd', -⟩ := realizesAt_readings (D.ℓ₀_prime θ) hR
     have hreal := hodd' D.m₁ D.dvd₁ D.ε₁ (D.T₁ θ) (D.T₁_m θ) (D.T₁_typ θ)
     have h1 := stageSymbol_reads hA hreal
-    obtain ⟨hadm, hval⟩ := rodd_eq_one h1
-    obtain ⟨-, hsq, -⟩ := hofilt θ _ hadm
+    obtain ⟨hintr, hval⟩ := rodd_eq_one h1
+    obtain ⟨-, hsq, -, -⟩ := hofilt θ _ hintr
     have hcop : ∀ q ∈ Δ.V.image f, Nat.Coprime q D.m₁ := by
       intro q hq
       obtain ⟨v, hv, rfl⟩ := Finset.mem_image.mp hq
@@ -524,7 +541,10 @@ theorem addressPackageStaged_of_genuine {ℓ : ℕ} (W : WData ℓ) (D : LabelDa
       hDf.trans (prod_qstar_of_isSquare D.four₁ hcop hsq)
     have hω : (AppGEndpoints.omega D' : ℤ) = ((Δ.V.image f).card : ℤ) := by
       rw [realizesAt_omega hR, hcard]
-    refine ⟨hD' ▸ hadm, ?_⟩
+    -- the realization avoids the enlarged support, so the intrinsic filter gives admissibility
+    have hav : ∀ p ∈ W.S, p.Prime → ¬ (p : ℤ) ∣ D' := (realizesAt_squarefree_coprime hR).2.1
+    have hadm : W.admissible θ D' := (D.oddAdmissible_iff θ D' hav).mp (hD' ▸ hintr)
+    refine ⟨hadm, ?_⟩
     rw [hω, hD']
     exact hval
   case h18 =>
@@ -553,8 +573,10 @@ theorem addressPackageStaged_of_genuine {ℓ : ℕ} (W : WData ℓ) (D : LabelDa
 
 /-! ## Non-vacuity of the label data -/
 
-/-- **Label data exist** for every `ℓ > 0` and `k ≠ 0` (PROVED): `m₁ = 24ℓ`, `m₂ = 24|k|ℓ`,
-`m = m₁m₂`, and `ℓ₀ θ` a prime larger than `m`. -/
+/-- **Label data exist** for every `ℓ > 0` and `k ≠ 0` (PROVED; structural non-vacuity only):
+`m₁ = 24ℓ`, `m₂ = 24|k|ℓ`, `m = m₁m₂`, `ℓ₀ θ` a prime larger than `m`, and the stage support of the
+data as the odd filter. A genuine discharge takes the old odd source's own filter instead (see
+`oddAdmissible_no_veto`). -/
 theorem LabelData.nonempty {ℓ : ℕ} (W : WData ℓ) (hℓ : 0 < ℓ) (hk : W.kfin ≠ 0) :
     Nonempty (LabelData W) := by
   have hka : 0 < W.kfin.natAbs := Int.natAbs_pos.mpr hk
@@ -563,7 +585,8 @@ theorem LabelData.nonempty {ℓ : ℕ} (W : WData ℓ) (hℓ : 0 < ℓ) (hk : W.
     (by positivity), (by positivity), (by positivity), Dvd.intro _ rfl, Dvd.intro_left _ rfl,
     ⟨6 * ℓ, by ring⟩, ⟨6 * W.kfin.natAbs * ℓ, by ring⟩, ⟨3 * ℓ, by ring⟩,
     ⟨3 * W.kfin.natAbs * ℓ, by ring⟩, ⟨6 * ℓ, by ring⟩,
-    fun q hq hd => ?_, fun q hq hd => ?_, fun _ => p, fun _ => hp, fun _ => ?_⟩⟩
+    fun q hq hd => ?_, fun q hq hd => ?_, fun _ => p, fun _ => hp, fun _ => ?_, W.admissible,
+    fun _ _ _ => Iff.rfl⟩⟩
   · have : 6 * ((ℓ : ℤ)).natAbs ∣ 24 * ℓ := ⟨4, by simp; ring⟩
     exact hd.trans this
   · have : 6 * (W.kfin * ℓ).natAbs ∣ 24 * W.kfin.natAbs * ℓ :=
@@ -603,6 +626,20 @@ theorem exists_unit_of_kSplitSeed {ℓ : ℕ} {W : WData ℓ} (D : LabelData W)
   intro U hU hq
   by_contra hne
   exact hno ⟨U, hU, hq, zmod2_eq_one_of_ne_zero hne⟩
+
+/-- **Conversely, a nonempty `K`-split unit of `Rev` gives the `K`-split seed input** (PROVED,
+with the empty exceptional set: the no-unit antecedent fails). So under the hypotheses of
+`exists_unit_of_kSplitSeed` the input is equivalent to the existence of such a unit; its content
+is the seed lemma (ELLIOT, tex 2628–2654, 10319–10481). -/
+theorem kSplitSeed_of_unit {ℓ : ℕ} {W : WData ℓ} (D : LabelData W) {Rev : Finset ℕ → ZMod 2}
+    (h : ∃ U : Finset ℕ, U.Nonempty ∧
+      (∀ q ∈ U, q.Prime ∧ Nat.Coprime q D.m₂ ∧ jacobiSym W.kfin q = 1) ∧ Rev U = 1) :
+    KSplitSeed W D Rev := by
+  obtain ⟨U, hU, hq, h1⟩ := h
+  refine ⟨∅, fun hno => ?_⟩
+  have h0 := hno U hU hq
+  rw [h1] at h0
+  exact absurd h0 (by decide)
 
 /-- **The zero reading does not satisfy the `K`-split seed input** (PROVED). -/
 theorem not_kSplitSeed_zero {ℓ : ℕ} {W : WData ℓ} (D : LabelData W) (hℓ : Adm ℓ)

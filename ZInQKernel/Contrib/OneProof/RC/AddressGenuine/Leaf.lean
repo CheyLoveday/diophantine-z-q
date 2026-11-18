@@ -68,7 +68,7 @@ stages of the ultrafilter (tex 10533–10540), a `GaloisTraceModel` of the genui
 the genuine stage types and the genuine stage character. -/
 def OddGaloisModels : Prop :=
   ∀ Wc : ℕ, ∀ᶠ θ in (W.stages : Filter ℕ),
-    Nonempty (GaloisTraceModel (D.T₁ θ) (Rodd W θ) (apo ℓ) (Wc + 1) (stageChar D.m₁ (D.ℓ₀ θ)))
+    Nonempty (GaloisTraceModel (D.T₁ θ) (Rodd W D θ) (apo ℓ) (Wc + 1) (stageChar D.m₁ (D.ℓ₀ θ)))
 
 /-- **Genuine Galois trace models of the transported even source at every budget** (fields as in
 `OddGaloisModels`; tex 9447–9976, 10288–10318). -/

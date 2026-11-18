@@ -17,13 +17,18 @@ ZInQ.Contrib.chebotarevExists` (for every finite subextension `E ⊆ ℚ̄`, eve
 finite set `S`, a Frobenius element at a prime `p ∉ S` agrees with `g` on `E`; from Tau Ceti's
 Chebotarev density theorem), and two GLUE hypotheses on the genuine subgroups `N_U = galN …`:
 
-* (a) **openness** (`GalNOpen`, tex 9663–9669): for good `U`, `N_U` contains the fixing subgroup
-  of a finite subextension `E ⊆ ℚ̄`; equivalently `N_U` is open in the Krull topology
-  (`galN_isOpen_iff`);
-* (b) **unramifiedness** (`GalNUnramified`, tex 9524–9548): for good `U` there is a finite set
-  `S` (depending on `U`) such that at every good prime `q ∉ U ∪ S` and every maximal ideal `Q` of
-  `ℤ̄` containing `q` (these are the primes of `ℤ̄` above `q`), the inertia group
-  `I_Q = {σ | ∀ x ∈ ℤ̄, σ x − x ∈ Q}` (Mathlib's `Ideal.inertia`) lies in `N_U`.
+* (a) **openness** (`GalNOpen`, tex 9663–9669): for every set `U` of good primes within the
+  budget, `|U| + 1 ≤ B`, `N_U` contains the fixing subgroup of a finite subextension `E ⊆ ℚ̄`;
+  equivalently `N_U` is open in the Krull topology (`galN_isOpen_iff`);
+* (b) **unramifiedness** (`GalNUnramified`, tex 9524–9548): for every set `U` of good primes
+  within the budget, `|U| + 1 ≤ B`, there is a finite set `S` (depending on `U`) such that at
+  every good prime `q ∉ U ∪ S` and every maximal ideal `Q` of `ℤ̄` containing `q` (these are the
+  primes of `ℤ̄` above `q`), the inertia group `I_Q = {σ | ∀ x ∈ ℤ̄, σ x − x ∈ Q}` (Mathlib's
+  `Ideal.inertia`) lies in `N_U`.
+
+Both are stated within the budget `B`, as the fields of `GaloisTraceModel`: the finite trace
+space, and with it `N_U`, is built for a fixed stage and `U` within the operator budget
+`|U| ≤ W`, `B = W + 1` (tex 9447–9468, 9649–9654, 9741–9745, 10533–10548).
 
 Main results (all PROVED):
 
@@ -36,7 +41,8 @@ Main results (all PROVED):
   primes above `q`) differ, up to conjugation, by an inertia element;
 * `exists_frob_eq_conj_mul` and `chebotarev_of_density`: under (a) and (b), the statement of the
   field `chebotarev` holds for every choice of Frobenius elements at the good primes;
-* `finiteIndex_of_galNOpen`: (a) implies the field `finiteIndex` (`G_ℚ/N_U` finite);
+* `finiteIndex_of_galNOpen`: (a) implies the field `finiteIndex` (`G_ℚ/N_U` finite, within the
+  budget);
 * `GaloisDensityModel`, `GaloisDensityModel.toGaloisTraceModel`: the data of `GaloisTraceModel`
   with (a), (b) in place of the fields `chebotarev` and `finiteIndex`, and the model built from it;
   `GaloisTraceModel.chebotarev_holds_of_density`: in every model, (a) and (b) imply the statement of
@@ -47,7 +53,8 @@ Main results (all PROVED):
   continuous), so (a), (b) reduce to the continuity and the unramifiedness of the trace action;
 * non-vacuity: `GaloisDensityModel.zero`, `galoisDensityModel_typeData_nonempty`,
   `galoisDensityModel_stage_nonempty` (the zero model over the genuine type data satisfies (a)
-  and (b)).
+  and (b)); its Galois trace model satisfies the unbudgeted forms
+  (`GaloisDensityModel.zero_toGaloisTraceModel_unbudgeted`).
 
 This supplies what the DEPARTURE note of the Galois model module records as missing for deriving
 `chebotarev` from the finite form of Čebotarev's theorem: the openness of `N_U` (hypothesis (a))
@@ -143,25 +150,31 @@ section Hypotheses
 
 variable {M : Type*} [AddCommGroup M] [Module (ZMod 2) M]
 
-/-- **(a) Openness of `N_U`** (tex 9663–9669: the characters are continuous and `g ↦ t(g)F_{U'}`
-is continuous on the finite module): for every set `U` of good primes, `N_U = galN chiType t F U`
-contains the fixing subgroup of a finite subextension `E ⊆ ℚ̄`, i.e. `N_U` is open in the Krull
-topology (`galN_isOpen_iff`). Kind: definition (the GLUE hypothesis (a)). -/
+/-- **(a) Openness of `N_U`** within the budget `B` (tex 9663–9669: the characters are continuous
+and `g ↦ t(g)F_{U'}` is continuous on the finite module; the budget, tex 9447–9468, 9649–9654,
+9741–9745, 10533–10548): for every set `U` of good primes with `|U| + 1 ≤ B`,
+`N_U = galN chiType t F U` contains the fixing subgroup of a finite subextension `E ⊆ ℚ̄`, i.e.
+`N_U` is open in the Krull topology (`galN_isOpen_iff`). Kind: definition (the GLUE
+hypothesis (a)). -/
 def GalNOpen (T : TypeData L ε) (chiType : GalQ →* Multiplicative L)
-    (t : GalQ → M →ₗ[ZMod 2] M) (F : Finset ℕ → M) : Prop :=
-  ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) →
+    (t : GalQ → M →ₗ[ZMod 2] M) (F : Finset ℕ → M) (B : ℕ) : Prop :=
+  ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B →
     ∃ E : IntermediateField ℚ Qbar, FiniteDimensional ℚ E ∧ E.fixingSubgroup ≤ galN chiType t F U
 
-/-- **(b) Unramifiedness of `N_U`** (tex 9524–9548: the forms have level supported on the bad
-primes and on `U`; the type fields and the fields `ℚ(√s*)`, `s ∈ U`, are unramified outside the
-level and `U`): for every set `U` of good primes there is a finite exceptional set `S` such that at
-every good prime `q ∉ U ∪ S` and every maximal ideal `Q` of `ℤ̄` above `q`, every element of the
-inertia group `I_Q = {σ | ∀ x ∈ ℤ̄, σ x − x ∈ Q}` lies in `N_U`. Kind: definition (the GLUE
-hypothesis (b)). -/
+/-- **(b) Unramifiedness of `N_U`** within the budget `B` (tex 9524–9548: the forms have level
+supported on the bad primes and on `U`; the type fields and the fields `ℚ(√s*)`, `s ∈ U`, are
+unramified outside the level and `U`; the budget, tex 9447–9468, 9649–9654, 9741–9745,
+10533–10548): for every set `U` of good primes with `|U| + 1 ≤ B` there is a finite exceptional
+set `S` such that at every good prime `q ∉ U ∪ S` and every maximal ideal `Q` of `ℤ̄` above `q`,
+every element of the inertia group `I_Q = {σ | ∀ x ∈ ℤ̄, σ x − x ∈ Q}` lies in `N_U`. Kind:
+definition (the GLUE hypothesis (b)); for the genuine trace action it rests on the PRINT that the
+Galois representations of weight-two newforms are unramified outside the level (Carayol, cited at
+tex 9778; locator `UNVERIFIED`). -/
 def GalNUnramified (T : TypeData L ε) (chiType : GalQ →* Multiplicative L)
-    (t : GalQ → M →ₗ[ZMod 2] M) (F : Finset ℕ → M) : Prop :=
-  ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → ∃ S : Finset ℕ, ∀ q : ℕ, T.Good q → q ∉ U → q ∉ S →
-    ∀ Q : Ideal Zbar, Q.IsMaximal → ((q : ℤ) : Zbar) ∈ Q → Q.inertia GalQ ≤ galN chiType t F U
+    (t : GalQ → M →ₗ[ZMod 2] M) (F : Finset ℕ → M) (B : ℕ) : Prop :=
+  ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∃ S : Finset ℕ, ∀ q : ℕ, T.Good q →
+    q ∉ U → q ∉ S → ∀ Q : Ideal Zbar, Q.IsMaximal → ((q : ℤ) : Zbar) ∈ Q →
+      Q.inertia GalQ ≤ galN chiType t F U
 
 /-- **Hypothesis (a) is openness in the Krull topology**: a subgroup of `G_ℚ` is open iff it
 contains the fixing subgroup of a finite subextension of `ℚ̄` (tex 9663–9669). Kind: PROVED
@@ -201,12 +214,14 @@ theorem finiteIndex_of_fixingSubgroup_le (H : Subgroup GalQ) (E : IntermediateFi
   rw [IntermediateField.restrictNormalHom_ker K] at h
   exact Subgroup.finiteIndex_of_le hKH
 
-/-- **(a) implies the finiteness of `G_ℚ/N_U`** for good `U` (the field `finiteIndex` of
-`GaloisTraceModel`, tex 9663–9669). Kind: PROVED (`finiteIndex_of_fixingSubgroup_le`). -/
+/-- **(a) implies the finiteness of `G_ℚ/N_U`** for `U` a set of good primes with `|U| + 1 ≤ B`
+(the field `finiteIndex` of `GaloisTraceModel`, tex 9663–9669; the budget, tex 9447–9468,
+9649–9654, 9741–9745, 10533–10548). Kind: PROVED (`finiteIndex_of_fixingSubgroup_le`). -/
 theorem finiteIndex_of_galNOpen (T : TypeData L ε) {chiType : GalQ →* Multiplicative L}
-    {t : GalQ → M →ₗ[ZMod 2] M} {F : Finset ℕ → M} (hopen : GalNOpen T chiType t F)
-    (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) : (galN chiType t F U).FiniteIndex := by
-  obtain ⟨E, hE, hEN⟩ := hopen U hU
+    {t : GalQ → M →ₗ[ZMod 2] M} {F : Finset ℕ → M} {B : ℕ} (hopen : GalNOpen T chiType t F B)
+    (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) :
+    (galN chiType t F U).FiniteIndex := by
+  obtain ⟨E, hE, hEN⟩ := hopen U hU hUB
   exact finiteIndex_of_fixingSubgroup_le _ E hEN
 
 end Hypotheses
@@ -260,22 +275,23 @@ theorem exists_frob_eq_conj_mul (T : TypeData L ε) {frob : ℕ → GalQ}
     by group⟩
 
 /-- **The field `chebotarev` of `GaloisTraceModel` from Chebotarev's density theorem** (tex
-9663–9669, 9666–9668, 9919–9921, 9524–9548): under (a) openness (`GalNOpen`) and (b)
-unramifiedness (`GalNUnramified`) of the subgroups `N_U`, for every choice of Frobenius elements
-`frob q` at the good primes, every class of `G_ℚ/N_U` (`U` good) is the Frobenius class of a good
-prime outside any finite set — verbatim the statement of the field `chebotarev`. Kind: PROVED
-(`exists_frob_eq_conj_mul`: the density theorem `ZInQ.Contrib.ChebFD.C10.frobDense
-ZInQ.Contrib.chebotarevExists`, proved in this repository from the Chebotarev density theorem of
-Tau Ceti). -/
+9663–9669, 9666–9668, 9919–9921, 9524–9548), within the budget `B` (tex 9447–9468, 9649–9654,
+9741–9745, 10533–10548): under (a) openness (`GalNOpen`) and (b) unramifiedness
+(`GalNUnramified`) of the subgroups `N_U` within the budget, for every choice of Frobenius
+elements `frob q` at the good primes, every class of `G_ℚ/N_U` (`U` a set of good primes with
+`|U| + 1 ≤ B`) is the Frobenius class of a good prime outside any finite set — verbatim the
+statement of the field `chebotarev`. Kind: PROVED (`exists_frob_eq_conj_mul`, applied at each
+such `U`: the density theorem `ZInQ.Contrib.ChebFD.C10.frobDense ZInQ.Contrib.chebotarevExists`,
+proved in this repository from the Chebotarev density theorem of Tau Ceti). -/
 theorem chebotarev_of_density (T : TypeData L ε) {chiType : GalQ →* Multiplicative L}
     {M : Type*} [AddCommGroup M] [Module (ZMod 2) M] {t : GalQ → M →ₗ[ZMod 2] M}
-    {F : Finset ℕ → M} {frob : ℕ → GalQ} (hfrob : ∀ q, T.Good q → IsFrobAt (frob q) q)
-    (hopen : GalNOpen T chiType t F) (hunr : GalNUnramified T chiType t F) :
-    ∀ (U : Finset ℕ), (∀ s ∈ U, T.Good s) → ∀ (g : GalQ) (avoid : Finset ℕ),
+    {F : Finset ℕ → M} {B : ℕ} {frob : ℕ → GalQ} (hfrob : ∀ q, T.Good q → IsFrobAt (frob q) q)
+    (hopen : GalNOpen T chiType t F B) (hunr : GalNUnramified T chiType t F B) :
+    ∀ (U : Finset ℕ), (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∀ (g : GalQ) (avoid : Finset ℕ),
       ∃ q h, ∃ n ∈ galN chiType t F U, T.Good q ∧ q ∉ avoid ∧ frob q = h * g * h⁻¹ * n := by
-  intro U hU g avoid
-  obtain ⟨E, hE, hEN⟩ := hopen U hU
-  obtain ⟨S, hS⟩ := hunr U hU
+  intro U hU hUB g avoid
+  obtain ⟨E, hE, hEN⟩ := hopen U hU hUB
+  obtain ⟨S, hS⟩ := hunr U hU hUB
   obtain ⟨q, h, n, hn, hq, hqa, -, -, hf⟩ :=
     exists_frob_eq_conj_mul T hfrob (galN chiType t F U) U S E hEN hS g avoid
   exact ⟨q, h, n, hn, hq, hqa, hf⟩
@@ -287,10 +303,15 @@ theorem chebotarev_of_density (T : TypeData L ε) {chiType : GalQ →* Multiplic
 PRINT field `chebotarev` and the GLUE field `finiteIndex` are replaced by the GLUE hypotheses (a)
 `isOpen` (`GalNOpen`, tex 9663–9669) and (b) `unramified` (`GalNUnramified`, tex 9524–9548);
 `chebotarev` and `finiteIndex` are then PROVED (`chebotarev_of_density`, `finiteIndex_of_galNOpen`,
-`GaloisDensityModel.toGaloisTraceModel`). Kinds of the other fields as in `GaloisTraceModel`:
-`frob_spec` definition; `trace_mul`, `det_orbit`, `two_fresh`, `trace_one`, `t_class` ELLIOT (tex
-9705–9745, 9762–9771); `kummer` GLUE (tex 9745–9750); `reading` ELLIOT (tex 9671–9704); `o12`
-ELLIOT (tex 9905–9918). -/
+`GaloisDensityModel.toGaloisTraceModel`). Budget (the text's quantifier, tex 9447–9468,
+9649–9654, 9741–9745, 10533–10548): as in `GaloisTraceModel`, the fields concerning one set `U`
+(`det_orbit`, `two_fresh`, `kummer`, (a), (b), `reading`, `o12`) are stated only for `U` a set of
+good primes with `|U| + 1 ≤ B`. Kinds of the other fields as in `GaloisTraceModel`: `frob_spec`
+definition; `trace_mul`, `trace_one`, `t_class` GLUE (matrix trace identities of the
+two-dimensional constituent representations, valid on the whole module once the reduced action
+is constructed; tex 9705–9745, 9762–9771); `det_orbit`, `two_fresh` ELLIOT (tex 9719–9745);
+`kummer` GLUE (tex 9745–9750); `reading` ELLIOT (tex 9671–9704); `o12` ELLIOT (tex
+9905–9918). -/
 structure GaloisDensityModel (T : TypeData L ε) (R : Finset ℕ → ZMod 2) (ap : ℕ → ℤ) (B : ℕ)
     (chiType : GalQ →* Multiplicative L) where
   /-- the reduced integral trace module (characteristic two, tex 9663–9669, 9893–9899) -/
@@ -301,7 +322,9 @@ structure GaloisDensityModel (T : TypeData L ε) (R : Finset ℕ → ZMod 2) (ap
   t : GalQ → M →ₗ[ZMod 2] M
   /-- the determinant (diamond) operators `d(g)` (tex 9762–9771) -/
   d : GalQ → M →ₗ[ZMod 2] M
-  /-- the reduced forms `F_U = θ H_U` (tex 9672) -/
+  /-- the reduced forms `F_U = θ H_U` (tex 9672) for `U` a set of good primes within the budget;
+  the values elsewhere are irrelevant (no field constrains them) and may be taken `0`
+  ("No finite-stage value at larger weights is asserted", tex 9679–9681) -/
   F : Finset ℕ → M
   /-- the coefficient-one functional on the `U`-forms (tex 9688–9695) -/
   read : Finset ℕ → M →ₗ[ZMod 2] ZMod 2
@@ -309,24 +332,40 @@ structure GaloisDensityModel (T : TypeData L ε) (R : Finset ℕ → ZMod 2) (ap
   frob : ℕ → GalQ
   /-- definition: `frob q` is a genuine arithmetic Frobenius element at every good prime `q` -/
   frob_spec : ∀ q, T.Good q → IsFrobAt (frob q) q
-  /-- ELLIOT (RC12, tex 9729–9737): `t(g)t(h) = t(gh) + d(h)t(gh⁻¹)` -/
+  /-- GLUE (matrix trace identities of the two-dimensional constituent representations, valid on
+  the whole module once the reduced action is constructed; tex 9705–9745, 9762–9771; the matrix
+  identity of tex 9734–9737): `t(g)t(h) = t(gh) + d(h)t(gh⁻¹)` -/
   trace_mul : ∀ g h (x : M), t g (t h x) = t (g * h) x + d h (t (g * h⁻¹) x)
-  /-- ELLIOT (RC12, tex 9719–9733): `d` acts trivially on the trace orbit of `F_U` -/
-  det_orbit : ∀ U u v, d u (t v (F U)) = t v (F U)
-  /-- ELLIOT (RC12, tex 9741–9745): two fresh traces vanish -/
-  two_fresh : ∀ U g h, t g (t h (F U)) = 0
-  /-- ELLIOT (RC12, tex 9739): `t(1) = 2` -/
+  /-- ELLIOT (RC12, tex 9719–9733), within the budget (tex 9447–9468, 9649–9654, 9741–9745,
+  10533–10548): for `U` a set of good primes with `|U| + 1 ≤ B`, `d` acts trivially on the trace
+  orbit of `F_U` -/
+  det_orbit : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B →
+    ∀ u v, d u (t v (F U)) = t v (F U)
+  /-- ELLIOT (RC12, tex 9741–9745: "`R ≥ 2` and the actual-stage budget were fixed before the
+  test"), within the budget (tex 9447–9468, 9649–9654, 10533–10548): for `U` a set of good primes
+  with `|U| + 1 ≤ B`, two fresh traces vanish on `F_U` -/
+  two_fresh : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B →
+    ∀ g h, t g (t h (F U)) = 0
+  /-- GLUE (matrix trace identities of the two-dimensional constituent representations, valid on
+  the whole module once the reduced action is constructed; tex 9705–9745, 9762–9771; `tr(1) = 2`,
+  tex 9739): `t(1) = 2` -/
   trace_one : ∀ x, t 1 x = (2 : ZMod 2) • x
-  /-- ELLIOT (tex 9762–9771; tex 9666–9668): `t` is a class function -/
+  /-- GLUE (matrix trace identities of the two-dimensional constituent representations, valid on
+  the whole module once the reduced action is constructed; tex 9705–9745, 9762–9771; tex
+  9666–9668): `t` is a class function -/
   t_class : ∀ g h, t (h * g * h⁻¹) = t g
-  /-- GLUE (Kummer theory for the several radicals, tex 9745–9750) -/
-  kummer : ∀ U g, chiType g = 1 → (∀ s ∈ U, bitChar s g = 1) →
-    g ∈ Subgroup.closure (sqSet GalQ) ⊔ galN chiType t F U
-  /-- GLUE (a) (continuity, tex 9663–9669): `N_U` is open, `U` good -/
-  isOpen : GalNOpen T chiType t F
-  /-- GLUE (b) (level and unramifiedness, tex 9524–9548): `N_U` contains the inertia groups
-  above the good primes outside `U` and a finite set, `U` good -/
-  unramified : GalNUnramified T chiType t F
+  /-- GLUE (Kummer theory for the several radicals, tex 9745–9750), within the budget (tex
+  9447–9468, 9649–9654, 9741–9745, 10533–10548): for `U` a set of good primes with
+  `|U| + 1 ≤ B` -/
+  kummer : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∀ g, chiType g = 1 →
+    (∀ s ∈ U, bitChar s g = 1) → g ∈ Subgroup.closure (sqSet GalQ) ⊔ galN chiType t F U
+  /-- GLUE (a) (continuity, tex 9663–9669), within the budget (tex 9447–9468, 9649–9654,
+  9741–9745, 10533–10548): `N_U` is open, `U` a set of good primes with `|U| + 1 ≤ B` -/
+  isOpen : GalNOpen T chiType t F B
+  /-- GLUE (b) (level and unramifiedness, tex 9524–9548), within the budget (tex 9447–9468,
+  9649–9654, 9741–9745, 10533–10548): `N_U` contains the inertia groups above the good primes
+  outside `U` and a finite set, `U` a set of good primes with `|U| + 1 ≤ B` -/
+  unramified : GalNUnramified T chiType t F B
   /-- ELLIOT (tex 9671–9704): the reading of a fresh vertex -/
   reading : ∀ (U : Finset ℕ) (q : ℕ), (∀ s ∈ U, T.Good s) → T.Good q → q ∉ U →
     (insert q U).card ≤ B → R (insert q U) = read U (t (frob q) (F U))
@@ -368,15 +407,16 @@ def GaloisDensityModel.toGaloisTraceModel {T : TypeData L ε} {R : Finset ℕ �
   o12 := X.o12
 
 /-- **In every genuine Galois trace model, the field `chebotarev` is implied by (a) and (b)**
-(tex 9663–9669, 9666–9668, 9524–9548): if the subgroups `N_U` of `X` are open and unramified
-outside `U` and a finite set, the statement of the field `chebotarev` follows from the density
-form of Chebotarev's theorem (so the PRINT input `chebotarev` may be replaced by the GLUE
-hypotheses (a), (b)). Kind: PROVED (`chebotarev_of_density`). -/
+(tex 9663–9669, 9666–9668, 9524–9548), within the budget (tex 9447–9468, 9649–9654, 9741–9745,
+10533–10548): if the subgroups `N_U` of `X`, `U` a set of good primes with `|U| + 1 ≤ B`, are
+open and unramified outside `U` and a finite set, the statement of the field `chebotarev` follows
+from the density form of Chebotarev's theorem (so the PRINT input `chebotarev` may be replaced by
+the GLUE hypotheses (a), (b)). Kind: PROVED (`chebotarev_of_density`). -/
 theorem GaloisTraceModel.chebotarev_holds_of_density {T : TypeData L ε} {R : Finset ℕ → ZMod 2}
     {ap : ℕ → ℤ} {B : ℕ} {chiType : GalQ →* Multiplicative L}
-    (X : GaloisTraceModel T R ap B chiType) (hopen : GalNOpen T chiType X.t X.F)
-    (hunr : GalNUnramified T chiType X.t X.F) :
-    ∀ (U : Finset ℕ), (∀ s ∈ U, T.Good s) → ∀ (g : GalQ) (avoid : Finset ℕ),
+    (X : GaloisTraceModel T R ap B chiType) (hopen : GalNOpen T chiType X.t X.F B)
+    (hunr : GalNUnramified T chiType X.t X.F B) :
+    ∀ (U : Finset ℕ), (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∀ (g : GalQ) (avoid : Finset ℕ),
       ∃ q h, ∃ n ∈ X.N U, T.Good q ∧ q ∉ avoid ∧ X.frob q = h * g * h⁻¹ * n :=
   chebotarev_of_density T X.frob_spec hopen hunr
 
@@ -427,18 +467,19 @@ theorem chars_eq_one_of_mem_inertia (T : TypeData L ε) {chiType : GalQ →* Mul
     exact mul_left_cancel (e.trans (mul_one _).symm)
 
 /-- **(b) reduces to the trace action**: for a type character reading the types, the hypothesis
-`GalNUnramified` follows from the unramifiedness of the trace action alone (inertia at the good
-primes outside `U` and a finite set does not move `t(·)F_{U'}`, `U' ⊆ U`, tex 9524–9548); the
-character part of `N_U` is unramified there (`chars_eq_one_of_mem_inertia`). Kind: PROVED. -/
+`GalNUnramified` (within the budget `B`) follows from the unramifiedness of the trace action alone
+(for `U` a set of good primes with `|U| + 1 ≤ B`, inertia at the good primes outside `U` and a
+finite set does not move `t(·)F_{U'}`, `U' ⊆ U`, tex 9524–9548); the character part of `N_U` is
+unramified there (`chars_eq_one_of_mem_inertia`). Kind: PROVED. -/
 theorem galNUnramified_of_trace (T : TypeData L ε) {chiType : GalQ →* Multiplicative L}
     (htyp : IsTypeChar T chiType) {M : Type*} [AddCommGroup M] [Module (ZMod 2) M]
-    {t : GalQ → M →ₗ[ZMod 2] M} {F : Finset ℕ → M}
-    (htr : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → ∃ S : Finset ℕ, ∀ q : ℕ, T.Good q → q ∉ U →
-      q ∉ S → ∀ Q : Ideal Zbar, Q.IsMaximal → ((q : ℤ) : Zbar) ∈ Q → ∀ ι ∈ Q.inertia GalQ,
-        ∀ g : GalQ, ∀ U' ⊆ U, t (g * ι) (F U') = t g (F U')) :
-    GalNUnramified T chiType t F := by
-  intro U hU
-  obtain ⟨S, hS⟩ := htr U hU
+    {t : GalQ → M →ₗ[ZMod 2] M} {F : Finset ℕ → M} {B : ℕ}
+    (htr : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∃ S : Finset ℕ, ∀ q : ℕ,
+      T.Good q → q ∉ U → q ∉ S → ∀ Q : Ideal Zbar, Q.IsMaximal → ((q : ℤ) : Zbar) ∈ Q →
+        ∀ ι ∈ Q.inertia GalQ, ∀ g : GalQ, ∀ U' ⊆ U, t (g * ι) (F U') = t g (F U')) :
+    GalNUnramified T chiType t F B := by
+  intro U hU hUB
+  obtain ⟨S, hS⟩ := htr U hU hUB
   refine ⟨S, fun q hq hqU hqS Q hQ hqQ ι hι => ?_⟩
   obtain ⟨h1, h2⟩ := chars_eq_one_of_mem_inertia T htyp hU hq hqU hQ hqQ hι
   exact mem_galN.mpr ⟨h1, h2, hS q hq hqU hqS Q hQ hqQ ι hι⟩
@@ -459,21 +500,21 @@ theorem exists_fixingSubgroup_le_ker_bitChar (U : Finset ℕ) :
 
 /-- **(a) reduces to the continuity of the type character and of the trace action** (tex
 9663–9669): if `χ_type` is trivial on the fixing subgroup of a finite subextension `E₀ ⊆ ℚ̄`, and
-for every set `U` of good primes the elements fixing some finite subextension `E₁` do not move
-`t(·)F_{U'}`, `U' ⊆ U`, then `GalNOpen` holds (with `E = E₀ E₁ ℚ(√s* : s ∈ U)`). Kind: PROVED
-(`exists_fixingSubgroup_le_ker_bitChar`). -/
+for every set `U` of good primes with `|U| + 1 ≤ B` the elements fixing some finite subextension
+`E₁` do not move `t(·)F_{U'}`, `U' ⊆ U`, then `GalNOpen` holds within the budget `B` (with
+`E = E₀ E₁ ℚ(√s* : s ∈ U)`). Kind: PROVED (`exists_fixingSubgroup_le_ker_bitChar`). -/
 theorem galNOpen_of_continuous (T : TypeData L ε) {chiType : GalQ →* Multiplicative L}
     {M : Type*} [AddCommGroup M] [Module (ZMod 2) M] {t : GalQ → M →ₗ[ZMod 2] M}
-    {F : Finset ℕ → M}
+    {F : Finset ℕ → M} {B : ℕ}
     (hchi : ∃ E : IntermediateField ℚ Qbar, FiniteDimensional ℚ E ∧
       ∀ σ ∈ E.fixingSubgroup, chiType σ = 1)
-    (htr : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → ∃ E : IntermediateField ℚ Qbar,
-      FiniteDimensional ℚ E ∧ ∀ σ ∈ E.fixingSubgroup, ∀ g : GalQ, ∀ U' ⊆ U,
-        t (g * σ) (F U') = t g (F U')) :
-    GalNOpen T chiType t F := by
-  intro U hU
+    (htr : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B →
+      ∃ E : IntermediateField ℚ Qbar, FiniteDimensional ℚ E ∧ ∀ σ ∈ E.fixingSubgroup,
+        ∀ g : GalQ, ∀ U' ⊆ U, t (g * σ) (F U') = t g (F U')) :
+    GalNOpen T chiType t F B := by
+  intro U hU hUB
   obtain ⟨E₀, hE₀, h₀⟩ := hchi
-  obtain ⟨E₁, hE₁, h₁⟩ := htr U hU
+  obtain ⟨E₁, hE₁, h₁⟩ := htr U hU hUB
   obtain ⟨E₂, hE₂, h₂⟩ := exists_fixingSubgroup_le_ker_bitChar U
   refine ⟨E₀ ⊔ E₁ ⊔ E₂, inferInstance, fun σ hσ => mem_galN.mpr ⟨?_, ?_, ?_⟩⟩
   · exact h₀ σ (IntermediateField.fixingSubgroup_antitone (le_sup_left.trans le_sup_left) hσ)
@@ -520,9 +561,10 @@ theorem exists_fixingSubgroup_le_ker_stageChar (m₁ ℓ₀ : ℕ) [NeZero m₁]
 
 /-- **Non-vacuity of (a) and (b)**: for every type data and every continuous type character
 reading the types, the zero model (zero module, as in `GaloisTraceModel.zero`) has open and
-unramified subgroups `N_U`, so it is a `GaloisDensityModel` (the other fields as in
-`GaloisTraceModel.zero`; `N_U` is the common kernel of the characters). Kind: PROVED
-(`galNOpen_of_continuous`, `galNUnramified_of_trace`, `frobeniusExists`). -/
+unramified subgroups `N_U` (at every set `U` of good primes, a fortiori within the budget), so it
+is a `GaloisDensityModel` (the other fields as in `GaloisTraceModel.zero`; `N_U` is the common
+kernel of the characters). Kind: PROVED (`galNOpen_of_continuous`, `galNUnramified_of_trace`,
+`frobeniusExists`). -/
 def GaloisDensityModel.zero (T : TypeData L ε) (ap : ℕ → ℤ) (B : ℕ)
     (chiType : GalQ →* Multiplicative L) (htyp : IsTypeChar T chiType)
     (hchi : ∃ E : IntermediateField ℚ Qbar, FiniteDimensional ℚ E ∧
@@ -536,17 +578,30 @@ def GaloisDensityModel.zero (T : TypeData L ε) (ap : ℕ → ℤ) (B : ℕ)
   frob := chooseFrob frobeniusExists
   frob_spec _ hq := chooseFrob_spec frobeniusExists hq.1
   trace_mul _ _ _ := Subsingleton.elim _ _
-  det_orbit _ _ _ := Subsingleton.elim _ _
-  two_fresh _ _ _ := Subsingleton.elim _ _
+  det_orbit _ _ _ _ _ := Subsingleton.elim _ _
+  two_fresh _ _ _ _ _ := Subsingleton.elim _ _
   trace_one _ := Subsingleton.elim _ _
   t_class _ _ := rfl
-  kummer _ _ h1 h2 := Subgroup.mem_sup_right (mem_galN_of_subsingleton.mpr ⟨h1, h2⟩)
+  kummer _ _ _ _ h1 h2 := Subgroup.mem_sup_right (mem_galN_of_subsingleton.mpr ⟨h1, h2⟩)
   isOpen := galNOpen_of_continuous T hchi
-    fun _ _ => ⟨⊥, inferInstance, fun _ _ _ _ _ => Subsingleton.elim _ _⟩
+    fun _ _ _ => ⟨⊥, inferInstance, fun _ _ _ _ _ => Subsingleton.elim _ _⟩
   unramified := galNUnramified_of_trace T htyp
-    fun _ _ => ⟨∅, fun _ _ _ _ _ _ _ _ _ _ _ _ => Subsingleton.elim _ _⟩
+    fun _ _ _ => ⟨∅, fun _ _ _ _ _ _ _ _ _ _ _ _ => Subsingleton.elim _ _⟩
   reading := (GaloisTraceModel.zero frobeniusExists T ap B chiType htyp).reading
   o12 := (GaloisTraceModel.zero frobeniusExists T ap B chiType htyp).o12
+
+/-- **The Galois trace model of the zero `GaloisDensityModel` satisfies the unbudgeted forms**
+(`GaloisTraceModel.Unbudgeted`, no tex line): its module is zero. Kind: PROVED
+(`GaloisTraceModel.unbudgeted_of_subsingleton`). -/
+theorem GaloisDensityModel.zero_toGaloisTraceModel_unbudgeted (T : TypeData L ε) (ap : ℕ → ℤ)
+    (B : ℕ) (chiType : GalQ →* Multiplicative L) (htyp : IsTypeChar T chiType)
+    (hchi : ∃ E : IntermediateField ℚ Qbar, FiniteDimensional ℚ E ∧
+      ∀ σ ∈ E.fixingSubgroup, chiType σ = 1) :
+    (GaloisDensityModel.zero T ap B chiType htyp hchi).toGaloisTraceModel.Unbudgeted :=
+  haveI : Subsingleton (GaloisDensityModel.zero T ap B chiType htyp hchi).toGaloisTraceModel.M :=
+    inferInstanceAs (Subsingleton PUnit)
+  (GaloisDensityModel.zero T ap B chiType htyp hchi).toGaloisTraceModel.unbudgeted_of_subsingleton
+    htyp
 
 /-- **The zero `GaloisDensityModel` over the genuine residue-class type data** `typeData m`, with
 the genuine type character `typChar m` (tex 2015–2025). Kind: PROVED (`GaloisDensityModel.zero`,

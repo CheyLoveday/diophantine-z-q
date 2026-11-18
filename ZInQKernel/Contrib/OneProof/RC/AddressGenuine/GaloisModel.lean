@@ -26,13 +26,33 @@ instance**:
   fixing the compositum of the type fields, the fields `ℚ(√s*)`, `s ∈ U`, and the fields cut out
   by the reduced trace action on the forms `F_{U'}` (tex 9663–9669, 9745–9750, 9919–9921).
 
-The remaining fields of `GaloisTraceModel` are those of `TraceModelRel`, verbatim with
-`G := G_ℚ`, `chiBit := bitChar`, `N := galN chiType t F`: the trace identities of lane RC12 on
-the reduced module (ELLIOT, tex 9705–9745), Kummer detection of the elementary quotient (GLUE,
-tex 9745–9750), Chebotarev in the finite quotient `G_ℚ/N_U` (PRINT), the coefficient-one reading
-and (O.12) (ELLIOT, tex 9671–9704, 9905–9918); and one added GLUE field, `finiteIndex`: `N_U`
-has finite index for good `U` (continuity of the trace action on the finite module, tex
-9663–9669), so that the hypothesis of Chebotarev's theorem is part of the type.
+The remaining fields of `GaloisTraceModel` are those of `TraceModelRel` with `G := G_ℚ`,
+`chiBit := bitChar`, `N := galN chiType t F`: the matrix trace identities `trace_mul`,
+`trace_one`, `t_class` of the two-dimensional constituent representations (GLUE, valid on the
+whole module once the reduced action is constructed, tex 9705–9745, 9762–9771), lane RC12's
+identities `det_orbit`, `two_fresh` on the trace orbit of `F_U` (ELLIOT, tex 9719–9745), Kummer
+detection of the elementary quotient (GLUE, tex 9745–9750), Chebotarev in the finite quotient
+`G_ℚ/N_U` (PRINT), the coefficient-one reading and (O.12) (ELLIOT, tex 9671–9704, 9905–9918);
+and one added GLUE field, `finiteIndex`: `N_U` has finite index (continuity of the trace action
+on the finite module, tex 9663–9669), so that the hypothesis of Chebotarev's theorem is part of
+the type.
+
+**The operator budget.** The manuscript builds the finite trace space for a fixed stage and `U`
+within the operator budget: for an odd source it first fixes "a finite operator budget
+`|U| ≤ W`" and then chooses the stage, after which the integer divisions (O.9)–(O.11) are valid
+(tex 9447–9468); the coefficient field, the constituents and the integral module are chosen "for
+a fixed stage and `U`" (tex 9649–9654); in the two-trace test "`R ≥ 2` and the actual-stage
+budget were fixed before the test" (tex 9741–9745); and the odd limit symbol is assembled one
+cutoff `W` at a time from the stages valid "for every `|U| ≤ W`" (tex 10533–10548). Accordingly
+every field of `GaloisTraceModel` concerning one set `U` (`det_orbit`, `two_fresh`, `kummer`,
+`finiteIndex`, `chebotarev`, and the readings `reading`, `o12`) is stated only for `U` a set of
+good primes with `|U| + 1 ≤ B`: `B = W + 1` is the vertex budget, a reading of `U ∪ {q}` having
+`|U ∪ {q}| ≤ B`. This is the text's quantifier. The fields `trace_mul`, `trace_one`, `t_class`
+concern the operators on the whole module and carry no budget. RC0's interface states
+`det_orbit`, `two_fresh`, `kummer` for every `U` and `chebotarev` for every set `U` of good
+primes; these unbudgeted forms are collected in the predicate `GaloisTraceModel.Unbudgeted`,
+which the text does not give off the budget and which holds for the zero-form models
+(`GaloisTraceModel.unbudgeted_of_subsingleton`, `GaloisTraceModel.zero_unbudgeted`).
 
 The fields `level`, `N_anti`, `N_chi`, `typ_frob`, `bit_frob` and `chi_surj` of `TraceModelRel`
 are **not** fields here: they are PROVED. `level`, `N_anti`, `N_chi` (and the normality of `N_U`)
@@ -57,10 +77,12 @@ data and every type character reading the types, given `FrobeniusExists`; `M` is
 `finite_of_typeData`), and `chebotarev` is proved by Dirichlet's theorem (batch 3's
 `realizeNat`). In particular the model is inhabited over the genuine type data `typeData m` and
 over the stage type data (`galoisTraceModel_typeData_nonempty`,
-`galoisTraceModel_stage_nonempty`). `FrobeniusExists` is proved in the Frobenius module
+`galoisTraceModel_stage_nonempty`). The zero model also satisfies the unbudgeted forms
+(`GaloisTraceModel.zero_unbudgeted`). `FrobeniusExists` is proved in the Frobenius module
 (`frobeniusExists`), which gives the unconditional forms `chi_surj_good`,
-`galoisTraceModel_nonempty`, `galoisTraceModel_typeData_nonempty'`,
-`galoisTraceModel_stage_nonempty'` and `coefficientRules_zero'`.
+`galoisTraceModel_nonempty`, `exists_galoisTraceModel_unbudgeted`,
+`galoisTraceModel_typeData_nonempty'`, `galoisTraceModel_stage_nonempty'` and
+`coefficientRules_zero'`.
 
 DEPARTURE (Chebotarev and openness). Čebotarev's density theorem concerns open normal subgroups
 of `G_ℚ` (finite Galois extensions of `ℚ`). The genuine `N_U` is open: the characters are
@@ -70,8 +92,9 @@ continuity of the type character is not part of the Frobenius interface. The fin
 Čebotarev's theorem is proved in this repository (`ZInQ.Contrib.chebotarevExists`, through the
 density form `ZInQ.Contrib.ChebFD.C10.frobDense`); lane RC24's `Chebotarev.lean` derives the field
 `chebotarev` from it (`chebotarev_of_density`), given the openness of `N_U` and the
-unramifiedness of `N_U` at the good primes outside `U` (both GLUE), and `GaloisDensityModel` there
-is the model with these two hypotheses in place of `chebotarev` and `finiteIndex`.
+unramifiedness of `N_U` at the good primes outside `U` (both GLUE, within the budget), and
+`GaloisDensityModel` there is the model with these two hypotheses in place of `chebotarev` and
+`finiteIndex`.
 
 References: [Neukirch] J. Neukirch, *Algebraic number theory*, Grundlehren 322 (Springer 1999),
 Ch. VII, Theorem (13.4) (Čebotarev's density theorem; statement page `UNVERIFIED`).
@@ -255,15 +278,22 @@ theorem chi_surj_of_frobeniusExists (hFrob : FrobeniusExists) (T : TypeData L ε
 /-- **The trace-module model of lane RC12's readings over `G_ℚ`**, within the budget `B`, for the
 type character `chiType` (tex 9641–9771, 9905–9953): RC0's `TraceModelRel` with `G := G_ℚ`, genuine
 Frobenius elements (`frob_spec`), `chiBit := bitChar`, and `N := galN chiType t F` defined.
-Kinds: `frob_spec` definition (genuine Frobenius elements); `trace_mul`, `det_orbit`, `two_fresh`,
-`trace_one`, `t_class` ELLIOT (lane RC12's trace identities on the reduced module, tex 9705–9745,
-9762–9771); `kummer` GLUE (Kummer theory for the several radicals, tex 9745–9750); `finiteIndex`
-GLUE (continuity on the finite module, tex 9663–9669); `chebotarev` PRINT (J. Neukirch,
-*Algebraic number theory*, Grundlehren 322, Springer 1999, Ch. VII, Theorem (13.4), Čebotarev's
-density theorem, statement page `UNVERIFIED`; applied to the finite quotient `G_ℚ/N_U`, tex
-9666–9668, 9919–9921); `reading` ELLIOT (tex 9671–9704); `o12` ELLIOT (tex 9905–9918). The
-fields `level`, `N_anti`, `N_chi`, `chi_surj`, `typ_frob`, `bit_frob` of `TraceModelRel` are
-theorems here (see the module docstring). Owner: RC12 (App F), Lane RC24. -/
+Budget (the text's quantifier, tex 9447–9468, 9649–9654, 9741–9745, 10533–10548): the fields
+concerning one set `U` (`det_orbit`, `two_fresh`, `kummer`, `finiteIndex`, `chebotarev`,
+`reading`, `o12`) are stated only for `U` a set of good primes with `|U| + 1 ≤ B`, since the
+finite trace space is built for a fixed stage and `U` within the operator budget `|U| ≤ W`,
+`B = W + 1` (their unbudgeted forms are `GaloisTraceModel.Unbudgeted`).
+Kinds: `frob_spec` definition (genuine Frobenius elements); `trace_mul`, `trace_one`, `t_class`
+GLUE (matrix trace identities of the two-dimensional constituent representations, valid on the
+whole module once the reduced action is constructed; tex 9705–9745, 9762–9771); `det_orbit`,
+`two_fresh` ELLIOT (lane RC12's identities on the trace orbit of `F_U`, tex 9719–9745); `kummer`
+GLUE (Kummer theory for the several radicals, tex 9745–9750); `finiteIndex` GLUE (continuity on
+the finite module, tex 9663–9669); `chebotarev` PRINT (J. Neukirch, *Algebraic number theory*,
+Grundlehren 322, Springer 1999, Ch. VII, Theorem (13.4), Čebotarev's density theorem, statement
+page `UNVERIFIED`; applied to the finite quotient `G_ℚ/N_U`, tex 9666–9668, 9919–9921); `reading`
+ELLIOT (tex 9671–9704); `o12` ELLIOT (tex 9905–9918). The fields `level`, `N_anti`, `N_chi`,
+`chi_surj`, `typ_frob`, `bit_frob` of `TraceModelRel` are theorems here (see the module
+docstring). Owner: RC12 (App F), Lane RC24. -/
 structure GaloisTraceModel (T : TypeData L ε) (R : Finset ℕ → ZMod 2) (ap : ℕ → ℤ) (B : ℕ)
     (chiType : GalQ →* Multiplicative L) where
   /-- the reduced integral trace module (characteristic two, tex 9663–9669, 9893–9899) -/
@@ -274,7 +304,9 @@ structure GaloisTraceModel (T : TypeData L ε) (R : Finset ℕ → ZMod 2) (ap :
   t : GalQ → M →ₗ[ZMod 2] M
   /-- the determinant (diamond) operators `d(g)` (tex 9762–9771) -/
   d : GalQ → M →ₗ[ZMod 2] M
-  /-- the reduced forms `F_U = θ H_U` (tex 9672) -/
+  /-- the reduced forms `F_U = θ H_U` (tex 9672) for `U` a set of good primes within the budget;
+  the values elsewhere are irrelevant (no field constrains them) and may be taken `0`
+  ("No finite-stage value at larger weights is asserted", tex 9679–9681) -/
   F : Finset ℕ → M
   /-- the coefficient-one functional on the `U`-forms (tex 9688–9695) -/
   read : Finset ℕ → M →ₗ[ZMod 2] ZMod 2
@@ -282,30 +314,48 @@ structure GaloisTraceModel (T : TypeData L ε) (R : Finset ℕ → ZMod 2) (ap :
   frob : ℕ → GalQ
   /-- definition: `frob q` is a genuine arithmetic Frobenius element at every good prime `q` -/
   frob_spec : ∀ q, T.Good q → IsFrobAt (frob q) q
-  /-- ELLIOT (RC12, tex 9729–9737): `t(g)t(h) = t(gh) + d(h)t(gh⁻¹)` -/
+  /-- GLUE (matrix trace identities of the two-dimensional constituent representations, valid on
+  the whole module once the reduced action is constructed; tex 9705–9745, 9762–9771; the matrix
+  identity of tex 9734–9737): `t(g)t(h) = t(gh) + d(h)t(gh⁻¹)` -/
   trace_mul : ∀ g h (x : M), t g (t h x) = t (g * h) x + d h (t (g * h⁻¹) x)
-  /-- ELLIOT (RC12, tex 9719–9733): `d` acts trivially on the trace orbit of `F_U` -/
-  det_orbit : ∀ U u v, d u (t v (F U)) = t v (F U)
-  /-- ELLIOT (RC12, tex 9741–9745): two fresh traces vanish -/
-  two_fresh : ∀ U g h, t g (t h (F U)) = 0
-  /-- ELLIOT (RC12, tex 9739): `t(1) = 2` -/
+  /-- ELLIOT (RC12, tex 9719–9733), within the budget (tex 9447–9468, 9649–9654, 9741–9745,
+  10533–10548): for `U` a set of good primes with `|U| + 1 ≤ B`, `d` acts trivially on the trace
+  orbit of `F_U` -/
+  det_orbit : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B →
+    ∀ u v, d u (t v (F U)) = t v (F U)
+  /-- ELLIOT (RC12, tex 9741–9745: "`R ≥ 2` and the actual-stage budget were fixed before the
+  test"), within the budget (tex 9447–9468, 9649–9654, 10533–10548): for `U` a set of good primes
+  with `|U| + 1 ≤ B`, two fresh traces vanish on `F_U` -/
+  two_fresh : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B →
+    ∀ g h, t g (t h (F U)) = 0
+  /-- GLUE (matrix trace identities of the two-dimensional constituent representations, valid on
+  the whole module once the reduced action is constructed; tex 9705–9745, 9762–9771; `tr(1) = 2`,
+  tex 9739): `t(1) = 2` -/
   trace_one : ∀ x, t 1 x = (2 : ZMod 2) • x
-  /-- ELLIOT (tex 9762–9771; `t(g)` is a limit of Hecke operators `T_q`, `Fr_q` in the class of
-  `g`, tex 9666–9668): `t` is a class function -/
+  /-- GLUE (matrix trace identities of the two-dimensional constituent representations, valid on
+  the whole module once the reduced action is constructed; tex 9705–9745, 9762–9771; `t(g)` is a
+  limit of Hecke operators `T_q`, `Fr_q` in the class of `g`, tex 9666–9668): `t` is a class
+  function -/
   t_class : ∀ g h, t (h * g * h⁻¹) = t g
-  /-- GLUE (Kummer theory for the several radicals, tex 9745–9750): an element with trivial type
-  and trivial `χ_s`, `s ∈ U`, lies in the subgroup generated by the squares and `N_U` -/
-  kummer : ∀ U g, chiType g = 1 → (∀ s ∈ U, bitChar s g = 1) →
-    g ∈ Subgroup.closure (sqSet GalQ) ⊔ galN chiType t F U
+  /-- GLUE (Kummer theory for the several radicals, tex 9745–9750), within the budget (tex
+  9447–9468, 9649–9654, 9741–9745, 10533–10548): for `U` a set of good primes with
+  `|U| + 1 ≤ B`, an element with trivial type and trivial `χ_s`, `s ∈ U`, lies in the subgroup
+  generated by the squares and `N_U` -/
+  kummer : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∀ g, chiType g = 1 →
+    (∀ s ∈ U, bitChar s g = 1) → g ∈ Subgroup.closure (sqSet GalQ) ⊔ galN chiType t F U
   /-- GLUE (continuity of the characters and of the trace action on the finite module,
-  tex 9663–9669): for `U` a set of good primes, `G_ℚ/N_U` is finite -/
-  finiteIndex : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → (galN chiType t F U).FiniteIndex
+  tex 9663–9669), within the budget (tex 9447–9468, 9649–9654, 9741–9745, 10533–10548): for `U` a
+  set of good primes with `|U| + 1 ≤ B`, `G_ℚ/N_U` is finite -/
+  finiteIndex : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B →
+    (galN chiType t F U).FiniteIndex
   /-- PRINT (J. Neukirch, *Algebraic number theory*, Grundlehren 322, Springer 1999, Ch. VII,
   Theorem (13.4), Čebotarev's density theorem, statement page `UNVERIFIED`), applied to the
-  finite quotient `G_ℚ/N_U`, `U` good (tex 9666–9668, 9919–9921): every class of `G_ℚ/N_U` is
-  the Frobenius class of a good prime outside any finite set -/
-  chebotarev : ∀ (U : Finset ℕ), (∀ s ∈ U, T.Good s) → ∀ (g : GalQ) (avoid : Finset ℕ),
-    ∃ q h, ∃ n ∈ galN chiType t F U, T.Good q ∧ q ∉ avoid ∧ frob q = h * g * h⁻¹ * n
+  finite quotient `G_ℚ/N_U` (tex 9666–9668, 9919–9921), within the budget (tex 9447–9468,
+  9649–9654, 9741–9745, 10533–10548): for `U` a set of good primes with `|U| + 1 ≤ B`, every
+  class of `G_ℚ/N_U` is the Frobenius class of a good prime outside any finite set -/
+  chebotarev : ∀ (U : Finset ℕ), (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B →
+    ∀ (g : GalQ) (avoid : Finset ℕ),
+      ∃ q h, ∃ n ∈ galN chiType t F U, T.Good q ∧ q ∉ avoid ∧ frob q = h * g * h⁻¹ * n
   /-- ELLIOT (tex 9671–9704): the reading of a fresh vertex `q` adjoining `U` is the
   coefficient-one coefficient of `t(Fr_q) F_U` -/
   reading : ∀ (U : Finset ℕ) (q : ℕ), (∀ s ∈ U, T.Good s) → T.Good q → q ∉ U →
@@ -373,50 +423,60 @@ theorem chi_surj (htyp : IsTypeChar T chiType) (U : Finset ℕ) (hU : ∀ s ∈ 
   obtain ⟨q, -, -, -, h1, h2⟩ := exists_good_frob T htyp X.frob_spec U ∅ hU ℓ b
   exact ⟨_, h1, h2⟩
 
-/-- Invariance of `g ↦ t(g)F_U` under the subgroup generated by the squares and `N_U`. Kind:
-PROVED (RC0's `TraceModelRel.trace_join`: RC12's `trace_square_invariance` and `level`). -/
-theorem trace_join (U : Finset ℕ) (g x : GalQ)
+/-- Invariance of `g ↦ t(g)F_U` under the subgroup generated by the squares and `N_U`, for `U` a
+set of good primes within the budget, `|U| + 1 ≤ B` (tex 9745–9750; the budget, tex 9741–9745).
+Kind: PROVED (RC0's `TraceModelRel.trace_join`: RC12's `trace_square_invariance` and `level`). -/
+theorem trace_join (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) (g x : GalQ)
     (hx : x ∈ Subgroup.closure (sqSet GalQ) ⊔ X.N U) : X.t (g * x) (X.F U) = X.t g (X.F U) := by
   rw [← Subgroup.closure_eq (X.N U), ← Subgroup.closure_union] at hx
   induction hx using Subgroup.closure_induction generalizing g with
   | mem x hx =>
     rcases hx with ⟨h, rfl⟩ | hn
-    · exact trace_square_invariance X.t X.d (X.F U) X.trace_mul (X.det_orbit U) (X.two_fresh U)
-        g h
+    · exact trace_square_invariance X.t X.d (X.F U) X.trace_mul (X.det_orbit U hU hUB)
+        (X.two_fresh U hU hUB) g h
     · exact X.level U g x hn
   | one => simp
   | mul x y _ _ ihx ihy => rw [← mul_assoc, ihy, ihx]
   | inv x _ ihx => rw [← ihx (g * x⁻¹), inv_mul_cancel_right]
 
-/-- **The fixed-`U` factorization from RC12's square invariance** (tex 9745–9750). Kind: PROVED
-(RC0's `TraceModelRel.fixedU_of_model`). -/
+/-- **The fixed-`U` factorization from RC12's square invariance** (tex 9745–9750). The fields
+`kummer`, `det_orbit`, `two_fresh` are used only at the good set `W` with `|W| + 1 ≤ B` (from
+`|W ∪ {p}| ≤ B`, `p ∉ W`). Kind: PROVED (RC0's `TraceModelRel.fixedU_of_model`). -/
 theorem fixedU_of_model (htyp : IsTypeChar T chiType) : FixedUFactorization T R B := by
   intro W p p' hcard hW hp hp' hpW hp'W ht hb
+  have hWB : W.card + 1 ≤ B := by
+    rw [← card_insert_of_notMem hpW]
+    exact hcard
   have hcard' : (insert p' W).card ≤ B := by
     rwa [card_insert_of_notMem hp'W, ← card_insert_of_notMem hpW]
   rw [X.reading W p hW hp hpW hcard, X.reading W p' hW hp' hp'W hcard']
   congr 1
   have hx : (X.frob p)⁻¹ * X.frob p' ∈ Subgroup.closure (sqSet GalQ) ⊔ X.N W := by
-    refine X.kummer W _ ?_ fun s hs => ?_
+    refine X.kummer W hW hWB _ ?_ fun s hs => ?_
     · rw [map_mul, map_inv, X.typ_frob htyp p hp, X.typ_frob htyp p' hp', ht, inv_mul_cancel]
     · have hps : p ≠ s := fun h => hpW (h ▸ hs)
       have hp's : p' ≠ s := fun h => hp'W (h ▸ hs)
       rw [map_mul, map_inv, X.bit_frob p s hp (hW s hs) hps, X.bit_frob p' s hp' (hW s hs) hp's,
         hb s hs, inv_mul_cancel]
-  have := X.trace_join W (X.frob p) _ hx
+  have := X.trace_join W hW hWB (X.frob p) _ hx
   rw [mul_inv_cancel_left] at this
   rw [this]
 
 /-- **Primary isolation from RC12's square invariance and `t(1) = 2`** (tex 9739, 9947–9948).
-Kind: PROVED (RC0's `TraceModelRel.primary_of_model`). -/
+The fields `kummer`, `det_orbit`, `two_fresh` are used only at the good set `W` with
+`|W| + 1 ≤ B` (from `|W ∪ {q}| ≤ B`, `q ∉ W`). Kind: PROVED (RC0's
+`TraceModelRel.primary_of_model`). -/
 theorem primary_of_model (htyp : IsTypeChar T chiType) : PrimaryReading T R B := by
   intro W q hW hq hqW hcard ht hb
+  have hWB : W.card + 1 ≤ B := by
+    rw [← card_insert_of_notMem hqW]
+    exact hcard
   rw [X.reading W q hW hq hqW hcard]
   have hx : X.frob q ∈ Subgroup.closure (sqSet GalQ) ⊔ X.N W := by
-    refine X.kummer W _ ?_ fun s hs => ?_
+    refine X.kummer W hW hWB _ ?_ fun s hs => ?_
     · rw [X.typ_frob htyp q hq, ht, ofAdd_zero]
     · rw [X.bit_frob q s hq (hW s hs) (fun h => hqW (h ▸ hs)), hb s hs, ofAdd_zero]
-  have := X.trace_join W 1 _ hx
+  have := X.trace_join W hW hWB 1 _ hx
   rw [one_mul] at this
   rw [this, X.trace_one, show (2 : ZMod 2) = 0 from rfl, zero_smul, map_zero]
 
@@ -424,16 +484,17 @@ theorem primary_of_model (htyp : IsTypeChar T chiType) : PrimaryReading T R B :=
 `G_ℚ/N_U`** (tex 9905–9945): fresh good primes whose Frobenius elements lie in the classes of
 `g, gτ, gφ, gτφ` modulo `N_U` (`g` with the prescribed type and bits, `chi_surj` at the good set
 `U`) carry the labels of `O12Reading` (product-label rule); `N_U` moves neither the labels at `U`
-(`N_chi`) nor the traces on `F_U`, `F_{U∖p}` (`level`, `N_anti`). Kind: PROVED (RC0's
+(`N_chi`) nor the traces on `F_U`, `F_{U∖p}` (`level`, `N_anti`). The field `chebotarev` is used
+only at the good set `U` with `|U| + 1 ≤ B` (the budget of `O12Reading`). Kind: PROVED (RC0's
 `TraceModelRel.o12_of_model`). -/
 theorem o12_of_model (htyp : IsTypeChar T chiType) : O12Reading T R ap B := by
   intro U p hpU hU hUB ℓ bq
   obtain ⟨g, hgT, hgB⟩ := X.chi_surj htyp U hU ℓ bq
   obtain ⟨τ, φ, κ0, hκ, hτT, hτB, hτp, hφT, hφB, hO⟩ := X.o12 U p hpU hU hUB g
-  obtain ⟨q, h1, n1, hn1, hq, hqU, hfq⟩ := X.chebotarev U hU g U
-  obtain ⟨qτ, h2, n2, hn2, hqτ, hqτU, hfqτ⟩ := X.chebotarev U hU (g * τ) U
-  obtain ⟨r0, h3, n3, hn3, hr0, hr0U, hfr0⟩ := X.chebotarev U hU (g * φ) U
-  obtain ⟨r1, h4, n4, hn4, hr1, hr1U, hfr1⟩ := X.chebotarev U hU (g * τ * φ) U
+  obtain ⟨q, h1, n1, hn1, hq, hqU, hfq⟩ := X.chebotarev U hU hUB g U
+  obtain ⟨qτ, h2, n2, hn2, hqτ, hqτU, hfqτ⟩ := X.chebotarev U hU hUB (g * τ) U
+  obtain ⟨r0, h3, n3, hn3, hr0, hr0U, hfr0⟩ := X.chebotarev U hU hUB (g * φ) U
+  obtain ⟨r1, h4, n4, hn4, hr1, hr1U, hfr1⟩ := X.chebotarev U hU hUB (g * τ * φ) U
   have ne_of : ∀ {x s : ℕ}, x ∉ U → s ∈ U → x ≠ s := fun hx hs h => hx (h ▸ hs)
   -- types
   have typ_of : ∀ {x : ℕ} {y h n : GalQ}, n ∈ X.N U → T.Good x →
@@ -524,6 +585,88 @@ theorem coefficientRules_of_galois {T : TypeData L ε} {R : Finset ℕ → ZMod 
   coefficientRules_symb T R ap (fun B => (X B).fixedU_of_model htyp)
     (fun B => (X B).o12_of_model htyp) hap (fun B => (X B).primary_of_model htyp)
 
+/-! ## The unbudgeted forms (bridge to lane RC0's interface) -/
+
+/-- **The unbudgeted forms of the budgeted fields** of a genuine Galois trace model: `det_orbit`,
+`two_fresh` and `kummer` at every finite set `U`, and `chebotarev` at every set `U` of good
+primes, with no budget — the form in which lane RC0's `TraceModelRel` states these fields. This is
+NOT given by the text off the budget: the manuscript builds the finite trace space, its operators
+and the subgroup `N_U` only for a fixed stage and `U` within the operator budget (tex 9447–9468,
+9649–9654, 9741–9745, 10533–10548), which is what the fields of `GaloisTraceModel` state. It holds
+for the zero-form models (`GaloisTraceModel.unbudgeted_of_subsingleton`,
+`GaloisTraceModel.zero_unbudgeted`). Kind: definition (bridge hypothesis, no tex line). -/
+def GaloisTraceModel.Unbudgeted {T : TypeData L ε} {R : Finset ℕ → ZMod 2} {ap : ℕ → ℤ} {B : ℕ}
+    {chiType : GalQ →* Multiplicative L} (X : GaloisTraceModel T R ap B chiType) : Prop :=
+  (∀ (U : Finset ℕ) (u v : GalQ), X.d u (X.t v (X.F U)) = X.t v (X.F U)) ∧
+    (∀ (U : Finset ℕ) (g h : GalQ), X.t g (X.t h (X.F U)) = 0) ∧
+    (∀ (U : Finset ℕ) (g : GalQ), chiType g = 1 → (∀ s ∈ U, bitChar s g = 1) →
+      g ∈ Subgroup.closure (sqSet GalQ) ⊔ X.N U) ∧
+    (∀ (U : Finset ℕ), (∀ s ∈ U, T.Good s) → ∀ (g : GalQ) (avoid : Finset ℕ),
+      ∃ q h, ∃ n ∈ X.N U, T.Good q ∧ q ∉ avoid ∧ X.frob q = h * g * h⁻¹ * n)
+
+section Unbudgeted
+
+variable {T : TypeData L ε} {R : Finset ℕ → ZMod 2} {ap : ℕ → ℤ} {B : ℕ}
+  {chiType : GalQ →* Multiplicative L} {X : GaloisTraceModel T R ap B chiType}
+
+/-- `det_orbit` at every `U`, from `Unbudgeted` (no tex line; bridge to lane RC0). Kind: PROVED
+(projection). -/
+theorem GaloisTraceModel.Unbudgeted.det_orbit (hX : X.Unbudgeted) :
+    ∀ (U : Finset ℕ) (u v : GalQ), X.d u (X.t v (X.F U)) = X.t v (X.F U) :=
+  hX.1
+
+/-- `two_fresh` at every `U`, from `Unbudgeted` (no tex line; bridge to lane RC0). Kind: PROVED
+(projection). -/
+theorem GaloisTraceModel.Unbudgeted.two_fresh (hX : X.Unbudgeted) :
+    ∀ (U : Finset ℕ) (g h : GalQ), X.t g (X.t h (X.F U)) = 0 :=
+  hX.2.1
+
+/-- `kummer` at every `U`, from `Unbudgeted` (no tex line; bridge to lane RC0). Kind: PROVED
+(projection). -/
+theorem GaloisTraceModel.Unbudgeted.kummer (hX : X.Unbudgeted) :
+    ∀ (U : Finset ℕ) (g : GalQ), chiType g = 1 → (∀ s ∈ U, bitChar s g = 1) →
+      g ∈ Subgroup.closure (sqSet GalQ) ⊔ X.N U :=
+  hX.2.2.1
+
+/-- `chebotarev` at every set `U` of good primes, from `Unbudgeted` (no tex line; bridge to lane
+RC0). Kind: PROVED (projection). -/
+theorem GaloisTraceModel.Unbudgeted.chebotarev (hX : X.Unbudgeted) :
+    ∀ (U : Finset ℕ), (∀ s ∈ U, T.Good s) → ∀ (g : GalQ) (avoid : Finset ℕ),
+      ∃ q h, ∃ n ∈ X.N U, T.Good q ∧ q ∉ avoid ∧ X.frob q = h * g * h⁻¹ * n :=
+  hX.2.2.2
+
+end Unbudgeted
+
+/-- **Chebotarev relative to `N_U` on a zero module, by Dirichlet** (tex 2151–2174, 9938–9942):
+on a zero module `N_U` is the common kernel of the characters, and for every set `U` of good
+primes (no budget), every `g ∈ G_ℚ` and every finite set `avoid`, a good prime `q ∉ avoid` with
+the type of `g` and the bits of `g` at `U` has `Fr_q = g n` with `n = g⁻¹ Fr_q ∈ N_U`. Kind:
+PROVED (`exists_good_frob`: batch 3's `realizeNat`). -/
+theorem galN_chebotarev_of_subsingleton (T : TypeData L ε) {chiType : GalQ →* Multiplicative L}
+    (htyp : IsTypeChar T chiType) {M : Type*} [AddCommGroup M] [Module (ZMod 2) M]
+    [Subsingleton M] (t : GalQ → M →ₗ[ZMod 2] M) (F : Finset ℕ → M) {frob : ℕ → GalQ}
+    (hfrob : ∀ q, T.Good q → IsFrobAt (frob q) q) (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s)
+    (g : GalQ) (avoid : Finset ℕ) :
+    ∃ q h, ∃ n ∈ galN chiType t F U, T.Good q ∧ q ∉ avoid ∧ frob q = h * g * h⁻¹ * n := by
+  obtain ⟨q, hq, -, hqa, h1, h2⟩ := exists_good_frob T htyp hfrob U avoid hU
+    (Multiplicative.toAdd (chiType g)) (fun s => Multiplicative.toAdd (bitChar s g))
+  refine ⟨q, 1, g⁻¹ * frob q, mem_galN_of_subsingleton.mpr ⟨?_, fun s hs => ?_⟩, hq, hqa,
+    by group⟩
+  · rw [map_mul, map_inv, h1, ofAdd_toAdd, inv_mul_cancel]
+  · rw [map_mul, map_inv, h2 s hs, ofAdd_toAdd, inv_mul_cancel]
+
+/-- **A genuine Galois trace model on a zero module satisfies the unbudgeted forms** (no tex
+line): `det_orbit`, `two_fresh` hold on a zero module, `kummer` since `N_U` is the common kernel of
+the characters (`mem_galN_of_subsingleton`), and `chebotarev` at every good `U` by Dirichlet
+(`galN_chebotarev_of_subsingleton`). Kind: PROVED. -/
+theorem GaloisTraceModel.unbudgeted_of_subsingleton {T : TypeData L ε} {R : Finset ℕ → ZMod 2}
+    {ap : ℕ → ℤ} {B : ℕ} {chiType : GalQ →* Multiplicative L}
+    (X : GaloisTraceModel T R ap B chiType) [Subsingleton X.M] (htyp : IsTypeChar T chiType) :
+    X.Unbudgeted :=
+  ⟨fun _ _ _ => Subsingleton.elim _ _, fun _ _ _ => Subsingleton.elim _ _,
+    fun _ _ h1 h2 => Subgroup.mem_sup_right (mem_galN_of_subsingleton.mpr ⟨h1, h2⟩),
+    fun U hU g avoid => galN_chebotarev_of_subsingleton T htyp X.t X.F X.frob_spec U hU g avoid⟩
+
 /-! ## The genuine type characters -/
 
 /-- **The type character of the residue-class type data `typeData m` is `typChar m`** (tex
@@ -608,9 +751,10 @@ data, every type character reading the types, every `a_p` and budget, a model of
 The module is zero, `frob` is chosen by `FrobeniusExists`, `N_U` is the common kernel of the
 characters (finite index: `galN_finiteIndex_of_subsingleton`), `chebotarev` holds by Dirichlet (a
 good prime `q ∉ avoid` with the type of `g` and the bits of `g` at `U`, batch 3's `realizeNat`;
-then `Fr_q = g n` with `n = g⁻¹ Fr_q ∈ N_U`), and in `o12` the elements `τ, φ` are Frobenius
-elements (of a good prime of trivial type with bits `[s = p]` at `U`, and of `p`). Kind:
-PROVED. -/
+then `Fr_q = g n` with `n = g⁻¹ Fr_q ∈ N_U`, `galN_chebotarev_of_subsingleton`), and in `o12` the
+elements `τ, φ` are Frobenius elements (of a good prime of trivial type with bits `[s = p]` at
+`U`, and of `p`). The budgeted fields hold at every `U` (`GaloisTraceModel.zero_unbudgeted`).
+Kind: PROVED. -/
 def GaloisTraceModel.zero (hFrob : FrobeniusExists) (T : TypeData L ε) (ap : ℕ → ℤ) (B : ℕ)
     (chiType : GalQ →* Multiplicative L) (htyp : IsTypeChar T chiType) :
     GaloisTraceModel T (fun _ => 0) ap B chiType where
@@ -622,20 +766,14 @@ def GaloisTraceModel.zero (hFrob : FrobeniusExists) (T : TypeData L ε) (ap : �
   frob := chooseFrob hFrob
   frob_spec _ hq := chooseFrob_spec hFrob hq.1
   trace_mul _ _ _ := Subsingleton.elim _ _
-  det_orbit _ _ _ := Subsingleton.elim _ _
-  two_fresh _ _ _ := Subsingleton.elim _ _
+  det_orbit _ _ _ _ _ := Subsingleton.elim _ _
+  two_fresh _ _ _ _ _ := Subsingleton.elim _ _
   trace_one _ := Subsingleton.elim _ _
   t_class _ _ := rfl
-  kummer _ _ h1 h2 := Subgroup.mem_sup_right (mem_galN_of_subsingleton.mpr ⟨h1, h2⟩)
-  finiteIndex U _ := galN_finiteIndex_of_subsingleton T chiType _ _ U
-  chebotarev U hU g avoid := by
-    obtain ⟨q, hq, -, hqa, h1, h2⟩ := exists_good_frob T htyp
-      (fun q hq => chooseFrob_spec hFrob hq.1) U avoid hU (Multiplicative.toAdd (chiType g))
-      (fun s => Multiplicative.toAdd (bitChar s g))
-    refine ⟨q, 1, g⁻¹ * chooseFrob hFrob q, mem_galN_of_subsingleton.mpr ⟨?_, fun s hs => ?_⟩,
-      hq, hqa, by group⟩
-    · rw [map_mul, map_inv, h1, ofAdd_toAdd, inv_mul_cancel]
-    · rw [map_mul, map_inv, h2 s hs, ofAdd_toAdd, inv_mul_cancel]
+  kummer _ _ _ _ h1 h2 := Subgroup.mem_sup_right (mem_galN_of_subsingleton.mpr ⟨h1, h2⟩)
+  finiteIndex U _ _ := galN_finiteIndex_of_subsingleton T chiType _ _ U
+  chebotarev U hU _ g avoid := galN_chebotarev_of_subsingleton T htyp _ _
+    (fun _ hq => chooseFrob_spec hFrob hq.1) U hU g avoid
   reading _ _ _ _ _ _ := rfl
   o12 U p hpU hU _ g := by
     have hp := hU p hpU
@@ -648,6 +786,15 @@ def GaloisTraceModel.zero (hFrob : FrobeniusExists) (T : TypeData L ε) (ap : �
     · rw [h2 s hs, if_neg' hsp, ofAdd_zero]
     · rw [h2 p hpU, if_pos' rfl]
     · simp
+
+/-- **The zero model satisfies the unbudgeted forms** (`GaloisTraceModel.Unbudgeted`, no tex
+line): its module is zero. Kind: PROVED (`GaloisTraceModel.unbudgeted_of_subsingleton`). -/
+theorem GaloisTraceModel.zero_unbudgeted (hFrob : FrobeniusExists) (T : TypeData L ε)
+    (ap : ℕ → ℤ) (B : ℕ) (chiType : GalQ →* Multiplicative L) (htyp : IsTypeChar T chiType) :
+    (GaloisTraceModel.zero hFrob T ap B chiType htyp).Unbudgeted :=
+  haveI : Subsingleton (GaloisTraceModel.zero hFrob T ap B chiType htyp).M :=
+    inferInstanceAs (Subsingleton PUnit)
+  (GaloisTraceModel.zero hFrob T ap B chiType htyp).unbudgeted_of_subsingleton htyp
 
 /-- **The genuine Galois model is inhabited** for every type data and type character reading the
 types, given `FrobeniusExists`. Kind: PROVED (`GaloisTraceModel.zero`). -/
@@ -715,6 +862,15 @@ theorem galoisTraceModel_nonempty (T : TypeData L ε) (ap : ℕ → ℤ) (B : �
     {chiType : GalQ →* Multiplicative L} (htyp : IsTypeChar T chiType) :
     Nonempty (GaloisTraceModel T (fun _ => 0) ap B chiType) :=
   galoisTraceModel_zero_nonempty frobeniusExists T ap B htyp
+
+/-- **A genuine Galois model satisfying the unbudgeted forms exists** for every type data and
+type character reading the types (no tex line: the bridge hypothesis `Unbudgeted` is
+satisfiable). Kind: PROVED (`GaloisTraceModel.zero_unbudgeted`, `frobeniusExists`). -/
+theorem exists_galoisTraceModel_unbudgeted (T : TypeData L ε) (ap : ℕ → ℤ) (B : ℕ)
+    {chiType : GalQ →* Multiplicative L} (htyp : IsTypeChar T chiType) :
+    ∃ X : GaloisTraceModel T (fun _ => 0) ap B chiType, X.Unbudgeted :=
+  ⟨GaloisTraceModel.zero frobeniusExists T ap B chiType htyp,
+    GaloisTraceModel.zero_unbudgeted frobeniusExists T ap B chiType htyp⟩
 
 /-- **The genuine Galois model over `typeData m` is inhabited** (no tex line). Kind: PROVED
 (`galoisTraceModel_typeData_nonempty`, `frobeniusExists`). -/

@@ -96,16 +96,15 @@ def WData.depthSet {ℓ : ℕ} (W : WData ℓ) : Set ℤ :=
 /-! The final companion leaf `CompanionLeaf` and `companionTarget_of` are in `CompanionLeaf.lean`. -/
 
 /-- **The address leaf from the density leaf in the remaining branch** (PROVED: lane RC24's
-`addressPackageStagedLeaf_of_genuineLeaf` and `addressGenuineLeaf_of_densityLeaf`, used only where
-the staged package is asked for, `¬ W.OddEmptyUnit`). -/
+`addressLeaf_of_densityLeaf`; the odd witness of the stabilized tables is derived from the attained
+odd minimum `δ_o ∈ depthSet`, tex 2590–2593, 10188–10199, 10501–10505, 10547; used only where the
+staged package is asked for, `¬ W.OddEmptyUnit`). -/
 theorem addressLeaf_of_densityLeaf_branch {ℓ : ℕ} {W : WData ℓ} (hℓ : Adm ℓ)
-    (hcomp : CompanionLeaf W)
+    (hcomp : CompanionLeaf W) (hdata : PreDataSpec W) (hprep : PreparedSpec W)
+    (hδ : W.δo ∈ W.depthSet)
     (h : ¬ W.OddEmptyUnit → ZInQ.Manuscript.RC.AddressGenuine.AddressDensityLeaf W) :
     AddressLeaf W :=
-  addressLeaf_of_stagedPackage W fun A CE CR Cper Cdet h33 h34 h35 hvis hU =>
-    ZInQ.Manuscript.RC.AddressGenuine.addressPackageStagedLeaf_of_genuineLeaf hℓ hcomp
-      (ZInQ.Manuscript.RC.AddressGenuine.addressGenuineLeaf_of_densityLeaf (h hU))
-      A CE CR Cper Cdet h33 h34 h35 hvis hU
+  ZInQ.Manuscript.RC.AddressGenuine.addressLeaf_of_densityLeaf hℓ hcomp hdata hprep hδ h
 
 /-! ## The leaves -/
 
@@ -174,14 +173,19 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   /-- In the remaining branch (`¬ W.OddEmptyUnit`, the scope of the address construction: tex
   2588–2593, 10268–10270, 10501–10505; the odd-empty-unit branch needs no address), the inputs of
   the address construction at `δ_o` over the genuine Galois objects (lane RC24's
-  `AddressDensityLeaf`): the label data, a fresh prime of `k`, density models of the odd stage
-  source on a set of stages of the ultrafilter and of the transported even source at every budget
-  (ELLIOT trace identities and readings, tex 9671–9745, 9905–9918; GLUE Kummer, openness and
-  unramifiedness of `N_U`, tex 9524–9548, 9663–9669), the odd witness, the odd and prepared
-  filters, the even filter, the K-split seed and the even reading (ELLIOT/GLUE; App G
-  10079–10861, App F 9447–9976; owners RC24, RC2, RC12, RC11, RC3, batch 3). Everything else of
-  the address package is PROVED over genuine `G_ℚ`, Frobenius elements and characters, Chebotarev
-  by the repository's density theorem (`addressLeaf_of_densityLeaf`). -/
+  `AddressDensityLeaf`): the label data with the intrinsic odd filter (the odd source's own filter,
+  agreeing with the stage support away from `W.S`; tex 2028–2029, 2603, 9479–9483, 10594–10597), a
+  fresh prime of `k`, budgeted density models of the odd stage source on a set of stages of the
+  ultrafilter and of the transported even source at every budget (GLUE trace identities; ELLIOT
+  readings, tex 9671–9745, 9905–9918; GLUE Kummer, openness and unramifiedness of `N_U`, tex
+  9524–9548, 9663–9669), the odd and prepared filters, the even filter, the K-split seed (given
+  `Adm ℓ`, `FreshPrime` and `k` odd squarefree, equivalent to a nonempty K-split unit of the even
+  reading: the conclusion of Lemma `ex:sec7-ksplit-seed`, kept in the text's conditional form, tex
+  2636–2641) and the even reading ((F.1)'s conclusion for the chosen reading; ELLIOT; App G
+  10079–10861, App F 9447–9976; owners RC24, RC2, RC12, RC11, RC3, batch 3). The odd witness is
+  not an input: it is derived from the attained minimum `δ_o` (`addressLeaf_of_densityLeaf_branch`).
+  Everything else of the address package is PROVED over genuine `G_ℚ`, Frobenius elements and
+  characters, Chebotarev by the repository's density theorem. -/
   address : ¬ W.OddEmptyUnit → ZInQ.Manuscript.RC.AddressGenuine.AddressDensityLeaf W
   /-- The inputs of (4.6) at every address (`CalibrationInputsH`): the two-primary Ш and torsion
   orders (ELLIOT + PRINT Kolyvagin), the component groups at `p ∣ k` through good models up to
@@ -340,7 +344,10 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
   have hfam : FinalFamilyTarget W₂.toRCData :=
     finalFamilyTarget_of W₂ hvis₂ hstages ⟨A, CE, h33⟩ ⟨Cper, h34, h34k⟩ h35
       hglue hδ
-      (addressLeaf_of_densityLeaf_branch hadm hq.companion hq.address)
+      (addressLeaf_of_densityLeaf_branch hadm hq.companion
+        ⟨hp.data_spec.support_prime, hp.data_spec.support_base, hp.data_spec.stages_hyper,
+          hp.data_spec.stages_index, hp.data_spec.admissible_split, hp.data_spec.prepared_one⟩
+        hp.prepared_spec hδ.1 hq.address)
   have h47 : CommonCoordinateTarget W₂.toRCData :=
     commonCoordinateTarget_of_inputs (commonCoordinateInputs_of_G hq.common_coordinate)
   have hheight : HeightOneTarget W₂.toRCData :=

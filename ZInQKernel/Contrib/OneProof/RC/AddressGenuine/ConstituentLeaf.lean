@@ -27,7 +27,7 @@ kinds as in `GaloisConstituentModel`): for every cutoff, on a set of stages of t
 constituent model over `G_ℚ` of the genuine odd reading with its ELLIOT inputs. -/
 def OddConstituentModels : Prop :=
   ∀ Wc : ℕ, ∀ᶠ θ in (W.stages : Filter ℕ),
-    ∃ X : GaloisConstituentModel (D.T₁ θ) (Rodd W θ) (apo ℓ) (Wc + 1) (stageChar D.m₁ (D.ℓ₀ θ)),
+    ∃ X : GaloisConstituentModel (D.T₁ θ) (Rodd W D θ) (apo ℓ) (Wc + 1) (stageChar D.m₁ (D.ℓ₀ θ)),
       X.Inputs
 
 /-- **Constituent models of the transported even source at every budget** (as
