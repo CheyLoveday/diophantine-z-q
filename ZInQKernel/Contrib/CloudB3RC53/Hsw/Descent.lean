@@ -31,10 +31,20 @@ classes `[g t], [g u] ∈ H¹(W_rel)`, and is bilinear there. That is `ResiduePa
 * `strictOrth_counterexample`: `StrictOrth` does **not** follow from the axioms of
   `SelPairData` and `tr ∘ d = 0`. There is an explicit model over `ℚ` with zero differentials
   where it fails.
+* `strictOrth_of_reverseIsotropy`, `exists_residuePairing_of_reverseIsotropy`: a sufficient
+  condition. Suppose there is a homotopy `h'` on `U_rel × U_str`, the reverse order of `Q.hU`,
+  with `d h' = ι u ∪ ι f t'`, and suppose it agrees with `Q.hU` on strict × strict cochains
+  (`ReverseIsotropy`). Then `StrictOrth` holds, and so does the descent.
+* Non-vacuity (LESSON 2): `symReverse` is a `ReverseIsotropy` instance in a model with a nonzero
+  local cup product (`symForm_ne_zero`, `strictOrth_symQ`).
 
 The first-variable descent along strict classes is therefore an extra input. In Nekovář's setting
 it comes from the graded commutativity of the local cup product up to homotopy together with
-`U_str ⊥ U_rel`; `SelPairData` does not record either.
+`U_str ⊥ U_rel`. That is the content of `ReverseIsotropy`, which `SelPairData` does not record.
+
+The descended form `P` is canonical only on `{[g t] : dt = 0} × H¹(W_rel)`. Off that subspace it
+is extended arbitrarily. So the local-duality shape required by `hsw_of_residuePairing` is a
+statement about the local Tate pairing on `H¹(W_rel)`, which is still an external input.
 
 All results are `PROVED`. No new axioms.
 -/
@@ -335,6 +345,63 @@ theorem exists_residuePairing_iff
 end Descent
 
 
+/-! ### A sufficient condition for `StrictOrth`: reverse isotropy -/
+
+section Reverse
+
+variable (D : SelData k) (Ustr : GCx k) (f : GHom Ustr D.U)
+  (Q : SelPairData (restrictData D f) D) (tr : (coneCx Q.resE).X 3 →ₗ[k] k)
+
+/-- **Reverse isotropy** in the degrees of tex L2816: a homotopy `h'` on `U_rel × U_str` (the
+reverse order of `Q.hU`) whose boundary is the local cup product `ι u ∪ ι f t'`, and which agrees
+with `Q.hU` on strict × strict cochains in degree `(2, 1)`. In Nekovář's setting this comes from the
+graded commutativity of the local cup product up to homotopy and `U_str ⊥ U_rel`. -/
+structure ReverseIsotropy where
+  /-- `h'` in degrees `(1, 1) → 1`. -/
+  h11 : D.U.X 1 →ₗ[k] Ustr.X 1 →ₗ[k] Q.EL.X 1
+  /-- `h'` in degrees `(2, 1) → 2`. -/
+  h21 : D.U.X 2 →ₗ[k] Ustr.X 1 →ₗ[k] Q.EL.X 2
+  /-- `h'` in degrees `(1, 2) → 2`. -/
+  h12 : D.U.X 1 →ₗ[k] Ustr.X 2 →ₗ[k] Q.EL.X 2
+  /-- The reverse isotropy identity `d h' + h'(d ·, ·) − h'(·, d ·) = ι u ∪ ι f t'`. -/
+  iso : ∀ (u : D.U.X 1) (t' : Ustr.X 1),
+    Q.EL.d 1 2 rfl (h11 u t') + h21 (D.U.d 1 2 rfl u) t' + sgn 1 • h12 u (Ustr.d 1 2 rfl t') =
+      Q.cupL.P 1 1 2 rfl (D.ι.f 1 1 rfl u) (D.ι.f 1 1 rfl (f.f 1 1 rfl t'))
+  /-- Agreement with `Q.hU` on strict × strict cochains. -/
+  compat : ∀ (s : Ustr.X 2) (t' : Ustr.X 1),
+    Q.hU 2 1 2 rfl s (f.f 1 1 rfl t') = h21 (f.f 2 2 rfl s) t'
+
+/-- **Reverse isotropy gives `StrictOrth`**: `h(s, f t') − ι u ∪ ι f t' = d(−h'(u, t'))` when
+`du = f s` and `dt' = 0`. `PROVED`. -/
+theorem strictOrth_of_reverseIsotropy (htr : ∀ z, tr ((coneCx Q.resE).d 2 3 rfl z) = 0)
+    (Rv : ReverseIsotropy D Ustr f Q) : StrictOrth D Ustr f Q tr := by
+  intro t' u s ht' hus
+  have iso := Rv.iso u t'
+  rw [ht', map_zero, smul_zero, add_zero, hus] at iso
+  have e : Q.hU 2 1 2 rfl s (f.f 1 1 rfl t') -
+      Q.cupL.P 1 1 2 rfl (D.ι.f 1 1 rfl u) (D.ι.f 1 1 rfl (f.f 1 1 rfl t')) =
+      Q.EL.d 1 2 rfl (-Rv.h11 u t') := by
+    rw [Rv.compat s t', ← iso, map_neg]
+    abel
+  refine (lhs_eq D Ustr f Q tr (f.f 1 1 rfl t') u s).trans ?_
+  rw [e]
+  exact tr_locT_d Q tr htr _
+
+end Reverse
+
+/-- **The descent from reverse isotropy** (tex L2790–2818), `PROVED`. Under the switch exactness
+data, `tr ∘ d = 0`, and reverse isotropy, the cone-trace cup product is a residue pairing. -/
+theorem exists_residuePairing_of_reverseIsotropy (R : QuasiRelaxedLocalization k) (Ustr : GCx k)
+    (f : GHom Ustr R.D.U) (Q : SelPairData (restrictData R.D f) R.D)
+    (tr : (coneCx Q.resE).X 3 →ₗ[k] k)
+    (hfg : ∀ n (u : Ustr.X n), R.gR.f n n rfl (f.f n n rfl u) = 0)
+    (hf : ∀ n, Function.Injective (f.f n n rfl)) (hg : ∀ n, Function.Surjective (R.gR.f n n rfl))
+    (hex : ∀ n (u : R.D.U.X n), R.gR.f n n rfl u = 0 → ∃ u', f.f n n rfl u' = u)
+    (htr : ∀ z, tr ((coneCx Q.resE).d 2 3 rfl z) = 0) (Rv : ReverseIsotropy R.D Ustr f Q) :
+    ∃ P, ResiduePairing R Ustr f Q tr P :=
+  exists_residuePairing R Ustr f Q tr hfg hf hg hex htr
+    (strictOrth_of_reverseIsotropy R.D Ustr f Q tr htr Rv)
+
 /-! ### `StrictOrth` is an extra input -/
 
 section Counterexample
@@ -351,15 +418,13 @@ abbrev zHom {V W : Type} [AddCommGroup V] [Module ℚ V] [AddCommGroup W] [Modul
   f _ _ _ := φ
   comm _ _ _ _ _ _ _ _ _ := map_zero φ
 
-/-- The bilinear form `(a, b) ↦ a₁ b₀` on `ℚ²`. -/
-def cexForm : (Fin 2 → ℚ) →ₗ[ℚ] (Fin 2 → ℚ) →ₗ[ℚ] ℚ :=
-  (LinearMap.mul ℚ ℚ).compl₁₂ (LinearMap.proj 1) (LinearMap.proj 0)
-
-/-- The constant pairing by `cexForm` (all differentials are zero, so Leibniz is trivial). -/
-def cexCupL : GPair (constZ (Fin 2 → ℚ)) (constZ (Fin 2 → ℚ)) (constZ ℚ) where
-  P _ _ _ _ := cexForm
+/-- The constant pairing by a bilinear form `β` on `ℚ²`. All differentials are zero, so the
+Leibniz rule is trivial. -/
+def formCupL (β : (Fin 2 → ℚ) →ₗ[ℚ] (Fin 2 → ℚ) →ₗ[ℚ] ℚ) :
+    GPair (constZ (Fin 2 → ℚ)) (constZ (Fin 2 → ℚ)) (constZ ℚ) where
+  P _ _ _ _ := β
   leib _ _ _ _ _ _ _ _ _ _ x y := by
-    change (0 : ℚ) = cexForm 0 y + _ • cexForm x 0
+    change (0 : ℚ) = β 0 y + _ • β x 0
     simp
 
 /-- The zero pairing. -/
@@ -376,22 +441,29 @@ def cexD : SelData ℚ :=
 /-- The strict condition `ℚ → ℚ²`, `c ↦ (c, 0)`. -/
 def cexF : GHom (constZ ℚ) cexD.U := zHom (LinearMap.single ℚ (fun _ : Fin 2 => ℚ) 0)
 
-/-- Selmer pairing data: zero global cup product, local cup product `cexForm`, zero isotropy
-homotopy. Isotropy holds because `cexForm (c, 0) v = 0`. -/
-def cexQ : SelPairData (restrictData cexD cexF) cexD where
+/-- Selmer pairing data with zero global cup product, local cup product `β` and zero isotropy
+homotopy. Isotropy holds when `β (c, 0) v = 0`. -/
+def formQ (β : (Fin 2 → ℚ) →ₗ[ℚ] (Fin 2 → ℚ) →ₗ[ℚ] ℚ)
+    (hβ : ∀ c v, β (Pi.single 0 c) v = 0) : SelPairData (restrictData cexD cexF) cexD where
   E := constZ ℚ
   EL := constZ ℚ
   resE := zHom 0
   cupG := cexCupG
-  cupL := cexCupL
+  cupL := formCupL β
   compat _ _ _ _ _ _ _ _ _ _ _ a b := by
-    change (0 : ℚ) = cexForm 0 0
+    change (0 : ℚ) = β 0 0
     simp
   hU _ _ _ _ := 0
   isotropy _ _ _ _ _ _ _ _ _ _ u v := by
-    change (0 : ℚ) + 0 + _ • (0 : ℚ) =
-      (Pi.single (0 : Fin 2) (show ℚ from u) : Fin 2 → ℚ) 1 * (show Fin 2 → ℚ from v) 0
-    rw [Pi.single_eq_of_ne (by decide), zero_mul, smul_zero, add_zero, add_zero]
+    exact (show (0 : ℚ) + 0 + _ • (0 : ℚ) = 0 by simp).trans (hβ u v).symm
+
+/-- The bilinear form `(a, b) ↦ a₁ b₀` on `ℚ²`. -/
+def cexForm : (Fin 2 → ℚ) →ₗ[ℚ] (Fin 2 → ℚ) →ₗ[ℚ] ℚ :=
+  (LinearMap.mul ℚ ℚ).compl₁₂ (LinearMap.proj 1) (LinearMap.proj 0)
+
+/-- The counterexample pairing data: local cup product `cexForm`. -/
+def cexQ : SelPairData (restrictData cexD cexF) cexD :=
+  formQ cexForm fun c v => by simp [cexForm]
 
 /-- The trace `Cone³ = ℚ × ℚ → ℚ`, the second projection. -/
 def cexTr : (coneCx cexQ.resE).X 3 →ₗ[ℚ] ℚ := LinearMap.snd ℚ ℚ ℚ
@@ -422,6 +494,41 @@ theorem strictOrth_counterexample :
       (Pi.single (1 : Fin 2) (1 : ℚ) : Fin 2 → ℚ) 1 *
         (Pi.single (0 : Fin 2) (1 : ℚ) : Fin 2 → ℚ) 0 = 0 at h2
     simp at h2
+
+/-- The symmetric form `(a, b) ↦ a₁ b₁` on `ℚ²`. It kills `(c, 0)` on both sides. -/
+def symForm : (Fin 2 → ℚ) →ₗ[ℚ] (Fin 2 → ℚ) →ₗ[ℚ] ℚ :=
+  (LinearMap.mul ℚ ℚ).compl₁₂ (LinearMap.proj 1) (LinearMap.proj 1)
+
+theorem symForm_single (a : Fin 2 → ℚ) (c : ℚ) : symForm a (Pi.single 0 c) = 0 := by
+  simp [symForm]
+
+/-- Pairing data with the nonzero local cup product `symForm`. -/
+def symQ : SelPairData (restrictData cexD cexF) cexD :=
+  formQ symForm fun c v => by simp [symForm]
+
+/-- **Non-vacuity of `ReverseIsotropy`** (LESSON 2), `PROVED`. The model `symQ` has a nonzero local
+cup product (`symForm (0,1) (0,1) = 1`) and reverse isotropy with `h' = 0`. -/
+def symReverse : ReverseIsotropy cexD (constZ ℚ) cexF symQ where
+  h11 := 0
+  h21 := 0
+  h12 := 0
+  iso u t' := by
+    exact (show (0 : ℚ) + 0 + sgn 1 • (0 : ℚ) = 0 by rw [smul_zero, add_zero, add_zero]).trans
+      (symForm_single u t').symm
+  compat _ _ := rfl
+
+theorem symForm_ne_zero : symForm (Pi.single 1 1) (Pi.single 1 1) = 1 := by simp [symForm]
+
+/-- The trace for `symQ`. -/
+def cexTr' : (coneCx symQ.resE).X 3 →ₗ[ℚ] ℚ := LinearMap.snd ℚ ℚ ℚ
+
+/-- `StrictOrth` holds in the model `symQ` (from `symReverse`). `PROVED`. -/
+theorem strictOrth_symQ : StrictOrth cexD (constZ ℚ) cexF symQ cexTr' :=
+  strictOrth_of_reverseIsotropy cexD (constZ ℚ) cexF symQ cexTr'
+    (fun z => by
+      change (0 : ℚ →ₗ[ℚ] ℚ) z.1 - (0 : ℚ →ₗ[ℚ] ℚ) z.2 = 0
+      exact sub_self (0 : ℚ))
+    symReverse
 
 end Counterexample
 
