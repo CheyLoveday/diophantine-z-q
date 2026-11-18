@@ -126,12 +126,11 @@ writes a file of several megabytes per module that embeds absolute paths. Clone 
 - The manuscripts: [diophantine_zq.pdf](diophantine_zq.pdf) ([TeX](diophantine_zq.tex)) and the earlier conditional
   [October 11 manuscript](October%2011%20Manuscript/README.md); the polynomial and its checks are in
   [construction/](construction/README.md). The copy here is the November 5 text that `ZInQ.FrozenTarget` was frozen
-  against. Upstream has revised the manuscript since (version 20 on 2026-11-18), with corrections listed in its
-  README.
+  against. Upstream has revised the manuscript since (version 20 as of 2026-11-18), with corrections listed in
+  its README.
 - The previous, longer README, with the earlier five-hypothesis theorem and its trust statements, is
   [here](https://github.com/Deicyde/diophantine-z-q/blob/222c98bfaaade688e1c0afdef7c857ce59ab6081/README.md).
-- [Blueprint site](https://deicyde.github.io/diophantine-z-q/) (redeployed after each main build cache run that
-  passes on `main`).
+- [Blueprint site](https://deicyde.github.io/diophantine-z-q/) (a snapshot from 2026-11-13).
 - Licence: the fork's own material is under the Apache License 2.0 ([LICENSE](LICENSE)). It does not cover the
   manuscripts, `construction/` and `lean/`, which came from upstream, or the vendored libraries
   ([NOTICE](NOTICE), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).
