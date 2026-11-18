@@ -4,3 +4,9 @@ blr_1_2_4	proof	project	yes		https://github.com/Deicyde/diophantine-z-q/commit/b
 shimizuCovolumeO1	proof	project	yes		https://github.com/Deicyde/diophantine-z-q/commit/57264686e0cb92cfa4c8d7c3c7cbb0c8642ca410	leaf-fold16	dbe96f2abf6ed6c27aac40c73e0e86e5bd5ce4a3
 igusaPsi4	proof	project	yes		https://github.com/Deicyde/diophantine-z-q/commit/e32311e513b3dd84f36df9e1d4a0f06ccc4ba0f1	leaf-fold16	dbe96f2abf6ed6c27aac40c73e0e86e5bd5ce4a3
 igusaChi10	proof	project	yes		https://github.com/Deicyde/diophantine-z-q/commit/e32311e513b3dd84f36df9e1d4a0f06ccc4ba0f1	leaf-fold16	dbe96f2abf6ed6c27aac40c73e0e86e5bd5ce4a3
+javanpeykarThm111An	statement-check	alreadydone	yes	contrib desk	https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6955406000	faltings-fold	daed7487b0938208ebe04ebb2dc2a6a99d4f1f67
+picRepresentableAbVar	statement-check	alreadydone	yes	contrib desk	https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6963676270	faltings-fold	daed7487b0938208ebe04ebb2dc2a6a99d4f1f67
+hCM	statement-check	zachbaugher	partly	contrib desk	https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6970893547	faltings-fold	daed7487b0938208ebe04ebb2dc2a6a99d4f1f67
+abscissa-parity	statement-fix	CheyLoveday	unknown	contrib desk	https://github.com/Deicyde/diophantine-z-q/pull/88	faltings-fold	daed7487b0938208ebe04ebb2dc2a6a99d4f1f67
+fowlerProp27	statement-check	zachbaugher	drafting only	contrib desk	https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973387139	faltings-fold	daed7487b0938208ebe04ebb2dc2a6a99d4f1f67
+cmjDegree	statement-check	zachbaugher	drafting only	contrib desk	https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973419601	faltings-fold	daed7487b0938208ebe04ebb2dc2a6a99d4f1f67

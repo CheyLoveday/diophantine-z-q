@@ -674,4 +674,10 @@ ZInQ.Manuscript.PoleS12.KolyvaginThm1
 | shimizuCovolumeO1 | proof | project | yes | https://github.com/Deicyde/diophantine-z-q/commit/57264686e0cb92cfa4c8d7c3c7cbb0c8642ca410 |
 | igusaPsi4 | proof | project | yes | https://github.com/Deicyde/diophantine-z-q/commit/e32311e513b3dd84f36df9e1d4a0f06ccc4ba0f1 |
 | igusaChi10 | proof | project | yes | https://github.com/Deicyde/diophantine-z-q/commit/e32311e513b3dd84f36df9e1d4a0f06ccc4ba0f1 |
+| javanpeykarThm111An | statement-check | alreadydone | yes | https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6955406000 |
+| picRepresentableAbVar | statement-check | alreadydone | yes | https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6963676270 |
+| hCM | statement-check | zachbaugher | partly | https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6970893547 |
+| abscissa-parity | statement-fix | CheyLoveday | unknown | https://github.com/Deicyde/diophantine-z-q/pull/88 |
+| fowlerProp27 | statement-check | zachbaugher | drafting only | https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973387139 |
+| cmjDegree | statement-check | zachbaugher | drafting only | https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973419601 |
 
