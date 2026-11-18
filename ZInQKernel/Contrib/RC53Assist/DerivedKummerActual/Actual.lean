@@ -1,4 +1,9 @@
 import ZInQKernel.Contrib.RC53Assist.DerivedKummer.LocalDuality
+import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.MulByInt.Comp
+import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.MulByInt.WeilPairing.Basic
+import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.MulByInt.WeilPairing.Bilinear
+import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.TateModule.Galois
+import ZInQKernel.Contrib.OneProof.RC.SelmerComplex.CupOne
 import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.TateModule.Basic
 import ZInQKernel.Contrib.RC53Assist.DerivedKummer.DegreeZero
 import ZInQKernel.Contrib.OneProof.RC.KummerMaps.KummerImage
@@ -2219,5 +2224,758 @@ theorem actualLocalReduction_mem_genuine_Kummer (a : ℕ)
 end ActualLocalKummer
 
 end ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralKummer
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.WeilLevel
+
+open WeierstrassCurve WeierstrassCurve.Affine TauCeti TauCeti.Isogeny AlgebraicGeometry IsDedekindDomain
+
+variable {F : Type} [Field F] [DecidableEq F] (W : WeierstrassCurve.Affine F) [W.IsElliptic]
+
+/-- Every function-field pullback fixes actual constant points. -/
+theorem map_constant_point (φ : Isogeny W W) (P : (W⁄F).toAffine.Point) :
+    Point.map φ.fieldPullback (Point.baseChange (W' := W) F W.FunctionField P) =
+      Point.baseChange (W' := W) F W.FunctionField P := by
+  change Point.map φ.fieldPullback (Point.map (Algebra.ofId F W.FunctionField) P) = _
+  rw [Point.map_map]
+  have h : φ.fieldPullback.comp (Algebra.ofId F W.FunctionField) = Algebra.ofId F W.FunctionField :=
+    Subsingleton.elim _ _
+  rw [h]
+
+/-- Multiplication pullback intertwines translation by a point with translation by its multiple. -/
+theorem multiplication_translation {n : ℤ} (hn : psiFunctionField W n ≠ 0)
+    (P : (W⁄F).toAffine.Point) :
+    (translation W P).toAlgHom.comp (mulByIntIsogeny W hn).fieldPullback =
+      (mulByIntIsogeny W hn).fieldPullback.comp (translation W (n • P)).toAlgHom := by
+  apply map_genericPoint_injective W
+  change Point.map ((translation W P).toAlgHom.comp (mulByIntIsogeny W hn).fieldPullback) W.genericPoint =
+    Point.map ((mulByIntIsogeny W hn).fieldPullback.comp (translation W (n • P)).toAlgHom) W.genericPoint
+  rw [← Point.map_map, ← Point.map_map, map_mulByIntIsogeny_genericPoint,
+    map_zsmul, map_translation_genericPoint, translatedGenericPoint_def,
+    zsmul_add, map_translation_genericPoint, translatedGenericPoint_def, map_add,
+    map_mulByIntIsogeny_genericPoint, map_constant_point, ← map_zsmul]
+
+/-- Pullback of actual divisors with the actual function-field algebra structure fixed explicitly. -/
+def pullDivisor (φ : Isogeny W W) : Divisor F W.FunctionField →+ Divisor F W.FunctionField :=
+  letI := φ.fieldPullback.toRingHom.toAlgebra
+  φ.divisorPullback (fun _ => rfl)
+
+/-- Actual divisor pullback is contravariantly compatible with composition. -/
+theorem pullDivisor_comp (φ ψ : Isogeny W W) (D : Divisor F W.FunctionField) :
+    pullDivisor W φ (pullDivisor W ψ D) = pullDivisor W (ψ.comp φ) D :=
+  @Isogeny.divisorPullback_comp F _ W W φ φ.fieldPullback.toRingHom.toAlgebra (fun _ => rfl)
+    W ψ ψ.fieldPullback.toRingHom.toAlgebra (ψ.comp φ).fieldPullback.toRingHom.toAlgebra
+    (fun _ => rfl) (fun _ => rfl) D
+
+/-- Actual pullback carries a principal divisor to the divisor of the genuine pulled-back function. -/
+theorem pullDivisor_principal (φ : Isogeny W W) (g : W.FunctionFieldˣ) :
+    pullDivisor W φ (Divisor.principal W.isFunctionField g) =
+      Divisor.principal W.isFunctionField (Units.map φ.fieldPullback.toMonoidHom g) :=
+  @Isogeny.divisorPullback_principal F _ W W φ φ.fieldPullback.toRingHom.toAlgebra (fun _ => rfl) g
+
+/-- The actual divisor difference of a point and the origin. -/
+def pointDifference (Q : W.Point) : Divisor F W.FunctionField :=
+  WeilDivisor.ofPoint (W.pointEquivDegreeOnePlace Q).1 - WeilDivisor.ofPoint (Place.infinity W)
+
+/-- The divisor used by the actual Weil pairing at an integral multiplication index. -/
+def levelDivisor {n : ℤ} (hn : psiFunctionField W n ≠ 0) (Q : W.Point) : Divisor F W.FunctionField :=
+  pullDivisor W (mulByIntIsogeny W hn) (pointDifference W Q)
+
+/-- The explicit actual pullback description is the genuine Weil-pairing divisor. -/
+theorem levelDivisor_eq_weil {n : ℤ} (hn : psiFunctionField W n ≠ 0) (Q : W.Point) :
+    levelDivisor W hn Q = Isogeny.weilPairingDivisor W hn Q := by
+  rw [Isogeny.weilPairingDivisor_def]
+  change pullDivisor W (mulByIntIsogeny W hn)
+      (WeilDivisor.ofPoint (W.pointEquivDegreeOnePlace Q).1 - WeilDivisor.ofPoint (Place.infinity W)) =
+    pullDivisor W (mulByIntIsogeny W hn) (WeilDivisor.ofPoint (W.pointEquivDegreeOnePlace Q).1) -
+      pullDivisor W (mulByIntIsogeny W hn) (WeilDivisor.ofPoint (Place.infinity W))
+  exact map_sub _ _ _
+
+/-- Pulling back a genuine Weil-pairing divisor changes its multiplication index by composition. -/
+theorem levelDivisor_mul {n m : ℤ} (hn : psiFunctionField W n ≠ 0)
+    (hm : psiFunctionField W m ≠ 0) (hnm : psiFunctionField W (n * m) ≠ 0) (Q : W.Point) :
+    pullDivisor W (mulByIntIsogeny W hm) (levelDivisor W hn Q) = levelDivisor W hnm Q := by
+  change pullDivisor W (mulByIntIsogeny W hm)
+      (pullDivisor W (mulByIntIsogeny W hn) (pointDifference W Q)) =
+    pullDivisor W (mulByIntIsogeny W hnm) (pointDifference W Q)
+  rw [pullDivisor_comp, mulByIntIsogeny_comp_mulByIntIsogeny W hn hm hnm]
+
+section ChangeOfLevel
+
+variable (N m : ℕ)
+
+/-- The actual inclusion of lower-level torsion in a higher multiplication level. -/
+def torsionInclude (T : AddSubgroup.torsionBy W.Point (N : ℤ)) :
+    AddSubgroup.torsionBy W.Point ((N * m : ℕ) : ℤ) :=
+  ⟨T.val, by
+    rw [AddSubgroup.torsionBy.nsmul_iff, Nat.mul_comm, mul_nsmul',
+      AddSubgroup.torsionBy.nsmul_iff.mp T.2, smul_zero]⟩
+
+/-- The actual coefficient transition multiplies a geometric torsion point by the level ratio. -/
+def torsionMultiply (S : AddSubgroup.torsionBy W.Point ((N * m : ℕ) : ℤ)) :
+    AddSubgroup.torsionBy W.Point (N : ℤ) :=
+  ⟨(m : ℕ) • S.val, by
+    rw [AddSubgroup.torsionBy.nsmul_iff, ← mul_nsmul']
+    exact AddSubgroup.torsionBy.nsmul_iff.mp S.2⟩
+
+variable [IsSepClosed F] [NeZero N] [NeZero m]
+  (hN : (N : F) ≠ 0) (hm : (m : F) ≠ 0)
+
+/-- The genuine Weil pairing at a composite level restricts to the lower-level pairing after multiplying its first argument by the level ratio. -/
+theorem weilPairing_change_level
+    (S : AddSubgroup.torsionBy W.Point ((N * m : ℕ) : ℤ))
+    (T : AddSubgroup.torsionBy W.Point (N : ℤ)) :
+    ((Isogeny.weilPairing W (N * m) (by simpa only [Nat.cast_mul] using mul_ne_zero hN hm)
+      S (torsionInclude W N m T)).toMul : Fˣ) =
+      ((Isogeny.weilPairing W N hN (torsionMultiply W N m S) T).toMul : Fˣ) := by
+  have hNI : ((N : ℤ) : F) ≠ 0 := by simpa only [Int.cast_natCast] using hN
+  have hmI : ((m : ℤ) : F) ≠ 0 := by simpa only [Int.cast_natCast] using hm
+  let hn := psiFunctionField_ne_zero W hNI
+  let hmi := psiFunctionField_ne_zero W hmI
+  have hnmi : psiFunctionField W ((N : ℤ) * (m : ℤ)) ≠ 0 :=
+    psiFunctionField_ne_zero W (by simpa only [Int.cast_mul] using mul_ne_zero hNI hmI)
+  have hT : (N : ℤ) • T.val = 0 := by
+    rw [natCast_zsmul]
+    exact AddSubgroup.torsionBy.nsmul_iff.mp T.2
+  obtain ⟨g, hg⟩ := exists_principal_eq_weilPairingDivisor W hNI hT
+  let φ := mulByIntIsogeny W hmi
+  let g' : W.FunctionFieldˣ := Units.map φ.fieldPullback.toMonoidHom g
+  have hg' : Divisor.principal W.isFunctionField g' =
+      Isogeny.weilPairingDivisor W hnmi (torsionInclude W N m T).val := by
+    rw [← pullDivisor_principal, hg, ← levelDivisor_eq_weil, levelDivisor_mul W hn hmi hnmi,
+      levelDivisor_eq_weil]
+    rfl
+  apply Units.ext
+  apply (algebraMap F W.FunctionField).injective
+  rw [Isogeny.algebraMap_weilPairing W (N * m) _ hg', Isogeny.algebraMap_weilPairing W N hN hg]
+  have htranslation := multiplication_translation W hmi (Point.equivBaseChangeSelf W S.val)
+  have hp : (m : ℤ) • Point.equivBaseChangeSelf W S.val =
+      Point.equivBaseChangeSelf W ((m : ℕ) • S.val) := by
+    rw [← map_zsmul, natCast_zsmul]
+  rw [hp] at htranslation
+  have ht := congrArg (fun f : W.FunctionField →ₐ[F] W.FunctionField => f (g : W.FunctionField)) htranslation
+  change translation W (Point.equivBaseChangeSelf W S.val) (φ.fieldPullback g) =
+      φ.fieldPullback (translation W (Point.equivBaseChangeSelf W ((m : ℕ) • S.val)) g) at ht
+  change translation W (Point.equivBaseChangeSelf W S.val) (φ.fieldPullback g) / φ.fieldPullback g = _
+  have hlow : algebraMap F W.FunctionField
+      ((Isogeny.weilPairing W N hN (torsionMultiply W N m S) T).toMul : Fˣ) =
+        translation W (Point.equivBaseChangeSelf W ((m : ℕ) • S.val)) g / g :=
+    Isogeny.algebraMap_weilPairing W N hN (S := torsionMultiply W N m S) (T := T) hg
+  rw [ht, ← map_div₀]
+  change φ.fieldPullback
+      (translation W (Point.equivBaseChangeSelf W ((m : ℕ) • S.val)) g / g) =
+    translation W (Point.equivBaseChangeSelf W ((m : ℕ) • S.val)) g / g
+  rw [← hlow]
+  exact φ.fieldPullback.commutes _
+
+/-- Multiplying both actual torsion arguments by the level ratio reduces the genuine Weil pairing by the same power. -/
+theorem weilPairing_multiplication_transition
+    (S T : AddSubgroup.torsionBy W.Point ((N * m : ℕ) : ℤ)) :
+    ((Isogeny.weilPairing W N hN (torsionMultiply W N m S) (torsionMultiply W N m T)).toMul : Fˣ) =
+      ((Isogeny.weilPairing W (N * m) (by simpa only [Nat.cast_mul] using mul_ne_zero hN hm) S T).toMul : Fˣ) ^ m := by
+  rw [← weilPairing_change_level W N m hN hm S (torsionMultiply W N m T)]
+  have h : torsionInclude W N m (torsionMultiply W N m T) = (m : ℕ) • T := Subtype.ext rfl
+  rw [h, map_nsmul, toMul_nsmul, SubmonoidClass.coe_pow]
+
+end ChangeOfLevel
+
+section TatePairing
+
+variable [IsSepClosed F] [CharZero F]
+
+/-- Changing an equal coefficient index and equal underlying torsion points does not change the genuine Weil value. -/
+theorem weilPairing_index_congr {N M : ℕ} [NeZero N] [NeZero M] (h : N = M)
+    (hN : (N : F) ≠ 0) (hM : (M : F) ≠ 0)
+    (S T : AddSubgroup.torsionBy W.Point (N : ℤ))
+    (S' T' : AddSubgroup.torsionBy W.Point (M : ℤ))
+    (hS : S.val = S'.val) (hT : T.val = T'.val) :
+    ((Isogeny.weilPairing W N hN S T).toMul : Fˣ) =
+      ((Isogeny.weilPairing W M hM S' T').toMul : Fˣ) := by
+  subst M
+  have hs : S = S' := Subtype.ext hS
+  have ht : T = T' := Subtype.ext hT
+  subst S'
+  subst T'
+  rfl
+
+/-- The genuine inclusion of roots of unity into the corresponding torsion level of multiplicative coefficients. -/
+def rootsAsLevel (N : ℕ) : Additive (rootsOfUnity N F) →+ AddSubgroup.torsionBy (Additive Fˣ) (N : ℤ) where
+  toFun z := ⟨Additive.ofMul (z.toMul : Fˣ), by
+    apply AddSubgroup.torsionBy.nsmul_iff.mpr
+    apply Additive.toMul.injective
+    change (z.toMul : Fˣ) ^ N = 1
+    exact (mem_rootsOfUnity N _).mp z.toMul.2⟩
+  map_zero' := Subtype.ext rfl
+  map_add' z z' := Subtype.ext rfl
+
+/-- The actual finite Weil pairing, with its values read in the genuine multiplicative Tate level. -/
+def finiteWeilLevel (a : ℕ) : TateModuleLevel 2 W.Point a →+ TateModuleLevel 2 W.Point a →+
+    TateModuleLevel 2 (Additive Fˣ) a :=
+  (AddMonoidHom.compHom (rootsAsLevel (F := F) (2 ^ a))).comp
+    (Isogeny.weilPairing W (2 ^ a) (Nat.cast_ne_zero.mpr (pow_ne_zero _ (by decide))))
+
+/-- The actual finite Weil values are compatible with the genuine Tate-module transitions. -/
+theorem finiteWeilLevel_transition (a : ℕ)
+    (S T : TateModuleLevel 2 W.Point (a + 1)) :
+    tateModuleTransition 2 (Additive Fˣ) a (finiteWeilLevel W (a + 1) S T) =
+      finiteWeilLevel W a (tateModuleTransition 2 W.Point a S) (tateModuleTransition 2 W.Point a T) := by
+  let S' : AddSubgroup.torsionBy W.Point (((2 ^ a : ℕ) * 2 : ℕ) : ℤ) :=
+    ⟨S.val, by simpa only [pow_succ] using S.2⟩
+  let T' : AddSubgroup.torsionBy W.Point (((2 ^ a : ℕ) * 2 : ℕ) : ℤ) :=
+    ⟨T.val, by simpa only [pow_succ] using T.2⟩
+  have hN : (2 ^ a : F) ≠ 0 := pow_ne_zero _ two_ne_zero
+  have hN' : ((2 ^ a : ℕ) : F) ≠ 0 := by simpa using hN
+  have hbig : ((2 ^ (a + 1) : ℕ) : F) ≠ 0 := by simp
+  have hprod : (((2 ^ a : ℕ) * 2 : ℕ) : F) ≠ 0 := by simp
+  have hindex := weilPairing_index_congr W (pow_succ 2 a) hbig hprod S T S' T' rfl rfl
+  have h := weilPairing_multiplication_transition W (2 ^ a) 2 hN' two_ne_zero S' T'
+  apply Subtype.ext
+  apply Additive.toMul.injective
+  change ((Isogeny.weilPairing W (2 ^ (a + 1)) hbig S T).toMul : Fˣ) ^ 2 =
+    ((Isogeny.weilPairing W (2 ^ a) hN' (tateModuleTransition 2 W.Point a S)
+      (tateModuleTransition 2 W.Point a T)).toMul : Fˣ)
+  rw [hindex, ← h]
+  rfl
+
+/-- The genuine integral Weil value is the compatible family of actual finite Weil values. -/
+def tateWeilValue (x y : TateModule 2 W.Point) : TateModule 2 (Additive Fˣ) :=
+  TateModule.mk (fun a => finiteWeilLevel W a (TateModule.proj a x) (TateModule.proj a y)) (fun a => by
+    rw [finiteWeilLevel_transition, TateModule.proj_succ, TateModule.proj_succ])
+
+/-- Integral Weil projection is exactly the actual finite Weil pairing. -/
+theorem tateWeilValue_projection (x y : TateModule 2 W.Point) (a : ℕ) :
+    TateModule.proj a (tateWeilValue W x y) = finiteWeilLevel W a (TateModule.proj a x) (TateModule.proj a y) := rfl
+
+/-- The genuine integral Weil pairing is bilinear over the actual two-adic scalar ring. -/
+def tateWeilBilin : TateModule 2 W.Point →ₗ[ℤ_[2]] TateModule 2 W.Point →ₗ[ℤ_[2]] TateModule 2 (Additive Fˣ) :=
+  LinearMap.mk₂ ℤ_[2] (tateWeilValue W)
+    (fun x x' y => by
+      apply TateModule.ext
+      intro a
+      simp only [tateWeilValue_projection, map_add, AddMonoidHom.add_apply])
+    (fun r x y => by
+      apply TateModule.ext
+      intro a
+      simp only [tateWeilValue_projection, TateModule.proj_smul]
+      exact ZMod.map_smul ((finiteWeilLevel W a).flip (TateModule.proj a y))
+        (PadicInt.toZModPow a r) (TateModule.proj a x))
+    (fun x y y' => by
+      apply TateModule.ext
+      intro a
+      simp only [tateWeilValue_projection, map_add])
+    (fun r x y => by
+      apply TateModule.ext
+      intro a
+      simp only [tateWeilValue_projection, TateModule.proj_smul]
+      exact ZMod.map_smul (finiteWeilLevel W a (TateModule.proj a x))
+        (PadicInt.toZModPow a r) (TateModule.proj a y))
+
+/-- The bilinear integral pairing is the genuine compatible finite Weil family. -/
+theorem tateWeilBilin_apply (x y : TateModule 2 W.Point) :
+    tateWeilBilin W x y = tateWeilValue W x y := rfl
+
+/-- The genuine integral Weil pairing is jointly continuous for the inverse-limit topologies. -/
+theorem continuous_tateWeilValue :
+    Continuous (fun p : TateModule 2 W.Point × TateModule 2 W.Point => tateWeilValue W p.1 p.2) := by
+  apply TateModule.continuous_iff.mpr
+  intro a
+  have h1 : IsLocallyConstant (fun p : TateModule 2 W.Point × TateModule 2 W.Point => TateModule.proj a p.1) :=
+    (TateModule.isLocallyConstant_proj a).comp_continuous continuous_fst
+  have h2 : IsLocallyConstant (fun p : TateModule 2 W.Point × TateModule 2 W.Point => TateModule.proj a p.2) :=
+    (TateModule.isLocallyConstant_proj a).comp_continuous continuous_snd
+  exact h1.comp₂ h2 (fun x y => finiteWeilLevel W a x y)
+
+end TatePairing
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.WeilLevel
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralPairing
+
+open CategoryTheory TauCeti TauCeti.ContCohomology
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.WeilLevel
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+
+variable (F : Type) [Field F] [CharZero F] [DecidableEq F]
+  (B : WeierstrassCurve F) [B.IsElliptic]
+
+/-- The actual integral Tate coefficients in the separable-closure description. -/
+abbrev pointTate := IntegralTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff
+
+/-- The actual integral roots-of-unity Tate coefficients of the local trace target. -/
+abbrev muTate := IntegralTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F)
+
+/-- The canonical actual point-coefficient dictionary induces the genuine integral geometric dictionary. -/
+def pointTateToGeometric : pointTate F B →ₗ[ℤ_[2]]
+    TateModule 2 (B.baseChange (SeparableClosure F)).toAffine.Point :=
+  TateModule.mapLinearMap B.pointCoeffEquiv.symm.toAddMonoidHom
+
+/-- The integral pairing on the actual point-coefficient Tate modules is the genuine integral Weil pairing. -/
+def coefficientWeilPairing : pointTate F B →ₗ[ℤ_[2]] pointTate F B →ₗ[ℤ_[2]] muTate F :=
+  ((tateWeilBilin (B.baseChange (SeparableClosure F))).compl₂ (pointTateToGeometric F B)).comp
+    (pointTateToGeometric F B)
+
+/-- The genuine finite point-coefficient dictionary in the separable-closure description. -/
+def pointLevelEquiv (a : ℕ) : FiniteTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff a ≃+
+    B.TorsionCoeff (2 ^ a) := AddEquiv.refl _
+
+/-- The finite point-coefficient dictionary intertwines the actual Galois action. -/
+theorem pointLevelEquiv_smul (a : ℕ) (σ : AbsoluteGaloisGroup F)
+    (t : FiniteTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff a) :
+    pointLevelEquiv F B a (σ • t) = σ • pointLevelEquiv F B a t := rfl
+
+/-- The fixed actual integral coefficient projection reduces the integral pairing to the genuine finite Weil pairing. -/
+theorem coefficientWeilPairing_projection (a : ℕ) (x y : pointTate F B) :
+    actualMuLevelEquiv F a (coefficientProjection (AbsoluteGaloisGroup F) (UnitsCoeff F) a
+      (coefficientWeilPairing F B x y)) =
+      B.torsionCoeffWeilPairing (2 ^ a) (twoPower_isUnit F a)
+        (pointLevelEquiv F B a (coefficientProjection (AbsoluteGaloisGroup F) B.PointCoeff a x))
+        (pointLevelEquiv F B a (coefficientProjection (AbsoluteGaloisGroup F) B.PointCoeff a y)) := by
+  erw [B.torsionCoeffWeilPairing_apply (2 ^ a) (twoPower_isUnit F a)
+    (Nat.cast_ne_zero.mpr (pow_ne_zero _ (by decide)))]
+
+/-- The genuine integral pairing intertwines the actual absolute Galois action. -/
+theorem coefficientWeilPairing_smul (σ : AbsoluteGaloisGroup F) (x y : pointTate F B) :
+    coefficientWeilPairing F B (σ • x) (σ • y) = σ • coefficientWeilPairing F B x y := by
+  apply TateModule.ext
+  intro a
+  apply (actualMuLevelEquiv F a).injective
+  change actualMuLevelEquiv F a (coefficientProjection (AbsoluteGaloisGroup F) (UnitsCoeff F) a
+      (coefficientWeilPairing F B (σ • x) (σ • y))) =
+    actualMuLevelEquiv F a (coefficientProjection (AbsoluteGaloisGroup F) (UnitsCoeff F) a
+      (σ • coefficientWeilPairing F B x y))
+  rw [coefficientWeilPairing_projection,
+    coefficientProjection_smul (AbsoluteGaloisGroup F) (UnitsCoeff F) a σ,
+    actualMuLevelEquiv_smul, coefficientWeilPairing_projection,
+    coefficientProjection_smul (AbsoluteGaloisGroup F) B.PointCoeff a σ x,
+    coefficientProjection_smul (AbsoluteGaloisGroup F) B.PointCoeff a σ y,
+    pointLevelEquiv_smul, pointLevelEquiv_smul]
+  exact B.torsionCoeffWeilPairing_smul (2 ^ a) (twoPower_isUnit F a) σ _ _
+
+/-- The actual point-coefficient Tate dictionary is continuous for the genuine inverse-limit topologies. -/
+theorem pointTateToGeometric_continuous : Continuous (pointTateToGeometric F B) := by
+  apply TateModule.continuous_iff.mpr
+  intro a
+  exact (TateModule.isLocallyConstant_proj a).comp
+    (TateModule.levelMap B.pointCoeffEquiv.symm.toAddMonoidHom a)
+
+/-- The actual integral Weil coefficient pairing is jointly continuous. -/
+theorem coefficientWeilPairing_continuous :
+    Continuous (fun p : pointTate F B × pointTate F B => coefficientWeilPairing F B p.1 p.2) :=
+  (continuous_tateWeilValue (B.baseChange (SeparableClosure F))).comp
+    ((pointTateToGeometric_continuous F B).comp continuous_fst |>.prodMk
+      ((pointTateToGeometric_continuous F B).comp continuous_snd))
+
+/-- The actual integral local cochain complex in the separable-closure description. -/
+abbrev pointComplex := integralComplex (AbsoluteGaloisGroup F) B.PointCoeff
+
+/-- The genuine integral cup product is the continuous cochain pairing induced by the actual Tate-Weil coefficients. -/
+def integralCupPair : NatPair (pointComplex F B) (pointComplex F B) (actualTraceComplex F) :=
+  contNatPair (coefficientWeilPairing F B) (coefficientWeilPairing_smul F B)
+    (coefficientWeilPairing_continuous F B)
+
+/-- The actual integral cup cochain in bidegree one. -/
+def integralCupOne : (pointComplex F B).X 1 →ₗ[ℤ_[2]] (pointComplex F B).X 1 →ₗ[ℤ_[2]]
+    (actualTraceComplex F).X 2 :=
+  (integralCupPair F B).P 1 1 2 rfl
+
+/-- The genuine integral cup product of actual one-cocycles is an actual two-cocycle. -/
+theorem integralCupOne_isCycle
+    (u v : LinearMap.ker ((pointComplex F B).d 1 2).hom) :
+    ((actualTraceComplex F).d 2 3).hom (integralCupOne F B u.val v.val) = 0 := by
+  have h := (integralCupPair F B).leib 1 1 2 rfl u.val v.val
+  rw [u.2, v.2, LinearMap.map_zero₂, map_zero, smul_zero, add_zero] at h
+  exact h
+
+/-- The actual integral cup product on actual continuous one-cocycles. -/
+def integralCupCycle (u v : LinearMap.ker ((pointComplex F B).d 1 2).hom) :
+    LinearMap.ker ((actualTraceComplex F).d 2 3).hom :=
+  ⟨integralCupOne F B u.val v.val, integralCupOne_isCycle F B u v⟩
+
+/-- The fixed genuine finite class reduction in the separable-closure point-coefficient description. -/
+def pointH1Reduction (a : ℕ) : LinearMap.ker ((pointComplex F B).d 1 2).hom →+
+    H1 (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a)) :=
+  (explicitCoeff1Equiv (AbsoluteGaloisGroup F)
+    (FiniteTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff a) (pointLevelEquiv F B a)
+    continuous_of_discreteTopology continuous_of_discreteTopology (pointLevelEquiv_smul F B a)).toAddMonoidHom.comp
+      (reducedOneClass (AbsoluteGaloisGroup F) B.PointCoeff a)
+
+/-- The fixed finite one-cocycle underlying the actual point-class reduction. -/
+def pointReductionZ1 (a : ℕ) (u : LinearMap.ker ((pointComplex F B).d 1 2).hom) :
+    Z1 (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a)) :=
+  cocyclesMap1 (AbsoluteGaloisGroup F) (FiniteTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff a)
+    (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a)) (ContinuousMonoidHom.id _)
+    (pointLevelEquiv F B a).toAddMonoidHom continuous_of_discreteTopology (pointLevelEquiv_smul F B a)
+    ⟨fun σ => cfun (reduceOneCycle (AbsoluteGaloisGroup F) B.PointCoeff a u).val (fun _ => σ),
+      mem_Z1_of_d_eq_zero _ (reduceOneCycle (AbsoluteGaloisGroup F) B.PointCoeff a u).2⟩
+
+/-- The fixed actual point-class reduction is the class of its specific finite cocycle. -/
+theorem pointH1Reduction_class (a : ℕ) (u : LinearMap.ker ((pointComplex F B).d 1 2).hom) :
+    pointH1Reduction F B a u = H1pi (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a))
+      (pointReductionZ1 F B a u) := rfl
+
+/-- The fixed finite two-cocycle underlying reduction of the genuine integral trace target. -/
+def muReductionZ2 (a : ℕ) (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) :
+    Z2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a)) :=
+  cocyclesMap2 (AbsoluteGaloisGroup F) (FiniteTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F) a)
+    (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a)) (ContinuousMonoidHom.id _)
+    (actualMuLevelEquiv F a).toAddMonoidHom continuous_of_discreteTopology (actualMuLevelEquiv_smul F a)
+    ⟨fun p => cfun (reduceTwoCycle (AbsoluteGaloisGroup F) (UnitsCoeff F) a z).val ![p.1, p.2],
+      mem_Z2_of_d_eq_zero _ (reduceTwoCycle (AbsoluteGaloisGroup F) (UnitsCoeff F) a z).2⟩
+
+/-- The fixed trace-target class reduction is the class of its specific finite cocycle. -/
+theorem muH2Reduction_class (a : ℕ) (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) :
+    actualMuH2Reduction F a z = H2pi (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a))
+      (muReductionZ2 F a z) := rfl
+
+/-- Fixed reduction of the actual integral cup is the cup of the fixed genuine finite reductions. -/
+theorem integralCupCycle_reduction (a : ℕ)
+    (u v : LinearMap.ker ((pointComplex F B).d 1 2).hom) :
+    actualMuH2Reduction F a (integralCupCycle F B u v) =
+      ZInQ.Contrib.CloudB3RC53.Duality.localWeilCup B (2 ^ a) (twoPower_isUnit F a)
+        (pointH1Reduction F B a u) (pointH1Reduction F B a v) := by
+  rw [muH2Reduction_class, pointH1Reduction_class, pointH1Reduction_class]
+  change H2pi (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a))
+      (muReductionZ2 F a (integralCupCycle F B u v)) =
+    ZInQ.Contrib.CloudB3RC53.Duality.cupH (B.torsionCoeffWeilPairing (2 ^ a) (twoPower_isUnit F a))
+      (fun σ x y => B.torsionCoeffWeilPairing_smul (2 ^ a) (twoPower_isUnit F a) σ x y)
+      (H1pi (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a)) (pointReductionZ1 F B a u))
+      (H1pi (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a)) (pointReductionZ1 F B a v))
+  rw [ZInQ.Contrib.CloudB3RC53.Duality.cupH_mk]
+  apply congrArg (H2pi (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a)))
+  apply Subtype.ext
+  funext p
+  obtain ⟨σ, τ⟩ := p
+  have hc : cfun (integralCupOne F B u.val v.val) ![σ, τ] =
+      coefficientWeilPairing F B (cfun u.val (fun _ => σ)) (σ • cfun v.val (fun _ => τ)) := by
+    change cupFun (coefficientWeilPairing F B) 1 1 2 rfl (cfun u.val) (cfun v.val) ![σ, τ] = _
+    exact cupFun_one_one_apply (coefficientWeilPairing F B) (cfun u.val) (cfun v.val) ![σ, τ]
+  change actualMuLevelEquiv F a
+      (coefficientProjection (AbsoluteGaloisGroup F) (UnitsCoeff F) a
+        (cfun (integralCupOne F B u.val v.val) ![σ, τ])) =
+    B.torsionCoeffWeilPairing (2 ^ a) (twoPower_isUnit F a)
+      (pointLevelEquiv F B a (coefficientProjection (AbsoluteGaloisGroup F) B.PointCoeff a
+        (cfun u.val (fun _ => σ))))
+      (σ • pointLevelEquiv F B a (coefficientProjection (AbsoluteGaloisGroup F) B.PointCoeff a
+        (cfun v.val (fun _ => τ))))
+  rw [hc, coefficientWeilPairing_projection, coefficientProjection_smul, pointLevelEquiv_smul]
+  all_goals exact continuous_of_discreteTopology
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralPairing
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralTrace
+
+open TauCeti TauCeti.ContCohomology TauCeti.ClassFieldTheory
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteTrace
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.CloudB3RC53.Duality
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+
+/-- The canonical rational-circle characters commute with the actual successive finite residue maps. -/
+theorem rationalCharacter_transition (a : ℕ) (z : ZMod (2 ^ (a + 1))) :
+    ZMod.toRatAddCircle (2 ^ a) ((ZMod.castHom (pow_dvd_pow 2 a.le_succ) (ZMod (2 ^ a))) z) =
+      (2 : ℕ) • ZMod.toRatAddCircle (2 ^ (a + 1)) z := by
+  obtain ⟨k, rfl⟩ := ZMod.intCast_surjective z
+  rw [map_intCast, ZMod.toRatAddCircle_intCast, ZMod.toRatAddCircle_intCast, ← AddCircle.coe_nsmul]
+  congr 1
+  simp only [nsmul_eq_mul, Nat.cast_pow, Nat.cast_ofNat, pow_succ]
+  field_simp
+  push_cast
+  ring
+
+variable (F : Type) [Field F]
+
+/-- The actual finite roots-of-unity transition on second cohomology. -/
+def finiteMuH2Transition (a : ℕ) :
+    H2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1))) →+
+      H2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a)) :=
+  explicitCoeff2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1)))
+    (kummerCoeffPow F (pow_dvd_pow 2 a.le_succ)) continuous_of_discreteTopology
+
+/-- The actual power map on multiplicative coefficient modules. -/
+def unitPowerHom (m : ℕ) : UnitsCoeff F →+[AbsoluteGaloisGroup F] UnitsCoeff F :=
+  { unitsCoeffPow F m with map_smul' := unitsCoeffPow_equivariant F m }
+
+/-- Actual roots-of-unity inclusions intertwine the genuine coefficient power map and the actual multiplication map on units. -/
+theorem coefficientIncl_power (a : ℕ) :
+    (kummerCoeffInclHom F (2 ^ a)).comp (kummerCoeffPow F (pow_dvd_pow 2 a.le_succ)) =
+      (unitPowerHom F 2).comp (kummerCoeffInclHom F (2 ^ (a + 1))) := by
+  apply DFunLike.ext
+  intro z
+  apply Additive.toMul.injective
+  change (z.toMul : (SeparableClosure F)ˣ) ^ (2 ^ (a + 1) / 2 ^ a) =
+    (z.toMul : (SeparableClosure F)ˣ) ^ 2
+  have h : 2 ^ (a + 1) / 2 ^ a = 2 := by
+    rw [pow_succ, Nat.mul_div_right 2 (pow_pos (by decide) a)]
+  rw [h]
+
+/-- The fixed genuine finite cohomology transition becomes multiplication by two under the actual Brauer map. -/
+theorem kummerToBr_transition (a : ℕ)
+    (z : H2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1)))) :
+    kummerToBr (2 ^ a) (finiteMuH2Transition F a z) = (2 : ℕ) • kummerToBr (2 ^ (a + 1)) z := by
+  change unitsRepH2Equiv F
+      ((explicitCoeff2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a))
+        (kummerCoeffInclHom F (2 ^ a)) continuous_of_discreteTopology)
+          (finiteMuH2Transition F a z)) = _
+  have h := explicitCoeff2_comp (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1)))
+    (kummerCoeffPow F (pow_dvd_pow 2 a.le_succ)) (kummerCoeffInclHom F (2 ^ a))
+    continuous_of_discreteTopology continuous_of_discreteTopology
+  have h' := explicitCoeff2_comp (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1)))
+    (kummerCoeffInclHom F (2 ^ (a + 1))) (unitPowerHom F 2)
+    continuous_of_discreteTopology continuous_of_discreteTopology
+  change unitsRepH2Equiv F
+    (((explicitCoeff2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a))
+      (kummerCoeffInclHom F (2 ^ a)) continuous_of_discreteTopology).comp
+        (explicitCoeff2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1)))
+          (kummerCoeffPow F (pow_dvd_pow 2 a.le_succ)) continuous_of_discreteTopology)) z) = _
+  rw [← h]
+  have hco := congrArg (fun f : KummerCoeff F (2 ^ (a + 1)) →+[AbsoluteGaloisGroup F] UnitsCoeff F =>
+    explicitCoeff2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1))) f
+      continuous_of_discreteTopology) (coefficientIncl_power F a)
+  erw [hco, h', AddMonoidHom.comp_apply]
+  rw [explicitCoeff2_eq_nsmul _ _ _ _ (fun t => by
+    change unitsCoeffPow F 2 t = (2 : ℕ) • t
+    rw [unitsCoeffPow_eq_nsmul])]
+  change (unitsRepH2Equiv F).toAddMonoidHom
+      ((2 : ℕ) • explicitCoeff2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1)))
+        (kummerCoeffInclHom F (2 ^ (a + 1))) continuous_of_discreteTopology z) =
+    (2 : ℕ) • (unitsRepH2Equiv F).toAddMonoidHom
+      (explicitCoeff2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1)))
+        (kummerCoeffInclHom F (2 ^ (a + 1))) continuous_of_discreteTopology z)
+  exact map_nsmul (unitsRepH2Equiv F).toAddMonoidHom 2 _
+
+section IntegralInvariant
+
+variable [CharZero F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
+
+/-- The actual finite local invariants are compatible with the genuine coefficient and residue transitions. -/
+theorem finiteInvariant_transition (a : ℕ)
+    (z : H2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1)))) :
+    (ZMod.castHom (pow_dvd_pow 2 a.le_succ) (ZMod (2 ^ a)))
+      (finiteInvariant F (2 ^ (a + 1)) (twoPower_isUnit F (a + 1)) z) =
+    finiteInvariant F (2 ^ a) (twoPower_isUnit F a) (finiteMuH2Transition F a z) := by
+  apply (ZMod.toRatAddCircle_injective (2 ^ a))
+  rw [rationalCharacter_transition, finiteInvariant_toRat, finiteInvariant_toRat,
+    kummerToBr_transition, map_nsmul]
+
+end IntegralInvariant
+
+/-- The specific finite cocycle obtained from actual integral trace-target reduction. -/
+def muReducedZ2 (a : ℕ) (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) :
+    Z2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a)) :=
+  cocyclesMap2 (AbsoluteGaloisGroup F) (FiniteTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F) a)
+    (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a)) (ContinuousMonoidHom.id _)
+    (actualMuLevelEquiv F a).toAddMonoidHom continuous_of_discreteTopology (actualMuLevelEquiv_smul F a)
+    ⟨fun p => cfun (reduceTwoCycle (AbsoluteGaloisGroup F) (UnitsCoeff F) a z).val ![p.1, p.2],
+      mem_Z2_of_d_eq_zero _ (reduceTwoCycle (AbsoluteGaloisGroup F) (UnitsCoeff F) a z).2⟩
+
+/-- The actual trace-target class reduction is the class of its specific finite cocycle. -/
+theorem actualMuReduction_class (a : ℕ) (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) :
+    actualMuH2Reduction F a z = H2pi (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a))
+      (muReducedZ2 F a z) := rfl
+
+/-- The genuine integral trace-target class reductions form a compatible finite-level family. -/
+theorem actualMuReduction_transition (a : ℕ)
+    (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) :
+    actualMuH2Reduction F a z = finiteMuH2Transition F a (actualMuH2Reduction F (a + 1) z) := by
+  rw [actualMuReduction_class, actualMuReduction_class]
+  change H2pi (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a)) (muReducedZ2 F a z) =
+    explicitCoeff2 (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1)))
+      (kummerCoeffPow F (pow_dvd_pow 2 a.le_succ)) continuous_of_discreteTopology
+      (H2pi (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ (a + 1))) (muReducedZ2 F (a + 1) z))
+  erw [explicitCoeff2_mk]
+  apply congrArg (H2pi (AbsoluteGaloisGroup F) (KummerCoeff F (2 ^ a)))
+  apply Subtype.ext
+  funext p
+  have h := congrArg (fun c => cfun c ![p.1, p.2])
+    (reduceCochains_succ (AbsoluteGaloisGroup F) (UnitsCoeff F) a 2 z.val)
+  change coefficientTransition (AbsoluteGaloisGroup F) (UnitsCoeff F) a
+      (coefficientProjection (AbsoluteGaloisGroup F) (UnitsCoeff F) (a + 1) (cfun z.val ![p.1, p.2])) =
+    coefficientProjection (AbsoluteGaloisGroup F) (UnitsCoeff F) a (cfun z.val ![p.1, p.2]) at h
+  change actualMuLevelEquiv F a
+      (coefficientProjection (AbsoluteGaloisGroup F) (UnitsCoeff F) a (cfun z.val ![p.1, p.2])) =
+    kummerCoeffPow F (pow_dvd_pow 2 a.le_succ)
+      (actualMuLevelEquiv F (a + 1)
+        (coefficientProjection (AbsoluteGaloisGroup F) (UnitsCoeff F) (a + 1) (cfun z.val ![p.1, p.2])))
+  rw [← h]
+  exact actualMuLevelEquiv_transition F a _
+
+section InvariantLift
+
+variable [CharZero F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
+
+/-- The independently specified actual finite invariant of a genuine integral target cocycle. -/
+def residueInvariant (a : ℕ) : LinearMap.ker ((actualTraceComplex F).d 2 3).hom →+ ZMod (2 ^ a) :=
+  (finiteInvariant F (2 ^ a) (twoPower_isUnit F a)).toAddMonoidHom.comp (actualMuH2Reduction F a)
+
+/-- The actual finite invariant residues of an integral target cocycle are compatible. -/
+theorem residueInvariant_transition (a : ℕ)
+    (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) :
+    (ZMod.castHom (pow_dvd_pow 2 a.le_succ) (ZMod (2 ^ a))) (residueInvariant F (a + 1) z) =
+      residueInvariant F a z := by
+  change (ZMod.castHom (pow_dvd_pow 2 a.le_succ) (ZMod (2 ^ a)))
+      (finiteInvariant F (2 ^ (a + 1)) (twoPower_isUnit F (a + 1)) (actualMuH2Reduction F (a + 1) z)) =
+    finiteInvariant F (2 ^ a) (twoPower_isUnit F a) (actualMuH2Reduction F a z)
+  rw [finiteInvariant_transition, ← actualMuReduction_transition]
+
+/-- The fixed integral representatives of the actual finite invariant residues. -/
+def invariantRepresentatives (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) (a : ℕ) : ℤ :=
+  (residueInvariant F a z).val
+
+/-- The fixed invariant representatives satisfy the actual two-adic Cauchy divisibility condition. -/
+theorem invariantRepresentatives_step
+    (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) (a : ℕ) :
+    (2 : ℤ) ^ a ∣ invariantRepresentatives F z (a + 1) - invariantRepresentatives F z a := by
+  have h := residueInvariant_transition F a z
+  have hhigh : (((residueInvariant F (a + 1) z).val : ℕ) : ZMod (2 ^ (a + 1))) =
+      residueInvariant F (a + 1) z := ZMod.natCast_zmod_val _
+  rw [← hhigh, map_natCast] at h
+  apply (ZMod.intCast_zmod_eq_zero_iff_dvd _ (2 ^ a)).mp
+  change (((invariantRepresentatives F z (a + 1) - invariantRepresentatives F z a : ℤ) : ZMod (2 ^ a))) = 0
+  rw [Int.cast_sub, sub_eq_zero]
+  simpa only [invariantRepresentatives, Int.cast_natCast, ZMod.natCast_zmod_val, Nat.cast_pow,
+    Nat.cast_ofNat] using h
+
+/-- The normalized actual integral local invariant of every genuine integral target two-cocycle. -/
+def traceCycleValue (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) : ℤ_[2] :=
+  PadicInt.ofIntSeq (invariantRepresentatives F z)
+    (PadicInt.isCauSeq_padicNorm_of_pow_dvd_sub (invariantRepresentatives F z) 2
+      (invariantRepresentatives_step F z))
+
+/-- The actual integral cycle invariant reduces to the independently defined genuine finite invariant at every level. -/
+theorem traceCycleValue_projection (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) (a : ℕ) :
+    PadicInt.toZModPow a (traceCycleValue F z) = residueInvariant F a z := by
+  rw [traceCycleValue, PadicInt.toZModPow_ofIntSeq_of_pow_dvd_sub]
+  simp only [invariantRepresentatives, Int.cast_natCast, ZMod.natCast_zmod_val]
+  all_goals simpa only [Nat.cast_ofNat] using invariantRepresentatives_step F z
+
+/-- Finite trace-target cochains see two-adic scalars through the actual finite residue. -/
+theorem finiteMuCochain_smul (a n : ℕ) (r : ℤ_[2])
+    (c : (finiteIntegralComplex (AbsoluteGaloisGroup F) (UnitsCoeff F) a).X n) :
+    r • c = (PadicInt.toZModPow a r).val • c := by
+  apply Subtype.ext
+  funext p
+  let t : FiniteTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F) a := cfun c p
+  let v : ZMod (2 ^ a) := PadicInt.toZModPow a r
+  change v • t = v.val • t
+  simpa only [Nat.cast_smul_eq_nsmul] using
+    congrArg (fun x : ZMod (2 ^ a) => x • t) (ZMod.natCast_zmod_val v).symm
+
+/-- The independently specified actual finite invariant is semilinear for the genuine finite scalar reduction. -/
+theorem residueInvariant_smul (a : ℕ) (r : ℤ_[2])
+    (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) :
+    residueInvariant F a (r • z) = (PadicInt.toZModPow a r).val • residueInvariant F a z := by
+  have h : reduceTwoCycle (AbsoluteGaloisGroup F) (UnitsCoeff F) a (r • z) =
+      (PadicInt.toZModPow a r).val • reduceTwoCycle (AbsoluteGaloisGroup F) (UnitsCoeff F) a z := by
+    rw [map_smul]
+    apply Subtype.ext
+    exact finiteMuCochain_smul F a 2 r _
+  let ψ : LinearMap.ker ((finiteIntegralComplex (AbsoluteGaloisGroup F) (UnitsCoeff F) a).d 2 3).hom →+
+      ZMod (2 ^ a) :=
+    (finiteInvariant F (2 ^ a) (twoPower_isUnit F a)).toAddMonoidHom.comp
+      ((actualMuH2Equiv F a).toAddMonoidHom.comp
+        (kerToH2 (k := ℤ_[2]) (G := AbsoluteGaloisGroup F)
+          (M := FiniteTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F) a)))
+  change ψ (reduceTwoCycle (AbsoluteGaloisGroup F) (UnitsCoeff F) a (r • z)) =
+    (PadicInt.toZModPow a r).val • ψ (reduceTwoCycle (AbsoluteGaloisGroup F) (UnitsCoeff F) a z)
+  rw [h, map_nsmul]
+
+/-- The normalized actual integral local invariant is a genuine linear map on actual target two-cocycles. -/
+def normalizedCycleTrace : LinearMap.ker ((actualTraceComplex F).d 2 3).hom →ₗ[ℤ_[2]] ℤ_[2] where
+  toFun := traceCycleValue F
+  map_add' z w := by
+    apply PadicInt.ext_of_toZModPow.mp
+    intro a
+    rw [map_add, traceCycleValue_projection, traceCycleValue_projection, traceCycleValue_projection, map_add]
+  map_smul' r z := by
+    apply PadicInt.ext_of_toZModPow.mp
+    intro a
+    simp only [smul_eq_mul, map_mul, traceCycleValue_projection]
+    rw [residueInvariant_smul, nsmul_eq_mul, ZMod.natCast_zmod_val]
+    rfl
+
+/-- The normalized actual integral cycle trace has its prescribed genuine finite local invariant at every level. -/
+theorem normalizedCycleTrace_projection
+    (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) (a : ℕ) :
+    PadicInt.toZModPow a (normalizedCycleTrace F z) =
+      finiteInvariant F (2 ^ a) (twoPower_isUnit F a) (actualMuH2Reduction F a z) :=
+  traceCycleValue_projection F z a
+
+/-- The kernel of the normalized actual integral cycle trace is exactly the actual continuous coboundaries. -/
+theorem normalizedCycleTrace_eq_zero_iff_boundary
+    (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) :
+    normalizedCycleTrace F z = 0 ↔
+      ∃ b : (actualTraceComplex F).X 1, ((actualTraceComplex F).d 1 2).hom b = z.val := by
+  rw [← actualMuH2Reduction_all_zero_iff_boundary]
+  constructor
+  · intro hz a
+    apply (finiteInvariant_eq_zero_iff F (2 ^ a) (twoPower_isUnit F a) _).mp
+    have h := normalizedCycleTrace_projection F z a
+    rw [hz, map_zero] at h
+    exact h.symm
+  · intro hz
+    apply PadicInt.ext_of_toZModPow.mp
+    intro a
+    rw [normalizedCycleTrace_projection, hz a, map_zero, map_zero]
+
+/-- The normalized actual cycle trace kills every actual continuous coboundary. -/
+theorem normalizedCycleTrace_boundary
+    (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) (b : (actualTraceComplex F).X 1)
+    (hb : ((actualTraceComplex F).d 1 2).hom b = z.val) : normalizedCycleTrace F z = 0 :=
+  (normalizedCycleTrace_eq_zero_iff_boundary F z).mpr ⟨b, hb⟩
+
+end InvariantLift
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralTrace
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralCompatibility
+
+open TauCeti TauCeti.ContCohomology
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteTrace
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralPairing
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralTrace
+
+variable (F : Type) [Field F] [CharZero F] [DecidableEq F] [ValuativeRel F] [TopologicalSpace F]
+  [IsNonarchimedeanLocalField F] (B : WeierstrassCurve F) [B.IsElliptic]
+
+/-- The normalized actual integral cup invariant is the genuine finite local Tate pairing of the fixed actual class reductions. -/
+theorem integralCup_invariant_compatibility (a : ℕ)
+    (u v : LinearMap.ker ((pointComplex F B).d 1 2).hom) :
+    padicInvariant a (normalizedCycleTrace F (integralCupCycle F B u v)) =
+      ZInQ.Contrib.CloudB3RC53.Duality.localTatePairing B (2 ^ a) (twoPower_isUnit F a)
+        (pointH1Reduction F B a u) (pointH1Reduction F B a v) := by
+  unfold padicInvariant
+  change ZMod.toRatAddCircle (2 ^ a)
+      (PadicInt.toZModPow a (normalizedCycleTrace F (integralCupCycle F B u v))) = _
+  rw [normalizedCycleTrace_projection, integralCupCycle_reduction, finiteInvariant_toRat]
+  rfl
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralCompatibility
 
 end
