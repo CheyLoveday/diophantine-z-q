@@ -3,7 +3,47 @@ import ZInQKernel.Contrib.CloudB3RC53.Hsw.CupOneReverse
 /-!
 # RC53 `hsw`: the local-duality shape of the residue pairing
 
-Draft.
+`hsw_of_residuePairing` (`Coordinates.lean`) needed the residue pairing `P` to have a fixed shape:
+`F` and `S` isotropic, `σ`-symmetric, and `F × S` perfect. This file weakens that to intrinsic
+local-duality properties of the cup product. The remaining properties are produced by a coordinate
+change that fixes the finite plane.
+
+## Results
+
+* `exists_coord_switchPairing_shear`: `S` need not be isotropic. If `P|_S` is `σ`-split,
+  `q(y, y') = h(y, y') + σ h(y', y)`, then after a shear `S → F` and an automorphism of `S`, `P` is
+  the switch pairing.
+* `split_of_two_ne_zero`: `P|_S` is `σ`-split when `2 ≠ 0` and `σ² = 1`.
+* `split_of_alternating`: for `σ = 1` it is `σ`-split when `P|_S` is alternating. This holds in
+  any characteristic, so it covers `𝔽₂`.
+* `cross_isPerfPair_of_nondeg`: `F × S` is perfect when `P` is nondegenerate and `F` is isotropic.
+* `exists_gClass`: when the strict condition vanishes in degree two, every coordinate vector is
+  the class `eR[g t]` of a relaxed cocycle. So the descended `P` is determined by the residue form
+  `resForm t u = tr((0, 0, −ι u) ∪ (0, t, 0))` on relaxed cocycles (`residuePairing_gClass`).
+* `resForm_symm`: the residue form is `(−c)`-symmetric, from the cup-one datum. This gives
+  `σ = −c`; for the Weil pairing, `c = −1` and `σ = 1`.
+* `map_coordShear_finPlane`: the coordinate change `Φ = (id × A) ∘ shear` fixes the finite plane,
+  so detection `F ≤ U` is unchanged.
+* `hsw_of_localDuality`: `hsw` holds verbatim, with `σ = −c`, after a coordinate change `Φ` fixing
+  `F`. It needs: the switch exactness data, a trace killing cone coboundaries, a strict condition
+  vanishing in degree two, a cup-one datum, and the local-duality shape of the residue form. The
+  shape means: `F` isotropic (unramified classes), nondegenerate (local Tate duality), and either
+  `2 ≠ 0` or (`c = −1` and alternating on `S`).
+* `genuine_switchCoordinates_of_localDuality`: the same for the genuine switch, with the genuine
+  cup-one datum `genuineCupOne`.
+
+## Remaining inputs
+
+The three shape properties of the genuine residue form at the switch place are the content of
+local duality:
+* `F` isotropic: the cup of two unramified classes is a coboundary (`cd Ẑ = 1`).
+* Nondegenerate: local Tate duality, i.e. `NekovarProp524` at `H¹`. This also needs the global
+  trace restricted to the local summand at `v` to induce `H²(G_v, T) ≅ k`.
+* Alternating on `S` in characteristic two: for the Weil pairing `x ∪ x` is a coboundary.
+
+Non-vacuity: `ShapeNonVacuity.lean`.
+
+All results are `PROVED`. No new axioms.
 -/
 
 noncomputable section
@@ -327,5 +367,57 @@ theorem hsw_of_localDuality (R : QuasiRelaxedLocalization k) (Ustr : GCx k) (f :
   obtain ⟨A, B, hAB⟩ := exists_coord_switchPairing_shear hε (-c) hJ2 P hF hσ hperf h hh
   refine ⟨coordShear A B, map_coordShear_finPlane A B,
     fun t u s ht hu ct cu hct hcu => (hP t u s ht hu ct cu hct hcu).trans (hAB _ _)⟩
+
+/-! ### The genuine switch -/
+
+section Genuine
+
+open NumberField IsDedekindDomain
+
+variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
+  {M : Type} [AddCommGroup M] [Module k M] [DistribMulAction (GKS K S) M]
+  [SMulCommClass (GKS K S) k M] [TopologicalSpace M] [DiscreteTopology M]
+  [ContinuousSMul (GKS K S) M]
+  {T : Type} [AddCommGroup T] [Module k T] [DistribMulAction (GKS K S) T]
+  [SMulCommClass (GKS K S) k T] [TopologicalSpace T] [DiscreteTopology T]
+  [ContinuousSMul (GKS K S) T]
+
+/-- **`SwitchCoordinates` for the genuine switch from the local-duality shape** (tex L2816–2818;
+`PROVED` from the inputs). Let `β` be a `c`-symmetric equivariant self-pairing, `I` any isotropy
+data, and suppose the strict condition complexes vanish in degree two. Suppose also that the
+residue form has the local-duality shape: finite plane isotropic, nondegenerate, and the
+characteristic condition. Then for coordinates `eR` changed by some `Φ` fixing the finite plane,
+the genuine switch satisfies `SwitchCoordinates` with `σ = −c`. -/
+theorem genuine_switchCoordinates_of_localDuality (X : GenuineSwitch K S k M)
+    (β : M →ₗ[k] M →ₗ[k] T) (hβ : ∀ (g : GKS K S) (a b : M), β (g • a) (g • b) = g • β a b)
+    (c : k) (hc : ∀ x y, β x y = c • β y x) (I : GaloisIsotropyData K S k β hβ X.ΔS X.ΔR)
+    (tr : (coneCx (galoisPairData K S k β hβ X.ΔS X.ΔR I).resE).X 3 →ₗ[k] k)
+    (htr : ∀ z, tr ((coneCx (galoisPairData K S k β hβ X.ΔS X.ΔR I).resE).d 2 3 rfl z) = 0)
+    (hUS2 : ∀ v (x : (X.US v).X 2), x = 0) {ε : k} (hε : ε ≠ 0)
+    {J : Matrix (Fin 2) (Fin 2) k} (hJ2 : J * J = 1)
+    (hFiso : ∀ t u (ht : X.toQuasi.D.U.d 1 2 rfl t = 0) (hu : X.toQuasi.D.U.d 1 2 rfl u = 0),
+      gClass X.toQuasi t ht ∈ finPlane k (Fin 2 → k) (Fin 2 → k) →
+      gClass X.toQuasi u hu ∈ finPlane k (Fin 2 → k) (Fin 2 → k) →
+      resForm X.toQuasi (piCx X.US) (piMap X.φ) (galoisPairData K S k β hβ X.ΔS X.ΔR I) tr t u = 0)
+    (hnd : ∀ t (ht : X.toQuasi.D.U.d 1 2 rfl t = 0),
+      (∀ u (_hu : X.toQuasi.D.U.d 1 2 rfl u = 0),
+        resForm X.toQuasi (piCx X.US) (piMap X.φ) (galoisPairData K S k β hβ X.ΔS X.ΔR I) tr t u =
+          0) → gClass X.toQuasi t ht = 0)
+    (hchar : ((2 : k) ≠ 0 ∧ c * c = 1) ∨
+      (c = -1 ∧ ∀ t (ht : X.toQuasi.D.U.d 1 2 rfl t = 0),
+        gClass X.toQuasi t ht ∈ singPlane k (Fin 2 → k) (Fin 2 → k) →
+        resForm X.toQuasi (piCx X.US) (piMap X.φ) (galoisPairData K S k β hβ X.ΔS X.ΔR I) tr t t =
+          0)) :
+    ∃ Φ : ((Fin 2 → k) × (Fin 2 → k)) ≃ₗ[k] ((Fin 2 → k) × (Fin 2 → k)),
+      (finPlane k (Fin 2 → k) (Fin 2 → k)).map Φ.toLinearMap =
+        finPlane k (Fin 2 → k) (Fin 2 → k) ∧
+      ({ X with eR := X.eR.trans Φ } : GenuineSwitch K S k M).SwitchCoordinates
+        (galoisPairData K S k β hβ X.ΔS X.ΔR I) tr ε (-c) J := by
+  obtain ⟨Φ, hΦ, hsw⟩ := hsw_of_localDuality X.toQuasi (piCx X.US) (piMap X.φ) _ tr X.hfg
+    X.φ_inj X.g_surj X.ex htr (fun x => funext fun v => hUS2 v (x v))
+    (genuineCupOne X β hβ c hc I) hε hJ2 hFiso hnd hchar
+  exact ⟨Φ, hΦ, hsw⟩
+
+end Genuine
 
 end ZInQ.Contrib.CloudB3RC53.Hsw
