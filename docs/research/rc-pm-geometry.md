@@ -139,4 +139,6 @@ dependency cache and sequential rebuilds of missing imports. All 27
 A failed transition between verification queues briefly allowed two Lean
 processes from this task to overlap. This violated the one-process rule.
 The old queue was stopped, and the final checks above ran sequentially in
-a single locked queue.
+a single locked queue. A shell quoting error while drafting the handoff
+later invoked Lean without a file or resource precheck; it printed usage
+and compiled nothing.

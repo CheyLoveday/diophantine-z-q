@@ -10,3 +10,4 @@
 - Axioms for each audit: `propext`, `Classical.choice`, `Quot.sound`.
 - Heegner ring class instance: explicit `Classical.decEq` matches the instance in the existing `StageKummer` interface.
 - Resource incident: a queue transition briefly overlapped two Lean processes; old queue stopped, final checks run sequentially under a lock.
+- Handoff draft: shell quoting invoked Lean without a file or resource precheck; usage only, no compilation.
