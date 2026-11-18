@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.RC53Assist.NewformPeriodsDictionary.Dictionary
 import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.Hom.PointMap
+import ZInQKernel.Contrib.CloudB3RC53.WeilIsogeny.HasseProof
 
 /-!
 # RC53 ModularWeil: the Frobenius trace dictionary at good reduction
@@ -35,6 +36,14 @@ own objects.
   `mapLinearMap_add`, `mapLinearMap_sub`, `mapLinearMap_zsmul` and `mapLinearMap_id` say the Tate
   map is additive.
 * Fragment: `detEqDegree_id`, i.e. (D) for the identity.
+* (F) on the slice `m = 1`, PROVED: `frobeniusDegreeFormOne_proof` gives
+  `deg(1 − n π) = 1 − a n + p n²` for all `n`, from `WeilIsogeny.degree_psi` (`deg(n π − m)` for
+  `m ≠ 0` in `\bar 𝔽_p`) with `𝔽 = 𝔽_p`, `K = \bar 𝔽_p`, `π = WeilIsogeny.piK`, and
+  `deg(−f) = deg f`. The slice suffices: `trace_det_of_detFormOne` recovers `tr A = a` and
+  `det A = d` from `det(1 − n A)` at `n = ±1` over a domain of characteristic zero such as `ℤ_ℓ`.
+  Hence `frobeniusTateDetFormOne_of` derives (FD) at `m = 1` from (D) alone, and
+  `goodReductionFrobeniusTraceDictionaryQ_of_RD` derives the target from (R) and (D) alone.
+  The full (F), including `p ∣ m` (where `m − n π` is inseparable), stays stated and is not needed.
 
 ## The missing classical pieces
 
@@ -44,11 +53,12 @@ own objects.
 * (D): the Weil pairing compatibility `e(αP, αQ) = e(P, Q)^{deg α}`, through dual isogenies. The
   library has the Weil pairing for multiplication by `n`, but not dual isogenies.
 * (F): the Frobenius isogeny with `deg π = p`, the separability of `1 − π` (its differential is
-  `1`), `#ker(1 − π) = #Ẽ(𝔽_p)`, and the quadratic form `deg(m − n π)`. The library has isogeny
-  degree, kernels, `card_ker_eq_degree_iff` and the group of homomorphisms with additive point
-  maps.
+  `1`), `#ker(1 − π) = #Ẽ(𝔽_p)`, and the quadratic form `deg(m − n π)`. For `p ∤ m` this is
+  `WeilIsogeny.degree_psi` (through the Weil pairing), which covers the slice `m = 1` used here;
+  only the case `p ∣ m` is missing.
 
-Classification: `PROVED` from the named inputs; (R) and (FD) are stated, not proved.
+Classification: `PROVED` from the named inputs; (R) and (D) are stated, not proved; (F) is proved
+on the slice `m = 1`, which is all the dictionary uses.
 -/
 
 noncomputable section
@@ -318,5 +328,152 @@ theorem detEqDegree_id (p : ℕ) [Fact p.Prime] (Et : WeierstrassCurve (ZMod p))
   rw [hid, mapLinearMap_id, map_one, TauCeti.Isogeny.Hom.degree_id, Nat.cast_one]
 
 end Split
+
+/-! ### The slice `m = 1`: (F) proved, and the dictionary from (R) and (D) -/
+
+/-- **Trace and determinant of a `2 × 2` matrix from `det(1 − n A)`** (`PROVED`): over a domain of
+characteristic zero, if `det(1 − n • A) = 1 − a n + d n²` for all integers `n`, then `tr A = a`
+and `det A = d`. (The values `n = ±1` suffice; their sum gives `2 det A = 2 d`.) -/
+theorem trace_det_of_detFormOne {R : Type*} [CommRing R] [IsDomain R] [CharZero R]
+    (A : Matrix (Fin 2) (Fin 2) R) (a d : R)
+    (h : ∀ n : ℤ, Matrix.det (1 - (n : R) • A) = 1 - a * n + d * n ^ 2) :
+    Matrix.trace A = a ∧ Matrix.det A = d := by
+  have key : ∀ n : ℤ, Matrix.det (1 - (n : R) • A) =
+      1 - Matrix.trace A * n + Matrix.det A * n ^ 2 := by
+    intro n
+    rw [Matrix.det_fin_two, Matrix.det_fin_two, Matrix.trace_fin_two]
+    simp only [Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply_eq,
+      Matrix.one_apply_ne (show (0 : Fin 2) ≠ 1 by decide),
+      Matrix.one_apply_ne (show (1 : Fin 2) ≠ 0 by decide), smul_eq_mul]
+    ring
+  have h1 := h 1
+  have h2 := h (-1)
+  rw [key] at h1 h2
+  push_cast at h1 h2
+  have hd : Matrix.det A = d := by
+    have h3 : (2 : R) * Matrix.det A = 2 * d := by linear_combination h1 + h2
+    exact mul_left_cancel₀ two_ne_zero h3
+  refine ⟨?_, hd⟩
+  have ht : (2 : R) * Matrix.trace A = 2 * a := by linear_combination h2 - h1
+  exact mul_left_cancel₀ two_ne_zero ht
+
+section One
+
+open scoped Classical
+
+/-- **(F) at `m = 1`** (Silverman V.2.3.1 on the slice `m = 1`): for an elliptic curve over `𝔽_p`
+there is a homomorphism `π` of the curve over `\bar 𝔽_p` acting on points as the `p`-power map on
+coordinates, with `deg(1 − n π) = 1 − a n + p n²` for all integers `n`, where
+`a = p + 1 − #Ẽ(𝔽_p)`. Proved in `frobeniusDegreeFormOne_proof`. -/
+def FrobeniusDegreeFormOne : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (Et : WeierstrassCurve (ZMod p)) [Et.IsElliptic],
+    ∃ π : TauCeti.Isogeny.Hom (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine
+        (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine,
+      (∀ P, π.pointMap P = WeierstrassCurve.Affine.Point.map (W' := Et)
+        (FiniteField.frobeniusAlgHom (ZMod p) (AlgebraicClosure (ZMod p))) P) ∧
+      ∀ n : ℤ, ((TauCeti.Isogeny.Hom.id _ - n • π).degree : ℤ) =
+        1 - ((p : ℤ) + 1 - (Nat.card Et.toAffine.Point : ℤ)) * n + p * n ^ 2
+
+/-- **(F) at `m = 1`** (`PROVED`): `π = WeilIsogeny.piK` over `\bar 𝔽_p`, whose point map is the
+`p`-power map (`WeilIsogeny.pointGaloisAction_frobenius`), and
+`deg(1 − n π) = deg(n π − 1) = 1 − a n + p n²` by `WeilIsogeny.degree_psi` and `degree_neg`. -/
+theorem frobeniusDegreeFormOne_proof : FrobeniusDegreeFormOne := by
+  intro p _ Et _
+  refine ⟨WeilIsogeny.piK Et (K := AlgebraicClosure (ZMod p)), fun P => ?_, fun n => ?_⟩
+  · refine (WeilIsogeny.pointGaloisAction_frobenius Et P).symm.trans ?_
+    rw [WeierstrassCurve.pointGaloisAction_apply]
+    congr 1
+  · have h1 : ((1 : ℤ) : AlgebraicClosure (ZMod p)) ≠ 0 := by simp
+    have h := WeilIsogeny.degree_psi Et (K := AlgebraicClosure (ZMod p)) n h1
+    rw [WeilIsogeny.psi, ← TauCeti.Isogeny.Hom.degree_ofIsogeny,
+      TauCeti.Isogeny.Hom.ofIsogeny_toIsogeny] at h
+    rw [show TauCeti.Isogeny.Hom.id _ - n • WeilIsogeny.piK Et (K := AlgebraicClosure (ZMod p)) =
+        -(n • WeilIsogeny.piK Et (K := AlgebraicClosure (ZMod p)) -
+          (1 : ℤ) • TauCeti.Isogeny.Hom.id _) by rw [one_zsmul, neg_sub],
+      TauCeti.Isogeny.Hom.degree_neg, h, WeilIsogeny.traceFrob, ZMod.card]
+    ring
+
+/-- **(FD) at `m = 1`**: for an elliptic curve `Et` over `𝔽_p`, `ℓ ≠ p` and all integers `n`,
+`det(1 − n π | T_ℓ Et) = 1 − a n + p n²` with `a = p + 1 − #Et(𝔽_p)`. Derived from (D) in
+`frobeniusTateDetFormOne_of`. -/
+def FrobeniusTateDetFormOne : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (Et : WeierstrassCurve (ZMod p)), Et.IsElliptic →
+    ∀ (ℓ : ℕ) [Fact ℓ.Prime], ℓ ≠ p → ∀ n : ℤ,
+      LinearMap.det ((1 : Module.End ℤ_[ℓ] (redTate p Et ℓ)) - (n : ℤ_[ℓ]) • frobTate p Et ℓ) =
+        1 - (((p : ℤ) + 1 - (Nat.card Et.toAffine.Point : ℤ) : ℤ) : ℤ_[ℓ]) * n +
+          (p : ℤ_[ℓ]) * n ^ 2
+
+/-- **(FD) at `m = 1` from (D)** (`PROVED` from (D)): (F) at `m = 1` is
+`frobeniusDegreeFormOne_proof`. -/
+theorem frobeniusTateDetFormOne_of (hD : DetEqDegree) : FrobeniusTateDetFormOne := by
+  intro p _ Et hEt ℓ _ hℓ n
+  have := hEt
+  obtain ⟨π, hπ, hdeg⟩ := frobeniusDegreeFormOne_proof p Et
+  let fr : (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point →+
+      (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point :=
+    WeierstrassCurve.Affine.Point.map (W' := Et)
+      (FiniteField.frobeniusAlgHom (ZMod p) (AlgebraicClosure (ZMod p)))
+  have hα : ∀ P, (TauCeti.Isogeny.Hom.id _ - n • π).pointMap P =
+      (AddMonoidHom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point - n • fr) P := by
+    intro P
+    rw [TauCeti.Isogeny.Hom.sub_pointMap, TauCeti.Isogeny.Hom.zsmul_pointMap,
+      TauCeti.Isogeny.Hom.id_pointMap, hπ]
+    rfl
+  have h := hD p Et ℓ hℓ _ _ hα
+  have hT : TauCeti.TateModule.mapLinearMap (p := ℓ)
+      (AddMonoidHom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point - n • fr) =
+      (1 : Module.End ℤ_[ℓ] (redTate p Et ℓ)) - (n : ℤ_[ℓ]) • frobTate p Et ℓ := by
+    rw [mapLinearMap_sub, mapLinearMap_zsmul, mapLinearMap_id]
+    rfl
+  rw [hT] at h
+  rw [h]
+  have : ((TauCeti.Isogeny.Hom.id _ - n • π).degree : ℤ_[ℓ]) =
+      (((TauCeti.Isogeny.Hom.id _ - n • π).degree : ℤ) : ℤ_[ℓ]) := by norm_cast
+  rw [this, hdeg n]
+  push_cast
+  ring
+
+/-- **`GoodReductionFrobeniusTraceDictionaryQ` from (R) and (FD) at `m = 1`** (`PROVED` from the
+two named inputs). As `goodReductionFrobeniusTraceDictionaryQ_of`, with the linear algebra
+`trace_det_of_detFormOne`. -/
+theorem goodReductionFrobeniusTraceDictionaryQ_of_one (hR : TateReductionComparison)
+    (hFD : FrobeniusTateDetFormOne) : GoodReductionFrobeniusTraceDictionaryQ := by
+  intro E hE p hp hgood ℓ _ hℓ Γ _ w hw σ hσ b
+  have : Fact p.Prime := ⟨hp⟩
+  obtain ⟨e, he⟩ := hR E hE p hp hgood ℓ hℓ Γ w hw σ hσ
+  set ρ := (E.baseChange ((primeIdealQ p hp).adicCompletion ℚ)).tateModuleGaloisRepresentation ℓ σ
+  have hconj : (frobTate p (reducedCurveModP E p hp) ℓ) =
+      (e : _ →ₗ[ℤ_[ℓ]] _) ∘ₗ ρ ∘ₗ (e.symm : _ →ₗ[ℤ_[ℓ]] _) := by
+    refine LinearMap.ext fun y => ?_
+    obtain ⟨x, rfl⟩ := e.surjective y
+    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]
+    exact (he x).symm
+  refine trace_det_of_detFormOne _ _ _ fun n => ?_
+  have hm : (1 : Matrix (Fin 2) (Fin 2) ℤ_[ℓ]) -
+      (n : ℤ_[ℓ]) • localTateMatrixQ E (primeIdealQ p hp) ℓ σ b =
+      LinearMap.toMatrix b b ((1 : Module.End ℤ_[ℓ] _) - (n : ℤ_[ℓ]) • ρ) := by
+    rw [map_sub, map_smul, LinearMap.toMatrix_one]
+    rfl
+  rw [hm, LinearMap.det_toMatrix]
+  have hc : (1 : Module.End ℤ_[ℓ] (redTate p (reducedCurveModP E p hp) ℓ)) -
+      (n : ℤ_[ℓ]) • frobTate p (reducedCurveModP E p hp) ℓ =
+      (e : _ →ₗ[ℤ_[ℓ]] _) ∘ₗ ((1 : Module.End ℤ_[ℓ] _) - (n : ℤ_[ℓ]) • ρ) ∘ₗ
+        (e.symm : _ →ₗ[ℤ_[ℓ]] _) := by
+    rw [hconj]
+    refine LinearMap.ext fun y => ?_
+    simp
+  have hFD' := hFD p (reducedCurveModP E p hp) (reducedCurveModP_isElliptic E p hp hgood) ℓ hℓ n
+  rw [hc, LinearMap.det_conj] at hFD'
+  rw [hFD']
+  push_cast
+  ring
+
+/-- **The dictionary from (R) and (D)** (`PROVED` from the two named inputs): (F) is no longer an
+input, its slice `m = 1` being `frobeniusDegreeFormOne_proof`. -/
+theorem goodReductionFrobeniusTraceDictionaryQ_of_RD (hR : TateReductionComparison)
+    (hD : DetEqDegree) : GoodReductionFrobeniusTraceDictionaryQ :=
+  goodReductionFrobeniusTraceDictionaryQ_of_one hR (frobeniusTateDetFormOne_of hD)
+
+end One
 
 end ZInQ.Contrib.CloudB3RC53.ModularWeil
