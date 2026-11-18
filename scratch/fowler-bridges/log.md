@@ -11,3 +11,5 @@
   to 5 LEAF / 24 GLUE. `autofold-output.txt` retains the relevant stdout lines. No fold was applied.
 - VERIFIED (Lean): `FowlerBridgesDiscriminant.lean` compiled with `lake env lean`. The lattice identity holds
   for any finite ℤ-basis, and both printed discriminant conditions are lemmas.
+- VERIFIED (Lean): the same discriminant file compiled with the local `toOrder` adapter. The remaining
+  imports of the contribution do not require the wider class field application.

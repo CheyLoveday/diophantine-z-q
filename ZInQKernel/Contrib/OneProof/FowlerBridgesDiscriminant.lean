@@ -1,5 +1,4 @@
 import ZInQKernel.Contrib.OneProof.CMBranch
-import ZInQKernel.Contrib.OneProof.GR512Bridge
 import ZInQKernel.Contrib.TauCeti.NumberTheory.NumberField.Global.Orders.Discriminant
 import Mathlib.LinearAlgebra.Unimodular
 import Mathlib.NumberTheory.NumberField.Discriminant.Basic
@@ -8,8 +7,8 @@ import Mathlib.RingTheory.PicardGroup
 /-!
 # Discriminants of imaginary quadratic orders
 
-The proof uses the order construction in `GR512Bridge` and the discriminant/index theorem in
-the vendored order library. The basis and trace arguments adapt commit `a7a10d135`.
+The order construction adapts `GR512Bridge.toOrder` without importing that module. The basis
+and trace arguments adapt commit `a7a10d135` and use the vendored discriminant/index theorem.
 -/
 
 namespace HDec.CMBranch.FowlerBridges
@@ -17,13 +16,41 @@ namespace HDec.CMBranch.FowlerBridges
 open NumberField Module TauCeti.GlobalNumberFields
 open scoped nonZeroDivisors
 
+private def intSubalgebra {k : Type} [Field k] (R : Subring k) : Subalgebra ℤ k :=
+  { R.toSubsemiring with algebraMap_mem' := fun n => by simpa using intCast_mem R n }
+
+/-- View the kernel's finite-index subring as an order. The additive index kills the quotient
+of the maximal order by the subring, so the subring spans the field over ℚ. -/
+def toOrder {k : Type} [Field k] [NumberField k] (R : Subring k)
+    (hR : IsImagQuadOrder k R) : NumberFieldOrder k where
+  toSubalgebra := intSubalgebra R
+  finite := by
+    have h : intSubalgebra R ≤ integralClosure ℤ k := fun x hx => hR.2.2.1 hx
+    have : Module.Finite ℤ (integralClosure ℤ k) := inferInstanceAs (Module.Finite ℤ (𝓞 k))
+    exact Module.Finite.of_injective (Subalgebra.inclusion h).toLinearMap
+      (Subalgebra.inclusion_injective h)
+  spans := by
+    apply top_unique
+    rw [← (maximalNumberFieldOrder k).spans]
+    apply Submodule.span_le.mpr
+    intro y hy
+    let f := LeafQM.AV.conductor R
+    have hf : (f : k) ≠ 0 := by exact_mod_cast hR.2.2.2
+    have hy' : y ∈ (integralClosure ℤ k).toSubring.toAddSubgroup := hy
+    have hm : f • y ∈ intSubalgebra R := R.toAddSubgroup.nsmul_relIndex_mem hy'
+    have he : y = (f : ℚ)⁻¹ • (f • y) := by
+      rw [Algebra.smul_def, nsmul_eq_mul, ← mul_assoc, map_inv₀, map_natCast,
+        inv_mul_cancel₀ hf, one_mul]
+    rw [he]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span hm)
+
 /-- A finite-index imaginary quadratic order has a two-element integral basis.
 The existing order construction gives a finite free integer module; localizing its basis
 in the ambient field shows that its rank is two. -/
 theorem exists_intBasis_of_isImagQuadOrder {k : Type} [Field k] [NumberField k]
     (R : Subring k) (hR : IsImagQuadOrder k R) : Nonempty (Basis (Fin 2) ℤ R) := by
   classical
-  let O := GR512Bridge.toOrder R hR.2.2.1 hR.2.2.2
+  let O := toOrder R hR
   let b := Module.Free.chooseBasis ℤ O.toSubalgebra
   let bQ := b.localizationLocalization ℚ ℤ⁰ k
   have hcard : Fintype.card (Module.Free.ChooseBasisIndex ℤ O.toSubalgebra) =
@@ -35,7 +62,7 @@ theorem exists_intBasis_of_isImagQuadOrder {k : Type} [Field k] [NumberField k]
 index defining `LeafQM.AV.conductor`, not the conductor ideal. -/
 theorem toOrder_index_eq_conductor {k : Type} [Field k] [NumberField k]
     (R : Subring k) (hR : IsImagQuadOrder k R) :
-    (GR512Bridge.toOrder R hR.2.2.1 hR.2.2.2).index = LeafQM.AV.conductor R := by
+    (toOrder R hR).index = LeafQM.AV.conductor R := by
   rw [NumberFieldOrder.index_eq_addSubgroup_index]
   change (R.toAddSubgroup.comap (algebraMap (𝓞 k) k).toAddMonoidHom).index =
     R.toAddSubgroup.relIndex (integralClosure ℤ k).toSubring.toAddSubgroup
@@ -53,7 +80,7 @@ theorem orderDisc_eq_discr {k : Type} [Field k] [NumberField k]
     (R : Subring k) (hR : IsImagQuadOrder k R)
     {ι : Type*} [Fintype ι] [DecidableEq ι] (b : Basis ι ℤ R) :
     orderDisc R = Algebra.discr ℤ b := by
-  let O := GR512Bridge.toOrder R hR.2.2.1 hR.2.2.2
+  let O := toOrder R hR
   have hb : Algebra.discr ℤ b = O.discr := O.discr_eq_discr b
   rw [hb, O.discr_eq_index_sq_mul, toOrder_index_eq_conductor R hR]
   rfl
