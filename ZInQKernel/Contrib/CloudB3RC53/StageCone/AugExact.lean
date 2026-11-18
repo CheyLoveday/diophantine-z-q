@@ -104,7 +104,8 @@ theorem exists_mulVec_eq_of_dotProduct_eq_zero {D : Matrix (Fin n) (Fin n) K} {i
 theorem exists_good_entry {D : Matrix (Fin n) (Fin n) K} {z w : Fin n → K} {u : K}
     (hu : ZInQ.Manuscript.RC.Central.IsClassFunctionalCoord D z w u) (hu0 : u ≠ 0)
     (hadj : D.adjugate ≠ 0) : ∃ i j, D.adjugate i j ≠ 0 ∧ z i ≠ 0 ∧ w j ≠ 0 := by
-  obtain ⟨i, j, hij⟩ : ∃ i j, D.adjugate i j ≠ 0 := ZInQ.Manuscript.RC.Central.exists_entry_ne_zero hadj
+  obtain ⟨i, j, hij⟩ : ∃ i j, D.adjugate i j ≠ 0 :=
+    ZInQ.Manuscript.RC.Central.exists_entry_ne_zero hadj
   have e := congrFun (congrFun hu i) j
   rw [vecMulVec_apply, Matrix.smul_apply, smul_eq_mul] at e
   have hne : z i * w j ≠ 0 := by rw [e]; exact mul_ne_zero hu0 hij
