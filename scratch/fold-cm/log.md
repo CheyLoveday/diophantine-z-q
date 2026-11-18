@@ -32,3 +32,13 @@ The CM base `CMBranch.sixContactMin_of_open4_cm` (Open4.lean) reads `r.r6 : PkgI
 The running autoland loop (started 11-17 04:14) runs ~/dzq-runs/autoland-loop.sh (mtime 04:14), whose docs-only
 merge filter has no claims.tsv/volatile.tsv exemption. The exemption exists only in autoland-loop.sh.new (15:23,
 not installed). So 84.1 is NOT live.
+
+## 5. Merge of component 1 and the CM base on the live bundles
+* `git merge 664e00417` (5cb492e59): clean, all files added.
+* `ZInQKernel/Contrib/OneProof/CMBranchUC8.lean` (new): cm-branch's localized theorems composed with d2a6b's and
+  fold-c8's replacements; top `HDec.HSyn.sixContactMin_of_open4_cm_u_c8 (r : OpenResearchLeaves2EBU)
+  (t : OpenTextbookLeaves4HFPZ) (l : OpenAddedLeaves4PZC8) (g : OpenGlue4) h20 hYu hθ + 7 CM inputs`.
+  `lake env lean`: 0 errors (VERIFIED, second try; first try missed the `g7DegreeBound_gp4` argument).
+* Dirty scan of the base top (`DirtyLive.lean` -> `dirty-live.tsv`, 6.7 min): 963 dirty of 97078 ZInQKernel constants;
+  722 in D2A6Chain, 130 in C8Chain, 1 TailZ87, 0 in SSFChain; the 109 in the original tree are covered by
+  cm-branch2's `_r5` copies or are the deleted GR/FS5 producers (checked by name).
