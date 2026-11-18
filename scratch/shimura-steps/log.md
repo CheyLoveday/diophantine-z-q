@@ -20,3 +20,11 @@
   Lean argument is generic fibre dimension and its transport to other fibres.
 - VERIFIED (Lean): the print form and the two named GLUE inputs imply the exact
   `R16Thm1b.ShimuraThm1Af` type.
+- VERIFIED: the final contribution compiles with `lake env lean`; all 39
+  `#print axioms` entries use only standard axioms (see `Axioms-output.txt`).
+- VERIFIED: the stock `#discharges` command matches the exact row type in
+  `DischargesFocused.lean`. The full assembly check is provided separately; the
+  cached assembly is from `TailZ62` and the `TailZ87` assembly has 2,276 missing
+  local import artifacts. The full assembly check was not run.
+- VERIFIED: `autofold.py --dry-run` rejects 5/24 → 6/25 in both counts.
+  No fold or count change.
