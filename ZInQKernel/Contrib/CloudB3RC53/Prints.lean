@@ -49,7 +49,12 @@ Form: `RootNumber E w` is the sign of the functional equation of `L(E, s)` (see 
 The print's `w(E)` is the global root number; that it is the sign of the functional equation is
 modularity (BCDT Theorem A) with Hecke's theory (bridge (ii): the identification of the product
 `∏_v w_v` of local root numbers with the sign of the functional equation), so this leaf is the
-print composed with that standard identification: consequence form. -/
+print composed with that standard identification: consequence form. That bridge (BCDT, Hecke and
+the local–global factorization of `ε`) is GLUE, not part of the print. The print's own hypotheses
+are matched: a `2^∞`-Selmer corank, and a rational point of order two, which gives the rational
+two-isogeny the print assumes; no finiteness of `Ш` is assumed, and the root number keeps its real
+place. Read: arXiv:0906.1815v1, p. 4 (J. reine angew. Math. 658 (2011)). Classification: PRINT
+modulo the GLUE root-number bridge. -/
 def DokchitserThm18 : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic →
     1 < Nat.card (nsmulAddMonoidHom 2 : E.toAffine.Point →+ E.toAffine.Point).ker →
