@@ -1,3 +1,4 @@
+import ZInQKernel.Contrib.CloudB3RC53.SelmerDuality.DualQuasiIso
 import ZInQKernel.Contrib.CloudB3RC53.Torsion.KummerIdentification
 import Mathlib
 import ZInQKernel.Contrib.OneProof.RC.SelmerComplex.Selmer
@@ -4517,5 +4518,1569 @@ def DegreeZeroReductionNaturality : Prop :=
     B.baseTorsionCoeff 2 (etaZero K w B (relationTorsion K w B x y hxy))
 
 end ZInQ.Contrib.RC53Assist.DerivedKummerActual.RetainedTorsionNaturality
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceAlgebra
+
+open CategoryTheory
+open scoped Topology
+open ZInQ.Contrib.CloudB3RC53.PairedFunctional
+open ZInQ.Contrib.CloudB3RC53.SelmerDuality
+
+/-- Compatible nonempty finite-level class fibers on a compact source have a common point. -/
+theorem simultaneous_class_equations {P : Type} [TopologicalSpace P] [CompactSpace P]
+    (V : ℕ → Type) [∀ a, TopologicalSpace (V a)] [∀ a, T2Space (V a)]
+    (t : ∀ a, V (a + 1) → V a) (g : ∀ a, P → V a) (z : ∀ a, V a)
+    (hcont : ∀ a, Continuous (g a))
+    (hg : ∀ a x, t a (g (a + 1) x) = g a x)
+    (hz : ∀ a, t a (z (a + 1)) = z a)
+    (hnonempty : ∀ a, ∃ x, g a x = z a) :
+    ∃ x : P, ∀ a, g a x = z a := by
+  let S : ℕ → Set P := fun a => {x | g a x = z a}
+  have hclosed : ∀ a, IsClosed (S a) := fun a => isClosed_eq (hcont a) continuous_const
+  have hstep : ∀ a, S (a + 1) ⊆ S a := by
+    intro a x hx
+    change g a x = z a
+    rw [← hg a x, hx, hz]
+  obtain ⟨x, hx⟩ := IsCompact.nonempty_iInter_of_sequence_nonempty_isCompact_isClosed
+    S hstep hnonempty (hclosed 0).isCompact hclosed
+  exact ⟨x, Set.mem_iInter.mp hx⟩
+
+/-- Acyclicity of the genuine cone gives the actual cochain quasi-isomorphism. -/
+theorem quasiIso_of_cone_acyclic {R : Type} [CommRing R] {A B : GCx R}
+    (f : GHom A B) (h : GAcyclic (coneCx f)) : QuasiIso (GHom.toCC f) := by
+  have h1 : QuasiIso (coneSESHom f).τ₁ := by
+    change QuasiIso (GHom.toCC (idGHom (shiftDown B)))
+    rw [toCC_idGHom]
+    infer_instance
+  have h2 : QuasiIso (coneSESHom f).τ₂ :=
+    quasiIso_of_acyclic _ ((acyclic_toCC_iff _).2 h)
+      ((acyclic_toCC_iff _).2 (coneCx_id_acyclic B))
+  exact HomologicalComplex.HomologySequence.quasiIso_τ₃
+    (coneSESHom f) (coneSES_shortExact f) (coneSES_shortExact _) h1 h2
+
+/-- Reindexing a genuine cochain-map component by the identity changes only its target degree. -/
+theorem component_reindex {R : Type} [CommRing R] {A B : GCx R} (f : GHom A B)
+    (i j k : ℤ) (hij : i = j) (hjk : j = k) (x : A.X i) :
+    (idGHom B).f j k hjk (f.f i j hij x) = f.f i k (hij.trans hjk) x := by
+  subst hij
+  subst hjk
+  rfl
+
+/-- The two genuine cycle/boundary conditions suffice to establish quasi-isomorphism in all degrees. -/
+theorem quasiIso_of_cycle_comparisons {R : Type} [CommRing R] {A B : GCx R}
+    (f : GHom A B)
+    (hsurj : ∀ n (z : B.X n), B.d n (n + 1) rfl z = 0 →
+      ∃ (x : A.X n) (y : B.X (n - 1)), A.d n (n + 1) rfl x = 0 ∧
+        f.f n n rfl x + B.d (n - 1) n (by omega) y = z)
+    (hinj : ∀ n (x : A.X n), A.d n (n + 1) rfl x = 0 →
+      (∃ y : B.X (n - 1), B.d (n - 1) n (by omega) y = f.f n n rfl x) →
+        ∃ y : A.X (n - 1), A.d (n - 1) n (by omega) y = x) :
+    QuasiIso (GHom.toCC f) := by
+  apply quasiIso_of_cone_acyclic f
+  apply (acyclic_toCC_iff _).mp
+  intro n
+  rw [HomologicalComplex.exactAt_iff' _ (n - 1) n (n + 1) (by simp) (by simp),
+    ShortComplex.moduleCat_exact_iff]
+  intro c hc
+  have hc' : (coneCx f).d n (n + 1) rfl c = 0 :=
+    (GCx.toCC_d_hom (coneCx f) n (n + 1) rfl c).symm.trans hc
+  obtain ⟨a, b⟩ := c
+  have ha : A.d n (n + 1) rfl a = 0 := congrArg Prod.fst hc'
+  have hfb : f.f n n rfl a = B.d (n - 1) n (by omega) b := by
+    have h0 := sub_eq_zero.mp (congrArg Prod.snd hc')
+    have h1 := congrArg ((idGHom B).f (n + 1 - 1) n (by omega)) h0
+    rw [component_reindex] at h1
+    have h2 := (idGHom B).comm (n - 1) (n + 1 - 1) (n - 1) n
+      rfl (by omega) (by omega) (by omega) b
+    rw [h2, idGHom_f_self] at h1
+    exact h1
+  obtain ⟨x, hx⟩ := hinj n a ha ⟨b, hfb.symm⟩
+  have hz : B.d (n - 1) n (by omega) (b - f.f (n - 1) (n - 1) rfl x) = 0 := by
+    rw [map_sub]
+    have hcomm := f.comm (n - 1) n (n - 1) n rfl (by omega) (by omega) rfl x
+    rw [← hcomm, hx]
+    exact sub_eq_zero.mpr hfb.symm
+  have hz' : B.d (n - 1) (n - 1 + 1) rfl (b - f.f (n - 1) (n - 1) rfl x) = 0 := by
+    have h := congrArg ((idGHom B).f n (n - 1 + 1) (by omega)) hz
+    have hi := (idGHom B).comm (n - 1) n (n - 1) (n - 1 + 1)
+      rfl (by omega) rfl (by omega) (b - f.f (n - 1) (n - 1) rfl x)
+    rw [hi, idGHom_f_self, map_zero] at h
+    exact h
+  obtain ⟨a', y, ha', hy⟩ := hsurj (n - 1) (b - f.f (n - 1) (n - 1) rfl x) hz'
+  have ha'' : A.d (n - 1) n (by omega) a' = 0 := by
+    have h := congrArg ((idGHom A).f (n - 1 + 1) n (by omega)) ha'
+    have hi := (idGHom A).comm (n - 1) (n - 1 + 1) (n - 1) n
+      rfl rfl (by omega) (by omega) a'
+    rw [hi, idGHom_f_self, map_zero] at h
+    exact h
+  refine ⟨(x + a', -y), ?_⟩
+  apply (GCx.toCC_d_hom _ (n - 1) n (by omega) _).trans
+  apply Prod.ext
+  · change A.d (n - 1) n (by omega) (x + a') = a
+    rw [map_add, hx, ha'', add_zero]
+  · change f.f (n - 1) (n - 1) rfl (x + a') - B.d (n - 1 - 1) (n - 1) (by omega) (-y) = b
+    rw [map_add, map_neg, sub_neg_eq_add, add_assoc, hy, add_sub_cancel]
+
+/-- The actual finite residue of a two-adic integer is locally constant, hence continuous for every topology on its finite target. -/
+theorem continuous_scalar_residue (a : ℕ) [TopologicalSpace (ZMod (2 ^ a))] :
+    Continuous (PadicInt.toZModPow (p := 2) a) := by
+  apply continuous_iff_continuousAt.mpr
+  intro x
+  have h : ∀ᶠ y in 𝓝 x, PadicInt.toZModPow (p := 2) a y = PadicInt.toZModPow (p := 2) a x := by
+    filter_upwards [Metric.ball_mem_nhds x (zpow_pos (show (0 : ℝ) < 2 by norm_num) (-a : ℤ))] with y hy
+    have hnorm : ‖y - x‖ ≤ (2 : ℝ) ^ (-a : ℤ) :=
+      le_of_lt (by simpa only [Metric.mem_ball, dist_eq_norm] using hy)
+    have hmem := (PadicInt.norm_le_pow_iff_mem_span_pow (y - x) a).mp hnorm
+    have hdiv := Ideal.mem_span_singleton.mp hmem
+    apply sub_eq_zero.mp
+    rw [← map_sub]
+    rw [← RingHom.mem_ker, PadicInt.ker_toZModPow]
+    simpa only [Nat.cast_pow, Nat.cast_ofNat] using hmem
+  exact (tendsto_const_nhds : Filter.Tendsto (fun _ : ℤ_[2] => PadicInt.toZModPow a x)
+    (𝓝 x) (𝓝 (PadicInt.toZModPow a x))).congr' (h.mono fun _ hy => hy.symm)
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceAlgebra
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceFiniteness
+
+variable {R U V W H : Type} [CommRing R]
+  [AddCommGroup U] [Module R U] [AddCommGroup V] [Module R V]
+  [AddCommGroup W] [Module R W] [AddCommGroup H]
+
+/-- The actual outgoing differential descends through the actual incoming boundaries. -/
+def quotientDifferential (d : U →ₗ[R] V) (b : W →ₗ[R] U) (h : d.comp b = 0) :
+    (U ⧸ LinearMap.range b) →ₗ[R] V :=
+  (LinearMap.range b).liftQ d (by
+    rintro x ⟨y, rfl⟩
+    exact LinearMap.congr_fun h y)
+
+/-- On actual cochain representatives the quotient differential is the original differential. -/
+theorem quotientDifferential_mk (d : U →ₗ[R] V) (b : W →ₗ[R] U) (h : d.comp b = 0) (u : U) :
+    quotientDifferential d b h (Submodule.Quotient.mk u) = d u := rfl
+
+/-- Finite cycle classes make the primitive classes of each actual boundary finite. -/
+theorem finite_primitive_classes [Finite H]
+    (d : U →ₗ[R] V) (b : W →ₗ[R] U) (h : d.comp b = 0)
+    (q : LinearMap.ker d →+ H)
+    (hq : ∀ x, q x = 0 ↔ ∃ y, b y = x.val)
+    (z : V) (u : U) (hu : d u = z) :
+    Finite {x : U ⧸ LinearMap.range b // quotientDifferential d b h x = z} := by
+  classical
+  let F := {x : U ⧸ LinearMap.range b // quotientDifferential d b h x = z}
+  let rep (x : F) : U := ((LinearMap.range b).mkQ_surjective x.val).choose
+  have hrep (x : F) : (Submodule.Quotient.mk (rep x) : U ⧸ LinearMap.range b) = x.val :=
+    ((LinearMap.range b).mkQ_surjective x.val).choose_spec
+  have hd (x : F) : d (rep x) = z := by
+    rw [← quotientDifferential_mk d b h, hrep]
+    exact x.2
+  let cycle (x : F) : LinearMap.ker d := ⟨rep x - u, by
+    rw [LinearMap.mem_ker, map_sub, hd, hu, sub_self]⟩
+  apply Finite.of_injective (fun x : F => q (cycle x))
+  intro x y hxy
+  change q (cycle x) = q (cycle y) at hxy
+  have hzero : q (cycle x - cycle y) = 0 := by rw [map_sub, hxy, sub_self]
+  obtain ⟨v, hv⟩ := (hq _).mp hzero
+  apply Subtype.ext
+  rw [← hrep x, ← hrep y]
+  apply (Submodule.Quotient.eq _).mpr
+  refine ⟨v, ?_⟩
+  change b v = rep x - rep y
+  change b v = (rep x - u) - (rep y - u) at hv
+  simpa only [sub_sub_sub_cancel_right] using hv
+
+/-- A finite compatible segment is obtained by projecting one actual terminal value. -/
+theorem compatible_segment (S : ℕ → Type) (t : ∀ n, S (n + 1) → S n)
+    (default : ∀ n, S n) (N : ℕ) (v : S N) :
+    ∃ x : ∀ n, S n, x N = v ∧ ∀ a < N, t a (x (a + 1)) = x a := by
+  classical
+  induction N with
+  | zero => exact ⟨Function.update default 0 v, Function.update_self _ _ _, by omega⟩
+  | succ N ih =>
+    obtain ⟨x, hx, ht⟩ := ih (t N v)
+    let y := Function.update x (N + 1) v
+    refine ⟨y, Function.update_self _ _ _, ?_⟩
+    intro a ha
+    by_cases h : a = N
+    · subst a
+      simp only [y, Function.update_self, Function.update_of_ne (show N ≠ N + 1 by omega)]
+      exact hx.symm
+    · have h1 : a ≠ N + 1 := by omega
+      have h2 : a + 1 ≠ N + 1 := by omega
+      simp only [y, Function.update_of_ne h1, Function.update_of_ne h2]
+      exact ht a (by omega)
+
+/-- Every inverse system of nonempty finite types has an actual compatible family; surjectivity of its transition maps is not required. -/
+theorem finite_system_has_section (S : ℕ → Type) [∀ n, Finite (S n)] [∀ n, Nonempty (S n)]
+    (t : ∀ n, S (n + 1) → S n) :
+    ∃ x : ∀ n, S n, ∀ n, t n (x (n + 1)) = x n := by
+  classical
+  let default : ∀ n, S n := fun n => Classical.choice (inferInstance : Nonempty (S n))
+  letI : ∀ n, TopologicalSpace (S n) := fun _ => ⊥
+  letI : ∀ n, DiscreteTopology (S n) := fun _ => ⟨rfl⟩
+  let C : ℕ → Set (∀ n, S n) := fun N => {x | ∀ a ≤ N, t a (x (a + 1)) = x a}
+  have hclosed : ∀ N, IsClosed (C N) := by
+    intro N
+    change IsClosed {x : ∀ n, S n | ∀ a ≤ N, t a (x (a + 1)) = x a}
+    simp only [Set.setOf_forall]
+    apply isClosed_iInter
+    intro a
+    apply isClosed_iInter
+    intro _
+    exact isClosed_eq ((continuous_of_discreteTopology (f := t a)).comp (continuous_apply (a + 1)))
+      (continuous_apply a)
+  have hstep : ∀ N, C (N + 1) ⊆ C N := fun N x hx a ha => hx a (by omega)
+  have hnonempty : ∀ N, (C N).Nonempty := by
+    intro N
+    obtain ⟨x, _, hx⟩ := compatible_segment S t default (N + 1) (default (N + 1))
+    exact ⟨x, fun a ha => hx a (by omega)⟩
+  obtain ⟨x, hx⟩ := IsCompact.nonempty_iInter_of_sequence_nonempty_isCompact_isClosed
+    C hstep hnonempty (hclosed 0).isCompact hclosed
+  exact ⟨x, fun n => Set.mem_iInter.mp hx n n (le_refl n)⟩
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceFiniteness
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceKummerClasses
+
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open CategoryTheory TauCeti TauCeti.ContCohomology
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralKummer
+
+variable (F : Type) [Field F] [CharZero F] [DecidableEq F]
+  (B : WeierstrassCurve F) [B.IsElliptic]
+
+/-- The genuine class reductions see scalar coefficients through the prescribed finite residues. -/
+theorem raw_reduction_smul (a : ℕ) (r : ℤ_[2])
+    (c : LinearMap.ker ((actualIntegralComplex F B).d 1 2).hom) :
+    reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (r • c) =
+      (PadicInt.toZModPow a r).val • reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a c := by
+  have h : reduceOneCycle (Field.absoluteGaloisGroup F) (PtAlg F B) a (r • c) =
+      (PadicInt.toZModPow a r).val • reduceOneCycle (Field.absoluteGaloisGroup F) (PtAlg F B) a c := by
+    apply Subtype.ext
+    change ((reduceCochains (Field.absoluteGaloisGroup F) (PtAlg F B) a).f 1).hom (r • c.val) = _
+    rw [map_smul]
+    exact finiteCochain_smul_repr F B a 1 r _
+  change kerToH1 (reduceOneCycle (Field.absoluteGaloisGroup F) (PtAlg F B) a (r • c)) = _
+  rw [h, map_nsmul]
+  rfl
+
+/-- Genuine integral one-cocycle classes form a compatible finite family. -/
+theorem raw_reduction_compatible (a : ℕ)
+    (c : LinearMap.ker ((actualIntegralComplex F B).d 1 2).hom) :
+    transitionH1 (Field.absoluteGaloisGroup F) (PtAlg F B) a
+        (reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) (a + 1) c) =
+      reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a c := by
+  change transitionH1 _ _ a (kerToH1 (reduceOneCycle _ _ (a + 1) c)) = kerToH1 (reduceOneCycle _ _ a c)
+  rw [transitionH1_kerToH1]
+  apply congrArg kerToH1
+  apply Subtype.ext
+  exact reduceCochains_succ (Field.absoluteGaloisGroup F) (PtAlg F B) a 1 c.val
+
+variable {r : ℕ}
+  (κ : (Fin r → ℤ_[2]) →ₗ[ℤ_[2]] LinearMap.ker ((actualIntegralComplex F B).d 1 2).hom)
+
+/-- The actual finite class map of a specified based integral cycle map is computed in the specified coordinate residues. -/
+theorem raw_based_reduction (a : ℕ) (u : Fin r → ℤ_[2]) :
+    reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (κ u) =
+      ∑ i : Fin r, (PadicInt.toZModPow a (u i)).val •
+        reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (κ (Pi.single i 1)) := by
+  have hu : (∑ i : Fin r, u i • (Pi.single i 1 : Fin r → ℤ_[2])) = u := by
+    ext j
+    simp [Pi.single_apply]
+  conv_lhs => rw [← hu]
+  simp only [map_sum, map_smul, raw_reduction_smul]
+
+/-- Finite solvability for all prescribed actual class reductions gives one simultaneous integral based vector. -/
+theorem simultaneous_based_reduction
+    (c : LinearMap.ker ((actualIntegralComplex F B).d 1 2).hom)
+    (hexists : ∀ a : ℕ, ∃ u : Fin r → ℤ_[2],
+      reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (κ u) =
+        reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a c) :
+    ∃ u : Fin r → ℤ_[2], ∀ a : ℕ,
+      reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (κ u) =
+        reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a c := by
+  let V (a : ℕ) := H1 (Field.absoluteGaloisGroup F) (FiniteTateCoeff (Field.absoluteGaloisGroup F) (PtAlg F B) a)
+  letI : ∀ a, TopologicalSpace (V a) := fun _ => ⊥
+  letI : ∀ a, DiscreteTopology (V a) := fun _ => ⟨rfl⟩
+  letI : ∀ a, TopologicalSpace (ZMod (2 ^ a)) := fun _ => ⊥
+  letI : ∀ a, DiscreteTopology (ZMod (2 ^ a)) := fun _ => ⟨rfl⟩
+  have hcont : ∀ a, Continuous (fun u : Fin r → ℤ_[2] =>
+      reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (κ u)) := by
+    intro a
+    have hs : Continuous (fun u : Fin r → ℤ_[2] => fun i : Fin r => PadicInt.toZModPow a (u i)) :=
+      continuous_pi (fun i => (SourceAlgebra.continuous_scalar_residue a).comp (continuous_apply i))
+    have ht : Continuous (fun q : Fin r → ZMod (2 ^ a) =>
+        ∑ i : Fin r, (q i).val • reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (κ (Pi.single i 1))) :=
+      continuous_of_discreteTopology
+    convert ht.comp hs using 1
+    funext u
+    exact raw_based_reduction F B κ a u
+  exact SourceAlgebra.simultaneous_class_equations V
+    (fun a x => transitionH1 (Field.absoluteGaloisGroup F) (PtAlg F B) a x)
+    (fun a u => reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (κ u))
+    (fun a => reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a c)
+    hcont (fun a u => raw_reduction_compatible F B a (κ u))
+    (fun a => raw_reduction_compatible F B a c) hexists
+
+/-- Membership in all prescribed finite images of a fixed based cycle map implies genuine integral membership modulo actual continuous boundaries. -/
+theorem integral_based_image_of_all_finite_images
+    (c : LinearMap.ker ((actualIntegralComplex F B).d 1 2).hom)
+    (hexists : ∀ a : ℕ, ∃ u : Fin r → ℤ_[2],
+      reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (κ u) =
+        reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a c) :
+    ∃ (u : Fin r → ℤ_[2]) (b : (actualIntegralComplex F B).X 0),
+      ((actualIntegralComplex F B).d 0 1).hom b = c.val - (κ u).val := by
+  obtain ⟨u, hu⟩ := simultaneous_based_reduction F B κ c hexists
+  haveI := actualIntegralCoeff_compact F B
+  refine ⟨u, ?_⟩
+  apply integral_one_boundary_of_finite_boundaries (Field.absoluteGaloisGroup F) (PtAlg F B)
+    (actualCoefficientProjection_surjective F B) (c.val - (κ u).val)
+  intro a
+  have hz : reducedOneClass (Field.absoluteGaloisGroup F) (PtAlg F B) a (c - κ u) = 0 := by
+    rw [map_sub, hu, sub_self]
+  exact (kerToH1_eq_zero_iff _).mp hz
+
+/-- On every rational point, the completed Kummer class is exactly the genuine finite Kummer map. -/
+theorem completion_class_of_point (a : ℕ) (p : B.toAffine.Point) :
+    completionKummerClass F B a (completePoint B.toAffine.Point p) =
+      FiniteTrace.hOneToAlg F B (2 ^ a) (B.kummerMap (2 ^ a) (twoPower_isUnit F a) p) := by
+  change FiniteTrace.hOneToAlg F B (2 ^ a)
+      (B.kummerClassMap (2 ^ a) _
+        (completionQuotientEquiv B.toAffine.Point a (Submodule.Quotient.mk (completePoint B.toAffine.Point p)))) = _
+  rw [completionQuotientEquiv_completePoint, B.kummerClassMap_mk]
+
+/-- The independently specified finite Kummer classes separate genuine completed points at every level. -/
+theorem completion_class_family_injective (x y : PointCompletion B.toAffine.Point)
+    (h : ∀ a, completionKummerClass F B a x = completionKummerClass F B a y) : x = y := by
+  apply Subtype.ext
+  funext a
+  apply (pointLevelEquiv B.toAffine.Point a).injective
+  have ha := h a
+  change FiniteTrace.hOneToAlg F B (2 ^ a)
+      (B.kummerClassMap (2 ^ a) _ (completionQuotientEquiv B.toAffine.Point a (Submodule.Quotient.mk x))) =
+    FiniteTrace.hOneToAlg F B (2 ^ a)
+      (B.kummerClassMap (2 ^ a) _ (completionQuotientEquiv B.toAffine.Point a (Submodule.Quotient.mk y))) at ha
+  have hq := B.kummerClassMap_injective (2 ^ a) (twoPower_isUnit F a)
+    ((FiniteTrace.hOneToAlg F B (2 ^ a)).injective ha)
+  simpa only [completionQuotientEquiv_mk] using hq
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceKummerClasses
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceDegreeZero
+
+open NumberField IsDedekindDomain TauCeti
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+
+/-- The actual Tate-module transition over several levels is the prescribed power of two. -/
+theorem projection_shift (A : Type) [AddCommGroup A] (v : TateModule 2 A) (a e : ℕ) :
+    (2 ^ e : ℕ) • (TateModule.proj (a + e) v).val = (TateModule.proj a v).val := by
+  induction e with
+  | zero => simp only [Nat.add_zero, pow_zero, one_nsmul]
+  | succ e ih =>
+    have h : (2 : ℕ) • (TateModule.proj (a + e + 1) v).val =
+        (TateModule.proj (a + e) v).val := congrArg Subtype.val (TateModule.proj_succ v (a + e))
+    rw [pow_succ', mul_nsmul]
+    change (2 ^ e : ℕ) • ((2 : ℕ) • (TateModule.proj (a + e + 1) v).val) = (TateModule.proj a v).val
+    rw [h]
+    exact ih
+
+/-- The genuine elliptic Tate module at an actual completion has no nonzero rational Galois invariant. -/
+theorem actual_fixed_tate_eq_zero
+    (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+    [DecidableEq (w.adicCompletion K)]
+    (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+    (v : IntegralTateCoeff (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff)
+    (hv : ∀ σ : AbsoluteGaloisGroup (w.adicCompletion K), σ • v = v) : v = 0 := by
+  obtain ⟨e, he⟩ := boundedTwoPrimary_local K w B
+  apply TateModule.ext
+  intro a
+  apply Subtype.ext
+  let q : B.TorsionCoeff (2 ^ (a + e)) := TateModule.proj (a + e) v
+  have hq : ∀ σ : AbsoluteGaloisGroup (w.adicCompletion K), σ • q = q := by
+    intro σ
+    have h := congrArg (coefficientProjection (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff (a + e)) (hv σ)
+    rw [coefficientProjection_smul] at h
+    exact h
+  obtain ⟨t, ht⟩ := B.exists_baseTorsionCoeff_eq_of_forall_smul_eq hq
+  have hqzero : (2 ^ e : ℕ) • q.val = 0 := by
+    rw [← ht]
+    change (2 ^ e : ℕ) • B.basePointCoeff t.val = 0
+    rw [← map_nsmul, he (a + e) t.val (AddSubgroup.torsionBy.nsmul_iff.mp t.2), map_zero]
+  change (TateModule.proj a v).val = 0
+  rw [← projection_shift B.PointCoeff v a e]
+  exact hqzero
+
+/-- Degree zero of the genuine continuous local elliptic Tate cochains is exact. -/
+theorem actual_zero_cochain_kernel
+    (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+    [DecidableEq (w.adicCompletion K)]
+    (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+    (b : (integralComplex (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff).X 0)
+    (hb : ((integralComplex (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff).d 0 1).hom b = 0) : b = 0 := by
+  let v : IntegralTateCoeff (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff :=
+    ZInQ.Manuscript.RC.CoefModules.cfun b Fin.elim0
+  have hv : ∀ σ : AbsoluteGaloisGroup (w.adicCompletion K), σ • v = v := by
+    intro σ
+    apply TateModule.ext
+    intro a
+    have h0 : ((finiteIntegralComplex (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff a).d 0 1).hom
+        (((reduceCochains (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff a).f 0).hom b) = 0 := by
+      rw [← reduceCochains_d, hb, map_zero]
+    let z : LinearMap.ker
+        ((finiteIntegralComplex (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff a).d 0 1).hom :=
+      ⟨((reduceCochains (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff a).f 0).hom b, h0⟩
+    have h := (FixedPoints.mem_addSubgroup _ _ _).mp
+      (ZInQ.Manuscript.RC.SelmerComplex.kerToH0 z).property σ
+    exact h
+  have hvzero := actual_fixed_tate_eq_zero K w B v hv
+  apply Subtype.ext
+  funext s
+  have hs : s = Fin.elim0 := Subsingleton.elim _ _
+  change ZInQ.Manuscript.RC.CoefModules.cfun b s = 0
+  rw [hs]
+  exact hvzero
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceDegreeZero
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.ActualBockstein
+
+open TauCeti TauCeti.ContCohomology CategoryTheory
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralPairing
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteTrace
+
+variable (F : Type) [Field F] [CharZero F] [DecidableEq F]
+  (B : WeierstrassCurve F) [B.IsElliptic]
+
+/-- Multiplication by two kills the actual first Tate level in every cochain degree. -/
+theorem two_kills_first_level (k : ℕ)
+    (u : (finiteIntegralComplex (AbsoluteGaloisGroup F) B.PointCoeff 1).X k) :
+    (2 : ℤ_[2]) • u = 0 := by
+  change ((2 : ℕ) : ℤ_[2]) • u = 0
+  rw [Nat.cast_smul_eq_nsmul]
+  apply contCochains_ext
+  intro s
+  apply Subtype.ext
+  let q : FiniteTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff 1 := cfun u s
+  change (2 : ℕ) • (show TateModuleLevel 2 B.PointCoeff 1 from q).val = 0
+  exact AddSubgroup.torsionBy.nsmul_iff.mp (show TateModuleLevel 2 B.PointCoeff 1 from q).property
+
+/-- The actual coefficient Bockstein of a completed-point Kummer class is its specific rational two-torsion coefficient. -/
+theorem completed_point_bockstein
+    (b : (pointComplex F B).X 0)
+    (c : LinearMap.ker ((pointComplex F B).d 1 2).hom)
+    (m : PointCompletion B.toAffine.Point)
+    (hb : ((pointComplex F B).d 0 1).hom b = (2 : ℤ_[2]) • c.val)
+    (hc : ∀ a, pointH1Reduction F B a c =
+      (hOneToAlg F B (2 ^ a)).symm (completionKummerClass F B a m)) :
+    ∃ t : AddSubgroup.torsionBy B.toAffine.Point 2,
+      IntegralPairing.pointLevelEquiv F B 1
+          (coefficientProjection (AbsoluteGaloisGroup F) B.PointCoeff 1 (cfun b Fin.elim0)) =
+        B.baseTorsionCoeff 2 t ∧ m = completePoint B.toAffine.Point t.val := by
+  let v : IntegralTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff := cfun b Fin.elim0
+  have hd (a : ℕ) : ((finiteIntegralComplex (AbsoluteGaloisGroup F) B.PointCoeff a).d 0 1).hom
+        (((reduceCochains (AbsoluteGaloisGroup F) B.PointCoeff a).f 0).hom b) =
+      (2 : ℤ_[2]) • ((reduceCochains (AbsoluteGaloisGroup F) B.PointCoeff a).f 1).hom c.val := by
+    rw [← reduceCochains_d, hb, map_smul]
+  have hzero : ((finiteIntegralComplex (AbsoluteGaloisGroup F) B.PointCoeff 1).d 0 1).hom
+      (((reduceCochains (AbsoluteGaloisGroup F) B.PointCoeff 1).f 0).hom b) = 0 :=
+    (hd 1).trans (two_kills_first_level F B 1 _)
+  let z : LinearMap.ker ((finiteIntegralComplex (AbsoluteGaloisGroup F) B.PointCoeff 1).d 0 1).hom :=
+    ⟨((reduceCochains (AbsoluteGaloisGroup F) B.PointCoeff 1).f 0).hom b, hzero⟩
+  let q : B.TorsionCoeff 2 := IntegralPairing.pointLevelEquiv F B 1
+    (coefficientProjection (AbsoluteGaloisGroup F) B.PointCoeff 1 v)
+  have hq : ∀ σ : AbsoluteGaloisGroup F, σ • q = q := by
+    intro σ
+    have h := (FixedPoints.mem_addSubgroup _ _ _).mp (kerToH0 z).property σ
+    exact h
+  obtain ⟨t, ht⟩ := B.exists_baseTorsionCoeff_eq_of_forall_smul_eq hq
+  let Q (a : ℕ) : B.PointCoeff := (TateModule.proj (a + 1) v).val
+  have hdivide (a : ℕ) : (2 ^ a : ℕ) • Q a = B.basePointCoeff t.val := by
+    have h1 : (TateModule.proj 1 v).val = B.basePointCoeff t.val := congrArg Subtype.val ht.symm
+    change (2 ^ a : ℕ) • (TateModule.proj (a + 1) v).val = _
+    rw [Nat.add_comm a 1]
+    exact (SourceDegreeZero.projection_shift B.PointCoeff v 1 a).trans h1
+  have hclass (a : ℕ) : pointH1Reduction F B a c = B.kummerMap (2 ^ a) (twoPower_isUnit F a) t.val := by
+    have hcycle : pointReductionZ1 F B a c =
+        (⟨WeierstrassCurve.kummerCocycle (hdivide a),
+          WeierstrassCurve.kummerCocycle_mem_Z1 (hdivide a)⟩ : Z1 (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a))) := by
+      apply Subtype.ext
+      funext σ
+      apply Subtype.ext
+      let w : IntegralTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff := cfun c.val (fun _ => σ)
+      change (TateModule.proj a w).val = σ • Q a - Q a
+      have h := congrArg (fun u => cfun u (fun _ => σ)) (hd (a + 1))
+      simp only [contFun_d01] at h
+      change σ • coefficientProjection (AbsoluteGaloisGroup F) B.PointCoeff (a + 1) v -
+          coefficientProjection (AbsoluteGaloisGroup F) B.PointCoeff (a + 1) v =
+        (2 : ℤ_[2]) • coefficientProjection (AbsoluteGaloisGroup F) B.PointCoeff (a + 1)
+          (cfun c.val (fun _ => σ)) at h
+      change _ = ((2 : ℕ) : ℤ_[2]) • _ at h
+      rw [Nat.cast_smul_eq_nsmul] at h
+      have hp := congrArg (fun u : FiniteTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff (a + 1) =>
+        (show TateModuleLevel 2 B.PointCoeff (a + 1) from u).val) h
+      change σ • Q a - Q a = (2 : ℕ) • (TateModule.proj (a + 1) w).val at hp
+      have hs : (2 : ℕ) • (TateModule.proj (a + 1) w).val =
+          (TateModule.proj a w).val := by
+        simpa only [pow_one] using SourceDegreeZero.projection_shift B.PointCoeff w a 1
+      exact hs.symm.trans hp.symm
+    rw [pointH1Reduction_class, hcycle]
+    exact (WeierstrassCurve.kummerMap_eq_H1pi (W := B) (m := 2 ^ a)
+      (twoPower_isUnit F a) (hdivide a)).symm
+  have hm : m = completePoint B.toAffine.Point t.val := by
+    apply SourceKummerClasses.completion_class_family_injective F B
+    intro a
+    have h := congrArg (hOneToAlg F B (2 ^ a)) (hc a)
+    rw [(hOneToAlg F B (2 ^ a)).apply_symm_apply, hclass] at h
+    rw [SourceKummerClasses.completion_class_of_point]
+    exact h.symm
+  exact ⟨t, ht.symm, hm⟩
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.ActualBockstein
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralFiniteBoundary
+
+open CategoryTheory TauCeti
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceFiniteness
+
+variable (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
+  (A : Type) [AddCommGroup A] [DistribMulAction G A]
+  [TopologicalSpace A] [DiscreteTopology A] [ContinuousSMul G A]
+
+/-- Finite genuine cycle classes make every integral cocycle detected by its actual finite reductions; no transition-surjectivity assumption on cohomology is needed. -/
+theorem boundary_of_finite_boundaries (k : ℕ)
+    (hcoeff : ∀ a, Function.Surjective (coefficientTransition G A a))
+    (H : ℕ → Type) [∀ a, AddCommGroup (H a)] [∀ a, Finite (H a)]
+    (q : ∀ a, LinearMap.ker ((finiteIntegralComplex G A a).d (k + 1) (k + 2)).hom →+ H a)
+    (hq : ∀ a x, q a x = 0 ↔ ∃ y : (finiteIntegralComplex G A a).X k,
+      ((finiteIntegralComplex G A a).d k (k + 1)).hom y = x.val)
+    (z : (integralComplex G A).X (k + 2))
+    (hz : ∀ a, ∃ u : (finiteIntegralComplex G A a).X (k + 1),
+      ((finiteIntegralComplex G A a).d (k + 1) (k + 2)).hom u =
+        ((reduceCochains G A a).f (k + 2)).hom z) :
+    ∃ u : (integralComplex G A).X (k + 1), ((integralComplex G A).d (k + 1) (k + 2)).hom u = z := by
+  classical
+  choose prim hprim using hz
+  let B (a : ℕ) : Submodule ℤ_[2] ((finiteIntegralComplex G A a).X (k + 1)) :=
+    LinearMap.range ((finiteIntegralComplex G A a).d k (k + 1)).hom
+  have dd (a : ℕ) :
+      ((finiteIntegralComplex G A a).d (k + 1) (k + 2)).hom.comp
+        ((finiteIntegralComplex G A a).d k (k + 1)).hom = 0 := by
+    have h := congrArg ModuleCat.Hom.hom ((finiteIntegralComplex G A a).d_comp_d k (k + 1) (k + 2))
+    simpa only [ModuleCat.hom_comp, ModuleCat.hom_zero] using h
+  let D (a : ℕ) := quotientDifferential
+    ((finiteIntegralComplex G A a).d (k + 1) (k + 2)).hom
+    ((finiteIntegralComplex G A a).d k (k + 1)).hom (dd a)
+  let F (a : ℕ) := {x : (finiteIntegralComplex G A a).X (k + 1) ⧸ B a //
+    D a x = ((reduceCochains G A a).f (k + 2)).hom z}
+  letI : ∀ a, Finite (F a) := fun a => finite_primitive_classes
+    ((finiteIntegralComplex G A a).d (k + 1) (k + 2)).hom
+    ((finiteIntegralComplex G A a).d k (k + 1)).hom (dd a) (q a) (hq a)
+    (((reduceCochains G A a).f (k + 2)).hom z) (prim a) (hprim a)
+  letI : ∀ a, Nonempty (F a) := fun a => ⟨⟨(B a).mkQ (prim a), hprim a⟩⟩
+  let T (a : ℕ) : ((finiteIntegralComplex G A (a + 1)).X (k + 1) ⧸ B (a + 1)) →ₗ[ℤ_[2]]
+      ((finiteIntegralComplex G A a).X (k + 1) ⧸ B a) :=
+    (B (a + 1)).mapQ (B a) ((transitionCochains G A a).f (k + 1)).hom (by
+      rintro x ⟨y, rfl⟩
+      exact ⟨((transitionCochains G A a).f k).hom y, (transitionCochains_d G A a k y).symm⟩)
+  have T_mk (a : ℕ) (u : (finiteIntegralComplex G A (a + 1)).X (k + 1)) :
+      T a ((B (a + 1)).mkQ u) = (B a).mkQ (((transitionCochains G A a).f (k + 1)).hom u) := rfl
+  have D_T (a : ℕ) (x : (finiteIntegralComplex G A (a + 1)).X (k + 1) ⧸ B (a + 1)) :
+      D a (T a x) = ((transitionCochains G A a).f (k + 2)).hom (D (a + 1) x) := by
+    induction x using Submodule.Quotient.induction_on with
+    | H u =>
+      change ((finiteIntegralComplex G A a).d (k + 1) (k + 2)).hom
+          (((transitionCochains G A a).f (k + 1)).hom u) =
+        ((transitionCochains G A a).f (k + 2)).hom
+          (((finiteIntegralComplex G A (a + 1)).d (k + 1) (k + 2)).hom u)
+      exact (transitionCochains_d G A a (k + 1) u).symm
+  let τ (a : ℕ) : F (a + 1) → F a := fun x => ⟨T a x.val, by
+    rw [D_T, x.property]
+    exact reduceCochains_succ G A a (k + 2) z⟩
+  obtain ⟨classes, hclasses⟩ := finite_system_has_section F τ
+  let rep (a : ℕ) : (finiteIntegralComplex G A a).X (k + 1) :=
+    ((B a).mkQ_surjective (classes a).val).choose
+  have hrep (a : ℕ) : (B a).mkQ (rep a) = (classes a).val :=
+    ((B a).mkQ_surjective (classes a).val).choose_spec
+  have step (a : ℕ) (u : (finiteIntegralComplex G A a).X (k + 1))
+      (hu : (B a).mkQ u = (classes a).val) :
+      ∃ u' : (finiteIntegralComplex G A (a + 1)).X (k + 1),
+        (B (a + 1)).mkQ u' = (classes (a + 1)).val ∧
+        ((transitionCochains G A a).f (k + 1)).hom u' = u := by
+    have ht : T a (classes (a + 1)).val = (classes a).val := congrArg Subtype.val (hclasses a)
+    have hzero : (B a).mkQ
+        (((transitionCochains G A a).f (k + 1)).hom (rep (a + 1)) - u) = 0 := by
+      rw [map_sub, ← T_mk, hrep, ht, hu, sub_self]
+    have hmem : ((transitionCochains G A a).f (k + 1)).hom (rep (a + 1)) - u ∈ B a := by
+      change Submodule.Quotient.mk _ = 0 at hzero
+      rwa [Submodule.Quotient.mk_eq_zero] at hzero
+    obtain ⟨v, hv⟩ := hmem
+    obtain ⟨v', hv'⟩ := transitionCochains_surjective G A a k (hcoeff a) v
+    refine ⟨rep (a + 1) - ((finiteIntegralComplex G A (a + 1)).d k (k + 1)).hom v', ?_, ?_⟩
+    · rw [map_sub, hrep]
+      have hb : (B (a + 1)).mkQ (((finiteIntegralComplex G A (a + 1)).d k (k + 1)).hom v') = 0 := by
+        change Submodule.Quotient.mk _ = 0
+        rw [Submodule.Quotient.mk_eq_zero]
+        exact ⟨v', rfl⟩
+      rw [hb, sub_zero]
+    · rw [map_sub, transitionCochains_d, hv', hv, sub_sub_cancel]
+  let u : ∀ a, {u : (finiteIntegralComplex G A a).X (k + 1) // (B a).mkQ u = (classes a).val} :=
+    fun a => Nat.rec (motive := fun a => {u : (finiteIntegralComplex G A a).X (k + 1) //
+        (B a).mkQ u = (classes a).val}) ⟨rep 0, hrep 0⟩
+      (fun a u => ⟨(step a u.val u.property).choose, (step a u.val u.property).choose_spec.1⟩) a
+  have hu : ∀ a, ((transitionCochains G A a).f (k + 1)).hom (u (a + 1)).val = (u a).val :=
+    fun a => (step a (u a).val (u a).property).choose_spec.2
+  refine ⟨liftCompatibleCochains G A (k + 1) (fun a => (u a).val) hu, ?_⟩
+  apply integralCochain_ext G A (k + 2)
+  intro a
+  rw [reduceCochains_d, liftCompatibleCochains_projection]
+  change D a ((B a).mkQ (u a).val) = _
+  rw [(u a).property]
+  exact (classes a).property
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralFiniteBoundary
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.RetainedTorsionNaturality
+
+open NumberField IsDedekindDomain TauCeti
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.TransportedLocal
+
+variable (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+  [DecidableEq (w.adicCompletion K)] (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+
+/-- The retained-degree-zero reduction square for the fixed actual local Kummer presentation is derived from its genuine coefficient Bockstein. -/
+theorem degreeZeroReductionNaturality_proof : DegreeZeroReductionNaturality K w B := by
+  intro x y hxy
+  obtain ⟨t, ht, hm⟩ := ActualBockstein.completed_point_bockstein (w.adicCompletion K) B
+    (localKummerZero K w B x) (localKummerOne K w B y) ((actualLocalPresentation K w B).g y)
+    (by
+      rw [localKummerZero_d, hxy, map_smul]
+      rfl)
+    (by
+      intro a
+      rw [localKummerOne_reduction]
+      change (FiniteTrace.hOneToAlg (w.adicCompletion K) B (2 ^ a)).symm
+          (IntegralReduction.actualH1Reduction (w.adicCompletion K) B a
+            (IntegralKummer.actualLocalKummerOne K w B y)) = _
+      rw [IntegralKummer.actualLocalKummerOne, IntegralKummer.basedKummerOne_reduction])
+  have hrel : relationTorsion K w B x y hxy = torsionToCompletion B.toAffine.Point 1 t :=
+    Subtype.ext hm
+  rw [hrel, etaZero_torsionToCompletion]
+  exact ht
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.RetainedTorsionNaturality
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceIntegralImage
+
+open CategoryTheory NumberField IsDedekindDomain TauCeti TauCeti.ContCohomology
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralPairing
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralTransport
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.TransportedLocal
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteTrace
+
+variable (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+  [DecidableEq (w.adicCompletion K)] (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+
+/-- A vector realizing an actual completed rational point reduces to exactly its genuine finite Kummer class. -/
+theorem local_reduction_of_complete_point (a : ℕ)
+    (u : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) (p : B.toAffine.Point)
+    (hu : (actualLocalPresentation K w B).g u = completePoint B.toAffine.Point p) :
+    pointH1Reduction (w.adicCompletion K) B a (localKummerOne K w B u) =
+      B.kummerMap (2 ^ a) (twoPower_isUnit (w.adicCompletion K) a) p := by
+  rw [localKummerOne_reduction]
+  change (hOneToAlg (w.adicCompletion K) B (2 ^ a)).symm
+    (actualH1Reduction (w.adicCompletion K) B a (actualLocalKummerOne K w B u)) = _
+  rw [actualLocalKummerOne, basedKummerOne_reduction, hu,
+    SourceKummerClasses.completion_class_of_point, (hOneToAlg (w.adicCompletion K) B (2 ^ a)).symm_apply_apply]
+
+/-- Actual membership at every fixed finite Kummer reduction lifts to actual integral membership modulo continuous boundaries. -/
+theorem local_integral_image_of_all_finite_images
+    (c : LinearMap.ker ((pointComplex (w.adicCompletion K) B).d 1 2).hom)
+    (hc : ∀ a, pointH1Reduction (w.adicCompletion K) B a c ∈
+      (B.kummerMap (2 ^ a) (twoPower_isUnit (w.adicCompletion K) a)).range) :
+    ∃ (u : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2])
+      (b : (pointComplex (w.adicCompletion K) B).X 0),
+      ((pointComplex (w.adicCompletion K) B).d 0 1).hom b = c.val - (localKummerOne K w B u).val := by
+  let ca : LinearMap.ker ((actualIntegralComplex (w.adicCompletion K) B).d 1 2).hom :=
+    ⟨((toAlgComplex (w.adicCompletion K) B).f 1).hom c.val, by
+      change ((actualIntegralComplex (w.adicCompletion K) B).d 1 2).hom
+        (((toAlgComplex (w.adicCompletion K) B).f 1).hom c.val) = 0
+      have hc0 : ((pointComplex (w.adicCompletion K) B).d 1 2).hom c.val = 0 := c.2
+      have h := congrArg (fun f => f.hom c.val) ((toAlgComplex (w.adicCompletion K) B).comm 1 2)
+      simpa only [ModuleCat.hom_comp, LinearMap.comp_apply, hc0, map_zero] using h⟩
+  have hca : toSepCycle (w.adicCompletion K) B ca = c := by
+    apply Subtype.ext
+    change ((toSepComplex (w.adicCompletion K) B).f 1).hom
+      (((toAlgComplex (w.adicCompletion K) B).f 1).hom c.val) = c.val
+    have h := congrArg (fun f => (f.f 1).hom c.val) (toAlgComplex_toSepComplex (w.adicCompletion K) B)
+    simpa only [HomologicalComplex.comp_f, HomologicalComplex.id_f, ModuleCat.hom_comp,
+      LinearMap.comp_apply, ModuleCat.hom_id, LinearMap.id_apply] using h
+  have hfinite : ∀ a, ∃ u : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2],
+      reducedOneClass (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a
+          (actualLocalKummerOne K w B u) =
+        reducedOneClass (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a ca := by
+    intro a
+    obtain ⟨p, hp⟩ := hc a
+    obtain ⟨u, hu⟩ := (actualLocalPresentation K w B).surjective (completePoint B.toAffine.Point p)
+    refine ⟨u, ?_⟩
+    apply (explicitCoeff1Equiv (Field.absoluteGaloisGroup (w.adicCompletion K))
+      (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a)
+      (actualLevelEquiv (w.adicCompletion K) B a) continuous_of_discreteTopology
+      continuous_of_discreteTopology (actualLevelEquiv_smul (w.adicCompletion K) B a)).injective
+    change actualH1Reduction (w.adicCompletion K) B a (actualLocalKummerOne K w B u) =
+      actualH1Reduction (w.adicCompletion K) B a ca
+    have h := (local_reduction_of_complete_point K w B a u p hu).trans hp
+    change pointH1Reduction (w.adicCompletion K) B a
+      (toSepCycle (w.adicCompletion K) B (actualLocalKummerOne K w B u)) =
+      pointH1Reduction (w.adicCompletion K) B a c at h
+    rw [← hca, integralReduction_square, integralReduction_square] at h
+    exact (hOneToAlg (w.adicCompletion K) B (2 ^ a)).symm.injective h
+  obtain ⟨u, b, hb⟩ := SourceKummerClasses.integral_based_image_of_all_finite_images
+    (w.adicCompletion K) B (actualLocalKummerOne K w B) ca hfinite
+  refine ⟨u, ((toSepComplex (w.adicCompletion K) B).f 0).hom b, ?_⟩
+  rw [← toSepComplex_d, hb, map_sub]
+  change (toSepCycle (w.adicCompletion K) B ca).val - (localKummerOne K w B u).val = _
+  rw [hca]
+
+/-- The printed actual finite Kummer annihilator detects the actual integral quotient class through the fixed trace and fixed reduction maps. -/
+theorem local_integral_annihilator_of_print (hM : MilneLocalDualityPrint)
+    (c : LinearMap.ker ((pointComplex (w.adicCompletion K) B).d 1 2).hom)
+    (hc : ∀ u : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2],
+      AllCochainTrace.trv (w.adicCompletion K)
+        (integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val c.val) = 0) :
+    ∃ (u : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2])
+      (b : (pointComplex (w.adicCompletion K) B).X 0),
+      ((pointComplex (w.adicCompletion K) B).d 0 1).hom b = c.val - (localKummerOne K w B u).val := by
+  apply local_integral_image_of_all_finite_images K w B c
+  intro a
+  apply (kummer_exact_annihilator_of_print hM (w.adicCompletion K) B
+    (2 ^ a) (twoPower_isUnit (w.adicCompletion K) a) _).mpr
+  rintro x ⟨p, rfl⟩
+  obtain ⟨u, hu⟩ := (actualLocalPresentation K w B).surjective (completePoint B.toAffine.Point p)
+  have hzero := congrArg (padicInvariant a) (hc u)
+  rw [map_zero] at hzero
+  have hnorm : padicInvariant a (AllCochainTrace.trv (w.adicCompletion K)
+        (integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val c.val)) =
+      ZInQ.Contrib.CloudB3RC53.Duality.localTatePairing B (2 ^ a)
+        (twoPower_isUnit (w.adicCompletion K) a)
+        (pointH1Reduction (w.adicCompletion K) B a (localKummerOne K w B u))
+        (pointH1Reduction (w.adicCompletion K) B a c) := by
+    change padicInvariant a (AllCochainTrace.trv (w.adicCompletion K)
+      (integralCupCycle (w.adicCompletion K) B (localKummerOne K w B u) c).val) = _
+    rw [AllCochainTrace.trv_on_cycles, IntegralCompatibility.integralCup_invariant_compatibility]
+  rw [local_reduction_of_complete_point K w B a u p hu] at hnorm
+  exact hnorm.symm.trans hzero
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceIntegralImage
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceFirstCohomology
+
+open CategoryTheory NumberField IsDedekindDomain TauCeti
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralPairing
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.TransportedLocal
+
+variable (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+  [DecidableEq (w.adicCompletion K)] (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+
+/-- Actual degree-one cycles in the genuine local point Tate cochains. -/
+abbrev cycles : Submodule ℤ_[2] ((pointComplex (w.adicCompletion K) B).X 1) :=
+  LinearMap.ker ((pointComplex (w.adicCompletion K) B).d 1 2).hom
+
+/-- The actual incoming differential, with its genuine cycle codomain. -/
+def incoming : (pointComplex (w.adicCompletion K) B).X 0 →ₗ[ℤ_[2]] cycles K w B :=
+  ((pointComplex (w.adicCompletion K) B).d 0 1).hom.codRestrict _ (fun b => by
+    change ((pointComplex (w.adicCompletion K) B).d 1 2).hom
+      (((pointComplex (w.adicCompletion K) B).d 0 1).hom b) = 0
+    have h := congrArg (fun f => f.hom b) ((pointComplex (w.adicCompletion K) B).d_comp_d 0 1 2)
+    simpa only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_zero, LinearMap.zero_apply] using h)
+
+/-- Degree-one boundaries of the actual quotient cone include the actual local Kummer image. -/
+def boundaries : Submodule ℤ_[2] (cycles K w B) :=
+  LinearMap.range (incoming K w B) ⊔ LinearMap.range (localKummerOne K w B)
+
+/-- The actual degree-one quotient by continuous boundaries and the fixed completed Kummer condition. -/
+abbrev sourceOne := cycles K w B ⧸ boundaries K w B
+
+/-- The actual trace-cup pairing on degree-one source cycles, evaluated on the fixed point generators. -/
+def pairing : cycles K w B →ₗ[ℤ_[2]]
+    Module.Dual ℤ_[2] (Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) where
+  toFun c := ((AllCochainTrace.trv (w.adicCompletion K)).comp
+    ((integralCupOne (w.adicCompletion K) B).flip c.val)).comp
+      ((cycles K w B).subtype.comp (localKummerOne K w B))
+  map_add' c d := by
+    apply LinearMap.ext
+    intro u
+    change AllCochainTrace.trv (w.adicCompletion K)
+        (integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val (c.val + d.val)) = _
+    rw [map_add, map_add]
+    rfl
+  map_smul' r c := by
+    apply LinearMap.ext
+    intro u
+    change AllCochainTrace.trv (w.adicCompletion K)
+        (integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val (r • c.val)) = _
+    rw [map_smul, map_smul]
+    rfl
+
+/-- The actual trace-cup pairing kills an actual continuous boundary. -/
+theorem pairing_incoming (b : (pointComplex (w.adicCompletion K) B).X 0)
+    (u : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) :
+    pairing K w B (incoming K w B b) u = 0 := by
+  have hk : ((pointComplex (w.adicCompletion K) B).d 1 2).hom (localKummerOne K w B u).val = 0 :=
+    (localKummerOne K w B u).property
+  have h := (integralCupPair (w.adicCompletion K) B).leib 1 0 1 rfl
+    (localKummerOne K w B u).val b
+  rw [hk, LinearMap.map_zero₂, zero_add] at h
+  simp only [pow_one, neg_one_smul] at h
+  change ((IntegralReduction.actualTraceComplex (w.adicCompletion K)).d 1 2).hom
+      (((integralCupPair (w.adicCompletion K) B).P 1 0 1 rfl) (localKummerOne K w B u).val b) =
+    -(integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val
+      (((pointComplex (w.adicCompletion K) B).d 0 1).hom b)) at h
+  have ht : -(AllCochainTrace.trv (w.adicCompletion K)
+      (integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val
+        (((pointComplex (w.adicCompletion K) B).d 0 1).hom b))) = 0 := by
+    rw [← map_neg, ← h]
+    exact AllCochainTrace.htrv (w.adicCompletion K) _
+  change AllCochainTrace.trv (w.adicCompletion K)
+    (integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val
+      (((pointComplex (w.adicCompletion K) B).d 0 1).hom b)) = 0
+  exact neg_eq_zero.mp ht
+
+/-- Both actual boundary summands are killed before passing to the quotient. -/
+theorem boundaries_le_kernel (hM : MilneLocalDualityPrint) :
+    boundaries K w B ≤ LinearMap.ker (pairing K w B) := by
+  apply sup_le
+  · rintro c ⟨b, rfl⟩
+    change pairing K w B (incoming K w B b) = 0
+    apply LinearMap.ext
+    intro u
+    exact pairing_incoming K w B b u
+  · rintro c ⟨u, rfl⟩
+    change pairing K w B (localKummerOne K w B u) = 0
+    apply LinearMap.ext
+    intro v
+    exact localCup_trace_zero K w B hM v u
+
+/-- The fixed actual trace pairing descends to the actual degree-one quotient cone class module. -/
+def classPairing (hM : MilneLocalDualityPrint) : sourceOne K w B →ₗ[ℤ_[2]]
+    Module.Dual ℤ_[2] (Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) :=
+  (boundaries K w B).liftQ (pairing K w B) (boundaries_le_kernel K w B hM)
+
+/-- The actual integral annihilator theorem makes this particular class pairing injective. -/
+theorem classPairing_injective (hM : MilneLocalDualityPrint) :
+    Function.Injective (classPairing K w B hM) := by
+  have hzero : ∀ z : sourceOne K w B, classPairing K w B hM z = 0 → z = 0 := by
+    intro z hz
+    obtain ⟨c, hc⟩ := (boundaries K w B).mkQ_surjective z
+    have hp : pairing K w B c = 0 := by
+      change classPairing K w B hM ((boundaries K w B).mkQ c) = 0
+      rw [hc]
+      exact hz
+    obtain ⟨u, b, hb⟩ := SourceIntegralImage.local_integral_annihilator_of_print K w B hM c
+      (fun v => LinearMap.congr_fun hp v)
+    have heq : c = incoming K w B b + localKummerOne K w B u := by
+      apply Subtype.ext
+      change c.val = ((pointComplex (w.adicCompletion K) B).d 0 1).hom b + (localKummerOne K w B u).val
+      exact sub_eq_iff_eq_add.mp hb.symm
+    rw [← hc]
+    change Submodule.Quotient.mk c = 0
+    rw [Submodule.Quotient.mk_eq_zero]
+    exact Submodule.mem_sup.mpr ⟨incoming K w B b, ⟨b, rfl⟩,
+      localKummerOne K w B u, ⟨u, rfl⟩, heq.symm⟩
+  intro z y h
+  have hz : classPairing K w B hM (z - y) = 0 := by rw [map_sub, h, sub_self]
+  exact sub_eq_zero.mp (hzero _ hz)
+
+/-- Degree-one cohomology of the actual local quotient cone is finite over the integral coefficient ring. -/
+theorem sourceOne_finite (hM : MilneLocalDualityPrint) : Module.Finite ℤ_[2] (sourceOne K w B) :=
+  Module.Finite.of_injective (classPairing K w B hM) (classPairing_injective K w B hM)
+
+/-- The actual degree-one quotient cone class module has no integral scalar torsion. -/
+theorem sourceOne_torsionFree (hM : MilneLocalDualityPrint) :
+    Module.IsTorsionFree ℤ_[2] (sourceOne K w B) := by
+  apply Module.IsTorsionFree.of_smul_eq_zero
+  intro r x hx
+  by_cases hr : r = 0
+  · exact Or.inl hr
+  · right
+    have h : r • classPairing K w B hM x = 0 := by
+      have h := congrArg (classPairing K w B hM) hx
+      simpa only [map_smul, map_zero] using h
+    have hz := (smul_eq_zero_iff_right (R := ℤ_[2])
+      (M := Module.Dual ℤ_[2] (Fin (actualLocalPresentation K w B).rankZero → ℤ_[2])) hr).mp h
+    apply classPairing_injective K w B hM
+    rw [map_zero]
+    exact hz
+
+/-- Degree-one cohomology of the actual quotient condition is finite free over the two-adic coefficient ring. -/
+theorem sourceOne_free (hM : MilneLocalDualityPrint) : Module.Free ℤ_[2] (sourceOne K w B) := by
+  haveI := sourceOne_finite K w B hM
+  haveI := sourceOne_torsionFree K w B hM
+  infer_instance
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceFirstCohomology
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.UniformReductions
+
+/-- Equality at a higher compatible level implies equality at each prescribed lower level. -/
+theorem equality_at_lower_level {X : Type} (V : ℕ → Type)
+    (t : ∀ n, V (n + 1) → V n) (q : ∀ n, X → V n)
+    (hq : ∀ n x, t n (q (n + 1) x) = q n x) (a b : ℕ) (hab : a ≤ b) :
+    ∀ x y, q b x = q b y → q a x = q a y := by
+  induction hab with
+  | refl => intro x y h; exact h
+  | @step b hab ih =>
+    intro x y h
+    apply ih x y
+    rw [← hq b x, ← hq b y, h]
+
+/-- A uniformly bounded compatible finite family that separates actual classes proves finiteness of those classes. -/
+theorem finite_of_uniform_separating_reductions {X : Type}
+    (V : ℕ → Type) [∀ n, Finite (V n)]
+    (t : ∀ n, V (n + 1) → V n) (q : ∀ n, X → V n)
+    (hq : ∀ n x, t n (q (n + 1) x) = q n x)
+    (hsep : ∀ x y, (∀ n, q n x = q n y) → x = y)
+    (B : ℕ) (hB : ∀ n, Nat.card (V n) ≤ B) : Finite X := by
+  classical
+  by_contra hX
+  letI : Infinite X := ⟨hX⟩
+  let e : Fin (B + 1) ↪ X :=
+    ⟨fun i => Infinite.natEmbedding X i.val, (Infinite.natEmbedding X).injective.comp Fin.val_injective⟩
+  have hd : ∀ i j : Fin (B + 1), i ≠ j → ∃ n, q n (e i) ≠ q n (e j) := by
+    intro i j hij
+    by_contra h
+    apply hij
+    apply e.injective
+    apply hsep
+    intro n
+    by_contra hn
+    exact h ⟨n, hn⟩
+  let level (p : Fin (B + 1) × Fin (B + 1)) : ℕ :=
+    if h : p.1 = p.2 then 0 else (hd p.1 p.2 h).choose
+  let N := Finset.univ.sup level
+  have hqi : Function.Injective (fun i : Fin (B + 1) => q N (e i)) := by
+    intro i j hij
+    by_contra hne
+    have hl : level (i, j) ≤ N := Finset.le_sup (Finset.mem_univ (i, j))
+    have heq := equality_at_lower_level V t q hq (level (i, j)) N hl (e i) (e j) hij
+    have hneq : q (level (i, j)) (e i) ≠ q (level (i, j)) (e j) := by
+      have hlv : level (i, j) = (hd i j hne).choose := by
+        dsimp only [level]
+        split
+        · rename_i h
+          exact (hne h).elim
+        · rfl
+      rw [hlv]
+      exact (hd i j hne).choose_spec
+    exact hneq heq
+  letI := Fintype.ofFinite (V N)
+  have hcard := Fintype.card_le_of_injective (fun i : Fin (B + 1) => q N (e i)) hqi
+  have hbound := hB N
+  simp only [Fintype.card_fin, Nat.card_eq_fintype_card] at hcard hbound
+  omega
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.UniformReductions
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceCharacterBound
+
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+
+variable (P : Type) [AddCommGroup P] (e : ℕ)
+  (he : ∀ (a : ℕ) (p : P), (2 ^ a : ℕ) • p = 0 → (2 ^ e : ℕ) • p = 0)
+  [Finite (AddSubgroup.torsionBy P (2 ^ e))]
+
+/-- Every finite primary torsion level injects into the actual fixed bounded level. -/
+def torsionEmbedding (a : ℕ) : AddSubgroup.torsionBy P (2 ^ a) ↪ AddSubgroup.torsionBy P (2 ^ e) where
+  toFun t := ⟨t.val, AddSubgroup.torsionBy.nsmul_iff.mpr (he a t.val (AddSubgroup.torsionBy.nsmul_iff.mp t.2))⟩
+  inj' t u h := by
+    have hv := congrArg (fun x : AddSubgroup.torsionBy P (2 ^ e) => x.val) h
+    exact Subtype.ext hv
+
+include he in
+/-- Finite primary-torsion character groups have one uniform finite cardinality bound. -/
+theorem characters_card_bound (a : ℕ) :
+    Nat.card (AddSubgroup.torsionBy P (2 ^ a) →+ RationalCircle) ≤
+      (2 ^ e) ^ Nat.card (AddSubgroup.torsionBy P (2 ^ e)) := by
+  classical
+  let T := AddSubgroup.torsionBy P (2 ^ a)
+  let E := AddSubgroup.torsionBy P (2 ^ e)
+  letI : Finite T := Finite.of_injective (torsionEmbedding P e he a) (torsionEmbedding P e he a).injective
+  letI := Fintype.ofFinite T
+  letI := Fintype.ofFinite E
+  have hkill : ∀ t : T, (2 ^ e : ℕ) • t = 0 := by
+    intro t
+    apply Subtype.ext
+    exact he a t.val (AddSubgroup.torsionBy.nsmul_iff.mp t.2)
+  let c := charactersToZMod (2 ^ e) hkill
+  let f : (T →+ RationalCircle) → (T → ZMod (2 ^ e)) := fun χ => c χ
+  have hf : Function.Injective f := by
+    intro χ ψ h
+    apply c.injective
+    exact AddMonoidHom.ext (congrFun h)
+  letI : Finite (T →+ RationalCircle) := Finite.of_injective f hf
+  letI := Fintype.ofFinite (T →+ RationalCircle)
+  have hcard := Fintype.card_le_of_injective f hf
+  have ht := Fintype.card_le_of_injective (torsionEmbedding P e he a)
+    (torsionEmbedding P e he a).injective
+  have hpow : (2 ^ e) ^ Fintype.card T ≤ (2 ^ e) ^ Fintype.card E :=
+    Nat.pow_le_pow_right (by positivity) ht
+  simp only [Fintype.card_fun, ZMod.card] at hcard
+  simpa only [Nat.card_eq_fintype_card] using hcard.trans hpow
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceCharacterBound
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceSecondCohomology
+
+open CategoryTheory NumberField IsDedekindDomain TauCeti TauCeti.ContCohomology
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteTrace
+
+variable (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+  [DecidableEq (w.adicCompletion K)] (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+
+/-- The actual degree-two cycles, in the fixed algebraic-closure cochain description. -/
+abbrev cycles : Submodule ℤ_[2] ((actualIntegralComplex (w.adicCompletion K) B).X 2) :=
+  LinearMap.ker ((actualIntegralComplex (w.adicCompletion K) B).d 2 3).hom
+
+/-- The genuine incoming differential into degree-two cycles. -/
+def incoming : (actualIntegralComplex (w.adicCompletion K) B).X 1 →ₗ[ℤ_[2]] cycles K w B :=
+  ((actualIntegralComplex (w.adicCompletion K) B).d 1 2).hom.codRestrict _ (fun b => by
+    change ((actualIntegralComplex (w.adicCompletion K) B).d 2 3).hom
+      (((actualIntegralComplex (w.adicCompletion K) B).d 1 2).hom b) = 0
+    have h := congrArg (fun f => f.hom b) ((actualIntegralComplex (w.adicCompletion K) B).d_comp_d 1 2 3)
+    simpa only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_zero, LinearMap.zero_apply] using h)
+
+/-- Actual integral degree-two cohomology retains the torsion boundary quotient. -/
+abbrev sourceTwo := cycles K w B ⧸ LinearMap.range (incoming K w B)
+
+/-- A fixed actual cycle representative of each actual integral degree-two class. -/
+def representative (x : sourceTwo K w B) : cycles K w B :=
+  ((LinearMap.range (incoming K w B)).mkQ_surjective x).choose
+
+/-- The representative realizes its specified class in the actual boundary quotient. -/
+theorem representative_class (x : sourceTwo K w B) :
+    (LinearMap.range (incoming K w B)).mkQ (representative K w B x) = x :=
+  ((LinearMap.range (incoming K w B)).mkQ_surjective x).choose_spec
+
+/-- The fixed finite source coefficient projections give genuine surjective coefficient transitions. -/
+theorem point_transition_surjective (a : ℕ) :
+    Function.Surjective (coefficientTransition (Field.absoluteGaloisGroup (w.adicCompletion K))
+      (PtAlg (w.adicCompletion K) B) a) := by
+  intro t
+  obtain ⟨v, hv⟩ := actualCoefficientProjection_surjective (w.adicCompletion K) B a t
+  exact ⟨coefficientProjection _ _ (a + 1) v, (coefficientProjection_succ _ _ a v).trans hv⟩
+
+/-- Finite actual first cohomology, needed for the actual primitive-class lifting argument. -/
+theorem finite_first_level (hF : MilneFiniteLocalDualityPrint) (a : ℕ) :
+    Finite (H1 (Field.absoluteGaloisGroup (w.adicCompletion K))
+      (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a)) := by
+  haveI := (hF (w.adicCompletion K) B (2 ^ a) (twoPower_isUnit (w.adicCompletion K) a)).1
+  let e := (explicitCoeff1Equiv (Field.absoluteGaloisGroup (w.adicCompletion K))
+    (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a)
+    (actualLevelEquiv (w.adicCompletion K) B a) continuous_of_discreteTopology
+    continuous_of_discreteTopology (actualLevelEquiv_smul (w.adicCompletion K) B a)).trans
+      (hOneToAlg (w.adicCompletion K) B (2 ^ a)).symm
+  exact Finite.of_equiv (H1 (AbsoluteGaloisGroup (w.adicCompletion K)) (B.TorsionCoeff (2 ^ a))) e.symm.toEquiv
+
+/-- Actual finite second cohomology is identified with the finite rational-torsion character group by the cited pairing, not by an arbitrary group isomorphism. -/
+def finite_second_dictionary (a : ℕ) :
+    H2 (Field.absoluteGaloisGroup (w.adicCompletion K))
+      (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a) ≃+
+        H2 (AbsoluteGaloisGroup (w.adicCompletion K)) (B.TorsionCoeff (2 ^ a)) :=
+  (explicitCoeff2Equiv (Field.absoluteGaloisGroup (w.adicCompletion K))
+    (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a)
+    (actualLevelEquiv (w.adicCompletion K) B a) continuous_of_discreteTopology
+    continuous_of_discreteTopology (actualLevelEquiv_smul (w.adicCompletion K) B a)).trans
+      (hTwoToAlg (w.adicCompletion K) B (2 ^ a)).symm
+
+/-- The actual finite second class transition is the genuine multiplication transition on coefficients. -/
+def transition (a : ℕ) :=
+  explicitCoeff2 (Field.absoluteGaloisGroup (w.adicCompletion K))
+    (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) (a + 1))
+    (transitionCoefficientHom (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a)
+    continuous_of_discreteTopology
+
+/-- The actual integral degree-two classes reduce through their specified actual representatives. -/
+def reduction (a : ℕ) (x : sourceTwo K w B) :=
+  reducedTwoClass (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a
+    (representative K w B x)
+
+/-- The specified degree-two class reductions are compatible with the actual finite coefficient transitions. -/
+theorem reduction_compatible (a : ℕ) (x : sourceTwo K w B) :
+    transition K w B a (reduction K w B (a + 1) x) = reduction K w B a x := by
+  change explicitCoeff2 _ _ _ _ (kerToH2 (reduceTwoCycle _ _ (a + 1) _)) = kerToH2 (reduceTwoCycle _ _ a _)
+  erw [kerToH2_apply, explicitCoeff2_mk]
+  apply congrArg (H2pi _ _)
+  apply Subtype.ext
+  funext p
+  obtain ⟨σ, τ⟩ := p
+  exact congrArg (fun v => cfun v ![σ, τ])
+    (reduceCochains_succ (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a 2 _)
+
+/-- Genuine finite class reductions separate actual integral degree-two classes, by finite first-cohomology primitive classes. -/
+theorem reduction_separates (hF : MilneFiniteLocalDualityPrint) (x y : sourceTwo K w B)
+    (hxy : ∀ a, reduction K w B a x = reduction K w B a y) : x = y := by
+  let c := representative K w B x - representative K w B y
+  let H (a : ℕ) := H1 (Field.absoluteGaloisGroup (w.adicCompletion K))
+    (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a)
+  letI : ∀ a, Finite (H a) := fun a => finite_first_level K w B hF a
+  obtain ⟨b, hb⟩ := IntegralFiniteBoundary.boundary_of_finite_boundaries
+    (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) 0
+    (point_transition_surjective K w B) H
+    (fun a => kerToH1 (k := ℤ_[2]) (G := Field.absoluteGaloisGroup (w.adicCompletion K))
+      (M := FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a))
+    (fun a z => kerToH1_eq_zero_iff z) c.val (by
+      intro a
+      have hz : reducedTwoClass (Field.absoluteGaloisGroup (w.adicCompletion K))
+          (PtAlg (w.adicCompletion K) B) a c = 0 := by
+        change reducedTwoClass (Field.absoluteGaloisGroup (w.adicCompletion K))
+          (PtAlg (w.adicCompletion K) B) a (representative K w B x - representative K w B y) = 0
+        rw [map_sub]
+        exact sub_eq_zero.mpr (hxy a)
+      exact (kerToH2_eq_zero_iff _).mp hz)
+  rw [← representative_class K w B x, ← representative_class K w B y]
+  apply (Submodule.Quotient.eq _).mpr
+  refine ⟨b, ?_⟩
+  apply Subtype.ext
+  exact hb
+
+/-- Each genuine finite second class group is finite by the fixed Milne character dictionary. -/
+theorem finite_second_level (hF : MilneFiniteLocalDualityPrint) (a : ℕ) :
+    Finite (H2 (Field.absoluteGaloisGroup (w.adicCompletion K))
+      (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a)) := by
+  classical
+  let T := AddSubgroup.torsionBy B.toAffine.Point (2 ^ a)
+  haveI : Finite T := WeierstrassCurve.finite_torsionBy B (by
+    exact_mod_cast pow_ne_zero a (by decide : (2 : ℕ) ≠ 0))
+  have hT : ∀ t : T, (2 ^ a : ℕ) • t = 0 := by
+    intro t
+    exact Subtype.ext (AddSubgroup.torsionBy.nsmul_iff.mp t.2)
+  let d := charactersToZMod (2 ^ a) hT
+  haveI : Finite (T →+ RationalCircle) := by
+    apply Finite.of_injective (fun f : T →+ RationalCircle => (d f : T → ZMod (2 ^ a)))
+    intro f g h
+    apply d.injective
+    exact AddMonoidHom.ext (congrFun h)
+  obtain ⟨_, _, _, e, _⟩ := hF (w.adicCompletion K) B (2 ^ a) (twoPower_isUnit (w.adicCompletion K) a)
+  exact Finite.of_equiv (T →+ RationalCircle) ((finite_second_dictionary K w B a).trans e).symm.toEquiv
+
+/-- Bounded genuine rational torsion bounds all actual finite second cohomology groups uniformly. -/
+theorem finite_second_uniform_bound (hF : MilneFiniteLocalDualityPrint) :
+    ∃ N : ℕ, ∀ a, Nat.card (H2 (Field.absoluteGaloisGroup (w.adicCompletion K))
+      (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a)) ≤ N := by
+  obtain ⟨e, he⟩ := boundedTwoPrimary_local K w B
+  haveI : Finite (AddSubgroup.torsionBy B.toAffine.Point (2 ^ e)) :=
+    WeierstrassCurve.finite_torsionBy B (by exact_mod_cast pow_ne_zero e (by decide : (2 : ℕ) ≠ 0))
+  refine ⟨(2 ^ e) ^ Nat.card (AddSubgroup.torsionBy B.toAffine.Point (2 ^ e)), ?_⟩
+  intro a
+  obtain ⟨_, _, _, f, _⟩ := hF (w.adicCompletion K) B (2 ^ a) (twoPower_isUnit (w.adicCompletion K) a)
+  rw [Nat.card_congr ((finite_second_dictionary K w B a).trans f).toEquiv]
+  exact SourceCharacterBound.characters_card_bound B.toAffine.Point e he a
+
+/-- The actual integral degree-two quotient has finite cardinality, not merely finite rank. -/
+theorem sourceTwo_finite (hF : MilneFiniteLocalDualityPrint) : Finite (sourceTwo K w B) := by
+  let V (a : ℕ) := H2 (Field.absoluteGaloisGroup (w.adicCompletion K))
+    (FiniteTateCoeff (Field.absoluteGaloisGroup (w.adicCompletion K)) (PtAlg (w.adicCompletion K) B) a)
+  letI : ∀ a, Finite (V a) := fun a => finite_second_level K w B hF a
+  obtain ⟨N, hN⟩ := finite_second_uniform_bound K w B hF
+  exact UniformReductions.finite_of_uniform_separating_reductions V
+    (fun a x => transition K w B a x) (reduction K w B)
+    (fun a x => reduction_compatible K w B a x) (fun x y h => reduction_separates K w B hF x y h) N hN
+
+/-- Actual integral degree-two cohomology is consequently a finite module over the two-adic ring. -/
+theorem sourceTwo_moduleFinite (hF : MilneFiniteLocalDualityPrint) :
+    Module.Finite ℤ_[2] (sourceTwo K w B) := by
+  haveI := sourceTwo_finite K w B hF
+  infer_instance
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.SourceSecondCohomology
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteSourceCoordinates
+
+open Matrix CategoryTheory
+open ZInQ.Contrib.CloudB3RC53.Torsion ZInQ.Contrib.CloudB3RC53.PairedFunctional
+open ZInQ.Contrib.CloudB3RC53.SelmerDuality
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedDual
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedBridge
+
+variable {R : Type} [CommRing R] {r1 r2 : ℕ}
+  (d : (Fin r1 → R) →ₗ[R] (Fin r2 → R))
+
+def oddProjection : (twoTermBased d).toGCx.X 1 →ₗ[R] (Fin r1 → R) where
+  toFun x i := x.val (Sum.inr i)
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+def evenProjection : (twoTermBased d).toGCx.X 2 →ₗ[R] (Fin r2 → R) where
+  toFun x i := x.val (Sum.inl i)
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- The prescribed odd-coordinate inclusion and projection recover each actual degree-one source vector. -/
+theorem odd_reconstruct (x : (twoTermBased d).toGCx.X 1) : oddCoordinates d (oddProjection d x) = x := by
+  apply Subtype.ext
+  funext i
+  rcases i with i | i
+  · change 0 = x.val (Sum.inl i)
+    exact (x.2 (Sum.inl i) (by change (2 : ℤ) ≠ 1; norm_num)).symm
+  · rfl
+
+/-- The prescribed even-coordinate inclusion and projection recover degree two. -/
+theorem even_reconstruct (x : (twoTermBased d).toGCx.X 2) : evenCoordinates d (evenProjection d x) = x := by
+  apply Subtype.ext
+  funext i
+  rcases i with i | i
+  · rfl
+  · change 0 = x.val (Sum.inr i)
+    exact (x.2 (Sum.inr i) (by change (1 : ℤ) ≠ 2; norm_num)).symm
+
+/-- All other source degrees are actually zero. -/
+theorem source_subsingleton (n : ℤ) (h1 : n ≠ 1) (h2 : n ≠ 2) :
+    Subsingleton ((twoTermBased d).toGCx.X n) := by
+  refine ⟨fun x y => Subtype.ext (funext fun i => ?_)⟩
+  rcases i with i | i
+  · exact (x.2 (Sum.inl i) (by change (2 : ℤ) ≠ n; exact h2.symm)).trans
+      (y.2 (Sum.inl i) (by change (2 : ℤ) ≠ n; exact h2.symm)).symm
+  · exact (x.2 (Sum.inr i) (by change (1 : ℤ) ≠ n; exact h1.symm)).trans
+      (y.2 (Sum.inr i) (by change (1 : ℤ) ≠ n; exact h1.symm)).symm
+
+/-- The outgoing differential of an actual degree-two source vector is zero. -/
+theorem even_d_zero (u : Fin r2 → R) : (twoTermBased d).toGCx.d 2 3 rfl (evenCoordinates d u) = 0 := by
+  apply Subtype.ext
+  change (twoTermBased d).dTot *ᵥ Sum.elim u 0 = 0
+  rw [BasedCx.dTot, fromBlocks_mulVec]
+  simp only [twoTermBased, zero_mulVec, mulVec_zero, zero_add]
+  change Sum.elim ((LinearMap.toMatrix' d) *ᵥ (0 : Fin r1 → R)) (0 : Fin r1 → R) = 0
+  rw [mulVec_zero]
+  funext i
+  rcases i with i | i <;> rfl
+
+variable (C : GCx R)
+  (f1 : (Fin r1 → R) →ₗ[R] C.X 1) (f2 : (Fin r2 → R) →ₗ[R] C.X 2)
+
+def realizationComponent (n : ℤ) : (twoTermBased d).toGCx.X n →ₗ[R] C.X n :=
+  if h1 : n = 1 then h1.symm ▸ f1.comp (oddProjection d)
+  else if h2 : n = 2 then h2.symm ▸ f2.comp (evenProjection d)
+  else 0
+
+/-- The finite source realization is formed from the specified actual cycle and relation lifts. -/
+def realization
+    (hcomm : (C.d 1 2 rfl).comp f1 = f2.comp d)
+    (hcycle : (C.d 2 3 rfl).comp f2 = 0) : GHom (twoTermBased d).toGCx C where
+  f i j h := h ▸ realizationComponent d C f1 f2 i
+  comm i i' j j' hij hsrc htgt hij' x := by
+    subst hij
+    subst hij'
+    subst hsrc
+    by_cases hi : i = 1
+    · subst i
+      rw [← odd_reconstruct d x]
+      change f2 (evenProjection d ((twoTermBased d).toGCx.d 1 2 rfl
+          (oddCoordinates d (oddProjection d x)))) = C.d 1 2 rfl (f1 (oddProjection d x))
+      rw [oddCoordinates_d]
+      exact (LinearMap.congr_fun hcomm _).symm
+    · by_cases hi2 : i = 2
+      · subst i
+        rw [← even_reconstruct d x]
+        change (realizationComponent d C f1 f2 3)
+            ((twoTermBased d).toGCx.d 2 3 rfl (evenCoordinates d (evenProjection d x))) =
+          C.d 2 3 rfl (f2 (evenProjection d x))
+        rw [even_d_zero, map_zero]
+        exact (LinearMap.congr_fun hcycle _).symm
+      · haveI := source_subsingleton d i hi hi2
+        have hx : x = 0 := Subsingleton.elim _ _
+        rw [hx, map_zero, map_zero, map_zero, map_zero]
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteSourceCoordinates
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteSourceRecipe
+
+open CategoryTheory
+open ZInQ.Contrib.CloudB3RC53.PairedFunctional ZInQ.Contrib.CloudB3RC53.SelmerDuality
+
+variable {R : Type} [CommRing R] [IsDomain R] [IsPrincipalIdealRing R]
+
+/-- A finite free presentation of a specified finite source cohomology module. -/
+structure Presentation (M : Type) [AddCommGroup M] [Module R M] where
+  generators : ℕ
+  relations : ℕ
+  differential : (Fin relations → R) →ₗ[R] (Fin generators → R)
+  classes : (Fin generators → R) →ₗ[R] M
+  complex : classes.comp differential = 0
+  injective : Function.Injective differential
+  surjective : Function.Surjective classes
+  exact : ∀ x, classes x = 0 → ∃ y, differential y = x
+
+/-- The specified cohomology module has an independent finite free presentation over the scalar PID. -/
+theorem presentation_nonempty (M : Type) [AddCommGroup M] [Module R M] [Module.Finite R M] :
+    Nonempty (Presentation (R := R) M) := by
+  classical
+  obtain ⟨n, s, hs⟩ := Module.Finite.exists_fin (R := R) (M := M)
+  let g : (Fin n → R) →ₗ[R] M := Fintype.linearCombination R s
+  have hg : Function.Surjective g := by
+    rw [← LinearMap.range_eq_top, Fintype.range_linearCombination, hs]
+  obtain ⟨m, b⟩ := (LinearMap.ker g).basisOfPid (Pi.basisFun R (Fin n))
+  let f : (Fin m → R) →ₗ[R] (Fin n → R) :=
+    (LinearMap.ker g).subtype.comp b.equivFun.symm.toLinearMap
+  refine ⟨⟨n, m, f, g, ?_, ?_, hg, ?_⟩⟩
+  · apply LinearMap.ext
+    intro x
+    exact (b.equivFun.symm x).property
+  · exact (LinearMap.ker g).subtype_injective.comp b.equivFun.symm.injective
+  · intro x hx
+    refine ⟨b.equivFun ⟨x, hx⟩, ?_⟩
+    change ((b.equivFun.symm (b.equivFun ⟨x, hx⟩) : LinearMap.ker g) : Fin n → R) = x
+    rw [b.equivFun.symm_apply_apply]
+
+/-- Actual cycle-class maps and their actual boundary kernels, independent of any self-dual comparison. -/
+structure CohomologyData (C : GCx R) (H1 H2 : Type)
+    [AddCommGroup H1] [Module R H1] [AddCommGroup H2] [Module R H2] where
+  classOne : LinearMap.ker (C.d 1 2 rfl) →ₗ[R] H1
+  one_surjective : Function.Surjective classOne
+  one_kernel : ∀ x, classOne x = 0 ↔ ∃ y : C.X 0, C.d 0 1 rfl y = x.val
+  classTwo : LinearMap.ker (C.d 2 3 rfl) →ₗ[R] H2
+  two_surjective : Function.Surjective classTwo
+  two_kernel : ∀ x, classTwo x = 0 ↔ ∃ y : C.X 1, C.d 1 2 rfl y = x.val
+
+/-- The chosen finite presentation generators lift to actual degree-two source cycles. -/
+theorem lift_generators (C : GCx R) (H1 H2 : Type)
+    [AddCommGroup H1] [Module R H1] [AddCommGroup H2] [Module R H2]
+    (D : CohomologyData C H1 H2) (P : Presentation (R := R) H2) :
+    ∃ z : (Fin P.generators → R) →ₗ[R] LinearMap.ker (C.d 2 3 rfl),
+      D.classTwo.comp z = P.classes := by
+  exact Module.projective_lifting_property D.classTwo P.classes D.two_surjective
+
+/-- Each finite presentation relation admits an actual continuous degree-one primitive, chosen linearly by projectivity. -/
+theorem lift_relations (C : GCx R) (H1 H2 : Type)
+    [AddCommGroup H1] [Module R H1] [AddCommGroup H2] [Module R H2]
+    (D : CohomologyData C H1 H2) (P : Presentation (R := R) H2)
+    (z : (Fin P.generators → R) →ₗ[R] LinearMap.ker (C.d 2 3 rfl))
+    (hz : D.classTwo.comp z = P.classes) :
+    ∃ f : (Fin P.relations → R) →ₗ[R] C.X 1,
+      (C.d 1 2 rfl).comp f = (LinearMap.ker (C.d 2 3 rfl)).subtype.comp (z.comp P.differential) := by
+  classical
+  let b : C.X 1 →ₗ[R] LinearMap.ker (C.d 2 3 rfl) :=
+    (C.d 1 2 rfl).codRestrict _ (fun x => C.d_d 1 2 3 rfl rfl x)
+  let r : (Fin P.relations → R) →ₗ[R] LinearMap.range b :=
+    (z.comp P.differential).codRestrict _ (fun x => by
+      have hx : D.classTwo (z (P.differential x)) = 0 := by
+        have h := LinearMap.congr_fun hz (P.differential x)
+        exact h.trans (LinearMap.congr_fun P.complex x)
+      obtain ⟨y, hy⟩ := (D.two_kernel _).mp hx
+      exact ⟨y, Subtype.ext hy⟩)
+  have hb : Function.Surjective b.rangeRestrict := by
+    rintro ⟨x, y, rfl⟩
+    exact ⟨y, rfl⟩
+  obtain ⟨f, hf⟩ := Module.projective_lifting_property b.rangeRestrict r hb
+  refine ⟨f, ?_⟩
+  apply LinearMap.ext
+  intro x
+  have h := congrArg (fun y : LinearMap.range b => y.val.val) (LinearMap.congr_fun hf x)
+  exact h
+
+/-- The finite free actual first cohomology module admits a linear cycle section, by projectivity rather than an assumed comparison inverse. -/
+theorem lift_first_classes (C : GCx R) (H1 H2 : Type)
+    [AddCommGroup H1] [Module R H1] [Module.Free R H1]
+    [AddCommGroup H2] [Module R H2] (D : CohomologyData C H1 H2) :
+    ∃ z : H1 →ₗ[R] LinearMap.ker (C.d 1 2 rfl), D.classOne.comp z = LinearMap.id := by
+  exact Module.projective_lifting_property D.classOne LinearMap.id D.one_surjective
+
+/-- Restricting a finite coordinate vector to its relation coordinates. -/
+def relationCoordinates (r s : ℕ) : (Fin (r + s) → R) →ₗ[R] (Fin r → R) where
+  toFun x i := x (Fin.castAdd s i)
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- Restricting the same vector to its independent first-cohomology coordinates. -/
+def cohomologyCoordinates (r s : ℕ) : (Fin (r + s) → R) →ₗ[R] (Fin s → R) where
+  toFun x i := x (Fin.natAdd r i)
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+/-- Cycle and relation lifts form a finite based realization of the specified actual cochain complex. -/
+theorem finite_realization_exists (C : GCx R) (H1 H2 : Type)
+    [AddCommGroup H1] [Module R H1] [Module.Free R H1] [Module.Finite R H1]
+    [AddCommGroup H2] [Module R H2] [Module.Finite R H2]
+    (D : CohomologyData C H1 H2) :
+    ∃ (r1 r2 : ℕ) (d : (Fin r1 → R) →ₗ[R] (Fin r2 → R)),
+      Nonempty (GHom (ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedDual.twoTermBased d).toGCx C) := by
+  classical
+  let P : Presentation (R := R) H2 := (presentation_nonempty H2).some
+  obtain ⟨z2, hz2⟩ := lift_generators C H1 H2 D P
+  obtain ⟨frel, hfrel⟩ := lift_relations C H1 H2 D P z2 hz2
+  obtain ⟨z1, hz1⟩ := lift_first_classes C H1 H2 D
+  let I := Module.Free.ChooseBasisIndex R H1
+  let b := (Module.Free.chooseBasis R H1).reindex (Fintype.equivFin I)
+  let s := Fintype.card I
+  let first : (Fin s → R) →ₗ[R] C.X 1 :=
+    (LinearMap.ker (C.d 1 2 rfl)).subtype.comp (z1.comp b.equivFun.symm.toLinearMap)
+  let d : (Fin (P.relations + s) → R) →ₗ[R] (Fin P.generators → R) :=
+    P.differential.comp (relationCoordinates P.relations s)
+  let f1 : (Fin (P.relations + s) → R) →ₗ[R] C.X 1 :=
+    frel.comp (relationCoordinates P.relations s) + first.comp (cohomologyCoordinates P.relations s)
+  let f2 : (Fin P.generators → R) →ₗ[R] C.X 2 :=
+    (LinearMap.ker (C.d 2 3 rfl)).subtype.comp z2
+  have hcomm : (C.d 1 2 rfl).comp f1 = f2.comp d := by
+    apply LinearMap.ext
+    intro x
+    change C.d 1 2 rfl (frel (relationCoordinates P.relations s x) +
+      (z1 (b.equivFun.symm (cohomologyCoordinates P.relations s x))).val) = _
+    rw [map_add, (z1 (b.equivFun.symm (cohomologyCoordinates P.relations s x))).property, add_zero]
+    exact LinearMap.congr_fun hfrel _
+  have hcycle : (C.d 2 3 rfl).comp f2 = 0 := by
+    apply LinearMap.ext
+    intro x
+    exact (z2 x).property
+  exact ⟨P.relations + s, P.generators, d,
+    ⟨ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteSourceCoordinates.realization d C f1 f2 hcomm hcycle⟩⟩
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteSourceRecipe
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.TraceThirdDegree
+
+open TauCeti TauCeti.ContCohomology
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralFiniteBoundary
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteTrace
+
+variable (F : Type) [Field F] [CharZero F] [DecidableEq F]
+  [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
+
+/-- The independent finite third-degree exactness statement for genuine roots-of-unity coefficients. -/
+def FiniteThirdDegreeExact : Prop :=
+  ∀ (a : ℕ) (t : (finiteIntegralComplex (AbsoluteGaloisGroup F) (UnitsCoeff F) a).X 3),
+    ((finiteIntegralComplex (AbsoluteGaloisGroup F) (UnitsCoeff F) a).d 3 4).hom t = 0 →
+    ∃ y : (finiteIntegralComplex (AbsoluteGaloisGroup F) (UnitsCoeff F) a).X 2,
+      ((finiteIntegralComplex (AbsoluteGaloisGroup F) (UnitsCoeff F) a).d 2 3).hom y = t
+
+/-- The genuine finite local invariant makes the second cohomology of each actual Tate level finite. -/
+theorem finite_mu_second_cohomology (a : ℕ) :
+    Finite (H2 (AbsoluteGaloisGroup F) (FiniteTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F) a)) :=
+  Finite.of_equiv (ZMod (2 ^ a))
+    (((actualMuH2Equiv F a).trans (finiteInvariant F (2 ^ a) (twoPower_isUnit F a))).symm.toEquiv)
+
+/-- Genuine finite third-degree exactness lifts to the actual integral trace-target exactness by finite second-cohomology primitive classes. -/
+theorem actual_third_exact_of_finite (hfinite : FiniteThirdDegreeExact F) :
+    FiniteCycleLift.ThirdDegreeExact F := by
+  intro t ht
+  let H (a : ℕ) := H2 (AbsoluteGaloisGroup F) (FiniteTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F) a)
+  letI : ∀ a, Finite (H a) := fun a => finite_mu_second_cohomology F a
+  apply boundary_of_finite_boundaries (AbsoluteGaloisGroup F) (UnitsCoeff F) 1
+    (actualMuTransition_surjective F) H
+    (fun a => kerToH2 (k := ℤ_[2]) (G := AbsoluteGaloisGroup F)
+      (M := FiniteTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F) a))
+    (fun a z => kerToH2_eq_zero_iff z) t
+  intro a
+  apply hfinite a (((reduceCochains (AbsoluteGaloisGroup F) (UnitsCoeff F) a).f 3).hom t)
+  rw [← reduceCochains_d, ht, map_zero]
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.TraceThirdDegree
 
 end
