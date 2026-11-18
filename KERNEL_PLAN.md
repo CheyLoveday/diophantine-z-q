@@ -21,8 +21,10 @@
 >
 > The proof is `ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`
 > (the Lemma 5.4 swap, over fork #90's `poleCompleteness_of_restrictedConverseGenuine_final`, squashed as
-> `5eca1103`). Proving Theorem 5.3 itself is fork issue #83. The rest of this document is kept as a record of the
-> plan.
+> `5eca1103`). Theorem 5.3 stays the hypothesis `hRC`. Fork PR #110 reduces it to step-level hypotheses
+> (`ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves : Prints → RCLeaves → RestrictedConverseGenuine`),
+> some of which still state their step's conclusion directly and are being restated over the manuscript's objects.
+> Proving those steps is fork issue #83. The rest of this document is kept as a record of the plan.
 
 This fork works toward a Lean proof of the 11/5 manuscript's Theorem 1.1, the statement
 frozen upstream as `ZInQ.exists_bounded_integer_polynomial_defining_integers`
