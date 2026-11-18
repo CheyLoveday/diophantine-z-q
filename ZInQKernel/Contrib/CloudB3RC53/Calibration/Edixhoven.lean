@@ -29,7 +29,12 @@ arbitrary fields `k`, curves `W` and numbers. Here:
   (`CalibrationModelC`, `calibrationTarget_of_C`) with the free `kres`/`Wred`/`h2`/`hEdix`
   replaced by the actual objects and the print. PROVED from the remaining fields.
 
-Kinds: `EdixhovenComponentNumber` PRINT/GLUE (hypothesis); the rest PROVED.
+Kinds: `EdixhovenComponentNumber` PRINT/GLUE (hypothesis); the rest PROVED. Because `GoodModelAt`
+requires the integral model to map to `E₀` literally, the print is silent where the given
+coefficients of `E₀` are not `p`-good (for instance `p = 3`, `3² ∣ Δ(E0Z)`); the model-free form
+`EdixhovenComponentNumberIso` and the model independence of the count
+(`card_twoTorsion_red_eq_of_iso`) are in `EdixhovenModel.lean`, a concrete instance in
+`EdixhovenWitness.lean`.
 -/
 
 noncomputable section
@@ -104,7 +109,8 @@ library).** For the fixed curve `E₀ = E^{(h)}` and the companion `k`: at an od
 `p ∥ k` (so `ℚ_p(√k)/ℚ_p` is a tame ramified quadratic extension) where `E₀` has a good integral
 model, the component group of the ramified twist `E₀^{(k)} = E^{(hk)}` is `Ẽ₀[2]`, so the component
 number `cB p` of `ℬ = E^{(h)} × E^{(hk)}` (the first factor contributing `1` at good reduction) is
-`#Ẽ₀(𝔽_p)[2]`, the rational two-torsion of the reduction of that model. -/
+`#Ẽ₀(𝔽_p)[2]`, the rational two-torsion of the reduction of that model. The model-free form is
+`EdixhovenComponentNumberIso` (`EdixhovenModel.lean`). -/
 def EdixhovenComponentNumber (ℓ : ℕ) (h : ℚ) (k : ℤ) (cB : ℕ → ℕ) : Prop :=
   ∀ p : ℕ, ∀ hp : p.Prime, p ≠ 2 → (p : ℤ) ∣ k → ¬ ((p : ℤ) ^ 2 ∣ k) →
     ∀ M : GoodModelAt (qtwist (Ecurve ℓ) h) p,
