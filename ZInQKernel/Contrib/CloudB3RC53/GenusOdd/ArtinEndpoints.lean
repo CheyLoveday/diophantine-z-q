@@ -168,4 +168,32 @@ theorem gzComparison_of_scaled_artin (P : Prints) (hArtin : ArtinFactorization) 
   obtain ⟨ε, hε, heq⟩ := H h hp hz (hne hL) hq
   exact ⟨ε, hε, by rw [heq, hdiff]⟩
 
+/-- **`RCSteps.gz_comparison` for a scaled `L_*`, Manin–Drinfeld form** (PROVED): as
+`gzComparison_of_scaled`, with `omegaMinus Lat ≠ 0` replaced by `L_*(h_*) ∈ ℚ^×`. -/
+theorem gzComparison_of_scaledMD_artin (P : Prints) (hArtin : ArtinFactorization) {ℓ : ℕ} [(Ecurve ℓ).IsElliptic]
+    {f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel (Ecurve ℓ)) :
+      Subgroup (GL (Fin 2) ℝ)) 2}
+    (hf : ∀ n : ℕ, 0 < n → (UpperHalfPlane.qExpansion 1 f).coeff n = ((Ecurve ℓ).LFunction n : ℂ))
+    {Lat : PeriodPair} (hLat : IsLatticeOf (Ecurve ℓ) Lat) (hNC : IsNonCMLattice Lat) {κ : ℂ}
+    (hκ : IsParamScale (newformLevel (Ecurve ℓ)) f Lat κ) {hstar kfin : ℤ}
+    (hgp : GenusPartner (Ecurve ℓ) hstar)
+    (hElkikMD : ∃ q : ℚ, q ≠ 0 ∧ (q : ℂ) = Lstar (Ecurve ℓ) Lat hstar)
+    (hk0 : kfin < 0) (hk4 : kfin % 4 = 1) (hksq : Squarefree kfin)
+    (hk2N : ∀ p : ℕ, p.Prime → p ∣ 2 * newformLevel (Ecurve ℓ) → SquareAt p kfin)
+    (hkcop : IsCoprime kfin hstar) (S : Finset ℕ)
+    (selG : (h : ℤ) → Option (HeegnerDatum (Ecurve ℓ) f Lat κ (h * hstar) 1 hstar))
+    (selR : (h k : ℤ) → Option (HeegnerDatum (Ecurve ℓ) f Lat κ k h.natAbs h))
+    (hselG : ∀ h, Prepared (Ecurve ℓ) hstar h → AnalyticRank (qtwist (Ecurve ℓ) h) 1 →
+      (selG h).isSome)
+    (hselR : ∀ h, Prepared (Ecurve ℓ) hstar h → AnalyticRank (qtwist (Ecurve ℓ) h) 1 →
+      Companion (Ecurve ℓ) Lat hstar h kfin → (selR h kfin).isSome)
+    {L' : ℤ → ℚ} (hL' : LstarScaled (Ecurve ℓ) L') :
+    GzComparisonText ℓ (Prepared (Ecurve ℓ) hstar) L'
+      (jgenOf (Ecurve ℓ) f Lat κ hstar selG) (jrcOf (Ecurve ℓ) f Lat κ selR) hstar kfin S := by
+  obtain ⟨q, hq0, hq⟩ := hElkikMD
+  have hLs : Lstar (Ecurve ℓ) Lat hstar ≠ 0 := by
+    rw [← hq]; exact_mod_cast hq0
+  exact gzComparison_of_scaled_artin P hArtin hf hLat hNC hκ hgp ⟨q, hq⟩ hk0 hk4 hksq hk2N hkcop S selG selR
+    hselG hselR (omegaMinus_ne_zero_of hLs) hL'
+
 end ZInQ.Contrib.CloudB3RC53.GenusOdd
