@@ -28,7 +28,7 @@ the **actual objects** of the other team's genuine Selmer data `galoisSelData K 
 `GenuineRetention2.toPlaceRetention2` (genuine targets and cup products as in `GenuineRetention`),
 `toRetainedPairing2_eq` (it is the other team's `genuineRetainedPairing`),
 **`selmerFunctionals2_of_genuine`** (feeds `SelmerFunctionals2`, hence `NaturalStep2` and RC0's
-`commonCoordinateInputs_of_G2`). Non-vacuity of the model itself (LESSON 2):
+`commonCoordinateInputs_of_G2`). Non-vacuity of the model itself (non-vacuity):
 `nonempty_genuineRetention2` — over every genuine relaxed/orthogonal Selmer data and every
 unramified datum at every place, with zero primitive and strict conditions.
 
@@ -263,7 +263,7 @@ variable {R : Type} [CommRing R] [TopologicalSpace R] {M M' T : Type}
   [TopologicalSpace T] [DiscreteTopology T] [ContinuousSMul (GKS K S) T]
   (β : M →ₗ[R] M' →ₗ[R] T) (hβ : ∀ (g : GKS K S) (a : M) (b : M'), β (g • a) (g • b) = g • β a b)
 
-/-- **Non-vacuity of `GenuineRetention2`** (LESSON 2): over every pair of genuine Selmer data
+/-- **Non-vacuity of `GenuineRetention2`** (non-vacuity): over every pair of genuine Selmer data
 (relaxed `ΔR`, orthogonal `ΔPp`), at every place `q ∈ S` and for every unramified datum `X` there,
 the retention datum with zero primitive and strict conditions (no old places). PROVED. -/
 theorem nonempty_genuineRetention2 (ΔR : GaloisLocalConditions K S R M')

@@ -15,7 +15,7 @@ arbitrary fields `k`, curves `W` and numbers. Here:
 
 * `GoodModelAt E p`: a genuine good integral model of `E/ℚ` at `p` (a Weierstrass curve over `ℤ`
   mapping to `E`, with `p ∤ Δ`); `GoodModelAt.red`: its reduction over `𝔽_p = ZMod p`, elliptic
-  (`isElliptic_red`). Non-vacuity of the model itself (LESSON 2): `goodModelE0`, the model
+  (`isElliptic_red`). Non-vacuity of the model itself (non-vacuity): `goodModelE0`, the model
   `y² = x³ + 2hℓ x² − 3h²ℓ² x` of `E₀ = E^{(h)}` (`Δ = 2⁸3²h⁶ℓ⁶`) at every `p ∤ 6hℓ`.
 * `EdixhovenComponentNumber ℓ h k cB` — **PRINT (Edixhoven Thm 5.3, Rem 5.4.1) as GLUE**, stated
   over the actual objects with the print's hypotheses in the type: for an odd prime `p` with
@@ -79,7 +79,7 @@ theorem E0Z_map (ℓ : ℕ) (h : ℤ) : (E0Z ℓ h).map (Int.castRingHom ℚ) = 
 theorem E0Z_Δ (ℓ : ℕ) (h : ℤ) : (E0Z ℓ h).Δ = 2 ^ 8 * 3 ^ 2 * h ^ 6 * (ℓ : ℤ) ^ 6 := by
   simp [E0Z, Δ, b₂, b₄, b₆, b₈]; ring
 
-/-- **Non-vacuity of `GoodModelAt` (LESSON 2)**: `E₀ = E^{(h)}` has a good integral model at
+/-- **Non-vacuity of `GoodModelAt` (non-vacuity)**: `E₀ = E^{(h)}` has a good integral model at
 every prime `p ∤ 6hℓ`. -/
 def goodModelE0 (ℓ : ℕ) (h : ℤ) {p : ℕ} (hp : p.Prime) (hp6 : ¬ (p : ℤ) ∣ 6 * h * ℓ) :
     GoodModelAt (qtwist (Ecurve ℓ) (h : ℚ)) p where

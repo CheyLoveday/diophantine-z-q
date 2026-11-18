@@ -25,7 +25,7 @@ Nodes:
 * (2) The quasi sides (PROVED): `finQuasiSide`, `singQuasiSide` for any switched family;
   `switchQuasiSide` over the side-independent relaxed localization `relLoc`
   (`switchFam_toQuasiRelaxed`).
-* LESSON 2 at the genuine setting (PROVED): `genuine_quasiSides` — for a nonarchimedean local field
+* non-vacuity at the genuine setting (PROVED): `genuine_quasiSides` — for a nonarchimedean local field
   `K` with odd residue characteristic, both quasi switch sides (finite plane, singular plane) over
   one relaxed localization of `C^•_cont(G_K, 𝔽₂²)` (`genFinSide`, `genSingSide`); `TameCoordinates`
   from `tameCoordinatesTrivial_galois`, `SwitchedAt` from `switchFam_switchedAt`.
@@ -654,7 +654,7 @@ def switchQuasiSide (old : ∀ v, SubFam (locCx Gv Mv v)) (T' : ∀ v, Set (Gv v
 
 end Planes
 
-/-! ### The genuine instance at a local Galois group (LESSON 2) -/
+/-! ### The genuine instance at a local Galois group (non-vacuity) -/
 
 section Genuine
 
@@ -708,7 +708,7 @@ def genSingSide {φ σ : Field.absoluteGaloisGroup K}
     (singular_side_iff (Gv := genG K) (Mv := genM K) (q := ()) φ σ (trivModEquiv _ _))
 
 variable (K) in
-/-- **LESSON 2 at the genuine setting** (tex L5027–5037, L5068–5086): for a nonarchimedean local
+/-- **non-vacuity at the genuine setting** (tex L5027–5037, L5068–5086): for a nonarchimedean local
 field `K` with odd residue characteristic there are a Frobenius lift `φ`, a tame generator
 `σ ∈ I_K` and tame coordinates for `𝔽₂²`, and over the genuine relaxed localization of
 `C^•_cont(G_K, 𝔽₂²)` both quasi switch sides (finite plane and singular plane) exist. PROVED. -/

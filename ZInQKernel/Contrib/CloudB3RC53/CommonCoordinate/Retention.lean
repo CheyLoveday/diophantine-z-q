@@ -27,7 +27,7 @@ by place, in the shape of the support-change data (`SelmerDuality/SupportChange.
 `PlaceRetention.toRetainedPairing` then PROVES the retained-homotopy equality and produces the
 `RetainedPairing` consumed by `cup_naturality` and `pairedFunctional_natural`.
 
-Non-vacuity of the model itself (LESSON 2): `examplePlaceRetention`, over Selmer data with
+Non-vacuity of the model itself (non-vacuity): `examplePlaceRetention`, over Selmer data with
 `ι_R = id` (so the functionals below are nonzero), one old place and the zero new place.
 
 Caveat: the new place `NP : UnramifiedNewPlace S` requires degreewise isomorphisms of the full local
@@ -167,7 +167,7 @@ def relSel (S : Type u) [CommRing S] : SelData S :=
 /-- The zero new place, in universe `u`. -/
 abbrev zeroNP (S : Type u) [CommRing S] : UnramifiedNewPlace S := zeroNewPlace S
 
-/-- **Non-vacuity of `PlaceRetention`** (LESSON 2): relaxed data `relSel` (`ι_R = id`), orthogonal
+/-- **Non-vacuity of `PlaceRetention`** (non-vacuity): relaxed data `relSel` (`ι_R = id`), orthogonal
 data `constSel` (`ι = 0`), identity condition maps, one old place with zero homotopy, the zero new
 place. -/
 def examplePlaceRetention (S : Type u) [CommRing S] :

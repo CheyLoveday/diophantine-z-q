@@ -455,7 +455,7 @@ theorem genuine_strictOrth_gen (X : GenuineSwitch K S k M) (β : M →ₗ[k] M �
 
 end Genuine
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section NonVacuity
 

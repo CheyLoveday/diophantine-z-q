@@ -205,7 +205,7 @@ theorem sideQuotientsGenuine_proof (c : SideCond G M) : SideQuotientsGenuine c :
           rw [map_neg, ha]
           simp
 
-/-- **Non-vacuity** (LESSON 2): the relaxed condition itself is a side condition (`A_F = C⁰`,
+/-- **Non-vacuity** (non-vacuity): the relaxed condition itself is a side condition (`A_F = C⁰`,
 `B_F = Z¹`), for every genuine `G`, `M`; its side quotients satisfy `SideQuotientsGenuine`. -/
 def relaxedSide (G M : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [AddCommGroup M] [Module (ZMod 2) M] [DistribMulAction G M] [SMulCommClass G (ZMod 2) M]

@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.CloudB3RC53.CoefficientDictionary.NonVacuity
 /-!
 # A corrected constituent model with a NONZERO reading (dihedral constituents)
 
-Consistency check, not part of the manuscript (LESSON 2). RC0's only witness of
+Consistency check, not part of the manuscript (non-vacuity). RC0's only witness of
 `ConstituentModelRel` has the zero reading, and `AdditiveObstruction.lean` shows that additive
 reduced traces (for example abelian images) can only give the zero reading. Here (all `PROVED`)
 `dihModel T ap B` is a `ConstituentModelRel` whose reduced traces are quadratic in `g`; with even

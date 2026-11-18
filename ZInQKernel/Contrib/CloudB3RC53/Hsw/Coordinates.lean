@@ -37,7 +37,7 @@ relaxed image) is `localizationDualityInput_of_residuePairing`.
 The reduction is no stronger than `hsw` itself. When `σ² = 1`, `switchPairing ε σ J` has all four
 properties (`switchPairing_residueShape`), and `hsw` *is* `ResiduePairing` for `P = switchPairing`
 (`residuePairing_of_hsw`). So any instance of `hsw` gives an instance of the hypotheses used here
-(LESSON 2, relative non-vacuity).
+(non-vacuity, relative non-vacuity).
 
 ## Remaining input (GLUE / local duality)
 
@@ -288,7 +288,7 @@ theorem hsw_reScale (R : QuasiRelaxedLocalization k) (Ustr : GCx k) (f : GHom Us
   rw [LinearMap.map_smul₂, LinearMap.map_smul, smul_eq_mul, smul_eq_mul] at e
   linear_combination -e
 
-/-! ### Relative non-vacuity (LESSON 2) -/
+/-! ### Relative non-vacuity -/
 
 /-- **`switchPairing` has the local-duality shape** when `σ² = 1` (the manuscript's `σ = 1`
 included). `PROVED`. -/

@@ -22,7 +22,7 @@ import ZInQKernel.RouteK.Rank.LFunctionCd
 * `EdixhovenComponentNumberIso`: the print over models up to isomorphism; it is equivalent to the
   print as stated wherever a good model in the stated sense exists (`edixhovenIso_of_edixhoven`,
   `edixhoven_of_edixhovenIso`).
-* Non-vacuity (LESSON 2): `edixhovenComponentNumber_canonical` — for every `ℓ, h, k` the canonical
+* Non-vacuity: `edixhovenComponentNumber_canonical` — for every `ℓ, h, k` the canonical
   choice `cB p = #Ẽ₀(𝔽_p)[2]` (any good model) satisfies the print's statement, and
   `edixhoven_witness_five`: for `ℓ = h = 1`, `k = 5`, the prime `p = 5 ∥ k` carries the good model
   `y² = x³ + 2x² − 3x` and `cB 5 = #Ẽ₀(𝔽₅)[2] = 4` (the cubic `x(x − 1)(x + 3)` splits mod `5`).
@@ -220,7 +220,7 @@ theorem edixhovenIso_of_edixhoven {ℓ : ℕ} {h : ℚ} {k : ℤ} {cB : ℕ → 
     exact card_twoTorsion_red_eq_of_iso M₀.toIso M
   · exact (hempty.false M).elim
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 open Classical in
 /-- The canonical component numbers: `#Ẽ₀(𝔽_p)[2]` for any good model up to isomorphism, `0`

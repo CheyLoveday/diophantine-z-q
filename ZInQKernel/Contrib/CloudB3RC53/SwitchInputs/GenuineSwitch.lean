@@ -43,7 +43,7 @@ Nodes (PROVED):
   dimensions are independent of the datum (`fiberDim_indep`), so no free choice remains.
 * `GenuineSwitchData.toSelmerModelSwitchData`, `RegularOfGenuineSwitchData`
   (`regular_of_genuineSwitchData`): regularity `∃ a, ι a = u` from the tightened data.
-* Non-vacuity (LESSON 2): `exGenuineFamily` / `exGenuineSwitchData`, a configuration family over `ℚ`
+* Non-vacuity: `exGenuineFamily` / `exGenuineSwitchData`, a configuration family over `ℚ`
   whose actual fiber is the Selmer complex with `G = ℚ` in degrees one and two, and a genuine
   datum for it; `exGenuine_fibre_forced` shows its fiber dimension is the genuine `H¹` dimension
   `1`.
@@ -206,7 +206,7 @@ theorem regular_of_genuineSwitchData : RegularOfGenuineSwitchData := by
     ⟨Φ.actual, Reach.start⟩
   exact ⟨a, ha.trans G.hu0⟩
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section NonVacuity
 

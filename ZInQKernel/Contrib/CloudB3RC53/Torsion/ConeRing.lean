@@ -14,7 +14,7 @@ field. This file gives the cone over any commutative ring and the comparison for
 * **`nakayama_comparison` (PROVED)**: for a chain map `f` of based complexes over a local ring, if
   the cone of the reduced map `f mod 𝔪` is contractible (the reduced comparison is a homotopy
   equivalence), then the cone of `f` is contractible (`f` is a homotopy equivalence).
-* LESSON 2: `nakayama_comparison_example` — over any local ring, the map `R --(1 + x)--> R`
+* Non-vacuity: `nakayama_comparison_example` — over any local ring, the map `R --(1 + x)--> R`
   between one-dimensional complexes in degree zero, `x ∈ 𝔪`, reduces to the identity, and its cone
   is contractible.
 
@@ -102,7 +102,7 @@ theorem nakayama_comparison [IsLocalRing R] (f : ChainMapR C D)
     Nonempty (Contraction (BasedCx.coneR f)) :=
   nakayama_contraction _ ((coneR_map (IsLocalRing.residue R) f).symm ▸ hbar)
 
-/-! ### LESSON 2 -/
+/-! ### Non-vacuity -/
 
 /-- The complex `R` in degree zero. -/
 def ptCx (R : Type*) [CommRing R] : BasedCx R Unit Empty where
@@ -126,7 +126,7 @@ def ptMap (a : R) : ChainMapR (ptCx R) (ptCx R) where
   commOE := Matrix.ext fun e => e.elim
   commEO := Matrix.ext fun _ e => e.elim
 
-/-- **LESSON 2**: over a local ring, for `x ∈ 𝔪` the reduced cone of `1 + x : R → R` is
+/-- **non-vacuity**: over a local ring, for `x ∈ 𝔪` the reduced cone of `1 + x : R → R` is
 contractible (the reduced map is the identity), so `nakayama_comparison` applies. -/
 theorem nakayama_comparison_example [IsLocalRing R] (x : R) (hx : x ∈ IsLocalRing.maximalIdeal R) :
     Nonempty (Contraction (BasedCx.coneR (ptMap (1 + x)))) := by

@@ -354,7 +354,7 @@ theorem finiteSide_BF_iff_urLin₁ (I : Subgroup G) (hπs : Function.Surjective 
 
 end Unramified
 
-/-! ### Non-vacuity (LESSON 2) of (b): `G = H = ℤ̂`, `π = id`, `I = 1`, trivial `𝔽₂` -/
+/-! ### Non-vacuity of (b): `G = H = ℤ̂`, `π = id`, `I = 1`, trivial `𝔽₂` -/
 
 section ExampleUr
 

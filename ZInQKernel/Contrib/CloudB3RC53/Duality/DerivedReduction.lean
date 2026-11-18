@@ -19,7 +19,7 @@ resolution), its reduction modulo `n = 2^a` is the two-term complex
 Hypotheses: `f` injective, `g : P₀ → M` surjective with `ker g = im f`, and `n` regular on `P₀`
 (true for free `ℤ₂`-modules and `n = 2^a`). The coefficient ring is any commutative ring.
 
-* LESSON 2: `reduction_example` — over `ℤ`, `M = ℤ/2` presented by `2 : ℤ → ℤ` and `n = 2`:
+* Non-vacuity: `reduction_example` — over `ℤ`, `M = ℤ/2` presented by `2 : ℤ → ℤ` and `n = 2`:
   the hypotheses hold and `M[2] = ℤ/2` is nonzero, so `ker f̄` is nonzero
   (`reduction_example_nontrivial`). Degree zero really carries the torsion.
 
@@ -212,9 +212,9 @@ noncomputable def cokerReduction_equiv (hfg : g.comp f = 0) (hg : Function.Surje
   (Submodule.quotEquivOfEq _ _ (ker_cokerMap hfg hg hex).symm).trans
     (LinearMap.quotKerEquivOfSurjective _ (cokerMap_surjective hg))
 
-/-! ### LESSON 2 -/
+/-! ### Non-vacuity -/
 
-/-- **LESSON 2**: `M = ℤ/2` presented by `2 : ℤ → ℤ`, reduced modulo `2`: the hypotheses hold, and
+/-- **non-vacuity**: `M = ℤ/2` presented by `2 : ℤ → ℤ`, reduced modulo `2`: the hypotheses hold, and
 degree zero `ker f̄ ≅ M[2] = ℤ/2` is nonzero. -/
 theorem reduction_example :
     let f : ℤ →ₗ[ℤ] ℤ := mulBy (2 : ℤ) ℤ
@@ -245,7 +245,7 @@ theorem reduction_example :
     · rw [LinearMap.mem_ker]; rfl
     · intro h; exact absurd (congrArg Subtype.val h) (by decide)
 
-/-- **LESSON 2, conclusion**: in the example, degree zero of the reduction, `ker (2 mod 2)`, is
+/-- **non-vacuity, conclusion**: in the example, degree zero of the reduction, `ker (2 mod 2)`, is
 nonzero: it is `M[2] = ℤ/2` (`kerReduction_equiv`). -/
 theorem reduction_example_nontrivial :
     Nontrivial (LinearMap.ker (reduction (2 : ℤ) (mulBy (2 : ℤ) ℤ))) := by

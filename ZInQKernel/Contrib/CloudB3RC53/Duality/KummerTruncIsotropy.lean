@@ -37,7 +37,7 @@ isotropy data: local conditions `ι : U → L`, `ι' : U' → L'`, a local cup p
   (finite isotropy), via `derivedKummerStep_trunc` applied to `τ≥2 E`.
 * `trunc_h_eq_zero`: for such conditions every `τ≥2` isotropy homotopy projects to zero in `τ≥2 E`
   (uniqueness; `nullHomotopy_eq_zero`).
-* LESSON 2: `exTruncLocal` (the interface for the derivative conditions of
+* Non-vacuity: `exTruncLocal` (the interface for the derivative conditions of
   `SwitchInputs/TruncIsotropy.lean`, where no untruncated homotopy exists) and `kummerEx` (the
   Kummer hypotheses in an example with a NONZERO `(1, 1)` cup value that is a coboundary).
 
@@ -242,7 +242,7 @@ section Example
 
 variable (S : Type u) [CommRing S]
 
-/-- **LESSON 2: the interface is inhabited** by the derivative conditions of
+/-- **Non-vacuity: the interface is inhabited** by the derivative conditions of
 `SwitchInputs/TruncIsotropy.lean` (`exTrunc`), for which no untruncated isotropy homotopy exists
 (`exUntruncated_fails`). -/
 def exTruncLocal : LocalTruncIsotropy (exStrData S).ι (exRelData S).ι (locCup S) :=
@@ -379,13 +379,13 @@ theorem kummerCup_ne_zero [Nontrivial S] :
   rw [e, mul_one] at h
   exact one_ne_zero h
 
-/-- **LESSON 2: the Kummer hypotheses hold in a model with a nonzero `(1, 1)` cup value**, and
+/-- **Non-vacuity: the Kummer hypotheses hold in a model with a nonzero `(1, 1)` cup value**, and
 `kummerTruncIsotropy` gives its zero `τ≥2` isotropy homotopy. -/
 def kummerEx : LocalTruncIsotropy (kummerι S) (kummerι S) (kummerCup S) :=
   kummerTruncIsotropy (kummerU_vanishes S) (kummerU_vanishes S) (kummerTrace S)
     (kummerTrace_ker S) (kummerCup_trace S)
 
-/-- **LESSON 2, `ℤ₂` form**: the hypotheses of `kummerTruncIsotropy_two` hold in the model over
+/-- **non-vacuity, `ℤ₂` form**: the hypotheses of `kummerTruncIsotropy_two` hold in the model over
 `ℤ₂`. -/
 def kummerEx_two : LocalTruncIsotropy (kummerι ℤ_[2]) (kummerι ℤ_[2]) (kummerCup ℤ_[2]) :=
   kummerTruncIsotropy_two (kummerU_vanishes ℤ_[2]) (kummerU_vanishes ℤ_[2]) (kummerTrace ℤ_[2])

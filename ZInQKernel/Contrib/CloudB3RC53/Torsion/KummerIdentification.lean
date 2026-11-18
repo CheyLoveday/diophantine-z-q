@@ -22,7 +22,7 @@ discharged by instantiating `D` with the genuine cochain-level Selmer complexes:
   model in the retained bases); `coord_eq`: `u_K = a b u₀ · δ₁ δ₂⁻¹ δ₃`;
   `hK_of_identification`: Bookkeeping's input `hK` in its exact type, from the identification and
   the valuations of `a, b, u₀, δ_i`; `hvprim_of_identification`: RC0's `hvprim`.
-* `modelSel`, `identification_example` (**LESSON 2 consistency instance**): for the Selmer data
+* `modelSel`, `identification_example` (**non-vacuity consistency instance**): for the Selmer data
   whose global complex is the model itself (zero local conditions), the identity-like map is a
   quasi-isomorphism (an isomorphism of complexes) and every field holds (`D_c = (0)`,
   `z₀ = λ₀ = u₀ = a = b = 1`, unit disks).
@@ -217,7 +217,7 @@ theorem hvprim_of_identification {D : SelData (PowerSeries ℚ_[2])}
 
 end Valuation
 
-/-! ### LESSON 2: a consistency instance -/
+/-! ### Non-vacuity: a consistency instance -/
 
 section Example
 
@@ -265,7 +265,7 @@ def exLam [IsDomain S] (δ₁ δ₂ δ₃ : Sˣ) :
   map_add' _ _ := dotProduct_add _ _ _
   map_smul' r _ := dotProduct_smul r _ _
 
-/-- **LESSON 2: the identification is consistent** — an instance for the Selmer data whose global
+/-- **Non-vacuity: the identification is consistent** — an instance for the Selmer data whose global
 complex is the model (`D_c = (0)`, `z₀ = λ₀ = u₀ = a = b = 1`, arbitrary unit disks). -/
 def identification_example [IsDomain S] (δ₁ δ₂ δ₃ : Sˣ) :
     KummerModelIdentification (modelSel (exModel δ₁ δ₂ δ₃)) where

@@ -16,6 +16,8 @@ L10862–10935) is:
    uniform upper bound `v₂ ũ_x(0) ≤ B` at `x ≠ 0` from (3.9), (3.4), (4.6), (4.7), and the
    base-zero lemma `ex:arith-base-zero`. This package is `FixedFieldPackage`. Its coefficient data
    are existential at this layer (see `FixedFieldPackage`); the tie to the genuine `ũ_x` is
+   `RCSteps.clearing` in the reduction `RC.Wiring.restrictedConverseGenuine_of_leaves`. Its coefficient data
+   are existential at this layer (see `FixedFieldPackage`); the tie to the genuine `ũ_x` is
    `RCSteps.clearing` in the reduction `RC.Wiring.restrictedConverseGenuine_of_leaves`.
 3. **Missing address** (`MissingAddressNode`, tex L5666–5735, (5.10)–(5.11)): from the clearing
    identity, the pole bound, the regular base and the numerical choices (5.10), some `x ≠ 0` has

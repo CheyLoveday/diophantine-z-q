@@ -33,7 +33,7 @@ Nodes (PROVED):
 * `FiberDimEqH1` / `fiberDim_eq_h1`: if the Selmer complex of a side is homotopy equivalent to the
   fiber of the stage's two-term model (the stage is a finite free model of that Selmer complex),
   then `fiberDim = dim H¹(C(U_F))`, the exact shape of the step fields of `SelmerSwitchData`.
-* Non-vacuity (LESSON 2): `exStrictIdentification` for the sides of `NonVacuity.lean`.
+* Non-vacuity: `exStrictIdentification` for the sides of `NonVacuity.lean`.
 -/
 
 noncomputable section
@@ -283,7 +283,7 @@ theorem singleStepField_of_model {A F : Type} [CommRing A] [Field F] {ι : A →
 
 end Fiber
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section NonVacuity
 

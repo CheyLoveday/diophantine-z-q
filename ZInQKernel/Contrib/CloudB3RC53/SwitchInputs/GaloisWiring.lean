@@ -37,7 +37,7 @@ groups inside `G_{K,S}`:
   `galoisSwitchFamily` (nonquadratic case; the quadratic fields are absurd). DEPARTURE: the
   quadratic switch steps are not wired here.
 * `regular_of_galoisNonquadInputs` (PROVED from `regular_of_galoisSwitchData'`): regularity.
-* `PlaceTame.exists_at`, `exists_galSides` (PROVED; LESSON 2 non-vacuity): at a place `q` with
+* `PlaceTame.exists_at`, `exists_galSides` (PROVED; non-vacuity): at a place `q` with
   finite residue field of odd characteristic and trivial `M ≃ 𝔽₂²`, the tame coordinates of
   `G_{K_q}` give genuine finite and singular quasi sides for every configuration.
 
@@ -412,7 +412,7 @@ theorem regular_of_galoisNonquadInputs [IsLocalRing A] (hι : Function.Injective
 
 end Steps
 
-/-! ### LESSON 2: the genuine switch sides at an actual place -/
+/-! ### Non-vacuity: the genuine switch sides at an actual place -/
 
 section Genuine
 
@@ -433,7 +433,7 @@ theorem PlaceTame.exists_at (q : Places K S) (I₀ : Subgroup (Gloc K q.1)) (φ�
              eM := fun _ => eM }, ?_, ?_, ?_⟩ <;>
     (dsimp only; exact Function.update_self (α := Places K S) _ _ _)
 
-/-- **The genuine switch sides exist at an actual place** (LESSON 2; tex L5027–5086): for a place
+/-- **The genuine switch sides exist at an actual place** (non-vacuity; tex L5027–5086): for a place
 `q ∈ S` with finite residue field of odd characteristic, and coefficients `M ≃ 𝔽₂²` on which
 `G_{K,S}` acts trivially, there are tame data `D` at the places with the tame coordinates at `q`
 (from the tame quotient of `G_{K_q}`, `exists_tame_coordinates`), and for every configuration `c`

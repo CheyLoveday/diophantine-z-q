@@ -2,21 +2,21 @@ import ZInQKernel.Contrib.CloudB3RC53.Frobenius.CountLemmas
 import ZInQKernel.Contrib.CloudB3RC53.Frobenius.DegreeOneSub
 
 /-!
-# `#E(𝔽_{q²}) = #E(𝔽_q) · (2q + 2 − #E(𝔽_q))`
+# `|E(𝔽_{q²})| = |E(𝔽_q)| · (2q + 2 − |E(𝔽_q)|)`
 
 Let `E = W` be an elliptic curve over a finite field `F` with `q` elements, `K ⊇ F` algebraically
 closed, and `σ` the action of the base-changed Frobenius on `E(K)`, `σ(a, b) = (a^q, b^q)`.
 
-* **Anti-fixed points** (`natCard_anti_add_natCard`): `#{P : σP = −P} + #E(F) = 2q + 2`. Both
+* **Anti-fixed points** (`natCard_anti_add_natCard`): `|{P : σP = −P}| + |E(F)| = 2q + 2`. Both
   `σP = P` and `σP = −P` force `x(P) ∈ F`; for each `x ∈ F` the two `y`-roots `y₀, −b − y₀` of the
   Weierstrass equation contribute exactly two in total (`natCard_quadratic_fix_add_anti`), and `O`
   is counted twice.
 * **Group theory** (`natCard_fix_sq`): `σ − 1` is the point map of the separable isogeny `π − 1`,
   hence additive and surjective on `E(K)` (Tau Ceti's `toPointHom_surjective`). So `σ` is additive
-  and `#Fix(σ²) = #Fix(σ) · #{σP = −P}` (`natCard_ker_sq_sub_one`).
+  and `|Fix(σ²)| = |Fix(σ)| · |{σP = −P}|` (`natCard_ker_sq_sub_one`).
 * **Points over the quadratic extension** (`natCard_points_quadratic`): if `L ⊇ F` has `q²`
-  elements, `#E(L) = #Fix(σ²) = #E(F) · (2q + 2 − #E(F))`; in trace form
-  `#E(L) = q² + 1 − (a² − 2q)` with `a = q + 1 − #E(F)` (`natCard_points_quadratic_trace`).
+  elements, `|E(L)| = |Fix(σ²)| = |E(F)| · (2q + 2 − |E(F)|)`; in trace form
+  `|E(L)| = q² + 1 − (a² − 2q)` with `a = q + 1 − |E(F)|` (`natCard_points_quadratic_trace`).
 
 This is the finite-field input of the inert clause of `LocalFactorK` at a prime of good reduction.
 Classification: PROVED.
@@ -135,7 +135,7 @@ theorem ptPred_anti_iff (P : (W.map f).Point) :
   · rw [pointMap_frobeniusMap_some, Point.neg_some, Point.some.injEq]
     rfl
 
-/-- **`#{P : σP = −P} + #E(F) = 2q + 2`.** PROVED. -/
+/-- **`|{P : σP = −P}| + |E(F)| = 2q + 2`.** PROVED. -/
 theorem natCard_anti_add_natCard :
     Nat.card {P : (W.map f).Point //
         (Isogeny.Hom.ofIsogeny (frobeniusMap W f)).pointMap P = -P} + Nat.card W.Point =
@@ -194,7 +194,7 @@ theorem exists_frobenius_addHom :
     rw [e]
     exact Isogeny.toPointHom_surjective _
 
-/-- **`#Fix(σ²) = #E(F) · #{σP = −P}`.** PROVED. -/
+/-- **`|Fix(σ²)| = |E(F)| · |{σP = −P}|`.** PROVED. -/
 theorem natCard_fix_sq :
     Nat.card {P : (W.map f).Point // (Isogeny.Hom.ofIsogeny (frobeniusMap W f)).pointMap
         ((Isogeny.Hom.ofIsogeny (frobeniusMap W f)).pointMap P) = P} =
@@ -254,7 +254,7 @@ theorem pointInclL_injective (hg : g.comp ι = f) : Function.Injective (pointInc
   rintro (_ | ⟨x, y, h⟩) (_ | ⟨x', y', h'⟩) hP <;> simp_all [pointInclL, g.injective.eq_iff]
 
 omit [IsAlgClosed K] in
-/-- **`#E(L) = #Fix(σ²)`** for `L ⊇ F` with `q²` elements. PROVED. -/
+/-- **`|E(L)| = |Fix(σ²)|`** for `L ⊇ F` with `q²` elements. PROVED. -/
 theorem natCard_fix_sq_eq (hg : g.comp ι = f) (hL : Fintype.card L = Fintype.card F ^ 2) :
     Nat.card {P : (W.map f).Point // (Isogeny.Hom.ofIsogeny (frobeniusMap W f)).pointMap
         ((Isogeny.Hom.ofIsogeny (frobeniusMap W f)).pointMap P) = P} =
@@ -291,7 +291,7 @@ theorem natCard_fix_sq_eq (hg : g.comp ι = f) (hL : Fintype.card L = Fintype.ca
 end Quadratic
 
 omit [IsAlgClosed K] [DecidableEq K] in
-/-- **`#E(L) = #E(F) · A` with `A + #E(F) = 2q + 2`**, for `L ⊇ F` with `q²` elements. PROVED. -/
+/-- **`|E(L)| = |E(F)| · A` with `A + |E(F)| = 2q + 2`**, for `L ⊇ F` with `q²` elements. PROVED. -/
 theorem natCard_points_quadratic_aux {L : Type*} [Field L] [Fintype L] (ι : F →+* L)
     (hL : Fintype.card L = Fintype.card F ^ 2) :
     ∃ A : ℕ, Nat.card (W.map ι).Point = Nat.card W.Point * A ∧
@@ -301,7 +301,7 @@ theorem natCard_points_quadratic_aux {L : Type*} [Field L] [Fintype L] (ι : F �
   refine ⟨_, ?_, natCard_anti_add_natCard W (g.comp ι)⟩
   rw [← natCard_fix_sq_eq W (g.comp ι) ι g rfl hL, natCard_fix_sq]
 
-/-- **`#E(𝔽_{q²}) = #E(𝔽_q) · (2q + 2 − #E(𝔽_q))`.** PROVED. -/
+/-- **`|E(𝔽_{q²})| = |E(𝔽_q)| · (2q + 2 − |E(𝔽_q)|)`.** PROVED. -/
 theorem natCard_points_quadratic {L : Type*} [Field L] [Fintype L] (ι : F →+* L)
     (hL : Fintype.card L = Fintype.card F ^ 2) :
     Nat.card (W.map ι).Point =
@@ -309,7 +309,7 @@ theorem natCard_points_quadratic {L : Type*} [Field L] [Fintype L] (ι : F →+*
   obtain ⟨A, h1, h2⟩ := natCard_points_quadratic_aux W ι hL
   rw [h1, ← h2, Nat.add_sub_cancel]
 
-/-- **Trace form: `#E(𝔽_{q²}) = q² + 1 − (a² − 2q)`, `a = q + 1 − #E(𝔽_q)`.** PROVED. -/
+/-- **Trace form: `|E(𝔽_{q²})| = q² + 1 − (a² − 2q)`, `a = q + 1 − |E(𝔽_q)|`.** PROVED. -/
 theorem natCard_points_quadratic_trace {L : Type*} [Field L] [Fintype L] (ι : F →+* L)
     (hL : Fintype.card L = Fintype.card F ^ 2) :
     (Nat.card (W.map ι).Point : ℤ) =
@@ -321,11 +321,11 @@ theorem natCard_points_quadratic_trace {L : Type*} [Field L] [Fintype L] (ι : F
   rw [h1, Nat.cast_mul, h2']
   ring
 
-/-- **Node `QuadraticExtensionPointCount`** (the `n = 2` case of `#E(𝔽_{q^n}) = q^n + 1 − (α^n + β^n)`,
+/-- **Node `QuadraticExtensionPointCount`** (the `n = 2` case of `|E(𝔽_{q^n})| = q^n + 1 − (α^n + β^n)`,
 cf. Silverman, Ch. V §2; infrastructure for the inert clause of `LocalFactorK`, not a manuscript line):
 for an elliptic curve `E` over `𝔽_q` and a field `L ⊇ 𝔽_q` with `q²` elements,
-`#E(L) = #E(𝔽_q) · (2q + 2 − #E(𝔽_q))`, i.e. `#E(L) = q² + 1 − (a² − 2q)` with
-`a = q + 1 − #E(𝔽_q)`. PROVED (`quadraticExtensionPointCount_proof`). -/
+`|E(L)| = |E(𝔽_q)| · (2q + 2 − |E(𝔽_q)|)`, i.e. `|E(L)| = q² + 1 − (a² − 2q)` with
+`a = q + 1 − |E(𝔽_q)|`. PROVED (`quadraticExtensionPointCount_proof`). -/
 def QuadraticExtensionPointCount : Prop :=
   ∀ (F : Type) [Field F] [Fintype F] (W : WeierstrassCurve.Affine F) [W.IsElliptic]
     (L : Type) [Field L] [Fintype L] (ι : F →+* L), Fintype.card L = Fintype.card F ^ 2 →

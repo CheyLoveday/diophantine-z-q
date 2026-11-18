@@ -32,7 +32,7 @@ RC16's `bdryF_eq`, from Nekovář's cup products), and
 cone of `∂_F` plus unit disks).
 Part A proves everything about the generic fibre that (i) and (ii) assert.
 
-**Part B (LESSON 2): `SwitchDualityAdjunction` is consistent.** `exSwitchDualityAdjunction`
+**Part B (non-vacuity): `SwitchDualityAdjunction` is consistent.** `exSwitchDualityAdjunction`
 inhabits QuasiSide's GLUE input for the relaxed localization `exQuasiRel` (`U = F`) with a strict
 Selmer complex `exStrD` whose `H²` is `ℚ²` (`exH2Equiv`), the connecting map `δ` = the singular
 coordinate, and the pairing `⟨x, v⟩ = β(λ v, (0, x))`; hence `LocalizationDualityInput` follows via
@@ -196,7 +196,7 @@ theorem cone_dims_of_matrix (E : ShortComplex (CochainComplex (ModuleCat.{0} k) 
   have hrn := LinearMap.finrank_range_add_finrank_ker δ
   refine ⟨?_, ?_⟩ <;> omega
 
-/-- **LESSON 2: `ConnectingMatrixIdentification` is consistent**: the map with matrix `oldMat ε v`
+/-- **Non-vacuity: `ConnectingMatrixIdentification` is consistent**: the map with matrix `oldMat ε v`
 in the standard bases. PROVED. -/
 theorem exConnectingMatrixIdentification (ε : k) (v : Fin 2 → k) :
     ConnectingMatrixIdentification (Matrix.toLin' (oldMat ε v)) (Pi.basisFun k (Fin 2))
@@ -288,7 +288,7 @@ theorem exDelta_hex :
     rw [show w = w' from exQuasiRel.eR.injective he.symm]
     exact hw'
 
-/-- **LESSON 2: `SwitchDualityAdjunction` is consistent** (tex L5068–5075). For the relaxed
+/-- **Non-vacuity: `SwitchDualityAdjunction` is consistent** (tex L5068–5075). For the relaxed
 localization `exQuasiRel` (`U = F`), the strict data `exStrD` (`H²(C_str) = ℚ²`), the connecting map
 `exDelta` and the switch pairing with `ε = σ = 1`, `J = J₀`, the pairing
 `⟨x, v⟩ = β(λ' v, (0, x))` is separating and adjoint to localization. PROVED. -/

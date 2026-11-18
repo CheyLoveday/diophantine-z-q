@@ -3,10 +3,10 @@ import Mathlib.GroupTheory.Coset.Card
 import Mathlib.FieldTheory.IsAlgClosed.Basic
 
 /-!
-# Two elementary counting lemmas for `#E(𝔽_{q²})`
+# Two elementary counting lemmas for `|E(𝔽_{q²})|`
 
 * `natCard_ker_sq_sub_one`: for an endomorphism `σ` of an abelian group with `σ − 1` surjective,
-  `#ker(σ² − 1) = #ker(σ − 1) · #ker(σ + 1)`. (`σ − 1` maps `ker(σ² − 1)` onto `ker(σ + 1)`:
+  `|ker(σ² − 1)| = |ker(σ − 1)| · |ker(σ + 1)|`. (`σ − 1` maps `ker(σ² − 1)` onto `ker(σ + 1)`:
   if `P − σP = Q` with `σQ = −Q`, then `σ²P = σP − σQ = P − Q + Q = P`; the kernel is `ker(σ − 1)`.)
 * `natCard_quadratic_fix_add_anti`: over an algebraically closed field `K ⊇ F` with `F` finite of
   `q` elements, for `b, c ∈ F` the equation `y² + b y = c` has, counted together, exactly two
@@ -24,7 +24,7 @@ section Group
 
 variable {G : Type*} [AddCommGroup G]
 
-/-- **`#ker(σ² − 1) = #ker(σ − 1) · #ker(σ + 1)`** when `σ − 1` is surjective. PROVED. -/
+/-- **`|ker(σ² − 1)| = |ker(σ − 1)| · |ker(σ + 1)|`** when `σ − 1` is surjective. PROVED. -/
 theorem natCard_ker_sq_sub_one (σ : G →+ G) (hs : Function.Surjective (σ - AddMonoidHom.id G)) :
     Nat.card (σ.comp σ - AddMonoidHom.id G).ker =
       Nat.card (σ - AddMonoidHom.id G).ker * Nat.card (σ + AddMonoidHom.id G).ker := by
