@@ -4,6 +4,7 @@ import ZInQKernel.Contrib.OneProof.RC.CoefModules.NonVacuity
 import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
 import Mathlib.Algebra.CharP.Two
 import ZInQKernel.Contrib.CloudB3RC53.RankCounts.Kummer.SqrtMem
+import ZInQKernel.Contrib.CloudB3RC53.RankCounts.Inflation
 
 /-!
 # RC53 finiteness: the places above `2` lie in the support, from full `2`-power torsion
@@ -54,10 +55,22 @@ in `S`.
   compositum of two extensions unramified outside `S` to be unramified outside `S`.
 * `twoPowerRootsRamified_of_finiteUnramifiedSupport`,
   `h2_of_hasFullTwoTorsion_of_finiteUnramifiedSupport` (`PROVED` from (b2)): the ramification
-  step and `h2`. So (b2) is the only remaining input for `h2`.
+  step and `h2`.
 
-Classification: `PROVED` from the named inputs; `TwoPowerRootsRamified` and
-`FiniteUnramifiedSupport` are stated, not proved, and the first follows from the second.
+## (b2) from the compositum statement
+
+* `isUnramifiedOutside_bot` (`PROVED`): `K` itself is unramified outside every `S`.
+* `UnramifiedOutsideSup` (ii, stated): the compositum of two finite normal subextensions
+  unramified outside `S` is unramified outside `S`.
+* `finiteUnramifiedSupport_of_sup` (`PROVED` from (ii)): with (ii) the finite normal
+  subextensions unramified outside `S` form a nonempty directed family, so every element of their
+  supremum `K_S` lies in one of them (`IntermediateField.coe_iSup_of_directed`).
+* `h2_of_hasFullTwoTorsion_of_sup` (`PROVED` from (ii)): so (ii) is the only remaining input for
+  `h2`.
+
+Classification: `PROVED` from the named inputs; `TwoPowerRootsRamified`,
+`FiniteUnramifiedSupport` and `UnramifiedOutsideSup` are stated, not proved, and each follows from
+the next.
 -/
 
 noncomputable section
@@ -325,5 +338,87 @@ theorem h2_of_hasFullTwoTorsion_of_finiteUnramifiedSupport (h : FiniteUnramified
   h2_of_hasFullTwoTorsion (twoPowerRootsRamified_of_finiteUnramifiedSupport h) W
 
 end Finite
+
+/-! ### (b2) from the compositum statement -/
+
+section Compositum
+
+open ZInQ.Contrib.CloudB3RC53.RankCounts (IsUnramifiedOutside unramifiedOutside UnrGal
+  unramifiedOutside_eq_iSup_subtype)
+
+/-- **`K` itself is unramified outside every `S`** (`PROVED`): `𝓞_K → 𝓞_⊥` is surjective, hence
+formally unramified. -/
+theorem isUnramifiedOutside_bot (K : Type) [Field K] [NumberField K]
+    (S : Set (HeightOneSpectrum (𝓞 K))) :
+    IsUnramifiedOutside K S (⊥ : IntermediateField K (AlgebraicClosure K)) := by
+  rw [RankCounts.KummerS.isUnramifiedOutside_iff]
+  intro v _
+  have hsurj : Function.Surjective
+      (Algebra.ofId (𝓞 K) (𝓞 (⊥ : IntermediateField K (AlgebraicClosure K)))) := by
+    intro x
+    obtain ⟨k, hk⟩ := IntermediateField.mem_bot.1 (x : (⊥ : IntermediateField K
+      (AlgebraicClosure K))).2
+    have hk' : algebraMap K (⊥ : IntermediateField K (AlgebraicClosure K)) k = x := by
+      apply Subtype.ext
+      exact hk
+    have hint : IsIntegral ℤ k := by
+      have hx : IsIntegral ℤ (x : (⊥ : IntermediateField K (AlgebraicClosure K))) := x.2
+      rw [← hk'] at hx
+      exact (isIntegral_algHom_iff ((Algebra.ofId K _).restrictScalars ℤ)
+        (algebraMap K _).injective).1 hx
+    refine ⟨⟨k, hint⟩, ?_⟩
+    apply RingOfIntegers.ext
+    exact hk'
+  have : Algebra.FormallyUnramified (𝓞 K) (𝓞 (⊥ : IntermediateField K (AlgebraicClosure K))) :=
+    Algebra.FormallyUnramified.of_surjective _ hsurj
+  intro P _ _
+  infer_instance
+
+/-- **(ii) The compositum of two finite normal subextensions unramified outside `S` is unramified
+outside `S`** (classical: the inertia group of a prime of `L₁ L₂` restricts into the trivial
+inertia groups of `L₁` and `L₂`, and `Gal(L₁ L₂/K) → Gal(L₁/K) × Gal(L₂/K)` is injective; Tau Ceti
+has `Ideal.isUnramifiedAt_iff_inertia_eq_bot`). Stated, not proved. -/
+def UnramifiedOutsideSup : Prop :=
+  ∀ (K : Type) [Field K] [NumberField K] (S : Set (HeightOneSpectrum (𝓞 K)))
+    (L₁ L₂ : IntermediateField K (AlgebraicClosure K)),
+    UnrGal K S L₁ → UnrGal K S L₂ → IsUnramifiedOutside K S (L₁ ⊔ L₂)
+
+/-- **(b2) from (ii)** (`PROVED` from `UnramifiedOutsideSup`): the finite normal subextensions
+unramified outside `S` form a directed family (by (ii)), containing `⊥`
+(`isUnramifiedOutside_bot`), so every element of their supremum `K_S` lies in one of them. -/
+theorem finiteUnramifiedSupport_of_sup (h : UnramifiedOutsideSup) : FiniteUnramifiedSupport := by
+  intro K _ _ S x
+  have hne : Nonempty {L : IntermediateField K (AlgebraicClosure K) // UnrGal K S L} :=
+    ⟨⟨⊥, inferInstance, inferInstance, isUnramifiedOutside_bot K S⟩⟩
+  have hdir : Directed (· ≤ ·) (fun L : {L : IntermediateField K (AlgebraicClosure K) //
+      UnrGal K S L} => (L : IntermediateField K (AlgebraicClosure K))) := by
+    intro L₁ L₂
+    have h₁ := L₁.2
+    have h₂ := L₂.2
+    have : FiniteDimensional K (L₁ : IntermediateField K (AlgebraicClosure K)) := h₁.1
+    have : FiniteDimensional K (L₂ : IntermediateField K (AlgebraicClosure K)) := h₂.1
+    have : Normal K (L₁ : IntermediateField K (AlgebraicClosure K)) := h₁.2.1
+    have : Normal K (L₂ : IntermediateField K (AlgebraicClosure K)) := h₂.2.1
+    refine ⟨⟨L₁.1 ⊔ L₂.1, inferInstance, inferInstance, h K S L₁.1 L₂.1 h₁ h₂⟩, le_sup_left,
+      le_sup_right⟩
+  have key : ∀ y : AlgebraicClosure K, y ∈ unramifiedOutside K S →
+      ∃ L : IntermediateField K (AlgebraicClosure K), FiniteDimensional K L ∧
+        IsUnramifiedOutside K S L ∧ y ∈ L := by
+    intro y hy
+    rw [unramifiedOutside_eq_iSup_subtype, ← SetLike.mem_coe,
+      IntermediateField.coe_iSup_of_directed hdir, Set.mem_iUnion] at hy
+    obtain ⟨L, hL⟩ := hy
+    exact ⟨L.1, L.2.1, L.2.2.2, hL⟩
+  exact key _ x.2
+
+/-- **`h2` from full `2`-power torsion and (ii)** (`PROVED` from `UnramifiedOutsideSup`). -/
+theorem h2_of_hasFullTwoTorsion_of_sup (h : UnramifiedOutsideSup)
+    {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
+    (W : WeierstrassCurve K) [W.IsElliptic]
+    [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] :
+    ∀ v : HeightOneSpectrum (𝓞 K), (2 : 𝓞 K) ∈ v.asIdeal → v ∈ S :=
+  h2_of_hasFullTwoTorsion_of_finiteUnramifiedSupport (finiteUnramifiedSupport_of_sup h) W
+
+end Compositum
 
 end ZInQ.Contrib.CloudB3RC53.Finiteness
