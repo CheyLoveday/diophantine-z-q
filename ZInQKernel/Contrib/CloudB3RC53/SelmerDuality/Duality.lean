@@ -376,7 +376,9 @@ structure PerfectCoefficientPairing (S : Type u) [CommRing S] where
 
 /-- The scope in which the termwise dual `Hom_S(C, S)` (`dualCx`) computes `RHom_S(C, S)`: `S` is
 self-injective (as the coefficient rings `A_i` are, `acoef_selfInjective`), or `C` is bounded
-with finitely generated projective terms. -/
+with finitely generated projective terms. In the self-injective case the defining property of an
+`RHom` model — the termwise dual carries quasi-isomorphisms to quasi-isomorphisms — is proved in
+`DualQuasiIso.lean` (`dualHom_quasiIso`). -/
 def TermwiseDualComputesRHom (S : Type u) [CommRing S] (C : GCx S) : Prop :=
   Module.Injective S S ∨
     ∃ a b : ℤ, (∀ n, n < a ∨ b < n → Subsingleton (C.X n)) ∧
