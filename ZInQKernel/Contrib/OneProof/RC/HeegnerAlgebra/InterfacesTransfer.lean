@@ -24,26 +24,60 @@ section Shapiro
 variable {G : Type*} [Group G] (H : Subgroup G) [H.Normal] [Fintype (G ⧸ H)]
 variable {A M : Type*} [CommRing A] [AddCommGroup M] [Module A M]
 
+/-- The `1`-cocycles of `H` with values in `M` (action `ρ`): `b(xy) = b(x) + x b(y)`. -/
+def cocyclesH (ρ : G →* Module.End A M) : AddSubgroup (H → M) where
+  carrier := {b | ∀ x y : H, b (x * y) = b x + ρ x (b y)}
+  zero_mem' := by intro x y; simp
+  add_mem' {b b'} hb hb' x y := by
+    simp only [Pi.add_apply, hb x y, hb' x y, map_add]; abel
+  neg_mem' {b} hb x y := by
+    simp only [Pi.neg_apply, hb x y, map_neg]; abel
+
+/-- The `1`-cocycles of `G` with values in `M(θ)` (action `R = θ ρ`): `c(gk) = c(g) + R(g) c(k)`. -/
+def cocyclesG (ρ : G →* Module.End A M) (θ : G ⧸ H →* Aˣ) : AddSubgroup (G → M) where
+  carrier := {c | ∀ g k : G, c (g * k) = c g + Rtw H ρ θ g (c k)}
+  zero_mem' := by intro g k; simp
+  add_mem' {c c'} hc hc' g k := by
+    simp only [Pi.add_apply, hc g k, hc' g k, map_add]; abel
+  neg_mem' {c} hc g k := by
+    simp only [Pi.neg_apply, hc g k, map_neg]; abel
+
+omit [Fintype (G ⧸ H)] in
+/-- Coboundaries `g ↦ R(g) w - w` are cocycles. -/
+theorem coboundary_mem_cocyclesG (ρ : G →* Module.End A M) (θ : G ⧸ H →* Aˣ) (w : M) :
+    (fun g => Rtw H ρ θ g w - w) ∈ cocyclesG H ρ θ := by
+  intro g k
+  simp only [Rtw_mul, Module.End.mul_apply, map_sub]
+  abel
+
+/-- The transfer (H21) of a cocycle is a cocycle (`H21_cocycle`). -/
+theorem T1_mem_cocyclesG (ρ : G →* Module.End A M) (θ : G ⧸ H →* Aˣ) (r : G ⧸ H → G)
+    (hr : ∀ δ, (QuotientGroup.mk (r δ) : G ⧸ H) = δ) (b : H → M) (hb : b ∈ cocyclesH H ρ) :
+    T1 H ρ θ r hr b ∈ cocyclesG H ρ θ :=
+  fun g k => H21_cocycle H ρ θ r hr b hb g k
+
 /-- `PRINT` (Nekovář, *Selmer complexes*, Astérisque 310, Sections 8.1.1–8.1.6, pp. 189–194,
 read and confirmed; Nekovář writes the corestriction on cochains with right cosets `U\G`, the
-manuscript with the mirror left-coset convention, as it says), tex 3202–3249.  `G = G_K`, `H = G_{H_f}` (normal, `Δ_f = G/H`),
-`M = E[2^m] ⊗ A` with the Tate action `ρ`, `θ` a character of `Δ_f`.  `clsH` and `clsG` send
-1-cocycles of `H` (coefficients `M`) and of `G` (coefficients `M(θ)`, action `R = θ ρ`) to their
-classes in abstract groups `H1H = H¹(H_f, M)` and `H1G = H¹(K, M(θ))`; `clsG` is additive and
-kills coboundaries; `shapiro` is Shapiro's isomorphism followed by the coefficient map (H20).  The
-printed input: for one chosen section `r₀`, the explicit transfer (H21) of a cocycle represents
-`shapiro` of its class. -/
+manuscript with the mirror left-coset convention, as it says), tex 3202–3249.  `G = G_K`,
+`H = G_{H_f}` (normal, `Δ_f = G/H`), `M = E[2^m] ⊗ A` with the Tate action `ρ`, `θ` a character of
+`Δ_f`.  `clsH` and `clsG` send `1`-cocycles of `H` (coefficients `M`) and of `G` (coefficients
+`M(θ)`, action `R = θ ρ`) to their classes in abstract groups `H1H = H¹(H_f, M)` and
+`H1G = H¹(K, M(θ))`; `clsG` is additive (on cocycles) and kills coboundaries; `shapiro` is
+Shapiro's isomorphism followed by the coefficient map (H20).  The printed input: for one chosen
+section `r₀`, the explicit transfer (H21) of a cocycle represents `shapiro` of its class.  The
+class maps are defined on cocycles only, so that genuine `H¹ = Z¹/B¹` can be used (this input is
+constructed from the explicit Shapiro map in
+`ZInQKernel/Contrib/CloudB3RC53/HeegnerCohomology/ShapiroInput.lean`). -/
 structure ShapiroTransferInput (ρ : G →* Module.End A M) (θ : G ⧸ H →* Aˣ) (H1H H1G : Type*)
     [AddCommGroup H1H] [AddCommGroup H1G] where
-  clsH : (H → M) → H1H
-  clsG : (G → M) → H1G
+  clsH : cocyclesH H ρ → H1H
+  clsG : cocyclesG H ρ θ →+ H1G
   shapiro : H1H →+ H1G
-  clsG_add : ∀ c c' : G → M, clsG (c + c') = clsG c + clsG c'
-  clsG_cob : ∀ w : M, clsG (fun g => Rtw H ρ θ g w - w) = 0
+  clsG_cob : ∀ w : M, clsG ⟨_, coboundary_mem_cocyclesG H ρ θ w⟩ = 0
   r₀ : G ⧸ H → G
   hr₀ : ∀ δ, (QuotientGroup.mk (r₀ δ) : G ⧸ H) = δ
-  computes : ∀ b : H → M, (∀ x y : H, b (x * y) = b x + ρ x (b y)) →
-    clsG (T1 H ρ θ r₀ hr₀ b) = shapiro (clsH b)
+  computes : ∀ b : cocyclesH H ρ,
+    clsG ⟨T1 H ρ θ r₀ hr₀ b, T1_mem_cocyclesG H ρ θ r₀ hr₀ b b.2⟩ = shapiro (clsH b)
 
 /-- tex 3247–3249, `PROVED` from `ShapiroTransferInput` and `T1_change_section`: the explicit
 transfer computes the same class for every choice of sections (the integral homotopy of
@@ -51,13 +85,14 @@ Nekovář 8.1.4 in degree one); no averaging factor occurs in (H21). -/
 theorem ShapiroTransferInput.computes_any {ρ : G →* Module.End A M} {θ : G ⧸ H →* Aˣ}
     {H1H H1G : Type*} [AddCommGroup H1H] [AddCommGroup H1G]
     (S : ShapiroTransferInput H ρ θ H1H H1G) (r : G ⧸ H → G)
-    (hr : ∀ δ, (QuotientGroup.mk (r δ) : G ⧸ H) = δ) (b : H → M)
-    (hb : ∀ x y : H, b (x * y) = b x + ρ x (b y)) :
-    S.clsG (T1 H ρ θ r hr b) = S.shapiro (S.clsH b) := by
-  obtain ⟨w, hw⟩ := T1_change_section H ρ θ S.r₀ S.hr₀ r hr b hb
-  have : T1 H ρ θ r hr b = T1 H ρ θ S.r₀ S.hr₀ b + (fun g => Rtw H ρ θ g w - w) := by
-    funext g; rw [hw g]; rfl
-  rw [this, S.clsG_add, S.clsG_cob, add_zero, S.computes b hb]
+    (hr : ∀ δ, (QuotientGroup.mk (r δ) : G ⧸ H) = δ) (b : cocyclesH H ρ) :
+    S.clsG ⟨T1 H ρ θ r hr b, T1_mem_cocyclesG H ρ θ r hr b b.2⟩ = S.shapiro (S.clsH b) := by
+  obtain ⟨w, hw⟩ := T1_change_section H ρ θ S.r₀ S.hr₀ r hr b b.2
+  have : (⟨T1 H ρ θ r hr b, T1_mem_cocyclesG H ρ θ r hr b b.2⟩ : cocyclesG H ρ θ) =
+      ⟨T1 H ρ θ S.r₀ S.hr₀ b, T1_mem_cocyclesG H ρ θ S.r₀ S.hr₀ b b.2⟩ +
+        ⟨_, coboundary_mem_cocyclesG H ρ θ w⟩ := by
+    apply Subtype.ext; funext g; exact hw g
+  rw [this, map_add, S.clsG_cob, add_zero, S.computes b]
 
 end Shapiro
 
