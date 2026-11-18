@@ -7,7 +7,8 @@ import ZInQKernel.Contrib.OneProof.RC.CoefModules.NonVacuity
 # The finite levels `M_i` of `𝕋 = T_2E ⊗ Λ(α)`
 
 Lane RC28 (coefficient modules), round 2. Manuscript `diophantine_zq.tex`, tex 2780–2785 (the
-reductions `M_i` of `(T_2E ⊗ Λ)(α)`) and tex 2786–2791 (`Ψ_i = (1+t)^{ξ_i}`, `α_i = χ_h Ψ_i`).
+finite levels of `(T_2E ⊗ Λ)(α)` for one supplied character; see the paragraph below) and tex
+2786–2791 (`Ψ_i = (1+t)^{ξ_i}`, `α_i = χ_h Ψ_i`).
 
 * F1. `lamToAcoef i : Λ → A_i = (ℤ/2^i)[t]/(t^i)`, surjective, with kernel `(2^i, t^i)`.
 * F2. `lamToAcoef_onePlusTPow`: `(1+t)^a ↦ (1+t)^(a mod 2^(2i))`; `units_map_lambdaChar`:
@@ -18,6 +19,14 @@ reductions `M_i` of `(T_2E ⊗ Λ)(α)`) and tex 2786–2791 (`Ψ_i = (1+t)^{ξ_
 * F4. Non-vacuity.
 
 Kinds: definitions and PROVED.
+-/
+
+/-!
+This is a conditional construction for one supplied continuous Λ-valued character on a fixed
+G_{K,S}. Its finite levels are the compatible reductions of that character. The manuscript's
+moving characters have conductor primes varying with precision and need not be reductions of
+one character (tex 2737–2741, 4269–4277). No identification with the retained inner-limit Selmer
+diagrams is proved here.
 -/
 
 noncomputable section
@@ -69,7 +78,7 @@ theorem truncQuot_coe (R : Type*) [CommRing R] (n : ℕ) (p : Polynomial R) :
   rw [Polynomial.coeff_coe, sub_self]
 
 /-- **F1: `Λ → A_i`**: coefficients mod `2^i`, then mod `t^i`. Kind: definition. Locator:
-`diophantine_zq.tex`, tex 2780–2785 (the reductions `M_i`). -/
+`diophantine_zq.tex`, tex 2780–2785 (the finite levels of one supplied character). -/
 def lamToAcoef (i : ℕ) : Lambda →+* Acoef i :=
   (truncQuot (ZMod (2 ^ i)) i).comp (PowerSeries.map (PadicInt.toZModPow i))
 

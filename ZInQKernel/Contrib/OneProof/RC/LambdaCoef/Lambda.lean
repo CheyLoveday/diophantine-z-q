@@ -8,8 +8,9 @@ import Mathlib.NumberTheory.Padics.MahlerBasis
 /-!
 # Lane RC28 round 2, part 2: `Λ = ℤ₂[[t]]`, its topology, and the `Λ`-adic character `α = χ_h Ψ`
 
-Manuscript `diophantine_zq.tex` (11/5), tex 2780–2795 (the moving character `Ψ = (1+t)^ξ` of the
-ring-class `ℤ₂`-extension, `α = χ_h Ψ`) and tex 4976–5200 (`R = Λ_𝔭`).
+Manuscript `diophantine_zq.tex` (11/5), tex 2780–2795 (the moving character `Ψ = (1+t)^ξ`, here for
+a supplied continuous `ℤ₂`-valued character `ξ`, no ring-class tower is supplied here; `α = χ_h Ψ`)
+and tex 4976–5200 (`R = Λ_𝔭`).
 
 * `Λ = Lambda = ℤ_[2]⟦t⟧` (the tree's `ZInQ.Manuscript.RC.Uniform.Lambda`) with the product
   topology on coefficients (Mathlib's `PowerSeries.WithPiTopology`; it is the `(2, t)`-adic topology),
@@ -22,6 +23,14 @@ ring-class `ℤ₂`-extension, `α = χ_h Ψ`) and tex 4976–5200 (`R = Λ_𝔭
   `χ = χ_h` the quadratic character of lane RC28 round 1; `continuous_lambdaChar`.
 
 Kinds: definitions and PROVED.
+-/
+
+/-!
+This is a conditional construction for one supplied continuous Λ-valued character on a fixed
+G_{K,S}. Its finite levels are the compatible reductions of that character. The manuscript's
+moving characters have conductor primes varying with precision and need not be reductions of
+one character (tex 2737–2741, 4269–4277). No identification with the retained inner-limit Selmer
+diagrams is proved here.
 -/
 
 noncomputable section
@@ -82,7 +91,7 @@ theorem coe_onePlusTPowHom (a : Multiplicative ℤ_[2]) :
 variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
 
 /-- **The moving character `Ψ = (1 + t)^ξ`** (tex 2786–2791) of a character `ξ : G_{K,S} → ℤ₂`
-(the ring-class `ℤ₂`-extension). -/
+(a supplied continuous `ℤ₂`-valued character; no ring-class tower is supplied here). -/
 def movingChar (ξ : GKS K S →* Multiplicative ℤ_[2]) : GKS K S →* Lambdaˣ :=
   onePlusTPowHom.comp ξ
 
