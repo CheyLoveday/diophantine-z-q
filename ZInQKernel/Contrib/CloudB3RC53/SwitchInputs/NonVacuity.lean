@@ -21,7 +21,7 @@ Examples (all PROVED):
   a stage of fiber dimension one (the switch fields genuinely exercised);
 * `exOuterSwitchData`: an `OuterSwitchData` with a stage of outer dimension three switching to one
   of outer dimension one (inner coordinates `1`, switch coordinates of valuation zero);
-* `exModelStage`, `exOuterOfModels`: a `ModelStage` (with `hgood`) over `ℤ₂ ⊂ ℚ₂` and the
+* `exModelStage`, `exOuterOfModels`: a `ModelStage` over `ℤ₂ ⊂ ℚ₂` and the
   `OuterSwitchData.ofModels` built from it (its `minor_link` proved from the outer model);
 * `exGaloisCocycleInvolution`: `GaloisCocycleInvolution` for `Γ = ℤ/2`, `Δ = 1`, the sign character,
   `K` concentrated in degree one, `σ = −1` and a nonzero localization (`exGalLoc_ne_zero`);
@@ -487,14 +487,14 @@ theorem exOuter_switches (𝒰 : Ultrafilter ℕ) : 1 < ((exOuterSwitchData 𝒰
   change 1 < exOuterStage3.outerDim
   rw [exOuterStage3_outerDim]; norm_num
 
-/-! ### An outer model stage (`ModelStage`, with `hgood`) -/
+/-! ### An outer model stage (`ModelStage`) -/
 
 section ModelExample
 
 open ZInQ.Manuscript.RC.Limits
 
 /-- **A `ModelStage`** over `R = ℤ₂`, `ϖ = 2`, `K = ℚ₂`: inner models `[ℤ₂ --0--> ℤ₂]`, outer kernel
-vector `1`, cycle, functional and complement `1`; `hgood` holds (the only minors are empty). -/
+vector `1`, cycle, functional and complement `1`. -/
 noncomputable def exModelStage (𝒰 : Ultrafilter ℕ) : ModelStage 𝒰 (2 : ℤ_[2]) ℚ_[2] where
   n := 0
   M := fun _ => 0
@@ -513,7 +513,6 @@ noncomputable def exModelStage (𝒰 : Ultrafilter ℕ) : ModelStage 𝒰 (2 : �
   hden := fun _ => by
     simp only [detCols, colsMat, colsDWY]
     rw [Matrix.det_fin_one]; simp [Fin.snoc]
-  hgood := fun _ _ _ _ => by rw [Matrix.det_isEmpty]; exact one_ne_zero
 
 theorem exModelStage_outerDim (𝒰 : Ultrafilter ℕ) : (exModelStage 𝒰).toOuterStage.outerDim = 1 := by
   have h0 : ((exModelStage 𝒰).toOuterStage.Dout).mulVecLin = 0 := by

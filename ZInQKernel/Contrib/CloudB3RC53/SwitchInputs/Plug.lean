@@ -32,9 +32,8 @@ produces those inputs from the Selmer-level results of `SwitchInputs`:
 * `ModelStage`, `ModelStage.toOuterStage`, `ModelStage.minorLink`, `OuterSwitchData.ofModels`
   (tex L4706–4714, L4957–4959): outer stages built from the genuine outer model (the entrywise image
   of the inner integral models in `Frac 𝒪_∞`, RC6), whose `minor_link` field is PROVED (from
-  `OuterMinors`) for families in which every non-infinitesimal inner minor is nonzero at every
-  instance (`hgood`; any family becomes one after restriction to an outer-large set,
-  `MinorLinkRestricted`).
+  `OuterMinors`) in its round-3 shape: the inner minors at the position of a nonzero outer minor are
+  integral, not negligible, and nonzero on an outer-large set.
 -/
 
 noncomputable section
@@ -561,9 +560,8 @@ variable {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] {ϖ : 
 /-- **An outer stage built from integral inner models** (tex L4706–4714, L4927–4940): the inner
 models `M j` over `R`, the outer model their entrywise image in `Frac 𝒪_∞` (RC6 `outerMatrix`),
 a nonzero outer kernel vector, inner cycles, closed functionals and admissible complements over
-`K`, and the good-family condition `hgood` (every inner minor sequence that is not infinitesimal is
-nonzero at every instance; any family satisfies it after restriction to an outer-large set,
-`MinorLinkRestricted`). -/
+`K`. (No good-family condition is needed: since round 3 the `minor_link` field asks the inner minors
+to be nonzero only on an outer-large set, which is what the genuine outer model gives.) -/
 structure ModelStage (ϖ : R) (K : Type) [Field K] [Algebra R K] where
   n : ℕ
   M : J → Matrix (Fin (n + 1)) (Fin (n + 1)) R
@@ -577,9 +575,6 @@ structure ModelStage (ϖ : R) (K : Type) [Field K] [Algebra R K] where
   hz : ∀ j, (M j).map (algebraMap R K) *ᵥ z j = 0
   hlam : ∀ j, lam j ᵥ* (M j).map (algebraMap R K) = 0
   hden : ∀ j, detCols (colsDWY ((M j).map (algebraMap R K)) (w j) (y j)) ≠ 0
-  hgood : ∀ k0 j0 : Fin (n + 1),
-    (fun j => ((M j).submatrix k0.succAbove j0.succAbove).det) ∉ infinitesimals 𝒰 ϖ →
-      ∀ j, ((M j).submatrix k0.succAbove j0.succAbove).det ≠ 0
 
 variable {𝒰}
 
@@ -605,28 +600,26 @@ theorem ModelStage.minorLink_core (hinj : Function.Injective (algebraMap R K))
     (h : (((outerMatrix 𝒰 ϖ X.M).map (algebraMap (OInf 𝒰 ϖ) (FractionRing (OInf 𝒰 ϖ)))).submatrix
       k0.succAbove j0.succAbove).det ≠ 0) :
     ∃ (k1 j1 : Fin (X.n + 1)),
-      (∀ j, (((X.M j).map (algebraMap R K)).submatrix k1.succAbove j1.succAbove).det ≠ 0) ∧
+      (∀ᶠ j in (𝒰 : Filter J),
+        (((X.M j).map (algebraMap R K)).submatrix k1.succAbove j1.succAbove).det ≠ 0) ∧
       (∀ᶠ j in (𝒰 : Filter J),
         (0 : WithTop ℤ) ≤ v ((((X.M j).map (algebraMap R K)).submatrix k1.succAbove
           j1.succAbove).det)) ∧
       ¬ OuterNegligible v 𝒰
         (fun j => (((X.M j).map (algebraMap R K)).submatrix k1.succAbove j1.succAbove).det) := by
-  obtain ⟨-, hint, hneg⟩ := minorLinkEventually_proof 𝒰 v (ϖ := ϖ) (K := K) X.n X.M hinj hv k0 j0 h
-  refine ⟨k0, j0, fun j => ?_, Eventually.of_forall hint, hneg⟩
-  have hx := (outerMinor_ne_zero_iff 𝒰 X.M k0.succAbove j0.succAbove).mp h
-  rw [minor_map]
-  intro h0
-  exact X.hgood k0 j0 hx j (hinj (by rw [h0, map_zero]))
+  obtain ⟨hne, hint, hneg⟩ :=
+    minorLinkEventually_proof 𝒰 v (ϖ := ϖ) (K := K) X.n X.M hinj hv k0 j0 h
+  exact ⟨k0, j0, hne, Eventually.of_forall hint, hneg⟩
 
 /-- **The `minor_link` field for a model stage** (tex L4706–4714, L4957–4959): a nonzero maximal minor
-of the outer model gives the inner minors at the same position, nonzero at every instance (`hgood`),
+of the outer model gives the inner minors at the same position, nonzero on an outer-large set,
 integral, and not outer-negligible — exactly the `minor_link` clause of `OuterSwitchData`.
 PROVED (from `OuterMinors`). -/
 theorem ModelStage.minorLink (hinj : Function.Injective (algebraMap R K)) (hv : IsPiAdicOn ϖ v)
     (X : ModelStage 𝒰 ϖ K) (k0 j0 : Fin (X.toOuterStage.m + 1))
     (h : (X.toOuterStage.Dout.submatrix k0.succAbove j0.succAbove).det ≠ 0) :
     ∃ (k1 j1 : Fin (X.toOuterStage.n + 1)),
-      (∀ j, ((X.toOuterStage.D j).submatrix k1.succAbove j1.succAbove).det ≠ 0) ∧
+      (∀ᶠ j in (𝒰 : Filter J), ((X.toOuterStage.D j).submatrix k1.succAbove j1.succAbove).det ≠ 0) ∧
       (∀ᶠ j in (𝒰 : Filter J),
         (0 : WithTop ℤ) ≤ v (((X.toOuterStage.D j).submatrix k1.succAbove j1.succAbove).det)) ∧
       ¬ OuterNegligible v 𝒰 (fun j => ((X.toOuterStage.D j).submatrix k1.succAbove j1.succAbove).det) :=
