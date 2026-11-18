@@ -288,6 +288,29 @@ theorem central_of_full (D : BlockComplex Lam) (s : (i : ℕ) → Fin (D.mi i) �
   | 2 => exact Matrix.ext fun j k => congrArg (fun N => N j (Sum.inr (Sum.inr k))) h2
   | _ + 3 => exact Matrix.ext fun j => j.elim0
 
+/-! ### The support change at several unramified new places -/
+
+/-- **The support change at a family of unramified new places** (tex L3480–3489, the family form of
+lane SelmerDuality's `SupportChangeUnramified`): the old local complexes and conditions are
+retained as direct summands, and their complements are the full local complexes `L_q` and the
+unramified local conditions `U_q` of the new places `q`: degreewise exact
+`0 → L --λ--> L⁺ --(p_{L,q})_q--> ∏_q L_q → 0` and `0 → U --μ--> U⁺ --(p_{U,q})_q--> ∏_q U_q → 0`,
+compatible with `ι⁺` and the `ι_q`. -/
+structure SupportChangeFamily {S : Type} [CommRing S] (T : SelmerDuality.SupportChangeData S)
+    {Qn : Type} (P : Qn → SelmerDuality.UnramifiedNewPlace S) where
+  /-- projections of the new local complexes onto the new places -/
+  pL : ∀ q, GHom T.Dp.L (P q).Lq
+  /-- projections of the new local conditions onto the new places -/
+  pU : ∀ q, GHom T.Dp.U (P q).Uq
+  lam_retract : ∀ i, ∃ ρ : T.Dp.L.X i →ₗ[S] T.D.L.X i, ∀ x, ρ (T.lam.f i i rfl x) = x
+  mu_retract : ∀ i, ∃ ρ : T.Dp.U.X i →ₗ[S] T.D.U.X i, ∀ x, ρ (T.mu.f i i rfl x) = x
+  pL_surj : ∀ i (z : ∀ q, (P q).Lq.X i), ∃ y, ∀ q, (pL q).f i i rfl y = z q
+  pU_surj : ∀ i (z : ∀ q, (P q).Uq.X i), ∃ v, ∀ q, (pU q).f i i rfl v = z q
+  L_exact : ∀ i (y : T.Dp.L.X i), (∀ q, (pL q).f i i rfl y = 0) ↔ ∃ x, T.lam.f i i rfl x = y
+  U_exact : ∀ i (v : T.Dp.U.X i), (∀ q, (pU q).f i i rfl v = 0) ↔ ∃ u, T.mu.f i i rfl u = v
+  ι_compat : ∀ q i (v : T.Dp.U.X i),
+    (pL q).f i i rfl (T.Dp.ι.f i i rfl v) = (P q).ιq.f i i rfl ((pU q).f i i rfl v)
+
 /-! ### The new-local model -/
 
 /-- **The identification of the remaining complex** (GLUE, second version; see the module
@@ -353,6 +376,9 @@ structure Identification2 (b : ℕ) (dK hK cE tK : ℕ) where
   qis : QuasiIso ψ
   /-- the support change at augmentation (5.6) -/
   sc : SelmerDuality.SupportChangeData Lam
+  /-- its new local complexes and conditions are those of the new places `NP q`: the actual
+  tame local complexes and unramified local conditions (tex L3470–3489) -/
+  scU : SupportChangeFamily sc NP
   /-- the augmented `C` models the new-support Selmer complex -/
   ψ0 : (C.map (augR b)).toGCx.toCC ⟶ (selCx sc.Dp).toCC
   qis0 : QuasiIso ψ0

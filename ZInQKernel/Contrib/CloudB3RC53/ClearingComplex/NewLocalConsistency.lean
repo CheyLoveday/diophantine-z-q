@@ -4,8 +4,8 @@ import ZInQKernel.Contrib.CloudB3RC53.ClearingComplex.NewLocalModel
 # Consistency of the second identification (nonempty new-local family)
 
 The GLUE input `Identification2 b dK hK cE tK` is used as a hypothesis (`clearingModel_of_km`).
-This file checks that its fields are jointly satisfiable with a NONEMPTY family of new places
-(`identification2_example`, PROVED): one new place with coefficient module `Λ`, Frobenius `1 + t`
+This file provides the building blocks of the consistency witness `identification2_example`
+(`PlaceSupport.lean`, PROVED), which has a NONEMPTY family of new places: one new place with coefficient module `Λ`, Frobenius `1 + t`
 (the graph-wide prescription "scalar `1 + t`", tex 5241–5243) and `q = 1`, built as a genuine
 `UnramifiedNewPlace` (`tamePlace`: the tame model `M --(Φ−1, 0)--> M ⊕ M --(0, Φ−q)--> M` and the
 unramified condition `[Φ − 1]`); its local block is `Φ − q = t`, with `det = t¹ · 1 + 2 · 0`
@@ -346,40 +346,5 @@ theorem central_fullEx :
   · ext (i | i | i) (j | j | j)
     all_goals first | exact i.elim0 | exact j.elim0 | rfl
   · ext i j; exact i.elim0
-
-/-- **Consistency of the second identification with a nonempty new-local family** (PROVED). -/
-def identification2_example (b : ℕ) : Identification2 b 0 0 0 0 where
-  Qn := Unit
-  ιn := Unit
-  NP := fun _ => placeEx
-  bas := fun _ => Module.Basis.singleton Unit Lam
-  A := AEx
-  hA := hAEx
-  dq := fun _ => 1
-  hd := fun _ => by norm_num
-  v := fun _ => 1
-  w := fun _ => 0
-  hdet := hdetEx
-  C := preEx b
-  eN := Equiv.refl _
-  hB0 := hB0Ex
-  hT0 := hTEx
-  hY0 := hYEx
-  s := fun _ _ => 1
-  s_ne := fun _ _ => one_ne_zero
-  central_full := central_fullEx
-  budget := budgetInputs_of_empty _ rfl fun i => by rcases i with _ | _ | _ | i <;> rfl
-  sel := trivSelG _
-  ψ := (trivSelGIso _).hom
-  qis := trivSelG_qis _
-  sc := trivSupportChange _ _ (((preEx b).map (augR b)).oldIncl hYEx hTEx)
-  ψ0 := (trivSelGIso _).hom
-  qis0 := trivSelG_qis _
-  ψold := (trivSelGIso _).hom
-  qisOld := trivSelG_qis _
-  square := trivSupportChange_square _ _ _
-
-theorem identification2_nonempty (b : ℕ) : Nonempty (Identification2 b 0 0 0 0) :=
-  ⟨identification2_example b⟩
 
 end ZInQ.Contrib.CloudB3RC53.ClearingComplex
