@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.CloudB3RC53.CoordLink.OrigCoord
 /-!
 # E1a over the genuine identification `Identification2G`
 
-Manuscript `diophantine_zq.tex`, tex 4219–4222 (`ũ = η u_rel`), 3877–3892 and 5513–5516 (the
+Manuscript `diophantine_zq.tex`, tex 4219–4224 (`ũ = η u_rel`), 3877–3892 and 5513–5516 (the
 relaxed coordinate is the coordinate of the original complex), 5510–5512 (`κ = det B`).
 
 `CoordLink/E1a.lean` reduces E1a (`CoordLink`) to `CorrectedIsEta` and `RelIsKM`, but only for the
