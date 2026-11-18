@@ -15,3 +15,5 @@
   imports of the contribution do not require the wider class field application.
 - VERIFIED (Lean): `FowlerBridgesIdeals.lean` compiled, including Picard finiteness and positivity,
   fractional-ideal lattice rank two, and properness iff invertibility.
+- VERIFIED (Lean): `FowlerBridges.lean` compiled. `card_pic_eq_properClassNumber` identifies the finite
+  count, and `fowlerProp27_of_print` proves the live row from the one printed proposition.
