@@ -11,3 +11,13 @@
   `CMjDegreePrint` uses the lattice j-value, the actual primitive equation of a
   quadratic upper half-plane period, and Fowler's proper ideal class number.
   `modularJ_eq` validates the classical normalization.
+- VERIFIED (Lean): `CMjBridgesArithmetic.lean` and `CMjBridgesDiscriminant.lean` compiled
+  with `lake env lean`. Coefficient base change maps algebraic j; membership in the
+  image field gives the degree inequality. The proper ideal count identifies the Picard
+  cardinal. Primitive period coefficients compute the multiplier ring and its discriminant.
+- VERIFIED (Lean): `CMjBridgesPeriods.lean` compiled with `lake env lean`. The proved
+  torsion count, coordinate uniformization, GAGA for maps and rigidity supply the actual
+  complex base change and its period with discriminant `orderDisc R`.
+- VERIFIED (library interfaces): the point and scheme uniformization interfaces do not
+  produce a field of definition for the modular j of this period. Mathlib's coefficient
+  j-value requires a Weierstrass equation; no proved comparison for the scheme curve was found.
