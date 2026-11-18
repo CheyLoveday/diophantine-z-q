@@ -2,9 +2,9 @@ import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.DualityData
 import ZInQKernel.Contrib.CloudB3RC53.Duality.LocalKummer
 
 /-!
-# Duality area: the derived Kummer step (tex L3443–3450) for the truncated target
+# Duality area: the derived Kummer step (tex L3445–3451) for the truncated target
 
-Lemma `ex:arith-local-kummer`, tex L3443–3450: "The restricted cup map
+Lemma `ex:arith-local-kummer`, tex L3445–3451: "The restricted cup map
 `M[−1] ⊗^L M[−1] → ℤ₂[−2]` has homotopy class determined by `Hom(M ⊗ M, ℤ₂)`. Finite isotropy makes
 every value divisible by every power of two, hence zero. A projective resolution therefore supplies
 a null-homotopy. The possible ambiguity group in degree minus one vanishes."
@@ -133,7 +133,7 @@ theorem eq_zero_of_forall_two_pow_dvd (z : ℤ_[2]) (h : ∀ a : ℕ, (2 : ℤ_[
   rw [PadicInt.mem_span_pow_iff_le_valuation _ hne] at hd'
   omega
 
-/-- **The derived Kummer step for the truncated target** (tex L3443–3450; PROVED): if `e : T² → ℤ₂`
+/-- **The derived Kummer step for the truncated target** (tex L3445–3451; PROVED): if `e : T² → ℤ₂`
 is injective on degree-two cocycles and every value `e (P u v)` is divisible by every power of two
 (finite isotropy), the restricted pairing vanishes identically, and every family of degree `−1`
 vanishes (so the zero family is the unique null-homotopy). -/
