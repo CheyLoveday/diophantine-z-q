@@ -18,12 +18,16 @@ tied to the Kummer condition itself. Here, for RC29's actual Kummer condition `a
 * **`genCondDim2_oldKummer_actual`**: if the local integral model `C` at `v` is a model of the
   actual local twist (`C ×_{𝒪_v} K_v = E^{(h)} ×_K K_v`), then
   `|H⁰(U_v)| · |H¹(U_v)| = 2^(genCondDim2 K S v .oldKummer (kummerResidualDim v C))`, i.e. the
-  genuine table's old-Kummer row is the `𝔽₂`-dimension of the actual Kummer condition's
-  cohomology;
+  genuine table's old-Kummer row is the exponent of `2` in the order of the actual Kummer
+  condition's cohomology (`H⁰, H¹` are `𝔽₂`-vector spaces of these orders); the model
+  identification `hC` is an explicit hypothesis (the Mattuck lane's models `C` are arbitrary
+  integral models);
 * **`genCondDim2_oldKummer_actual_odd`**: at an odd place with full rational `2`-torsion of the
   twist, `|H⁰(U_v)| · |H¹(U_v)| = 2⁴ = 2^(LocalCondition.dim .oldKummer 0)` (Mattuck at odd
   places, no finiteness hypothesis);
 * `OldKummerActualOdd` (node, PROVED).
+
+Scope: level `i = 1` only (see part 2, `Actual.lean`).
 
 **Classification.** PROVED (from RC29's hypotheses of `actualKummerAt` and the model
 identification `hC`).
