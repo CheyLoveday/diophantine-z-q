@@ -26,9 +26,12 @@ isotropy homotopy:
 * `genuine_strictOrth`, `genuine_exists_residuePairing`: for the genuine switch, with any
   isotropy data and strict condition complexes vanishing in degree two, `StrictOrth` holds. The
   left-hand side of `hsw` is then a residue pairing `P(eR[g t], eR[g u])`.
-* Non-vacuity: `weil_cSymm` (the Weil pairing is `c`-symmetric with `c = −1`),
-  `exGenuineSwitch_US2`, `exIsotropy`, and `exGenuine_residuePairing` (all hypotheses at once on
-  the example switch).
+* Non-vacuity:
+  * `weil_cSymm`: the Weil pairing is `c`-symmetric with `c = −1`.
+  * `exGenuineSwitch_US2`, `exIsotropy`, `exGenuine_residuePairing`: all hypotheses at once on the
+    example switch with the trivial module.
+  * `exGenuineSwitchW`, `exIsotropyW`, `exGenuineW_residuePairing`: all hypotheses at once with
+    `𝔽₂²` coefficients and the nonzero alternating Weil pairing `e₂` (`weil_two_ne_zero`).
 
 ## Scope
 
@@ -253,7 +256,7 @@ degree two, the hypothesis `hUS2` of `genuine_strictOrth`. `PROVED`. -/
 theorem exGenuineSwitch_US2 {k : Type} [Field k] (K : Type) [Field K] [NumberField K]
     (q : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)) :
     ∀ v (x : ((exGenuineSwitch (k := k) K q).US v).X 2), x = 0 :=
-  fun _ x => Subsingleton.elim (α := PUnit) x 0
+  fun _ _ => rfl
 
 /-- Zero isotropy data for the example switch, with the zero pairing on the trivial module. -/
 def exIsotropy {k : Type} [Field k] (K : Type) [Field K] [NumberField K]
@@ -277,6 +280,75 @@ theorem exGenuine_residuePairing {k : Type} [Field k] (K : Type) [Field K] [Numb
   genuine_exists_residuePairing (exGenuineSwitch (k := k) K q) _ _ (1 : k) (fun _ _ => rfl)
     (exIsotropy K q) 0
     (fun _ => rfl) (exGenuineSwitch_US2 K q)
+
+/-- The `𝔽₂²` coefficient module with the trivial action. -/
+abbrev WMod (K : Type) [Field K] [NumberField K]
+    (q : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)) : Type :=
+  TrivMod (GKS K {q}) (Fin 2 → ZMod 2)
+
+/-- The `𝔽₂` target module with the trivial action. -/
+abbrev WTarget (K : Type) [Field K] [NumberField K]
+    (q : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)) : Type :=
+  TrivMod (GKS K {q}) (ZMod 2)
+
+/-- The Weil pairing `e₂` on `𝔽₂²`, as a pairing of trivial modules. -/
+def weilW (K : Type) [Field K] [NumberField K]
+    (q : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)) :
+    WMod K q →ₗ[ZMod 2] WMod K q →ₗ[ZMod 2] WTarget K q :=
+  ZInQ.Manuscript.RC.Uniform.weil (K := ZMod 2)
+
+/-- The example genuine switch with coefficients `𝔽₂²`: the same data as `exGenuineSwitch`. -/
+def exGenuineSwitchW (K : Type) [Field K] [NumberField K]
+    (q : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)) :
+    GenuineSwitch K {q} (ZMod 2) (WMod K q) where
+  ΔR := ⟨fun _ => constCx ((Fin 2 → ZMod 2) × (Fin 2 → ZMod 2)), fun _ => zeroGHom _ _⟩
+  US _ := ZInQ.Manuscript.RC.SelmerComplex.zeroCx (ZMod 2)
+  φ _ := zeroGHom _ _
+  W := constCx ((Fin 2 → ZMod 2) × (Fin 2 → ZMod 2))
+  g :=
+    { f := fun n m h => by
+        subst h
+        exact LinearMap.proj (R := ZMod 2)
+          (φ := fun _ : Places K {q} => ((Fin 2 → ZMod 2) × (Fin 2 → ZMod 2))) ⟨q, rfl⟩
+      comm := fun i i₁ j j₁ hij h₁ h₂ hj x => by
+        subst hij hj
+        rfl }
+  hfg _ _ := rfl
+  φ_inj _ _ _ _ := funext fun _ => rfl
+  g_surj _ y := ⟨fun _ => y, rfl⟩
+  ex n u hu := ⟨0, by
+    funext v
+    have hv : v = ⟨q, rfl⟩ := Subsingleton.elim _ _
+    subst hv
+    exact hu.symm⟩
+  eR := constCxH1 _
+
+/-- Zero isotropy data for the `𝔽₂²` example, with the Weil pairing. -/
+def exIsotropyW (K : Type) [Field K] [NumberField K]
+    (q : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)) :
+    GaloisIsotropyData K {q} (ZMod 2) (weilW K q) (fun _ _ _ => rfl)
+      (exGenuineSwitchW K q).ΔS (exGenuineSwitchW K q).ΔR where
+  h _ _ _ _ _ := 0
+  isotropy _ _ _ _ _ _ _ _ _ _ _ _ _ := by
+    simp only [LinearMap.zero_apply, map_zero, smul_zero, add_zero]
+    exact (map_zero _).symm
+
+/-- **End-to-end non-vacuity with the Weil pairing** (`PROVED`): all hypotheses of
+`genuine_exists_residuePairing` hold together for the `𝔽₂²` example with the nonzero alternating
+Weil pairing `e₂` (`c = −1`, `weil_cSymm`). -/
+theorem exGenuineW_residuePairing (K : Type) [Field K] [NumberField K]
+    (q : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)) :
+    ∃ P, ResiduePairing (exGenuineSwitchW K q).toQuasi (piCx (exGenuineSwitchW K q).US)
+      (piMap (exGenuineSwitchW K q).φ)
+      (galoisPairData K {q} (ZMod 2) _ _ _ _ (exIsotropyW K q)) 0 P :=
+  genuine_exists_residuePairing (exGenuineSwitchW K q) (weilW K q) (fun _ _ _ => rfl) (-1)
+    (fun x y => (weil_cSymm (k := ZMod 2) x y : _)) (exIsotropyW K q) 0 (fun _ => rfl)
+    (fun _ _ => rfl)
+
+/-- The Weil pairing of the example is nonzero. -/
+theorem weil_two_ne_zero :
+    ZInQ.Manuscript.RC.Uniform.weil (K := ZMod 2) (Pi.single 0 1) (Pi.single 1 1) = 1 := by
+  simp [ZInQ.Manuscript.RC.Uniform.weil_apply]
 
 end NonVacuity
 
