@@ -30,6 +30,12 @@ by place, in the shape of the support-change data (`SelmerDuality/SupportChange.
 Non-vacuity of the model itself (LESSON 2): `examplePlaceRetention`, over Selmer data with
 `ι_R = id` (so the functionals below are nonzero), one old place and the zero new place.
 
+Caveat: the new place `NP : UnramifiedNewPlace S` requires degreewise isomorphisms of the full local
+complex at `q` with the 3-term tame model `M → M ⊕ M → M`; genuine continuous cochains
+`C^•(G_{K_q}, M)` are only quasi-isomorphic to it (they are nonzero in every degree `≥ 0`), so this
+hypothesis is consistent (zero witnesses) but not instantiable by genuine continuous cochains;
+re-pointing to the genuine Galois support data is pending.
+
 **Classification.** PROVED.
 -/
 
@@ -45,7 +51,13 @@ variable {S : Type u} [CommRing S]
 
 /-- **Place-by-place retention data** for the primitive/relaxed and strict/orthogonal Selmer
 complexes (tex L4159–4166). `DR` is the relaxed data (condition `U_R`), `DPp` the orthogonal data
-(condition `U_{P⊥}`), `fP : U_P → U_R` and `fS : U_S → U_{P⊥}` the condition maps. -/
+(condition `U_{P⊥}`), `fP : U_P → U_R` and `fS : U_S → U_{P⊥}` the condition maps.
+
+Caveat: the field `NP : UnramifiedNewPlace S` requires degreewise isomorphisms of the full local
+complex at `q` with the 3-term tame model `M → M ⊕ M → M`; genuine continuous cochains
+`C^•(G_{K_q}, M)` are only quasi-isomorphic to it (they are nonzero in every degree `≥ 0`), so this
+hypothesis is consistent (zero witnesses) but not instantiable by genuine continuous cochains;
+re-pointing to the genuine Galois support data is pending. -/
 structure PlaceRetention (DR DPp : SelData S) {UP US : GCx S} (fP : GHom UP DR.U)
     (fS : GHom US DPp.U) where
   /-- Global target. -/

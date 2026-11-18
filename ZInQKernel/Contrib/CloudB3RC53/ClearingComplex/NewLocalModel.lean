@@ -52,7 +52,13 @@ Not derived (interface gaps, recorded as ELLIOT): the identification of the augm
 family Selmer data `sel` with `sc.Dp` needs a coefficient-change interface for `SelData` (none
 exists); the (5.7) lengths and ranks are assumed for the central complex, which is identified with
 the central fibre of the old complex (`CentralFibre.lean`) but not with `sc`'s cohomology.
-Consistency: `identification2_example` (`PlaceSupport.lean`), with one genuine new place.
+Consistency: `identification2_example` (`PlaceSupport.lean`), with one new place in the tame model.
+
+Caveat: `UnramifiedNewPlace` (hence `SupportChangeFamily` and `Identification2`) requires degreewise
+isomorphisms of the full local complex at `q` with the 3-term tame model `M → M ⊕ M → M`; genuine
+continuous cochains `C^•(G_{K_q}, M)` are only quasi-isomorphic to it (they are nonzero in every
+degree `≥ 0`), so these hypotheses are consistent (zero witnesses) but not instantiable by genuine
+continuous cochains; re-pointing to the genuine Galois support data is pending.
 -/
 
 noncomputable section
@@ -297,7 +303,13 @@ lane SelmerDuality's `SupportChangeUnramified`): the old local complexes and con
 retained as direct summands, and their complements are the full local complexes `L_q` and the
 unramified local conditions `U_q` of the new places `q`: degreewise exact
 `0 → L --λ--> L⁺ --(p_{L,q})_q--> ∏_q L_q → 0` and `0 → U --μ--> U⁺ --(p_{U,q})_q--> ∏_q U_q → 0`,
-compatible with `ι⁺` and the `ι_q`. -/
+compatible with `ι⁺` and the `ι_q`.
+
+Caveat: `UnramifiedNewPlace` requires degreewise isomorphisms of the full local complex at `q` with
+the 3-term tame model `M → M ⊕ M → M`; genuine continuous cochains `C^•(G_{K_q}, M)` are only
+quasi-isomorphic to it (they are nonzero in every degree `≥ 0`), so this hypothesis is consistent
+(zero witnesses) but not instantiable by genuine continuous cochains; re-pointing to the genuine
+Galois support data is pending. -/
 structure SupportChangeFamily {S : Type} [CommRing S] (T : SelmerDuality.SupportChangeData S)
     {Qn : Type} (P : Qn → SelmerDuality.UnramifiedNewPlace S) where
   /-- projections of the new local complexes onto the new places -/
@@ -319,7 +331,13 @@ structure SupportChangeFamily {S : Type} [CommRing S] (T : SelmerDuality.Support
 docstring): one pre-cancellation family model with a nonempty family of new places whose local
 blocks are the actual unramified local differentials `Φ_q − q`, the old part in central Smith form,
 the (5.7) counts at the free ranks `(0, 1, 1, 0)` of the block form, the family Selmer model and
-the support change at augmentation. -/
+the support change at augmentation.
+
+Caveat: its new places `NP : Qn → UnramifiedNewPlace Λ` require degreewise isomorphisms of the full
+local complex at `q` with the 3-term tame model `M → M ⊕ M → M`; genuine continuous cochains
+`C^•(G_{K_q}, M)` are only quasi-isomorphic to it (they are nonzero in every degree `≥ 0`), so these
+fields are consistent (zero witnesses) but not instantiable by genuine continuous cochains;
+re-pointing to the genuine Galois support data is pending. -/
 structure Identification2 (b : ℕ) (dK hK cE tK : ℕ) where
   /-- the new places and the index of a local block -/
   Qn : Type

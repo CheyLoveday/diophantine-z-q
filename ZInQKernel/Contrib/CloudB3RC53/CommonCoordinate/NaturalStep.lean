@@ -10,8 +10,10 @@ CommonCoordinate review items 4 and 8 (and v2 item 4): `ActualStep` (`Unit.lean`
 functional relation `w_R|old = e_q w_P` of the triangular model directly. Here it is constructed:
 
 * `SelmerFunctionals wR wP e_K`: the triangular-basis functionals are the paired functionals
-  `λ_R = tr(z_S ∪ ·)`, `λ_P = tr(z_{P⊥} ∪ ·)` of genuine retained Selmer data — a
-  `PlaceRetention` (`Retention.lean`: every old condition and homotopy retained, place by place),
+  `λ_R = tr(z_S ∪ ·)`, `λ_P = tr(z_{P⊥} ∪ ·)` of retained Selmer data — a
+  `PlaceRetention` (`Retention.lean`: every old condition and homotopy retained, place by place;
+  its new place is an `UnramifiedNewPlace`, not instantiable by genuine continuous cochains, and
+  re-pointing to the genuine Galois support data is pending),
   a trace killing coboundaries, the paired strict lift `j z_S = e z_{P⊥} + d b`, and model bases
   `φ_P` (cocycles of `C_P`) and `φ_R` of `C_R` whose old part is `i ∘ φ_P` — read in the coordinate
   ring through `ψ`, with `ψ(e) = e_q`.

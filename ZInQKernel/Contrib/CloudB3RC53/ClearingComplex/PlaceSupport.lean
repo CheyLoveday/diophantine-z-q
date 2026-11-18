@@ -414,7 +414,8 @@ theorem squareEx : (trivSelGIso (oldEx b).toGCx).hom ≫
 (PROVED): one unramified new place (tame model, `M = Λ`, `Φ = 1 + t`, `q = 1`) with local block
 `Φ − q = t`, whose new-support Selmer data carry the actual local complex and unramified condition
 of the place (`scUEx`), and the augmented pre-cancellation complex quasi-isomorphic to the
-new-support Selmer complex (`ψ0G_quasiIso`). -/
+new-support Selmer complex (`ψ0G_quasiIso`). The place is the 3-term tame model, not genuine
+continuous cochains (see the caveat on `Identification2`). -/
 def identification2_example (b : ℕ) : Identification2 b 0 0 0 0 where
   Qn := Unit
   ιn := Unit

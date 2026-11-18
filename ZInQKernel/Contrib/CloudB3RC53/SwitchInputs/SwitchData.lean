@@ -185,7 +185,11 @@ structure SingleModelStep {ι : A →+* F} (ρ : A →+* k) (S S' : TwoTermStage
 /-- **Height-one switching data from per-stage fiber models** (tex L4976–5195): the stages, an
 involution on each stage's fiber cohomology (the cohomology signs; only used when `quadratic`),
 the primitive vectors, and for each switch a step bundle (nonquadratic, mixed or single sign) with
-a coordinate step. The sign dimensions are the sign-part dimensions of the stage involutions. -/
+a coordinate step. The sign dimensions are the sign-part dimensions of the stage involutions.
+Caveat: the coordinate steps `CoordStep` are free inputs, and the stages are not tied to the genuine
+fibre models of the configuration (only the stage dimensions come from the step bundles); linking
+the stages to the genuine fibre models is pending (genuine switching data on the
+`rc53-switch-genuine` branch, not yet in the tree). -/
 structure SelmerModelSwitchData (ι : A →+* F) (ρ : A →+* k) where
   Stage : Type
   stage : Stage → TwoTermStage ι
