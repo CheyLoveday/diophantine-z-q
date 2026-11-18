@@ -10,6 +10,12 @@ genuine Galois objects of lane RC24: the group `G_ℚ = Aut(ℚ̄/ℚ)`, genuine
 genuine type and bit characters, and `N_U` defined from the characters and the reduced trace
 action (`GaloisModel.lean`, `Constituents.lean`).
 
+Round 3: the constituent model is on coefficientwise reduced expansions (tex 9639–9646). The
+faithful bridge is to lane RC0's `TraceModelRel`, whose module is abstract
+(`GaloisConstituentModel.toTraceModelRel`). Lane RC0's `ConstituentModelRel` reads the forms in
+`Λ/𝔪Λ` and needs, besides the unbudgeted forms, saturation (`Saturated`, not assumed by the text);
+the Tate instance satisfies both.
+
 Round 2: lane RC24's models state their module fields only within the operator budget (tex
 9447–9468, 9649–9654), while lane RC0's interfaces ask `det_orbit`, `two_fresh`, `kummer` and
 `chebotarev` at every `U`. The bridges therefore take the unbudgeted forms as an explicit
@@ -72,12 +78,25 @@ def GaloisTraceModel.toTraceModelRel (X : GaloisTraceModel T R ap B chiType)
   reading := X.reading
   o12 := X.o12
 
+attribute [local instance] GaloisConstituentModel.modMexp
+
+/-- **The genuine constituent model as lane RC0's `TraceModelRel`, through its module of reduced
+expansions** (PROVED, given the unbudgeted forms; no saturation is needed: lane RC0's
+`TraceModelRel` has an abstract module, here the reduced expansions, tex 9639–9646). This is the
+faithful bridge to lane RC0's interfaces. -/
+def GaloisConstituentModel.toTraceModelRel (X : GaloisConstituentModel T R ap B chiType)
+    (htyp : IsTypeChar T chiType) (hX : X.Unbudgeted) (hI : X.Inputs) : TraceModelRel T R ap B :=
+  (X.toGaloisTraceModel hI).toTraceModelRel htyp (X.unbudgeted_toGaloisTraceModel hX hI)
+
 /-- **The genuine constituent model as lane RC0's `ConstituentModelRel`** (PROVED, given the
-unbudgeted forms of the module fields: `G = G_ℚ`, `chiBit = bitChar`, `N = consN`; `level_red`,
-`N_anti`, `N_chi`, `chi_surj` (good `U`), `typ_frob`, `bit_frob` are the theorems of
-`Constituents.lean`; tex 9638–9797). -/
+unbudgeted forms AND saturation). Lane RC0's interface reads the forms in `Λ/𝔪Λ` and asks
+membership in `𝔪Λ`, which the coefficientwise identities of the text give only for a saturated
+module. The text assumes no saturation (tex 9644–9646). The functionals are those of the reduced
+expansions, through `Λ/𝔪Λ → Mexp` (`le_ker_redE`). `G = G_ℚ`, `chiBit = bitChar`, `N = consN`; the
+remaining fields are theorems of `Constituents.lean` (tex 9638–9797). -/
 def GaloisConstituentModel.toConstituentModelRel (X : GaloisConstituentModel T R ap B chiType)
-    (htyp : IsTypeChar T chiType) (hX : X.Unbudgeted) : ConstituentModelRel T R ap B where
+    (htyp : IsTypeChar T chiType) (hX : X.Unbudgeted) (hsat : X.Saturated) :
+    ConstituentModelRel T R ap B where
   G := GalQ
   I := X.I
   K := X.K
@@ -89,14 +108,19 @@ def GaloisConstituentModel.toConstituentModelRel (X : GaloisConstituentModel T R
   stable_t := X.stable_t
   stable_d := X.stable_d
   F := X.F
-  read := X.read
+  read U := (X.read U).comp
+    ((X.m • ⊤ : Submodule X.O X.Λ).liftQ X.redE X.le_ker_redE).toAddMonoidHom
   frob := X.frob
   N := X.N
   chiType := chiType
   chiBit := bitChar
-  det_orbit := hX.det_orbit
-  two_fresh := hX.two_fresh
-  level_red := fun U g n hn => X.level_red U g n hn
+  det_orbit U u v := hsat (X.dΛ u (X.tΛ v (X.F U)) - X.tΛ v (X.F U)) (by
+    rw [map_sub, sub_eq_zero]
+    exact hX.det_orbit U u v)
+  two_fresh U g h := hsat _ (hX.two_fresh U g h)
+  level_red U g n hn := hsat (X.tΛ (g * n) (X.F U) - X.tΛ g (X.F U)) (by
+    rw [map_sub, sub_eq_zero]
+    exact X.level_red U g n hn)
   N_anti := X.N_anti
   N_chi := X.N_chi
   kummer := hX.kummer
@@ -105,22 +129,47 @@ def GaloisConstituentModel.toConstituentModelRel (X : GaloisConstituentModel T R
   typ_frob := X.typ_frob htyp
   bit_frob := X.bit_frob
 
-/-- **The ELLIOT inputs carry over** (PROVED: the two readings are stated for the same reduced
-operators). -/
+/-- **The ELLIOT inputs carry over** (PROVED: the readings of `Λ/𝔪Λ` factor through the reduced
+expansions). -/
 theorem GaloisConstituentModel.toConstituentModelRel_inputs
     (X : GaloisConstituentModel T R ap B chiType) (htyp : IsTypeChar T chiType)
-    (hX : X.Unbudgeted) (hI : X.Inputs) : (X.toConstituentModelRel htyp hX).Inputs := hI
+    (hX : X.Unbudgeted) (hsat : X.Saturated) (hI : X.Inputs) :
+    (X.toConstituentModelRel htyp hX hsat).Inputs := by
+  have key : ∀ (U : Finset ℕ) (g : GalQ), (X.toConstituentModelRel htyp hX hsat).readM U
+      ((X.toConstituentModelRel htyp hX hsat).tM g ((X.toConstituentModelRel htyp hX hsat).FM U)) =
+        X.readE U (X.tE g (X.FE U)) := by
+    intro U g
+    rw [GaloisConstituentModel.FE, GaloisConstituentModel.tE_redM]
+    rfl
+  obtain ⟨h1, h2⟩ := hI
+  refine ⟨fun U q hU hq hqU hc => by
+    have h := h1 U q hU hq hqU hc
+    rw [← key] at h
+    exact h, fun U p hp hU hc (g : GalQ) => ?_⟩
+  obtain ⟨τ, φ, κ0, hκ, a1, a2, a3, a4, a5, hO⟩ := h2 U p hp hU hc g
+  refine ⟨τ, φ, κ0, hκ, a1, a2, a3, a4, a5, ?_⟩
+  rw [← key, ← key, ← key, ← key] at hO
+  exact hO
 
 /-- **Lane RC0's `ConstituentModelRel` is inhabited by a genuine Galois representation**
 (PROVED): one constituent, the `2`-adic Tate representation of an elliptic curve `E/ℚ`, over the
-genuine type data `typeData m` and the genuine group `G_ℚ`, for the zero reading, with its
-inputs (the zero forms satisfy the unbudgeted fields). -/
+genuine type data `typeData m` and the genuine group `G_ℚ`, for the zero reading, with its inputs.
+The zero forms satisfy the unbudgeted fields, and the rank-one lattice over `ℤ₂` is saturated. -/
 theorem tateConstituentModelRel (E : WeierstrassCurve ℚ) [E.IsElliptic] (m : ℕ) [NeZero m]
     (hm : 0 < m) (h4 : 4 ∣ m) (ap : ℕ → ℤ) (B : ℕ) :
     ∃ X : ConstituentModelRel (typeData m hm h4) (fun _ => 0) ap B, X.Inputs :=
   ⟨(tateConstituentModel' E m hm h4 ap B).toConstituentModelRel (isTypeChar_typeData m hm h4)
-      (tateConstituentModel'_unbudgeted E m hm h4 ap B),
-    (tateConstituentModel' E m hm h4 ap B).toConstituentModelRel_inputs _ _
+      (tateConstituentModel'_unbudgeted E m hm h4 ap B)
+      (tateConstituentModel'_saturated E m hm h4 ap B),
+    (tateConstituentModel' E m hm h4 ap B).toConstituentModelRel_inputs _ _ _
       (tateConstituentModel'_inputs E m hm h4 ap B)⟩
+
+/-- **Lane RC0's `TraceModelRel` is inhabited by the reduced expansions of a genuine Galois
+representation** (PROVED; the faithful bridge, no saturation). -/
+theorem tateTraceModelRel (E : WeierstrassCurve ℚ) [E.IsElliptic] (m : ℕ) [NeZero m]
+    (hm : 0 < m) (h4 : 4 ∣ m) (ap : ℕ → ℤ) (B : ℕ) :
+    Nonempty (TraceModelRel (typeData m hm h4) (fun _ => 0) ap B) :=
+  ⟨(tateConstituentModel' E m hm h4 ap B).toTraceModelRel (isTypeChar_typeData m hm h4)
+    (tateConstituentModel'_unbudgeted E m hm h4 ap B) (tateConstituentModel'_inputs E m hm h4 ap B)⟩
 
 end ZInQ.Manuscript.RC.AddressGenuine
