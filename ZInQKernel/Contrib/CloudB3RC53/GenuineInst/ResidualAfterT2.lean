@@ -32,8 +32,10 @@ tied to the arithmetic only through `e : HomotopyEquiv L P'` (the text's tex 462
 no `𝔽₂((t))`-coefficient Galois cochains in this tree).
 
 * `transfer_after_inverting_t'`, `residualRankCounts_afterT'`;
-* Non-vacuity: `transfer_after_inverting_t'_nonvacuous` (zero complexes; model level only, like the
-  peer's witness).
+* Non-vacuity: `transfer_after_inverting_t'_nonvacuous`, `reduction_nonvacuous` (zero complexes;
+  model level only — like the peer's witness, they do not tie the models to the arithmetic
+  cochains). Non-vacuity of the whole constructor is not shown (as for
+  `residualRankCounts_genuine`).
 
 **Classification.** PROVED (from the inputs listed).
 -/
@@ -116,6 +118,45 @@ theorem transfer_after_inverting_t' {R R' : Type} [CommRing R] [StrongRankCondit
         (finrank_baseChangeCx φ P n)
   rw [htot, ← heq]
   exact h
+
+section NonVacuity2
+
+instance baseChangeCx_punit_subsingleton {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S)
+    (i : ℤ) : Subsingleton ((baseChangeCx φ (punitCx R)).X i) := by
+  let := φ.toAlgebra
+  change Subsingleton (S ⊗[R] PUnit)
+  infer_instance
+
+/-- The zero complex is isomorphic to the base change of the zero complex. -/
+def punitCxIsoBaseChange {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) :
+    punitCx S ≅ baseChangeCx φ (punitCx R) :=
+  HomologicalComplex.Hom.isoOfComponents
+    (fun i => (LinearEquiv.ofSubsingleton ((punitCx S).X i)
+      ((baseChangeCx φ (punitCx R)).X i)).toModuleIso)
+    (fun i j _ => by
+      ext x
+      exact Subsingleton.elim _ _)
+
+/-- **Non-vacuity of the inputs of `transfer_after_inverting_t'`** at `𝔽₂[[t]] → 𝔽₂((t))`, with the
+zero complexes (the base-change comparison is an isomorphism of complexes; model level only — as
+the peer's witness, this does not tie the models to the arithmetic cochains). PROVED. -/
+theorem transfer_after_inverting_t'_nonvacuous : 0 ≤ 0 :=
+  transfer_after_inverting_t' (algebraMap (PowerSeries (ZMod 2)) (LaurentSeries (ZMod 2)))
+    (punitCx (PowerSeries (ZMod 2))) (punitCx (LaurentSeries (ZMod 2)))
+    (punitCx (LaurentSeries (ZMod 2))) 0 0 (punitCxIsoBaseChange _)
+    (fun i j x => by rw [Subsingleton.elim x 0, map_zero]; exact Submodule.zero_mem _)
+    (HomotopyEquiv.refl _) {0} 0 0
+    (by rw [Finset.sum_singleton, Module.finrank_zero_of_subsingleton])
+    (by rw [Finset.sum_singleton, Module.finrank_zero_of_subsingleton])
+
+/-- **Non-vacuity of the reduction comparison**: the reduction modulo `t` of the zero complex is
+isomorphic, as a complex, to the zero complex over `𝔽₂`. PROVED. -/
+theorem reduction_nonvacuous :
+    Nonempty (baseChangeCx (PowerSeries.constantCoeff : PowerSeries (ZMod 2) →+* ZMod 2)
+      (punitCx (PowerSeries (ZMod 2))) ≅ punitCx (ZMod 2)) :=
+  ⟨(punitCxIsoBaseChange _).symm⟩
+
+end NonVacuity2
 
 /-- **Named GLUE (C4): the global part of the residual model has no degree-`3` term.** For a
 totally complex number field `K`, `cd₂ G_{K,S} ≤ 2` (Neukirch–Schmidt–Wingberg, *Cohomology of
