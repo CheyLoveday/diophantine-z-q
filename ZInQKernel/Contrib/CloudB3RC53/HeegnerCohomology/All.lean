@@ -8,6 +8,7 @@ import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.Shapiro
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.ShapiroInput
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.Witness
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.Cartesian
+import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.CorDescent
 
 /-!
 # HeegnerCohomology: the cohomological layer of `ex:arith-finite-heegner` (tex 2834–3410)
@@ -29,4 +30,6 @@ Index of the area (all `PROVED`, standard axioms):
   section of Shapiro's map; RC10's `ShapiroTransferInput`; node `ShapiroNode`.
 * `Witness`: (H22) Selmer-cone witnesses.
 * `Cartesian`: restriction and corestriction commute in Cartesian squares; node `CartesianNode`.
+* `CorDescent`: corestriction commutes with conjugation; the genuine hypothesis of RC10's
+  `FiveTerm.descend_cor` (`hsq_genuine`) and `descend_cor_genuine`.
 -/
