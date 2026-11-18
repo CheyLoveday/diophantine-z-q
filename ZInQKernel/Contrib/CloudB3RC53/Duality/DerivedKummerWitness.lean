@@ -6,7 +6,7 @@ import ZInQKernel.Contrib.CloudB3RC53.Duality.DerivedKummerTrunc
 For `M = ℤ/2` (a condition with two-primary torsion) and an untruncated two-term model of the local
 target with `H¹ ≠ 0` torsion, the restricted pairing can vanish on `H¹ × H¹ → H²` and still fail to
 be null-homotopic: the class has a component in `Hom(Tor₁(M, M), H¹)` that Elliot's divisibility
-argument does not see (tex L3443–3450). Over `S = ℤ₂`:
+argument does not see (tex L3445–3451). Over `S = ℤ₂`:
 
 * `U`: `ℤ₂ --2--> ℤ₂` in degrees `0, 1` (a free resolution of `ℤ/2`, so `U ≃ M[−1]`);
 * `T`: `ℤ₂ --2--> ℤ₂ --0--> ℤ₂` in degrees `0, 1, 2` (`H⁰ = 0`, `H¹ = ℤ/2`, `H² = ℤ₂`, the shape of
