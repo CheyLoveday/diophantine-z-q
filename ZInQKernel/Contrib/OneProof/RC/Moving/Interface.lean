@@ -182,7 +182,9 @@ structure MovingSetting (T : TateImage) (n : ℕ) where
   /-- `GLUE` (tex 3683–3684): `𝔭_j 𝔭̄_j = (p)` is rational principal, so `qbar = −q`. -/
   qbar_eq : ∀ r, good r → ∀ j, qbar r j = -q r j
   /-- `res α_a ∈ 𝐅_r^×`: the residue of `α_a` at `𝔯 = v ∩ K`, i.e. the residue-ratio
-  coordinate of the class of `β_a` (read so; see the report on tex 3579) -/
+  coordinate of the class of `β_a`, i.e. `α_a mod 𝔯 = (β_a mod 𝔯)/(β_a mod 𝔯̄)` (tex 3576–3579;
+  reading `res α_a` as the ratio image of `α_a` itself would give `α_a²` and break (4.4b) by a factor
+  of two) -/
   x : ∀ r, Pl r → Fin t → Additive (ZMod r)ˣ
   /-- `GLUE` (tex 3576–3579, [Cox, (7.27)]): the principal relations
   `∑_j m_j^{(a)} q_j + δ(res α_a) = 0`. -/

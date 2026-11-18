@@ -12,7 +12,8 @@ For `E_ℓ` the twist `qtwist (Ecurve ℓ) k` is `y² = x(x − kℓ)(x + 3kℓ)
 * `exists_ksplit_prime_v2_eq_two_b3` (`PROVED`): arbitrarily large primes `p ≡ 1 (mod 4)` with
   `(ℓ/p) = −1`, `(k/p) = 1`, `p ∤ 6kℓ` and `v₂(p + 1 − a_p(E^{(k)})) = 2`, for `a_p` the coefficient
   of Mathlib's `L(qtwist (Ecurve ℓ) k, s)` (tex 2643–2653, 10482–10500);
-* `AppGCongruenceB3` (`ELLIOT`, tex 2636–2641, 10319–10481) and `ksplit_seed_b3` (`PROVED` from it):
+* `AppGCongruenceB3` (a proposition refuted by `not_appGCongruence`; the `ELLIOT` step, tex 2636–2641,
+  10319–10481, is the implication `NoSeed → AppGCongruenceB3`) and `ksplit_seed_b3` (`PROVED` from that implication):
   Lemma `ex:sec7-ksplit-seed`, tex 2628–2654.
 -/
 
@@ -42,7 +43,8 @@ theorem exists_ksplit_prime_v2_eq_two_b3 {ℓ : ℕ} (hℓ : Adm ℓ) {k : ℤ} 
   rw [qtwist_Ecurve_eq]
   exact exists_ksplit_prime_v2_eq_two hℓ.1 hℓ.2.1 hℓ.2.2 hk_odd hk_sf hq₀ hq₀k hq₀ℓ n
 
-/-- **The App G congruence, shared vocabulary** (`ELLIOT`; tex 2636–2641, 10319–10481):
+/-- **The App G congruence, shared vocabulary** (tex 2636–2641, 10319–10481; a proposition refuted by
+`not_appGCongruence`, not an `ELLIOT` leaf: the `ELLIOT` step is `NoSeed → AppGCongruenceB3`):
 `a_p(E^{(k)}) ≡ p + 1 (mod 8)` at every prime `p ∉ S` with `p ∤ 6kℓ` and `(k/p) = 1`, for `a_p` the
 coefficient of Mathlib's `L(qtwist (Ecurve ℓ) k, s)`. -/
 def AppGCongruenceB3 (ℓ : ℕ) (k : ℤ) (S : Finset ℕ) : Prop :=
@@ -53,7 +55,7 @@ theorem appGCongruenceB3_iff (ℓ : ℕ) (k : ℤ) (S : Finset ℕ) :
     AppGCongruenceB3 ℓ k S ↔ AppGCongruence ℓ k S := by
   simp only [AppGCongruenceB3, AppGCongruence, qtwist_Ecurve_eq]
 
-/-- **Lemma `ex:sec7-ksplit-seed`, shared vocabulary** (`PROVED` from `AppGCongruenceB3`;
+/-- **Lemma `ex:sec7-ksplit-seed`, shared vocabulary** (`PROVED` from the implication `hG`;
 tex 2628–2654): the assumed absence `NoSeed` of a nonempty `K`-split unit seed of the positive even
 source for `E^{(k)}` is refuted. -/
 theorem ksplit_seed_b3 {ℓ : ℕ} (hℓ : Adm ℓ) {k : ℤ} (hk_odd : Odd k) (hk_sf : Squarefree k)

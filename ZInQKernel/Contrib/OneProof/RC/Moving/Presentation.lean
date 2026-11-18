@@ -264,7 +264,7 @@ theorem exists_psi (i n : ℕ) (hn : 2 * i ≤ n) :
   rw [← ofMul_pow, toMul_ofMul, Units.val_pow_eq_pow_val]
 
 /-- **The local model (4.4) at the moving prime** (consumer check, tex 3471–3477 with
-3670–3677 and 3695–3698; gap P-a of the host check of `ex:arith-paired-functional`, PROVED).
+3670–3677 and 3695–3698, as used by Proposition `ex:arith-paired-functional`; PROVED).
 At the moving prime `r` the inertia generator acts as `g = 1 + t`, and
 `DC − CA = −(N_r(g) − 1)(g − 1) = −((r−1)/2)·((1+t)² − 1)` for
 `N_r(g) = (r+1)/2 + ((r−1)/2) g`.  This vanishes in `A_i` as soon as `r ≡ 1 (mod 2^{i+1})`, which

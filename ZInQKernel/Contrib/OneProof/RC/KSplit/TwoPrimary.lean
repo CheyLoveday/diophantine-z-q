@@ -22,9 +22,9 @@ with the three two-torsion points `T₀ = (0, 0)`, `T₁ = (ℓ, 0)`, `T₂ = (�
   element of order four would give a half of a nonzero two-torsion point.
 * `card_eq_card_primaryComponent_two_mul_odd`: in a finite abelian group the index of the
   two-primary component is odd (Cauchy); hence `four_dvd_card_of_nonsquares` and
-  `not_eight_dvd_card_of_nonsquares`: `v₂ #E_ℓ(F) = 2` (tex 10500: "This gives
+  `not_eight_dvd_card_of_nonsquares`: `v₂ |E_ℓ(F)| = 2` (tex 10500: "This gives
   `v₂(p + 1 − a_p) = 2`").
-* `four_dvd_card`: full rational two-torsion gives `4 ∣ #E_ℓ(F)` (tex 10475–10476: "full rational
+* `four_dvd_card`: full rational two-torsion gives `4 ∣ |E_ℓ(F)|` (tex 10475–10476: "full rational
   two-torsion gives `a_p ≡ p + 1 (mod 4)`").
 * `nonsquares_of_one_mod_four`, `card_curveF_zmod_of_conditions`: over `𝔽_p` with `p ≡ 1 (mod 4)`
   and `(ℓ/p) = −1`, the three differences are nonsquares (tex 2643–2649);
@@ -105,7 +105,7 @@ theorem two_nsmul_tPtF {e : F} (he : IsRootF ℓ e) : 2 • tPtF h2 h3 hℓ he =
   unfold tPtF
   rw [two_nsmul, Point.add_self_of_Y_eq (by rw [curveF_negY, neg_zero])]
 
-/-- **`#E_ℓ(F)[2] = 4`** (`PROVED`). -/
+/-- **`|E_ℓ(F)[2]| = 4`** (`PROVED`). -/
 theorem card_ker_two_eq_four [Finite (curveF ℓ).toAffine.Point] :
     Nat.card (nsmulAddMonoidHom 2 : (curveF ℓ).toAffine.Point →+ _).ker = 4 := by
   refine le_antisymm ?_ (four_le_card_ker_two h2 h3 hℓ)
@@ -130,7 +130,7 @@ theorem card_ker_two_eq_four [Finite (curveF ℓ).toAffine.Point] :
         refine (Nat.succ_le_succ (Nat.succ_le_succ (Set.ncard_insert_le _ _))).trans ?_
         rw [Set.ncard_singleton]
 
-/-- **Full rational two-torsion gives `4 ∣ #E_ℓ(F)`** (`PROVED`; tex 10475–10476 and
+/-- **Full rational two-torsion gives `4 ∣ |E_ℓ(F)|`** (`PROVED`; tex 10475–10476 and
 App F tex 9585, 9593–9594: "full rational two-torsion gives `a_p ≡ p + 1 (mod 4)`"). Lagrange's
 theorem for the subgroup `E_ℓ(F)[2]` of order four. -/
 theorem four_dvd_card [Finite (curveF ℓ).toAffine.Point] :
@@ -219,7 +219,7 @@ end Halving
 /-! ### The two-adic valuation of the order of a finite abelian group -/
 
 /-- **The index of the two-primary component is odd** (`PROVED`; `GLUE`-level textbook fact used at
-tex 10500): `#G = #G[2^∞] · m` with `m` odd. If `2` divided the index, Cauchy's theorem would give
+tex 10500): `|G| = |G[2^∞]| · m` with `m` odd. If `2` divided the index, Cauchy's theorem would give
 `z ∉ G[2^∞]` with `2z ∈ G[2^∞]`, which is absurd. -/
 theorem card_eq_card_primaryComponent_two_mul_odd (G : Type*) [AddCommGroup G] [Finite G] :
     ∃ m : ℕ, Odd m ∧ Nat.card G = Nat.card (AddCommGroup.primaryComponent G 2) * m := by
@@ -240,7 +240,7 @@ theorem card_eq_card_primaryComponent_two_mul_odd (G : Type*) [AddCommGroup G] [
     exact absurd hz (by norm_num)
   · rw [AddSubgroup.card_eq_card_quotient_mul_card_addSubgroup P, mul_comm]
 
-/-- If the two-primary component has order four, then `4 ∣ #G` and `8 ∤ #G` (`PROVED`). -/
+/-- If the two-primary component has order four, then `4 ∣ |G|` and `8 ∤ |G|` (`PROVED`). -/
 theorem four_dvd_and_not_eight_dvd_of_card_primaryComponent (G : Type*) [AddCommGroup G]
     [Finite G] (h4 : Nat.card (AddCommGroup.primaryComponent G 2) = 4) :
     4 ∣ Nat.card G ∧ ¬ 8 ∣ Nat.card G := by
@@ -256,13 +256,13 @@ variable (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0) (hℓ : ℓ ≠ 0)
   (hn0 : ¬ IsSquare (-ℓ)) (hn1 : ¬ IsSquare ℓ) (hn2 : ¬ IsSquare (-4 * ℓ))
 include h2 h3 hℓ hn0 hn1 hn2
 
-/-- **`v₂ #E_ℓ(F) = 2`, lower half** (`PROVED`). -/
+/-- **`v₂ |E_ℓ(F)| = 2`, lower half** (`PROVED`). -/
 theorem four_dvd_card_of_nonsquares [Finite (curveF ℓ).toAffine.Point] :
     4 ∣ Nat.card (curveF ℓ).toAffine.Point :=
   (four_dvd_and_not_eight_dvd_of_card_primaryComponent _
     (card_primaryComponent_two_eq_four h2 h3 hℓ hn0 hn1 hn2)).1
 
-/-- **`v₂ #E_ℓ(F) = 2`, upper half: `8 ∤ #E_ℓ(F)`** (`PROVED`; tex 2650–2651, 10499–10500:
+/-- **`v₂ |E_ℓ(F)| = 2`, upper half: `8 ∤ |E_ℓ(F)|`** (`PROVED`; tex 2650–2651, 10499–10500:
 "This gives `v₂(p + 1 − a_p) = 2`"). -/
 theorem not_eight_dvd_card_of_nonsquares [Finite (curveF ℓ).toAffine.Point] :
     ¬ 8 ∣ Nat.card (curveF ℓ).toAffine.Point :=
@@ -315,9 +315,9 @@ theorem nonsquares_of_one_mod_four (hp4 : p % 4 = 1) {L : ZMod p} (hL : ¬ IsSqu
   field_simp
   linear_combination hs
 
-/-- **`v₂ #E_ℓ(𝔽_p) = 2` under the seed conditions** (`PROVED`; tex 2643–2651, 10482–10500):
+/-- **`v₂ |E_ℓ(𝔽_p)| = 2` under the seed conditions** (`PROVED`; tex 2643–2651, 10482–10500):
 for a prime `p ≡ 1 (mod 4)` and `L ∈ 𝔽_p` a nonsquare (`(ℓ/p) = −1` for `L = ℓ mod p`),
-`4 ∣ #E_L(𝔽_p)` and `8 ∤ #E_L(𝔽_p)`. -/
+`4 ∣ |E_L(𝔽_p)|` and `8 ∤ |E_L(𝔽_p)|`. -/
 theorem card_curveF_zmod_of_conditions (hp4 : p % 4 = 1) {L : ZMod p} (hL : ¬ IsSquare L) :
     4 ∣ Nat.card (curveF L).toAffine.Point ∧ ¬ 8 ∣ Nat.card (curveF L).toAffine.Point := by
   obtain ⟨h2, h3⟩ := two_three_ne_zero_of_one_mod_four hp4
@@ -338,7 +338,7 @@ theorem card_primaryComponent_two_zmod (hp4 : p % 4 = 1) {ℓ : ℤ} (hℓ : jac
   obtain ⟨hn0, hn1, hn2⟩ := nonsquares_of_one_mod_four hp4 hL
   exact card_primaryComponent_two_eq_four h2 h3 hL0 hn0 hn1 hn2
 
-/-- **`v₂ #E_ℓ(𝔽_p) = 2`** when `p ≡ 1 (mod 4)` and `(ℓ/p) = −1` (`PROVED`; tex 10500). -/
+/-- **`v₂ |E_ℓ(𝔽_p)| = 2`** when `p ≡ 1 (mod 4)` and `(ℓ/p) = −1` (`PROVED`; tex 10500). -/
 theorem v2_card_zmod (hp4 : p % 4 = 1) {ℓ : ℤ} (hℓ : jacobiSym ℓ p = -1) :
     4 ∣ Nat.card (curveF ((ℓ : ℤ) : ZMod p)).toAffine.Point ∧
       ¬ 8 ∣ Nat.card (curveF ((ℓ : ℤ) : ZMod p)).toAffine.Point := by

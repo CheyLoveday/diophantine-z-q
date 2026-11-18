@@ -20,10 +20,10 @@ PROVED fact.
 * `Λ[1/2]` inside `ℚ₂[[t]]` (`InLamHalf`), `Λ`-units (`LamUnit`), the central value `central`.
 * Restriction of coefficient data to a coordinate subcube (`restrictData`), PROVED to
   preserve every predicate of the blueprint's package (`ClearingIdentity`, `PoleBound`,
-  `BaseRegular`, `UpperBound`, `BaseZero`). It is needed because `FixedFieldPackage.coord`
-  quantifies over every binary dimension `b` allowed by (5.10), while (3.9) supplies families only
-  for every sufficiently large `b` (DEPARTURE of form, not in the text: a family of a larger
-  dimension is restricted to a subcube).
+  `BaseRegular`, `UpperBound`, `BaseZero`). Since the top layer's `FixedFieldPackage` takes the
+  threshold `b₀` of (3.9) ("for every sufficiently large `b`", tex 2679, 10794), the deduction
+  uses it only with `max(b, b₀) = b`, where the restriction is the identity transport; it is kept
+  so that the proof does not depend on how the threshold is recorded.
 -/
 
 noncomputable section
@@ -127,7 +127,7 @@ abbrev Addr (b : ℕ) : Type := Fin b → ZMod 2
 /-- `q^* = (−1)^{(q−1)/2} q` (the family (3.9)). -/
 def qstar (q : ℕ) : ℤ := (-1) ^ ((q - 1) / 2) * q
 
-/-- **A binary family** (Proposition `ex:sec7-final-family`, lines 2695–2715): an address
+/-- **A binary family** (Proposition `ex:sec7-final-family`, lines 2674–2694): an address
 dimension `b`, a finite set `Q` of primes and linear forms `λ_q : 𝔽₂^b → 𝔽₂`. -/
 structure Family where
   /-- the address dimension `b` -/
@@ -147,7 +147,7 @@ def Family.h (F : Family) (x : Addr F.b) : ℤ :=
 
 /-- **Admissible family for the companion `k`**: the primes of `Q` are distinct good odd primes
 outside the fixed support `S` (which contains the primes of `2N`, of `h_*` and of `k`), split in
-`K = ℚ(√k)` (`(k/q) = 1`), and every `λ_q` is a nonzero linear form (lines 2700–2702, 4253–4256). -/
+`K = ℚ(√k)` (`(k/q) = 1`), and every `λ_q` is a nonzero linear form (lines 2678–2680, 4234–4237). -/
 def Family.Admissible (S : Finset ℕ) (k : ℤ) (F : Family) : Prop :=
   ∀ q ∈ F.Q, q.Prime ∧ q ≠ 2 ∧ q ∉ S ∧ jacobiSym k q = 1 ∧ F.lam q ≠ 0
 

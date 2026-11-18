@@ -105,11 +105,13 @@ theorem exists_ksplit_prime_v2_eq_two {ℓ : ℕ} (hℓ_pos : 0 < ℓ) (hℓ_sf 
   · rw [sub_LFunction_twist_eq_card hp4 hp6 hksq hk0 hℓ0]; exact_mod_cast h4
   · rw [sub_LFunction_twist_eq_card hp4 hp6 hksq hk0 hℓ0]; exact_mod_cast h8
 
-/-- **The App G congruence** (`ELLIOT`; tex 2636–2641, 10319–10481; Version 19 states its scope
+/-- **The App G congruence, as a proposition** (tex 2636–2641, 10319–10481; Version 19 states its scope
 explicitly, `quartic_v19.tex` 18569–18583: "at every fresh good `K`-split prime outside the support,
 whether or not it lies in the coefficient filter"): `a_p(E^{(k)}) ≡ p + 1 (mod 8)` at every prime
 `p` outside the finite support `S` with `p ∤ 6kℓ` (good reduction of `E^{(k)}`) and `(k/p) = 1`
-(`p` split in `K`). Elliot derives it inside the assumed absence of a nonempty unit seed; see
+(`p` split in `K`). This proposition is false for every finite `S` (`not_appGCongruence`,
+`PROVED`), so it is not an `ELLIOT` leaf: Elliot's step (`ELLIOT`, tex 2636–2641) is the implication
+`NoSeed → AppGCongruence ℓ k S`, derived inside the assumed absence of a nonempty unit seed; see
 `appGCongruence_of_traceData` for that derivation from its modular-forms inputs. -/
 def AppGCongruence (ℓ : ℕ) (k : ℤ) (S : Finset ℕ) : Prop :=
   ∀ p : ℕ, p.Prime → p ∉ S → ¬ (p : ℤ) ∣ 6 * (k * ℓ) → jacobiSym k p = 1 →
@@ -127,12 +129,16 @@ theorem not_appGCongruence {ℓ : ℕ} (hℓ_pos : 0 < ℓ) (hℓ_sf : Squarefre
   exact h8 (hG p hp hpS hp6 hJk)
 
 /-- **Lemma `ex:sec7-ksplit-seed` (The nonempty seed for the present curve)** (tex 2628–2654;
-`PROVED` from the `ELLIOT` input `AppGCongruence`): for `E = E_ℓ` and the chosen `k`, `K`, the
+`PROVED` from the `ELLIOT` implication `hG : NoSeed → AppGCongruence ℓ k S`, tex 2636–2641): for
+`E = E_ℓ` and the chosen `k`, `K`, the
 positive even source for `E^{(k)}`, normalized at index one, has a nonempty unit seed consisting of
 `K`-split primes. `NoSeed` is the proposition that no such nonempty unit exists (the source and its
 seeds are not formalized here; `NoSeed` is the abstract statement the App G calculation
 refutes). If `NoSeed` forced `AppGCongruence` (tex 2636–2641), the prime of
-`exists_ksplit_prime_v2_eq_two`, chosen outside `S`, would contradict it (tex 2643–2651). -/
+`exists_ksplit_prime_v2_eq_two`, chosen outside `S`, would contradict it (tex 2643–2651). The
+unconditional content is `not_appGCongruence`; given it, `hG` is equivalent to `¬ NoSeed`, so the
+lemma's non-elementary content is exactly `hG`, and it says something about seeds only once `NoSeed`
+is instantiated with the genuine no-seed proposition. -/
 theorem ksplit_seed {ℓ : ℕ} (hℓ_pos : 0 < ℓ) (hℓ_sf : Squarefree ℓ) (hℓ12 : ℓ % 12 = 11)
     {k : ℤ} (hk_odd : Odd k) (hk_sf : Squarefree k) {q₀ : ℕ} (hq₀ : q₀.Prime)
     (hq₀k : (q₀ : ℤ) ∣ k) (hq₀ℓ : ¬ q₀ ∣ 2 * ℓ) (S : Finset ℕ) (NoSeed : Prop)
@@ -194,8 +200,9 @@ theorem app_nonempty_seed {L : Type*} [Field L] [CharZero L] (O : Subring L) {�
 
 /-! ### Non-vacuity: the hypotheses hold for `ℓ = 11`, `k = −7`, `q₀ = 7` -/
 
-/-- The manuscript's hypotheses are satisfiable: `ℓ = 11`, `k = −7` (`K = ℚ(√−7)`, ramified only at
-`7 ∤ 22`), so `exists_ksplit_prime_v2_eq_two` applies (`PROVED`). -/
+/-- The hypotheses of `exists_ksplit_prime_v2_eq_two` are satisfiable: `ℓ = 11`, `k = −7`
+(`K = ℚ(√−7)`, ramified only at `7 ∤ 22`), `q₀ = 7` (`PROVED`). (`k = −7` is not a companion of the
+text: it is not a square at `3 ∣ N(E_11)`, while tex 2596 asks for `k` square at `2N`.) -/
 theorem exists_ksplit_prime_example (n : ℕ) :
     ∃ p : ℕ, n < p ∧ p.Prime ∧ p % 4 = 1 ∧ jacobiSym (11 : ℤ) p = -1 ∧ jacobiSym (-7) p = 1 ∧
       ¬ (p : ℤ) ∣ 6 * (-7 * 11) ∧

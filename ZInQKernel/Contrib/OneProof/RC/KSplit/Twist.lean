@@ -38,7 +38,7 @@ theorem curveF_isElliptic (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0) {L : F} (hL 
   ⟨isUnit_iff_ne_zero.mpr (curveF_Δ_ne_zero h2 h3 hL)⟩
 
 /-- **The reductions have the same number of points** (`PROVED`; tex 2645–2647, 10488–10490):
-`#E_{s²L}(F) = #E_L(F)`. -/
+`|E_{s²L}(F)| = |E_L(F)|`. -/
 theorem natCard_curveF_sq_mul (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0) {L : F} (hL : L ≠ 0)
     {s : F} (hs : s ≠ 0) :
     Nat.card (curveF (s ^ 2 * L)).toAffine.Point = Nat.card (curveF L).toAffine.Point := by
@@ -47,7 +47,7 @@ theorem natCard_curveF_sq_mul (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0) {L : F} 
   exact ZInQ.Literature.natCard_point_variableChange _ _
 
 /-- **The form used for the twist**: if `K = s²` is a nonzero square in `F`, then
-`#E_{K·L}(F) = #E_L(F)` (`PROVED`; tex 2645–2647: `E^{(k)}` reduces to `curveF (k ℓ mod p)`). -/
+`|E_{K·L}(F)| = |E_L(F)|` (`PROVED`; tex 2645–2647: `E^{(k)}` reduces to `curveF (k ℓ mod p)`). -/
 theorem natCard_curveF_mul_of_isSquare (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0) {L : F} (hL : L ≠ 0)
     {K : F} (hK : IsSquare K) (hK0 : K ≠ 0) :
     Nat.card (curveF (K * L)).toAffine.Point = Nat.card (curveF L).toAffine.Point := by

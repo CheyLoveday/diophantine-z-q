@@ -32,7 +32,7 @@ open Finset
 
 variable {b : ℕ} {G : Type*} [Fintype G]
 
-/-- **The missing address** (tex 5677–5684; kind PROVED). Given `q = #s` sign-value functions of
+/-- **The missing address** (tex 5677–5684; kind PROVED). Given `q = |s|` sign-value functions of
 elements of `ℤ₂[G]` with `q(2^{M−1} − 1) < b`, there is a nonzero address `x` at which all of them
 agree with their values at `0` modulo `2^M`. Proof as in the text: the product of the indicators of
 the equations has Boolean degree `< b`, so its support, the simultaneous solution set, has even
