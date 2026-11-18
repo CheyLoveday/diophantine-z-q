@@ -14,17 +14,19 @@ trivial character whose coefficients are `aₙ = E.LFunction n`.
 * `LiCarayolNewformOfModular` (CONSEQUENCE GLUE, not a print): for a modular `E` there are
   `M ∣ N` and a newform of level `M`, weight `2` and trivial nebentypus (Tau Ceti's
   `HeckeRing.GL2.Newform`, Miyake's primitive form) whose coefficients are `E.LFunction n` for
-  every `n ≥ 1`. Its sources (statements not read against the papers here):
+  every `n ≥ 1`. Its sources (locators checked against page images by an independent reader;
+  verdict: consequence, not a literal statement of either paper):
   - W.-C. W. Li, *Newforms and functional equations*, Math. Ann. **212** (1975), 285–315
-    (bibitem `li-newforms`, tex L11050–11052): the old/new decomposition of `S₂(Γ₀(N))` and the
-    primitive forms, printed p. 294; strong multiplicity one, Theorem 5, p. 298. The manuscript's
-    own locator for this bibitem is p. 296 (the Fricke-conjugation relation), which supports a
-    different step;
+    (bibitem `li-newforms`, tex L11050–11052): the old/new decomposition and the primitive
+    forms, §2, p. 294; Theorem 3 (i), (iii), p. 295; strong multiplicity one, Theorem 5, p. 298.
+    The manuscript's own locator for this bibitem is p. 296 (the Fricke-conjugation relation),
+    which supports a different step;
   - H. Carayol, *Sur les représentations ℓ-adiques associées aux formes modulaires de Hilbert*,
-    Ann. Sci. ÉNS **19** (1986), 409–468 (bibitem `carayol`, tex L11205–11208), Theorem A: the
-    `ℓ`-adic Galois representation attached to a newform and its local–global compatibility.
-    Theorem A does not itself say that the level is the conductor of `E` or that the
-    coefficients at the bad primes are those of the local factors of `L(E, s)`.
+    Ann. Sci. ÉNS **19** (1986), 409–468 (bibitem `carayol`, tex L11205–11208): Théorème (A),
+    pp. 410–411, the `ℓ`-adic Galois representation attached to a newform and its local–global
+    compatibility, and the unnumbered Corollaire in §0.8, p. 411. Together with the Galois
+    comparison below, the eigenvalues at the primes dividing the level are `+1`, `−1` or `0`,
+    matching the local factors of `L(E, s)` at the bad primes.
   Further inputs, beyond both papers, are folded into this glue:
   - the Hecke bridge: the input form, whose coefficients are those of `L(E, s)`, is a Hecke
     eigenform away from its level;
@@ -42,9 +44,11 @@ trivial character whose coefficients are `aₙ = E.LFunction n`.
   from `Γ₁(M)` with trivial character to `Γ₀(M)` is `cuspFormCharSpaceOneEquiv`. Both preserve the
   underlying function on `ℍ`.
 
-**Classification.** `LiCarayolNewformOfModular` CONSEQUENCE GLUE (sources Li 1975 p. 294 and
-Theorem 5, p. 298; Carayol 1986 Theorem A; plus the Hecke bridge, the Čebotarev/Brauer–Nesbitt
-comparison and Casselman's newvector/conductor comparison); the reduction PROVED.
+**Classification.** `LiCarayolNewformOfModular` CONSEQUENCE GLUE (sources Li 1975 §2 p. 294,
+Theorem 3 (i), (iii) p. 295 and Theorem 5 p. 298; Carayol 1986 Théorème (A) pp. 410–411 and the
+Corollaire of §0.8 p. 411; locators checked against page images by an independent reader; plus
+the Hecke bridge, the Čebotarev/Brauer–Nesbitt comparison and Casselman's newvector/conductor
+comparison); the reduction PROVED.
 -/
 
 noncomputable section
@@ -55,9 +59,11 @@ open CongruenceSubgroup UpperHalfPlane HeckeRing.GL2
 open ZInQ.Contrib.RC53Assist.NewformPeriods ZInQ.Manuscript.PoleS12
 
 /-- **The newform of a modular elliptic curve** (CONSEQUENCE GLUE, not a print; sources Li 1975,
-bibitem `li-newforms`, p. 294 and Theorem 5, p. 298, and Carayol 1986, bibitem `carayol`,
-Theorem A, together with the Hecke bridge, the Čebotarev/Brauer–Nesbitt comparison and
-Casselman's newvector/conductor comparison; see the module docstring). If `E/ℚ` has a weight-two
+bibitem `li-newforms`, §2 p. 294, Theorem 3 (i), (iii) p. 295 and Theorem 5 p. 298, and Carayol
+1986, bibitem `carayol`, Théorème (A) pp. 410–411 and the Corollaire of §0.8 p. 411, locators
+checked against page images by an independent reader; together with the Hecke bridge, the
+Čebotarev/Brauer–Nesbitt comparison and Casselman's newvector/conductor comparison; see the
+module docstring). If `E/ℚ` has a weight-two
 cusp form on `Γ₀(N)`, `N > 0`, with the coefficients of `L(E, s)`, then for some `M ∣ N` there is
 a newform of level `M`, weight `2` and trivial nebentypus whose coefficients are `E.LFunction n`
 for every `n ≥ 1`. -/
