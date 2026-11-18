@@ -6,11 +6,11 @@ import ZInQKernel.Contrib.CloudB3RC53.ContBridge.Discrete
 
 Manuscript `diophantine_zq.tex`, Lemma `ex:limits-residual-bound`, tex 4521–4531 (`H^{>2} = 0`).
 
-Part 22's `globalDegreeThreeVanishes_of_milne` / `residualRankCounts_afterT''` stated the degree-`3`
-identification `eG3` against Mathlib's continuous `H³(G_{K,S₀}, W)`, because the comparison
-`genHEquiv` of the genuine continuous cochains with Mathlib's continuous cohomology was available
-only in degrees `≤ 2`. The ContBridge comparison `ContBridge.contCohomologyLinearEquiv` holds in
-**every** degree (the peer's witness uses it at its instance as `allGenHEquiv`); here:
+Part 22's `globalDegreeThreeVanishes_of_milne` / `residualRankCounts_afterT''` state the degree-`3`
+identification `eG3` against Mathlib's continuous `H³(G_{K,S₀}, W)`. The ContBridge comparison
+`ContBridge.contCohomologyLinearEquiv` of the genuine continuous cochains with Mathlib's continuous
+cohomology holds in **every** degree (`RC53Assist.ResidualWitnessActive` uses it at its instance as
+`allGenHEquiv`); here:
 
 * `genHEquivAll K S₀ n`: `genH K S₀ n ≃ Hⁿ_cont(G_{K,S₀}, W)` (Mathlib) for all `n`;
 * `globalDegreeThreeVanishes_of_milne_genH`: `GlobalDegreeThreeVanishes Dsel` from Milne ADT
@@ -19,8 +19,7 @@ only in degrees `≤ 2`. The ContBridge comparison `ContBridge.contCohomologyLin
 * `residualRankCounts_afterT'''`: `residualRankCounts_afterT'` with that `eG3` in place of the named
   GLUE.
 
-This removes the limitation recorded in part 22 (the missing degree-`3` genuine-to-Mathlib
-comparison).
+This gives the form of part 22 with `eG3` against the genuine object.
 
 **Classification.** PROVED.
 -/
