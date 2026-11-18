@@ -21,3 +21,7 @@
 - VERIFIED (library interfaces): the point and scheme uniformization interfaces do not
   produce a field of definition for the modular j of this period. Mathlib's coefficient
   j-value requires a Weierstrass equation; no proved comparison for the scheme curve was found.
+- VERIFIED (Lean): `CMjBridges.lean` compiled with `lake env lean`.
+  `cmjDegree_of_print_of_periodJDescends` proves the live row from the printed
+  equality conditional on `CMPeriodJDescends`. The latter is only the field-of-definition
+  comparison for the analytic j of the actual CM period; it is open glue.
