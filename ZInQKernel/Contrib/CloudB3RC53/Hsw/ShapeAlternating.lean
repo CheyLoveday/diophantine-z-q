@@ -226,7 +226,7 @@ theorem genuine_switchCoordinates_char2 (h2 : (2 : k) = 0) (X : GenuineSwitch K 
 
 end Genuine
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 /-- **The Weil pairing is polarized** (`PROVED`): `e₂(x, y) = γ(x, y) − γ(y, x)` with
 `γ(x, y) = x₀ y₁`. This is equivariant for the trivial action on `𝔽₂²` coefficients. -/

@@ -29,7 +29,7 @@ complexes and a chain map:
 * Forgetting the tame model: `PlaceRetention.toPlaceRetention2`,
   `SelmerFunctionals.toSelmerFunctionals2`,
   `NaturalStep.toNaturalStep2`, `CommonCoordinateTrianglesG.toG2`, `commonCoordinateInputsG2_of_G`
-  (so the `2`-interfaces are weaker than the old ones), and non-vacuity (LESSON 2):
+  (so the `2`-interfaces are weaker than the old ones), and non-vacuity:
   `nonempty_placeRetention2`, `nonempty_trianglesG2_three`.
 
 **Classification.** PROVED (interfaces and their transport).
@@ -199,7 +199,7 @@ theorem toPlaceRetention2_toRetainedPairing (R : PlaceRetention DR DPp fP fS) :
     R.toPlaceRetention2.toRetainedPairing = R.toRetainedPairing :=
   rfl
 
-/-- **Non-vacuity of `PlaceRetention2`** (LESSON 2): batch 3's example. -/
+/-- **Non-vacuity of `PlaceRetention2`** (non-vacuity): batch 3's example. -/
 theorem nonempty_placeRetention2 (S : Type u) [CommRing S] :
     Nonempty (PlaceRetention2 (relSel S) (constSel S) (constId S) (constId S)) :=
   ⟨(examplePlaceRetention S).toPlaceRetention2⟩
@@ -454,7 +454,7 @@ theorem commonCoordinateInputsG2_of_G {ℓ : ℕ} {D : RCData ℓ} (h : CommonCo
   exact ⟨M.toG2⟩
 
 /-- **Non-vacuity of `CommonCoordinateTrianglesG2` at a family with an unused graph prime**
-(LESSON 2): round 4's witness at `q = 3`. -/
+(non-vacuity): round 4's witness at `q = 3`. -/
 theorem nonempty_trianglesG2_three :
     Nonempty (CommonCoordinateTrianglesG2 exDataThree famThree 0) :=
   ⟨(trianglesG_three exDataThree rfl rfl).toG2⟩

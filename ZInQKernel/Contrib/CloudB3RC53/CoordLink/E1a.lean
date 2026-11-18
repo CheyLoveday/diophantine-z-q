@@ -25,7 +25,7 @@ lane Torsion). Against the strengthened identification `Identification2` (lane C
 * **`coordLink_of_km` (E1a, PROVED from the two inputs)**: `CoordLink M.toIdentification.B κ η 0
   e g (cOf M.D z μ hz hμ)` for every representation `UTildeRep Dd F e g` — the cancellation factor
   is `κ = det B` (`kmCoord_preCancel`), the functional is transported, and `c = kmCoord(D_x)`.
-* `coordLink_example`: the inputs are inhabited (LESSON 2) for the trivial new-local model.
+* `coordLink_example`: the inputs are inhabited (non-vacuity) for the trivial new-local model.
 
 **Classification.** PROVED (the two named inputs are GLUE).
 -/

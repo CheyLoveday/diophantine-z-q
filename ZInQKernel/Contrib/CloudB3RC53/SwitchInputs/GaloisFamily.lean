@@ -193,7 +193,7 @@ theorem quasiSwitchDims_of_h1Finite {k : Type} [Field k] (R : QuasiRelaxedLocali
         finrank k ↥(R.U ⊓ singPlane k (Fin 2 → k) (Fin 2 → k)) :=
   ⟨quasiSwitchSideDims_of_h1Finite R _ SF hF, quasiSwitchSideDims_of_h1Finite R _ SS hS⟩
 
-/-! ### Non-vacuity of the family (LESSON 2) -/
+/-! ### Non-vacuity of the family (non-vacuity) -/
 
 section NonVacuity
 
@@ -205,7 +205,7 @@ instance trivMod_continuousConstSMul (G V R : Type) [Semiring R] [AddCommGroup V
     [TopologicalSpace V] [ContinuousConstSMul R V] : ContinuousConstSMul R (TrivMod G V) :=
   inferInstanceAs (ContinuousConstSMul R V)
 
-/-- **The genuine Galois family exists** (LESSON 2): over `ℚ` with no places, coefficients `k = ℚ`,
+/-- **The genuine Galois family exists** (non-vacuity): over `ℚ` with no places, coefficients `k = ℚ`,
 module `M = ℚ` with the trivial action, the strict conditions as base and derivative conditions,
 the actual configuration `∅`, the actual class `0` and functional `0`. Every field is genuine Galois
 data; by `no_genuineSwitchData_of_zAct_zero` no switching datum over this particular family exists,

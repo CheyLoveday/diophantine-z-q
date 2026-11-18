@@ -19,7 +19,7 @@ the `hsw` descent runs on truncated Selmer pairing data (`SelPairDataTrunc`, as 
 * `localPairCupOne`: the genuine cup-one datum of `⊕_v C^•_cont(G_v, −)` for a `c`-symmetric
   equivariant self-pairing. RC26's truncated data, with local cup product `localSumPair`, plugs in
   with `hP := fun _ _ => rfl`.
-* Non-vacuity (LESSON 2): `exGenuine_trunc_residuePairing`, all hypotheses at once on the example
+* Non-vacuity: `exGenuine_trunc_residuePairing`, all hypotheses at once on the example
   genuine switch (via `SelPairData.toTrunc`).
 
 All results are `PROVED`. No new axioms.
@@ -135,7 +135,7 @@ def localPairCupOne (c : k) (hc : ∀ x y, β x y = c • β y x) :
 
 end Local
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section NonVacuity
 

@@ -2,11 +2,11 @@ import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.QuadWiring
 import ZInQKernel.Contrib.CloudB3RC53.PairedFunctional.Lambda
 
 /-!
-# RC53 SwitchInputs: the Galois switching data, LESSON 2 analysis and the quadratic steps
+# RC53 SwitchInputs: the Galois switching data, non-vacuity analysis and the quadratic steps
 
 Height-one regularity by switches, Proposition `ex:limits-uniform-lower-bound`, tex L4976–5195.
 
-**Part A (LESSON 2 for `GaloisNonquadInputs`, `GaloisWiring.lean`).** The genuine Galois family of
+**Part A (non-vacuity for `GaloisNonquadInputs`, `GaloisWiring.lean`).** The genuine Galois family of
 `GaloisWiring.lean` has coefficients `𝔽₂` (`ZMod 2`). Two facts limit it:
 
 * `isEmpty_ringHom_zmod_two_of_isUnit`, `isEmpty_ringHom_zmod_two_heightOne` (PROVED): if `2` is a unit
@@ -31,7 +31,7 @@ configuration `c`, candidate quadratic switch data at every prime `p` (sides equ
 sign classes, the other team's detecting-prime existence, a `CoordStep` for every candidate).
 `GaloisQuadInputs Φ ι ρ u` is `GaloisSwitchData` with the quadratic steps given by candidates;
 `GaloisQuadInputs.toGaloisSwitchData` (PROVED) chooses the prime by `exists_detectingPrime` /
-`exists_detectingPrimePlus`, and `regular_of_galoisQuadInputs` gives regularity. LESSON 2:
+`exists_detectingPrimePlus`, and `regular_of_galoisQuadInputs` gives regularity. Non-vacuity:
 `GaloisQuadInputs.ofNonquadratic` and the instance `exGaloisQuadInputs` (nonquadratic family); a
 quadratic instance needs candidates with `DualityFromSelmer` at every prime, not built here.
 -/
@@ -95,7 +95,7 @@ section Forces
 variable {k : Type} [Field k] {A F : Type} [CommRing A] [Field F]
   {Φ : SwitchFamily k A} {ι : A →+* F} {ρ : A →+* k} {u : F}
 
-/-- **Galois switching data force nonzero genuine `H¹`** (LESSON 2 analysis): the actual fibre's
+/-- **Galois switching data force nonzero genuine `H¹`** (non-vacuity analysis): the actual fibre's
 Selmer complex has `dim H¹ ≥ 1`, equal to the actual stage's fibre dimension. Applied to
 `GaloisNonquadInputs.toGaloisSwitchData` (`GaloisWiring.lean`) over the genuine family `galΦ`, an
 instance of `GaloisNonquadInputs` requires an explicit computation of continuous Galois cohomology
@@ -309,7 +309,7 @@ noncomputable def GaloisQuadInputs.ofNonquadratic (G : GaloisSwitchData Φ ι ρ
 
 end Quad
 
-/-! ### LESSON 2 -/
+/-! ### Non-vacuity -/
 
 /-- The example family of `GenuineSwitch.lean` is nonquadratic. PROVED. -/
 theorem exGenuineFamily_not_quadratic : ¬ exGenuineFamily.quadratic (RingHom.id ℚ) := by

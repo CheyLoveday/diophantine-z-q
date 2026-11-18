@@ -28,7 +28,7 @@ instance used that freedom. Here the input is tightened (truth check, LESSON c):
 * `tied_of_duality`, `tied_iff_duality` (PROVED): when `δ` is surjective, the tied input is
   equivalent to `LocalizationDualityInput` for the actual relaxed image (a finding: the remaining
   GLUE content is exactly the self-annihilation `U = U^⊥`, no more and no less).
-* LESSON 2: `exTied`, a genuinely tied strict condition (`U_str = 0` inside the relaxed condition of
+* Non-vacuity: `exTied`, a genuinely tied strict condition (`U_str = 0` inside the relaxed condition of
   the degree-one example `exRel`), with `δ` surjective (`exDelta_surjective`, from `H²(C_rel) = 0`),
   `H²(C(U_str)) ≠ 0` coming from the actual sequence (`ex_h2_nontrivial`, dimension `2`), and the
   tied input inhabited (`exTiedAdjunction`).
@@ -169,7 +169,7 @@ theorem tied_iff_duality (T : TiedStrict R) (ε σ : k) (J : Matrix (Fin 2) (Fin
     TiedSwitchDualityAdjunction T ε σ J hε hσ hJ2 ↔ LocalizationDualityInput ε σ J hε hσ hJ2 R.U :=
   ⟨localizationDualityInput_of_tied T ε σ J hε hσ hJ2, tied_of_duality T ε σ J hε hσ hJ2 hδ⟩
 
-/-! ### Non-vacuity (LESSON 2): a genuinely tied configuration -/
+/-! ### Non-vacuity: a genuinely tied configuration -/
 
 /-- **The tied strict condition of the degree-one example** (`exRel`): `U_str = 0` inside the
 relaxed condition `U_rel = F ⊕ S`, with `W_rel = U_rel` (`g_R = id`). -/

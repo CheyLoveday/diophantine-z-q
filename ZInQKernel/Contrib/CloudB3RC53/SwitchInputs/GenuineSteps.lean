@@ -563,7 +563,7 @@ theorem regular_of_galoisSwitchData' [IsLocalRing A] (hÎ¹ : Function.Injective Î
 
 end Galois
 
-/-! ### The literal (degree-one) bundles are special cases; non-vacuity (LESSON 2) -/
+/-! ### The literal (degree-one) bundles are special cases; non-vacuity -/
 
 section Literal
 

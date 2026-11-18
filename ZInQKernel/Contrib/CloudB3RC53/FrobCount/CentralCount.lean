@@ -31,7 +31,7 @@ Results:
 * **`centralFrobeniusDeterminantsNonzeroCount_proof` (PROVED)**: for `Φ ∈ M₂(ℤ)` with `det Φ = q`
   and `tr Φ = ±(q + 1 − #W(k))`, both central determinants are nonzero. There is no Hasse
   hypothesis and no condition on `W` (good reduction is not needed for the count bounds).
-* LESSON 2: `centralFrobeniusCount_example` — for every Weierstrass curve over every finite field,
+* Non-vacuity: `centralFrobeniusCount_example` — for every Weierstrass curve over every finite field,
   `Φ = [[0, −q], [1, a_r]]` satisfies the hypotheses. Concrete instance:
   `y² = x³ − x` over `𝔽₃` (`exCurve3`).
 
@@ -165,7 +165,7 @@ theorem centralFrobeniusDeterminantsNonzeroCount_proof :
     rw [this]
     exact mul_ne_zero hq.ne' (fun h => key (by linarith))
 
-/-- **LESSON 2**: for every Weierstrass curve over every finite field, the companion matrix
+/-- **non-vacuity**: for every Weierstrass curve over every finite field, the companion matrix
 `[[0, −q], [1, a_r]]` of `x² − a_r x + q` satisfies the hypotheses. -/
 theorem centralFrobeniusCount_example :
     (!![0, -(Fintype.card F : ℤ); 1, (Fintype.card F : ℤ) + 1 - Nat.card (Point W)] :

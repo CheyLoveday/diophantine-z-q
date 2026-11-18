@@ -289,7 +289,7 @@ theorem singular_plane {I : Subgroup G} {φ σ : G} (T : TameCoordinates (M := M
 
 end Sides
 
-/-! ### Non-vacuity (LESSON 2): the tame coordinates on `(ℤ/2)²` with `M = 𝔽₂²` -/
+/-! ### Non-vacuity: the tame coordinates on `(ℤ/2)²` with `M = 𝔽₂²` -/
 
 section Example
 
@@ -349,7 +349,7 @@ theorem exCocDA_zero_of (z : Z1 ExG ExM)
   · rw [show (Multiplicative.ofAdd ((1 : ZMod 2), (1 : ZMod 2)) : ExG) = exφ * exσ by decide, hadd, hφ, hσ,
       add_zero]
 
-/-- **Non-vacuity of `TameCoordinates`** (LESSON 2): on `G = (ℤ/2)²` with `M = 𝔽₂²` (trivial
+/-- **Non-vacuity of `TameCoordinates`** (non-vacuity): on `G = (ℤ/2)²` with `M = 𝔽₂²` (trivial
 action), `I = ⟨σ⟩`, the coordinate map `[z] ↦ (z(φ), z(σ))` is bijective and cocycles with
 `z(σ) = 0` vanish on `I`. PROVED. -/
 theorem exTameCoordinates : TameCoordinates (M := ExM) (Subgroup.zpowers exσ) exφ exσ where

@@ -33,7 +33,7 @@ Nodes:
 * `OuterSwitchData.ofIntegralModels` (PROVED): `OuterSwitchData` from integral model stages and outer
   switch steps; `minor_link`, `cycle_integral` and `functional_bound` are proved, the switch comes
   from `OuterSwitchStep`.
-* Non-vacuity (LESSON 2): `exIntegralModelStage` (over `ℤ₂ ⊂ ℚ₂`), `exOuterOfIntegralModels`, and
+* Non-vacuity: `exIntegralModelStage` (over `ℤ₂ ⊂ ℚ₂`), `exOuterOfIntegralModels`, and
   `exOuterSwitchStepInputs` (the switch-input components: `NonquadDims 3 1` and unit-normalized
   switch coordinates over `ℚ₂`).
 
@@ -280,7 +280,7 @@ def OuterSwitchData.ofIntegralModels (hinj : Function.Injective (algebraMap R K)
 
 end Integral
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section Examples
 

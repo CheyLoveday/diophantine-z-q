@@ -26,7 +26,7 @@ over `Λ` are not coefficient changes of one `SelData` in the project.)
   invariance `kmCoord_eq_of_fourMap` (lane Torsion).
 * `coordLink_of_comparison` (PROVED): E1a from the (4.7) data, the integral core and the retained
   comparison.
-* `retainedComparison_ex` (LESSON 2): the input holds in the non-degenerate example of
+* `retainedComparison_ex` (non-vacuity): the input holds in the non-degenerate example of
   `CoreExample.lean` (corrected coordinate `−t`), with an explicit chain map.
 
 **Caveat (round 4).** The core route takes an integral core with exact augmentation at EVERY

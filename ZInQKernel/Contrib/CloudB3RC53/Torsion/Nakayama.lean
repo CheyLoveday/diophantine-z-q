@@ -24,7 +24,7 @@ The proof is elementary:
   with `d`, so `h U⁻¹` is a contraction.
 
 * `BasedCx.map`: coefficient change of a based complex along a ring map.
-* LESSON 2: `nakayama_example` — for any local ring `R` and `x` in its maximal ideal, the disk
+* Non-vacuity: `nakayama_example` — for any local ring `R` and `x` in its maximal ideal, the disk
   `R --(1 + x)--> R` has a contractible reduction, and the theorem produces an integral contraction.
 
 **Classification.** PROVED.
@@ -172,7 +172,7 @@ theorem nakayama_contraction (C : BasedCx R κe κo)
       _ = UO * UO⁻¹ := by rw [iEO, Matrix.add_mul]; simp only [Matrix.mul_assoc]
       _ = 1 := mul_nonsing_inv _ dO
 
-/-- **LESSON 2**: for `x` in the maximal ideal, the reduction of the disk `R --(1 + x)--> R` is
+/-- **non-vacuity**: for `x` in the maximal ideal, the reduction of the disk `R --(1 + x)--> R` is
 contractible (by the identity), so `nakayama_contraction` gives an integral contraction. -/
 theorem nakayama_example (x : R) (hx : x ∈ IsLocalRing.maximalIdeal R) :
     Nonempty (Contraction (diskEven 0 even_zero (1 + x))) := by

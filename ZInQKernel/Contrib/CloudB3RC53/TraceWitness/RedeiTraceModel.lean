@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.CloudB3RC53.EvenUpper.RedeiWitness
 /-!
 # A corrected trace model with a NONZERO reading (non-vacuity of `TraceModelRel`)
 
-Consistency check, not part of the manuscript (LESSON 2). RC0's only witnesses of `TraceModelRel`
+Consistency check, not part of the manuscript (non-vacuity). RC0's only witnesses of `TraceModelRel`
 and `ConstituentModelRel` (`TraceModelRel.zero`, `ConstituentModelRel.zero`) have the zero reading.
 Here, for every type data `T` over `𝔽₂`, every budget and every even `a_p`, `redeiTraceModel` is a
 `TraceModelRel` whose reading is the Rédei reading `R(W) = det` (over `𝔽₂`) of the Rédei matrix of

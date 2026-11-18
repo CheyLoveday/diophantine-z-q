@@ -40,7 +40,7 @@ Nodes:
 * `stageModelLink_of_baseChange` (PROVED): the GLUE link from an integral change of basis.
 * `coordStep_of_switch` (PROVED from the links): UniformSwitch's `CoordStep`.
 * `outerCoords_of_switch` (PROVED from the links): the field `OuterSwitchStep.coords`.
-* Non-vacuity (LESSON 2): `exStage_old`, `exStage_new`, `exPlaneCoordStep`, `exOuterLink`.
+* Non-vacuity: `exStage_old`, `exStage_new`, `exPlaneCoordStep`, `exOuterLink`.
 -/
 
 noncomputable section
@@ -335,7 +335,7 @@ theorem outerCoords_of_switch (cOld cNew : J → K)
 
 end Outer
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section Examples
 

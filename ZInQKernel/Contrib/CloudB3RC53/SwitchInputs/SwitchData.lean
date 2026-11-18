@@ -30,7 +30,7 @@ Nodes (PROVED):
 * `finrank_signPart_of_equiv`: equivariant linear isomorphisms preserve sign-part dimensions.
 * `SelmerModelSwitchData.toSelmerSwitchData`: the full `SelmerSwitchData` from the bundle.
 * `regular_of_selmerModelSwitchData`: every stage coordinate lies in `ι(A)` (RC16 regularity).
-* Non-vacuity (LESSON 2): `exSelmerModelSwitchData`, a bundle with a genuine nonquadratic switch
+* Non-vacuity: `exSelmerModelSwitchData`, a bundle with a genuine nonquadratic switch
   from fiber dimension three to one (`exSelmerModelSwitchData_switches`).
 
 Remaining inputs (GLUE, carried in the step bundles): localization duality, detection, the
@@ -262,7 +262,7 @@ theorem regular_of_selmerModelSwitchData [IsLocalRing A] {ι : A →+* F}
     (P : SelmerModelSwitchData ι ρ) (S : P.Stage) : ∃ a : A, ι a = (P.stage S).u :=
   regular_of_selmerSwitchData hι hρ P.toSelmerSwitchData S
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section NonVacuity
 
@@ -309,7 +309,7 @@ noncomputable def exNonquadModelStep (u u' : ℚ) :
     haveI := fiberH1_finite (RingHom.id ℚ) (exStage1 u')
     exact LinearEquiv.ofFinrankEq _ _ (by rw [exSideS_h1, fiberH1_exStage1])
 
-/-- **`SelmerModelSwitchData` with a genuine switch** (LESSON 2): the stages of fiber dimensions
+/-- **`SelmerModelSwitchData` with a genuine switch** (non-vacuity): the stages of fiber dimensions
 three and one of `exSelmerSwitchData`, the identity involutions (nonquadratic case), and the
 nonquadratic model step `exNonquadModelStep`. -/
 noncomputable def exSelmerModelSwitchData :

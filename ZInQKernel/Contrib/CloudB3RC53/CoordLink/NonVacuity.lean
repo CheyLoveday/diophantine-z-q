@@ -2,7 +2,7 @@ import ZInQKernel.Contrib.CloudB3RC53.CoordLink.E1a
 import ZInQKernel.Contrib.CloudB3RC53.ClearingComplex.PlaceSupport
 
 /-!
-# E1a, part 3: consistency of the two inputs (LESSON 2)
+# E1a, part 3: consistency of the two inputs (non-vacuity)
 
 * `kmCoord_zero_class`: the coordinate of the zero class vanishes (the augmented complex is not
   exact in degree zero, so it has no contraction and its torsion is `0`).
@@ -93,7 +93,7 @@ theorem hlam0 (b : ℕ) :
     lamEx b ᵥ* fromRows ((Mex b).C.map (φO b)).X ((Mex b).C.map (φO b)).Y = 0 :=
   zero_vecMul _
 
-/-- **LESSON 2: the two inputs of E1a hold together** for lane ClearingComplex's consistency
+/-- **Non-vacuity: the two inputs of E1a hold together** for lane ClearingComplex's consistency
 witness `identification2_example` and interface data with `ũ = 0`. -/
 theorem coordLinkInputs_example (ℓ : ℕ) (F : Family) :
     CorrectedIsEta (ddZero ℓ) F 1 0 ∧

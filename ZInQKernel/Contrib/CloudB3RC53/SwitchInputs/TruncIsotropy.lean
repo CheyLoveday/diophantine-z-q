@@ -31,7 +31,7 @@ This file:
   truncated cone, and `trT_selCupFun` computes it by the original cup formula.
 * `switchAdjunction_of_trunc` (PROVED): the switch duality adjunction from truncated data — the other
   team's `switchAdjunctionFromDuality_proof` applies to `toSelPairData`.
-* LESSON 2: the derivative conditions `D⁰` (degree 0) and `D⁰ ⊕ (F ⊕ S)[−1]` (degrees 0, 1) with a
+* Non-vacuity: the derivative conditions `D⁰` (degree 0) and `D⁰ ⊕ (F ⊕ S)[−1]` (degrees 0, 1) with a
   local cup product `L⁰ × L¹ → E_L¹`: `exUntruncated_fails` (no untruncated isotropy homotopy
   exists) and `exTrunc` (truncated data exist), hence genuine `SelPairData` over `τ≥2`.
 -/
@@ -343,7 +343,7 @@ theorem switchAdjunction_of_trunc (k : Type) [Field k] (R : QuasiRelaxedLocaliza
 
 end Adjunction
 
-/-! ### LESSON 2: the derivative conditions, where only the truncated isotropy holds -/
+/-! ### Non-vacuity: the derivative conditions, where only the truncated isotropy holds -/
 
 section Example
 
@@ -433,7 +433,7 @@ def exU0 : (exStrData S).U.X 0 := fun _ => 1
 /-- See `exU0`. -/
 def exV1 : (exRelData S).U.X 1 := fun _ => 1
 
-/-- **LESSON 2: the untruncated isotropy fails for the derivative conditions.** For the local cup
+/-- **Non-vacuity: the untruncated isotropy fails for the derivative conditions.** For the local cup
 product `locCup` (pairing `D⁰` with the `F`-coordinate of `(F ⊕ S)[−1]`, into degree one), no
 isotropy homotopy `h` satisfies `d h + h d = ι u ∪ ι' v` in all degrees: in bidegree `(0, 1)` all
 three terms of the left side vanish, while `ι(1) ∪ ι'(e_F) = 1 ≠ 0`. So the derivative conditions do
@@ -465,7 +465,7 @@ theorem exUntruncated_fails [Nontrivial S]
   have h0 := congrFun h ⟨0, by simp [dimTgt]⟩
   exact zero_ne_one (h0.trans h1)
 
-/-- **LESSON 2: the truncated isotropy holds for the derivative conditions.** With `h = 0`, both
+/-- **Non-vacuity: the truncated isotropy holds for the derivative conditions.** With `h = 0`, both
 truncated identities hold: the local cup product vanishes in target degrees `≥ 2` (its only nonzero
 bidegree is `(0, 1)`, of target degree one). PROVED. -/
 def exTrunc : SelPairDataTrunc (exStrData S) (exRelData S) where
@@ -488,7 +488,7 @@ def exTrunc : SelPairDataTrunc (exStrData S) (exRelData S) where
     simp [locCup_P, locCupP, hc, stdCx_d_apply]
     rfl
 
-/-- **LESSON 2: genuine Selmer pairing data over `τ≥2` for the derivative conditions**, although no
+/-- **Non-vacuity: genuine Selmer pairing data over `τ≥2` for the derivative conditions**, although no
 untruncated data exist for `locCup` (`exUntruncated_fails`). -/
 def exTruncSelPairData : SelPairData (exStrData S) (exRelData S) := (exTrunc S).toSelPairData
 

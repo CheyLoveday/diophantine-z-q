@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.NonVacuity
 /-!
 # RC53 SwitchInputs: non-vacuity of the quadratic Selmer switch steps
 
-LESSON 2 (model non-vacuity) for the two models of `Plug.lean` that `NonVacuity.lean` leaves
+non-vacuity (model non-vacuity) for the two models of `Plug.lean` that `NonVacuity.lean` leaves
 uninhabited: `SelmerQuadMixedStep` and `SelmerQuadSingleStep` (tex L5003–5136), together with the
 `SelmerQuadSwitch` they contain, now with genuinely nontrivial involutions.
 

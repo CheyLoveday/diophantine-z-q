@@ -190,7 +190,7 @@ theorem localIdentity_ramified (F : PowerSeries ℂ) (ε : ℂ) :
       PowerSeries.rescale ε F = 1 * PowerSeries.rescale ε F := by
   simp
 
-/-! ### Consistency of the inert clause (LESSON 2)
+/-! ### Consistency of the inert clause (non-vacuity)
 
 Mathlib's local polynomial over `ℚ_p` has one of the shapes `1 − aT + pT²` (good), `1 − T`, `1 + T`,
 `1`. For each, `L(T) L(−T)` is `Q(T²)` with `Q` again of one of Mathlib's shapes, now with `p²` in

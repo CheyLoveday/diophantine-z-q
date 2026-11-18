@@ -25,7 +25,7 @@ functional relation `w_R|old = e_q w_P` of the triangular model directly. Here i
   `commonCoordinateModel_of_natural_models` and `commonCoordinateInputs_of_natural` (RC0's
   `CommonCoordinateInputs`), from retained naturality, support-change retention and the triangular
   models. PROVED.
-* Non-vacuity (LESSON 2): `naturalStep_example`, the step of `actualStep_example` with its
+* Non-vacuity: `naturalStep_example`, the step of `actualStep_example` with its
   functionals produced by `examplePlaceRetention`.
 
 **Classification.** PROVED.

@@ -422,7 +422,7 @@ end Galois
 /-- The whole complex as a subcomplex. -/
 def SubFam.top (L : GCx k) : SubFam L := ⟨fun _ => ⊤, fun _ _ _ _ _ => Submodule.mem_top⟩
 
-/-- **Non-vacuity of `DerivFamily`** (LESSON 2): the old conditions (all three equal) at every
+/-- **Non-vacuity of `DerivFamily`** (non-vacuity): the old conditions (all three equal) at every
 place, for any family of complexes; the inertia properties hold. -/
 def DerivFamily.const (Lv : ι → GCx k) (A : ∀ v, SubFam (Lv v)) : DerivFamily Lv where
   str := A
@@ -446,7 +446,7 @@ def planeSub {V : Type} [AddCommGroup V] [Module k V] (P : Submodule k V) :
   S n := if n = 1 then P else ⊥
   hd _ j _ _ _ := (Submodule.zero_mem _ : (0 : V) ∈ (if j = 1 then P else ⊥))
 
-/-- **A nontrivial derivative family** (LESSON 2): one place, the local complex `constCx (k² × k²)`
+/-- **A nontrivial derivative family** (non-vacuity): one place, the local complex `constCx (k² × k²)`
 (zero differential), strict condition `0`, side condition the finite plane `F` in degree one,
 relaxed condition all of `F ⊕ S` in degree one; the inertia properties hold, and the transported
 quasi-side facts apply (`quasiFacts`). -/

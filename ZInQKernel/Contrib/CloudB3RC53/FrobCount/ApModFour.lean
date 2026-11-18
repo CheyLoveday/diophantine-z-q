@@ -20,7 +20,7 @@ file states the manuscript's input and closes the departure for the actual curve
   `ApModFour`. This is lane RC's `apModFour_curve`: `a_p = p + 1 − #Ẽ_m(𝔽_p)` and
   `Ẽ_m(𝔽_p)[2] = {O, (0, 0), (m, 0), (−3m, 0)}` has order four.
 * `apEven_curve_typeData`: hence `ApEven` for the actual curve, through the manuscript's form.
-* LESSON 2: `apModFour_curve_one_five` — `a_5(E_1) ≡ 6 (mod 4)`.
+* Non-vacuity: `apModFour_curve_one_five` — `a_5(E_1) ≡ 6 (mod 4)`.
 
 **Classification.** PROVED.
 -/
@@ -61,7 +61,7 @@ theorem apEven_curve_typeData (T : TypeData L ε) (m : ℤ)
     ApEven T (fun p => (ZInQ.Manuscript.curve (m : ℚ)).LFunction p) :=
   apEven_of_apModFour T _ (apModFour_curve_typeData T m hM)
 
-/-- **LESSON 2**: `a_5(E_1) ≡ 6 (mod 4)`. -/
+/-- **non-vacuity**: `a_5(E_1) ≡ 6 (mod 4)`. -/
 theorem apModFour_curve_one_five :
     (ZInQ.Manuscript.curve ((1 : ℤ) : ℚ)).LFunction 5 ≡ (5 : ℤ) + 1 [ZMOD 4] := by
   have := ZInQ.Manuscript.RC.AddressGenuine.apModFour_curve 1 6

@@ -29,7 +29,7 @@ forces `ũ_x ≠ 0` everywhere, which fails at generically acyclic constituents 
 * `degenerate_of_patterns` (PROVED): the degenerate input splits along E2's patterns: at a
   generically acyclic constituent it is `u_{rel,x} = 0`; at a rank-one constituent it is needed only
   where `c^{orig}_x = 0`.
-* `origCases_zero_example` (LESSON 2): the case inputs hold for every genuine identification with
+* `origCases_zero_example` (non-vacuity): the case inputs hold for every genuine identification with
   the zero class and functional and interface data with `ũ = 0` (all addresses degenerate); the
   non-degenerate branch is inhabited in batch 3's `CoordLink/ComparisonExample.lean`
   (`ũ = −t`, `Identification2`).
@@ -139,7 +139,12 @@ theorem urelK_eq_kmOrig_of_core {ℓ : ℕ} (Dd : RCData ℓ) (F : Family)
 
 /-- **`OrigCoordLink` by cases** (PROVED): from the (4.7) data, the degenerate input
 (`u_{rel,x} = 0` where `c^{orig}_x = 0`) and the non-degenerate input (an integral core with the
-same coordinate as `C_x` where `c^{orig}_x ≠ 0`), at the addresses with `Δ_x ≠ 0`. -/
+same coordinate as `C_x` where `c^{orig}_x ≠ 0`), at the addresses with `Δ_x ≠ 0`.
+
+Conditional comparison route. The premise that η belongs to Λ[G]
+with Λ-unit sign evaluations is stronger than the manuscript's η∈𝒪[G],
+which may have poles (tex 4155,4229). The nondegenerate case still requires
+the actual class/functional and retained determinant-basis comparison. -/
 theorem origCoordLink_of_cases {ℓ : ℕ} (Dd : RCData ℓ) (F : Family)
     (M : Identification2G K S S' hS F.b dK hK cE tK)
     (z : Fin M.D.m0 ⊕ Unit ⊕ Fin M.D.m1 → MonoidAlgebra OO (SignGroup F.b))
@@ -210,7 +215,7 @@ theorem coreRoute_forces_nonzero {ℓ : ℕ} (Dd : RCData ℓ) (F : Family)
   uTilde_ne_zero_of_core Dd F x (T x) (by rw [hcompat x]; exact (hunit x).map ιQ) (core x)
     (hcore x)
 
-/-! ### LESSON 2: the case inputs with all addresses degenerate -/
+/-! ### Non-vacuity: the case inputs with all addresses degenerate -/
 
 /-- The (4.7) data for `ũ = u_prim = 0`: no unused primes, `η = 1`, `u_rel = 0`. -/
 def trianglesZero (ℓ : ℕ) (F : Family) (x : Addr F.b) :
@@ -246,7 +251,7 @@ def trianglesZero (ℓ : ℕ) (F : Family) (x : Addr F.b) :
   eps _ := 1
   hstep := by simp
 
-/-- **LESSON 2: the case inputs of `origCoordLink_of_cases` hold together** for every genuine
+/-- **Non-vacuity: the case inputs of `origCoordLink_of_cases` hold together** for every genuine
 identification, with the zero class and functional and interface data with `ũ = 0` (every address
 is degenerate: the coordinate of the zero class vanishes). -/
 theorem origCases_zero_example (ℓ : ℕ) (F : Family)

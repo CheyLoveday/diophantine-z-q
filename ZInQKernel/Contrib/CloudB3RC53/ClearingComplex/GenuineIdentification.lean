@@ -36,7 +36,7 @@ the identification to the genuine objects, keeping `Identification2` unchanged.
   RC0's `ClearingInputsCx` from `Identification2G`, transported cycle and functional, and E1a, with
   `c := kmCoord` and E1b `coordComputation_km`).
 
-LESSON 2 (recorded, see notes): an instance with a nonempty set of new places needs genuine
+non-vacuity (recorded, see notes): an instance with a nonempty set of new places needs genuine
 continuous cochains of `G_{K_q}` quasi-isomorphic to a nonzero tame model (local Galois
 cohomology) and a factorization `ψ_q` (lane RC26's GLUE `UnramifiedAtFactorization`); neither is
 available, so no unconditional witness is given here. The cancellation part is witnessed by
@@ -88,8 +88,10 @@ variable (K : Type) [Field K] [NumberField K] (S S' : Set (HeightOneSpectrum (�
   (hS : S ⊆ S')
 
 set_option maxHeartbeats 1000000 in
-/-- **The identification of the remaining complex over the genuine Selmer complexes** (GLUE; see
-the module docstring). -/
+/-- An abstract family identification with a finite unramified-support
+comparison. Its pre-cancellation new blocks are in degrees two and three.
+It does not model the full-condition singular-quotient triangle (5.6)
+of tex 5234–5238 and 5398–5403. -/
 structure Identification2G [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K S S')]
     (b : ℕ) (dK hK cE tK : ℕ) where
   /-- the new places are the active primes: there is at least one -/

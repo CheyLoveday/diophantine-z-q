@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.GaloisInvolution
 /-!
 # RC53 SwitchInputs: non-vacuity of the diagram involution
 
-LESSON 2 for `GaloisInvolution.lean`'s model structure `DiagramInvolution R SF SS` (a hypothesis of
+non-vacuity for `GaloisInvolution.lean`'s model structure `DiagramInvolution R SF SS` (a hypothesis of
 `DiagramInvolution.toSelmerQuadSwitch`, tex L5009–5086): a genuine instance over `ℚ` with
 non-trivial involutions, on the mixed-sign example `exRel`, `exSideF`, `exSideS` of
 `NonVacuity.lean`.
@@ -47,7 +47,7 @@ theorem exSelEndoRel_isInvolution : exSelEndoRel.IsInvolution := by
     (((flipM (dimAt 2 i)).prodMap (-flipM (dimAt 2 i))) u) = u
   exact Prod.ext (flipM_flipM _ _) (negflip_negflip _ _)
 
-/-- **A genuine diagram involution** (LESSON 2 for `DiagramInvolution`, tex L5009–5086): on the
+/-- **A genuine diagram involution** (non-vacuity for `DiagramInvolution`, tex L5009–5086): on the
 mixed example, `J₀` on the finite condition, `0` on the strict condition, `−J₀` on the singular
 condition, all compatible with the inclusions into the relaxed condition. -/
 def exDiagramInvolution : DiagramInvolution exRel exSideF exSideS where

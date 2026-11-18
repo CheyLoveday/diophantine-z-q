@@ -38,7 +38,7 @@ Nodes (PROVED):
 * `hloc_of_cocycleRep`: the clause `hloc` of `galoisCocycleInvolution_genuine` (in its exact shape
   `locH (Hσ v) = localInv J (locH v)`) for any localization `locH` represented by local cocycles on
   which the involution acts by the cocycle action up to a coboundary.
-* Non-vacuity (LESSON 2): the infinite dihedral group with `σ = r 1`, `Φ = sr 0`, `m = −1`,
+* Non-vacuity: the infinite dihedral group with `σ = r 1`, `Φ = sr 0`, `m = −1`,
   `ρ(r i) = 1`, `ρ(sr i) = diag(1, −1)` over `ℚ`, and a cocycle with nonzero singular coordinate.
 
 GLUE left (stated as the hypotheses of `hloc_of_cocycleRep`): that the local component of the
@@ -157,7 +157,7 @@ theorem hloc_of_cocycleRep (ρ : G →* Module.End k (Fin 2 → k)) (φ σ Φ : 
   rw [e, coord_coboundary ρ hφ1 hσ, add_zero]
   exact localJAction_proof k G ρ φ σ Φ m hφ hconj hσ hm (rep v) (hrep v)
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 /-- `J₀ = diag(1, −1)` as an endomorphism of `ℚ²`. -/
 def exJ : Module.End ℚ (Fin 2 → ℚ) := Matrix.toLin' (Matrix.diagonal ![1, -1])
@@ -187,7 +187,7 @@ theorem exRho_r (i : ZMod 0) : exRho (DihedralGroup.r i) = 1 := rfl
 
 theorem exRho_sr (i : ZMod 0) : exRho (DihedralGroup.sr i) = exJ := rfl
 
-/-- **Non-vacuity of the hypotheses** (LESSON 2): in the infinite dihedral group, `σ = r 1` (tame
+/-- **Non-vacuity of the hypotheses** (non-vacuity): in the infinite dihedral group, `σ = r 1` (tame
 inertia), `Φ = sr 0` (rational Frobenius), `φ = Φ² = 1`, `m = −1`: the relations hold, `σ` acts
 trivially, `J₀² = 1`, so `LocalJAction` and `hloc_of_cocycleRep` apply. PROVED. -/
 theorem exLocalJ_hyps :
@@ -232,7 +232,7 @@ theorem exCoc_cocycle : IsCocycle exRho exCoc := by
   · simp only [DihedralGroup.sr_mul_sr, exCoc, exRho_sr]
     rw [hsub, map_zsmul, exJ_e1, smul_neg, ← neg_smul, ← add_smul]; congr 1; ring
 
-/-- **The computation on the example** (LESSON 2): the singular coordinate of `exCoc` is
+/-- **The computation on the example** (non-vacuity): the singular coordinate of `exCoc` is
 `e₁ ≠ 0`, and `LocalJAction` gives the transformed coordinates `localInv J₀ (0, e₁) = (0, e₁)`
 (since `−J₀ e₁ = e₁`). PROVED. -/
 theorem exLocalJ_coords :
