@@ -110,4 +110,19 @@ theorem map_translation_tautologicalPoint (φ : Isogeny W₁ W₂)
       reductionOfDegreeEqOne_smul_map (W := W₂) (hw := (W₁.pointEquivDegreeOnePlace (Q + P)).2), hred]
   rw [h1, hred, hadd, map_add, sub_self]
 
+/-- **A separable isogeny intertwines translations on function fields**:
+`φ^* ∘ τ_{φ P}^* = τ_P^* ∘ φ^*`. PROVED. -/
+theorem fieldPullback_comp_translation (φ : Isogeny W₁ W₂)
+    [Algebra.IsSeparable φ.fieldPullback.fieldRange W₁.FunctionField] (P : W₁.Point) :
+    φ.fieldPullback.comp (translation W₂ (Point.equivBaseChangeSelf W₂
+        ((Isogeny.Hom.ofIsogeny φ).pointMap P)) : W₂.FunctionField →ₐ[F] W₂.FunctionField) =
+      (translation W₁ (Point.equivBaseChangeSelf W₁ P) : W₁.FunctionField →ₐ[F]
+        W₁.FunctionField).comp φ.fieldPullback := by
+  apply map_genericPoint_injective W₂ (Ω := W₁.FunctionField)
+  simp only
+  rw [← Point.map_map, ← Point.map_map, map_translation_genericPoint,
+    translatedGenericPoint_def, map_add, ← Isogeny.tautologicalPoint_eq_map_genericPoint,
+    ← Isogeny.Hom.tautologicalPoint_ofIsogeny,
+    map_translation_tautologicalPoint, Point.map_baseChange]
+
 end ZInQ.Contrib.CloudB3RC53.WeilIsogeny
