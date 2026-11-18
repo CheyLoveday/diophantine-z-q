@@ -1,0 +1,7 @@
+# cm-port handoff — merge complete, fold blocked
+
+**VERIFIED.** `wip/cm-port` merges `151c02161` (including `fe5ad6a96`) onto the assigned fork main `41892618b` in `fe56e1880`. The CM order proof and fibre split provider are preserved. The [scratch check](../scratch/cm-port/Statement.lean) compiles using the previous task’s import cache, checks the verbatim Prop from `324f0655a`, and records only `propext`, `Classical.choice` and `Quot.sound` for the order proof and the original provider.
+
+The live fold stops at `PkgI2.RaynaudCriterionNF.{0}`, an input to `cmFibreSplit_of_curveOrder324`. Main no longer supplies unipotence for all inertia. It supplies `R6U`: wild inertia triviality and the integral `Y₃` moduli model. The old CM hom field construction still uses the all-inertia input for `good_of_QML3`. The [report](../docs/research/cm-port.md) maps the other five inputs and records the exact mismatch.
+
+The next integration step would be to adapt the CM hom field construction to the already-proved `good_of_QML3U` path, then run the fold and the live `FrozenTarget` and `#discharges` checks. No such reroute was attempted. `Main.lean`, its four headline binders, and `kinds.tsv` are unchanged. **H strict LEAF/GLUE 5/28 on 33** remains live; removing only `cmFibreSplit` would give **H strict LEAF/GLUE 5/27 on 32**. Manuscript check: nothing new beyond `cm-curve-order`’s check of `thm:height` L582–587.
