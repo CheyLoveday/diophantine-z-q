@@ -29,9 +29,11 @@ support data). Its differences:
   `B` need not be invertible modulo `ρ`, and the old inclusion is not claimed to be a
   quasi-isomorphism.
 
-The remaining fields (the local blocks `A_q` with `det A_q = X^{d_q} v_q + 2 w_q`, the central
-Smith form, the budget, the genuine family model, Nekovář's finite setting, the tame models) are
-those of `Identification2G`. Derived as there: `toIdentification` (poles in degree one),
+The cancellation fields (the local blocks `A_q` with `det A_q = X^{d_q} v_q + 2 w_q`, the family
+model, `T₀ = Y₀ = 0`, the central Smith form, the budget) form the parent structure `FullCore Qn`
+(indexed by an arbitrary finite type `Qn`, here the new places); the remaining fields (the genuine
+family model, Nekovář's finite setting, the tame models) are those of `Identification2G`. Derived
+as there: `FullCore.toIdentification` (poles in degree one),
 `toSelmerIdentification`, `support_qis` (from the PRINT `NekovarProp788ii`) and
 `clearingInputsCx_of_km3` (the body of RC0's `ClearingInputsCx`).
 
@@ -77,27 +79,24 @@ theorem isUnit_B_full {Qn ιn : Type} [Fintype Qn] [DecidableEq Qn] [Fintype ιn
   rw [e, Matrix.det_submatrix_equiv_self] at h0
   exact h0
 
-variable (K : Type) [Field K] [NumberField K] (S S' : Set (HeightOneSpectrum (𝓞 K)))
-  (hS : S ⊆ S')
-
-/-- **The identification with the full-condition triangle (5.6)** (GLUE; see the module
-docstring). The new places may be empty. -/
-structure Identification3 [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K S S')]
-    (b : ℕ) (dK hK cE tK : ℕ) where
+/-- **The cancellation core of the full-condition model** (the new local blocks indexed by `Qn`,
+possibly empty; the family model with the new summands in degrees one and two; `T₀ = Y₀ = 0`; the
+central Smith form; the budget). -/
+structure FullCore (Qn : Type) [Fintype Qn] [DecidableEq Qn] (b : ℕ) (dK hK cE tK : ℕ) where
   /-- the index of a local block -/
   ιn : Type
   [fι : Fintype ιn]
   [dι : DecidableEq ιn]
   /-- the new local blocks over `Λ`, one per new place -/
-  A : NewPlaces K S S' → Matrix ιn ιn Lam
-  dq : NewPlaces K S S' → ℕ
+  A : Qn → Matrix ιn ιn Lam
+  dq : Qn → ℕ
   hd : ∀ q, dq q ≤ 4
-  v : NewPlaces K S S' → Lamˣ
-  w : NewPlaces K S S' → Lam
+  v : Qn → Lamˣ
+  w : Qn → Lam
   hdet : ∀ q, (A q).det = (PowerSeries.X : Lam) ^ dq q * (v q : Lam) + 2 * w q
   /-- the pre-cancellation family model over `Λ[G]`, new summands in degrees one and two -/
   C : FullPreComplex (MonoidAlgebra Lam (SignGroup b))
-  eN : C.N ≃ ιn × NewPlaces K S S'
+  eN : C.N ≃ ιn × Qn
   hB0 : (C.B.submatrix eN.symm eN.symm).map aug = Matrix.blockDiagonal A
   hT0 : C.T.map (augR b) = 0
   hY0 : C.Y.map (augR b) = 0
@@ -113,6 +112,104 @@ structure Identification3 [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K
   budget : BudgetInputsAt (((C.map (φO b)).cancel (isUnit_B_full A dq hd v w hdet C eN hB0)).toSmithBlocks
     (O := OO) ((C.map (augR b)).old hY0 hT0).Ai s s_ne (central_of_full _ s central_full))
     fr₀ dK hK cE tK
+
+namespace FullCore
+
+attribute [instance] fι dι
+
+variable {Qn : Type} [Fintype Qn] [DecidableEq Qn] {dK hK cE tK : ℕ}
+  (M : FullCore Qn b dK hK cE tK)
+
+theorem isUnit_B : IsUnit (M.C.map (φO b)).B.det :=
+  isUnit_B_full M.A M.dq M.hd M.v M.w M.hdet M.C M.eN M.hB0
+
+/-- **The remaining complex**: the cancellation of the new singular summands over `𝒪[G]`. -/
+def D : BlockComplex (MonoidAlgebra OO (SignGroup b)) :=
+  (M.C.map (φO b)).cancel M.isUnit_B
+
+/-- The augmented old part over `Λ`. -/
+abbrev oldC : BlockComplex Lam := (M.C.map (augR b)).old M.hY0 M.hT0
+
+/-- The new local block as a family over `ι × Q`. -/
+abbrev Bsub : Matrix (M.ιn × Qn) (M.ιn × Qn)
+    (MonoidAlgebra Lam (SignGroup b)) :=
+  M.C.B.submatrix M.eN.symm M.eN.symm
+
+theorem d1_map_aug : M.D.d1.map (augS b) = (M.C.P.map (augR b)).map (algebraMap Lam OO) := by
+  change (M.C.P.map (φO b) - M.C.Q.map (φO b) * (M.C.B.map (φO b))⁻¹ *
+    M.C.T.map (φO b)).map (augS b) = _
+  rw [Matrix.map_sub _ (map_sub _), Matrix.map_mul, Matrix.map_mul, map_φO_aug, map_φO_aug M.C.T,
+    M.hT0, Matrix.map_zero _ (map_zero _), Matrix.mul_zero, sub_zero]
+
+theorem aug_eq (i : ℕ) :
+    (M.D.Ai i).map aug = (M.oldC.Ai i).map (algebraMap Lam OO) := by
+  match i with
+  | 0 => exact Matrix.ext fun j k => aug_φO (M.C.c0 (Sum.inl j) k)
+  | 1 =>
+    exact Matrix.ext fun j k =>
+      congrArg (fun N : Matrix _ _ OO => N (Sum.inl j) (Sum.inr (Sum.inr k))) M.d1_map_aug
+  | 2 => exact Matrix.ext fun j k => aug_φO (M.C.U j (Sum.inr (Sum.inr k)))
+  | _ + 3 => exact Matrix.ext fun j => j.elim0
+
+/-- **The sign-evaluated surviving differential `d¹ = P − QB⁻¹T` is the Schur complement of the
+new-local family** (PROVED; one cancellation, in degree one). -/
+theorem poles1 : IsNewLocalSchur (b := b) fun x => M.D.d1.map (Determinant.signEval (sgnChar x)) := by
+  refine ⟨Qn, M.ιn, inferInstance, inferInstance, inferInstance, inferInstance, M.A,
+    M.dq, M.hd, M.v, M.w, M.hdet, M.Bsub, M.hB0, Fin M.D.m1 ⊕ Unit ⊕ Fin M.D.m2,
+    Fin M.D.m0 ⊕ Unit ⊕ Fin M.D.m1, inferInstance, inferInstance, M.C.P,
+    M.C.Q.submatrix id M.eN.symm, M.C.T.submatrix M.eN.symm id, 1, 1, fun x => ?_⟩
+  set f := (Determinant.signEval (O := OO) (sgnChar x)).toRingHom
+  have hB : IsUnit (M.C.B.map (φO b)).det := M.isUnit_B
+  have h1 : M.D.d1.map (Determinant.signEval (sgnChar x)) =
+      (M.C.P.map (φO b) - M.C.Q.map (φO b) * (M.C.B.map (φO b))⁻¹ *
+        M.C.T.map (φO b)).map f := rfl
+  set Px := (M.C.P.map (Determinant.signEval (sgnChar x))).map (algebraMap Lam OO)
+  set Qx := (M.C.Q.map (Determinant.signEval (sgnChar x))).map (algebraMap Lam OO)
+  set Bx := (M.C.B.map (Determinant.signEval (sgnChar x))).map (algebraMap Lam OO)
+  set Tx := (M.C.T.map (Determinant.signEval (sgnChar x))).map (algebraMap Lam OO)
+  have hL : M.D.d1.map (Determinant.signEval (sgnChar x)) = Px - Qx * Bx⁻¹ * Tx := by
+    rw [h1, Matrix.map_sub _ (map_sub _), Matrix.map_mul, Matrix.map_mul,
+      map_inv_of_isUnit f _ hB]
+    change (M.C.P.map (φO b)).map (Determinant.signEval (sgnChar x)) -
+        (M.C.Q.map (φO b)).map (Determinant.signEval (sgnChar x)) *
+          ((M.C.B.map (φO b)).map (Determinant.signEval (sgnChar x)))⁻¹ *
+          (M.C.T.map (φO b)).map (Determinant.signEval (sgnChar x)) = _
+    rw [map_φO_signEval, map_φO_signEval, map_φO_signEval, map_φO_signEval]
+  have hR : (1 : Matrix (Fin M.C.m1 ⊕ Unit ⊕ Fin M.C.m2) (Fin M.C.m1 ⊕ Unit ⊕ Fin M.C.m2) Lam).map
+        (algebraMap Lam OO) *
+      (Px - (Qx.submatrix id M.eN.symm) * (Bx.submatrix M.eN.symm M.eN.symm)⁻¹ *
+        (Tx.submatrix M.eN.symm id)) *
+      (1 : Matrix (Fin M.C.m0 ⊕ Unit ⊕ Fin M.C.m1) (Fin M.C.m0 ⊕ Unit ⊕ Fin M.C.m1) Lam).map
+        (algebraMap Lam OO) = Px - Qx * Bx⁻¹ * Tx := by
+    rw [Matrix.inv_submatrix_equiv, Matrix.submatrix_mul_equiv, Matrix.submatrix_mul_equiv,
+      Matrix.submatrix_id_id, Matrix.map_one _ (map_zero _) (map_one _),
+      Matrix.map_one _ (map_zero _) (map_one _), Matrix.one_mul, Matrix.mul_one]
+  exact hL.trans hR.symm
+
+/-- **The identification, derived** (PROVED): `poles0 = c⁰`, `poles1` the Schur complement,
+`poles2 = U`. -/
+def toIdentification : Identification b dK hK cE tK where
+  D := M.D
+  A0 := M.oldC.Ai
+  s := M.s
+  s_ne := M.s_ne
+  central := central_of_full _ M.s M.central_full
+  aug_eq := M.aug_eq
+  poles0 := Identification2.isNewLocalSchur_lam M.C.c0
+  poles1 := M.poles1
+  poles2 := Identification2.isNewLocalSchur_lam M.C.U
+  budget := budgetInputs_of_at M.budget
+
+end FullCore
+
+
+variable (K : Type) [Field K] [NumberField K] (S S' : Set (HeightOneSpectrum (𝓞 K)))
+  (hS : S ⊆ S')
+
+/-- **The identification with the full-condition triangle (5.6)** (GLUE; see the module
+docstring). The new places may be empty. -/
+structure Identification3 [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K S S')]
+    (b : ℕ) (dK hK cE tK : ℕ) extends FullCore (NewPlaces K S S') b dK hK cE tK where
   /-- the family coefficient module (a topological `𝒪[G][G_{K,S'}]`-module) -/
   Mf : Type
   [Mf_acg : AddCommGroup Mf]
@@ -187,92 +284,11 @@ structure Identification3 [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K
       (fun q g => (locMap_compat K hS q.1 g).trans (hψur q g)) q))
 
 namespace Identification3
-
-attribute [instance] fι dι Mf_acg Mf_mod Mf_act Mf_comm Mf_top Mf_cadd Mf_csmul Mf_cact
+attribute [instance] Mf_acg Mf_mod Mf_act Mf_comm Mf_top Mf_cadd Mf_csmul Mf_cact
   R₀_ring R₀_local M₀_acg M₀_mod M₀_act M₀_comm M₀_top M₀_disc M₀_cact M₀_fin
 
 variable {K S S' hS} [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K S S')]
   {dK hK cE tK : ℕ} (M : Identification3 K S S' hS b dK hK cE tK)
-
-theorem isUnit_B : IsUnit (M.C.map (φO b)).B.det :=
-  isUnit_B_full M.A M.dq M.hd M.v M.w M.hdet M.C M.eN M.hB0
-
-/-- **The remaining complex**: the cancellation of the new singular summands over `𝒪[G]`. -/
-def D : BlockComplex (MonoidAlgebra OO (SignGroup b)) :=
-  (M.C.map (φO b)).cancel M.isUnit_B
-
-/-- The augmented old part over `Λ`. -/
-abbrev oldC : BlockComplex Lam := (M.C.map (augR b)).old M.hY0 M.hT0
-
-/-- The new local block as a family over `ι × Q`. -/
-abbrev Bsub : Matrix (M.ιn × NewPlaces K S S') (M.ιn × NewPlaces K S S')
-    (MonoidAlgebra Lam (SignGroup b)) :=
-  M.C.B.submatrix M.eN.symm M.eN.symm
-
-theorem d1_map_aug : M.D.d1.map (augS b) = (M.C.P.map (augR b)).map (algebraMap Lam OO) := by
-  change (M.C.P.map (φO b) - M.C.Q.map (φO b) * (M.C.B.map (φO b))⁻¹ *
-    M.C.T.map (φO b)).map (augS b) = _
-  rw [Matrix.map_sub _ (map_sub _), Matrix.map_mul, Matrix.map_mul, map_φO_aug, map_φO_aug M.C.T,
-    M.hT0, Matrix.map_zero _ (map_zero _), Matrix.mul_zero, sub_zero]
-
-theorem aug_eq (i : ℕ) :
-    (M.D.Ai i).map aug = (M.oldC.Ai i).map (algebraMap Lam OO) := by
-  match i with
-  | 0 => exact Matrix.ext fun j k => aug_φO (M.C.c0 (Sum.inl j) k)
-  | 1 =>
-    exact Matrix.ext fun j k =>
-      congrArg (fun N : Matrix _ _ OO => N (Sum.inl j) (Sum.inr (Sum.inr k))) M.d1_map_aug
-  | 2 => exact Matrix.ext fun j k => aug_φO (M.C.U j (Sum.inr (Sum.inr k)))
-  | _ + 3 => exact Matrix.ext fun j => j.elim0
-
-/-- **The sign-evaluated surviving differential `d¹ = P − QB⁻¹T` is the Schur complement of the
-new-local family** (PROVED; one cancellation, in degree one). -/
-theorem poles1 : IsNewLocalSchur (b := b) fun x => M.D.d1.map (Determinant.signEval (sgnChar x)) := by
-  refine ⟨NewPlaces K S S', M.ιn, inferInstance, inferInstance, inferInstance, inferInstance, M.A,
-    M.dq, M.hd, M.v, M.w, M.hdet, M.Bsub, M.hB0, Fin M.D.m1 ⊕ Unit ⊕ Fin M.D.m2,
-    Fin M.D.m0 ⊕ Unit ⊕ Fin M.D.m1, inferInstance, inferInstance, M.C.P,
-    M.C.Q.submatrix id M.eN.symm, M.C.T.submatrix M.eN.symm id, 1, 1, fun x => ?_⟩
-  set f := (Determinant.signEval (O := OO) (sgnChar x)).toRingHom
-  have hB : IsUnit (M.C.B.map (φO b)).det := M.isUnit_B
-  have h1 : M.D.d1.map (Determinant.signEval (sgnChar x)) =
-      (M.C.P.map (φO b) - M.C.Q.map (φO b) * (M.C.B.map (φO b))⁻¹ *
-        M.C.T.map (φO b)).map f := rfl
-  set Px := (M.C.P.map (Determinant.signEval (sgnChar x))).map (algebraMap Lam OO)
-  set Qx := (M.C.Q.map (Determinant.signEval (sgnChar x))).map (algebraMap Lam OO)
-  set Bx := (M.C.B.map (Determinant.signEval (sgnChar x))).map (algebraMap Lam OO)
-  set Tx := (M.C.T.map (Determinant.signEval (sgnChar x))).map (algebraMap Lam OO)
-  have hL : M.D.d1.map (Determinant.signEval (sgnChar x)) = Px - Qx * Bx⁻¹ * Tx := by
-    rw [h1, Matrix.map_sub _ (map_sub _), Matrix.map_mul, Matrix.map_mul,
-      map_inv_of_isUnit f _ hB]
-    change (M.C.P.map (φO b)).map (Determinant.signEval (sgnChar x)) -
-        (M.C.Q.map (φO b)).map (Determinant.signEval (sgnChar x)) *
-          ((M.C.B.map (φO b)).map (Determinant.signEval (sgnChar x)))⁻¹ *
-          (M.C.T.map (φO b)).map (Determinant.signEval (sgnChar x)) = _
-    rw [map_φO_signEval, map_φO_signEval, map_φO_signEval, map_φO_signEval]
-  have hR : (1 : Matrix (Fin M.C.m1 ⊕ Unit ⊕ Fin M.C.m2) (Fin M.C.m1 ⊕ Unit ⊕ Fin M.C.m2) Lam).map
-        (algebraMap Lam OO) *
-      (Px - (Qx.submatrix id M.eN.symm) * (Bx.submatrix M.eN.symm M.eN.symm)⁻¹ *
-        (Tx.submatrix M.eN.symm id)) *
-      (1 : Matrix (Fin M.C.m0 ⊕ Unit ⊕ Fin M.C.m1) (Fin M.C.m0 ⊕ Unit ⊕ Fin M.C.m1) Lam).map
-        (algebraMap Lam OO) = Px - Qx * Bx⁻¹ * Tx := by
-    rw [Matrix.inv_submatrix_equiv, Matrix.submatrix_mul_equiv, Matrix.submatrix_mul_equiv,
-      Matrix.submatrix_id_id, Matrix.map_one _ (map_zero _) (map_one _),
-      Matrix.map_one _ (map_zero _) (map_one _), Matrix.one_mul, Matrix.mul_one]
-  exact hL.trans hR.symm
-
-/-- **The identification, derived** (PROVED): `poles0 = c⁰`, `poles1` the Schur complement,
-`poles2 = U`. -/
-def toIdentification : Identification b dK hK cE tK where
-  D := M.D
-  A0 := M.oldC.Ai
-  s := M.s
-  s_ne := M.s_ne
-  central := central_of_full _ M.s M.central_full
-  aug_eq := M.aug_eq
-  poles0 := Identification2.isNewLocalSchur_lam M.C.c0
-  poles1 := M.poles1
-  poles2 := Identification2.isNewLocalSchur_lam M.C.U
-  budget := budgetInputs_of_at M.budget
 
 theorem comp_qis :
     QuasiIso (SelmerDuality.GHom.toCC (FullPreComplex.incl M.isUnit_B) ≫ M.ψf) := by
