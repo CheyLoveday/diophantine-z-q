@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.CloudB3RC53.RankCounts.GlobalH1
+import ZInQKernel.Contrib.CloudB3RC53.RankCounts.Inflation
 import ZInQKernel.Contrib.CloudB3RC53.RankCounts.QuadraticPlaces
 import ZInQKernel.Contrib.OneProof.RC.Limits.ResidualBound
 
@@ -18,8 +18,9 @@ quadratic field `K = ℚ(√k)` in which:
 * `globalTot = h⁰ + h¹ + h²` with `hⁱ = dim_{𝔽₂} H^i(G_{K,S₀}, W)`, `W = 𝔽₂²` trivial, for the genuine
   `G_{K,S₀}` (`GlobalPrints`), and `global_le` is PROVED through RC6's genus-route structure
   `GlobalCountsGenus` (`globalCountsGenus_of`), whose fields `nPlaces_le_two`, `nPlaces_ram`,
-  `h0_eq`, `h1_eq` are PROVED, `euler` follows from the PRINT leaves Milne ADT I.4.10/I.5.1, and
-  `inflation` is an input of this file (see below);
+  `h0_eq`, `h1_eq` and `inflation` are PROVED (the last from `Inflation.lean`, with the finiteness of
+  `H¹(G_{K,S_T}, 𝔽₂)` from Milne ADT I.5.1), and `euler` follows from the PRINT leaves Milne ADT
+  I.4.10/I.5.1;
 * `places_length` is PROVED from `nPlaces ≤ 2` when the place list over `p` has one entry per
   prime of `K` above `p`.
 
@@ -28,13 +29,13 @@ The remaining named inputs, with RC6's types (the genuine values substituted whe
   (tex 4494–4517; ELLIOT's genus argument), as in `GlobalCountsGenus`, with
   `h1ST = dim H¹(G_{K,S_T}, 𝔽₂)` and `nPlaces = #(primes above p)`; `clDim` is the dimension of
   `Cl(𝒪_{K,S_T})[2]`, not defined here;
-* `inflation` (tex 4519–4520): `dim H¹(G_{K,S₀}, 𝔽₂) ≤ dim H¹(G_{K,S_T}, 𝔽₂)`;
 * `places_deg`, `places_counts` (tex 4544–4582; local degrees and the local table; RC6's
   `placeData_counts_of_prints` gives the local-cohomology part from Milne ADT I.2.3, I.2.8);
 * `arch_le` (tex 4584–4591);
 * `cone` (tex 4593–4597; the Selmer-cone model, see the Duality lane's `cone_of_selmerModel` on
   branch `cloud-b3s/rc53-selmer-duality-2`);
-* `transfer` (tex 4598–4647; Nekovář 7.8.8(ii) and RC6's `ResidualAlgebra`).
+* `transfer` (tex 4598–4647; Nekovář 7.8.8(ii) and RC6's `ResidualAlgebra`; assigned to the
+  MinimalComplexes lane, branch `cloud-b3s/rc53-residual-transfer`).
 
 Kinds: PROVED from the named inputs.
 -/
@@ -90,7 +91,8 @@ theorem finrank_zmod2_sq : Module.finrank (ZMod 2) (ZMod 2 × ZMod 2) = 2 := by
   rw [Module.finrank_prod, Module.finrank_self]
 
 /-- **RC6's genus-route global counts from the genuine `G_{K,S}`** (tex 4478–4533). PROVED from
-the PRINT leaves Milne ADT I.4.10/I.5.1 and the named inputs `kummer`, `genus`, `inflation`. Here
+the PRINT leaves Milne ADT I.4.10/I.5.1 and the inputs `kummer`, `genus`, `inflation` (the last is PROVED
+in `residualRankCounts_of` by `rc6InflationOfPrint_proof`). Here
 `S₀ ⊆ S_T` are finite sets of primes of the imaginary quadratic field `K = ℚ(√k)`, `S₀` containing
 the primes above `2`, `T` a finite set of rational primes containing the ramified ones. -/
 def globalCountsGenus_of (h410 : MilneADT_I_4_10_totallyComplex)
@@ -165,8 +167,6 @@ def residualRankCounts_of (h410 : MilneADT_I_4_10_totallyComplex)
     (clDim : ℕ) (genus : clDim + 1 ≤ (ramifiedPrimes K k).card)
     (kummer : h1F2 K (primesAboveSet K (primeSetT N r D (ramifiedPrimes K k))) =
       (1 + ∑ p ∈ primeSetT N r D (ramifiedPrimes K k), nPlaces K p) + clDim)
-    (inflation : h1F2 K (primesAboveSet K (chargedPrimes N r D)) ≤
-      h1F2 K (primesAboveSet K (primeSetT N r D (ramifiedPrimes K k))))
     -- the local inputs
     (places : ℕ → List PlaceData)
     (hlen : ∀ p ∈ chargedPrimes N r D, (places p).length = nPlaces K p)
@@ -187,7 +187,12 @@ def residualRankCounts_of (h410 : MilneADT_I_4_10_totallyComplex)
     (primesAboveSet K (primeSetT N r D (ramifiedPrimes K k)))
     (primesAboveSet_finite K _ (ne_zero_of_mem_chargedPrimes hN hr hD))
     (fun v hv => two_mem_primesAboveSet K (two_mem_chargedPrimes hN) v hv)
-    clDim genus kummer inflation
+    clDim genus kummer
+    (rc6InflationOfPrint_proof h51 K hK _ _
+      (primesAboveSet_mono K Finset.subset_union_left)
+      (primesAboveSet_finite K _ (ne_zero_of_mem_primeSetT K k hN hr hD))
+      (fun v hv => primesAboveSet_mono K Finset.subset_union_left
+        (two_mem_primesAboveSet K (two_mem_chargedPrimes hN) v hv)))
   { N := N
     N_ne_zero := hN
     k := k
@@ -213,7 +218,7 @@ def residualRankCounts_of (h410 : MilneADT_I_4_10_totallyComplex)
 open Classical in
 /-- **Lemma `ex:limits-residual-bound`, `N(E,A,j) ≤ 56 ω(2N) + 8A + 56j + 70`** (tex 4453–4648),
 PROVED from the PRINT leaves Milne ADT I.4.10/I.5.1 and the named inputs of
-`residualRankCounts_of` (kummer, genus, inflation, the local inputs, cone, transfer), through RC6's
+`residualRankCounts_of` (kummer, genus, the local inputs, cone, transfer), through RC6's
 `ResidualRankCounts.genericRank_le`. -/
 def ResidualRankBoundNode : Prop :=
   MilneADT_I_4_10_totallyComplex → MilneADT_I_5_1_totallyComplex →
@@ -223,8 +228,6 @@ def ResidualRankBoundNode : Prop :=
     ∀ (clDim : ℕ), clDim + 1 ≤ (ramifiedPrimes K k).card →
     h1F2 K (primesAboveSet K (primeSetT N r D (ramifiedPrimes K k))) =
       (1 + ∑ p ∈ primeSetT N r D (ramifiedPrimes K k), nPlaces K p) + clDim →
-    h1F2 K (primesAboveSet K (chargedPrimes N r D)) ≤
-      h1F2 K (primesAboveSet K (primeSetT N r D (ramifiedPrimes K k))) →
     ∀ (places : ℕ → List PlaceData),
     (∀ p ∈ chargedPrimes N r D, (places p).length = nPlaces K p) →
     (∀ p ∈ chargedPrimes N r D, ((places p).map PlaceData.deg).sum ≤ 2) →
@@ -238,9 +241,9 @@ def ResidualRankBoundNode : Prop :=
     genericRank ≤ 56 * (2 * N).primeFactors.card + 8 * A + 56 * D.card + 70
 
 theorem residualRankBoundNode_proof : ResidualRankBoundNode := by
-  intro h410 h51 K _ _ k α hα hK N hN A hA r hr D hD clDim genus kummer inflation places hlen
+  intro h410 h51 K _ _ k α hα hK N hN A hA r hr D hD clDim genus kummer places hlen
     hdeg hcounts archTot harch rankTot hcone genericRank htransfer
   exact (residualRankCounts_of K h410 h51 k α hα hK N hN A hA r hr D hD clDim genus kummer
-    inflation places hlen hdeg hcounts archTot harch rankTot hcone genericRank htransfer).genericRank_le
+    places hlen hdeg hcounts archTot harch rankTot hcone genericRank htransfer).genericRank_le
 
 end ZInQ.Contrib.CloudB3RC53.RankCounts
