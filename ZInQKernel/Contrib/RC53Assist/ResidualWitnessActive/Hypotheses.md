@@ -1,6 +1,10 @@
 # Active residual witness: hypothesis inventory
 
 
+## Scope of the after-t witness (independent review, 2026-11-18)
+
+The after-t part is a valid nonzero model-level fixture, not a genuine t-deformation: the smaller-support model is the residual cone extended to F_2[[t]] (not built from a global character) and the original-support model is a split extension. The constructor `residualRankCounts_afterT` compares the models only through graded ranks, degreewise equivalences and a homotopy equivalence between supplied models, so it also accepts models with all differentials erased; and its counts sum over degrees 0, 1, 2 although the models live in degrees 0 to 3 (the degree-three term of the before-inverting-t model is positive). The F_2 witnesses of `residualRankCounts_genuine` and `residualRankCounts_actual` are not affected.
+
 ## Update (2026-11-18)
 
 The module `ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ResidualAfterT` is now part of the integration branch, so `Witness.lean` imports it and calls `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_afterT` directly; the former copied section `AfterTCopy` described below has been removed. The copied local Kummer section is unchanged.
