@@ -60,7 +60,10 @@ Fields are added as further prints are stated (see `DAG.md`). -/
 structure Prints : Prop where
   /-- Breuil–Conrad–Diamond–Taylor, Theorem A (tex L1779 `\cite[Theorem A and Introduction,
   conditions (1)–(6)]{bcdt}`): every elliptic curve over `ℚ` is modular. This is
-  `PoleS12.BCDTThmA`. -/
+  `PoleS12.BCDTThmA`. Its condition (6) is a parametrization by `X₁(N)`; the parametrization by
+  `X₀(N)` that Kolyvagin's Theorem 1 assumes is Darmon's Theorem 5.4 (`DarmonThm54`,
+  `Prints/Kolyvagin.lean`; Dummigan, J. Théor. Nombres Bordeaux 18 (2006), p. 345, reportedly
+  corroborates, not read). -/
   bcdt : BCDTThmA
   /-- Kolyvagin, Theorem 1 (`r ≤ 1`). -/
   kolyvagin : KolyvaginThm1Printed

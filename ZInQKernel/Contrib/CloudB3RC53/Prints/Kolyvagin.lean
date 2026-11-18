@@ -105,8 +105,10 @@ H. Darmon, "Rational points on curves", §5, Theorem 5.3; read in the author's v
 11, 2008, p. 53; published page UNVERIFIED): "Let `E` be an elliptic curve over `ℚ`, and let
 `L(E, s)` be its Hasse–Weil `L`-series. If `r := ord_{s=1} L(E, s) ≤ 1`, then `r(E, ℚ) = r` and
 `Ш(E/ℚ)` is finite." A stronger printed source than the packaged Kolyvagin leaf (no modularity
-premise; Darmon derives it from modularity, Gross–Zagier and Kolyvagin); see the module docstring
-for the match of the definitions. -/
+premise; Darmon derives it from modularity, the Gross–Zagier formula (his Theorem 5.7) and
+Kolyvagin's theorem (his Theorem 5.10); it therefore packages Gross–Zagier, which the project rule
+of `Prints.lean` admits only through the Cai–Shu–Tian and Kolyvagin leaves, so its use is a
+governance choice); see the module docstring for the match of the definitions. -/
 def DarmonThm53 : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → ∀ r : ℕ, r ≤ 1 → AnalyticRank E r →
     Module.rank ℤ E.toAffine.Point = r ∧ Finite (sha E)
