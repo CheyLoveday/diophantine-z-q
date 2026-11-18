@@ -1,0 +1,32 @@
+'ZInQ.FaltingsRestate.hasTorusExtension_of_connected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.isLocalizationAway_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.jO_range_eq_basicOpen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.jO_genericOpen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.specDVR_points' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.closedFibre_hasTorusExtension' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.genericFibre_dim_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.fibre_dims' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.closedFibre_dim_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.isCommMonObj_groupModelO' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.genericFibre_hasTorusExtension' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.isSemiabelianModelO_imp_faltingsDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.faltingsLemma1DVR_models' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.faltingsLemma1DVR_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsDict.0.ZInQ.FaltingsRestate.isIso_openSubgroup_of_connected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsDict.0.ZInQ.FaltingsRestate.smoothRank_chart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsDict.0.ZInQ.FaltingsRestate.smoothRank_mono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsDict.0.ZInQ.FaltingsRestate.smoothRank_of_connected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsDict.0.ZInQ.FaltingsRestate.dim_baseChange_eq_chart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsDict.0.ZInQ.FaltingsRestate.genericFibre_connected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
