@@ -17,8 +17,8 @@ L10862–10935) is:
    base-zero lemma `ex:arith-base-zero`. This package is `FixedFieldPackage`.
 3. **Missing address** (`MissingAddressNode`, tex L5666–5735, (5.10)–(5.11)): from the clearing
    identity alone, some `x ≠ 0` has `v₂(ũ_x(0) - ũ_0(0)) ≥ M - 2c`.
-4. **Final deduction** (`FinalRankDeductionNode`, tex L5736–5741): if `L'(E/K, 1) ≠ 0` and
-   `L(E^{(k)}, 1) ≠ 0`, then `ord_{s=1} L(E, s) = 1`.
+4. **Final deduction** (`FinalRankDeductionNode`, tex L5734–5736, L10922–10924): with the root
+   number `−1` of step 1, if `L'(E/K,1) ≠ 0` and `L(E^{(k)},1) ≠ 0`, then `ord_{s=1} L(E,s) = 1`.
 
 The coordinates `ũ_x` live in `Λ[1/2]`, `Λ = ℤ₂[[t]]` (tex L5719–5721), and `f, d` in `𝒪[G]`,
 where `𝒪` is the `2`-adic completion of `Λ_{(2)}` (Laurent series `Σ_{i ∈ ℤ} aᵢ tⁱ`, `aᵢ ∈ ℤ₂`,
@@ -42,15 +42,16 @@ Theorem 1.8 (`rootNumberNode_proof`, `Assembly.lean`). -/
 def RootNumberNode : Prop :=
   ∀ ℓ : ℕ, Adm ℓ → SelmerCorankOne (Ecurve ℓ) → RootNumber (Ecurve ℓ) (-1)
 
-/-- **Root number `-1` forces `L(E, 1) = 0`** (tex L5740–5741, "`w(E) = -1` gives
-`ord ≥ 1`"): every entire continuation `F` of `L(E, s)` occurring in a functional equation with
+/-- **Root number `-1` forces `L(E, 1) = 0`** (the functional equation at `s = 1`; this is not a
+sentence of the text: the final deductions, tex L5734–5736 and L10922–10924, use `L(E,1) = 0`
+implicitly, from the root number `−1` of tex L1792–1796): every entire continuation `F` of `L(E, s)` occurring in a functional equation with
 sign `-1` vanishes at `s = 1`. -/
 def CentralValueZeroNode : Prop :=
   ∀ E : WeierstrassCurve ℚ, ∀ N : ℕ, 0 < N → ∀ F : ℂ → ℂ,
     (∀ s : ℂ, 0 < s.re → s.re < 2 → completedL N F (2 - s) = (-1 : ℂ) * completedL N F s) →
     F 1 = 0
 
-/-- **The final deduction** (tex L5736–5741, L10930–10935): with root number `-1`,
+/-- **The final deduction** (tex L5734–5736, L10922–10924): with root number `-1`,
 `L(E^{(k)}, 1) ≠ 0` and `ord_{s=1} L(E,s) L(E^{(k)},s) < 2` (that is, `L'(E/K, 1) ≠ 0` for
 `K = ℚ(√k)`), `E` has analytic rank one. -/
 def FinalRankDeductionNode : Prop :=
@@ -113,7 +114,14 @@ def BaseZero {b : ℕ} (E : WeierstrassCurve ℚ) (k : ℚ) (C : CoordData b) : 
 `L(E^{(k)}, 1) ≠ 0` (tex L2595–2600), constants `B`, `c_det` and a pole bound `L_T(M)` fixed
 before the binary dimension (tex L5497–5499, L5655–5662, L5730–5731), and, for every `M, b` as in
 (5.10) with `b` beyond a threshold `b₀`, coefficient data with the clearing identity, the pole bound, a regular base with
-`c ≤ c_det`, the upper bound `B` and the base-zero conclusion. -/
+`c ≤ c_det`, the upper bound `B` and the base-zero conclusion.
+
+At this layer the coefficient data `C` are existential and are not tied to the genuine coordinates
+`ũ_x`: constant data inhabit the package as soon as `L(E^{(k)},1) ≠ 0` and `¬ ProductOrderGeTwo E
+k`, so, given `Prints`, `BranchPackageNode` is equivalent to Theorem 5.3. The reduction to Elliot's
+steps is lane RC0's `restrictedConverseGenuine_of_steps'` (now
+`RC.Wiring.restrictedConverseGenuine_of_leaves`), whose `RCSteps.clearing` ties `C.u x j = [tʲ]
+ũ_x`. -/
 structure FixedFieldPackage (E : WeierstrassCurve ℚ) where
   /-- The final companion discriminant `k` (`K = ℚ(√k)`). -/
   k : ℚ
@@ -137,7 +145,14 @@ structure FixedFieldPackage (E : WeierstrassCurve ℚ) where
 domain of Theorem 5.3 with `corank_{ℤ₂} Sel_{2^∞}(E_ℓ/ℚ) = 1`, either `E_ℓ` has analytic rank one
 (Branch 1: the odd limit symbol is a unit at the empty configuration and (O.8) applies at `D = 1`,
 tex L2587–2592, L10258–10273), or the fixed-field package of Branch 2 exists. This node bundles
-Elliot's constructions of Sections 7–9 and Appendices E–G; `DAG.md` lists its sub-nodes. -/
+Elliot's constructions of Sections 7–9 and Appendices E–G; `DAG.md` lists its sub-nodes.
+
+At this layer the coefficient data `C` are existential and are not tied to the genuine coordinates
+`ũ_x`: constant data inhabit the package as soon as `L(E^{(k)},1) ≠ 0` and `¬ ProductOrderGeTwo E
+k`, so, given `Prints`, `BranchPackageNode` is equivalent to Theorem 5.3. The reduction to Elliot's
+steps is lane RC0's `restrictedConverseGenuine_of_steps'` (now
+`RC.Wiring.restrictedConverseGenuine_of_leaves`), whose `RCSteps.clearing` ties `C.u x j = [tʲ]
+ũ_x`. -/
 def BranchPackageNode : Prop :=
   ∀ ℓ : ℕ, Adm ℓ → SelmerCorankOne (Ecurve ℓ) →
     AnalyticRankOne (Ecurve ℓ) ∨ Nonempty (FixedFieldPackage (Ecurve ℓ))

@@ -6,7 +6,7 @@ import ZInQKernel.Contrib.CloudB3RC53.Nodes
 * `rootNumberNode_proof`: `RootNumberNode` from Dokchitser–Dokchitser Theorem 1.8 (tex
   L1793–1797), using the rational two-torsion of `E_ℓ` proved in `PoleRC`.
 * `centralValueZeroNode_proof`: `CentralValueZeroNode` (the functional equation at `s = 1`).
-* `finalRankDeductionNode_proof`: `FinalRankDeductionNode` (tex L5736–5741): the order of a
+* `finalRankDeductionNode_proof`: `FinalRankDeductionNode` (tex L5734–5736, L10922–10924): the order of a
   product is the sum of the orders.
 * `restrictedConverseGenuine_of_nodes`: **Theorem 5.3** from `Prints`, `BranchPackageNode` and
   `MissingAddressNode`, following tex L5666–5741: choose `M, b` as in (5.10); if `L'(E/K, 1) = 0`
@@ -49,7 +49,7 @@ theorem centralValueZeroNode_proof : CentralValueZeroNode := by
     · exact absurd h (by simp [Complex.cpow_eq_zero_iff, hpi])
   · exact h
 
-/-- **The final deduction** (tex L5736–5741). -/
+/-- **The final deduction** (tex L5734–5736, L10922–10924). -/
 theorem finalRankDeductionNode_proof : FinalRankDeductionNode := by
   rintro E k ⟨N, hN, F, ⟨hFd, hFL⟩, hFE⟩ ⟨G, hGd, hGL, hGord⟩ hnot
   have hF1 : F 1 = 0 := centralValueZeroNode_proof E N hN F (by simpa using hFE)

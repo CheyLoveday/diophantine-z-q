@@ -3,8 +3,7 @@
 Target: `ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine` (Theorem 5.3, `hyp:RC`,
 `diophantine_zq.tex` L1005–1011). Proof: Sections 7–9 (L1760–5744) and Appendices E–G
 (L6825–10935). Blueprint (shared top layer): `ZInQKernel/Contrib/CloudB3RC53/{Basic,Prints,Prints/CST,Nodes,Assembly}.lean`
-and this file, on branch `cloud-b3s/rc53-top`, based on the PR #90 head `rc/thm53-headline-20261117`. Read-only inputs: the fleet's manuscript checks
-`docs/research/mcheck-rc-map.md`, `mcheck-rc-app.md`, `mcheck-rc-deep.md`.
+and this file.
 
 Assembly (no `sorry`, standard axioms):
 
@@ -33,10 +32,10 @@ calibration, common coordinate, central specialization, base zero; RC16 switches
 |---|---|---|---|---|---|
 | Theorem 5.3 | `restrictedConverseGenuine_of_nodes` | 1771–1776, 5666–5741 | Prints, BranchPackageNode, MissingAddressNode, the rows below | TOP | PROVED (from the two open nodes) |
 | root number −1 | `RootNumberNode`, `rootNumberNode_proof` | 1793–1797 | DD Thm 1.8; rational 2-torsion of `E_ℓ` (`PoleRC`) | TOP | PROVED |
-| `L(E,1) = 0` | `CentralValueZeroNode`, `centralValueZeroNode_proof` | 5740–5741 | functional equation at `s = 1` | TOP | PROVED |
-| final deduction | `FinalRankDeductionNode`, `finalRankDeductionNode_proof` | 5736–5741 | order of a product | TOP | PROVED |
+| `L(E,1) = 0` | `CentralValueZeroNode`, `centralValueZeroNode_proof` | (not a sentence of the text; used implicitly at 5734–5736, 10922–10924, from the root number −1 of 1792–1796) | functional equation at `s = 1` | TOP | PROVED |
+| final deduction | `FinalRankDeductionNode`, `finalRankDeductionNode_proof` | 5734–5736, 10922–10924 | root number −1; order of a product | TOP | PROVED |
 | missing address (5.10)–(5.11) | `MissingAddressNode`; `ZInQ.Manuscript.RC.Boolean.missingAddressNode` | 5666–5735 | Boolean bit degree, cube parity, Gauss lemma for `𝒪` | RC1 | PROVED (on `rc/thm53-proof-20261117`) |
-| Branch 1 or Branch-2 package | `BranchPackageNode` (`FixedFieldPackage`) | 2587–2602, 2595–2715, 2718–5664, App E–G | every row below | RC0 | reduced by RC0 (`ZInQ.Manuscript.RC.branchPackageNode_of_steps`) to `Prints`, one Kummer GLUE and the 13 fields of `RCSteps`; fields OPEN |
+| Branch 1 or Branch-2 package | `BranchPackageNode` (`FixedFieldPackage`) | 2587–2602, 2595–2715, 2718–5664, App E–G | every row below | RC0 | reduced by RC0 (`ZInQ.Manuscript.RC.branchPackageNode_of_steps`) to `Prints`, one Kummer GLUE and the 13 fields of `RCSteps`; fields OPEN. At this layer the coefficient data `C` are existential and are not tied to the genuine coordinates `ũ_x`: constant data inhabit the package as soon as `L(E^{(k)},1) ≠ 0` and `¬ ProductOrderGeTwo E k`, so, given `Prints`, `BranchPackageNode` is equivalent to Theorem 5.3. The reduction to Elliot's steps is lane RC0's `restrictedConverseGenuine_of_steps'` (now `RC.Wiring.restrictedConverseGenuine_of_leaves`), whose `RCSteps.clearing` ties `C.u x j = [tʲ] ũ_x`. |
 
 `FixedFieldPackage` fields and their sources:
 
@@ -103,7 +102,7 @@ RC2/RC11/RC13; `calibration`, `common_coordinate`, `base_zero`: RC15; `height_on
 | ex:limits-uniform-lower-bound (5.5) | 4909–5205 | (5.1), (5.3), (5.4), switch, (4.6) | RC16 | Schur/Cramer coordinate formula, hyperbolic sign planes, `Λ = ∩ Λ_p` cores OPEN |
 | ex:limits-fixed-field-budget (5.6)–(5.8) | 5208–5484 | Nekovář 5.1.1–5.1.6 | RankCounts | bound arithmetic OPEN |
 | ex:limits-fixed-field-clearing (5.9) | 5487–5645 | budget, paired functional, `η` | RC7 | `L_T(M) = 16(d_K+5)M` pole arithmetic OPEN |
-| ex:limits-coefficient-transfer (5.10)–(5.11) | 5647–5741 | clearing | RC1 / TOP | `MissingAddressNode` OPEN; final deduction PROVED |
+| ex:limits-coefficient-transfer (5.10)–(5.11) | 5647–5741 | clearing | RC1 / TOP | `MissingAddressNode` PROVED (RC1); final deduction PROVED |
 
 ## Appendix E (app:even-source), L6825–8205
 

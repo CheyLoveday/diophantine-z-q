@@ -6,19 +6,14 @@ import ZInQKernel.Contrib.TauCeti.NumberTheory.ModularForms.EichlerIntegral.Basi
 /-!
 # Cai–Shu–Tian, Theorem 1.1 (explicit Gross–Zagier formula): the part that can be stated
 
-This is a verbatim copy, in the RC53 namespace, of the statement of Cai–Shu–Tian Theorem 1.1 written
-by the fleet's kolyv-cst-printed task (branch `wip/kolyv-cst-printed`, file
-`ZInQKernel/Contrib/OneProof/KolyvCST/CaiShuTian.lean`), which is not on this blueprint's base
-branch. The definitions and the statement are unchanged; only the namespace differs. When both
-land, the two statements are syntactically identical and can be unified. The manuscript (`diophantine_zq.tex`) cites
+The manuscript (`diophantine_zq.tex`) cites
 `\cite[Theorem 1.1]{cst}` at L2428 (proof of Proposition `ex:sec7-genus-lower`: "applies
 twice", with the conditions of L2429–2432) and at L8268–8272 (proof of Proposition
 `ex:app-detector`: "the unaveraged height formula", with Rankin derivative
 `L'(E^{(D_w)},1) L(E^{(h_*)},1) ≠ 0`, so `P_{D_w}` is nontorsion). Bibitem L11181–11183:
 L. Cai, J. Shu and Y. Tian, "Explicit Gross–Zagier and Waldspurger formulae", Algebra & Number
-Theory 8 (2014), arXiv:1408.1733. **Not read for this task** (no network): every clause below is
-UNVERIFIED (pending reading); docs/research/kolyv-cst-printed.md §2 lists what a print reader must
-check. No proof of the theorem and no Gross–Zagier argument is written here.
+Theory 8 (2014), arXiv:1408.1733. **Not read for this file**: every clause below is
+UNVERIFIED (pending reading). No proof of the theorem and no Gross–Zagier argument is written here.
 
 ## What is stated: `CSTThm11Split`
 
@@ -43,7 +38,7 @@ A special case (never stronger) of Theorem 1.1, in the domain the manuscript use
 
 Conclusion: there is `C > 0` depending only on `(E, f, Lat, κ)` such that
 `L'(1, E, χ) = C / (c √|D|) · ĥ_K(P_χ)` for all such `(K, c, χ, [A,B,C], ι, y)`. The print has
-`C = 8π² (f, f)_{Γ₀(N)} / deg φ` (as an earlier audit and the manuscript's L2430–2431 describe it;
+`C = 8π² (f, f)_{Γ₀(N)} / deg φ` (Theorem 1.1 of arXiv:1408.1733v2, p. 2, with `µ(N,D) = 0` and `u = 1`;
 UNVERIFIED): the Petersson norm and `deg φ` are fixed by `(E, f, Lat, κ)`, so the existential `C`
 is a consequence of the print, and it is what both manuscript uses need (L2428: the ratio of two
 instances, L2433–2436; L8269: nonvanishing ⇔ nontorsion).
@@ -63,7 +58,7 @@ instances, L2433–2436; L8269: nonvanishing ⇔ nontorsion).
 * **The constant** `8π²(f, f)/deg φ` (Tau Ceti has Petersson products, `CuspForm.peterssonInnerCosets`,
   but `deg φ` needs `X₀(N)`): replaced by the existential `C > 0`, a consequence.
 * The general hypotheses at primes `p ∣ N` that are not split are not stated (the print's
-  conditions there are known only through the audit summary): special case only.
+  conditions (1)–(2) at primes of `N` that are not split): special case only.
 -/
 
 noncomputable section
