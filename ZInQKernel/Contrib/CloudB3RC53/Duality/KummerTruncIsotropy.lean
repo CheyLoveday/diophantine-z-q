@@ -27,9 +27,9 @@ isotropy data: local conditions `ι : U → L`, `ι' : U' → L'`, a local cup p
 * `pullPair`: the restricted cup product `U × U' → E`, `(u, v) ↦ ι u ∪ ι' v`.
 * `ofTruncZero`: if the restricted cup product vanishes after projecting to `τ≥2 E`, the zero family
   is a `τ≥2` isotropy homotopy.
-* **`kummerTruncIsotropy` (PROVED, finite level, any coefficient ring)**: for conditions concentrated
-  in degrees `0, 1` and a local trace `trv : E² → R` whose kernel on the degree-two cocycles
-  consists of coboundaries (the first half of `InducesIsoH2`, `RC/SelmerComplex/Prints.lean`), if
+* **`kummerTruncIsotropy` (PROVED, finite level, any coefficient ring)**: for conditions
+  concentrated in degrees `0, 1` and a local trace `trv : E² → R` whose kernel on the degree-two
+  cocycles consists of coboundaries (the first half of `InducesIsoH2`, `RC/SelmerComplex/Prints.lean`), if
   `trv (ι u ∪ ι' v) = 0` for all `(1, 1)` classes, the zero family is a `τ≥2` isotropy homotopy.
 * **`kummerTruncIsotropy_two` (PROVED, `ℤ₂`)**: the same with `trv` killing coboundaries and the
   hypothesis weakened to "every value `trv (ι u ∪ ι' v)` is divisible by every power of two"
@@ -37,8 +37,8 @@ isotropy data: local conditions `ι : U → L`, `ι' : U' → L'`, a local cup p
 * `trunc_h_eq_zero`: for such conditions every `τ≥2` isotropy homotopy projects to zero in `τ≥2 E`
   (uniqueness; `nullHomotopy_eq_zero`).
 * LESSON 2: `exTruncLocal` (the interface for the derivative conditions of
-  `SwitchInputs/TruncIsotropy.lean`, where no untruncated homotopy exists) and `kummerEx` (the Kummer
-  hypotheses in an example with a NONZERO `(1, 1)` cup value that is a coboundary).
+  `SwitchInputs/TruncIsotropy.lean`, where no untruncated homotopy exists) and `kummerEx` (the
+  Kummer hypotheses in an example with a NONZERO `(1, 1)` cup value that is a coboundary).
 
 **Classification.** PROVED.
 -/
