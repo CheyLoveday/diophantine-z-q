@@ -9,15 +9,22 @@ Lemma `ex:arith-common-coordinate` (tex 4142–4328) over the text's objects, as
 `frobMat C p`, the matrix of `ρ_T(Fr_p)` on `T₂E` in lane RC28's basis over `K_S`
 (`CommonCoordinate6Frobenius.lean`), no longer a free matrix with the right trace and determinant.
 
-| field / datum | text | tex | kind |
-|---|---|---|---|
-| `(Ecurve ℓ).IsElliptic` | `E_ℓ` is an elliptic curve | 1779–1784 | definition (PROVED for `ℓ ≠ 0`) |
-| `C : TateCoef (Ecurve ℓ)` | `K`, `S`, `K̄ ≃ ℚ̄`, `E[2^∞] ⊆ E(K_S)` | 2747–2781 | definition + GLUE (NOS, AEC VII.7.1) |
-| `FrobeniusTrace (Ecurve ℓ)` | `tr ρ_T(Fr_q) = a_q` at good odd `q` | 4213 | GLUE (Eichler–Shimura; AEC V.2.3.1, VII.3.1(b), VII.4.1) |
-| `hgood` | the graph primes are good | 4143, 2678–2680 | definition (from the support) |
-| `u`, `hprim` | relaxed coordinates; `u_{prim,x}` regular | 3877–3892, 4153, 4159–4188 | definition + ELLIOT |
-| `eps`, `hstep` | the support triangle at each step, with `frobMat` | 4157–4194, 4325–4327 | ELLIOT + GLUE; DEPARTURE (one prime at a time) |
-| `htilde` | `η_x u_{rel,x}` regular, expansion `ũ_x` | 4150–4151, 4224–4231 | definition |
+Each field or datum: text; tex lines; kind.
+
+* `(Ecurve ℓ).IsElliptic`: `E_ℓ` is an elliptic curve; tex 1779–1784; definition (PROVED for
+  `ℓ ≠ 0`).
+* `C : TateCoef (Ecurve ℓ)`: `K`, `S`, `K̄ ≃ ℚ̄`, `E[2^∞] ⊆ E(K_S)`; tex 2747–2781; definition +
+  GLUE (NOS, AEC VII.7.1).
+* `FrobeniusTrace (Ecurve ℓ)`: `tr ρ_T(Fr_q) = a_q` at good odd `q`; tex 4213; GLUE
+  (Eichler–Shimura; AEC V.2.3.1, VII.3.1(b), VII.4.1).
+* `hgood`: the graph primes are good; tex 4143, 2678–2680; definition (from the support).
+* `u`: relaxed coordinates; tex 3877–3892, 4159–4188; existential (any coordinates; not tied to
+  the actual complexes).
+* `hprim`: `u_{prim,x}` regular; tex 4153; definition + ELLIOT.
+* `eps`, `hstep`: (4.7) at each step as an existential triangular model (met by
+  `naturalStep_relaxedCoord` for any coordinates with `δ u' = c e² u`), with `frobMat` in its
+  two-place block; tex 4157–4194, 4325–4327; ELLIOT; DEPARTURE (one prime at a time).
+* `htilde`: `η_x u_{rel,x}` regular, expansion `ũ_x`; tex 4150–4151, 4224–4231; definition.
 
 PROVED: `det(frobMat C q) = q` at every odd prime (no hypothesis), `tr(frobMat C q) = a_q` from the
 GLUE at good primes; hence the round-one leaf (`commonCoordinateInputsL_of_LF`, with
@@ -46,17 +53,18 @@ structure CommonCoordinateTrianglesLF {ℓ : ℕ} [(Ecurve ℓ).IsElliptic] (C :
   /-- the graph primes are primes of good reduction of `E_ℓ` (definition: they lie outside the
   support, which contains the primes of `6ℓ`; tex 4143 "unused good split prime", 2678–2680) -/
   hgood : ∀ q ∈ Fam.Q, Nonvanishing.GoodAt (Ecurve ℓ) q
-  /-- the class-functional coordinates in `F` relaxed at `T ⊆ U` (definition: the coordinates of
-  `[z] ⊗ [λ]` of the actual complexes, existential here; tex 3877–3892, 4159–4188) -/
+  /-- the class-functional coordinates in `F` relaxed at `T ⊆ U` (existential: any coordinates;
+  the text's are those of `[z] ⊗ [λ]`; tex 3877–3892, 4159–4188) -/
   u : Finset ℕ → FracLam
   /-- the primitive coordinate `u ∅` is regular at `t = 0` with `t`-expansion `u_{prim,x}`
   (definition + ELLIOT regularity; DEPARTURE of scope as `RCData.uPrim`; tex 4153, 4334–4336) -/
   hprim : IsTExpansion (u ∅) (D.uPrim Fam x)
-  /-- the step units `ε` of (4.7) (definition; tex 4187–4193) -/
+  /-- the step units `ε` of (4.7) (existential; tex 4187–4193) -/
   eps : Finset ℕ → ℕ → FracLam
-  /-- each relaxation `T → T ∪ {p}` at an unused prime is the support triangle in the original
-  integral bases, with the actual Frobenius `frobMat C p` (batch 3's `NaturalStep` over `F`;
-  ELLIOT + GLUE Nekovář 6.4.1–6.4.3; DEPARTURE: one prime at a time; tex 4157–4194, 4325–4327) -/
+  /-- each relaxation `T → T ∪ {p}` at an unused prime is (4.7) at the step as an existential
+  triangular model over `F` (batch 3's `NaturalStep`, met by `naturalStep_relaxedCoord`), with
+  the actual Frobenius `frobMat C p` in its two-place block (ELLIOT; DEPARTURE: one prime at a
+  time; tex 4157–4194, 4325–4327) -/
   hstep : ∀ T ⊆ unusedAt Fam x, ∀ p ∈ unusedAt Fam x, p ∉ T →
     NaturalStep ((frobMat C p).map zTwoToF) (p : FracLam) (p : FracLam)⁻¹ (apE ℓ p : FracLam)
       (lamToF (zAt Fam x p : Lambda)) (lamToF ((zAt Fam x p)⁻¹ : Lambdaˣ)) (u T) (u (insert p T))

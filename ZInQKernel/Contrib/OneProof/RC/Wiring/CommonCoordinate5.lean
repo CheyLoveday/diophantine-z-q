@@ -20,10 +20,12 @@ Here (objects in `CommonCoordinate5Objects.lean`, universal ones in
   (it is regular at `t = 0`, `hprim`), and the corrected coordinate `ũ_x = η_x u_{rel,x}` — the
   product — is the one identified with the interface's power series (`htilde`); `η_x` alone and the
   relaxed coordinates are only elements of `F` (`η_x` can have a pole: `CommonCoordinate5Bridge`);
-* **the steps are the text's**: at each unused prime the relaxation is batch 3's `NaturalStep` over
-  `F` (the support triangle in the original integral bases with `Λ`-unit basis comparisons, the
-  norm identity, and the functionals of retained Selmer data; tex 4157–4194), with the actual `z`,
-  `a_q`, `q` and a Frobenius matrix over `ℤ₂` of trace `a_q` and determinant `q`.
+* **the step models are existential**: at each unused prime the relaxation is batch 3's
+  `NaturalStep` over `F`, whose two-place block is built from the actual `z`, `a_q`, `q` and a
+  Frobenius matrix over `ℤ₂` of trace `a_q` and determinant `q`; its triangular model, norm
+  identity, functionals (batch 3's abstract retention data) and basis comparisons are
+  existential and are met by `naturalStepF_of` for any coordinates with `δ u' = c e² u`, so the
+  field asserts exactly (4.7) at the step (ELLIOT; tex 4157–4194).
 
 PROVED (standard axioms): `CommonCoordinateTrianglesL.corrected_eq`
 (`η_x u_{rel,x} = ε_x u_{prim,x}` in `F`, `ε_x ∈ Λ^×`) and
@@ -32,13 +34,21 @@ target the wiring consumes (`RCSteps.common_coordinate`).
 
 ## The leaf, field by field
 
-| field | text object | tex | kind |
-|---|---|---|---|
-| `Fr`, `hFtr`, `hFdet` | `Fr_q` on `T₂E` at a graph prime: trace `a_q` (Mathlib's coefficient), determinant `q` | 4209–4213 | GLUE (Frobenius on the Tate module at a good prime; not pinned to `T₂E`, which is not in the tree) |
-| `u` | the class-functional coordinates in `F` relaxed at `T ⊆ U_x` (`U_x` the unused primes) | 3877–3892, 4159–4188 | definition (coordinates of the actual complexes; existential here) |
-| `hprim` | `u_{prim,x} = u ∅` is regular at `t = 0`, with `t`-expansion `D.uPrim` | 4153, 4334–4336, 5004–5008 | definition + ELLIOT (regularity), as `RCData.uPrim` |
-| `eps`, `hstep` | each relaxation `T → T ∪ {p}`: the support triangle (`NaturalStep` over `F`) | 4157–4194 | ELLIOT + GLUE (Nekovář 6.4.1–6.4.3 through batch 3's retention data) |
-| `htilde` | `ũ_x = η_x u_{rel,x}`, `η_x = etaF` the evaluated universal correction, has `t`-expansion `D.uTilde` | 4150–4151, 4224–4231 | definition (the interface identification) |
+Each field: text object; tex lines; kind.
+
+* `Fr`, `hFtr`, `hFdet`: `Fr_q` on `T₂E` at a graph prime: trace `a_q` (Mathlib's coefficient),
+  determinant `q`; tex 4209–4213; GLUE (Frobenius on the Tate module at a good prime; not pinned
+  to `T₂E`, which is not in the tree).
+* `u`: the class-functional coordinates in `F` relaxed at `T ⊆ U_x` (`U_x` the unused primes);
+  tex 3877–3892, 4159–4188; existential (any coordinates; not tied to the actual complexes).
+* `hprim`: `u_{prim,x} = u ∅` is regular at `t = 0`, with `t`-expansion `D.uPrim`; tex 4153,
+  4334–4336, 5004–5008; definition + ELLIOT (regularity), as `RCData.uPrim`.
+* `eps`: the step units of each relaxation `T → T ∪ {p}`; tex 4157–4194; existential.
+* `hstep`: each relaxation `T → T ∪ {p}`: the support triangle (`NaturalStep` over `F`);
+  tex 4157–4194; ELLIOT ((4.7) at one prime; `λ_R ∘ i = e_q λ_P` is PROVED only for abstract
+  retention data).
+* `htilde`: `ũ_x = η_x u_{rel,x}`, `η_x = etaF` the evaluated universal correction, has
+  `t`-expansion `D.uTilde`; tex 4150–4151, 4224–4231; definition (the interface identification).
 
 DEPARTURES (flagged):
 * the multi-prime relaxation is done one unused prime at a time, at every intermediate `T ⊆ U_x`
@@ -134,20 +144,20 @@ structure CommonCoordinateTrianglesL {ℓ : ℕ} (D : RCData ℓ) (Fam : Family)
   hFtr : ∀ q ∈ Fam.Q, (Fr q).trace = (apE ℓ q : ℤ_[2])
   /-- `det Fr_q = q` (GLUE; tex 4213) -/
   hFdet : ∀ q ∈ Fam.Q, (Fr q).det = (q : ℤ_[2])
-  /-- the class-functional coordinates in `F` relaxed at `T ⊆ U` (definition: the coordinates of
-  `[z] ⊗ [λ]` of the actual complexes, existential here; tex 3877–3892, 4159–4188) -/
+  /-- the class-functional coordinates in `F` relaxed at `T ⊆ U` (existential: any coordinates;
+  the text's are those of `[z] ⊗ [λ]`; tex 3877–3892, 4159–4188) -/
   u : Finset ℕ → FracLam
   /-- the primitive coordinate `u_{prim,x} = u ∅` is regular at `t = 0`, with `t`-expansion the
   interface's `u_{prim,x}` (definition + ELLIOT regularity; DEPARTURE of scope as `RCData.uPrim`;
   tex 4153, 4334–4336, 5004–5008) -/
   hprim : IsTExpansion (u ∅) (D.uPrim Fam x)
-  /-- the step units `ε` of (4.7) (definition: determined by the step's basis comparisons;
+  /-- the step units `ε` of (4.7) (existential, determined by the step's basis comparisons;
   tex 4187–4193) -/
   eps : Finset ℕ → ℕ → FracLam
   /-- each relaxation `T → T ∪ {p}` at an unused prime is the support triangle in the original
-  integral bases (batch 3's `NaturalStep` over `F`: triangular model, norm identity, functionals
-  of retained Selmer data, `Λ`-unit basis comparisons; ELLIOT + GLUE Nekovář 6.4.1–6.4.3;
-  DEPARTURE: one prime at a time at every `T ⊆ U`; tex 4157–4194, 4325–4327) -/
+  integral bases (batch 3's `NaturalStep` over `F`, an existential triangular model met by
+  `naturalStepF_of` for any `u, u'` with `δ u' = c e² u`: (4.7) at the step, ELLIOT; DEPARTURE:
+  one prime at a time at every `T ⊆ U`; tex 4157–4194, 4325–4327) -/
   hstep : ∀ T ⊆ unusedAt Fam x, ∀ p ∈ unusedAt Fam x, p ∉ T →
     NaturalStep ((Fr p).map zTwoToF) (p : FracLam) (p : FracLam)⁻¹ (apE ℓ p : FracLam)
       (lamToF (zAt Fam x p : Lambda)) (lamToF ((zAt Fam x p)⁻¹ : Lambdaˣ)) (u T) (u (insert p T))

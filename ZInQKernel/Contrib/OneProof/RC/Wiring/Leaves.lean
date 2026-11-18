@@ -64,7 +64,7 @@ with Selmer corank one:
    repository's density theorem, the odd source read on its own filter and the odd witness derived
    from `δ_o`), `calibration` (from the ELLIOT leaf `calibration`, with RC19's regulator relation
    and the free generators from `Prints`), `common_coordinate` (the ELLIOT leaf `common_coordinate`,
-   through batch 3's natural support-triangle steps), `base_zero` (lane RC25's
+   through existential support-triangle step models), `base_zero` (lane RC25's
    `BaseZeroAssembly.baseZeroTarget_of_leaves`, through RC0's `baseZeroTarget_of_inputs` and RC15's
    `baseZero_node_genuine` over RC20's `Λ_(t)`, the height formula by RC19, with (4.7) and
    `ũ₀ ∈ Λ[1/2]` at the base from `common_coordinate` and `prim_regular`, from the ELLIOT leaf
@@ -118,9 +118,11 @@ witnesses:
 * `PostLeaves.common_coordinate`: over the text's objects with the actual Frobenius
   (`CommonCoordinateInputsLF`: the local objects, `η_x` and the matrix of `ρ_T(Fr_q)` in lane RC28's
   basis are definitions, evaluated in `F = Frac Λ`; only the primitive coordinate and the product
-  `η_x u_{rel,x}` are regular; `tr ρ_T(Fr_q) = a_q` is the GLUE `FrobeniusTrace`); on data with
-  primitive coordinates in `F` it is equivalent to (4.7) together with `ε_x = 1` where no graph
-  prime is unused (`commonCoordinateInputsLF_iff`), and its step models are existential;
+  `η_x u_{rel,x}` are regular; `tr ρ_T(Fr_q) = a_q` is the GLUE `FrobeniusTrace`); for `ℓ > 0`
+  and a support containing `S₀` (PROVED, `PreDataSpec.support_base`) it is equivalent to the GLUE
+  `FrobeniusTrace (E_ℓ)` together with (4.7), `ε_x = 1` where no graph prime is unused, and
+  `u_{prim,x} ∈ F` (the GLUE is a conjunct of the leaf, not a hypothesis; the pinned Frobenius
+  adds nothing else), and its step models are existential;
 * `PreLeaves.eq35` and `PostLeaves.prim_regular`: the configuration families are existential and
   only required to be some genuine Galois Selmer data with `t = X`; with one genuine complex of the
   homotopy type of `[k --0--> k]` at each `𝔭` (true, not formalized), they are equivalent to
@@ -359,26 +361,29 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   Silverman AEC V.2.3.1, VII.3.1(b), VII.4.1, Remark V.2.6), and at every address of a final
   family: the graph primes good (definition), the class-functional coordinates in `F = Frac Λ`
   relaxed at the subsets of the unused primes `U_x`, the primitive one regular at `t = 0` with
-  `t`-expansion `u_{prim,x}` (definition + ELLIOT), each relaxation step at an unused prime the
-  support triangle in the original integral bases over `F` with the actual matrix `frobMat C p` of
-  `ρ_T(Fr_p)` in lane RC28's basis of `T₂E` over `K_S` (`det = p` PROVED, `tr = a_p` from the
-  GLUE), the actual `z = x(ε(F̃r_q))(1 + t)`, `a_q` (Mathlib's coefficient of `L(E, s)`) and `q`
-  (`NaturalStep`; ELLIOT + GLUE Nekovář 6.4.1–6.4.3), and the product `ũ_x = η_x u_{rel,x}`
+  `t`-expansion `u_{prim,x}` (definition + ELLIOT), (4.7) at each relaxation step at an unused
+  prime, as an existential triangular model over `F` (`NaturalStep`; ELLIOT), with the actual
+  matrix `frobMat C p` of `ρ_T(Fr_p)` in lane RC28's basis of `T₂E` over `K_S` (`det = p` PROVED,
+  `tr = a_p` from the GLUE), the actual `z = x(ε(F̃r_q))(1 + t)`, `a_q` (Mathlib's coefficient of
+  `L(E, s)`) and `q` in its two-place block, and the product `ũ_x = η_x u_{rel,x}`
   regular with `t`-expansion `ũ_x` (definition). No free ring and no free Frobenius matrix: `g_q`,
   the Frobenius lift, `e_q`, `l_q`, `v_q`, `η_x` and `ρ_T(Fr_q)` are definitions; `e_q(x)⁻¹`,
   `v_q(x)` and `η_x` are evaluated in `F` and may have a pole at `t = 0`
-  (`etaF_not_regular_single`); `x(η) = η_x` for the universal `η ∈ 𝒪[G]` (`eval_etaU`);
+  (`etaF_not_regular_single`); `ι(η_x) = x(η)` in `Frac 𝒪` for the universal `η ∈ 𝒪[G]`
+  (`eval_etaU`; no ring map `𝒪[G] → F` fixes `t`);
   `ē_q = t²/(1+t)` (`resG_eU_mul`) (tex 4148–4149, 4196–4231, 4297–4327; owners RC32, RC28, RC17,
   RC15, RC20, RC7, batch 3 CommonCoordinate). PROVED from it: the round-one leaf
-  (`commonCoordinateInputsL_of_LF`), hence `λ_R ∘ i = e_q λ_P` and (4.7) at each step, the
+  (`commonCoordinateInputsL_of_LF`), hence (4.7) at each step, the
   multi-prime (4.7), `ũ_x = ε_x u_{prim,x}` in `F`, and (4.7) for the interface's power series
-  (`commonCoordinateTarget_of_LF`). Conclusion-shaped: on data whose primitive coordinates come
-  from `F` (with good graph primes, under the GLUE) the leaf is equivalent to (4.7) together with
-  `ε_x = 1` where no graph prime is unused (`commonCoordinateInputsLF_iff`); it is not implied by
-  (4.7) alone (`commonCoordinateInputsLF_not_of_target`); the step models are existential and not
-  tied to the actual Selmer complexes; the coefficient datum is existential (the text's is
-  `K = ℚ(√k)`; only `tr` and `det` of `ρ_T(Fr_q)` enter (4.7)). Scope departure: this field is
-  also requested in Branch 1 (see `RC/Skeleton/Steps.lean`). -/
+  (`commonCoordinateTarget_of_LF`). Conclusion-shaped: for `ℓ > 0` and a support containing `S₀`
+  (PROVED, `PreDataSpec.support_base`) the leaf is equivalent to the GLUE `FrobeniusTrace (E_ℓ)`
+  together with (4.7), `ε_x = 1` where no graph prime is unused, and `u_{prim,x} ∈ F` (the GLUE is
+  a conjunct of the leaf, not a hypothesis; the pinned Frobenius adds nothing else); it is not
+  implied by (4.7) alone (`commonCoordinateInputsLF_not_of_target`) (only through `ε_x = 1` at the
+  empty family); the step models are existential and not tied to the actual Selmer complexes; the
+  coefficient datum is existential (the text's is `K = ℚ(√k)`; only `tr` and `det` of
+  `ρ_T(Fr_q)` enter (4.7)). Scope departure: this field is also requested in Branch 1 (see
+  `RC/Skeleton/Steps.lean`). -/
   common_coordinate : CommonCoordinateInputsLF W.toRCData
   /-- The inputs of height-one regularity of the primitive coordinates (`PrimRegularityInputsGPK`):
   at every height-one prime `𝔭 ≠ (2)`, a configuration family genuine at `𝔭` (lane RC26's Galois

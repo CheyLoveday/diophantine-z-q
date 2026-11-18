@@ -6,10 +6,13 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate5Bridge
 
 * `commonCoordinateInputsLF_not_of_target`: the leaf is not implied by (4.7) (round one's
   counterexample: `u_prim ≡ 1`, `ũ ≡ −1`, the empty family; the leaf implies the round-one leaf);
-* `commonCoordinateInputsLF_iff`: with the GLUE `FrobeniusTrace (E_ℓ)`, good graph primes and
-  primitive coordinates from `F`, the leaf holds exactly when (4.7) holds with `ε_x = 1` where no
-  graph prime is unused, as in round one: pinning the Frobenius matrix does not constrain the
-  existential step models.
+* `commonCoordinateInputsLF_iff`: for `ℓ > 0`, given the GLUE `FrobeniusTrace (E_ℓ)`, good graph
+  primes (for a support containing `S₀`, PROVED, `PreDataSpec.support_base`) and primitive
+  coordinates from `F`, the leaf holds exactly when (4.7) holds with `ε_x = 1` where no graph
+  prime is unused. So the leaf is equivalent to the GLUE `FrobeniusTrace (E_ℓ)` together with
+  (4.7), `ε_x = 1` where no graph prime is unused, and `u_{prim,x} ∈ F` (the GLUE is a conjunct of
+  the leaf, not a hypothesis; the pinned Frobenius adds nothing else): pinning the Frobenius
+  matrix does not constrain the existential step models.
 
 Kinds: PROVED.
 -/
