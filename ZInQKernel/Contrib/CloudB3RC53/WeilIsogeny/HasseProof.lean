@@ -15,8 +15,8 @@ For an elliptic curve `E` over a finite field `𝔽_q`, `| |E(𝔽_q)| − q −
   them is nonzero in `\bar{𝔽}_q`), `4(m² − 3am + 9q) = (2m − 3a)² − 9(a² − 4q) ≤ 4 − 9 < 0`, while a
   degree is nonnegative.
 
-This proves the printed `HasseBound` of `Hasse/Convergence.lean` (same statement), hence
-`HasseConvergence`.
+This proves the statement `HasseBound` (not a print) of `Hasse/Convergence.lean` (same statement),
+hence `HasseConvergence`.
 
 Classification: PROVED.
 -/
@@ -126,7 +126,7 @@ theorem hasse_bound_of_sq (h : traceFrob W ^ 2 ≤ 4 * (Fintype.card F : ℤ)) :
   exact Real.sqrt_le_sqrt (by exact_mod_cast h)
 
 /-- **Node `HasseBoundProved`** (Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Theorem
-V.1.1; the statement of the PRINT `HasseBound` of `Hasse/Convergence.lean`): for an
+V.1.1; the statement `HasseBound` of `Hasse/Convergence.lean`, not a print): for an
 elliptic curve `E` over a finite field `𝔽_q`, `| |E(𝔽_q)| − q − 1 | ≤ 2√q`. PROVED
 (`hasseBoundProved_proof`). -/
 def HasseBoundProved : Prop :=
