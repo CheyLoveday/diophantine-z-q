@@ -10,6 +10,7 @@ to show that the idempotent is proper. Manuscript: `thm:height`, proof, L582–5
 
 noncomputable section
 set_option maxHeartbeats 1000000
+set_option linter.style.haveILetI false
 
 namespace HDec.CMBranch.FibreSplit
 
@@ -67,8 +68,10 @@ private theorem reverse_split_impossible
       _ = Module.finrank ℚ (Matrix (Fin 2) (Fin 2) (Kd d)) := e.toLinearEquiv.finrank_eq
       _ = 8 := by rw [Module.finrank_matrix, finrank_kd hd]; rfl
   have h4 : Module.finrank ℤ (PkgI3.AbVar.End E) ≤ 4 := by
-    rw [hE] at hrE
-    exact_mod_cast hrE
+    have hrE' : ((Module.finrank ℤ (PkgI3.AbVar.End E) : ℕ∞) : WithBot ℕ∞) ≤
+        (((4 : ℕ) : ℕ∞) : WithBot ℕ∞) := by
+      simpa only [hE, mul_one, Nat.cast_ofNat, WithBot.coe_ofNat] using hrE
+    exact ENat.natCast_le_natCast.mp (WithBot.coe_le_coe.mp hrE')
   omega
 
 /-- The original version of `CMCurveOrder` is proved from the chain's T6. -/
