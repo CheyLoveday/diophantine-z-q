@@ -31,7 +31,8 @@ quasi-isomorphisms, hence so is the Selmer duality map
 * `fibreOrthogonal_strict_relaxedT` (PROVED from local duality and the trace normalization `hsum`)
   and `fibreOrthogonal_strict_relaxedT_of_print` (from the PRINT `NekovarFibreLocalDuality`).
 * **`fibreSelmerDuality_relaxed_strict`, `fibreSelmerDuality_strict_relaxed`** (PROVED from the
-  PRINTs): the duality between the relaxed and the strict fibre Selmer complexes, both ways.
+  PRINTs): the duality between the full-condition and the zero-condition fibre Selmer complexes,
+  both ways (not the derivative-prime strict/relaxed pair of tex 5059–5070).
 * `exists_fibreSelmerDuality_strict_relaxed` (PROVED from the three PRINTs): with the canonical
   trace packet (`NekovarFibreTraces`: ONE packet of local traces `FibreLocalTraces`, and global
   traces normalized by it, `FibreLocalTraces.Normalizes`).
@@ -259,8 +260,11 @@ RC26's `genuineSelmerDualityT`: under the fibre standing hypotheses, for coeffic
 Nekovář's topology, `T ≅ k(𝔭)(1)`, a perfect continuous equivariant pairing `β : X × X' → T`,
 local conditions `ΔA`, `ΔB` with truncated isotropy data `I`, a trace inducing
 `H³_c ≅ k(𝔭)`, and the orthogonality of the local conditions, the genuine Selmer duality map
-`C_{ΔA}(X) → Hom_{k(𝔭)}(C_{ΔB}(X'), k(𝔭))[−3]` is a quasi-isomorphism. Kind: PROVED from the
-PRINT `NekovarFibreGlobalDuality` (and the hypothesis `horth`). -/
+`C_{ΔA}(X) → Hom_{k(𝔭)}(C_{ΔB}(X'), k(𝔭))[−3]` is a quasi-isomorphism.
+This is the duality of the Galois cochains of the fibre (DEPARTURE 5 of `Print.lean`); the
+text's complexes are `C ⊗_R k` (tex 4977–4990), and `horth` for the text's derivative-prime
+conditions `D⁰`, `D⁰ ⊕ (F ⊕ S)[−1]` (tex 4860–4875, 5059–5061) is not discharged here.
+Kind: PROVED from the PRINT `NekovarFibreGlobalDuality` (and the hypothesis `horth`). -/
 theorem fibreSelmerDualityT (h : NekovarFibreGlobalDuality K) (hset : NekovarFibreSetting K S)
     (hX : IsLatticeTop (GKS K S) X) (hX' : IsLatticeTop (GKS K S) X')
     (hTl : IsLatticeTop (GKS K S) T) (hT : IsTateTwistFibre K S P T)
@@ -294,7 +298,10 @@ theorem fibreOrthogonal_strict_relaxedT_of_print (h : NekovarFibreLocalDuality K
     I tr htr hsum
 
 /-- **The relaxed fibre Selmer complex is dual to the strict one** (full conditions on `X`, zero
-conditions on `X'`; tex 2813–2814, 5065–5070): `C_rel(X) ≃ Hom_{k(𝔭)}(C_str(X'), k(𝔭))[−3]`.
+conditions on `X'` at every place of `S`; tex 2813–2814: "A full condition is paired with the
+zero condition"): `C_rel(X) ≃ Hom_{k(𝔭)}(C_str(X'), k(𝔭))[−3]`. Not the strict/relaxed pair of
+tex 5059–5070: at a derivative prime those are `D⁰` and `D⁰ ⊕ (F ⊕ S)[−1]`, "not the full local
+complex" (tex 4855–4876); that duality is `fibreSelmerDualityT` with `horth` for those conditions.
 Kind: PROVED from the PRINT `NekovarFibreGlobalDuality`. -/
 theorem fibreSelmerDuality_relaxed_strict (h : NekovarFibreGlobalDuality K)
     (hset : NekovarFibreSetting K S) (hX : IsLatticeTop (GKS K S) X)

@@ -146,8 +146,11 @@ variable {K S} {P : Ideal Lambda} [P.IsPrime] [IsHeightOneOdd P]
 6.3.3): for switch data on a fibre coefficient module `M` with Nekovář's topology, a perfect
 continuous equivariant self-pairing `β : M × M → T` with `T ≅ k(𝔭)(1)`, truncated isotropy data
 for (strict, relaxed), a trace inducing `H³_c ≅ k(𝔭)`, the orthogonality of the strict and relaxed
-conditions, and the switch coordinates, `SwitchDualityAdjunction` holds. Kind: PROVED from the
-PRINT `NekovarFibreGlobalDuality`. -/
+conditions, and the switch coordinates, `SwitchDualityAdjunction` holds.
+This is the duality of the Galois cochains of the fibre (DEPARTURE 5 of `Print.lean`); the
+text's complexes are `C ⊗_R k` (tex 4977–4990), and `horth` for the text's derivative-prime
+conditions `D⁰`, `D⁰ ⊕ (F ⊕ S)[−1]` (tex 4860–4875, 5059–5061) is not discharged here.
+Kind: PROVED from the PRINT `NekovarFibreGlobalDuality`. -/
 theorem FibreSwitch.adjunction_of_prints (X : FibreSwitch K S (ResAt P) M)
     (h : NekovarFibreGlobalDuality K) (hset : NekovarFibreSetting K S)
     (hM : IsLatticeTop (GKS K S) M) (hTl : IsLatticeTop (GKS K S) T)
