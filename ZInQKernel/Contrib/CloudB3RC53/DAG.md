@@ -62,7 +62,7 @@ RC2/RC11/RC13; `calibration`, `common_coordinate`, `base_zero`: RC15; `height_on
 
 | node | tex | depends on | owner | status |
 |---|---|---|---|---|
-| setup: modularity, parametrization `π`, root number | 1760–1797 | BCDT, Milne MF 11.19, DD | TOP | root number PROVED; `π` STATED-DEFS (`X₀(N)`, `J₀(N)`) |
+| setup: modularity, parametrization `π`, root number | 1760–1797 | BCDT (modularity; its Introduction (6) gives `X₁(N)`), Darmon 2009 Thm 5.4 (`X₀(N)` parametrization), Milne MF 11.19, DD | TOP | root number PROVED; `π` STATED-DEFS (`X₀(N)`, `J₀(N)`) |
 | ex:sec7-even-scalar (3.2) | 1832–1966 | App E | RC11 | STATED-DEFS (`Λ`, Kato class, positive complex) |
 | ex:sec7-nonvanishing | 1969–2004 | HL, BFH, Desjardins, ex:app-five-prime | RC13 | STATED-DEFS → OPEN once HL/BFH/Desjardins are stated |
 | ex:sec7-typed-graph, ex:sec7-symbol | 2006–2070 | (3.2), (3.8) | RC2 | STATED-DEFS (typed residue graphs, coefficient symbols) |
