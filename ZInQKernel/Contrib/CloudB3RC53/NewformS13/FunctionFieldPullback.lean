@@ -16,7 +16,11 @@ function-field form of a nonconstant map `X₀(M) → A`), and the invariant dif
   (`r = p + qY` maps to `0` only if the norm `p² − pq(a₁X + a₃) − q²(X³ + ⋯)` vanishes at `x`);
 * **`pointFieldHom`**: the `ℚ`-algebra map `ℚ(A) → F` extending it;
 * **`pullbackFF_omegaA`**: the pull-back of `ω_A ∈ Ω[ℚ(A)⁄ℚ]` along `pointFieldHom` is `omegaPull`;
-  **`qExpDiff_pullbackFF_omegaA`**: its `q`-expansion is `θx · (2y + a₁x + a₃)⁻¹`.
+  **`qExpDiff_pullbackFF_omegaA`**: its `q`-expansion is `θx · (2y + a₁x + a₃)⁻¹`;
+* `modularPointFieldHom`, **`pullbackIsMultiple_iff_functionField`**: for the peer's
+  `IsModularPointQ M A x y`, the field map `ℚ(A) → ℚ(j, j_M)`, and clause (iv)
+  `PullbackIsMultiple A x y ĝ c` is the statement that the `q`-expansion of the pull-back of
+  `ω_A` along it is `c · ĝ`.
 
 All statements are definitions or PROVED.
 -/
@@ -325,5 +329,41 @@ theorem qExpDiff_pullbackFF_omegaA {x y : FQ M} (h : OnCurve M A x y)
   rw [pullbackFF_omegaA, qExpDiff_omegaPull]
 
 end FunctionField
+
+/-! ### From the peer's `IsModularPointQ` -/
+
+section Modular
+
+variable {M : ℕ} [NeZero M] {A : WeierstrassCurve ℚ}
+
+theorem onCurve_of_isModularPointQ {x y : LaurentSeries ℚ} (h : IsModularPointQ M A x y) :
+    OnCurve M A ⟨x, h.1⟩ ⟨y, h.2.1⟩ := by
+  apply Subtype.ext
+  simp only [IntermediateField.coe_add, IntermediateField.coe_mul, IntermediateField.coe_pow]
+  have e : ∀ a : ℚ, ((algebraMap ℚ (FQ M) a : FQ M) : LaurentSeries ℚ) = cQ a := fun a => by
+    rw [cQ, eq_ratCast (algebraMap ℚ (FQ M)), eq_ratCast (algebraMap ℚ (LaurentSeries ℚ))]
+    rfl
+  simp only [e]
+  exact h.2.2.1
+
+/-- **The function-field map of a modular point** (`IsModularPointQ`, the peer's form of a
+nonconstant `ℚ`-morphism `X₀(M) → A`): a field embedding `ℚ(A) → ℚ(j, j_M)`. -/
+def modularPointFieldHom {x y : LaurentSeries ℚ} (h : IsModularPointQ M A x y) :
+    A.toAffine.FunctionField →+* FQ M :=
+  pointFieldHom (onCurve_of_isModularPointQ h) h.2.2.2
+
+/-- **Clause (iv) of the print is the `q`-expansion of the pull-back of `ω_A` along the
+function-field map of the modular point**: for `2y + a₁x + a₃ ≠ 0`,
+`PullbackIsMultiple A x y ĝ c` iff the `q`-expansion of the pull-back of `ω_A ∈ Ω[ℚ(A)⁄ℚ]` is
+`c · ĝ` (times `dq/q`). -/
+theorem pullbackIsMultiple_iff_functionField {x y : LaurentSeries ℚ} (h : IsModularPointQ M A x y)
+    (hden : denomF A (⟨x, h.1⟩ : FQ M) ⟨y, h.2.1⟩ ≠ 0) (ĝ : PowerSeries ℂ) (c : ℂ) :
+    PullbackIsMultiple A x y ĝ c ↔
+      toComplexLaurent (qExpDiff M (pullbackFF (modularPointFieldHom h) (omegaA A))) =
+        HahnSeries.C c * HahnSeries.ofPowerSeries ℤ ℂ ĝ := by
+  rw [modularPointFieldHom, pullbackFF_omegaA]
+  exact pullbackIsMultiple_iff (A := A) ⟨x, h.1⟩ ⟨y, h.2.1⟩ hden ĝ c
+
+end Modular
 
 end ZInQ.Contrib.CloudB3RC53.NewformS13
