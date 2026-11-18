@@ -1,0 +1,202 @@
+rational_canonical.{u_3} : ∀ (k : Type u_3) [inst : Field.{u_3} k],
+  Eq.{u_3 + 1}
+    ((WeilDivisor.OrderSystem.divisorClass.{u_3, u_3} (Place.orderSystem.{u_3, u_3} ⋯))
+      (HSMul.hSMul.{0, u_3, u_3} (-2) (WeilDivisor.ofPoint.{u_3} (Place.infty.{u_3} k))))
+    (canonicalClass.{u_3, u_3} ⋯ ⋯)
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.rational_canonical' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+exists_normalized_rational : ∀ (k : Type u_3) [inst : Field k],
+  ∃ ω ∈ weilDifferentialSpace k (RatFunc k),
+    IsGreatest {D | ω ∈ weilDifferentialFiltration D} (-2 • WeilDivisor.ofPoint (Place.infty k)) ∧
+      (repartitionDualComponent ω (Place.infty k)) RatFunc.X⁻¹ = -1
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.exists_normalized_rational' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+rationalDifferential : (k : Type u_3) → [inst : Field k] → Dual k ↥(repartitionSpace k (RatFunc k))
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.rationalDifferential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+rationalDifferential_mem : ∀ (k : Type u_3) [inst : Field k],
+  rationalDifferential k ∈ weilDifferentialSpace k (RatFunc k)
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.rationalDifferential_mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+rationalDifferential_greatest : ∀ (k : Type u_3) [inst : Field k],
+  IsGreatest {D | rationalDifferential k ∈ weilDifferentialFiltration D} (-2 • WeilDivisor.ofPoint (Place.infty k))
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.rationalDifferential_greatest' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+rationalDifferential_normalization : ∀ (k : Type u_3) [inst : Field k],
+  (repartitionDualComponent (rationalDifferential k) (Place.infty k)) RatFunc.X⁻¹ = -1
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.rationalDifferential_normalization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+rationalDifferential_ne_zero : ∀ (k : Type u_3) [inst : Field k], rationalDifferential k ≠ 0
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.rationalDifferential_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+rationalDifferential_divisor : ∀ (k : Type u_3) [inst : Field k],
+  weilDifferentialDivisor ⋯ ⋯ ⋯ ⋯ = -2 • WeilDivisor.ofPoint (Place.infty k)
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.rationalDifferential_divisor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@differentialOfSeparating : {k : Type u_3} →
+  {F : Type u_4} →
+    [inst : Field k] →
+      [inst_1 : Field F] →
+        [inst_2 : Algebra k F] →
+          {x : F} →
+            IsFunctionField k F → Transcendental k x → [Algebra.IsSeparable (↥k⟮x⟯) F] → ↥(weilDifferentialSpace k F)
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.differentialOfSeparating' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@differentialOfSeparating_ne_zero : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {x : F} (hF : IsFunctionField k F) (hx : Transcendental k x)
+  [inst_3 : Algebra.IsSeparable (↥k⟮x⟯) F], differentialOfSeparating hF hx ≠ 0
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.differentialOfSeparating_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@differentialBasis : {k : Type u_3} →
+  {F : Type u_4} →
+    [inst : Field k] →
+      [inst_1 : Field F] →
+        [inst_2 : Algebra k F] →
+          {x : F} →
+            (hF : IsFunctionField k F) →
+              IsIntegrallyClosedIn k F →
+                Transcendental k x → [Algebra.IsSeparable (↥k⟮x⟯) F] → Basis Unit F ↥(weilDifferentialSpace k F)
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.differentialBasis' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@differentialBasis_apply : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F] [inst_2 : Algebra k F]
+  {x : F} (hF : IsFunctionField k F) (hex : IsIntegrallyClosedIn k F) (hx : Transcendental k x)
+  [inst_3 : Algebra.IsSeparable (↥k⟮x⟯) F] (i : Unit), (differentialBasis hF hex hx) i = differentialOfSeparating hF hx
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.differentialBasis_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@comparison : {k : Type u_3} →
+  {F : Type u_4} →
+    [inst : Field k] →
+      [inst_1 : Field F] →
+        [inst_2 : Algebra k F] →
+          {x : F} →
+            (hF : IsFunctionField k F) →
+              IsIntegrallyClosedIn k F →
+                Transcendental k x → [Algebra.IsSeparable (↥k⟮x⟯) F] → Ω[F⁄k] ≃ₗ[F] ↥(weilDifferentialSpace k F)
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.comparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+@comparison_D_self : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F] [inst_2 : Algebra k F] {x : F}
+  (hF : IsFunctionField k F) (hex : IsIntegrallyClosedIn k F) (hx : Transcendental k x)
+  [inst_3 : Algebra.IsSeparable (↥k⟮x⟯) F], (comparison hF hex hx) ((D k F) x) = differentialOfSeparating hF hx
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.comparison_D_self' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@comparison_D : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F] [inst_2 : Algebra k F] {x : F}
+  (hF : IsFunctionField k F) (hex : IsIntegrallyClosedIn k F) (hx : Transcendental k x)
+  [inst_3 : Algebra.IsSeparable (↥k⟮x⟯) F] (y : F),
+  (comparison hF hex hx) ((D k F) y) = (derivativeOfSeparating hx) y • differentialOfSeparating hF hx
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.comparison_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+@differentialOfSeparating_divisor : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {x : F} (hF : IsFunctionField k F) (hex : IsIntegrallyClosedIn k F) (hx : Transcendental k x)
+  [inst_3 : Algebra.IsSeparable (↥k⟮x⟯) F],
+  weilDifferentialDivisor hF hex ⋯ ⋯ = -2 • Divisor.poles hF (Units.mk0 x ⋯) + Divisor.different k F ⋯
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.differentialOfSeparating_divisor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@different_le_derivative : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F] [inst_2 : Algebra k F]
+  {k' : Type u_5} {F' : Type u_6} [inst_3 : Field k'] [inst_4 : Field F'] [inst_5 : Algebra k k']
+  [inst_6 : Algebra k' F'] [inst_7 : Algebra F F'] [inst_8 : Algebra k F'] [inst_9 : IsScalarTower k k' F']
+  [inst_10 : IsScalarTower k F F'] [inst_11 : FiniteDimensional F F'] [inst_12 : Algebra.IsSeparable F F']
+  {P' : Place k' F'} {y : F'},
+  F⟮y⟯ = ⊤ →
+    ∀ {ψ : F[X]},
+      ψ.Monic →
+        (∀ (i : ℕ), ψ.coeff i ∈ (Place.restrict k F P').integers) →
+          (aeval y) ψ = 0 →
+            (aeval y) (derivative ψ) ≠ 0 → ↑(Place.differentExponent k F P') ≤ P'.ord ((aeval y) (derivative ψ))
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.different_le_derivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@different_le_quadratic : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F] [inst_2 : Algebra k F]
+  {k' : Type u_5} {F' : Type u_6} [inst_3 : Field k'] [inst_4 : Field F'] [inst_5 : Algebra k k']
+  [inst_6 : Algebra k' F'] [inst_7 : Algebra F F'] [inst_8 : Algebra k F'] [inst_9 : IsScalarTower k k' F']
+  [inst_10 : IsScalarTower k F F'] [inst_11 : FiniteDimensional F F'] [inst_12 : Algebra.IsSeparable F F']
+  {P' : Place k' F'} {u v : F},
+  (algebraMap F F') u ∈ P'.integers →
+    (algebraMap F F') v ∈ P'.integers →
+      ∀ {z : F'},
+        F⟮z⟯ = ⊤ →
+          z ^ 2 + (algebraMap F F') u * z - (algebraMap F F') v = 0 →
+            2 * z + (algebraMap F F') u ≠ 0 → ↑(Place.differentExponent k F P') ≤ P'.ord (2 * z + (algebraMap F F') u)
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.different_le_quadratic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@polynomial_ratFunc_tower : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k),
+  IsScalarTower k[X] (RatFunc k) W.FunctionField
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.polynomial_ratFunc_tower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@coordinate_equation : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k),
+  W.genericY ^ 2 + (algebraMap k W.FunctionField) W.a₁ * W.genericX * W.genericY +
+      (algebraMap k W.FunctionField) W.a₃ * W.genericY =
+    W.genericX ^ 3 + (algebraMap k W.FunctionField) W.a₂ * W.genericX ^ 2 +
+        (algebraMap k W.FunctionField) W.a₄ * W.genericX +
+      (algebraMap k W.FunctionField) W.a₆
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.coordinate_equation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@weierstrass_different_bound : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k)
+  [inst_1 : WeierstrassCurve.IsElliptic W] (P : Place k W.FunctionField),
+  ↑(Place.differentExponent k (RatFunc k) P) ≤ P.ord W.invariantDifferentialDenom + 2 * max (-P.ord W.genericX) 0
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.DivisorZeroAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.weierstrass_different_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@invariantWeilDifferential : {k : Type u_3} →
+  [inst : Field k] →
+    (W : WeierstrassCurve.Affine k) → [WeierstrassCurve.IsElliptic W] → ↥(weilDifferentialSpace k W.FunctionField)
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.invariantWeilDifferential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@invariantWeilDifferential_formula : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k)
+  [inst_1 : WeierstrassCurve.IsElliptic W],
+  invariantWeilDifferential W = W.invariantDifferentialDenom⁻¹ • differentialOfSeparating ⋯ ⋯
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.invariantWeilDifferential_formula' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@invariantWeilDifferential_ne_zero : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k)
+  [inst_1 : WeierstrassCurve.IsElliptic W], ↑(invariantWeilDifferential W) ≠ 0
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.invariantWeilDifferential_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@invariantWeilDifferential_divisor : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k)
+  [inst_1 : WeierstrassCurve.IsElliptic W], weilDifferentialDivisor ⋯ ⋯ ⋯ ⋯ = 0
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.invariantWeilDifferential_divisor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@invariantWeilDifferential_mem_holomorphic : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k)
+  [inst_1 : WeierstrassCurve.IsElliptic W], ↑(invariantWeilDifferential W) ∈ weilDifferentialFiltration 0
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.invariantWeilDifferential_mem_holomorphic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@holomorphicWeilDifferentials_eq_span : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k)
+  [inst_1 : WeierstrassCurve.IsElliptic W], weilDifferentialFiltration 0 = k ∙ ↑(invariantWeilDifferential W)
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.holomorphicWeilDifferentials_eq_span' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@existsUnique_smul_invariantWeilDifferential : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k)
+  [inst_1 : WeierstrassCurve.IsElliptic W] (η : ↥(weilDifferentialFiltration 0)),
+  ∃! c, c • ↑(invariantWeilDifferential W) = ↑η
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.existsUnique_smul_invariantWeilDifferential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@invariantWeilDifferential_order : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k)
+  [inst_1 : WeierstrassCurve.IsElliptic W] (P : Place k W.FunctionField), weilDifferentialOrder ⋯ ⋯ ⋯ ⋯ P = 0
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.invariantWeilDifferential_order' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@comparison_mem_holomorphic_iff : ∀ {k : Type u_3} [inst : Field k] (W : WeierstrassCurve.Affine k)
+  [inst_1 : WeierstrassCurve.IsElliptic W] (η : Ω[W.FunctionField⁄k]),
+  ↑((comparison ⋯ ⋯ ⋯) η) ∈ weilDifferentialFiltration 0 ↔ ∃! c, c • W.invariantDifferential = η
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.comparison_mem_holomorphic_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
