@@ -61,8 +61,8 @@ def archTotal (w : InfinitePlace K) : ℕ :=
   2 * ∑ i ∈ Finset.range 3, Module.finrank (ZMod 2)
     (continuousCohomology i (trivialGaloisRep w.Completion (Fin 2 → ZMod 2)))
 
-/-- **The archimedean allowance (tex 4584–4591): at a complex place, `archTotal = 4`.** PROVED. -/
 omit [NumberField K] in
+/-- **The archimedean allowance (tex 4584–4591): at a complex place, `archTotal = 4`.** PROVED. -/
 theorem archTotal_eq_four (w : InfinitePlace K) (hw : w.IsComplex) : archTotal K w = 4 := by
   have := TauCeti.ClassFieldTheory.subsingleton_fieldAbsoluteGaloisGroup_of_isComplex w hw
   have h0 := finrank_H0_trivialGaloisRep w.Completion (Fin 2 → ZMod 2)
