@@ -1,0 +1,334 @@
+{
+  "status": "PASS",
+  "scope": "fresh research-source compilation and selected transitive axiom audit",
+  "lean_version": "Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "dependencies": {
+    "mathlib": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+    "plausible": "dfa4f38190d07c37e315953e08b90fe2d95b3c24",
+    "LeanSearchClient": "d6b4c7be5be75ec4917c873ac50c756dc1436372",
+    "importGraph": "a41f0e9a4dea23188ea9cc1c41ac9f8bbafe0b93",
+    "proofwidgets": "df72b022e558978a1c50264cfc4d7fec86fa8e04",
+    "aesop": "4a174c490d8707121c4a9290800489f105d85e07",
+    "Qq": "dce0ad79c486cb1fb504af04f953c3466b0c6db8",
+    "batteries": "66e469188fe07963e5cf666c7d4433f45b8131c5",
+    "Cli": "c24fe6078c630e89b489bffe59b3e20ac30d12c8"
+  },
+  "modules_compiled": 32,
+  "declarations_audited": 53,
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "axioms": {
+    "Research.DerivativeSwitch.ArithmeticBridge.arithmetic_unit_comparison": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticSelmer.arithmetic_selmer_cycle": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticSelmer.exists_normalized_retained_adjoint": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ArithmeticSelmer.supportKernel_closed": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.CompactSupportTrace.exists_trace_of_reciprocity": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.CompactSupportTrace.trace_eq_on_cycles": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateLocalTransport.LocalData.h1_local_transport_tame": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateWeilPairing.conjugateDual_apply": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateWeilPairing.paired_equivariant": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ConjugateWeilPairing.scalarTwist_continuous": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContinuousCup.cup11_closed": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContinuousCup.cup11_eval": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContinuousCup.cup11_restrict": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContinuousSelmer.cochainsMap_comp": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContinuousSelmer.localization_component": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContinuousSelmer.selmer_cycle_at_place": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContinuousSelmer.selmer_cycle_of_witnesses": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContinuousSelmerTrace.exists_normalized_trace": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContinuousSelmerTrace.normalized_trace_eq_on_cycles": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContractibleLocalCondition.added_condition_boundary": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ContractibleLocalCondition.comparison": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteSelmerCoefficients.binary_selfInjective": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteSelmerCoefficients.parameter_nilpotent": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteSelmerCoefficients.reduce_comp": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteSelmerCoefficients.scalarFinite": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteSelmerCoefficients.scalar_selfInjective": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteSelmerCoefficients.zmod_selfInjective": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteTateTwist.absoluteCharacter_spec": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteTateTwist.conjugateCup11": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteTateTwist.exists_primitiveRoot": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteTateTwist.supportedCharacter_at_place": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteTateTwist.supportedCharacter_continuous": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.FiniteTateTwist.supportedCharacter_pullback": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.NativeBoundaryTrace.pure_boundary_boundary_witness": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.NativeBoundaryTrace.pure_boundary_evaluation_of_trace_homotopy": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.NativeSelmerCone.selmer_cycle_equation": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.RetainedBoundaryRows.boundary_row_defect": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.RetainedBoundaryRows.projected_boundary_row": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.RetainedCoefficients.residue_compatible": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.RetainedCoefficients.residue_eventually": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.RetainedCoefficients.retain": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.RetainedSelmerModels.differential_sq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.RetainedSelmerModels.mapMatrix_comm": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.RetainedSelmerModels.retainedHomotopyEquiv": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.RetainedSelmerModels.retainedMap": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ScalarRatio.scaled_coordinate_mul_cofactor_mem": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.ScalarRatio.target_det_ne_zero_of_axes": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.SelmerDualityMap.adjoint_apply": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.SelmerDualityMap.retained_adjoint_apply": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.TameFactor.integral_unit_comparison": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.TerminalRankReduction.coboundary_of_vanishing_on_kernel": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.TerminalRankReduction.exists_quadratic_value_ne_zero": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Research.DerivativeSwitch.TerminalRankReduction.hyperbolic_axes": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "baseline_warnings": [
+    "Research/DerivativeSwitch/Coordinate.lean:147:0: warning: automatically included section variable(s) unused in theorem `Research.DerivativeSwitch.ScalarRatio.row_mul_assoc`:",
+    "Research/DerivativeSwitch/Coordinate.lean:34:0: warning: automatically included section variable(s) unused in theorem `Research.DerivativeSwitch.ScalarRatio.tensor_mul`:",
+    "Research/DerivativeSwitch/Coordinate.lean:43:0: warning: automatically included section variable(s) unused in theorem `Research.DerivativeSwitch.ScalarRatio.mul_tensor`:"
+  ],
+  "input_sha256": {
+    "lean/Research/DerivativeSwitchBoundary.lean": "63a9215fa55568069d2d1a7b2c3a7345ec21c7ad6a82203f42c5451ee4b8bbea",
+    "lean/Research/DerivativeSwitch/Coordinate.lean": "229e66269880b9970b15ca36fab290d2572fdfac7396383d3327e652128ade90",
+    "lean/Research/DerivativeSwitch/CommonStrict.lean": "c5770846489d7fdab0024d8f3c49e0a474eb0fa56dc428cc6a7034bc8e5605e4",
+    "lean/Research/DerivativeSwitch/UnitCriterion.lean": "efd9f4404b9760f9d7ebc2cb0874f21f517ed3868e9e23f78fd0465a2c03e45a",
+    "lean/Research/DerivativeSwitch/BoundaryCup.lean": "64750e7706f82cf0a47b76c80503bcab0577c2aa18f9703c09b4b8288be0df90",
+    "lean/Research/DerivativeSwitch/ArithmeticBridge.lean": "2b72fc4237d45feb84973e470f0887c3ef3768cfaaedec967857a4ca01c09ef6",
+    "lean/Research/DerivativeSwitch/ActualBoundaryCup.lean": "77bcdd2ae5283ffd6cc51062e452da4294fcd5b3d952940b588b2d5b52ecdd90",
+    "lean/Research/DerivativeSwitch/OrthogonalComparison.lean": "bfec996b869e44c6a42fc058fbc24cc7288b1f61d0f0e7eef1f4f58f41dca1ba",
+    "lean/Research/DerivativeSwitch/ConjugateLocalTransport.lean": "8688eef27fcc89c02eb3ab270e5359534dc23ef16e11678bdb1dd3587e3f8b86",
+    "lean/Research/DerivativeSwitch/ConjugateLocalH1.lean": "078ac50ae0c90c8e609a57c51c5884a25646ad7305531f1cf531617485b9078f",
+    "lean/Research/DerivativeSwitch/NativeSelmerCone.lean": "ccb717969890b7602b108716b34d59e780bbe7c43eef47fdb3d0b8718b3c08f5",
+    "lean/Research/DerivativeSwitch/NativeBoundaryTrace.lean": "b6bcca84aa469d3e7eaca128cf6b7f613f956e08d89d63571faf4789de1aaa82",
+    "lean/Research/DerivativeSwitch/TameFactor.lean": "03f222ae04c6d5c14e07c75e88c1933223f75cbe8e412d96145d282dcaa46df4",
+    "lean/Research/DerivativeSwitch/TameLocalH1.lean": "ad9f0f66ea0b450d171aeb931b6f0b4d1a8254817285d1a5177564d286213393",
+    "lean/Research/DerivativeSwitch/CompactSupportTrace.lean": "fa7a3306556108065aa8b2d93681a18042dc4e51d37a031993a42999f6a30dd3",
+    "lean/Research/DerivativeSwitch/ContractibleLocalCondition.lean": "dbefb18821270a937fe78c7c150bfb883aa54dcbcb3b70a4a525f4fd98e72c70",
+    "lean/Research/DerivativeSwitch/CommonStrictAxes.lean": "5093e9beea298b8353f527e2255172209331e5fe4e583271a3dc581ecc15bc70",
+    "lean/Research/DerivativeSwitch/RetainedBoundaryRows.lean": "8e57073599d0bf56a0642835cdb199702491b132f03b463adb67b98eeae606b8",
+    "lean/Research/DerivativeSwitch/TerminalRankReduction.lean": "83fc68a143f86678c7d0b40c573b89ada559018c3d3614ce60c36d208911eb01",
+    "lean/Research/DerivativeSwitch/OuterCoordinateBound.lean": "d173ca8b4b495fd17b2db80ab2bd3699fb552ce246842b9490c97135830bf583",
+    "lean/Research/DerivativeSwitch/ContinuousSelmer.lean": "90d5b89b199a1e06d595a3d42785d212c624ae0583fd8eeb8f0028c3705fc9fd",
+    "lean/Research/DerivativeSwitch/ArithmeticSelmer.lean": "42eb218226289694efd4170259637cac4f9a085a1772af5b0a8fb04a0fbe2475",
+    "lean/Research/DerivativeSwitch/FiniteSelmerCoefficients.lean": "99097ee54b83f4beb1be5b25029b53de402b3c28a0deda4aab3e1ad49f1ac649",
+    "lean/Research/DerivativeSwitch/FiniteSelmerInjective.lean": "d5fea0d66a61fbe9d39f2c5cbd5a007135f804dad1e57476d90464c9d30131c7",
+    "lean/Research/DerivativeSwitch/RetainedCoefficients.lean": "b3ca1e5c721c3bd48cf6890a5f8d363e0d4dbb793c33deede2cffa7dd8421f5b",
+    "lean/Research/DerivativeSwitch/RetainedSelmerModels.lean": "b46808622256852ca21b133bbba5e41f98a48403127cd4f83aba6a8e326d565d",
+    "lean/Research/DerivativeSwitch/ConjugateWeilPairing.lean": "55ebcd1238366dc72596bb0f8c53e01a5f69a60403a5fbbf37c5ee402957c691",
+    "lean/Research/DerivativeSwitch/ContinuousCup.lean": "1453dfe3b38aec9f8719b266b4b19fc1ea51dadc9fd88f52b86c35a409471028",
+    "lean/Research/DerivativeSwitch/FiniteTateTwist.lean": "5def177297c81a8e3b3853976cb8a537afaa0e852e60ad00f166e5ac338a0f85",
+    "lean/Research/DerivativeSwitch/ContinuousSelmerTrace.lean": "e7d46bf1e375879bc6b51fc419c861d100d32d68b6e730e54ac0f54a86cadc49",
+    "lean/Research/DerivativeSwitch/SelmerDualityMap.lean": "841da49f6753fb0f461565c0811b1bf6fa486a5252e258670aa7962ccefd408a",
+    "lean/Research/DerivativeSwitch/ArithmeticSelmerAdjoint.lean": "ac8192fdcebaea8de92d28357f1611dc03692c4edff219b4617564ab6fd89c1a",
+    "lean/lake-manifest.json": "a770787f33b5824f61a0731d59e67fca3f44a531b21d1fc1a804064c6fb54e58",
+    "lean/lean-toolchain": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c",
+    "research/derivative-switch-arithmetic-lean/roots.txt": "50c2b0b3af9923fd5a901c589c44d5007d64d6cebe01ac3a128a33fc79ac0e2b",
+    "research/derivative-switch-arithmetic-lean/verify.py": "f83792d1372f80781d5caadb6711d0ee010c4f9bb23110ab1dd5504fb4b2cfc9"
+  },
+  "statements_and_axioms_sha256": "e874166faa5f26a41fda5b6fa0f8d996074de203ea1bc6303a3eff747be71a5a"
+}
