@@ -328,9 +328,8 @@ theorem galRelSwitch_exists_trace (hTr : NekovarFibreTraces K) (hset : NekovarFi
 
 /-- **The named duality input from both PRINTs** (tex L5062–5070): the trace is supplied by
 `NekovarFibreTraces`; the local complement criterion (open limit (1)) and the switch coordinates
-(ELLIOT) are required for every trace killing coboundaries and inducing `H³_c ≅ k(𝔭)`, with a
-constant `ε` depending on the trace (tex 5035–5038: `ε ∈ k^×`; rescaling the trace rescales `ε`).
-The conclusion is the duality input for some `ε ≠ 0`. Classification: PROVED from the PRINTs
+(ELLIOT) are required for every trace killing coboundaries and inducing `H³_c ≅ k(𝔭)`; the
+constant `ε` depends on the trace (tex 5035–5038: `ε ∈ k^×`). The conclusion is the duality input for some `ε ≠ 0`. Classification: PROVED from the PRINTs
 `NekovarFibreGlobalDuality` and `NekovarFibreTraces`. (Restated: an earlier form with one `ε` for
 every trace contradicted `NekovarFibreTraces`.) -/
 theorem galRelK_localizationDualityInput_of_traces
