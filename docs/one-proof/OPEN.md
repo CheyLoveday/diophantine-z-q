@@ -72,6 +72,7 @@ ping, and is released if there is no reply within 7 days of the ping.
 | hypothesis | holder | since |
 | --- | --- | --- |
 | [`pazukiCor13Upper`](#pazukicor13upper) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pazuki-inputs)) | 2026-11-16 |
+| [`hPC`](#hpc) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/90)) | 2026-11-17 |
 
 ## Packets
 
@@ -161,7 +162,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`r9a`](#r9a) | research | published | LEAF |  | good-first | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`silverbergZarhinThm35`](#silverbergzarhinthm35) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`hPC`](#hpc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
+| [`hPC`](#hpc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/90)) |
 
 ## The hypotheses
 
@@ -587,7 +588,7 @@ polynomial; the manuscript derives it from its restricted converse, Theorem 5.3.
 * Source: Glazer, 11/5 manuscript (diophantine_zq.tex), Theorem 5.2 (Pole completeness, hyp:PC), lines 1001-1004, for the manuscript's pole polynomial Q_pole (lines 976-982, curves y^2 = x(x - l)(x + 3l)); the manuscript proves it from Theorem 5.3 (restricted converse, hyp:RC, lines 1005-1011)
 * discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/90)).
 
 ```lean
 ZInQ.PoleCompleteness
