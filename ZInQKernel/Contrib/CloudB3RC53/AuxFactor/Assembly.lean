@@ -15,7 +15,10 @@ three inputs discharged by Elliot's steps proved here:
   together with the dictionary input `hDict` (named after the fact, tex 10096–10098 and 10139:
   "for the total type that actually occurs, `hk'` is partitionable" when the dummy primes realize
   the seed-anchor classes; its combinatorial core is `negative_partitionable`, read through the
-  coefficient dictionary).
+  coefficient dictionary). Since round 4 `hDict` is asked only at the prepared `h` (positive,
+  squarefree, `≡ 1 (mod 8)`, prime to the support; tex 2344–2346, 10059–10061) and only for the
+  companions actually produced (`L(E^{(hk')}, 1) ≠ 0`, tex 2380–2385), exactly as RC13's `hdummy`
+  uses it.
 
 The prints (Hoffstein–Luo, the BFH twist sign, BCDT) are RC8/RC13's leaves, used as they are.
 -/
@@ -38,11 +41,13 @@ theorem auxFactor (hHL : HoffsteinLuo) (hTS : BFHTwistSign) (hBCDT : BCDTThmA)
     (Partitionable CorankZero : ℤ → Prop)
     -- the dummy supply and the dictionary
     (m : ℕ) (hm : 0 < m) (hm2 : 2 ∣ m) (A₀ : ℕ) (cls : ℕ → ZMod m) (hcls : ∀ i, IsUnit (cls i))
-    (hDict : ∀ (h : ℤ) (q : ℕ → ℕ), (∀ i < A₀, (q i).Prime ∧ ((q i : ℕ) : ZMod m) = cls i) →
+    (hDict : ∀ (h : ℤ) (q : ℕ → ℕ), 0 < h → Squarefree h → h % 8 = 1 →
+      (∀ p ∈ S, ¬ (p : ℤ) ∣ h) → (∀ i < A₀, (q i).Prime ∧ ((q i : ℕ) : ZMod m) = cls i) →
       ∀ u : ℤ, (∏ i ∈ range A₀, (q i : ℤ)) * u < 0 → ((∏ i ∈ range A₀, (q i : ℤ)) * u) % 8 = 1 →
         Squarefree ((∏ i ∈ range A₀, (q i : ℤ)) * u) →
         (∀ p ∈ S ∪ h.natAbs.primeFactors,
           IsSquareAt p (((∏ i ∈ range A₀, (q i : ℤ)) * u : ℤ) : ℚ)) →
+        CentralNonzero (qtwist E ((h * ((∏ i ∈ range A₀, (q i : ℤ)) * u) : ℤ) : ℚ)) →
         Partitionable (h * ((∏ i ∈ range A₀, (q i : ℤ)) * u)))
     (hforward : ∀ d : ℤ, CentralNonzero (qtwist E d) → CorankZero d)
     -- (F.1)–(F.2)
@@ -66,7 +71,7 @@ theorem auxFactor (hHL : HoffsteinLuo) (hTS : BFHTwistSign) (hBCDT : BCDTThmA)
     href hfwdL h32 hmiss
   refine roughCompanion hHL hTS hBCDT hE hS h2 hbad Partitionable CorankZero vL
     (fun d => (sN d : ℤ)) C₁ A₀ ?_ hforward h33b
-  intro h hh0 _ _ hhS X hX
+  intro h hh0 hhsq hh8 hhS X hX
   obtain ⟨q, -, hq, ha0, hasf, haω, haSX, hah⟩ := dummy_realization m hm hm2 A₀ cls hcls S X h
   refine ⟨∏ i ∈ range A₀, (q i : ℤ), ha0, hasf, haω, fun p hp => ?_, hah hh0.ne', ?_⟩
   · have hpp : p.Prime := by
@@ -74,7 +79,7 @@ theorem auxFactor (hHL : HoffsteinLuo) (hTS : BFHTwistSign) (hBCDT : BCDTThmA)
       · exact hS p hp
       · exact hX p hp
     exact haSX p hp hpp
-  · exact fun u hu h8 hsf hsq _ =>
-      hDict h q (fun i hi => ⟨(hq i hi).1, (hq i hi).2.2.2.2⟩) u hu h8 hsf hsq
+  · exact fun u hu h8 hsf hsq hcn =>
+      hDict h q hh0 hhsq hh8 hhS (fun i hi => ⟨(hq i hi).1, (hq i hi).2.2.2.2⟩) u hu h8 hsf hsq hcn
 
 end ZInQ.Contrib.CloudB3RC53.AuxFactor
