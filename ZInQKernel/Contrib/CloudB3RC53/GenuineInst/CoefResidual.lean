@@ -12,8 +12,19 @@ The residual module of `M_i` is `𝔽₂ ⊗_{A_i} M_i`, along the residue map `
 * `resEps`: the residue map (`i ≠ 0`); the units of `A_i` go to `1`, so the twist `α_i` dies;
 * `resCancel`: `𝔽₂ ⊗_{A_i} (A_i ⊗_ℤ T) ≅ 𝔽₂ ⊗_ℤ T ≅ T / 2T` (`cancelBaseChange`,
   `quotTensorEquivQuotSMul`);
-* (later stages) `T / 2T ≅ E[2]` for `T = E[2^i]` with full torsion, and `E[2] ≅ 𝔽₂²` with trivial
-  action when `E[2]` is rational.
+* `resCancel_resAct`: under `resCancel` the residual action `id ⊗ α(g)(id ⊗ g)` is the action of
+  `g` on `T / 2T` (the twist dies since `ε(α(g)) = 1`);
+* `halfEquiv`: `P[2m] / 2P[2m] ≅ P[2]` (multiplication by `m`) for an abelian group `P` with
+  `|P[2m]| = (2m)²`, `|P[m]| = m²`, `|P[2]| = 4` (counting kernels and images);
+* `residualEquiv`: for the actual `M_{j+1} = Mcoef K S W (j+1) α`,
+  `𝔽₂ ⊗_{A_{j+1}} M_{j+1} ≅ E(K_S)[2]`, `G_{K,S}`-equivariantly (`residualEquiv_resAct`), given
+  `FullTorsion` at `2^{j+1}`, `2^j` and `2` (RC28's Néron–Ogg–Shafarevich GLUE hypothesis);
+* `torsTwoEquiv`, `residualFin2`: `E(K_S)[2] ≅ 𝔽₂²`, hence `𝔽₂ ⊗_{A_{j+1}} M_{j+1} ≅ 𝔽₂²`; with
+  trivial Galois action on `E(K_S)[2]` (tex 4479–4480) the residual action is trivial in these
+  coordinates (`residualFin2_resAct`).
+
+**Classification.** Definitions and PROVED statements; the only hypotheses are `FullTorsion`
+(GLUE, as in RC28) and, for `residualFin2_resAct`, the trivial action on `E(K_S)[2]`.
 -/
 
 noncomputable section
@@ -127,5 +138,221 @@ theorem resCancel_resAct (g : G) (x : ResMod2 i α T) :
       rfl
 
 end Cancel
+
+section Halving
+
+/-! ### `T / 2T ≅ T[2]` for `T = P[2m]` with full torsion -/
+
+variable {P : Type} [AddCommGroup P] {n : ℕ} (m : ℕ)
+
+/-- Multiplication by `m`, `P[2m] → P[2]`. -/
+def halfMap (hnm : n = 2 * m) : AddSubgroup.torsionBy P (n : ℤ) →+ AddSubgroup.torsionBy P ((2 : ℕ) : ℤ) :=
+  AddMonoidHom.mk' (fun x => ⟨m • (x : P), by
+    rw [AddSubgroup.torsionBy.nsmul_iff, smul_smul, ← hnm]
+    exact AddSubgroup.torsionBy.nsmul_iff.mp x.2⟩)
+    (fun x y => Subtype.ext (by simp))
+
+theorem coe_halfMap (hnm : n = 2 * m) (x : AddSubgroup.torsionBy P (n : ℤ)) :
+    (halfMap m hnm x : P) = m • (x : P) := rfl
+
+/-- Doubling, `P[2m] → P`. -/
+def dblMap (n : ℕ) : AddSubgroup.torsionBy P (n : ℤ) →+ P :=
+  AddMonoidHom.mk' (fun x => 2 • (x : P)) (fun x y => by simp)
+
+/-- The kernel of `halfMap` is `P[m]`. -/
+def kerHalfEquiv (hnm : n = 2 * m) : (halfMap (P := P) m hnm).ker ≃ AddSubgroup.torsionBy P (m : ℤ) where
+  toFun x := ⟨x.1.1, by
+    have h := congrArg Subtype.val (AddMonoidHom.mem_ker.mp x.2)
+    exact AddSubgroup.torsionBy.nsmul_iff.mpr h⟩
+  invFun y := ⟨⟨y.1, by
+      rw [AddSubgroup.torsionBy.nsmul_iff, hnm, ← smul_smul,
+        AddSubgroup.torsionBy.nsmul_iff.mp y.2, smul_zero]⟩,
+    AddMonoidHom.mem_ker.mpr (Subtype.ext (AddSubgroup.torsionBy.nsmul_iff.mp y.2))⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+/-- The kernel of `dblMap` is `P[2]`. -/
+def kerDblEquiv (hnm : n = 2 * m) : (dblMap (P := P) n).ker ≃ AddSubgroup.torsionBy P ((2 : ℕ) : ℤ) where
+  toFun x := ⟨x.1.1, AddSubgroup.torsionBy.nsmul_iff.mpr (AddMonoidHom.mem_ker.mp x.2)⟩
+  invFun y := ⟨⟨y.1, by
+      rw [AddSubgroup.torsionBy.nsmul_iff, hnm, mul_comm, ← smul_smul,
+        AddSubgroup.torsionBy.nsmul_iff.mp y.2, smul_zero]⟩,
+    AddMonoidHom.mem_ker.mpr (AddSubgroup.torsionBy.nsmul_iff.mp y.2)⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+variable {m}
+
+theorem natCard_range_of_ker {A B : Type} [AddCommGroup A] [AddCommGroup B] (f : A →+ B)
+    {a k : ℕ} (hA : Nat.card A = a) (hk : Nat.card f.ker = k) : Nat.card f.range * k = a := by
+  rw [← hA, ← hk, ← AddSubgroup.index_ker, mul_comm]
+  exact AddSubgroup.card_mul_index f.ker
+
+/-- **`halfMap` is onto `P[2]`** when `|P[2m]| = (2m)²`, `|P[m]| = m²`, `|P[2]| = 4`. PROVED. -/
+theorem halfMap_surjective (hnm : n = 2 * m) (hm : m ≠ 0)
+    (hT : Nat.card (AddSubgroup.torsionBy P (n : ℤ)) = n ^ 2)
+    (hM : Nat.card (AddSubgroup.torsionBy P (m : ℤ)) = m ^ 2)
+    (h2 : Nat.card (AddSubgroup.torsionBy P ((2 : ℕ) : ℤ)) = 2 ^ 2) :
+    Function.Surjective (halfMap (P := P) m hnm) := by
+  have hr := natCard_range_of_ker (halfMap (P := P) m hnm) hT
+    ((Nat.card_congr (kerHalfEquiv m hnm)).trans hM)
+  have hm2 : 0 < m ^ 2 := by positivity
+  have hcard : Nat.card (halfMap (P := P) m hnm).range =
+      Nat.card (AddSubgroup.torsionBy P ((2 : ℕ) : ℤ)) := by
+    rw [h2]
+    apply Nat.eq_of_mul_eq_mul_right hm2
+    rw [hr, hnm]
+    ring
+  have : Finite (AddSubgroup.torsionBy P ((2 : ℕ) : ℤ)) := Nat.finite_of_card_ne_zero (by omega)
+  exact AddMonoidHom.range_eq_top.mp (AddSubgroup.eq_top_of_card_eq _ hcard)
+
+/-- **`P[m] = 2·P[2m]`** under the same cardinalities. PROVED. -/
+theorem exists_two_nsmul_of_mem (hnm : n = 2 * m) (hm : m ≠ 0)
+    (hT : Nat.card (AddSubgroup.torsionBy P (n : ℤ)) = n ^ 2)
+    (hM : Nat.card (AddSubgroup.torsionBy P (m : ℤ)) = m ^ 2)
+    (h2 : Nat.card (AddSubgroup.torsionBy P ((2 : ℕ) : ℤ)) = 2 ^ 2)
+    {y : P} (hy : y ∈ AddSubgroup.torsionBy P (m : ℤ)) :
+    ∃ x : AddSubgroup.torsionBy P (n : ℤ), 2 • (x : P) = y := by
+  have hr := natCard_range_of_ker (dblMap (P := P) n) hT
+    ((Nat.card_congr (kerDblEquiv m hnm)).trans h2)
+  have hle : (dblMap (P := P) n).range ≤ AddSubgroup.torsionBy P (m : ℤ) := by
+    rintro _ ⟨x, rfl⟩
+    change 2 • (x : P) ∈ _
+    rw [AddSubgroup.torsionBy.nsmul_iff, smul_smul, mul_comm, ← hnm]
+    exact AddSubgroup.torsionBy.nsmul_iff.mp x.2
+  have hcard : Nat.card (AddSubgroup.torsionBy P (m : ℤ)) ≤ Nat.card (dblMap (P := P) n).range := by
+    rw [hM]
+    apply le_of_eq
+    apply Nat.eq_of_mul_eq_mul_right (show 0 < 2 ^ 2 by norm_num)
+    rw [hr, hnm]
+    ring
+  have : Finite (AddSubgroup.torsionBy P (m : ℤ)) :=
+    Nat.finite_of_card_ne_zero (by rw [hM]; positivity)
+  have heq := AddSubgroup.eq_of_le_of_card_ge hle hcard
+  rw [← heq] at hy
+  obtain ⟨x, hx⟩ := hy
+  exact ⟨x, hx⟩
+
+/-- **`ker(halfMap) = 2·P[2m]`** as `ℤ`-submodules. PROVED. -/
+theorem ker_halfMap (hnm : n = 2 * m) (hm : m ≠ 0)
+    (hT : Nat.card (AddSubgroup.torsionBy P (n : ℤ)) = n ^ 2)
+    (hM : Nat.card (AddSubgroup.torsionBy P (m : ℤ)) = m ^ 2)
+    (h2 : Nat.card (AddSubgroup.torsionBy P ((2 : ℕ) : ℤ)) = 2 ^ 2) :
+    LinearMap.ker (halfMap (P := P) m hnm).toIntLinearMap =
+      Ideal.span {((2 : ℕ) : ℤ)} • (⊤ : Submodule ℤ (AddSubgroup.torsionBy P (n : ℤ))) := by
+  rw [Submodule.ideal_span_singleton_smul]
+  ext x
+  rw [LinearMap.mem_ker, AddMonoidHom.coe_toIntLinearMap, Submodule.mem_smul_pointwise_iff_exists]
+  constructor
+  · intro hx
+    have hy : (x : P) ∈ AddSubgroup.torsionBy P (m : ℤ) :=
+      AddSubgroup.torsionBy.nsmul_iff.mpr (congrArg Subtype.val hx)
+    obtain ⟨z, hz⟩ := exists_two_nsmul_of_mem hnm hm hT hM h2 hy
+    refine ⟨z, Submodule.mem_top, Subtype.ext ?_⟩
+    rw [← hz, AddSubgroup.coe_zsmul, Nat.cast_ofNat, ofNat_zsmul]
+  · rintro ⟨z, -, rfl⟩
+    apply Subtype.ext
+    rw [coe_halfMap, AddSubgroup.coe_zsmul, Nat.cast_ofNat, ofNat_zsmul, smul_smul, mul_comm, ← hnm,
+      AddSubgroup.torsionBy.nsmul_iff.mp z.2]
+    rfl
+
+/-- **`P[2m] / 2P[2m] ≅ P[2]`** (multiplication by `m`), under the cardinalities `(2m)²`, `m²`,
+`4`. PROVED. -/
+def halfEquiv (hnm : n = 2 * m) (hm : m ≠ 0)
+    (hT : Nat.card (AddSubgroup.torsionBy P (n : ℤ)) = n ^ 2)
+    (hM : Nat.card (AddSubgroup.torsionBy P (m : ℤ)) = m ^ 2)
+    (h2 : Nat.card (AddSubgroup.torsionBy P ((2 : ℕ) : ℤ)) = 2 ^ 2) :
+    (AddSubgroup.torsionBy P (n : ℤ) ⧸
+        (Ideal.span {((2 : ℕ) : ℤ)} • (⊤ : Submodule ℤ (AddSubgroup.torsionBy P (n : ℤ))))) ≃ₗ[ℤ]
+      AddSubgroup.torsionBy P ((2 : ℕ) : ℤ) :=
+  (Submodule.quotEquivOfEq _ _ (ker_halfMap hnm hm hT hM h2).symm).trans
+    ((halfMap (P := P) m hnm).toIntLinearMap.quotKerEquivOfSurjective (halfMap_surjective hnm hm hT hM h2))
+
+theorem halfEquiv_mk (hnm : n = 2 * m) (hm : m ≠ 0)
+    (hT : Nat.card (AddSubgroup.torsionBy P (n : ℤ)) = n ^ 2)
+    (hM : Nat.card (AddSubgroup.torsionBy P (m : ℤ)) = m ^ 2)
+    (h2 : Nat.card (AddSubgroup.torsionBy P ((2 : ℕ) : ℤ)) = 2 ^ 2)
+    (x : AddSubgroup.torsionBy P (n : ℤ)) :
+    halfEquiv hnm hm hT hM h2 (Submodule.Quotient.mk x) = halfMap m hnm x := rfl
+
+end Halving
+
+section Actual
+
+/-! ### The actual `M_i`: `𝔽₂ ⊗_{A_i} M_i ≅ E[2] ≅ 𝔽₂²` -/
+
+open NumberField IsDedekindDomain WeierstrassCurve ZInQ.Manuscript.RC.SelmerComplex
+
+variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
+  {W : WeierstrassCurve K}
+
+omit [NumberField K] in
+/-- Multiplication by `2^j`, `E[2^{j+1}] → E[2]`, is `G_{K,S}`-equivariant. PROVED. -/
+theorem halfMap_smul (j : ℕ) (σ : GKS K S) (x : TorsS K S W ((2 ^ (j + 1) : ℕ) : ℤ)) :
+    halfMap (2 ^ j) (pow_succ' 2 j) (σ • x) = σ • halfMap (2 ^ j) (pow_succ' 2 j) x := by
+  apply Subtype.ext
+  rw [coe_halfMap, coe_smul_torsS, coe_smul_torsS, coe_halfMap, map_nsmul]
+
+variable (j : ℕ) (α : GKS K S →* (Acoef (j + 1))ˣ)
+
+/-- **The residual module of the actual `M_{j+1}` is `E[2]`**: `𝔽₂ ⊗_{A_{j+1}} M_{j+1} ≅
+E(K_S)[2]`, `c ⊗ (a ⊗ t) ↦ ε(a)c · 2^j t`, given that `E[2^{j+1}]`, `E[2^j]`, `E[2]` are defined
+over `K_S` (`FullTorsion`, Néron–Ogg–Shafarevich GLUE as in RC28). -/
+def residualEquiv (hT : FullTorsion K S W (2 ^ (j + 1))) (hM : FullTorsion K S W (2 ^ j))
+    (h2 : FullTorsion K S W 2) :
+    ZMod 2 ⊗[Acoef (j + 1)] Mcoef K S W (j + 1) α ≃+ TorsS K S W ((2 : ℕ) : ℤ) :=
+  (resCancel (j + 1) α (TorsS K S W ((2 ^ (j + 1) : ℕ) : ℤ))).trans
+    (halfEquiv (pow_succ' 2 j) (pow_ne_zero j two_ne_zero) hT hM h2).toAddEquiv
+
+omit [NumberField K] in
+/-- **`residualEquiv` is `G_{K,S}`-equivariant**: the residual action of `σ` on
+`𝔽₂ ⊗ M_{j+1}` (the twist `α` disappears) is the Galois action on `E[2]`. PROVED. -/
+theorem residualEquiv_resAct (hT : FullTorsion K S W (2 ^ (j + 1)))
+    (hM : FullTorsion K S W (2 ^ j)) (h2 : FullTorsion K S W 2) (σ : GKS K S)
+    (x : ZMod 2 ⊗[Acoef (j + 1)] Mcoef K S W (j + 1) α) :
+    residualEquiv j α hT hM h2 (resAct (j + 1) α _ σ x) = σ • residualEquiv j α hT hM h2 x := by
+  change halfEquiv (pow_succ' 2 j) (pow_ne_zero j two_ne_zero) hT hM h2
+      (resCancel (j + 1) α _ (resAct (j + 1) α _ σ x)) =
+    σ • halfEquiv (pow_succ' 2 j) (pow_ne_zero j two_ne_zero) hT hM h2 (resCancel (j + 1) α _ x)
+  rw [resCancel_resAct]
+  obtain ⟨t, ht⟩ := Submodule.Quotient.mk_surjective _ (resCancel (j + 1) α _ x)
+  rw [← ht]
+  exact halfMap_smul j σ t
+
+variable (K S W) in
+/-- **`E(K_S)[2] ≅ 𝔽₂²`** when `|E(K_S)[2]| = 4`. -/
+def torsTwoEquiv (h2 : FullTorsion K S W 2) : TorsS K S W ((2 : ℕ) : ℤ) ≃+ (Fin 2 → ZMod 2) :=
+  letI : Module (ZMod 2) (TorsS K S W ((2 : ℕ) : ℤ)) := AddSubgroup.torsionBy.zmodModule
+  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  haveI : Finite (TorsS K S W ((2 : ℕ) : ℤ)) :=
+    Nat.finite_of_card_ne_zero (by rw [show Nat.card _ = 2 ^ 2 from h2]; norm_num)
+  haveI : Fintype (TorsS K S W ((2 : ℕ) : ℤ)) := Fintype.ofFinite _
+  (LinearEquiv.ofFinrankEq (R := ZMod 2) (TorsS K S W ((2 : ℕ) : ℤ)) (Fin 2 → ZMod 2) (by
+    have hc := Module.card_eq_pow_finrank (K := ZMod 2) (V := TorsS K S W ((2 : ℕ) : ℤ))
+    rw [← Nat.card_eq_fintype_card, show Nat.card _ = 2 ^ 2 from h2, ZMod.card] at hc
+    rw [Module.finrank_fin_fun]
+    exact (Nat.pow_right_injective le_rfl hc).symm)).toAddEquiv
+
+/-- **The residual module of the actual `M_{j+1}` is `𝔽₂²`**: `𝔽₂ ⊗_{A_{j+1}} M_{j+1} ≅ 𝔽₂²`
+(additively), under `FullTorsion` at `2^{j+1}`, `2^j`, `2`. -/
+def residualFin2 (hT : FullTorsion K S W (2 ^ (j + 1))) (hM : FullTorsion K S W (2 ^ j))
+    (h2 : FullTorsion K S W 2) :
+    ZMod 2 ⊗[Acoef (j + 1)] Mcoef K S W (j + 1) α ≃+ (Fin 2 → ZMod 2) :=
+  (residualEquiv j α hT hM h2).trans (torsTwoEquiv K S W h2)
+
+omit [NumberField K] in
+/-- **The residual representation is trivial when `E[2]` is rational** (tex 4479–4480): if
+`G_{K,S}` acts trivially on `E(K_S)[2]`, the residual action of every `σ` on `𝔽₂ ⊗ M_{j+1}` is the
+identity in the coordinates `residualFin2`. PROVED. -/
+theorem residualFin2_resAct (hT : FullTorsion K S W (2 ^ (j + 1)))
+    (hM : FullTorsion K S W (2 ^ j)) (h2 : FullTorsion K S W 2)
+    (htriv : ∀ (σ : GKS K S) (P : TorsS K S W ((2 : ℕ) : ℤ)), σ • P = P) (σ : GKS K S)
+    (x : ZMod 2 ⊗[Acoef (j + 1)] Mcoef K S W (j + 1) α) :
+    residualFin2 j α hT hM h2 (resAct (j + 1) α _ σ x) = residualFin2 j α hT hM h2 x := by
+  change torsTwoEquiv K S W h2 (residualEquiv j α hT hM h2 (resAct (j + 1) α _ σ x)) =
+    torsTwoEquiv K S W h2 (residualEquiv j α hT hM h2 x)
+  rw [residualEquiv_resAct, htriv]
+
+end Actual
 
 end ZInQ.Contrib.CloudB3RC53.GenuineInst
