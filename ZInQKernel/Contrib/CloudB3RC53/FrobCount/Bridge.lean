@@ -10,8 +10,8 @@ conclusion, `CentralFrobeniusDeterminantsAt Φ r`, from the point-count version 
 `CentralCount.lean`, with no Hasse hypothesis and no lower bound on `r`, so that consumers can
 switch:
 
-* `centralFrobeniusDeterminantsAt_of_count` (PROVED): if `det Φ = r`, `r = #k` for a finite field
-  `k`, and `tr Φ = ±(r + 1 − #W(k))` for a Weierstrass curve `W` over `k`, then
+* `centralFrobeniusDeterminantsAt_of_count` (PROVED): if `det Φ = r`, `r = |k|` for a finite field
+  `k`, and `tr Φ = ±(r + 1 − |W(k)|)` for a Weierstrass curve `W` over `k`, then
   `CentralFrobeniusDeterminantsAt Φ r`.
 * `centralFrobeniusDeterminantsAt_of_hasse` (PROVED): the old conclusion, in the same form, from
   the old hypotheses (`centralFrobeniusDeterminantsNonzero_proof`), for comparison.

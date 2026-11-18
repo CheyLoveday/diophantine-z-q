@@ -11,7 +11,7 @@ Proposition `ex:limits-uniform-lower-bound`, proof, tex L5068–5075:
 
 `QuasiSide.lean`'s GLUE input `SwitchDualityAdjunction` takes an arbitrary strict Selmer datum `Dstr`
 and an arbitrary map `δ` (with the exactness `range H¹(λ) = ker δ` as a hypothesis); its consistency
-instance used that freedom. Here the input is tightened (truth check, LESSON c):
+instance used that freedom. Here the input is tightened (truth check):
 
 * `TiedStrict R`: the strict local condition `U_str ⊂ U_rel` of the SAME configuration as the relaxed
   localization `R` (same global complex `G`, local complex `L`), with `U_rel / U_str = W_rel`

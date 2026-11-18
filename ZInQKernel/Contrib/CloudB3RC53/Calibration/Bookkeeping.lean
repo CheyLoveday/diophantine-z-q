@@ -28,7 +28,7 @@ and RankCounts areas)". This file proves:
 * `card_twoTorsion_eq_two_pow` (genuine objects): for an elliptic curve over a field of
   characteristic `≠ 2`, `|E(K)[2]| = 2^t` with `t ≤ 2` — the exponent `t_p = dim_{𝔽₂} E[2]^{Fr_p}`
   of tex L4029–4033, L4118–4138 (RC0's fields `hB`, `htp` with `tp p` this exponent, once the
-  component number is identified with `#Ẽ(𝔽_p)[2]`, Edixhoven Thm 5.3 and Rem 5.4.1: GLUE, the
+  component number is identified with `|Ẽ(𝔽_p)[2]|`, Edixhoven Thm 5.3 and Rem 5.4.1: GLUE, the
   component groups of Néron models are not in the library).
 
 **Classification.** PROVED (the inputs are named in each statement).
@@ -133,7 +133,7 @@ theorem card_twoTorsion_eq_two_pow {K : Type*} [Field K] [DecidableEq K] (W : We
 /-- **RC0's fields `hB` and `htp` from the reductions** (tex L4118–4138). For each companion prime
 `p ∈ T` let `W p` be an elliptic curve over a field `k p` in which `2` is invertible (the good
 reduction `Ẽ₀` over `𝔽_p`, `p` odd), and assume the component number of the ramified twist is
-`#Ẽ₀(𝔽_p)[2]` (GLUE, the content of Edixhoven, *Néron models and tame ramification*, Thm 5.3 and
+`|Ẽ₀(𝔽_p)[2]|` (GLUE, the content of Edixhoven, *Néron models and tame ramification*, Thm 5.3 and
 Rem 5.4.1, pp. 299–300, as cited: component groups of Néron models are not in the library). Then
 there is `t : ℕ → ℕ` with `c_p(ℬ) = 2^{t_p}` and `t_p ≤ 2` at every `p ∈ T`. -/
 theorem componentFields_of_reductions (T : Finset ℕ) (k : ℕ → Type) [∀ p, Field (k p)]

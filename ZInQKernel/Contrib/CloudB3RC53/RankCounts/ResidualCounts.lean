@@ -27,7 +27,7 @@ quadratic field `K = ℚ(√k)` in which:
 The remaining named inputs, with RC6's types (the genuine values substituted where they exist):
 * `kummer` (tex 4482–4492; GLUE: Kummer theory and the `S`-unit theorem for `G_{K,S_T}`) and `genus`
   (tex 4494–4517; ELLIOT's genus argument), as in `GlobalCountsGenus`, with
-  `h1ST = dim H¹(G_{K,S_T}, 𝔽₂)` and `nPlaces = #(primes above p)`; `clDim` is the dimension of
+  `h1ST = dim H¹(G_{K,S_T}, 𝔽₂)` and `nPlaces = |primes above p|`; `clDim` is the dimension of
   `Cl(𝒪_{K,S_T})[2]`, not defined here (both are proved downstream: `genus` in
   `ResidualCountsGenus.lean`, `kummer` in `ResidualCountsKummer.lean`);
 * `places_deg`, `places_counts` (tex 4544–4582; local degrees and the local table; RC6's

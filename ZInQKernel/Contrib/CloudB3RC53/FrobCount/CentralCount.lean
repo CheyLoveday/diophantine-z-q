@@ -12,24 +12,24 @@ determinants are nonzero and hence units in `R`").
 the Hasse bound `a_r² ≤ 4r`, taken as a hypothesis (Hasse's theorem is not in the library). This
 file shows that the Hasse bound is not needed. Only the two trivial point-count bounds are used.
 
-At the moving prime `r` (residue field `k` with `q = #k` elements), Frobenius `Φ` acts on the
+At the moving prime `r` (residue field `k` with `q = |k|` elements), Frobenius `Φ` acts on the
 rank-two coefficient module with characteristic polynomial `x² − a x + q`, `a = ±a_r`, where
-`a_r = q + 1 − #Ẽ(k)` is the trace of Frobenius of the reduction `Ẽ` (this is how the text reads
+`a_r = q + 1 − |Ẽ(k)|` is the trace of Frobenius of the reduction `Ẽ` (this is how the text reads
 `a`). The two central determinants are `det(Φ − 1) = 1 − a + q` and `det(Φ − q) = q(q + 1 − a)`.
 Both vanish only if `a = q + 1`, that is:
 
-* `a = a_r` and `#Ẽ(k) = 0`, impossible since `Ẽ(k)` contains the point at infinity
+* `a = a_r` and `|Ẽ(k)| = 0`, impossible since `Ẽ(k)` contains the point at infinity
   (`one_le_card_point`); or
-* `a = −a_r` and `#Ẽ(k) = 2q + 2`, impossible since each `x ∈ k` gives at most two points
-  (the Weierstrass equation is a monic quadratic in `y`), so `#Ẽ(k) ≤ 2q + 1`
+* `a = −a_r` and `|Ẽ(k)| = 2q + 2`, impossible since each `x ∈ k` gives at most two points
+  (the Weierstrass equation is a monic quadratic in `y`), so `|Ẽ(k)| ≤ 2q + 1`
   (`card_point_le`).
 
 Results:
-* `card_point_le`, `one_le_card_point` (PROVED): `1 ≤ #W(k) ≤ 2q + 1` for every Weierstrass curve
+* `card_point_le`, `one_le_card_point` (PROVED): `1 ≤ |W(k)| ≤ 2q + 1` for every Weierstrass curve
   `W` over a finite field `k` (nonsingular points plus the point at infinity, Mathlib's
   `WeierstrassCurve.Affine.Point`).
 * **`centralFrobeniusDeterminantsNonzeroCount_proof` (PROVED)**: for `Φ ∈ M₂(ℤ)` with `det Φ = q`
-  and `tr Φ = ±(q + 1 − #W(k))`, both central determinants are nonzero. There is no Hasse
+  and `tr Φ = ±(q + 1 − |W(k)|)`, both central determinants are nonzero. There is no Hasse
   hypothesis and no condition on `W` (good reduction is not needed for the count bounds).
 * Non-vacuity: `centralFrobeniusCount_example` — for every Weierstrass curve over every finite field,
   `Φ = [[0, −q], [1, a_r]]` satisfies the hypotheses. Concrete instance:
@@ -111,12 +111,12 @@ def pointEquiv : (Point W) ≃ Option {xy : F × F // Nonsingular W xy.1 xy.2} w
 
 instance : Finite (Point W) := Finite.of_equiv _ (pointEquiv W).symm
 
-/-- **The point at infinity**: `1 ≤ #W(k)`. -/
+/-- **The point at infinity**: `1 ≤ |W(k)|`. -/
 theorem one_le_card_point : 1 ≤ Nat.card (Point W) :=
   haveI : Nonempty (Point W) := ⟨.zero⟩
   Nat.card_pos
 
-/-- **`#W(k) ≤ 2q + 1`.** -/
+/-- **`|W(k)| ≤ 2q + 1`.** -/
 theorem card_point_le : Nat.card (Point W) ≤ 2 * Fintype.card F + 1 := by
   rw [Nat.card_congr (pointEquiv W), Nat.card_eq_fintype_card, Fintype.card_option]
   have h1 : Fintype.card {xy : F × F // Nonsingular W xy.1 xy.2} ≤
@@ -130,7 +130,7 @@ theorem card_point_le : Nat.card (Point W) ≤ 2 * Fintype.card F + 1 := by
 
 /-- **The central Frobenius determinants from point counts** (tex L3763–3764, L3929–3930,
 L5185–5186): for a Weierstrass curve `W` over a finite field with `q` elements and `Φ ∈ M₂(ℤ)` with
-`det Φ = q` and `tr Φ = ±(q + 1 − #W(k))`, `det(Φ − 1) ≠ 0` and `det(Φ − q) ≠ 0`. -/
+`det Φ = q` and `tr Φ = ±(q + 1 − |W(k)|)`, `det(Φ − 1) ≠ 0` and `det(Φ − q) ≠ 0`. -/
 def CentralFrobeniusDeterminantsNonzeroCount : Prop :=
   ∀ (F : Type) [Field F] [Fintype F] (W : WeierstrassCurve.Affine F)
     (Φ : Matrix (Fin 2) (Fin 2) ℤ), Φ.det = Fintype.card F →

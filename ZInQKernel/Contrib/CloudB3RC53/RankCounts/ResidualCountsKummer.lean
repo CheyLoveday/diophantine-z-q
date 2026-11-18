@@ -15,7 +15,7 @@ above `2`, `dim_{𝔽₂} H¹(G_{K,S}, 𝔽₂) = 1 + |S| + dim Cl(𝒪_{K,S})[2
 `μ₂(K) = {±1}`).
 
 `kummer_field` is RC6's field in the exact form of `residualRankCounts_genus` (`|S_T|` counted as
-`Σ_{p ∈ T} #(primes above p)`, `ncard_primesAboveSet`), and `residualRankCounts_kummer` is RC6's
+`Σ_{p ∈ T} |primes above p|`, `ncard_primesAboveSet`), and `residualRankCounts_kummer` is RC6's
 `ResidualRankCounts` with both `genus` and `kummer` proved. Kinds: PROVED.
 -/
 
@@ -67,7 +67,7 @@ theorem ncard_primesAbove_heightOne {p : ℕ} (hp : p.Prime) :
   have hne : P ≠ ⊥ := ne_bot_of_mem_primesAbove K hp.ne_zero hP
   exact ⟨⟨P, hP.1, hne⟩, (natCast_mem_asIdeal_iff K hp ⟨P, hP.1, hne⟩).mpr hP, rfl⟩
 
-/-- `|S_T| = Σ_{p ∈ T} #(primes above p)` (tex 4516–4517). -/
+/-- `|S_T| = Σ_{p ∈ T} |primes above p|` (tex 4516–4517). -/
 theorem ncard_primesAboveSet (T : Finset ℕ) (hT : ∀ p ∈ T, p.Prime) :
     (primesAboveSet K T).ncard = ∑ p ∈ T, nPlaces K p := by
   classical
