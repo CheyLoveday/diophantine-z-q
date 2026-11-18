@@ -193,6 +193,23 @@ theorem degenerate_of_patterns {ℓ : ℕ} (Dd : RCData ℓ) (F : Family)
   · exact hR x hΔ h h0
   · exact hA x hΔ h
 
+/-- **The every-address core route forces `ũ ≠ 0` everywhere** (PROVED; confirms RC0's
+`uTilde_ne_zero_of_core` for the hypotheses of `relIsKM_of_core` / `coordLink_of_triangles_core`):
+with the (4.7) data, `χ_x(η) = ιQ(x(η_Λ))` a unit, and an integral core carrying `u_{rel,x}` at every
+address, no corrected coordinate of the family vanishes. -/
+theorem coreRoute_forces_nonzero {ℓ : ℕ} (Dd : RCData ℓ) (F : Family)
+    (ηΛ : MonoidAlgebra Lam (SignGroup F.b))
+    (hunit : ∀ x : Addr F.b, IsUnit (Determinant.signEval (sgnChar x) ηΛ))
+    (T : ∀ x, CommonCoordinateTrianglesN Dd F x)
+    (hcompat : ∀ x, (T x).chi (Central.eta (T x).Q (T x).v (T x).g) =
+      ιQ (Determinant.signEval (sgnChar x) ηΛ))
+    (core : Addr F.b → IntegralCore)
+    (hcore : ∀ x, Central.IsClassFunctionalCoord ((core x).D.map ιQ) (ιQ ∘ (core x).zc)
+      (ιQ ∘ (core x).wc) (T x).urel) :
+    ∀ x, Dd.uTilde F x ≠ 0 := fun x =>
+  uTilde_ne_zero_of_core Dd F x (T x) (by rw [hcompat x]; exact (hunit x).map ιQ) (core x)
+    (hcore x)
+
 /-! ### LESSON 2: the case inputs with all addresses degenerate -/
 
 /-- The (4.7) data for `ũ = u_prim = 0`: no unused primes, `η = 1`, `u_rel = 0`. -/
