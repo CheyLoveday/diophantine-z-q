@@ -115,7 +115,7 @@ if not (m79 and m78 and 'GR9.sixContactMin_of_open72_sf_u r t l' in t73):
 taint = G + '/taint_out.txt'
 if not os.path.exists(taint):
     die(f'run the taint first: lake env lean {G}/Taint.lean > {taint}')
-body = G + '/chain_body.lean'
+body = G + '/chain_body.lean.txt'
 # the top theorems from the swap point up are replaced by the edited copies of the top section
 EXCL = ['sixContactMin_of_open45_pz_eb_sf_u', 'sixContactMin_of_open48_eb_k954_sf_u', 'sixContactMin_of_open72_sf_u',
         'sixContactMin_of_open73_sf_u', 'sixContactMin_of_open78', 'sixContactMin_of_open79'] + \
@@ -350,9 +350,9 @@ print(f'strict count: {before[1]}/{before[2]} on {before[0]} -> {after[1]}/{afte
 if after[2] > before[2] or after[4] > before[4]:
     die('a GLUE count rises; not folding')
 if DRY:
-    open(G + '/C8Chain-dryrun.lean', 'w').write(chain_txt)
-    open(G + f'/{new_mod}-dryrun.lean', 'w').write('\n'.join(tz))
-    print(f'dry run: wrote {G}/C8Chain-dryrun.lean and {G}/{new_mod}-dryrun.lean only')
+    open(G + '/C8Chain-dryrun.lean.txt', 'w').write(chain_txt)
+    open(G + f'/{new_mod}-dryrun.lean.txt', 'w').write('\n'.join(tz))
+    print(f'dry run: wrote {G}/C8Chain-dryrun.lean.txt and {G}/{new_mod}-dryrun.lean.txt only')
     sys.exit(0)
 open(CHAIN, 'w').write(chain_txt)
 open(f'{H}{new_mod}.lean', 'w').write('\n'.join(tz))
