@@ -38,3 +38,18 @@
   map, up to the usual nonzero weights 2 and 3. The lattice equation then determines the two
   complex coefficients, and the weights cancel out of j. Prove this last implication and the
   conditional row; stop before developing the missing comparison. No new literature leaf.
+- VERIFIED (library follow-up): the vendored smooth proper curve bridge gives a
+  function-field Riemann–Roch formula over an algebraically closed field, with an
+  unspecified genus parameter. The section base-change theorem found alongside it
+  is for global regular functions under its finite-map data. Neither supplies the
+  controlled pole coordinates and their comparison required here.
+- VERIFIED (Lean): the same-base compiled dependencies were available locally.
+  `JDescent.lean` compiled with `lake env lean`. Its pointwise comparison is in terms
+  of actual sections, the normalized lattice, the actual period point map, and the
+  section equation over L. Evaluation of constants along σ and surjectivity of ℘
+  off the lattice are proved. The latter gives two evaluations determining the
+  coefficients; Mathlib's variable-change and coefficient-map formulas then give j descent.
+  All five declarations checked by `#print axioms` use only
+  `propext`, `Classical.choice`, and `Quot.sound`.
+- VERIFIED (source imports): the contribution's transitive import graph excludes
+  the headline and the excluded library.
