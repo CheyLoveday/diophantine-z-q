@@ -1,5 +1,24 @@
 # Central Selmer comparison: verified partial proof
 
+
+## Correction after independent review (2026-11-18)
+
+An independent review found that the remaining inputs of
+`centralSelmerComparisonOfSpecializedModel`, as typed, are not tied to arithmetic objects: input 1 is
+met by taking `K` to be the scalar-changed model itself with `i` the identity, and input 3 by taking
+`S := fullSelmerProduct` with `f` the identity; nothing in the signature mentions the quadratic field.
+`Restatement.lean` records `inputs_iff_hcentral`: under `SelmerCorankOneOverK`, the remaining bundle is
+equivalent to `hcentral`. So this contribution proves the algebraic steps and supplies a constructor,
+but it does not shrink the base-zero leaf: `central` and `hcentral` stay open at their present strength
+until the inputs are supplied by the genuine objects (the rational Kummer complex of the actual local
+conditions, the Selmer group over the quadratic field, and the restriction-corestriction pair). Further
+notes from the review: `universalCoefficientsRatTateEquiv` takes an arbitrary basis that is not tied to
+`j`; `hzero : CU.d 0 1 = 0` is not a field of `BaseZeroCoreLimit` or `BaseZeroCore`, so wiring needs an
+interface change; `Comparison.lean` uses `set_option backward.isDefEq.respectTransparency false` at one
+declaration (needed for elaboration; it does not affect soundness). Earlier text below that describes
+the inputs as "the genuine full Selmer group over the quadratic field" describes the intended
+instantiation, not what the types enforce.
+
 ## Result and scope
 
 The product, rationalization, eigenspace, matrix-cohomology, and coefficient-specialization steps are proved. The conditional constructors return the exact existing `CentralSelmerComparison` type, and `hcentral_of_specializedModel` returns the exact base-zero rank field. The actual arithmetic instance is **not** constructed, so the original comparison gap is **not closed**.

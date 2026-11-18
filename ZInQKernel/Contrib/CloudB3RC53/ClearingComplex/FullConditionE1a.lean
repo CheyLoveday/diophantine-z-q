@@ -185,9 +185,15 @@ theorem coordLink_of_orig3 {ℓ : ℕ} (D : RCData ℓ) (F : Family)
 
 end Coordinate
 
-/-- **The inputs of (5.9) over the full-condition identification** (the analogue of
-`ClearingInputsG` with `Identification3`: new singular summands in degrees one and two, the
-full-condition comparison, the new places possibly empty). -/
+/-- **The inputs of (5.9) over the full-condition identification** (ELLIOT: Proposition
+`ex:limits-fixed-field-clearing` in the form of its proof, with E1a for an existential model;
+`Identification3` is ELLIOT for its `FullCore` (tex 5394–5430, 5522–5543) and GLUE for its Galois
+comparisons; tex 5234–5238, 5394–5463, 5509–5617). Caveats: the new places are not tied to the
+family's primes (`S' = S` is admitted for every family); the family-Selmer clause (`Mf`, `Δf`,
+`hfull`, `ψf`) is met by every complex once `S ≠ ∅`, and `M₀, Δ₀` are not related to `Mf, Δf`;
+the deduction `clearingTarget_of_G3` uses only `FullCore`, the vacuous `SelmerIdentification` and
+`OrigCoordLink3` (neither `ψ0, ψold, square, tame` nor the PRINT `NekovarProp788ii` is in its
+closure); `OrigCoordLink3` does not supply the provenance of `z`, `λ`, `η`. -/
 def ClearingInputsG3 {ℓ : ℕ} (D : RCData ℓ) : Prop :=
   ∃ (K : Type) (_ : Field K) (_ : NumberField K) (dK hK cE tK : ℕ),
     ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F →

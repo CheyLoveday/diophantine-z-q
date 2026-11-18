@@ -32,16 +32,18 @@ with the coefficient identification `τ^*M_i ≃ M_i^*(1)` of tex 2765, 2805 (la
   coefficient comparison `τ'^*M ≅ τ^*M`, `m ↦ g⁻¹m`; at a fixed place `τ' = τ_v` is the
   restriction of the local automorphism `Ē_v` of `K̄_v` to `K̄` (`locConj_fixed`), the actual local
   representative of conjugation.
-* **The dual conditions `U^⊥` on `M_i^*(1)` (tex 2810–2812)**: `conjTransportDual` composes
-  `conjTransport` with the coefficient change `conjTransportCoef` along RC28's
-  `conjDualEquiv : τ^*M_i ≃ M_i^*(1)`: from the condition `U_{τv}` at `τv` for `M_i` it gives the
+* **Conjugate transport to the coefficient dual `M_i^*(1)` (tex 2810–2812)**: `conjTransportDual`
+  composes `conjTransport` with the coefficient change `conjTransportCoef` along RC28's
+  `conjDualEquiv : τ^*M_i ≃ M_i^*(1)`: from the condition `U_{τv}` at `τv` for `M_i` it gives a
   condition at `v` for `M_i^*(1)`. `conjTransportDualAt` does this at every place of `S` (split:
   from `τv`; fixed: from `v` itself through the local representative), and
-  `conjTransportDualConditions` assembles lane RC26's local conditions for `M_i^*(1)`; the dual
-  Selmer data `galoisSelData K S A (M_i^*(1)) (·)` are genuine
-  (`conjTransportDual_isGaloisSelData`).
-  Zero goes to zero and full to full, consistent with "A full condition is paired with the zero
-  condition" (tex 2813–2815).
+  `conjTransportDualConditions` assembles lane RC26's local conditions for `M_i^*(1)`; the
+  resulting Selmer data on `M_i^*(1)` are genuine (`conjTransportDual_isGaloisSelData`). These are
+  transported conditions on the coefficient dual, not the orthogonal complement `U^⊥`: zero goes to
+  zero and full to full. To represent `U^⊥`, first supply the actual orthogonal system (Kummer at
+  `2N`, zero against full, tex 2813–2815) and transport that system; lane RC29's round-3
+  `conjActualLocalComplements` (`ConjComplements.lean`) proves that the transport of the actual
+  orthogonal system is the orthogonal complement of the actual conditions.
 * (f) Non-vacuity: `conjTransportNV_unique`, `conjTransportNV_fixedPlace` (the place above `2` of
   `ℚ(i)` is the only one and is fixed by every automorphism), `conjTransportNV_actualConj`,
   `conjTransportDual_nonvacuous` and `conjTransportNV_isGaloisSelData`: every hypothesis of
@@ -443,7 +445,8 @@ theorem conjTransportDual_isInjective (hFull : FullTorsion K S W N)
     (conjTransportDual C W hW hμ A α hFull hα g hvw hg c).IsInjective :=
   conjTransportCoef_isInjective _ _ _ (conjTransport_isInjective C g hvw hg c hc)
 
-/-- The dual of the zero condition at `τv` is the zero condition at `v`. Kind: PROVED. -/
+/-- The conjugate transport of the zero condition at `τv` is the zero condition at `v`.
+Kind: PROVED. -/
 theorem conjTransportDual_zeroAt (hFull : FullTorsion K S W N)
     (hα : ∀ σ, α (C.conj σ) = (α σ)⁻¹) (g : GKS K S) {v w : Places K S}
     (hvw : w.1.asIdeal = v.1.asIdeal.map (RingOfIntegers.mapRingEquiv C.κ : 𝓞 K →+* 𝓞 K))
@@ -454,8 +457,8 @@ theorem conjTransportDual_zeroAt (hFull : FullTorsion K S W N)
   unfold conjTransportDual
   rw [conjTransport_zeroAt, conjTransportCoef_zeroAt]
 
-/-- The dual of the full condition at `τv` is (isomorphic to) the full condition at `v`.
-Kind: PROVED. -/
+/-- The conjugate transport of the full condition at `τv` is (isomorphic to) the full condition
+at `v`. Kind: PROVED. -/
 theorem conjTransportDual_fullAt_bijective (hFull : FullTorsion K S W N)
     (hα : ∀ σ, α (C.conj σ) = (α σ)⁻¹) (g : GKS K S) {v w : Places K S}
     (hvw : w.1.asIdeal = v.1.asIdeal.map (RingOfIntegers.mapRingEquiv C.κ : 𝓞 K →+* 𝓞 K))
@@ -637,16 +640,19 @@ def conjTransportDualAt (hFull : FullTorsion K S W N) (hα : ∀ σ, α (C.conj 
   conjTransportCoef (conjDualEquiv C W hW hμ A α hFull) (conjDualEquiv_smul C W hW hμ A α hFull hα)
     (conjTransportAt C Δ v)
 
-/-- **The dual local conditions `U^⊥` on `M_i^*(1)`** at all places of `S`, in lane RC26's
-format: the local conditions of `C_{U^⊥}(M_i^*(1))` in the duality
-`C_U(M_i) ≃ RHom(C_{U^⊥}(M_i^*(1)), R_i)[−3]` of tex 2769–2772, 2825–2829 (DEPARTURE D4). -/
+/-- Local conditions on the coefficient dual M_i^*(1), obtained by conjugate transport of the
+supplied system Δ. This constructor does not compute Δ's orthogonal complement. Full conditions
+remain full and zero conditions remain zero. To represent U^⊥, first supply and identify the
+actual orthogonal system, then transport that system (lane RC29's round-3
+`conjActualLocalComplements`, `ConjComplements.lean`, proves that the transport of the actual
+orthogonal system is the orthogonal complement of the actual conditions). -/
 def conjTransportDualConditions (hFull : FullTorsion K S W N) (hα : ∀ σ, α (C.conj σ) = (α σ)⁻¹)
     (Δ : ∀ w : Places K S, CondAt K S A (CoefMod A α (TorsS K S W N)) w) :
     GaloisLocalConditions K S A (DualM W hμ A α) :=
   ofCondAt K S A _ (conjTransportDualAt C W hW hμ A α hFull hα Δ)
 
-/-- **The dual Selmer data `C_{U^⊥}(M_i^*(1))` are genuine Galois Selmer data** (lane RC0's
-`IsGaloisSelData`), for finite `S` and injective conditions `U`. Kind: PROVED. -/
+/-- The Selmer data on M_i^*(1) with conjugate-transported supplied conditions are genuine
+Galois Selmer data, for finite S and injective supplied conditions. Kind: PROVED. -/
 theorem conjTransportDual_isGaloisSelData (hFull : FullTorsion K S W N)
     (hα : ∀ σ, α (C.conj σ) = (α σ)⁻¹) (hSfin : S.Finite)
     (Δ : ∀ w : Places K S, CondAt K S A (CoefMod A α (TorsS K S W N)) w)
@@ -778,8 +784,10 @@ theorem conjTransportDual_nonvacuous :
   exact ⟨C, v, hfix, hC, conjTransportDual_isInjective _ _ _ _ _ _ _ _ _ _ _ _
     (fullAt_isInjective _ _ _ _ v)⟩
 
-/-- **(f) Non-vacuity of the assembled dual Selmer data**: for the same data, the dual Selmer
-data `C_{U^⊥}(M_1^*(1))` of the full conditions are genuine Galois Selmer data. Kind: PROVED. -/
+/-- Non-vacuity of generic conjugate transport on the coefficient dual, for the displayed
+ℚ(i) example. Its supplied full conditions remain full; this is not the orthogonal-dual
+system of full conditions. ℚ(i) is outside the manuscript's allowed fields (tex 2720).
+Kind: PROVED. -/
 theorem conjTransportNV_isGaloisSelData :
     ∃ C : ActualConj (CyclotomicField 4 ℚ) conjTransportNVPlaces, C.κ ≠ RingEquiv.refl _ ∧
       ZInQ.Manuscript.RC.Wiring.IsGaloisSelData

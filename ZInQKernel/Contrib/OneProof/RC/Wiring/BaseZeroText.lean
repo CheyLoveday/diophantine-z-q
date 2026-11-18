@@ -7,8 +7,10 @@ import ZInQKernel.Contrib.OneProof.RC.BaseZeroLimit.NonVacuity
 
 Lemma `ex:arith-base-zero` (tex 4330–4376). The leaf `BaseZeroLeafInputsSqrt` (`BaseZeroSqrt.lean`)
 carries lane RC25's `BaseZeroCore`, whose fields `hcentral`, `boundary` (with its limit statement
-`hlim`), `lam`, `hlam` and `hu` state conclusions of steps of the text. Here the core states the
-steps themselves:
+`hlim`), `lam`, `hlam` and `hu` state conclusions of steps of the text.
+Here the core records weaker algebraic inputs named after those steps. The fields do not
+identify `CU` with the actual primitive complex, `cz` with conjugate transport of `z`, or `ψ`
+with the inverse of the orthogonal comparison:
 
 | field of `BaseZeroCore` | replaced by | how the field is recovered | tex |
 |---|---|---|---|
@@ -37,11 +39,12 @@ comparison exists iff the central kernel has the Selmer dimension
 degenerate pairing (`ε = 0`). The gain is that `hcentral`, `hlim` and `hlam` are proofs from the
 steps of the text, and each remaining input is a named step with its kind.
 
-What remains of the leaf: the Heegner data (definition + GLUE), the two-term model of the
-primitive complex at the base and its identification (`CU`, `e1`, `e2`, `hd`; no genuine two-term
-model over `Λ_(t)` is constructed in the project), the pairing with its Leibniz identity and the
-class `c z`, the central comparison, the stage data of (4.5), and `hprimId` (the interface's
-`u_{prim,0}` is the `t`-expansion of the generic coordinate).
+What remains of the leaf is an existential matrix model and pairing data, the Heegner data,
+the central dimension comparison, the inner-limit compatibility equations, and `hprimId`.
+The fields `CU`, `e1`, `e2`, `hd` specify only the degree-one/two differential; they impose
+neither two-term support nor an identification with the actual primitive complex. The cocycle
+`cz` is independent of `z`, and `ψ` is an arbitrary chain map. Supplying the genuine retained
+complex, class, duality and comparison maps remains an arithmetic discharge obligation.
 -/
 
 noncomputable section
@@ -75,13 +78,17 @@ structure BaseZeroCoreText {ℓ : ℕ} (D : RCData ℓ) (Fam : Family) {G : Type
   m : ℕ
   /-- the differential of the two-term model, over `A = Λ_(t)` -/
   Dm : Matrix (Fin (m + 1)) (Fin (m + 1)) Rings.LambdaT
-  /-- the central degree-one cohomology is the rational full Selmer group -/
-  central : CentralSelmerComparison (selmerTwoPower (Ecurve ℓ)) (selmerTwoPower (Etw ℓ D.kfin)) Dm
+  /-- An abstract equivalence from the central matrix kernel to the rational full Selmer
+  product; under `SelmerCorankOneOverK`, its existence is equivalent to the central rank
+  condition. No naturality or actual cohomology-map compatibility is required. -/
+  central : CentralSelmerComparison (selmerTwoPower (Ecurve ℓ))
+    (selmerTwoPower (Etw ℓ D.kfin)) Dm
   /-- the retained integral cycle -/
   z : Fin (m + 1) → Rings.LambdaT
   /-- it is a cycle -/
   hz : Dm *ᵥ z = 0
-  /-- the complex of the model -/
+  /-- A complex with the specified degree-one/two matrix window. Other degrees and the
+  incoming differential are not constrained by this structure. -/
   CU : CochainComplex (ModuleCat.{0} Rings.LambdaT) ℤ
   /-- the complex paired with it -/
   C' : CochainComplex (ModuleCat.{0} Rings.LambdaT) ℤ
@@ -101,9 +108,11 @@ structure BaseZeroCoreText {ℓ : ℕ} (D : RCData ℓ) (Fam : Family) {G : Type
   ε : Rings.LambdaT
   /-- the Leibniz identity of the pairing -/
   hL1 : ∀ w y, pd2 ((CU.d 1 2).hom w) y = ε * pd1 w ((C'.d 1 2).hom y)
-  /-- the chain map `ψ : C → C'` -/
+  /-- An arbitrary chain map; the structure does not require an orthogonal-comparison
+  homotopy inverse. -/
   ψ : C ⟶ C'
-  /-- the class `c z` -/
+  /-- An independent cocycle. Identification with conjugate transport of the retained
+  cycle `z` is not a field of this structure. -/
   cz : C.X 1
   /-- it is a cocycle -/
   hcz : (C.d 1 2).hom cz = 0

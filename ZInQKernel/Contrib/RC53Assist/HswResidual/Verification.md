@@ -1,5 +1,10 @@
 # Residual switch nondegeneracy: verification report
 
+
+## Update after independent review (2026-11-18)
+
+The shipped `Residual.lean` is 35,509 bytes, SHA-256 `8eab349b6864e949e4efc70a35340b622088eccc2ad3830a6ee710aa2a47181b`: the checked source with its trailing `#check` and `#print axioms` lines removed. The digest recorded further below (37,274 bytes, `bdd77c73…`) is that of the instrumented checking edition. `InterfaceCheck.lean`, cited below, is a separate checking file that is not shipped. An independent review recompiled the shipped source, confirmed that `derivSwitch_switchCoordinates_tame_of_Milne` produces the original consumer's unabbreviated result type, and matched `MilneCor23Residual` against Milne, Arithmetic Duality Theorems, 2nd ed., I, Corollary 2.3, p. 28.
+
 Compiled, conditional residual bridge for target (10). The implementation produces the exact `hnd` accepted by `derivSwitch_switchCoordinates_tame` and applies that consumer directly. It does not prove the uninstantiated Milne print or the A23 Kummer–Brauer comparison.
 
 ## Mathematical statement of the target

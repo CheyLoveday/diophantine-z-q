@@ -1,104 +1,111 @@
-# Prepared negative-type clause 4: verification record
+# Prepared clause 4: abstract certificate and genuine source binding
 
-Result: final single-file compilation succeeded with exit code 0 and no warnings.
-The dependency build had completed before compilation. All nine declarations
-below were checked, and every axiom report contains only the standard three
-axioms propext, Classical.choice, and Quot.sound.
+## Verification status
 
-Scope: this is a proved combinatorial clause and a conditional reduction of its
-prepared-seed input to PreparedEvenSourceInput. It is not an unconditional
-construction of the actual even forms or a proof of seeds at all total types.
+The corrected abstract certificate, its prime-unit equivalence, the prepared
+combinatorial clause, and the genuine-source bridges have been checked. Both
+library sources and their exact-prefix verification copies compile with exit
+code zero and no errors or warnings. All eighteen theorem axiom reports contain
+only `propext`, `Classical.choice`, and `Quot.sound`; the four genuine-source
+definitions have the same axiom reports.
 
-Remaining source obligation, for each PreparedType W T tau, fixed before h:
-1. the original negative coefficient filter consists of positive squarefree
-   indices seven modulo eight, good at the type conductor, with total tau;
-2. the actual phase-normalized coefficients have a nonzero retained reference;
-3. their valuation minus the prime-factor count has an integer lower bound;
-4. A tau is the reading of that same source at its least normalized depth.
-The attained minimum, nonempty minimum seeds, independence of internal bits,
-and anchor contraction are proved, not remaining inputs. The lower-bound
-arithmetic is proved from (E.9) and (E.11); the reading identity is proved by the
-dictionary when A is its actual normalized source symbol. No new printed leaf
-is introduced. The reference/source construction is the Appendix E obligation
-at lines 7793--7810, not an assumed nonvanishing theorem for unprepared filters.
+An explicit application of the existing `auxFactor_of_prepared`, using the
+direct genuine-source seed bridge in its seed-argument position, also compiled.
+Verification diagnostics are not part of the library sources. The current
+genuine-source verification record is distinct from the earlier certificate
+verification records, whose stage-specific statements are preserved.
 
-The literal phrase "every total type" at lines 10131--10132 is not proved.
-PreparedClauseFour formalizes its use for the prepared negative sources of
-lines 10057, 10096--10105, and 10139. A type's sign coordinate is not the curve's
-root number.
+## What the abstract certificate says
 
-Exact compiler output follows.
+`PreparedUnitCertificate` is an abstract prime-unit certificate. It freely
+chooses a coefficient function and an index predicate. A singleton predicate
+manufactures those data from a prime-configuration unit. Its exact content is:
 
-leastCoefficientDepth_exists : ∀ (a : ℕ → ℚ_[2]) (F : ℕ → Prop) (c : ℤ),
-  (∃ D, F D ∧ a D ≠ 0) →
-    (∀ (D : ℕ), F D → a D ≠ 0 → c ≤ (a D).valuation - ↑(#D.primeFactors)) → ∃ δ, LeastCoefficientDepth a F δ
-coefficientDepth_lowerBound_of_E9_E11 : ∀ (a : ℕ → ℚ_[2]) (F : ℕ → Prop) (vL : ℕ → ℤ) (κ C : ℤ),
-  (∀ (D : ℕ), F D → a D ≠ 0 → vL D = 2 * (a D).valuation + κ) →
-    (∀ (D : ℕ), F D → a D ≠ 0 → 2 * ↑(#D.primeFactors) + C ≤ vL D) →
-      ∀ (D : ℕ), F D → a D ≠ 0 → (C - κ) / 2 ≤ (a D).valuation - ↑(#D.primeFactors)
-@normalizedPrimeReading_of_dictionary : ∀ {L : Type} [inst : AddCommGroup L] {ε : L →+ ZMod 2} (T : TypeData L ε)
-  (τ : L) (a : ℕ → ℚ_[2]) (F : ℕ → Prop) (δ : ℤ),
-  NegativeCoefficientFilter T τ F →
-    (∀ (B : ℕ), FixedUFactorization T (coeffReading a δ F) B) →
-      NormalizedPrimeReading T (symb T (coeffReading a δ F)) a F δ
-@preparedSeedInput_of_evenSourceInput : ∀ {L : Type} [inst : AddCommGroup L] {ε : L →+ ZMod 2} {ℓ : ℕ} (W : WData ℓ)
-  (T : TypeData L ε) (A : L → Config L → ZMod 2),
-  PreparedEvenSourceInput W T A → ∀ (τ : L), PreparedType W T τ → ∃ Γ, IsUnitSeed ε (A τ) Γ
-@preparedType_sign_one : ∀ {L : Type} [inst : AddCommGroup L] {ε : L →+ ZMod 2} {ℓ : ℕ} (W : WData ℓ)
-  (T : TypeData L ε), (∀ (p : ℕ), Nat.Prime p → p ∣ T.m → p ∈ W.S) → ∀ {τ : L}, PreparedType W T τ → ε τ = 1
-@preparedClauseFour_of_preparedSeeds : ∀ {L : Type} [inst : AddCommGroup L] {ε : L →+ ZMod 2} {ℓ : ℕ} (W : WData ℓ)
-  (T : TypeData L ε),
-  (∀ (p : ℕ), Nat.Prime p → p ∣ T.m → p ∈ W.S) →
-    ∀ (A : L → Config L → ZMod 2),
-      (∀ (τ : L), CoefficientRules ε (A τ)) →
-        (∀ (τ : L), VanishesOffFilter (A τ) τ) →
-          (∀ (τ : L), PreparedType W T τ → ∃ Γ, IsUnitSeed ε (A τ) Γ) → PreparedClauseFour W T A
-@preparedSeedInput_of_clauseFour : ∀ {L : Type} [inst : AddCommGroup L] {ε : L →+ ZMod 2} {ℓ : ℕ} (W : WData ℓ)
-  (T : TypeData L ε) (A : L → Config L → ZMod 2),
-  PreparedClauseFour W T A → ∀ (τ : L), PreparedType W T τ → ∃ Γ, IsUnitSeed ε (A τ) Γ
-@preparedClauseFour_of_evenSourceInput : ∀ {L : Type} [inst : AddCommGroup L] {ε : L →+ ZMod 2} {ℓ : ℕ} (W : WData ℓ)
-  (T : TypeData L ε),
-  (∀ (p : ℕ), Nat.Prime p → p ∣ T.m → p ∈ W.S) →
-    ∀ (A : L → Config L → ZMod 2),
-      (∀ (τ : L), CoefficientRules ε (A τ)) →
-        (∀ (τ : L), VanishesOffFilter (A τ) τ) → PreparedEvenSourceInput W T A → PreparedClauseFour W T A
-@auxFactor_of_clauseFour : ∀ {L : Type} [inst : AddCommGroup L] {ε : L →+ ZMod 2} {ℓ : ℕ} (W : WData ℓ),
-  (∀ p ∈ W.S, Nat.Prime p) →
-    2 ∈ W.S →
-      ∀ [Fintype L] (T : TypeData L ε),
-        (∀ (p : ℕ), Nat.Prime p → p ∣ T.m → p ∈ W.S) →
-          ∀ (A : L → Config L → ZMod 2),
-            (∀ (τ : L), CoefficientRules ε (A τ)) →
-              (∀ (τ : L), VanishesOffFilter (A τ) τ) →
-                PreparedClauseFour W T A →
-                  (∀ d < 0,
-                      Squarefree d →
-                        (∀ p ∈ W.S, ¬↑p ∣ d) →
-                          IsPartitionable ε (A (primeConfig d.natAbs.primeFactors T.typ).total)
-                              (primeConfig d.natAbs.primeFactors T.typ) →
-                            W.Partitionable d) →
-                    ∃ A₀, AuxFactor W A₀
-'ZInQ.Contrib.RC53Assist.AuxFactor.leastCoefficientDepth_exists' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-'ZInQ.Contrib.RC53Assist.AuxFactor.coefficientDepth_lowerBound_of_E9_E11' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-'ZInQ.Contrib.RC53Assist.AuxFactor.normalizedPrimeReading_of_dictionary' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-'ZInQ.Contrib.RC53Assist.AuxFactor.preparedSeedInput_of_evenSourceInput' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-'ZInQ.Contrib.RC53Assist.AuxFactor.preparedType_sign_one' depends on axioms: [propext, Classical.choice, Quot.sound]
-'ZInQ.Contrib.RC53Assist.AuxFactor.preparedClauseFour_of_preparedSeeds' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-'ZInQ.Contrib.RC53Assist.AuxFactor.preparedSeedInput_of_clauseFour' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-'ZInQ.Contrib.RC53Assist.AuxFactor.preparedClauseFour_of_evenSourceInput' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
-'ZInQ.Contrib.RC53Assist.AuxFactor.auxFactor_of_clauseFour' depends on axioms: [propext, Classical.choice, Quot.sound]
-[exit code: 0]
+```lean
+PreparedUnitCertificate W T A ↔
+  ∀ τ : L, PreparedType W T τ →
+    ∃ D : ℕ, 0 < D ∧ Squarefree D ∧ D % 8 = 7 ∧
+      (∀ p ∈ D.primeFactors, T.Good p) ∧
+      (primeConfig D.primeFactors T.typ).total = τ ∧
+      A τ (primeConfig D.primeFactors T.typ) = 1
+```
+
+This is the proved theorem `preparedUnitCertificate_iff_primeUnits`. Neither
+implication needs coefficient rules, a modular form, or an analytic theorem.
+The certificate is not a specification of the actual Appendix E sources.
+
+`PreparedEvenSourceInput` remains only as a compatibility abbreviation for this
+certificate. The two earlier theorem names remain compatibility wrappers;
+the primary names are `preparedSeedInput_of_unitCertificate` and
+`preparedClauseFour_of_unitCertificate`. Compatibility does not restore the
+earlier source-level interpretation. Earlier verification records establish
+their earlier abstract theorem types, not authenticity of the chosen source.
+
+## Prepared combinatorial clause
+
+For each prepared type only, every unit seed is nonempty, a minimum nonempty
+seed exists with the prepared total type, its internal edge bits are
+irrelevant, and matching all but one seed label with a nonempty remainder gives
+a contraction certificate. `PreparedClauseFour` records these assertions.
+
+A prepared type is witnessed by a negative squarefree parameter congruent to
+one modulo eight, prime to the support, with analytic order zero. Its unsigned
+index is seven modulo eight and its sign coordinate is one. This coordinate is
+not the elliptic curve's root number.
+
+`preparedSeedInput_of_clauseFour` has exactly the seed-argument type of
+`auxFactor_of_prepared`, for the same support, type data and symbols. The other
+arguments, including the semantic partitionability implication, are unchanged.
+The unrestricted phrase "every total type" at lines 10131--10132 is not proved;
+the clause concerns the prepared negative sources of lines 10057,
+10096--10105, and 10139.
+
+## Genuine source binding
+
+`PreparedGenuineEvenSource` is separate from the abstract certificate. It binds
+all of the following:
+
+- A genuine `CentralNormalization` of the fixed curve, agreeing with `W.Lstar`.
+- For each prepared type, actual `EvenPhaseData` at sign minus one, with a
+  nonzero same-source central reference and reference index seven modulo eight.
+- Exactly the original `S0Filter`, not an arbitrary predicate or subfilter.
+- The rational phase-removed coefficients and attained depth supplied by the
+  existing `EvenPhaseData.minimum_sieved` theorem with empty extra sieve.
+- The type-filter dictionary, fixed-`U` factorization at every budget, and
+  equality of the given symbol with that actual normalized dictionary symbol.
+
+The existing minimum theorem uses the separate, explicit premises
+`WaldspurgerCor2`, the genuine `EvenLowerBound`, and continuations of the actual
+quadratic-twist L-series. The same-source coefficient-square identity is
+returned by that theorem. No freely chosen central-valuation function replaces
+these actual central values, and no unit or seed is an input of the genuine
+binding.
+
+The proved certificate bridge is
+`preparedUnitCertificate_of_genuineEvenSource`; its compatibility bridge has
+conclusion `PreparedEvenSourceInput`. The direct seed bridge uses the already
+attained index of the existing even minimum. It does not call the abstract
+certificate's generic minimum helper. The combinatorial clause follows from
+that direct seed bridge and the unchanged coefficient-rule and off-filter
+hypotheses. No even minimization argument is re-proved.
+
+All six genuine-source theorems are compiled and axiom-checked. They give a
+conditional genuine-source-to-certificate and genuine-source-to-seed reduction;
+they do not construct the genuine source package for the actual symbols.
+
+## What remains
+
+A caller must supply the genuine source data for the actual symbols: the
+central-normalization agreement, prepared actual form and nonzero reference,
+whole-filter type dictionary, fixed-`U` factorization, and actual-symbol equality.
+The printed Corollary 2, genuine even lower bound, actual twist continuations,
+and ellipticity remain explicit premises. The coefficient-rule and off-filter
+hypotheses, support specification, and semantic partitionability implication
+remain the unchanged auxiliary-factor inputs.
+
+The existing even minimizer, its actual coefficient phase and square identity,
+its attained index, the original squareclass filter, and the seed/anchor
+bridges are verified components of this conditional reduction. No new printed
+leaf, source-construction theorem, unrestricted all-type seed theorem, or
+unconditional auxiliary factor is claimed. No dependency build was performed
+as part of this contribution.

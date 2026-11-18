@@ -238,10 +238,10 @@ def OddWitness : Prop :=
 squareclass of one at `m₁` and at `ℓ₀`. This implication does not assert that the filter
 contains one or that every index of these types is admitted. With `PreDataSpec`,
 `LabelData.oddAdmissible_iff` implies membership of one at every stage.
-DEPARTURE unless App F's "prescribed unit classes" (tex 8209–8210) include the class of 1 at the
-primes of `h_*`: the stage support carries the added unit-squareclass condition of 1 at those
-primes (tex 8564–8565, 9094–9095). The fixed witness `D_w` satisfies it (tex 8254–8258), and `δ_o`
-is the minimum of that source. -/
+The selected intrinsic odd source uses the positive unit-squareclass filter containing one
+after adjoining the primes of `h_*` (tex 2460–2462, 8247–8248, 8254–8258). The class of one at
+`h_*` is part of that chosen source. Later stationary tests at the primes of `k` remain outside
+the intrinsic filter (tex 10594–10596). -/
 def OddFilter : Prop :=
   ∀ θ : ℕ, ∀ D' : ℤ, D.oddAdmissible θ D' →
     0 < D' ∧ IsSquare (D' : ZMod D.m₁) ∧ IsSquare (D' : ZMod (D.ℓ₀ θ)) ∧

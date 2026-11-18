@@ -17,7 +17,7 @@ This file puts the genuine Kummer conditions of `Iota.lean` into the orthogonali
   (`χ_h = ±1`), so the dual module `M_i(α⁻¹) ≅ M_i^*(1)` carries the same kind of genuine Kummer
   condition (PROVED).
 * `kummerCondFun`: the conditions at the coefficient support `S₀` of `kummerSelData` — the genuine
-  Kummer condition `actualKummerAtS` at the places of `P ⊆ S₀` (above `2N` and the family's primes,
+  Kummer condition `actualKummerAtS` at the places of `P ⊆ S₀` (above `2N`,
   where the moving character is locally trivial), given conditions elsewhere in `S₀`;
   `kummerCondFun_concentrated` (PROVED: degrees `0, 1`).
 * **`orthogonalComplementsT_kummerCond`**: Nekovář's orthogonality (`OrthogonalComplementsT`,
@@ -107,19 +107,22 @@ abbrev kummerCondA : ∀ v : Places K S, v.1 ∈ S₀ → CondAt K S (Acoef i) (
 abbrev kummerCondB : ∀ v : Places K S, v.1 ∈ S₀ → CondAt K S (Acoef i) (MinS hS W i (charInv α)) v :=
   kummerCondFun hS W i s hs hs0 hFull P (charInv α) (fun v hv => isLocallyQuadAt_charInv (hα v hv)) c'
 
-/-- **`OrthogonalComplementsT` for the genuine Kummer conditions** (Nekovář 6.2.7 with 7.5.6;
-tex 2761–2830, 3413–3423, 3483–3498): the actual conditions — the genuine Kummer condition
-(`actualKummerAtS`, with the coefficient maps `ι_v` of `Iota.lean`) at the places of `P`, given
-conditions elsewhere in `S₀`, the unramified condition at `S − S₀` — on `M_i` against the same
-conditions on `M_i(α⁻¹)`, through the inflated Weil pairing, with the zero isotropy homotopies,
-are orthogonal complements. Hypotheses: the PRINT `NekovarProp756` (Nekovář, *Selmer complexes*,
-7.5.6 with 7.5.5, pp. 169–170) at `S − S₀`; `K` totally complex, `S₀` finite containing the
-primes above `2`; `FullTorsion` (GLUE, lane RC28); `hiso` and `hperf` at `S₀` — at the places of
-`P` these are **ELLIOT** (Lemma `ex:arith-local-kummer`, tex 3418–3419: "Its Kummer image is its
-exact local annihilator, and the comparison has integral isotropy homotopies", proved at tex
-3442–3450 from Milne I.2.3, I.3.2–I.3.5), at the other places of `S₀` the corresponding inputs of
-the text's other conditions; the local and global traces as in lane RC26 (`htrv`, `htrv2`,
-`hsum`; Nekovář 5.4.1, not formalized). PROVED (from these). -/
+/-- Orthogonality for the constructed finite Kummer conditions and supplied old conditions
+concentrated in degrees zero and one, with unramified conditions outside S₀. The Kummer-place
+isotropy and local quasi-isomorphism are ELLIOT inputs (tex 3418–3419, 3442–3456); the
+unramified comparison uses Nekovář 7.5.6. The hypotheses `hc` and `hc'` exclude a genuine full
+condition with nonzero coefficients. This theorem therefore does not instantiate the complete
+primitive/relaxed old-condition package, which retains full active and moving conditions
+(tex 2865–2867, 5055–5061). Full/zero places require their separate local comparison and an
+assembly allowing arbitrary old conditions. PROVED from the displayed hypotheses.
+
+Lane RC29's later rounds supply both: round 2's `orthogonalComplementsT_kummerCond_of_milne`
+(`KummerSelmer.lean`) derives the Kummer-place inputs from the PRINTs
+`MilneLocalTateDualityKummerCharZero` and `NekovarProp524`, and round 3's `actualLocalComplements`
+(`ActualComplements.lean`) is the assembly with the full conditions at the active and moving primes
+paired with the zero condition, through the arbitrary-condition per-place assembly
+`orthogonalComplementsT_ofCondAt`, the zero homotopy of `ActLTZ`/`ofTruncZero` and the full/zero
+comparison `orthLocalMap_full_zero_quasiIso`. -/
 theorem orthogonalComplementsT_kummerCond [Fintype (Places K S)] (h756 : NekovarProp756 K)
     (hK : IsTotallyComplex K) (hS₀fin : S₀.Finite)
     (h2₀ : ∀ v : HeightOneSpectrum (𝓞 K), (2 : 𝓞 K) ∈ v.asIdeal → v ∈ S₀)
