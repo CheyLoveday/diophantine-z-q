@@ -380,7 +380,7 @@ theorem quasiSingleStep_of_genuine {ι : A →+* F} {ρ : A →+* k} {S : TwoTer
 
 end Steps
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section NonVacuity
 

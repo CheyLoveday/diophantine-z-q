@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.Artin34
 /-!
 # GenusOdd: consistency of `LocalFactorK` and the downstream form of (3.4)
 
-LESSON 2 checks for the GLUE `LocalFactorK` (each clause is a standard local theorem; here we check
+non-vacuity checks for the GLUE `LocalFactorK` (each clause is a standard local theorem; here we check
 that the clauses do not contradict Mathlib's definitions on a genuine example):
 
 * `localFactorK_rat`: the statement of `LocalFactorK` with `K = ℚ` is PROVED (the only prime of `ℚ`
@@ -46,7 +46,7 @@ theorem eq_of_mem_primesAbove_rat {v 𝔭 : HeightOneSpectrum (𝓞 ℚ)}
   apply primesEquiv.injective
   exact Subtype.ext heq
 
-/-- **`LocalFactorK` holds for `K = ℚ`** (PROVED; LESSON 2 consistency check of the GLUE on a
+/-- **`LocalFactorK` holds for `K = ℚ`** (PROVED; non-vacuity consistency check of the GLUE on a
 genuine example: its first two clauses are the identity there, and its third is vacuous since
 `N v = p ≠ p²`). -/
 theorem localFactorK_rat (E : WeierstrassCurve ℚ) [E.IsElliptic]

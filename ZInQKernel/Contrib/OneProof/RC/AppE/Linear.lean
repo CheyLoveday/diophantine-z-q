@@ -20,7 +20,7 @@ linear algebra that Appendix E uses on them (tex 8029–8039, 8104–8110):
   (lane RC8's PRINT) at `f₁`, `f₂` and `f₁ + f₂`, given `L(E^{(σD₀)}, 1) ≠ 0`. This is the
   manuscript's "proportional coefficient functionals" with the scalar common to every vector;
   the proof replaces the polynomial-ring domain argument by the identity
-  `A (x₁y₂ − x₂y₁)² = Σ cᵢ (Cor. 2 at fᵢ)` (provenance (c): same conclusion, shorter route).
+  `A (x₁y₂ − x₂y₁)² = Σ cᵢ (Cor. 2 at fᵢ)` (proved here: same conclusion, shorter route).
 
 Everything here is PROVED.
 -/

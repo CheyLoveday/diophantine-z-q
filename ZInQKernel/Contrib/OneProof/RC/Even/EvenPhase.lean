@@ -302,8 +302,8 @@ containing the whole `S₀` filter, and `EvenPhaseData.minimum_sieved` a minimum
 filter (prime to a sieve `B`). (2) The structure is inhabited from the prints: Appendix E's
 `evenPhaseData_of_prints` and `evenPhaseData_Ecurve` (PROVED from the PRINTs
 `WaldspurgerNonvanishing`, `WaldspurgerCor2`, `RamseyAlgebraicModel`, BCDT, the GLUE
-`HasseConvergence` and the GLUE hypothesis `HalfIntegralTwist`) build an instance whose retained set
-is exactly the `S₀` filter. -/
+`HasseConvergence` and `HalfIntegralTwist`, PROVED in `RC/HalfIntegral`) build an instance whose
+retained set is exactly the `S₀` filter. -/
 structure EvenPhaseData (E : WeierstrassCurve ℚ) (L : CentralNormalization E) (σ : ℤ)
     (S₀ : Finset ℕ) (D₀ : ℕ) where
   hS₀ : ∀ p ∈ S₀, p.Prime

@@ -37,10 +37,11 @@ PROVED here:
 The inputs that are not finite algebra are hypotheses, each with its tex lines and kind: the orbit
 parametrization (ELLIOT, tex 9136–9170), the weights along the torsor (ELLIOT, tex 9171–9194,
 9297–9305), the reduction identity at the reference tuple (PRINT Cornut–Jetchev, arXiv:1012.0725v1,
-Theorem 3.1 (§3.5, p. 9), Corollary 3.2, §§4.9–4.10 — the one statement is
-`PrintsArith.CJSetting.Thm31` — + ELLIOT, tex 9195–9296), the orientation changes (ELLIOT,
-tex 9329–9364), the stabilizers `𝒪_F^× = {±1}` (ELLIOT/GLUE, tex 9308–9309) and, for the phase
-removal, that the phase is a unit (ELLIOT, tex 9325–9327) and `2^M𝒪 ∩ ℤ = 2^Mℤ` (GLUE).
+Theorem 3.1 (§3.5, p. 9), Corollary 3.2, §§4.9–4.10 — the print's statement is
+`PrintsArith.CJSetting.Thm31`; this hypothesis is not derived from it — + ELLIOT, tex 9195–9296),
+the orientation changes (ELLIOT, tex 9329–9364), the stabilizers `𝒪_F^× = {±1}` (ELLIOT/GLUE,
+tex 9308–9309) and, for the phase removal, that the phase is a unit (ELLIOT, tex 9325–9327) and
+`2^M𝒪 ∩ ℤ = 2^Mℤ` (GLUE).
 
 Convention: `u ∈ R_z^×` acts by conjugation `x ↦ u x u⁻¹` (a left action). As `R_z^×` is a group,
 invariance under it is the same statement as Elliot's invariance under `x ↦ u⁻¹ x u` (tex 8573).
@@ -377,8 +378,9 @@ theorem orbit_count (S : ThetaStage O a b) (z : S.X) (n : ℚ)
   `χ_{h_*}(Nrd z_a) f(z_a⁻¹ x z_a) = ζ₀(t) χ_F([a])`;
 * `hred` (PRINT: C. Cornut and D. Jetchev, *Liftings of reduction maps for quaternion algebras*,
   2010 preprint, arXiv:1012.0725v1, Theorem 3.1 (§3.5, p. 9), Corollary 3.2, §3.6 and §§4.9–4.10,
-  as cited at tex 9195–9296 (read; the one statement is `PrintsArith.CJSetting.Thm31`, the `κ = 1`
-  torsor bijection `PrintsArith.CJReductionData.thm3_1KappaOne_of_print`) + ELLIOT, tex 9195–9296)
+  as cited at tex 9195–9296 (read; the print's statement is `PrintsArith.CJSetting.Thm31`, the
+  `κ = 1` torsor bijection `PrintsArith.CJReductionData.thm3_1KappaOne_of_print`; this hypothesis is
+  not derived from it) + ELLIOT, tex 9195–9296)
   — the reduction identity at the reference tuple `t₀`,
   `∑_{[a]} χ_F([a]) P_M(z_a) = λ_M(\overline{LP_D})` in `ℤ/2^M`, for integer lifts:
   `2^M ∣ ∑_c χF(c) P(zc(t₀,c)) − λ` with `λ` an integer lift of `λ_M(\overline{LP_D})`;

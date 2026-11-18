@@ -1,7 +1,7 @@
 import ZInQKernel.Contrib.CloudB3RC53.CoordLink.PreCoreQI
 
 /-!
-# E1a, part 8: the retained comparison in the non-degenerate example (LESSON 2)
+# E1a, part 8: the retained comparison in the non-degenerate example (non-vacuity)
 
 For the example of `CoreExample.lean` (lane ClearingComplex's witness `identification2_example`,
 class `1` on `H₁`, functional `1` on `H₂`; core `D = (0)`, class `1`, functional `−t`), the chain
@@ -106,7 +106,7 @@ theorem kmCoord_CxEx :
 
 set_option synthInstance.maxHeartbeats 400000 in
 set_option synthInstance.maxSize 512 in
-/-- **LESSON 2: the retained comparison holds in the non-degenerate example.** -/
+/-- **Non-vacuity: the retained comparison holds in the non-degenerate example.** -/
 theorem retainedComparison_ex :
     RetainedComparison (Mex b) x (zCore b) (lamCore b) (hzCore b) (hlamCore b)
       (coreEx.D.map ψO) (ψO ∘ coreEx.zc) (ψO ∘ coreEx.wc) coreEx.hz coreEx.hw := by

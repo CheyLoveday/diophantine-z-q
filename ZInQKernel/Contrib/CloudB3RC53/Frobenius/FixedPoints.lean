@@ -80,7 +80,7 @@ theorem range_pointIncl :
       obtain ⟨y, rfl⟩ := mem_range_of_pow_card_eq f hfix.2
       exact ⟨.some x y ((map_nonsingular (W := W) f.injective x y).mp h), rfl⟩
 
-/-- **Frobenius-fixed points of `W_K` ↔ points of `W(F)`**: there are exactly `#W(F)` of them.
+/-- **Frobenius-fixed points of `W_K` ↔ points of `W(F)`**: there are exactly `|W(F)|` of them.
 PROVED. -/
 theorem natCard_fixedPoints :
     Nat.card {P : (W.map f).Point //

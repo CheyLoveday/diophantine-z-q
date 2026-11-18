@@ -412,7 +412,7 @@ theorem localizationDualityInput_of_adjunction (R : QuasiRelaxedLocalization k) 
   rw [hU]
   exact h
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 /-- The quasi relaxed localization of the degree-one example `exRel` over `ℚ`. -/
 def exQuasiRel : QuasiRelaxedLocalization ℚ := exRel.toQuasi

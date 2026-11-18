@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.NonVacuityQuad
 /-!
 # RC53 SwitchInputs: non-vacuity of the quadratic step bundles of `SelmerModelSwitchData`
 
-LESSON 2 for `SwitchData.lean` (tex L4976–5195, the quadratic switches L5003–5136): genuine
+non-vacuity for `SwitchData.lean` (tex L4976–5195, the quadratic switches L5003–5136): genuine
 instances of the quadratic step bundles `MixedModelStep` and `SingleModelStep`, and a
 `SelmerModelSwitchData` with an actual quadratic switch, built on the Selmer-level examples
 `exQuadMixedStep` and `exQuadSingleStep` of `NonVacuityQuad.lean`.
@@ -150,7 +150,7 @@ def zeroStage (m : ℕ) : TwoTermStage (RingHom.id ℚ) where
 theorem zeroStage_fiberDim (m : ℕ) : (zeroStage m).fiberDim (RingHom.id ℚ) = m + 1 :=
   fiberDim_zero_matrix _ rfl
 
-/-- **`MixedModelStep` is inhabited** (LESSON 2): the mixed example `exQuadMixedStep` with the stages
+/-- **`MixedModelStep` is inhabited** (non-vacuity): the mixed example `exQuadMixedStep` with the stages
 of fiber dimensions three (`exStage3`) and one (`exStage1`). PROVED. -/
 def exMixedModelStep (u u' : ℚ) :=
   mixedModelStepOf (RingHom.id ℚ) exQuadMixedStep (exStage3 u) (exStage1 u')
@@ -175,7 +175,7 @@ theorem exSingle_V_pos :
     1 ≤ finrank ℚ ((selCx exQuadSingleStep.X.SF.Dside).toCC.homology 1) :=
   le_trans (by norm_num) two_le_finrank_VB
 
-/-- **`SingleModelStep` is inhabited** (LESSON 2): the single-sign example `exQuadSingleStep` with
+/-- **`SingleModelStep` is inhabited** (non-vacuity): the single-sign example `exQuadSingleStep` with
 zero-differential stages of the dimensions of its two sides. PROVED. -/
 def exSingleModelStep :=
   singleModelStepOf (RingHom.id ℚ) exQuadSingleStep
@@ -228,7 +228,7 @@ theorem exQ_both_signs :
   · rw [mem_signPart, key, Y.hcp, one_smul]
   · rw [mem_signPart, key, Y.hcm, map_neg, neg_one_smul]
 
-/-- **A quadratic `SelmerModelSwitchData` with a genuine switch** (LESSON 2): the stage of fiber
+/-- **A quadratic `SelmerModelSwitchData` with a genuine switch** (non-vacuity): the stage of fiber
 dimension three, carrying both signs, switches by the mixed model step `exMixedModelStep`
 (coordinate step `exCoordStep`) to the stage of fiber dimension one. PROVED. -/
 def exQuadModelSwitchData : SelmerModelSwitchData (k := ℚ) (RingHom.id ℚ) (RingHom.id ℚ) where

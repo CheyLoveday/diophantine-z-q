@@ -18,7 +18,7 @@ Setting: `K` a nonarchimedean local field with residue characteristic `p ≠ 2`,
   Kummer character `g ↦ g β / β` of a square root `β` of some `a ∈ Kˣ`; writing `a = u ϖ^k` with
   `u` a unit, `β = γ α^k` with `γ² = u` unramified, so on `I_K` the character is
   `g ↦ (g α / α)^k`; `z(σ) = 0` makes `k` even, hence `z = 0` on `I_K`.
-* `eq_zero_of_apply_frobenius_tame_eq_zero`: `z(φ) = z(σ) = 0 ⇒ z = 0` (Frobenius and inertia
+* `eq_zero_of_eq_zero_on_inertia`: `z(φ) = 0` and `z = 0` on `I_K` give `z = 0` (Frobenius and inertia
   generate `G_K` topologically, Tau Ceti).
 * `ramChar`, `urChar`: the ramified character `g ↦ [g α ≠ α]` and the unramified character (parity
   of the `ℤ̂`-coordinate), with values `(0, 1)` and `(1, 0)` at `(φ, σ)` when `φ α = α`;

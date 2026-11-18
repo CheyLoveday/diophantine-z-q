@@ -62,7 +62,7 @@ variable {ℓ : ℕ} (W : WData ℓ) (D : LabelData W) (Rev : Finset ℕ → ZMo
 
 /-- **Genuine Galois trace models of the odd stage source** (the model's ELLIOT/GLUE/PRINT fields:
 lane RC12's trace identities on the reduced module, tex 9705–9745; Kummer, tex 9745–9750;
-continuity, tex 9663–9669; Chebotarev for `G_ℚ/N_U`, tex 9666–9668, 9749–9750; the
+continuity, tex 9663–9669; Chebotarev for `G_ℚ/N_U`, tex 9666–9668, 9919–9921; the
 coefficient-one reading, tex 9671–9704; (O.12), tex 9905–9918): for every cutoff, on a set of
 stages of the ultrafilter (tex 10533–10540), a `GaloisTraceModel` of the genuine odd reading over
 the genuine stage types and the genuine stage character. -/
@@ -132,8 +132,9 @@ theorem addressLeaf_of_galois {ℓ : ℕ} (W : WData ℓ) (D : LabelData W)
 label data `D` (definition) and the even reading `Rev` of the transported source, with the fresh
 ramification of `K` (ELLIOT), genuine Galois trace models of the odd stage source and of the even
 source (App F; ELLIOT/GLUE/PRINT fields), the bounded-weight witness (ELLIOT), the odd, prepared
-and even filters (definition), the `K`-split seed (ELLIOT, App G) and the even reading (ELLIOT/PRINT,
-Waldspurger). It replaces `AddressPackageDictLeaf W` in `PostLeaves` (`addressLeaf_of_genuineLeaf`). -/
+and even filters (definition), the `K`-split seed (ELLIOT, App G) and the even reading (ELLIOT;
+(F.1)'s conclusion for `Rev`, the Waldspurger comparison's transported unit conclusion). This
+intermediate leaf is obtained from `AddressDensityLeaf` by its guarded consumer. -/
 def AddressGenuineLeaf {ℓ : ℕ} (W : WData ℓ) : Prop :=
   ∃ (D : LabelData W) (Rev : Finset ℕ → ZMod 2), FreshPrime W D ∧ OddGaloisModels W D ∧
     OddWitness W D ∧ OddFilter W D ∧ PreparedFilter W D ∧ EvenGaloisModels W D Rev ∧

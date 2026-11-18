@@ -44,6 +44,12 @@ map `[z] ↦ (z(φ), z(σ))` need not be bijective. Here:
   `[W --(Φ−1)--> W] ≃_qis C^•_cont(H, W)` (`urSelf_galois_quasiIso`), so **the finite side's
   cocycles are exactly the inflations of the images of the quasi-isomorphism `urSelf`** (identified
   as subspaces of `Z¹(G, M)`).
+
+**Caveat (residue field `𝔽₂`).** The genuine instances in this file are specialised to the residue
+field `𝔽₂`. They are not applicable at the height-one primes `𝔭 ≠ (2)` of `Λ` where the switching
+runs (tex L4976: `R = Λ_𝔭`, residue field of characteristic `0`): there is no ring map
+`Λ_𝔭 → ZMod 2` (`isEmpty_ringHom_zmod_two_heightOne`). See `GaloisWiringQuad.lean` for the
+field-generic version.
 -/
 
 noncomputable section
@@ -196,7 +202,8 @@ variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchim
 /-- **The strengthened tame coordinates hold at a local Galois group** (tex L5027–5037): for a
 nonarchimedean local field `K` with residue characteristic `p ≠ 2` there are a Frobenius lift `φ`
 and a tame generator `σ ∈ I_K` such that `TameCoordinatesTrivial I_K φ σ r` holds for `𝔽₂^r` with
-the trivial action, every `r`. PROVED (from `TameQuotient.exists_tame_coordinates`). -/
+the trivial action, every `r`. PROVED (from `TameQuotient.exists_tame_coordinates`). Residual-field (`𝔽₂`) instance only; not applicable at height-one primes `≠ (2)`, see
+`isEmpty_ringHom_zmod_two_heightOne`; the characteristic-zero version is the field-generic chain. -/
 theorem tameCoordinatesTrivial_galois (hp : ringChar 𝓀[K] ≠ 2) (r : ℕ) :
     ∃ φ σ : Field.absoluteGaloisGroup K, TauCeti.IsArithFrobeniusLift K φ ∧
       σ ∈ TauCeti.inertiaSubgroup K ∧
@@ -208,7 +215,8 @@ theorem tameCoordinatesTrivial_galois (hp : ringChar 𝓀[K] ≠ 2) (r : ℕ) :
 /-- **The genuine planes** (tex L5027–5037, L5068–5083): at a local Galois group with `p ≠ 2` and
 `M = 𝔽₂²` (trivial action), the tame coordinates `H¹(W_rel) ≃ k² × k²` send the finite side
 (cocycles vanishing on `I_K`) to `finPlane` and the singular side (`z(φ) = 0`) to `singPlane`, and
-both sides have the quasi-side homology. PROVED. -/
+both sides have the quasi-side homology. PROVED. Residual-field (`𝔽₂`) instance only; not applicable at height-one primes `≠ (2)`, see
+`isEmpty_ringHom_zmod_two_heightOne`; the characteristic-zero version is the field-generic chain. -/
 theorem galois_planes (hp : ringChar 𝓀[K] ≠ 2) :
     ∃ φ σ : Field.absoluteGaloisGroup K, TauCeti.IsArithFrobeniusLift K φ ∧
       σ ∈ TauCeti.inertiaSubgroup K ∧
@@ -348,7 +356,7 @@ theorem finiteSide_BF_iff_urLin₁ (I : Subgroup G) (hπs : Function.Surjective 
 
 end Unramified
 
-/-! ### Non-vacuity (LESSON 2) of (b): `G = H = ℤ̂`, `π = id`, `I = 1`, trivial `𝔽₂` -/
+/-! ### Non-vacuity of (b): `G = H = ℤ̂`, `π = id`, `I = 1`, trivial `𝔽₂` -/
 
 section ExampleUr
 

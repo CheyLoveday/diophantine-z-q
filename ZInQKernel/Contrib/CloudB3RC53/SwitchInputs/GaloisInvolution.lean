@@ -577,7 +577,7 @@ theorem galoisCocycleInvolution_genuine {C : ConjData k T (loc := loc)}
 
 end PartC
 
-/-! ### Part D: non-vacuity (LESSON 2) -/
+/-! ### Part D: non-vacuity -/
 
 section Example
 
@@ -658,7 +658,7 @@ theorem exJl2 : exJl ∘ₗ exJl = LinearMap.id := by
 theorem exJldet : LinearMap.det exJl = -1 := by
   rw [exJl, LinearMap.det_toLin', Matrix.det_fin_two_of]; norm_num
 
-/-- **Non-vacuity of `GaloisCocycleInvolution` on a genuine Selmer complex** (LESSON 2): for the
+/-- **Non-vacuity of `GaloisCocycleInvolution` on a genuine Selmer complex** (non-vacuity): for the
 group `ℤ/2` with the trivial index-two subgroup, `τ` the generator, `ρ` the sign character, and the
 genuine Selmer complex `selCx (selData …)` of continuous cochains (strict conditions, no places), the
 GLUE input holds with the genuine involution (`σ² = 1`, `ev ∘ σ¹ = cocycleAct ∘ ev`), for the zero

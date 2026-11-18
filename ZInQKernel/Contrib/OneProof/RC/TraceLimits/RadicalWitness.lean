@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.OneProof.RC.TraceLimits.Density
 # Rational radicals for quadratic characters
 
 Tex 9748–9750. An anti-invariant in the fixed field of the character's
-kernel gives a rational squareclass (on-the-spot, provenance (c)).
+kernel gives a rational squareclass (proved here).
 This step does not yet constrain the prime support of the radicand.
 -/
 
@@ -93,7 +93,5 @@ theorem squarefree_radical_of_open_ker (χ : GQ →* Multiplicative (ZMod 2))
     have h : y + y = 0 := by nth_rewrite 2 [hyy]; exact add_neg_cancel y
     have hh : (2 : Qbar) * y = 0 := by rwa [two_mul]
     exact hy ((mul_eq_zero.mp hh).resolve_left (by norm_num))
-
-#print axioms squarefree_radical_of_open_ker
 
 end ZInQ.Manuscript.RC.TraceLimits

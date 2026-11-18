@@ -22,7 +22,7 @@ finite or singular `D⁰ ⊕ F[−1]`, `D⁰ ⊕ S[−1]`, relaxed `D⁰ ⊕ (F 
 * `genCondDim2`, **`genCondDim2_eq`**: every row of the table except the old-Kummer one (Mattuck,
   the input `kd`) is computed from genuine objects and equals RC6's `condDimAt` — the named input
   `hD` is removed; `hL_of_genuineModel2` (RC6's `hL` with no `hD`);
-* **non-vacuity** (LESSON 2): `hL_of_genuineModel_nonvacuous`, `hL_of_genuineModel2_nonvacuous` —
+* **non-vacuity** (non-vacuity): `hL_of_genuineModel_nonvacuous`, `hL_of_genuineModel2_nonvacuous` —
   the minimal model built from the genuine dimensions (`rankModel`) meets both rank bounds with
   equality.
 
@@ -312,7 +312,7 @@ def rankModel (A B : ℕ) : ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData (Z
   res := ⟨fun _ _ _ => 0, fun _ _ _ _ _ _ _ _ _ => rfl⟩
   ι := ⟨fun _ _ _ => 0, fun _ _ _ _ _ _ _ _ _ => rfl⟩
 
-/-- **Non-vacuity of `hL_of_genuineModel`'s rank hypotheses** (LESSON 2): the minimal model built
+/-- **Non-vacuity of `hL_of_genuineModel`'s rank hypotheses** (non-vacuity): the minimal model built
 from the genuine dimensions — condition part of rank `∑_p condSum (genCondDimFun …)` and local part
 of rank `∑_p genLocSum` (the genuine local cohomology dimensions over the places above the charged
 primes), zero differentials — meets both bounds with equality. PROVED. -/

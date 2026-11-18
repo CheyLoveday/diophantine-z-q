@@ -145,11 +145,4 @@ theorem stable_operators (T : TypeData L ε) {avoid : Finset ℕ} {frob : ℕ �
     rw [eq, ops.det_eq q hq hqa ⟨v, hv⟩]
     exact ((q : O) • ops.diamond q ⟨v, hv⟩).2
 
-#print axioms dense_frobeniusTests
-#print axioms frobenius_conj_in_constituents
-#print axioms dV_conj
-#print axioms operators_eq_at_frobenius
-#print axioms continuousOperators_of_matrix
-#print axioms stable_operators
-
 end ZInQ.Manuscript.RC.TraceLimits

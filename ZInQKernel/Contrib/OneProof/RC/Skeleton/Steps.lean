@@ -100,7 +100,11 @@ structure RCData (ℓ : ℕ) where
   /-- the phase-removed odd coefficients `a_{M_θ}(D)` at stage `θ`: an integer representative
   modulo `2^{M_θ}` (tex 2080–2082); every reader depends only on the residue -/
   aθ : ℕ → ℤ → ℤ
-  /-- the stage support: `D` admissible at stage `θ` with `(D/ℓ₀) = 1` -/
+  /-- the stage support: `D` admissible at stage `θ` with `(D/ℓ₀) = 1`. DEPARTURE unless App F's
+  "prescribed unit classes" (tex 8209–8210) include the class of 1 at the primes of `h_*`: the
+  stage support carries the added unit-squareclass condition of 1 at those primes (tex 8564–8565,
+  9094–9095). The fixed witness `D_w` satisfies it (tex 8254–8258), and `δ_o` is the minimum of
+  that source. -/
   admissible : ℕ → ℤ → Prop
   /-- the odd ultrafilter minimum `δ_o` -/
   δo : ℤ

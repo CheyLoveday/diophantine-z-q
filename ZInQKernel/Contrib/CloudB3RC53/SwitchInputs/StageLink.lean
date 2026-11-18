@@ -29,7 +29,7 @@ determinant, to `M ⊕ (unit disks)`:
   (6.3.3–6.3.4), together with the cancellation of unit disks.
 * `coordStep_of_coneIdentification` (PROVED from the GLUE): an actual `CoordStep`.
 
-Non-vacuity (LESSON 2): a genuine `3 × 3` stage model (`ex3Stage`: the minimal model `oldMat 1 e₀`
+Non-vacuity: a genuine `3 × 3` stage model (`ex3Stage`: the minimal model `oldMat 1 e₀`
 plus one unit disk), its `ConeReduction`, the resulting `StageModelLink`, and an actual `CoordStep`
 from the `3 × 3` old stage to the `2 × 2` new stage of `CoordSwitch`.
 -/
@@ -143,7 +143,7 @@ noncomputable def coordStep_of_coneIdentification (ι : A →+* F) (S S' : TwoTe
 
 end Link
 
-/-! ### Non-vacuity: a `3 × 3` stage model (LESSON 2) -/
+/-! ### Non-vacuity: a `3 × 3` stage model (non-vacuity) -/
 
 section Examples
 

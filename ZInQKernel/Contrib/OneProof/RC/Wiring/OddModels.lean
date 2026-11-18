@@ -16,7 +16,8 @@ also defines `λ_θ(D) = lamOf`, tex 2512–2530, 9112–9113):
   8209–8212, 8587–8588; owner RC23);
 * `ω`, `O`, `T`, `hcore`: the theta side of (O.7) (`ThetaSide`, ELLIOT: the theta-form
   construction, tex 8418) and the comparison argument at every admissible `(θ, D)` (`ComparisonCore`,
-  ELLIOT + PRINT Cornut–Jetchev, tex 9120–9370); owner RC23 / the hosts;
+  ELLIOT + PRINT Cornut–Jetchev, tex 9120–9370); owner RC23 and the theta-form construction of
+  App F;
 * `Dw`, `cw`, `hO2`: (O.2) at the fixed witness, read on `λ` (ELLIOT + PRINT; tex 8225–8405,
   2490–2493, 2534–2536; owner RC23).
 
@@ -27,7 +28,7 @@ parameters are prepared by the data specification and the instance) and
 Conclusion-shaped part: the point side is genuine (`λ = lamOf`, the stage map of `L` times the
 genuine genus point, with the same selection as (3.4)), but the theta side `T` and the comparison
 argument `hcore` exist for every integer `λ` and every `a_θ ≡ c₀ λ (mod 2^{M_θ})` on the admissible
-set (lane RV2's review probes `free_theta`, `oddInstance_of_congruence`), so together they are (O.7)
+set, so together they are (O.7)
 itself, an ELLIOT leaf; `a_θ` is pinned only modulo `2^{M_θ}` on the admissible set. NOTE: `hO2`
 needs `D_w` admissible in the final data's filter, so `k` must avoid the primes of `D_w` (the text,
 tex 2596–2598, does not say so explicitly).

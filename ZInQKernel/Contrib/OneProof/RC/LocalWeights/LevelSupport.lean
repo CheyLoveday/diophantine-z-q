@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalWeights.LevelRules
 # The split support and its projectors in the order
 
 The equalities verify tex 8499–8504 and 8517–8531 in the affine coordinate.
-The matrix calculations are provenance (c).
+The matrix calculations are given here.
 -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
@@ -12,8 +12,6 @@ namespace ZInQ.Manuscript.RC.LocalWeights
 open Matrix
 
 variable {p : ℕ} [Fact p.Prime] {e : ℕ}
-
-local notation "red" => PadicInt.toZModPow
 
 /-- A split unit eigenvalue gap for (y=(1+x)/2). -/
 def SplitSupport (y : eichler p e) : Prop :=
@@ -54,9 +52,10 @@ theorem splitSupport_selected (he : 0 < e) (y : eichler p e) (hy : y.val.trace =
   have hd' := congrArg (fun z : ZMod (p ^ e) => (ZMod.cast z : ZMod (p ^ 1))) hd
   rw [PadicInt.cast_toZModPow 1 e he] at hd'
   rw [ZMod.cast_zero] at hd'
-  have ha' := congrArg (red 1 : ℤ_[p] →+* ZMod (p ^ 1)) ha
+  have ha' := congrArg (PadicInt.toZModPow 1 : ℤ_[p] →+* ZMod (p ^ 1)) ha
   simp only [map_sub, map_pow, map_add, map_zero] at ha' hd'
-  have hsq : red 1 ((2 * y.val 1 1 - 1) ^ 2) = red 1 ((2 * a - 1) ^ 2) := by
+  have hsq : PadicInt.toZModPow 1 ((2 * y.val 1 1 - 1) ^ 2) =
+      PadicInt.toZModPow 1 ((2 * a - 1) ^ 2) := by
     simp only [map_pow, map_mul, map_sub, map_ofNat, map_one]
     linear_combination 4 * hd' - 4 * ha'
   have hunit : IsUnit (2 * y.val 1 1 - 1) := by
@@ -136,8 +135,8 @@ theorem projector_eigen (y : eichler p e) (hy : y.val.trace = 1)
   rw [mul_smul_comm, he, smul_comm]
 
 theorem level_scalar (e : ℕ) (a : ℤ_[p]) :
-    level p e (algebraMap ℤ_[p] (eichler p e) a) = red e a := by
-  change red e ((algebraMap ℤ_[p] (Mat ℤ_[p]) a) 1 1) = _
+    level p e (algebraMap ℤ_[p] (eichler p e) a) = PadicInt.toZModPow e a := by
+  change PadicInt.toZModPow e ((algebraMap ℤ_[p] (Mat ℤ_[p]) a) 1 1) = _
   rw [Matrix.algebraMap_matrix_apply, ite_eq_left rfl]
   rfl
 
@@ -218,16 +217,3 @@ theorem levelWeight_nonzero_iff {O : Type*} [CommRing O] [Nontrivial O]
     exact ⟨fun hn => False.elim (hn rfl), fun hh => False.elim (h hh)⟩
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights
-#print axioms splitSupport_selected
-#print axioms odd_integral_half
-#print axioms affine_square
-#print axioms projector_numerator
-#print axioms projector_idempotent
-#print axioms projector_eigen
-#print axioms level_scalar
-#print axioms projector_level
-#print axioms projector_affine
-#print axioms splitSupport_square
-#print axioms levelWeight_nonzero_iff

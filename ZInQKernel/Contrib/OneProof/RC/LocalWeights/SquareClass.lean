@@ -59,7 +59,3 @@ theorem squareClass_compactOpen [TopologicalSpace X]
     exact (hg.isClosed_fiber 0).isOpen_compl
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights
-#print axioms LocalRule.withSquareClass
-#print axioms squareClass_compactOpen

@@ -8,7 +8,7 @@ import Mathlib.Algebra.Field.ZMod
 Fourier inversion chooses the coefficients of the translation sum. For a primitive
 character this is the manuscript's normalized Gauss sum. Inversion at the original
 modulus also handles imprimitive characters: their zero values off the units give the
-sieve directly. Using Fourier inversion for this combined step is provenance (c).
+sieve directly. The combined step by Fourier inversion is proved here.
 -/
 
 noncomputable section
@@ -167,15 +167,5 @@ theorem dirichlet_apply_primitive_sieve {N : ℕ} [NeZero N]
   · simpa only [Int.cast_natCast] using (ν.primitiveCharacter_apply_of_isCoprime (h.mpr hn)).symm
   · simpa only [Int.cast_natCast] using
       (ν.apply_eq_zero_iff (n : ℤ)).mpr (fun h' ↦ hn (h.mp h'))
-
-#print axioms ratShift_cast
-#print axioms sum_translationWeights
-#print axioms translationWeights_unit
-#print axioms translationWeights_primitive
-#print axioms qParam_residueShift
-#print axioms hasSum_translationSum
-#print axioms qExpansion_translationSum
-#print axioms translationSum_principal_prime
-#print axioms dirichlet_apply_primitive_sieve
 
 end ZInQ.Manuscript.RC.HalfIntegral

@@ -82,10 +82,3 @@ theorem dyadic_character_exists {O : Type*} [CommRing O]
     rw [← map_pow, hu, map_one]
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms odd_character_exists
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms odd_character_complex
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms dyadic_character_exists

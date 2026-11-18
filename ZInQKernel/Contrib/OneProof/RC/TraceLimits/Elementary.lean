@@ -8,7 +8,7 @@ import Mathlib.Tactic.Group
 # Separation by quadratic characters
 
 The group-theoretic part of Appendix F, tex 9745–9750.
-The basis of the elementary quotient is an on-the-spot proof (provenance (c)).
+The basis of the elementary quotient is constructed here.
 -/
 
 noncomputable section
@@ -66,8 +66,5 @@ theorem exists_quadratic_separating {G : Type*} [Group G] (N : Subgroup G)
   · change χ (QuotientGroup.mk' H a) = 1
     rw [(show QuotientGroup.mk' H a = 1 from (QuotientGroup.eq_one_iff a).2 (Subgroup.mem_sup_right ha : a ∈ H)), map_one]
   · exact hi
-
-#print axioms normal_of_all_squares
-#print axioms exists_quadratic_separating
 
 end ZInQ.Manuscript.RC.TraceLimits

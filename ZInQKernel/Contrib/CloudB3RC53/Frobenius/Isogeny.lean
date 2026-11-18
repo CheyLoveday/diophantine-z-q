@@ -14,7 +14,7 @@ point at infinity goes to infinity because every coordinate function has its `q`
 back (`CoordinatePullback.mapsInfinity_of_pow`).
 
 * `frobeniusIsogeny`: the Frobenius isogeny, with `frobeniusIsogeny_pullback`.
-* `degree_frobeniusIsogeny`: `deg π = q` (Silverman II.2.11(b)): the pullback sends the affine
+* `degree_frobeniusIsogeny`: `deg π = q` (Silverman II.2.11(c)): the pullback sends the affine
   coordinate `x` to `x^q`, so `[K(W) : π^* K(W)] = [K(x) : K(x^q)]` (Tau Ceti's
   `finrank_fieldRange_of_apply_X_eq`), which is `q` by Lüroth's degree formula (Mathlib's
   `RatFunc.finrank_eq_max_natDegree`).
@@ -67,7 +67,7 @@ theorem frobeniusIsogeny_fieldPullback (z : W.FunctionField) :
   rw [map_div₀, Isogeny.fieldPullback_algebraMap, Isogeny.fieldPullback_algebraMap,
     frobeniusIsogeny_pullback, frobeniusIsogeny_pullback, div_pow]
 
-/-- **`deg π = q`** (Silverman II.2.11(b)). PROVED. -/
+/-- **`deg π = q`** (Silverman II.2.11(c)). PROVED. -/
 theorem degree_frobeniusIsogeny : (frobeniusIsogeny W).degree = Fintype.card F := by
   have hX : (frobeniusIsogeny W).fieldPullback (algebraMap F[X] W.FunctionField X) =
       algebraMap (RatFunc F) W.FunctionField (RatFunc.X ^ Fintype.card F) := by

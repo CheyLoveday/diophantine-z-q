@@ -2,7 +2,7 @@ import ZInQKernel.Contrib.CloudB3RC53.CoordLink.RelCore
 import ZInQKernel.Contrib.CloudB3RC53.CoordLink.NonVacuity
 
 /-!
-# E1a, part 6: a non-degenerate consistency instance (LESSON 2)
+# E1a, part 6: a non-degenerate consistency instance (non-vacuity)
 
 All hypotheses of `coordLink_of_triangles_core` hold together for lane ClearingComplex's witness
 `identification2_example` (old part `H₁ --0--> H₂`, one genuine tame new place with block `t`),

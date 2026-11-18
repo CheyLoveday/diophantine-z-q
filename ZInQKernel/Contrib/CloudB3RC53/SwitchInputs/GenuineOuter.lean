@@ -45,7 +45,7 @@ Results:
   and not a free choice; `start_outerDim` identifies the starting outer dimension with that kernel.
 * `uniform_lower_bound_of_genuine` (5.5): the uniform lower bound for the actual coordinates, from
   `GenuineOuterSwitchData` for every sequence of instances.
-* Non-vacuity (LESSON 2): `exGenuineModels` over `ℤ₂ ⊂ ℚ₂` (constant instances `[ℤ₂ --0--> ℤ₂]`
+* Non-vacuity: `exGenuineModels` over `ℤ₂ ⊂ ℚ₂` (constant instances `[ℤ₂ --0--> ℤ₂]`
   with class and functional `1`) and `exGenuineOuterSwitchData`, whose starting outer dimension is
   FORCED to be one (`exGenuine_start_outerDim`). As recorded in `OuterIntegral.lean`, with genuine
   integral models an outer dimension `> 1` makes `v u_j → −∞`, so switch-exercising genuine data
@@ -274,7 +274,7 @@ theorem uniform_lower_bound_of_genuine {Inst P : Type} (G : GenuineOuterModels �
 
 end Genuine
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 section Examples
 

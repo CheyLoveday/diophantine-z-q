@@ -28,7 +28,11 @@ surjective `κ`-to-1 correspondence `θ_S : c_f⁻¹(c', c'') → c_{S,f}⁻¹(c
 **Lean form.** `CM(G,H)`, adelic quaternion groups, ring class fields and the Artin map are not in
 Mathlib, so the objects are bundled abstractly in `CJSetting` (§§3.1–3.4); `CJSetting.Thm31` is the
 single PRINT statement of Cornut–Jetchev in the project, with general `κ` given by the printed formula
-(`CJSetting.kappa`, from the encoding `cjN` of Lemma 2.1). Lane RC12's `Odd.CornutJetchevThm31` is this
+(`CJSetting.kappa`, from the encoding `cjN` of Lemma 2.1). It is not used by
+`restrictedConverseGenuine_of_leaves`: the headline's Cornut–Jetchev input is the pointwise
+reduction identity, field `Visibility.ComparisonCore.reduction` (in `RC/Visibility/Models.lean`,
+carried by the field `hcore` of `OddInstance` in `RC/Wiring/OddModels.lean`; kind ELLIOT citing
+Theorem 3.1/Corollary 3.2 and §§4.9–4.10), which is not derived from `Thm31`. Lane RC12's `Odd.CornutJetchevThm31` is this
 definition; lane RC9's `CJReductionData.Thm3_1KappaOne` (the `κ = 1` bijection of class-group
 torsors) is DERIVED from it (`CJReductionData.thm3_1KappaOne_of_print`, `PrintsArith/Heegner.lean`).
 

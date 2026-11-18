@@ -10,8 +10,9 @@ genuine Galois objects of lane RC24: the group `G_ℚ = Aut(ℚ̄/ℚ)`, genuine
 genuine type and bit characters, and `N_U` defined from the characters and the reduced trace
 action (`GaloisModel.lean`, `Constituents.lean`).
 
-Round 3: the constituent model is on coefficientwise reduced expansions (tex 9639–9646). The
-faithful bridge is to lane RC0's `TraceModelRel`, whose module is abstract
+Round 4: the module of the Galois trace model is `Mst` (no congruence hypothesis on the
+operators). Round 3: the constituent model is on coefficientwise reduced expansions
+(tex 9639–9646). The faithful bridge is to lane RC0's `TraceModelRel`, whose module is abstract
 (`GaloisConstituentModel.toTraceModelRel`). Lane RC0's `ConstituentModelRel` reads the forms in
 `Λ/𝔪Λ` and needs, besides the unbudgeted forms, saturation (`Saturated`, not assumed by the text);
 the Tate instance satisfies both.
@@ -78,7 +79,7 @@ def GaloisTraceModel.toTraceModelRel (X : GaloisTraceModel T R ap B chiType)
   reading := X.reading
   o12 := X.o12
 
-attribute [local instance] GaloisConstituentModel.modMexp
+attribute [local instance] GaloisConstituentModel.modMst
 
 /-- **The genuine constituent model as lane RC0's `TraceModelRel`, through its module of reduced
 expansions** (PROVED, given the unbudgeted forms; no saturation is needed: lane RC0's
@@ -92,7 +93,8 @@ def GaloisConstituentModel.toTraceModelRel (X : GaloisConstituentModel T R ap B 
 unbudgeted forms AND saturation). Lane RC0's interface reads the forms in `Λ/𝔪Λ` and asks
 membership in `𝔪Λ`, which the coefficientwise identities of the text give only for a saturated
 module. The text assumes no saturation (tex 9644–9646). The functionals are those of the reduced
-expansions, through `Λ/𝔪Λ → Mexp` (`le_ker_redE`). `G = G_ℚ`, `chiBit = bitChar`, `N = consN`; the
+expansions, through `Λ/𝔪Λ → (C → 𝒪/𝔪)` (`le_ker_redE`). `G = G_ℚ`, `chiBit = bitChar`,
+`N = consN`; the
 remaining fields are theorems of `Constituents.lean` (tex 9638–9797). -/
 def GaloisConstituentModel.toConstituentModelRel (X : GaloisConstituentModel T R ap B chiType)
     (htyp : IsTypeChar T chiType) (hX : X.Unbudgeted) (hsat : X.Saturated) :
@@ -137,9 +139,8 @@ theorem GaloisConstituentModel.toConstituentModelRel_inputs
     (X.toConstituentModelRel htyp hX hsat).Inputs := by
   have key : ∀ (U : Finset ℕ) (g : GalQ), (X.toConstituentModelRel htyp hX hsat).readM U
       ((X.toConstituentModelRel htyp hX hsat).tM g ((X.toConstituentModelRel htyp hX hsat).FM U)) =
-        X.readE U (X.tE g (X.FE U)) := by
+        X.read U (X.redE (X.tΛ g (X.F U))) := by
     intro U g
-    rw [GaloisConstituentModel.FE, GaloisConstituentModel.tE_redM]
     rfl
   obtain ⟨h1, h2⟩ := hI
   refine ⟨fun U q hU hq hqU hc => by

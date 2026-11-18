@@ -8,8 +8,8 @@ the rationality of `a(D)/z_D`, for the algebraic normalized vector, then transpo
 the eigenspace with nonzero reference coefficient by the full-space comparison.
 
 `rational_of_ramsey` (PROVED from lane RC8's PRINT `WaldspurgerCor2`, the PRINT
-`RamseyAlgebraicModel`, the GLUE hypothesis `HalfIntegralTwist`, entire continuations of the twists,
-and `L(E^{(σD₀)}, 1) ≠ 0`).
+`RamseyAlgebraicModel`, `HalfIntegralTwist` (PROVED in `RC/HalfIntegral`), entire continuations of
+the twists, and `L(E^{(σD₀)}, 1) ≠ 0`).
 -/
 
 noncomputable section
@@ -32,11 +32,12 @@ theorem kronecker_pow_odd {N : ℕ} (h4 : 4 ∣ N) {σ : ℤ} (hσ : σ = 1 ∨ 
   rw [pow_succ, pow_mul, kronecker_cpx_sq h4 hσ hn, one_pow, one_mul]
 
 /-- **The Galois comparison** (tex 8086–8134; PROVED from the PRINTs `WaldspurgerCor2` and
-`RamseyAlgebraicModel` and the GLUE `HalfIntegralTwist`; the field `rational` of lane RC11's
-`EvenPhaseData`). Let `g` lie in the full good-Hecke eigenspace of `E` and `η = ψχ_{−σ}` at a level
-`N` (`4 ∣ N`), with `a_g(D₀) ≠ 0`, where `D₀ > 0` is squarefree and prime to `N` and
-`L(E^{(σD₀)}, 1) ≠ 0`. For every positive squarefree `D` prime to `N` in the unit squareclasses of
-`D₀` at the primes of `N`, `a_g(D)/a_g(D₀) = z_D r` with `r ∈ ℚ` and `z_D = phase N η D₀ D`. -/
+`RamseyAlgebraicModel` and `HalfIntegralTwist`, PROVED in `RC/HalfIntegral`; the field `rational`
+of lane RC11's `EvenPhaseData`). Let `g` lie in the full good-Hecke eigenspace of `E` and
+`η = ψχ_{−σ}` at a level `N` (`4 ∣ N`), with `a_g(D₀) ≠ 0`, where `D₀ > 0` is squarefree and prime
+to `N` and `L(E^{(σD₀)}, 1) ≠ 0`. For every positive squarefree `D` prime to `N` in the unit
+squareclasses of `D₀` at the primes of `N`, `a_g(D)/a_g(D₀) = z_D r` with `r ∈ ℚ` and
+`z_D = phase N η D₀ D`. -/
 theorem rational_of_ramsey (hR : RamseyAlgebraicModel) (hTw : HalfIntegralTwist)
     (hW : WaldspurgerCor2) {E : WeierstrassCurve ℚ} (hE : E.IsElliptic)
     (hcont : ∀ h : ℤ, h ≠ 0 → ∃ F, IsLContinuation (qtwist E h) F)

@@ -132,20 +132,3 @@ theorem divisionWeight_uniformizer {O : Type*} [Ring O] (x : C.order)
 
 end DivisionCoordinates
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms DivisionCoordinates.coordinate_injective
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms DivisionCoordinates.residueWeight_eq
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms DivisionCoordinates.divisionWeight_nonzero_iff
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms DivisionCoordinates.norm_residue_of_trace_zero
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms DivisionCoordinates.divisionWeight_locallyConstant
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms DivisionCoordinates.divisionWeight_conj
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms DivisionCoordinates.divisionWeight_scale
-open ZInQ.Manuscript.RC.LocalWeights in
-#print axioms DivisionCoordinates.divisionWeight_uniformizer

@@ -6,7 +6,7 @@ import ZInQKernel.Contrib.CloudB3RC53.CoordLink.NonVacuity
 
 The coordinate identification of `ClearingInputsG` (`OrigCoordLink`, and batch 3's pair
 `CorrectedIsEta`, `RelIsKMG` that implies it) adds no obstruction beyond the genuine identification
-`Identification2G` itself (LESSON 2, as for batch 3's `coordLinkInputs_example`, now for every
+`Identification2G` itself (non-vacuity, as for batch 3's `coordLinkInputs_example`, now for every
 genuine identification):
 
 * `correctedIsEta_of_zero`: for interface data whose corrected coordinates vanish on `F`,
@@ -20,7 +20,7 @@ genuine identification):
 The instance is degenerate (`ũ = 0`, zero class); it shows joint satisfiability of the coordinate
 input with any genuine identification, not that it holds for the genuine coordinate. A witness of
 `Identification2G` with a nonempty set of new places needs genuine local cochains quasi-isomorphic
-to a nonzero tame model (local Galois cohomology), which no lane provides (batch 3's LESSON 2).
+to a nonzero tame model (local Galois cohomology), which no lane provides (as for batch 3's non-vacuity examples).
 
 **Classification.** PROVED.
 -/

@@ -136,9 +136,11 @@ structure CalibrationModel {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : F
   hB : ∀ p ∈ D.kfin.natAbs.primeFactors, cB p = 2 ^ tp p
   /-- `t_p ≤ 2` -/
   htp : ∀ p ∈ D.kfin.natAbs.primeFactors, tp p ≤ 2
-  /-- the index `I` of the sum isogeny -/
+  /-- the index `I = [ℬ(ℚ)_free : φ 𝒜(ℚ)_free]` of `φ : 𝒜 → ℬ` (RC19's `diffMap`,
+  `P ↦ (P + σP, ι⁻¹(P − σP))`; tex 4082–4084) -/
   alpha : ℤ
-  /-- the index `J` of the difference isogeny -/
+  /-- the index `J = [𝒜(ℚ)_free : ψ ℬ(ℚ)_free]` of `ψ : ℬ → 𝒜` (RC19's `sumMap`,
+  `(Q, R) ↦ Q + ι R`; tex 4085–4086) -/
   beta : ℤ
   /-- `IJ = 2` -/
   hIJ : alpha * beta = 2

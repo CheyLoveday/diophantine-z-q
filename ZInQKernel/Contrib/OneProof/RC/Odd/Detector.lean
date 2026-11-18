@@ -8,8 +8,13 @@ the finite-field evaluation map of `ex:app-theta-form` (tex 8439–8461).
 
 PROVED here (abstractly, over the data the text constructs):
 * the finite-field Kummer map `κ_M(P) = F R − R` (`nR = P`) on `E(𝔽_{ℓ₀²})`: well defined, additive,
-  valued in `E[n]`, kernel `n E(𝔽_{ℓ₀²})`, onto `E[n]` when `F − 1` is onto, Frobenius-equivariant;
-  `λ_M = b κ_M` has Frobenius sign `+1` when `bC = b` (tex 8378–8390, 8439–8456) — `kummer*`;
+  valued in `E[n]`, kernel `n E(𝔽_{ℓ₀²})`, onto `E[n]` when `F − 1` is onto, Frobenius-equivariant
+  (tex 8378–8390, 8439–8456) — `kummer*`; as a map into the finite torsion `E[n]`, `kummerTorsion`;
+* `λ_M = b κ_M` has Frobenius sign `+1` when `bC = b`, with the row `b` on the finite torsion
+  `E[n] = T/nT` (the fixed integral row `b : T → ℤ₂` reduced modulo `2^M`), as in the text
+  (tex 8346–8347, 8382, 8388–8390, 8452–8456) — `lambda_frobenius_sign`. A row on all geometric
+  points would be zero: `E(k̄₀)` is divisible by `n`, so every additive map from it to a group
+  killed by `n` vanishes (`addMonoidHom_eq_zero_of_divisible`);
 * the cocycle algebra of `σ = hτ`: `c(σ²) = (1 + C)v`, `b c(σ²) = 2 b(v) = 2^{a+1}` (tex 8343–8356);
 * `c_Q(h^d) = d c_Q(h)` on `H = ker ρ` (tex 8336–8339);
 * the central-scalar coboundary `(z − 1)c(g) = (g − 1)c(z)` (tex 8321–8326);
@@ -73,15 +78,118 @@ theorem kummer_equivariant (Fr : A →+ A) (hcomm : ∀ x, Fr (F x) = F (Fr x)) 
     F (Fr R) - Fr R = Fr (F R - R) := by
   rw [map_sub, hcomm]
 
-/-- **PROVED.** Frobenius sign `+1`: if the row `b` satisfies `b ∘ Fr = b` on `E[n]` (`bC = b`), then
-`λ = b κ` satisfies `λ(Fr P) = λ(P)` (tex 8389–8390, 8436, 8456). -/
+/-- **The Kummer value in the finite torsion** `E[n]`: `κ(P) = F R − R ∈ E[n]` for `P` fixed by `F`
+and `nR = P` (tex 8382: "`κ_M(P) = F²R − R ∈ E[n] = T/nT`"; tex 8444–8447). PROVED membership
+(`kummer_mem_torsion`). -/
+def kummerTorsion {P R : A} (hP : F P = P) (hR : n • R = P) : AddSubgroup.torsionBy A (n : ℤ) :=
+  ⟨F R - R, AddSubgroup.torsionBy.nsmul_iff.mpr (kummer_mem_torsion F n hP hR)⟩
+
+@[simp] theorem kummerTorsion_val {P R : A} (hP : F P = P) (hR : n • R = P) :
+    (kummerTorsion F n hP hR : A) = F R - R :=
+  rfl
+
+/-- **An endomorphism restricted to the finite torsion** `E[n]`: for the arithmetic Frobenius
+`Fr = Fr_{ℓ₀}` over `𝔽_{ℓ₀}`, its action on `E[2^M]`, by `C` in the transported torsion basis
+(tex 8368–8373, 8453–8455). -/
+def torsionRestrict (Fr : A →+ A) :
+    AddSubgroup.torsionBy A (n : ℤ) →+ AddSubgroup.torsionBy A (n : ℤ) :=
+  (Fr.comp (AddSubgroup.torsionBy A (n : ℤ)).subtype).codRestrict _ fun t =>
+    AddSubgroup.torsionBy.nsmul_iff.mpr (by
+      change n • Fr t.val = 0
+      rw [← map_nsmul, AddSubgroup.torsionBy.nsmul_iff.mp t.property, map_zero])
+
+@[simp] theorem torsionRestrict_val (Fr : A →+ A) (t : AddSubgroup.torsionBy A (n : ℤ)) :
+    (torsionRestrict n Fr t : A) = Fr t :=
+  rfl
+
+/-- **PROVED.** If `Fr` commutes with `F` and `F P = P`, then `F (Fr P) = Fr P`. -/
+theorem fixed_frob (Fr : A →+ A) (hcomm : ∀ x, Fr (F x) = F (Fr x)) {P : A} (hP : F P = P) :
+    F (Fr P) = Fr P := by
+  rw [← hcomm, hP]
+
+/-- **PROVED.** `Fr R` divides `Fr P` when `R` divides `P`. -/
+theorem div_frob (Fr : A →+ A) {P R : A} (hR : n • R = P) : n • Fr R = Fr P := by
+  rw [← map_nsmul, hR]
+
+/-- **PROVED.** Frobenius equivariance in the finite torsion: `κ(Fr P) = Fr κ(P)` in `E[n]`, by
+taking `Fr R` as the division point of `Fr P` (tex 8388–8389, 8453–8455:
+"`κ_M(Fr_{ℓ₀} P) = C κ_M(P)`"). -/
+theorem kummerTorsion_frob (Fr : A →+ A) (hcomm : ∀ x, Fr (F x) = F (Fr x)) {P R : A}
+    (hP : F P = P) (hR : n • R = P) :
+    kummerTorsion F n (fixed_frob F Fr hcomm hP) (div_frob n Fr hR) =
+      torsionRestrict n Fr (kummerTorsion F n hP hR) :=
+  Subtype.ext (kummer_equivariant F Fr hcomm R)
+
+/-- **PROVED (tex 8389–8390, 8452–8456; also 2495–2496, 8435–8436).** Frobenius sign `+1`: let
+`b` be a row on the **finite torsion** `E[n]` (the text's fixed integral row `b : T → ℤ₂` with
+`bC = b`, tex 8346–8347, taken modulo `2^M` on `E[2^M] = T/2^M T`: "Composing `κ_M` with the fixed
+row `b` modulo `2^M` gives `λ_M`", tex 8452–8453) that is fixed by `Fr` there (`bC = b`). Then
+`λ = b ∘ κ` satisfies `λ(Fr P) = λ(P)`.
+
+Lane RC27 restatement: the row used to be an additive map on the whole group `A` of geometric
+points, with `Fr`-invariance asked only on `n`-torsion. In the genuine setting `A = E(k̄₀)` is
+divisible by `n`, so every such row with values in `ℤ/2^M` is zero
+(`addMonoidHom_eq_zero_of_divisible`), and the old statement said nothing. The row now lives on
+`E[n]`, where the text puts it; non-vacuity: `lambda_frobenius_sign_nonvacuous` (a nonzero row with
+nonzero value on a Kummer class). -/
 theorem lambda_frobenius_sign {B : Type*} [AddCommGroup B] (Fr : A →+ A)
-    (hcomm : ∀ x, Fr (F x) = F (Fr x)) (b : A →+ B)
-    (hb : ∀ t, n • t = 0 → b (Fr t) = b t) {P R : A} (hP : F P = P) (hR : n • R = P) :
-    b (F (Fr R) - Fr R) = b (F R - R) := by
-  rw [kummer_equivariant F Fr hcomm, hb _ (kummer_mem_torsion F n hP hR)]
+    (hcomm : ∀ x, Fr (F x) = F (Fr x)) (b : AddSubgroup.torsionBy A (n : ℤ) →+ B)
+    (hb : ∀ t, b (torsionRestrict n Fr t) = b t) {P R : A} (hP : F P = P) (hR : n • R = P) :
+    b (kummerTorsion F n (fixed_frob F Fr hcomm hP) (div_frob n Fr hR)) =
+      b (kummerTorsion F n hP hR) := by
+  rw [kummerTorsion_frob F n Fr hcomm hP hR, hb]
+
+/-- **PROVED (why the row must live on the finite torsion).** If `A` is divisible by `n` (as the
+geometric points `E(k̄₀)` of an elliptic curve are) and `n` kills `B` (as it kills `ℤ/2^M` for
+`n = 2^M`), every additive map `A → B` is zero. -/
+theorem addMonoidHom_eq_zero_of_divisible {B : Type*} [AddCommGroup B]
+    (hdiv : ∀ x : A, ∃ y : A, n • y = x) (hB : ∀ y : B, n • y = 0) (b : A →+ B) : b = 0 := by
+  ext x
+  obtain ⟨y, rfl⟩ := hdiv x
+  rw [map_nsmul, hB, AddMonoidHom.zero_apply]
 
 end Kummer
+
+/-! ### Non-vacuity of the restated Frobenius sign -/
+
+section KummerNonVacuity
+
+/-- A toy model of the finite-field Kummer map: `A = ℤ/4`, `n = 2`, `F = −1`. `F` is the identity on
+`A[2] = {0, 2}`, `P = 2` is fixed, `R = 1` divides it, and `κ(P) = F R − R = 2 ≠ 0`. -/
+abbrev toyF : ZMod 4 →+ ZMod 4 := -AddMonoidHom.id (ZMod 4)
+
+/-- The nonzero row `A[2] → ℤ/2`, `0 ↦ 0`, `2 ↦ 1`. -/
+def toyRow : AddSubgroup.torsionBy (ZMod 4) ((2 : ℕ) : ℤ) →+ ZMod 2 :=
+  AddMonoidHom.mk' (fun t => ((t.val.val / 2 : ℕ) : ZMod 2)) (by
+    rintro ⟨x, hx⟩ ⟨y, hy⟩
+    have hx' : 2 • x = 0 := AddSubgroup.torsionBy.nsmul_iff.mp hx
+    have hy' : 2 • y = 0 := AddSubgroup.torsionBy.nsmul_iff.mp hy
+    change (((x + y).val / 2 : ℕ) : ZMod 2) =
+      ((x.val / 2 : ℕ) : ZMod 2) + ((y.val / 2 : ℕ) : ZMod 2)
+    clear hx hy
+    revert hx' hy'
+    revert x y
+    decide)
+
+/-- **PROVED (non-vacuity of `lambda_frobenius_sign`).** In the toy model, with `Fr = F`, the
+hypotheses hold for the nonzero row `toyRow`, and the Kummer class of `P = 2` has nonzero row value:
+the restated statement is not satisfied only by the zero row. -/
+theorem lambda_frobenius_sign_nonvacuous :
+    (∀ t, toyRow (torsionRestrict 2 toyF t) = toyRow t) ∧
+      ∃ (hP : toyF 2 = 2) (hR : 2 • (1 : ZMod 4) = 2),
+        toyRow (kummerTorsion toyF 2 hP hR) ≠ 0 := by
+  refine ⟨?_, by decide, by decide, ?_⟩
+  · rintro ⟨x, hx⟩
+    have hx' : 2 • x = 0 := AddSubgroup.torsionBy.nsmul_iff.mp hx
+    change (((-x : ZMod 4).val / 2 : ℕ) : ZMod 2) = ((x.val / 2 : ℕ) : ZMod 2)
+    clear hx
+    revert hx'
+    revert x
+    decide
+  · change (((toyF 1 - 1 : ZMod 4).val / 2 : ℕ) : ZMod 2) ≠ 0
+    decide
+
+end KummerNonVacuity
 
 /-! ### The Kummer cocycle (tex 8308–8356) -/
 

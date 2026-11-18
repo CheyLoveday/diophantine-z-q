@@ -5,18 +5,18 @@ import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.Neg
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 
 /-!
-# `deg(1 − π) = #E(𝔽_q)`
+# `deg(1 − π) = |E(𝔽_q)|`
 
 For an elliptic curve `E = W` over a finite field `F` with `q` elements, and the base change `π` of
 its `q`-power Frobenius to a separably closed field `K ⊇ F` (e.g. `\bar F`), the endomorphism
-`1 − π` of `E_K` has degree `#E(F)` (`degree_id_sub_frobeniusMap`; Silverman V.1.1, first step of
+`1 − π` of `E_K` has degree `|E(F)|` (`degree_id_sub_frobeniusMap`; Silverman V.1.1, first step of
 the proof of Hasse's bound).
 
 * `1 − π ≠ 0` and it is separable: `π^* ω = 0` (`hom_pullbackDifferential_frobeniusMap`), so Tau
   Ceti's differential criterion applies to `r π − s` with `r = s = 1`
   (`zsmul_sub_zsmul_id_ne_zero_of_pullbackDifferential_eq_zero`,
   `isSeparable_toIsogeny_zsmul_sub_zsmul_id_iff_of_pullbackDifferential_eq_zero`).
-* A separable isogeny over a separably closed field has `#ker = deg` (Tau Ceti's
+* A separable isogeny over a separably closed field has `|ker| = deg` (Tau Ceti's
   `card_ker_toPointHom_eq_degree`).
 * The kernel of `π − 1` is the set of Frobenius-fixed points (`pointMap` is additive in the morphism
   and agrees with the class-group point map for separable isogenies), which is `E(F)`
@@ -36,7 +36,7 @@ open TauCeti
 variable {F : Type*} [Field F] [Fintype F] (W : WeierstrassCurve.Affine F) [W.IsElliptic]
   {K : Type*} [Field K] [IsSepClosed K] [DecidableEq K] (f : F →+* K)
 
-/-- **`deg(π − 1) = #E(F)`** over a separably closed field. PROVED. -/
+/-- **`deg(π − 1) = |E(F)|`** over a separably closed field. PROVED. -/
 theorem degree_frobeniusMap_sub_id :
     (Isogeny.Hom.ofIsogeny (frobeniusMap W f) - Isogeny.Hom.id (W.map f)).degree =
       Nat.card W.Point := by
@@ -60,14 +60,15 @@ theorem degree_frobeniusMap_sub_id :
     Isogeny.Hom.ofIsogeny_toIsogeny, Isogeny.Hom.sub_pointMap, Isogeny.Hom.zsmul_pointMap,
     Isogeny.Hom.zsmul_pointMap, one_zsmul, one_zsmul, Isogeny.Hom.id_pointMap, sub_eq_zero]
 
-/-- **`deg(1 − π) = #E(F)`** over a separably closed field (Silverman V.1.1). PROVED. -/
+/-- **`deg(1 − π) = |E(F)|`** over a separably closed field (as in the proof of Silverman V.1.1).
+PROVED. -/
 theorem degree_id_sub_frobeniusMap :
     (Isogeny.Hom.id (W.map f) - Isogeny.Hom.ofIsogeny (frobeniusMap W f)).degree =
       Nat.card W.Point := by
   rw [← neg_sub, Isogeny.Hom.degree_neg, degree_frobeniusMap_sub_id]
 
 omit [IsSepClosed K] [DecidableEq K] in
-/-- **`deg(1 − π) = #E(𝔽_q)` over `\bar{𝔽}_q`**, for the Frobenius of `E` base-changed to the
+/-- **`deg(1 − π) = |E(𝔽_q)|` over `\bar{𝔽}_q`**, for the Frobenius of `E` base-changed to the
 algebraic closure. PROVED. -/
 theorem degree_id_sub_frobenius_algebraicClosure :
     letI := Classical.decEq (AlgebraicClosure F)
@@ -79,7 +80,7 @@ theorem degree_id_sub_frobenius_algebraicClosure :
 
 /-- **Node `DegreeOneSubFrobenius`** (Silverman V.1.1, first step of the proof of Hasse's bound;
 infrastructure towards `LocalFactorInert`, not a manuscript line): for every elliptic curve `E`
-over a finite field `𝔽_q`, the endomorphism `1 − π` of `E` over `\bar{𝔽}_q` has degree `#E(𝔽_q)`.
+over a finite field `𝔽_q`, the endomorphism `1 − π` of `E` over `\bar{𝔽}_q` has degree `|E(𝔽_q)|`.
 PROVED (`degreeOneSubFrobenius_proof`). -/
 def DegreeOneSubFrobenius : Prop :=
   ∀ (F : Type) [Field F] [Fintype F] (W : WeierstrassCurve.Affine F) [W.IsElliptic],

@@ -2,7 +2,7 @@ import ZInQKernel.Contrib.OneProof.RC.HalfIntegral.Fourier
 import ZInQKernel.Contrib.OneProof.RC.HalfIntegral.Cusps
 
 /-! Passage of rational translations through congruence matrices, and the
-holomorphy and cusp limits used by the twist (provenance (c)). -/
+holomorphy and cusp limits used by the twist (proved here). -/
 
 noncomputable section
 
@@ -125,10 +125,5 @@ theorem translationSum_cuspidal {N k : ℕ} [NeZero N] (v : ZMod N → ℂ) {f :
   refine squeeze_zero (fun z ↦ by positivity) (fun z ↦ ?_) ht'
   rw [translationSum, ← Finset.sum_mul]
   exact mul_le_mul_of_nonneg_right (norm_sum_le _ _) (by positivity)
-
-#print axioms coe_rat_map_smul
-#print axioms exists_translation_conjugate
-#print axioms translate_differentiableOn
-#print axioms translationSum_cuspidal
 
 end ZInQ.Manuscript.RC.HalfIntegral

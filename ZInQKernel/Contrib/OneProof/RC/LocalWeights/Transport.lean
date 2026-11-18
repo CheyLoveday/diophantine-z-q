@@ -1,7 +1,7 @@
 import ZInQKernel.Contrib.OneProof.RC.LocalWeights.Compact
 
 /-! Transport of the rules through zero extension, used for tex 8496 and 8571–8577.
-The transport lemma is provenance (c). -/
+The transport lemma is proved here. -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
 
@@ -23,5 +23,3 @@ theorem extendWeight_transform {X A O : Type*} [MulZeroClass O]
     rw [hs.2 _ hn, hs.2 _ hx, mul_zero]
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-#print axioms ZInQ.Manuscript.RC.LocalWeights.extendWeight_transform

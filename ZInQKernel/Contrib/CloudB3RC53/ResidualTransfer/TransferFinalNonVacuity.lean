@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.CloudB3RC53.SelmerDuality.NonVacuity
 /-!
 # RC53 ResidualTransfer: non-vacuity of the hypotheses of `transfer_final`
 
-Lesson-2 check for the corrected `transfer_final` (tex L4598–4647): its hypotheses are jointly
+Non-vacuity check for the corrected `transfer_final` (tex L4598–4647): its hypotheses are jointly
 satisfiable. Over the local ring `ℚ`, the zero Selmer data with the trivial support change
 (`SelmerDuality.zeroSupportChange`, `zeroSupportChangeUnramified`), the full condition equal to the
 zero complex, the zero singular quotient, and the zero minimal model satisfy every hypothesis:
@@ -76,7 +76,7 @@ theorem zeroSel_eq_restrict :
   rw [ghom_eq_of_subsingleton (ghomComp (zeroHom ℚ (zeroCx ℚ) (zeroCx ℚ))
     (zeroHom ℚ (zeroCx ℚ) (zeroCx ℚ))) (zeroHom ℚ _ _)]
 
-/-- **Non-vacuity of the corrected `transfer_final`** (Lesson 2): all its hypotheses hold for the
+/-- **Non-vacuity of the corrected `transfer_final`**: all its hypotheses hold for the
 zero data over `ℚ` (support comparison of zero Selmer data, full condition and singular quotient
 zero, minimal model zero), so `transfer_final` applies. PROVED. -/
 theorem transfer_final_nonvacuous : (0 : ℕ) ≤ 0 := by

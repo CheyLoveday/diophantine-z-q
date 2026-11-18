@@ -17,15 +17,23 @@ module is assumed, and no identification of its abstract quotient with all reduc
 needed" (tex 9639–9646); "the conclusion is an identity of coefficientwise reduced expansions"
 (9716–9717); the trace identities hold "on the reduced trace orbit of `F_U`" (9728–9729). The
 model therefore carries the integral Fourier expansion `expand : Λ → (C → 𝒪)` of the integral
-module and works on the module of reduced expansions `Mexp`, the image of `Λ` under
-coefficientwise reduction modulo `𝔪` (`redE`). The operators act there because they preserve
-coefficientwise congruences (`cong_t`, `cong_d`, GLUE: good Hecke operations satisfy
-`(T_q f)[n] = f[qn] + q(⟨q⟩f)[n/q]`, and the scalar trace and determinant operators are their
-Chebotarev limits, tex 9658–9668). `det_orbit`, `two_fresh`, the defining condition of `N_U`
-(`consN`) and the readings `read` are stated on reduced expansions. Round 2 stated them as
-membership in the abstract submodule `𝔪Λ`; without saturation, coefficientwise vanishing modulo
-`𝔪` does not give that, so the old form was stronger than the text. Membership in `𝔪Λ` is now
-the separate hypothesis `GaloisConstituentModel.Saturated`, which the text does not assume. Only
+module, and every field is the coefficientwise reduction (`redE`) of an identity between vectors
+of `Λ`: `det_orbit`, `two_fresh`, the defining condition of `N_U` (`consN`) and the readings
+`read`.
+
+Round 4: the model makes NO assumption that the operators preserve coefficientwise congruences
+on `Λ`. The text proves the integrality of the diamond translates with correction coefficients
+(tex 9655–9660), evaluates its identities in `Λ` and then reduces (tex 9898–9900); it does not
+say that the diamond operators preserve coefficientwise congruences. Round 3's fields `cong_t`,
+`cong_d` and its module of reduced expansions are therefore removed. The abstract module of the
+Galois trace model is now `Mst`, which is `Λ` modulo the largest submodule `Kst` of the reduction
+kernel that is stable under all `t(g)`, `d(g)`. The operators descend because `Kst` is stable,
+the readings descend because `Kst` lies in the kernel, and the two identities and `N_U` land in
+`Kst` by the exact characteristic-zero identities (`detSpan_le_Kst`, `galN_eq_N`). Round 2 stated
+them as membership in the abstract submodule `𝔪Λ`; without saturation, coefficientwise
+vanishing modulo `𝔪` does not give that, so the old form was stronger than the text. Membership
+in `𝔪Λ` is now the separate hypothesis `GaloisConstituentModel.Saturated`, which the text does
+not assume. Only
 the bridge to lane RC0's `ConstituentModelRel`, whose reduced module is `Λ/𝔪Λ`, uses it
 (`RelBridge.lean`).
 
@@ -33,14 +41,14 @@ the bridge to lane RC0's `ConstituentModelRel`, whose reduced module is `Λ/𝔪
   its Fourier expansion, genuine Frobenius elements, `chiBit := bitChar`, and `N_U := consN …`
   defined from the characters and the reduced trace orbit. The fields `level_red`, `N_anti`,
   `N_chi`, `typ_frob`, `bit_frob` and `chi_surj` (good `U`) of lane RC0 are PROVED here.
-* `GaloisConstituentModel.toGaloisTraceModel`: the module of reduced expansions `Mexp` with the
-  induced operators is a `GaloisTraceModel`. `consN` is `galN` of the induced operators
-  (`consN_eq_galN`). `toGaloisDensityModel` gives the density form, given openness and
-  unramifiedness. The readings and RC2's rules follow.
+* `GaloisConstituentModel.toGaloisTraceModel`: `Mst` with the induced operators is a
+  `GaloisTraceModel`, whose type is unchanged. Within the budget, `consN` is `galN` of the induced
+  operators (`galN_eq_N`). `toGaloisDensityModel` gives the density form of the wired leaf (type
+  unchanged), given openness and unramifiedness. The readings and RC2's rules follow.
 * Non-vacuity with a genuine Galois representation: for an elliptic curve `E/ℚ`,
   `tateConstituentModel'` has one constituent, the `2`-adic Tate representation of `E`. Its data
   are the `ℤ₂`-lattice of integral vectors, its coordinate as the Fourier expansion, and the zero
-  forms. Its module of reduced expansions is nonzero (`tateConstituentModelOf_nontrivial`).
+  forms. Its module `Mst` is nonzero (`tateConstituentModelOf_nontrivial`).
   **The constituents of the actual forms `F_U = θ H_U` are weight-two cuspidal newforms and
   Eisenstein character pairs (tex 9647–9654, 9762–9771), not `E` or its twists; the Tate
   representation of `E` only shows that the structure is inhabited by a genuine Galois
@@ -50,8 +58,12 @@ DEPARTURE (the constituent representations as data). Mathlib has no Galois repre
 attached to modular forms. The field `ρ` therefore carries the representations as data. Their
 existence is Carayol's theorem (PRINT, tex 9773–9797). The properties of them that the proof uses
 enter through these fields, all stated for the operators built from `ρ`:
-`stable_t`, `stable_d`, `cong_t`, `cong_d` and `det_orbit` (GLUE); `two_fresh` and the inputs
-`reading`, `o12` (ELLIOT).
+`stable_t` and `stable_d` (GLUE); `det_orbit`, `two_fresh` and the inputs `reading`, `o12`
+(ELLIOT).
+
+Hypotheses stronger than the text (flagged where defined): `GaloisConstituentModel.Unbudgeted`
+(the fields off the operator budget) and `GaloisConstituentModel.Saturated` (membership in
+`𝔪Λ`); only the bridges to lane RC0's interfaces use them (`RelBridge.lean`).
 
 Kinds: `PROVED` (a Lean proof), `PRINT` (a printed theorem taken as a field), `GLUE` (a
 textbook fact taken as a field), `ELLIOT` (a step of the manuscript's argument taken as a field
@@ -147,7 +159,8 @@ variable {Y : Type*}
 * `rt(gn, U') = rt(g, U')` for every `g ∈ G_ℚ` and every `U' ⊆ U`.
 
 For the constituent model, `rt(g, U')` is the reduced expansion of `t(g)F_{U'}` (`redTrace`),
-and `N_U` is `galN` of the induced operators (`GaloisConstituentModel.consN_eq_galN`). Kind:
+and within the budget `N_U` is `galN` of the operators induced on `Mst`
+(`GaloisConstituentModel.galN_eq_N`). Kind:
 definition. -/
 def consN (chiType : GalQ →* Multiplicative L) (rt : GalQ → Finset ℕ → Y) (U : Finset ℕ) :
     Subgroup GalQ where
@@ -218,12 +231,14 @@ within the budget `B`, for the type character `chiType` (tex 9638–9668, 9705�
 RC0's `ConstituentModelRel` with `G := G_ℚ`, genuine Frobenius elements (`frob_spec`),
 `chiBit := bitChar`, and `N_U := consN chiType (redTrace …) U` defined. Every identity of the
 trace argument is an identity of coefficientwise reduced expansions (tex 9639–9646, 9716–9717,
-9728–9729; see the module docstring).
+9728–9729; see the module docstring). This constituent interface is not the wired density leaf:
+the leaf asks for density models (`Chebotarev.lean`), which `toGaloisDensityModel` builds from it
+given its inputs, openness and unramifiedness.
 
 Kinds:
 * `ρ`: PRINT ([Carayol, §§0.3–0.7, Théorème A, pp. 409–411], tex 9773–9797, stated as data);
-* `stable_t`, `stable_d`, `cong_t`, `cong_d`, `det_orbit`, `kummer`, `finiteIndex`: GLUE;
-* `two_fresh`: ELLIOT;
+* `stable_t`, `stable_d`, `kummer`, `finiteIndex`: GLUE;
+* `det_orbit`, `two_fresh`: ELLIOT;
 * `chebotarev`: PRINT ([Neukirch, Ch. VII, Theorem (13.4)]; tex 9666–9668, 9919–9921);
 * `I`, `K`, `O`, `m`, `Λ`, `C`, `coefK`, `expand`, `expand_spec`, `F`, `read`, `frob_spec`:
   definition (data of the construction, tex 9638–9668).
@@ -265,12 +280,6 @@ structure GaloisConstituentModel (T : TypeData L ε) (R : Finset ℕ → ZMod 2)
   /-- definition: `expand` records the Fourier coefficients of the integral forms in `𝒪`
   (the translates remain integral, tex 9655–9660) -/
   expand_spec : ∀ (v : Λ) (n : C), algebraMap O K (expand v n) = coefK v n
-  /-- GLUE (tex 9658–9668: good Hecke operations `(T_q f)[n] = f[qn] + q(⟨q⟩f)[n/q]`, of which
-  the scalar trace operators are Chebotarev limits): `t(g)` preserves coefficientwise
-  congruences modulo `𝔪` -/
-  cong_t : ∀ g (v : Λ), redExpOf m expand v = 0 → redExpOf m expand (latT ρ Λ stable_t g v) = 0
-  /-- GLUE (tex 9658–9668, diamond operations): `d(g)` preserves coefficientwise congruences -/
-  cong_d : ∀ g (v : Λ), redExpOf m expand v = 0 → redExpOf m expand (latD ρ Λ stable_d g v) = 0
   /-- the integral forms `F_U = θ H_U` (tex 9647–9648, 9672) for `U` a set of good primes within
   the budget; the values elsewhere are constrained by no field -/
   F : Finset ℕ → Λ
@@ -280,9 +289,9 @@ structure GaloisConstituentModel (T : TypeData L ε) (R : Finset ℕ → ZMod 2)
   frob : ℕ → GalQ
   /-- definition: `frob q` is a genuine arithmetic Frobenius element at every good prime `q` -/
   frob_spec : ∀ q, T.Good q → IsFrobAt (frob q) q
-  /-- GLUE (tex 9712–9729: the diamond formula; "the conclusion is an identity of coefficientwise
-  reduced expansions", 9716–9717), within the budget: `d(u) t(v) F_U` and `t(v) F_U` have the same
-  reduced expansion -/
+  /-- ELLIOT (tex 9712–9733: the diamond/trace-orbit calculation; "the conclusion is an identity
+  of coefficientwise reduced expansions", 9716–9717), within the budget: `d(u) t(v) F_U` and
+  `t(v) F_U` have the same reduced expansion -/
   det_orbit : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∀ u v,
     redExpOf m expand (latD ρ Λ stable_d u (latT ρ Λ stable_t v (F U))) =
       redExpOf m expand (latT ρ Λ stable_t v (F U))
@@ -362,174 +371,358 @@ theorem chi_surj (htyp : IsTypeChar T chiType) (U : Finset ℕ) (hU : ∀ s ∈ 
   obtain ⟨q, -, -, -, h1, h2⟩ := exists_good_frob T htyp X.frob_spec U ∅ hU ℓ b
   exact ⟨_, h1, h2⟩
 
-/-! ### The module of reduced expansions -/
+/-! ### Identities on the integral module (exact, characteristic zero) -/
 
-/-- **The module of coefficientwise reduced expansions**: the image of `Λ` under reduction
-modulo `𝔪` (tex 9639–9646). Kind: definition. -/
-abbrev Mexp : Submodule X.O (X.C → X.O ⧸ X.m) := LinearMap.range X.redE
-
-/-- The reduced expansion of a vector of `Λ`, in `Mexp`. Kind: definition. -/
-def redM : X.Λ →ₗ[X.O] X.Mexp := X.redE.rangeRestrict
-
-/-- Kind: PROVED (definition). -/
-theorem redM_coe (v : X.Λ) : (X.redM v : X.C → X.O ⧸ X.m) = X.redE v := rfl
-
-/-- Every reduced expansion comes from `Λ`. Kind: PROVED. -/
-theorem redM_surjective : Function.Surjective X.redM := LinearMap.surjective_rangeRestrict _
-
-/-- Kind: PROVED. -/
-theorem redM_eq_iff (v w : X.Λ) : X.redM v = X.redM w ↔ X.redE v = X.redE w :=
-  Subtype.ext_iff
-
-/-- Kind: PROVED. -/
-theorem redM_eq_zero_iff (v : X.Λ) : X.redM v = 0 ↔ X.redE v = 0 := by
-  rw [← map_zero X.redM, redM_eq_iff, map_zero]
-
-/-- `2 = 0` on reduced expansions (`2 ∈ 𝔪`). Kind: PROVED. -/
-theorem two_nsmul_exp (y : X.C → X.O ⧸ X.m) : 2 • y = 0 := by
-  funext n
-  have h2 : ((2 : ℕ) : X.O ⧸ X.m) = 0 := by
-    rw [show ((2 : ℕ) : X.O ⧸ X.m) = Ideal.Quotient.mk X.m (2 : X.O) by
-      rw [map_ofNat]; rfl]
-    exact Ideal.Quotient.eq_zero_iff_mem.mpr X.two_mem
-  show 2 • y n = 0
-  rw [nsmul_eq_mul, h2, zero_mul]
-
-/-- `2 = 0` on the module of reduced expansions. Kind: PROVED. -/
-theorem two_nsmul_Mexp (x : X.Mexp) : 2 • x = 0 :=
-  Subtype.ext (X.two_nsmul_exp (x : X.C → X.O ⧸ X.m))
-
-/-- The `𝔽₂`-structure of the module of reduced expansions. Kind: definition. -/
-abbrev modMexp : Module (ZMod 2) X.Mexp := AddCommGroup.zmodModule X.two_nsmul_Mexp
-
-/-- **An `𝒪`-linear endomorphism of `Λ` preserving coefficientwise congruences acts on the
-reduced expansions** (through `Λ / ker(reduction) ≅ Mexp`). Kind: definition. -/
-def opE (f : X.Λ →ₗ[X.O] X.Λ) (hf : ∀ v, X.redE v = 0 → X.redE (f v) = 0) :
-    X.Mexp →ₗ[X.O] X.Mexp :=
-  (X.redE.quotKerEquivRange.toLinearMap ∘ₗ
-    (LinearMap.ker X.redE).mapQ (LinearMap.ker X.redE) f
-      (fun v hv => LinearMap.mem_ker.mpr (hf v (LinearMap.mem_ker.mp hv)))) ∘ₗ
-      X.redE.quotKerEquivRange.symm.toLinearMap
-
-/-- Kind: PROVED. -/
-theorem opE_redM (f : X.Λ →ₗ[X.O] X.Λ) (hf : ∀ v, X.redE v = 0 → X.redE (f v) = 0)
-    (v : X.Λ) : X.opE f hf (X.redM v) = X.redM (f v) := by
+/-- `t` and `d` commute on `Λ` (both are scalar operators on each constituent). Kind: PROVED. -/
+theorem tΛ_dΛ (g h : GalQ) (v : X.Λ) : X.tΛ g (X.dΛ h v) = X.dΛ h (X.tΛ g v) := by
   apply Subtype.ext
-  simp only [opE, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe]
-  rw [show X.redM v = ⟨X.redE v, LinearMap.mem_range_self _ v⟩ from rfl,
-    LinearMap.quotKerEquivRange_symm_apply_image, Submodule.mkQ_apply]
-  rfl
+  funext i
+  simp only [latT_coe, latD_coe, tV, dV, scalarOp_apply]
+  ring
 
-attribute [local instance] GaloisConstituentModel.modMexp
+/-- `t(g)t(h) = t(gh) + d(h)t(gh⁻¹)` on `Λ` (batch 3's `tV_mul`, tex 9734–9737). Kind:
+PROVED. -/
+theorem tΛ_mul (g h : GalQ) (v : X.Λ) :
+    X.tΛ g (X.tΛ h v) = X.tΛ (g * h) v + X.dΛ h (X.tΛ (g * h⁻¹) v) :=
+  Subtype.ext (tV_mul X.ρ g h (v : X.I → X.K))
 
-/-- `t(g)` on reduced expansions. Kind: definition. -/
-def tE (g : GalQ) : X.Mexp →ₗ[ZMod 2] X.Mexp :=
-  (X.opE (X.tΛ g) (fun v hv => X.cong_t g v hv)).toAddMonoidHom.toZModLinearMap 2
-
-/-- `d(g)` on reduced expansions. Kind: definition. -/
-def dE (g : GalQ) : X.Mexp →ₗ[ZMod 2] X.Mexp :=
-  (X.opE (X.dΛ g) (fun v hv => X.cong_d g v hv)).toAddMonoidHom.toZModLinearMap 2
-
-/-- The reduced forms `F_U`. Kind: definition. -/
-def FE (U : Finset ℕ) : X.Mexp := X.redM (X.F U)
-
-/-- The coefficient-one functionals on the module of reduced expansions. Kind: definition. -/
-def readE (U : Finset ℕ) : X.Mexp →ₗ[ZMod 2] ZMod 2 :=
-  ((X.read U).comp X.Mexp.subtype.toAddMonoidHom).toZModLinearMap 2
-
-/-- Kind: PROVED. -/
-theorem tE_redM (g : GalQ) (v : X.Λ) : X.tE g (X.redM v) = X.redM (X.tΛ g v) :=
-  X.opE_redM _ (fun v hv => X.cong_t g v hv) v
-
-/-- Kind: PROVED. -/
-theorem dE_redM (g : GalQ) (v : X.Λ) : X.dE g (X.redM v) = X.redM (X.dΛ g v) :=
-  X.opE_redM _ (fun v hv => X.cong_d g v hv) v
-
-/-- Kind: PROVED (definition). -/
-theorem readE_redM (U : Finset ℕ) (v : X.Λ) : X.readE U (X.redM v) = X.read U (X.redE v) := rfl
-
-/-- **`trace_mul` on reduced expansions** (tex 9734–9737). Kind: PROVED (the matrix identity on
-each constituent, batch 3's `tV_mul`, then reduction). -/
-theorem trace_mul (g h : GalQ) (x : X.Mexp) :
-    X.tE g (X.tE h x) = X.tE (g * h) x + X.dE h (X.tE (g * h⁻¹) x) := by
-  obtain ⟨v, rfl⟩ := X.redM_surjective x
-  rw [tE_redM, tE_redM, tE_redM, tE_redM, dE_redM, ← map_add]
-  congr 1
+/-- `d` is multiplicative on `Λ` (`det` is multiplicative). Kind: PROVED. -/
+theorem dΛ_mul (g h : GalQ) (v : X.Λ) : X.dΛ (g * h) v = X.dΛ g (X.dΛ h v) := by
   apply Subtype.ext
-  exact tV_mul X.ρ g h (v : X.I → X.K)
+  funext i
+  simp only [latD_coe, dV, scalarOp_apply, map_mul, Units.val_mul, Matrix.det_mul]
+  ring
 
-/-- **`det_orbit` on reduced expansions** (tex 9712–9729), within the budget. Kind: PROVED (from
-the GLUE field `det_orbit`). -/
-theorem det_orbit' (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) (u v : GalQ) :
-    X.dE u (X.tE v (X.FE U)) = X.tE v (X.FE U) := by
-  rw [FE, tE_redM, dE_redM, redM_eq_iff]
-  exact X.det_orbit U hU hUB u v
+/-- `t(1) = 2` on `Λ`. Kind: PROVED (`tV_one`). -/
+theorem tΛ_one (v : X.Λ) : X.tΛ 1 v = (2 : ℕ) • v := by
+  apply Subtype.ext
+  show tV X.ρ 1 (v : X.I → X.K) = (((2 : ℕ) • v : X.Λ) : X.I → X.K)
+  rw [tV_one, two_smul]
+  simp [two_nsmul]
 
-/-- **`two_fresh` on reduced expansions** (tex 9741–9745), within the budget. Kind: PROVED (from
-the ELLIOT field `two_fresh`). -/
-theorem two_fresh' (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) (g h : GalQ) :
-    X.tE g (X.tE h (X.FE U)) = 0 := by
-  rw [FE, tE_redM, tE_redM, redM_eq_zero_iff]
-  exact X.two_fresh U hU hUB g h
-
-/-- **`trace_one`** (tex 9739). Kind: PROVED (`tr 1 = 2`, `2 ∈ 𝔪`). -/
-theorem trace_one (x : X.Mexp) : X.tE 1 x = (2 : ZMod 2) • x := by
-  rw [show (2 : ZMod 2) = 0 from rfl, zero_smul]
-  obtain ⟨v, rfl⟩ := X.redM_surjective x
-  rw [tE_redM]
-  have e : X.tΛ 1 v = (2 : ℕ) • v := by
-    apply Subtype.ext
-    show tV X.ρ 1 (v : X.I → X.K) = (((2 : ℕ) • v : X.Λ) : X.I → X.K)
-    rw [tV_one, two_smul]
-    simp [two_nsmul]
-  rw [e, map_nsmul]
-  exact X.two_nsmul_Mexp _
-
-/-- **`t` is a class function** (tex 9762–9771). Kind: PROVED (batch 3's `tV_conj`). -/
-theorem t_class (g h : GalQ) : X.tE (h * g * h⁻¹) = X.tE g := by
+/-- `t` is a class function on `Λ` (`tV_conj`). Kind: PROVED. -/
+theorem tΛ_conj (g h : GalQ) : X.tΛ (h * g * h⁻¹) = X.tΛ g := by
   apply LinearMap.ext
-  intro x
-  obtain ⟨v, rfl⟩ := X.redM_surjective x
-  rw [tE_redM, tE_redM]
-  congr 1
+  intro v
   apply Subtype.ext
   show tV X.ρ (h * g * h⁻¹) (v : X.I → X.K) = tV X.ρ g v
   rw [tV_conj]
 
-/-- **The induced traces agree on `F_U` iff the reduced trace orbit does.** Kind: PROVED. -/
-theorem tE_FE_eq_iff (g n : GalQ) (U : Finset ℕ) :
-    X.tE (g * n) (X.FE U) = X.tE g (X.FE U) ↔
-      redTrace X.m X.expand X.ρ X.stable_t X.F (g * n) U =
-        redTrace X.m X.expand X.ρ X.stable_t X.F g U := by
-  rw [FE, tE_redM, tE_redM, redM_eq_iff]
-  rfl
-
-/-- **`level`** (RC0's `TraceModelRel.level`) on reduced expansions. Kind: PROVED. -/
-theorem level (U : Finset ℕ) (g n : GalQ) (hn : n ∈ X.N U) :
-    X.tE (g * n) (X.FE U) = X.tE g (X.FE U) :=
-  (X.tE_FE_eq_iff g n U).mpr (hn.2.2 g U (subset_refl U))
-
-/-- **`N_U` is the subgroup `galN` of the induced operators** (`GaloisModel.lean`). Kind:
-PROVED. -/
-theorem consN_eq_galN (U : Finset ℕ) : X.N U = galN chiType X.tE X.FE U := by
-  ext n
-  rw [mem_galN, N, mem_consN]
-  exact and_congr Iff.rfl (and_congr Iff.rfl (forall_congr' fun g =>
-    forall₂_congr fun U' _ => (X.tE_FE_eq_iff g n U').symm))
-
-/-- **`N_U` is normal** (tex 9919–9921). Kind: PROVED (`consN_eq_galN`, `galN_normal`). -/
+/-- **`N_U` is normal** (tex 9919–9921). Kind: PROVED (`tΛ_conj`). -/
 theorem N_normal (U : Finset ℕ) : (X.N U).Normal := by
-  rw [X.consN_eq_galN U]
-  exact galN_normal X.t_class
+  refine ⟨fun n hn k => ⟨?_, fun s hs => ?_, fun g U' hU' => ?_⟩⟩
+  · rw [map_mul, map_mul, map_inv, hn.1, mul_one, mul_inv_cancel]
+  · rw [map_mul, map_mul, map_inv, hn.2.1 s hs, mul_one, mul_inv_cancel]
+  · show X.redE (X.tΛ (g * (k * n * k⁻¹)) (X.F U')) = X.redE (X.tΛ g (X.F U'))
+    have e1 : X.tΛ (g * (k * n * k⁻¹)) = X.tΛ ((k⁻¹ * g * k) * n) := by
+      rw [← X.tΛ_conj ((k⁻¹ * g * k) * n) k]
+      congr 1
+      group
+    have e2 : X.tΛ g = X.tΛ (k⁻¹ * g * k) := by
+      rw [← X.tΛ_conj (k⁻¹ * g * k) k]
+      congr 1
+      group
+    rw [e1, e2]
+    exact hn.2.2 _ U' hU'
+
+/-! ### The largest operator-stable submodule of the reduction kernel
+
+The text evaluates every identity of the trace argument in `Λ` and then reduces coefficientwise
+(tex 9639–9646, 9716–9717, 9728–9729, 9898–9900). It does not assert that the operators
+preserve coefficientwise congruences on `Λ`. The abstract module of the Galois trace model is
+therefore `Λ` modulo the largest submodule `Kst` of the kernel of coefficientwise reduction that
+is stable under all `t(g)` and `d(g)`. The operators descend because `Kst` is stable, and the
+readings descend because `Kst` lies in the kernel. The two identities of the trace argument land
+in `Kst` (`detSpan_le_Kst`): the submodule they generate is operator-stable by the exact
+characteristic-zero identities (`tΛ_mul`, `dΛ_mul`, `tΛ_dΛ`), and it lies in the kernel by the
+coefficientwise identities. The subgroup `galN` of the quotient is `N_U` (`galN_eq_N`). -/
+
+/-- The submodules of the reduction kernel stable under every `t(g)` and `d(g)`. Kind:
+definition. -/
+def StableKer : Set (Submodule X.O X.Λ) :=
+  {P | P ≤ LinearMap.ker X.redE ∧ (∀ g, P ≤ P.comap (X.tΛ g)) ∧ ∀ g, P ≤ P.comap (X.dΛ g)}
+
+/-- **The largest operator-stable submodule of the kernel of coefficientwise reduction.** Kind:
+definition. -/
+def Kst : Submodule X.O X.Λ := sSup X.StableKer
+
+/-- Kind: PROVED. -/
+theorem Kst_le_ker : X.Kst ≤ LinearMap.ker X.redE := sSup_le fun _ hP => hP.1
+
+/-- Kind: PROVED. -/
+theorem Kst_stable_t (g : GalQ) : X.Kst ≤ X.Kst.comap (X.tΛ g) :=
+  sSup_le fun _ hP => (hP.2.1 g).trans (Submodule.comap_mono (le_sSup hP))
+
+/-- Kind: PROVED. -/
+theorem Kst_stable_d (g : GalQ) : X.Kst ≤ X.Kst.comap (X.dΛ g) :=
+  sSup_le fun _ hP => (hP.2.2 g).trans (Submodule.comap_mono (le_sSup hP))
+
+/-- A stable submodule of the kernel lies in `Kst`. Kind: PROVED. -/
+theorem le_Kst {P : Submodule X.O X.Λ} (h1 : P ≤ LinearMap.ker X.redE)
+    (h2 : ∀ g, P ≤ P.comap (X.tΛ g)) (h3 : ∀ g, P ≤ P.comap (X.dΛ g)) : P ≤ X.Kst :=
+  le_sSup ⟨h1, h2, h3⟩
+
+/-- `𝔪Λ ≤ Kst`. Kind: PROVED. -/
+theorem mLam_le_Kst : (X.m • ⊤ : Submodule X.O X.Λ) ≤ X.Kst := by
+  refine X.le_Kst (le_ker_redExpOf X.m X.expand) (fun g => ?_) (fun g => ?_) <;>
+  · rw [← Submodule.map_le_iff_le_comap, Submodule.map_smul'']
+    exact smul_mono_right _ le_top
+
+/-- The generators of the determinant and two-trace identities for `F_U`. Kind: definition. -/
+def orbitGens (U : Finset ℕ) : Set X.Λ :=
+  {x | (∃ a b, x = X.dΛ a (X.tΛ b (X.F U)) - X.tΛ b (X.F U)) ∨
+    ∃ g h, x = X.tΛ g (X.tΛ h (X.F U))}
+
+/-- **The submodule generated by the two identities of the trace argument at `U`** (tex
+9712–9745): the vectors `(d(a) − 1) t(b) F_U` and `t(g) t(h) F_U`. Kind: definition. -/
+def detSpan (U : Finset ℕ) : Submodule X.O X.Λ := Submodule.span X.O (X.orbitGens U)
+
+theorem gen1_mem (U : Finset ℕ) (a b : GalQ) :
+    X.dΛ a (X.tΛ b (X.F U)) - X.tΛ b (X.F U) ∈ X.detSpan U :=
+  Submodule.subset_span (Or.inl ⟨a, b, rfl⟩)
+
+theorem gen2_mem (U : Finset ℕ) (g h : GalQ) : X.tΛ g (X.tΛ h (X.F U)) ∈ X.detSpan U :=
+  Submodule.subset_span (Or.inr ⟨g, h, rfl⟩)
+
+/-- `(d(a) − 1) t(x) t(y) F_U` lies in the span (exact identities). Kind: PROVED. -/
+theorem dsub_tt_mem (U : Finset ℕ) (a x y : GalQ) :
+    X.dΛ a (X.tΛ x (X.tΛ y (X.F U))) - X.tΛ x (X.tΛ y (X.F U)) ∈ X.detSpan U := by
+  have e : X.dΛ a (X.tΛ x (X.tΛ y (X.F U))) - X.tΛ x (X.tΛ y (X.F U)) =
+      (X.dΛ a (X.tΛ (x * y) (X.F U)) - X.tΛ (x * y) (X.F U)) +
+        ((X.dΛ (a * y) (X.tΛ (x * y⁻¹) (X.F U)) - X.tΛ (x * y⁻¹) (X.F U)) -
+          (X.dΛ y (X.tΛ (x * y⁻¹) (X.F U)) - X.tΛ (x * y⁻¹) (X.F U))) := by
+    rw [X.tΛ_mul, map_add, X.dΛ_mul]
+    abel
+  rw [e]
+  exact Submodule.add_mem _ (X.gen1_mem U _ _)
+    (Submodule.sub_mem _ (X.gen1_mem U _ _) (X.gen1_mem U _ _))
+
+/-- The span is stable under `t(k)`. Kind: PROVED (`tΛ_mul`, `dΛ_mul`, `tΛ_dΛ`). -/
+theorem detSpan_stable_t (U : Finset ℕ) (k : GalQ) :
+    X.detSpan U ≤ (X.detSpan U).comap (X.tΛ k) := by
+  rw [detSpan, Submodule.span_le]
+  rintro x (⟨a, b, rfl⟩ | ⟨g, h, rfl⟩)
+  · show X.tΛ k (X.dΛ a (X.tΛ b (X.F U)) - X.tΛ b (X.F U)) ∈ X.detSpan U
+    rw [map_sub, X.tΛ_dΛ]
+    exact X.dsub_tt_mem U a k b
+  · show X.tΛ k (X.tΛ g (X.tΛ h (X.F U))) ∈ X.detSpan U
+    have e : X.tΛ k (X.tΛ g (X.tΛ h (X.F U))) = X.tΛ k (X.tΛ (g * h) (X.F U)) +
+        X.tΛ k (X.tΛ (g * h⁻¹) (X.F U)) +
+        (X.dΛ h (X.tΛ k (X.tΛ (g * h⁻¹) (X.F U))) - X.tΛ k (X.tΛ (g * h⁻¹) (X.F U))) := by
+      rw [X.tΛ_mul g h, map_add, X.tΛ_dΛ]
+      abel
+    rw [e]
+    exact Submodule.add_mem _ (Submodule.add_mem _ (X.gen2_mem U _ _) (X.gen2_mem U _ _))
+      (X.dsub_tt_mem U h k _)
+
+/-- The span is stable under `d(k)`. Kind: PROVED. -/
+theorem detSpan_stable_d (U : Finset ℕ) (k : GalQ) :
+    X.detSpan U ≤ (X.detSpan U).comap (X.dΛ k) := by
+  rw [detSpan, Submodule.span_le]
+  rintro x (⟨a, b, rfl⟩ | ⟨g, h, rfl⟩)
+  · show X.dΛ k (X.dΛ a (X.tΛ b (X.F U)) - X.tΛ b (X.F U)) ∈ X.detSpan U
+    have e : X.dΛ k (X.dΛ a (X.tΛ b (X.F U)) - X.tΛ b (X.F U)) =
+        (X.dΛ (k * a) (X.tΛ b (X.F U)) - X.tΛ b (X.F U)) -
+          (X.dΛ k (X.tΛ b (X.F U)) - X.tΛ b (X.F U)) := by
+      rw [map_sub, X.dΛ_mul]
+      abel
+    rw [e]
+    exact Submodule.sub_mem _ (X.gen1_mem U _ _) (X.gen1_mem U _ _)
+  · show X.dΛ k (X.tΛ g (X.tΛ h (X.F U))) ∈ X.detSpan U
+    have e : X.dΛ k (X.tΛ g (X.tΛ h (X.F U))) = X.tΛ g (X.tΛ h (X.F U)) +
+        (X.dΛ k (X.tΛ g (X.tΛ h (X.F U))) - X.tΛ g (X.tΛ h (X.F U))) := by abel
+    rw [e]
+    exact Submodule.add_mem _ (X.gen2_mem U _ _) (X.dsub_tt_mem U k g h)
+
+/-- **The span lies in the reduction kernel** for `U` a set of good primes within the budget:
+the coefficientwise identities `det_orbit` and `two_fresh`. Kind: PROVED. -/
+theorem detSpan_le_ker (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) :
+    X.detSpan U ≤ LinearMap.ker X.redE := by
+  rw [detSpan, Submodule.span_le]
+  rintro x (⟨a, b, rfl⟩ | ⟨g, h, rfl⟩)
+  · show X.redE _ = 0
+    rw [map_sub, sub_eq_zero]
+    exact X.det_orbit U hU hUB a b
+  · exact X.two_fresh U hU hUB g h
+
+/-- **The two identities land in `Kst`** within the budget. Kind: PROVED. -/
+theorem detSpan_le_Kst (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) :
+    X.detSpan U ≤ X.Kst :=
+  X.le_Kst (X.detSpan_le_ker U hU hUB) (X.detSpan_stable_t U) (X.detSpan_stable_d U)
+
+/-- The vectors `t(gn) F_{U'} − t(g) F_{U'}`, `n ∈ N_U`, with the identities at `U'`. Kind:
+definition. -/
+def levelSpan (U U' : Finset ℕ) : Submodule X.O X.Λ :=
+  Submodule.span X.O {x | ∃ g, ∃ n ∈ X.N U, x = X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')} ⊔
+    X.detSpan U'
+
+/-- **`t(gn) F_{U'} − t(g) F_{U'}` lies in `Kst`** for `n ∈ N_U`, `U' ⊆ U`, `U` within the
+budget (the span is operator-stable by the exact identities and the normality of `N_U`, and it
+lies in the kernel by the definition of `N_U` and the coefficientwise identities). Kind:
+PROVED. -/
+theorem level_mem_Kst (U U' : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B)
+    (hU' : U' ⊆ U) (g n : GalQ) (hn : n ∈ X.N U) :
+    X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U') ∈ X.Kst := by
+  have hU'g : ∀ s ∈ U', T.Good s := fun s hs => hU s (hU' hs)
+  have hU'B : U'.card + 1 ≤ B := (Nat.add_le_add_right (Finset.card_le_card hU') 1).trans hUB
+  have hnorm := X.N_normal U
+  have hgen : ∀ g, ∀ n ∈ X.N U, X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U') ∈ X.levelSpan U U' :=
+    fun g n hn => Submodule.mem_sup_left (Submodule.subset_span ⟨g, n, hn, rfl⟩)
+  have hdet : ∀ x ∈ X.detSpan U', x ∈ X.levelSpan U U' := fun x hx => Submodule.mem_sup_right hx
+  refine X.le_Kst (P := X.levelSpan U U') ?_ (fun k => ?_) (fun k => ?_) (hgen g n hn)
+  · refine sup_le ?_ (X.detSpan_le_ker U' hU'g hU'B)
+    rw [Submodule.span_le]
+    rintro x ⟨g, n, hn, rfl⟩
+    show X.redE _ = 0
+    rw [map_sub, sub_eq_zero]
+    exact hn.2.2 g U' hU'
+  · refine sup_le ?_ ((X.detSpan_stable_t U' k).trans (Submodule.comap_mono le_sup_right))
+    rw [Submodule.span_le]
+    rintro x ⟨g, n, hn, rfl⟩
+    show X.tΛ k (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) ∈ X.levelSpan U U'
+    have hn' : g * n⁻¹ * g⁻¹ ∈ X.N U := hnorm.conj_mem _ (inv_mem hn) g
+    have e : X.tΛ k (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) =
+        (X.tΛ ((k * g) * n) (X.F U') - X.tΛ (k * g) (X.F U')) +
+          (X.tΛ ((k * g⁻¹) * (g * n⁻¹ * g⁻¹)) (X.F U') - X.tΛ (k * g⁻¹) (X.F U')) +
+          ((X.dΛ (g * n) (X.tΛ (k * (g * n)⁻¹) (X.F U')) - X.tΛ (k * (g * n)⁻¹) (X.F U')) -
+            (X.dΛ g (X.tΛ (k * g⁻¹) (X.F U')) - X.tΛ (k * g⁻¹) (X.F U'))) := by
+      rw [map_sub, X.tΛ_mul, X.tΛ_mul]
+      have h1 : k * (g * n) = (k * g) * n := by group
+      have h2 : k * (g * n)⁻¹ = (k * g⁻¹) * (g * n⁻¹ * g⁻¹) := by group
+      rw [h1, ← h2]
+      abel
+    rw [e]
+    refine Submodule.add_mem _ (Submodule.add_mem _ (hgen _ _ hn) (hgen _ _ hn')) ?_
+    exact Submodule.sub_mem _ (hdet _ (X.gen1_mem U' _ _)) (hdet _ (X.gen1_mem U' _ _))
+  · refine sup_le ?_ ((X.detSpan_stable_d U' k).trans (Submodule.comap_mono le_sup_right))
+    rw [Submodule.span_le]
+    rintro x ⟨g, n, hn, rfl⟩
+    show X.dΛ k (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) ∈ X.levelSpan U U'
+    have e : X.dΛ k (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) =
+        (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) +
+          ((X.dΛ k (X.tΛ (g * n) (X.F U')) - X.tΛ (g * n) (X.F U')) -
+            (X.dΛ k (X.tΛ g (X.F U')) - X.tΛ g (X.F U'))) := by
+      rw [map_sub]
+      abel
+    rw [e]
+    exact Submodule.add_mem _ (hgen _ _ hn)
+      (Submodule.sub_mem _ (hdet _ (X.gen1_mem U' _ _)) (hdet _ (X.gen1_mem U' _ _)))
+
+/-! ### The abstract module of the Galois trace model -/
+
+/-- **The module of the Galois trace model**: `Λ` modulo the largest operator-stable submodule of
+the kernel of coefficientwise reduction. It needs no congruence property of the operators
+(tex 9639–9646, 9898–9900). Kind: definition. -/
+abbrev Mst : Type := X.Λ ⧸ X.Kst
+
+/-- `2 = 0` on `Mst` (`2 ∈ 𝔪`, `𝔪Λ ≤ Kst`). Kind: PROVED. -/
+theorem two_nsmul_Mst (x : X.Mst) : 2 • x = 0 := by
+  induction x using Submodule.Quotient.induction_on with
+  | H v =>
+    show 2 • X.Kst.mkQ v = 0
+    rw [← map_nsmul, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero,
+      ← Nat.cast_smul_eq_nsmul X.O]
+    exact X.mLam_le_Kst (Submodule.smul_mem_smul (by exact_mod_cast X.two_mem) trivial)
+
+/-- The `𝔽₂`-structure of `Mst`. Kind: definition. -/
+abbrev modMst : Module (ZMod 2) X.Mst := AddCommGroup.zmodModule X.two_nsmul_Mst
+
+attribute [local instance] GaloisConstituentModel.modMst
+
+/-- `t(g)` on `Mst`. Kind: definition. -/
+def tK (g : GalQ) : X.Mst →ₗ[ZMod 2] X.Mst :=
+  (X.Kst.mapQ X.Kst (X.tΛ g) (X.Kst_stable_t g)).toAddMonoidHom.toZModLinearMap 2
+
+/-- `d(g)` on `Mst`. Kind: definition. -/
+def dK (g : GalQ) : X.Mst →ₗ[ZMod 2] X.Mst :=
+  (X.Kst.mapQ X.Kst (X.dΛ g) (X.Kst_stable_d g)).toAddMonoidHom.toZModLinearMap 2
+
+/-- The forms `F_U` in `Mst`. Kind: definition. -/
+def FK (U : Finset ℕ) : X.Mst := Submodule.Quotient.mk (X.F U)
+
+/-- The coefficient-one functionals, through coefficientwise reduction (`Kst` lies in its
+kernel). Kind: definition. -/
+def readK (U : Finset ℕ) : X.Mst →ₗ[ZMod 2] ZMod 2 :=
+  ((X.read U).comp (X.Kst.liftQ X.redE X.Kst_le_ker).toAddMonoidHom).toZModLinearMap 2
+
+theorem tK_mk (g : GalQ) (v : X.Λ) :
+    X.tK g (Submodule.Quotient.mk v) = Submodule.Quotient.mk (X.tΛ g v) := rfl
+
+theorem dK_mk (g : GalQ) (v : X.Λ) :
+    X.dK g (Submodule.Quotient.mk v) = Submodule.Quotient.mk (X.dΛ g v) := rfl
+
+/-- The readings of `Mst` are those of the reduced expansions. Kind: PROVED (definition). -/
+theorem readK_mk (U : Finset ℕ) (v : X.Λ) :
+    X.readK U (Submodule.Quotient.mk v) = X.read U (X.redE v) := rfl
+
+theorem mk_eq_mk_iff (v w : X.Λ) :
+    (Submodule.Quotient.mk v : X.Mst) = Submodule.Quotient.mk w ↔ v - w ∈ X.Kst :=
+  Submodule.Quotient.eq _
+
+/-- **`trace_mul` on `Mst`** (tex 9734–9737). Kind: PROVED (`tΛ_mul`). -/
+theorem trace_mul (g h : GalQ) (x : X.Mst) :
+    X.tK g (X.tK h x) = X.tK (g * h) x + X.dK h (X.tK (g * h⁻¹) x) := by
+  induction x using Submodule.Quotient.induction_on with
+  | H v =>
+    rw [tK_mk, tK_mk, tK_mk, tK_mk, dK_mk, ← Submodule.Quotient.mk_add, X.tΛ_mul]
+
+/-- **`det_orbit` on `Mst`** (tex 9712–9733), within the budget. Kind: PROVED (from the
+coefficientwise field, `detSpan_le_Kst`). -/
+theorem det_orbit' (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) (u v : GalQ) :
+    X.dK u (X.tK v (X.FK U)) = X.tK v (X.FK U) := by
+  rw [FK, tK_mk, dK_mk, mk_eq_mk_iff]
+  exact X.detSpan_le_Kst U hU hUB (X.gen1_mem U u v)
+
+/-- **`two_fresh` on `Mst`** (tex 9741–9745), within the budget. Kind: PROVED. -/
+theorem two_fresh' (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) (g h : GalQ) :
+    X.tK g (X.tK h (X.FK U)) = 0 := by
+  rw [FK, tK_mk, tK_mk, Submodule.Quotient.mk_eq_zero]
+  exact X.detSpan_le_Kst U hU hUB (X.gen2_mem U g h)
+
+/-- **`trace_one`** (tex 9739). Kind: PROVED. -/
+theorem trace_one (x : X.Mst) : X.tK 1 x = (2 : ZMod 2) • x := by
+  rw [show (2 : ZMod 2) = 0 from rfl, zero_smul]
+  induction x using Submodule.Quotient.induction_on with
+  | H v =>
+    rw [tK_mk, X.tΛ_one]
+    show X.Kst.mkQ ((2 : ℕ) • v) = 0
+    rw [map_nsmul]
+    exact X.two_nsmul_Mst _
+
+/-- **`t` is a class function** (tex 9762–9771). Kind: PROVED. -/
+theorem t_class (g h : GalQ) : X.tK (h * g * h⁻¹) = X.tK g := by
+  apply LinearMap.ext
+  intro x
+  induction x using Submodule.Quotient.induction_on with
+  | H v => rw [tK_mk, tK_mk, X.tΛ_conj]
+
+/-- **Within the budget, `N_U` is the subgroup `galN` of `Mst`.** Kind: PROVED
+(`level_mem_Kst`, `Kst_le_ker`). -/
+theorem galN_eq_N (U : Finset ℕ) (hU : ∀ s ∈ U, T.Good s) (hUB : U.card + 1 ≤ B) :
+    galN chiType X.tK X.FK U = X.N U := by
+  ext n
+  rw [mem_galN]
+  constructor
+  · rintro ⟨h1, h2, h3⟩
+    refine ⟨h1, h2, fun g U' hU' => ?_⟩
+    have h := h3 g U' hU'
+    rw [FK, tK_mk, tK_mk, mk_eq_mk_iff] at h
+    have := X.Kst_le_ker h
+    rw [LinearMap.mem_ker, map_sub, sub_eq_zero] at this
+    exact this
+  · intro hn
+    refine ⟨hn.1, hn.2.1, fun g U' hU' => ?_⟩
+    rw [FK, tK_mk, tK_mk, mk_eq_mk_iff]
+    exact X.level_mem_Kst U U' hU hUB hU' g n hn
 
 /-! ### The genuine Galois trace model of the constituent model -/
 
-/-- **The two ELLIOT inputs**, for the induced operators on reduced expansions: the
-coefficient-one reading of a fresh vertex (tex 9671–9704) and (O.12) at coefficient one (tex
-9905–9918). Kind: definition. -/
+/-- **The two ELLIOT inputs**, on reduced expansions of vectors of `Λ` (tex 9671–9704,
+9905–9918): the coefficient-one reading of a fresh vertex and (O.12) at coefficient one. Kind:
+definition. -/
 def Inputs : Prop :=
   (∀ (U : Finset ℕ) (q : ℕ), (∀ s ∈ U, T.Good s) → T.Good q → q ∉ U →
-      (insert q U).card ≤ B → R (insert q U) = X.readE U (X.tE (X.frob q) (X.FE U))) ∧
+      (insert q U).card ≤ B → R (insert q U) = X.read U (X.redE (X.tΛ (X.frob q) (X.F U)))) ∧
   (∀ (U : Finset ℕ) (p : ℕ), p ∈ U → (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B → ∀ g : GalQ,
       ∃ (τ φ : GalQ) (κ0 : ℤ), (κ0 = 1 ∨ κ0 = -1) ∧
         chiType τ = 1 ∧ (∀ s ∈ U, s ≠ p → bitChar s τ = 1) ∧
@@ -537,20 +730,20 @@ def Inputs : Prop :=
         chiType φ = Multiplicative.ofAdd (T.typ p) ∧
         (∀ s ∈ U, s ≠ p → bitChar s φ = Multiplicative.ofAdd (legBit p s)) ∧
         ((Cp (ap p) (-κ0) : ℤ) : ZMod 2) *
-            X.readE (U.erase p) (X.tE (g * τ * φ) (X.FE (U.erase p))) -
-          ((Cp (ap p) κ0 : ℤ) : ZMod 2) * X.readE (U.erase p) (X.tE (g * φ) (X.FE (U.erase p))) =
-        X.readE U (X.tE (g * τ) (X.FE U)) - X.readE U (X.tE g (X.FE U)))
+            X.read (U.erase p) (X.redE (X.tΛ (g * τ * φ) (X.F (U.erase p)))) -
+          ((Cp (ap p) κ0 : ℤ) : ZMod 2) *
+            X.read (U.erase p) (X.redE (X.tΛ (g * φ) (X.F (U.erase p)))) =
+        X.read U (X.redE (X.tΛ (g * τ) (X.F U))) - X.read U (X.redE (X.tΛ g (X.F U))))
 
-/-- **The genuine Galois trace model of the constituent model** (tex 9638–9771): the module of
-reduced expansions `Mexp` with the induced operators, forms and functionals. The abstract
-module of `GaloisTraceModel` is instantiated by the reduced expansions. Kind: PROVED. -/
+/-- **The genuine Galois trace model of the constituent model** (tex 9638–9771): `Mst` with the
+induced operators, forms and functionals. Kind: PROVED. -/
 def toGaloisTraceModel (hI : X.Inputs) : GaloisTraceModel T R ap B chiType where
-  M := X.Mexp
-  instMod := X.modMexp
-  t := X.tE
-  d := X.dE
-  F := X.FE
-  read := X.readE
+  M := X.Mst
+  instMod := X.modMst
+  t := X.tK
+  d := X.dK
+  F := X.FK
+  read := X.readK
   frob := X.frob
   frob_spec := X.frob_spec
   trace_mul := X.trace_mul
@@ -559,29 +752,28 @@ def toGaloisTraceModel (hI : X.Inputs) : GaloisTraceModel T R ap B chiType where
   trace_one := X.trace_one
   t_class := X.t_class
   kummer U hU hUB g h1 h2 := by
-    rw [← X.consN_eq_galN U]
+    rw [X.galN_eq_N U hU hUB]
     exact X.kummer U hU hUB g h1 h2
   finiteIndex U hU hUB := by
-    rw [← X.consN_eq_galN U]
+    rw [X.galN_eq_N U hU hUB]
     exact X.finiteIndex U hU hUB
   chebotarev U hU hUB g avoid := by
-    rw [← X.consN_eq_galN U]
+    rw [X.galN_eq_N U hU hUB]
     exact X.chebotarev U hU hUB g avoid
   reading := hI.1
   o12 := hI.2
 
-/-- **The density form** (the model of the wired leaf, `Chebotarev.lean`) from a constituent
-model: the module of reduced expansions with the induced operators, given the GLUE openness
-(a) and unramifiedness (b) of the induced `N_U`. The constituent model's own `finiteIndex` and
-`chebotarev` are not used. Kind: PROVED. -/
-def toGaloisDensityModel (hI : X.Inputs) (hopen : GalNOpen T chiType X.tE X.FE B)
-    (hunr : GalNUnramified T chiType X.tE X.FE B) : GaloisDensityModel T R ap B chiType where
-  M := X.Mexp
-  instMod := X.modMexp
-  t := X.tE
-  d := X.dE
-  F := X.FE
-  read := X.readE
+/-- **The density form** (the model of the wired leaf; its type is unchanged) from a constituent
+model: `Mst` with the induced operators, given the GLUE openness (a) and unramifiedness (b) of
+`galN` of `Mst`. Kind: PROVED. -/
+def toGaloisDensityModel (hI : X.Inputs) (hopen : GalNOpen T chiType X.tK X.FK B)
+    (hunr : GalNUnramified T chiType X.tK X.FK B) : GaloisDensityModel T R ap B chiType where
+  M := X.Mst
+  instMod := X.modMst
+  t := X.tK
+  d := X.dK
+  F := X.FK
+  read := X.readK
   frob := X.frob
   frob_spec := X.frob_spec
   trace_mul := X.trace_mul
@@ -590,12 +782,21 @@ def toGaloisDensityModel (hI : X.Inputs) (hopen : GalNOpen T chiType X.tE X.FE B
   trace_one := X.trace_one
   t_class := X.t_class
   kummer U hU hUB g h1 h2 := by
-    rw [← X.consN_eq_galN U]
+    rw [X.galN_eq_N U hU hUB]
     exact X.kummer U hU hUB g h1 h2
   isOpen := hopen
   unramified := hunr
   reading := hI.1
   o12 := hI.2
+
+/-- **Openness of `N_U` within the budget gives the hypothesis (a) of the density form.** Kind:
+PROVED (`galN_eq_N`). -/
+theorem galNOpen_of_N (h : ∀ U : Finset ℕ, (∀ s ∈ U, T.Good s) → U.card + 1 ≤ B →
+    ∃ E : IntermediateField ℚ Qbar, FiniteDimensional ℚ E ∧ E.fixingSubgroup ≤ X.N U) :
+    GalNOpen T chiType X.tK X.FK B := by
+  intro U hU hUB
+  rw [X.galN_eq_N U hU hUB]
+  exact h U hU hUB
 
 /-- **The fixed-`U` factorization from the constituent model** (tex 9745–9750). Kind: PROVED. -/
 theorem fixedU_of_constituents (hI : X.Inputs) (htyp : IsTypeChar T chiType) :
@@ -653,22 +854,96 @@ theorem Unbudgeted.chebotarev (hX : X.Unbudgeted) :
       ∃ q h, ∃ n ∈ X.N U, T.Good q ∧ q ∉ avoid ∧ X.frob q = h * g * h⁻¹ * n :=
   hX.2.2.2
 
+/-- With the unbudgeted forms, the two identities land in `Kst` at every `U`. Kind: PROVED. -/
+theorem detSpan_le_Kst_of_unbudgeted (hX : X.Unbudgeted) (U : Finset ℕ) :
+    X.detSpan U ≤ X.Kst := by
+  refine X.le_Kst ?_ (X.detSpan_stable_t U) (X.detSpan_stable_d U)
+  rw [detSpan, Submodule.span_le]
+  rintro x (⟨a, b, rfl⟩ | ⟨g, h, rfl⟩)
+  · show X.redE _ = 0
+    rw [map_sub, sub_eq_zero]
+    exact hX.1 U a b
+  · exact hX.2.1 U g h
+
+/-- With the unbudgeted forms, `galN` of `Mst` is `N_U` at every `U` (no budget). Kind:
+PROVED. -/
+theorem galN_eq_N_of_unbudgeted (hX : X.Unbudgeted) (U : Finset ℕ) :
+    galN chiType X.tK X.FK U = X.N U := by
+  ext n
+  rw [mem_galN]
+  constructor
+  · rintro ⟨h1, h2, h3⟩
+    refine ⟨h1, h2, fun g U' hU' => ?_⟩
+    have h := h3 g U' hU'
+    rw [FK, tK_mk, tK_mk, mk_eq_mk_iff] at h
+    have := X.Kst_le_ker h
+    rw [LinearMap.mem_ker, map_sub, sub_eq_zero] at this
+    exact this
+  · intro hn
+    refine ⟨hn.1, hn.2.1, fun g U' hU' => ?_⟩
+    rw [FK, tK_mk, tK_mk, mk_eq_mk_iff]
+    have hnorm := X.N_normal U
+    let P : Submodule X.O X.Λ :=
+      Submodule.span X.O {x | ∃ g, ∃ n ∈ X.N U, x = X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')} ⊔
+        X.detSpan U'
+    have hgen : ∀ g, ∀ n ∈ X.N U, X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U') ∈ P :=
+      fun g n hn => Submodule.mem_sup_left (Submodule.subset_span ⟨g, n, hn, rfl⟩)
+    have hdet : ∀ x ∈ X.detSpan U', x ∈ P := fun x hx => Submodule.mem_sup_right hx
+    refine X.le_Kst (P := P) ?_ (fun k => ?_) (fun k => ?_) (hgen g n hn)
+    · refine sup_le ?_ (X.Kst_le_ker.trans' (X.detSpan_le_Kst_of_unbudgeted hX U'))
+      rw [Submodule.span_le]
+      rintro x ⟨g, n, hn, rfl⟩
+      show X.redE _ = 0
+      rw [map_sub, sub_eq_zero]
+      exact hn.2.2 g U' hU'
+    · refine sup_le ?_ ((X.detSpan_stable_t U' k).trans (Submodule.comap_mono le_sup_right))
+      rw [Submodule.span_le]
+      rintro x ⟨g, n, hn, rfl⟩
+      show X.tΛ k (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) ∈ P
+      have hn' : g * n⁻¹ * g⁻¹ ∈ X.N U := hnorm.conj_mem _ (inv_mem hn) g
+      have e : X.tΛ k (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) =
+          (X.tΛ ((k * g) * n) (X.F U') - X.tΛ (k * g) (X.F U')) +
+            (X.tΛ ((k * g⁻¹) * (g * n⁻¹ * g⁻¹)) (X.F U') - X.tΛ (k * g⁻¹) (X.F U')) +
+            ((X.dΛ (g * n) (X.tΛ (k * (g * n)⁻¹) (X.F U')) - X.tΛ (k * (g * n)⁻¹) (X.F U')) -
+              (X.dΛ g (X.tΛ (k * g⁻¹) (X.F U')) - X.tΛ (k * g⁻¹) (X.F U'))) := by
+        rw [map_sub, X.tΛ_mul, X.tΛ_mul]
+        have h1 : k * (g * n) = (k * g) * n := by group
+        have h2 : k * (g * n)⁻¹ = (k * g⁻¹) * (g * n⁻¹ * g⁻¹) := by group
+        rw [h1, ← h2]
+        abel
+      rw [e]
+      refine Submodule.add_mem _ (Submodule.add_mem _ (hgen _ _ hn) (hgen _ _ hn')) ?_
+      exact Submodule.sub_mem _ (hdet _ (X.gen1_mem U' _ _)) (hdet _ (X.gen1_mem U' _ _))
+    · refine sup_le ?_ ((X.detSpan_stable_d U' k).trans (Submodule.comap_mono le_sup_right))
+      rw [Submodule.span_le]
+      rintro x ⟨g, n, hn, rfl⟩
+      show X.dΛ k (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) ∈ P
+      have e : X.dΛ k (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) =
+          (X.tΛ (g * n) (X.F U') - X.tΛ g (X.F U')) +
+            ((X.dΛ k (X.tΛ (g * n) (X.F U')) - X.tΛ (g * n) (X.F U')) -
+              (X.dΛ k (X.tΛ g (X.F U')) - X.tΛ g (X.F U'))) := by
+        rw [map_sub]
+        abel
+      rw [e]
+      exact Submodule.add_mem _ (hgen _ _ hn)
+        (Submodule.sub_mem _ (hdet _ (X.gen1_mem U' _ _)) (hdet _ (X.gen1_mem U' _ _)))
+
 /-- **The unbudgeted forms pass to the Galois trace model** (no tex line). Kind: PROVED. -/
 theorem unbudgeted_toGaloisTraceModel (hX : X.Unbudgeted) (hI : X.Inputs) :
     (X.toGaloisTraceModel hI).Unbudgeted := by
   refine ⟨fun U u v => ?_, fun U g h => ?_, fun U g h1 h2 => ?_, fun U hU g avoid => ?_⟩
-  · show X.dE u (X.tE v (X.FE U)) = X.tE v (X.FE U)
-    rw [FE, tE_redM, dE_redM, redM_eq_iff]
-    exact hX.1 U u v
-  · show X.tE g (X.tE h (X.FE U)) = 0
-    rw [FE, tE_redM, tE_redM, redM_eq_zero_iff]
-    exact hX.2.1 U g h
-  · show g ∈ Subgroup.closure (sqSet GalQ) ⊔ galN chiType X.tE X.FE U
-    rw [← X.consN_eq_galN U]
+  · show X.dK u (X.tK v (X.FK U)) = X.tK v (X.FK U)
+    rw [FK, tK_mk, dK_mk, mk_eq_mk_iff]
+    exact X.detSpan_le_Kst_of_unbudgeted hX U (X.gen1_mem U u v)
+  · show X.tK g (X.tK h (X.FK U)) = 0
+    rw [FK, tK_mk, tK_mk, Submodule.Quotient.mk_eq_zero]
+    exact X.detSpan_le_Kst_of_unbudgeted hX U (X.gen2_mem U g h)
+  · show g ∈ Subgroup.closure (sqSet GalQ) ⊔ galN chiType X.tK X.FK U
+    rw [X.galN_eq_N_of_unbudgeted hX U]
     exact hX.2.2.1 U g h1 h2
-  · show ∃ q h, ∃ n ∈ galN chiType X.tE X.FE U, T.Good q ∧ q ∉ avoid ∧
+  · show ∃ q h, ∃ n ∈ galN chiType X.tK X.FK U, T.Good q ∧ q ∉ avoid ∧
       X.frob q = h * g * h⁻¹ * n
-    rw [← X.consN_eq_galN U]
+    rw [X.galN_eq_N_of_unbudgeted hX U]
     exact hX.2.2.2 U hU g avoid
 
 /-- **The reduced trace orbit of zero forms is constant** (zero). Kind: PROVED. -/
@@ -688,6 +963,13 @@ theorem unbudgeted_of_forms_eq_zero (hF : ∀ U, X.F U = 0) (htyp : IsTypeChar T
   · simp only [hF U, map_zero]
   · exact Subgroup.mem_sup_right ((mem_consN_of_const hrt).mpr ⟨h1, h2⟩)
   · exact consN_const_chebotarev T htyp hrt X.frob_spec U hU g avoid
+
+/-- **`Mst` is nonzero as soon as some vector of `Λ` has a nonzero reduced expansion** (`Kst` lies
+in the reduction kernel). Kind: PROVED. -/
+theorem nontrivial_Mst (v : X.Λ) (hv : X.redE v ≠ 0) : Nontrivial X.Mst :=
+  ⟨⟨Submodule.Quotient.mk v, 0, fun h => hv (by
+    rw [Submodule.Quotient.mk_eq_zero] at h
+    exact X.Kst_le_ker h)⟩⟩
 
 /-- **Saturation of the integral module** (NOT assumed by the text: "No saturation of the
 integral Fourier module is assumed, and no identification of its abstract quotient with all
@@ -741,11 +1023,7 @@ def GaloisConstituentModel.zeroForms (hFrob : FrobeniusExists) (T : TypeData L �
     (two_mem : (2 : O) ∈ m) (ρ : I → GalQ →* GL (Fin 2) K) (Λ : Submodule O (I → K))
     (stable_t : ∀ g, ∀ v ∈ Λ, tV ρ g v ∈ Λ) (stable_d : ∀ g, ∀ v ∈ Λ, dV ρ g v ∈ Λ)
     {C : Type} (coefK : (I → K) →ₗ[K] (C → K)) (expand : Λ →ₗ[O] (C → O))
-    (expand_spec : ∀ (v : Λ) (n : C), algebraMap O K (expand v n) = coefK v n)
-    (cong_t : ∀ g (v : Λ), redExpOf m expand v = 0 →
-      redExpOf m expand (latT ρ Λ stable_t g v) = 0)
-    (cong_d : ∀ g (v : Λ), redExpOf m expand v = 0 →
-      redExpOf m expand (latD ρ Λ stable_d g v) = 0) :
+    (expand_spec : ∀ (v : Λ) (n : C), algebraMap O K (expand v n) = coefK v n) :
     GaloisConstituentModel T (fun _ => 0) ap B chiType where
   I := I
   K := K
@@ -760,8 +1038,6 @@ def GaloisConstituentModel.zeroForms (hFrob : FrobeniusExists) (T : TypeData L �
   coefK := coefK
   expand := expand
   expand_spec := expand_spec
-  cong_t := cong_t
-  cong_d := cong_d
   F _ := 0
   read _ := 0
   frob := chooseFrob hFrob
@@ -783,31 +1059,25 @@ variable (hFrob : FrobeniusExists) (T : TypeData L ε) (ap : ℕ → ℤ) (B : �
   (stable_t : ∀ g, ∀ v ∈ Λ, tV ρ g v ∈ Λ) (stable_d : ∀ g, ∀ v ∈ Λ, dV ρ g v ∈ Λ)
   {C : Type} (coefK : (I → K) →ₗ[K] (C → K)) (expand : Λ →ₗ[O] (C → O))
   (expand_spec : ∀ (v : Λ) (n : C), algebraMap O K (expand v n) = coefK v n)
-  (cong_t : ∀ g (v : Λ), redExpOf m expand v = 0 →
-    redExpOf m expand (latT ρ Λ stable_t g v) = 0)
-  (cong_d : ∀ g (v : Λ), redExpOf m expand v = 0 →
-    redExpOf m expand (latD ρ Λ stable_d g v) = 0)
 
-attribute [local instance] GaloisConstituentModel.modMexp
+attribute [local instance] GaloisConstituentModel.modMst
 
 /-- The functionals of a zero-forms model vanish. Kind: PROVED (definition). -/
-theorem GaloisConstituentModel.zeroForms_readE (U : Finset ℕ)
+theorem GaloisConstituentModel.zeroForms_readK (U : Finset ℕ)
     (x : (GaloisConstituentModel.zeroForms hFrob T ap B chiType htyp m two_mem ρ Λ stable_t
-      stable_d coefK expand expand_spec cong_t cong_d).Mexp) :
+      stable_d coefK expand expand_spec).Mst) :
     (GaloisConstituentModel.zeroForms hFrob T ap B chiType htyp m two_mem ρ Λ stable_t
-      stable_d coefK expand expand_spec cong_t cong_d).readE U x = 0 :=
+      stable_d coefK expand expand_spec).readK U x = 0 :=
   rfl
 
 /-- **The inputs of a zero-forms model hold**: every reading is zero; in (O.12) the elements
 `τ, φ` have the prescribed characters by `chi_surj` at the good set `U`. Kind: PROVED. -/
 theorem GaloisConstituentModel.zeroForms_inputs :
     (GaloisConstituentModel.zeroForms hFrob T ap B chiType htyp m two_mem ρ Λ stable_t
-      stable_d coefK expand expand_spec cong_t cong_d).Inputs := by
+      stable_d coefK expand expand_spec).Inputs := by
   set X := GaloisConstituentModel.zeroForms hFrob T ap B chiType htyp m two_mem ρ Λ stable_t
-    stable_d coefK expand expand_spec cong_t cong_d
-  refine ⟨fun U q _ _ _ _ => (GaloisConstituentModel.zeroForms_readE hFrob T ap B chiType htyp m
-    two_mem ρ Λ stable_t stable_d coefK expand expand_spec cong_t cong_d U _).symm,
-    fun U p hpU hU _ g => ?_⟩
+    stable_d coefK expand expand_spec
+  refine ⟨fun U q _ _ _ _ => rfl, fun U p hpU hU _ g => ?_⟩
   obtain ⟨τ, hτT, hτB⟩ := X.chi_surj htyp U hU 0 (fun s => if s = p then 1 else 0)
   obtain ⟨φ, hφT, hφB⟩ := X.chi_surj htyp U hU (T.typ p) (fun s => legBit p s)
   refine ⟨τ, φ, 1, Or.inl rfl, by rw [hτT, ofAdd_zero], fun s hs hsp => ?_, ?_, hφT,
@@ -820,7 +1090,7 @@ theorem GaloisConstituentModel.zeroForms_inputs :
 /-- **A zero-forms model satisfies the unbudgeted forms** (no tex line). Kind: PROVED. -/
 theorem GaloisConstituentModel.zeroForms_unbudgeted :
     (GaloisConstituentModel.zeroForms hFrob T ap B chiType htyp m two_mem ρ Λ stable_t
-      stable_d coefK expand expand_spec cong_t cong_d).Unbudgeted :=
+      stable_d coefK expand expand_spec).Unbudgeted :=
   GaloisConstituentModel.unbudgeted_of_forms_eq_zero _ (fun _ => rfl) htyp
 
 end ZeroForms
@@ -942,44 +1212,18 @@ theorem intCoord_latD (g : GalQ) (v : intLattice) (i : Unit) :
   rw [PadicInt.coe_mul, intCoord_coe, intCoord_coe, latD_coe]
   simp only [dV, scalarOp_apply, det_tateRhoQ]
 
-/-- **The scalar traces preserve coefficientwise congruences** (multiplication by an integral
-scalar). Kind: PROVED. -/
-theorem tate_cong_t (g : GalQ) (v : intLattice)
-    (hv : redExpOf (IsLocalRing.maximalIdeal ℤ_[2]) intCoord v = 0) :
-    redExpOf (IsLocalRing.maximalIdeal ℤ_[2]) intCoord
-      (latT (fun _ : Unit => tateRhoQ E) intLattice (tate_stable_t E) g v) = 0 := by
-  funext i
-  have h := congrFun hv i
-  rw [redExpOf_apply] at h ⊢
-  rw [intCoord_latT, map_mul, h]
-  exact mul_zero _
-
-/-- **The determinants preserve coefficientwise congruences.** Kind: PROVED. -/
-theorem tate_cong_d (g : GalQ) (v : intLattice)
-    (hv : redExpOf (IsLocalRing.maximalIdeal ℤ_[2]) intCoord v = 0) :
-    redExpOf (IsLocalRing.maximalIdeal ℤ_[2]) intCoord
-      (latD (fun _ : Unit => tateRhoQ E) intLattice (tate_stable_d E) g v) = 0 := by
-  funext i
-  have h := congrFun hv i
-  rw [redExpOf_apply] at h ⊢
-  rw [intCoord_latD, map_mul, h]
-  exact mul_zero _
-
 /-- The integral vector `1`. Kind: definition. -/
 def intOne : intLattice := ⟨fun _ => 1, mem_intLattice.mpr fun _ => ⟨1, PadicInt.coe_one⟩⟩
 
-/-- **The reduced expansions of the integral lattice form a nonzero module** (the reduced
-coordinate of `1` is `1 ≠ 0` in `ℤ₂/𝔪`). Kind: PROVED. -/
-theorem intLattice_exp_nontrivial :
-    Nontrivial (LinearMap.range (redExpOf (IsLocalRing.maximalIdeal ℤ_[2]) intCoord)) := by
-  refine ⟨⟨⟨_, LinearMap.mem_range_self _ intOne⟩, 0, fun h => ?_⟩⟩
-  have h1 := congrFun (congrArg Subtype.val h) ()
-  change redExpOf (IsLocalRing.maximalIdeal ℤ_[2]) intCoord intOne () = 0 at h1
+/-- **The reduced coordinate of the integral vector `1` is nonzero** (`1 ∉ 𝔪_{ℤ₂}`). Kind:
+PROVED. -/
+theorem intOne_red_ne_zero : redExpOf (IsLocalRing.maximalIdeal ℤ_[2]) intCoord intOne ≠ 0 := by
+  intro h
+  have h1 := congrFun h ()
   rw [redExpOf_apply] at h1
   have hone : intCoord intOne () = 1 := PadicInt.ext rfl
   rw [hone] at h1
-  have hmem := Ideal.Quotient.eq_zero_iff_mem.mp h1
-  exact IsLocalRing.notMem_maximalIdeal.mpr isUnit_one hmem
+  exact IsLocalRing.notMem_maximalIdeal.mpr isUnit_one (Ideal.Quotient.eq_zero_iff_mem.mp h1)
 
 /-- **The integral lattice is saturated** (`ℤ₂` is a DVR and the lattice has rank one): a vector
 with vanishing reduced coordinate lies in `𝔪Λ`. Kind: PROVED. -/
@@ -1010,8 +1254,8 @@ type data and every type character reading the types. For an elliptic curve `E/�
 * `Λ` the lattice of integral vectors, with Fourier expansion its coordinate (`C = Unit`);
 * the zero forms and the zero functionals.
 
-The operators preserve `Λ` and coefficientwise congruences (`tate_stable_t`, `tate_cong_t`), and
-the module of reduced expansions is nonzero (`tateConstituentModelOf_nontrivial`). The
+The operators preserve `Λ` (`tate_stable_t`, `tate_stable_d`), and the module of the Galois
+trace model is nonzero (`tateConstituentModelOf_nontrivial`). The
 constituents of the actual forms `F_U = θ H_U` are weight-two cuspidal newforms and Eisenstein
 character pairs (tex 9647–9654, 9762–9771), not `E` or its twists. Kind: PROVED. -/
 def tateConstituentModelOf (T : TypeData L ε) (chiType : GalQ →* Multiplicative L)
@@ -1019,7 +1263,7 @@ def tateConstituentModelOf (T : TypeData L ε) (chiType : GalQ →* Multiplicati
     GaloisConstituentModel T (fun _ => 0) ap B chiType :=
   GaloisConstituentModel.zeroForms hFrob T ap B chiType htyp (IsLocalRing.maximalIdeal ℤ_[2])
     two_mem_maximalIdeal_padicInt (fun _ : Unit => tateRhoQ E) intLattice (tate_stable_t E)
-    (tate_stable_d E) LinearMap.id intCoord intCoord_spec (tate_cong_t E) (tate_cong_d E)
+    (tate_stable_d E) LinearMap.id intCoord intCoord_spec
 
 section Of
 
@@ -1065,20 +1309,20 @@ theorem tateConstituentModelOf_dV (σ : GalQ) (v : Unit → ℚ_[2]) :
 /-- The inputs of `tateConstituentModelOf` hold. Kind: PROVED (`zeroForms_inputs`). -/
 theorem tateConstituentModelOf_inputs :
     (tateConstituentModelOf E hFrob T chiType htyp ap B).Inputs :=
-  GaloisConstituentModel.zeroForms_inputs hFrob _ ap B _ _ _ _ _ _ _ _ _ _ _ _ _
+  GaloisConstituentModel.zeroForms_inputs hFrob _ ap B _ _ _ _ _ _ _ _ _ _ _
 
 /-- `tateConstituentModelOf` satisfies the unbudgeted forms (its forms are zero; no tex line).
 Kind: PROVED (`zeroForms_unbudgeted`). -/
 theorem tateConstituentModelOf_unbudgeted :
     (tateConstituentModelOf E hFrob T chiType htyp ap B).Unbudgeted :=
-  GaloisConstituentModel.zeroForms_unbudgeted hFrob _ ap B _ _ _ _ _ _ _ _ _ _ _ _ _
+  GaloisConstituentModel.zeroForms_unbudgeted hFrob _ ap B _ _ _ _ _ _ _ _ _ _ _
 
 /-- **The module of reduced expansions of the Tate constituent model is nonzero** (it is
 `ℤ₂/𝔪`, on which `t(σ)` is the reduction of the trace of `ρ_T(σ)`). Kind: PROVED
-(`intLattice_exp_nontrivial`). -/
+(`intOne_red_ne_zero`). -/
 theorem tateConstituentModelOf_nontrivial :
-    Nontrivial (tateConstituentModelOf E hFrob T chiType htyp ap B).Mexp :=
-  intLattice_exp_nontrivial
+    Nontrivial (tateConstituentModelOf E hFrob T chiType htyp ap B).Mst :=
+  GaloisConstituentModel.nontrivial_Mst _ intOne intOne_red_ne_zero
 
 /-- **The Tate constituent model is saturated** (the bridge hypothesis of lane RC0's interface
 holds here; no tex line). Kind: PROVED (`intLattice_saturated`). -/
@@ -1126,7 +1370,7 @@ def tateGaloisTraceModel : GaloisTraceModel (typeData m hm h4) (fun _ => 0) ap B
 /-- **The module of `tateGaloisTraceModel` is nonzero.** Kind: PROVED. -/
 theorem tateGaloisTraceModel_nontrivial :
     Nontrivial (tateGaloisTraceModel E hFrob m hm h4 ap B).M :=
-  intLattice_exp_nontrivial
+  GaloisConstituentModel.nontrivial_Mst _ intOne intOne_red_ne_zero
 
 /-- **The Tate constituent model over stage type data**, with the stage type character
 `stageChar m₁ ℓ₀`. Kind: PROVED. -/
@@ -1221,8 +1465,8 @@ theorem tateConstituentModel'_saturated : (tateConstituentModel' E m hm h4 ap B)
 
 /-- The module of reduced expansions of `tateConstituentModel'` is nonzero. Kind: PROVED. -/
 theorem tateConstituentModel'_nontrivial :
-    Nontrivial (tateConstituentModel' E m hm h4 ap B).Mexp :=
-  intLattice_exp_nontrivial
+    Nontrivial (tateConstituentModel' E m hm h4 ap B).Mst :=
+  GaloisConstituentModel.nontrivial_Mst _ intOne intOne_red_ne_zero
 
 end Unconditional
 

@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.OneProof.RC.SelmerComplex.Orthogonality
 /-!
 # RC53 SwitchInputs: non-vacuity of `DualityFromSelmer`
 
-LESSON 2 for GenuineSteps' model structure `DualityFromSelmer R` (the inputs of the Selmer-complex
+non-vacuity for GenuineSteps' model structure `DualityFromSelmer R` (the inputs of the Selmer-complex
 lane's `switchAdjunctionFromDuality_proof`, tex L5068–5075): a genuine instance over `ℚ` with
 `σ = 1`, for every `ε ≠ 0` and every involution `J` (`J * J = 1`), so that QuadWiring's
 `hU_of_dualityFromSelmer` applies.

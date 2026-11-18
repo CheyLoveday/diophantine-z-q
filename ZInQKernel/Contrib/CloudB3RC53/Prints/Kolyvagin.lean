@@ -1,0 +1,134 @@
+import ZInQKernel.Contrib.CloudB3RC53.Prints
+
+/-!
+# Kolyvagin's Theorem 1 with its own premise: a weak Weil parametrization
+
+`KolyvaginThm1Printed` (`Prints.lean`) takes as premise `IsModular E`: a `Γ₀(N)` cusp form whose
+coefficients are those of `L(E, s)`. Kolyvagin's Theorem 1 (MPIM preprint MPI/90-69 (1990), p. 4)
+assumes instead a weak Weil parametrization `X₀(N) → E` with `N` the conductor (p. 3). This file
+states the print with that premise and derives the old form from it, through the modular
+parametrization of Darmon's Theorem 5.4:
+
+* `HasWeakWeilParametrization E`: the analytic data of a modular parametrization of `E` over `ℚ`
+  at the conductor level. `X₀(N)` as a curve over `ℚ` is absent from Mathlib and Tau Ceti, so,
+  as for the Cai–Shu–Tian print (`Prints/CST.lean`), the parametrization is stated through its
+  complex-analytic model: a cusp form `f` on `Γ₀(N)` with the coefficients of `L(E, s)`, a period
+  lattice `Lat` of `E`, and a nonzero RATIONAL `c` with `c · (periods of 2πi f dτ) ⊆ Lat`, so that
+  `τ ↦ ℘_Lat-point of c ∫_{i∞}^τ 2πi f` (`CST.phiAn`) is a `Γ₀(N)`-invariant map
+  `X₀(N)(ℂ) → E(ℂ)` sending `∞` to `O`. Darmon's proof of Theorem 5.4 gives exactly this
+  description: "the pull-back `φ^*(ω_E)` is a nonzero rational multiple of the differential form
+  `ω_f := 2πi f(τ) dτ`". `N` is `CST.newformLevel E`, which is the conductor by Carayol's theorem.
+  That these analytic data are equivalent to a genuine nonconstant `ℚ`-morphism `X₀(N) → E` with
+  the same `E`, differential, lattice and period map (uniformization and GAGA with `ℚ`-descent, the
+  Eichler–Shimura construction) is NOT proved here. The leaves below are therefore
+  faithful to the printed statement only modulo the translation algebraic `X₀(N) → E` ⇔ analytic
+  data, which is an unproved GLUE (translation) step.
+* `KolyvaginThm1WeilParam` (PRINT): Kolyvagin's Theorem 1 with the weak Weil parametrization
+  premise.
+* `DarmonThm54` (PRINT): H. Darmon, "Rational points on curves", §5.1, Theorem 5.4: for an
+  elliptic curve `E/ℚ` of conductor `N`, "there exists a nonconstant map of curves over `ℚ`
+  `φ : X₀(N) → E`". Read in the author's version dated April 11, 2008 (§5.1, Theorem 5.4, p. 54
+  of that version); the published version (Arithmetic Geometry, Clay Math. Proc. 8 (2009)) was
+  not read, and its page (reported as p. 43) is UNVERIFIED. Darmon proves it from modularity
+  (his Theorem 4.6) and Faltings' isogeny theorem.
+* `kolyvaginThm1Printed_of_weilParam` (PROVED): the old `IsModular`-premise form follows from the
+  two prints, so the current consumers of `Prints.kolyvagin` keep working
+  (`prints_of_weilParam`).
+
+The old leaf is not relabelled: its premise is not Kolyvagin's.
+
+A stronger printed source, recorded as an alternative route only (not admitted on the main route:
+its use needs the owner's decision under issue #74, decision 3): Darmon's
+Theorem 5.3 (same paper, §5, p. 53 of the 2008 author version) states the conclusion of
+`KolyvaginThm1Printed` for EVERY elliptic curve over `ℚ`, with no modularity premise
+(`DarmonThm53`, PRINT), so `kolyvaginThm1Printed_of_darmon53` (PROVED) gives the packaged leaf
+from it. The definitions match: Darmon's `L(E, s)` is the Hasse–Weil `L`-series, the Euler product
+of the local factors `F_p(p^{-s})^{-1}`, convergent on `Re s > 3/2` and continued to `ℂ` by
+modularity, and `r := ord_{s=1} L(E, s)`; here `AnalyticRank E r` asks for an entire function equal
+to Mathlib's `L(E, s)` (the Euler product of the local factors of the minimal models) on
+`Re s > 3/2` with order `r` at `s = 1`. Darmon's `r(E, ℚ)` is the rank of `E(ℚ)`
+(`Module.rank ℤ E(ℚ)` here) and `Ш(E/ℚ)` the Shafarevich–Tate group (`SelmerTwoPower.sha`, Tau
+Ceti's group of classes locally trivial at every place).
+
+Classification: `KolyvaginThm1WeilParam`, `DarmonThm54` PRINT modulo the GLUE translation above
+(not plain PRINT); `DarmonThm53` PRINT, not admitted on the main route (see its docstring); the
+bridges PROVED.
+-/
+
+noncomputable section
+
+namespace ZInQ.Contrib.CloudB3RC53
+
+open ZInQ.Manuscript ZInQ.Manuscript.SelmerTwoPower ZInQ.Manuscript.PoleS12 CST
+
+/-- **`E` has a weak Weil parametrization `X₀(N) → E` over `ℚ`, `N` the conductor** (analytic
+model; see the module docstring): a cusp form `f` of weight `2` on `Γ₀(N)`, `N = newformLevel E`,
+with the coefficients of `L(E, s)`, a period lattice `Lat` of `E` (`IsLatticeOf`), and a nonzero
+rational `c` scaling the periods of `2πi f dτ` into `Lat` (`IsParamScale`), so that `φ^* ω_E = c ω_f`
+for the analytic map `CST.phiAn E f Lat c`. An analytic stand-in: faithful to the printed statement only modulo the translation algebraic `X₀(N) → E` ⇔ analytic
+data, which is an unproved GLUE (translation) step. -/
+def HasWeakWeilParametrization (E : WeierstrassCurve ℚ) : Prop :=
+  ∃ (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2)
+    (Lat : PeriodPair) (c : ℚ),
+    (∀ n : ℕ, 0 < n → (UpperHalfPlane.qExpansion 1 f).coeff n = (E.LFunction n : ℂ)) ∧
+      IsLatticeOf E Lat ∧ IsParamScale (newformLevel E) f Lat (c : ℂ)
+
+/-- **Kolyvagin, Theorem 1, with its own premise** (printed leaf; V. A. Kolyvagin, "On the
+Mordell–Weil group and the Shafarevich–Tate group of modular elliptic curves", MPIM preprint
+MPI/90-69 (1990), Theorem 1, p. 4, under the weak Weil parametrization of p. 3; tex L1093
+`\cite[Theorem 1, pp. 4–5]{kolyvagin}`): an elliptic curve `E/ℚ` with a weak Weil parametrization
+`X₀(N) → E` (`N` the conductor) and `ord_{s=1} L(E, s) = r ≤ 1` has `rank E(ℚ) = r` and finite
+`Ш(E/ℚ)`. The parametrization is in its analytic form (`HasWeakWeilParametrization`), so this leaf
+is faithful to the printed statement only modulo the translation algebraic `X₀(N) → E` ⇔ analytic
+data, which is an unproved GLUE (translation) step. -/
+def KolyvaginThm1WeilParam : Prop :=
+  ∀ E : WeierstrassCurve ℚ, E.IsElliptic → HasWeakWeilParametrization E →
+    ∀ r : ℕ, r ≤ 1 → AnalyticRank E r →
+      Module.rank ℤ E.toAffine.Point = r ∧ Finite (sha E)
+
+/-- **Darmon, Theorem 5.4: the modular parametrization over `ℚ` at the conductor level**
+(printed leaf; H. Darmon, "Rational points on curves", §5.1, Theorem 5.4; read in the author's
+version dated April 11, 2008, p. 54; published page UNVERIFIED): for an elliptic curve `E/ℚ` of
+conductor `N` there is a nonconstant map of curves over `ℚ` `φ : X₀(N) → E`. Stated through the
+analytic model of the parametrization (`HasWeakWeilParametrization`), which Darmon's proof
+describes: `φ^*(ω_E)` is a nonzero rational multiple of `ω_f = 2πi f(τ) dτ`. This leaf is
+faithful to the printed statement only modulo the translation algebraic `X₀(N) → E` ⇔ analytic
+data, which is an unproved GLUE (translation) step. -/
+def DarmonThm54 : Prop :=
+  ∀ E : WeierstrassCurve ℚ, E.IsElliptic → HasWeakWeilParametrization E
+
+/-- **The old `IsModular`-premise form of Kolyvagin's Theorem 1 from the two prints** (PROVED):
+Darmon's Theorem 5.4 supplies the weak Weil parametrization that Kolyvagin's Theorem 1 assumes. -/
+theorem kolyvaginThm1Printed_of_weilParam (hD : DarmonThm54) (hK : KolyvaginThm1WeilParam) :
+    KolyvaginThm1Printed :=
+  fun E hE _ r hr hA => hK E hE (hD E hE) r hr hA
+
+/-- **The printed leaves with Kolyvagin's own premise** (PROVED): `Prints` from BCDT Theorem A,
+Darmon's Theorem 5.4, Kolyvagin's Theorem 1 with the weak Weil parametrization premise,
+Dokchitser–Dokchitser Theorem 1.8 and Cai–Shu–Tian Theorem 1.1. -/
+theorem prints_of_weilParam (hB : BCDTThmA) (hD : DarmonThm54) (hK : KolyvaginThm1WeilParam)
+    (hdd : DokchitserThm18) (hcst : CST.CSTThm11Split) : Prints :=
+  ⟨hB, kolyvaginThm1Printed_of_weilParam hD hK, hdd, hcst⟩
+
+/-- **Darmon, Theorem 5.3: rank and Shafarevich–Tate group in analytic rank `≤ 1`** (printed leaf;
+H. Darmon, "Rational points on curves", §5, Theorem 5.3; read in the author's version dated April
+11, 2008, p. 53; published page UNVERIFIED): "Let `E` be an elliptic curve over `ℚ`, and let
+`L(E, s)` be its Hasse–Weil `L`-series. If `r := ord_{s=1} L(E, s) ≤ 1`, then `r(E, ℚ) = r` and
+`Ш(E/ℚ)` is finite." A stronger printed source than the packaged Kolyvagin leaf (no modularity
+premise; Darmon derives it from modularity, the Gross–Zagier formula (his Theorem 5.7) and
+Kolyvagin's theorem (his Theorem 5.10); it therefore packages Gross–Zagier, which the project rule
+of `Prints.lean` admits only through the Cai–Shu–Tian and Kolyvagin leaves, so its use is a
+governance choice); see the module docstring for the match of the definitions. Not admitted on the
+main route: its use needs the owner's decision under issue #74, decision 3; recorded as an
+alternative only. -/
+def DarmonThm53 : Prop :=
+  ∀ E : WeierstrassCurve ℚ, E.IsElliptic → ∀ r : ℕ, r ≤ 1 → AnalyticRank E r →
+    Module.rank ℤ E.toAffine.Point = r ∧ Finite (sha E)
+
+/-- **The packaged Kolyvagin leaf from Darmon's Theorem 5.3** (PROVED; an alternative route by a
+stronger printed source, disclosed above): the modularity premise of `KolyvaginThm1Printed` is not
+needed. -/
+theorem kolyvaginThm1Printed_of_darmon53 (hD : DarmonThm53) : KolyvaginThm1Printed :=
+  fun E hE _ r hr hA => hD E hE r hr hA
+
+end ZInQ.Contrib.CloudB3RC53

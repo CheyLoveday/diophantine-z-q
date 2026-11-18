@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.NonVacuitySingle3
 /-!
 # RC53 SwitchInputs: a terminating switching datum with a single-sign switch (`3 → 3 → 1`)
 
-LESSON 2 for the single-sign field of `SelmerModelSwitchData` (tex L5123–5136, L4976–5195): with
+non-vacuity for the single-sign field of `SelmerModelSwitchData` (tex L5123–5136, L4976–5195): with
 the dimension-three single-sign Selmer example `exQuadSingleStep3` (`NonVacuitySingle3.lean`, global
 part `ℚ²`), `singleSignSwitchData` (`SingleSign.lean`) is a quadratic switching datum whose stage of
 fiber dimension three carrying one sign switches with one sign to a stage of fiber dimension three

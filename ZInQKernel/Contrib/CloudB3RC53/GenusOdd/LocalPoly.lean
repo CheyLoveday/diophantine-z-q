@@ -10,7 +10,7 @@ at `p` and the splitting type of `𝔭`:
 * `N𝔭 = p`, `𝔭` unramified (`K_𝔭 = ℚ_p`): `L_𝔭(T) = L_p(T)`;
 * `N𝔭 = p`, `E` good at `p` (any ramification): `L_𝔭(T) = L_p(T)`;
 * `N𝔭 = p²`, `𝔭` unramified: `L_𝔭(T²) = L_p(T) L_p(−T)`, i.e. for good `p`
-  `L_𝔭(T) = 1 − (a_p² − 2p) T + p² T²` (`#Ẽ(𝔽_{p²}) = p² + 1 − (a_p² − 2p)`).
+  `L_𝔭(T) = 1 − (a_p² − 2p) T + p² T²` (`|Ẽ(𝔽_{p²})| = p² + 1 − (a_p² − 2p)`).
 
 `GoodReductionOffLevel` (introduced as GLUE): a prime not dividing the level of the newform of `E` is
 a prime of good reduction (Carayol: the level is the conductor). **PROVED** from lane RC8's printed
@@ -44,7 +44,7 @@ under unramified base change). Let `E/ℚ` be elliptic, `K` a number field, `v` 
    stays minimal over `𝓞_𝔭` with the same reduction over the same residue field `𝔽_p`, so
    `L_𝔭 = L_p`.
 3. If `N𝔭 = p²` and `𝔭² ∤ p` (`K_𝔭/ℚ_p` unramified quadratic), a minimal model stays minimal with the
-   same reduction type; for good reduction `#Ẽ(𝔽_{p²}) = p² + 1 − (a_p² − 2p)` (Frobenius
+   same reduction type; for good reduction `|Ẽ(𝔽_{p²})| = p² + 1 − (a_p² − 2p)` (Frobenius
    characteristic polynomial `T² − a_p T + p`, eigenvalues squared), split multiplicative stays
    split, non-split becomes split over `𝔽_{p²}`, additive stays additive. In each case
    `L_𝔭(T²) = L_p(T) L_p(−T)`.
@@ -190,7 +190,7 @@ theorem localIdentity_ramified (F : PowerSeries ℂ) (ε : ℂ) :
       PowerSeries.rescale ε F = 1 * PowerSeries.rescale ε F := by
   simp
 
-/-! ### Consistency of the inert clause (LESSON 2)
+/-! ### Consistency of the inert clause (non-vacuity)
 
 Mathlib's local polynomial over `ℚ_p` has one of the shapes `1 − aT + pT²` (good), `1 − T`, `1 + T`,
 `1`. For each, `L(T) L(−T)` is `Q(T²)` with `Q` again of one of Mathlib's shapes, now with `p²` in

@@ -14,9 +14,8 @@ what the remaining freedom amounts to (PROVED):
   `regularityInputsG_iff_of_unitFibre` (under `E`, the leaf is equivalent to its target).
 
 So a collapse of the new leaf to its target needs this statement `E` about genuine continuous
-Galois cohomology, which involves neither `u` nor the address. `E` is not available in Lean, and its
-trivial candidate fails (`exZeroFamily_no_data`, `GenuineSwitchNonVacuity.lean`). Pinning the family
-to the address's actual complex (a definition) removes the freedom altogether.
+Galois cohomology, which involves neither `u` nor the address. `E` holds, but is not formalized;
+its trivial candidate fails (`exZeroFamily_no_data`, `GenuineSwitchNonVacuity.lean`).
 -/
 
 noncomputable section

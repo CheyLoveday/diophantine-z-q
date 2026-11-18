@@ -25,8 +25,9 @@ positive squarefree parameters in these same unit squareclasses at every prime o
   (`S0Filter.infinite`, `EvenPhaseData.retained_infinite`);
 * `evenPhaseData_Ecurve_retained_infinite` — the strengthened structure is still inhabited for the
   curve `E_ℓ` from the inputs of `evenPhaseData_Ecurve` (the PRINTs `WaldspurgerNonvanishing`,
-  `WaldspurgerCor2`, `RamseyAlgebraicModel`, `ModularNewform`, the GLUE `HasseConvergence` and the
-  GLUE hypothesis `HalfIntegralTwist`), with retained set the whole, infinite, `S₀` filter;
+  `WaldspurgerCor2`, `RamseyAlgebraicModel`, `ModularNewform`, the GLUE `HasseConvergence` and
+  `HalfIntegralTwist`, PROVED in `RC/HalfIntegral`), with retained set the whole, infinite, `S₀`
+  filter;
 * `evenPhaseRest_of_prints` — lane RC22's phase bundle `EvenPhaseRest` (which now carries
   `filter_mem` too) for every reference form the print can return, from the same prints: the
   hypothesis `rest` of `evenPhaseData_of_waldspurgerNonvanishing` is satisfiable
@@ -52,8 +53,8 @@ theorem not_exists_evenPhaseData_singleton {E : WeierstrassCurve ℚ}
 
 /-- **Non-vacuity witness for the strengthened structure, for `E_ℓ`** (PROVED from the inputs of
 `evenPhaseData_Ecurve`: the PRINTs `WaldspurgerNonvanishing`, `WaldspurgerCor2`,
-`RamseyAlgebraicModel`, `ModularNewform`, the GLUE `HasseConvergence` and the GLUE hypothesis
-`HalfIntegralTwist`): with `S₀ = primes(2N₀)` and `D₀ > 0` squarefree prime to `2N₀` with
+`RamseyAlgebraicModel`, `ModularNewform`, the GLUE `HasseConvergence` and `HalfIntegralTwist`,
+PROVED in `RC/HalfIntegral`): with `S₀ = primes(2N₀)` and `D₀ > 0` squarefree prime to `2N₀` with
 `L_*(σD₀) ≠ 0`, there is `P : EvenPhaseData (Ecurve ℓ) L σ S₀ D₀` whose retained set is the whole
 `S₀` filter, and that set is infinite. -/
 theorem evenPhaseData_Ecurve_retained_infinite (hWN : WaldspurgerNonvanishing)
@@ -70,7 +71,8 @@ theorem evenPhaseData_Ecurve_retained_infinite (hWN : WaldspurgerNonvanishing)
 
 /-- **The phase bundle `EvenPhaseRest` for every reference form the print can return** (PROVED
 construction from the PRINTs `WaldspurgerCor2`, `RamseyAlgebraicModel`, `PoleS12.BCDTThmA`, the
-GLUE `HasseConvergence` and the GLUE hypothesis `HalfIntegralTwist`; tex 7800–7817, 8086–8138):
+GLUE `HasseConvergence` and `HalfIntegralTwist`, PROVED in `RC/HalfIntegral`; tex 7800–7817,
+8086–8138):
 for a form `g` in the eigenspace of `E` and `η = ψχ_{−σ}` at a level `N` (`4 ∣ N`) with prime
 support in `S₀ ∋ 2`, `ψ` of two-power order and `a_g(D₀) ≠ 0`, the retained set may be taken to be
 the whole `S₀` filter, `z` the phase, and the Galois comparison holds. This is the non-vacuity
@@ -117,8 +119,8 @@ def evenPhaseRest_of_prints (hW : WaldspurgerCor2) (hR : RamseyAlgebraicModel)
             (S0Filter.spec hNS hD).2.2.1 (S0Filter.spec hNS hD).2.2.2 }
 
 /-- **Lane RC22's bridge applies** (PROVED from the PRINTs `WaldspurgerNonvanishing`,
-`WaldspurgerCor2`, `RamseyAlgebraicModel`, `PoleS12.BCDTThmA`, the GLUE `HasseConvergence` and the
-GLUE hypothesis `HalfIntegralTwist`): `evenPhaseData_of_waldspurgerNonvanishing` with
+`WaldspurgerCor2`, `RamseyAlgebraicModel`, `PoleS12.BCDTThmA`, the GLUE `HasseConvergence` and
+`HalfIntegralTwist`, PROVED in `RC/HalfIntegral`): `evenPhaseData_of_waldspurgerNonvanishing` with
 `rest := evenPhaseRest_of_prints …` gives an instance of the strengthened `EvenPhaseData`. -/
 theorem evenPhaseData_nonempty_of_prints (hWN : WaldspurgerNonvanishing) (hW : WaldspurgerCor2)
     (hR : RamseyAlgebraicModel) (hTw : HalfIntegralTwist) (hB : PoleS12.BCDTThmA)

@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.OneProof.RC.LocalWeights.Dyadic
 
 /-! Uniform congruence bounds including outside the support, tex 8563–8564.
 The passage from reduction in the order to translation in the ambient space is
-provenance (c). -/
+given here. -/
 
 namespace ZInQ.Manuscript.RC.LocalWeights
 
@@ -154,11 +154,3 @@ theorem divisionSchwartz_period {O : Type*} [Ring O] (a : C.IntegralZero)
 end DivisionCoordinates
 
 end ZInQ.Manuscript.RC.LocalWeights
-
-open ZInQ.Manuscript.RC.LocalWeights
-#print axioms extendWeight_period
-#print axioms nilSchwartz_period
-#print axioms affineSchwartz_period
-#print axioms levelSchwartz_chart_congr
-#print axioms DivisionCoordinates.red_prime_mul
-#print axioms DivisionCoordinates.divisionSchwartz_period

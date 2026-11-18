@@ -13,7 +13,7 @@ import ZInQKernel.Contrib.CloudB3RC53.Torsion.Cone
   `kmCoord(C, z_C, λ_C) = (−1)^{|κo|} · kmCoord(D, z_D, λ_D) · τ(cone f)⁻¹`; in particular the
   coordinate changes by the inverse torsion of the cone (up to sign), a unit.
 * `kmCoord_eq_of_fourMap`: the same for a `FourMap` with the augmented compatibility.
-* `cone_id_example` (LESSON 2): the identity of the augmented two-term example
+* `cone_id_example` (non-vacuity): the identity of the augmented two-term example
   (`twoTermContraction_example`) is such a chain map.
 
 **Classification.** PROVED.
@@ -160,7 +160,7 @@ def FourMap.id (C : FourCx K ι0 ι1 ι2 ι3) : FourMap C C where
 
 end FourMap
 
-/-- **LESSON 2**: the hypotheses of `kmCoord_eq_of_fourMap` hold for the identity of the augmented
+/-- **non-vacuity**: the hypotheses of `kmCoord_eq_of_fourMap` hold for the identity of the augmented
 two-term example `D = (0)`, `z = λ = 1` (`twoTermContraction_example`). -/
 theorem cone_id_example :
     kmCoord (twoTerm (0 : Matrix (Fin 1) (Fin 1) K)) 1 1 twoTerm_zero_hz twoTerm_zero_hw (σ₀ 1) =

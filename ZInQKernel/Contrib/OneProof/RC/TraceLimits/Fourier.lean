@@ -79,9 +79,4 @@ theorem diamond_fresh_trace_coeff (m : Ideal O) {coeff : ℕ → M →ₗ[O] O}
   · simp only [map_sum, map_smul]
     exact m.sum_mem fun j hj => m.smul_mem _ (unary_fresh_trace m hq hn (hJ j hj) hT (hC j hj))
 
-#print axioms diamond_correction_integral
-#print axioms fresh_mul_ne_unary
-#print axioms unary_fresh_trace
-#print axioms diamond_fresh_trace_coeff
-
 end ZInQ.Manuscript.RC.TraceLimits

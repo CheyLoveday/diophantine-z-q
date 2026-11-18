@@ -32,7 +32,7 @@ integral information is one number: the torsion of the cone of the augmented com
   comparison.
 * `StageConeComparison` (the sharpened GLUE) and `coordStep_of_coneComparison` (PROVED from it): an
   actual `CoordStep`.
-* LESSON 2: the `3 × 3` stage `ex3Stage` of `StageLink.lean` with the comparison `f¹ = f² = [I | 0]`
+* Non-vacuity: the `3 × 3` stage `ex3Stage` of `StageLink.lean` with the comparison `f¹ = f² = [I | 0]`
   (`ex3StageMap`) satisfies `IntegralUnit` (`ex3_integralUnit`); with the identity comparison of
   the `2 × 2` new stage, `StageConeComparison` holds (`ex3_stageConeComparison`) and gives an actual
   `CoordStep` (`ex3CoordStep'`).
@@ -223,7 +223,7 @@ noncomputable def coordStep_of_coneComparison (S S' : TwoTermStage ι) {ε σ : 
 
 end Glue
 
-/-! ### LESSON 2: a `3 × 3` stage and its comparison with the cone -/
+/-! ### Non-vacuity: a `3 × 3` stage and its comparison with the cone -/
 
 section Examples
 
@@ -270,7 +270,7 @@ theorem ex3Stage_adj : (ex3Stage.D.map (RingHom.id ℚ)).adjugate ≠ 0 := by
   rw [ex3D_map_id, adjugate_fin_three] at h0
   simp [ex3D] at h0
 
-/-- **LESSON 2: the lattice condition holds for the `3 × 3` stage** (from the `3 × 3` link of
+/-- **Non-vacuity: the lattice condition holds for the `3 × 3` stage** (from the `3 × 3` link of
 `StageLink.lean` and `stageModelLink_iff`). -/
 theorem ex3_integralUnit : ex3StageMap.IntegralUnit (oldMat_hz 1 exV) (oldMat_hl 1 exV) :=
   (stageModelLink_iff ex3StageMap _ _ (by simp [ex3Stage]) ex3Stage_adj
@@ -310,7 +310,7 @@ theorem exNew_integralUnit :
     (newMat_coord one_ne_zero one_ne_zero _ exV) (by norm_num)
     (newMat_adjugate_ne_zero one_ne_zero one_ne_zero exJ_v_ne_zero)).1 exLink_new
 
-/-- **LESSON 2: `StageConeComparison` holds** for the `3 × 3` old stage and the `2 × 2` new stage,
+/-- **Non-vacuity: `StageConeComparison` holds** for the `3 × 3` old stage and the `2 × 2` new stage,
 and `coordStep_of_coneComparison` gives an actual `CoordStep`. -/
 theorem ex3_stageConeComparison :
     StageConeComparison ex3Stage exStage_new 1 1 (switchJ0 ℚ) exV :=

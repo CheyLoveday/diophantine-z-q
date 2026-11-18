@@ -38,7 +38,7 @@ classes `[g t], [g u] ∈ H¹(W_rel)`, and is bilinear there. That is `ResiduePa
   (`ReverseIsotropy`). Then `StrictOrth` holds, and so does the descent.
 * `exists_residuePairing_trunc`: the same descent for `SelPairDataTrunc`, i.e. for the truncated
   `hsw` of `switchAdjunction_of_trunc`.
-* Non-vacuity (LESSON 2): `symReverse` is a `ReverseIsotropy` instance in a model with a nonzero
+* Non-vacuity: `symReverse` is a `ReverseIsotropy` instance in a model with a nonzero
   local cup product (`symForm_ne_zero`, `strictOrth_symQ`).
 
 The first-variable descent along strict classes is therefore an extra input. In Nekovář's setting
@@ -532,7 +532,7 @@ theorem symForm_single (a : Fin 2 → ℚ) (c : ℚ) : symForm a (Pi.single 0 c)
 def symQ : SelPairData (restrictData cexD cexF) cexD :=
   formQ symForm fun c v => by simp [symForm]
 
-/-- **Non-vacuity of `ReverseIsotropy`** (LESSON 2), `PROVED`. The model `symQ` has a nonzero local
+/-- **Non-vacuity of `ReverseIsotropy`** (non-vacuity), `PROVED`. The model `symQ` has a nonzero local
 cup product (`symForm (0,1) (0,1) = 1`) and reverse isotropy with `h' = 0`. -/
 def symReverse : ReverseIsotropy cexD (constZ ℚ) cexF symQ where
   h11 := 0

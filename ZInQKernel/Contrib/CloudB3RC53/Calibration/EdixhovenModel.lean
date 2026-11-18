@@ -8,7 +8,7 @@ import ZInQKernel.RouteK.Rank.LFunctionCd
 /-!
 # Calibration: the two-torsion count of `EdixhovenComponentNumber` is model-independent (PROVED)
 
-`EdixhovenComponentNumber ℓ h k cB` asks `cB p = #Ẽ₀(𝔽_p)[2]` for EVERY good integral model of
+`EdixhovenComponentNumber ℓ h k cB` asks `cB p = |Ẽ₀(𝔽_p)[2]|` for EVERY good integral model of
 `E₀ = E^{(h)}` at `p`. This file shows that the count does not depend on the model:
 
 * `GoodModelAt.W_eq`: a `GoodModelAt E p` is a Weierstrass curve over `ℤ` mapping to `E` itself, so
@@ -18,14 +18,14 @@ import ZInQKernel.RouteK.Rank.LFunctionCd
   related by a change of variables over `𝔽_p`** (`exists_red_eq_smul`): the change of variables
   between them over `ℚ_p` has a unit scaling factor (`Δ₂ = u⁻¹² Δ₁`, both `p`-adic units), hence is
   integral (Silverman VII.1.3(d), Tau Ceti's `exists_baseChange_eq_of_smul_eq`), and reduces modulo
-  `p`. Hence `#Ẽ(𝔽_p)[2]` is the same for all of them (`card_twoTorsion_red_eq_of_iso`).
+  `p`. Hence `|Ẽ(𝔽_p)[2]|` is the same for all of them (`card_twoTorsion_red_eq_of_iso`).
 * `EdixhovenComponentNumberIso`: the print over models up to isomorphism; it is equivalent to the
   print as stated wherever a good model in the stated sense exists (`edixhovenIso_of_edixhoven`,
   `edixhoven_of_edixhovenIso`).
-* Non-vacuity (LESSON 2): `edixhovenComponentNumber_canonical` — for every `ℓ, h, k` the canonical
-  choice `cB p = #Ẽ₀(𝔽_p)[2]` (any good model) satisfies the print's statement, and
+* Non-vacuity: `edixhovenComponentNumber_canonical` — for every `ℓ, h, k` the canonical
+  choice `cB p = |Ẽ₀(𝔽_p)[2]|` (any good model) satisfies the print's statement, and
   `edixhoven_witness_five`: for `ℓ = h = 1`, `k = 5`, the prime `p = 5 ∥ k` carries the good model
-  `y² = x³ + 2x² − 3x` and `cB 5 = #Ẽ₀(𝔽₅)[2] = 4` (the cubic `x(x − 1)(x + 3)` splits mod `5`).
+  `y² = x³ + 2x² − 3x` and `cB 5 = |Ẽ₀(𝔽₅)[2]| = 4` (the cubic `x(x − 1)(x + 3)` splits mod `5`).
 -/
 
 noncomputable section
@@ -181,7 +181,7 @@ theorem natCard_torsionBy_congr {A B : Type*} [AddCommGroup A] [AddCommGroup B] 
   · intro h; rw [← map_nsmul] at h; exact (map_eq_zero_iff e e.injective).mp h
 
 /-- **The two-torsion count is model-independent** (PROVED): two good integral models of `E` at
-`p`, up to isomorphism, have the same `#Ẽ(𝔽_p)[2]`. -/
+`p`, up to isomorphism, have the same `|Ẽ(𝔽_p)[2]|`. -/
 theorem card_twoTorsion_red_eq_of_iso {E : WeierstrassCurve ℚ} {p : ℕ} [hp : Fact p.Prime]
     (M₁ M₂ : GoodModelIso E p) :
     Nat.card (AddSubgroup.torsionBy M₁.red.toAffine.Point (2 : ℕ)) =
@@ -220,10 +220,10 @@ theorem edixhovenIso_of_edixhoven {ℓ : ℕ} {h : ℚ} {k : ℤ} {cB : ℕ → 
     exact card_twoTorsion_red_eq_of_iso M₀.toIso M
   · exact (hempty.false M).elim
 
-/-! ### Non-vacuity (LESSON 2) -/
+/-! ### Non-vacuity -/
 
 open Classical in
-/-- The canonical component numbers: `#Ẽ₀(𝔽_p)[2]` for any good model up to isomorphism, `0`
+/-- The canonical component numbers: `|Ẽ₀(𝔽_p)[2]|` for any good model up to isomorphism, `0`
 where there is none. -/
 def cBcanonical (ℓ : ℕ) (h : ℚ) (p : ℕ) : ℕ :=
   if hp : p.Prime then

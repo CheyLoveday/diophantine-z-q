@@ -10,11 +10,11 @@ Branch 2 that support is prime to `W.S`, which contains every prime of `k` (`Com
 the fresh prime of `k` is good for the odd stage types: so every set containing it read zero, and
 with App F's readings this forces every nonempty reading to vanish, contradicting a nonempty
 witness. The text reads the odd source on its own filter: "Enlarging `S_lab` records labels and
-prime exclusions; it does not change the coefficient source" (tex 2028–2029); "The intrinsic odd
+prime exclusions; it does not change the coefficient source" (tex 2027–2029); "The intrinsic odd
 symbol continues to omit the primes of `k`" (2603); "Later stationary prime-selection tests may
-enrich the common label alphabet without resieving the intrinsic odd source" (9479–9481);
+enrich the common label alphabet without resieving the intrinsic odd source" (9481–9483);
 "Additional stationary tests at primes dividing `k` … do not add conditions to that odd symbol"
-(10594–10597). Round 2 makes that filter a field of the label data (`LabelData.oddAdmissible`).
+(10594–10596). Round 2 makes that filter a field of the label data (`LabelData.oddAdmissible`).
 
 This file records, as theorems, the difference between the two filters:
 
@@ -30,6 +30,11 @@ This file records, as theorems, the difference between the two filters:
   not typed in Branch 2 (PROVED);
 * `typeFilter_typed`: the filter of the text's shape — positive, a square at `m₁` and at `ℓ₀`, prime
   to both — is typed (PROVED); so `OddFilterTyped` is satisfiable by a nonempty filter.
+
+`oddAdmissible_no_veto` requires `OddFilterTyped` and a member of the filter.
+`OddFilterTyped` is not a field of `AddressDensityLeaf`. `typeFilter_typed` proves a
+property of the displayed filter shape; it does not construct label data satisfying
+`oddAdmissible_iff` together with the data specification and nonzero density models.
 -/
 
 noncomputable section

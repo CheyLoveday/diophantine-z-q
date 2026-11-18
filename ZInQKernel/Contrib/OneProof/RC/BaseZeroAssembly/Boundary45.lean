@@ -331,8 +331,7 @@ cycle (in the model's central degree-one coordinates), with kinds:
   `boundary45_finite`, survive the inner limit, and the comparison `i` identifies the specialized
   cycle `z₀`).
 Since `stage` and `kappa` are existential, `Nonempty (Boundary45Base P n z̄)` is equivalent to
-`∃ κ L, L ≠ 0 ∧ z̄ = L κ(P)`, and for torsion `P` to `z̄ = 0` (lane RV2's review probes
-`boundary_iff_h45`, `boundary_iff_of_torsion`). -/
+`∃ κ L, L ≠ 0 ∧ z̄ = L κ(P)`, and for torsion `P` to `z̄ = 0`. -/
 structure Boundary45Base {G : Type} [AddCommGroup G] (P : G) (n : ℕ) (zbar : Fin n → ℚ_[2]) :
     Type 1 where
   /-- the finite stages -/

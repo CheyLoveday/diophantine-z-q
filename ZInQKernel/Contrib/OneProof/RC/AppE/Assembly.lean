@@ -30,8 +30,9 @@ The 11/5 manuscript, Appendix E, tex 7792–8134. This file fills lane RC11's st
 
 Inputs: the PRINTs `WaldspurgerNonvanishing` (Waldspurger + Elliot's local construction),
 `WaldspurgerCor2` (lane RC8), `RamseyAlgebraicModel` (this lane), `ModularNewform` and
-`HasseConvergence` (lane RC8; BCDT via `bcdtThmA_of_modularNewform`), and the GLUE hypothesis
-`HalfIntegralTwist` (not proved; see `Galois.lean`). Everything else is PROVED.
+`HasseConvergence` (lane RC8; BCDT via `bcdtThmA_of_modularNewform`), and `HalfIntegralTwist`
+(PROVED, `HalfIntegral.halfIntegralTwist`; `HalfIntegral.evenPhaseData_Ecurve` discharges it).
+Everything else is PROVED.
 -/
 
 noncomputable section
@@ -74,8 +75,8 @@ theorem F_one_ne_zero_of_lstar {E : WeierstrassCurve ℚ}
 
 /-- **`EvenPhaseData` from the prints** (Proposition `ex:app-even-phase`, tex 7792–8134; PROVED
 from the PRINTs `WaldspurgerNonvanishing`, `WaldspurgerCor2`, `RamseyAlgebraicModel`,
-`PoleS12.BCDTThmA`, the GLUE `HasseConvergence` (lane RC8) and the GLUE hypothesis
-`HalfIntegralTwist`). For an elliptic `E/ℚ`, a sign `σ`, a finite set `S₀ ∋ 2` of primes containing
+`PoleS12.BCDTThmA`, the GLUE `HasseConvergence` (lane RC8) and `HalfIntegralTwist`, PROVED in
+`RC/HalfIntegral`). For an elliptic `E/ℚ`, a sign `σ`, a finite set `S₀ ∋ 2` of primes containing
 the primes of the level of every functional equation of `L(E, s)`, and a positive squarefree
 `D₀` prime to `S₀` with `L_*(σD₀) ≠ 0`: there is `P : EvenPhaseData E L σ S₀ D₀` whose retained
 set is the whole `S₀` filter of `D₀` and whose phase is `z_D = phase P.N P.η D₀ D`. This is the
@@ -187,10 +188,10 @@ theorem hcond_primeFactors (hM : ModularNewform) {E : WeierstrassCurve ℚ} (hE 
 
 /-- **`EvenPhaseData` for the curve `E_ℓ` of section 7** (Proposition `ex:app-even-phase` for
 `E = E_ℓ`, tex 7792–8134; PROVED from the PRINTs `WaldspurgerNonvanishing`,
-`WaldspurgerCor2`, `RamseyAlgebraicModel`, `ModularNewform`, the GLUE `HasseConvergence` and the
-GLUE hypothesis `HalfIntegralTwist`). `S₀` is the set of primes of `2N₀`, `N₀` the level of a
-functional equation of `L(E_ℓ, s)` (the conductor, `ModularNewform`); `D₀ > 0` is squarefree, prime
-to `2N₀`, with `L_*(σD₀) ≠ 0`. The retained set is the whole `S₀` filter. -/
+`WaldspurgerCor2`, `RamseyAlgebraicModel`, `ModularNewform`, the GLUE `HasseConvergence` and
+`HalfIntegralTwist`, PROVED in `RC/HalfIntegral`). `S₀` is the set of primes of `2N₀`, `N₀` the
+level of a functional equation of `L(E_ℓ, s)` (the conductor, `ModularNewform`); `D₀ > 0` is
+squarefree, prime to `2N₀`, with `L_*(σD₀) ≠ 0`. The retained set is the whole `S₀` filter. -/
 theorem evenPhaseData_Ecurve (hWN : WaldspurgerNonvanishing) (hW : WaldspurgerCor2)
     (hR : RamseyAlgebraicModel) (hTw : HalfIntegralTwist) (hM : ModularNewform)
     (hH : HasseConvergence) {ℓ : ℕ} (hℓ : 0 < ℓ)
