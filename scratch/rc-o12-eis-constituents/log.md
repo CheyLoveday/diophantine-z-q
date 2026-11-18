@@ -1,0 +1,6 @@
+- Base: `40d619ca811e6d8e760c49ac7e273cf5be8b2272`.
+- `GaloisConstituentModel`: no Eisenstein tag, semisimplicity, characteristic-zero good polynomial per column, or analytic column identification.
+- `TauCeti.ModularForm.levelRaise`: normalized substitution, q-expansion and nebentypus transport available.
+- Mathlib's generic holomorphic Eisenstein construction assumes weight at least three; its level-one weight-two series does not supply the primitive character-pair theorem.
+- `TraceLimits.dense_arithmeticFrobenius`, `TSkolemKW.hsynBrauerNesbitt`: available with no new printed inputs.
+- `Forms.lean`: `mapPair_coeff`, `coeff_one`, `BaseForm.atLevel_character`, `BaseForm.atLevel_coeff`, `ColumnRealization.expansion`. Passed `lake env lean -j1`; seven axiom checks, including two private helpers; only `propext`, `Classical.choice`, `Quot.sound`.
