@@ -5,10 +5,11 @@ import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.Separa
 /-!
 # The algebraic glue G2alg reduced to the constancy of the pull-back coefficient
 
-`IsogenyLattice.lean` reduces the isogeny–lattice glue G2 to an analytic glue (G2an) and an algebraic
-glue `IsogenyScalarRationalGlue` (G2alg: every `ℚ`-isogeny has a pull-back scalar, a nonzero
-rational number). This file proves the differential algebra of G2alg from Tau Ceti's invariant
-differential and isolates its remaining content, the constancy of the pull-back coefficient.
+`IsogenyLattice.lean` reduces the isogeny–lattice glue G2 to an analytic glue (G2an) and an
+algebraic glue `IsogenyScalarRationalGlue` (G2alg: every `ℚ`-isogeny has a pull-back scalar, a
+nonzero rational number). This file proves the differential algebra of G2alg from Tau Ceti's
+invariant differential and isolates its remaining content, the constancy of the pull-back
+coefficient.
 
 From Tau Ceti (vendored, Apache-2.0; library results used as infrastructure, not prints):
 `invariantDifferential` (`ω = dx / (2y + a₁x + a₃)`), `existsUnique_smul_invariantDifferential`
