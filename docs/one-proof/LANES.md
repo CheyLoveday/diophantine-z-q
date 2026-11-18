@@ -18,3 +18,14 @@ A lane is one unit of project work: one issue (template "Lane"), one owner, one 
   `Removes-rows:` line of its body. It also warns when the change touches files with an owner, and when the generated
   files are out of date.
 - **Decisions** are recorded once, in [docs/DECISIONS.md](../DECISIONS.md), with a link to where they were made.
+
+## Current lanes
+
+Lanes recorded here instead of as Lane issues. Their claim is on
+[#83](https://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6966750889), next to the Theorem 5.3 work they
+feed.
+
+| lane | owner | branch | writes | board rows changed | depends on | done when |
+|---|---|---|---|---|---|---|
+| Appendix F: the weighted ternary theta form at one stage (tex 8206–9100) | project | `wip/rc-appF-theta` | `ZInQKernel/Contrib/OneProof/RC/AppF/`, `docs/research/rc-appF-theta.md`, `scratch/rc-appF-theta/` | none: it supplies `aθ` and `Odd.OddStageSource` to the Theorem 5.3 reduction | `rc/thm53-proof-20261117` at `8a63a360` | the construction and its `OddStageSource` proof build with only the standard axioms, or a scoped report names what is missing |
+| Appendix E: the actual even form and its phase, the fields of `Even.EvenPhaseData` (tex 7792–8134) | project | `wip/rc-appE-phase` | `ZInQKernel/Contrib/OneProof/RC/AppE/`, `docs/research/rc-appE-phase.md`, `scratch/rc-appE-phase/` | none: it supplies the even-phase inputs of the same reduction | `rc/thm53-proof-20261117` at `8a63a360` | the fields build with only the standard axioms, or a scoped report names what is missing |
