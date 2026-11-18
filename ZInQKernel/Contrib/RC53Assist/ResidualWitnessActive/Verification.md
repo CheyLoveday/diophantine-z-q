@@ -1,5 +1,10 @@
 # Active residual witness: verification
 
+
+## Update (2026-11-18)
+
+The module `ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ResidualAfterT` is now part of the integration branch, so `Witness.lean` imports it and calls `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_afterT` directly; the former copied section `AfterTCopy` described below has been removed. The copied local Kummer section is unchanged.
+
 ## Result
 
 `Witness.lean` applies three RC53 residual-count constructors to one instance in which the

@@ -1,5 +1,10 @@
 # Active residual witness: hypothesis inventory
 
+
+## Update (2026-11-18)
+
+The module `ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ResidualAfterT` is now part of the integration branch, so `Witness.lean` imports it and calls `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_afterT` directly; the former copied section `AfterTCopy` described below has been removed. The copied local Kummer section is unchanged.
+
 The targets are the constructors `ZInQ.Contrib.CloudB3RC53.Mattuck.residualRankCounts_genuine`
 and `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_actual` (manuscript Lemma
 `ex:limits-residual-bound`, tex 4453–4648), and the transfer-after-inverting-`t` constructor

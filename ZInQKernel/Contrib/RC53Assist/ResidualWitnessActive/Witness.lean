@@ -9,6 +9,7 @@ import ZInQKernel.Contrib.CloudB3RC53.GenuineInst.CoefResidualCounts
 import ZInQKernel.Contrib.CloudB3RC53.ContBridge.Discrete
 import ZInQKernel.Contrib.OneProof.RC.SelmerComplex.UnramifiedFactorization
 import ZInQKernel.Contrib.OneProof.RC.SelmerComplex.Instances
+import ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ResidualAfterT
 
 /-!
 # A non-degenerate witness for the residual rank counts
@@ -62,8 +63,8 @@ active place has a non-acyclic quotient (`active_full_change_not_acyclic`, from 
 `h¹ = 4`). For the constructors with coefficients `𝔽₂` the change of condition used here thickens
 the unramified conditions at the active places by the contractible cone of their identity.
 
-**After inverting `t`.** The constructor `residualRankCounts_afterT` (a verbatim copy, section
-`AfterTCopy`) takes the transfer over `𝔽₂[[t]]` and `𝔽₂((t))`, as in the text (tex 4612–4631). It
+**After inverting `t`.** The constructor `residualRankCounts_afterT` (imported from
+`GenuineInst.ResidualAfterT`) takes the transfer over `𝔽₂[[t]]` and `𝔽₂((t))`, as in the text (tex 4612–4631). It
 is applied to the same instance (`activeAfterTCounts`) with:
 * the smaller-support free model `P` over `𝔽₂[[t]]`: the residual cone extended to `𝔽₂[[t]]`, whose
   reduction modulo `t` has the ranks of the residual cone (`afterP_hred`), and its base change `P'`
@@ -4262,153 +4263,6 @@ end Blocks
 
 end ZInQ.Contrib.RC53Assist.ResidualWitnessActive
 
-/-! ## The transfer after inverting `t`
-
-The declarations of this namespace are a verbatim copy of those of the module
-`ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ResidualAfterT` (manuscript tex 4598–4647), which is
-not part of this build; only the namespace is changed. They are compiled with the default
-elaboration options. -/
-
-section AfterTCopySection
-
-set_option maxHeartbeats 200000
-set_option backward.isDefEq.respectTransparency true
-
-namespace ZInQ.Contrib.RC53Assist.ResidualWitnessActive.AfterTCopy
-
-open ZInQ.Contrib.CloudB3RC53.GenuineInst
-
-open NumberField IsDedekindDomain CategoryTheory ZInQ.Manuscript.RC.Limits
-  ZInQ.Contrib.CloudB3RC53.RankCounts ZInQ.Contrib.CloudB3RC53.PairedFunctional
-  ZInQ.Manuscript.RC.SelmerComplex ZInQ.Contrib.CloudB3RC53.SelmerDuality
-  ZInQ.Contrib.CloudB3RC53.ResidualTransfer ZInQ.Contrib.CloudB3RC53.Mattuck TensorProduct
-
-/-- **The transfer after a base change to a field** (tex 4598–4631, model level): a minimal model
-`L` over the field `R'` homotopy equivalent to the base change `P'` of a bounded free model `P` over
-`R` has total rank at most that of `P`. PROVED. -/
-theorem transfer_after_inverting_t {R R' : Type} [CommRing R] [StrongRankCondition R] [Field R']
-    [Algebra R R'] (P : CochainComplex (ModuleCat.{0} R) ℤ) [∀ i, Module.Free R (P.X i)]
-    [∀ i, Module.Finite R (P.X i)] (P' L : CochainComplex (ModuleCat.{0} R') ℤ) (a b : ℤ)
-    [P'.IsStrictlyGE a] [P'.IsStrictlyLE b] [L.IsStrictlyGE a] [L.IsStrictlyLE b]
-    [∀ i, Module.Finite R' (P'.X i)] [∀ i, Module.Finite R' (L.X i)]
-    (hbc : ∀ n, Nonempty (P'.X n ≃ₗ[R'] R' ⊗[R] P.X n))
-    (hLmin : ∀ i j x, (L.d i j).hom x ∈
-      IsLocalRing.maximalIdeal R' • (⊤ : Submodule R' (L.X j)))
-    (e : HomotopyEquiv L P') (s : Finset ℤ) (genericRank rankTot : ℕ)
-    (hgen : genericRank = ∑ n ∈ s, Module.finrank R' (L.X n))
-    (htot : rankTot = ∑ n ∈ s, Module.finrank R (P.X n)) : genericRank ≤ rankTot := by
-  have h := transferOfModels_final L P' a b hLmin e s genericRank
-    (∑ n ∈ s, Module.finrank R' (P'.X n)) hgen rfl
-  have heq : ∑ n ∈ s, Module.finrank R' (P'.X n) = ∑ n ∈ s, Module.finrank R (P.X n) :=
-    Finset.sum_congr rfl fun n _ => by
-      rw [(hbc n).some.finrank_eq, Module.finrank_baseChange]
-  rw [htot, ← heq]
-  exact h
-
-section NonVacuity
-
-/-- The complex with every term `0` (`PUnit`) over a ring `R`. -/
-def punitCx (R : Type) [CommRing R] : CochainComplex (ModuleCat.{0} R) ℤ where
-  X _ := ModuleCat.of R PUnit
-  d _ _ := 0
-
-instance punitCx_subsingleton (R : Type) [CommRing R] (i : ℤ) : Subsingleton ((punitCx R).X i) :=
-  inferInstanceAs (Subsingleton PUnit)
-
-instance punitCx_free (R : Type) [CommRing R] (i : ℤ) : Module.Free R ((punitCx R).X i) :=
-  inferInstanceAs (Module.Free R PUnit)
-
-instance punitCx_finite (R : Type) [CommRing R] (i : ℤ) : Module.Finite R ((punitCx R).X i) :=
-  inferInstanceAs (Module.Finite R PUnit)
-
-instance punitCx_ge (R : Type) [CommRing R] : (punitCx R).IsStrictlyGE 0 :=
-  (CochainComplex.isStrictlyGE_iff _ 0).2 fun _ _ => ModuleCat.isZero_of_subsingleton _
-
-instance punitCx_le (R : Type) [CommRing R] : (punitCx R).IsStrictlyLE 0 :=
-  (CochainComplex.isStrictlyLE_iff _ 0).2 fun _ _ => ModuleCat.isZero_of_subsingleton _
-
-/-- **Non-vacuity of the hypotheses of `transfer_after_inverting_t`** at `𝔽₂[[t]] → 𝔽₂((t))`:
-the zero complexes (total ranks `0 ≤ 0`). PROVED. -/
-theorem transfer_after_inverting_t_nonvacuous :
-    0 ≤ 0 :=
-  transfer_after_inverting_t (punitCx (PowerSeries (ZMod 2)))
-    (punitCx (LaurentSeries (ZMod 2))) (punitCx (LaurentSeries (ZMod 2))) 0 0
-    (fun n => ⟨LinearEquiv.ofSubsingleton _ _⟩)
-    (fun i j x => by rw [Subsingleton.elim x 0, map_zero]; exact Submodule.zero_mem _)
-    (HomotopyEquiv.refl _) {0} 0 0
-    (by rw [Finset.sum_singleton, Module.finrank_zero_of_subsingleton])
-    (by rw [Finset.sum_singleton, Module.finrank_zero_of_subsingleton])
-
-end NonVacuity
-
-variable (K : Type) [Field K] [NumberField K]
-  (Ew : ∀ w : HeightOneSpectrum (𝓞 K), WeierstrassCurve (w.adicCompletionIntegers K))
-  [hEw : ∀ w, ((Ew w).baseChange (w.adicCompletion K)).IsElliptic]
-
-open Classical in
-/-- **RC6's `ResidualRankCounts` with the transfer after inverting `t`** (tex 4453–4648): as
-`residualRankCounts_genuine` (the counts `kummer`, `hcond`, `hG`, `hL` from the genuine producers),
-with `transfer` from `transfer_after_inverting_t` at `𝔽₂[[t]] → 𝔽₂((t))`: the smaller-support free
-model `P` over `𝔽₂[[t]]` whose reduction modulo `t` has the ranks of the residual model `Dsel`
-(`hred`; only its ranks are used), its base change `P'` to `𝔽₂((t))` (`hbc`), and the generic
-minimal model `L` over
-`𝔽₂((t))` homotopy equivalent to `P'` (`e`; the text's tex 4626–4631, an input). No acyclicity
-hypothesis over `ZMod 2`. PROVED. -/
-def residualRankCounts_afterT (h410 : MilneADT_I_4_10_totallyComplex)
-    (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8) (h23 : MilneADT_I_2_3_trivial)
-    (k : ℤ) (α : 𝓞 K) (hα : IsQuadraticRadicand K k α)
-    (hK : IsTotallyComplex K) (N : ℕ) (hN : N ≠ 0) (A : ℕ) (hA : k.natAbs.primeFactors.card ≤ A)
-    (r : ℕ) (hr : r.Prime) (D : Finset ℕ) (hD : ∀ p ∈ D, p.Prime) (hDodd : ∀ p ∈ D, p ≠ 2)
-    (cond : Ideal (𝓞 K) → LocalCondition)
-    (hcondD : ∀ P : Ideal (𝓞 K), cond P = .derivRelaxed → ∃ q ∈ D, P ∈ primesAbove K q)
-    (hfull : ∀ w : HeightOneSpectrum (𝓞 K), cond w.asIdeal = .oldKummer →
-      Nat.card (Submodule.torsionBy ℤ ((Ew w).baseChange (w.adicCompletion K)).toAffine.Point 2) =
-        4)
-    (w : InfinitePlace K) (hw : w.IsComplex)
-    -- the residual model and its identifications
-    (Sloc : Set (HeightOneSpectrum (𝓞 K)))
-    (Dsel : SelData (ZMod 2))
-    [∀ n, Module.Finite (ZMod 2) (Dsel.G.X n)] [∀ n, Module.Finite (ZMod 2) (Dsel.U.X n)]
-    [∀ n, Module.Finite (ZMod 2) (Dsel.L.X n)]
-    (s : Finset ℤ) (hs : s ⊆ Finset.Icc 0 2)
-    (eG : ∀ n ∈ s, Dsel.G.X n ≃ₗ[ZMod 2]
-      genH K (primesAboveSet K (chargedPrimes N r D)) n.toNat)
-    (hUm : ∑ n ∈ s, Module.finrank (ZMod 2) (Dsel.U.X n) ≤ ∑ p ∈ chargedPrimes N r D,
-      condSum K (genCondDimFun2 K Sloc cond (kummerDimOfCurves K Ew (kd2OfCurves K Ew))) p)
-    (hLm : ∑ n ∈ s, Module.finrank (ZMod 2) (Dsel.L.X (n - 1)) ≤
-      ∑ p ∈ chargedPrimes N r D, genLocSum K Sloc p)
-    -- the transfer after inverting `t`
-    (P : CochainComplex (ModuleCat.{0} (PowerSeries (ZMod 2))) ℤ)
-    [∀ i, Module.Free (PowerSeries (ZMod 2)) (P.X i)]
-    [∀ i, Module.Finite (PowerSeries (ZMod 2)) (P.X i)]
-    (hred : ∀ n ∈ s, Module.finrank (PowerSeries (ZMod 2)) (P.X n) =
-      Module.finrank (ZMod 2) ((selCx Dsel).X n))
-    (P' L : CochainComplex (ModuleCat.{0} (LaurentSeries (ZMod 2))) ℤ) (a b : ℤ)
-    [P'.IsStrictlyGE a] [P'.IsStrictlyLE b] [L.IsStrictlyGE a] [L.IsStrictlyLE b]
-    [∀ i, Module.Finite (LaurentSeries (ZMod 2)) (P'.X i)]
-    [∀ i, Module.Finite (LaurentSeries (ZMod 2)) (L.X i)]
-    (hbc : ∀ n, Nonempty (P'.X n ≃ₗ[LaurentSeries (ZMod 2)]
-      LaurentSeries (ZMod 2) ⊗[PowerSeries (ZMod 2)] P.X n))
-    (hLmin : ∀ i j x, (L.d i j).hom x ∈
-      IsLocalRing.maximalIdeal (LaurentSeries (ZMod 2)) •
-        (⊤ : Submodule (LaurentSeries (ZMod 2)) (L.X j)))
-    (e : HomotopyEquiv L P') :
-    ResidualRankCounts :=
-  haveI : ∀ i, Module.Finite (ZMod 2) ((selCx Dsel).toCC.X i) := fun i => by
-    change Module.Finite (ZMod 2) (Dsel.G.X i × Dsel.U.X i × Dsel.L.X (i - 1))
-    infer_instance
-  residualRankCounts_mattuck K Ew h410 h51 h28 h23 k α hα hK N hN A hA r hr D hD hDodd cond hcondD
-    hfull w hw Dsel s (∑ n ∈ s, Module.finrank (ZMod 2) ((selCx Dsel).X n)) rfl
-    (hG_of_genuineModel K _ Dsel s hs eG)
-    (hL_of_genuineModel2 K Sloc hr hD cond (kummerDimOfCurves K Ew (kd2OfCurves K Ew)) Dsel s
-      (archTotal K w) hUm hLm)
-    (∑ n ∈ s, Module.finrank (LaurentSeries (ZMod 2)) (L.X n))
-    (transfer_after_inverting_t P P' L a b hbc hLmin e s _ _ rfl
-      (Finset.sum_congr rfl fun n hn => (hred n hn).symm))
-
-end ZInQ.Contrib.RC53Assist.ResidualWitnessActive.AfterTCopy
-
-end AfterTCopySection
 
 /-! ## The active blocks after inverting `t` -/
 
@@ -4849,7 +4703,7 @@ def activeAfterTCounts (h410 : MilneADT_I_4_10_totallyComplex)
   letI : afterL.IsStrictlyLE 3 := afterL_le h410 h28
   letI : ∀ n, Module.Finite Kt (afterP'.X n) := afterP'_finite h410 h51 h28
   letI : ∀ n, Module.Finite Kt (afterL.X n) := afterL_finite h410 h51 h28
-  exact AfterTCopy.residualRankCounts_afterT SmallK smallLocalModels h410 h51 h28 h23
+  exact ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_afterT SmallK smallLocalModels h410 h51 h28 h23
     (-1) smallAlpha smallAlpha_radicand smallK_complex 66 (by decide) 0 (by simp) 5 (by decide)
     actD actD_prime actD_odd actCond actCond_derivative actCond_full_torsion
     smallInfinitePlace smallInfinitePlace_complex SmallS actSel actDegrees
