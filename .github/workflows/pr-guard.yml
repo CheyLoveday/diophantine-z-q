@@ -33,3 +33,5 @@ jobs:
       # render_open.py --check here and at HEAD^1; only problems that main does not already have are reported.
       - name: Problems this pull request brings into the generated contributor files (warning only)
         run: python scripts/guard/check_pr.py render --base HEAD^1
+      - name: Board render unit tests (fixtures only)
+        run: python -I scripts/one_proof/test_scoring.py
