@@ -198,10 +198,28 @@
    "docstring":
    "Milne, Abelian varieties v2.00, Part I, Thm 12.1(a), as the manuscript cites it (lem:de-rham-descent L10966-10970); Milne 1986 (Cornell-Silverman) Thm 15.1(a): `H¹(A_K̄, ℤ_ℓ) = Hom(T_ℓ A, ℤ_ℓ)`, Galois-equivariantly, over Mathlib's pro-étale `EllAdicCohomology`. ",
    "bundle": "OpenAddedLeaves28"},
-  {"type": "ZInQ.PoleCompleteness",
-   "statement": "ZInQ.PoleCompleteness",
-   "field": "hPC",
+  {"type": "ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine",
+   "statement": "ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine",
+   "field": "hRC",
    "docstring":
-   "**Hypothesis PC** (Theorem 5.2, pole completeness). Every rational `B` with square\nreduced denominator, `0 < B < 1/2` and `v_p(B) ≥ 4` for every `p ∈ S₀` satisfies `Φ(B)`. ",
+   "**Theorem 5.3 of the 11/5 manuscript (restricted converse, `hyp:RC`), over the genuine Selmer\ncondition.** For every positive squarefree `ℓ ≡ 11 (mod 12)`,\n`corank_{ℤ₂} Sel_{2^∞}(E_ℓ/ℚ) = 1` implies `ord_{s=1} L(E_ℓ, s) = 1`, where\n`E_ℓ : y² = x(x - ℓ)(x + 3ℓ)` (`ZInQ.Manuscript.curve`) and `ord_{s=1}` is\n`ZInQ.Manuscript.AnalyticRankOne`. It is `ZInQ.Manuscript.RestrictedConverse` at the predicate\n`SelmerCorankOne`. ",
+   "bundle": "frozenTarget"},
+  {"type": "ZInQ.Manuscript.PoleS12.Lemma54",
+   "statement": "ZInQ.Manuscript.PoleS12.Lemma54",
+   "field": "h54",
+   "docstring":
+   "**Lemma 5.4 (`lem:corank`, tex L1072–1084), a lemma of the manuscript (not a printed leaf),\nstated over genuine definitions.** For an\nelliptic curve `E/ℚ` with full rational two-torsion, `dim_{𝔽₂} Sel₂(E/ℚ) = 3` (`#Sel₂ = 8`, with\n`Sel₂ = selmerAt E 1`, Tau Ceti's 2-Selmer group with the conditions at every place) implies\n`corank_{ℤ₂} Sel_{2^∞}(E/ℚ) = 1` (`SelmerTwoPower.SelmerCorankOne`). Provenance (b): the manuscript\nproves it from the Kummer sequence and the Cassels–Tate pairing, citing Poonen–Stoll, Ann. of\nMath. 150 (1999) 1109–1149 (`\\cite{poonenstoll}`, tex L1081). It is a hypothesis here, a lemma that\nthe manuscript proves and not a published theorem; it is not proved in Lean. ",
+   "bundle": "frozenTarget"},
+  {"type": "ZInQ.Manuscript.PoleS12.BCDTThmA",
+   "statement": "ZInQ.Manuscript.PoleS12.BCDTThmA",
+   "field": "hB",
+   "docstring":
+   "**Breuil–Conrad–Diamond–Taylor, Theorem A** (printed leaf; J. Amer. Math. Soc. 14 (2001)\n843–939; the manuscript cites the author manuscript, `\\cite[Theorem A]{bcdt}`, tex L1092):\nevery elliptic curve over `ℚ` is modular (Theorem A, p. 1 of the author manuscript). The print's\nnotion of \"modular\" is its Introduction's conditions (1)–(6) (p. 3); condition (2) says that\n`L(E, s) = L(f, s)` for an eigenform `f` of weight 2 and level `N(E)`, on `Γ₁(N(E))` (cusp forms\np. 1, eigenforms p. 2). `IsModular` is a consequence of (2): trivial nebentypus takes `Γ₁(N(E))`\nto `Γ₀(N(E))`, and equality of the Dirichlet series gives equality of the coefficients for every\n`n ≥ 1`. Read (AI) on fork issue #83:\nhttps://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6962416523 ",
+   "bundle": "frozenTarget"},
+  {"type": "ZInQ.Manuscript.PoleS12.KolyvaginThm1",
+   "statement": "ZInQ.Manuscript.PoleS12.KolyvaginThm1",
+   "field": "hK",
+   "docstring":
+   "**Kolyvagin, Theorem 1, the case `r = 1`** (consequence of the print, not the printed statement; cited: \"On the Mordell–Weil group\nand the Shafarevich–Tate group of modular elliptic curves\", MPIM preprint MPI/90-69 (1990),\nTheorems 1–5, pp. 4–5; tex L1093, `\\cite[Theorem 1, pp. 4–5]{kolyvagin}`; read (AI) on fork\nissue #83: https://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6962416523):\na modular elliptic curve `E/ℚ` with `ord_{s=1} L(E, s) = 1` has `rank E(ℚ) = 1` and finite\n`Ш(E/ℚ)`. Theorem 1 (p. 4) assumes a weak Weil parametrization `X₀(N) → E` with `N` the conductor\n(p. 3). `IsModular` is a weaker hypothesis, so this statement is a consequence of the print: it follows\nfrom Kolyvagin's weak Weil parametrization hypothesis only through Shimura's construction (an abelian\nvariety quotient of `J₀(N)` attached to the newform) and Faltings' isogeny theorem (with trivial\nnebentypus), the step BCDT cite\nfor (2) ⇒ (6) on p. 3 of their author manuscript. `Ш` is `SelmerTwoPower.sha` (Tau Ceti's Shafarevich–Tate group, local triviality at every\nplace). The print is a preprint, not a refereed paper (Known issue, round 1); its `r = 0` case is\nnot used. ",
    "bundle": "frozenTarget"}],
- "count": 34}
+ "count": 37}

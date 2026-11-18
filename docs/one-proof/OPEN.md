@@ -13,7 +13,7 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**33 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves63`), plus one manuscript hypothesis outside the H part (`hPC`: pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
+**33 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves63`), plus four manuscript hypotheses outside the H part (`hRC`, `h54`, `hB`, `hK`: pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
 
 * **Strict count: 5 published / 28 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
@@ -72,7 +72,7 @@ ping, and is released if there is no reply within 7 days of the ping.
 | hypothesis | holder | since |
 | --- | --- | --- |
 | [`pazukiCor13Upper`](#pazukicor13upper) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/tree/wip/pazuki-inputs)) | 2026-11-16 |
-| [`hPC`](#hpc) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/90)) | 2026-11-17 |
+| [`hRC`](#hrc) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) | 2026-11-17 |
 
 ## Packets
 
@@ -159,7 +159,10 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`r9a`](#r9a) | research | published | LEAF |  | good-first | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`silverbergZarhinThm35`](#silverbergzarhinthm35) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`hPC`](#hpc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/90)) |
+| [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
+| [`h54`](#h54) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
+| [`hB`](#hb) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
+| [`hK`](#hk) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
 
 ## The hypotheses
 
@@ -635,20 +638,93 @@ Pole completeness PC (`ZInQ.PoleCompleteness`) is Theorem 5.2 of the 11/5 manusc
 polynomial; the manuscript derives it from its restricted converse, Theorem 5.3. The former Route K inputs
 (Tian–Yuan–Zhang and Gross–Zagier) are no longer hypotheses.
 
-### hPC
+### hRC
 
-* Argument `hPC` of `frozenTarget`; kind **manuscript hypothesis**, strict **GLUE**; flag: ELLIOT: Theorem 5.3 route in progress (#83).
-* Source: Glazer, 11/5 manuscript (diophantine_zq.tex), Theorem 5.2 (Pole completeness, hyp:PC), lines 1001-1004, for the manuscript's pole polynomial Q_pole (lines 976-982, curves y^2 = x(x - l)(x + 3l)); the manuscript proves it from Theorem 5.3 (restricted converse, hyp:RC, lines 1005-1011)
+* Argument `hRC` of `frozenTarget`; kind **manuscript hypothesis**, strict **GLUE**; flag: ELLIOT: Theorem 5.3 (restricted converse) as printed, over the genuine 2-power Selmer group (SelmerTwoPower.RestrictedConverseGenuine); proof in progress on #83.
+* Source: Glazer, 11/5 manuscript (diophantine_zq.tex), Theorem 5.3 (Restricted converse, hyp:RC), lines 1005-1011: curves y^2 = x(x - l)(x + 3l), positive squarefree l = 11 mod 12, corank_{Z_2} Sel_{2^inf}(E_l/Q) = 1 implies ord_{s=1} L(E_l, s) = 1
 * discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
 * Human readings recorded: none.
-* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/90)).
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)).
 
 ```lean
-ZInQ.PoleCompleteness
+ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine
 ```
 
-> **Hypothesis PC** (Theorem 5.2, pole completeness). Every rational `B` with square
-> reduced denominator, `0 < B < 1/2` and `v_p(B) ≥ 4` for every `p ∈ S₀` satisfies `Φ(B)`.
+> **Theorem 5.3 of the 11/5 manuscript (restricted converse, `hyp:RC`), over the genuine Selmer
+> condition.** For every positive squarefree `ℓ ≡ 11 (mod 12)`,
+> `corank_{ℤ₂} Sel_{2^∞}(E_ℓ/ℚ) = 1` implies `ord_{s=1} L(E_ℓ, s) = 1`, where
+> `E_ℓ : y² = x(x - ℓ)(x + 3ℓ)` (`ZInQ.Manuscript.curve`) and `ord_{s=1}` is
+> `ZInQ.Manuscript.AnalyticRankOne`. It is `ZInQ.Manuscript.RestrictedConverse` at the predicate
+> `SelmerCorankOne`.
+
+### h54
+
+* Argument `h54` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: a lemma of the manuscript (lem:corank), not a printed leaf: the manuscript proves it from the Kummer sequence and Cassels-Tate via Poonen-Stoll; not proved in Lean.
+* Source: Glazer, 11/5 manuscript (diophantine_zq.tex), Lemma 5.4 (lem:corank), lines 1072-1084; Poonen-Stoll, Ann. of Math. 150 (1999) 1109-1149 (cited at L1081)
+* discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+ZInQ.Manuscript.PoleS12.Lemma54
+```
+
+> **Lemma 5.4 (`lem:corank`, tex L1072–1084), a lemma of the manuscript (not a printed leaf),
+> stated over genuine definitions.** For an
+> elliptic curve `E/ℚ` with full rational two-torsion, `dim_{𝔽₂} Sel₂(E/ℚ) = 3` (`#Sel₂ = 8`, with
+> `Sel₂ = selmerAt E 1`, Tau Ceti's 2-Selmer group with the conditions at every place) implies
+> `corank_{ℤ₂} Sel_{2^∞}(E/ℚ) = 1` (`SelmerTwoPower.SelmerCorankOne`). Provenance (b): the manuscript
+> proves it from the Kummer sequence and the Cassels–Tate pairing, citing Poonen–Stoll, Ann. of
+> Math. 150 (1999) 1109–1149 (`\cite{poonenstoll}`, tex L1081). It is a hypothesis here, a lemma that
+> the manuscript proves and not a published theorem; it is not proved in Lean.
+
+### hB
+
+* Argument `hB` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: BCDT's modular = weight-2 eigenform of level N(E) on Gamma1 (condition (2), p. 3); IsModular follows by trivial nebentypus; AI page read 11-17.
+* Source: Breuil-Conrad-Diamond-Taylor, J. Amer. Math. Soc. 14 (2001), Theorem A (every elliptic curve over Q is modular)
+* discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+ZInQ.Manuscript.PoleS12.BCDTThmA
+```
+
+> **Breuil–Conrad–Diamond–Taylor, Theorem A** (printed leaf; J. Amer. Math. Soc. 14 (2001)
+> 843–939; the manuscript cites the author manuscript, `\cite[Theorem A]{bcdt}`, tex L1092):
+> every elliptic curve over `ℚ` is modular (Theorem A, p. 1 of the author manuscript). The print's
+> notion of "modular" is its Introduction's conditions (1)–(6) (p. 3); condition (2) says that
+> `L(E, s) = L(f, s)` for an eigenform `f` of weight 2 and level `N(E)`, on `Γ₁(N(E))` (cusp forms
+> p. 1, eigenforms p. 2). `IsModular` is a consequence of (2): trivial nebentypus takes `Γ₁(N(E))`
+> to `Γ₀(N(E))`, and equality of the Dirichlet series gives equality of the coefficients for every
+> `n ≥ 1`. Read (AI) on fork issue #83:
+> https://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6962416523
+
+### hK
+
+* Argument `hK` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: Kolyvagin (MPI/90-69) Thm 1 p. 4 assumes a weak Weil parametrization X0(N) -> E with N the conductor (p. 3); IsModular implies it via Shimura's construction plus Faltings' isogeny theorem (BCDT's (2) => (6)); AI page read 11-17.
+* Source: Kolyvagin, On the Mordell-Weil group and the Shafarevich-Tate group of modular elliptic curves, MPIM preprint MPI/90-69 (1990), Theorem 1, the case r = 1
+* discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+ZInQ.Manuscript.PoleS12.KolyvaginThm1
+```
+
+> **Kolyvagin, Theorem 1, the case `r = 1`** (consequence of the print, not the printed statement; cited: "On the Mordell–Weil group
+> and the Shafarevich–Tate group of modular elliptic curves", MPIM preprint MPI/90-69 (1990),
+> Theorems 1–5, pp. 4–5; tex L1093, `\cite[Theorem 1, pp. 4–5]{kolyvagin}`; read (AI) on fork
+> issue #83: https://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6962416523):
+> a modular elliptic curve `E/ℚ` with `ord_{s=1} L(E, s) = 1` has `rank E(ℚ) = 1` and finite
+> `Ш(E/ℚ)`. Theorem 1 (p. 4) assumes a weak Weil parametrization `X₀(N) → E` with `N` the conductor
+> (p. 3). `IsModular` is a weaker hypothesis, so this statement is a consequence of the print: it follows
+> from Kolyvagin's weak Weil parametrization hypothesis only through Shimura's construction (an abelian
+> variety quotient of `J₀(N)` attached to the newform) and Faltings' isogeny theorem (with trivial
+> nebentypus), the step BCDT cite
+> for (2) ⇒ (6) on p. 3 of their author manuscript. `Ш` is `SelmerTwoPower.sha` (Tau Ceti's Shafarevich–Tate group, local triviality at every
+> place). The print is a preprint, not a refereed paper (Known issue, round 1); its `r = 0` case is
+> not used.
 
 ## Credits
 
