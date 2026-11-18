@@ -30,6 +30,21 @@ killing coboundaries, a global trace whose local part is `∑_v tr_v` (`hsum`; R
   configuration conditions `SwitchCondsK.A₀`, `Ad` are arbitrary subcomplexes away from a switch
   place, so `hold` is not provable for the chain as stated; see (3) for the standard conditions.
 
+**(2) The switch place: strict `τ≤0` is the orthogonal complement of relaxed `τ≤1`** (PROVED
+from the PRINT `NekovarFibreLocalDuality`, Nekovář 5.6.3(i)):
+* `TruncShape01` (the shape of the pair: `U` in degree `0` onto `Z⁰(L)`, `U'` in degrees `0, 1`
+  onto `L'⁰` and `Z¹(L')`), and `trunc01_quasiIso` (generic, PROVED): if the full local duality map
+  `L → Hom_k(L', k)[−2]` has acyclic cone, the per-place local duality map of a `TruncShape01` pair
+  is a quasi-isomorphism, for any `τ≥2` isotropy homotopy (on homology: `H¹(L) ≅ H¹(L')^*`,
+  `H²(L) ≅ H⁰(L')^*`; the proof adapts lane RC26's cone argument, `coneAdj_solve`, degree by
+  degree, with `trunc01_finish`, `dual_factor_of_ker`, `dual_extend_of_injective`);
+* `strRelK_truncShape01` (PROVED): the chain's strict `[Z⁰ → 0]` and relaxed `[C⁰ → Z¹]` at the
+  switch place have that shape (any field, group, module and old conditions; non-vacuity of
+  `TruncShape01`);
+* `galRelSwitch_placeMap_q` (PROVED from the PRINT): `hq` at the fibre `k(𝔭)`, for any `τ≥2`
+  isotropy data and the local traces of one packet; `galRelSwitch_horth_of_print` (PROVED from
+  the PRINT and `hold`): `horth` with only the old places left as hypotheses.
+
 **(3) Finding: the singular side at a characteristic-zero fibre is not self-orthogonal.** For the
 standard conditions (`PlaceTameK.std`: `finCond = sideOfSetK I_v`, `singCond = sideOfSetK {φ_v}`)
 `hold` asks the finite side, resp. the singular side, to be its own orthogonal complement at each
@@ -68,7 +83,14 @@ open CategoryTheory ZInQ.Contrib.CloudB3RC53.PairedFunctional ZInQ.Contrib.Cloud
   ZInQ.Manuscript.RC.SelmerComplex NumberField IsDedekindDomain
 open ZInQ.Manuscript.RC.FibreDuality (FibreSwitch GalTruncIsotropyData galCompactTT galPairDataT
   FibreOrthogonalComplementsT FibreLocalTraces)
-open ZInQ.Manuscript.RC.KummerMaps (orthLocalMap orthNeg orthPlaceMap orth_localDualityMapT_quasiIso)
+open ZInQ.Manuscript.RC.KummerMaps (orthLocalMap orthNeg orthPlaceMap orth_localDualityMapT_quasiIso
+  orthLocalMap_apply orthNeg_f_apply)
+open ZInQ.Contrib.CloudB3RC53.Duality (LocalTruncIsotropy)
+open ZInQ.Manuscript.RC.FibreDuality (NekovarFibreLocalDuality NekovarFibreSetting IsLatticeTop
+  IsTateTwistFibre)
+open ZInQ.Manuscript.RC.Uniform (Lambda)
+open ZInQ.Manuscript.RC.Wiring (ResAt)
+open ZInQ.Manuscript.RC.LambdaCoef (IsHeightOneOdd)
 
 /-! ### (1) The per-place reduction -/
 
@@ -186,6 +208,356 @@ theorem galRelSwitch_UR_ne {v : Places K S} (hv : v ≠ q) :
   rw [switchRelK, ite_eq_right hv]
 
 end Reduction
+
+/-! ### (2) At the switch place: strict `τ≤0` against relaxed `τ≤1` -/
+
+section Trunc01
+
+variable {k : Type} [Field k]
+
+/-- **A linear form vanishing on `ker g` factors through `g`** (over a field: through
+`V/ker g ≅ im g`, then extended from `im g`). PROVED. -/
+theorem dual_factor_of_ker {V W : Type} [AddCommGroup V] [Module k V]
+    [AddCommGroup W] [Module k W] (g : V →ₗ[k] W) (f : V →ₗ[k] k) (h : ∀ v, g v = 0 → f v = 0) :
+    ∃ z : W →ₗ[k] k, ∀ v, z (g v) = f v := by
+  let f₁ : (V ⧸ LinearMap.ker g) →ₗ[k] k := (LinearMap.ker g).liftQ f (fun v hv => h v hv)
+  let f₂ : LinearMap.range g →ₗ[k] k := f₁ ∘ₗ g.quotKerEquivRange.symm.toLinearMap
+  obtain ⟨z, hz⟩ := LinearMap.exists_extend f₂
+  refine ⟨z, fun v => ?_⟩
+  have h1 := LinearMap.congr_fun hz ⟨g v, LinearMap.mem_range_self g v⟩
+  simp only [LinearMap.comp_apply, Submodule.coe_subtype] at h1
+  rw [h1]
+  simp only [f₂, f₁, LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearMap.quotKerEquivRange_symm_apply_image]
+  rfl
+
+/-- **A linear form extends along an injective linear map** (over a field). PROVED. -/
+theorem dual_extend_of_injective {V W : Type} [AddCommGroup V] [Module k V]
+    [AddCommGroup W] [Module k W] (ι : V →ₗ[k] W) (hι : Function.Injective ι) (φ : V →ₗ[k] k) :
+    ∃ z : W →ₗ[k] k, ∀ v, z (ι v) = φ v := by
+  obtain ⟨r, hr⟩ := ι.exists_leftInverse_of_injective (LinearMap.ker_eq_bot.mpr hι)
+  exact ⟨φ ∘ₗ r, fun v => by rw [LinearMap.comp_apply, ← LinearMap.comp_apply r ι, hr,
+    LinearMap.id_apply]⟩
+
+/-- **The shape of the pair (strict `τ≤0`, relaxed `τ≤1`)** of condition maps `iU : U → L`,
+`iU' : U' → L'` into complexes concentrated in degrees `≥ 0`: `U` lives in degree `0` and maps
+injectively onto the `0`-cocycles `Z⁰(L)`; `U'` lives in degrees `0, 1`, maps isomorphically onto
+`L'⁰` in degree `0` and injectively onto the `1`-cocycles `Z¹(L')` in degree `1` (tex L5068–5072:
+`D⁰ = τ≤0`, relaxed `τ≤1 = [C⁰ → Z¹]`). Kind: definition (non-vacuity: `strRelK_truncShape01`,
+for every switch place of every genuine local complex). -/
+structure TruncShape01 {U U' L L' : GCx k} (iU : GHom U L) (iU' : GHom U' L') : Prop where
+  /-- `L` vanishes in negative degrees. -/
+  hLneg : ∀ n, n < 0 → Subsingleton (L.X n)
+  /-- `L'` vanishes in negative degrees. -/
+  hL'neg : ∀ n, n < 0 → Subsingleton (L'.X n)
+  /-- `U` lives in degree `0`. -/
+  hUz : ∀ n, n ≠ 0 → Subsingleton (U.X n)
+  /-- `U'` lives in degrees `0, 1`. -/
+  hU'z : ∀ n, n ≠ 0 → n ≠ 1 → Subsingleton (U'.X n)
+  /-- `iU` is injective. -/
+  hUinj : ∀ n m (h : n = m), Function.Injective (iU.f n m h)
+  /-- `iU` hits the `0`-cocycles. -/
+  hU0 : ∀ n m (h : n = m) m' (h' : m + 1 = m'), n = 0 → ∀ x : L.X m, L.d m m' h' x = 0 →
+    ∃ u, iU.f n m h u = x
+  /-- `iU'` is injective. -/
+  hU'inj : ∀ n, Function.Injective (iU'.f n n rfl)
+  /-- `iU'` is onto in degree `0`. -/
+  hU'0 : ∀ n, n = 0 → Function.Surjective (iU'.f n n rfl)
+  /-- `iU'` hits the `1`-cocycles. -/
+  hU'1 : ∀ n m (h : n + 1 = m), n = 1 → ∀ y : L'.X n, L'.d n m h y = 0 →
+    ∃ y₁, iU'.f n n rfl y₁ = y
+
+variable {U U' L L' E : GCx k} (iU : GHom U L) (iU' : GHom U' L')
+  (P : GPair L L' E) (J : LocalTruncIsotropy iU iU' P) (trv : E.X 2 →ₗ[k] k)
+  (htrv : ∀ z, trv (E.d 1 2 rfl z) = 0)
+
+/-- **The primitive in degrees `j ≥ 2`**: a cycle `((u, x), φ)` of the cone of the per-place local
+duality map, with `u = 0` (the condition `U` lives in degree `0`), has a primitive as soon as some
+`z : Hom(L'^{4−j}, k)` restricts to `φ` on `U'` and satisfies `tr(x ∪ y) = (−1)^j z(dy)` on
+`L'^{3−j}`: solve `de' = −x` with `tr(e' ∪ ·) + (−1)^{j−1} z'(d ·) = z` by the acyclicity of the
+cone of the full local duality map (lane RC26's `coneAdj_solve`), and take `((0, e'), −z' ∘ i')`.
+PROVED. -/
+theorem trunc01_finish (htrv2 : ∀ z, trv (E.d (2 - 1) 2 (by omega) z) = 0)
+    (hacyc : GAcyclic (coneCx (adjHom P 2 trv htrv2)))
+    (hUz : ∀ n, n ≠ 0 → Subsingleton (U.X n))
+    (i j l : ℤ) (hij : i + 1 = j) (hjl : j + 1 = l) (hj : 2 ≤ j)
+    (u : U.X j) (x : L.X (j - 1)) (φ : (dualCx U' 3).X (j - 1))
+    (hc : (coneCx (orthLocalMap iU iU' P J trv htrv)).d j l hjl
+      ((((u, x) : coneT (orthNeg iU) j), φ) : coneT (orthLocalMap iU iU' P J trv htrv) j) = 0)
+    (z : Module.Dual k (L'.X (3 - (j - 1))))
+    (ha : ∀ y : U'.X (3 - (j - 1)), z (iU'.f _ _ rfl y) = asDual φ y)
+    (hb : ∀ y : L'.X (3 - (l - 1)), trv (P.P (j - 1) (3 - (l - 1)) 2 (by omega) x y) =
+      PairedFunctional.sgn (j - 2) • z (L'.d (3 - (l - 1)) (3 - (j - 1)) (by omega) y)) :
+    ∃ c', (coneCx (orthLocalMap iU iU' P J trv htrv)).d i j hij c' =
+      ((((u, x) : coneT (orthNeg iU) j), φ) : coneT (orthLocalMap iU iU' P J trv htrv) j) := by
+  have := hUz j (by omega)
+  have hu : u = 0 := Subsingleton.elim _ _
+  have h1 : (orthNeg iU).f j (l - 1) (by omega) u - L.d (j - 1) (l - 1) (by omega) x = 0 :=
+    congrArg (fun w => w.1.2) hc
+  rw [hu, map_zero, zero_sub, neg_eq_zero] at h1
+  have he : L.d (j - 1) (l - 1) (by omega) (-x) = 0 := by rw [map_neg, h1, neg_zero]
+  have hz : ∀ y : L'.X (3 - (l - 1)), trv (P.P (j - 1) (3 - (l - 1)) 2 (by omega) (-x) y) =
+      (-(PairedFunctional.sgn (j - 1 - 1))) • z (L'.d (3 - (l - 1)) (3 - (j - 1)) (by omega) y) := by
+    intro y
+    rw [show j - 1 - 1 = j - 2 by ring, LinearMap.map_neg₂, map_neg, hb y, neg_smul]
+  obtain ⟨e', z', he', hz'⟩ := coneAdj_solve P trv htrv2 hacyc (i - 1) (j - 1) (l - 1) (by omega)
+    (by omega) (3 - (l - 1)) (3 - (j - 1)) (3 - (i - 1)) (by omega) (by omega) (by omega) (-x) z he hz
+  let φ' : Module.Dual k (U'.X (3 - (i - 1))) := -(z'.comp (iU'.f (3 - (i - 1)) (3 - (i - 1)) rfl))
+  refine ⟨((((0 : U.X i), e') : coneT (orthNeg iU) i), φ'), ?_⟩
+  refine Prod.ext (Prod.ext ?_ ?_) ?_
+  · change U.d i j hij 0 = u
+    rw [map_zero, hu]
+  · change (orthNeg iU).f i (j - 1) (by omega) 0 - L.d (i - 1) (j - 1) (by omega) e' = x
+    rw [map_zero, zero_sub, he', neg_neg]
+  · refine dualCx_ext fun y => ?_
+    change asDual ((orthLocalMap iU iU' P J trv htrv).f i (j - 1) (by omega)
+        ((0, e') : coneT (orthNeg iU) i)) y -
+      asDual ((dualCx U' 3).d (i - 1) (j - 1) (by omega) φ') y = asDual φ y
+    rw [orthLocalMap_apply, LinearMap.map_zero₂, add_zero]
+    erw [dualCx_d_apply]
+    have hcomm := iU'.comm (3 - (j - 1)) (3 - (i - 1)) (3 - (j - 1)) (3 - (i - 1)) rfl (by omega)
+      (by omega) rfl y
+    have h3 : asDual φ' (U'.d (3 - (j - 1)) (3 - (i - 1)) (by omega) y) =
+        -z' (L'.d (3 - (j - 1)) (3 - (i - 1)) (by omega) (iU'.f _ _ rfl y)) := by
+      change -(z' (iU'.f (3 - (i - 1)) (3 - (i - 1)) rfl
+        (U'.d (3 - (j - 1)) (3 - (i - 1)) _ y))) = _
+      rw [hcomm]
+    rw [h3, ← ha y, ← hz' (iU'.f _ _ rfl y), sgn_pred (i - 1)]
+    simp only [zsmul_eq_mul, Int.cast_neg, smul_neg, neg_neg]
+    ring
+
+/-- **Strict `τ≤0` is the orthogonal complement of relaxed `τ≤1`, from local duality** (Nekovář
+6.2.7 at one place; tex L5062–5072): for condition maps of the shape `TruncShape01`, a local cup
+product `P : L × L' → E`, any `τ≥2` isotropy homotopy `J` and a local trace `tr` killing
+coboundaries, if the full local duality map `L → Hom_k(L', k)[−2]`, `a ↦ (b ↦ tr(a ∪ b))` has
+acyclic cone (it is a quasi-isomorphism: Nekovář 5.2.4/5.6.3(i)), then the per-place local duality
+map `Cone(U → L)[−1] → Hom_k(U', k)[−3]` is a quasi-isomorphism. On homology this is
+`H¹(L) ≅ H¹(L')^*` and `H²(L) ≅ H⁰(L')^*`; the proof is the cone chase, degree by degree (`≤ 0`:
+the cycles vanish; `1`: `Z⁰(L)` comes from `U`; `2`: injectivity of `H¹(L) → H¹(L')^*`, by
+factoring through `d`; `≥ 3`: extension along `U' → L'`, then `trunc01_finish`). PROVED. -/
+theorem trunc01_quasiIso (htrv2 : ∀ z, trv (E.d (2 - 1) 2 (by omega) z) = 0)
+    (hacyc : GAcyclic (coneCx (adjHom P 2 trv htrv2)))
+    (hS : TruncShape01 iU iU') :
+    QuasiIso (GHom.toCC (orthLocalMap iU iU' P J trv htrv)) := by
+  obtain ⟨hLneg, hL'neg, hUz, hU'z, hUinj, hU0, hU'inj, hU'0, hU'1⟩ := hS
+  refine quasiIso_of_coneCx_acyclic _ (fun i j l hij hjl c hc => ?_)
+  obtain ⟨⟨u, x⟩, φ⟩ := c
+  have h1 : (orthNeg iU).f j (l - 1) (by omega) u - L.d (j - 1) (l - 1) (by omega) x = 0 :=
+    congrArg (fun w => w.1.2) hc
+  have h2 : ∀ y : U'.X (3 - (l - 1)),
+      trv (P.P (j - 1) (3 - (l - 1)) 2 (by omega) x (iU'.f _ _ rfl y) +
+        J.h j (3 - (l - 1)) 2 (by omega) u y) =
+      (-(PairedFunctional.sgn (j - 1))) • asDual φ (U'.d (3 - (l - 1)) (3 - (j - 1)) (by omega) y) := by
+    intro y
+    have h : asDual ((orthLocalMap iU iU' P J trv htrv).f j (l - 1) (by omega)
+        ((u, x) : coneT (orthNeg iU) j)) y -
+        asDual ((dualCx U' 3).d (j - 1) (l - 1) (by omega) φ) y = 0 :=
+      LinearMap.congr_fun (congrArg Prod.snd hc) y
+    erw [orthLocalMap_apply, dualCx_d_apply] at h
+    exact sub_eq_zero.mp h
+  rcases (show j ≤ 0 ∨ j = 1 ∨ j = 2 ∨ 3 ≤ j by omega) with hj | hj | hj | hj
+  · -- degrees `≤ 0`: the cycle is zero
+    have hx : x = 0 := (hLneg (j - 1) (by omega)).elim _ _
+    have hu : u = 0 := by
+      by_cases hj0 : j = 0
+      · rw [hx, map_zero, sub_zero, orthNeg_f_apply, neg_eq_zero] at h1
+        exact hUinj j (l - 1) (by omega) (h1.trans (map_zero _).symm)
+      · exact (hUz j hj0).elim _ _
+    have hφ : φ = 0 := by
+      have := hU'z (3 - (j - 1)) (by omega) (by omega)
+      exact dualCx_ext fun y => by rw [Subsingleton.elim y 0, map_zero, map_zero]
+    refine ⟨0, ?_⟩
+    rw [map_zero, hu, hx, hφ]
+    rfl
+  · -- degree `1`: `x ∈ Z⁰` comes from the condition
+    have hu : u = 0 := (hUz j (by omega)).elim _ _
+    rw [hu, map_zero, zero_sub, neg_eq_zero] at h1
+    obtain ⟨u', hu'⟩ := hU0 i (j - 1) (by omega) (l - 1) (by omega) (by omega) (-x)
+      (by rw [map_neg, h1, neg_zero])
+    refine ⟨((((u', 0) : coneT (orthNeg iU) i)), 0), ?_⟩
+    refine Prod.ext (Prod.ext ?_ ?_) ?_
+    · exact (hUz j (by omega)).elim _ _
+    · change (orthNeg iU).f i (j - 1) (by omega) u' - L.d (i - 1) (j - 1) (by omega) 0 = x
+      rw [map_zero, sub_zero, orthNeg_f_apply, hu', neg_neg]
+    · have := hU'z (3 - (j - 1)) (by omega) (by omega)
+      exact dualCx_ext fun y => by rw [Subsingleton.elim y 0, map_zero, map_zero]
+  · -- degree `2`: injectivity of `H¹(L) → H¹(L')^*`
+    have hu : u = 0 := (hUz j (by omega)).elim _ _
+    have hf : ∀ y, L'.d (3 - (l - 1)) (3 - (j - 1)) (by omega) y = 0 →
+        trv (P.P (j - 1) (3 - (l - 1)) 2 (by omega) x y) = 0 := by
+      intro y hy
+      obtain ⟨y₁, rfl⟩ := hU'1 (3 - (l - 1)) (3 - (j - 1)) (by omega) (by omega) y hy
+      have h := h2 y₁
+      rw [hu, LinearMap.map_zero₂, add_zero] at h
+      have : Subsingleton (U'.X (3 - (j - 1))) := hU'z _ (by omega) (by omega)
+      rw [h, Subsingleton.elim (U'.d (3 - (l - 1)) (3 - (j - 1)) (by omega) y₁) 0, map_zero,
+        smul_zero]
+    obtain ⟨z₀, hz₀⟩ := dual_factor_of_ker (L'.d (3 - (l - 1)) (3 - (j - 1)) (by omega))
+      (trv ∘ₗ P.P (j - 1) (3 - (l - 1)) 2 (by omega) x) (fun y hy => hf y hy)
+    refine trunc01_finish iU iU' P J trv htrv htrv2 hacyc hUz i j l hij hjl (by omega) u x φ hc
+      (PairedFunctional.sgn (j - 2) • z₀) (fun y => ?_) (fun y => ?_)
+    · have : Subsingleton (U'.X (3 - (j - 1))) := hU'z _ (by omega) (by omega)
+      rw [Subsingleton.elim y 0]
+      simp
+    · rw [LinearMap.smul_apply, smul_smul, sgn_mul_self, one_smul, hz₀]
+      rfl
+  · -- degrees `≥ 3`: extend `φ` along the injective condition map
+    have hu : u = 0 := (hUz j (by omega)).elim _ _
+    obtain ⟨z, hz⟩ := dual_extend_of_injective (iU'.f (3 - (j - 1)) (3 - (j - 1)) rfl) (hU'inj _)
+      (asDual φ)
+    refine trunc01_finish iU iU' P J trv htrv htrv2 hacyc hUz i j l hij hjl (by omega) u x φ hc z hz
+      (fun y => ?_)
+    obtain ⟨y₀, rfl⟩ : ∃ y₀, iU'.f (3 - (l - 1)) (3 - (l - 1)) rfl y₀ = y := by
+      by_cases h3 : j = 3
+      · exact hU'0 _ (by omega) y
+      · have := hL'neg (3 - (l - 1)) (by omega)
+        exact ⟨0, Subsingleton.elim _ _⟩
+    have h := h2 y₀
+    rw [hu, LinearMap.map_zero₂, add_zero] at h
+    rw [h, ← iU'.comm (3 - (l - 1)) (3 - (j - 1)) (3 - (l - 1)) (3 - (j - 1)) rfl (by omega)
+      (by omega) rfl y₀, hz, show j - 2 = j - 1 - 1 by ring, sgn_pred, neg_smul, neg_smul]
+    rw [neg_neg, sgn_pred (j - 1), sgn_pred j, neg_neg]
+
+end Trunc01
+
+/-! ### The strict and relaxed derivative conditions have the shape `TruncShape01` -/
+
+section Shape
+
+variable {k : Type} [Field k] {ι : Type} [DecidableEq ι]
+  {Gv : ι → Type} [∀ v, Group (Gv v)] [∀ v, TopologicalSpace (Gv v)]
+  [∀ v, IsTopologicalGroup (Gv v)]
+  {Mv : ι → Type} [∀ v, AddCommGroup (Mv v)] [∀ v, Module k (Mv v)]
+  [∀ v, DistribMulAction (Gv v) (Mv v)] [∀ v, SMulCommClass (Gv v) k (Mv v)]
+  [∀ v, TopologicalSpace (Mv v)] [∀ v, ContinuousAdd (Mv v)]
+  [∀ v, ContinuousConstSMul k (Mv v)] [∀ v, ContinuousSMul (Gv v) (Mv v)]
+
+/-- The extension by zero of an `ℕ`-indexed complex vanishes in negative degrees. PROVED. -/
+theorem natCx_subsingleton_neg (Kc : CochainComplex (ModuleCat.{0} k) ℕ) (n : ℤ) (hn : n < 0) :
+    Subsingleton ((natCx Kc).X n) := by
+  rcases n with n | n
+  · exact absurd hn (not_lt.mpr (Int.natCast_nonneg n))
+  · exact (inferInstance : Subsingleton PUnit)
+
+/-- A submodule equal to `⊥` is a subsingleton. PROVED. -/
+theorem subsingleton_of_eq_bot {V : Type} [AddCommGroup V] [Module k V] (p : Submodule k V)
+    (h : p = ⊥) : Subsingleton p := by
+  subst h
+  infer_instance
+
+/-- **The strict and relaxed derivative conditions at a switch place have the shape
+`TruncShape01`** (tex L5068–5072): `[Z⁰ → 0] → C(G_q, M)` (through the relaxed condition) and
+`[C⁰ → Z¹] → C(G_q, M)`, for every family of old conditions, every topological group and every
+topological module (non-vacuity of `TruncShape01`). PROVED. -/
+theorem strRelK_truncShape01 (q : ι) (old : ∀ v, SubFam (locCxK k Gv Mv v)) :
+    TruncShape01 (ghomComp (SubFam.inclLe (switch_hsrK q old q)) (switchRelK k Gv Mv q old q).incl)
+      (switchRelK k Gv Mv q old q).incl where
+  hLneg n hn := natCx_subsingleton_neg _ n hn
+  hL'neg n hn := natCx_subsingleton_neg _ n hn
+  hUz n hn := by
+    change Subsingleton ↥((switchStrK k Gv Mv q old q).S n)
+    rw [switchStr_qK]
+    rcases n with (_ | _ | n) | n
+    · exact absurd rfl hn
+    · exact subsingleton_of_eq_bot _ rfl
+    · exact subsingleton_of_eq_bot _ rfl
+    · exact subsingleton_of_eq_bot _ rfl
+  hU'z n hn hn1 := by
+    change Subsingleton ↥((switchRelK k Gv Mv q old q).S n)
+    rw [switchRel_qK]
+    rcases n with (_ | _ | n) | n
+    · exact absurd rfl hn
+    · exact absurd rfl hn1
+    · exact subsingleton_of_eq_bot _ rfl
+    · exact subsingleton_of_eq_bot _ rfl
+  hUinj n m h := by
+    subst h
+    intro a b hab
+    exact Subtype.ext hab
+  hU0 n m h m' h' hn x hx := by
+    subst h hn h'
+    have hmem : x ∈ (switchStrK k Gv Mv q old q).S 0 := by
+      rw [switchStr_qK]
+      exact hx
+    exact ⟨⟨x, hmem⟩, rfl⟩
+  hU'inj n a b hab := Subtype.ext hab
+  hU'0 n hn x := by
+    subst hn
+    have hmem : x ∈ (switchRelK k Gv Mv q old q).S 0 := by
+      rw [switchRel_qK]
+      exact (Submodule.mem_top : x ∈ (⊤ : Submodule k ((locCxK k Gv Mv q).X 0)))
+    exact ⟨⟨x, hmem⟩, rfl⟩
+  hU'1 n m h hn y hy := by
+    subst hn h
+    have hmem : y ∈ (switchRelK k Gv Mv q old q).S 1 := by
+      rw [switchRel_qK]
+      exact hy
+    exact ⟨⟨y, hmem⟩, rfl⟩
+
+end Shape
+
+/-! ### At the fibres: `hq` from the local duality PRINT, and `horth` from `hold` -/
+
+section Fibre
+
+variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
+  {P : Ideal Lambda} [P.IsPrime] [IsHeightOneOdd P]
+  {M T : Type}
+  [AddCommGroup M] [Module (ResAt P) M] [Module Lambda M] [IsScalarTower Lambda (ResAt P) M]
+  [DistribMulAction (GKS K S) M] [SMulCommClass (GKS K S) (ResAt P) M] [TopologicalSpace M]
+  [IsTopologicalAddGroup M] [ContinuousConstSMul (ResAt P) M] [ContinuousSMul (GKS K S) M]
+  [AddCommGroup T] [Module (ResAt P) T] [Module Lambda T] [IsScalarTower Lambda (ResAt P) T]
+  [DistribMulAction (GKS K S) T] [SMulCommClass (GKS K S) (ResAt P) T] [TopologicalSpace T]
+  [IsTopologicalAddGroup T] [ContinuousConstSMul (ResAt P) T] [ContinuousSMul (GKS K S) T]
+  (β : M →ₗ[ResAt P] M →ₗ[ResAt P] T)
+  (hβ : ∀ (g : GKS K S) (a b : M), β (g • a) (g • b) = g • β a b)
+  (hβc : Continuous fun x : M × M => β x.1 x.2)
+  (C : SwitchCondsK (ResAt P) K S M) (c : Finset (Places K S)) (q : Places K S)
+  (Tq : TameCoordinatesTrivialK (ResAt P) (gMvK K S M q) (C.D.I q) (C.D.φ q) (C.D.σ q))
+
+open Classical in
+/-- **`hq`: at the switch place, strict `τ≤0` is the orthogonal complement of relaxed `τ≤1`**
+(tex L5062–5072; Nekovář 6.2.7 at `q` from 5.6.3(i)): for the chain's switch at the fibre
+`k(𝔭)`, any `τ≥2` isotropy data and the local traces of one packet `L`, the per-place local duality
+map at `q` is a quasi-isomorphism. Classification: PROVED from the PRINT
+`NekovarFibreLocalDuality` (with `trunc01_quasiIso` and `strRelK_truncShape01`). -/
+theorem galRelSwitch_placeMap_q (hL : NekovarFibreLocalDuality K) (hset : NekovarFibreSetting K S)
+    (hM : IsLatticeTop (GKS K S) M) (hTl : IsLatticeTop (GKS K S) T)
+    (hT : IsTateTwistFibre K S P T) (hb : Function.Bijective β) (hb' : Function.Bijective β.flip)
+    (I : GalTruncIsotropyData S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
+      (galRelSwitch C c q Tq).ΔR) (L : FibreLocalTraces S (ResAt P) T) :
+    QuasiIso (GHom.toCC (switchPlaceMap β hβ hβc (galRelSwitch C c q Tq) I L.trv
+      (fun v z => L.htrv v z) q)) :=
+  trunc01_quasiIso _ _ _ (I.toLocal q) (L.trv q) (fun z => L.htrv q z) (L.htrv q)
+    (coneCx_acyclic_of_quasiIso _ (hL S P hset M M T hM hM hTl hT β hβ hβc hb hb' q (L.trv q)
+      (L.htrv q) (L.iso q)))
+    (strRelK_truncShape01 q (C.old c))
+
+/-- **`horth` for the chain's switch at the fibre, modulo per-place self-orthogonality of the old
+conditions** (tex L5055–5086; Nekovář 6.2.7): the hypothesis `horth` of `FibreDualityWiring.lean`
+holds for the canonical trace packet once each old condition `old c v`, `v ≠ q`, is its own
+orthogonal complement (`hold`); the switch place is discharged by `galRelSwitch_placeMap_q`.
+Classification: PROVED from the PRINT `NekovarFibreLocalDuality` and the hypothesis `hold` (which
+FAILS for the standard singular side at a characteristic-zero fibre; finding (3)). -/
+theorem galRelSwitch_horth_of_print [Fintype (Places K S)] (hL : NekovarFibreLocalDuality K)
+    (hset : NekovarFibreSetting K S) (hM : IsLatticeTop (GKS K S) M)
+    (hTl : IsLatticeTop (GKS K S) T) (hT : IsTateTwistFibre K S P T) (hb : Function.Bijective β)
+    (hb' : Function.Bijective β.flip)
+    (I : GalTruncIsotropyData S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
+      (galRelSwitch C c q Tq).ΔR) (L : FibreLocalTraces S (ResAt P) T)
+    (tr : (galCompactTT S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
+      (galRelSwitch C c q Tq).ΔR I).X 3 →ₗ[ResAt P] ResAt P)
+    (htr : ∀ z, tr ((galCompactTT S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
+      (galRelSwitch C c q Tq).ΔR I).d 2 3 rfl z) = 0)
+    (hsum : L.Normalizes tr)
+    (hold : ∀ v, v ≠ q → QuasiIso (GHom.toCC (switchPlaceMap β hβ hβc (galRelSwitch C c q Tq) I
+      L.trv (fun v z => L.htrv v z) v))) :
+    FibreOrthogonalComplementsT β hβ hβc (galRelSwitch C c q Tq).ΔS (galRelSwitch C c q Tq).ΔR I
+      tr htr :=
+  fibreSwitch_horth_of_packet β hβ hβc (galRelSwitch C c q Tq) I L tr htr hsum q
+    (galRelSwitch_placeMap_q β hβ hβc C c q Tq hL hset hM hTl hT hb hb' I L) hold
+
+end Fibre
 
 /-! ### (3) The self-pairing at a place with trivial Frobenius -/
 
