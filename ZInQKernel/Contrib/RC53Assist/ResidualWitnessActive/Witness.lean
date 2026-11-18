@@ -153,7 +153,7 @@ theorem smul_ptEquiv (σ : Field.absoluteGaloisGroup F)
 
 open scoped Classical in
 /-- PROVED (tex 3413–3416). The Galois action is the action `WeierstrassCurve.pointGaloisAction`
-of the other group. -/
+(`ZInQKernel/Contrib/TauCeti/AlgebraicGeometry/EllipticCurve/Affine/Point/Galois.lean`). -/
 theorem pointGaloisAction_eq_smul (σ : Field.absoluteGaloisGroup F)
     (P : (B.baseChange (AlgebraicClosure F)).toAffine.Point) :
     ptEquiv F B (Multiplicative.toAdd (B.pointGaloisAction σ) P) = σ • ptEquiv F B P :=
@@ -242,7 +242,9 @@ theorem coe_smul_torsAlg {m : ℕ} (σ : Field.absoluteGaloisGroup F) (t : TorsA
 
 open scoped Classical in
 /-- PROVED (tex 3415–3417). The action on `B(F̄)[m]` is the action
-`WeierstrassCurve.torsionGaloisAction` of the other group, read through `ptEquiv`. -/
+`WeierstrassCurve.torsionGaloisAction`
+(`ZInQKernel/Contrib/TauCeti/AlgebraicGeometry/EllipticCurve/Affine/Point/Galois.lean`), read
+through `ptEquiv`. -/
 theorem torsionGaloisAction_eq_smul {m : ℕ} (σ : Field.absoluteGaloisGroup F)
     (t : AddSubgroup.torsionBy (B.baseChange (AlgebraicClosure F)).toAffine.Point (m : ℤ)) :
     ptEquiv F B ((Multiplicative.toAdd (B.torsionGaloisAction (m : ℤ) σ) t :
@@ -325,7 +327,8 @@ theorem exists_basePt_of_fixed [CharZero F] {Q : PtAlg F B}
 
 omit [DecidableEq F] in
 /-- PROVED (tex 3413–3417). **`B(F̄)` is `m`-divisible** for `B` elliptic, `m ≠ 0`, `F` of
-characteristic zero (the other group's `WeierstrassCurve.Affine.nsmul_surjective`). -/
+characteristic zero (`WeierstrassCurve.Affine.nsmul_surjective`,
+`ZInQKernel/Contrib/TauCeti/AlgebraicGeometry/EllipticCurve/Isogeny/MulByInt/Surjective.lean`). -/
 theorem exists_nsmul_eq [CharZero F] [B.IsElliptic] (m : ℕ) [NeZero m] (Q : PtAlg F B) :
     ∃ R : PtAlg F B, m • R = Q := by
   classical

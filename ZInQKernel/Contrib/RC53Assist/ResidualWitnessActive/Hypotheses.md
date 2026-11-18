@@ -1,6 +1,10 @@
 # Active residual witness: hypothesis inventory
 
 
+## Scope of the after-t witness (independent review, 2026-11-18)
+
+The after-t part is a valid nonzero model-level fixture, not a genuine t-deformation: the smaller-support model is the residual cone extended to F_2[[t]] (not built from a global character) and the original-support model is a split extension. The constructor `residualRankCounts_afterT` compares the models only through graded ranks, degreewise equivalences and a homotopy equivalence between supplied models, so it also accepts models with all differentials erased; and its counts sum over degrees 0, 1, 2 although the models live in degrees 0 to 3 (the degree-three term of the before-inverting-t model is positive). The F_2 witnesses of `residualRankCounts_genuine` and `residualRankCounts_actual` are not affected.
+
 ## Update (2026-11-18)
 
 The module `ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ResidualAfterT` is now part of the integration branch, so `Witness.lean` imports it and calls `ZInQ.Contrib.CloudB3RC53.GenuineInst.residualRankCounts_afterT` directly; the former copied section `AfterTCopy` described below has been removed. The copied local Kummer section is unchanged.
@@ -147,3 +151,5 @@ Milne, *Arithmetic Duality Theorems*, 2nd ed. (2006), Ch. I: Theorem 4.10(c) (pp
 Theorem 5.1 (p. 67), Theorem 2.8 (p. 31), Corollary 2.3 (p. 28); Nekovář, *Selmer complexes*,
 Astérisque 310 (2006), Proposition 7.8.8(ii) (pp. 186–187). They are explicit hypotheses of the
 statements; the locators are those of the repository's statements of these propositions.
+
+Note (independent review, 2026-11-18): the input `hM0` of the constructors holds trivially at this instance and should be read as TRIVIAL in the tables below. `Axioms.txt` was regenerated so that declaration names containing an apostrophe are printed in full.
