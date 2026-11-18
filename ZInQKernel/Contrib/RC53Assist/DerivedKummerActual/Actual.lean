@@ -1,3 +1,9 @@
+import ZInQKernel.Contrib.CloudB3RC53.Torsion.KummerIdentification
+import Mathlib
+import ZInQKernel.Contrib.OneProof.RC.SelmerComplex.Selmer
+import ZInQKernel.Contrib.CloudB3RC53.SelmerDuality.Dual
+import ZInQKernel.Contrib.CloudB3RC53.Duality.KummerTruncIsotropy
+import ZInQKernel.Contrib.RC53Assist.DerivedKummer.ComparisonAlgebra
 import ZInQKernel.Contrib.RC53Assist.DerivedKummer.LocalDuality
 import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.MulByInt.Comp
 import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.MulByInt.WeilPairing.Basic
@@ -2977,5 +2983,1539 @@ theorem integralCup_invariant_compatibility (a : ℕ)
   rfl
 
 end ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralCompatibility
+
+end
+
+/-!
+# Extension of a scalar map from a saturated kernel
+
+A kernel with torsion-free target splits inside every finitely generated
+submodule over a principal ideal domain. Compactness of the scalar ring
+then assembles the finite extensions into a scalar-linear map on the
+entire source. No global complement of the kernel is assumed.
+-/
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.TraceExtension
+
+section FiniteExtension
+
+variable {R N V : Type*} [CommRing R] [IsDomain R] [IsPrincipalIdealRing R]
+  [AddCommGroup N] [Module R N] [AddCommGroup V] [Module R V]
+  [Module.IsTorsionFree R V]
+
+/-- A scalar map on the genuine kernel extends over each finitely generated source submodule. -/
+theorem kernel_extension_on_finite_submodule (d : N →ₗ[R] V) (f : LinearMap.ker d →ₗ[R] R)
+    (U : Submodule R N) [Module.Finite R U] :
+    ∃ h : U →ₗ[R] R, ∀ (u : U) (hu : d u.val = 0), h u = f ⟨u.val, hu⟩ := by
+  let q : U →ₗ[R] V := d.comp U.subtype
+  let q' : U →ₗ[R] LinearMap.range q := q.rangeRestrict
+  have hsurj : Function.Surjective q' := by
+    rintro ⟨v, u, hu⟩
+    exact ⟨u, Subtype.ext hu⟩
+  obtain ⟨s, hs⟩ := Module.projective_lifting_property q'
+    (LinearMap.id : LinearMap.range q →ₗ[R] LinearMap.range q) hsurj
+  let p : U →ₗ[R] LinearMap.ker d :=
+    (U.subtype - U.subtype.comp (s.comp q')).codRestrict _ (by
+      intro u
+      change d (u.val - (s (q' u)).val) = 0
+      rw [map_sub]
+      have h := congrArg (fun t : LinearMap.range q => t.val) (LinearMap.congr_fun hs (q' u))
+      change d (s (q' u)).val = d u.val at h
+      rw [h, sub_self])
+  refine ⟨f.comp p, ?_⟩
+  intro u hu
+  have hq : q' u = 0 := Subtype.ext hu
+  change f ⟨u.val - (s (q' u)).val, _⟩ = f ⟨u.val, hu⟩
+  apply congrArg f
+  apply Subtype.ext
+  change u.val - (s (q' u)).val = u.val
+  rw [hq, map_zero, Submodule.coe_zero, sub_zero]
+
+end FiniteExtension
+
+section CompactExtension
+
+variable {R N V : Type*} [CommRing R] [IsDomain R] [IsPrincipalIdealRing R]
+  [TopologicalSpace R] [IsTopologicalRing R] [CompactSpace R] [T2Space R]
+  [AddCommGroup N] [Module R N] [AddCommGroup V] [Module R V]
+  [Module.IsTorsionFree R V]
+
+/-- The equations required of an extension: additivity, scalar linearity and agreement on the kernel. -/
+abbrev Equation (d : N →ₗ[R] V) := (N × N) ⊕ ((R × N) ⊕ LinearMap.ker d)
+
+open scoped Classical in
+/-- The finite source support of one extension equation. -/
+def equationSupport (d : N →ₗ[R] V) : Equation d → Finset N
+  | Sum.inl (x, y) => {x, y, x + y}
+  | Sum.inr (Sum.inl (r, x)) => {x, r • x}
+  | Sum.inr (Sum.inr x) => {x.val}
+
+/-- One closed condition on a prospective scalar extension. -/
+def equationSet (d : N →ₗ[R] V) (f : LinearMap.ker d →ₗ[R] R) : Equation d → Set (N → R)
+  | Sum.inl (x, y) => {h | h (x + y) = h x + h y}
+  | Sum.inr (Sum.inl (r, x)) => {h | h (r • x) = r * h x}
+  | Sum.inr (Sum.inr x) => {h | h x.val = f x}
+
+/-- Each actual extension equation is closed in the compact product of scalar rings. -/
+theorem equationSet_closed (d : N →ₗ[R] V) (f : LinearMap.ker d →ₗ[R] R) (e : Equation d) :
+    IsClosed (equationSet d f e) := by
+  rcases e with ⟨x, y⟩ | (⟨r, x⟩ | x)
+  · exact isClosed_eq (continuous_apply (x + y)) ((continuous_apply x).add (continuous_apply y))
+  · exact isClosed_eq (continuous_apply (r • x)) (continuous_const.mul (continuous_apply x))
+  · exact isClosed_eq (continuous_apply x.val) continuous_const
+
+/-- A linear map from a kernel with torsion-free target extends to the whole source over a compact scalar PID. -/
+theorem kernel_extension_of_compact_scalar (d : N →ₗ[R] V) (f : LinearMap.ker d →ₗ[R] R) :
+    ∃ h : N →ₗ[R] R, ∀ x : LinearMap.ker d, h x.val = f x := by
+  classical
+  have hfinite : ∀ s : Finset (Equation d), (⋂ e ∈ s, equationSet d f e).Nonempty := by
+    intro s
+    let nodes := s.biUnion (equationSupport d)
+    let U : Submodule R N := Submodule.span R (nodes : Set N)
+    obtain ⟨g, hg⟩ := kernel_extension_on_finite_submodule d f U
+    let h : N → R := fun x => if hx : x ∈ U then g ⟨x, hx⟩ else 0
+    have hvalue (x : N) (hx : x ∈ U) : h x = g ⟨x, hx⟩ := dif_pos hx
+    refine ⟨h, ?_⟩
+    simp only [Set.mem_iInter]
+    intro e he
+    have hmem (x : N) (hx : x ∈ equationSupport d e) : x ∈ U :=
+      Submodule.subset_span (Finset.mem_biUnion.mpr ⟨e, he, hx⟩)
+    rcases e with ⟨x, y⟩ | (⟨r, x⟩ | x)
+    · have hx : x ∈ U := hmem x (by simp [equationSupport])
+      have hy : y ∈ U := hmem y (by simp [equationSupport])
+      change h (x + y) = h x + h y
+      rw [hvalue (x + y) (U.add_mem hx hy), hvalue x hx, hvalue y hy]
+      exact map_add g ⟨x, hx⟩ ⟨y, hy⟩
+    · have hx : x ∈ U := hmem x (by simp [equationSupport])
+      change h (r • x) = r * h x
+      rw [hvalue (r • x) (U.smul_mem r hx), hvalue x hx]
+      exact map_smul g r ⟨x, hx⟩
+    · have hx : x.val ∈ U := hmem x.val (by simp [equationSupport])
+      change h x.val = f x
+      rw [hvalue x.val hx]
+      exact hg ⟨x.val, hx⟩ x.2
+  obtain ⟨h, hh⟩ := CompactSpace.iInter_nonempty (equationSet_closed d f) hfinite
+  have hAdd (x y : N) : h (x + y) = h x + h y :=
+    Set.mem_iInter.mp hh (Sum.inl (x, y))
+  have hSmul (r : R) (x : N) : h (r • x) = r * h x :=
+    Set.mem_iInter.mp hh (Sum.inr (Sum.inl (r, x)))
+  let g : N →ₗ[R] R :=
+    { toFun := h
+      map_add' := hAdd
+      map_smul' := fun r x => hSmul r x }
+  exact ⟨g, fun x => Set.mem_iInter.mp hh (Sum.inr (Sum.inr x))⟩
+
+end CompactExtension
+
+section TwoAdicTate
+
+open TauCeti
+
+/-- The genuine two-adic Tate module is torsion-free over the actual scalar ring. -/
+theorem tateModule_isTorsionFree (A : Type*) [AddCommGroup A] :
+    Module.IsTorsionFree ℤ_[2] (TateModule 2 A) := by
+  apply Module.IsTorsionFree.of_smul_eq_zero
+  intro r x hx
+  by_cases hr : r = 0
+  · exact Or.inl hr
+  · right
+    apply TateModule.eq_zero_of_pow_nsmul_eq_zero (k := r.valuation)
+    let u : ℤ_[2]ˣ := PadicInt.unitCoeff hr
+    have hru : r = (u : ℤ_[2]) * (2 : ℤ_[2]) ^ r.valuation := PadicInt.unitCoeff_spec hr
+    rw [hru, mul_smul] at hx
+    have h := congrArg (fun y : TateModule 2 A => (u⁻¹ : ℤ_[2]ˣ).val • y) hx
+    simp only [← mul_smul, smul_zero] at h
+    rw [← mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mul] at h
+    have hp : ((2 : ℤ_[2]) ^ r.valuation) • x = (2 ^ r.valuation : ℕ) • x := by
+      rw [← Nat.cast_smul_eq_nsmul (R := ℤ_[2]), Nat.cast_pow, Nat.cast_ofNat]
+    rwa [hp] at h
+
+end TwoAdicTate
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.TraceExtension
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.AllCochainTrace
+
+open TauCeti TauCeti.ContCohomology
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.TraceExtension
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralTrace
+
+variable (F : Type) [Field F]
+
+/-- The actual integral trace-target cochains are torsion-free over the genuine scalar ring. -/
+theorem traceCochains_isTorsionFree (n : ℕ) : Module.IsTorsionFree ℤ_[2] ((actualTraceComplex F).X n) := by
+  haveI : Module.IsTorsionFree ℤ_[2] (IntegralTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F)) :=
+    tateModule_isTorsionFree (UnitsCoeff F)
+  apply Module.IsTorsionFree.of_smul_eq_zero
+  intro r c hc
+  by_cases hr : r = 0
+  · exact Or.inl hr
+  · right
+    apply Subtype.ext
+    funext s
+    change (cfun c s : IntegralTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F)) = 0
+    have h : r • (cfun c s : IntegralTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F)) = 0 :=
+      congrArg (fun v => cfun v s) hc
+    exact (smul_eq_zero_iff_right (M := IntegralTateCoeff (AbsoluteGaloisGroup F) (UnitsCoeff F)) hr).mp h
+
+variable [CharZero F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
+
+/-- The normalized genuine cycle invariant extends linearly to all actual degree-two cochains. -/
+theorem allCochainTraceExtension_exists :
+    ∃ trv : (actualTraceComplex F).X 2 →ₗ[ℤ_[2]] ℤ_[2],
+      ∀ z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom,
+        trv z.val = normalizedCycleTrace F z := by
+  haveI := traceCochains_isTorsionFree F 3
+  exact kernel_extension_of_compact_scalar ((actualTraceComplex F).d 2 3).hom (normalizedCycleTrace F)
+
+/-- A fixed all-cochain extension of the independently normalized actual local invariant. -/
+def trv : (actualTraceComplex F).X 2 →ₗ[ℤ_[2]] ℤ_[2] :=
+  (allCochainTraceExtension_exists F).choose
+
+/-- On actual cocycles the fixed all-cochain trace is the genuine normalized local invariant. -/
+theorem trv_on_cycles (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) :
+    trv F z.val = normalizedCycleTrace F z :=
+  (allCochainTraceExtension_exists F).choose_spec z
+
+/-- The actual all-cochain trace kills every genuine continuous coboundary. -/
+theorem htrv (y : (actualTraceComplex F).X 1) :
+    trv F (((actualTraceComplex F).d 1 2).hom y) = 0 := by
+  have hz : ((actualTraceComplex F).d 2 3).hom (((actualTraceComplex F).d 1 2).hom y) = 0 := by
+    have h := congrArg (fun f => f.hom y) ((actualTraceComplex F).d_comp_d 1 2 3)
+    simpa only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_zero, LinearMap.zero_apply] using h
+  rw [trv_on_cycles F ⟨_, hz⟩]
+  exact normalizedCycleTrace_boundary F ⟨_, hz⟩ y rfl
+
+/-- A genuine integral target cocycle in the trace kernel is a genuine continuous coboundary. -/
+theorem hker (z : (actualTraceComplex F).X 2)
+    (hz : ((actualTraceComplex F).d 2 3).hom z = 0) (htrace : trv F z = 0) :
+    ∃ y : (actualTraceComplex F).X 1, ((actualTraceComplex F).d 1 2).hom y = z := by
+  apply (normalizedCycleTrace_eq_zero_iff_boundary F ⟨z, hz⟩).mp
+  rw [← trv_on_cycles]
+  exact htrace
+
+/-- The fixed all-cochain trace has the independently specified finite local invariant on every actual cocycle. -/
+theorem trv_finite_normalization
+    (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom) (a : ℕ) :
+    PadicInt.toZModPow a (trv F z.val) =
+      FiniteTrace.finiteInvariant F (2 ^ a) (twoPower_isUnit F a) (actualMuH2Reduction F a z) := by
+  rw [trv_on_cycles, normalizedCycleTrace_projection]
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.AllCochainTrace
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralTransport
+
+open CategoryTheory TauCeti TauCeti.ContCohomology
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteTrace
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+
+variable (F : Type) [Field F] [CharZero F] [DecidableEq F] (B : WeierstrassCurve F) [B.IsElliptic]
+
+/-- The actual integral Tate coefficient map from the algebraic closure to the separable closure. -/
+def toSepCoefficients : IntegralTateCoeff (Field.absoluteGaloisGroup F) (PtAlg F B) →ₗ[ℤ_[2]]
+    IntegralTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff :=
+  TateModule.mapLinearMap (pointCoeffToAlg F B).symm.toAddMonoidHom
+
+/-- The inverse integral Tate coefficient map is induced by the canonical closure inclusion. -/
+def toAlgCoefficients : IntegralTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff →ₗ[ℤ_[2]]
+    IntegralTateCoeff (Field.absoluteGaloisGroup F) (PtAlg F B) :=
+  TateModule.mapLinearMap (pointCoeffToAlg F B).toAddMonoidHom
+
+/-- Integral coefficient transport preserves the actual inverse-limit topology. -/
+theorem toSepCoefficients_continuous : Continuous (toSepCoefficients F B) := by
+  apply TateModule.continuous_iff.mpr
+  intro a
+  exact (TateModule.isLocallyConstant_proj a).comp
+    (TateModule.levelMap (pointCoeffToAlg F B).symm.toAddMonoidHom a)
+
+/-- The inverse integral coefficient transport is continuous. -/
+theorem toAlgCoefficients_continuous : Continuous (toAlgCoefficients F B) := by
+  apply TateModule.continuous_iff.mpr
+  intro a
+  exact (TateModule.isLocallyConstant_proj a).comp
+    (TateModule.levelMap (pointCoeffToAlg F B).toAddMonoidHom a)
+
+/-- The inverse point dictionary intertwines the genuine absolute Galois actions. -/
+theorem pointCoeffToSep_smul (σ : AbsoluteGaloisGroup F) (p : PtAlg F B) :
+    (pointCoeffToAlg F B).symm ((absoluteGaloisGroupRestrictEquiv F).symm σ • p) =
+      σ • (pointCoeffToAlg F B).symm p := by
+  apply (pointCoeffToAlg F B).injective
+  rw [(pointCoeffToAlg F B).apply_symm_apply]
+  have h := pointCoeffToAlg_smul F B ((absoluteGaloisGroupRestrictEquiv F).symm σ)
+    ((pointCoeffToAlg F B).symm p)
+  rw [(absoluteGaloisGroupRestrictEquiv F).apply_symm_apply,
+    (pointCoeffToAlg F B).apply_symm_apply] at h
+  exact h.symm
+
+/-- Integral coefficient transport intertwines the actual Galois action along the actual group equivalence. -/
+theorem toSepCoefficients_smul (σ : AbsoluteGaloisGroup F)
+    (x : IntegralTateCoeff (Field.absoluteGaloisGroup F) (PtAlg F B)) :
+    toSepCoefficients F B ((absoluteGaloisGroupRestrictEquiv F).symm σ • x) =
+      σ • toSepCoefficients F B x := by
+  apply TateModule.ext
+  intro a
+  apply Subtype.ext
+  exact pointCoeffToSep_smul F B σ (TateModule.proj a x).val
+
+/-- The inverse integral coefficient map intertwines the actual group actions. -/
+theorem toAlgCoefficients_smul (σ : Field.absoluteGaloisGroup F)
+    (x : IntegralTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff) :
+    toAlgCoefficients F B (absoluteGaloisGroupRestrictEquiv F σ • x) =
+      σ • toAlgCoefficients F B x := by
+  apply TateModule.ext
+  intro a
+  apply Subtype.ext
+  exact pointCoeffToAlg_smul F B σ (TateModule.proj a x).val
+
+/-- The actual integral cochain transport to the separable-closure description used by the cup. -/
+def toSepComplex : actualIntegralComplex F B ⟶ IntegralPairing.pointComplex F B :=
+  contCochainsMap ⟨(absoluteGaloisGroupRestrictEquiv F).symm.toMulEquiv.toMonoidHom,
+      (absoluteGaloisGroupRestrictEquiv F).symm.continuous⟩
+    (toSepCoefficients F B) (toSepCoefficients_continuous F B) (toSepCoefficients_smul F B)
+
+/-- The inverse genuine cochain transport along the canonical closure dictionary. -/
+def toAlgComplex : IntegralPairing.pointComplex F B ⟶ actualIntegralComplex F B :=
+  contCochainsMap ⟨(absoluteGaloisGroupRestrictEquiv F).toMulEquiv.toMonoidHom,
+      (absoluteGaloisGroupRestrictEquiv F).continuous⟩
+    (toAlgCoefficients F B) (toAlgCoefficients_continuous F B) (toAlgCoefficients_smul F B)
+
+/-- The actual integral cochain transport has its prescribed coefficient-and-group formula in every degree. -/
+theorem toSepComplex_apply (n : ℕ) (c : (actualIntegralComplex F B).X n)
+    (s : Fin n → AbsoluteGaloisGroup F) :
+    cfun (((toSepComplex F B).f n).hom c) s =
+      toSepCoefficients F B (cfun c (fun i => (absoluteGaloisGroupRestrictEquiv F).symm (s i))) := rfl
+
+/-- The genuine cochain transport restricted to actual integral one-cocycles. -/
+def toSepCycle : LinearMap.ker ((actualIntegralComplex F B).d 1 2).hom →ₗ[ℤ_[2]]
+    LinearMap.ker ((IntegralPairing.pointComplex F B).d 1 2).hom where
+  toFun c := ⟨((toSepComplex F B).f 1).hom c.val, by
+    change ((IntegralPairing.pointComplex F B).d 1 2).hom (((toSepComplex F B).f 1).hom c.val) = 0
+    have h := congrArg (fun f => f.hom c.val) ((toSepComplex F B).comm 1 2)
+    have hc : ((actualIntegralComplex F B).d 1 2).hom c.val = 0 := c.2
+    simpa only [ModuleCat.hom_comp, LinearMap.comp_apply, hc, map_zero] using h⟩
+  map_add' c d := Subtype.ext (map_add ((toSepComplex F B).f 1).hom c.val d.val)
+  map_smul' r c := Subtype.ext (map_smul ((toSepComplex F B).f 1).hom r c.val)
+
+/-- Actual finite cochain projection commutes with the actual integral closure transport in every degree. -/
+theorem toSepComplex_reduction (a n : ℕ) (c : (actualIntegralComplex F B).X n)
+    (s : Fin n → AbsoluteGaloisGroup F) :
+    IntegralPairing.pointLevelEquiv F B a
+      (cfun (((reduceCochains (AbsoluteGaloisGroup F) B.PointCoeff a).f n).hom
+        (((toSepComplex F B).f n).hom c)) s) =
+      (torsionCoeffToAlg F B (2 ^ a)).symm
+        (actualLevelEquiv F B a (cfun
+          (((reduceCochains (Field.absoluteGaloisGroup F) (PtAlg F B) a).f n).hom c)
+            (fun i => (absoluteGaloisGroupRestrictEquiv F).symm (s i)))) := by
+  apply Subtype.ext
+  rfl
+
+/-- Integral closure transport followed by its inverse is the identity on actual coefficients. -/
+theorem toAlg_toSep_coefficients
+    (x : IntegralTateCoeff (Field.absoluteGaloisGroup F) (PtAlg F B)) :
+    toAlgCoefficients F B (toSepCoefficients F B x) = x := by
+  apply TateModule.ext
+  intro a
+  apply Subtype.ext
+  exact (pointCoeffToAlg F B).apply_symm_apply (TateModule.proj a x).val
+
+/-- The inverse closure transport followed by the forward map is the identity on actual coefficients. -/
+theorem toSep_toAlg_coefficients
+    (x : IntegralTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff) :
+    toSepCoefficients F B (toAlgCoefficients F B x) = x := by
+  apply TateModule.ext
+  intro a
+  apply Subtype.ext
+  exact (pointCoeffToAlg F B).symm_apply_apply (TateModule.proj a x).val
+
+/-- The actual cochain closure transports are inverse in every degree. -/
+theorem toSepComplex_toAlgComplex : toSepComplex F B ≫ toAlgComplex F B = 𝟙 (actualIntegralComplex F B) := by
+  ext n c
+  apply Subtype.ext
+  funext s
+  change toAlgCoefficients F B (toSepCoefficients F B
+      (cfun c (fun i => (absoluteGaloisGroupRestrictEquiv F).symm (absoluteGaloisGroupRestrictEquiv F (s i))))) =
+    cfun c s
+  simp only [(absoluteGaloisGroupRestrictEquiv F).symm_apply_apply, toAlg_toSep_coefficients]
+
+/-- The inverse cochain transport has the reverse identity law. -/
+theorem toAlgComplex_toSepComplex : toAlgComplex F B ≫ toSepComplex F B = 𝟙 (IntegralPairing.pointComplex F B) := by
+  ext n c
+  apply Subtype.ext
+  funext s
+  change toSepCoefficients F B (toAlgCoefficients F B
+      (cfun c (fun i => absoluteGaloisGroupRestrictEquiv F ((absoluteGaloisGroupRestrictEquiv F).symm (s i))))) =
+    cfun c s
+  simp only [(absoluteGaloisGroupRestrictEquiv F).apply_symm_apply, toSep_toAlg_coefficients]
+
+/-- The actual integral closure comparison is an isomorphism of the genuine cochain complexes. -/
+def closureCochainIso : actualIntegralComplex F B ≅ IntegralPairing.pointComplex F B where
+  hom := toSepComplex F B
+  inv := toAlgComplex F B
+  hom_inv_id := toSepComplex_toAlgComplex F B
+  inv_hom_id := toAlgComplex_toSepComplex F B
+
+/-- The fixed finite algebraic-closure cocycle of an actual integral one-cocycle. -/
+def algReductionZ1 (a : ℕ) (c : LinearMap.ker ((actualIntegralComplex F B).d 1 2).hom) :
+    Z1 (Field.absoluteGaloisGroup F) (TorsAlg F B (2 ^ a)) :=
+  cocyclesMap1 (Field.absoluteGaloisGroup F) (FiniteTateCoeff (Field.absoluteGaloisGroup F) (PtAlg F B) a)
+    (Field.absoluteGaloisGroup F) (TorsAlg F B (2 ^ a)) (ContinuousMonoidHom.id _)
+    (actualLevelEquiv F B a).toAddMonoidHom continuous_of_discreteTopology (actualLevelEquiv_smul F B a)
+    ⟨fun σ => cfun (reduceOneCycle (Field.absoluteGaloisGroup F) (PtAlg F B) a c).val (fun _ => σ),
+      mem_Z1_of_d_eq_zero _ (reduceOneCycle (Field.absoluteGaloisGroup F) (PtAlg F B) a c).2⟩
+
+/-- The genuine algebraic-closure class reduction is the class of its specific finite cocycle. -/
+theorem actualH1Reduction_class (a : ℕ) (c : LinearMap.ker ((actualIntegralComplex F B).d 1 2).hom) :
+    actualH1Reduction F B a c = H1pi (Field.absoluteGaloisGroup F) (TorsAlg F B (2 ^ a))
+      (algReductionZ1 F B a c) := rfl
+
+/-- The fixed finite separable-closure cocycle of an actual integral one-cocycle. -/
+def sepReductionZ1 (a : ℕ) (c : LinearMap.ker ((IntegralPairing.pointComplex F B).d 1 2).hom) :
+    Z1 (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a)) :=
+  cocyclesMap1 (AbsoluteGaloisGroup F) (FiniteTateCoeff (AbsoluteGaloisGroup F) B.PointCoeff a)
+    (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a)) (ContinuousMonoidHom.id _)
+    (IntegralPairing.pointLevelEquiv F B a).toAddMonoidHom continuous_of_discreteTopology
+    (IntegralPairing.pointLevelEquiv_smul F B a)
+    ⟨fun σ => cfun (reduceOneCycle (AbsoluteGaloisGroup F) B.PointCoeff a c).val (fun _ => σ),
+      mem_Z1_of_d_eq_zero _ (reduceOneCycle (AbsoluteGaloisGroup F) B.PointCoeff a c).2⟩
+
+/-- The genuine separable-closure class reduction is the class of its specific finite cocycle. -/
+theorem pointH1Reduction_class (a : ℕ)
+    (c : LinearMap.ker ((IntegralPairing.pointComplex F B).d 1 2).hom) :
+    IntegralPairing.pointH1Reduction F B a c = H1pi (AbsoluteGaloisGroup F) (B.TorsionCoeff (2 ^ a))
+      (sepReductionZ1 F B a c) := rfl
+
+/-- The actual finite Kummer class reductions commute with the genuine integral closure isomorphism. -/
+theorem integralReduction_square (a : ℕ)
+    (c : LinearMap.ker ((actualIntegralComplex F B).d 1 2).hom) :
+    IntegralPairing.pointH1Reduction F B a (toSepCycle F B c) =
+      (hOneToAlg F B (2 ^ a)).symm (actualH1Reduction F B a c) := by
+  rw [pointH1Reduction_class, actualH1Reduction_class]
+  erw [hOneToAlg, explicitMap1Equiv_symm_apply, explicitMap1_mk]
+
+/-- Actual integral cochain closure transport commutes with every differential. -/
+theorem toSepComplex_d (n : ℕ) (c : (actualIntegralComplex F B).X n) :
+    ((toSepComplex F B).f (n + 1)).hom (((actualIntegralComplex F B).d n (n + 1)).hom c) =
+      ((IntegralPairing.pointComplex F B).d n (n + 1)).hom (((toSepComplex F B).f n).hom c) := by
+  have h := congrArg (fun f => f.hom c) ((toSepComplex F B).comm n (n + 1))
+  simpa only [ModuleCat.hom_comp, LinearMap.comp_apply] using h.symm
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralTransport
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.TransportedLocal
+
+open CategoryTheory NumberField IsDedekindDomain TauCeti TauCeti.ContCohomology
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralPairing
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralTransport
+
+variable (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+  [DecidableEq (w.adicCompletion K)] (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+
+/-- The earlier actual local degree-one Kummer presentation map transported to the genuine cup coefficients. -/
+def localKummerOne : (Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) →ₗ[ℤ_[2]]
+    LinearMap.ker ((pointComplex (w.adicCompletion K) B).d 1 2).hom :=
+  (toSepCycle (w.adicCompletion K) B).comp (actualLocalKummerOne K w B)
+
+/-- The earlier actual local degree-zero Kummer presentation map transported by the same integral isomorphism. -/
+def localKummerZero : (Fin (actualLocalPresentation K w B).rankOne → ℤ_[2]) →ₗ[ℤ_[2]]
+    (pointComplex (w.adicCompletion K) B).X 0 :=
+  ((toSepComplex (w.adicCompletion K) B).f 0).hom.comp (actualLocalKummerZero K w B)
+
+/-- The fixed genuine transported local maps satisfy the differential square of the original actual presentation. -/
+theorem localKummerZero_d (u : Fin (actualLocalPresentation K w B).rankOne → ℤ_[2]) :
+    ((pointComplex (w.adicCompletion K) B).d 0 1).hom (localKummerZero K w B u) =
+      (localKummerOne K w B ((actualLocalPresentation K w B).f u)).val := by
+  change ((pointComplex (w.adicCompletion K) B).d 0 1).hom
+      (((toSepComplex (w.adicCompletion K) B).f 0).hom (actualLocalKummerZero K w B u)) =
+    ((toSepComplex (w.adicCompletion K) B).f 1).hom
+      (actualLocalKummerOne K w B ((actualLocalPresentation K w B).f u)).val
+  rw [← toSepComplex_d, actualLocalKummerZero_d]
+
+/-- The fixed class reduction of the transported actual local presentation is exactly the previously specified genuine finite local reduction. -/
+theorem localKummerOne_reduction (a : ℕ)
+    (u : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) :
+    pointH1Reduction (w.adicCompletion K) B a (localKummerOne K w B u) =
+      actualLocalReduction K w B a u := by
+  change pointH1Reduction (w.adicCompletion K) B a
+    (toSepCycle (w.adicCompletion K) B (actualLocalKummerOne K w B u)) = _
+  rw [integralReduction_square]
+  rfl
+
+/-- The specific transported integral local classes lie in the genuine Kummer image at every finite level. -/
+theorem localKummerOne_mem_genuine_Kummer (a : ℕ)
+    (u : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) :
+    pointH1Reduction (w.adicCompletion K) B a (localKummerOne K w B u) ∈
+      (B.kummerMap (2 ^ a) (twoPower_isUnit (w.adicCompletion K) a)).range := by
+  rw [localKummerOne_reduction]
+  exact actualLocalReduction_mem_genuine_Kummer K w B a u
+
+/-- Cup–invariant compatibility on the fixed transported actual local presentation, using the all-cochain trace. -/
+theorem localCup_invariant_compatibility (a : ℕ)
+    (u v : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) :
+    padicInvariant a (AllCochainTrace.trv (w.adicCompletion K)
+      (integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val (localKummerOne K w B v).val)) =
+      ZInQ.Contrib.CloudB3RC53.Duality.localTatePairing B (2 ^ a) (twoPower_isUnit (w.adicCompletion K) a)
+        (actualLocalReduction K w B a u) (actualLocalReduction K w B a v) := by
+  change padicInvariant a (AllCochainTrace.trv (w.adicCompletion K)
+    (integralCupCycle (w.adicCompletion K) B (localKummerOne K w B u) (localKummerOne K w B v)).val) = _
+  rw [AllCochainTrace.trv_on_cycles (w.adicCompletion K)
+      (integralCupCycle (w.adicCompletion K) B (localKummerOne K w B u) (localKummerOne K w B v))]
+  rw [IntegralCompatibility.integralCup_invariant_compatibility,
+    localKummerOne_reduction, localKummerOne_reduction]
+
+/-- Printed finite Kummer isotropy gives divisibility of the genuine all-cochain trace values for the fixed actual local maps. -/
+theorem localCup_trace_divisible (hM : MilneLocalDualityPrint) (a : ℕ)
+    (u v : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) :
+    (2 : ℤ_[2]) ^ a ∣ AllCochainTrace.trv (w.adicCompletion K)
+      (integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val (localKummerOne K w B v).val) := by
+  obtain ⟨D⟩ := hM (w.adicCompletion K) B
+  apply (padicInvariant_eq_zero_iff a _).mp
+  rw [localCup_invariant_compatibility, actualLocalReduction_apply, actualLocalReduction_apply]
+  exact kummer_finite_isotropy B D (2 ^ a) (twoPower_isUnit (w.adicCompletion K) a) _ _
+
+/-- The all-cochain trace of the cup of two fixed actual local Kummer cochains is zero. -/
+theorem localCup_trace_zero (hM : MilneLocalDualityPrint)
+    (u v : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) :
+    AllCochainTrace.trv (w.adicCompletion K)
+      (integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val (localKummerOne K w B v).val) = 0 := by
+  apply PadicInt.ext_of_toZModPow.mp
+  intro a
+  rw [map_zero]
+  apply (PadicInt.toZModPow_eq_zero_iff_dvd a _).mpr
+  simpa only [Nat.cast_ofNat] using localCup_trace_divisible K w B hM a u v
+
+/-- The actual integral cup of two fixed actual local Kummer cochains is a genuine continuous coboundary. -/
+theorem localCup_is_boundary (hM : MilneLocalDualityPrint)
+    (u v : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) :
+    ∃ b : (actualTraceComplex (w.adicCompletion K)).X 1,
+      ((actualTraceComplex (w.adicCompletion K)).d 1 2).hom b =
+        integralCupOne (w.adicCompletion K) B (localKummerOne K w B u).val (localKummerOne K w B v).val :=
+  AllCochainTrace.hker (w.adicCompletion K) _
+    (integralCupOne_isCycle (w.adicCompletion K) B (localKummerOne K w B u) (localKummerOne K w B v))
+    (localCup_trace_zero K w B hM u v)
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.TransportedLocal
+
+end
+
+/-!
+# A finite free local presentation and its cochain map
+
+The two-term presentation retains the relations in degree zero and the
+point generators in degree one. Its map to the actual local cochains is
+determined by its degree-zero and degree-one maps and their differential
+square. The trace adjoint is formed on the genuine local cup product.
+-/
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.SelfDualCore
+
+open CategoryTheory ZInQ.Contrib.CloudB3RC53.PairedFunctional
+open ZInQ.Contrib.CloudB3RC53.SelmerDuality ZInQ.Manuscript.RC.SelmerComplex
+open ZInQ.Contrib.CloudB3RC53.Duality
+open ZInQ.Contrib.CloudB3RC53.HeegnerCohomology (VanishesOutside)
+
+variable {R : Type} [CommRing R]
+
+/-- The terms of a fixed finite free point presentation, retaining both degrees. -/
+def presentationX (r1 r0 : ℕ) (n : ℤ) : ModuleCat R :=
+  if n = 0 then ModuleCat.of R (Fin r1 → R)
+  else if n = 1 then ModuleCat.of R (Fin r0 → R)
+  else ModuleCat.of R PUnit
+
+/-- The actual presentation differential is the specified relation map in degree zero. -/
+def presentationD (r1 r0 : ℕ) (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R))
+    (i j : ℤ) (h : i + 1 = j) : presentationX (R := R) r1 r0 i →ₗ[R] presentationX (R := R) r1 r0 j :=
+  if hi : i = 0 then by
+    subst i
+    have hj : j = 1 := by omega
+    subst j
+    exact f
+  else 0
+
+/-- Only degree zero has a nonzero differential in the fixed point presentation. -/
+theorem presentationD_of_ne (r1 r0 : ℕ) (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R))
+    (i j : ℤ) (h : i + 1 = j) (hi : i ≠ 0) : presentationD r1 r0 f i j h = 0 := by
+  unfold presentationD
+  exact dif_neg hi
+
+/-- The genuine two-term free presentation, including its degree-zero relation module. -/
+def presentationCx (r1 r0 : ℕ) (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) : GCx R where
+  X := presentationX r1 r0
+  d := presentationD r1 r0 f
+  d_d i j k hij hjk x := by
+    by_cases hi : i = 0
+    · subst i
+      have hj : j = 1 := by omega
+      subst j
+      simp only [presentationD, zero_add, ↓reduceDIte, one_ne_zero, LinearMap.zero_apply]
+    · change presentationD r1 r0 f j k hjk (presentationD r1 r0 f i j hij x) = 0
+      erw [presentationD_of_ne r1 r0 f i j hij hi, map_zero]
+
+/-- Every degree outside zero and one of the fixed presentation is zero. -/
+theorem presentationCx_vanishes (r1 r0 : ℕ) (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) :
+    VanishesOutside (presentationCx r1 r0 f) (fun i => i = 0 ∨ i = 1) := by
+  intro i hi
+  have hi0 : i ≠ 0 := fun h => hi (Or.inl h)
+  have hi1 : i ≠ 1 := fun h => hi (Or.inr h)
+  change Subsingleton (presentationX (R := R) r1 r0 i)
+  simp only [presentationX, if_neg hi0, if_neg hi1]
+  infer_instance
+
+/-- The actual degree maps of a point presentation, with their required cochain differential identities. -/
+structure PresentationMap (L : GCx R) (r1 r0 : ℕ)
+    (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) where
+  zero : (Fin r1 → R) →ₗ[R] L.X 0
+  one : (Fin r0 → R) →ₗ[R] L.X 1
+  differential : ∀ u, L.d 0 1 rfl (zero u) = one (f u)
+  cycle : ∀ u, L.d 1 2 rfl (one u) = 0
+
+/-- The fixed component of the genuine presentation cochain map. -/
+def presentationMapComponent {L : GCx R} {r1 r0 : ℕ} {f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)}
+    (I : PresentationMap L r1 r0 f) (i j : ℤ) (h : i = j) :
+    (presentationCx r1 r0 f).X i →ₗ[R] L.X j := by
+  subst j
+  exact if hi : i = 0 then by subst i; exact I.zero
+    else if hi1 : i = 1 then by subst i; exact I.one
+    else 0
+
+/-- The prescribed degree maps give a genuine cochain map of the fixed free presentation. -/
+def presentationMap {L : GCx R} {r1 r0 : ℕ} {f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)}
+    (I : PresentationMap L r1 r0 f) : GHom (presentationCx r1 r0 f) L where
+  f := presentationMapComponent I
+  comm i i1 j j1 hij hi hj hjj1 x := by
+    subst j
+    subst j1
+    have hi1 : i1 = i + 1 := hi.symm
+    subst i1
+    by_cases hi0 : i = 0
+    · subst i
+      exact (I.differential x).symm
+    · by_cases hione : i = 1
+      · subst i
+        change 0 = L.d 1 2 rfl (I.one x)
+        exact (I.cycle x).symm
+      · have hmap : presentationMapComponent I i i rfl = 0 := by
+          simp only [presentationMapComponent, dif_neg hi0, dif_neg hione]
+        change presentationMapComponent I (i + 1) (i + 1) rfl
+            (presentationD r1 r0 f i (i + 1) rfl x) =
+          L.d i (i + 1) rfl (presentationMapComponent I i i rfl x)
+        erw [presentationD_of_ne r1 r0 f i (i + 1) rfl hi0, map_zero, hmap, map_zero]
+
+section OrdinaryCone
+
+variable {U L D : GCx R}
+
+/-- The ordinary mapping-cone differential for a genuine local-condition cochain map. -/
+def ordinaryConeD (ι : GHom U L) (i j : ℤ) (h : i + 1 = j) :
+    (L.X i × U.X (i + 1)) →ₗ[R] (L.X j × U.X (j + 1)) :=
+  ((L.d i j h).comp (LinearMap.fst R _ _) +
+    (ι.f (i + 1) j h).comp (LinearMap.snd R _ _)).prod
+      (-(U.d (i + 1) (j + 1) (by omega)).comp (LinearMap.snd R _ _))
+
+/-- The actual ordinary cone of the fixed local-condition map, with no perfect-model replacement. -/
+def ordinaryCone (ι : GHom U L) : GCx R where
+  X n := ModuleCat.of R (L.X n × U.X (n + 1))
+  d := ordinaryConeD ι
+  d_d i j k hij hjk z := by
+    apply Prod.ext
+    · change L.d j k hjk (L.d i j hij z.1 + ι.f (i + 1) j hij z.2) +
+        ι.f (j + 1) k hjk (-(U.d (i + 1) (j + 1) (by omega) z.2)) = 0
+      rw [map_add, L.d_d, zero_add, map_neg]
+      have h := ι.comm (i + 1) (j + 1) j k hij (by omega) hjk hjk z.2
+      rw [h, add_neg_cancel]
+    · change -(U.d (j + 1) (k + 1) (by omega)
+        (-(U.d (i + 1) (j + 1) (by omega) z.2))) = 0
+      rw [map_neg, neg_neg, U.d_d]
+
+/-- A genuine cochain map vanishing on the local condition gives its specified comparison from the ordinary cone. -/
+def coneComparison (ι : GHom U L) (g : GHom L D)
+    (hzero : ∀ (i : ℤ) (u : U.X i), g.f i i rfl (ι.f i i rfl u) = 0) :
+    GHom (ordinaryCone ι) D where
+  f i j h := (g.f i j h).comp (LinearMap.fst R _ _)
+  comm i i1 j j1 hij hi hj h1 z := by
+    subst j
+    subst j1
+    have h : i1 = i + 1 := hi.symm
+    subst i1
+    change g.f (i + 1) (i + 1) rfl
+      (L.d i (i + 1) rfl z.1 + ι.f (i + 1) (i + 1) rfl z.2) =
+      D.d i (i + 1) rfl (g.f i i rfl z.1)
+    rw [map_add, hzero, add_zero]
+    exact g.comm i (i + 1) i (i + 1) rfl rfl rfl rfl z.1
+
+end OrdinaryCone
+
+section ActualAdjoint
+
+variable {U L T : GCx R} (ι : GHom U L) (P : GPair L L T)
+  (tr : T.X 2 →ₗ[R] R) (htr : ∀ y, tr (T.d 1 2 rfl y) = 0)
+
+/-- The integral trace adjoint of the genuine cup paired against the specified local condition. -/
+def traceAdjoint : GHom L (dualCx U 2) :=
+  adjHom (pullPair P (idGHom L) ι) 2 tr htr
+
+/-- With a two-term local condition, scalar cup isotropy in bidegree one kills the entire restricted trace adjoint. -/
+theorem traceAdjoint_local_zero
+    (hU : VanishesOutside U (fun i => i = 0 ∨ i = 1))
+    (h11 : ∀ u v : U.X 1, tr (P.P 1 1 2 rfl (ι.f 1 1 rfl u) (ι.f 1 1 rfl v)) = 0)
+    (i : ℤ) (u : U.X i) :
+    (traceAdjoint ι P tr htr).f i i rfl (ι.f i i rfl u) = 0 := by
+  apply dualCx_ext
+  intro v
+  change tr (P.P i (2 - i) 2 (by omega) (ι.f i i rfl u) (ι.f (2 - i) (2 - i) rfl v)) = 0
+  by_cases hi : i = 1
+  · subst i
+    exact h11 u v
+  · by_cases hi0 : i = 0
+    · subst i
+      haveI := hU (2 - 0) (by omega)
+      have hv : v = 0 := Subsingleton.elim _ _
+      rw [hv, map_zero, map_zero, map_zero]
+    · haveI := hU i (by omega)
+      have hu : u = 0 := Subsingleton.elim _ _
+      rw [hu, map_zero, LinearMap.map_zero₂, map_zero]
+
+/-- The specified integral self-dual local comparison from the actual ordinary cone. -/
+def selfDualConeComparison
+    (hU : VanishesOutside U (fun i => i = 0 ∨ i = 1))
+    (h11 : ∀ u v : U.X 1, tr (P.P 1 1 2 rfl (ι.f 1 1 rfl u) (ι.f 1 1 rfl v)) = 0) :
+    GHom (ordinaryCone ι) (dualCx U 2) :=
+  coneComparison ι (traceAdjoint ι P tr htr) (traceAdjoint_local_zero ι P tr htr hU h11)
+
+end ActualAdjoint
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.SelfDualCore
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.ActualSelfDual
+
+open CategoryTheory NumberField IsDedekindDomain TauCeti TauCeti.ContCohomology
+open ZInQ.Contrib.CloudB3RC53.PairedFunctional ZInQ.Contrib.CloudB3RC53.SelmerDuality
+open ZInQ.Contrib.CloudB3RC53.Duality ZInQ.Contrib.CloudB3RC53.Torsion
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralPairing
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.TransportedLocal
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.SelfDualCore
+open ZInQ.Manuscript.RC.SelmerComplex
+
+variable (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+  [DecidableEq (w.adicCompletion K)] (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+
+/-- The fixed finite free presentation of the genuine completed local point group. -/
+def localCondition : GCx ℤ_[2] :=
+  presentationCx (actualLocalPresentation K w B).rankOne (actualLocalPresentation K w B).rankZero
+    (actualLocalPresentation K w B).f
+
+/-- The actual continuous local point-coefficient cochains, without a finite perfect-model substitution. -/
+abbrev localCochains := natCx (pointComplex (w.adicCompletion K) B)
+
+/-- The genuine integral local trace-target cochains. -/
+abbrev localTraceTarget := natCx (actualTraceComplex (w.adicCompletion K))
+
+/-- The fixed genuine point presentation data in the actual local cochains. -/
+def localPresentationMap : PresentationMap (localCochains K w B)
+    (actualLocalPresentation K w B).rankOne (actualLocalPresentation K w B).rankZero
+      (actualLocalPresentation K w B).f where
+  zero := localKummerZero K w B
+  one := (LinearMap.ker ((pointComplex (w.adicCompletion K) B).d 1 2).hom).subtype.comp
+    (localKummerOne K w B)
+  differential u := localKummerZero_d K w B u
+  cycle u := (localKummerOne K w B u).2
+
+/-- The actual cochain-level Kummer inclusion is the map of the fixed genuine free presentation. -/
+def localConditionMap : GHom (localCondition K w B) (localCochains K w B) :=
+  presentationMap (localPresentationMap K w B)
+
+/-- Degree zero of the genuine presentation map is the earlier actual Kummer relation primitive. -/
+theorem localConditionMap_zero (u : Fin (actualLocalPresentation K w B).rankOne → ℤ_[2]) :
+    (localConditionMap K w B).f 0 0 rfl u = localKummerZero K w B u := rfl
+
+/-- Degree one of the genuine presentation map is the earlier fixed actual Kummer one-cocycle. -/
+theorem localConditionMap_one (u : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2]) :
+    (localConditionMap K w B).f 1 1 rfl u = (localKummerOne K w B u).val := rfl
+
+/-- The actual integral local cup product in all relation-indexed degrees. -/
+def localCup : GPair (localCochains K w B) (localCochains K w B) (localTraceTarget K w) :=
+  natPair (integralCupPair (w.adicCompletion K) B)
+
+/-- The scalar trace of the cup of the specified actual Kummer presentation maps is zero. -/
+theorem localCondition_scalar_isotropy (hM : MilneLocalDualityPrint)
+    (u v : (localCondition K w B).X 1) :
+    AllCochainTrace.trv (w.adicCompletion K)
+      ((localCup K w B).P 1 1 2 rfl ((localConditionMap K w B).f 1 1 rfl u)
+        ((localConditionMap K w B).f 1 1 rfl v)) = 0 :=
+  localCup_trace_zero K w B hM u v
+
+/-- The genuine truncated isotropy interface is supplied by the actual trace, actual kernel exactness and the fixed local maps. -/
+def localTruncatedIsotropy (hM : MilneLocalDualityPrint) :
+    LocalTruncIsotropy (localConditionMap K w B) (localConditionMap K w B) (localCup K w B) :=
+  kummerTruncIsotropy
+    (presentationCx_vanishes _ _ _) (presentationCx_vanishes _ _ _)
+    (AllCochainTrace.trv (w.adicCompletion K)) (AllCochainTrace.hker (w.adicCompletion K))
+    (localCondition_scalar_isotropy K w B hM)
+
+/-- The actual local quotient cone of the genuine point presentation in Galois cochains. -/
+def localQuotientCone : GCx ℤ_[2] := ordinaryCone (localConditionMap K w B)
+
+/-- The genuine derived dual of the fixed finite free Kummer presentation in complementary degree two. -/
+def localDualTarget : GCx ℤ_[2] := dualCx (localCondition K w B) 2
+
+/-- The trace adjoint on the actual local Galois cochains, before passage to the quotient cone. -/
+def localTraceAdjoint : GHom (localCochains K w B) (localDualTarget K w B) :=
+  traceAdjoint (localConditionMap K w B) (localCup K w B)
+    (AllCochainTrace.trv (w.adicCompletion K)) (AllCochainTrace.htrv (w.adicCompletion K))
+
+/-- The actual integral self-dual local comparison is constructed on the genuine quotient cone, not postulated. -/
+def localSelfDualComparison (hM : MilneLocalDualityPrint) :
+    GHom (localQuotientCone K w B) (localDualTarget K w B) :=
+  selfDualConeComparison (localConditionMap K w B) (localCup K w B)
+    (AllCochainTrace.trv (w.adicCompletion K)) (AllCochainTrace.htrv (w.adicCompletion K))
+    (presentationCx_vanishes _ _ _) (localCondition_scalar_isotropy K w B hM)
+
+/-- The constructed local comparison is exactly the trace-cup adjoint on its Galois-cochain component. -/
+theorem localSelfDualComparison_formula (hM : MilneLocalDualityPrint) (i : ℤ)
+    (z : (localQuotientCone K w B).X i) (u : (localCondition K w B).X (2 - i)) :
+    asDual ((localSelfDualComparison K w B hM).f i i rfl z) u =
+      AllCochainTrace.trv (w.adicCompletion K)
+        ((localCup K w B).P i (2 - i) 2 (by omega) z.1
+          ((localConditionMap K w B).f (2 - i) (2 - i) rfl u)) := rfl
+
+/-- A finite based realization of the genuine local quotient cone. This is source-model data only, independent of self-duality. -/
+structure IntegralConeBasedResolution (κe κo : Type) [Fintype κe] [Fintype κo]
+    [DecidableEq κe] [DecidableEq κo] where
+  C : BasedCx ℤ_[2] κe κo
+  realization : GHom C.toGCx (localQuotientCone K w B)
+  quasiIso : QuasiIso (GHom.toCC realization)
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.ActualSelfDual
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedDual
+
+open Matrix
+open ZInQ.Contrib.CloudB3RC53.Torsion
+open ZInQ.Contrib.RC53Assist.DerivedKummer.Comparison
+
+variable {R : Type} [CommRing R]
+
+/-- The standard finite coordinate basis identifies vectors with their dual linear forms. -/
+def vectorDual (r : ℕ) : (Fin r → R) ≃ₗ[R] Module.Dual R (Fin r → R) :=
+  (Pi.basisFun R (Fin r)).toDualEquiv
+
+/-- Evaluation of the standard coordinate dual on a basis vector. -/
+theorem vectorDual_basis (r : ℕ) (v : Fin r → R) (i : Fin r) :
+    vectorDual (R := R) r v (Pi.single i 1) = v i := by
+  simpa [vectorDual] using (Pi.basisFun R (Fin r)).toDual_apply_left v i
+
+/-- A coordinate basis vector in the dual reads the same coordinate. -/
+theorem vectorDual_single (r : ℕ) (i : Fin r) (v : Fin r → R) :
+    vectorDual (R := R) r (Pi.single i 1) v = v i := by
+  simpa [vectorDual] using (Pi.basisFun R (Fin r)).toDual_apply_right i v
+
+/-- The fixed dual relation map in the genuine standard coordinate bases. -/
+def dualRelation {r1 r0 : ℕ} (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) :
+    (Fin r0 → R) →ₗ[R] (Fin r1 → R) :=
+  (vectorDual r1).symm.toLinearMap.comp (f.dualMap.comp (vectorDual r0).toLinearMap)
+
+/-- The dual relation map is exactly the dual of the actual relation map. -/
+theorem dualRelation_dual {r1 r0 : ℕ} (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) (v : Fin r0 → R) :
+    vectorDual r1 (dualRelation f v) = f.dualMap (vectorDual r0 v) :=
+  (vectorDual r1).apply_symm_apply _
+
+/-- In the standard bases the actual dual relation matrix is the transpose. -/
+theorem dualRelation_matrix {r1 r0 : ℕ} (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) :
+    LinearMap.toMatrix' (dualRelation f) = (LinearMap.toMatrix' f).transpose := by
+  ext i j
+  change dualRelation f (Pi.single j 1) i = f (Pi.single i 1) j
+  rw [← vectorDual_basis r1 (dualRelation f (Pi.single j 1)) i, dualRelation_dual]
+  exact vectorDual_single r0 j (f (Pi.single i 1))
+
+/-- The based complementary-degree dual of the actual fixed free point presentation. -/
+def dualPresentationCx {r1 r0 : ℕ} (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) : BasedCx R (Fin r1) (Fin r0) where
+  degE _ := 2
+  degO _ := 1
+  even_degE _ := ⟨1, rfl⟩
+  odd_degO _ := ⟨0, rfl⟩
+  dOE := 0
+  dEO := LinearMap.toMatrix' (dualRelation f)
+  dd_E := by simp
+  dd_O := by simp
+  deg_dOE _ _ h := absurd rfl h
+  deg_dEO _ _ _ := rfl
+
+/-- The differential of the based dual is the prescribed actual dual relation map. -/
+theorem dualPresentationCx_d {r1 r0 : ℕ} (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) (v : Fin r0 → R) :
+    (dualPresentationCx f).dEO *ᵥ v = dualRelation f v := by
+  change LinearMap.toMatrix' (dualRelation f) *ᵥ v = dualRelation f v
+  rw [← Matrix.toLin'_apply, Matrix.toLin'_toMatrix']
+
+section ResidueModel
+
+variable {F : Type} [Field F] {r1 r0 : ℕ}
+  (f : (Fin r1 → F) →ₗ[F] (Fin r0 → F))
+
+/-- The actual even residue class map of the based dual, restricting the coordinate form to the reduced relation kernel. -/
+def evenClass : cyclesE (dualPresentationCx f) →ₗ[F] Module.Dual F (LinearMap.ker f) :=
+  (LinearMap.ker f).dualRestrict.comp
+    ((vectorDual r1).toLinearMap.comp (cyclesE (dualPresentationCx f)).subtype)
+
+/-- The even class map of the based dual is onto. -/
+theorem evenClass_surjective : Function.Surjective (evenClass f) := by
+  intro ψ
+  obtain ⟨φ, hφ⟩ := Subspace.dualRestrict_surjective (W := LinearMap.ker f) ψ
+  let v := (vectorDual r1).symm φ
+  have hv : v ∈ cyclesE (dualPresentationCx f) := by
+    change (0 : Matrix (Fin r0) (Fin r1) F) *ᵥ v = 0
+    exact zero_mulVec v
+  refine ⟨⟨v, hv⟩, ?_⟩
+  change (LinearMap.ker f).dualRestrict (vectorDual r1 ((vectorDual r1).symm φ)) = ψ
+  rw [(vectorDual r1).apply_symm_apply, hφ]
+
+/-- The even class kernel of the actual based dual is exactly its boundaries. -/
+theorem evenClass_kernel (x : cyclesE (dualPresentationCx f)) :
+    evenClass f x = 0 ↔ ∃ b : Fin r0 → F, (dualPresentationCx f).dEO *ᵥ b = x.val := by
+  constructor
+  · intro hx
+    have hAnn : vectorDual r1 x.val ∈ (LinearMap.ker f).dualAnnihilator := hx
+    rw [← LinearMap.range_dualMap_eq_dualAnnihilator_ker f] at hAnn
+    obtain ⟨φ, hφ⟩ := hAnn
+    refine ⟨(vectorDual r0).symm φ, ?_⟩
+    rw [dualPresentationCx_d]
+    apply (vectorDual r1).injective
+    rw [dualRelation_dual, (vectorDual r0).apply_symm_apply, hφ]
+  · rintro ⟨b, hb⟩
+    change (LinearMap.ker f).dualRestrict (vectorDual r1 x.val) = 0
+    rw [← hb, dualPresentationCx_d, dualRelation_dual]
+    ext u
+    change vectorDual r0 b (f u.val) = 0
+    rw [u.2, map_zero]
+
+/-- Odd dual cocycles are precisely the coordinate linear forms annihilating the actual reduced relation image. -/
+def oddAnnihilator : cyclesO (dualPresentationCx f) →ₗ[F] (LinearMap.range f).dualAnnihilator :=
+  (((vectorDual r0).toLinearMap).comp (cyclesO (dualPresentationCx f)).subtype).codRestrict _ (by
+    intro x
+    rw [← LinearMap.ker_dualMap_eq_dualAnnihilator_range f]
+    change f.dualMap (vectorDual r0 x.val) = 0
+    have hx : (dualPresentationCx f).dEO *ᵥ x.val = 0 := x.2
+    rw [dualPresentationCx_d] at hx
+    rw [← dualRelation_dual, hx, map_zero])
+
+/-- The actual odd residue class of the based dual is the specified functional on the reduced point quotient. -/
+def oddClass : cyclesO (dualPresentationCx f) →ₗ[F]
+    Module.Dual F ((Fin r0 → F) ⧸ LinearMap.range f) :=
+  (LinearMap.range f).dualQuotEquivDualAnnihilator.symm.toLinearMap.comp (oddAnnihilator f)
+
+/-- The odd class map of the based dual is injective. -/
+theorem oddClass_injective : Function.Injective (oddClass f) := by
+  intro x y h
+  apply Subtype.ext
+  apply (vectorDual r0).injective
+  have h' := (LinearMap.range f).dualQuotEquivDualAnnihilator.symm.injective h
+  have hv := congrArg Subtype.val h'
+  change vectorDual r0 x.val = vectorDual r0 y.val at hv
+  exact hv
+
+/-- The odd class map of the actual based dual is onto. -/
+theorem oddClass_surjective : Function.Surjective (oddClass f) := by
+  intro ψ
+  let α := (LinearMap.range f).dualQuotEquivDualAnnihilator ψ
+  let v := (vectorDual r0).symm α.val
+  have hv : v ∈ cyclesO (dualPresentationCx f) := by
+    change (dualPresentationCx f).dEO *ᵥ v = 0
+    rw [dualPresentationCx_d]
+    apply (vectorDual r1).injective
+    rw [dualRelation_dual, map_zero, (vectorDual r0).apply_symm_apply]
+    exact (show α.val ∈ LinearMap.ker f.dualMap from
+      (LinearMap.ker_dualMap_eq_dualAnnihilator_range f).symm ▸ α.2)
+  let x : cyclesO (dualPresentationCx f) := ⟨v, hv⟩
+  refine ⟨x, ?_⟩
+  change (LinearMap.range f).dualQuotEquivDualAnnihilator.symm (oddAnnihilator f x) = ψ
+  rw [← (LinearMap.range f).dualQuotEquivDualAnnihilator.symm_apply_apply ψ]
+  congr 1
+  apply Subtype.ext
+  exact (vectorDual r0).apply_symm_apply α.val
+
+/-- The odd class kernel of the actual based dual is exactly its boundaries. -/
+theorem oddClass_kernel (x : cyclesO (dualPresentationCx f)) :
+    oddClass f x = 0 ↔ ∃ b : Fin r1 → F, (dualPresentationCx f).dOE *ᵥ b = x.val := by
+  constructor
+  · intro hx
+    have hz : x = 0 := oddClass_injective f (hx.trans (map_zero (oddClass f)).symm)
+    exact ⟨0, by rw [hz]; exact mulVec_zero _⟩
+  · rintro ⟨b, hb⟩
+    have hval : x.val = 0 := hb.symm.trans (zero_mulVec b)
+    have hz : x = 0 := Subtype.ext hval
+    rw [hz, map_zero]
+
+/-- The full canonical residue cohomology model of the based complementary-degree dual presentation. -/
+def dualPresentationModel : CohomologyModel (dualPresentationCx f)
+    (Module.Dual F (LinearMap.ker f))
+    (Module.Dual F ((Fin r0 → F) ⧸ LinearMap.range f)) where
+  classE := evenClass f
+  ontoE := evenClass_surjective f
+  kernelE := evenClass_kernel f
+  classO := oddClass f
+  ontoO := oddClass_surjective f
+  kernelO := oddClass_kernel f
+
+end ResidueModel
+
+section TwoTermBased
+
+/-- A fixed finite free complex in degrees one and two, in its standard bases. -/
+def twoTermBased {r1 r2 : ℕ} (d : (Fin r1 → R) →ₗ[R] (Fin r2 → R)) : BasedCx R (Fin r2) (Fin r1) where
+  degE _ := 2
+  degO _ := 1
+  even_degE _ := ⟨1, rfl⟩
+  odd_degO _ := ⟨0, rfl⟩
+  dOE := 0
+  dEO := LinearMap.toMatrix' d
+  dd_E := by simp
+  dd_O := by simp
+  deg_dOE _ _ h := absurd rfl h
+  deg_dEO _ _ _ := rfl
+
+/-- The specified differential is exactly the based matrix differential. -/
+theorem twoTermBased_d {r1 r2 : ℕ} (d : (Fin r1 → R) →ₗ[R] (Fin r2 → R)) (v : Fin r1 → R) :
+    (twoTermBased d).dEO *ᵥ v = d v := by
+  change LinearMap.toMatrix' d *ᵥ v = d v
+  rw [← Matrix.toLin'_apply, Matrix.toLin'_toMatrix']
+
+/-- The dual fixed presentation has its precise finite two-term based model. -/
+theorem dualPresentationCx_eq_twoTerm {r1 r0 : ℕ}
+    (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) : dualPresentationCx f = twoTermBased (dualRelation f) := rfl
+
+/-- Canonical coefficient reduction of a finite based differential. -/
+def reducedDifferential {S : Type} [CommRing S] (π : R →+* S) {r1 r2 : ℕ}
+    (d : (Fin r1 → R) →ₗ[R] (Fin r2 → R)) : (Fin r1 → S) →ₗ[S] (Fin r2 → S) :=
+  Matrix.toLin' ((LinearMap.toMatrix' d).map π)
+
+/-- Coefficient reduction commutes with the specified finite two-term based model. -/
+theorem twoTermBased_map {S : Type} [CommRing S] (π : R →+* S) {r1 r2 : ℕ}
+    (d : (Fin r1 → R) →ₗ[R] (Fin r2 → R)) :
+    (twoTermBased d).map π = twoTermBased (reducedDifferential π d) := by
+  unfold twoTermBased BasedCx.map
+  congr 1
+  · exact Matrix.map_zero _ (map_zero π)
+  · exact (LinearMap.toMatrix'_toLin' _).symm
+
+/-- Canonical coefficient reduction commutes with the actual complementary-degree dual relation map. -/
+theorem dualPresentationCx_map {S : Type} [CommRing S] (π : R →+* S) {r1 r0 : ℕ}
+    (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R)) :
+    (dualPresentationCx f).map π = dualPresentationCx (reducedDifferential π f) := by
+  unfold dualPresentationCx BasedCx.map
+  congr 1
+  · exact Matrix.map_zero _ (map_zero π)
+  · change (LinearMap.toMatrix' (dualRelation f)).map π =
+      LinearMap.toMatrix' (dualRelation (reducedDifferential π f))
+    rw [dualRelation_matrix, dualRelation_matrix, reducedDifferential,
+      LinearMap.toMatrix'_toLin', Matrix.transpose_map]
+
+/-- Degree-one and degree-two maps satisfying the specified differential square give the based chain map. -/
+def twoTermBasedMap {r1 r2 s1 s2 : ℕ}
+    {dC : (Fin r1 → R) →ₗ[R] (Fin r2 → R)} {dD : (Fin s1 → R) →ₗ[R] (Fin s2 → R)}
+    (f1 : (Fin r1 → R) →ₗ[R] (Fin s1 → R)) (f2 : (Fin r2 → R) →ₗ[R] (Fin s2 → R))
+    (h : dD.comp f1 = f2.comp dC) : ChainMapR (twoTermBased dC) (twoTermBased dD) where
+  fE := LinearMap.toMatrix' f2
+  fO := LinearMap.toMatrix' f1
+  deg_fE _ _ _ := rfl
+  deg_fO _ _ _ := rfl
+  commOE := by simp [twoTermBased]
+  commEO := by
+    change LinearMap.toMatrix' dD * LinearMap.toMatrix' f1 = LinearMap.toMatrix' f2 * LinearMap.toMatrix' dC
+    rw [← LinearMap.toMatrix'_comp, ← LinearMap.toMatrix'_comp, h]
+
+end TwoTermBased
+
+section TwoTermCohomology
+
+variable {F : Type} [Field F] {r1 r2 : ℕ}
+  (d : (Fin r1 → F) →ₗ[F] (Fin r2 → F))
+
+/-- The even class map of the fixed two-term source is the actual cokernel projection. -/
+def twoTermEvenClass : cyclesE (twoTermBased d) →ₗ[F] ((Fin r2 → F) ⧸ LinearMap.range d) :=
+  (LinearMap.range d).mkQ.comp (cyclesE (twoTermBased d)).subtype
+
+/-- The odd class map of the fixed two-term source is the actual reduced relation kernel. -/
+def twoTermOddClass : cyclesO (twoTermBased d) →ₗ[F] LinearMap.ker d :=
+  (cyclesO (twoTermBased d)).subtype.codRestrict _ (fun x => by
+    have hx : (twoTermBased d).dEO *ᵥ x.val = 0 := x.2
+    rwa [twoTermBased_d] at hx)
+
+/-- The full canonical residue cohomology model of the finite two-term source. -/
+def twoTermModel : CohomologyModel (twoTermBased d)
+    ((Fin r2 → F) ⧸ LinearMap.range d) (LinearMap.ker d) where
+  classE := twoTermEvenClass d
+  ontoE := by
+    intro y
+    obtain ⟨x, hx⟩ := (LinearMap.range d).mkQ_surjective y
+    exact ⟨⟨x, zero_mulVec x⟩, hx⟩
+  kernelE := by
+    intro x
+    change Submodule.Quotient.mk x.val = 0 ↔ ∃ b, (twoTermBased d).dEO *ᵥ b = x.val
+    rw [Submodule.Quotient.mk_eq_zero]
+    constructor
+    · rintro ⟨b, hb⟩
+      exact ⟨b, (twoTermBased_d d b).trans hb⟩
+    · rintro ⟨b, hb⟩
+      exact ⟨b, (twoTermBased_d d b).symm.trans hb⟩
+  classO := twoTermOddClass d
+  ontoO := by
+    intro x
+    refine ⟨⟨x.val, ?_⟩, rfl⟩
+    change (twoTermBased d).dEO *ᵥ x.val = 0
+    rw [twoTermBased_d]
+    exact x.2
+  kernelO := by
+    intro x
+    constructor
+    · intro hx
+      have hv : x.val = 0 := congrArg Subtype.val hx
+      exact ⟨0, by rw [hv]; exact mulVec_zero _⟩
+    · rintro ⟨b, hb⟩
+      have hv : x.val = 0 := hb.symm.trans (zero_mulVec b)
+      exact Subtype.ext hv
+
+end TwoTermCohomology
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedDual
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedBridge
+
+open Matrix CategoryTheory
+open ZInQ.Contrib.CloudB3RC53.PairedFunctional ZInQ.Contrib.CloudB3RC53.SelmerDuality
+open ZInQ.Contrib.CloudB3RC53.Torsion
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedDual
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.SelfDualCore
+
+variable {R : Type} [CommRing R] {c1 c2 r1 r0 : ℕ}
+  (d : (Fin c1 → R) →ₗ[R] (Fin c2 → R))
+  (f : (Fin r1 → R) →ₗ[R] (Fin r0 → R))
+
+/-- The genuine degree-one coordinate inclusion in a finite based two-term source. -/
+def oddCoordinates : (Fin c1 → R) →ₗ[R] (twoTermBased d).toGCx.X 1 where
+  toFun u := ⟨Sum.elim 0 u, by
+    rintro (i | j) h
+    · rfl
+    · exact (h rfl).elim⟩
+  map_add' u v := Subtype.ext (by
+    change (Sum.elim (0 : Fin c2 → R) (u + v) : Fin c2 ⊕ Fin c1 → R) =
+      Sum.elim (0 : Fin c2 → R) u + Sum.elim (0 : Fin c2 → R) v
+    funext i
+    rcases i with i | i <;> simp)
+  map_smul' r u := Subtype.ext (by
+    change (Sum.elim (0 : Fin c2 → R) (r • u) : Fin c2 ⊕ Fin c1 → R) =
+      r • Sum.elim (0 : Fin c2 → R) u
+    funext i
+    rcases i with i | i <;> simp)
+
+/-- The genuine degree-two coordinate inclusion in the same finite based source. -/
+def evenCoordinates : (Fin c2 → R) →ₗ[R] (twoTermBased d).toGCx.X 2 where
+  toFun u := ⟨Sum.elim u 0, by
+    rintro (i | j) h
+    · exact (h rfl).elim
+    · rfl⟩
+  map_add' u v := Subtype.ext (by
+    change (Sum.elim (u + v) (0 : Fin c1 → R) : Fin c2 ⊕ Fin c1 → R) =
+      Sum.elim u (0 : Fin c1 → R) + Sum.elim v (0 : Fin c1 → R)
+    funext i
+    rcases i with i | i <;> simp)
+  map_smul' r u := Subtype.ext (by
+    change (Sum.elim (r • u) (0 : Fin c1 → R) : Fin c2 ⊕ Fin c1 → R) =
+      r • Sum.elim u (0 : Fin c1 → R)
+    funext i
+    rcases i with i | i <;> simp)
+
+/-- The coordinate inclusions intertwine the specified genuine source differential. -/
+theorem oddCoordinates_d (u : Fin c1 → R) :
+    (twoTermBased d).toGCx.d 1 2 rfl (oddCoordinates d u) = evenCoordinates d (d u) := by
+  apply Subtype.ext
+  change (twoTermBased d).dTot *ᵥ Sum.elim 0 u = Sum.elim (d u) 0
+  rw [BasedCx.dTot, fromBlocks_mulVec]
+  simp only [twoTermBased, zero_mulVec, mulVec_zero, zero_add, add_zero]
+  congr 1
+  exact (twoTermBased_d d u)
+
+variable (g : GHom (twoTermBased d).toGCx (dualCx (presentationCx r1 r0 f) 2))
+
+/-- The actual degree-one component of the comparison, read as a coordinate dual form. -/
+def comparisonOne : (Fin c1 → R) →ₗ[R] Module.Dual R (Fin r0 → R) :=
+  (g.f 1 1 rfl).comp (oddCoordinates d)
+
+/-- The actual degree-two component of the comparison in the complementary coordinate dual. -/
+def comparisonTwo : (Fin c2 → R) →ₗ[R] Module.Dual R (Fin r1 → R) :=
+  (g.f 2 2 rfl).comp (evenCoordinates d)
+
+/-- The genuine cochain comparison gives exactly the coordinate dual differential square. -/
+theorem comparison_components_commute :
+    (comparisonTwo d f g).comp d = f.dualMap.comp (comparisonOne d f g) := by
+  apply LinearMap.ext
+  intro u
+  apply LinearMap.ext
+  intro v
+  have h := g.comm 1 2 1 2 rfl rfl rfl rfl (oddCoordinates d u)
+  rw [oddCoordinates_d] at h
+  have hv := congrArg (fun φ : (dualCx (presentationCx r1 r0 f) 2).X 2 => asDual φ v) h
+  change comparisonTwo d f g (d u) v = (-(sgn (1 : ℤ))) • comparisonOne d f g u (f v) at hv
+  change comparisonTwo d f g (d u) v = comparisonOne d f g u (f v)
+  simpa [sgn] using hv
+
+/-- The degree-one based matrix is obtained from the specified genuine comparison, not selected by an abstract isomorphism. -/
+def comparisonOneCoordinates : (Fin c1 → R) →ₗ[R] (Fin r0 → R) :=
+  (vectorDual r0).symm.toLinearMap.comp (comparisonOne d f g)
+
+/-- The degree-two based matrix is read from the same actual trace adjoint. -/
+def comparisonTwoCoordinates : (Fin c2 → R) →ₗ[R] (Fin r1 → R) :=
+  (vectorDual r1).symm.toLinearMap.comp (comparisonTwo d f g)
+
+/-- The actual coordinate comparison maps satisfy the dual-presentation square. -/
+theorem coordinate_comparison_commutes :
+    (dualRelation f).comp (comparisonOneCoordinates d f g) =
+      (comparisonTwoCoordinates d f g).comp d := by
+  apply LinearMap.ext
+  intro u
+  apply (vectorDual r1).injective
+  rw [LinearMap.comp_apply, LinearMap.comp_apply, dualRelation_dual]
+  change f.dualMap (vectorDual r0 ((vectorDual r0).symm (comparisonOne d f g u))) =
+    vectorDual r1 ((vectorDual r1).symm (comparisonTwo d f g (d u)))
+  rw [(vectorDual r0).apply_symm_apply, (vectorDual r1).apply_symm_apply]
+  exact (LinearMap.congr_fun (comparison_components_commute d f g) u).symm
+
+/-- The genuine cochain trace comparison in chosen source bases gives the specified integral based chain map to the dual fixed presentation. -/
+def basedComparison : ChainMapR (twoTermBased d) (dualPresentationCx f) :=
+  twoTermBasedMap (comparisonOneCoordinates d f g) (comparisonTwoCoordinates d f g)
+    (coordinate_comparison_commutes d f g)
+
+/-- The odd matrix of the constructed based comparison is exactly its genuine trace-adjoint coordinate map. -/
+theorem basedComparison_one (u : Fin c1 → R) :
+    (basedComparison d f g).fO *ᵥ u = comparisonOneCoordinates d f g u := by
+  change LinearMap.toMatrix' (comparisonOneCoordinates d f g) *ᵥ u = _
+  rw [← Matrix.toLin'_apply, Matrix.toLin'_toMatrix']
+
+/-- The even matrix of the constructed based comparison is exactly its genuine trace-adjoint coordinate map. -/
+theorem basedComparison_two (u : Fin c2 → R) :
+    (basedComparison d f g).fE *ᵥ u = comparisonTwoCoordinates d f g u := by
+  change LinearMap.toMatrix' (comparisonTwoCoordinates d f g) *ᵥ u = _
+  rw [← Matrix.toLin'_apply, Matrix.toLin'_toMatrix']
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedBridge
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.ModelComparison
+
+open Matrix
+open ZInQ.Contrib.CloudB3RC53.Torsion
+open ZInQ.Contrib.RC53Assist.DerivedKummer.Comparison
+
+variable {R : Type} [CommRing R]
+  {κe κo κe' κo' : Type} [Fintype κe] [Fintype κo] [Fintype κe'] [Fintype κo']
+  [DecidableEq κe] [DecidableEq κo] [DecidableEq κe'] [DecidableEq κo']
+  {C : BasedCx R κe κo} {D : BasedCx R κe' κo'}
+  {HE HO HE' HO' : Type} [AddCommGroup HE] [Module R HE] [AddCommGroup HO] [Module R HO]
+  [AddCommGroup HE'] [Module R HE'] [AddCommGroup HO'] [Module R HO']
+  (f : ChainMapR C D) (M : CohomologyModel C HE HO) (N : CohomologyModel D HE' HO')
+
+/-- The actual target even class map composed with the specified based comparison on cycles. -/
+def evenCycleClass : cyclesE C →ₗ[R] HE' := N.classE.comp (cycleMapE f)
+
+/-- The actual target odd class map composed with the same specified chain map. -/
+def oddCycleClass : cyclesO C →ₗ[R] HO' := N.classO.comp (cycleMapO f)
+
+/-- The even comparison kills the kernel of the specified source class map because chain maps send actual boundaries to boundaries. -/
+theorem evenCycleClass_kills_kernel : LinearMap.ker M.classE ≤ LinearMap.ker (evenCycleClass f N) := by
+  intro x hx
+  obtain ⟨b, hb⟩ := (M.kernelE x).mp hx
+  apply (N.kernelE (cycleMapE f x)).mpr
+  refine ⟨f.fO *ᵥ b, ?_⟩
+  change D.dEO *ᵥ (f.fO *ᵥ b) = f.fE *ᵥ x.val
+  rw [mulVec_mulVec, f.commEO, ← mulVec_mulVec, hb]
+
+/-- The odd comparison kills the source class kernel for the same genuine boundary reason. -/
+theorem oddCycleClass_kills_kernel : LinearMap.ker M.classO ≤ LinearMap.ker (oddCycleClass f N) := by
+  intro x hx
+  obtain ⟨b, hb⟩ := (M.kernelO x).mp hx
+  apply (N.kernelO (cycleMapO f x)).mpr
+  refine ⟨f.fE *ᵥ b, ?_⟩
+  change D.dOE *ᵥ (f.fE *ᵥ b) = f.fO *ᵥ x.val
+  rw [mulVec_mulVec, f.commOE, ← mulVec_mulVec, hb]
+
+/-- The independently specified induced even comparison on the actual chosen cohomology models. -/
+def alphaEven : HE →ₗ[R] HE' :=
+  ((LinearMap.ker M.classE).liftQ (evenCycleClass f N) (evenCycleClass_kills_kernel f M N)).comp
+    (M.classE.quotKerEquivOfSurjective M.ontoE).symm.toLinearMap
+
+/-- The independently specified induced odd comparison on the same models. -/
+def alphaOdd : HO →ₗ[R] HO' :=
+  ((LinearMap.ker M.classO).liftQ (oddCycleClass f N) (oddCycleClass_kills_kernel f M N)).comp
+    (M.classO.quotKerEquivOfSurjective M.ontoO).symm.toLinearMap
+
+/-- The even commuting square is derived for these specific class maps and this specific reduced chain map. -/
+theorem commE (x : cyclesE C) :
+    N.classE (cycleMapE f x) = alphaEven f M N (M.classE x) := by
+  let e := M.classE.quotKerEquivOfSurjective M.ontoE
+  have hx : M.classE x = e (Submodule.Quotient.mk x) := rfl
+  change evenCycleClass f N x =
+    (LinearMap.ker M.classE).liftQ (evenCycleClass f N) (evenCycleClass_kills_kernel f M N)
+      (e.symm (M.classE x))
+  rw [hx, e.symm_apply_apply, Submodule.liftQ_apply]
+
+/-- The odd commuting square is derived from the same independently specified model data. -/
+theorem commO (x : cyclesO C) :
+    N.classO (cycleMapO f x) = alphaOdd f M N (M.classO x) := by
+  let e := M.classO.quotKerEquivOfSurjective M.ontoO
+  have hx : M.classO x = e (Submodule.Quotient.mk x) := rfl
+  change oddCycleClass f N x =
+    (LinearMap.ker M.classO).liftQ (oddCycleClass f N) (oddCycleClass_kills_kernel f M N)
+      (e.symm (M.classO x))
+  rw [hx, e.symm_apply_apply, Submodule.liftQ_apply]
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.ModelComparison
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.ActualBasedComparison
+
+open CategoryTheory NumberField IsDedekindDomain TauCeti TauCeti.ContCohomology
+open ZInQ.Contrib.CloudB3RC53.PairedFunctional ZInQ.Contrib.CloudB3RC53.SelmerDuality
+open ZInQ.Contrib.CloudB3RC53.Torsion
+open ZInQ.Contrib.RC53Assist.DerivedKummer.Comparison
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedDual
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.BasedBridge
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.ActualSelfDual
+
+variable (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+  [DecidableEq (w.adicCompletion K)] (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+
+/-- Independent finite source-model data for the genuine local quotient cone, with no self-duality assertion. -/
+structure TwoTermConeBasedResolution (c1 c2 : ℕ) where
+  differential : (Fin c1 → ℤ_[2]) →ₗ[ℤ_[2]] (Fin c2 → ℤ_[2])
+  realization : GHom (twoTermBased differential).toGCx (localQuotientCone K w B)
+  quasiIso : QuasiIso (GHom.toCC realization)
+
+variable {c1 c2 : ℕ} (I : TwoTermConeBasedResolution K w B c1 c2)
+
+/-- The self-dual comparison in the supplied genuine source bases, formed from the actual trace adjoint and realization. -/
+def actualBasedMap (hM : MilneLocalDualityPrint) :
+    ChainMapR (twoTermBased I.differential) (dualPresentationCx (actualLocalPresentation K w B).f) :=
+  basedComparison I.differential (actualLocalPresentation K w B).f
+    (ghomComp I.realization (localSelfDualComparison K w B hM))
+
+/-- The fixed genuine relation differential of the point presentation reduced modulo two. -/
+def pointDifferentialModTwo :
+    (Fin (actualLocalPresentation K w B).rankOne → ZMod 2) →ₗ[ZMod 2]
+      (Fin (actualLocalPresentation K w B).rankZero → ZMod 2) :=
+  reducedDifferential (PadicInt.toZMod (p := 2)) (actualLocalPresentation K w B).f
+
+/-- The specified source-model differential reduced in its actual bases. -/
+def sourceDifferentialModTwo : (Fin c1 → ZMod 2) →ₗ[ZMod 2] (Fin c2 → ZMod 2) :=
+  reducedDifferential (PadicInt.toZMod (p := 2)) I.differential
+
+/-- The full canonical cohomology model of the reduced finite source, retaining its actual kernel and cokernel. -/
+def sourceModTwoModel :
+    CohomologyModel ((twoTermBased I.differential).map (PadicInt.toZMod (p := 2)))
+      ((Fin c2 → ZMod 2) ⧸ LinearMap.range (sourceDifferentialModTwo K w B I))
+      (LinearMap.ker (sourceDifferentialModTwo K w B I)) :=
+  (twoTermBased_map (PadicInt.toZMod (p := 2)) I.differential).symm ▸
+    twoTermModel (sourceDifferentialModTwo K w B I)
+
+/-- The full canonical cohomology model of the reduced actual dual point presentation. -/
+def targetModTwoModel :
+    CohomologyModel ((dualPresentationCx (actualLocalPresentation K w B).f).map (PadicInt.toZMod (p := 2)))
+      (Module.Dual (ZMod 2) (LinearMap.ker (pointDifferentialModTwo K w B)))
+      (Module.Dual (ZMod 2)
+        ((Fin (actualLocalPresentation K w B).rankZero → ZMod 2) ⧸ LinearMap.range (pointDifferentialModTwo K w B))) :=
+  (dualPresentationCx_map (PadicInt.toZMod (p := 2)) (actualLocalPresentation K w B).f).symm ▸
+    dualPresentationModel (pointDifferentialModTwo K w B)
+
+/-- The specific induced even comparison for the actual trace-adjoint based map and the specified models. -/
+def alphaEven (hM : MilneLocalDualityPrint) :
+    ((Fin c2 → ZMod 2) ⧸ LinearMap.range (sourceDifferentialModTwo K w B I)) →ₗ[ZMod 2]
+      Module.Dual (ZMod 2) (LinearMap.ker (pointDifferentialModTwo K w B)) :=
+  ModelComparison.alphaEven ((actualBasedMap K w B I hM).map (PadicInt.toZMod (p := 2)))
+    (sourceModTwoModel K w B I) (targetModTwoModel K w B)
+
+/-- The specific induced odd comparison for the same genuine based map. -/
+def alphaOdd (hM : MilneLocalDualityPrint) :
+    LinearMap.ker (sourceDifferentialModTwo K w B I) →ₗ[ZMod 2]
+      Module.Dual (ZMod 2)
+        ((Fin (actualLocalPresentation K w B).rankZero → ZMod 2) ⧸ LinearMap.range (pointDifferentialModTwo K w B)) :=
+  ModelComparison.alphaOdd ((actualBasedMap K w B I hM).map (PadicInt.toZMod (p := 2)))
+    (sourceModTwoModel K w B I) (targetModTwoModel K w B)
+
+/-- The even model square is derived for the actual constructed trace-adjoint chain map in the supplied source bases. -/
+theorem commE (hM : MilneLocalDualityPrint)
+    (x : cyclesE ((twoTermBased I.differential).map (PadicInt.toZMod (p := 2)))) :
+    (targetModTwoModel K w B).classE
+        (cycleMapE ((actualBasedMap K w B I hM).map (PadicInt.toZMod (p := 2))) x) =
+      alphaEven K w B I hM ((sourceModTwoModel K w B I).classE x) :=
+  ModelComparison.commE _ _ _ x
+
+/-- The odd model square is derived from the same actual map and the same specified source/target models. -/
+theorem commO (hM : MilneLocalDualityPrint)
+    (x : cyclesO ((twoTermBased I.differential).map (PadicInt.toZMod (p := 2)))) :
+    (targetModTwoModel K w B).classO
+        (cycleMapO ((actualBasedMap K w B I hM).map (PadicInt.toZMod (p := 2))) x) =
+      alphaOdd K w B I hM ((sourceModTwoModel K w B I).classO x) :=
+  ModelComparison.commO _ _ _ x
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.ActualBasedComparison
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteCycleLift
+
+open TauCeti TauCeti.ContCohomology
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralTrace
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.AllCochainTrace
+
+variable (F : Type) [Field F] [CharZero F] [ValuativeRel F] [TopologicalSpace F]
+  [IsNonarchimedeanLocalField F]
+
+/-- The independent degree-three exactness statement for the actual integral local trace target. -/
+def ThirdDegreeExact : Prop :=
+  ∀ t : (actualTraceComplex F).X 3, ((actualTraceComplex F).d 3 4).hom t = 0 →
+    ∃ y : (actualTraceComplex F).X 2, ((actualTraceComplex F).d 2 3).hom y = t
+
+/-- Given genuine degree-three exactness, a cochain whose differential is a prescribed two-power multiple differs from an actual cocycle by that two-power multiple. -/
+theorem cycleLift_of_third_exact (hexact : ThirdDegreeExact F) (a : ℕ)
+    (z : (actualTraceComplex F).X 2) (t : (actualTraceComplex F).X 3)
+    (ht : ((actualTraceComplex F).d 2 3).hom z = (2 : ℤ_[2]) ^ a • t) :
+    ∃ w : LinearMap.ker ((actualTraceComplex F).d 2 3).hom,
+      ∃ y : (actualTraceComplex F).X 2, z = w.val + (2 : ℤ_[2]) ^ a • y := by
+  haveI := traceCochains_isTorsionFree F 4
+  have hdt : ((actualTraceComplex F).d 3 4).hom t = 0 := by
+    apply (smul_eq_zero_iff_right (R := ℤ_[2]) (M := (actualTraceComplex F).X 4)
+      (pow_ne_zero a (two_ne_zero : (2 : ℤ_[2]) ≠ 0))).mp
+    have h := congrArg (fun f => f.hom z) ((actualTraceComplex F).d_comp_d 2 3 4)
+    have hcomp : ((actualTraceComplex F).d 3 4).hom (((actualTraceComplex F).d 2 3).hom z) = 0 := by
+      simpa only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_zero, LinearMap.zero_apply] using h
+    rwa [ht, map_smul] at hcomp
+  obtain ⟨y, hy⟩ := hexact t hdt
+  have hw : ((actualTraceComplex F).d 2 3).hom (z - (2 : ℤ_[2]) ^ a • y) = 0 := by
+    rw [map_sub, map_smul, ht, hy, sub_self]
+  exact ⟨⟨z - (2 : ℤ_[2]) ^ a • y, hw⟩, y, (sub_add_cancel _ _).symm⟩
+
+/-- The fixed all-cochain trace has the same genuine finite invariant as an actual lifted cycle, independently of the chosen all-cochain extension. -/
+theorem cycleLift_trace_normalization (a : ℕ)
+    (z : (actualTraceComplex F).X 2) (w : LinearMap.ker ((actualTraceComplex F).d 2 3).hom)
+    (y : (actualTraceComplex F).X 2) (h : z = w.val + (2 : ℤ_[2]) ^ a • y) :
+    PadicInt.toZModPow a (AllCochainTrace.trv F z) =
+      FiniteTrace.finiteInvariant F (2 ^ a) (twoPower_isUnit F a) (actualMuH2Reduction F a w) := by
+  rw [h, map_add, map_smul, smul_eq_mul, map_add, map_mul, trv_finite_normalization]
+  have hzero : PadicInt.toZModPow (p := 2) a ((2 : ℤ_[2]) ^ a) = 0 := by
+    apply (PadicInt.toZModPow_eq_zero_iff_dvd a _).mpr
+    simp only [Nat.cast_ofNat]
+    exact dvd_rfl
+  rw [hzero, zero_mul, add_zero]
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteCycleLift
+
+end
+
+noncomputable section
+
+set_option maxHeartbeats 600000
+
+namespace ZInQ.Contrib.RC53Assist.DerivedKummerActual.RetainedTorsionNaturality
+
+open NumberField IsDedekindDomain TauCeti
+open ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.RC53Assist.DerivedKummer
+open ZInQ.Contrib.CloudB3RC53.Duality
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.IntegralReduction
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.TransportedLocal
+
+variable (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
+  [DecidableEq (w.adicCompletion K)] (B : WeierstrassCurve (w.adicCompletion K)) [B.IsElliptic]
+
+/-- An actual presentation relation divisible by two gives its specific completed rational torsion point. -/
+def relationTorsion
+    (x : Fin (actualLocalPresentation K w B).rankOne → ℤ_[2])
+    (y : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2])
+    (hxy : (actualLocalPresentation K w B).f x = (2 : ℤ_[2]) • y) :
+    torsionN (2 : ℤ_[2]) (PointCompletion B.toAffine.Point) :=
+  ⟨(actualLocalPresentation K w B).g y, by
+    change (2 : ℤ_[2]) • (actualLocalPresentation K w B).g y = 0
+    rw [← map_smul, ← hxy]
+    exact LinearMap.congr_fun (actualLocalPresentation K w B).complex x⟩
+
+/-- The exact retained-degree-zero coefficient naturality obligation for the fixed actual local presentation. This statement is recorded as an open obligation, not assumed as a printed leaf. -/
+def DegreeZeroReductionNaturality : Prop :=
+  ∀ (x : Fin (actualLocalPresentation K w B).rankOne → ℤ_[2])
+    (y : Fin (actualLocalPresentation K w B).rankZero → ℤ_[2])
+    (hxy : (actualLocalPresentation K w B).f x = (2 : ℤ_[2]) • y),
+    IntegralPairing.pointLevelEquiv (w.adicCompletion K) B 1
+      (coefficientProjection (AbsoluteGaloisGroup (w.adicCompletion K)) B.PointCoeff 1
+        (cfun (localKummerZero K w B x) Fin.elim0)) =
+    B.baseTorsionCoeff 2 (etaZero K w B (relationTorsion K w B x y hxy))
+
+end ZInQ.Contrib.RC53Assist.DerivedKummerActual.RetainedTorsionNaturality
 
 end
