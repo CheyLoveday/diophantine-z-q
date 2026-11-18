@@ -1,0 +1,5 @@
+- Base: `40d619ca811e6d8e760c49ac7e273cf5be8b2272`.
+- Route B: fixed-set windows; `window_misses_test` rules out global coverage by a finite pool at budget at least two.
+- Inherited source error: obsolete `hdiam` in `ThetaCoeff/Model.lean`; imports bypass it.
+- `Consumers.lean`: `o12_at` transports the two pointwise readings with representatives outside `U ∪ avoid`; `traceRead_eq_of_labels` gives the fixed-root orbit congruence; `fixedU_at` and `primary_at` consume prescribed fresh readings. The window-family theorems produce `O12Reading`, `FixedUFactorization`, `PrimaryReading` and `RulesUpTo`.
+- `Consumers.lean`: `lake env lean -j1` passed; all seven theorem audits: `propext`, `Classical.choice`, `Quot.sound`.
