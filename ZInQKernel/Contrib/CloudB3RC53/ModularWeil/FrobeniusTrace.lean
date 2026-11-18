@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.RC53Assist.NewformPeriodsDictionary.Dictionary
+import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.Hom.PointMap
 
 /-!
 # RC53 ModularWeil: the Frobenius trace dictionary at good reduction
@@ -27,6 +28,13 @@ own objects.
 * `goodReductionFrobeniusTraceDictionaryQ_of` (`PROVED` from (R) and (FD)): the target exactly as
   stated. The Tate matrix of `σ` is conjugate, through (R), to `π`, so the determinant form
   transfers. The linear algebra gives the trace and the determinant in every basis.
+* `DetEqDegree` (D) and `FrobeniusDegreeForm` (F): the two halves of (FD), stated for homomorphisms
+  of the curve over `\bar 𝔽_p` (`TauCeti.Isogeny.Hom`, with its degree and point maps).
+  `frobeniusTateDetForm_of` (`PROVED`) derives (FD) from (D) and (F), and
+  `goodReductionFrobeniusTraceDictionaryQ_of_RDF` derives the target from (R), (D) and (F).
+  `mapLinearMap_add`, `mapLinearMap_sub`, `mapLinearMap_zsmul` and `mapLinearMap_id` say the Tate
+  map is additive.
+* Fragment: `detEqDegree_id`, i.e. (D) for the identity.
 
 ## The missing classical pieces
 
@@ -184,5 +192,129 @@ theorem goodReductionFrobeniusTraceDictionaryQ_of (hR : TateReductionComparison)
   rw [hFD']
   push_cast
   ring
+
+/-! ### (FD) from (D) and (F) -/
+
+section Split
+
+open scoped Classical
+
+/-- `TateModule.mapLinearMap` is additive. -/
+theorem mapLinearMap_add {ℓ : ℕ} [Fact ℓ.Prime] {A B : Type*} [AddCommGroup A] [AddCommGroup B]
+    (f g : A →+ B) :
+    TauCeti.TateModule.mapLinearMap (p := ℓ) (f + g) =
+      TauCeti.TateModule.mapLinearMap f + TauCeti.TateModule.mapLinearMap g := by
+  refine LinearMap.ext fun x => TauCeti.TateModule.ext fun n => Subtype.ext ?_
+  simp only [LinearMap.add_apply, TauCeti.TateModule.mapLinearMap_apply, map_add,
+    TauCeti.TateModule.proj_map, AddSubgroup.coe_add, TauCeti.TateModule.levelMap_apply,
+    AddMonoidHom.add_apply]
+
+/-- `TateModule.mapLinearMap` is subtractive. -/
+theorem mapLinearMap_sub {ℓ : ℕ} [Fact ℓ.Prime] {A B : Type*} [AddCommGroup A] [AddCommGroup B]
+    (f g : A →+ B) :
+    TauCeti.TateModule.mapLinearMap (p := ℓ) (f - g) =
+      TauCeti.TateModule.mapLinearMap f - TauCeti.TateModule.mapLinearMap g := by
+  refine LinearMap.ext fun x => TauCeti.TateModule.ext fun n => Subtype.ext ?_
+  simp only [LinearMap.sub_apply, TauCeti.TateModule.mapLinearMap_apply, map_sub,
+    TauCeti.TateModule.proj_map, AddSubgroup.coe_sub, TauCeti.TateModule.levelMap_apply,
+    AddMonoidHom.sub_apply]
+
+/-- `TateModule.mapLinearMap` commutes with integer multiples. -/
+theorem mapLinearMap_zsmul {ℓ : ℕ} [Fact ℓ.Prime] {A B : Type*} [AddCommGroup A] [AddCommGroup B]
+    (k : ℤ) (f : A →+ B) :
+    TauCeti.TateModule.mapLinearMap (p := ℓ) (k • f) =
+      (k : ℤ_[ℓ]) • TauCeti.TateModule.mapLinearMap f := by
+  refine LinearMap.ext fun x => ?_
+  rw [LinearMap.smul_apply, Int.cast_smul_eq_zsmul]
+  refine TauCeti.TateModule.ext fun n => Subtype.ext ?_
+  simp only [TauCeti.TateModule.mapLinearMap_apply, map_zsmul, TauCeti.TateModule.proj_map,
+    AddSubgroup.coe_zsmul, TauCeti.TateModule.levelMap_apply, AddMonoidHom.smul_apply]
+
+/-- `TateModule.mapLinearMap` of the identity. -/
+theorem mapLinearMap_id {ℓ : ℕ} [Fact ℓ.Prime] {A : Type*} [AddCommGroup A] :
+    TauCeti.TateModule.mapLinearMap (p := ℓ) (AddMonoidHom.id A) = 1 := by
+  refine LinearMap.ext fun x => ?_
+  rw [TauCeti.TateModule.mapLinearMap_apply, TauCeti.TateModule.map_id]
+  rfl
+
+/-- **(D) The determinant of an endomorphism on `T_ℓ` is its degree** (Silverman III.8.6), for an
+elliptic curve over `𝔽_p`, `ℓ ≠ p`, over `\bar 𝔽_p`. Here `f` is a homomorphism of the curve
+(`TauCeti.Isogeny.Hom`, with `deg 0 = 0`) and `α` its additive point map. Stated, not proved. -/
+def DetEqDegree : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (Et : WeierstrassCurve (ZMod p)) [Et.IsElliptic],
+    ∀ (ℓ : ℕ) [Fact ℓ.Prime], ℓ ≠ p →
+      ∀ (f : TauCeti.Isogeny.Hom (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine
+          (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine)
+        (α : (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point →+
+          (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point),
+        (∀ P, f.pointMap P = α P) →
+          LinearMap.det (TauCeti.TateModule.mapLinearMap (p := ℓ) α) = (f.degree : ℤ_[ℓ])
+
+/-- **(F) The degree form of Frobenius** (Silverman V.2.3.1): for an elliptic curve over `𝔽_p`
+there is a homomorphism `π` of the curve over `\bar 𝔽_p` acting on points as the `p`-power map on
+coordinates, with `deg(m − n π) = m² − a m n + p n²` for all integers `m, n`, where
+`a = p + 1 − #Ẽ(𝔽_p)`. (From `deg π = p`, `1 − π` separable with kernel `Ẽ(𝔽_p)`, and the
+quadratic nature of the degree.) Stated, not proved. -/
+def FrobeniusDegreeForm : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime] (Et : WeierstrassCurve (ZMod p)) [Et.IsElliptic],
+    ∃ π : TauCeti.Isogeny.Hom (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine
+        (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine,
+      (∀ P, π.pointMap P = WeierstrassCurve.Affine.Point.map (W' := Et)
+        (FiniteField.frobeniusAlgHom (ZMod p) (AlgebraicClosure (ZMod p))) P) ∧
+      ∀ m n : ℤ, ((m • TauCeti.Isogeny.Hom.id _ - n • π).degree : ℤ) =
+        m ^ 2 - ((p : ℤ) + 1 - (Nat.card Et.toAffine.Point : ℤ)) * m * n + p * n ^ 2
+
+/-- **(FD) from (D) and (F)** (`PROVED`). -/
+theorem frobeniusTateDetForm_of (hD : DetEqDegree) (hF : FrobeniusDegreeForm) :
+    FrobeniusTateDetForm := by
+  intro p _ Et hEt ℓ _ hℓ m n
+  have := hEt
+  obtain ⟨π, hπ, hdeg⟩ := hF p Et
+  let fr : (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point →+
+      (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point :=
+    WeierstrassCurve.Affine.Point.map (W' := Et)
+      (FiniteField.frobeniusAlgHom (ZMod p) (AlgebraicClosure (ZMod p)))
+  have hα : ∀ P, (m • TauCeti.Isogeny.Hom.id _ - n • π).pointMap P =
+      (m • AddMonoidHom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point - n • fr) P := by
+    intro P
+    rw [TauCeti.Isogeny.Hom.sub_pointMap, TauCeti.Isogeny.Hom.zsmul_pointMap,
+      TauCeti.Isogeny.Hom.zsmul_pointMap, TauCeti.Isogeny.Hom.id_pointMap, hπ]
+    rfl
+  have h := hD p Et ℓ hℓ _ _ hα
+  have hT : TauCeti.TateModule.mapLinearMap (p := ℓ)
+      (m • AddMonoidHom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point - n • fr) =
+      (m : ℤ_[ℓ]) • (1 : Module.End ℤ_[ℓ] (redTate p Et ℓ)) - (n : ℤ_[ℓ]) • frobTate p Et ℓ := by
+    rw [mapLinearMap_sub, mapLinearMap_zsmul, mapLinearMap_zsmul, mapLinearMap_id]
+    rfl
+  rw [hT] at h
+  rw [h]
+  have hd := hdeg m n
+  have : ((m • TauCeti.Isogeny.Hom.id _ - n • π).degree : ℤ_[ℓ]) =
+      (((m • TauCeti.Isogeny.Hom.id _ - n • π).degree : ℤ) : ℤ_[ℓ]) := by norm_cast
+  rw [this, hd]
+  push_cast
+  ring
+
+/-- **The dictionary from (R), (D) and (F)** (`PROVED` from the three named inputs). -/
+theorem goodReductionFrobeniusTraceDictionaryQ_of_RDF (hR : TateReductionComparison)
+    (hD : DetEqDegree) (hF : FrobeniusDegreeForm) : GoodReductionFrobeniusTraceDictionaryQ :=
+  goodReductionFrobeniusTraceDictionaryQ_of hR (frobeniusTateDetForm_of hD hF)
+
+/-- **(D) for the identity** (`PROVED`): an additive point map agreeing with the identity
+homomorphism is the identity, whose Tate map has determinant `1 = deg id`. -/
+theorem detEqDegree_id (p : ℕ) [Fact p.Prime] (Et : WeierstrassCurve (ZMod p)) [Et.IsElliptic]
+    (ℓ : ℕ) [Fact ℓ.Prime]
+    (α : (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point →+
+      (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point)
+    (hα : ∀ P, (TauCeti.Isogeny.Hom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine).pointMap
+      P = α P) :
+    LinearMap.det (TauCeti.TateModule.mapLinearMap (p := ℓ) α) =
+      ((TauCeti.Isogeny.Hom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine).degree :
+        ℤ_[ℓ]) := by
+  have hid : α = AddMonoidHom.id _ := AddMonoidHom.ext fun P =>
+    (hα P).symm.trans (TauCeti.Isogeny.Hom.id_pointMap P)
+  rw [hid, mapLinearMap_id, map_one, TauCeti.Isogeny.Hom.degree_id, Nat.cast_one]
+
+end Split
 
 end ZInQ.Contrib.CloudB3RC53.ModularWeil
