@@ -5,7 +5,8 @@ import ZInQKernel.Contrib.CloudB3RC53.Torsion.ConeCoord
 # E1a, part 7: `PreCoreLink` from a retained comparison map
 
 `PreCoreLink` (`RelCore.lean`: the pre-cancellation complex `C_x` and the integral two-term core of
-the relaxed complex at `x` have the same Knudsen–Mumford coordinate) is derived from ONE named input,
+the relaxed complex at `x` have the same Knudsen–Mumford coordinate) is derived from ONE named
+input,
 `RetainedComparison`, with stateable properties:
 
 * a chain map `f : C_x → core` of four-term complexes (`FourMap`) with the augmented compatibility
@@ -46,7 +47,8 @@ set_option synthInstance.maxHeartbeats 400000 in
 set_option synthInstance.maxSize 512 in
 /-- **GLUE: the retained comparison** of the sign-evaluated pre-cancellation complex `C_x` with the
 two-term core `[K^n --D--> K^n]` (class `z_c`, functional `w_c`): a chain map with the augmented
-compatibility, `aug C_x` acyclic, and the cone of the augmented map of torsion the canonical sign. -/
+compatibility, `aug C_x` acyclic, and the cone of the augmented map of torsion the canonical
+sign. -/
 def RetainedComparison (M : Identification2 b dK hK cE tK) (x : Addr b)
     (z : Fin M.D.m0 ⊕ Unit ⊕ Fin M.D.m1 → MonoidAlgebra OO (SignGroup b))
     (lam : (Fin M.C.m1 ⊕ Unit ⊕ Fin M.C.m2) ⊕ M.C.N → MonoidAlgebra OO (SignGroup b))
