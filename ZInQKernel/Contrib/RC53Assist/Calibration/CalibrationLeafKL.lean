@@ -19,6 +19,11 @@ the local-block fields `Fr`, `hFtr`, `hFdet`, `PW`, `QW`, `eW`, `zmov`, `zmov'`,
 
 Results (PROVED, standard axioms): `CalibrationModelHKL.nonempty_modelP`,
 `calibrationInputsP_of_HKL`, `calibrationTarget_of_HKL`.
+
+**Status.** The Kummer block `KummerCoordinateBlock` is conditional bookkeeping (its disk orders
+are freely assignable and `link` is a coordinate equation), so this leaf does not discharge `hK`
+arithmetically; the leaf `CalibrationModelHKL2` replaces it by `KummerCoordinateBlockG` (disk
+lengths read from the genuine finite-level Kummer Selmer complexes) and adds `MovingPrimeData`.
 -/
 
 noncomputable section
