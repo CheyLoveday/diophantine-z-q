@@ -1,0 +1,137 @@
+Statements and axiom report for ZInQKernel/Contrib/RC53Assist/IsogenyScheme/ProjectiveModel.lean
+(namespace ZInQ.Contrib.RC53Assist.IsogenyScheme; Lean 4.35.0, Mathlib v4.35.0 as pinned).
+Produced by `#check` and `#print axioms` on the compiled file.
+
+irreducibleSpace_proj : ∀ (E : WeierstrassCurve ℚ), IrreducibleSpace ↥(AlgebraicGeometry.Proj E.toProjective.grading)
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.irreducibleSpace_proj' depends on axioms: [propext, Classical.choice, Quot.sound]
+isIntegral_proj : ∀ (E : WeierstrassCurve ℚ),
+  AlgebraicGeometry.IsIntegral (AlgebraicGeometry.Proj E.toProjective.grading)
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.isIntegral_proj' depends on axioms: [propext, Classical.choice, Quot.sound]
+isProper_proj : ∀ (E : WeierstrassCurve ℚ),
+  AlgebraicGeometry.IsProper (AlgebraicGeometry.Proj.toSpecZero E.toProjective.grading)
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.isProper_proj' depends on axioms: [propext, Classical.choice, Quot.sound]
+projFunctionFieldEquiv : (E : WeierstrassCurve ℚ) →
+  ↑(AlgebraicGeometry.Proj E.toProjective.grading).functionField ≃+* E.toAffine.FunctionField
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.projFunctionFieldEquiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+projFunctionFieldEquiv_germ : ∀ (E : WeierstrassCurve ℚ) (U : (AlgebraicGeometry.Proj E.toProjective.grading).Opens)
+  [inst : Nonempty ↥↑U] (s : ↑((AlgebraicGeometry.Proj E.toProjective.grading).presheaf.obj (Opposite.op U))),
+  (projFunctionFieldEquiv E)
+      ((CategoryTheory.ConcreteCategory.hom ((AlgebraicGeometry.Proj E.toProjective.grading).germToFunctionField U))
+        s) =
+    (atPrimeEquivFunctionField E ⋯) (↑s ⟨genericPoint ↥(AlgebraicGeometry.Proj E.toProjective.grading), ⋯⟩)
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.projFunctionFieldEquiv_germ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+projModel : (E : WeierstrassCurve ℚ) → SchemeModel E
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.projModel' depends on axioms: [propext, Classical.choice, Quot.sound]
+affineEquivZChart : (E : WeierstrassCurve ℚ) → E.toAffine.CoordinateRing ≃+* ZChart E
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.affineEquivZChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+@isFractionRing_zChart : ∀ {E : WeierstrassCurve ℚ} {P : Ideal E.toProjective.CoordinateRing} [inst : P.IsPrime]
+  (hP : P = ⊥), IsFractionRing (ZChart E) (HomogeneousLocalization.AtPrime E.toProjective.grading P)
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.isFractionRing_zChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+@atPrimeEquivFunctionField_mk : ∀ {E : WeierstrassCurve ℚ} {P : Ideal E.toProjective.CoordinateRing} [inst : P.IsPrime]
+  (hP : P = ⊥) (i : ℕ) (a b : ↥(E.toProjective.grading i)) (hb : ↑b ∈ P.primeCompl),
+  (atPrimeEquivFunctionField E hP) (HomogeneousLocalization.mk { deg := i, num := a, den := b, den_mem := hb }) =
+    (dehomogenization E) ↑a / (dehomogenization E) ↑b
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.atPrimeEquivFunctionField_mk' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+pointO : (E : WeierstrassCurve ℚ) → ↥(AlgebraicGeometry.Proj E.toProjective.grading)
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.pointO' depends on axioms: [propext, Classical.choice, Quot.sound]
+mem_pointO_iff : ∀ (E : WeierstrassCurve ℚ) {n : ℕ} {a : E.toProjective.CoordinateRing},
+  a ∈ E.toProjective.grading n → (a ∈ (pointO E).asHomogeneousIdeal ↔ E.toProjective.evalZero a = 0)
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.mem_pointO_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+stalkPointOToFunctionField : (E : WeierstrassCurve ℚ) →
+  ↑((AlgebraicGeometry.Proj E.toProjective.grading).presheaf.stalk (pointO E)) →+* E.toAffine.FunctionField
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.stalkPointOToFunctionField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+stalkPointOImage : (E : WeierstrassCurve ℚ) → Subring E.toAffine.FunctionField
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.stalkPointOImage' depends on axioms: [propext, Classical.choice, Quot.sound]
+infinityPlace_le_one_iff_mem_stalkPointOImage : ∀ (E : WeierstrassCurve ℚ) (z : E.toAffine.FunctionField),
+  E.toAffine.infinityPlace z ≤ 1 ↔ z ∈ stalkPointOImage E
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.infinityPlace_le_one_iff_mem_stalkPointOImage' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+infinityPlace_lt_one_iff_mem_maximalIdeal : ∀ (E : WeierstrassCurve ℚ) (z : E.toAffine.FunctionField),
+  E.toAffine.infinityPlace z < 1 ↔
+    ∃ g ∈ IsLocalRing.maximalIdeal ↑((AlgebraicGeometry.Proj E.toProjective.grading).presheaf.stalk (pointO E)),
+      (stalkPointOToFunctionField E) g = z
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.infinityPlace_lt_one_iff_mem_maximalIdeal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+stalkPointOImage_eq_valuationSubring : ∀ (E : WeierstrassCurve ℚ),
+  stalkPointOImage E = E.toAffine.infinityPlace.valuationSubring.toSubring
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.stalkPointOImage_eq_valuationSubring' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+stalkPointOEquivValuationSubring : (E : WeierstrassCurve ℚ) →
+  ↑((AlgebraicGeometry.Proj E.toProjective.grading).presheaf.stalk (pointO E)) ≃+*
+    ↥E.toAffine.infinityPlace.valuationSubring
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.stalkPointOEquivValuationSubring' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+isDiscreteValuationRing_stalk_pointO : ∀ (E : WeierstrassCurve ℚ),
+  IsDiscreteValuationRing ↑((AlgebraicGeometry.Proj E.toProjective.grading).presheaf.stalk (pointO E))
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.isDiscreteValuationRing_stalk_pointO' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+dominated_iff_eq_pointO : ∀ (E : WeierstrassCurve ℚ) (P : ↥(AlgebraicGeometry.Proj E.toProjective.grading)),
+  (∀ (g : ↑((AlgebraicGeometry.Proj E.toProjective.grading).presheaf.stalk P)),
+      E.toAffine.infinityPlace
+          ((projFunctionFieldEquiv E)
+            ((algebraMap ↑((AlgebraicGeometry.Proj E.toProjective.grading).presheaf.stalk P)
+                ↑(AlgebraicGeometry.Proj E.toProjective.grading).functionField)
+              g)) ≤
+        1) ↔
+    P = pointO E
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.dominated_iff_eq_pointO' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@isPointedMap_of_apply_pointO : ∀ {E₁ E₂ : WeierstrassCurve ℚ} (f : (projModel E₁).X ⟶ (projModel E₂).X)
+  [inst : AlgebraicGeometry.IsDominant f], f (pointO E₁) = pointO E₂ → IsPointedMap (projModel E₁) (projModel E₂) f
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.isPointedMap_of_apply_pointO' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@isPointedMap_iff_apply_pointO : ∀ {E₁ E₂ : WeierstrassCurve ℚ} (f : (projModel E₁).X ⟶ (projModel E₂).X)
+  [inst : AlgebraicGeometry.IsDominant f], IsPointedMap (projModel E₁) (projModel E₂) f ↔ f (pointO E₁) = pointO E₂
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.isPointedMap_iff_apply_pointO' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@isogenyOfProjMorphism : {E₁ E₂ : WeierstrassCurve ℚ} →
+  (f : (projModel E₁).X ⟶ (projModel E₂).X) →
+    [AlgebraicGeometry.IsDominant f] → f (pointO E₁) = pointO E₂ → TauCeti.Isogeny E₁.toAffine E₂.toAffine
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.isogenyOfProjMorphism' depends on axioms: [propext, Classical.choice, Quot.sound]
+@isogenyOfProjMorphism_fieldPullback : ∀ {E₁ E₂ : WeierstrassCurve ℚ} (f : (projModel E₁).X ⟶ (projModel E₂).X)
+  [inst : AlgebraicGeometry.IsDominant f] (hf : f (pointO E₁) = pointO E₂),
+  (isogenyOfProjMorphism f hf).fieldPullback = fieldMap (projModel E₁) (projModel E₂) f
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.isogenyOfProjMorphism_fieldPullback' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@nonempty_isogeny_of_projMorphism : ∀ {E₁ E₂ : WeierstrassCurve ℚ} (f : (projModel E₁).X ⟶ (projModel E₂).X)
+  [AlgebraicGeometry.IsDominant f], f (pointO E₁) = pointO E₂ → Nonempty (TauCeti.Isogeny E₁.toAffine E₂.toAffine)
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.nonempty_isogeny_of_projMorphism' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@eq_of_fieldMap_eq : ∀ {E₁ E₂ : WeierstrassCurve ℚ} {f g : (projModel E₁).X ⟶ (projModel E₂).X}
+  [inst : AlgebraicGeometry.IsDominant f] [inst_1 : AlgebraicGeometry.IsDominant g],
+  fieldMap (projModel E₁) (projModel E₂) f = fieldMap (projModel E₁) (projModel E₂) g → f = g
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.eq_of_fieldMap_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@eq_of_isogenyOfProjMorphism_eq : ∀ {E₁ E₂ : WeierstrassCurve ℚ} {f g : (projModel E₁).X ⟶ (projModel E₂).X}
+  [inst : AlgebraicGeometry.IsDominant f] [inst_1 : AlgebraicGeometry.IsDominant g] (hf : f (pointO E₁) = pointO E₂)
+  (hg : g (pointO E₁) = pointO E₂),
+  (isogenyOfProjMorphism f hf).fieldPullback = (isogenyOfProjMorphism g hg).fieldPullback → f = g
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.eq_of_isogenyOfProjMorphism_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+isogenyOfProjMorphism_id_fieldPullback : ∀ (E : WeierstrassCurve ℚ),
+  (isogenyOfProjMorphism (CategoryTheory.CategoryStruct.id (projModel E).X) ⋯).fieldPullback =
+    AlgHom.id ℚ E.toAffine.FunctionField
+'ZInQ.Contrib.RC53Assist.IsogenyScheme.isogenyOfProjMorphism_id_fieldPullback' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+All 146 named declarations of the file depend on axioms: [propext, Classical.choice, Quot.sound].
+The file contains no sorry, admit, axiom, native_decide or implemented_by.
