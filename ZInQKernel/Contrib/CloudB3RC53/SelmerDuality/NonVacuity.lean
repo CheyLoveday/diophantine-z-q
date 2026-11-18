@@ -66,7 +66,10 @@ def zeroHom (A B : GCx S) : GHom A B where
 /-- Zero Selmer data. -/
 abbrev zeroSel : SelData S := ⟨zeroCx S, zeroCx S, zeroCx S, zeroHom S _ _, zeroHom S _ _⟩
 
-instance (n : ℤ) : Subsingleton ((zeroCx S).X n) := ⟨fun _ _ => rfl⟩
+/-- The zero complex's modules are subsingletons. Low priority: the carrier is `PUnit` up to
+reducible unfolding, so at default priority this instance is tried for every `Subsingleton PUnit`
+goal and its ring argument sends the search into a timeout. -/
+instance (priority := low) (n : ℤ) : Subsingleton ((zeroCx S).X n) := ⟨fun _ _ => rfl⟩
 
 /-- The zero coefficient module as an unramified new place (tame model at augmentation with
 `M = 0`, `Φ = 0`, `q = 1`). -/
