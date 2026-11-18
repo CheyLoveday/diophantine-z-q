@@ -187,7 +187,7 @@ sections give orbit terms differing by the coboundary of `w = ∑_{δ ∈ O} R(r
 theorem orbitTerm_change_section (r' : G ⧸ H → G) (hr' : ∀ δ, ((r' δ : G) : G ⧸ H) = δ)
     (O : Finset (G ⧸ H)) (hO : ∀ d ∈ D, ∀ δ ∈ O, ((d : G) : G ⧸ H) * δ ∈ O)
     (b : H → M) (hb : ∀ x y : H, b (x * y) = b x + ρ x (b y)) :
-    ∃ w : M, ∀ d : D, orbitTerm H ρ θ r' hr' O b d =
+    ∃ w : M, (∀ k : ℤ, (∀ x, k • b x = 0) → k • w = 0) ∧ ∀ d : D, orbitTerm H ρ θ r' hr' O b d =
       orbitTerm H ρ θ r hr O b d + (R H ρ θ d w - w) := by
   -- `u_δ = r_δ⁻¹ r'_δ ∈ H`
   have hu : ∀ δ, (r δ)⁻¹ * r' δ ∈ H := fun δ => by
@@ -199,7 +199,9 @@ theorem orbitTerm_change_section (r' : G ⧸ H → G) (hr' : ∀ δ, ((r' δ : G
     have := hb x⁻¹ x
     rw [inv_mul_cancel, hb1] at this
     exact eq_neg_of_add_eq_zero_left this.symm
-  refine ⟨∑ δ ∈ O, R H ρ θ (r δ) (b (u δ)), fun d => ?_⟩
+  refine ⟨∑ δ ∈ O, R H ρ θ (r δ) (b (u δ)), fun k hk => ?_, fun d => ?_⟩
+  · rw [smul_sum]
+    exact sum_eq_zero fun δ _ => by rw [← map_zsmul, hk, map_zero]
   have hρinv : ∀ (x : H) (m : M), ρ (x : G) (ρ ((x⁻¹ : H) : G) m) = m := fun x m => by
     rw [← Module.End.mul_apply, ← map_mul]; simp
   have key : ∀ δ : G ⧸ H,
@@ -246,7 +248,8 @@ restricted to `D` is the corestriction cochain of the transported cocycle `b_s` 
 of some `w ∈ M` (for the action `R` of `D`). -/
 theorem orbitTerm_eq_cor_add_coboundary [DecidableEq (G ⧸ H)] (s : G)
     (hs : ((s : G) : G ⧸ H) = δ₀) (b : H → M) (hb : ∀ x y : H, b (x * y) = b x + ρ x (b y)) :
-    ∃ w : M, ∀ d : D, orbitTerm H ρ θ r hr (univ.image (phi H t)) b d =
+    ∃ w : M, (∀ k : ℤ, (∀ x, k • b x = 0) → k • w = 0) ∧
+      ∀ d : D, orbitTerm H ρ θ r hr (univ.image (phi H t)) b d =
       (TauCeti.ContCohomology.cochainsCor1 D (TwM H ρ θ) (stab H D δ₀) t ht
         (bTrans H ρ θ s hs b) d).val + (R H ρ θ d w - w) := by
   classical
@@ -263,9 +266,9 @@ theorem orbitTerm_eq_cor_add_coboundary [DecidableEq (G ⧸ H)] (s : G)
     intro u
     have h : ∃ v, phi H t v = phi H t u := ⟨u, rfl⟩
     simp only [rc, dif_pos h, phi_injective H t ht h.choose_spec]
-  obtain ⟨w, hw⟩ := orbitTerm_change_section H ρ θ rc hrc r hr (univ.image (phi H t))
+  obtain ⟨w, hwk, hw⟩ := orbitTerm_change_section H ρ θ rc hrc r hr (univ.image (phi H t))
     (image_phi_stable H t ht) b hb
-  exact ⟨w, fun d => by rw [hw d, orbitTerm_eq_cor H ρ θ rc hrc t ht s hs hcomp b d]⟩
+  exact ⟨w, hwk, fun d => by rw [hw d, orbitTerm_eq_cor H ρ θ rc hrc t ht s hs hcomp b d]⟩
 
 end TwistedTransfer
 
@@ -294,6 +297,7 @@ def MackeyCorNode : Prop :=
 
 theorem mackeyCorNode_proof : MackeyCorNode := by
   intro G _ H _ r hr A M _ _ _ ρ θ D δ₀ _ _ t ht s hs b hb
-  exact TwistedTransfer.orbitTerm_eq_cor_add_coboundary H ρ θ r hr t ht s hs b hb
+  obtain ⟨w, -, hw⟩ := TwistedTransfer.orbitTerm_eq_cor_add_coboundary H ρ θ r hr t ht s hs b hb
+  exact ⟨w, hw⟩
 
 end ZInQ.Contrib.CloudB3RC53.HeegnerCohomology

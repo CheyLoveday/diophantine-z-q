@@ -10,6 +10,7 @@ import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.Witness
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.Cartesian
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.CorDescent
 import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.MackeyCor
+import ZInQKernel.Contrib.CloudB3RC53.HeegnerCohomology.KummerPush
 
 /-!
 # HeegnerCohomology: the cohomological layer of `ex:arith-finite-heegner` (tex 2834–3410)
@@ -35,4 +36,6 @@ Index of the area (all `PROVED`, standard axioms):
   `FiveTerm.descend_cor` (`hsq_genuine`) and `descend_cor_genuine`.
 * `MackeyCor`: each Mackey orbit term is the local corestriction of the transported cocycle; node
   `MackeyCorNode`.
+* `KummerPush`: the old Kummer conditions survive the coefficient push (tex 3257–3267); node
+  `OldKummerSurvivesNode`.
 -/
