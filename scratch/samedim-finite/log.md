@@ -14,3 +14,9 @@
   Translation after field extension gives finitely many geometric kernel points.
 - VERIFIED (Lean): `ShimuraSteps.sameDimSurjectiveFinite : ShimuraSteps.SameDimSurjectiveFinite`;
   `ShimuraSteps.shimuraThm1Af_of_printed'` takes only the print form and the Hecke bridge.
+- VERIFIED (Lean): `Axioms.lean` lists only `propext`, `Classical.choice` and `Quot.sound`
+  for all eleven new theorems. `DischargesFocused.lean` matches the exact quotient row
+  type and reports that the new theorem assumes only `ShimuraThm1AsPrinted` and
+  `ShimuraHeckeRelations`. The full assembly was not checked.
+- VERIFIED (dry run): strict and strictest both change from 5 LEAF / 24 GLUE (29 rows)
+  to 6 LEAF / 24 GLUE (30 rows). No files in the assembly were changed.
