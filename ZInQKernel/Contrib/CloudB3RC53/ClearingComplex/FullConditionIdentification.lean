@@ -16,6 +16,8 @@ support data). Its differences:
 * the pre-cancellation family model is a `FullPreComplex`: the new singular summands `N` sit in
   **degrees one and two** (`C¹ = D¹ ⊕ N`, `C² = D² ⊕ N`, `d¹ = (P Q; T B)`), so the surviving
   Schur differential is `d¹ = P − QB⁻¹T` and `d⁰ = c⁰`, `d² = U` are unchanged (`poles1`);
+* the family local conditions `Δf` are **full at the new places** (`hfull`: the condition map is
+  an isomorphism in every degree there; satisfied by the relaxed conditions, `hfull_relaxed`);
 * there is **no nonemptiness hypothesis** on the new places: `S' = S` (`Q = ∅`) is admitted;
 * the augmented model modulo `ρ` is compared with the genuine **full-condition** Selmer complex
   `selCx (galoisFullData K hS R₀ M₀ Δ₀)` (`ψ0`), its old part with the genuine unramified
@@ -222,6 +224,10 @@ structure Identification3 [Fintype (NewPlaces K S S')] [DecidableEq (NewPlaces K
   [Mf_cact : ContinuousSMul (GKS K S') Mf]
   /-- the family local conditions -/
   Δf : GaloisLocalConditions K S' (MonoidAlgebra OO (SignGroup b)) Mf
+  /-- the family local conditions are FULL at the new places: there the condition map
+  `U_v → C^•_cont(G_{K_v}, M_f)` is an isomorphism in every degree (the complex `C_b` of (5.6)) -/
+  hfull : ∀ v : ZInQ.Manuscript.RC.SelmerComplex.Places K S', v.1 ∉ S →
+    ∀ n : ℤ, Function.Bijective ((Δf.i v).f n n rfl)
   /-- `C ⊗ 𝒪[G]` is a model of the genuine family Selmer complex -/
   ψf : (C.map (φO b)).toGCx.toCC ⟶ (selCx (galoisSelData K S' _ Mf Δf)).toCC
   qisf : QuasiIso ψf
@@ -367,6 +373,18 @@ theorem quotMap_quasiIso : QuasiIso M.quotMap := by
     M.genuine_shortExact h₁ h₂
 
 end Identification3
+
+/-- **The full condition satisfies `hfull`**: the relaxed (full) conditions everywhere have the
+identity as condition map. -/
+theorem hfull_relaxed {K : Type} [Field K] [NumberField K] (S S' : Set (HeightOneSpectrum (𝓞 K)))
+    (k : Type) [CommRing k] (Mf : Type) [AddCommGroup Mf] [Module k Mf]
+    [DistribMulAction (GKS K S') Mf] [SMulCommClass (GKS K S') k Mf] [TopologicalSpace Mf]
+    [ContinuousAdd Mf] [ContinuousConstSMul k Mf] [ContinuousSMul (GKS K S') Mf] :
+    ∀ v : ZInQ.Manuscript.RC.SelmerComplex.Places K S', v.1 ∉ S → ∀ n : ℤ,
+      Function.Bijective
+        (((ZInQ.Manuscript.RC.SelmerComplex.relaxedConditions k _ _ _ Mf :
+          GaloisLocalConditions K S' k Mf).i v).f n n rfl) :=
+  fun _ _ _ => Function.bijective_id
 
 /-- **The inputs of RC0's `clearingTarget_of_complex`** (the body of `ClearingInputsCx`) from the
 full-condition identification, transported cycles and functionals, and E1a (PROVED; `c := kmCoord`,
