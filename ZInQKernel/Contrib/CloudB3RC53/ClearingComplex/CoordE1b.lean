@@ -250,4 +250,30 @@ theorem clearingModel_of_km {ℓ : ℕ} (Dd : RCData ℓ)
     exact ⟨M, sdOf M.D z μ M.oldC.Ai M.s M.s_ne (central_of_full _ M.s M.central_full), κ, -1, η, cOf M.D z μ hz hμ,
       coordComputation_km M.D z μ hz hμ M.oldC.Ai M.s M.s_ne (central_of_full _ M.s M.central_full), hlink⟩⟩
 
+/-- **The inputs of RC0's `clearingTarget_of_complex`** (the body of `ClearingInputsCx`, RC/Wiring)
+from the second identification, transported cycles and functionals, and E1a (PROVED): the
+Selmer-phrased identification is derived (`toSelmerIdentification`), the scalar data are read off
+`z, μ`, the coordinate is the Knudsen–Mumford coordinate and E1b is `coordComputation_km`. -/
+theorem clearingInputsCx_of_km {ℓ : ℕ} (Dd : RCData ℓ)
+    (h : ∃ dK hK cE tK : ℕ, ∀ Co Ce : ℤ, ∀ F : Family, Dd.FinalFamilyAt Co Ce F →
+      ∃ (M : Identification2 F.b dK hK cE tK)
+        (z : Fin M.D.m0 ⊕ Unit ⊕ Fin M.D.m1 → MonoidAlgebra OO (SignGroup F.b))
+        (μ : Fin M.D.m1 ⊕ Unit ⊕ Fin M.D.m2 → MonoidAlgebra OO (SignGroup F.b))
+        (hz : M.D.d1 *ᵥ z = 0) (hμ : μ ᵥ* M.D.d1 = 0) (κ η : MonoidAlgebra OO (SignGroup F.b)),
+        ∀ (e : Addr F.b → ℕ) (g : Addr F.b → Lam), UTildeRep Dd F e g →
+          CoordLink M.toIdentification.B κ η 0 e g (cOf M.D z μ hz hμ)) :
+    ∃ dK hK cE tK : ℕ, ∀ Co Ce : ℤ, ∀ F : Family, Dd.FinalFamilyAt Co Ce F →
+      ∃ (I : SelmerIdentification F.b dK hK cE tK) (sd : ScalarData I.B)
+        (κ ε η : MonoidAlgebra OO (SignGroup F.b)) (c : Addr F.b → FractionRing OO),
+        CoordComputation I.B sd ε c I.D.RankOnePattern I.D.AcyclicPattern ∧
+        ∀ (e : Addr F.b → ℕ) (g : Addr F.b → Lam), UTildeRep Dd F e g →
+          CoordLink I.B κ η 0 e g c := by
+  obtain ⟨dK, hK, cE, tK, hF⟩ := h
+  refine ⟨dK, hK, cE, tK, fun Co Ce F hFam => ?_⟩
+  obtain ⟨M, z, μ, hz, hμ, κ, η, hlink⟩ := hF Co Ce F hFam
+  exact ⟨M.toSelmerIdentification, sdOf M.D z μ M.oldC.Ai M.s M.s_ne
+      (central_of_full _ M.s M.central_full), κ, -1, η, cOf M.D z μ hz hμ,
+    coordComputation_km M.D z μ hz hμ M.oldC.Ai M.s M.s_ne (central_of_full _ M.s M.central_full),
+    hlink⟩
+
 end ZInQ.Contrib.CloudB3RC53.ClearingComplex
