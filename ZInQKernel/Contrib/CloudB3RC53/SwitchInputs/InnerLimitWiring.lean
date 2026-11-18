@@ -6,8 +6,8 @@ import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.DerivativeOrthogonal
 
 Proposition `ex:limits-uniform-lower-bound`, height-one regularity (tex L4976–5195), the switch at a
 derivative label (tex L5027–5086), Lemma `ex:limits-inner-limit` (tex L4391–4451): the switch is
-taken on the inner-limit objects along derivative labels with `q → 1`, not on one fixed
-characteristic-zero fibre (`DerivativeOrthogonal.lean`, finding (3); `UnrCoords`).
+taken on the inner-limit objects along derivative labels with `q → 1` (tex L3298–3300, L5030–5032),
+not on one fixed characteristic-zero fibre (`DerivativeOrthogonal.lean`, finding (3); `UnrCoords`).
 
 The inner-limit switching objects (`RC53Assist.InnerLimit.Objects`: `fibreLimitGlobal`,
 `limitRelaxed`, the finite and singular limit sides, `fibreLimitNonquadStep`) produce a

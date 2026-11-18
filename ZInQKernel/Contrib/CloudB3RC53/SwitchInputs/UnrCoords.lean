@@ -3,9 +3,9 @@ import ZInQKernel.Contrib.CloudB3RC53.SwitchInputs.GenericNonVacuity
 /-!
 # RC53 SwitchInputs: unramified tame coordinates `H¹ ≅ M/(Φ−1)M × ker(Φ − q)`
 
-Manuscript `diophantine_zq.tex`, tex L5027–5037 (the coordinates of `H¹(W_rel)` at an inert
-derivative prime from the tame quotient `⟨φ, σ | φσφ⁻¹ = σ^q⟩`) and the side conditions of
-tex L5068–5083.
+Manuscript `diophantine_zq.tex`, tex L3298–3306, L5026–5037 (the coordinates of `H¹(W_rel)` at an
+inert derivative prime from the tame quotient `⟨φ, σ | φσφ⁻¹ = σ^q⟩`) and the side conditions of tex
+L5060–5082.
 
 `TameCoordinatesTrivialK` (`GenericSides.lean`) asks the whole group to act trivially, and in
 characteristic zero it is then refuted by `not_tameCoordinatesTrivialK_of_tame`
@@ -26,23 +26,23 @@ Nodes:
   finite side is `coker × 0` (`finite_side_imageUnr`; at cocycle level `finite_side_iffUnr`)
   and the singular side is `0 × ker` (`singular_side_imageUnr`; only up to coboundaries when
   `Φ ≠ 1`).
-* Dimension bookkeeping (PROVED): `finrank_H1WrelK_of_q_ne_one`, `finrank_H1WrelK_of_q_eq_one`, `singular_zero_of_q_ne_one`,
-  `two_plus_two_iff_q_eq_one`, `no_k2k2_coords_of_q_ne_one`, `two_plus_two_iff_ell`,
-  `h1_trivial_of_eigen`.
+* Dimension bookkeeping (PROVED): `finrank_H1WrelK_of_q_ne_one`, `finrank_H1WrelK_of_q_eq_one`,
+  `singular_zero_of_q_ne_one`, `two_plus_two_iff_q_eq_one`, `no_k2k2_coords_of_q_ne_one`,
+  `two_plus_two_iff_ell`, `h1_trivial_of_eigen`.
 * Non-vacuity (PROVED): `tameCoordinatesUnr_J` (`Φ = diag(1, −1)` nontrivial, `q = 2`, over the
   discrete group `ℤ`); `tameCoordinatesUnr_derivative`, `derivative_example_two_plus_zero`
-  (`Φ = 1`, `q = 2`: `dim H¹ = 2 + 0`, no `ℚ² × ℚ²`); and `tameCoordinatesUnr_q_one`, `two_plus_two_q_one` (`Φ = 1`, `q = 1`,
-  recovering `2 + 2`).
+  (`Φ = 1`, `q = 2`: `dim H¹ = 2 + 0`, no `ℚ² × ℚ²`); and `tameCoordinatesUnr_q_one`,
+  `two_plus_two_q_one` (`Φ = 1`, `q = 1`, recovering `2 + 2`).
 
 **Finding (dimension count at the derivative prime).** At an inert derivative prime the text
-uses `Φ = J² = 1` and `q = ℓ²`. Then `M/(Φ−1)M = M` has dimension `2` and `ker(Φ − q) = 0` as soon
-as `(q : k) ≠ 1`, so `H¹(W_rel)` has dimension `2 + 0`, not `2 + 2`
-(`finrank_H1WrelK_of_q_ne_one`, `singular_zero_of_q_ne_one`). The `2 + 2` count holds iff `(q : k) = 1`
-(`two_plus_two_iff_q_eq_one`); in characteristic zero with `q = ℓ²` this means `ℓ = 1`
+uses `Φ = J² = 1` and `q = ℓ²` (tex L3298–3300). Then `M/(Φ−1)M = M` has dimension `2` and
+`ker(Φ − q) = 0` as soon as `(q : k) ≠ 1`, so `H¹(W_rel)` has dimension `2 + 0`, not `2 + 2`
+(`finrank_H1WrelK_of_q_ne_one`, `singular_zero_of_q_ne_one`). The `2 + 2` count holds iff
+`(q : k) = 1` (`two_plus_two_iff_q_eq_one`); in characteristic zero with `q = ℓ²` this means `ℓ = 1`
 (`two_plus_two_iff_ell`), which no prime satisfies. So `QuasiNonquadStep`, (5.5a) and
-`RelaxedImageFinite`, which take `finPlane`/`singPlane` inside `(Fin 2 → k) × (Fin 2 → k)`, can
-only be fed from these coordinates where `ℓ² ≡ 1` in `k` (e.g. `k = 𝔽₂` with `ℓ` odd), i.e. in
-the text's limit `ℓ → −1` (2-adically), not at a fixed characteristic-zero fibre.
+`RelaxedImageFinite`, which take `finPlane`/`singPlane` inside `(Fin 2 → k) × (Fin 2 → k)`, can only
+be fed from these coordinates where `ℓ² ≡ 1` in `k` (e.g. `k = 𝔽₂` with `ℓ` odd), i.e. in the text's
+limit `ℓ → −1` (2-adically), not at a fixed characteristic-zero fibre.
 -/
 
 noncomputable section
@@ -157,8 +157,8 @@ variable (k M) in
 /-- `ker(Φ − q)`, the target of the singular (tame) coordinate. -/
 abbrev KerFrob (φ : G) (q : ℕ) : Submodule k M := LinearMap.ker (frobSub k M φ (q : k))
 
-/-- **`z(σ) ∈ ker(Φ − q)`** (tex L5027–5037): if `σ` acts trivially and `φσφ⁻¹ = σ^q`, then
-`z(φσφ⁻¹) = z(φ) + φ • z(σ) − (φσφ⁻¹) • z(φ) = φ • z(σ)` and `z(σ^q) = q • z(σ)`. PROVED. -/
+/-- **`z(σ) ∈ ker(Φ − q)`** (tex L3298–3306, L5026–5037): if `σ` acts trivially and `φσφ⁻¹ = σ^q`,
+then `z(φσφ⁻¹) = z(φ) + φ • z(σ) − (φσφ⁻¹) • z(φ) = φ • z(σ)` and `z(σ^q) = q • z(σ)`. PROVED. -/
 theorem ev1K_sigma_mem_ker {φ σ : G} (hσ : ∀ m : M, σ • m = m) (q : ℕ)
     (hrel : φ * σ * φ⁻¹ = σ ^ q) (z : Z1K k G M) :
     ev1K (z : (contCochains k G M).X 1) σ ∈ KerFrob k M φ q := by
@@ -178,8 +178,8 @@ def coordLUnr (φ σ : G) (q : ℕ) (hσ : ∀ m : M, σ • m = m) (hrel : φ *
     (LinearMap.codRestrict (KerFrob k M φ q) (ev1LK σ ∘ₗ (Z1K k G M).subtype)
       fun z => ev1K_sigma_mem_ker hσ q hrel z)
 
-/-- **Coboundaries have zero coordinates** (tex L5027–5037): `(d⁰a)(φ) = (Φ − 1)a` is zero in
-`M/(Φ − 1)M`, and `(d⁰a)(σ) = σ • a − a = 0`. PROVED. -/
+/-- **Coboundaries have zero coordinates** (tex L3298–3306, L5026–5037): `(d⁰a)(φ) = (Φ − 1)a` is
+zero in `M/(Φ − 1)M`, and `(d⁰a)(σ) = σ • a − a = 0`. PROVED. -/
 theorem coordLUnr_relaxedD (φ σ : G) (q : ℕ) (hσ : ∀ m : M, σ • m = m)
     (hrel : φ * σ * φ⁻¹ = σ ^ q) (a : (contCochains k G M).X 0) :
     coordLUnr φ σ q hσ hrel (relaxedDK k G M a) = 0 := by
@@ -206,15 +206,14 @@ theorem coordQUnr_mk (φ σ : G) (q : ℕ) (hσ : ∀ m : M, σ • m = m) (hrel
   rfl
 
 variable (k M) in
-/-- **GLUE: the unramified tame coordinates** (tex L5027–5037). The inertia subgroup `I` acts
-trivially on `M` (`M` unramified), `σ ∈ I`, the tame relation `φσφ⁻¹ = σ^q` holds in `G`, the
+/-- **GLUE: the unramified tame coordinates** (tex L3298–3306, L5026–5037). The inertia subgroup `I`
+acts trivially on `M` (`M` unramified), `σ ∈ I`, the tame relation `φσφ⁻¹ = σ^q` holds in `G`, the
 coordinate map `[z] ↦ (z(φ) mod (Φ − 1)M, z(σ))` is a bijection
 `H¹(W_rel) ≅ M/(Φ − 1)M × ker(Φ − q)`, and a cocycle with `z(σ) = 0` vanishes on `I`. This is the
 inflation–restriction computation of `H¹` of the tame quotient `⟨φ, σ | φσφ⁻¹ = σ^q⟩` with
-coefficients in an unramified module (wild inertia pro-`p`, `I/P` procyclic); the
-well-definedness and the values of the coordinates are PROVED (`coordLUnr_relaxedD`,
-`ev1K_sigma_mem_ker`). Unlike `TameCoordinatesTrivialK`, `φ` may act nontrivially.
-Classification: GLUE. -/
+coefficients in an unramified module (wild inertia pro-`p`, `I/P` procyclic); the well-definedness
+and the values of the coordinates are PROVED (`coordLUnr_relaxedD`, `ev1K_sigma_mem_ker`). Unlike
+`TameCoordinatesTrivialK`, `φ` may act nontrivially. Classification: GLUE. -/
 structure TameCoordinatesUnr (I : Subgroup G) (φ σ : G) (q : ℕ) : Prop where
   hItriv : ∀ h ∈ I, ∀ m : M, h • m = m
   hσI : σ ∈ I
@@ -225,8 +224,8 @@ structure TameCoordinatesUnr (I : Subgroup G) (φ σ : G) (q : ℕ) : Prop where
 
 variable {I : Subgroup G} {φ σ : G} {q : ℕ}
 
-/-- **The coordinates** `H¹(W_rel) ≃ M/(Φ − 1)M × ker(Φ − q)` (tex L5027–5037). PROVED from the
-GLUE input. -/
+/-- **The coordinates** `H¹(W_rel) ≃ M/(Φ − 1)M × ker(Φ − q)` (tex L3298–3306, L5026–5037). PROVED
+from the GLUE input. -/
 def coordEquivUnr (T : TameCoordinatesUnr k M I φ σ q) :
     H1WrelK k G M ≃ₗ[k] CokerFrob k M φ × KerFrob k M φ q :=
   LinearEquiv.ofBijective _ T.hbij
@@ -240,7 +239,7 @@ theorem coordEquivUnr_mk (T : TameCoordinatesUnr k M I φ σ q) (z : Z1K k G M) 
 
 /-! ### The sides in the coordinates -/
 
-/-- **The finite side at cocycle level** (tex L5068–5072, L5027–5037): `z(h) = 0` on `I` iff the
+/-- **The finite side at cocycle level** (tex L5026–5037, L5060–5061): `z(h) = 0` on `I` iff the
 class of `z` lies in `finPlane = coker(Φ − 1) × 0`. PROVED. -/
 theorem finite_side_iffUnr (T : TameCoordinatesUnr k M I φ σ q) (z : Z1K k G M) :
     z ∈ (sideOfSetK k M (I : Set G)).BF ↔
@@ -253,8 +252,8 @@ theorem finite_side_iffUnr (T : TameCoordinatesUnr k M I φ σ q) (z : Z1K k G M
   · intro h g hg
     exact T.hI z (congrArg Subtype.val h) g hg
 
-/-- **The finite side is `coker(Φ − 1) × 0`** (tex L5068–5072): the image of the finite side in
-`H¹(W_rel)`, transported by `coordEquivUnr`, is `finPlane`. PROVED. -/
+/-- **The finite side is `coker(Φ − 1) × 0`** (tex L5026–5027, L5060–5061): the image of the finite
+side in `H¹(W_rel)`, transported by `coordEquivUnr`, is `finPlane`. PROVED. -/
 theorem finite_side_imageUnr (T : TameCoordinatesUnr k M I φ σ q) :
     ((sideOfSetK k M (I : Set G)).BF.map (LinearMap.range (relaxedDK k G M)).mkQ).map
       (coordEquivUnr T).toLinearMap = finPlane k (CokerFrob k M φ) (KerFrob k M φ q) := by
@@ -355,8 +354,8 @@ theorem subtype_eq_zero_of_eq_bot {p : Submodule k M} (hp : p = ⊥) (v : p) : v
   subst hp
   exact Subsingleton.elim _ _
 
-/-- **The dimension of `H¹(W_rel)` at a derivative prime, `(q : k) ≠ 1`** (tex L5027–5037, with
-`Φ = J² = 1`): `dim H¹ = dim M + 0`. PROVED. -/
+/-- **The dimension of `H¹(W_rel)` at a derivative prime, `(q : k) ≠ 1`** (tex L3298–3306,
+L5026–5037, with `Φ = J² = 1`): `dim H¹ = dim M + 0`. PROVED. -/
 theorem finrank_H1WrelK_of_q_ne_one [FiniteDimensional k M] (T : TameCoordinatesUnr k M I φ σ q)
     (hφ : ∀ m : M, φ • m = m) (hq : (q : k) ≠ 1) :
     finrank k (H1WrelK k G M) = finrank k M + 0 := by
@@ -364,8 +363,8 @@ theorem finrank_H1WrelK_of_q_ne_one [FiniteDimensional k M] (T : TameCoordinates
     (Submodule.quotEquivOfEqBot _ (range_frobSub_one_eq_bot hφ)).finrank_eq,
     (LinearEquiv.ofEq _ _ (kerFrob_eq_bot_of_q_ne_one hφ hq)).finrank_eq, finrank_bot k M]
 
-/-- **The dimension of `H¹(W_rel)` at a derivative prime, `(q : k) = 1`** (tex L5027–5037, with
-`Φ = J² = 1`): `dim H¹ = dim M + dim M`. PROVED. -/
+/-- **The dimension of `H¹(W_rel)` at a derivative prime, `(q : k) = 1`** (tex L3298–3306,
+L5026–5037, with `Φ = J² = 1`): `dim H¹ = dim M + dim M`. PROVED. -/
 theorem finrank_H1WrelK_of_q_eq_one [FiniteDimensional k M] (T : TameCoordinatesUnr k M I φ σ q)
     (hφ : ∀ m : M, φ • m = m) (hq : (q : k) = 1) :
     finrank k (H1WrelK k G M) = finrank k M + finrank k M := by
@@ -373,10 +372,10 @@ theorem finrank_H1WrelK_of_q_eq_one [FiniteDimensional k M] (T : TameCoordinates
     (Submodule.quotEquivOfEqBot _ (range_frobSub_one_eq_bot hφ)).finrank_eq,
     (LinearEquiv.ofEq _ _ (kerFrob_eq_top_of_q_eq_one hφ hq)).finrank_eq, finrank_top k M]
 
-/-- **Finding: the singular plane is zero when `(q : k) ≠ 1`** (tex L5027–5037, L5073–5083). With
-`Φ = 1` (the derivative prime, `Φ = J² = 1`) and `(q : k) ≠ 1` (e.g. `q = ℓ²` in characteristic
-zero), every `1`-cocycle has `z(σ) = 0`, and the singular side has zero image in `H¹(W_rel)`.
-PROVED. -/
+/-- **Finding: the singular plane is zero when `(q : k) ≠ 1`** (tex L3298–3306, L5026–5037,
+L5073–5083). With `Φ = 1` (the derivative prime, `Φ = J² = 1`) and `(q : k) ≠ 1` (e.g. `q = ℓ²` in
+characteristic zero), every `1`-cocycle has `z(σ) = 0`, and the singular side has zero image in
+`H¹(W_rel)`. PROVED. -/
 theorem singular_zero_of_q_ne_one (T : TameCoordinatesUnr k M I φ σ q)
     (hφ : ∀ m : M, φ • m = m) (hq : (q : k) ≠ 1) :
     (∀ z : Z1K k G M, ev1K (z : (contCochains k G M).X 1) σ = 0) ∧
@@ -397,9 +396,9 @@ theorem singular_zero_of_q_ne_one (T : TameCoordinatesUnr k M I φ σ q)
   change (Submodule.Quotient.mk (ev1K (z : (contCochains k G M).X 1) φ) : CokerFrob k M φ) = 0
   rw [(mem_sideOfSetK_BF _ z).mp hz φ (Set.mem_singleton φ), Submodule.Quotient.mk_zero]
 
-/-- **Finding: `2 + 2` iff `(q : k) = 1`** (tex L5027–5037). With `Φ = 1` and `dim M = 2`,
-`H¹(W_rel) ≃ k² × k²` (the shape `finPlane`/`singPlane` in `(Fin 2 → k) × (Fin 2 → k)` asked for by
-`QuasiNonquadStep`, (5.5a) and `RelaxedImageFinite`) iff `(q : k) = 1`. PROVED. -/
+/-- **Finding: `2 + 2` iff `(q : k) = 1`** (tex L3298–3306, L5026–5037). With `Φ = 1` and
+`dim M = 2`, `H¹(W_rel) ≃ k² × k²` (the shape `finPlane`/`singPlane` in `(Fin 2 → k) × (Fin 2 → k)`
+asked for by `QuasiNonquadStep`, (5.5a) and `RelaxedImageFinite`) iff `(q : k) = 1`. PROVED. -/
 theorem two_plus_two_iff_q_eq_one [FiniteDimensional k M] (T : TameCoordinatesUnr k M I φ σ q)
     (hφ : ∀ m : M, φ • m = m) (hM : finrank k M = 2) :
     Nonempty (H1WrelK k G M ≃ₗ[k] (Fin 2 → k) × (Fin 2 → k)) ↔ (q : k) = 1 := by
@@ -418,15 +417,15 @@ theorem two_plus_two_iff_q_eq_one [FiniteDimensional k M] (T : TameCoordinatesUn
     rw [hM] at hfin
     exact ⟨LinearEquiv.ofFinrankEq _ _ (by rw [hfin, h4])⟩
 
-/-- **No `k² × k²` coordinates when `(q : k) ≠ 1`** (tex L5027–5037). PROVED. -/
+/-- **No `k² × k²` coordinates when `(q : k) ≠ 1`** (tex L3298–3306, L5026–5037). PROVED. -/
 theorem no_k2k2_coords_of_q_ne_one [FiniteDimensional k M] (T : TameCoordinatesUnr k M I φ σ q)
     (hφ : ∀ m : M, φ • m = m) (hM : finrank k M = 2) (hq : (q : k) ≠ 1) :
     ¬ Nonempty (H1WrelK k G M ≃ₗ[k] (Fin 2 → k) × (Fin 2 → k)) :=
   fun h => hq ((two_plus_two_iff_q_eq_one T hφ hM).mp h)
 
-/-- **Finding: in characteristic zero, `2 + 2` at `q = ℓ²` iff `ℓ = 1`** (tex L5027–5037). So no
-prime `ℓ` gives the `2 + 2` count at a characteristic-zero fibre; it is the text's limit `ℓ → −1`
-(where `ℓ² → 1`). PROVED. -/
+/-- **Finding: in characteristic zero, `2 + 2` at `q = ℓ²` iff `ℓ = 1`** (tex L3298–3300,
+L5030–5032). So no prime `ℓ` gives the `2 + 2` count at a characteristic-zero fibre; it is the
+text's limit `ℓ → −1` (where `ℓ² → 1`). PROVED. -/
 theorem two_plus_two_iff_ell [CharZero k] [FiniteDimensional k M] {ℓ : ℕ}
     (T : TameCoordinatesUnr k M I φ σ (ℓ ^ 2)) (hφ : ∀ m : M, φ • m = m)
     (hM : finrank k M = 2) :
@@ -438,9 +437,9 @@ theorem two_plus_two_iff_ell [CharZero k] [FiniteDimensional k M] {ℓ : ℕ}
   · rintro rfl
     rfl
 
-/-- **`H¹(W_rel) = 0` when `Φ − 1` is onto and `Φ − q` is injective** (tex L5027–5037): e.g. at a
-good inert prime in characteristic zero, where by the Weil bounds neither `1` nor `q` is an
-eigenvalue of Frobenius. PROVED. -/
+/-- **`H¹(W_rel) = 0` when `Φ − 1` is onto and `Φ − q` is injective** (tex L3298–3306, L5026–5037):
+e.g. at a good inert prime in characteristic zero, where by the Weil bounds neither `1` nor `q` is
+an eigenvalue of Frobenius. PROVED. -/
 theorem h1_trivial_of_eigen (T : TameCoordinatesUnr k M I φ σ q)
     (hsurj : LinearMap.range (frobSub k M φ 1) = ⊤) (hinj : KerFrob k M φ q = ⊥)
     (x : H1WrelK k G M) : x = 0 := by
@@ -602,9 +601,9 @@ def zJ (x : JMod) : (contCochains ℚ GZ JMod).X 1 :=
 theorem zJ_mem (x : JMod) : zJ x ∈ Z1K ℚ GZ JMod :=
   mem_Z1K_of_cocycle (zJ x) fun g h => FJ_mul x g h
 
-/-- **Non-vacuity of `TameCoordinatesUnr` with `Φ` nontrivial** (tex L5027–5037): over `ℚ`, the
-discrete group `G = ℤ = ⟨φ⟩`, `M = ℚ²` with `φ` acting by `Φ = diag(1, −1)`, `σ = 1`, `I = 1`,
-`q = 2`. Here `H¹ = M/(Φ − 1)M ≅ ℚ` and `ker(Φ − 2) = 0`. PROVED. -/
+/-- **Non-vacuity of `TameCoordinatesUnr` with `Φ` nontrivial** (tex L3298–3306, L5026–5037): over
+`ℚ`, the discrete group `G = ℤ = ⟨φ⟩`, `M = ℚ²` with `φ` acting by `Φ = diag(1, −1)`, `σ = 1`,
+`I = 1`, `q = 2`. Here `H¹ = M/(Φ − 1)M ≅ ℚ` and `ker(Φ − 2) = 0`. PROVED. -/
 theorem tameCoordinatesUnr_J : TameCoordinatesUnr ℚ JMod (⊥ : Subgroup GZ) φZ 1 2 := by
   have hItriv : ∀ h ∈ (⊥ : Subgroup GZ), ∀ m : JMod, h • m = m := fun h hh m => by
     rw [Subgroup.mem_bot.mp hh, one_smul]
@@ -654,8 +653,8 @@ theorem tameCoordinatesUnr_J : TameCoordinatesUnr ℚ JMod (⊥ : Subgroup GZ) �
 /-- `ℚ²` with the trivial action of `ℤ`. -/
 abbrev MQZ : Type := TrivMod GZ (Fin 2 → ℚ)
 
-/-- **Non-vacuity at the derivative-prime shape** (tex L5027–5037): over `ℚ`, `G = ℤ = ⟨φ⟩`
-discrete, `M = ℚ²` with `Φ = 1`, `σ = 1`, `I = 1`, `q = 2`; so the hypotheses of
+/-- **Non-vacuity at the derivative-prime shape** (tex L3298–3306, L5026–5037): over `ℚ`,
+`G = ℤ = ⟨φ⟩` discrete, `M = ℚ²` with `Φ = 1`, `σ = 1`, `I = 1`, `q = 2`; so the hypotheses of
 `singular_zero_of_q_ne_one`, `no_k2k2_coords_of_q_ne_one` are satisfiable. PROVED. -/
 theorem tameCoordinatesUnr_derivative : TameCoordinatesUnr ℚ MQZ (⊥ : Subgroup GZ) φZ 1 2 := by
   have htriv : ∀ (g : GZ) (m : MQZ), g • m = m := fun _ _ => rfl
@@ -695,8 +694,8 @@ theorem tameCoordinatesUnr_derivative : TameCoordinatesUnr ℚ MQZ (⊥ : Subgro
   · intro z _ h hh
     rw [Subgroup.mem_bot.mp hh, ev1K_one_unr]
 
-/-- **At the derivative-prime shape, `2 + 0`, not `2 + 2`** (tex L5027–5037): in the example
-`tameCoordinatesUnr_derivative` (`Φ = 1`, `q = 2`), `dim H¹(W_rel) = 2 + 0` and there is no
+/-- **At the derivative-prime shape, `2 + 0`, not `2 + 2`** (tex L3298–3306, L5026–5037): in the
+example `tameCoordinatesUnr_derivative` (`Φ = 1`, `q = 2`), `dim H¹(W_rel) = 2 + 0` and there is no
 `H¹(W_rel) ≃ ℚ² × ℚ²`. PROVED. -/
 theorem derivative_example_two_plus_zero :
     finrank ℚ (H1WrelK ℚ GZ MQZ) = 2 + 0 ∧
@@ -707,15 +706,15 @@ theorem derivative_example_two_plus_zero :
   refine ⟨?_, no_k2k2_coords_of_q_ne_one tameCoordinatesUnr_derivative (fun _ => rfl) hM hq⟩
   rw [finrank_H1WrelK_of_q_ne_one tameCoordinatesUnr_derivative (fun _ => rfl) hq, hM]
 
-/-- **Non-vacuity of `TameCoordinatesUnr` with `q = 1`** (tex L5027–5037): `G = ℤ²` discrete,
-`M = ℚ²` with the trivial action, `φ = (1, 0)`, `σ = (0, 1)`, `I = ⟨σ⟩` (the example of
+/-- **Non-vacuity of `TameCoordinatesUnr` with `q = 1`** (tex L3298–3306, L5026–5037): `G = ℤ²`
+discrete, `M = ℚ²` with the trivial action, `φ = (1, 0)`, `σ = (0, 1)`, `I = ⟨σ⟩` (the example of
 `tameCoordinatesTrivialK_example`). PROVED. -/
 theorem tameCoordinatesUnr_q_one : TameCoordinatesUnr ℚ MQ2 IZ2 φZ2 σZ2 1 :=
   tameCoordinatesTrivialK_example.toUnr (by
     rw [pow_one, mul_comm φZ2 σZ2, mul_assoc, mul_inv_cancel, mul_one])
 
-/-- **`q = 1` recovers `2 + 2`** (tex L5027–5037): in the example `tameCoordinatesUnr_q_one`
-(`Φ = 1`, `q = 1`, `dim M = 2`), `H¹(W_rel) ≃ ℚ² × ℚ²`. PROVED. -/
+/-- **`q = 1` recovers `2 + 2`** (tex L3298–3306, L5026–5037): in the example
+`tameCoordinatesUnr_q_one` (`Φ = 1`, `q = 1`, `dim M = 2`), `H¹(W_rel) ≃ ℚ² × ℚ²`. PROVED. -/
 theorem two_plus_two_q_one : Nonempty (H1WrelK ℚ GZ2 MQ2 ≃ₗ[ℚ] (Fin 2 → ℚ) × (Fin 2 → ℚ)) := by
   have : FiniteDimensional ℚ MQ2 := inferInstanceAs (FiniteDimensional ℚ (Fin 2 → ℚ))
   have hM : finrank ℚ MQ2 = 2 := Module.finrank_fin_fun ℚ

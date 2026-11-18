@@ -12,8 +12,9 @@ every `v`).
 
 `FibreDualityWiring.lean` leaves the hypothesis `horth`
 (`FibreOrthogonalComplementsT β … ΔS ΔR I tr htr`) open for the switch `galRelSwitch C c q T`:
-strict conditions `ΔS = switchStrK q (old c)` against relaxed conditions `ΔR = switchRelK q (old c)`,
-through a self-pairing `β : M × M → T`. This file reduces it to the places.
+strict conditions `ΔS = switchStrK q (old c)` against relaxed conditions
+`ΔR = switchRelK q (old c)`, through a self-pairing `β : M × M → T`. This file reduces it to the
+places.
 
 **(1) The per-place reduction** (PROVED, from lane RC29's splitting lemma
 `orth_localDualityMapT_quasiIso`): `fibreSwitch_horth_of_places` (any RC31 `FibreSwitch`) and
@@ -58,7 +59,7 @@ place outside `c`, resp. in `c`. On homology a self-orthogonal condition `U ⊆ 
 `H⁰(U) = H⁰(G_v, M)`) has `H¹(U)` equal to its own annihilator in `H¹(G_v, M)` under local duality,
 so `2 · dim H¹(U) = dim H¹(G_v, M)`.
 * In the derivative model at an inert derivative place over a characteristic-zero fibre
-  (`Φ = J² = 1`, `q = ℓ² ≠ 1` in `k(𝔭)`) the singular part vanishes
+  (`Φ = J² = 1`, `q = ℓ² ≠ 1` in `k(𝔭)`; tex L3298–3300) the singular part vanishes
   (`UnrCoords.singular_zero_of_q_ne_one`): `H¹` of the singular side is `0`, while
   `H¹(G_v, M) ≅ coker(Φ − 1) = M ≠ 0` (`UnrCoords.finrank_H1WrelK_of_q_ne_one`). So the singular
   side is NOT self-orthogonal there, and `hold` FAILS for the standard conditions whenever such a
@@ -72,7 +73,7 @@ so `2 · dim H¹(U) = dim H¹(G_v, M)`.
   homology, but there are no `2 + 2` coordinates and the switch step is empty.
 This is the constraint of the `2 + 2` shape again (`UnrCoords.two_plus_two_iff_q_eq_one`): Elliot's
 isotropic planes `F`, `S` exist only when `q ≡ 1`, i.e. in the inner limit `ℓᵢ → −1` (tex
-L5033–5035), and the switch has to be formalised on inner-limit objects. The finite side (cocycles
+L5030–5032), and the switch has to be formalised on inner-limit objects. The finite side (cocycles
 vanishing on inertia; the unramified condition) is self-orthogonal at places not above `2` where
 `M` is unramified (Nekovář 7.5.6; lane RC29's PRINT `NekovarProp756`, for discrete coefficients);
 RC31 has no such print for the fibres. (Homological argument recorded, not formalised, except
@@ -248,7 +249,7 @@ theorem dual_extend_of_injective {V W : Type} [AddCommGroup V] [Module k V]
 /-- **The shape of the pair (strict `τ≤0`, relaxed `τ≤1`)** of condition maps `iU : U → L`,
 `iU' : U' → L'` into complexes concentrated in degrees `≥ 0`: `U` lives in degree `0` and maps
 injectively onto the `0`-cocycles `Z⁰(L)`; `U'` lives in degrees `0, 1`, maps isomorphically onto
-`L'⁰` in degree `0` and injectively onto the `1`-cocycles `Z¹(L')` in degree `1` (tex L5068–5072:
+`L'⁰` in degree `0` and injectively onto the `1`-cocycles `Z¹(L')` in degree `1` (tex L5060–5061:
 `D⁰ = τ≤0`, relaxed `τ≤1 = [C⁰ → Z¹]`). Kind: definition (non-vacuity: `strRelK_truncShape01`,
 for every switch place of every genuine local complex). -/
 structure TruncShape01 {U U' L L' : GCx k} (iU : GHom U L) (iU' : GHom U' L') : Prop where
@@ -333,7 +334,7 @@ theorem trunc01_finish (htrv2 : ∀ z, trv (E.d (2 - 1) 2 (by omega) z) = 0)
     ring
 
 /-- **Strict `τ≤0` is the orthogonal complement of relaxed `τ≤1`, from local duality** (Nekovář
-6.2.7 at one place; tex L5062–5072): for condition maps of the shape `TruncShape01`, a local cup
+6.2.7 at one place; tex L5060–5071): for condition maps of the shape `TruncShape01`, a local cup
 product `P : L × L' → E`, any `τ≥2` isotropy homotopy `J` and a local trace `tr` killing
 coboundaries, if the full local duality map `L → Hom_k(L', k)[−2]`, `a ↦ (b ↦ tr(a ∪ b))` has
 acyclic cone (it is a quasi-isomorphism: Nekovář 5.2.4/5.6.3(i)), then the per-place local duality
@@ -452,7 +453,7 @@ theorem subsingleton_of_eq_bot {V : Type} [AddCommGroup V] [Module k V] (p : Sub
   infer_instance
 
 /-- **The strict and relaxed derivative conditions at a switch place have the shape
-`TruncShape01`** (tex L5068–5072): `[Z⁰ → 0] → C(G_q, M)` (through the relaxed condition) and
+`TruncShape01`** (tex L5060–5061): `[Z⁰ → 0] → C(G_q, M)` (through the relaxed condition) and
 `[C⁰ → Z¹] → C(G_q, M)`, for every family of old conditions, every topological group and every
 topological module (non-vacuity of `TruncShape01`). PROVED. -/
 theorem strRelK_truncShape01 (q : ι) (old : ∀ v, SubFam (locCxK k Gv Mv v)) :
@@ -523,7 +524,7 @@ variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 
 
 open Classical in
 /-- **`hq`: at the switch place, strict `τ≤0` is the orthogonal complement of relaxed `τ≤1`**
-(tex L5062–5072; Nekovář 6.2.7 at `q` from 5.6.3(i)): for the chain's switch at the fibre
+(tex L5060–5071; Nekovář 6.2.7 at `q` from 5.6.3(i)): for the chain's switch at the fibre
 `k(𝔭)`, any `τ≥2` isotropy data and the local traces of one packet `L`, the per-place local duality
 map at `q` is a quasi-isomorphism. Classification: PROVED from the PRINT
 `NekovarFibreLocalDuality` (with `trunc01_quasiIso` and `strRelK_truncShape01`). -/
