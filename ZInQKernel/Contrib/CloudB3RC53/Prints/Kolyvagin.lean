@@ -49,10 +49,10 @@ open ZInQ.Manuscript ZInQ.Manuscript.SelmerTwoPower ZInQ.Manuscript.PoleS12 CST
 /-- **`E` has a weak Weil parametrization `X₀(N) → E` over `ℚ`, `N` the conductor** (analytic
 model; see the module docstring): a cusp form `f` of weight `2` on `Γ₀(N)`, `N = newformLevel E`,
 with the coefficients of `L(E, s)`, a period lattice `Lat` of `E` (`IsLatticeOf`), and a nonzero
-rational `c` scaling the periods of `2πi f dτ` into `Lat` (`IsParamScale`), so that `φ^* ω_E = c ω_f`
-for the analytic map `CST.phiAn E f Lat c`. An analytic stand-in: faithful to the printed
-statement only modulo the translation algebraic `X₀(N) → E` ⇔ analytic data, which is an unproved
-GLUE (translation) step. -/
+rational `c` scaling the periods of `2πi f dτ` into `Lat` (`IsParamScale`), so that
+`φ^* ω_E = c ω_f` for the analytic map `CST.phiAn E f Lat c`. An analytic stand-in: faithful to the
+printed statement only modulo the translation algebraic `X₀(N) → E` ⇔ analytic data, which is an
+unproved GLUE (translation) step. -/
 def HasWeakWeilParametrization (E : WeierstrassCurve ℚ) : Prop :=
   ∃ (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2)
     (Lat : PeriodPair) (c : ℚ),
