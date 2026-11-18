@@ -275,7 +275,8 @@ theorem frobeniusTateDetForm_of (hD : DetEqDegree) (hF : FrobeniusDegreeForm) :
     WeierstrassCurve.Affine.Point.map (W' := Et)
       (FiniteField.frobeniusAlgHom (ZMod p) (AlgebraicClosure (ZMod p)))
   have hα : ∀ P, (m • TauCeti.Isogeny.Hom.id _ - n • π).pointMap P =
-      (m • AddMonoidHom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point - n • fr) P := by
+      (m • AddMonoidHom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point -
+        n • fr) P := by
     intro P
     rw [TauCeti.Isogeny.Hom.sub_pointMap, TauCeti.Isogeny.Hom.zsmul_pointMap,
       TauCeti.Isogeny.Hom.zsmul_pointMap, TauCeti.Isogeny.Hom.id_pointMap, hπ]
@@ -306,8 +307,9 @@ theorem detEqDegree_id (p : ℕ) [Fact p.Prime] (Et : WeierstrassCurve (ZMod p))
     (ℓ : ℕ) [Fact ℓ.Prime]
     (α : (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point →+
       (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point)
-    (hα : ∀ P, (TauCeti.Isogeny.Hom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine).pointMap
-      P = α P) :
+    (hα : ∀ P,
+      (TauCeti.Isogeny.Hom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine).pointMap P =
+        α P) :
     LinearMap.det (TauCeti.TateModule.mapLinearMap (p := ℓ) α) =
       ((TauCeti.Isogeny.Hom.id (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine).degree :
         ℤ_[ℓ]) := by
