@@ -1,0 +1,12 @@
+# Results log
+
+- VERIFIED: worktree starts at `15c9e93d3`. The requested row is in `TailZ87.lean`; the adjacent
+  character-polynomial and standard-model rows are out of scope.
+- VERIFIED by source search: the tree has composite Hecke operators on modular forms and abstract
+  double-coset rings. The Jacobian interface has independent prime and diamond actions; `xiSq` is
+  defined as the ring expression. No independent action for composite ξ_n on this Jacobian found.
+- STANDARD (Dirichlet, Mathlib `Nat.forall_exists_prime_gt_and_eq_mod`): two distinct primes in a
+  prescribed unit class allow integral reverse generation by Bézout.
+- VERIFIED (Lean): the positive integer multiple of an endomorphism has the same
+  scheme-theoretic image. The two generated subrings agree integrally, and the image
+  families and quotient universal properties agree under `HeckeRelations`.
