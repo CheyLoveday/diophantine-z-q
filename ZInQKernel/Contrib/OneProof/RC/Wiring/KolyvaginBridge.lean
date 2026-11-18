@@ -16,7 +16,7 @@ The manuscript passes from BCDT's modularity directly to that hypothesis (tex 10
   `CloudB3RC53/Prints/Kolyvagin.lean`. The analytic rank one of the hypothesis is the print's case
   `r = 1` (`analyticRank_one_iff`).
 * `kolyvaginRankOne_of_weilParam` (PROVED): the §5 route's `KolyvaginRankOne` from BCDT's
-  Theorem A, the gap and the print, through `kolyvaginRankOne_of_printed`.
+  Theorem A, the GLUE and the print, through `kolyvaginRankOne_of_printed`.
 
 Classification: PROVED from `ModularToWeakWeil` (GLUE; the manuscript carries it out for `E_ℓ` at
 tex 1779–1788) and `KolyvaginThm1WeilParam`.
