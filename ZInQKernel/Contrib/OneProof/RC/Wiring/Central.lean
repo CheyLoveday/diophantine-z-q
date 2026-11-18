@@ -20,8 +20,8 @@ hypotheses. In particular the following are **not** hypotheses here, but consequ
 
 | derived here | by lane RC15's | tex |
 |---|---|---|
-| `v₂ N_i = v₂ m_i` at the moving prime | `padicValInt_movingNorm` | 4066–4074 |
-| `Reg_ℬ = (2/α²) Reg_𝒜` for the real regulators, `2/α² ∈ ℚ`, and `v₂(Reg_ℬ/Reg_𝒜) = ±1` | `regulator_ratio` (over `ℝ`), `regulator_eq_ratCast_mul`, `padicValRat_regulator_ratio` | 4082–4091 |
+| `v₂ N_i = v₂ m_i` at the moving prime | `padicValInt_movingNorm` | 4066–4075 |
+| `Reg_ℬ = (2/α²) Reg_𝒜` for the real regulators, `2/α² ∈ ℚ`, and `v₂(Reg_ℬ/Reg_𝒜) = ±1` | `regulator_ratio` (over `ℝ`), `regulator_eq_ratCast_mul`, `padicValRat_regulator_ratio` | 4082–4090, 4110 |
 | `a ∈ {±1, ±2, ±4}` and `|v₂(Ω_ℬ/Ω_𝒜)| ≤ 4` | `pullback_values`, `padicValRat_period_ratio` | 4093–4104 |
 | `s_𝒜 − s_ℬ = 2g_𝒜 − 2g_ℬ + v₂(2/α²) + v₂ρ_Ω + v₂(C_ℬ/C_𝒜)` | `milne_valuation_form_of_adjunction` (through `milne_valuation_form`) | 4105–4112 |
 | `v₂(C_ℬ/C_𝒜) = Σ_{p ∣ k} t_p` | `padicValRat_component_ratio` | 4118–4135 |
@@ -66,7 +66,7 @@ theorem lamUnit_prod {ι : Type*} (s : Finset ι) (f : ι → PowerSeries ℚ_[2
 
 /-! ## (4.6): the calibration -/
 
-/-- The determinant computation of (4.6) (tex 4051–4078): the class and functional free
+/-- The determinant computation of (4.6) (tex 4051–4080): the class and functional free
 coefficients contribute `j_rc + v₂(Lm)` each, the ordinary Kummer torsion contributes the disks of
 lengths `g_𝒜, s_𝒜, g_𝒜` in degrees one, two, three, the two places above the moving prime
 contribute degree-two length `v₂N_i` each, and the two places above each of the `ω(h)` active
@@ -84,19 +84,19 @@ parameters, fixed before the family.
 
 | field | content | tex | kind | owner |
 |---|---|---|---|---|
-| `shaA`–`tB_ne` | the two-primary orders `|Ш|`, `|tors|` of `𝒜` and `ℬ`, nonzero (finite `Ш` at a known simple zero, by the forward theorem) | 4016–4023 | ELLIOT + PRINT (Kolyvagin Thm 1) | RC9 |
+| `shaA`–`tB_ne` | the two-primary orders `|Ш|`, `|tors|` of `𝒜` and `ℬ`, nonzero (finite `Ш` at a known simple zero, by the forward theorem) | 4020–4021, 4050–4057 | existential orders (genuine witnesses finite by Kolyvagin, `lem:forward-rank`, tex 1086–1093) | RC9 |
 | `Scomp`, `cA`, `cB`, `tp`, `hTS`, `hcpos`, `hcancel`, `hA1`, `hB` | the component numbers: cancellation at split primes, `c_p(𝒜) = 1` (connected Weil restriction), `c_p(ℬ) = 2^{t_p}` at `p ∣ k` | 4118–4135 | ELLIOT + PRINT (Edixhoven Thm 5.3, Rem 5.4.1) | RC15 / RC9 |
-| `htp` | `t_p = dim_{𝔽₂} E[2]^{Fr_p} ≤ 2` | 4136–4138 | ELLIOT | RC15 |
+| `htp` | `t_p = dim_{𝔽₂} E[2]^{Fr_p} ≤ 2` | 4000, 4039, 4136 | ELLIOT | RC15 |
 | `alpha`, `beta`, `hIJ` | the dual isogeny indices with `IJ = 2` (`φ g_𝒜 ≡ α g_ℬ`, `ψ g_ℬ ≡ β g_𝒜` on free generators) | 4082–4088 | ELLIOT (PROVED by lane RC19 for the genuine generators: `CalibrationModelR.nonempty_model`) | RC15 / RC19 |
 | `RegA`, `RegB`, `hadj` | the **real** regulators of `𝒜` and `ℬ` (canonical heights of free generators at rank one) and the height adjunction read on generators, `α Reg_ℬ = β Reg_𝒜`; the rational ratio `Reg_ℬ/Reg_𝒜 = 2/α²` is derived from it (`Central.regulator_eq_ratCast_mul`), it is not a field | 4022–4025, 4082–4090 | GLUE (functoriality of the canonical height; PROVED by lane RC19 for the genuine heights, `regulator_ratio_sumDiff`) | RC15 / RC19 |
 | `aPull`, `bPull`, `hab` | the integral pullbacks of the Néron differentials, `ab = 4` | 4093–4096 | ELLIOT | RC15 |
 | `gam`, `kap`, `hgam`, `hkap`, `hcv` | the real change of variables, both finite groups of order at most four | 4096–4104 | GLUE | RC15 |
-| `OmA`, `hRegA`, `hOmA`, `rhoOm` | the chosen Néron period of `𝒜`, `Reg_𝒜 ≠ 0`, `Ω_𝒜 ≠ 0`, and the rational period ratio | 4090–4104 | definition | RC15 |
-| `hmilne` | Cassels' isogeny invariance of the Birch–Swinnerton-Dyer quotient at the real regulators `Reg_𝒜`, `Reg_ℬ`, with self-dual torsion counts (principal polarizations) | 4024–4027, 4105–4112 | PRINT (Milne ADT I.7.3, (7.3.1)) + GLUE | RC15 |
-| `hsB` | `Ш(ℬ) = Ш(E^{(h_x)}) × Ш(E^{(h_x k)})`: `s_ℬ = s(h_x) + s(h_x k)` | 4113–4114 | ELLIOT | RC15 |
-| `hgB` | the rational torsion of `ℬ` is bounded by the fixed `G₀` | 4114–4115 | ELLIOT | RC15 |
-| `rmov`–`hBexp` | the moving prime: `r ≡ 1 (mod 2^B)`, `χ = ±1`, `m = a_r − 2χ ≠ 0`, `v₂m < B` (lane RC17's `moving_character_genuine` produces exactly such a prime over the genuine Tate image) | 4066–4074 | ELLIOT | RC4 / RC17 |
-| `hvprim` | determinant multiplicativity in the support triangles: the primitive central value is regular with the computed valuation | 4058–4078, V19 20063–20079 | ELLIOT | RC15 (with the Duality and RankCounts areas) |
+| `OmA`, `hRegA`, `hOmA`, `rhoOm` | the chosen Néron period of `𝒜`, `Reg_𝒜 ≠ 0`, `Ω_𝒜 ≠ 0`, and the rational period ratio | 4089–4092, 4096–4104 | definition | RC15 |
+| `hmilne` | Cassels' isogeny invariance of the Birch–Swinnerton-Dyer quotient at the real regulators `Reg_𝒜`, `Reg_ℬ`, with self-dual torsion counts (principal polarizations) | 4027–4030, 4106–4113 | PRINT (Milne ADT I.7.3, (7.3.1)) + GLUE | RC15 |
+| `hsB` | `Ш(ℬ) = Ш(E^{(h_x)}) × Ш(E^{(h_x k)})`: `s_ℬ = s(h_x) + s(h_x k)` | 4053–4057 (implicit), and the signs at 4138–4139 | ELLIOT | RC15 |
+| `hgB` | the rational torsion of `ℬ` is bounded by the fixed `G₀` | 4115–4116 | ELLIOT | RC15 |
+| `rmov`–`hBexp` | the moving prime: `r ≡ 1 (mod 2^B)`, `χ = ±1`, `m = a_r − 2χ ≠ 0`, `v₂m < B` (lane RC17's `moving_character_genuine` produces exactly such a prime over the genuine Tate image) | 4066–4075 | ELLIOT | RC4 / RC17 |
+| `hvprim` | determinant multiplicativity in the support triangles: the primitive central value is regular with the computed valuation | 4058–4080 | ELLIOT | RC15 (with the Duality and RankCounts areas) |
 -/
 structure CalibrationModel {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : Family)
     (x : Addr Fam.b) : Type where

@@ -220,7 +220,8 @@ structure MovingDataK (E : WeierstrassCurve ℚ) (n : ℕ) where
   cls_gen : ∀ c : Cl, ∃ v : Fin s → ℤ, ∑ j, v j • cls j = c
   m : Fin t → Fin s → ℤ
   m_span : ∀ v : Fin s → ℤ, ∑ j, v j • cls j = 0 → ∃ b : Fin t → ℤ, v = ∑ a, b a • m a
-  /-- `GLUE` (tex 3551–3557), over the genuine Kummer relations -/
+  /-- `ELLIOT/GLUE` (tex 3551–3557; Elliot's argument from textbook valuation facts), as in RC4,
+  over the genuine Kummer relations -/
   KR_val : ∀ b ∈ kd.KR, ∀ j, act j → (2 : ℤ) ^ n ∣ ∑ a, b a * m a j
   /-- the excluded primes (tex 3566, 3676: the primes ramified in `K`, the primes under the chosen
   primes; data); the good primes are `GoodPrime E sqrtD Sexc` -/

@@ -8,7 +8,7 @@ comparison") and 8090–8098 (the conjugation assertion).
 
 **The print.** N. Ramsey, *Geometric and `p`-adic modular forms of half-integral weight*,
 Ann. Inst. Fourier 56 (2006), Definition 3.1, Theorem 4.2, Remark 4.4 (as cited at tex 8042, 8064;
-locators UNVERIFIED: no copy was available, no network). Ramsey defines weight-`k/2` forms of level
+locators UNVERIFIED). Ramsey defines weight-`k/2` forms of level
 `4N` over a `ℤ[1/4N]`-algebra as sections of a divisor sheaf on `X₁(4N)` (Def. 3.1), and identifies
 them over `ℂ` with the classical forms (Thm. 4.2). Elliot uses two consequences:
 

@@ -2,9 +2,9 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.AuxFactor3
 import ZInQKernel.Contrib.CloudB3RC53.EvenUpper.RedeiFilter
 
 /-!
-# Theorem 5.3, Lane RC0: the corrected auxiliary-factor and even-upper shapes are consistent
+# Theorem 5.3, Lane RC0: toy-data consistency of the prepared filter and the five auxiliary-factor clauses
 
-A concrete instance of the corrected data specifications, on batch 3's interface data `W₂ ℓ`
+A toy instance of the corrected data specifications, on batch 3's interface data `W₂ ℓ`
 (support `{2}`, prepared filter `{1}`, `Partitionable` the Rédei partitionability on the corrected
 filter of negative squarefree odd parameters; `EvenUpper.W₂`), PROVED:
 
@@ -17,8 +17,12 @@ filter of negative squarefree odd parameters; `EvenUpper.W₂`), PROVED:
   `partitionable_W₂_neg7`) and the single-precision even input at the same data (batch 3's
   `evenUpperInputsAt_W₂`).
 
-Not covered here: the genuine arithmetic clauses ((3.2) for the genuine normalization of `L_*`,
-the realized cubes at every partitionable parameter), which need genuine data.
+`W₂` is not candidate data for `PreLeaves`: its support `{2}` fails `PreDataSpec`/`SupportSpec`,
+`L_* ≡ 1` is not RC11's normalization, and the types are the sign alone. The even-upper leaf
+`EvenUpperRC11Inputs` (in particular its cube clause) is not covered; `EvenUpperInputsAt (W₂ ℓ)`
+holds only because `L_* ≡ 1` makes each base its own unit. Not covered either: the genuine
+arithmetic clauses ((3.2) for the genuine normalization of `L_*`, the realized cubes at every
+partitionable parameter), which need genuine data.
 -/
 
 noncomputable section
