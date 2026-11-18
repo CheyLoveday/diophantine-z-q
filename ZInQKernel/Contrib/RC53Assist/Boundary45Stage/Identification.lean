@@ -17,16 +17,21 @@ Z/2^i. The same coefficient projection carries each actual Kummer cocycle
 and its span to the specified central Kummer cocycle and span.
 
 The central datum supplies the two representative-level local hypotheses.
-The retained-stage constructor uses those proofs, the canonical class map
-and the actual global division-point Kummer map, and preserves the specified
-norm stage and arithmetic representatives. It works at every precision,
+The conditional retained-stage constructor uses those proofs, the canonical
+class map and the actual global division-point Kummer map. Its input packet
+is unrestricted in the norm stage, place partition, representatives and
+model projections: it does not identify the actual arithmetic stage or the
+retained finite free model. In particular the model may be erased without
+changing the representatives. The local proofs work at every precision,
 including the genuine zero coefficient ring at precision zero.
 
-The arithmetic division points over the support field, the local Selmer-cone
-representatives, and the finite-model projection remain inputs on fixed
-objects. Ring-class fields and CM points are not constructed here. Nor is a
-comparison from the integral derived Kummer object to these explicit finite
-cochain conditions, or the complete base-zero leaf, asserted.
+The arithmetic division points over the support field, the actual constructed
+class, its local Selmer-cone representatives, and a normalized finite-model
+comparison are not supplied by that conditional packet. Ring-class fields
+and CM points are not constructed here. Nor is a comparison from the integral
+derived Kummer object to these explicit finite cochain conditions, or the
+complete base-zero leaf, asserted. The obstructions to interpreting the
+packet as an identification were found in an independent review.
 
 The manuscript passages used are lines 2914-2936, 3254-3266, 3278-3295,
 3372-3405, 3413-3438, 3458-3463, 3479-3498, and 3912-3921. The local and
@@ -1374,10 +1379,13 @@ variable {K : Type} [Field K] [NumberField K] [DecidableEq K]
   (hdiv : GlobalDivisionPointsInSupport (S0 := S0) W i)
   {P : W.toAffine.Point} (T : SplitNormStage P) (L : ℤ) (N M0 : ℕ)
 
-/-- The remaining arithmetic representatives and model projection for a fixed norm stage.
-The global and local groups, all differentials, localization, inclusion, the class map and
-Kummer map are already fixed genuine objects. Neither local boundary hypothesis is a field.
-There is no assertion that these remaining inputs exist for a given arithmetic construction. -/
+/-- An unrestricted conditional representative and model packet for a supplied norm stage.
+The ambient cochain groups and their maps are fixed, and neither local boundary hypothesis
+is a field. The stage, place partition, global representative, projections and coordinates
+are not identified with the actual construction. The class field is equivalent to the
+global-boundary obligation; zero projections are allowed even at positive precision.
+Inhabitation of this packet is not evidence of an actual retained arithmetic model.
+These limitations were found in an independent review. -/
 structure CentralRetainedInput : Type where
   zG : (centralSelData W i hS hFull Pold).G.X 1
   hzG : (centralSelData W i hS hFull Pold).G.d 1 2 rfl zG = 0
@@ -1419,9 +1427,10 @@ structure CentralRetainedInput : Type where
 
 variable (C : CentralRetainedInput W i hS hFull Pold hdiv T L N M0)
 
-/-- The consumed retained stage, on the same specified norm stage and the genuine central datum.
-Its two local fields are theorems, its class-map exactness is the actual quotient kernel,
-and its point map is the actual global Kummer map. All remaining representatives are preserved. -/
+/-- A conditional constructor for the retained-stage interface on the supplied packet.
+The two local fields and class-map kernel are proved on the genuine central datum.
+Preserving the supplied stage and representatives does not identify them with the
+finite Heegner construction, and the packet supplies no normalized model comparison. -/
 def centralRetainedStage : RetainedStage45 P L i N M0 :=
   let D := centralSelData W i hS hFull Pold
   { S := T
@@ -1473,8 +1482,9 @@ def centralRetainedStage : RetainedStage45 P L i N M0 :=
     hzeta := C.hzeta
     hjay := C.hjay }
 
-/-- The constructor preserves the specified stage and fixes all cochain groups and maps.
-It does not choose a different norm stage or an unrelated Selmer complex. -/
+/-- The conditional constructor preserves its supplied stage and the ambient cochain maps.
+This is a preservation statement, not an identification of the arithmetic stage,
+the prescribed place partition, the constructed class or the retained finite free model. -/
 theorem centralRetainedStage_spec :
     (centralRetainedStage W i hS hFull Pold hdiv T L N M0 C).S = T ∧
       (centralRetainedStage W i hS hFull Pold hdiv T L N M0 C).G1 =
@@ -1493,7 +1503,9 @@ theorem centralRetainedStage_spec :
         cochainClass (centralSelData W i hS hFull Pold) :=
   ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
 
-/-- The retained finite-model boundary, with the actual local hypotheses discharged. -/
+/-- The finite-coordinate boundary conditional on the unrestricted packet.
+The local lifting hypotheses are proved, but the class and model obligations are inputs.
+For an erased model this theorem proves only the zero coordinate identity. -/
 theorem centralRetainedStage_exists_witness :
     ∃ v : Fin M0 → ℤ_[2], ∀ a : Fin N,
       C.zeta a - ((L * (T.a - 2) : ℤ) : ℤ_[2]) * C.jay a - (C.dC *ᵥ v) a ∈ twoAdicStage i :=
