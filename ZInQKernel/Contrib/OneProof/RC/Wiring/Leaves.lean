@@ -20,6 +20,7 @@ import ZInQKernel.Contrib.OneProof.RC.AddressGenuine.DensityLeaf
 import ZInQKernel.Contrib.OneProof.RC.Wiring.OddModels
 import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.LocalFinal
 import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.ArtinUnconditional
+import ZInQKernel.Contrib.CloudB3RC53.Hasse.Final
 import ZInQKernel.Contrib.OneProof.RC.Wiring.ClearingComplex3
 import ZInQKernel.Contrib.OneProof.RC.Wiring.ClearingComplex4
 import ZInQKernel.Contrib.OneProof.RC.GlueSweep.AnaLevel
@@ -362,8 +363,6 @@ structure RCLeaves where
   p. 3; GLUE: Atkin–Lehner/Carayol, the eigenform of level `N(E)` is the newform; tex 1779–1784;
   lane RC8). -/
   modularNewform : PrintsAnalytic.ModularNewform
-  /-- Absolute convergence of `L(E, s)` on `Re s > 3/2` (GLUE, textbook: Hasse's bound; lane RC8). -/
-  hasse : PrintsAnalytic.HasseConvergence
   /-- The interface data, given the genus partner `h_*`: chosen by whoever discharges `RCLeaves`
   and constrained only by the leaves (see the module docstring). -/
   data : ∀ ℓ : ℕ, ℤ → WData ℓ
@@ -380,6 +379,12 @@ structure RCLeaves where
 
 /-! ## The steps from the leaves -/
 
+/-- Absolute convergence of `L(E, s)` on `Re s > 3/2` (PROVED, no print and no field of `RCLeaves`:
+batch 3's `hasseConvergence_proved`, from Hasse's bound, Silverman AEC, second edition, Theorem
+V.1.1, proved through the Frobenius isogeny; used uncited at tex 1590 and 6323). -/
+theorem RCLeaves.hasse (_L : RCLeaves) : PrintsAnalytic.HasseConvergence :=
+  ZInQ.Contrib.CloudB3RC53.Hasse.hasseConvergence_proved
+
 /-- Hoffstein–Luo for elliptic curves (PROVED from the print; lane RC18's `twistDictionary`). -/
 theorem RCLeaves.hl (L : RCLeaves) : Nonvanishing.HoffsteinLuo :=
   Nonvanishing.FromRC8.hoffsteinLuo_of_curve
@@ -393,13 +398,13 @@ theorem RCLeaves.twistSign (L : RCLeaves) : Nonvanishing.BFHTwistSign :=
     (TwistDictionary.twistedRootNumberCurve_of_print L.twistedFE L.modularNewform L.hasse)
     (GlueSweep.Ana.levelSupport_of_modularNewform L.modularNewform)
 
-/-- The Artin factorization of the ring-class `L`-functions (PROVED from `modularNewform` and
-`hasse` alone; batch 3's `artinFactorization_of_newform'`: the factorization's own hypothesis splits
-every level prime in `K`, so the inert primes are good and the proved good case of the inert
-clause applies; tex 2411–2440). (3.4) therefore rests on `hasse` and the `modularNewform` print, with
+/-- The Artin factorization of the ring-class `L`-functions (PROVED from the `modularNewform` print
+alone; batch 3's `artinFactorization_unconditional`: Hasse's bound is proved, and the factorization's
+own hypothesis splits every level prime in `K`, so the inert primes are good and the proved good
+case of the inert clause applies; tex 2411–2440). (3.4) thus rests on `modularNewform` alone, with
 no local GLUE. -/
 theorem RCLeaves.artin (L : RCLeaves) : ZInQ.Contrib.CloudB3RC53.GenusOdd.ArtinFactorization :=
-  ZInQ.Contrib.CloudB3RC53.GenusOdd.artinFactorization_of_newform' L.hasse L.modularNewform
+  ZInQ.Contrib.CloudB3RC53.Hasse.artinFactorization_unconditional L.modularNewform
 
 /-- Every elliptic curve over `ℚ` has a root number (PROVED from modularity in newform form and
 Hasse's convergence; lane RC8's `exists_rootNumber`). -/
