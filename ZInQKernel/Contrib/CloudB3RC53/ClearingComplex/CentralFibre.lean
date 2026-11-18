@@ -38,9 +38,9 @@ abbrev Bsm : SmithBlocks S OO := D.toSmithBlocks (O := OO) A0 s s_ne central
 /-- The central fibre (the central Smith form). -/
 abbrev Fc : BlockComplex ℤ_[2] := smithForm D.m0 D.m1 D.m2 (s 0) (s 1) (s 2)
 
-theorem σ0 (j : Fin D.m0) : σ (Bsm D A0 s s_ne central) 0 j = s 0 j := rfl
-theorem σ1 (j : Fin D.m1) : σ (Bsm D A0 s s_ne central) 1 j = s 1 j := rfl
-theorem σ2 (j : Fin D.m2) : σ (Bsm D A0 s s_ne central) 2 j = s 2 j := rfl
+theorem cf_σ0 (j : Fin D.m0) : σ (Bsm D A0 s s_ne central) 0 j = s 0 j := rfl
+theorem cf_σ1 (j : Fin D.m1) : σ (Bsm D A0 s s_ne central) 1 j = s 1 j := rfl
+theorem cf_σ2 (j : Fin D.m2) : σ (Bsm D A0 s s_ne central) 2 j = s 2 j := rfl
 
 /-- Degree zero: `D_c^0 = E₀`. -/
 def cfe0 : centralCx (Bsm D A0 s s_ne central) fr₀ 0 ≃ₗ[ℤ_[2]] (Fin D.m0 → ℤ_[2]) where
