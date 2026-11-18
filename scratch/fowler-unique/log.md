@@ -1,0 +1,8 @@
+# Fowler uniqueness results
+
+- VERIFIED (repository): the starting tree is `b64a56395`, with `fowlerProp27` live and rated GLUE in both columns.
+- VERIFIED (source): `NumberFieldOrder.discr_eq_index_sq_mul` and `toOrder_index_eq_conductor` already give the square-index formula. The field discriminant is invariant under ring isomorphism by `NumberField.discr_eq_discr_of_ringEquiv`.
+- VERIFIED (manuscript and recorded reading): L586–593 apply Fowler at the full geometric endomorphism order and parameter `D`; the reading in `docs/research/fowler-bridges.md` records the proper ideal count on p. 613 and the bound on p. 615.
+- VERIFIED (Mathlib source): `QuadraticAlgebra.nonempty_algEquiv_int_iff` classifies standard integral quadratic algebras by their polynomial discriminants. The order bridge compares that discriminant with the trace discriminant.
+- VERIFIED (dry run): replacing `fowlerProp27` by `fowlerProp27PrintCanonical` gives 4 LEAF / 25 GLUE → 5 LEAF / 24 GLUE on 29 H rows, strict and strictest. The preview made no edits.
+- VERIFIED (Lean): `FowlerUniqueDiscriminant.lean` compiled. Equality of trace discriminants gives a ring isomorphism and equality of the field discriminants and conductor indices. Dividing by the field discriminant gives the square of the index. Projection along a basis of the maximal order proves `O = ℤ + f · 𝓞 k`, also for the kernel's finite-index subring, and the formula is preserved by field isomorphisms.
