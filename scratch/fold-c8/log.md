@@ -72,3 +72,27 @@ reflink-copied from the fold-b116 worktree (627782cf; no Lean file differs from 
 - autoform check: exit 0 (776 articles, 647 fully proved).
 - gate.sh: AUTOFOLD-DRYRUN-EXIT=0, TREE-UNCHANGED=yes, GATEFOLD-EXIT=0, GATEFOLD-AXIOMS=standard, **GATE=ok**.
 - **render_open count after the fold: 30 open (H 29, strict 5/24, strictest 5/24, 1 other).**
+
+## 6. AllContrib / clash check (VERIFIED, 11-17 16:55)
+- The 31 Contrib modules without an olean were built first (`lake build` of them: Build completed successfully, 14652
+  jobs; build-missing.txt), so every one of the 6640 Contrib modules has an olean.
+- **ClashScan** (contrib-clashes' olean scan, Lean 4.35's import rule; `scratch/fold-c8/ClashScan.lean` over
+  `contrib-modules.txt` = every `ZInQKernel/Contrib/*.lean` except AllContrib, plus OneProof.Main and TailZ87):
+  19043 modules read, 0 missing oleans, 856345 constants; **7 fatal clashes, all pre-existing and none involving a
+  module of this branch** (clashscan-fatal.txt): 6 `HDecomp.Textbook.Different` / `Contrib.Different.Local`
+  (`PkgI6.TraceContainsRamificationIdx`, `PkgI6.MonogenicDVR`, `TDifferent.phiExpl/resHom/phiF/filtR`; fixed on
+  wip/contrib-clashes, not on this base) and 1 `WeierstrassCurve.Affine.divisorSum`
+  (`CloudB2X0Transitive.Vendor.AnthropicFLT...Def_WeierstrassCurve_GenusOnePic0` def / `TauCeti...Divisor.Sum`
+  axiom). 1741 accepted duplicates; the 20 involving PR #86 / new modules (clashscan-new-modules.txt) are realized
+  `eq_1` / `congr_simp` lemmas; **against CloudB3W17bReduced: one accepted duplicate
+  (`TopCat.Presheaf.stalkCongr.eq_1`, both vendor Stacks `Perfect.BaseChangeStalk`), no fatal clash**.
+- **Real co-import** (`lake env lean`, one process at a time):
+  * base `AllContrib.lean` list alone (AllContribBase.lean): exit 0.
+  * A: base list + every new CloudR2* module (PR #86, 317 files' modules): exit 0.
+  * **B: base list + PR #86 + all 26 CloudB3W17bReduced modules: exit 0.**
+  * C: base list + the new C8 / Scholze / de Rham modules: exit 1, `divisorSum` clash (CloudB2X0Transitive vs TauCeti).
+    Pre-existing: base list + `OneProof.H.TailZ86` (the unchanged base chain) and base list + `PicZeroCharZeroCopy`
+    fail with the same error. The C8 modules import the chain (C8Conrad imports PicZeroCharZeroCopy), so they inherit it.
+  * AllContribC8.lean (base list + all new modules + CloudB3W17bReduced) therefore fails at the same pre-existing clash.
+- AllContrib.lean is not edited (not in this task's write list; the C8 modules cannot join it until the
+  divisorSum and Different clashes are fixed, e.g. by wip/contrib-clashes).
