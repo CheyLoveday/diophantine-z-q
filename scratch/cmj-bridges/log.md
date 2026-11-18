@@ -25,3 +25,13 @@
   `cmjDegree_of_print_of_periodJDescends` proves the live row from the printed
   equality conditional on `CMPeriodJDescends`. The latter is only the field-of-definition
   comparison for the analytic j of the actual CM period; it is open glue.
+- VERIFIED (Lean): `lake env lean scratch/cmj-bridges/Axioms.lean` passed.
+  The original group-model uniformization interface and normalized modular j surjectivity
+  both follow from existing proofs. All 15 new theorems (including the two scratch checks)
+  and the reused Picard class-number theorem use only the standard axioms.
+- VERIFIED (Lean): `lake env lean scratch/cmj-bridges/Discharges.lean` checked the live
+  headline (33 open hypotheses). The new candidate discharges `OpenResearchLeaves66.cmjDegree`
+  only from `CMPeriodJDescends` and `CMjDegreePrint`.
+- VERIFIED (dry run): on 29 H rows, both counts remain 4 LEAF / 25 GLUE. The read-only
+  autofold preview projects 5 LEAF / 24 GLUE with a future proof of the open comparison.
+  The listed proof name for that comparison is a placeholder; nothing was folded.
