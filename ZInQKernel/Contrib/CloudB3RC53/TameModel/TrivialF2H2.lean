@@ -23,7 +23,7 @@ noncomputable section
 
 namespace ZInQ.Contrib.CloudB3RC53.TameModel
 
-open CategoryTheory TauCeti ValuativeRel ContCohomology
+open CategoryTheory TauCeti ValuativeRel ContCohomology TauCeti.ClassFieldTheory
 open ZInQ.Contrib.CloudB3RC53.TameQuotient
 open ZInQ.Manuscript.RC.SelmerComplex
 
@@ -190,5 +190,125 @@ theorem mem_B2_of_Pu (hp : ringChar 𝓀[K] ≠ 2)
   exact mem_B2_of_Pmu hp ((H2pi_eq_zero_iff).1 hx.symm)
 
 end Transport
+
+/-! ### The unramified quadratic character as a `ℚ/ℤ`-valued character -/
+
+/-- `1/2 ∈ ℚ/ℤ`. -/
+def halfQZ : AddCircle (1 : ℚ) := ((1 / 2 : ℚ) : AddCircle (1 : ℚ))
+
+theorem two_zsmul_halfQZ : (2 : ℤ) • halfQZ = 0 := by
+  have h : ((1 / 2 : ℚ) : AddCircle (1 : ℚ)) + ((1 / 2 : ℚ) : AddCircle (1 : ℚ)) = 0 := by
+    rw [← AddCircle.coe_add (p := (1 : ℚ)), show (1 / 2 : ℚ) + 1 / 2 = 1 by norm_num]
+    exact AddCircle.coe_period (1 : ℚ)
+  change (2 : ℤ) • ((1 / 2 : ℚ) : AddCircle (1 : ℚ)) = 0
+  rw [two_zsmul]
+  exact h
+
+theorem halfQZ_ne_zero : halfQZ ≠ 0 := by
+  intro h
+  rw [halfQZ, AddCircle.coe_eq_zero_iff] at h
+  obtain ⟨n, hn⟩ := h
+  have : (n : ℚ) = 1 / 2 := by simpa using hn
+  have h2 : (2 * n : ℚ) = 1 := by rw [this]; norm_num
+  have : (2 * n : ℤ) = 1 := by exact_mod_cast h2
+  omega
+
+/-- `𝔽₂ → ℚ/ℤ`, `x ↦ x/2`. -/
+def zmod2ToQZ : ZMod 2 →+ AddCircle (1 : ℚ) :=
+  ZMod.lift 2 ⟨zmultiplesHom _ halfQZ, by simpa using two_zsmul_halfQZ⟩
+
+theorem zmod2ToQZ_one : zmod2ToQZ 1 = halfQZ := by
+  have : ((1 : ℤ) : ZMod 2) = 1 := by simp
+  rw [← this, zmod2ToQZ, ZMod.lift_coe]
+  simp
+
+theorem zmod2ToQZ_eq_zero_iff (x : ZMod 2) : zmod2ToQZ x = 0 ↔ x = 0 := by
+  have h01 : ∀ t : ZMod 2, t = 0 ∨ t = 1 := by decide
+  rcases h01 x with rfl | rfl
+  · simp
+  · rw [zmod2ToQZ_one]
+    exact ⟨fun h => absurd h halfQZ_ne_zero, fun h => absurd h (by decide)⟩
+
+variable (K) in
+/-- The unramified quadratic character on `Gal(Kˢ/K)`, additively. -/
+def urA : Additive (AbsoluteGaloisGroup K) →+ ZMod 2 where
+  toFun x := urChar K ((Rg K).symm x.toMul)
+  map_zero' := by
+    have := urChar_mul (K := K) 1 1
+    rw [mul_one] at this
+    change urChar K ((Rg K).symm 1) = 0
+    rw [map_one]
+    simpa using this
+  map_add' x y := by
+    change urChar K ((Rg K).symm (x.toMul * y.toMul)) = _
+    rw [map_mul, urChar_mul]
+
+variable (K) in
+/-- **The `ℚ/ℤ`-valued unramified character of order two** `χ = χ_ur / 2`. -/
+def chiQZ : Additive (AbsoluteGaloisGroup K) →+ AddCircle (1 : ℚ) := zmod2ToQZ.comp (urA K)
+
+theorem continuous_urA : Continuous (fun τ : AbsoluteGaloisGroup K => urA K (Additive.ofMul τ)) :=
+  continuous_urChar.comp (Rg K).symm.continuous
+
+theorem isOpen_ker_chiQZ : IsOpen ((chiQZ K).ker : Set (Additive (AbsoluteGaloisGroup K))) := by
+  have : ((chiQZ K).ker : Set (Additive (AbsoluteGaloisGroup K))) =
+      (fun τ : AbsoluteGaloisGroup K => urA K (Additive.ofMul τ)) ⁻¹' {0} := by
+    ext x
+    simp only [SetLike.mem_coe, AddMonoidHom.mem_ker, chiQZ, AddMonoidHom.comp_apply,
+      zmod2ToQZ_eq_zero_iff]
+    rfl
+  rw [this]
+  exact (isOpen_discrete _).preimage continuous_urA
+
+instance : Fact ((0 : ℚ) < 1) := ⟨one_pos⟩
+
+theorem equivIco_halfQZ : (AddCircle.equivIco (1 : ℚ) 0 halfQZ : ℚ) = 1 / 2 := by
+  rw [halfQZ, AddCircle.equivIco_coe_eq (by norm_num : (1 / 2 : ℚ) ∈ Set.Ico 0 (0 + 1))]
+
+theorem equivIco_zeroQZ : (AddCircle.equivIco (1 : ℚ) 0 (0 : AddCircle (1 : ℚ)) : ℚ) = 0 := by
+  rw [← AddCircle.coe_zero, AddCircle.equivIco_coe_eq (by norm_num : (0 : ℚ) ∈ Set.Ico 0 (0 + 1))]
+
+/-- **The carry of `χ_ur/2`** is the product of the two parities. -/
+theorem characterCarry_chiQZ (g h : AbsoluteGaloisGroup K) :
+    characterCarry (chiQZ K) g h =
+      ((urA K (Additive.ofMul g)).val * (urA K (Additive.ofMul h)).val : ℤ) := by
+  have h01 : ∀ t : ZMod 2, t = 0 ∨ t = 1 := by decide
+  have hv : ∀ τ : AbsoluteGaloisGroup K, (AddCircle.equivIco (1 : ℚ) 0 (chiQZ K (.ofMul τ)) : ℚ) =
+      (urA K (Additive.ofMul τ)).val / 2 := by
+    intro τ
+    change (AddCircle.equivIco (1 : ℚ) 0 (zmod2ToQZ (urA K (.ofMul τ))) : ℚ) = _
+    rcases h01 (urA K (.ofMul τ)) with h | h <;> rw [h]
+    · rw [map_zero, equivIco_zeroQZ]; simp
+    · rw [zmod2ToQZ_one, equivIco_halfQZ, zmod2_val_one]; norm_num
+  rw [characterCarry, hv, hv]
+  rcases h01 (urA K (.ofMul g)) with hg | hg <;> rcases h01 (urA K (.ofMul h)) with hh | hh <;>
+    simp [hg, hh, zmod2_val_one] <;> norm_num
+
+/-- **The arithmetic Frobenius has unramified parity one**: an element representing `Art_K ϖ` for a
+uniformizer `ϖ`. -/
+theorem urChar_of_artinMap {ϖ : Kˣ} (hϖ : normalizedValuation K ϖ = .ofAdd 1)
+    {σ : Field.absoluteGaloisGroup K}
+    (hσ : (σ : Field.absoluteGaloisGroupAbelianization K) = artinMap K ϖ) :
+    urChar K σ = 1 := by
+  have hE : maximalUnramifiedGaloisGroupEquivZHat K (AlgebraicClosure K)
+      (restrictMaximalUnramifiedHom K σ) = zHat.gen := by
+    rw [← unramifiedCoordinate_mk, hσ, unramifiedCoordinate_artinMap, hϖ, zHat.ofInt_ofAdd,
+      zpow_one]
+  change Multiplicative.toAdd ((zHat.lift (Multiplicative.ofAdd (1 : ZMod 2)) :
+    zHat →ₜ* Multiplicative (ZMod 2)) (maximalUnramifiedGaloisGroupEquivZHat K (AlgebraicClosure K)
+      (restrictMaximalUnramifiedHom K σ))) = 1
+  rw [hE, zHat.lift_gen, toAdd_ofAdd]
+
+/-- **The invariant of the carry class `ϖ ∪ δ(χ_ur/2)` is `1/2`.** -/
+theorem invMap_carry_eq_half {ϖ : Kˣ} (hϖ : normalizedValuation K ϖ = .ofAdd 1) :
+    invMap K (unitsRepH2Equiv K (characterCarryCocycle (chiQZ K) isOpen_ker_chiQZ
+        (baseUnitsEquivInvariants K (.ofMul ϖ)) : H2 (AbsoluteGaloisGroup K) (UnitsCoeff K))) =
+      halfQZ := by
+  obtain ⟨σ, hσ⟩ := QuotientGroup.mk_surjective (artinMap K ϖ)
+  rw [ClassFieldTheory.invMap_characterCarryCocycle_of_mk_eq_artinMap (chiQZ K)
+    isOpen_ker_chiQZ ϖ σ hσ]
+  change zmod2ToQZ (urChar K ((Rg K).symm (absoluteGaloisGroupRestrictEquiv K σ))) = halfQZ
+  rw [show (Rg K).symm (absoluteGaloisGroupRestrictEquiv K σ) = σ from
+    (Rg K).symm_apply_apply σ, urChar_of_artinMap hϖ hσ, zmod2ToQZ_one]
 
 end ZInQ.Contrib.CloudB3RC53.TameModel
