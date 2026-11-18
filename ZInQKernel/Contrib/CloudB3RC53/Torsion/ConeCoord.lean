@@ -125,6 +125,29 @@ theorem kmCoord_eq_of_fourMap (F : FourMap C D) (zC : ι1 → K) (lC : ι2 → K
           (σD.sumCongr σC.symm))⁻¹ :=
   kmCoord_eq_of_cone C D zC lC hzC hlC zD lD hzD hlD _ hC hD σC σD
 
+/-- **Retained bases compatible along `f`**: if the cone torsion is the canonical sign
+`(−1)^{|κo(aug C)|}`, the coordinates agree (PROVED). -/
+theorem kmCoord_eq_of_fourMap_retained (F : FourMap C D) (zC : ι1 → K) (lC : ι2 → K)
+    (hzC : C.d1 *ᵥ zC = 0) (hlC : lC ᵥ* C.d1 = 0) (zD : ι1' → K) (lD : ι2' → K)
+    (hzD : D.d1 *ᵥ zD = 0) (hlD : lD ᵥ* D.d1 = 0) (hz : F.f1 *ᵥ zC = zD) (hl : lD ᵥ* F.f2 = lC)
+    (hC : Contraction (C.aug zC lC hzC hlC).toBased)
+    (hD : Contraction (D.aug zD lD hzD hlD).toBased)
+    (σC : (ι0 ⊕ Unit) ⊕ ι2 ≃ ι1 ⊕ (ι3 ⊕ Unit)) (σD : (ι0' ⊕ Unit) ⊕ ι2' ≃ ι1' ⊕ (ι3' ⊕ Unit))
+    (hcone : torsion (BasedCx.cone (F.augMap zC lC hzC hlC zD lD hzD hlD hz hl))
+      (σD.sumCongr σC.symm) = (-1) ^ Fintype.card (ι1 ⊕ (ι3 ⊕ Unit))) :
+    kmCoord C zC lC hzC hlC σC = kmCoord D zD lD hzD hlD σD := by
+  rw [kmCoord_eq_of_fourMap F zC lC hzC hlC zD lD hzD hlD hz hl hC hD σC σD, hcone]
+  have hs : ((-1 : K) ^ Fintype.card (ι1 ⊕ (ι3 ⊕ Unit))) *
+      (-1) ^ Fintype.card (ι1 ⊕ (ι3 ⊕ Unit)) = 1 := by
+    rw [← pow_add]; exact Even.neg_one_pow ⟨_, rfl⟩
+  have hne : (-1 : K) ^ Fintype.card (ι1 ⊕ (ι3 ⊕ Unit)) ≠ 0 :=
+    pow_ne_zero _ (neg_ne_zero.mpr one_ne_zero)
+  calc (-1) ^ Fintype.card (ι1 ⊕ (ι3 ⊕ Unit)) * kmCoord D zD lD hzD hlD σD *
+        ((-1 : K) ^ Fintype.card (ι1 ⊕ (ι3 ⊕ Unit)))⁻¹
+      = kmCoord D zD lD hzD hlD σD * ((-1 : K) ^ Fintype.card (ι1 ⊕ (ι3 ⊕ Unit)) *
+          ((-1 : K) ^ Fintype.card (ι1 ⊕ (ι3 ⊕ Unit)))⁻¹) := by ring
+    _ = _ := by rw [mul_inv_cancel₀ hne, mul_one]
+
 /-- The identity chain map. -/
 def FourMap.id (C : FourCx K ι0 ι1 ι2 ι3) : FourMap C C where
   f0 := 1
