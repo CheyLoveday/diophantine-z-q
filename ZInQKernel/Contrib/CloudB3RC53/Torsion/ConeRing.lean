@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.CloudB3RC53.Torsion.Nakayama
 /-!
 # Torsion, part 11: cones over a commutative ring, and derived Nakayama for comparisons
 
-Lemma `ex:arith-local-kummer`, tex L3453–3454: "Reduction modulo two … gives the perfect
+Lemma `ex:arith-local-kummer`, tex L3452–3453: "Reduction modulo two … gives the perfect
 quotient-to-dual comparison; derived Nakayama lifts it." `Nakayama.lean` proves derived Nakayama
 for one based complex. The project's mapping cone `BasedCx.cone` (`Cone.lean`) is stated over a
 field. This file gives the cone over any commutative ring and the comparison form:
@@ -95,7 +95,7 @@ theorem coneR_map {S : Type*} [CommRing S] (π : R →+* S) (f : ChainMapR C D) 
       fromBlocks (D.dEO.map π) (f.fE.map π) 0 (-(C.dOE.map π))
     rw [Matrix.fromBlocks_map, Matrix.map_zero _ (map_zero π), Matrix.map_neg _ (map_neg π)]
 
-/-- **Derived Nakayama for comparisons** (tex L3453–3454): over a local ring, if the cone of the
+/-- **Derived Nakayama for comparisons** (tex L3452–3453): over a local ring, if the cone of the
 reduced comparison is contractible, the cone of the comparison is contractible. PROVED. -/
 theorem nakayama_comparison [IsLocalRing R] (f : ChainMapR C D)
     (hbar : Contraction (BasedCx.coneR (f.map (IsLocalRing.residue R)))) :
