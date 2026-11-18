@@ -9,3 +9,7 @@
 - `exists_diamond_fieldMap`: rational pullback on the model function field, with equivalence of the finite germ values at each source and translated parameter, including exceptional parameters.
 - `BShStandardGeometry`: compiled with Lean 4.35.0; all five axiom checks report only `propext`, `Classical.choice`, `Quot.sound`.
 - Geometry: extends the generic point map into a proper target; translates a Jacobian-valued map for the Albanese property; compares valuation specializations by separatedness; descends an invariant point over a finite Galois extension.
+- `BShStandard`: compiled with Lean 4.35.0; all six axiom checks report only `propext`, `Classical.choice`, `Quot.sound`.
+- `exists_diamonds`: exact `IsDiamond` at every unit under the fixed model hypotheses.
+- `exists_hecke_of_trace`: `IsPrimeTrace` yields `IsHeckeT`. `bShStandardModel_of_primeTraces`: supplying the trace morphisms for all primes and models gives the unchanged row.
+- Open: marked cyclic quotient comparison over the generic field, then specialization of the resulting prime traces. No discharge for `bShStandardModel`.
