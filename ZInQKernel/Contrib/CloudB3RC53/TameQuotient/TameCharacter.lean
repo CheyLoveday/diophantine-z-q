@@ -26,9 +26,9 @@ subgroup (Tau Ceti). Fix `n` prime to `p`, an element `a ∈ K` and an `n`-th ro
 * `exists_tame_generator`: there is `σ ∈ I_K` with `κ(σ)` a primitive `n`-th root of unity, and
   `exists_frobeniusLift_fix`: there is an arithmetic Frobenius lift fixing `α`.
 
-So `I_K → μₙ` is the tame quotient at level `n`: its kernel fixes `K^{ur}(α)`, and with a
-Frobenius lift `φ` fixing `α` the group `Gal(K^{ur}(α)/K)` is `μₙ ⋊ ⟨φ⟩`, `φ` acting by `q`.
-All PROVED.
+All PROVED. (Informally, not formalized here: `I_K → μₙ` is the tame quotient at level `n`, its
+kernel fixes `K^{ur}(α)`, and with a Frobenius lift `φ` fixing `α` the group `Gal(K^{ur}(α)/K)` is
+`μₙ ⋊ ⟨φ⟩`, `φ` acting by `q`.)
 -/
 
 noncomputable section
