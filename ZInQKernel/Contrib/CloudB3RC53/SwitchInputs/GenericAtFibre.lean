@@ -64,6 +64,17 @@ Planned duality route: the named duality input of this chain can be discharged b
 five lemma `selmerDuality_of_global_local` (modulo the print `NekovarFibreGlobalDuality`, Nekovář
 5.6.3(ii) localised at `Λ/𝔭`) once it lands, provided the inner-limit objects are `k(𝔭)`-linear and
 lattice-topologised.
+
+**The inner-limit counterpart, and a limitation of `GaloisInputsK`.** The inner-limit switching
+objects are built in a separate lane (`RC53Assist.InnerLimit.Objects`, not imported here): the limit
+`H¹` identified with the `H¹` of the limiting tame complex, closed complementary rank-two switch
+planes, a fixed-`𝔭` specialisation to `V_𝔭 × V_𝔭`, both `QuasiSwitchSide` values, the connecting map
+with exactness and a conditional `QuasiNonquadStep (ResAt 𝔭)` wiring; their duality is the explicit
+hypothesis `FibreInnerLimitPairingCertificate`. That is the counterpart of this file's fixed-place
+chain. The family `GaloisInputsK` used here works at a FIXED place `q ∈ S` of one arithmetic field:
+it cannot identify a MOVING derivative label (the inner-limit index `ℓᵢ → −1`) with one arithmetic
+prime. A consumer passing from the inner-limit objects to these steps needs actual side-to-stage
+equivalences and the arithmetic Galois/cochain comparisons; neither is supplied here. (Comments only.)
 -/
 
 noncomputable section

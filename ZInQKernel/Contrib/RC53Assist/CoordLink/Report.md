@@ -1,5 +1,22 @@
 # RC53 coordinate comparison: unit-free reductions and the residual provenance gap
 
+
+## Correction after independent review (2026-11-18)
+
+1. **The two predicates restate the conclusion.** `RankOneCoordinateProvenanceG` and `AcyclicCoordinateConventionG` are the rank-one and acyclic restrictions of the coordinate identity (`Classification.lean`: `rankOne_is_restricted_conclusion`, `acyclic_is_restricted_conclusion`). They are casewise residual coordinate identities, not an independent provenance construction; `relIsKMG_iff_provenance_and_convention` does not reduce the open identity, which stays open.
+2. **The retained-model route is too rigid at coboundary functionals.** When the functional is a nonzero coboundary `lam = β d²`, no `RetainedCoordinateModelG` exists, although the original coordinate is zero (`RetainedObstruction.lean`: `no_retained_model_of_coboundary`, with an explicit contractible example). The manuscript sets the coordinate, not every representative of the functional, to zero (tex 3889–3891, 5612–5615) and keeps homotopies in its comparisons (3837–3862, 4158–4177, 4189–4194). A homotopy-aware comparison is needed before this route can replace the coordinate link. `relIsKMG_of_retained_models` remains a sound conditional theorem.
+3. **Shipped files.** The source hashes and sizes recorded further below are those of an instrumented checking edition; the shipped sources are listed here. The compiler transcripts are the `*.check.txt` files next to the sources, and there is no separate checksum file.
+
+- `Correction.lean`: 11384 bytes, SHA-256 `fe32dadf489a102622ec751a19f61cc82f2a43b214a115069c839593e4236c48`
+- `Comparison.lean`: 20844 bytes, SHA-256 `202784c3fe69f1753477facf049e8932ab6b20a864bed75a74a1cf7935f5d2c9`
+- `Transport.lean`: 5758 bytes, SHA-256 `86852ed92439ec37b5c93ccce8b154c721350ed256ae86cbdb8e349628ad62c4`
+- `Patterns.lean`: 7902 bytes, SHA-256 `e0d4b0b11afd7f5e60ece1c56bc8731107e96e67851b4169357b9a3c3be21d11`
+- `Provenance.lean`: 6761 bytes, SHA-256 `a8d4dbbad11b9b36d261cba79206a4e44af94106d058cf18301ce0d0ad49a728`
+- `Classification.lean`: 2672 bytes, SHA-256 `e412ad18b87da300acb9469b7e1ac6e56a9ea3bbd322c6689688e6c39fc6354a`
+- `RetainedObstruction.lean`: 9398 bytes, SHA-256 `a01ad8aaa43e20557b4a7a745c0fdbf8cf12de62d391b36635a4f920d0d9eb0c`
+
+The unit-free correction algebra (`Correction.lean`), the cone and adjugate comparisons, and the transport through nonzero common denominators are unaffected.
+
 ## Outcome
 
 The fraction-field comparison does not need the premise that the correction is in the power-series group algebra with unit sign evaluations. The correction, retained-comparison, and denominator-transport reductions below are proved. The actual arithmetic relaxed-coordinate provenance is **not discharged**.

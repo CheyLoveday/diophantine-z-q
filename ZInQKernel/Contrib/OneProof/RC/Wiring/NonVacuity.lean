@@ -14,9 +14,9 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.StageDataNonVacuity
   printed leaves: `exists_genusPartner` (lane RC13) produces one.
 * The two stage leaves are satisfiable (`toyW_stages`).
 * The stage clauses of `PreLeaves` (`StageSupport`, and the stage link `StagesFrom` of
-  `OddStagedInstance`) hold for the data built by the Appendix F stage construction from every
-  stage sequence, with actual sequences existing unconditionally and the detector value from a
-  nontorsion rational point (`StageDataNonVacuity.lean`: `stageClauses_concrete`,
+  `OddStagedInstance`) hold for the data built with separated intrinsic unit support and later
+  prime exclusions. The intrinsic unit support is disjoint from the primes of the chosen `k`.
+  Actual sequences exist unconditionally; the detector value requires a nontorsion rational point (`StageDataNonVacuity.lean`: `stageClauses_concrete`,
   `stageClauses_of_detector`).
 -/
 
