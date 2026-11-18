@@ -95,6 +95,9 @@ def test_volatile_rows_are_not_offered():
     assert '* Status: may change soon, not offered.' in open_md
     assert '* Status: held by the project ([claim](https://github.com/o/r/pull/9)) (may change soon).' in open_md
     assert '* Status: open.' in open_md
+    # the volatile project-interest row's label is shown without its offer
+    assert 'label project-interest (project interest, free to claim)' not in open_md
+    assert 'label project-interest' in open_md
     # the Packets lists mark volatile rows, and pages-wanted.md leaves them out
     assert '* [`c`](#c) (GLUE; unread) (may change soon): EGA IV' in open_md
     assert '* [`b`](#b) (GLUE; unread): SGA 3' in open_md

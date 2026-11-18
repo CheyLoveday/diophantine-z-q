@@ -483,7 +483,9 @@ def render(m):
         if k['packet']:
             bits.append(f"packet [{k['packet']}](#packet-{k['packet'].lower()})")
         if k['label']:
-            bits.append(f"label {k['label']} ({LABELS[k['label']]})")
+            # a volatile row that is not held is not offered, so its label is shown without the offer's gloss
+            offered = not (f in m.get('volatile', {}) and not (f in claims and claims[f]['hold'] == 'held'))
+            bits.append(f"label {k['label']}" + (f" ({LABELS[k['label']]})" if offered else ''))
         if k['tier']:
             bits.append(f"tier {k['tier']} (model triage, unreviewed)")
         if k['area_issue']:
