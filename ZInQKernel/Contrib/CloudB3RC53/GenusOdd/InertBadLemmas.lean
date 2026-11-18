@@ -12,7 +12,7 @@ import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.RationalModel
   `v_𝔭(z) = exp(−v_p(z))`; hence (`mem_pow_iff_of_rat`) for integral lifts `r ∈ 𝓞_𝔭`, `r' ∈ 𝓞_𝔮` of
   the same rational at two such primes, `r ∈ 𝔪_𝔭ⁿ ↔ r' ∈ 𝔪_𝔮ⁿ`.
 * `splits_map_of_card_sq`: a polynomial of degree `≤ 2` over a finite field `k` splits over any
-  field `L ⊇ k` with `#L = #k²` (an irreducible quadratic divides `X^{#k²} − X`, which splits in
+  field `L ⊇ k` with `|L| = |k|²` (an irreducible quadratic divides `X^{|k|²} − X`, which splits in
   `L`).
 
 Classification: PROVED.
@@ -86,7 +86,7 @@ section Split
 
 variable {k : Type*} [Field k] [Fintype k] {L : Type*} [Field L] [Fintype L]
 
-/-- **A polynomial of degree `≤ 2` over `k` splits over a field with `#k²` elements** (PROVED). -/
+/-- **A polynomial of degree `≤ 2` over `k` splits over a field with `|k|²` elements** (PROVED). -/
 theorem splits_map_of_card_sq (ψ : k →+* L) (hL : Fintype.card L = Fintype.card k ^ 2)
     {f : k[X]} (hf : f.natDegree ≤ 2) : Splits (f.map ψ) := by
   classical

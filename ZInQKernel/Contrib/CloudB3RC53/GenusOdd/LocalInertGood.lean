@@ -8,7 +8,7 @@ At a prime `𝔭` of `K` with `N𝔭 = p²` above a prime `p` of good reduction 
 model `W₀ = C₀ • E` that is minimal over `ℚ_v` has unit discriminant, so it is minimal over `𝓞_𝔭`
 too (as in clause 2, `localFactorK_clause_good`). Its reduction over `𝓞_𝔭` is the base change of its
 reduction `Ẽ` over `𝔽_p` along a ring homomorphism `𝔽_p → k_𝔭` (`reduction_map_eq_of_rat_hom`),
-and `k_𝔭` has `p²` elements, so `#Ẽ(k_𝔭) = p² + 1 − (a_p² − 2p)`
+and `k_𝔭` has `p²` elements, so `|Ẽ(k_𝔭)| = p² + 1 − (a_p² − 2p)`
 (`Frobenius.natCard_points_quadratic_trace`). Hence `L_𝔭(T²) = L_p(T) L_p(−T)`
 (`localFactorInert_good`).
 

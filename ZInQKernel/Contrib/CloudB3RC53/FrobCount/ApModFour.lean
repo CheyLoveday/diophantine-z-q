@@ -17,7 +17,7 @@ file states the manuscript's input and closes the departure for the actual curve
 * **`apModFour_curve_typeData` (PROVED)**: for the actual curve `E_m : y² = x(x − m)(x + 3m)`
   (`ZInQ.Manuscript.curve m`, full rational two-torsion) and any type data whose conductor
   contains every prime factor of `6m`, the coefficients of Mathlib's `L(E_m, s)` satisfy
-  `ApModFour`. This is lane RC's `apModFour_curve`: `a_p = p + 1 − #Ẽ_m(𝔽_p)` and
+  `ApModFour`. This is lane RC's `apModFour_curve`: `a_p = p + 1 − |Ẽ_m(𝔽_p)|` and
   `Ẽ_m(𝔽_p)[2] = {O, (0, 0), (m, 0), (−3m, 0)}` has order four.
 * `apEven_curve_typeData`: hence `ApEven` for the actual curve, through the manuscript's form.
 * Non-vacuity: `apModFour_curve_one_five` — `a_5(E_1) ≡ 6 (mod 4)`.

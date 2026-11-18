@@ -218,7 +218,7 @@ theorem localFactorK_clause_good (E : WeierstrassCurve ℚ) [E.IsElliptic]
 
 /-- **The inert clause of `LocalFactorK`** (GLUE; the one remaining local input: Frobenius
 characteristic polynomial / unramified base change. For `N𝔭 = p²`, `𝔭² ∤ p` (`K_𝔭/ℚ_p` unramified
-quadratic): `L_𝔭(T²) = L_p(T) L_p(−T)`, i.e. for good `p`, `#Ẽ(𝔽_{p²}) = p² + 1 − (a_p² − 2p)`;
+quadratic): `L_𝔭(T²) = L_p(T) L_p(−T)`, i.e. for good `p`, `|Ẽ(𝔽_{p²})| = p² + 1 − (a_p² − 2p)`;
 split multiplicative stays split, non-split becomes split, additive stays additive). -/
 def LocalFactorInert : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (K : Type) [Field K] [NumberField K]

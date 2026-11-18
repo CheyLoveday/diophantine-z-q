@@ -114,7 +114,7 @@ theorem conductor_le_of_dvd (hK2 : Module.finrank ℚ K = 2) {p : ℕ} (hp : p.P
     rw [key]
     exact add_mem (Ideal.mul_mem_left _ _ (Ideal.mul_mem_right _ _ hcI))
       (Ideal.mul_mem_right _ _ (Ideal.mul_mem_left _ _ hp'))
-  -- hence `#(𝓞_K / p) ≤ p`
+  -- hence `|𝓞_K / p| ≤ p`
   have hp0 : 0 < p := hp.pos
   let f : Fin p → 𝓞 K ⧸ I := fun i => ((i : ℕ) : 𝓞 K ⧸ I)
   have hf : Function.Surjective f := by
