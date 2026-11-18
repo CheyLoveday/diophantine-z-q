@@ -33,9 +33,9 @@ The readings below are page-image readings (not human-certified); the quotes are
 A special case, in consequence form.
 
 Setting, p. 525: "Let Γ be a group of level N, and J the jacobian variety of 𝔥*/Γ. Let
-φ: 𝔥* → J be the map obtained by composing the natural map 𝔥* → 𝔥*/Γ with a canonical map of
-𝔥*/Γ into J. Then there is an isomorphism μ: S₂(Γ) → D_J defined by δφ(μ(f)) = f(z)dz for
-f ∈ S₂(Γ), where δφ is the "pull back" associated with φ, and z is a standard variable on 𝔥."
+ψ: 𝔥* → J be the map obtained by composing the natural map 𝔥* → 𝔥*/Γ with a canonical map of
+𝔥*/Γ into J. Then there is an isomorphism μ: S₂(Γ) → D_J defined by δψ(μ(f)) = f(z)dz for
+f ∈ S₂(Γ), where δψ is the "pull back" associated with ψ, and z is a standard variable on 𝔥."
 (p. 524: D_B is "the vector space over C of all holomorphic 1-forms on B".) Also p. 525: "For a
 positive integer n, let q be the largest divisor of n prime to N, and put n = mq. Then we define
 T_n and ξ_n by T_n = T_mT_q, ξ_n = ξ_mξ_q, T_m = [ΓαΓ]₂, ξ_m = {ΓαΓ} with α = [1 0; 0 m], and
@@ -104,7 +104,7 @@ unabhängig von l."
 
 "Korollar 2. Seien A₁, A₂ wie im Korollar 1. Es sind äquivalent
 i) A₁ und A₂ sind isogen.
-ii) T_l(A₁) ⊗_Z Q_l ≅ T_l(A₂) ⊗_Z Q_l als π-Modul.
+ii) T_l(A₁) ⊗_{Z_l} Q_l ≅ T_l(A₂) ⊗_{Z_l} Q_l als π-Modul.
 iii) L_v(s, A₁) = L_v(s, A₂) für fast alle Stellen v von K.
 iv) L_v(s, A₁) = L_v(s, A₂) für alle v."
 ("Korollar 1. Seien A₁ und A₂ abelsche Varietäten über K." The proof: "Die Äquivalenz von i) und
