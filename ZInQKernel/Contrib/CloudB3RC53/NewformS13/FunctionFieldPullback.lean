@@ -158,4 +158,82 @@ theorem transcendental_of_nonconst {x : LaurentSeries ℚ} (hx : ∃ n : ℤ, n 
   simp only [map_add, aeval_X, aeval_C, hy, sub_add_cancel]
   exact hPx
 
+/-! ### The coordinate-ring map is injective -/
+
+section Injective
+
+variable {M : ℕ} [NeZero M] {A : WeierstrassCurve ℚ}
+
+theorem pointAlgHom_smul_basis {x y : FQ M} (h : OnCurve M A x y) (p q : ℚ[X]) :
+    pointAlgHom h (p • (1 : A.toAffine.CoordinateRing) +
+        q • WeierstrassCurve.Affine.CoordinateRing.mk A.toAffine Polynomial.X) =
+      aeval x p + aeval x q * y := by
+  rw [map_add, Algebra.smul_def, Algebra.smul_def, mul_one, map_mul]
+  have h1 : ∀ r : ℚ[X], pointAlgHom h (algebraMap ℚ[X] A.toAffine.CoordinateRing r) = aeval x r :=
+    fun r => by
+      change (AdjoinRoot.lift (Polynomial.aeval x).toRingHom y (eval_polynomial h))
+        (AdjoinRoot.of _ r) = _
+      rw [AdjoinRoot.lift_of]
+      rfl
+  have h2 : pointAlgHom h (WeierstrassCurve.Affine.CoordinateRing.mk A.toAffine Polynomial.X) = y :=
+    pointAlgHom_Y h
+  rw [h1, h1, h2]
+
+theorem aeval_norm_eq {x y : FQ M} (h : OnCurve M A x y) (p q : ℚ[X]) :
+    aeval x (Algebra.norm ℚ[X] (p • (1 : A.toAffine.CoordinateRing) +
+        q • WeierstrassCurve.Affine.CoordinateRing.mk A.toAffine Polynomial.X)) =
+      (aeval x p + aeval x q * y) *
+        (aeval x p + aeval x q * (-y - algebraMap ℚ (FQ M) A.a₁ * x - algebraMap ℚ (FQ M) A.a₃)) := by
+  rw [WeierstrassCurve.Affine.CoordinateRing.norm_smul_basis]
+  simp only [map_sub, map_mul, map_pow, map_add, aeval_X, aeval_C]
+  simp only [OnCurve] at h
+  linear_combination (aeval x q) ^ 2 * h
+
+/-- **For nonconstant `x`, the coordinate-ring map `ℚ[A] → F` is injective.** -/
+theorem pointAlgHom_injective {x y : FQ M} (h : OnCurve M A x y)
+    (hx : ∃ n : ℤ, n ≠ 0 ∧ (x : LaurentSeries ℚ).coeff n ≠ 0) :
+    Function.Injective (pointAlgHom h) := by
+  rw [injective_iff_map_eq_zero]
+  intro r hr
+  obtain ⟨p, q, rfl⟩ := WeierstrassCurve.Affine.CoordinateRing.exists_smul_basis_eq r
+  have hN : aeval x (Algebra.norm ℚ[X] (p • (1 : A.toAffine.CoordinateRing) +
+      q • WeierstrassCurve.Affine.CoordinateRing.mk A.toAffine Polynomial.X)) = 0 := by
+    rw [aeval_norm_eq h, ← pointAlgHom_smul_basis h, hr, zero_mul]
+  have hT := transcendental_of_nonconst hx
+  have hN0 : Algebra.norm ℚ[X] (p • (1 : A.toAffine.CoordinateRing) +
+      q • WeierstrassCurve.Affine.CoordinateRing.mk A.toAffine Polynomial.X) = 0 := by
+    by_contra hne
+    apply hT
+    refine ⟨_, hne, ?_⟩
+    have := congrArg (fun z : FQ M => (z : LaurentSeries ℚ)) hN
+    simp only [IntermediateField.coe_zero] at this
+    rw [← this, Polynomial.aeval_def, Polynomial.aeval_def]
+    have key := Polynomial.hom_eval₂ (Algebra.norm ℚ[X] (p • (1 : A.toAffine.CoordinateRing) +
+        q • WeierstrassCurve.Affine.CoordinateRing.mk A.toAffine Polynomial.X))
+      (algebraMap ℚ (FQ M)) (algebraMap (FQ M) (LaurentSeries ℚ)) x
+    rw [show (algebraMap (FQ M) (LaurentSeries ℚ)).comp (algebraMap ℚ (FQ M)) =
+      algebraMap ℚ (LaurentSeries ℚ) from RingHom.ext_rat _ _] at key
+    exact key.symm
+  have hdeg := WeierstrassCurve.Affine.CoordinateRing.degree_norm_smul_basis (W' := A.toAffine) p q
+  rw [hN0, Polynomial.degree_zero] at hdeg
+  have hp : p = 0 := by
+    by_contra hp0
+    have h1 : 2 • p.degree ≤ ⊥ := hdeg ▸ le_max_left _ _
+    rw [le_bot_iff, Polynomial.degree_eq_natDegree hp0] at h1
+    have e : (2 • (p.natDegree : WithBot ℕ)) = ((2 * p.natDegree : ℕ) : WithBot ℕ) := by
+      rw [nsmul_eq_mul]; push_cast; rfl
+    rw [e] at h1
+    exact WithBot.natCast_ne_bot _ h1
+  have hq : q = 0 := by
+    by_contra hq0
+    have h1 : 2 • q.degree + 3 ≤ ⊥ := hdeg ▸ le_max_right _ _
+    rw [le_bot_iff, Polynomial.degree_eq_natDegree hq0] at h1
+    have e : (2 • (q.natDegree : WithBot ℕ)) + 3 = ((2 * q.natDegree + 3 : ℕ) : WithBot ℕ) := by
+      rw [nsmul_eq_mul]; push_cast; rfl
+    rw [e] at h1
+    exact WithBot.natCast_ne_bot _ h1
+  rw [hp, hq, zero_smul, zero_smul, add_zero]
+
+end Injective
+
 end ZInQ.Contrib.CloudB3RC53.NewformS13
