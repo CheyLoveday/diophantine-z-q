@@ -8,7 +8,8 @@ import ZInQKernel.Contrib.TauCeti.AlgebraicGeometry.EllipticCurve.Isogeny.PointH
 For a separable isogeny `φ : W₁ → W₂` of elliptic curves over a separably closed field `F` and `N`
 invertible in `F`, with `S, T ∈ W₁[N]`,
 
-    e_N(φ S, φ T) = e_N(S, T)^{deg φ}        (`weilPairing_pointMap`, Silverman III.8.2).
+    e_N(φ S, φ T) = e_N(S, T)^{deg φ}        (`weilPairing_torsionMap`; a consequence
+of Silverman III.8.2, `e_N(S, φ̂ T) = e_N(φ S, T)`, proved here without the dual isogeny).
 
 Proof (no dual isogeny). Let `g₂` have divisor `[N]^* (φ T) − [N]^* (O)` on `W₂`, so that
 `e_N(φ S, φ T) = τ_{φ S} g₂ / g₂`. Pull back along `φ`: since `φ^* ∘ τ_{φ S}^* = τ_S^* ∘ φ^*`
@@ -105,7 +106,7 @@ theorem card_kerFinset :
 
 include hN in
 /-- **The Weil pairing under a separable isogeny: `e_N(φ S, φ T) = e_N(S, T)^{deg φ}`**
-(Silverman III.8.2, written additively in `Additive (rootsOfUnity N F)`). PROVED. -/
+(a consequence of Silverman III.8.2, written additively in `Additive (rootsOfUnity N F)`). PROVED. -/
 theorem weilPairing_torsionMap (S T : Submodule.torsionBy ℤ W₁.toAffine.Point (N : ℤ)) :
     weilPairing W₂ N hN (torsionMap φ N S) (torsionMap φ N T) =
       φ.degree • weilPairing W₁ N hN S T := by
@@ -225,7 +226,7 @@ theorem weilPairing_torsionMap (S T : Submodule.torsionBy ℤ W₁.toAffine.Poin
   ext
   simpa using hinj
 
-/-- **Node `WeilPairingIsogeny`** (Silverman III.8.2 for separable isogenies; the first step of the
+/-- **Node `WeilPairingIsogeny`** (a consequence of Silverman III.8.2, for separable isogenies; the first step of the
 route from the Weil pairing to Hasse's bound, not a manuscript line): for a separable isogeny
 `φ : E₁ → E₂` over a separably closed field and `N` invertible there,
 `e_N(φ S, φ T) = e_N(S, T)^{deg φ}` on `E₁[N]`. PROVED (`weilPairingIsogeny_proof`). -/
