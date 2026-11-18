@@ -3,38 +3,48 @@ import ZInQKernel.Contrib.TauCeti.NumberTheory.ModularForms.Newforms.FullEigenfo
 import ZInQKernel.Contrib.TauCeti.NumberTheory.ModularForms.TrivialNebentypus
 
 /-!
-# G0: the newform of a modular elliptic curve, from Li 1975 and Carayol 1986
+# G0: the newform of a modular elliptic curve (named consequence glue)
 
 The peer package `RC53Assist/NewformPeriods` names the translation step G0,
 `NewformOfModularCurveGlue`: a modular `E/ℚ` (`IsModular E`: a weight-two cusp form on `Γ₀(N)`
 with the coefficients of `L(E, s)`) has, at some level `M`, a normalized full Hecke eigenform with
 trivial character whose coefficients are `aₙ = E.LFunction n`.
 
-**What is a print, and what is proved.**
-* `LiCarayolNewformOfModular` (PRINT, consequence form; statement not read against the papers
-  here, UNVERIFIED as a reading): the newform theory of W.-C. W. Li, *Newforms and functional
-  equations*, Math. Ann. **212** (1975), 285–315 (bibitem `li-newforms`, tex L11050–11052; the
-  manuscript's locator: p. 296): the decomposition of `S₂(Γ₀(N))` into newforms of levels
-  `M ∣ N` and their images, with multiplicity one, so the eigenvalue system of a form on `Γ₀(N)`
-  that is a Hecke eigenform away from `N` is that of a unique newform of some level `M ∣ N`;
-  together with H. Carayol, *Sur les représentations ℓ-adiques associées aux formes modulaires
-  de Hilbert*, Ann. Sci. ÉNS **19** (1986), 409–468 (bibitem `carayol`, tex L11205–11208; the
-  manuscript's locator: Theorem A): the level of that newform is the conductor of `E`, and its
-  coefficients at the primes dividing the level are those of the local factors of `L(E, s)`.
-  The Lean statement keeps the consequence used here: for a modular `E` there are `M ∣ N` and
-  a newform of level `M`, weight `2` and trivial nebentypus (Tau Ceti's `HeckeRing.GL2.Newform`,
-  Miyake's primitive form) whose coefficients are `E.LFunction n` for every `n ≥ 1`. The
-  identification of the level with the conductor is not used and is not stated (Mathlib has no
-  conductor of an elliptic curve). Nothing beyond the two papers is added.
+**What is glue, and what is proved.**
+* `LiCarayolNewformOfModular` (CONSEQUENCE GLUE, not a print): for a modular `E` there are
+  `M ∣ N` and a newform of level `M`, weight `2` and trivial nebentypus (Tau Ceti's
+  `HeckeRing.GL2.Newform`, Miyake's primitive form) whose coefficients are `E.LFunction n` for
+  every `n ≥ 1`. Its sources (statements not read against the papers here):
+  - W.-C. W. Li, *Newforms and functional equations*, Math. Ann. **212** (1975), 285–315
+    (bibitem `li-newforms`, tex L11050–11052): the old/new decomposition of `S₂(Γ₀(N))` and the
+    primitive forms, printed p. 294; strong multiplicity one, Theorem 5, p. 298. The manuscript's
+    own locator for this bibitem is p. 296 (the Fricke-conjugation relation), which supports a
+    different step;
+  - H. Carayol, *Sur les représentations ℓ-adiques associées aux formes modulaires de Hilbert*,
+    Ann. Sci. ÉNS **19** (1986), 409–468 (bibitem `carayol`, tex L11205–11208), Theorem A: the
+    `ℓ`-adic Galois representation attached to a newform and its local–global compatibility.
+    Theorem A does not itself say that the level is the conductor of `E` or that the
+    coefficients at the bad primes are those of the local factors of `L(E, s)`.
+  Further inputs, beyond both papers, are folded into this glue:
+  - the Hecke bridge: the input form, whose coefficients are those of `L(E, s)`, is a Hecke
+    eigenform away from its level;
+  - the Galois comparison: the representation of the newform and the Tate module of `E` agree
+    (Čebotarev density and Brauer–Nesbitt, from the coefficients at the good primes);
+  - Casselman's newvector theory: the level of the newform is the conductor of the attached
+    local representations, so that the coefficients at the primes dividing the level match the
+    local factors of `L(E, s)`.
+  The identification of the level with the conductor is not stated in Lean (Mathlib has no
+  conductor of an elliptic curve).
 * **`newformOfModularCurveGlue_of_print` (PROVED)**: `LiCarayolNewformOfModular →
-  NewformOfModularCurveGlue`. The full eigen-ness at every `Tₙ`, the primes dividing the level
-  included, is Tau Ceti's theorem `Newform.toEigenform` (Diamond–Shurman Theorem 5.8.2, Miyake
-  Theorem 4.6.13), and the passage from `Γ₁(M)` with trivial character to `Γ₀(M)` is
-  `cuspFormCharSpaceOneEquiv`. Both preserve the underlying function on `ℍ`.
+  NewformOfModularCurveGlue` (the name is kept from an earlier labelling). The full eigen-ness at
+  every `Tₙ`, the primes dividing the level included, is Tau Ceti's theorem
+  `Newform.toEigenform` (Diamond–Shurman Theorem 5.8.2, Miyake Theorem 4.6.13), and the passage
+  from `Γ₁(M)` with trivial character to `Γ₀(M)` is `cuspFormCharSpaceOneEquiv`. Both preserve the
+  underlying function on `ℍ`.
 
-**Classification.** `LiCarayolNewformOfModular` PRINT (consequence form; the manuscript's
-locators Li p. 296 and Carayol Theorem A, statement not read against the papers here); the
-reduction PROVED.
+**Classification.** `LiCarayolNewformOfModular` CONSEQUENCE GLUE (sources Li 1975 p. 294 and
+Theorem 5, p. 298; Carayol 1986 Theorem A; plus the Hecke bridge, the Čebotarev/Brauer–Nesbitt
+comparison and Casselman's newvector/conductor comparison); the reduction PROVED.
 -/
 
 noncomputable section
@@ -44,13 +54,13 @@ namespace ZInQ.Contrib.CloudB3RC53.ModularWeil
 open CongruenceSubgroup UpperHalfPlane HeckeRing.GL2
 open ZInQ.Contrib.RC53Assist.NewformPeriods ZInQ.Manuscript.PoleS12
 
-/-- **Li 1975 and Carayol 1986: the newform of a modular elliptic curve** (PRINT, consequence
-form; bibitems `li-newforms`, `carayol`; the manuscript's locators: Li, Math. Ann. 212 (1975),
-p. 296, tex L11050–11052, and Carayol, Ann. Sci. ÉNS 19 (1986), Theorem A, tex L11205–11208;
-statement not read against the papers here, UNVERIFIED as a reading). If `E/ℚ` has a
-weight-two cusp form on `Γ₀(N)`, `N > 0`, with the coefficients of `L(E, s)`, then for some
-`M ∣ N` there is a newform of level `M`, weight `2` and trivial nebentypus whose coefficients are
-`E.LFunction n` for every `n ≥ 1`. -/
+/-- **The newform of a modular elliptic curve** (CONSEQUENCE GLUE, not a print; sources Li 1975,
+bibitem `li-newforms`, p. 294 and Theorem 5, p. 298, and Carayol 1986, bibitem `carayol`,
+Theorem A, together with the Hecke bridge, the Čebotarev/Brauer–Nesbitt comparison and
+Casselman's newvector/conductor comparison; see the module docstring). If `E/ℚ` has a weight-two
+cusp form on `Γ₀(N)`, `N > 0`, with the coefficients of `L(E, s)`, then for some `M ∣ N` there is
+a newform of level `M`, weight `2` and trivial nebentypus whose coefficients are `E.LFunction n`
+for every `n ≥ 1`. -/
 def LiCarayolNewformOfModular : Prop :=
   ∀ (E : WeierstrassCurve ℚ), E.IsElliptic →
     ∀ (N : ℕ) (_ : 0 < N) (f : CuspForm (Gamma0 N : Subgroup (GL (Fin 2) ℝ)) 2),
@@ -58,7 +68,7 @@ def LiCarayolNewformOfModular : Prop :=
       ∃ (M : ℕ) (_ : NeZero M) (F : Newform M 2), M ∣ N ∧ F.χ = 1 ∧
         ∀ n : ℕ, 0 < n → (qExpansion 1 F.toCuspForm).coeff n = (E.LFunction n : ℂ)
 
-/-- **G0 from the Li–Carayol print** (PROVED). -/
+/-- **G0 from the consequence glue `LiCarayolNewformOfModular`** (PROVED). -/
 theorem newformOfModularCurveGlue_of_print (h : LiCarayolNewformOfModular) :
     NewformOfModularCurveGlue := by
   intro E hE hM
