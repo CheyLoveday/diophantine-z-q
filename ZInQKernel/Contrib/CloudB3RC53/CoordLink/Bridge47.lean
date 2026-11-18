@@ -20,8 +20,8 @@ clearing, through the sign evaluations `evK x`); they meet in `Λ[1/2]`, `Λ = �
 * `urelK`: the relaxed coordinate in `Frac 𝒪`, `u_rel = η_x⁻¹ ũ_x` with `η_x = x(η_Λ) ∈ Λ^×`;
 * **`correctedIsEta_of_triangles` (PROVED)**: for a universal correction `η_Λ ∈ Λ[G]` whose
   sign evaluations are units and agree with the (4.7) data's `χ(η)` at every address
-  (`χ_x(η) = ιQ(x(η_Λ))`; for the (4.7) data over `R = Λ[G]` with `χ_x = ιQ ∘ x` this is `rfl`, see
-  `chi_eta_of_lamG`), `CorrectedIsEta Dd F (φO η_Λ) urelK` holds, **and** `urelK x` is the image in
+  (`χ_x(η) = ιQ(x(η_Λ))`; for the (4.7) data over `R = Λ[G]` with `χ_x = ιQ ∘ x` this holds by
+  definition), `CorrectedIsEta Dd F (φO η_Λ) urelK` holds, **and** `urelK x` is the image in
   `Frac 𝒪` of the (4.7) data's relaxed coordinate `u_rel` (`urel_eq_of_triangles`: equality of
   coefficients in `ℚ₂`). The pinned `u_rel` is thus the two-term relaxed coordinate of the (4.7)
   step models (`IsCoordOn` of `NaturalStep`), the input of `RelIsKM`.
@@ -130,7 +130,8 @@ theorem urel_eq_of_triangles {ℓ : ℕ} {Dd : RCData ℓ} {F : Family}
     T.urel = PowerSeries.C ((2 : ℚ_[2]) ^ e₀ x)⁻¹ * ιQ ((hunit x).unit⁻¹ * g₀ x) := by
   have hut := T.hutilde
   rw [hcompat, uTilde_eq_of_rep h₀ x] at hut
-  have hinv : ιQ (((hunit x).unit⁻¹ : Lamˣ) : Lam) * ιQ (Determinant.signEval (sgnChar x) ηΛ) = 1 := by
+  have hinv : ιQ (((hunit x).unit⁻¹ : Lamˣ) : Lam) *
+      ιQ (Determinant.signEval (sgnChar x) ηΛ) = 1 := by
     rw [← map_mul, IsUnit.val_inv_mul, map_one]
   calc T.urel = ιQ (((hunit x).unit⁻¹ : Lamˣ) : Lam) *
         (ιQ (Determinant.signEval (sgnChar x) ηΛ) * T.urel) := by rw [← mul_assoc, hinv, one_mul]
