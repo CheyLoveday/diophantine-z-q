@@ -31,7 +31,7 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.BaseZeroText
 import ZInQKernel.Contrib.OneProof.RC.Wiring.UniformSwitch
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35Leaf
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineSwitchPK
-import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35A
+import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35Pad
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate5Wiring
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf3
 import ZInQKernel.Contrib.OneProof.RC.Wiring.StageData
@@ -126,11 +126,12 @@ witnesses:
   their targets (`regularityInputsGPK_iff_of_unitFibre`); over the address's own genuine complexes
   no switch step can be formed (`C¹_cont` is infinite-dimensional), so the address's family
   witnesses the regularity part only when `s(𝔭) = 1`;
-* `PostLeaves.clearing_model`: the full-condition triangle (5.6) is now modelled (the RC53 group's
-  `Identification3Q`); the coordinate identification `OrigCoordLink3` is the definition of the
+* `PostLeaves.clearing_model`: the full-condition triangle (5.6) is modelled, with the two
+  conjugate new places over each prime of the family (`Identification3Q2`); the family-Selmer
+  clause is met by every complex; the deduction uses only the cancellation core, the derived Selmer
+  identification and the coordinate identification `OrigCoordLink3`, which is the definition of the
   corrected coordinate only for the actual complex, class, functional, correction and retained
-  basis, whose provenance the existential interface does not supply, and the family coefficient
-  module and its conditions are existential.
+  basis, whose provenance the existential interface does not supply.
 
 **Departures** (besides those in the fields' docstrings: the narrowing of the seeds in
 `aux_factor`, the existential level in `even_upper`, the scope of `prim_regular` at `x = 0`):
@@ -143,7 +144,7 @@ witnesses:
   reads the odd source on its own filter (lane RC24's intrinsic odd filter), so the fresh prime of
   `k` no longer vetoes the odd readings (fixed);
 * closed: the model family of (3.5) is chosen for each `A`, at the companion pairs with
-  `ω(k') ≤ A`, with the size of the cap of (5.1) at each configuration (`Eq35InputsGenuineA`; tex
+  `ω(k') ≤ A`, with sizes at most the cap of (5.1) (`Eq35InputsGenuineABounded`; tex
   2442–2446, 4453–4460, 4910); before, one family with one size function was fixed for all ring
   instances before `A`, a bound the text does not state;
 * closed: the coefficient dictionary's input (O.9) is consumed in the manuscript's form
@@ -259,31 +260,32 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   theta models are supplied, and away from the selected datum the fields do not identify `ev` with
   reduction at the constructed primes. -/
   odd_staged : Nonempty (OddStagedInstance W)
-  /-- The inputs of (3.5) in the text's quantifier order (`Eq35InputsGenuineA`): chosen before `A`,
-  the primitive coordinates at the companion pairs with `GenuineSwitchDataPK` (batch 3's
-  `GenuineSwitchData` with the actual classes nonzero instead of primitive) over configuration
-  families genuine at every height-one prime (`RegularityInputsGPK`: lane RC26's Galois fibers, the
-  genuine moving variable) and (4.6) at the companion pairs; then for every `A`, a family of
-  switched models over `𝒪` for the companion pairs with `ω(k') ≤ A`, of the size of the cap of
-  (5.1) at each configuration (`eq51Cap`: the text's models have size at most the cap, padded by
-  contractible blocks), each a two-term model of genuine Galois Selmer data over `𝒪`, the actual
-  models' coordinates having the valuations of `ι_𝒪 u_prim`, with batch 3's `GenuineOuterSwitchData`
-  (switch GLUE between the determined stages) for every sequence of those pairs (ELLIOT + GLUE; tex
-  2441–2446, 3987–4047, 4453–4460, 4909–5202; owners RC16, RC15, RC6, RC26, batch 3 SwitchInputs).
-  PROVED from them: the primitive kernel vectors (tex 4987–4992: saturation of `ker d` over the DVR
-  `Λ_𝔭`, the RC53 group's `exists_primitiveKernelVector`), `pos` from them, `minor_link`, the
-  integral cycles and functionals, the nonzero outer class, the Cramer terminal step, the equal
-  inner valuations, regularity (`regular_of_genuineSwitchDataPK`, through the RC53 group's
-  `regular_of_switchDataPK`), and RC16's (3.5) over RC20's genuine valuation
-  (`eq35Target_of_inputsA`). Caveats: the configuration family is existential and only required to
-  be some genuine Galois Selmer data with `t = X`. With one genuine complex of the homotopy type of
-  `[k --0--> k]` at each `𝔭` (true, not formalized), its regularity part is equivalent to
-  `uprim h k' ∈ Λ[1/2]` at the companion pairs, Elliot's regularity assertion (ELLIOT). Over the
-  actual genuine complexes no switch step can be formed (`fG`: `C¹_cont` is infinite-dimensional),
-  so the actual family witnesses the regularity part only when `s(𝔭) = 1`. The outer model family
-  is existential as well: the genuine Galois Selmer data in `IsGenuineInstanceModel` are not tied
-  to the instance `i`. -/
-  eq35 : Eq35InputsGenuineA W
+  /-- The inputs of (3.5) in the text's quantifier order and form (`Eq35InputsGenuineABounded`):
+  chosen before `A`, the primitive coordinates at the companion pairs with `GenuineSwitchDataPK`
+  (batch 3's `GenuineSwitchData` with the actual classes nonzero instead of primitive) over
+  configuration families genuine at every height-one prime (`RegularityInputsGPK`: lane RC26's
+  Galois fibers, the genuine moving variable) and (4.6) at the companion pairs; then for every `A`,
+  a family of switched models over `𝒪` for the companion pairs with `ω(k') ≤ A`, of size at most the
+  cap of (5.1) at each configuration (`eq51Cap`; equivalent to the sizes equal to the cap, by
+  padding with contractible blocks `[𝒪 --(-1)--> 𝒪]`: `eq35InputsGenuineA_iff_bounded`, which keeps
+  the coordinates, the outer dimensions and the switch steps), each a two-term model of genuine
+  Galois Selmer data over `𝒪`, the actual models' coordinates having the valuations of `ι_𝒪 u_prim`,
+  with batch 3's `GenuineOuterSwitchData` (switch GLUE between the determined stages) for every
+  sequence of those pairs (ELLIOT + GLUE; tex 2441–2446, 3987–4047, 4453–4460, 4909–5202; owners
+  RC16, RC15, RC6, RC26, batch 3 SwitchInputs). PROVED from them: the primitive kernel vectors (tex
+  4987–4992: saturation of `ker d` over the DVR `Λ_𝔭`, the RC53 group's
+  `exists_primitiveKernelVector`), `pos` from them, `minor_link`, the integral cycles and
+  functionals, the nonzero outer class, the Cramer terminal step, the equal inner valuations,
+  regularity (`regular_of_genuineSwitchDataPK`, through the RC53 group's `regular_of_switchDataPK`),
+  and RC16's (3.5) over RC20's genuine valuation (`eq35Target_of_inputsA`). Caveats: the
+  configuration family is existential and only required to be some genuine Galois Selmer data with
+  `t = X`. With one genuine complex of the homotopy type of `[k --0--> k]` at each `𝔭` (true, not
+  formalized), its regularity part is equivalent to `uprim h k' ∈ Λ[1/2]` at the companion pairs,
+  Elliot's regularity assertion (ELLIOT). Over the actual genuine complexes no switch step can be
+  formed (`fG`: `C¹_cont` is infinite-dimensional), so the actual family witnesses the regularity
+  part only when `s(𝔭) = 1`. The outer model family is existential as well: the genuine Galois
+  Selmer data in `IsGenuineInstanceModel` are not tied to the instance `i`. -/
+  eq35 : Eq35InputsGenuineABounded W
 
 /-- **The data specification from the leaves** (PROVED: the fixed support and the stage link of the
 staged odd instance, by the stage construction's `preDataSpec_preparedStages`; formerly the leaf
@@ -399,34 +401,36 @@ structure PostLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   new structure has the same emptiness at `H¹ = 0`, `isEmpty_genuineSwitchDataPK_of_h1_eq_zero`).
   The actual fibres must come from the `Λ`-adic module (`RC/LambdaCoef`, in progress). -/
   prim_regular : PrimRegularityInputsGPK W.toRCData
-  /-- The inputs of (5.9) over the full-condition triangle (5.6) (`ClearingInputsG3Q`): the fixed
-  field `K` and the constants before the family; at every final family the RC53 group's
-  `Identification3Q` (GLUE): the pre-cancellation family model with the new singular summands in
-  degrees one and two (the cancellation leaves `P − QB⁻¹T`, and the inclusion of the remaining
-  complex is a quasi-isomorphism), the family local conditions full at the new places (`hfull`), a
-  quasi-isomorphism to lane RC26's genuine family Selmer complex, and modulo `ρ` the comparisons
-  with the genuine full-condition Selmer complex and, for the old part, with the genuine unramified
-  support complex, compatible with the inclusion `C(ur) → C(full)` (the old inclusion is not
-  claimed to be a quasi-isomorphism; the map to the genuine singular quotients `⊕_q` is PROVED a
-  quasi-isomorphism by the five lemma on (5.6)), the tame models at the new places (named input),
-  and the new places identified with the family's primes `F.Q` (one place over each prime, the
-  residue cardinality of its tame model that prime; `Q = ∅` admitted); the actual cycle, the closed
-  functional and the correction `η` over `𝒪[G]` (data); and the coordinate identification
+  /-- The inputs of (5.9) over the full-condition triangle (5.6) (`ClearingInputsG3Q2`): the fixed
+  field `K` and the constants before the family; at every final family a full-condition
+  identification `Identification3Q2` (ELLIOT for the inherited cancellation core: the lifted family
+  model with the new singular summands in degrees one and two, `B₀ = diag(A_q)`, `T₀ = 0`, the
+  central Smith form, the budget (5.7), tex 5394–5430, 5522–5543; GLUE for the Galois comparisons:
+  the family local conditions full at the new places, a quasi-isomorphism to lane RC26's genuine
+  family Selmer complex, modulo `ρ` the comparisons with the genuine full-condition and unramified
+  support complexes compatible with the inclusion `C(ur) → C(full)`, the tame models; the map to the
+  genuine singular quotients `⊕_q` is PROVED a quasi-isomorphism, and the old inclusion is not
+  claimed to be one), with the two conjugate new places over each prime of the family (one place
+  over each conjugate graph place of a split `q`, the residue cardinality of its tame model that
+  prime, `card (S' − S) = 2 · card Q`; tex 5247, 5456–5457; `Q = ∅` admitted); the actual cycle, the
+  closed functional and the correction `η` over `𝒪[G]` (data); and the coordinate identification
   `OrigCoordLink3`: where `Δ_x ≠ 0`, the corrected coordinate is `η_x` times the Knudsen–Mumford
   coordinate of `[z] ⊗ [λ]` of the pre-cancellation complex (GLUE) (tex 5234–5238, 5355–5645,
   3470–3499, 3877–3892, 4219–4224; owners RC7, RC15, RC26, batch 3 ClearingComplex / CoordLink /
   RankCounts / PairedFunctional). PROVED from them: `κ = det(B)⁻¹` (the Knudsen–Mumford coordinate
   of `C` is `det(B)⁻¹` times that of the cancelled complex), E1a, E1b for the Knudsen–Mumford
-  coordinate, the Smith model, the generic patterns, the entry poles, the budget (5.7), and (5.9)
-  by lane RC7 over RC20's genuine `𝒪`, with the exponent `a = 0` (`clearingTarget_of_G3Q`, through
-  the RC53 group's `clearingTarget_of_G3`). What remains: for the same actual complex, class,
-  functional, correction and retained basis `OrigCoordLink3` is the definition of the corrected
-  coordinate (tex 3877–3892, 4224, 5605–5615), but the existential interface does not supply that
-  provenance; the family coefficient module and its local conditions are existential (not the
-  address's `Λ`-adic module); the field `K` is existential. Non-vacuity of the coordinate input:
-  `clearingInputsG3Q_of_zero`. Scope departure: this field is also requested in Branch 1 (see
+  coordinate, the Smith model, the generic patterns, the entry poles, the budget (5.7), and (5.9) by
+  lane RC7 over RC20's genuine `𝒪`, with the exponent `a = 0` (`clearingTarget_of_G3Q2`, through the
+  RC53 group's `clearingTarget_of_G3`). Caveats: the family-Selmer clause (`Mf`, `Δf`, `hfull`,
+  `ψf`) is met by every complex, and `M₀`, `Δ₀` are not related to `Mf`, `Δf`; the deduction uses
+  only the cancellation core, the derived Selmer identification and `OrigCoordLink3` (neither `ψ0`,
+  `ψold`, `square`, `tame` nor the PRINT `NekovarProp788ii` is in its closure); for the same actual
+  complex, class, functional, correction and retained basis `OrigCoordLink3` is the definition of
+  the corrected coordinate (tex 3877–3892, 4224, 5605–5615), but the existential interface does not
+  supply that provenance; the field `K` is existential. Non-vacuity of the coordinate input:
+  `clearingInputsG3Q2_of_zero`. Scope departure: this field is also requested in Branch 1 (see
   `RC/Skeleton/Steps.lean`). -/
-  clearing_model : ClearingInputsG3Q W.toRCData
+  clearing_model : ClearingInputsG3Q2 W.toRCData
   /-- **Lemma `ex:arith-base-zero` at the base, on the text's named steps**
   (`BaseZeroLeafInputsText`; ELLIOT, tex 4330–4376; owners RC15, RC19, RC25, RC30, batch 3
   HeegnerCohomology, RankCounts, BaseZeroLam), with the height formula (Cai–Shu–Tian Thm 1.1 from
@@ -553,7 +557,8 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
   obtain ⟨Cdet, hCdet⟩ := hvis
   obtain ⟨A, CE, h33⟩ := hF3
   obtain ⟨Cper, h34, h34k⟩ := gz34Target_of_genusOdd P L.artin L.rootNumberExists I
-  have h35 : Eq35Target W₁ := eq35Target_of_inputsA W₁ hp.eq35
+  have h35 : Eq35Target W₁ :=
+    eq35Target_of_inputsA W₁ (eq35InputsGenuineA_of_bounded W₁ hp.eq35)
   obtain ⟨CR, h35A⟩ := h35 A
   obtain ⟨δ, hδ⟩ := exists_oddMinimum W₁ h33 h34 h35A hCdet hglue
     (witnessLeaf_of_oddInstance Io hstages)
@@ -575,7 +580,7 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
   have hheight : HeightOneTarget W₂.toRCData :=
     heightOneTarget_of_inputsGPK _ hq.prim_regular h47
   have hclear : ClearingTarget W₂.toRCData :=
-    clearingTarget_of_G3Q _ hheight hq.clearing_model
+    clearingTarget_of_G3Q2 _ hheight hq.clearing_model
   have hbz : BaseZeroTarget W₂.toRCData :=
     baseZeroTarget_of_L P hq.common_coordinate
       (primRegularityInputs_of_GPK _ hq.prim_regular)

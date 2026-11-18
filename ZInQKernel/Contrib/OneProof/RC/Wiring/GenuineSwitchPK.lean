@@ -48,6 +48,11 @@ PROVED here:
 
 Non-vacuity, and a family that the new structure admits and the old one rejects:
 `GenuineSwitchPKNonVacuity.lean`.
+
+**Caveat** (as for the round 4 leaves, `GenuineSwitchLeaf.lean`). The configuration family is
+existential and only required to be some genuine Galois Selmer data with `t = X`. Over the actual
+genuine complexes of the address no switch step can be formed (`fG`: `C¹_cont` is
+infinite-dimensional), so the actual family witnesses the leaf only when `s(𝔭) = 1`.
 -/
 
 noncomputable section

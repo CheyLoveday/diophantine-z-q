@@ -21,10 +21,11 @@ the text never states (the final review's R3-5).
    for every sequence of them;
 3. the size of the models at a configuration of `j` switches is the cap of (5.1),
    `nOf l = eq51Cap ℓ A |l|` (`N` the level of `E_ℓ`): the text's models have size at most the cap,
-   and padding a model by contractible blocks `[𝒪 --1--> 𝒪]` changes neither its coordinate (the
-   coordinate is independent of the complement, `classFunctionalCoordWith_indep`), nor its outer
-   dimension, nor the switch steps; so the models are the text's models up to that padding, not
-   necessarily minimal.
+   and padding a model by contractible blocks `[𝒪 --(-1)--> 𝒪]` keeps its coordinate exactly, its
+   outer dimension and the switch steps (`GenuineEq35Pad.lean`; blocks `[𝒪 --1--> 𝒪]` would change
+   the coordinate by the sign `(-1)^k`); so the models are the text's models up to that padding,
+   not necessarily minimal. The leaf in the text's form, with the sizes at most the cap, is
+   `Eq35InputsGenuineABounded`, equivalent to this one (`eq35InputsGenuineA_iff_bounded`).
 
 PROVED: `eq35Target_of_inputsA` ((3.5) for each `A`, RC16's `exLimitsUniformLowerBound` over lane
 RC20's genuine `𝒪`), `eq55_of_inputsA` ((5.5) through batch 3's `uniform_lower_bound_of_genuine`),
@@ -67,8 +68,8 @@ def eq51Cap (ℓ A j : ℕ) : ℕ :=
    3864–3869; ELLIOT + GLUE; owners RC6, batch 3), with
    * the size at a configuration of `j` switches the cap of (5.1), `eq51Cap ℓ A j` (tex 4936–4938,
      4954–4956; the text's models have size at most the cap, padded by contractible blocks
-     `[𝒪 --1--> 𝒪]`, which change neither the coordinate, `classFunctionalCoordWith_indep`, nor the
-     outer dimension, nor the switch steps);
+     `[𝒪 --(-1)--> 𝒪]`, which keep the coordinate, the outer dimension and the switch steps,
+     `GenuineEq35Pad.lean`);
    * every model a two-term model of genuine Galois Selmer data over `𝒪` (`IsGenuineInstanceModel`;
      GLUE identification; owners RC26, RC6, batch 3; the Galois data are existential, not tied to
      the instance);
