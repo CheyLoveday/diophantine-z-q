@@ -21,6 +21,11 @@ old-Kummer dimension `kd = kummerDimOfCurves K Ew (kd2OfCurves K Ew)` (Mattuck's
 
 Non-vacuity: `kummerDimOfCurves_actual_nonvacuous` (over `ℚ` at `v₃`, models `E_w = W0`).
 
+Scope: the table function itself is unchanged (`kd` is still a number); these lemmas identify
+it, place by place, with the order of the actual condition's cohomology. They need the model
+identification `hC` at each old-Kummer place — RC6's wiring takes the models `E_w` as arbitrary
+and does not impose it — and they are at the residual level `i = 1` (see part 2, `Actual.lean`).
+
 **Classification.** PROVED.
 -/
 

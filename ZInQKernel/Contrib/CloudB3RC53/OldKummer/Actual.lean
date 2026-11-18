@@ -17,6 +17,19 @@ Lane RC29's actual Kummer condition `actualKummerAt W i s hs hs0 α hFull v hα`
 * `natCard_actualKummerAt_one`: `|H⁰(U_v)| = |B(K_v)[2]|` and `|H¹(U_v)| = |B(K_v)/2B(K_v)|`
   (part 1, `natCard_kummerConditionIn_H0`/`_H1`).
 
+**Scope.**
+* Only the level `i = 1` is treated. This is the level the consumers need: RC6's residual bound
+  (Lemma `ex:limits-residual-bound`) works at the residue field `B_i/(t) = 𝔽₂` with the residual
+  coefficient module `W = E[2]` (tex 4478–4480), and its old-Kummer row is the residual pair
+  `(2, 2 + d_w)` (tex 4551–4556); `GenuineInst.genCondDim2` and RC6's `condDimAt` are residual
+  (`𝔽₂`) dimensions. For `i > 1` the transport of part 1 does not apply: `ι_v` is injective but
+  not onto (`|M_i| = |A_i|² = 2^(2i²) > 2^(2i) = |B[2^i]|` for `i > 1`), and the scalars of `A_i` are not integers.
+* The text obtains the residual condition as the derived reduction of the Kummer condition; here
+  the level-`1` actual condition (coefficients `M_1 = E[2] ⊗ A_1`) is computed directly. The
+  comparison between the derived reduction of the level-`i` condition and the level-`1` condition
+  is not formalized (no formal consumer uses it).
+* The statements are cardinalities (`|H⁰|`, `|H¹|`), not lengths over `A_1`.
+
 **Classification.** PROVED (from RC29's hypotheses of `actualKummerAt`: `FullTorsion` at `2`, GLUE
 as in RC28, and `IsLocallyQuadAt`).
 -/
