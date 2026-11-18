@@ -280,7 +280,8 @@ open Classical
 nonquadratic step whose relaxed localization, finite side and singular side are the genuine
 `galRel`, `galFinSide`, `galSingSide`; the strict dimensions agree by `galSides_Dstr`. The duality
 input `hdual`, the detection `hdet` and the fibre isomorphisms `φ`, `φ'` are the stated inputs.
-PROVED (from the inputs). -/
+PROVED (from the inputs). Residual-field (`𝔽₂`) instance only; not applicable at height-one primes `≠ (2)`, see
+`isEmpty_ringHom_zmod_two_heightOne`; the characteristic-zero version is the field-generic chain. -/
 def galNonquadStep (c : Finset (Places K S)) (q : Places K S)
     (T : TameCoordinates (M := gMv K S M q) (D.I q) (D.φ q) (D.σ q)) (S₀ S₁ : TwoTermStage ι)
     (ε σ : ZMod 2) (J : Matrix (Fin 2) (Fin 2) (ZMod 2)) (hε : ε ≠ 0) (hσ : σ ≠ 0)
@@ -344,7 +345,8 @@ configuration of fibre dimension `> 1`, a new place `q ∉ c` with tame coordina
 the duality input and the detection for the genuine relaxed localization `galRel D c q T`. The sides
 of the switch steps are NOT inputs: they are the genuine `galFinSide`, `galSingSide`, whose Selmer
 data are the fibres of `c` and `insert q c` by construction (`galFinSide_Dside`,
-`galSingSide_Dside`). -/
+`galSingSide_Dside`). Residual-field (`𝔽₂`) instance only; not applicable at height-one primes `≠ (2)`, see
+`isEmpty_ringHom_zmod_two_heightOne`; the characteristic-zero version is the field-generic chain. -/
 structure GaloisNonquadInputs (ι : A →+* F) (u : F) where
   /-- The stage two-term models. -/
   stage : Finset (Places K S) → TwoTermStage ι
@@ -375,7 +377,8 @@ variable {D ρ c₀ t zAct hzAct lamAct hlamAct}
 
 /-- **Galois switching data from the nonquadratic inputs** (tex L4976–5195): the switch steps are
 `galNonquadStep` with the genuine sides, so `hF`, `hS` are `galFinSide_Dside`, `galSingSide_Dside`;
-the fibre isomorphisms come from the stage models. PROVED. -/
+the fibre isomorphisms come from the stage models. PROVED. Residual-field (`𝔽₂`) instance only; not applicable at height-one primes `≠ (2)`, see
+`isEmpty_ringHom_zmod_two_heightOne`; the characteristic-zero version is the field-generic chain. -/
 noncomputable def GaloisNonquadInputs.toGaloisSwitchData {u : F}
     (X : GaloisNonquadInputs D ρ c₀ t zAct hzAct lamAct hlamAct ι u) :
     GaloisSwitchData (galΦ D A c₀ t zAct hzAct lamAct hlamAct) ι ρ u where
@@ -404,7 +407,8 @@ noncomputable def GaloisNonquadInputs.toGaloisSwitchData {u : F}
   switch_single _ _ h := absurd h X.hnq
 
 /-- **Regularity from the nonquadratic Galois switching inputs** (tex L4976–5195): `∃ a, ι a = u`.
-PROVED (from the inputs). -/
+PROVED (from the inputs). Residual-field (`𝔽₂`) instance only; not applicable at height-one primes `≠ (2)`, see
+`isEmpty_ringHom_zmod_two_heightOne`; the characteristic-zero version is the field-generic chain. -/
 theorem regular_of_galoisNonquadInputs [IsLocalRing A] (hι : Function.Injective ι)
     (hρ : ∀ x ∈ IsLocalRing.maximalIdeal A, ρ x = 0) {u : F}
     (X : GaloisNonquadInputs D ρ c₀ t zAct hzAct lamAct hlamAct ι u) : ∃ a : A, ι a = u :=
@@ -438,7 +442,8 @@ theorem PlaceTame.exists_at (q : Places K S) (I₀ : Subgroup (Gloc K q.1)) (φ�
 `G_{K,S}` acts trivially, there are tame data `D` at the places with the tame coordinates at `q`
 (from the tame quotient of `G_{K_q}`, `exists_tame_coordinates`), and for every configuration `c`
 the genuine finite and singular quasi sides at `q` (over `C^•_cont(G_{K,S}, M)` with `res_S`).
-PROVED. -/
+PROVED. Residual-field (`𝔽₂`) instance only; not applicable at height-one primes `≠ (2)`, see
+`isEmpty_ringHom_zmod_two_heightOne`; the characteristic-zero version is the field-generic chain. -/
 theorem exists_galSides (q : Places K S) [Finite (𝓞 K ⧸ q.1.asIdeal)]
     (hp : ringChar 𝓀[q.1.adicCompletion K] ≠ 2) (htriv : ∀ (g : GKS K S) (m : M), g • m = m)
     (eM : M ≃ₗ[ZMod 2] (Fin 2 → ZMod 2)) :

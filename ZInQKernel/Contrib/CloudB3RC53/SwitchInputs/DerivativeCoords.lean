@@ -711,7 +711,8 @@ variable (K) in
 /-- **non-vacuity at the genuine setting** (tex L5027–5037, L5068–5086): for a nonarchimedean local
 field `K` with odd residue characteristic there are a Frobenius lift `φ`, a tame generator
 `σ ∈ I_K` and tame coordinates for `𝔽₂²`, and over the genuine relaxed localization of
-`C^•_cont(G_K, 𝔽₂²)` both quasi switch sides (finite plane and singular plane) exist. PROVED. -/
+`C^•_cont(G_K, 𝔽₂²)` both quasi switch sides (finite plane and singular plane) exist. PROVED. Residual-field (`𝔽₂`) instance only; not applicable at height-one primes `≠ (2)`, see
+`isEmpty_ringHom_zmod_two_heightOne`; the characteristic-zero version is the field-generic chain. -/
 theorem genuine_quasiSides (hp : ringChar 𝓀[K] ≠ 2) :
     ∃ φ σ : Field.absoluteGaloisGroup K, TauCeti.IsArithFrobeniusLift K φ ∧
       σ ∈ TauCeti.inertiaSubgroup K ∧
