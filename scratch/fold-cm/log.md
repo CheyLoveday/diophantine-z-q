@@ -29,7 +29,7 @@ The CM base `CMBranch.sixContactMin_of_open4_cm` (Open4.lean) reads `r.r6 : PkgI
   J(inf) = -57600/7^6 is not a branch value.
 
 ## 4. Inbox 84.1 (VERIFIED, read on this host 18:55)
-The running autoland loop (started 11-17 04:14) runs ~/dzq-runs/autoland-loop.sh (mtime 04:14), whose docs-only
+The running autoland loop (started 11-17 04:14) runs the autoland script autoland-loop.sh (mtime 04:14), whose docs-only
 merge filter has no claims.tsv/volatile.tsv exemption. The exemption exists only in autoland-loop.sh.new (15:23,
 not installed). So 84.1 is NOT live.
 
@@ -90,3 +90,7 @@ FS5NoCM auxiliary `_proof_1` terms, `FS5NoCM.CMOptimalEmbedding` (lower added bu
 OpenStatements 34; render_open: **33 H hypotheses, strict 5/28, strictest 5/28** = the integrator's expected count;
 --check ok; crosswalk 232 IDs, 3 matched, --check ok; DischargesTest 135 DISCHARGES lines, no error; autoform exit 0
 (776 articles, 647 fully proved); gate.sh GATE=ok.
+
+## 8. Final
+Report docs/research/fold-cm.md (Manuscript check: no error; L411-418 Gram matrix VERIFIED by gram_check.py, L511-519
+by pullback_check.py; L481-509 bypassed, unchecked). Count: 5/24 on 29 -> 5/28 on 33 (expected). Inbox 84.1: not live.
