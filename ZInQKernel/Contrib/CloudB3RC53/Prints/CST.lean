@@ -12,7 +12,8 @@ twice", with the conditions of L2429–2432) and at L8268–8272 (proof of Propo
 `ex:app-detector`: "the unaveraged height formula", with Rankin derivative
 `L'(E^{(D_w)},1) L(E^{(h_*)},1) ≠ 0`, so `P_{D_w}` is nontorsion). Bibitem L11181–11183:
 L. Cai, J. Shu and Y. Tian, "Explicit Gross–Zagier and Waldspurger formulae", Algebra & Number
-Theory 8 (2014), arXiv:1408.1733. Theorem 1.1 was read (arXiv:1408.1733v2, p. 2); the clauses
+Theory 8 (2014), Theorem 1.1, journal p. 2525; arXiv:1408.1733. Theorem 1.1 was read
+(arXiv:1408.1733v2, p. 2); the clauses
 below are its special case `µ(N, D) = 0`, `u = 1`. No proof of the theorem and no Gross–Zagier
 argument is written here.
 
@@ -57,7 +58,19 @@ instances, L2433–2436; L8269: nonvanishing ⇔ nontorsion).
   `E/K` twisted by `χ`. Their equality (automorphic induction of `χ`; local factors at `𝔭 ∣ c`
   equal to `1` for primitive `χ`) is a translation, provenance (c), SPECULATIVE at `𝔭 ∣ c`.
 * **The constant** `8π²(f, f)/deg φ` (Tau Ceti has Petersson products, `CuspForm.peterssonInnerCosets`,
-  but `deg φ` needs `X₀(N)`): replaced by the existential `C > 0`, a consequence.
+  but `deg φ` needs `X₀(N)`): replaced by the existential `C > 0`, a consequence. This is WEAKER
+  than the printed exact constant: fixed rescalings of the height are absorbed into `C`, but there
+  is no exact numerical identity.
+* **The height normalisation.** Tau Ceti's canonical height is the full-`x` height, twice the
+  common half-`x` convention; whether the printed `ĥ` is half-`x` is not settled by the text, and
+  the exact normalisation port is unwritten (the existential `C` absorbs a fixed rescaling).
+
+## Classification
+
+PRINT in consequence form (a special case of Theorem 1.1 with an existential constant), over the
+CONSEQUENCE GLUE dictionaries: the newform of `E`, the modular parametrization over `ℚ` (here its
+analytic model), the CM point, the local `L`-series of `E/K` twisted by `χ`, and the height
+normalisation. These dictionaries are GLUE translations, not literal PRINT.
 * The general hypotheses at primes `p ∣ N` that are not split are not stated (the print's
   conditions (1)–(2) at primes of `N` that are not split): special case only.
 -/
@@ -282,9 +295,11 @@ level `N` and discriminant `Dc²`, every embedding `ι : H_c → ℂ` and every 
 `ĥ_K(Σ_t χ(t) P_t) = [H_c : K]⁻¹ Σ_{t,t'} χ(t) conj χ(t') ⟨P_t, P_{t'}⟩_{H_c}`.
 
 Provenance (b), cited by the manuscript (bibitem `cst`, L11181–11183; cited L2428, L8269).
-Rating: PRINT, special case of arXiv:1408.1733v2, Theorem 1.1, p. 2, over written-fresh
-definitions. The analytic CM-point/parametrization and local-series dictionaries are GLUE
-translations. -/
+Rating: PRINT in consequence form, special case of Theorem 1.1 (ANT 8 (2014) p. 2525;
+arXiv:1408.1733v2, p. 2), over written-fresh definitions, with an existential constant (weaker
+than the printed exact constant). The newform, modular-parametrization, CM-point, local-series and
+height-normalisation dictionaries are CONSEQUENCE GLUE translations, not literal PRINT (see the
+module docstring). -/
 def CSTThm11Split : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic]
     (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2),
