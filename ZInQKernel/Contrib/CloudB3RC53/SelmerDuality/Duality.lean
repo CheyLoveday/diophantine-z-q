@@ -25,14 +25,16 @@ file formalizes the cochain-level deduction over an arbitrary commutative ring `
     (global duality / Poitou–Tate in Nekovář's cochain form), and
   - `localDualityMap : Cone(U → L)[−1] → Hom(U', S)[−3]`,
     `(u, x) ↦ (v ↦ tr(0, x ∪ ι' v + h(u, v)))` (local duality between `L/U` and `U^⊥`);
-* `FiniteSelmerDualityNode` (PROVED from the two printed inputs): if the global and local duality
-  maps are quasi-isomorphisms (`NekovarGlobalDuality`, `NekovarLocalOrthogonality`: PRINT,
-  UNVERIFIED), the Selmer duality map is a quasi-isomorphism, and a homotopy equivalence when the
+* `FiniteSelmerDualityNode` (PROVED from the two GLUE inputs): if the global duality and local
+  orthogonality maps are quasi-isomorphisms (`GlobalDualityInput`, `LocalOrthogonalityInput`:
+  Nekovář's conclusions assumed for the abstract model, the identification with Galois cochains
+  left open), the Selmer duality map is a quasi-isomorphism, and a homotopy equivalence when the
   two Selmer complexes are bounded with free terms.
 
-**DEPARTURE** (form): `RHom_S(C_{U⊥}, S)` is represented by the termwise dual complex
-`Hom_S(C_{U⊥}, S)` (`dualCx`); this computes `RHom` when `S` is self-injective (the finite
-Frobenius coefficient rings of the text) or `C_{U⊥}` is bounded with finite projective terms.
+`RHom_S(C_{U⊥}, S)` is represented by the termwise dual complex `Hom_S(C_{U⊥}, S)` (`dualCx`),
+and the node is stated only in the scope `TermwiseDualComputesRHom` where this computes `RHom`:
+`S` self-injective (the coefficient rings `A_i`, `SelfInjective.lean`) or `C_{U⊥}` bounded with
+finitely generated projective terms.
 -/
 
 noncomputable section
@@ -355,54 +357,93 @@ def sesHom : sesTop D ⟶ sesBot D' where
 
 end SES
 
-/-! ### The printed inputs and the theorem -/
+/-! ### The duality inputs (GLUE) and the theorem -/
 
 section Theorem
+
+/-- **A perfect coefficient pairing** `M × M' → S` (tex L2797–2803: the Weil pairing gives an
+`R_i`-linear perfect pairing `M_i ⊗ τ*M_i → R_i(1)`, `τ*M_i ≃ M_i^*(1)`; proved for the actual
+coefficients in `Duality/ConjugateDuality.lean`): both adjoints are bijective. -/
+structure PerfectCoefficientPairing (S : Type u) [CommRing S] where
+  /-- The coefficient module `M`. -/
+  M : ModuleCat.{u} S
+  /-- The dual coefficient module `M' = M^*(1)`. -/
+  M' : ModuleCat.{u} S
+  /-- The pairing `M × M' → S`. -/
+  pair : M →ₗ[S] M' →ₗ[S] S
+  perfect_left : Function.Bijective pair
+  perfect_right : Function.Bijective pair.flip
+
+/-- The scope in which the termwise dual `Hom_S(C, S)` (`dualCx`) computes `RHom_S(C, S)`: `S` is
+self-injective (as the coefficient rings `A_i` are, `acoef_selfInjective`), or `C` is bounded
+with finitely generated projective terms. -/
+def TermwiseDualComputesRHom (S : Type u) [CommRing S] (C : GCx S) : Prop :=
+  Module.Injective S S ∨
+    ∃ a b : ℤ, (∀ n, n < a ∨ b < n → Subsingleton (C.X n)) ∧
+      ∀ n, Module.Projective S (C.X n) ∧ Module.Finite S (C.X n)
 
 variable {D D' : SelData S} (Q : SelPairData D D') (tr : (coneCx Q.resE).X 3 →ₗ[S] S)
   (htr : ∀ z, tr ((coneCx Q.resE).d 2 3 rfl z) = 0)
 
-/-- **PRINT** (UNVERIFIED; Nekovář, *Selmer complexes*, Sections 5.1, 5.2.4, 5.4.3, as cited at tex
-L3451–3452; global duality / Poitou–Tate in cochain form): the global duality map
-`G → Hom_S(G'_c, S)[−3]`, `a ↦ ((b, y) ↦ tr(a ∪ b, (−1)^i res a ∪ y))`, between the cochains of
-`G_{K,S}` with coefficients `M` and the dual of the compactly supported cochains of `M^*(1)`, is a
-quasi-isomorphism. -/
-def NekovarGlobalDuality : Prop := QuasiIso (GHom.toCC (globalDualityMap Q tr htr))
+/-- **GLUE input: global duality for the abstract model** (the conclusion of Nekovář, *Selmer
+complexes*, Sections 5.1, 5.2.4 and 5.4.3, as cited at tex L3451–3452: global duality /
+Poitou–Tate in cochain form, assumed here for the abstract model). For a perfect coefficient pairing
+`P` (`M × M^*(1) → S`), the global duality map `G → Hom_S(G'_c, S)[−3]`,
+`a ↦ ((b, y) ↦ tr(a ∪ b, (−1)^i res a ∪ y))`, from the global complex to the dual of the
+compactly supported complex `G'_c = Cone(G' → L')[−1]` (`compactCx`), is a quasi-isomorphism.
 
-/-- **PRINT** (UNVERIFIED; Nekovář, *Selmer complexes*, Sections 5.2.4 and 6.2–6.3 (local duality
-and orthogonal local conditions), as cited at tex L3451–3452, L3826–3836; tex L2797–2829 for the
-transported orthogonal conditions): `U' = U^⊥` is the orthogonal complement of `U` under local
-duality with the isotropy homotopy `h`, i.e. the local duality map
-`Cone(U → L)[−1] → Hom_S(U', S)[−3]`, `(u, x) ↦ (v ↦ tr(0, x ∪ ι' v + h(u, v)))`, is a
-quasi-isomorphism. -/
-def NekovarLocalOrthogonality : Prop := QuasiIso (GHom.toCC (localDualityMap Q tr htr))
+This is *not* a printed leaf: Nekovář's theorem is about the continuous cochains of `G_{K,S}`
+with coefficients `M` and `M^*(1)`, which the library does not provide in all degrees; the
+identification of `G, G', L, L'`, the cup products and the trace with those cochains (and of their
+coefficients with `P`) is left open. Classification: GLUE (assumed input). -/
+def GlobalDualityInput (_P : PerfectCoefficientPairing S) : Prop :=
+  QuasiIso (GHom.toCC (globalDualityMap Q tr htr))
+
+/-- **GLUE input: local orthogonality for the abstract model** (the conclusion of Nekovář,
+*Selmer complexes*, Sections 5.2.4 and 6.2–6.3, as cited at tex L3451–3452 and L3826–3836:
+local duality and orthogonal local conditions, assumed here for the abstract model). For a perfect
+coefficient pairing `P`, the local condition `U'` is the orthogonal complement of `U` in the derived
+sense, with the isotropy homotopy `h` of `Q` (`SelPairData.isotropy`: `ι u ∪ ι' v = d h(u, v) + …`):
+the local duality map `Cone(U → L)[−1] → Hom_S(U', S)[−3]`,
+`(u, x) ↦ (v ↦ tr(0, x ∪ ι' v + h(u, v)))`, is a quasi-isomorphism.
+
+A degreewise (cochain-level) annihilator condition is deliberately not imposed: for the actual
+Galois cochains, `U'` is the orthogonal complement only up to the homotopy `h` and on cohomology,
+and a degreewise annihilator condition fails (it would make the input vacuous for the genuine
+data). The identification with the actual local cochains and Kummer conditions is left open.
+Classification: GLUE (assumed input). -/
+def LocalOrthogonalityInput (_P : PerfectCoefficientPairing S) : Prop :=
+  QuasiIso (GHom.toCC (localDualityMap Q tr htr))
 
 /-- **Finite Selmer duality** (`ex:arith-conjugate-duality`, tex L2806–2830; (4.3), tex
-L3451–3460). Over any commutative ring `S`: for Selmer data `D` (`C_U`) and `D'` (`C_{U⊥}`), the
-cup-product data `Q` with an isotropy homotopy and a trace `tr` of degree three killing
-coboundaries, if the global duality map and the local orthogonality map are quasi-isomorphisms
-(the printed inputs `NekovarGlobalDuality`, `NekovarLocalOrthogonality`), then the Selmer
-duality map `C_U → Hom_S(C_{U⊥}, S)[−3]` is a quasi-isomorphism; if moreover `C_U` and
-`C_{U⊥}` are bounded (in degrees `[0, 3]`) with free terms, it is a homotopy equivalence. -/
+L3451–3460). Over a commutative ring `S`, in the scope where the termwise dual computes `RHom`
+(`TermwiseDualComputesRHom S (selCx D')`: `S` self-injective, or `C_{U⊥}` bounded with finitely
+generated projective terms): for Selmer data `D` (`C_U`) and `D'` (`C_{U⊥}`), cup-product data `Q`
+with an isotropy homotopy, a trace `tr` of degree three killing coboundaries and a perfect
+coefficient pairing `P`, if the global duality and local orthogonality inputs hold
+(`GlobalDualityInput`, `LocalOrthogonalityInput`: GLUE), the Selmer duality map
+`C_U → Hom_S(C_{U⊥}, S)[−3] = RHom_S(C_{U⊥}, S)[−3]` is a quasi-isomorphism. -/
 def FiniteSelmerDualityNode : Prop :=
   ∀ (S : Type u) [CommRing S] (D D' : SelData S) (Q : SelPairData D D')
-    (tr : (coneCx Q.resE).X 3 →ₗ[S] S) (htr : ∀ z, tr ((coneCx Q.resE).d 2 3 rfl z) = 0),
-    NekovarGlobalDuality Q tr htr → NekovarLocalOrthogonality Q tr htr →
+    (tr : (coneCx Q.resE).X 3 →ₗ[S] S) (htr : ∀ z, tr ((coneCx Q.resE).d 2 3 rfl z) = 0)
+    (P : PerfectCoefficientPairing S), TermwiseDualComputesRHom S (selCx D') →
+    GlobalDualityInput Q tr htr P → LocalOrthogonalityInput Q tr htr P →
       QuasiIso (GHom.toCC (selmerDualityMap Q tr htr))
 
 theorem finiteSelmerDualityNode_proof : FiniteSelmerDualityNode.{u} := by
-  intro S _ D D' Q tr htr hG hL
+  intro S _ D D' Q tr htr P _ hG hL
   exact quasiIso_τ₂ (sesHom Q tr htr) (sesTop_shortExact D) (sesBot_shortExact D') hL hG
 
 /-- The homotopy-equivalence form for bounded free complexes. -/
-theorem selmerDuality_homotopyEquiv (hG : NekovarGlobalDuality Q tr htr)
-    (hL : NekovarLocalOrthogonality Q tr htr) (a b : ℤ)
+theorem selmerDuality_homotopyEquiv (P : PerfectCoefficientPairing S)
+    (hS : TermwiseDualComputesRHom S (selCx D'))
+    (hG : GlobalDualityInput Q tr htr P) (hL : LocalOrthogonalityInput Q tr htr P) (a b : ℤ)
     [(selCx D).toCC.IsStrictlyGE a] [(selCx D).toCC.IsStrictlyLE b]
     [(dualCx (selCx D') 3).toCC.IsStrictlyGE a] [(dualCx (selCx D') 3).toCC.IsStrictlyLE b]
     [∀ n, Module.Free S ((selCx D).toCC.X n)] [∀ n, Module.Free S ((dualCx (selCx D') 3).toCC.X n)] :
     ∃ e : HomotopyEquiv (selCx D).toCC (dualCx (selCx D') 3).toCC,
       e.hom = GHom.toCC (selmerDualityMap Q tr htr) := by
-  have := finiteSelmerDualityNode_proof S D D' Q tr htr hG hL
+  have := finiteSelmerDualityNode_proof S D D' Q tr htr P hS hG hL
   exact homotopyEquiv_of_quasiIso_free a b _
 
 end Theorem
