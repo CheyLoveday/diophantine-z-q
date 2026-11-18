@@ -1,0 +1,179 @@
+{
+  "scope": "Hosted proof-only execution of the nine named first-precision trace targets",
+  "status": "INCOMPLETE",
+  "candidate_commit": "7ff19d37bf7f81f6202954739dbbc22c951e7cfa",
+  "candidate_tree": "7f67e7af777f55f6c9ff8bbf4664514ef3869928",
+  "research_source_commit": "515cf1421e68150adf4104f9cf1e1dbfd2e5a5c2",
+  "supplier_commit": "4606b900ec8e5c26dd989d9ba8e8dd18e73e8773",
+  "odproof_runtime_commit": "386d10ac98c8f365cfc2e14ef72e2f6e8b576728",
+  "lean": "4.35.0",
+  "mathlib": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+  "candidate_archive_sha256": "28a3e7256d621923fcb911988371af4244af3952c28b1a5085351f202dbcc5c8",
+  "source_manifest_sha256": "e9c31ca35d29f911ec6416bd0afc739c2b8b9d36bb4503ed9afe86ed190b18b5",
+  "inputs": {
+    "research": 16,
+    "supplier": 293,
+    "configuration": 3
+  },
+  "targets": [
+    "Research.DerivativeSwitch.FirstSelmerPrecision.scalarEquiv_quotient",
+    "Research.DerivativeSwitch.FirstSelmerPrecision.coefficientLine_action",
+    "Research.DerivativeSwitch.LocalInvariantTwo.circleInvariant_injective",
+    "Research.DerivativeSwitch.LocalInvariantTwo.invariant_normalization",
+    "Research.DerivativeSwitch.LocalTraceTwo.restrictedSign_eq",
+    "Research.DerivativeSwitch.LocalTraceTwo.exists_compact_support_trace",
+    "Research.DerivativeSwitch.LocalTraceTwo.exists_local_trace",
+    "Research.DerivativeSwitch.LocalTraceTwo.duality02_apply",
+    "Research.DerivativeSwitch.LocalTraceTwo.trace_duality02"
+  ],
+  "completed": [
+    "candidate-build",
+    "candidate-export",
+    "export-inventory",
+    "coverage"
+  ],
+  "required_checkers": {
+    "leanchecker": "OUT_OF_MEMORY",
+    "leanchecker-paranoid": "NOT_RUN",
+    "lean4lean": "NOT_RUN",
+    "nanoda": "NOT_RUN",
+    "con-leche": "NOT_RUN",
+    "con-ron": "NOT_RUN"
+  },
+  "strict_axiom_audit": "NOT_RUN",
+  "independently_reviewed_statement_comparison": "NOT_REQUESTED",
+  "next_check": "Replay the retained 951586204-byte export with a measured larger memory allowance for leanchecker. A full proof-only pass requires all six checkers and the strict axiom audit.",
+  "runs": [
+    {
+      "run_id": "558738b6062387e3dd0975fb99b886a3",
+      "input_digest": "991814574c69b665f14bc660e1b49ac76728d1cd6fe8af20f6250d7e9f9f6c37",
+      "request_sha256": "93ba9df8709a0b3739d42380490211262533e369b94f2a0c96d24316d67c0220",
+      "result_sha256": "f0c6458fabe0a48facee660567819b46544b1fd916c99bb86c440a128803ec35",
+      "receipt_sha256": "2f41119d8009d14f2ec43926e897d9a705c307be1fbd29a91bea511e3999ece6",
+      "stage_memory_bytes": 10737418240,
+      "vm_memory_mib": 16384,
+      "native": "INCOMPLETE",
+      "errors": [
+        "Candidate build did not complete"
+      ],
+      "exit_code": 3,
+      "checker_results": {},
+      "remote_receipt_validation": "VERIFIED",
+      "offline_inspection_scope": "ORIGINAL_REMOTE_VALIDATION",
+      "native_cleanup": "CONFIRMED",
+      "vm_cleanup": "CONFIRMED",
+      "stages": [
+        {
+          "stage": "candidate-build",
+          "exit": -9,
+          "resource_error": "CGROUP_MEMORY_LIMIT",
+          "timed_out": false,
+          "memory_peak_bytes": 10737418240,
+          "owned_modules_reported_built": 308,
+          "owned_modules_without_build_line": [
+            "Research.DerivativeSwitch.LocalTraceTwo"
+          ],
+          "last_job_line": "\u2714 [9354/9355] Built Research.DerivativeSwitch.LocalInvariantTwo (14s)",
+          "stdout_sha256": "1e347b428108861bab5db8fb71503829e5bc08c0ef90329b56a7452f807d326e",
+          "memory_events": {
+            "high": 0,
+            "low": 0,
+            "max": 117751,
+            "oom": 1,
+            "oom_group_kill": 1,
+            "oom_kill": 6,
+            "sock_throttled": 0
+          }
+        }
+      ],
+      "receipt_file": "odproof/run-01.json"
+    },
+    {
+      "run_id": "72535331ce2616ee850034eb23ea570f",
+      "input_digest": "510860fe5133344e270e0178ef280bac3ae8c8d4392dd4ab93c455751c3c2c3e",
+      "request_sha256": "b97f86f7642deb96fe8d4ec8d78c9cc8f5dbaa63bd5792684e94b738e65d9d5a",
+      "result_sha256": "f8128982405b9093f55619f8eba892ac6acec3f27cc02de580f18a2b2f3bd68b",
+      "receipt_sha256": "e6542118743097db6d34927dca845376ccc7da4e212c7510b53af9655e102f7e",
+      "stage_memory_bytes": 25769803776,
+      "vm_memory_mib": 32768,
+      "native": "INCOMPLETE",
+      "errors": [
+        "Required checker failed or was incomplete: leanchecker"
+      ],
+      "exit_code": 3,
+      "checker_results": {
+        "leanchecker": "OUT_OF_MEMORY"
+      },
+      "remote_receipt_validation": "VERIFIED",
+      "offline_inspection_scope": "ORIGINAL_REMOTE_VALIDATION",
+      "native_cleanup": "CONFIRMED",
+      "vm_cleanup": "CONFIRMED",
+      "stages": [
+        {
+          "stage": "candidate-build",
+          "exit": 0,
+          "resource_error": null,
+          "timed_out": false,
+          "memory_peak_bytes": 14595633152,
+          "owned_modules_reported_built": 309,
+          "owned_modules_without_build_line": [],
+          "last_job_line": "Build completed successfully (9355 jobs).",
+          "stdout_sha256": "36b91df9d2cb19c832c018eb361edd81e989124882b47c5df8426123499e9080",
+          "memory_events": {
+            "high": 0,
+            "low": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_group_kill": 0,
+            "oom_kill": 0,
+            "sock_throttled": 0
+          }
+        },
+        {
+          "stage": "candidate-export",
+          "exit": 0,
+          "resource_error": null,
+          "timed_out": false,
+          "memory_peak_bytes": 4724322304,
+          "export": {
+            "bytes": 951586204,
+            "path": "candidate-export-export.ndjson",
+            "sha256": "2e2ecf03c70c9bcf13d165f50bf992087b13aee2f891a9238cb7ed91640bc7c5"
+          }
+        },
+        {
+          "stage": "export-inventory",
+          "exit": 0,
+          "resource_error": null,
+          "timed_out": false,
+          "memory_peak_bytes": 1740300288
+        },
+        {
+          "stage": "coverage",
+          "exit": 0,
+          "resource_error": null,
+          "timed_out": false,
+          "memory_peak_bytes": 2193154048,
+          "coverage": {
+            "candidate_export_sha256": "2e2ecf03c70c9bcf13d165f50bf992087b13aee2f891a9238cb7ed91640bc7c5",
+            "conflicting": [],
+            "extra": [],
+            "kind": "NATIVE_COVERAGE_V1",
+            "matches": true,
+            "missing": [],
+            "project_declarations": 8796,
+            "reference_export_sha256": "2e2ecf03c70c9bcf13d165f50bf992087b13aee2f891a9238cb7ed91640bc7c5"
+          }
+        },
+        {
+          "stage": "checker-leanchecker",
+          "exit": -9,
+          "resource_error": "CGROUP_MEMORY_LIMIT",
+          "timed_out": false,
+          "memory_peak_bytes": 25769803776
+        }
+      ],
+      "receipt_file": "odproof/run-02.json"
+    }
+  ]
+}
