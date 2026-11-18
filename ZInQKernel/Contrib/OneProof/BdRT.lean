@@ -95,6 +95,62 @@ theorem bdrAct_tt (σ : GQp p) :
   rw [BdRInv.bdrAct_algebraMap, bdrPlusMap_tt, map_mul]
   rfl
 
+local notation "BPlus" => BDeRhamPlus 𝓞_ℂ_[p] p
+local notation "AwayT" => Localization.Away (tt p Z)
+
+/-- Extend the Galois action on `B_dR^+` to the ring obtained by inverting `t`. -/
+def awayTAct (σ : GQp p) : AwayT →+* AwayT :=
+  IsLocalization.Away.lift (tt p Z)
+    (g := (algebraMap BPlus AwayT).comp (DR.bdrPlusMap p (oAct p σ))) (by
+      rw [RingHom.comp_apply, bdrPlusMap_tt, map_mul]
+      exact ((IsUnit.mk0 _ (cycPow_one_ne_zero p σ)).map
+        ((algebraMap BPlus AwayT).comp (qpToPlus p))).mul
+        (IsLocalization.Away.algebraMap_isUnit (tt p Z)))
+
+/-- The localized action extends the action on the positive ring. -/
+theorem awayTAct_comp (σ : GQp p) :
+    (awayTAct p Z σ).comp (algebraMap BPlus AwayT) =
+      (algebraMap BPlus AwayT).comp (DR.bdrPlusMap p (oAct p σ)) :=
+  IsLocalization.Away.lift_comp _ _
+
+/-- The canonical equivalence with `B_dR^+[1/t]` identifies the two Galois actions. -/
+theorem bdREquivAwayT_intertwines (σ : GQp p) (x : BdR p) :
+    bdREquivAwayT Z (bdrAct p σ x) = awayTAct p Z σ (bdREquivAwayT Z x) := by
+  -- Give the input to `transport_extends` the exact localization type it expects.
+  let B := ZInQ.Contrib.G9.BdrKer.BdR (𝓞_ℂ_[p] : Type) p
+  let f : B →+* B := bdrAct p σ
+  have hf : f.comp (algebraMap BPlus B) =
+      (algebraMap BPlus B).comp (DR.bdrPlusMap p (oAct p σ)) := by
+    apply RingHom.ext
+    intro z
+    change bdrAct p σ (algebraMap BPlus (BdR p) z) =
+      algebraMap BPlus (BdR p) (DR.bdrPlusMap p (oAct p σ) z)
+    exact BdRInv.bdrAct_algebraMap p σ z
+  have h := ext_of_extends Z _ _ (awayTAct_comp p Z σ) (transport_extends Z f hf)
+  let y : B := x
+  have hx := DFunLike.congr_fun h (bdREquivAwayT Z y)
+  change awayTAct p Z σ (bdREquivAwayT Z y) =
+    bdREquivAwayT Z (f ((bdREquivAwayT Z).symm (bdREquivAwayT Z y))) at hx
+  rw [AlgEquiv.symm_apply_apply] at hx
+  exact hx.symm
+
+/-- The localized maps form a Galois action (composition is multiplication). -/
+def awayTAction : GQp p →* (AwayT →+* AwayT) := by
+  let e : BdR p ≃ₐ[BPlus] AwayT := bdREquivAwayT Z
+  have he (σ : GQp p) (x : BdR p) :
+      e (bdrAct p σ x) = awayTAct p Z σ (e x) :=
+    bdREquivAwayT_intertwines p Z σ x
+  refine { toFun := awayTAct p Z, map_one' := ?_, map_mul' := ?_ }
+  · apply RingHom.ext
+    intro u
+    obtain ⟨x, rfl⟩ := e.surjective u
+    simp only [← he, bdrAct_one, RingHom.one_def, RingHom.id_apply]
+  · intro σ τ
+    apply RingHom.ext
+    intro u
+    obtain ⟨x, rfl⟩ := e.surjective u
+    simp only [RingHom.mul_def, RingHom.comp_apply, ← he, bdrAct_mul]
+
 end
 
 end DeRhamPrint.BdRT
@@ -103,3 +159,7 @@ end DeRhamPrint.BdRT
 #print axioms DeRhamPrint.BdRT.isGenEps_eps
 #print axioms DeRhamPrint.BdRT.bdrPlusMap_tt
 #print axioms DeRhamPrint.BdRT.bdrAct_tt
+#print axioms DeRhamPrint.BdRT.awayTAct
+#print axioms DeRhamPrint.BdRT.awayTAct_comp
+#print axioms DeRhamPrint.BdRT.bdREquivAwayT_intertwines
+#print axioms DeRhamPrint.BdRT.awayTAction

@@ -27,3 +27,8 @@
   `bdrPlusMap_tt` and `bdrAct_tt` give `sigma(t) = chi(sigma) * t` in
   the positive ring and the kernel's period field, respectively. All four
   checks so far gave the three standard axioms.
+- VERIFIED (Lean): `awayTAct` is the localization lift and `awayTAct_comp`
+  proves it extends the action on the positive ring.
+  `bdREquivAwayT_intertwines` applies `transport_extends` with the
+  explicitly typed KerTheta ring map, then uses `ext_of_extends`.
+  `awayTAction` packages the action laws. The axiom checks all passed.
