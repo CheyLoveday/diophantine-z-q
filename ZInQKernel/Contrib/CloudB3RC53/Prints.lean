@@ -49,7 +49,12 @@ Form: `RootNumber E w` is the sign of the functional equation of `L(E, s)` (see 
 The print's `w(E)` is the global root number; that it is the sign of the functional equation is
 modularity (BCDT Theorem A) with Hecke's theory (bridge (ii): the identification of the product
 `∏_v w_v` of local root numbers with the sign of the functional equation), so this leaf is the
-print composed with that standard identification: consequence form. -/
+print composed with that standard identification: consequence form. That bridge (BCDT, Hecke and
+the local–global factorization of `ε`) is GLUE, not part of the print. The print's own hypotheses
+are matched: a `2^∞`-Selmer corank, and a rational point of order two, which gives the rational
+two-isogeny the print assumes; no finiteness of `Ш` is assumed, and the root number keeps its real
+place. Read: arXiv:0906.1815v1, p. 4 (J. reine angew. Math. 658 (2011)). Classification: PRINT
+modulo the GLUE root-number bridge. -/
 def DokchitserThm18 : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic →
     1 < Nat.card (nsmulAddMonoidHom 2 : E.toAffine.Point →+ E.toAffine.Point).ker →
@@ -60,10 +65,9 @@ Fields are added as further prints are stated (see `DAG.md`). -/
 structure Prints : Prop where
   /-- Breuil–Conrad–Diamond–Taylor, Theorem A (tex L1779 `\cite[Theorem A and Introduction,
   conditions (1)–(6)]{bcdt}`): every elliptic curve over `ℚ` is modular. This is
-  `PoleS12.BCDTThmA`. Its condition (6) is a parametrization by `X₁(N)`; the parametrization by
-  `X₀(N)` that Kolyvagin's Theorem 1 assumes is Darmon's Theorem 5.4 (`DarmonThm54`,
-  `Prints/Kolyvagin.lean`; Dummigan, J. Théor. Nombres Bordeaux 18 (2006), p. 345, reportedly
-  corroborates, not read). -/
+  `PoleS12.BCDTThmA`. Its condition (6) is a parametrization by `X₁(N)`; the passage to
+  Kolyvagin's `X₀(N)` premise is the ELLIOT gap `ModularToWeakWeil` (tex L1092–1093;
+  `Prints/Kolyvagin.lean`). -/
   bcdt : BCDTThmA
   /-- Kolyvagin, Theorem 1 (`r ≤ 1`). -/
   kolyvagin : KolyvaginThm1Printed
