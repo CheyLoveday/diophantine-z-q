@@ -322,7 +322,7 @@ theorem natCard_points_quadratic_trace {L : Type*} [Field L] [Fintype L] (ι : F
   ring
 
 /-- **Node `QuadraticExtensionPointCount`** (the `n = 2` case of `#E(𝔽_{q^n}) = q^n + 1 − (α^n + β^n)`,
-Silverman V.2.3.1; infrastructure for the inert clause of `LocalFactorK`, not a manuscript line):
+cf. Silverman, Ch. V §2; infrastructure for the inert clause of `LocalFactorK`, not a manuscript line):
 for an elliptic curve `E` over `𝔽_q` and a field `L ⊇ 𝔽_q` with `q²` elements,
 `#E(L) = #E(𝔽_q) · (2q + 2 − #E(𝔽_q))`, i.e. `#E(L) = q² + 1 − (a² − 2q)` with
 `a = q + 1 − #E(𝔽_q)`. PROVED (`quadraticExtensionPointCount_proof`). -/
