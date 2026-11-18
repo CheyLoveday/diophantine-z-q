@@ -3,3 +3,5 @@
 - Inherited source error: obsolete `hdiam` in `ThetaCoeff/Model.lean`; imports bypass it.
 - `Consumers.lean`: `o12_at` transports the two pointwise readings with representatives outside `U ∪ avoid`; `traceRead_eq_of_labels` gives the fixed-root orbit congruence; `fixedU_at` and `primary_at` consume prescribed fresh readings. The window-family theorems produce `O12Reading`, `FixedUFactorization`, `PrimaryReading` and `RulesUpTo`.
 - `Consumers.lean`: `lake env lean -j1` passed; all seven theorem audits: `propext`, `Classical.choice`, `Quot.sound`.
+- `Stage.lean`: `readings_on_of_stage` yields `ReadingsOn` from the two pointwise identities. `root_readings_of_stage` gives all prescribed-prime readings via the extra `ExcludedAtOne` comparison at the root.
+- `Stage.lean`: `lake env lean -j1` passed; all four theorem audits (including two private helpers): `propext`, `Classical.choice`, `Quot.sound`.
