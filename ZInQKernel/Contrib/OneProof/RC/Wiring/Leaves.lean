@@ -31,6 +31,7 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.BaseZeroText
 import ZInQKernel.Contrib.OneProof.RC.Wiring.UniformSwitch
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35Leaf
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineSwitchPK
+import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35A
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate5Wiring
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf3
 import ZInQKernel.Contrib.OneProof.RC.Wiring.StageData
@@ -141,6 +142,10 @@ witnesses:
 * the companion's primes lie in the fixed support before `δ_o` (`CompanionLeaf`); the address leaf
   reads the odd source on its own filter (lane RC24's intrinsic odd filter), so the fresh prime of
   `k` no longer vetoes the odd readings (fixed);
+* closed: the model family of (3.5) is chosen for each `A`, at the companion pairs with
+  `ω(k') ≤ A`, with the size of the cap of (5.1) at each configuration (`Eq35InputsGenuineA`; tex
+  2442–2446, 4453–4460, 4910); before, one family with one size function was fixed for all ring
+  instances before `A`, a bound the text does not state;
 * closed: the coefficient dictionary's input (O.9) is consumed in the manuscript's form
   `a_p ≡ p + 1 (mod 4)` at every good prime (tex 9585, 9593–9594), proved for the actual curves
   (batch 3's `apModFour_curve_typeData`) and passed to the dictionary's weaker `ApEven` by
@@ -254,29 +259,31 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   theta models are supplied, and away from the selected datum the fields do not identify `ev` with
   reduction at the constructed primes. -/
   odd_staged : Nonempty (OddStagedInstance W)
-  /-- The inputs of (3.5) on the text's primitive kernel vector (`Eq35InputsGenuineGGPK`): the
-  primitive coordinates at the companion pairs with `GenuineSwitchDataPK` (batch 3's
+  /-- The inputs of (3.5) in the text's quantifier order (`Eq35InputsGenuineA`): chosen before `A`,
+  the primitive coordinates at the companion pairs with `GenuineSwitchDataPK` (batch 3's
   `GenuineSwitchData` with the actual classes nonzero instead of primitive) over configuration
   families genuine at every height-one prime (`RegularityInputsGPK`: lane RC26's Galois fibers, the
-  genuine moving variable), (4.6) at the companion pairs, and ONE family of switched minimal models
-  over `𝒪` for all ring instances, each a two-term model of genuine Galois Selmer data over `𝒪`, the
-  actual models' coordinates having the valuations of `ι_𝒪 u_prim`, with batch 3's
-  `GenuineOuterSwitchData` (switch GLUE between the determined stages) for every sequence of
-  companion pairs (ELLIOT + GLUE; tex 2441–2446, 3987–4047, 4909–5202; owners RC16, RC15, RC6, RC26,
-  batch 3 SwitchInputs). PROVED from them: the primitive kernel vectors (tex 4987–4992: saturation
-  of `ker d` over the DVR `Λ_𝔭`, the RC53 group's `exists_primitiveKernelVector`), `pos` from them,
-  `minor_link`, the integral cycles and functionals, the nonzero outer class, the Cramer terminal
-  step, the equal inner valuations, regularity (`regular_of_genuineSwitchDataPK`, through the RC53
-  group's `regular_of_switchDataPK`), and RC16's (3.5) over RC20's genuine valuation. Caveat: the
-  configuration family is existential and only required to be some genuine Galois Selmer data with
-  `t = X`. With one genuine complex of the homotopy type of `[k --0--> k]` at each `𝔭` (true, not
-  formalized), its regularity part is equivalent to `uprim h k' ∈ Λ[1/2]` at the companion pairs,
-  Elliot's regularity assertion (ELLIOT). Over the actual genuine complexes no switch step can be
-  formed (`fG`: `C¹_cont` is infinite-dimensional), so the actual family witnesses the regularity
-  part only when `s(𝔭) = 1`. DEPARTURE: one model family with one size function `nOf` is fixed for
-  all ring instances before `A`, stronger than the text's per-`A` bound (tex 4936–4940,
-  4453–4463). -/
-  eq35 : Eq35InputsGenuineGGPK W
+  genuine moving variable) and (4.6) at the companion pairs; then for every `A`, a family of
+  switched models over `𝒪` for the companion pairs with `ω(k') ≤ A`, of the size of the cap of
+  (5.1) at each configuration (`eq51Cap`: the text's models have size at most the cap, padded by
+  contractible blocks), each a two-term model of genuine Galois Selmer data over `𝒪`, the actual
+  models' coordinates having the valuations of `ι_𝒪 u_prim`, with batch 3's `GenuineOuterSwitchData`
+  (switch GLUE between the determined stages) for every sequence of those pairs (ELLIOT + GLUE; tex
+  2441–2446, 3987–4047, 4453–4460, 4909–5202; owners RC16, RC15, RC6, RC26, batch 3 SwitchInputs).
+  PROVED from them: the primitive kernel vectors (tex 4987–4992: saturation of `ker d` over the DVR
+  `Λ_𝔭`, the RC53 group's `exists_primitiveKernelVector`), `pos` from them, `minor_link`, the
+  integral cycles and functionals, the nonzero outer class, the Cramer terminal step, the equal
+  inner valuations, regularity (`regular_of_genuineSwitchDataPK`, through the RC53 group's
+  `regular_of_switchDataPK`), and RC16's (3.5) over RC20's genuine valuation
+  (`eq35Target_of_inputsA`). Caveats: the configuration family is existential and only required to
+  be some genuine Galois Selmer data with `t = X`. With one genuine complex of the homotopy type of
+  `[k --0--> k]` at each `𝔭` (true, not formalized), its regularity part is equivalent to
+  `uprim h k' ∈ Λ[1/2]` at the companion pairs, Elliot's regularity assertion (ELLIOT). Over the
+  actual genuine complexes no switch step can be formed (`fG`: `C¹_cont` is infinite-dimensional),
+  so the actual family witnesses the regularity part only when `s(𝔭) = 1`. The outer model family
+  is existential as well: the genuine Galois Selmer data in `IsGenuineInstanceModel` are not tied
+  to the instance `i`. -/
+  eq35 : Eq35InputsGenuineA W
 
 /-- **The data specification from the leaves** (PROVED: the fixed support and the stage link of the
 staged odd instance, by the stage construction's `preDataSpec_preparedStages`; formerly the leaf
@@ -546,7 +553,7 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
   obtain ⟨Cdet, hCdet⟩ := hvis
   obtain ⟨A, CE, h33⟩ := hF3
   obtain ⟨Cper, h34, h34k⟩ := gz34Target_of_genusOdd P L.artin L.rootNumberExists I
-  have h35 : Eq35Target W₁ := eq35Target_of_inputsGGPK W₁ hp.eq35
+  have h35 : Eq35Target W₁ := eq35Target_of_inputsA W₁ hp.eq35
   obtain ⟨CR, h35A⟩ := h35 A
   obtain ⟨δ, hδ⟩ := exists_oddMinimum W₁ h33 h34 h35A hCdet hglue
     (witnessLeaf_of_oddInstance Io hstages)
