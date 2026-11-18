@@ -56,7 +56,8 @@ and lane RC8's GLUE `HasseConvergence`). Consumer: lane RC11's `EvenPhaseData.E1
 theorem evenPhaseData_E11_of_bcdt (hW : WaldspurgerCor2) (hB : PoleS12.BCDTThmA)
     (hH : HasseConvergence) {E : WeierstrassCurve ℚ} [hE : E.IsElliptic]
     {L : ZInQ.Manuscript.RC.Even.CentralNormalization E} {σ : ℤ} (hσ : σ = 1 ∨ σ = -1)
-    {D₀ : ℕ} (P : ZInQ.Manuscript.RC.Even.EvenPhaseData E L σ D₀) (hL₀ : L.Lstar (σ * D₀) ≠ 0) :
+    {S₀ : Finset ℕ} {D₀ : ℕ} (P : ZInQ.Manuscript.RC.Even.EvenPhaseData E L σ S₀ D₀)
+    (hL₀ : L.Lstar (σ * D₀) ≠ 0) :
     ∀ D ∈ P.retained, ∃ r : ℚ, hiwCoeff P.g D / hiwCoeff P.g D₀ = P.z D * (r : ℂ) ∧
       r ^ 2 = L.Lstar (σ * D) / L.Lstar (σ * D₀) :=
   P.E11 hW hE hσ hL₀ (twistContinuation_of_bcdt hB hH E)
@@ -69,7 +70,8 @@ Dischargers: `twistContinuation_of_bcdt` and `evenLowerBound_of_evenScalar32_of_
 theorem evenPhaseData_minimum_of_prints (hW : WaldspurgerCor2) (hP : Prints)
     (hH : HasseConvergence) {E : WeierstrassCurve ℚ} [hE : E.IsElliptic]
     {L : ZInQ.Manuscript.RC.Even.CentralNormalization E} {σ : ℤ} (hσ : σ = 1 ∨ σ = -1)
-    {D₀ : ℕ} (P : ZInQ.Manuscript.RC.Even.EvenPhaseData E L σ D₀) (hL₀ : L.Lstar (σ * D₀) ≠ 0)
+    {S₀ : Finset ℕ} {D₀ : ℕ} (P : ZInQ.Manuscript.RC.Even.EvenPhaseData E L σ S₀ D₀)
+    (hL₀ : L.Lstar (σ * D₀) ≠ 0)
     {N : ℕ} (h32 : ZInQ.Manuscript.RC.Even.EvenScalar32 E N L) :
     ∃ r : ℕ → ℚ, (∀ D ∈ P.retained, hiwCoeff P.g D / hiwCoeff P.g D₀ = P.z D * (r D : ℂ) ∧
         r D ^ 2 = L.Lstar (σ * D) / L.Lstar (σ * D₀)) ∧
@@ -86,7 +88,8 @@ lane RC11's `evenScalar32_of_appE` followed by `evenPhaseData_minimum_of_prints`
 theorem evenPhaseData_minimum_of_appE (hW : WaldspurgerCor2) (hP : Prints)
     (hH : HasseConvergence) {E : WeierstrassCurve ℚ} [hE : E.IsElliptic]
     {L : ZInQ.Manuscript.RC.Even.CentralNormalization E} {σ : ℤ} (hσ : σ = 1 ∨ σ = -1)
-    {D₀ : ℕ} (P : ZInQ.Manuscript.RC.Even.EvenPhaseData E L σ D₀) (hL₀ : L.Lstar (σ * D₀) ≠ 0)
+    {S₀ : Finset ℕ} {D₀ : ℕ} (P : ZInQ.Manuscript.RC.Even.EvenPhaseData E L σ S₀ D₀)
+    (hL₀ : L.Lstar (σ * D₀) ≠ 0)
     {N : ℕ} (hN : N ≠ 0) (hA : ZInQ.Manuscript.RC.Even.AppEOutputs E N L) :
     ∃ r : ℕ → ℚ, (∀ D ∈ P.retained, hiwCoeff P.g D / hiwCoeff P.g D₀ = P.z D * (r D : ℂ) ∧
         r D ^ 2 = L.Lstar (σ * D) / L.Lstar (σ * D₀)) ∧

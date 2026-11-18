@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.RC.Height.BaseZeroCST
+import ZInQKernel.Contrib.OneProof.RC.Height.ArtinG2
 import ZInQKernel.Contrib.OneProof.RC.Central.BaseZero
 
 /-!
@@ -18,6 +19,11 @@ Heegner trace `P` is not torsion when the product `L`-function has nonzero deriv
 (`ZInQ.Manuscript.RC.Height.not_isOfFinAddOrder_of_CST`). This file composes the two, replacing
 `hz0` by RC19's inputs, lane RC15's (4.5) in the form of `baseZero_node` (`h45`, ELLIOT) with
 `Lm ≠ 0`, and the injectivity modulo torsion of the composite Kummer map (`hkum`, GLUE).
+
+Lane RC27 (item 7): `simpleZero_specialization_of_CST_of_artin` is the same statement with RC19's
+GLUE `LFactorizationConductorOne E K k` replaced by the shared top layer's GLUE
+`GenusOdd.ArtinFactorization`, `K` split at `2` and `K = ℚ(√k)` (lane RC27's
+`not_isOfFinAddOrder_of_CST_of_artin`).
 
 Every theorem in this file is PROVED (from the stated remaining inputs).
 -/
@@ -99,5 +105,53 @@ theorem simpleZero_specialization_of_CST {E : WeierstrassCurve ℚ} [E.IsEllipti
     exact hκ ((smul_eq_zero.mp h0).resolve_left hLm')
   exact ZInQ.Manuscript.RC.Central.simpleZero_specialization (F := Fr) ρ hρ D hcentral z w hz hz0
     uprim hu
+
+open Classical in
+/-- **The generic coordinate specializes at a known simple zero, with RC19's G2 from
+`ArtinFactorization`** (11/5 tex 2464, 8268–8272, 9439–9440; tex 5736 with tex 2599, 2720).
+PROVED: `simpleZero_specialization_of_CST` with `hL` (RC19's GLUE) supplied by lane RC27's
+`lFactorizationConductorOne_of_artin` from the shared top layer's GLUE
+`GenusOdd.ArtinFactorization`, `K` split at `2` (`h2`) and `K = ℚ(√k)` (`t`, `ht`, `htk`); all
+other inputs are those of `simpleZero_specialization_of_CST`. -/
+theorem simpleZero_specialization_of_CST_of_artin {E : WeierstrassCurve ℚ} [E.IsElliptic] {k : ℚ}
+    (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2)
+    (hf : ∀ n : ℕ, 0 < n → (UpperHalfPlane.qExpansion 1 f).coeff n = (E.LFunction n : ℂ))
+    (Lat : PeriodPair) (hLat : IsLatticeOf E Lat) (hnCM : IsNonCMLattice Lat)
+    (scale : ℂ) (hscale : IsParamScale (newformLevel E) f Lat scale)
+    (K : Type) [Field K] [NumberField K] [DecidableEq K] (hK2 : Module.finrank ℚ K = 2)
+    (hKc : IsTotallyComplex K) (hD3 : discr K ≠ -3) (hD4 : discr K ≠ -4)
+    (hsplit : ∀ p : ℕ, p.Prime → p ∣ newformLevel E → SplitsIn K p)
+    (a₀ b₀ c₀ : ℤ) (hH : IsHeegnerForm (newformLevel E) (discr K * (1 : ℕ) ^ 2) a₀ b₀ c₀)
+    (ι : ringClassField (conductorOrder K 1) →ₐ[ℚ] ℂ)
+    (y : (E.baseChange (ringClassField (conductorOrder K 1))).toAffine.Point)
+    (hy : Point.map (W' := E.toAffine) ι y =
+      phiAn E f Lat scale (cmPoint a₀ b₀ (discr K * (1 : ℕ) ^ 2)))
+    (P : (E.baseChange K).toAffine.Point)
+    (hP : Point.baseChange K (ringClassField (conductorOrder K 1)) P =
+      ∑ σ : ringClassField (conductorOrder K 1) ≃ₐ[K] ringClassField (conductorOrder K 1),
+        Point.map (W' := E.toAffine) (σ.toAlgHom.restrictScalars ℚ) y)
+    (hA : GenusOdd.ArtinFactorization) (h2 : SplitsIn K 2) (t : K)
+    (ht : t ∉ (algebraMap ℚ K).range) (htk : t ^ 2 = algebraMap ℚ K k) (hCST : CSTThm11Split)
+    (Lf : ℂ → ℂ) (hLf : Differentiable ℂ Lf)
+    (hLfeq : ∀ s : ℂ, 3 / 2 < s.re → Lf s = E.LSeries s * (qtwist E k).LSeries s)
+    (hderiv : deriv Lf 1 ≠ 0)
+    {A Fr : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] [Field Fr]
+    [Algebra A Fr] [IsFractionRing A Fr] (ρ : A →+* ℚ_[2])
+    (hρ : ∀ x ∈ IsLocalRing.maximalIdeal A, ρ x = 0) {m : ℕ}
+    (D : Matrix (Fin (m + 1)) (Fin (m + 1)) A) (hcentral : (D.map ρ).rank = m)
+    (z w : Fin (m + 1) → A) (hz : D *ᵥ z = 0) (uprim : Fr)
+    (hu : ZInQ.Manuscript.RC.Central.IsClassFunctionalCoord (D.map (algebraMap A Fr))
+      (fun i => algebraMap A Fr (z i)) (fun i => algebraMap A Fr (w i)) uprim)
+    (kum : (E.baseChange K).toAffine.Point →+ (Fin (m + 1) → ℚ_[2])) (Lm : ℤ) (hLm : Lm ≠ 0)
+    (h45 : (fun i => ρ (z i)) = (Lm : ℚ_[2]) • kum P)
+    (hkum : ¬ IsOfFinAddOrder P → kum P ≠ 0) :
+    (D.map (algebraMap A Fr)).det = 0 ∧
+      ∃ u₀ : A, algebraMap A Fr u₀ = uprim ∧
+        ZInQ.Manuscript.RC.Central.IsClassFunctionalCoord (D.map ρ) (fun i => ρ (z i))
+          (fun i => ρ (w i)) (ρ u₀) :=
+  simpleZero_specialization_of_CST f hf Lat hLat hnCM scale hscale K hK2 hKc hD3 hD4 hsplit
+    a₀ b₀ c₀ hH ι y hy P hP
+    (ZInQ.Manuscript.RC.Height.lFactorizationConductorOne_of_artin hA E K hK2 hKc h2 hsplit ht htk)
+    hCST Lf hLf hLfeq hderiv ρ hρ D hcentral z w hz uprim hu kum Lm hLm h45 hkum
 
 end ZInQ.Manuscript.RC.GlueSweep.Central

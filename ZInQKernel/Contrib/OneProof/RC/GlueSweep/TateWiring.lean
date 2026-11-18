@@ -18,7 +18,8 @@ So the hypothesis is ALREADY DISCHARGED IN TREE, but the downstream statements s
 * `moving_character_tate_of`, `moving_character_genuine_of`, `moving_character_ecurve_of`,
   `moving_character_ecurve_genuine_of`: Proposition `ex:arith-moving-character` (tex 3500–3702)
   over the genuine Tate image, from lane RC4's remaining interface fields, Serre's print and
-  non-CM (for `E_ℓ`: the prints `ArithPrints` and `CMjInteger`) only.
+  non-CM (for `E_ℓ`: the prints `ArithPrints` and `CMjInteger`) only; the forms over lane RC17's
+  `MovingData` also take the GLUE `FrobeniusTrace` (`tr ρ_T(Fr_r) = a_r`, Lane RC27).
 -/
 
 noncomputable section
@@ -85,30 +86,34 @@ theorem moving_character_tate_of {E : WeierstrassCurve ℚ} [E.IsElliptic] (hS :
 `MovingData`, without the determinant GLUE**: lane RC17's `MovingData.toMovingSetting` with `hdetEq`
 discharged by `detTateTwoEqCyclotomic_holds` (its fields `GF_index`, `HL_le`, `kum_of_mem_HL`,
 `mem_HL_of_kum` are lane RC17's PROVED `GFinf_index`, `KummerData.HLinf_le`,
-`KummerData.kum_of_mem_HL`, `KummerData.mem_HL_of_kum`). -/
+`KummerData.kum_of_mem_HL`, `KummerData.mem_HL_of_kum`; Lane RC27: `ap r = E.LFunction r`, and
+`cheb` is derived from the PROVED Chebotarev step, the GLUE `hT : FrobeniusTrace E` and the field
+`frob_kummer`). -/
 def movingSettingOf {E : WeierstrassCurve ℚ} [E.IsElliptic] (hS : SerreThm3) (hE : HasNoCM E)
-    {n : ℕ} (M : MovingData E n) : MovingSetting (tateImageOf E hS hE) n :=
-  M.toMovingSetting hS hE (detTateTwoEqCyclotomic_holds E)
+    (hT : FrobeniusTrace E) {n : ℕ} (M : MovingData E n) : MovingSetting (tateImageOf E hS hE) n :=
+  M.toMovingSetting hS hE (detTateTwoEqCyclotomic_holds E) hT
 
 /-- **Proposition `ex:arith-moving-character` over the genuine Tate image and Kummer layer**
-(tex 3500–3702). Kind: PROVED from `SerreThm3` (PRINT), `HasNoCM E` and the remaining fields of lane
-RC17's `MovingData` (RC4's GLUE/PRINT fields other than the four Kummer fields). Consumer: lane
-RC17's `moving_character_genuine` (hypothesis `hdetEq` discharged by
-`detTateTwoEqCyclotomic_holds`). -/
+(tex 3500–3702), with the genuine `a_r = E.LFunction r` (Lane RC27). Kind: PROVED from `SerreThm3`
+(PRINT), `HasNoCM E`, the GLUE `FrobeniusTrace E` and the remaining fields of lane RC17's
+`MovingData` (RC4's GLUE/PRINT fields other than the four Kummer fields, with the power-residue
+field `frob_kummer`). Consumer: lane RC17's `moving_character_genuine` (hypothesis `hdetEq`
+discharged by `detTateTwoEqCyclotomic_holds`). -/
 theorem moving_character_genuine_of {E : WeierstrassCurve ℚ} [E.IsElliptic] (hS : SerreThm3)
-    (hE : HasNoCM E) {n : ℕ} (M : MovingData E n) (B : ℕ) (S : Finset ℕ) :
+    (hE : HasNoCM E) (hT : FrobeniusTrace E) {n : ℕ} (M : MovingData E n) (B : ℕ)
+    (S : Finset ℕ) :
     ∃ r : ℕ, r ∉ S ∧ r.Prime ∧ M.good r ∧ (2 : ℤ) ^ B ∣ (r : ℤ) - 1 ∧
       ∃ ξ : M.P r →+ ZMod (2 ^ n),
         (∀ y : ZMod (2 ^ n), ∃ z ∈ M.inertia r, ξ z = y) ∧
         (∀ j, M.over2N j → ∀ z ∈ M.decomp r j ⊔ M.decompBar r j, ξ z = 0) ∧
         (∀ j, M.act j → ξ (M.q r j) = 1 ∧ ξ (M.qbar r j) = -1) ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 2 + M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 2 - M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 1 + M.ap r + r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 1 - M.ap r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 2 + E.LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 2 - E.LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 1 + E.LFunction r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 1 - E.LFunction r + r ∧
         ∀ χ : ℤ, (χ = 1 ∨ χ = -1) →
-          ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ M.ap r - 2 * χ :=
-  moving_character_genuine hS hE (detTateTwoEqCyclotomic_holds E) M B S
+          ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ E.LFunction r - 2 * χ :=
+  moving_character_genuine hS hE (detTateTwoEqCyclotomic_holds E) hT M B S
 
 /-! ### The curves `E_ℓ` -/
 
@@ -138,23 +143,29 @@ theorem moving_character_ecurve_of (P : ArithPrints) (hcm : CMjInteger) {ℓ : �
   moving_character_ecurve P hcm glueTate hℓ M B S
 
 /-- **Proposition `ex:arith-moving-character` for `E_ℓ` over the genuine Kummer layer**
-(tex 3500–3702). Kind: PROVED from `ArithPrints` (PRINT), `CMjInteger` (GLUE) and the remaining
+(tex 3500–3702), with the genuine `a_r = (E_ℓ).LFunction r` (Lane RC27). Kind: PROVED from
+`ArithPrints` (PRINT), `CMjInteger` (GLUE), the GLUE `FrobeniusTrace (E_ℓ)` and the remaining
 fields of lane RC17's `MovingData`. Consumer: lane RC17's `moving_character_ecurve_genuine`
 (hypothesis `H : GlueTate` discharged by `glueTate`). -/
 theorem moving_character_ecurve_genuine_of (P : ArithPrints) (hcm : CMjInteger) {ℓ : ℕ}
-    (hℓ : 0 < ℓ) {n : ℕ} (M : MovingData (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) n) (B : ℕ)
-    (S : Finset ℕ) :
+    (hℓ : 0 < ℓ) (hT : FrobeniusTrace (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)) {n : ℕ}
+    (M : MovingData (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) n) (B : ℕ) (S : Finset ℕ) :
     ∃ r : ℕ, r ∉ S ∧ r.Prime ∧ M.good r ∧ (2 : ℤ) ^ B ∣ (r : ℤ) - 1 ∧
       ∃ ξ : M.P r →+ ZMod (2 ^ n),
         (∀ y : ZMod (2 ^ n), ∃ z ∈ M.inertia r, ξ z = y) ∧
         (∀ j, M.over2N j → ∀ z ∈ M.decomp r j ⊔ M.decompBar r j, ξ z = 0) ∧
         (∀ j, M.act j → ξ (M.q r j) = 1 ∧ ξ (M.qbar r j) = -1) ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ 2 + M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ 2 - M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ 1 + M.ap r + r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ 1 - M.ap r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+          2 + (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+          2 - (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+          1 + (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+          1 - (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r + r ∧
         ∀ χ : ℤ, (χ = 1 ∨ χ = -1) →
-          ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ M.ap r - 2 * χ :=
-  moving_character_ecurve_genuine P hcm glueTate hℓ M B S
+          ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+            (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r - 2 * χ :=
+  moving_character_ecurve_genuine P hcm glueTate hℓ hT M B S
 
 end ZInQ.Manuscript.RC.GlueSweep.Tate

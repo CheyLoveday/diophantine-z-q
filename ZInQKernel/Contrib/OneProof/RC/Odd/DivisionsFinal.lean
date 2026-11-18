@@ -28,12 +28,69 @@ def TL (χ : ℕ → R) : List ℕ → (ℕ → R) → (ℕ → R)
 @[simp] theorem TL_cons (χ : ℕ → R) (p : ℕ) (L : List ℕ) (a : ℕ → R) :
     TL χ (p :: L) a = Top p (χ p) (TL χ L a) := rfl
 
-variable {T δ : ℕ} {χ : ℕ → R} {G : ℕ → Prop} {ap : ℕ → ℤ} {a : ℕ → R}
+variable {T : ℕ} {δ : ℤ} {χ : ℕ → R} {G : ℕ → Prop} {adm : ℕ → Prop} {ap : ℕ → ℤ} {a : ℕ → R}
+
+/-- **PROVED (the depth at every Fourier index; tex 9471–9476, 9558–9569, 9607–9613).** From the depth
+at the squarefree parameters of the stage support, the vanishing off the support and the recurrence
+(O.6) at the good primes: `v₂ a(n) ≥ min(T, δ + |oddPart n|)` at every index `n`. A square of a good
+prime is removed by the shell formulas (`rec_even`, `rec_odd`), which do not change the primes with
+odd exponent; an index divisible by a prime of the support, or a squarefree index outside the stage
+support, has coefficient zero. This is the reading of "Its depth bound" in tex 9610–9613 for the
+squarefree input `D` of an index. -/
+theorem SourceHyp.depth_all (H : SourceHyp T δ χ G adm ap a) (n : ℕ) :
+    (2 : R) ^ (min (T : ℤ) (δ + (oddPart n).card)).toNat ∣ a n := by
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · rw [H.zero]; exact dvd_zero _
+  by_cases hsq : Squarefree n
+  · by_cases hadm : adm n
+    · have := H.depth n hsq hadm
+      rwa [← card_oddPart_of_squarefree hsq] at this
+    · rw [H.support_adm n hsq hadm]; exact dvd_zero _
+  obtain ⟨p, hp, hp2⟩ : ∃ p, p.Prime ∧ p * p ∣ n := by
+    have := Nat.squarefree_iff_prime_squarefree.not.mp hsq
+    push Not at this
+    exact this
+  by_cases hpG : G p
+  · obtain ⟨ε, hε, hrec⟩ := H.recur p hpG
+    have : Fact p.Prime := ⟨hp⟩
+    obtain ⟨k, n', hpn', rfl⟩ := Nat.exists_eq_pow_mul_and_not_dvd hn.ne' p hp.ne_one
+    have hn' : n' ≠ 0 := by rintro rfl; simp at hn
+    have hk2 : 2 ≤ k := by
+      by_contra hk
+      interval_cases k
+      · rw [pow_zero, one_mul] at hp2
+        exact hpn' (dvd_trans (dvd_mul_left p p) hp2)
+      · rw [pow_one] at hp2
+        exact hpn' (Nat.dvd_of_mul_dvd_mul_left hp.pos hp2)
+    have hp1 : 1 < p := hp.one_lt
+    obtain ⟨s, rfl | rfl⟩ := Nat.even_or_odd' k
+    · rw [rec_even hrec hpn' s, oddPart_pow_even_mul hp hn' hpn']
+      apply dvd_mul_of_dvd_right
+      apply ih n'
+      have : 1 < p ^ (2 * s) := Nat.one_lt_pow (by omega) hp1
+      have hn'0 : 0 < n' := Nat.pos_of_ne_zero hn'
+      nlinarith
+    · rw [rec_odd hrec hpn' s, oddPart_pow_odd_mul hp hn' hpn', ← oddPart_mul_prime hp hn' hpn']
+      apply dvd_mul_of_dvd_right
+      apply ih (p * n')
+      have : p < p ^ (2 * s + 1) := by
+        calc p = p ^ 1 := (pow_one p).symm
+          _ < p ^ (2 * s + 1) := Nat.pow_lt_pow_right hp1 (by omega)
+      have hn'0 : 0 < n' := Nat.pos_of_ne_zero hn'
+      nlinarith
+  · rw [H.support]
+    · exact dvd_zero _
+    · refine ⟨p, ?_, hpG⟩
+      rw [Nat.mem_primeFactors]
+      exact ⟨hp, dvd_trans (dvd_mul_left p p) hp2, hn.ne'⟩
 
 /-- The base: one good prime (tex 9562–9566, 9598–9599). -/
-theorem SourceHyp.single (H : SourceHyp T δ χ G ap a) {q : ℕ} (hq : G q) {n : ℕ} (hn : n ≠ 0)
-    (hqn : q ∉ oddPart n) (t : ℕ) :
-    (2 : R) ^ (min T (δ + (oddPart n).card + 1)) ∣ a (n * (q ^ t) ^ 2) - χ q ^ t * a n := by
+theorem SourceHyp.single (H : SourceHyp T δ χ G adm ap a) {q : ℕ} (hq : G q) {n : ℕ}
+    (hn : n ≠ 0) (hqn : q ∉ oddPart n) (t : ℕ) :
+    (2 : R) ^ (min (T : ℤ) (δ + (oddPart n).card + 1)).toNat ∣
+      a (n * (q ^ t) ^ 2) - χ q ^ t * a n := by
   obtain ⟨ε, hε, hrec⟩ := H.recur q hq
   have : Fact q.Prime := ⟨H.prime q hq⟩
   obtain ⟨k, n'', hqn'', rfl⟩ := Nat.exists_eq_pow_mul_and_not_dvd hn q (H.prime q hq).ne_one
@@ -53,20 +110,20 @@ theorem SourceHyp.single (H : SourceHyp T δ χ G ap a) {q : ℕ} (hq : G q) {n 
       push_cast; ring
     rw [hexp]
     exact dvd_mul_of_dvd_right (two_pow_dvd_of_le (by omega)
-      (two_pow_dvd_intCast_even_mul hev (H.depth n''))) _
+      (two_pow_dvd_intCast_even_mul hev (H.depth_all n''))) _
   · exfalso; apply hqn
     rw [oddPart_pow_odd_mul (H.prime q hq) hn'' hqn'']
     exact Finset.mem_insert_self _ _
 
 /-- **PROVED.** The invariant holds for the source itself (`U = ∅`). -/
-theorem SourceHyp.divInv (H : SourceHyp T δ χ G ap a) : DivInv T δ χ G ∅ a := by
-  refine ⟨H.zero, fun n => by simpa using H.depth n, ?_⟩
+theorem SourceHyp.divInv (H : SourceHyp T δ χ G adm ap a) : DivInv T δ χ G ∅ a := by
+  refine ⟨H.zero, fun n => by simpa using H.depth_all n, ?_⟩
   intro n m hn hm hgood hcop
-  simp only [Finset.sdiff_empty, Finset.card_empty, add_zero]
+  simp only [Finset.sdiff_empty, Finset.card_empty, Nat.cast_zero, add_zero]
   simp only [Finset.sdiff_empty] at hcop
   have key : ∀ m, m ≠ 0 → (∀ q ∈ m.primeFactors, G q) → ∀ n, n ≠ 0 →
       (∀ q ∈ oddPart n, ¬ q ∣ m) →
-      (2 : R) ^ (min T (δ + (oddPart n).card + 1)) ∣ a (n * m ^ 2) - χ m * a n := by
+      (2 : R) ^ (min (T : ℤ) (δ + (oddPart n).card + 1)).toNat ∣ a (n * m ^ 2) - χ m * a n := by
     intro m
     induction m using Nat.recOnPrimePow with
     | zero => intro h; exact absurd rfl h
@@ -100,7 +157,7 @@ theorem SourceHyp.divInv (H : SourceHyp T δ χ G ap a) : DivInv T δ χ G ∅ a
 
 /-- **PROVED.** The invariant after `∏_{p∈U}(U_p − η(p)V_p)` for a list `U` of distinct good
 primes, together with the twisted recurrence at every other good prime. -/
-theorem SourceHyp.divInv_TL (H : SourceHyp T δ χ G ap a) (L : List ℕ) (hnd : L.Nodup)
+theorem SourceHyp.divInv_TL (H : SourceHyp T δ χ G adm ap a) (L : List ℕ) (hnd : L.Nodup)
     (hL : ∀ p ∈ L, G p) :
     DivInv T δ χ G L.toFinset (TL χ L a) ∧
       ∀ q (hq : G q), q ∉ L → ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
@@ -138,27 +195,28 @@ theorem SourceHyp.divInv_TL (H : SourceHyp T δ χ G ap a) (L : List ℕ) (hnd :
 index `n`: `2^{min T (δ + |U| + ω(r))} ∣ (∏_{p∈U}(U_p − η(p)V_p) g)[n]`, where
 `ω(r) = #(oddPart n ∖ U)` counts the primes of the squarefree kernel `J r` of `n` outside `U`
 (so `v₂ B_U[Jrm²] ≥ ω(r)` with `n_U = δ + |U|`, truncated at `T` for an odd stage). -/
-theorem O9 (H : SourceHyp T δ χ G ap a) (L : List ℕ) (hnd : L.Nodup) (hL : ∀ p ∈ L, G p)
-    (n : ℕ) : (2 : R) ^ (min T (δ + L.length + (oddPart n \ L.toFinset).card)) ∣ TL χ L a n := by
+theorem O9 (H : SourceHyp T δ χ G adm ap a) (L : List ℕ) (hnd : L.Nodup) (hL : ∀ p ∈ L, G p)
+    (n : ℕ) :
+    (2 : R) ^ (min (T : ℤ) (δ + L.length + (oddPart n \ L.toFinset).card)).toNat ∣ TL χ L a n := by
   have := (H.divInv_TL L hnd hL).1.bound n
   rwa [List.toFinset_card_of_nodup hnd] at this
 
 /-- **(O.11), the shell congruence (tex 9626–9627), PROVED.** In matching parity, for `n = J m₁²`
 with `J ⊆ U` (i.e. `oddPart n ⊆ U`) and every good `m`:
 `B_U[n m²] − η(m) B_U[n] ∈ 2𝒪`, undivided: `2^{min T (n_U + 1)}` divides the difference. -/
-theorem O11_cong (H : SourceHyp T δ χ G ap a) (L : List ℕ) (hnd : L.Nodup) (hL : ∀ p ∈ L, G p)
-    {n m : ℕ} (hn : n ≠ 0) (hm : m ≠ 0) (hJ : oddPart n ⊆ L.toFinset)
+theorem O11_cong (H : SourceHyp T δ χ G adm ap a) (L : List ℕ) (hnd : L.Nodup)
+    (hL : ∀ p ∈ L, G p) {n m : ℕ} (hn : n ≠ 0) (hm : m ≠ 0) (hJ : oddPart n ⊆ L.toFinset)
     (hgood : ∀ q ∈ m.primeFactors, G q) :
-    (2 : R) ^ (min T (δ + L.length + 1)) ∣ TL χ L a (n * m ^ 2) - χ m * TL χ L a n := by
+    (2 : R) ^ (min (T : ℤ) (δ + L.length + 1)).toNat ∣ TL χ L a (n * m ^ 2) - χ m * TL χ L a n := by
   have hsd : oddPart n \ L.toFinset = ∅ := Finset.sdiff_eq_empty_iff_subset.mpr hJ
   have := (H.divInv_TL L hnd hL).1.cong n m hn hm hgood (by simp [hsd])
-  rwa [hsd, Finset.card_empty, add_zero, List.toFinset_card_of_nodup hnd] at this
+  rwa [hsd, Finset.card_empty, Nat.cast_zero, add_zero, List.toFinset_card_of_nodup hnd] at this
 
 /-- **(O.11), off the unary support (tex 9628–9632), PROVED.** If the squarefree kernel of `n` is
 not contained in `U`, then `ω(r) ≥ 1` and `2^{min T (n_U + 1)} ∣ (∏(U_p − η(p)V_p) g)[n]`. -/
-theorem O11_offJ (H : SourceHyp T δ χ G ap a) (L : List ℕ) (hnd : L.Nodup) (hL : ∀ p ∈ L, G p)
-    {n : ℕ} (hJ : ¬ oddPart n ⊆ L.toFinset) :
-    (2 : R) ^ (min T (δ + L.length + 1)) ∣ TL χ L a n := by
+theorem O11_offJ (H : SourceHyp T δ χ G adm ap a) (L : List ℕ) (hnd : L.Nodup)
+    (hL : ∀ p ∈ L, G p) {n : ℕ} (hJ : ¬ oddPart n ⊆ L.toFinset) :
+    (2 : R) ^ (min (T : ℤ) (δ + L.length + 1)).toNat ∣ TL χ L a n := by
   have hpos : 0 < (oddPart n \ L.toFinset).card := by
     rw [Finset.card_pos]
     obtain ⟨q, hq, hqL⟩ := Finset.not_subset.mp hJ
@@ -169,15 +227,15 @@ theorem O11_offJ (H : SourceHyp T δ χ G ap a) (L : List ℕ) (hnd : L.Nodup) (
 unary series `Θ_J = ∑ η(m) χ_{−4}(m)^i m q^{J m²}`, whose coefficient `θ(m)` at `J m²` is an odd
 integer times `η(m)`: at every index `J m²` (`J ⊆ U`, `m` good) the undivided numerator of `H_U` is
 divisible by `2^{min T (n_U + 1)}`. -/
-theorem O11_theta (H : SourceHyp T δ χ G ap a) (L : List ℕ) (hnd : L.Nodup)
+theorem O11_theta (H : SourceHyp T δ χ G adm ap a) (L : List ℕ) (hnd : L.Nodup)
     (hL : ∀ p ∈ L, G p) (θ : ℕ → ℤ) (hθ : ∀ m, Odd m → Odd (θ m))
     {n m : ℕ} (hn : n ≠ 0) (hm : m ≠ 0) (hmodd : Odd m) (hJ : oddPart n ⊆ L.toFinset)
     (hgood : ∀ q ∈ m.primeFactors, G q) :
-    (2 : R) ^ (min T (δ + L.length + 1)) ∣
+    (2 : R) ^ (min (T : ℤ) (δ + L.length + 1)).toNat ∣
       TL χ L a (n * m ^ 2) - TL χ L a n * (χ m * (θ m : R)) := by
   have h1 := O11_cong H L hnd hL hn hm hJ hgood
   have h2 := O9 H L hnd hL n
-  rw [Finset.sdiff_eq_empty_iff_subset.mpr hJ, Finset.card_empty, add_zero] at h2
+  rw [Finset.sdiff_eq_empty_iff_subset.mpr hJ, Finset.card_empty, Nat.cast_zero, add_zero] at h2
   have hev : Even (1 - θ m) := Odd.sub_odd odd_one (hθ m hmodd)
   have : TL χ L a (n * m ^ 2) - TL χ L a n * (χ m * (θ m : R)) =
       (TL χ L a (n * m ^ 2) - χ m * TL χ L a n) +
@@ -246,5 +304,94 @@ theorem TL_omission (χ : ℕ → R) (a : ℕ → R) {p : ℕ} [hp : Fact p.Prim
   rw [show V.prod * (p * (p * r)) = p ^ 2 * (V.prod * r) by ring, hrec (V.prod * r),
     divCoeff_of_not_dvd a (not_sq_dvd_of_not_dvd hpVr)]
   push_cast; ring
+
+/-! ### Transport along ring homomorphisms -/
+
+/-- **PROVED.** `divCoeff` commutes with a ring homomorphism. -/
+theorem divCoeff_map {R' : Type*} [CommRing R'] (f : R →+* R') (b : ℕ → R) (d n : ℕ) :
+    divCoeff (fun k => f (b k)) d n = f (divCoeff b d n) := by
+  unfold divCoeff; split_ifs <;> simp
+
+/-- **PROVED.** The source hypotheses (without depth) are transported by a ring homomorphism
+`f : R → R'` (e.g. the reduction `𝒪 → 𝒪/2^M𝒪`). -/
+theorem SourceCore.map {R' : Type*} [CommRing R'] (f : R →+* R') (H : SourceCore χ G adm ap a) :
+    SourceCore (fun n => f (χ n)) G adm ap (fun n => f (a n)) where
+  prime := H.prime
+  odd := H.odd
+  ap_mod := H.ap_mod
+  recur q hq := by
+    obtain ⟨ε, hε, hrec⟩ := H.recur q hq
+    refine ⟨ε, hε, fun n => ?_⟩
+    have := congrArg f (hrec n)
+    rw [divCoeff_map]
+    simpa using this
+  zero := by simp [H.zero]
+  support n hn := by simp [H.support n hn]
+  support_adm D hD hadm := by simp [H.support_adm D hD hadm]
+  mul x y := by simp [H.mul]
+  one := by simp [H.one]
+
+/-- **PROVED.** The source hypotheses with depth are transported by a ring homomorphism. -/
+theorem SourceHyp.map {R' : Type*} [CommRing R'] (f : R →+* R') (H : SourceHyp T δ χ G adm ap a) :
+    SourceHyp T δ (fun n => f (χ n)) G adm ap (fun n => f (a n)) :=
+  { toSourceCore := H.toSourceCore.map f
+    depth := fun D hD hadm => by
+      have h := map_dvd f (H.depth D hD hadm)
+      rwa [map_pow, map_ofNat] at h }
+
+/-! ### Non-vacuity of `SourceCore` / `SourceHyp` -/
+
+/-- The phase character of the non-vacuity example: `χ(1) = 1`, `χ(n) = 0` otherwise. -/
+def exChi : ℕ → ℤ := fun n => if n = 1 then 1 else 0
+
+/-- The coefficient function of the non-vacuity example: `a(1) = 1`, `a(3) = 2`, `0` otherwise. -/
+def exCoeff : ℕ → ℤ := fun n => if n = 1 then 1 else if n = 3 then 2 else 0
+
+/-- **PROVED (non-vacuity of the restated source hypotheses).** Over `ℤ`, with the one good prime
+`3`, the stage support `{1, 3}`, `a_3 = 0`, depth `δ = 0` and truncation `T = 3`, the coefficient
+function `a(1) = 1`, `a(3) = 2` satisfies every field of `SourceHyp` (recurrence, support, depth),
+is nonzero, and the depth bound is attained at `D = 3`: `v₂ a(3) = 1 = δ + ω(3)`. -/
+theorem sourceHyp_example :
+    SourceHyp 3 0 exChi (fun q => q = 3) (fun D => D = 1 ∨ D = 3) (fun _ => 0) exCoeff ∧
+      exCoeff 3 ≠ 0 ∧ ¬ (2 : ℤ) ^ 2 ∣ exCoeff 3 := by
+  refine ⟨⟨⟨fun q hq => hq ▸ Nat.prime_three, fun q hq => by subst hq; decide,
+    fun q hq => by subst hq; decide, fun q hq => ?_, by simp [exCoeff], ?_, ?_, ?_, ?_⟩, ?_⟩,
+    by decide, by decide⟩
+  · subst hq
+    refine ⟨1, Or.inl rfl, fun n => ?_⟩
+    have h1 : ¬ 9 * n = 1 := by omega
+    have h3 : ¬ 9 * n = 3 := by omega
+    simp [exCoeff, exChi, h1, h3]
+  · rintro n ⟨q, hq, hq3⟩
+    simp only [exCoeff]
+    split_ifs with h1 h3
+    · subst h1; simp at hq
+    · subst h3
+      rw [Nat.prime_three.primeFactors, Finset.mem_singleton] at hq
+      exact absurd hq hq3
+    · rfl
+  · intro D _ hD
+    simp only [exCoeff]
+    split_ifs with h1 h3
+    · exact absurd (Or.inl h1) hD
+    · exact absurd (Or.inr h3) hD
+    · rfl
+  · intro x y
+    simp only [exChi]
+    by_cases hx : x = 1
+    · subst hx; simp
+    · have hxy : x * y ≠ 1 := fun h => hx (Nat.eq_one_of_mul_eq_one_right h)
+      simp [hx, hxy]
+  · simp [exChi]
+  · intro D _ hD
+    rcases hD with rfl | rfl
+    · simp [exCoeff]
+    · rw [ArithmeticFunction.cardDistinctFactors_apply_prime Nat.prime_three]
+      simp [exCoeff]
+
+/-- **PROVED (non-vacuity of `DivInv`).** The invariant holds for the example source at `U = ∅`. -/
+theorem divInv_example :
+    DivInv 3 0 exChi (fun q => q = 3) ∅ exCoeff :=
+  sourceHyp_example.1.divInv
 
 end ZInQ.Manuscript.RC.Odd

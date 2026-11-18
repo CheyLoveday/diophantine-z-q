@@ -2,9 +2,9 @@ import ZInQKernel.Contrib.OneProof.RC.PrintsArith.Bundle
 import ZInQKernel.Contrib.CloudB3RC53.OpenImage.Basic
 
 /-!
-# Lane RC22 (glue sweep), Tate share: lane RC9's bundle `GlueArith` is uninhabitable
+# Lane RC22 (glue sweep), Tate share: lane RC9's former field `GlueArith.det` is false
 
-Lane RC9 (`RC/PrintsArith/Bundle.lean`) bundles two textbook facts:
+Lane RC9 (`RC/PrintsArith/Bundle.lean`) bundled two textbook facts:
 
 ```
 structure GlueArith : Prop where
@@ -12,24 +12,29 @@ structure GlueArith : Prop where
   det : ∀ E : WeierstrassCurve ℚ, DetTateTwoCyclotomic E
 ```
 
-The field `det` quantifies over **all** Weierstrass curves over `ℚ`, with no `[E.IsElliptic]`, while
+The field `det` quantified over **all** Weierstrass curves over `ℚ`, with no `[E.IsElliptic]`, while
 `TateMod E 2` is the vendored Tate module of the group of *nonsingular* points `(E⁄ℚ̄)(ℚ̄)`, which is
 defined for singular cubics too. For the cuspidal cubic `y² = x³` that group has no nonzero
 `2`-power torsion (a point `P = -P` has `y = 0`, hence `x = 0`, and `(0, 0)` is singular), so its
 `2`-adic Tate module is zero and `det ρ₂(σ) = 1` for every `σ ∈ G_ℚ`; `DetTateTwoCyclotomic` would then
 say that every `σ` fixes `μ_{2^∞}`, but complex conjugation moves `√-1`. Hence
-`not_glueArith : ¬ GlueArith` (PROVED), and every theorem of lane RC9 taking `G : GlueArith`
-(`ecurve_hasNoCM`, `ecurve_serre_scalar`, `ecurve_serre_SL2_part`, `ecurve_kato_hyp_v`) is vacuous
-as stated. The direction `DetTateTwoCyclotomic E` is true, and proved in the tree, for every
-*elliptic* `E/ℚ` (`ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoCyclotomic`); the
-replacement bridges, which need only `CMjInteger` and the prints, are in `TatePrintsArith.lean`.
+`not_forall_detTateTwoCyclotomic` (PROVED): the old bundle was uninhabitable, and lane RC9's
+`ecurve_hasNoCM`, `ecurve_serre_scalar`, `ecurve_serre_SL2_part`, `ecurve_kato_hyp_v` were vacuous.
+
+**Fixed at the source (lane RC27).** The field `det` has been dropped from `GlueArith`, which now holds
+only `CMjInteger` (`PrintsArith.glueArith_iff`); the direction `DetTateTwoCyclotomic E` is true, and
+proved in the tree, for every *elliptic* `E/ℚ`
+(`ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoCyclotomic`, recorded in lane RC9's file as
+`PrintsArith.detTateTwoCyclotomic_of_isElliptic`), and lane RC9's four theorems discharge the
+determinant with it. The counterexample below stays as the record of why the unrestricted field
+cannot be reinstated; the bridges of `TatePrintsArith.lean`, which need only `CMjInteger` and the
+prints, now agree with lane RC9's theorems.
 
 Manuscript (11/5 version, `diophantine_zq.tex`): the GLUE is used at tex 3597–3605
 (`ex:arith-moving-character`, "the determinant is the cyclotomic character") and, through
 `kato_hyp_v`, at tex 7228–7231; the manuscript applies it only to the elliptic curves `E_ℓ`
-(`c₄ = 208ℓ²`, `Δ = 2304ℓ⁶`, tex 1765), so the defect is in the Lean bundle, not in the text.
+(`c₄ = 208ℓ²`, `Δ = 2304ℓ⁶`, tex 1765), so the defect was in the Lean bundle, not in the text.
 -/
-
 noncomputable section
 
 namespace ZInQ.Manuscript.RC.GlueSweep.Tate
@@ -123,9 +128,9 @@ theorem exists_moves_root_of_unity :
     exact h
 
 /-- **Lane RC9's GLUE `DetTateTwoCyclotomic` is false for the singular cubic `y² = x³`** (PROVED).
-Consumer: the field `GlueArith.det` (lane RC9, `RC/PrintsArith/Bundle.lean`), used at tex 3597–3605
-through `ecurve_serre_SL2_part` and at tex 7228–7231 through `ecurve_kato_hyp_v`. Kind: PROVED (a
-counterexample; standard axioms only). -/
+Consumer: the former field `GlueArith.det` (lane RC9, `RC/PrintsArith/Bundle.lean`; dropped by lane
+RC27), used at tex 3597–3605 through `ecurve_serre_SL2_part` and at tex 7228–7231 through
+`ecurve_kato_hyp_v`. Kind: PROVED (a counterexample; standard axioms only). -/
 theorem not_detTateTwoCyclotomic_cusp : ¬ DetTateTwoCyclotomic cusp := by
   intro h
   obtain ⟨σ, ζ, hζ, hσ⟩ := exists_moves_root_of_unity
@@ -136,14 +141,5 @@ theorem not_detTateTwoCyclotomic_cusp : ¬ DetTateTwoCyclotomic cusp := by
 `[E.IsElliptic]` (`ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoCyclotomic`). -/
 theorem not_forall_detTateTwoCyclotomic : ¬ ∀ E : WeierstrassCurve ℚ, DetTateTwoCyclotomic E :=
   fun h => not_detTateTwoCyclotomic_cusp (h cusp)
-
-/-- **Lane RC9's bundle `GlueArith` is uninhabitable** (PROVED): its field
-`det : ∀ E : WeierstrassCurve ℚ, DetTateTwoCyclotomic E` fails at `y² = x³`. Consequently lane RC9's
-`ecurve_hasNoCM`, `ecurve_serre_scalar`, `ecurve_serre_SL2_part` and `ecurve_kato_hyp_v`
-(tex 1765–1767, 2882–2887, 3597–3605, 7228–7231), which take `G : GlueArith`, are vacuous as
-stated; `TatePrintsArith.lean` restates them from `CMjInteger` and the prints only, discharging the
-determinant by `detTateTwoCyclotomic` for the elliptic `E_ℓ`. Kind: PROVED. -/
-theorem not_glueArith : ¬ GlueArith :=
-  fun G => not_forall_detTateTwoCyclotomic G.det
 
 end ZInQ.Manuscript.RC.GlueSweep.Tate

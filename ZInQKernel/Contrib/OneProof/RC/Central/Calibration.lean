@@ -21,8 +21,13 @@ hypotheses with their kinds:
 * the local quotient lengths: `v₂ N_i` at each of the two places above the moving prime
   (ELLIOT, tex 4066–4071; `v₂ N_i = v₂ m_i` is PROVED in `EulerFactors.lean`) and `2` at each of
   the two places above an active prime (GLUE, `dim_{𝔽₂} E[2]^{Fr_p} = 2`, tex 4032–4036, 4076–4078);
-* the regulator ratio from dual isogenies with `ψφ = [2]` (the height adjunction is GLUE here;
-  `regulator_inputs_sumDiff` in `Height/Discharge.lean` derives these inputs);
+* the regulator ratio of the **real** regulators `Reg_A`, `Reg_B` (canonical heights of free
+  generators at rank one) from dual isogenies with `ψφ = [2]`: the height adjunction read on
+  generators, `α Reg_B = β Reg_A`, and `αβ = 2` are the hypotheses of `regulator_ratio`, PROVED for
+  the genuine canonical heights by lane RC19 (`Height/SumDifference.lean`,
+  `regulator_ratio_sumDiff`, which applies `regulator_ratio` to them; `Height/Discharge.lean`,
+  `regulator_inputs_sumDiff`); that `Reg_B/Reg_A = 2/I²` is a rational number is then derived
+  (`regulator_eq_ratCast_mul`, `regulator_ratio_div`), not assumed;
 * the pullbacks `φ^*ω_B = a ω_A`, `ψ^*ω_A = b ω_B` with `ab = 4`, the real change of variables
   `|a| Ω_A = (|ker φ_ℝ| / |coker φ_ℝ|) Ω_B` with both orders at most four (GLUE, tex 4093–4104);
 * **Cassels' isogeny invariance in Milne's form** (PRINT: J. S. Milne, *Arithmetic Duality
@@ -44,8 +49,13 @@ Every declaration in this file is `PROVED`, except the definition `MilneIsogenyI
 states the print (PRINT).
 
 * `MilneIsogenyInvariance` (PRINT), `milne_valuation_form` (tex 4105–4112).
-* `regulator_ratio`, `isogenyIndex_mul`, `padicValRat_regulator_ratio` (tex 4080–4091):
-  `IJ = 2`, `Reg_B / Reg_A = 2 / I²`, `v₂(Reg_B/Reg_A) = ±1`.
+* `isogenyIndex_mul`, `isogenyIndex_ne_zero`, `regulator_ratio` (over `ℝ`),
+  `regulator_eq_ratCast_mul`, `regulator_ratio_div`, `padicValRat_regulator_ratio`
+  (tex 4082–4090): `IJ = 2`, `Reg_B α² = 2 Reg_A`, `Reg_B / Reg_A = 2/α² = 2/I² ∈ ℚ`,
+  `v₂(Reg_B/Reg_A) = ±1`.
+* `milne_valuation_form_of_adjunction` (tex 4082–4112): Milne's identity at real regulators related
+  by the adjunction, in valuation form with `v₂(2/α²)`; `regulator_hypotheses_satisfiable`:
+  non-vacuity, with the irrational regulator `Reg_A = π`.
 * `pullback_values` (tex 4093–4096): `ab = 4 ⇒ a ∈ {±1, ±2, ±4}`.
 * `padicValRat_period_ratio` (tex 4096–4104): `|v₂(Ω_B/Ω_A)| ≤ 4`.
 * `padicValRat_component_ratio` (tex 4118–4135): `v₂(C_B/C_A) = Σ_{p ∣ k} t_p`.
@@ -74,7 +84,9 @@ def MilneIsogenyInvariance (shaA shaB tA tAd tB tBd CA CB : ℕ) (RegA RegB ΩA 
 /-- **The two-adic form of the isogeny invariance** (tex 4105–4112). With self-dual torsion
 counts (`|A^t(ℚ)_tors| = |A(ℚ)_tors|`, `A` and `B` principally polarized: GLUE), rational ratios
 `Reg_B = ρ_Reg Reg_A`, `Ω_B = ρ_Ω Ω_A`, and `s_X = v₂ |Ш(X)|`, `g_X = v₂ |X(ℚ)_tors|`:
-`s_A − s_B = 2g_A − 2g_B + v₂ ρ_Reg + v₂ ρ_Ω + v₂(C_B/C_A)`. PROVED. -/
+`s_A − s_B = 2g_A − 2g_B + v₂ ρ_Reg + v₂ ρ_Ω + v₂(C_B/C_A)`. The rationality of `Reg_B/Reg_A` is
+not an input of the calibration: `milne_valuation_form_of_adjunction` derives it from the height
+adjunction on the real regulators (tex 4088–4090) and then applies this lemma. PROVED. -/
 theorem milne_valuation_form {shaA shaB tA tB CA CB : ℕ} {RegA ΩA : ℝ} {ρReg ρΩ : ℚ}
     (hshaA : shaA ≠ 0) (hshaB : shaB ≠ 0) (htA : tA ≠ 0) (htB : tB ≠ 0) (hCA : CA ≠ 0)
     (hCB : CB ≠ 0) (hRegA : RegA ≠ 0) (hΩA : ΩA ≠ 0) (hρReg : ρReg ≠ 0) (hρΩ : ρΩ ≠ 0)
@@ -108,24 +120,64 @@ theorem milne_valuation_form {shaA shaB tA tB CA CB : ℕ} {RegA ΩA : ℝ} {ρR
   push_cast at hv ⊢
   linarith
 
-/-! ### The regulator ratio -/
+/-! ### The regulator ratio
+
+The regulators `Reg_A`, `Reg_B` are **real** numbers: the determinants of the canonical
+(Néron–Tate) height pairings on the free parts of `A(ℚ)` and `B(ℚ)`; at rank one, the canonical
+heights of free generators. The text derives that their ratio is the rational number `2/I²`
+(tex 4082–4090), and only then takes its two-adic valuation (tex 4108–4112). Here too the
+rationality is a consequence (`regulator_eq_ratCast_mul`, `regulator_ratio_div`), not an input. -/
 
 /-- **`ψφ = [2]` on rank-one free lattices**: with `φ(g_A) = α g_B` and `ψ(g_B) = β g_A`,
 `αβ = 2`; the indices `I = |α|`, `J = |β|` satisfy `IJ = 2` (tex 4082–4088). PROVED. -/
 theorem isogenyIndex_mul {α β : ℤ} (h : α * β = 2) : α.natAbs * β.natAbs = 2 := by
   rw [← Int.natAbs_mul, h]; rfl
 
-/-- **`Reg_B / Reg_A = 2 / I²`** (tex 4088–4090): with the height adjunction
-`⟨φ x, y⟩_B = ⟨x, ψ y⟩_A` (GLUE: functoriality of the canonical height under dual isogenies) read
-on generators as `α Reg_B = β Reg_A`, and `αβ = 2`, one has `Reg_B α² = 2 Reg_A`. PROVED. In the
-reduction it is applied only to the rational ratio `ρ_Reg` (`RegA := 1`, `RegB := ρ_Reg = 2/α²`,
-`Wiring/Central.lean`); the genuine regulators are real and enter through `milne_valuation_form`. -/
-theorem regulator_ratio {α β : ℤ} {RegA RegB : ℚ} (h : α * β = 2)
-    (hadj : (α : ℚ) * RegB = (β : ℚ) * RegA) : RegB * (α : ℚ) ^ 2 = 2 * RegA := by
-  have h' : (α : ℚ) * β = 2 := by exact_mod_cast h
-  linear_combination (α : ℚ) * hadj + RegA * h'
+/-- `αβ = 2` forces `α ≠ 0`: the index `I = |α|` is positive (tex 4082–4088). PROVED. -/
+theorem isogenyIndex_ne_zero {α β : ℤ} (h : α * β = 2) : α ≠ 0 := by
+  rintro rfl
+  simp at h
 
-/-- **`v₂(Reg_B / Reg_A) = v₂(2/I²) = ±1`** (tex 4088–4090, 4108–4109). PROVED. -/
+/-- **`Reg_B / Reg_A = 2 / I²`** (tex 4022–4025, 4082–4090), for the real regulators. With the
+height adjunction `⟨φ x, y⟩_B = ⟨x, ψ y⟩_A` ("the sum/difference isogenies are dual", tex 4022–4023)
+read on free generators `g_A`, `g_B` of the two rank-one lattices (`φ g_A ≡ α g_B`,
+`ψ g_B ≡ β g_A` modulo torsion, `Reg_A = ĥ_A(g_A)`, `Reg_B = ĥ_B(g_B)`) as `α Reg_B = β Reg_A`, and
+`αβ = 2` (`ψφ = [2]`), one has `Reg_B α² = 2 Reg_A`. Both hypotheses are PROVED for the genuine
+canonical heights by lane RC19 (`ZInQ.Manuscript.RC.Height.regulator_ratio_sumDiff`, which applies
+this theorem to them). PROVED. -/
+theorem regulator_ratio {α β : ℤ} {RegA RegB : ℝ} (h : α * β = 2)
+    (hadj : (α : ℝ) * RegB = (β : ℝ) * RegA) : RegB * (α : ℝ) ^ 2 = 2 * RegA := by
+  have h' : (α : ℝ) * β = 2 := by exact_mod_cast h
+  linear_combination (α : ℝ) * hadj + RegA * h'
+
+/-- **The regulator ratio is the rational number `2/α²`** (tex 4088–4090): under the hypotheses of
+`regulator_ratio`, `Reg_B = (2/α²) · Reg_A` with `2/α² ∈ ℚ`, for every real `Reg_A`. That
+`Reg_B/Reg_A` is rational is derived here from the adjunction and `αβ = 2`; it is not assumed.
+PROVED. -/
+theorem regulator_eq_ratCast_mul {α β : ℤ} {RegA RegB : ℝ} (h : α * β = 2)
+    (hadj : (α : ℝ) * RegB = (β : ℝ) * RegA) : RegB = ((2 / (α : ℚ) ^ 2 : ℚ) : ℝ) * RegA := by
+  have hα : (α : ℝ) ≠ 0 := by exact_mod_cast isogenyIndex_ne_zero h
+  have hr := regulator_ratio h hadj
+  push_cast
+  field_simp
+  linear_combination hr
+
+/-- **`Reg_B / Reg_A = 2 / I²`, a rational number** (tex 4088–4090): under the hypotheses of
+`regulator_ratio` and `Reg_A ≠ 0`, the ratio of the real regulators is the rational number `2/α²`,
+and it is `2/I²` for the index `I = |α| = [B(ℚ)_free : φ A(ℚ)_free]` (the text's form). PROVED. -/
+theorem regulator_ratio_div {α β : ℤ} {RegA RegB : ℝ} (h : α * β = 2)
+    (hadj : (α : ℝ) * RegB = (β : ℝ) * RegA) (hRegA : RegA ≠ 0) :
+    RegB / RegA = ((2 / (α : ℚ) ^ 2 : ℚ) : ℝ) ∧
+      RegB / RegA = 2 / ((α.natAbs : ℕ) : ℝ) ^ 2 := by
+  have h1 : RegB / RegA = ((2 / (α : ℚ) ^ 2 : ℚ) : ℝ) := by
+    rw [regulator_eq_ratCast_mul h hadj, mul_div_assoc, div_self hRegA, mul_one]
+  refine ⟨h1, ?_⟩
+  rw [h1, Nat.cast_natAbs, Int.cast_abs, sq_abs]
+  push_cast
+  rfl
+
+/-- **`v₂(Reg_B / Reg_A) = v₂(2/I²) = ±1`** (tex 4088–4090, 4108–4109): the two-adic valuation of
+the rational number `2/α²`, which is `Reg_B/Reg_A` by `regulator_ratio_div`. PROVED. -/
 theorem padicValRat_regulator_ratio {α β : ℤ} (h : α * β = 2) :
     padicValRat 2 (2 / ((α : ℚ) ^ 2)) = 1 ∨ padicValRat 2 (2 / ((α : ℚ) ^ 2)) = -1 := by
   have hdvd : α ∣ 2 := ⟨β, h.symm⟩
@@ -146,6 +198,46 @@ theorem padicValRat_regulator_ratio {α β : ℤ} (h : α * β = 2) :
     rw [show ((-2 : ℤ) : ℚ) ^ 2 = 2 * 2 by norm_num, div_mul_eq_div_div, div_self (by norm_num),
       padicValRat.div (by norm_num) (by norm_num), padicValRat.one, h22]
     norm_num
+
+/-- **The two-adic isogeny identity at the real regulators** (tex 4082–4112). Milne's identity for
+real regulators `Reg_A ≠ 0`, `Reg_B` related by the height adjunction on generators
+(`α Reg_B = β Reg_A`, `αβ = 2`, as in `regulator_ratio`), periods `Ω_A ≠ 0`, `Ω_B = ρ_Ω Ω_A`, and
+self-dual torsion counts, gives
+`s_A − s_B = 2g_A − 2g_B + v₂(2/α²) + v₂ ρ_Ω + v₂(C_B/C_A)` with `2/α² = Reg_B/Reg_A`
+(`regulator_ratio_div`) and `v₂(2/α²) = ±1` (`padicValRat_regulator_ratio`). The regulator ratio
+enters as the rational number derived from the adjunction, not as an input; the regulators
+themselves are arbitrary reals (see `regulator_hypotheses_satisfiable`). PROVED, from Milne's print
+(`MilneIsogenyInvariance`) through `milne_valuation_form`. -/
+theorem milne_valuation_form_of_adjunction {shaA shaB tA tB CA CB : ℕ} {RegA RegB ΩA : ℝ}
+    {ρΩ : ℚ} {α β : ℤ} (hαβ : α * β = 2) (hadj : (α : ℝ) * RegB = (β : ℝ) * RegA)
+    (hshaA : shaA ≠ 0) (hshaB : shaB ≠ 0) (htA : tA ≠ 0) (htB : tB ≠ 0) (hCA : CA ≠ 0)
+    (hCB : CB ≠ 0) (hRegA : RegA ≠ 0) (hΩA : ΩA ≠ 0) (hρΩ : ρΩ ≠ 0)
+    (h : MilneIsogenyInvariance shaA shaB tA tA tB tB CA CB RegA RegB ΩA ((ρΩ : ℝ) * ΩA)) :
+    (padicValNat 2 shaA : ℤ) - padicValNat 2 shaB =
+        2 * (padicValNat 2 tA : ℤ) - 2 * padicValNat 2 tB + padicValRat 2 (2 / (α : ℚ) ^ 2) +
+          padicValRat 2 ρΩ + padicValRat 2 ((CB : ℚ) / CA) ∧
+      (padicValRat 2 (2 / (α : ℚ) ^ 2) = 1 ∨ padicValRat 2 (2 / (α : ℚ) ^ 2) = -1) := by
+  have hα : (α : ℚ) ≠ 0 := by exact_mod_cast isogenyIndex_ne_zero hαβ
+  have hρ0 : (2 / (α : ℚ) ^ 2) ≠ 0 := div_ne_zero two_ne_zero (pow_ne_zero 2 hα)
+  rw [regulator_eq_ratCast_mul hαβ hadj] at h
+  exact ⟨milne_valuation_form hshaA hshaB htA htB hCA hCB hRegA hΩA hρ0 hρΩ h,
+    padicValRat_regulator_ratio hαβ⟩
+
+/-- **Non-vacuity of the regulator hypotheses, with an irrational regulator** (PROVED). The
+hypotheses of `regulator_ratio`, `regulator_eq_ratCast_mul`, `regulator_ratio_div` and
+`milne_valuation_form_of_adjunction` are jointly satisfiable with `Reg_A = π`: `α = 1`, `β = 2`,
+`Reg_B = 2π`, `Ω_A = 1`, `ρ_Ω = 1`, `|Ш(A)| = 2`, every other order `1`, and Milne's identity
+`2 · π · 1 · 1 / (1 · 1) = 1 · 2π · 1 · 1 / (1 · 1)`. So the real carrier is genuinely used: the
+regulators are not forced to be rational, only their ratio is. -/
+theorem regulator_hypotheses_satisfiable :
+    ∃ (α β : ℤ) (RegA RegB : ℝ), α * β = 2 ∧ (α : ℝ) * RegB = (β : ℝ) * RegA ∧ RegA ≠ 0 ∧
+      Irrational RegA ∧
+      MilneIsogenyInvariance 2 1 1 1 1 1 1 1 RegA RegB 1 (((1 : ℚ) : ℝ) * 1) := by
+  refine ⟨1, 2, Real.pi, 2 * Real.pi, by norm_num, by push_cast; ring, Real.pi_ne_zero,
+    irrational_pi, ?_⟩
+  simp only [MilneIsogenyInvariance]
+  push_cast
+  ring
 
 /-! ### Pullbacks and the period ratio -/
 

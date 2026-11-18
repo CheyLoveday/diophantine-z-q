@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.RC.PrintsArith.Basic
+import ZInQKernel.Contrib.OneProof.RC.PrintsArith.CornutJetchev
 
 /-!
 # Heegner points, cusps and CM reduction: Cai–Chen–Liu, Elkik (Manin–Drinfeld), Cornut–Jetchev
@@ -12,21 +13,26 @@ curves and CM points:
   norm relations (4.1) for `y_d = π(x_d)`.
 * **Elkik**, *Le théorème de Manin–Drinfeld*, Astérisque 183 (1990), 59–67, **Théorème, p. 59**
   (read: Numdam scan). Use: tex 2937–2946, finiteness of the cuspidal subgroup `𝒞_N` of `J₀(N)`.
-* **Cornut–Jetchev**, *Liftings of reduction maps for quaternion algebras*, preprint (PDF dated
-  3 December 2010, author's web page), **Theorem 3.1** (§3.5, p. 9), with §§3.1–3.4 (pp. 4–8),
-  Lemma 2.1 (p. 4), Corollary 3.2 (p. 9) and §§4.9–4.10 (p. 15) (read: §§2–3.5, 4.9–4.10). Use:
-  tex 2522–2533 ((3.8)) and App. F tex 9195–9295.
+* **Cornut–Jetchev**, *Liftings of reduction maps for quaternion algebras*, preprint,
+  arXiv:1012.0725v1 (3 December 2010; the same text as the author's web page PDF), **Theorem 3.1**
+  (§3.5, p. 9), with §§3.1–3.4 (pp. 4–8), Lemma 2.1 (p. 4), Corollary 3.2 (p. 9) and §§4.9–4.10
+  (p. 15) (read: §§2–3.5, 4.9–4.10). Use: tex 2522–2533 ((3.8)) and App. F tex 9195–9295. The one
+  PRINT statement of Theorem 3.1 (general `κ`) is `CJSetting.Thm31` (`PrintsArith/CornutJetchev.lean`,
+  Lane RC27); the `κ = 1` bijection used here, `CJReductionData.Thm3_1KappaOne`, is DERIVED from it
+  (`CJReductionData.thm3_1KappaOne_of_print`).
 
 **What is genuine.** `ManinDrinfeld` is stated over genuine definitions in its analytic form
 (cusp forms, the action of `SL₂(ℤ)` on `ℍ`, path integrals): DEPARTURE of form, since `J₀(N)` and
 divisor classes on `X_Γ` are absent from Mathlib; equivalent to the print by the Abel–Jacobi theorem
 (GLUE). The Cornut–Jetchev hypothesis checks of App. F (`cj_kappa_eq_one`, `cj_H2`,
-`cj_inert`) are PROVED.
+`cj_inert`) are PROVED, and they discharge H.2, H.3 and `κ = 1` in the derivation of the `κ = 1`
+bijection from the print (`CJReductionData.PrintRealization`, `thm3_1KappaOne_of_print`).
 
 **What is an interface.** Modular curves `X₀(N)` as curves over `ℚ`, CM points, ring class fields,
 Hecke correspondences, the modular parametrization `π : X₀(N) → E` and supersingular reduction do
 not exist in Mathlib. `HeegnerPointData` and `CJReductionData` carry exactly the objects and
-properties the proof uses. **Vacuity:** the norm relations alone are satisfied by the zero system
+properties the proof uses; `CJReductionData.PrintRealization` records how the latter sits inside the
+print's objects at the manuscript's specialization (non-vacuity: `cjToyRealization`). **Vacuity:** the norm relations alone are satisfied by the zero system
 (`HeegnerPointData.zero_normRelations`); in the proof the anchor is Cai–Shu–Tian's height formula
 (stated by the shared top layer, `CST.CSTThm11Split`), so `CCLThm2_15Applied` is parametric in an
 anchor predicate. **Sizing a genuine definition:** `X₀(N)` over `ℚ` (or its analytic uniformization
@@ -172,22 +178,8 @@ def CCLThm2_15Applied (E : WeierstrassCurve ℚ) (Anchor : HeegnerPointData E �
 
 /-! ### Cornut–Jetchev: the reduction bijection and the hypothesis checks of App. F -/
 
-/-- **Cornut–Jetchev, Lemma 2.1 (p. 4), the unramified case** (`K_v/F_v` unramified, residue field
-of order `q`): `N(n', n'', δ)` is `1` if `δ = |n' - n''|`, `(q - 1) q^{r-1}` if
-`δ = |n' - n''| + 2r` with `0 < r < min(n', n'')` (case i), `q^{min(n', n'')}` if `δ = n' + n''`
-(case ii), and `0` otherwise. (Cases iii–iv, for ramified and split `K_v`, are not needed.) -/
-def cjNUnram (q n₁ n₂ δ : ℕ) : ℕ :=
-  if δ = n₁ + n₂ then q ^ min n₁ n₂
-  else if max n₁ n₂ - min n₁ n₂ ≤ δ ∧ (δ - (max n₁ n₂ - min n₁ n₂)) % 2 = 0 ∧
-      (δ - (max n₁ n₂ - min n₁ n₂)) / 2 < min n₁ n₂ then
-    (if δ = max n₁ n₂ - min n₁ n₂ then 1
-      else (q - 1) * q ^ ((δ - (max n₁ n₂ - min n₁ n₂)) / 2 - 1))
-  else 0
-
-/-- **`N_{ℓ₀}(0, 0, 0) = 1`** (App. F tex 9238–9242, "which also follows directly from
-[Lemma 2.1(ii)]"), PROVED from the encoding of Lemma 2.1. -/
-theorem cjNUnram_zero (q : ℕ) : cjNUnram q 0 0 0 = 1 := by
-  simp [cjNUnram]
+-- `cjNUnram` (Lemma 2.1, unramified case) and `cjNUnram_zero` now live in
+-- `PrintsArith/CornutJetchev.lean` (same namespace), next to the print they feed.
 
 /-- **`κ = 1` in Theorem 3.1 for the manuscript's specialization** (PROVED; tex 9225–9243): with
 `F_CJ = ℚ`, `K_CJ = ℚ(√(D h_*))`, `B_CJ = M₂(ℚ)`, `S = {ℓ₀}`, both fine conductors `(1)`, so
@@ -232,14 +224,18 @@ structure CJReductionData where
 attribute [instance] CJReductionData.commGroup CJReductionData.fintype CJReductionData.actCM
   CJReductionData.actEmb
 
-/-- **The conclusion of Cornut–Jetchev's Theorem 3.1 (§3.5, p. 9) with `κ = 1`**: *by restriction,
-`θ_S` induces a surjective `κ`-to-`1` correspondence
+/-- **The conclusion of Cornut–Jetchev's Theorem 3.1 (§3.5, p. 9) with `κ = 1`, as the manuscript
+uses it** (tex 9245–9263): *by restriction, `θ_S` induces a surjective `κ`-to-`1` correspondence
 `c_f^{-1}(c', c'') → c_{S,f}^{-1}(c'_S, c''_S) ∩ ψ_{S'}^{-1}(e_{S'}(c', c''))`*; with `κ = 1`
 (`cj_kappa_eq_one`) and the orientation tuple fixed, an equivariant bijection of `Pic`-torsors
-(tex 9256–9261: "Theorem 3.1 gives a bijection onto one such sign, not onto both"). PRINT over the
-interface `CJReductionData` (the print is stated for the genuine adelic `θ_S`). Note: Corollary 4.1
-(p. 15) counts conjugate *pairs* of optimal embeddings; the manuscript uses the sign fiber of
-Theorem 3.1 instead (tex 9368–9370), which is the print's own formulation. -/
+(tex 9256–9261: "Theorem 3.1 gives a bijection onto one such sign, not onto both … The resulting map
+is an equivariant bijection of the source class-group torsor onto the target torsor").
+**Kind: DERIVED (no longer a PRINT leaf).** It is PROVED from the one PRINT statement
+`CJSetting.Thm31` by `CJReductionData.thm3_1KappaOne_of_print`, for `D` realized inside the print's
+objects (`CJReductionData.PrintRealization`). The definition is kept so that statements over it
+(`sum_red_eq`) still typecheck. Note: Corollary 4.1 (p. 15) counts conjugate *pairs* of optimal
+embeddings; the manuscript uses the sign fiber of Theorem 3.1 instead (tex 9368–9370), which is the
+print's own formulation. -/
 def CJReductionData.Thm3_1KappaOne (D : CJReductionData) : Prop :=
   Function.Bijective D.red ∧ ∀ (a : D.Pic) (x : D.CMPts), D.red (a • x) = a • D.red x
 
@@ -251,5 +247,204 @@ theorem CJReductionData.sum_red_eq (D : CJReductionData) (hD : D.Thm3_1KappaOne)
     ∑ a : D.Pic, χ a • P (D.red (a • x₀)) = ∑ a : D.Pic, χ a • P (a • D.red x₀) := by
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [hD.2 a x₀]
+
+/-! ### The `κ = 1` bijection derived from the print (Lane RC27) -/
+
+/-- **How `D` sits inside the objects of Cornut–Jetchev at the manuscript's specialization
+(interface; tex 9150–9169, 9195–9263).** The print's objects `P` (§§3.1–3.4) with:
+* the specialization of tex 9195–9243: `F_CJ = ℚ`, `K_CJ = F = ℚ(√(D h_*))`, `B_CJ = M₂(ℚ)` (no finite
+  ramification, `[ℚ : ℚ] = 1`), `S = {ℓ₀}`, `ℓ₀ ∤ N` (`v_{ℓ₀}(𝔫) = 0`), `(D/ℓ₀) = 1`,
+  `(h_*/ℓ₀) = −1`; both fine conductors `(1)` at `c₀` (`v_{ℓ₀}(c') = v_{ℓ₀}(c'') = 0`,
+  `|Gal(F[c]/F[c_S])| = 1`, tex 9225–9243);
+* `inert_of_jacobi` (GLUE, the decomposition law in `ℚ(√(D h_*))` for the odd prime `ℓ₀ ∤ D h_*`):
+  `(D h_*/ℓ₀) = −1` makes `ℓ₀` inert (tex 9206–9210);
+* the orientation tuples at the primes of `N` (`orX`, `orY`; tex 9136–9149): `θ_S` preserves them,
+  since its map on local orbit data away from `S` is the bijection of the print's (8) (§3.2, p. 6;
+  tex 9258–9260: "Away from `ℓ₀` its map on local orbit data is a bijection, so we may also restrict
+  to the chosen orientations");
+* `ιX`, `ιY`: `D.CMPts` is the part of `c_f⁻¹(c₀)` with the fixed tuple `o₀` and `D.Emb` the part of
+  the target `c_{S,f}⁻¹(c₀,S) ∩ ψ_{S'}⁻¹(e_{S'}(c₀))` with that tuple (tex 9156–9169, 9260–9261);
+* `art`: the Galois action on these conductor-one points factors through `Pic(𝒪_F)` (print §3.3,
+  p. 7: the stabilizer is `F^× 𝒪̂_F^×`; tex 9163–9169), compatibly with both embeddings;
+* `red_eq`: `D.red` is `θ_S` restricted (tex 9266–9272).
+ABSTRACT. Non-vacuity: `cjToyRealization`. -/
+structure CJReductionData.PrintRealization (D : CJReductionData) where
+  /-- The print's objects (§§3.1–3.4). -/
+  P : CJSetting
+  /-- The place `ℓ₀` of `F_CJ = ℚ`. -/
+  ℓ₀ : P.Pl
+  /-- The rational prime `ℓ₀`. -/
+  p₀ : ℕ
+  /-- The parameter `D`. -/
+  Dpar : ℤ
+  /-- The genus partner `h_*`. -/
+  hstar : ℤ
+  hS : P.S = {ℓ₀}
+  hRamB : P.RamB = ∅
+  hdegF : P.degF = 1
+  hq : P.q ℓ₀ = p₀
+  hD : jacobiSym Dpar p₀ = 1
+  hh : jacobiSym hstar p₀ = -1
+  /-- GLUE: the decomposition law at the odd prime `ℓ₀ ∤ D h_*`. -/
+  inert_of_jacobi : jacobiSym (Dpar * hstar) p₀ = -1 → P.ty ℓ₀ = .inert
+  /-- The pair of fine conductors `((1), (1))`. -/
+  c₀ : P.C
+  hval₁ : P.val₁ c₀ ℓ₀ = 0
+  hval₂ : P.val₂ c₀ ℓ₀ = 0
+  hvn : P.vn ℓ₀ = 0
+  hgal : P.galIdx c₀ = 1
+  /-- The orientation tuples at the primes of `N`. -/
+  Or : Type
+  orX : P.X → Or
+  orY : P.Y → Or
+  /-- The fixed orientation tuple. -/
+  o₀ : Or
+  or_θ : ∀ x, orY (P.θ x) = orX x
+  ιX : D.CMPts → P.X
+  ιY : D.Emb → P.Y
+  ιX_injective : Function.Injective ιX
+  ιY_injective : Function.Injective ιY
+  ιX_range : ∀ x, x ∈ Set.range ιX ↔ P.cf x = c₀ ∧ orX x = o₀
+  ιY_range : ∀ y, y ∈ Set.range ιY ↔ y ∈ CJSetting.Target c₀ ∧ orY y = o₀
+  /-- The Galois action on conductor-one points through `Pic(𝒪_F)`. -/
+  art : P.Gal → D.Pic
+  art_surjective : Function.Surjective art
+  ιX_smul : ∀ g x, ιX (art g • x) = g • ιX x
+  ιY_smul : ∀ g y, ιY (art g • y) = g • ιY y
+  red_eq : ∀ x, ιY (D.red x) = P.θ (ιX x)
+
+namespace CJReductionData.PrintRealization
+
+variable {D : CJReductionData} (R : D.PrintRealization)
+
+/-- **H.1 for the specialization** (PROVED; tex 9203–9204): `Ram_f M₂(ℚ) = ∅`. -/
+theorem h1 : R.P.H1 := by
+  unfold CJSetting.H1; rw [R.hRamB]; exact Finset.disjoint_empty_left _
+
+/-- **H.2 for the specialization** (PROVED from `cj_H2`; tex 9204–9205): `1 + 0 + 1` is even. -/
+theorem h2 : R.P.H2 := by
+  unfold CJSetting.H2
+  rw [R.hS, R.hRamB, R.hdegF, Finset.card_singleton, Finset.card_empty]
+  exact cj_H2
+
+/-- **`ℓ₀` is inert in `F`** (PROVED from `cj_inert` and the decomposition law; tex 9206–9210). -/
+theorem ty_ℓ₀ : R.P.ty R.ℓ₀ = .inert :=
+  R.inert_of_jacobi (cj_inert R.hD R.hh)
+
+/-- **H.3 for the specialization** (PROVED; tex 9206–9210): `ℓ₀` is inert. -/
+theorem h3 : R.P.H3 := by
+  intro v hv
+  rw [R.hS, Finset.mem_singleton] at hv
+  subst hv
+  exact Or.inl R.ty_ℓ₀
+
+/-- **The parity condition at `c₀`** (PROVED; tex 9233–9234): `0 − 0 ≡ v_{ℓ₀}(N) = 0 (mod 2)`. -/
+theorem parity₀ : R.P.Parity R.c₀ := by
+  intro v hv _
+  rw [R.hS, Finset.mem_singleton] at hv
+  subst hv
+  rw [R.hval₁, R.hval₂, R.hvn]
+  exact ⟨0, rfl⟩
+
+/-- **`κ = 1` at `c₀`** (PROVED from `cj_kappa_eq_one`; tex 9235–9243):
+`κ = |Gal(F[1]/F[1])| · N_{ℓ₀}(0, 0, 0) = 1 · 1`. -/
+theorem kappa₀ : R.P.kappa R.c₀ = 1 := by
+  unfold CJSetting.kappa
+  rw [R.hS, Finset.prod_singleton, R.hgal, R.ty_ℓ₀, R.hval₁, R.hval₂, R.hvn, R.hq]
+  exact cj_kappa_eq_one R.p₀
+
+end CJReductionData.PrintRealization
+
+/-- **The `κ = 1` bijection, DERIVED from the print** (PROVED; tex 9195–9263). If `D` is realized
+inside the objects of Cornut–Jetchev at the manuscript's specialization, then Theorem 3.1
+(`CJSetting.Thm31`, general `κ`) gives `D.Thm3_1KappaOne`: H.1–H.3, the parity condition and `κ = 1`
+are the PROVED specialization checks (`cj_H2`, `cj_inert`, `cj_kappa_eq_one`), so `θ_S` is a bijection
+of `c_f⁻¹(c₀)` onto the sign fibre; it preserves the orientation tuple, hence restricts to a bijection
+`D.CMPts → D.Emb`; and it is equivariant (§3.2), hence so is `D.red` for `Pic(𝒪_F)`. -/
+theorem CJReductionData.thm3_1KappaOne_of_print (D : CJReductionData) (R : D.PrintRealization)
+    (hP : R.P.Thm31) : D.Thm3_1KappaOne := by
+  have hbij := hP.bijOn_of_kappa_eq_one R.h1 R.h2 R.h3 R.parity₀ R.kappa₀
+  refine ⟨⟨fun x₁ x₂ h => ?_, fun y => ?_⟩, fun a x => ?_⟩
+  · -- injective
+    have hx₁ := (R.ιX_range (R.ιX x₁)).mp ⟨x₁, rfl⟩
+    have hx₂ := (R.ιX_range (R.ιX x₂)).mp ⟨x₂, rfl⟩
+    have : R.P.θ (R.ιX x₁) = R.P.θ (R.ιX x₂) := by rw [← R.red_eq, ← R.red_eq, h]
+    exact R.ιX_injective (hbij.injOn hx₁.1 hx₂.1 this)
+  · -- surjective
+    obtain ⟨hyT, hyo⟩ := (R.ιY_range (R.ιY y)).mp ⟨y, rfl⟩
+    obtain ⟨x, hx, hxy⟩ := hbij.surjOn hyT
+    have hox : R.orX x = R.o₀ := by rw [← R.or_θ, hxy, hyo]
+    obtain ⟨x', rfl⟩ := (R.ιX_range x).mpr ⟨hx, hox⟩
+    exact ⟨x', R.ιY_injective (by rw [R.red_eq, hxy])⟩
+  · -- equivariant
+    obtain ⟨g, rfl⟩ := R.art_surjective a
+    apply R.ιY_injective
+    rw [R.red_eq, R.ιX_smul, hP.equivariant R.h1 R.h2 R.h3, ← R.red_eq, R.ιY_smul]
+
+/-- **The exact finite-sum identity of App. F (tex 9279–9286) from the print** (PROVED):
+`sum_red_eq` with its hypothesis discharged by `thm3_1KappaOne_of_print`. -/
+theorem CJReductionData.sum_red_eq_of_print (D : CJReductionData) (R : D.PrintRealization)
+    (hP : R.P.Thm31) {A : Type*} [AddCommGroup A] (P : D.Emb → A) (χ : D.Pic → ℤ)
+    (x₀ : D.CMPts) :
+    ∑ a : D.Pic, χ a • P (D.red (a • x₀)) = ∑ a : D.Pic, χ a • P (a • D.red x₀) :=
+  D.sum_red_eq (D.thm3_1KappaOne_of_print R hP) P χ x₀
+
+/-! ### Non-vacuity of the realization -/
+
+/-- A toy reduction datum: `Pic = ℤ/2` acting on two CM points and two embeddings by translation,
+`red = id` (the shape of `cjToySetting`). -/
+def cjToyReduction : CJReductionData where
+  Pic := Multiplicative (ZMod 2)
+  CMPts := ZMod 2
+  actCM := cjToyAction
+  Emb := ZMod 2
+  actEmb := cjToyAction
+  red := id
+
+/-- **Non-vacuity (PROVED):** `cjToyReduction` is realized inside `cjToySetting` at the shape of the
+manuscript's specialization (`ℓ₀ = 3`, `D = 1`, `h_* = −1`: `(1/3) = 1`, `(−1/3) = −1`). -/
+def cjToyRealization : cjToyReduction.PrintRealization where
+  P := cjToySetting
+  ℓ₀ := ()
+  p₀ := 3
+  Dpar := 1
+  hstar := -1
+  hS := rfl
+  hRamB := rfl
+  hdegF := rfl
+  hq := rfl
+  hD := by norm_num
+  hh := by norm_num
+  inert_of_jacobi := fun _ => rfl
+  c₀ := ()
+  hval₁ := rfl
+  hval₂ := rfl
+  hvn := rfl
+  hgal := rfl
+  Or := Unit
+  orX := fun _ => ()
+  orY := fun _ => ()
+  o₀ := ()
+  or_θ := fun _ => rfl
+  ιX := id
+  ιY := id
+  ιX_injective := Function.injective_id
+  ιY_injective := Function.injective_id
+  ιX_range := fun x => ⟨fun _ => ⟨rfl, rfl⟩, fun _ => ⟨x, rfl⟩⟩
+  ιY_range := fun y => ⟨fun _ => ⟨⟨rfl, rfl⟩, rfl⟩, fun _ => ⟨y, rfl⟩⟩
+  art := id
+  art_surjective := Function.surjective_id
+  ιX_smul := fun _ _ => rfl
+  ιY_smul := fun _ _ => rfl
+  red_eq := fun _ => rfl
+
+/-- **Non-vacuity (PROVED):** the hypotheses of `thm3_1KappaOne_of_print` are jointly satisfiable:
+a realization together with the print for its setting. -/
+theorem cjToyRealization_hypotheses : cjToyRealization.P.Thm31 :=
+  cjToySetting_thm31.2.2.2
+
+/-- The derived conclusion at the toy instance (a sanity check of the derivation). -/
+theorem cjToyReduction_thm3_1KappaOne : cjToyReduction.Thm3_1KappaOne :=
+  cjToyReduction.thm3_1KappaOne_of_print cjToyRealization cjToyRealization_hypotheses
 
 end ZInQ.Manuscript.RC.PrintsArith

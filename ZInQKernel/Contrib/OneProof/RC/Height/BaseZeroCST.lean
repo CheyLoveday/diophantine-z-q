@@ -28,7 +28,12 @@ conductor-one Heegner hypotheses. This file proves `hheight` from:
   `P_{H₁} = Σ_{σ ∈ Gal(H₁/K)} σ y` of the Heegner point (tex 4345: "the specified point");
 * `LFactorizationConductorOne` (GLUE, the factorization `L(E/K, s) = L(E, s) L(E^{(k)}, s)` of the
   character-one `twistedLFunction`, with `K = ℚ(√k)`; tex 5736 reads it as the definition of
-  the left side); this is not a height fact and is kept as an explicit hypothesis;
+  the left side); this is not a height fact and is kept as an explicit hypothesis here. Lane RC27
+  derives it (`ArtinG2.lean`, `lFactorizationConductorOne_of_artin`) from the shared top layer's
+  GLUE `GenusOdd.ArtinFactorization` (its case `c = 1`, `d₁ = 1`, `χ = 1`) and the model invariance
+  of Mathlib's `L`-series (`ModelInvariance.lean`), for `K = ℚ(√k)` split at `2`; the composed
+  forms of the two theorems below are `hheight_of_CST_of_artin` and
+  `not_isOfFinAddOrder_of_CST_of_artin` there;
 * `ĥ = 0 ⇔ torsion` over the number field `H₁` (PROVED, `Torsion.lean`).
 
 Every theorem in this file is PROVED; `LFactorizationConductorOne` is a definition (the GLUE
@@ -52,7 +57,10 @@ open WeierstrassCurve WeierstrassCurve.Affine ZInQ.Contrib.CloudB3RC53 ZInQ.Cont
 
 /-- **The conductor-one `L`-factorization** (GLUE; tex 5736): the character-one twisted
 `L`-function of `E/K` (Euler product over the primes of `K` of Mathlib's local factors of `E/K`) is
-`L(E, s) L(E^{(k)}, s)` on `Re s > 3/2`, for `K = ℚ(√k)`. -/
+`L(E, s) L(E^{(k)}, s)` on `Re s > 3/2`, for `K = ℚ(√k)`. Lane RC27 proves it from the shared top
+layer's GLUE `GenusOdd.ArtinFactorization` (case `c = 1`, `d₁ = 1`, `d₂ = disc K`, `χ = 1`) for
+`K = ℚ(√k)` imaginary quadratic, split at `2` and at the level
+(`ArtinG2.lean`: `lFactorizationConductorOne_of_artin`); the statement here is unchanged. -/
 def LFactorizationConductorOne (E : WeierstrassCurve ℚ) (K : Type) [Field K] [NumberField K]
     (k : ℚ) : Prop :=
   ∀ s : ℂ, 3 / 2 < s.re →

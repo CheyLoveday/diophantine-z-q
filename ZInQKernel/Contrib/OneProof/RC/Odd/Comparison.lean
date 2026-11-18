@@ -1,5 +1,6 @@
 import Mathlib
 import ZInQKernel.Contrib.OneProof.RC.Odd.Constants
+import ZInQKernel.Contrib.OneProof.RC.PrintsArith.CornutJetchev
 
 /-!
 # Lane RC12-odd: the unaveraged comparison (O.7) (App F, tex 9101–9405)
@@ -9,17 +10,18 @@ Manuscript (11/5), Appendix F, Proposition `ex:app-theta-comparison`:
 used at (3.8) (tex 2522–2530).
 
 * `CornutJetchevThm31` — **PRINT**, Cornut–Jetchev, *Liftings of reduction maps for quaternion
-  algebras* (preprint, 2010; 17 pp.), §3.5 Theorem 3.1 (p. 9) and Corollary 3.2 (p. 9), with the
-  hypotheses H.1–H.3 of §3.1 (p. 5), the adelic map `θ_S` of §3.2 (pp. 5–6), the fine conductor of
-  §3.3 (pp. 6–7, (10)–(12)), the sign invariant of §3.4 (p. 8, `φ_{S'} = ψ_{S'} ∘ θ_S`, (14)) and
-  `κ = |Gal(K[c]/K[c_S])| ∏_{v∈S} N_v(v(c'), v(c''), v(n))`; Lemma 2.1 (p. 4) gives `N_v`. Read in the
-  print (text extraction of the arXiv-style preprint; locators recorded from it). The objects
-  `CM(G,H) = T(ℚ)\G(𝔸_f)/H` are not in Mathlib, so the statement is over an abstract interface: an
-  equivariant map of Galois sets with conductor and sign maps.
+  algebras* (preprint, arXiv:1012.0725v1, 2010; 17 pp.), §3.5 Theorem 3.1 (p. 9), general `κ`: the
+  one PRINT statement of the project, `PrintsArith.CJSetting.Thm31` (`PrintsArith/CornutJetchev.lean`,
+  Lane RC27), with H.1–H.3 of §3.1 (p. 5), the equivariant map `θ_S` of §3.2 (pp. 5–6), the fine
+  conductors of §3.3 (pp. 6–7, (10)–(12)), the sign invariant of §3.4 (p. 8, (14)) and
+  `κ = |Gal(K[c]/K[c_S])| ∏_{v∈S} N_v(v(c'), v(c''), v(𝔫))` with `N_v` from Lemma 2.1 (p. 4). Lane RC9's
+  `κ = 1` form `PrintsArith.CJReductionData.Thm3_1KappaOne` is derived from it.
 * `cj_kappa_eq_one` — **PROVED**: the specialization `F_CJ = ℚ`, `K_CJ = ℚ(√(Dh_*))`,
   `B_CJ = M₂(ℚ)`, `S = {ℓ₀}`: H.2's integer `|S| + |Ram_f B| + [F:ℚ] = 1 + 0 + 1 = 2` is even, the
-  parity condition `0 − 0 ≡ v_{ℓ₀}(N) = 0`, Lemma 2.1(ii) `N_{ℓ₀}(0,0,0) = q^{min(0,0)} = 1`, fine
-  conductors one, so `κ = 1` (tex 9195–9243).
+  parity condition `0 − 0 ≡ v_{ℓ₀}(N) = 0`, Lemma 2.1(ii) `N_{ℓ₀}(0,0,0) = q^{min(0,0)} = 1` (through
+  the print's encoding `PrintsArith.cjNUnram`), fine conductors one, so `κ = 1` (tex 9195–9243).
+* `cj_bijection_of_kappa_one` — **PROVED** from the print: with `κ = 1`, a bijection of `c_f⁻¹(c)` onto
+  the sign fibre (tex 9245–9263).
 * `orbit_sum` — **PROVED**: an embedding orbit with stabilizer `{±1}` has `|R_z^×|/2` elements and,
   weighted by `c₀/|R_z^×|`, contributes `c₀/2` (tex 9308–9311, 9378–9390).
 * `O7_assembly` — **PROVED**: summing the `2^{ω(N)+1}` orientation tuples, each contributing
@@ -32,22 +34,24 @@ namespace ZInQ.Manuscript.RC.Odd
 
 /-! ### Cornut–Jetchev, Theorem 3.1 (PRINT, abstract interface) -/
 
-/-- **Cornut–Jetchev, Theorem 3.1 (PRINT; preprint 2010, §3.5, p. 9), abstract form.**
-`X` stands for `CM(G,H)` and `Y` for `CM(G_S,H_S)` (§3.2), `θ = θ_S : X → Y` the `Gal_K^{ab}`-equivariant
-map, `cf`, `cSf` the fine conductor maps (§3.3, (10)), `primeToS` the map `(c',c'') ↦ (c'_S, c''_S)`
-of (12), `φ = ψ ∘ θ` the sign maps of §3.4 with values in `(ℤ/2)^{|S'|}`, `e` the map `e_{S'}` of
-(14), `parity` the condition `v(c') − v(c'') ≡ v(n) (mod 2)` for `v ∈ S'`, and `κ` the integer of
-§3.5. The theorem: for every fine conductor `c` with the parity condition, `θ` restricted to
-`cf⁻¹(c)` is a surjective `κ(c)`-to-`1` map onto `cSf⁻¹(c_S) ∩ ψ⁻¹(e(c))`. -/
-def CornutJetchevThm31 {X Y C CS Sg : Type*} (θ : X → Y) (cf : X → C) (cSf : Y → CS)
-    (primeToS : C → CS) (ψ : Y → Sg) (e : C → Sg) (parity : C → Prop) (κ : C → ℕ) : Prop :=
-  ∀ c, parity c →
-    (∀ x, cf x = c → cSf (θ x) = primeToS c ∧ ψ (θ x) = e c) ∧
-    ∀ y, cSf y = primeToS c → ψ y = e c → Nat.card {x : X // cf x = c ∧ θ x = y} = κ c
+/-- **Cornut–Jetchev, Theorem 3.1 (PRINT; arXiv:1012.0725v1, §3.5, p. 9), general `κ`.** This is
+the project's one PRINT statement of the theorem, `PrintsArith.CJSetting.Thm31` (Lane RC27 unified
+lanes RC9 and RC12 here): over the print's objects `P` (`X = CM(G,H)`, `Y = CM(G_S,H_S)`, the
+`Gal_K^{ab}`-equivariant `θ_S`, the fine conductors `c_f`, `c_{S,f}`, `( )_S`, the sign map `ψ_{S'}` and
+`e_{S'}` of (14)), under H.1–H.3, for every `c = (c', c'')` with `v(c') − v(c'') ≡ v(𝔫) (mod 2)` at
+`v ∈ S'`, `θ_S` maps `c_f⁻¹(c)` into `c_{S,f}⁻¹(c_S) ∩ ψ_{S'}⁻¹(e_{S'}(c))` and is `κ(c)`-to-1 onto it,
+`κ = |Gal(K[c]/K[c_S])| ∏_{v∈S} N_v(v(c'), v(c''), v(𝔫))` (Lemma 2.1). Previously this file stated
+the fibre count with an arbitrary `κ`; the printed formula and the equivariance of §3.2 are now part
+of the statement. -/
+abbrev CornutJetchevThm31 (P : PrintsArith.CJSetting) : Prop := P.Thm31
 
-/-- Cornut–Jetchev, Lemma 2.1 (p. 4), case (ii) (`K/F` unramified, `δ = n' + n''`):
-`N(n', n'', δ) = q^{min(n', n'')}`. -/
-def cjNunramified (q n' n'' : ℕ) : ℕ := q ^ min n' n''
+/-- Cornut–Jetchev, Lemma 2.1 (p. 4), case (ii) (`K/F` unramified, `δ = n' + n''`), through the
+print's encoding: `N(n', n'', n' + n'') = q^{min(n', n'')}` (`cjNunramified_eq`). -/
+def cjNunramified (q n' n'' : ℕ) : ℕ := PrintsArith.cjNUnram q n' n'' (n' + n'')
+
+/-- **PROVED.** Lemma 2.1(ii): `N(n', n'', n' + n'') = q^{min(n', n'')}`. -/
+theorem cjNunramified_eq (q n' n'' : ℕ) : cjNunramified q n' n'' = q ^ min n' n'' := by
+  simp [cjNunramified, PrintsArith.cjNUnram]
 
 /-- **PROVED (tex 9203–9243).** The specialization of Cornut–Jetchev with `S = {ℓ₀}`: H.2's integer
 is `2` (even), the parity condition holds, `N_{ℓ₀}(0,0,0) = 1` (Lemma 2.1(ii)), and with fine
@@ -55,31 +59,23 @@ conductors one (`|Gal(K[1]/K[1])| = 1`) the multiplicity is `κ = 1`. -/
 theorem cj_kappa_eq_one (q : ℕ) :
     (1 + 0 + 1) % 2 = 0 ∧ (0 - 0 : ℤ) % 2 = 0 ∧ cjNunramified q 0 0 = 1 ∧
       1 * cjNunramified q 0 0 = 1 := by
-  simp [cjNunramified]
+  simp [cjNunramified_eq]
 
-/-- **PROVED.** With `κ = 1`, Theorem 3.1 gives a bijection between the source CM points of fine
-conductor `c` and the target points of the prescribed conductor and sign (one sign fibre, not both,
-tex 9245–9263). -/
-theorem cj_bijection_of_kappa_one {X Y C CS Sg : Type*} {θ : X → Y} {cf : X → C} {cSf : Y → CS}
-    {primeToS : C → CS} {ψ : Y → Sg} {e : C → Sg} {parity : C → Prop} {κ : C → ℕ}
-    (hCJ : CornutJetchevThm31 θ cf cSf primeToS ψ e parity κ) {c : C} (hc : parity c)
-    (hκ : κ c = 1) :
-    Function.Bijective (fun x : {x : X // cf x = c} =>
-      (⟨θ x.1, (hCJ c hc).1 x.1 x.2⟩ : {y : Y // cSf y = primeToS c ∧ ψ y = e c})) := by
+/-- **PROVED** (from the print). With `κ = 1`, Theorem 3.1 gives a bijection between the source CM
+points of fine conductor `c` and the target points of the prescribed conductor and sign (one sign
+fibre, not both, tex 9245–9263). -/
+theorem cj_bijection_of_kappa_one {P : PrintsArith.CJSetting} (hCJ : CornutJetchevThm31 P)
+    (h1 : P.H1) (h2 : P.H2) (h3 : P.H3) {c : P.C} (hc : P.Parity c) (hκ : P.kappa c = 1) :
+    Function.Bijective (fun x : {x : P.X // P.cf x = c} =>
+      (⟨P.θ x.1, ((hCJ h1 h2 h3).2 c hc).1 x.1 x.2⟩ :
+        {y : P.Y // P.cSf y = P.primeToS c ∧ P.ψ y = P.e c})) := by
+  have hb := PrintsArith.CJSetting.Thm31.bijOn_of_kappa_eq_one hCJ h1 h2 h3 hc hκ
   constructor
   · intro x₁ x₂ h
-    have h' : θ x₁.1 = θ x₂.1 := congrArg Subtype.val h
-    have hcard := (hCJ c hc).2 (θ x₁.1) ((hCJ c hc).1 x₁.1 x₁.2).1 ((hCJ c hc).1 x₁.1 x₁.2).2
-    rw [hκ] at hcard
-    have := (Nat.card_eq_one_iff_unique.mp hcard).1
-    have hs := Subsingleton.elim (⟨x₁.1, x₁.2, rfl⟩ : {x : X // cf x = c ∧ θ x = θ x₁.1})
-      ⟨x₂.1, x₂.2, h'.symm⟩
-    exact Subtype.ext (congrArg (fun z : {x : X // cf x = c ∧ θ x = θ x₁.1} => z.1) hs)
-  · rintro ⟨y, hy1, hy2⟩
-    have hcard := (hCJ c hc).2 y hy1 hy2
-    rw [hκ] at hcard
-    obtain ⟨⟨x, hx1, hx2⟩⟩ := (Nat.card_eq_one_iff_unique.mp hcard).2
-    exact ⟨⟨x, hx1⟩, Subtype.ext hx2⟩
+    exact Subtype.ext (hb.injOn x₁.2 x₂.2 (congrArg Subtype.val h))
+  · rintro ⟨y, hy⟩
+    obtain ⟨x, hx, hxy⟩ := hb.surjOn hy
+    exact ⟨⟨x, hx⟩, Subtype.ext hxy⟩
 
 /-! ### The orbit count and the orientation sum -/
 
@@ -133,7 +129,10 @@ theorem c0_mul_two_pow_eq (ω : ℕ) : (c0 : ℤ) * 2 ^ ω = 2 ^ (9 + ω) * 4738
 
 /-- **PROVED (tex 9391–9399).** If `a ≡ c₀ 2^{ω(N)} ζ λ (mod 2^M)` with `ζ` odd (the phase is a unit)
 and `λ = λ_M(\overline{Q})` of exact 2-adic order `c_w`, and `c_θ + c_w < M` with
-`c_θ = 9 + ω(N)`, then `a` has exact order `c_θ + c_w`: `v₂ a_M(D_w) = c_θ + c_w`. -/
+`c_θ = 9 + ω(N)`, then `a` has exact order `c_θ + c_w`: `v₂ a_M(D_w) = c_θ + c_w`.
+`hlam1`, `hlam2` are (O.2) (tex 8396–8398) read on an integer lift `λ` of `λ_M(\bar Q)`; they are
+derived in `Visibility.lean` (`exact_order_of_residue`, `exact_order_of_eq_two_pow`,
+`witness_vZ_of_detector`). -/
 theorem witness_exact_order (ω M cw : ℕ) {a ζ lam : ℤ} (hζ : Odd ζ)
     (hlam1 : (2 : ℤ) ^ cw ∣ lam) (hlam2 : ¬ (2 : ℤ) ^ (cw + 1) ∣ lam)
     (hcong : (2 : ℤ) ^ M ∣ a - (c0 : ℤ) * 2 ^ ω * ζ * lam) (hM : 9 + ω + cw < M) :

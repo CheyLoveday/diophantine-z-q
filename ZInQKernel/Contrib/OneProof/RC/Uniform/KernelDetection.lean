@@ -27,13 +27,23 @@ The proof (tex lines 4765-4831) has four algebraic steps, formalized here in ord
    vanishes on their span, in every characteristic (`quadratic_vanishes_on_span`); so one actual
    kernel element supplies a rank-two localization (`exists_rank_two_localization`). The three
    steps are assembled in `kernel_element_detects_two_classes`.
-4. (tex 4809-4831) *Finite Chebotarev and (5.4).* The arithmetic content of (5.4) is an input,
-   recorded as the interface `ExactChebotarevRealization`. The step "Only afterward compose with
-   the inclusion `I_j`" is the algebra `matrix_identity_mul_inclusion`.
+4. (tex 4809-4831) *Finite Chebotarev and (5.4).* This file keeps only the abstract shadow of
+   (5.4) at one finite stage, the interface `ExactChebotarevRealization` over an abstract finite
+   group (Lane RC22: MISMATCH, abstract groups), and the algebra of the step "Only afterward
+   compose with the inclusion `I_j`" (`matrix_identity_mul_inclusion`). The genuine (5.4) is in
+   `ChebotarevRealization.lean` (Lane RC27): `ExactChebotarevRealizationGenuine`, over `G_ℚ`, the
+   genuine finite Galois groups `Gal(M_i/ℚ)` of the stage composita with the genuine restriction
+   maps, a genuine complex conjugation, genuine Frobenius elements at new inert primes, and the
+   inner ultralimit over `Λ = ℤ₂[[t]]` of Lane RC6. Its finite-Chebotarev half is PROVED from the
+   tree's Chebotarev theorem, its exact `Λ`-identity from the inner ultralimit, with one ELLIOT
+   input (`NewPrimeLocalization`: localization at a new inert prime is evaluation at the
+   Frobenius square); for the genuine data the abstract interface below is a theorem at every
+   finite stage (`exactChebotarevRealization_stage`).
 
-Kinds used in the docstrings: `PROVED` (Lean proof); `ELLIOT/PRINT` (an input stated as an
-interface and not proved here: finite Chebotarev and the inner-limit exactness behind (5.4)).
-The namespace `NonVacuity` contains models showing that the hypotheses are satisfiable.
+Kinds used in the docstrings: `PROVED` (Lean proof); `ELLIOT` (Elliot's step, stated as a
+hypothesis: the absolute irreducibility `IsSimpleModule`/`hEnd`, tex 4777-4786). The interface
+`ExactChebotarevRealization` is a definition; it is no longer an input of the proof (see
+step 4). The namespace `NonVacuity` contains models showing that the hypotheses are satisfiable.
 -/
 
 namespace ZInQ.Manuscript.RC.Uniform
@@ -714,36 +724,52 @@ end Assembled
 
 section ExactIdentity
 
-/-- **Interface for (5.4)** (tex 4755-4758 and 4809-4827). Kind: ELLIOT/PRINT, an input that is
-stated and not proved here (finite Chebotarev is a print input; the exact equality over `Λ`
-through the inner ultrafilter is Elliot's, via `ex:limits-inner-limit`, tex 4391-4407):
+/-- **Abstract shadow of (5.4) at one finite stage** (tex 4755-4758 and 4809-4827).
+Definition (an interface over abstract groups; it is no longer an input of the proof).
+
 "Chebotarev is applied at finite stages, not to the product group. ... Include their quotient,
 the required Tate precision, ring-class and quadratic fields and old diagrams in one compositum.
 The element just found, multiplied by conjugation, is a single actual automorphism of that
 compositum. ... Choose the new prime and a place above it to realize that representative. ...
 Taking the same inner ultrafilter gives an exact equality of `Λ`-matrices `L_j=E_{σ_j^2}` (5.4)."
 
-Data, for each instance `j : J`:
-* `Γ j`: the finite quotient `Gal(M_j/ℚ)` of one compositum `M_j` (an abstract finite group);
+Data, for each `j : J`:
+* `Γ j`: a finite group, standing for the finite quotient `Gal(M/ℚ)` of one stage compositum `M`;
 * `τ j`, `h j`: the images in `Γ j` of complex conjugation and of the kernel element just found;
 * `P j`: the admissible new primes (outside the finitely many already used), each with a chosen
   place above it, and `frob j ℓ ∈ Γ j` the Frobenius at the chosen place;
-* `E j σ`: the `Λ`-matrix of evaluations of the original basis cochains at `σ` (they factor
-  through `Γ j`);
-* `L j ℓ`: the `Λ`-matrix of localizations at the new prime `ℓ`.
+* `E j σ`: the matrix of evaluations of the original basis cochains at `σ`, factoring through
+  `Γ j`, with entries in the coefficient ring `Λ`;
+* `L j ℓ`: the matrix of localizations at the new prime `ℓ`.
 
-The proposition: for every `j` there is a new prime `ℓ` whose Frobenius realizes the
-representative `σ_j = τ_j h_j`, and `L_j = E_{σ_j^2}` holds exactly over `Λ`.
+The proposition: for every `j` there is a new prime `ℓ` whose Frobenius is the representative
+`τ_j h_j` and `L_j = E_j(frob^2)` holds exactly.
 
-DEPARTURE: the finite stages of precision `n(i) → ∞` and the inner ultrafilter that produce the
-exact identity over `Λ` are not modelled; their output, the exact identity (5.4), is the
-interface. -/
+MISMATCH (found by Lane RC22, documented and repaired by Lane RC27):
+* on its own the interface is met by junk: nothing ties `P j` to primes or `frob` to Frobenius
+  elements (the first example below takes `P j = Unit` and `frob` constant);
+* over the genuine `Λ = ℤ₂[[t]]` the evaluations of the basis cochains do not factor through one
+  finite group: only the stage cochains at a finite precision `n(i)` do, and the exact
+  `Λ`-identity arises from the stagewise matches through the inner ultrafilter
+  (`ex:limits-inner-limit`, tex 4391-4407).
+
+The faithful statement is `ExactChebotarevRealizationGenuine` (`ChebotarevRealization.lean`): `G_ℚ`,
+the genuine `Gal(M_i/ℚ)` and restriction maps, a genuine complex conjugation, genuine Frobenius
+elements at new primes inert in `K`, the inner ultralimit over `Λ`; PROVED there
+(`exactChebotarevRealizationGenuine_of_localization`) from the tree's Chebotarev theorem, Lane
+RC6's inner ultralimit and one ELLIOT input `NewPrimeLocalization`. This interface is its shadow at
+one finite stage: for the genuine data it holds with `Γ = Gal(M_i/ℚ)`, `P` the new inert primes with
+their genuine Frobenius elements and `Λ` the finite stage `Λ/(2^{n(i)}, t^{n(i)})`
+(`exactChebotarevRealization_stage`, PROVED). -/
 def ExactChebotarevRealization {J Λ m n : Type*} (Γ : J → Type*) [∀ j, Group (Γ j)]
     [∀ j, Finite (Γ j)] (τ h : ∀ j, Γ j) (P : J → Type*) (frob : ∀ j, P j → Γ j)
     (E : ∀ j, Γ j → Matrix m n Λ) (L : ∀ j, P j → Matrix m n Λ) : Prop :=
   ∀ j, ∃ ℓ : P j, frob j ℓ = τ j * h j ∧ L j ℓ = E j (frob j ℓ ^ 2)
 
-/-- The interface `ExactChebotarevRealization` is satisfiable (non-vacuity). -/
+/-- The interface `ExactChebotarevRealization` is satisfiable (non-vacuity). This model is junk
+(`P j = Unit`, `frob` constant): the abstract interface alone carries no arithmetic content, see
+its docstring; the genuine model is `ChebotarevNonVacuity.genuine_instance`
+(`ChebotarevRealization.lean`). -/
 example : ExactChebotarevRealization (J := Unit) (Λ := ℤ) (m := Fin 2) (n := Fin 2)
     (fun _ => Multiplicative (ZMod 2)) (fun _ => 1) (fun _ => 1) (fun _ => Unit) (fun _ _ => 1)
     (fun _ _ => 1) (fun _ _ => 1) :=
@@ -769,7 +795,9 @@ theorem matrix_identity_mul_inclusion {R m n p : Type*} [NonUnitalNonAssocSemiri
 
 /-- (5.4) composed with the inclusions (tex 4825-4829). Kind: PROVED from the interface
 `ExactChebotarevRealization`. The inclusion matrices `I j` have entries in a ring `R` receiving
-`Λ` (they may carry `j`-dependent denominators); `L_j I_j = E_{σ_j^2} I_j` holds exactly. -/
+`Λ` (they may carry `j`-dependent denominators); `L_j I_j = E_{σ_j^2} I_j` holds exactly. The
+form over the genuine Galois groups and the genuine `Λ` is
+`ExactChebotarevRealizationGenuine.mul_inclusion` (`ChebotarevRealization.lean`). -/
 theorem ExactChebotarevRealization.mul_inclusion {J Λ R m n p : Type*} [Semiring Λ]
     [Semiring R] [Fintype n] (Γ : J → Type*) [∀ j, Group (Γ j)] [∀ j, Finite (Γ j)]
     (τ h : ∀ j, Γ j) (P : J → Type*) (frob : ∀ j, P j → Γ j) (E : ∀ j, Γ j → Matrix m n Λ)

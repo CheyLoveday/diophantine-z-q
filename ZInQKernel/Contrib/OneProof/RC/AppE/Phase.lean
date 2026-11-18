@@ -4,15 +4,16 @@ import ZInQKernel.Contrib.OneProof.RC.Even.EvenPhase
 # Appendix E, Proposition `ex:app-even-phase`: the retained set and the phase `z_D`
 
 The 11/5 manuscript (`diophantine_zq.tex`), Appendix E, tex 7812–7820 (the `S₀` filter),
-8114–8138 (the phase). For the fields `retained`, `retained_spec`, `D₀_mem`, `z`, `z_root`,
-`z_sq` of lane RC11's structure `EvenPhaseData` (`RC/Even/EvenPhase.lean`).
+8114–8138 (the phase). For the fields `retained`, `retained_spec`, `filter_mem`, `D₀_mem`, `z`,
+`z_root`, `z_sq` of lane RC11's structure `EvenPhaseData` (`RC/Even/EvenPhase.lean`).
 
-* `S0Filter S₀ D₀ D` — the retained parameters (tex 7812–7817): `D > 0` squarefree, prime to every
-  prime of `S₀`, in the unit squareclass of `D₀` at every prime of `S₀` (`DD₀ ≡ 1 (mod 8)` at `2`,
-  `DD₀` a square modulo odd `p`; by Hensel this is `D/D₀ ∈ (ℚ_p^×)²`);
-* `S0Filter.spec` — at any level `N` with prime support in `S₀`, a retained `D` is prime to `N`
-  and in the unit squareclasses of `D₀` at every prime of `N` (the field `retained_spec`);
-  `S0Filter.self` — `D₀` is retained (the field `D₀_mem`);
+* the retained parameters are lane RC11's `S0Filter S₀ D₀ D` (`RC/Even/EvenPhase.lean`,
+  tex 7793–7817): `D > 0` squarefree, prime to every prime of `S₀`, in the unit squareclass of
+  `D₀` at every prime of `S₀` (`DD₀ ≡ 1 (mod 8)` at `2`, `DD₀` a square modulo odd `p`; by Hensel
+  this is `D/D₀ ∈ (ℚ_p^×)²`, `isSquare_zmod_prime_pow_odd`, `isSquare_zmod_two_pow`). Its lemmas
+  `S0Filter.spec` (the field `retained_spec` at a level with prime support in `S₀`) and
+  `S0Filter.self` (the field `D₀_mem`) are there too, since the structure's field `filter_mem`
+  needs the filter;
 * `isSquare_zmod_of_local` — Hensel's lemma and the Chinese remainder theorem: a unit that is a
   square modulo every odd prime of `N` and `≡ 1 (mod 8)` (if `2 ∣ N`) is a square in `ZMod N`;
 * `sqrtRatio`, `phase` — **the phase** (tex 8116–8121): `z_D = η(w)` for a `w ∈ ZMod N` with
@@ -36,42 +37,7 @@ namespace ZInQ.Manuscript.RC.AppE
 
 open ZInQ.Manuscript ZInQ.Manuscript.RC.PrintsAnalytic
 
-/-! ## The `S₀` filter -/
-
-/-- **The retained parameters** (tex 7812–7817, 7800–7801): `D > 0` squarefree, prime to every
-prime of `S₀`, in the unit squareclass of `D₀` at every prime of `S₀`: `DD₀ ≡ 1 (mod 8)` at
-`p = 2` and `DD₀` a nonzero square modulo an odd `p ∈ S₀` (by Hensel, `D/D₀ ∈ (ℚ_p^×)²`). -/
-def S0Filter (S₀ : Finset ℕ) (D₀ D : ℕ) : Prop :=
-  0 < D ∧ Squarefree D ∧ (∀ p ∈ S₀, ¬ p ∣ D) ∧
-    ∀ p ∈ S₀, (p = 2 → (D * D₀) % 8 = 1) ∧ (p ≠ 2 → IsSquare ((D * D₀ : ℕ) : ZMod p))
-
-/-- A natural number prime to every prime of a positive `N`'s prime support is prime to `N`. -/
-theorem coprime_of_support {S₀ : Finset ℕ} {N D : ℕ}
-    (hNS : ∀ p : ℕ, p.Prime → p ∣ N → p ∈ S₀) (hD : ∀ p ∈ S₀, ¬ p ∣ D) : D.Coprime N := by
-  refine Nat.coprime_of_dvd fun p hp hpD hpN => hD p (hNS p hp hpN) hpD
-
-/-- **The field `retained_spec`** (PROVED): at a level `N` with prime support in `S₀`, a retained
-`D` is positive, squarefree, prime to `N`, and in the unit squareclasses of `D₀` at every prime of
-`N`. -/
-theorem S0Filter.spec {S₀ : Finset ℕ} {D₀ D N : ℕ} (hNS : ∀ p : ℕ, p.Prime → p ∣ N → p ∈ S₀)
-    (h : S0Filter S₀ D₀ D) :
-    0 < D ∧ Squarefree D ∧ D.Coprime N ∧ SameUnitClassesAtLevel N D D₀ :=
-  ⟨h.1, h.2.1, coprime_of_support hNS h.2.2.1, fun p hp hpN => h.2.2.2 p (hNS p hp hpN)⟩
-
-/-- An odd square is `1` modulo `8` (PROVED). -/
-theorem odd_mul_self_mod_eight {D : ℕ} (hD : ¬ 2 ∣ D) : (D * D) % 8 = 1 := by
-  have h8 : D % 8 < 8 := Nat.mod_lt _ (by norm_num)
-  have hodd : D % 2 = 1 := by omega
-  rw [Nat.mul_mod]
-  have : D % 8 = 1 ∨ D % 8 = 3 ∨ D % 8 = 5 ∨ D % 8 = 7 := by omega
-  rcases this with h | h | h | h <;> rw [h]
-
-/-- **The field `D₀_mem`** (PROVED): the reference `D₀` (positive, squarefree, prime to `S₀ ∋ 2`)
-is retained. -/
-theorem S0Filter.self {S₀ : Finset ℕ} (h2 : 2 ∈ S₀) {D₀ : ℕ} (hD₀ : 0 < D₀)
-    (hsq : Squarefree D₀) (hS : ∀ p ∈ S₀, ¬ p ∣ D₀) : S0Filter S₀ D₀ D₀ := by
-  refine ⟨hD₀, hsq, hS, fun p _ => ⟨fun _ => odd_mul_self_mod_eight (hS 2 h2), fun _ => ?_⟩⟩
-  exact ⟨(D₀ : ZMod p), by push_cast; ring⟩
+/-! ## Unit squareclasses at a level -/
 
 /-- The retained parameters at a level `N` are prime to `N` and in the unit classes of `D₀` at
 every prime of every level `M` with the same prime support as `N` (PROVED). -/

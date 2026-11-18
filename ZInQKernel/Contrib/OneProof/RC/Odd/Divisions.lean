@@ -16,13 +16,20 @@ Manuscript (11/5), Appendix F, proof of Proposition `ex:app-coefficient-rules`:
   `B_U[Jm²] − B_U[J] η(m) ∈ 2𝒪`. Thus `H_U = (B_U − ∑_J B_U[J] Θ_J)/2` is integral."
 
 We state them undivided, as divisibilities by powers of `2` in the coefficient ring `R`, for an
-abstract coefficient function `a` satisfying:
-* the source depth inequality `2^{min T (δ + ω(sqf n))} ∣ a(n)` (the "fixed minimum depth" of the
-  even source, or the minimum-depth inequalities of Proposition `ex:app-odd-minimum` at an odd stage,
-  tex 9450–9453, 9484); `ω(sqf n)` is the number of primes with odd exponent in `n` (`oddPart n`);
+abstract coefficient function `a` satisfying (`SourceHyp`, `DivisionsMain.lean`):
+* the depth inequality `v₂ a(D) ≥ min(T, δ + ω(D))` at the squarefree parameters `D` of the
+  coefficient support (the "fixed minimum depth" of the even source, or, at an odd stage chosen as in
+  Proposition `ex:app-odd-minimum`, the depth inequalities of App G, tex 9450–9453, 9484,
+  10208–10227; there `δ = δ_o` is an integer, possibly negative, and `T = max(0, δ_o + W_U) + R`);
+  the vanishing of the coefficients off the support (tex 9472–9476, 2530–2532); the bound at every
+  Fourier index `n` then follows, with `ω` replaced by the number of primes with odd exponent in `n`
+  (`oddPart n`), from the recurrence (`SourceHyp.depth_all`);
 * the recurrence (O.6) at every good prime `q` (odd, outside the support, `a_q ≡ q + 1 (mod 4)` as
   every prime is split in `ℚ(E[2]) = ℚ`, tex 9585, 9593), with `ψ(q)/η(q) = ±1`;
 * a completely multiplicative phase character `χ = η` and `a(0) = 0` (tex 9092).
+
+Exponents are integers truncated at `0` (`Int.toNat`), since the depth `δ` is an integer
+(tex 9488: "the depth `δ` is an integer"; App G puts `N_0 = max(0, δ_o + W_U)`).
 
 Everything here is PROVED.
 -/
@@ -83,6 +90,21 @@ theorem oddPart_mul_prime {p n' : ℕ} (hp : p.Prime) (hn' : n' ≠ 0) (hpn : ¬
   have := oddPart_pow_odd_mul (s := 0) hp hn' hpn
   simpa using this
 
+theorem oddPart_of_squarefree {D : ℕ} (hD : Squarefree D) : oddPart D = D.primeFactors := by
+  unfold oddPart
+  refine Finset.filter_true_of_mem fun q hq => ?_
+  have h1 := Squarefree.natFactorization_le_one q hD
+  have h0 : D.factorization q ≠ 0 := by
+    rw [← Finsupp.mem_support_iff, Nat.support_factorization]; exact hq
+  have : D.factorization q = 1 := by omega
+  rw [this]; exact odd_one
+
+/-- For a squarefree `D`, `|oddPart D| = ω(D)` (the number of distinct prime factors). -/
+theorem card_oddPart_of_squarefree {D : ℕ} (hD : Squarefree D) :
+    (oddPart D).card = ArithmeticFunction.cardDistinctFactors D := by
+  rw [oddPart_of_squarefree hD, ArithmeticFunction.cardDistinctFactors_apply, ← List.card_toFinset,
+    Nat.toFinset_factors]
+
 theorem legendreSym_neg_mul_sq {p : ℕ} [Fact p.Prime] {n m : ℕ} (hpm : ¬ p ∣ m) :
     legendreSym p (-((n * m ^ 2 : ℕ) : ℤ)) = legendreSym p (-(n : ℤ)) := by
   have hm : legendreSym p (m : ℤ) ^ 2 = 1 := by
@@ -113,13 +135,15 @@ theorem two_pow_dvd_intCast_even_mul {k : ℕ} {x : R} {c : ℤ} (hc : Even c) (
   rw [this]; exact dvd_mul_of_dvd_right (two_pow_dvd_two_mul h) _
 
 /-- The invariant carried through `∏_{p∈U}(U_p − η(p)V_p)`: vanishing at `0`, the bound (O.9),
-and the shell congruence behind (O.11) (tex 9626–9627). -/
-structure DivInv (T δ : ℕ) (χ : ℕ → R) (GoodPrime : ℕ → Prop) (U : Finset ℕ) (b : ℕ → R) :
+and the shell congruence behind (O.11) (tex 9626–9627). The depth `δ` is an integer and the
+exponents are truncated at `T` and at `0`. -/
+structure DivInv (T : ℕ) (δ : ℤ) (χ : ℕ → R) (GoodPrime : ℕ → Prop) (U : Finset ℕ) (b : ℕ → R) :
     Prop where
   zero : b 0 = 0
-  bound : ∀ n, (2 : R) ^ (min T (δ + U.card + (oddPart n \ U).card)) ∣ b n
+  bound : ∀ n, (2 : R) ^ (min (T : ℤ) (δ + U.card + (oddPart n \ U).card)).toNat ∣ b n
   cong : ∀ n m, n ≠ 0 → m ≠ 0 → (∀ q ∈ m.primeFactors, GoodPrime q) →
     (∀ q ∈ oddPart n \ U, ¬ q ∣ m) →
-    (2 : R) ^ (min T (δ + U.card + (oddPart n \ U).card + 1)) ∣ b (n * m ^ 2) - χ m * b n
+    (2 : R) ^ (min (T : ℤ) (δ + U.card + (oddPart n \ U).card + 1)).toNat ∣
+      b (n * m ^ 2) - χ m * b n
 
 end ZInQ.Manuscript.RC.Odd

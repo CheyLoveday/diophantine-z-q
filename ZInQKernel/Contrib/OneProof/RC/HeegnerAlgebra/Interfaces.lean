@@ -259,8 +259,9 @@ theorem H7_assembled {ι 𝒜 Γ P HV HE : Type*} [DecidableEq ι] [CommRing �
 
 /-- (H8)–(H11) assembled, tex 3004–3086, `PROVED` from the interfaces: with
 `c_{I,a} = δ_a(C_π D_I y_{f n_I})` and `b_{I,a} = m₀ C_bad d_a(c_{I,a})`, the restriction of
-`b_{I,a}` to `M_I` is `δ_a(L D_I y_{f n_I})`, `L = m₀ C_π C_bad 2^{2e}`; for `I = ∅`
-(restriction the identity) the class is the Kummer class of `L` times the point. -/
+`b_{I,a}` to `M_I` is `δ_a(L D_I y_{f n_I})`, `L = m₀ C_π C_bad 2^{2e}`.  For `I = ∅`,
+`H11_empty` gives the class itself (not only its restriction): it is the Kummer class over `H_f`
+of `L` times the point. -/
 theorem H11_assembled {A B C D P : Type*} [AddCommGroup A] [AddCommGroup B] [AddCommGroup C]
     [AddCommGroup D] [AddCommGroup P] (e : ℕ) (Inp : InfResInput A B C D e) (δa : P →+ C)
     (m0 Cπ Cbad : ℕ) (x : P) :
@@ -268,15 +269,65 @@ theorem H11_assembled {A B C D P : Type*} [AddCommGroup A] [AddCommGroup B] [Add
       δa (Lmult m0 Cπ Cbad e • x) :=
   H11_restriction Inp.seq e Inp.killD δa m0 Cπ Cbad x
 
-/-- (H8)–(H9) for `I = ∅`, tex 3030–3032 and 3293–3295, `PROVED`: when the relative group is
-trivial the descended class is `2^{2e}` times the class, so `b_{∅,a}` is the Kummer class of the
-`L`-multiplied point. -/
-theorem H11_empty {A B D P : Type*} [AddCommGroup A] [AddCommGroup B] [AddCommGroup D]
-    [AddCommGroup P] (e : ℕ) (Inp : InfResInput A B B D e) (hres : ∀ b, Inp.seq.res b = b)
-    (δa : P →+ B) (m0 Cπ Cbad : ℕ) (x : P) :
+/-- (H8)–(H9) and (H11) for `I = ∅`, tex 2867–2868, 3030–3032 and 3293–3295, `PROVED`: "For
+`I = ∅` the class is the Kummer class of the `L`-multiplied unaveraged weighted point."  For
+`I = ∅`, `M_∅ = H_f`, so the class `c_{∅,a} = δ_a(C_π y)` of the third term `H¹(M_∅, V_a)^Γ` is the
+restriction of the Kummer class over the base field: `δa = res ∘ κ` on the points (`hκ`), where
+`κ : P → B = H¹(H_f, V_a)` is the Kummer map of `E(H_f)` and `δa : P → H¹(M_∅, V_a)^Γ` the one over
+`M_∅`.  Then `b_{∅,a} = m₀ C_bad d_a(c_{∅,a})` is the Kummer class `κ(L x)` itself,
+`L = m₀ C_π C_bad 2^{2e}`, by "this same definition gives `d_a(c) = 2^{2e} c`"
+(`FiveTerm.descend_res`).
+
+Restated by Lane RC27 over a general `InfResInput A B C D e`: the earlier form required the third
+term to be the second one with `res = id` and one map `δa` into it, which the genuine sequence
+(third term `H1ConjInvariants G M ⊤`) cannot satisfy.  The conclusion now names the Kummer map
+over `H_f`, as the text does; the triviality of the relative group enters only through `hκ` (no
+bijectivity of `res` is needed; with it, see `H11_empty_of_bijective`).  Non-vacuity: the genuine
+sequence at `N = ⊤` with `δa = res ∘ κ` (`GlueSweep.Heeg.H11_empty_genuine`), and the toy data
+`InfResInput.ofTrivialRelative` (`H11_empty_nonvacuous`, conclusion `4 ≠ 0`). -/
+theorem H11_empty {A B C D P : Type*} [AddCommGroup A] [AddCommGroup B] [AddCommGroup C]
+    [AddCommGroup D] [AddCommGroup P] (e : ℕ) (Inp : InfResInput A B C D e) (κ : P →+ B)
+    (δa : P →+ C) (hκ : ∀ y, Inp.seq.res (κ y) = δa y) (m0 Cπ Cbad : ℕ) (x : P) :
     ((m0 * Cbad : ℕ) : ℤ) • Inp.seq.descend e Inp.killD (δa ((Cπ : ℤ) • x)) =
-      δa (Lmult m0 Cπ Cbad e • x) := by
-  have h := H11_restriction Inp.seq e Inp.killD δa m0 Cπ Cbad x
-  rwa [hres] at h
+      κ (Lmult m0 Cπ Cbad e • x) := by
+  rw [← hκ, Inp.seq.descend_res e Inp.killA Inp.killD, smul_smul, ← map_zsmul, smul_smul, Lmult]
+  congr 2
+  push_cast
+  ring
+
+/-- `H11_empty` when the relative group is trivial, tex 2867–2868, 3030–3032 and 3293–3295,
+`PROVED`: if restriction `H¹(H_f, V_a) → H¹(M_∅, V_a)^Γ` is an isomorphism (`hres`; for `I = ∅`,
+`FiveTerm.res_bijective_of_subsingleton`), then for any map `δa` into the third term,
+`b_{∅,a} = m₀ C_bad d_a(δa(C_π x))` is the class of `H¹(H_f, V_a)` corresponding to `δa(L x)`
+under that isomorphism, i.e. the Kummer class of the `L`-multiplied point read in `H¹(H_f, V_a)`.
+Derived from `H11_empty` with `κ = res⁻¹ ∘ δa`.  Non-vacuity: as for `H11_empty` (the genuine
+`res` at `N = ⊤` is bijective: `GlueSweep.Heeg.explicitResConj1_top_bijective`). -/
+theorem H11_empty_of_bijective {A B C D P : Type*} [AddCommGroup A] [AddCommGroup B]
+    [AddCommGroup C] [AddCommGroup D] [AddCommGroup P] (e : ℕ) (Inp : InfResInput A B C D e)
+    (hres : Function.Bijective Inp.seq.res) (δa : P →+ C) (m0 Cπ Cbad : ℕ) (x : P) :
+    ((m0 * Cbad : ℕ) : ℤ) • Inp.seq.descend e Inp.killD (δa ((Cπ : ℤ) • x)) =
+      (AddEquiv.ofBijective Inp.seq.res hres).symm (δa (Lmult m0 Cπ Cbad e • x)) :=
+  H11_empty e Inp ((AddEquiv.ofBijective Inp.seq.res hres).symm.toAddMonoidHom.comp δa) δa
+    (fun _ => AddEquiv.ofBijective_apply_symm_apply Inp.seq.res hres) m0 Cπ Cbad x
+
+/-- The interface `InfResInput` for the five-term data of a trivial relative group
+(`FiveTerm.ofTrivialRelative`: zero outer terms, restriction the identity).  A toy instance for
+the non-vacuity of `H11_empty`. -/
+def InfResInput.ofTrivialRelative (B : Type*) [AddCommGroup B] (e : ℕ) :
+    InfResInput Unit B B Unit e where
+  seq := FiveTerm.ofTrivialRelative B
+  killA _ := Subsingleton.elim _ _
+  killD _ := Subsingleton.elim _ _
+
+/-- Non-vacuity of `H11_empty`, `PROVED`: its hypotheses hold for the toy data over `ℤ` with
+`κ = δa = id` (`hκ` holds since restriction is the identity), and with `m₀ = C_π = C_bad = 1`,
+`e = 1`, `x = 1` the conclusion is `b_{∅,a} = L = 4 ≠ 0`. -/
+theorem H11_empty_nonvacuous :
+    ((1 * 1 : ℕ) : ℤ) • (InfResInput.ofTrivialRelative ℤ 1).seq.descend 1
+        (InfResInput.ofTrivialRelative ℤ 1).killD (AddMonoidHom.id ℤ (((1 : ℕ) : ℤ) • (1 : ℤ))) =
+      4 := by
+  rw [H11_empty 1 (InfResInput.ofTrivialRelative ℤ 1) (AddMonoidHom.id ℤ) (AddMonoidHom.id ℤ)
+    (fun _ => rfl) 1 1 1 1]
+  decide
 
 end ZInQ.Manuscript.RC.HeegnerAlgebra

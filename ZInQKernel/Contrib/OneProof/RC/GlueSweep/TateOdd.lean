@@ -3,6 +3,7 @@ import ZInQKernel.Contrib.OneProof.RC.TateWiring.Image
 import ZInQKernel.Contrib.CloudB3RC53.DetTateCyclotomic.Equality
 import ZInQKernel.Contrib.OneProof.RC.PrintsAnalytic.Basic
 import ZInQKernel.Contrib.OneProof.RC.Odd.Detector
+import ZInQKernel.Contrib.OneProof.RC.GlueSweep.TateChebotarev
 
 /-!
 # Lane RC22 (glue sweep), Tate share: the Galois inputs of lane RC12's detecting stage
@@ -68,23 +69,7 @@ theorem qtwist_ecurve_serre_scalar (hS : SerreThm3) (hcm : CMjInteger) {ℓ : �
 
 /-! ### The determinant step `ℓ₀ ≡ −1 (mod 2^M)` -/
 
-/-- **`det ρ₂(σ) ≡ ℓ₀ (mod 2^M)` for `σ` acting on `μ_{2^M}` as `ζ ↦ ζ^{ℓ₀}`** (PROVED from the tree's
-`ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoEqCyclotomic`, every elliptic `E/ℚ`). -/
-theorem toZModPow_det_eq_of_frob (E : WeierstrassCurve ℚ) [E.IsElliptic] {M ℓ₀ : ℕ} (σ : GalQ)
-    (hfrob : ∀ ζ : Qbar, ζ ^ (2 ^ M) = 1 → σ ζ = ζ ^ ℓ₀) :
-    PadicInt.toZModPow M (LinearMap.det (tateRep E 2 σ)) = (ℓ₀ : ZMod (2 ^ M)) := by
-  rw [DetTateCyclotomic.detTateTwoEqCyclotomic E σ,
-    show (cyclotomicCharacter Qbar 2 σ.toRingEquiv : ℤ_[2]) =
-      (cyclotomicCharacter Qbar 2 σ.toRingEquiv).val from rfl, cyclotomicCharacter.toZModPow]
-  symm
-  refine modularCyclotomicCharacter.unique _ _ σ.toRingEquiv fun t ht => ?_
-  have htM : (t : Qbar) ^ (2 ^ M) = 1 := by
-    have h := congrArg Units.val ((mem_rootsOfUnity _ _).mp ht)
-    simpa using h
-  rw [ZMod.val_natCast]
-  change σ (t : Qbar) = (t : Qbar) ^ (ℓ₀ % 2 ^ M)
-  rw [hfrob _ htM]
-  conv_lhs => rw [← Nat.div_add_mod ℓ₀ (2 ^ M), pow_add, pow_mul, htM, one_pow, one_mul]
+-- `toZModPow_det_eq_of_frob` (`det ρ₂(σ) ≡ ℓ₀ (mod 2^M)`) is in `TateChebotarev.lean` (Lane RC27).
 
 /-- **`ℓ₀ ≡ −1 (mod 2^M)`** (tex 8372–8374, "The determinant also gives `ℓ₀ ≡ −1 (mod 2^M)`"): if
 `σ ∈ G_ℚ` acts on the `2^M`-th roots of unity as `ζ ↦ ζ^{ℓ₀}` and its matrix `ρ₂(σ)` (lane RC17's
@@ -115,5 +100,25 @@ theorem ell0_mod_four (E : WeierstrassCurve ℚ) [E.IsElliptic] {M ℓ₀ : ℕ}
       (PadicInt.toZModPow M).mapMatrix C) :
     ℓ₀ % 4 = 3 :=
   ZInQ.Manuscript.RC.Odd.mod_four_of_neg_one hM (ell0_congr_neg_one E σ hfrob C hCdet hσC)
+
+/-- **`Fr_{ℓ₀} ≡ C (mod 2^M)` and `ℓ₀ ≡ −1 (mod 2^M)` for Chebotarev primes** (tex 8362–8374): if
+`ρ₂(σ)` has matrix `C` with `det C = −1` (Elliot's `σ = hτ`), then for every `M`, finite `F₀` (e.g.
+`ℚ(√D_w, √h_*)`) and finite `S` there is a Frobenius `h` at a prime `ℓ₀ ∉ S` with `h = σ` on `F₀`,
+`ρ₂(h) ≡ C (mod 2^M)` and `ℓ₀ ≡ −1 (mod 2^M)`. Kind: PROVED from the tree's Chebotarev and
+`det ρ₂ = χ₂` (no remaining hypothesis beyond the data). Consumer: lane RC12's
+`mod_four_of_neg_one` / `det_congr` step (its hypothesis `h` with the GLUE "`det ρ(Fr_{ℓ₀}) = ℓ₀`"
+and the Chebotarev GLUE both discharged); also lane RC10's (H12) half `2^{a+1} ∣ ℓ + 1` (with
+`C = J`). Dischargers: `exists_frob_congr`, `ell0_congr_neg_one`. (Lane RC27: moved here from
+`TateChebotarev.lean`, statement and proof unchanged.) -/
+theorem exists_ell0_congr_neg_one (E : WeierstrassCurve ℚ) [E.IsElliptic] (σ : GalQ)
+    (C : Matrix (Fin 2) (Fin 2) ℤ_[2]) (hσC : tateMatrix E σ = C) (hCdet : C.det = -1) (M : ℕ)
+    (F₀ : IntermediateField ℚ Qbar) [FiniteDimensional ℚ F₀] (S : Finset ℕ) :
+    ∃ (h : GalQ) (ℓ₀ : ℕ), ℓ₀.Prime ∧ ℓ₀ ∉ S ∧ ZInQ.Contrib.ChebFD.C10.IsFrobAt h ℓ₀ ∧
+      (∀ x ∈ F₀, h x = σ x) ∧
+      (PadicInt.toZModPow M).mapMatrix (tateMatrix E h) = (PadicInt.toZModPow M).mapMatrix C ∧
+      ((ℓ₀ : ℤ) : ZMod (2 ^ M)) = -1 := by
+  obtain ⟨h, ℓ₀, hprime, hnot, -, hF, hF₀, hcong, hfrob⟩ := exists_frob_congr E σ M F₀ S
+  rw [hσC] at hcong
+  exact ⟨h, ℓ₀, hprime, hnot, hF, hF₀, hcong, ell0_congr_neg_one E h hfrob C hCdet hcong⟩
 
 end ZInQ.Manuscript.RC.GlueSweep.Tate

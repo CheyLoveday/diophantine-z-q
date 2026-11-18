@@ -33,11 +33,14 @@ PROVED here (from the fields, the local counts of `Lines.lean` and the transfer 
 * `ThetaStage.brandt` (tex 9059–9082): `H(p²n) + s(−n/p)H(n) + ps²H(n/p²) = sχ_{h_*}(p)a_pH(n)`;
 * `ThetaStage.recAt` ((O.6), tex 9083–9093): `RecAt p (η p) (−1/p) a_p aθ` at every good prime;
 * `ThetaStage.aθ_zero` (tex 9092): `aθ 0 = 0`;
-* `ThetaStage.sourceHyp`: `Odd.SourceHyp T δ η Good a_p aθ`, given `a_q ≡ q + 1 (mod 4)` (PROVED for
-  the actual curve as `GlueSweep.Odd.ap_mod_four_curve`) and the depth inequality of App G
-  (the field `SourceHyp.depth`, taken as a hypothesis, tex 10151–10256);
-* `ThetaStage.oddStageSource`: the tree's `Odd.OddStageSource M δ η Good a_p aθ` for
-  `R = ZMod (2^M)`.
+* `ThetaStage.sourceCore`, `ThetaStage.sourceHyp`: `Odd.SourceCore η Good adm a_p aθ` and
+  `Odd.SourceHyp T δ η Good adm a_p aθ`, given `a_q ≡ q + 1 (mod 4)` (PROVED for the actual curve as
+  `GlueSweep.Odd.ap_mod_four_curve`), the vanishing off the coefficient support and off the stage
+  support (ELLIOT, tex 9472–9476, 2530–2532), and, for `sourceHyp`, the depth inequality at the
+  squarefree parameters of the stage support (App G's conclusion, tex 10151–10256; produced by
+  `Odd.sourceHyp_depth_of_oddMinimumF6`);
+* `ThetaStage.oddStageCore`, `ThetaStage.oddStageSource`: the tree's `Odd.OddStageCore` and
+  `Odd.OddStageSource` for `R = 𝒪/2^M𝒪` (`Odd.StageRing`).
 
 What the fields encode, and what is missing, is in `docs/research/rc-appF-theta.md`. In short: the
 fields are the definitions of the adelic construction plus three standard facts used by Elliot
@@ -190,32 +193,67 @@ theorem recAt {p : ℕ} (hp : S.Good p) :
 theorem aθ_zero : S.aθ 0 = 0 := by
   simp [aθ, H, S.theta_zero]
 
-/-- **PROVED: the coefficient source.** For a stage whose `a_q` satisfy `a_q ≡ q + 1 (mod 4)` at
-the good primes and whose coefficients satisfy App G's depth inequality (the field `depth` of
-`SourceHyp`), the phase-removed coefficients `aθ` satisfy the tree's `SourceHyp`. -/
-theorem sourceHyp {T δ : ℕ} (hap : ∀ q, S.Good q → S.ap q ≡ q + 1 [ZMOD 4])
-    (depth : ∀ n, (2 : R) ^ (min T (δ + (oddPart n).card)) ∣ S.aθ n) :
-    SourceHyp T δ S.η S.Good S.ap S.aθ where
+/-- **PROVED: the coefficient source without its depth.** For a stage whose `a_q` satisfy
+`a_q ≡ q + 1 (mod 4)` at the good primes, and whose coefficients vanish at the indices not prime to
+the coefficient support and at the squarefree parameters outside the stage support `adm` (the local
+Schwartz supports, tex 9472–9476, 2530–2532, 8496–8566; ELLIOT inputs, not fields of `ThetaStage`),
+the phase-removed coefficients `aθ` satisfy the tree's `SourceCore`. -/
+theorem sourceCore {adm : ℕ → Prop} (hap : ∀ q, S.Good q → S.ap q ≡ q + 1 [ZMOD 4])
+    (support : ∀ n, (∃ q ∈ n.primeFactors, ¬ S.Good q) → S.aθ n = 0)
+    (support_adm : ∀ D, Squarefree D → ¬ adm D → S.aθ D = 0) :
+    SourceCore S.η S.Good adm S.ap S.aθ where
   prime := S.good_prime
   odd q hq := by exact_mod_cast (S.good_prime q hq).odd_of_ne_two (S.good_ne_two q hq)
   ap_mod := hap
   recur q hq := by
-    haveI := Fact.mk (S.good_prime q hq)
+    have := Fact.mk (S.good_prime q hq)
     refine ⟨legendreSym q (-1), ?_, S.recAt hq⟩
     have h0 : ((-1 : ℤ) : ZMod q) ≠ 0 := by simp
     exact legendreSym.eq_one_or_neg_one q h0
   zero := S.aθ_zero
-  depth := depth
+  support := support
+  support_adm := support_adm
   mul := S.η_mul
   one := S.η_one
 
-/-- **PROVED: the tree's `OddStageSource` at one actual stage** (`R = ZMod (2^M)`, the model of
-`𝒪/2^M𝒪` used by `RC/Odd/Statements.lean`). Consumers: `Odd.O9_odd_stage`, `Odd.O11_odd_stage`. -/
-theorem oddStageSource {M δ : ℕ} (S : ThetaStage (ZMod (2 ^ M)))
+/-- **PROVED: the coefficient source.** `sourceCore` together with a depth inequality at the
+squarefree parameters of the stage support (integer depth `δ`, truncation `T`; at an odd stage this
+is App G's conclusion for one finite operator budget, `Odd.sourceHyp_depth_of_oddMinimumF6`,
+tex 10151–10256): the phase-removed coefficients `aθ` satisfy the tree's `SourceHyp`. -/
+theorem sourceHyp {T : ℕ} {δ : ℤ} {adm : ℕ → Prop}
     (hap : ∀ q, S.Good q → S.ap q ≡ q + 1 [ZMOD 4])
-    (depth : ∀ n, (2 : ZMod (2 ^ M)) ^ (min M (δ + (oddPart n).card)) ∣ S.aθ n) :
-    OddStageSource M δ S.η S.Good S.ap S.aθ :=
-  S.sourceHyp hap depth
+    (support : ∀ n, (∃ q ∈ n.primeFactors, ¬ S.Good q) → S.aθ n = 0)
+    (support_adm : ∀ D, Squarefree D → ¬ adm D → S.aθ D = 0)
+    (depth : ∀ D, Squarefree D → adm D →
+      (2 : R) ^ (min (T : ℤ) (δ + ArithmeticFunction.cardDistinctFactors D)).toNat ∣ S.aθ D) :
+    SourceHyp T δ S.η S.Good adm S.ap S.aθ :=
+  { toSourceCore := S.sourceCore hap support support_adm
+    depth := depth }
+
+/-- **PROVED: the tree's `OddStageCore` at one actual stage** (coefficients in `𝒪/2^M𝒪`, the model
+used by `RC/Odd/Statements.lean`). With App G's stage choice (`Odd.oddStageSource_eventually`) it
+gives the valid stages of every finite operator budget. -/
+theorem oddStageCore {O : Type*} [CommRing O] {M : ℕ} (S : ThetaStage (StageRing O M))
+    {adm : ℕ → Prop} (hap : ∀ q, S.Good q → S.ap q ≡ q + 1 [ZMOD 4])
+    (support : ∀ n, (∃ q ∈ n.primeFactors, ¬ S.Good q) → S.aθ n = 0)
+    (support_adm : ∀ D, Squarefree D → ¬ adm D → S.aθ D = 0) :
+    OddStageCore O M S.η S.Good adm S.ap S.aθ :=
+  S.sourceCore hap support support_adm
+
+/-- **PROVED: the tree's `OddStageSource` at one actual stage** (coefficients in `𝒪/2^M𝒪`): a stage
+valid for the budget `(W_U, R_b)` with odd minimum `δ_o`. Consumers: `Odd.O9_odd_stage`,
+`Odd.O11_odd_stage`. -/
+theorem oddStageSource {O : Type*} [CommRing O] {WU Rb M : ℕ} {δo : ℤ}
+    (S : ThetaStage (StageRing O M)) {adm : ℕ → Prop}
+    (hap : ∀ q, S.Good q → S.ap q ≡ q + 1 [ZMOD 4])
+    (support : ∀ n, (∃ q ∈ n.primeFactors, ¬ S.Good q) → S.aθ n = 0)
+    (support_adm : ∀ D, Squarefree D → ¬ adm D → S.aθ D = 0)
+    (hM : budgetLevel δo WU Rb ≤ M)
+    (depth : ∀ D, Squarefree D → adm D →
+      (2 : StageRing O M) ^ (min ((budgetLevel δo WU Rb : ℕ) : ℤ)
+        (δo + ArithmeticFunction.cardDistinctFactors D)).toNat ∣ S.aθ D) :
+    OddStageSource O WU Rb M δo S.η S.Good adm S.ap S.aθ :=
+  ⟨hM, S.sourceHyp hap support support_adm depth⟩
 
 end ThetaStage
 

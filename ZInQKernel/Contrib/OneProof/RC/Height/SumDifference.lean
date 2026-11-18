@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.RC.Height.Isomorphism
 import ZInQKernel.Contrib.OneProof.RC.Height.BaseChange
+import ZInQKernel.Contrib.OneProof.RC.Central.Calibration
 
 /-!
 # Lane RC19 (height): the sum/difference isogenies, their adjunction and the regulator ratio
@@ -39,7 +40,9 @@ Every declaration in this file is PROVED.
 * `regulator_ratio_sumDiff`: with rank-one free generators `g_A`, `g_B` (rank one is an input:
   the forward theorems at known simple zeros, tex 4020–4021), there are `α, β ∈ ℤ` with
   `φ g_A ≡ α g_B`, `ψ g_B ≡ β g_A` modulo torsion, `αβ = 2` (so `IJ = 2` for `I = |α|`, `J = |β|`)
-  and `Reg_B α² = 2 Reg_A`, i.e. `Reg_B / Reg_A = 2/I²` (tex 4082–4090).
+  and `Reg_B α² = 2 Reg_A`, i.e. `Reg_B / Reg_A = 2/I²` (tex 4082–4090). The last identity is lane
+  RC15's `Central.regulator_ratio` (stated over `ℝ`) applied to the genuine real regulators
+  `Reg_A = ĥ_A(g_A)`, `Reg_B = ĥ_B(g_B)`.
 -/
 
 open Height
@@ -384,8 +387,10 @@ generate `A(ℚ) = E^{(h)}(K)` modulo torsion and `g_B` generate `B(ℚ) = E^{(h
 modulo torsion (rank one: an input, from the forward theorems at known simple zeros, tex 4020–4021).
 Then there are integers `α, β` with `φ g_A ≡ α g_B` and `ψ g_B ≡ β g_A` modulo torsion, so that
 `I = [B_free : φ A_free] = |α|` and `J = [A_free : ψ B_free] = |β|`, and
-`αβ = 2` (`IJ = 2`), `α Reg_B = β Reg_A` (the adjunction read on generators: RC15's input `hadj`)
-and `Reg_B α² = 2 Reg_A` for `Reg_A = ĥ_A(g_A)`, `Reg_B = ĥ_B(g_B)`. PROVED. -/
+`αβ = 2` (`IJ = 2`), `α Reg_B = β Reg_A` (the adjunction read on generators: the hypothesis `hadj`
+of lane RC15's `Central.regulator_ratio`) and `Reg_B α² = 2 Reg_A` for the genuine real regulators
+`Reg_A = ĥ_A(g_A)`, `Reg_B = ĥ_B(g_B)` (lane RC15's `Central.regulator_ratio`, over `ℝ`, applied to
+them). PROVED. -/
 theorem regulator_ratio_sumDiff (gA : ((qtwist E h).baseChange K).toAffine.Point)
     (gB : ((qtwist E h).baseChange ℚ).toAffine.Point ×
       ((qtwist E (h * k)).baseChange ℚ).toAffine.Point)
@@ -422,9 +427,7 @@ theorem regulator_ratio_sumDiff (gA : ((qtwist E h).baseChange K).toAffine.Point
         neronTatePairing_eq_zero_of_isOfFinAddOrder_right _ hβ, zero_add,
         neronTatePairing_zsmul_right, neronTatePairing_self]
     rw [← hl, ← hr, pairingB_diffMap]
-  refine ⟨α, β, hα, hβ, hαβ, hadj, ?_⟩
-  have hαβR : (α : ℝ) * β = 2 := by exact_mod_cast hαβ
-  linear_combination (α : ℝ) * hadj + gA.canonicalHeight * hαβR
+  exact ⟨α, β, hα, hβ, hαβ, hadj, ZInQ.Manuscript.RC.Central.regulator_ratio hαβ hadj⟩
 
 end SumDifference
 

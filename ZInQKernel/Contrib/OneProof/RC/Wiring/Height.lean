@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.RC.Wiring.Central
 import ZInQKernel.Contrib.OneProof.RC.Height.BaseZeroCST
+import ZInQKernel.Contrib.OneProof.RC.Height.ArtinG2
 
 /-!
 # Theorem 5.3, Lane RC0 round 2: the conductor-one height formula in the base-zero inputs (lane RC19)
@@ -9,6 +10,13 @@ Lane RC15's base-zero node takes the conductor-one height formula as the hypothe
 `hheight_of_CST` proves it from the blueprint's statement of Cai–Shu–Tian Theorem 1.1 and the
 conductor-one Heegner data. This file replaces the field `hheight` of `BaseZeroModel` by those data
 (`HeegnerData`): `baseZeroInputs_of_CST : BaseZeroInputsCST D → BaseZeroInputs D` (PROVED).
+
+Lane RC27 (item 7): the conjunct `LFactorizationConductorOne E K k` (RC19's GLUE G2) of
+`HeegnerData` follows from the shared top layer's GLUE `GenusOdd.ArtinFactorization` when `K` is
+split at `2` and `K = ℚ(√k)` (`ArtinG2.lean`). `HeegnerDataSqrt` is `HeegnerData` with that
+conjunct replaced by these two conditions on `K`; `heegnerData_of_sqrt` (PROVED) turns it into
+`HeegnerData` given `ArtinFactorization`, and `hheight_of_heegnerDataSqrt` (PROVED) is the height
+formula from it.
 -/
 
 noncomputable section
@@ -61,6 +69,54 @@ theorem hheight_of_heegnerData {E : WeierstrassCurve ℚ} {hE : E.IsElliptic} {k
   obtain ⟨f, hf, Lat, hLat, hnCM, κ, hκ, hK2, hKc, hD3, hD4, hsplit, A, B, C', hH, ι, y, hy, hP,
     hL⟩ := h
   exact hheight_of_CST E k f hf Lat hLat hnCM κ hκ K hK2 hKc hD3 hD4 hsplit A B C' hH ι y hy P hP hL
+
+open Classical in
+/-- **The conductor-one Heegner data with the factorization replaced by conditions on `K`**
+(tex 4330–4346; tex 2599 "Fix `k` and `K = ℚ(√k)`", tex 2720 "`K = ℚ(√k)` … imaginary, split at
+`2N`"): the data of `HeegnerData` (verbatim) with its conjunct `LFactorizationConductorOne E K k`
+(GLUE) replaced by `K` split at `2` and a square root `t ∈ K \ ℚ` of `k`. Kinds: definition (the
+Heegner point), as for `HeegnerData`. Non-vacuity: the replaced conjuncts are jointly satisfiable
+with every other condition on `K` here except the level splitting (`K = ℚ(√−7)`, `k = −7`:
+`ZInQ.Manuscript.RC.Height.artinG2_field_hypotheses_nonvacuous`); the remaining conjuncts are those
+of `HeegnerData`. -/
+def HeegnerDataSqrt (E : WeierstrassCurve ℚ) (hE : E.IsElliptic) (k : ℚ) (K : Type) [Field K]
+    [NumberField K] [DecidableEq K] (P : (E.baseChange K).toAffine.Point) : Prop :=
+  haveI := hE
+  ∃ (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2)
+    (_ : ∀ n : ℕ, 0 < n → (UpperHalfPlane.qExpansion 1 f).coeff n = (E.LFunction n : ℂ))
+    (Lat : PeriodPair) (_ : IsLatticeOf E Lat) (_ : IsNonCMLattice Lat)
+    (κ : ℂ) (_ : IsParamScale (newformLevel E) f Lat κ)
+    (_ : Module.finrank ℚ K = 2) (_ : IsTotallyComplex K) (_ : discr K ≠ -3) (_ : discr K ≠ -4)
+    (_ : ∀ p : ℕ, p.Prime → p ∣ newformLevel E → SplitsIn K p)
+    (A B C' : ℤ) (_ : IsHeegnerForm (newformLevel E) (discr K * (1 : ℕ) ^ 2) A B C')
+    (ι : ringClassField (conductorOrder K 1) →ₐ[ℚ] ℂ)
+    (y : (E.baseChange (ringClassField (conductorOrder K 1))).toAffine.Point),
+    Point.map (W' := E.toAffine) ι y = phiAn E f Lat κ (cmPoint A B (discr K * (1 : ℕ) ^ 2)) ∧
+    Point.baseChange K (ringClassField (conductorOrder K 1)) P =
+      ∑ σ : ringClassField (conductorOrder K 1) ≃ₐ[K] ringClassField (conductorOrder K 1),
+        Point.map (W' := E.toAffine) (σ.toAlgHom.restrictScalars ℚ) y ∧
+    SplitsIn K 2 ∧ ∃ t : K, t ∉ (algebraMap ℚ K).range ∧ t ^ 2 = algebraMap ℚ K k
+
+/-- **`HeegnerData` from `HeegnerDataSqrt` and `ArtinFactorization`** (tex 5736; PROVED from the
+shared top layer's GLUE `GenusOdd.ArtinFactorization` by lane RC27's
+`lFactorizationConductorOne_of_artin`). -/
+theorem heegnerData_of_sqrt (hA : GenusOdd.ArtinFactorization) {E : WeierstrassCurve ℚ}
+    {hE : E.IsElliptic} {k : ℚ} {K : Type} [Field K] [NumberField K] [DecidableEq K]
+    {P : (E.baseChange K).toAffine.Point} (h : HeegnerDataSqrt E hE k K P) :
+    HeegnerData E hE k K P := by
+  have := hE
+  obtain ⟨f, hf, Lat, hLat, hnCM, κ, hκ, hK2, hKc, hD3, hD4, hsplit, A, B, C', hH, ι, y, hy, hP,
+    h2, t, ht, htk⟩ := h
+  exact ⟨f, hf, Lat, hLat, hnCM, κ, hκ, hK2, hKc, hD3, hD4, hsplit, A, B, C', hH, ι, y, hy, hP,
+    lFactorizationConductorOne_of_artin hA E K hK2 hKc h2 hsplit ht htk⟩
+
+/-- **The conductor-one height formula from `HeegnerDataSqrt` and `ArtinFactorization`** (PROVED:
+`hheight_of_heegnerData` after `heegnerData_of_sqrt`). -/
+theorem hheight_of_heegnerDataSqrt (hA : GenusOdd.ArtinFactorization) {E : WeierstrassCurve ℚ}
+    {hE : E.IsElliptic} {k : ℚ} {K : Type} [Field K] [NumberField K] [DecidableEq K]
+    {P : (E.baseChange K).toAffine.Point} (h : HeegnerDataSqrt E hE k K P) :
+    CSTThm11Split → ProductOrderGeTwo E k → IsOfFinAddOrder P :=
+  hheight_of_heegnerData (heegnerData_of_sqrt hA h)
 
 /-- **The base-zero model with the conductor-one Heegner data in place of the height formula**:
 the fields of `BaseZeroModel` (tex 4330–4376; see there), with `K` a number field, `P` the

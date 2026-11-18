@@ -42,10 +42,20 @@ Locators (read on the public web unless marked `UNVERIFIED`):
 * [Guillot] P. Guillot, *A gentle course in local class field theory* (CUP 2018), pp. 11–13,
   Lemma 1.20 and Theorem 1.22 (the perfect Kummer pairing), as cited by Version 19 of the
   manuscript (`UNVERIFIED`: not read).
-* [Silverman] J. H. Silverman, *The arithmetic of elliptic curves*, 2nd ed.: Theorem V.2.3.1
-  (`tr` and `det` of Frobenius on `T_ℓ`), Proposition VII.3.1(b) (reduction is injective on
-  prime-to-`p` torsion), §III.8 (Weil pairing: `det ρ_T` is the cyclotomic character)
-  (`UNVERIFIED`: not re-read).
+* [Silverman] J. H. Silverman, *The arithmetic of elliptic curves*, 2nd ed., GTM 106 (Springer
+  2009): Proposition V.2.3 (= III.8.6), p. 141, and Theorem V.2.3.1 with its proof and Remark V.2.6,
+  pp. 142–144 (for the `q`-power Frobenius `φ` of `Ẽ/𝔽_q`: `det φ_ℓ = q`,
+  `tr φ_ℓ = q + 1 − |Ẽ(𝔽_q)|`); Proposition VII.3.1(b), p. 192 (good reduction: the reduction map
+  is injective on prime-to-`p` torsion) and Proposition VII.4.1, p. 195 (`E[m]` and `T_ℓ E` are then
+  unramified) — read for Lane RC27; §III.8 (Weil pairing: `det ρ_T` is the cyclotomic character):
+  `UNVERIFIED` (not read; the identity is proved in the tree).
+
+Lane RC27: over the genuine Tate image (lane RC17's `MovingData`, `RC/TateWiring/Kummer.lean`)
+`ap r` is the genuine coefficient `a_r = E.LFunction r`, `good` the genuine `GoodPrime`, and the
+field `cheb` is not assumed but derived (`MovingData.cheb`) from its three ingredients: the
+Chebotarev step (PROVED from the tree's Chebotarev theorem), `tr ρ_T(Fr_r) = a_r` (the explicit GLUE
+`FrobeniusTrace`, [Silverman, V.2.3.1, VII.3.1(b), VII.4.1]) and the power-residue formula (GLUE).
+In this abstract interface (an abstract group `G`, no Frobenius elements) the three stay bundled.
 -/
 
 open Matrix
@@ -150,9 +160,12 @@ structure MovingSetting (T : TateImage) (n : ℕ) where
   automorphism of `L_∞/F_∞`, hence (restriction is onto) by some `σ₀ ∈ G_{F_∞}`. -/
   kum_surj : ∀ φ : Fin t → ZMod (2 ^ n),
     (∀ b ∈ KR, ∑ a, (b a : ZMod (2 ^ n)) * φ a = 0) → ∃ σ : GF, kum σ = Multiplicative.ofAdd φ
-  /-- `r` is good: a rational prime split in `K`, prime to `2N` and to the chosen primes -/
+  /-- `r` is good: a rational prime split in `K`, prime to `2N` and to the chosen primes (abstract
+  here; over the genuine objects it is lane RC17's `GoodPrime`, Lane RC27) -/
   good : ℕ → Prop
-  /-- `a_r` of the fixed curve -/
+  /-- `a_r` of the fixed curve (abstract here: the abstract `TateImage` has no Frobenius elements;
+  over the genuine Tate image lane RC17's `MovingData.toMovingSetting` sets
+  `ap r = E.LFunction r`, the coefficient of Mathlib's L-function of `E`, Lane RC27) -/
   ap : ℕ → ℤ
   /-- `Gal(H_r/K) ≅ Pic(ℤ + r𝒪_K)` -/
   P : ℕ → Type
@@ -214,7 +227,12 @@ structure MovingSetting (T : TateImage) (n : ℕ) where
   Frobenius facts: `r` splits in `K` and `r ≡ 1 (mod 2^{B'})` (since `σ` fixes `K` and
   `μ_{2^{B'}}`); `a_r ≡ tr ρ_T(σ) (mod 2^{B'})` ([Silverman, V.2.3.1, VII.3.1(b)]); and the
   Frobenius formula on `α_a^{1/2^n}` at the realizing place `v`: `κ_r(res α_a)` equals the
-  Kummer multiplier of `σ`. -/
+  Kummer multiplier of `σ`.  The trace congruence is used at tex 3686 ("Finally
+  `a_r ≡ tr ρ_T(σ) (mod 2^{B'})`"): it combines `ρ_T(Fr_r) ≡ ρ_T(σ) (mod 2^{B'})` (Chebotarev in a
+  field containing `E[2^{B'}]`) with `tr ρ_T(Fr_r) = a_r`.  Lane RC27: over the genuine Tate image
+  this field is derived, not assumed (lane RC17's `MovingData.cheb`: the Chebotarev step PROVED,
+  `tr ρ_T(Fr_r) = a_r` the GLUE `FrobeniusTrace`, the power-residue formula the GLUE field
+  `frob_kummer`). -/
   cheb : ∀ (σ : GF) (B' : ℕ) (S : Finset ℕ), ∃ (r : ℕ) (v : Pl r), r ∉ S ∧ r.Prime ∧ good r ∧
     (2 : ℤ) ^ B' ∣ (r : ℤ) - 1 ∧
     (2 : ℤ_[2]) ^ B' ∣ (ap r : ℤ_[2]) - tr (T.ρ σ) ∧

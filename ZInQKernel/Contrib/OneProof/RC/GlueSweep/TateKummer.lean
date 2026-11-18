@@ -18,6 +18,10 @@ lane RC17's definitions, with no hypothesis.
 `moving_character_genuine` and `moving_character_ecurve_genuine` with both the determinant GLUE and
 `kum_surj` removed; `moving_character_ecurve_genuineS` is the form for `E_ℓ` that needs only
 Serre's print `SerreThm3` (not the whole bundle `ArithPrints`) and `CMjInteger`.
+
+Lane RC27: `MovingDataK` follows lane RC17's restructured `MovingData` (genuine `a_r = E.LFunction r`
+and good primes; the field `cheb` replaced by the GLUE field `frob_kummer`, with the Chebotarev step
+PROVED and `tr ρ_T(Fr_r) = a_r` the GLUE hypothesis `FrobeniusTrace`, which the bridges now take).
 -/
 
 noncomputable section
@@ -186,9 +190,14 @@ theorem kum_surj_genuine {s : Qbar} {n t : ℕ} (K : KummerData s n t) (φ : Fin
     rw [zpow_natCast, ← pow_mul, mul_comm, pow_mul, K.γ_pow]
 
 
-/-- **Lane RC17's `MovingData E n` without the field `kum_surj`** (tex 3530–3595, 3662–3684): the
+/-- **Lane RC17's `MovingData E n` without the field `kum_surj`** (tex 3530–3595, 3662–3693): the
 remaining fields are lane RC4's other interface fields (kinds and locators as in
-`ZInQ.Manuscript.RC.Moving.MovingSetting`), with the Kummer layer and the trace genuine. -/
+`ZInQ.Manuscript.RC.Moving.MovingSetting`), with the Kummer layer, the trace, `a_r` and the good
+primes genuine.  Lane RC27: as `MovingData`, no field `ap` (`a_r = E.LFunction r`), no field `good`
+(the genuine `GoodPrime E sqrtD Sexc`, with the data field `Sexc`), and the field `cheb` split: the
+Chebotarev step is PROVED (`MovingData.exists_frobenius`), `tr ρ_T(Fr_r) = a_r` is the GLUE
+`FrobeniusTrace E` (a hypothesis of the statements below) and the power-residue formula is the GLUE
+field `frob_kummer`.  Non-vacuity: `MovingDataK.trivial`. -/
 structure MovingDataK (E : WeierstrassCurve ℚ) (n : ℕ) where
   /-- the allowed field `K = ℚ(√D)`, embedded in `ℚ̄` by `√D ↦ sqrtD` -/
   D : ℚ
@@ -211,45 +220,57 @@ structure MovingDataK (E : WeierstrassCurve ℚ) (n : ℕ) where
   cls_gen : ∀ c : Cl, ∃ v : Fin s → ℤ, ∑ j, v j • cls j = c
   m : Fin t → Fin s → ℤ
   m_span : ∀ v : Fin s → ℤ, ∑ j, v j • cls j = 0 → ∃ b : Fin t → ℤ, v = ∑ a, b a • m a
-  /-- `ELLIOT/GLUE` (tex 3551–3557; Elliot's argument from textbook valuation facts), over the
-  genuine Kummer relations, as in lane RC17 -/
+  /-- `GLUE` (tex 3551–3557), over the genuine Kummer relations -/
   KR_val : ∀ b ∈ kd.KR, ∀ j, act j → (2 : ℤ) ^ n ∣ ∑ a, b a * m a j
-  good : ℕ → Prop
-  ap : ℕ → ℤ
+  /-- the excluded primes (tex 3566, 3676: the primes ramified in `K`, the primes under the chosen
+  primes; data); the good primes are `GoodPrime E sqrtD Sexc` -/
+  Sexc : Finset ℕ
   P : ℕ → Type
   [pGrp : ∀ r, AddCommGroup (P r)]
   Pl : ℕ → Type
   δ : ∀ r, Pl r → (Additive (ZMod r)ˣ →+ P r)
   π : ∀ r, P r →+ Cl
-  /-- `GLUE` (tex 3566–3575), as in lane RC4 -/
-  δ_inj : ∀ r, good r → ∀ v, Function.Injective (δ r v)
-  exact : ∀ r, good r → ∀ v, ∀ p : P r, π r p = 0 ↔ ∃ y, δ r v y = p
+  /-- `GLUE` (tex 3566–3575), as in RC4 -/
+  δ_inj : ∀ r, GoodPrime E sqrtD Sexc r → ∀ v, Function.Injective (δ r v)
+  exact : ∀ r, GoodPrime E sqrtD Sexc r → ∀ v, ∀ p : P r, π r p = 0 ↔ ∃ y, δ r v y = p
   q : ∀ r, Fin s → P r
   qbar : ∀ r, Fin s → P r
-  /-- `GLUE` (tex 3575–3576), as in lane RC4 -/
-  π_q : ∀ r, good r → ∀ j, π r (q r j) = cls j
-  /-- `GLUE` (tex 3683–3684), as in lane RC4 -/
-  qbar_eq : ∀ r, good r → ∀ j, qbar r j = -q r j
+  /-- `GLUE` (tex 3575–3576), as in RC4 -/
+  π_q : ∀ r, GoodPrime E sqrtD Sexc r → ∀ j, π r (q r j) = cls j
+  /-- `GLUE` (tex 3683–3684), as in RC4 -/
+  qbar_eq : ∀ r, GoodPrime E sqrtD Sexc r → ∀ j, qbar r j = -q r j
   x : ∀ r, Pl r → Fin t → Additive (ZMod r)ˣ
-  /-- `GLUE` (tex 3576–3579), as in lane RC4 -/
-  rel : ∀ r, good r → ∀ v a, ∑ j, m a j • q r j + δ r v (x r v a) = 0
+  /-- `GLUE` (tex 3576–3579), as in RC4 -/
+  rel : ∀ r, GoodPrime E sqrtD Sexc r → ∀ v a, ∑ j, m a j • q r j + δ r v (x r v a) = 0
   κ : ∀ r, Pl r → (Additive (ZMod r)ˣ →+ ZMod (2 ^ n))
-  /-- `GLUE` (tex 3585–3586), as in lane RC4 -/
-  κ_surj : ∀ r, good r → ∀ v, (2 : ℤ) ^ n ∣ (r : ℤ) - 1 → Function.Surjective (κ r v)
+  /-- `GLUE` (tex 3585–3586), as in RC4 -/
+  κ_surj : ∀ r, GoodPrime E sqrtD Sexc r → ∀ v, (2 : ℤ) ^ n ∣ (r : ℤ) - 1 →
+    Function.Surjective (κ r v)
   inertia : ∀ r, AddSubgroup (P r)
-  /-- `GLUE` (tex 3679–3681), as in lane RC4 -/
-  inertia_eq : ∀ r, good r → ∀ v, inertia r = (δ r v).range
+  /-- `GLUE` (tex 3679–3681), as in RC4 -/
+  inertia_eq : ∀ r, GoodPrime E sqrtD Sexc r → ∀ v, inertia r = (δ r v).range
   decomp : ∀ r, Fin s → AddSubgroup (P r)
   decompBar : ∀ r, Fin s → AddSubgroup (P r)
-  /-- `GLUE` (tex 3681–3682), as in lane RC4 -/
-  decomp_eq : ∀ r, good r → ∀ j, decomp r j = AddSubgroup.zmultiples (q r j)
-  decompBar_eq : ∀ r, good r → ∀ j, decompBar r j = AddSubgroup.zmultiples (qbar r j)
-  /-- `PRINT`/`GLUE` (tex 3670–3679), as in lane RC17, with the genuine trace and multipliers -/
-  cheb : ∀ (σ : GFinf sqrtD) (B' : ℕ) (S : Finset ℕ), ∃ (r : ℕ) (v : Pl r), r ∉ S ∧ r.Prime ∧
-    good r ∧ (2 : ℤ) ^ B' ∣ (r : ℤ) - 1 ∧
-    (2 : ℤ_[2]) ^ B' ∣ (ap r : ℤ_[2]) -
-      LinearMap.trace ℤ_[2] (TateMod E 2) (tateRep E 2 ((σ : GalQmu2) : GalQ)) ∧
-    ∀ a, κ r v (x r v a) = Multiplicative.toAdd (kd.kum σ) a
+  /-- `GLUE` (tex 3681–3682), as in RC4 -/
+  decomp_eq : ∀ r, GoodPrime E sqrtD Sexc r → ∀ j, decomp r j = AddSubgroup.zmultiples (q r j)
+  decompBar_eq : ∀ r, GoodPrime E sqrtD Sexc r → ∀ j,
+    decompBar r j = AddSubgroup.zmultiples (qbar r j)
+  /-- `GLUE` (tex 3676–3677, "Choose a place realizing this representative ... The Frobenius
+  formula on `α_a^{1/2^n}` gives (4.4b)"; Lane RC27, ingredient (iii) of RC4's `cheb`): **the
+  power-residue (Frobenius) formula**.  For a good prime `r ≡ 1 (mod 2^n)` and an arithmetic
+  Frobenius element `h` at `r` fixing `K`, some place `v` over `r` (the place of `h`, orienting the
+  data at `r`) satisfies `h(α_a^{1/2^n}) = ζ_{2^n}^{κ_r(res α_a)} α_a^{1/2^n}` for every radicand: the
+  `2^n`-th power-residue symbol of `α_a` at `v` (the root of unity `≡ α_a^{(r−1)/2^n}` modulo the
+  place) is the Frobenius multiplier.  Kind: GLUE.  Its content is the identification of the
+  abstract `Pl r`, `x`, `κ` with the places over `r`, the residues `α_a mod 𝔯` and the
+  `2^n`-th power-residue characters normalized by `ζ` (they stay abstract because `rel` ties them
+  to the ring-class data `δ`, `P r`, which are not in Mathlib); with that identification the
+  formula is the one-line computation `h(γ_a) ≡ γ_a^r` modulo the place of `h`, so
+  `h(γ_a)/γ_a ≡ α_a^{(r−1)/2^n}` (cf. the power residue symbol, J. Neukirch, *Algebraic number
+  theory*, Ch. V, §3: `UNVERIFIED` locator, not read). -/
+  frob_kummer : ∀ (r : ℕ) (h : GalQ), GoodPrime E sqrtD Sexc r →
+    ZInQ.Contrib.ChebFD.C10.IsFrobAt h r → h sqrtD = sqrtD → (2 : ℤ) ^ n ∣ (r : ℤ) - 1 →
+      ∃ v : Pl r, ∀ a, h (kd.γ a) = kd.ζ ^ (κ r v (x r v a)).val * kd.γ a
 
 attribute [instance] MovingDataK.decAct MovingDataK.clGrp MovingDataK.pGrp
 
@@ -259,45 +280,64 @@ def MovingDataK.toMovingData {E : WeierstrassCurve ℚ} {n : ℕ} (M : MovingDat
     MovingData E n :=
   { M with kum_surj := fun φ hφ => kum_surj_genuine M.kd φ hφ }
 
-/-- **Proposition `ex:arith-moving-character` over the genuine Tate image and Kummer layer**
-(tex 3500–3702), with `c_E = 16 d + 21`. Kind: PROVED from `SerreThm3` (PRINT), `HasNoCM E` and the
-fields of `MovingDataK` (lane RC4's remaining GLUE/PRINT fields other than the four Kummer fields
-and `kum_surj`). Consumer: lane RC17's `moving_character_genuine` (hypotheses `hdetEq` and the
-field `kum_surj` discharged by `detTateTwoEqCyclotomic_holds` and `kum_surj_genuine`). -/
-theorem moving_character_genuineK {E : WeierstrassCurve ℚ} [E.IsElliptic] (hS : SerreThm3)
-    (hE : HasNoCM E) {n : ℕ} (M : MovingDataK E n) (B : ℕ) (S : Finset ℕ) :
-    ∃ r : ℕ, r ∉ S ∧ r.Prime ∧ M.good r ∧ (2 : ℤ) ^ B ∣ (r : ℤ) - 1 ∧
-      ∃ ξ : M.P r →+ ZMod (2 ^ n),
-        (∀ y : ZMod (2 ^ n), ∃ z ∈ M.inertia r, ξ z = y) ∧
-        (∀ j, M.over2N j → ∀ z ∈ M.decomp r j ⊔ M.decompBar r j, ξ z = 0) ∧
-        (∀ j, M.act j → ξ (M.q r j) = 1 ∧ ξ (M.qbar r j) = -1) ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 2 + M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 2 - M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 1 + M.ap r + r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 1 - M.ap r + r ∧
-        ∀ χ : ℤ, (χ = 1 ∨ χ = -1) →
-          ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ M.ap r - 2 * χ :=
-  moving_character_genuine_of hS hE M.toMovingData B S
+/-- The good primes of `M : MovingDataK E n` (Lane RC27): the genuine `GoodPrime E M.sqrtD M.Sexc`,
+those of `M.toMovingData`. -/
+def MovingDataK.good {E : WeierstrassCurve ℚ} {n : ℕ} (M : MovingDataK E n) (r : ℕ) : Prop :=
+  GoodPrime E M.sqrtD M.Sexc r
 
-/-- **The same for `E_ℓ`** (tex 3500–3702). Kind: PROVED from `ArithPrints` (only the field `serre`
-is used; PRINT), `CMjInteger` (GLUE) and the fields of `MovingDataK`. Consumer: lane RC17's
-`moving_character_ecurve_genuine` (hypotheses `H : GlueTate` and the field `kum_surj` discharged by
-`glueTate` and `kum_surj_genuine`). -/
-theorem moving_character_ecurve_genuineK (P : ArithPrints) (hcm : CMjInteger) {ℓ : ℕ}
-    (hℓ : 0 < ℓ) {n : ℕ} (M : MovingDataK (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) n) (B : ℕ)
+/-- **Non-vacuity of `MovingDataK`** (Lane RC27): lane RC17's inhabitant `MovingData.trivial E n`
+without its field `kum_surj`. -/
+def MovingDataK.trivial (E : WeierstrassCurve ℚ) (n : ℕ) : MovingDataK E n :=
+  { MovingData.trivial E n with }
+
+/-- **Proposition `ex:arith-moving-character` over the genuine Tate image and Kummer layer**
+(tex 3500–3702), with `c_E = 16 d + 21` and the genuine `a_r = E.LFunction r` (Lane RC27). Kind:
+PROVED from `SerreThm3` (PRINT), `HasNoCM E`, the GLUE `FrobeniusTrace E` (`tr ρ_T(Fr_r) = a_r`,
+lane RC17's `Kummer.lean`) and the fields of `MovingDataK` (lane RC4's remaining GLUE/PRINT fields
+other than the four Kummer fields and `kum_surj`, with the power-residue field `frob_kummer`).
+Consumer: lane RC17's `moving_character_genuine` (hypotheses `hdetEq` and the field `kum_surj`
+discharged by `detTateTwoEqCyclotomic_holds` and `kum_surj_genuine`). -/
+theorem moving_character_genuineK {E : WeierstrassCurve ℚ} [E.IsElliptic] (hS : SerreThm3)
+    (hE : HasNoCM E) (hT : FrobeniusTrace E) {n : ℕ} (M : MovingDataK E n) (B : ℕ)
     (S : Finset ℕ) :
     ∃ r : ℕ, r ∉ S ∧ r.Prime ∧ M.good r ∧ (2 : ℤ) ^ B ∣ (r : ℤ) - 1 ∧
       ∃ ξ : M.P r →+ ZMod (2 ^ n),
         (∀ y : ZMod (2 ^ n), ∃ z ∈ M.inertia r, ξ z = y) ∧
         (∀ j, M.over2N j → ∀ z ∈ M.decomp r j ⊔ M.decompBar r j, ξ z = 0) ∧
         (∀ j, M.act j → ξ (M.q r j) = 1 ∧ ξ (M.qbar r j) = -1) ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ 2 + M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ 2 - M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ 1 + M.ap r + r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ 1 - M.ap r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 2 + E.LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 2 - E.LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 1 + E.LFunction r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ 1 - E.LFunction r + r ∧
         ∀ χ : ℤ, (χ = 1 ∨ χ = -1) →
-          ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣ M.ap r - 2 * χ :=
-  moving_character_ecurve_genuine_of P hcm hℓ M.toMovingData B S
+          ¬ (2 : ℤ) ^ (cE (tateImageOf E hS hE).d + 1) ∣ E.LFunction r - 2 * χ :=
+  moving_character_genuine_of hS hE hT M.toMovingData B S
+
+/-- **The same for `E_ℓ`** (tex 3500–3702), with the genuine `a_r = (E_ℓ).LFunction r`. Kind:
+PROVED from `ArithPrints` (only the field `serre` is used; PRINT), `CMjInteger` (GLUE), the GLUE
+`FrobeniusTrace (E_ℓ)` and the fields of `MovingDataK`. Consumer: lane RC17's
+`moving_character_ecurve_genuine` (hypotheses `H : GlueTate` and the field `kum_surj` discharged by
+`glueTate` and `kum_surj_genuine`). -/
+theorem moving_character_ecurve_genuineK (P : ArithPrints) (hcm : CMjInteger) {ℓ : ℕ}
+    (hℓ : 0 < ℓ) (hT : FrobeniusTrace (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)) {n : ℕ}
+    (M : MovingDataK (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) n) (B : ℕ) (S : Finset ℕ) :
+    ∃ r : ℕ, r ∉ S ∧ r.Prime ∧ M.good r ∧ (2 : ℤ) ^ B ∣ (r : ℤ) - 1 ∧
+      ∃ ξ : M.P r →+ ZMod (2 ^ n),
+        (∀ y : ZMod (2 ^ n), ∃ z ∈ M.inertia r, ξ z = y) ∧
+        (∀ j, M.over2N j → ∀ z ∈ M.decomp r j ⊔ M.decompBar r j, ξ z = 0) ∧
+        (∀ j, M.act j → ξ (M.q r j) = 1 ∧ ξ (M.qbar r j) = -1) ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+          2 + (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+          2 - (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+          1 + (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+          1 - (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r + r ∧
+        ∀ χ : ℤ, (χ = 1 ∨ χ = -1) →
+          ¬ (2 : ℤ) ^ (cE (tateImageEcurveOf P hcm hℓ).d + 1) ∣
+            (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r - 2 * χ :=
+  moving_character_ecurve_genuine_of P hcm hℓ hT M.toMovingData B S
 
 
 /-- **The fixed Tate image of `E_ℓ` from Serre's print alone** (tex 3597–3605): lane RC17's
@@ -309,37 +349,47 @@ def tateImageEcurveS (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ} (hℓ : 0 <
     (ecurve_hasNoCM_of hcm hℓ)
 
 /-- **Proposition `ex:arith-moving-character` for `E_ℓ`** (tex 3500–3702), over the genuine Tate
-image and Kummer layer. Kind: PROVED from `SerreThm3` (PRINT), `CMjInteger` (GLUE) and the fields of
-`MovingDataK` (lane RC4's remaining interface fields). Consumer: lane RC17's
+image and Kummer layer, with the genuine `a_r = (E_ℓ).LFunction r` (`= r + 1 − |Ẽ_ℓ(𝔽_r)|` at
+`r ∤ 6ℓ`, lane RC3's `KSplit.LFunction_curve_apply_prime`). Kind: PROVED from `SerreThm3` (PRINT),
+`CMjInteger` (GLUE), the GLUE `FrobeniusTrace (E_ℓ)` (`tr ρ_T(Fr_r) = a_r`, Lane RC27) and the
+fields of `MovingDataK` (lane RC4's remaining interface fields). Consumer: lane RC17's
 `moving_character_ecurve_genuine` (hypotheses `P : ArithPrints` (only `P.serre` used),
 `H : GlueTate` and the field `kum_surj` replaced/discharged by `SerreThm3`, `glueTate`,
 `kum_surj_genuine`). -/
 theorem moving_character_ecurve_genuineS (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ}
-    (hℓ : 0 < ℓ) {n : ℕ} (M : MovingDataK (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) n) (B : ℕ)
-    (S : Finset ℕ) :
+    (hℓ : 0 < ℓ) (hT : FrobeniusTrace (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)) {n : ℕ}
+    (M : MovingDataK (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) n) (B : ℕ) (S : Finset ℕ) :
     ∃ r : ℕ, r ∉ S ∧ r.Prime ∧ M.good r ∧ (2 : ℤ) ^ B ∣ (r : ℤ) - 1 ∧
       ∃ ξ : M.P r →+ ZMod (2 ^ n),
         (∀ y : ZMod (2 ^ n), ∃ z ∈ M.inertia r, ξ z = y) ∧
         (∀ j, M.over2N j → ∀ z ∈ M.decomp r j ⊔ M.decompBar r j, ξ z = 0) ∧
         (∀ j, M.act j → ξ (M.q r j) = 1 ∧ ξ (M.qbar r j) = -1) ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣ 2 + M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣ 2 - M.ap r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣ 1 + M.ap r + r ∧
-        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣ 1 - M.ap r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+          2 + (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+          2 - (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+          1 + (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+          1 - (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r + r ∧
         ∀ χ : ℤ, (χ = 1 ∨ χ = -1) →
-          ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣ M.ap r - 2 * χ :=
+          ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+            (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r - 2 * χ :=
   @moving_character_genuineK (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) (ecurve_isElliptic hℓ) hS
-    (ecurve_hasNoCM_of hcm hℓ) n M B S
+    (ecurve_hasNoCM_of hcm hℓ) hT n M B S
 
 /-- **Lane RC4's `MovingSetting` over the genuine Tate image of `E_ℓ` and the genuine Kummer
-layer, from `MovingDataK`** (tex 3530–3595, 3662–3684): lane RC17's `MovingData.toMovingSetting`
+layer, from `MovingDataK`** (tex 3530–3595, 3662–3693): lane RC17's `MovingData.toMovingSetting`
 applied to `MovingDataK.toMovingData`; the fields `GF_index`, `HL_le`, `kum_of_mem_HL`,
-`mem_HL_of_kum`, `kum_surj` are PROVED (lane RC17, `kum_surj_genuine`) and the Tate image needs only
-`SerreThm3` (PRINT) and `CMjInteger` (GLUE). For consumers of lane RC4's interface. -/
-def movingSettingEcurveS (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ} (hℓ : 0 < ℓ) {n : ℕ}
+`mem_HL_of_kum`, `kum_surj` are PROVED (lane RC17, `kum_surj_genuine`), `ap r = (E_ℓ).LFunction r`
+and `cheb` is derived from the PROVED Chebotarev step, the GLUE `FrobeniusTrace (E_ℓ)` and the
+field `frob_kummer` (Lane RC27); the Tate image needs only `SerreThm3` (PRINT) and `CMjInteger`
+(GLUE). For consumers of lane RC4's interface. -/
+def movingSettingEcurveS (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ} (hℓ : 0 < ℓ)
+    (hT : FrobeniusTrace (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)) {n : ℕ}
     (M : MovingDataK (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) n) :
     MovingSetting (tateImageEcurveS hS hcm hℓ) n :=
   @movingSettingOf (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) (ecurve_isElliptic hℓ) hS
-    (ecurve_hasNoCM_of hcm hℓ) n M.toMovingData
+    (ecurve_hasNoCM_of hcm hℓ) hT n M.toMovingData
 
 end ZInQ.Manuscript.RC.GlueSweep.Tate

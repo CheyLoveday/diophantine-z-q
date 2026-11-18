@@ -9,6 +9,11 @@ import ZInQKernel.Contrib.OneProof.RC.Odd.Statements
 inputs, `VisibilityInputs`: the comparison (O.7) (Cornut–Jetchev Thm 3.1, PRINT, with Elliot's
 theta construction, ELLIOT), the native-index bound (ELLIOT/GLUE) and the torsion clause (the
 height formula, Cai–Shu–Tian Thm 1.1, PRINT).
+
+`oddStageSource_of_data` (PROVED, lane RC27): App G's valid odd stages (`Odd.OddStageSource`, the
+inputs of (O.9)–(O.11) at an odd stage) over the data `D : RCData ℓ`, from the stage cores, the
+phase relation with `D.aθ`, (F.5), the advancing stages and `D.δo` the attained minimum, through
+lane RC12's `Odd.oddStageSource_eventually` (batch 3's `f6_of_isLeast`, `stageChoice_proof`).
 -/
 
 noncomputable section
@@ -59,5 +64,41 @@ theorem visibilityTarget_of_inputs (h : VisibilityInputs D) : VisibilityTarget D
   refine ⟨h1, ?_⟩
   rw [odd_vZ_eq] at h2
   exact h2
+
+/-- **PROVED (lane RC27; App G, Proposition `ex:app-odd-minimum`, tex 10190–10227; App F,
+tex 9450–9453, 9578–9584): the valid odd stages over the data.** For `D : RCData ℓ` (stages
+`D.stages`, precisions `D.Mθ`, phase-removed integer coefficients `D.aθ`, stage support
+`D.admissible`, odd minimum `D.δo`), given:
+* the stage coefficient functions `a θ` in `𝒪/2^{M_θ}𝒪` with their cores (`Odd.OddStageCore`,
+  ELLIOT: the theta form (O.4)–(O.6) and its supports, tex 8409–9100, 9471–9476, 2530–2532);
+* the phase relation at the squarefree parameters of the stage support: the actual coefficient is a
+  multiple `ζ · a_θ(D)` of the phase-removed integer (tex 2538, (3.8) at 2527–2530; lane RC23's
+  `ThetaSide.coeff` in this form);
+* the advancing stages (`RCSteps.stages_advance`), (F.5) at every stage (batch 3's `CoarseF5`; the
+  wiring's `exists_oddMinimum` derives it from the leaves) and `D.δo` the attained minimum (the body of
+  `OddMinimumTarget`);
+for every finite operator budget `W_U` and `R ≥ 2`, the stages are valid eventually along the
+ultrafilter. -/
+theorem oddStageSource_of_data (O : Type*) [CommRing O]
+    (η : (θ : ℕ) → ℕ → Odd.StageRing O (D.Mθ θ)) (Good : ℕ → ℕ → Prop) (ap : ℕ → ℤ)
+    (a : (θ : ℕ) → ℕ → Odd.StageRing O (D.Mθ θ))
+    (hcore : ∀ θ, Odd.OddStageCore O (D.Mθ θ) (η θ) (Good θ) (fun n => D.admissible θ n) ap (a θ))
+    (ζ : ℕ → ℕ → O)
+    (hphase : ∀ θ (Dn : ℕ), Squarefree Dn → D.admissible θ Dn →
+      a θ Dn = Ideal.Quotient.mk (Ideal.span {(2 : O) ^ D.Mθ θ}) (ζ θ Dn * (D.aθ θ Dn : O)))
+    (hM : Tendsto D.Mθ (D.stages : Filter ℕ) atTop) (Ccoarse : ℚ)
+    (hF5 : ∀ θ Dd, D.admissible θ Dd → AppGEndpoints.QLe
+      (min (D.Mθ θ : ℚ) (AppGEndpoints.omega Dd - Ccoarse)) (vZ (D.aθ θ Dd)))
+    (hmin : IsLeast (AppGEndpoints.DepthSet D.stages D.Mθ (fun θ Dd => vZ (D.aθ θ Dd))
+      D.admissible) D.δo)
+    (WU R : ℕ) (hR : 2 ≤ R) :
+    ∀ᶠ θ in (D.stages : Filter ℕ), Odd.OddStageSource O WU R (D.Mθ θ) D.δo (η θ) (Good θ)
+      (fun n => D.admissible θ n) ap (a θ) :=
+  Odd.oddStageSource_eventually D.stages D.Mθ hM (fun θ Dd => vZ (D.aθ θ Dd)) D.admissible η Good
+    ap a hcore
+    (fun θ Dn k hsq hadm hle => by
+      rw [hphase θ Dn hsq hadm]
+      exact Odd.two_pow_dvd_stage_of_le_vZ O (D.Mθ θ) (ζ θ Dn) (by rwa [odd_vZ_eq]))
+    Ccoarse hF5 hmin WU R hR
 
 end ZInQ.Manuscript.RC.Wiring

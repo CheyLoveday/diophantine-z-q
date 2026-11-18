@@ -7,6 +7,9 @@ Every declaration here is `PROVED`.
 
 * `trivialStage`: a `SplitNormStage` (the trivial ring-class group, `a_r = 3`, `m_r = 1`): the
   hypotheses of `SplitNormStage.weightedPoint_eq` are consistent with a nonzero weighted point.
+* `classAtBase_nonvacuous`: the construction inputs of `classAtBase_of_construction` (as restated
+  by Lane RC27 over a general five-term sequence, with Kummer maps `κ`, `δa` related by
+  restriction) are jointly satisfiable, with a nonzero class `b_∅ = L W = 4`.
 * `boundary45Base_nonvacuous`: a `Boundary45Base` whose central cycle `z̄` is nonzero (for a
   non-torsion specified point): the inputs of (4.5) at the base do not force `z̄ = 0`; `z̄ = 0`
   follows only for a torsion point (`Boundary45Base.central_eq_zero_of_torsion`).
@@ -62,6 +65,25 @@ def trivialStage : SplitNormStage (1 : ℤ) where
 /-- The weighted point of the trivial stage is the point itself (`m_r = 1`). PROVED. -/
 theorem trivialStage_weightedPoint : trivialStage.W = (trivialStage.a - 2) • (1 : ℤ) :=
   trivialStage.weightedPoint_eq
+
+/-- **The construction inputs of `classAtBase_of_construction` are jointly satisfiable**
+(PROVED): the trivial stage; lane RC10's `InfResInput.ofTrivialRelative ℤ 1` (the five-term data
+of a trivial relative group over `ℤ`: zero outer terms, restriction the identity); the Kummer maps
+`κ = δa` the identity (so `hκ` holds); `Tr`, `δ` and the trace `Wsum` the identity (`Wsum` is the
+sum over the trivial ring-class group, `hWsum`; `hTr` is then `rfl`). With `e = 1` and
+`m₀ = C_π = C_bad = 1` the pushed class is `L W = 4 ≠ 0`. -/
+theorem classAtBase_nonvacuous :
+    AddMonoidHom.id ℤ (((1 * 1 : ℕ) : ℤ) •
+        (HeegnerAlgebra.InfResInput.ofTrivialRelative ℤ 1).seq.descend 1
+          (HeegnerAlgebra.InfResInput.ofTrivialRelative ℤ 1).killD
+          (AddMonoidHom.id ℤ (((1 : ℕ) : ℤ) • trivialStage.yr))) = 4 :=
+  (classAtBase_of_construction trivialStage 1 (HeegnerAlgebra.InfResInput.ofTrivialRelative ℤ 1)
+    (AddMonoidHom.id ℤ) (AddMonoidHom.id ℤ) (fun _ => rfl) 1 1 1 (AddMonoidHom.id ℤ)
+    (AddMonoidHom.id ℤ) (AddMonoidHom.id ℤ)
+    (fun (x : ℤ) => by
+      change x = ∑ δ' : Unit, ((1 : Unit →* Module.End ℤ ℤ) δ') x
+      simp)
+    (fun _ => rfl)).trans (by decide)
 
 /-- The additive map `x ↦ (x c)` from `ℤ` to `ℚ₂¹`. -/
 def constKappa (c : ℚ_[2]) : ℤ →+ (Fin 1 → ℚ_[2]) where

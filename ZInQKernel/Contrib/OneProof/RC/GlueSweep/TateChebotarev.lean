@@ -1,6 +1,6 @@
 import ZInQKernel.Contrib.Chebotarev.FrobeniusDenseOfExists
 import ZInQKernel.Contrib.Chebotarev.Exists
-import ZInQKernel.Contrib.OneProof.RC.GlueSweep.TateOdd
+import ZInQKernel.Contrib.OneProof.RC.TateWiring.Discharge
 
 /-!
 # Lane RC22 (glue sweep), Tate share: Chebotarev primes for the detecting stage, over `G_ℚ`
@@ -9,7 +9,11 @@ Manuscript (11/5 version), Appendix F, proof of Proposition `ex:app-detector`, t
 "Finite Chebotarev supplies infinitely many good rational primes `ℓ₀` in its conjugacy class ...
 Thus `Fr_{ℓ₀} ≡ C (mod 2^M)` ... The determinant also gives `ℓ₀ ≡ −1 (mod 2^M)`." Lane RC12
 (`RC/Odd/Detector.lean`) lists Chebotarev and "`det ρ(Fr_{ℓ₀}) = ℓ₀`" as GLUE hypotheses; lane RC10's
-(H12) (tex 3088–3100) uses the same two inputs for its retained primes.
+(H12) (tex 3088–3100) uses the same two inputs for its retained primes. The same Chebotarev step,
+with the same proof, is used in Proposition `ex:arith-moving-character`, tex 3670–3679 ("Finite
+Chebotarev supplies infinitely many rational primes in its Frobenius class"), and its determinant
+step `det(Fr_r) = r` at tex 3686; lane RC17's `MovingData.exists_frobenius` and
+`moving_character_frobenius` (`RC/TateWiring/Kummer.lean`, Lane RC27) take them from here.
 
 The tree proves Chebotarev in the form "Frobenius elements at primes outside `S` are dense in
 `G_ℚ`" (`ZInQ.Contrib.ChebFD.C10.frobDense`, from `ZInQ.Contrib.chebotarevExists`, Tau Ceti's
@@ -17,8 +21,15 @@ density theorem), with `IsFrobAt h p` meaning `h x ≡ x^p` modulo a prime of `�
 * `apply_eq_pow_of_isFrobAt`: such an `h` acts on `μ_{2^∞}` as `ζ ↦ ζ^p` for `p` odd (PROVED);
 * `torsField E M = ℚ(E[2^M])` is finite over `ℚ`, and agreement on it gives congruent Tate matrices
   modulo `2^M` (`tateMatrix_congr_of_eqOn_torsField`, PROVED);
-* `exists_frob_congr`, `exists_ell0_congr_neg_one`: the Chebotarev step of tex 8362–8374, PROVED
-  with no remaining hypothesis (with the proved `det ρ₂ = χ₂` of the tree).
+* `exists_frob_congr`: the Chebotarev step of tex 8362–8372 (and 3670–3679), PROVED with no
+  remaining hypothesis;
+* `toZModPow_det_eq_of_frob`, `det_tateRep_eq_of_isFrobAt`: `det ρ₂(Fr_p) = p` (tex 3686,
+  8372–8374), PROVED from the tree's `det ρ₂ = χ₂`.
+
+The detecting-stage corollary `exists_ell0_congr_neg_one` (`ℓ₀ ≡ −1 (mod 2^M)`) is in `TateOdd.lean`,
+next to `ell0_congr_neg_one` (Lane RC27: moved there, with `toZModPow_det_eq_of_frob` moved here, so
+that this file needs only the Tate image and Chebotarev and can be imported by lane RC17's
+`Kummer.lean`).
 -/
 
 noncomputable section
@@ -227,23 +238,38 @@ theorem exists_frob_congr (E : WeierstrassCurve ℚ) [E.IsElliptic] (σ : GalQ) 
     fun x hx => hagree x (le_sup_left (a := F₀) hx), ?_, fun ζ hζ => apply_eq_pow_of_isFrobAt h2 hF ζ hζ⟩
   exact tateMatrix_congr_of_eqOn_torsField E fun x hx => hagree x (le_sup_right (b := torsField E M) hx)
 
-/-- **`Fr_{ℓ₀} ≡ C (mod 2^M)` and `ℓ₀ ≡ −1 (mod 2^M)` for Chebotarev primes** (tex 8362–8374): if
-`ρ₂(σ)` has matrix `C` with `det C = −1` (Elliot's `σ = hτ`), then for every `M`, finite `F₀` (e.g.
-`ℚ(√D_w, √h_*)`) and finite `S` there is a Frobenius `h` at a prime `ℓ₀ ∉ S` with `h = σ` on `F₀`,
-`ρ₂(h) ≡ C (mod 2^M)` and `ℓ₀ ≡ −1 (mod 2^M)`. Kind: PROVED from the tree's Chebotarev and
-`det ρ₂ = χ₂` (no remaining hypothesis beyond the data). Consumer: lane RC12's
-`mod_four_of_neg_one` / `det_congr` step (its hypothesis `h` with the GLUE "`det ρ(Fr_{ℓ₀}) = ℓ₀`"
-and the Chebotarev GLUE both discharged); also lane RC10's (H12) half `2^{a+1} ∣ ℓ + 1` (with
-`C = J`). Dischargers: `exists_frob_congr`, `ell0_congr_neg_one`. -/
-theorem exists_ell0_congr_neg_one (E : WeierstrassCurve ℚ) [E.IsElliptic] (σ : GalQ)
-    (C : Matrix (Fin 2) (Fin 2) ℤ_[2]) (hσC : tateMatrix E σ = C) (hCdet : C.det = -1) (M : ℕ)
-    (F₀ : IntermediateField ℚ Qbar) [FiniteDimensional ℚ F₀] (S : Finset ℕ) :
-    ∃ (h : GalQ) (ℓ₀ : ℕ), ℓ₀.Prime ∧ ℓ₀ ∉ S ∧ ZInQ.Contrib.ChebFD.C10.IsFrobAt h ℓ₀ ∧
-      (∀ x ∈ F₀, h x = σ x) ∧
-      (PadicInt.toZModPow M).mapMatrix (tateMatrix E h) = (PadicInt.toZModPow M).mapMatrix C ∧
-      ((ℓ₀ : ℤ) : ZMod (2 ^ M)) = -1 := by
-  obtain ⟨h, ℓ₀, hprime, hnot, -, hF, hF₀, hcong, hfrob⟩ := exists_frob_congr E σ M F₀ S
-  rw [hσC] at hcong
-  exact ⟨h, ℓ₀, hprime, hnot, hF, hF₀, hcong, ell0_congr_neg_one E h hfrob C hCdet hcong⟩
+/-! ### The determinant of a Frobenius element: `det ρ₂(Fr_p) = p` -/
+
+/-- **`det ρ₂(σ) ≡ ℓ₀ (mod 2^M)` for `σ` acting on `μ_{2^M}` as `ζ ↦ ζ^{ℓ₀}`** (PROVED from the tree's
+`ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoEqCyclotomic`, every elliptic `E/ℚ`). Lane RC27:
+moved here from `TateOdd.lean` (statement and proof unchanged). -/
+theorem toZModPow_det_eq_of_frob (E : WeierstrassCurve ℚ) [E.IsElliptic] {M ℓ₀ : ℕ} (σ : GalQ)
+    (hfrob : ∀ ζ : Qbar, ζ ^ (2 ^ M) = 1 → σ ζ = ζ ^ ℓ₀) :
+    PadicInt.toZModPow M (LinearMap.det (tateRep E 2 σ)) = (ℓ₀ : ZMod (2 ^ M)) := by
+  rw [ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoEqCyclotomic E σ,
+    show (cyclotomicCharacter Qbar 2 σ.toRingEquiv : ℤ_[2]) =
+      (cyclotomicCharacter Qbar 2 σ.toRingEquiv).val from rfl, cyclotomicCharacter.toZModPow]
+  symm
+  refine modularCyclotomicCharacter.unique _ _ σ.toRingEquiv fun t ht => ?_
+  have htM : (t : Qbar) ^ (2 ^ M) = 1 := by
+    have h := congrArg Units.val ((mem_rootsOfUnity _ _).mp ht)
+    simpa using h
+  rw [ZMod.val_natCast]
+  change σ (t : Qbar) = (t : Qbar) ^ (ℓ₀ % 2 ^ M)
+  rw [hfrob _ htM]
+  conv_lhs => rw [← Nat.div_add_mod ℓ₀ (2 ^ M), pow_add, pow_mul, htM, one_pow, one_mul]
+
+/-- **`det ρ₂(Fr_p) = p`** (tex 3686: "`det(Fr_r) = r`"; tex 8372–8374): for an elliptic `E/ℚ`, an
+odd prime `p` and an arithmetic Frobenius element `h ∈ G_ℚ` at `p` (the tree's `IsFrobAt`), the
+determinant of `ρ_T(h)` on `T₂E` is `p`. Kind: PROVED (no remaining hypothesis): `h` acts on every
+`μ_{2^M}` as `ζ ↦ ζ^p` (`apply_eq_pow_of_isFrobAt`), so `det ρ₂(h) ≡ p (mod 2^M)` for every `M`
+(`toZModPow_det_eq_of_frob`, from the tree's `det ρ₂ = χ₂`). Consumer: lane RC17's
+`moving_character_frobenius` (`v₂ det(1 ± Fr_r) ≤ c_E`, tex 3690–3691). -/
+theorem det_tateRep_eq_of_isFrobAt (E : WeierstrassCurve ℚ) [E.IsElliptic] {h : GalQ} {p : ℕ}
+    (hp2 : p ≠ 2) (hF : ZInQ.Contrib.ChebFD.C10.IsFrobAt h p) :
+    LinearMap.det (tateRep E 2 h) = (p : ℤ_[2]) := by
+  rw [← PadicInt.ext_of_toZModPow]
+  intro M
+  rw [toZModPow_det_eq_of_frob E h (fun ζ hζ => apply_eq_pow_of_isFrobAt hp2 hF ζ hζ), map_natCast]
 
 end ZInQ.Manuscript.RC.GlueSweep.Tate

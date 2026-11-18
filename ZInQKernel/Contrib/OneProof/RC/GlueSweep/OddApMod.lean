@@ -10,17 +10,19 @@ Manuscript (11/5), Appendix F: the odd source uses `a_q ≡ q + 1 (mod 4)` at ev
 (tex 9558–9569, 9585–9617: "full rational two-torsion"), so that the shell factors have the
 parities of (O.9)–(O.11), and `a_p` even in the omission rule (tex 9919–9931).
 
-Lane RC12 takes this as the field `ap_mod` of `SourceHyp` (hence of the ELLIOT statement
-`OddStageSource`), for an abstract `ap : ℕ → ℤ`, and as the hypothesis `hap : Even ap` of
+Lane RC12 takes this as the field `ap_mod` of `SourceCore` / `SourceHyp` (hence of the ELLIOT
+statement `OddStageCore` and of `OddStageSource`), for an abstract `ap : ℕ → ℤ`, and as the
+hypothesis `hap : Even ap` of
 `cp_sum_odd`. For the actual curve `y² = x(x − m)(x + 3m)` (`m = ℓ` for `E_ℓ`, `m = Dℓ` for the
 twist `E_ℓ^{(D)}`) with `a_q` the Dirichlet coefficient at `q` of Mathlib's `L(E, s)`, it is PROVED
-here from lane RC3's `LFunction_curve_apply_prime` (`a_q = q + 1 − #Ẽ(𝔽_q)` at `q ∤ 6m`) and
-`four_dvd_card` (the rational two-torsion gives `4 ∣ #Ẽ(𝔽_q)`):
+here from lane RC3's `LFunction_curve_apply_prime` (`a_q = q + 1 − |Ẽ(𝔽_q)|` at `q ∤ 6m`) and
+`four_dvd_card` (the rational two-torsion gives `4 ∣ |Ẽ(𝔽_q)|`):
 
 * `ap_mod_four_curve`: `a_q ≡ q + 1 (mod 4)` for every prime `q ∤ 6m`;
-* `sourceHyp_curve`, `oddStageSource_curve`: lane RC12's `SourceHyp` / `OddStageSource` at
-  `ap := a_·(curve m)` with the fields `prime`, `odd`, `ap_mod` discharged, for good primes avoiding
-  `6m` (the fixed support contains `2`, `3` and the primes of `m`);
+* `sourceCore_curve`, `sourceHyp_curve`, `oddStageCore_curve`, `oddStageSource_curve`: lane RC12's
+  `SourceCore` / `SourceHyp` / `OddStageCore` / `OddStageSource` at `ap := a_·(curve m)` with the
+  fields `prime`, `odd`, `ap_mod` discharged, for good primes avoiding `6m` (the fixed support
+  contains `2`, `3` and the primes of `m`);
 * `cp_sum_odd_curve`: lane RC12's `cp_sum_odd` with `hap` discharged.
 
 (The companion statement `ApEven` of the coefficient dictionary is the symbols share's
@@ -59,45 +61,94 @@ theorem odd_of_not_dvd_six_mul {m : ℤ} {q : ℕ} (hq : q.Prime) (hq6 : ¬ (q :
   have hq2 : q ≠ 2 := fun h => hq6 (by rw [h]; exact ⟨3 * m, by push_cast; ring⟩)
   exact_mod_cast hq.odd_of_ne_two hq2
 
-/-- **Lane RC12's `SourceHyp` at the actual curve, with `prime`, `odd`, `ap_mod` discharged**
+/-- **Lane RC12's `SourceCore` at the actual curve, with `prime`, `odd`, `ap_mod` discharged**
 (App F, tex 9471–9636). PROVED: for good primes that are primes not dividing `6m`, the
 coefficients `a_q` of Mathlib's `L(curve m, s)` satisfy `a_q ≡ q + 1 (mod 4)`
 (`ap_mod_four_curve`). Remaining (ELLIOT, the actual theta stage): the recurrence (O.6) `recur`,
-`a(0) = 0`, the depth inequality, the multiplicativity of `η`. Consumer: `SourceHyp.ap_mod`
+`a(0) = 0`, the support conditions, the multiplicativity of `η`. Consumer: `SourceCore.ap_mod`
 (and `.prime`, `.odd`); discharger: lane RC3's `LFunction_curve_apply_prime`, `four_dvd_card`. -/
-theorem sourceHyp_curve {R : Type*} [CommRing R] {T δ : ℕ} {χ : ℕ → R} {GoodPrime : ℕ → Prop}
+theorem sourceCore_curve {R : Type*} [CommRing R] {χ : ℕ → R} {GoodPrime adm : ℕ → Prop}
     {a : ℕ → R} (m : ℤ) (hgood : ∀ q, GoodPrime q → q.Prime ∧ ¬ (q : ℤ) ∣ 6 * m)
     (recur : ∀ q (hq : GoodPrime q), ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
       @ZInQ.Manuscript.RC.Odd.RecAt R _ q ⟨(hgood q hq).1⟩ (χ q) ε
         ((ZInQ.Manuscript.curve (m : ℚ)).LFunction q) a)
-    (zero : a 0 = 0)
-    (depth : ∀ n, (2 : R) ^ (min T (δ + (ZInQ.Manuscript.RC.Odd.oddPart n).card)) ∣ a n)
+    (zero : a 0 = 0) (support : ∀ n, (∃ q ∈ n.primeFactors, ¬ GoodPrime q) → a n = 0)
+    (support_adm : ∀ D, Squarefree D → ¬ adm D → a D = 0)
     (mul : ∀ x y, χ (x * y) = χ x * χ y) (one : χ 1 = 1) :
-    ZInQ.Manuscript.RC.Odd.SourceHyp T δ χ GoodPrime
+    ZInQ.Manuscript.RC.Odd.SourceCore χ GoodPrime adm
       (fun q => (ZInQ.Manuscript.curve (m : ℚ)).LFunction q) a where
   prime q hq := (hgood q hq).1
   odd q hq := odd_of_not_dvd_six_mul (hgood q hq).1 (hgood q hq).2
   ap_mod q hq := ap_mod_four_curve m (hgood q hq).1 (hgood q hq).2
   recur := recur
   zero := zero
-  depth := depth
+  support := support
+  support_adm := support_adm
   mul := mul
   one := one
 
-/-- **Lane RC12's `OddStageSource` at the actual curve** (App F, tex 8409–9100, 9471–9636), with
-`prime`, `odd`, `ap_mod` discharged as in `sourceHyp_curve`. PROVED. Consumer:
-`Odd.OddStageSource` (hence `Odd.O9_odd_stage`, `Odd.O11_odd_stage`). -/
-theorem oddStageSource_curve {M δ : ℕ} {η : ℕ → ZMod (2 ^ M)} {Good : ℕ → Prop}
-    {a : ℕ → ZMod (2 ^ M)} (m : ℤ) (hgood : ∀ q, Good q → q.Prime ∧ ¬ (q : ℤ) ∣ 6 * m)
-    (recur : ∀ q (hq : Good q), ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
-      @ZInQ.Manuscript.RC.Odd.RecAt (ZMod (2 ^ M)) _ q ⟨(hgood q hq).1⟩ (η q) ε
+/-- **Lane RC12's `SourceHyp` at the actual curve, with `prime`, `odd`, `ap_mod` discharged**
+(App F, tex 9471–9636): `sourceCore_curve` together with the depth inequality at the squarefree
+parameters of the stage support (integer depth `δ`, truncation `T`). PROVED. Consumer:
+`SourceHyp.ap_mod` (and `.prime`, `.odd`). -/
+theorem sourceHyp_curve {R : Type*} [CommRing R] {T : ℕ} {δ : ℤ} {χ : ℕ → R}
+    {GoodPrime adm : ℕ → Prop} {a : ℕ → R} (m : ℤ)
+    (hgood : ∀ q, GoodPrime q → q.Prime ∧ ¬ (q : ℤ) ∣ 6 * m)
+    (recur : ∀ q (hq : GoodPrime q), ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
+      @ZInQ.Manuscript.RC.Odd.RecAt R _ q ⟨(hgood q hq).1⟩ (χ q) ε
         ((ZInQ.Manuscript.curve (m : ℚ)).LFunction q) a)
-    (zero : a 0 = 0)
-    (depth : ∀ n, (2 : ZMod (2 ^ M)) ^ (min M (δ + (ZInQ.Manuscript.RC.Odd.oddPart n).card)) ∣ a n)
-    (mul : ∀ x y, η (x * y) = η x * η y) (one : η 1 = 1) :
-    ZInQ.Manuscript.RC.Odd.OddStageSource M δ η Good
+    (zero : a 0 = 0) (support : ∀ n, (∃ q ∈ n.primeFactors, ¬ GoodPrime q) → a n = 0)
+    (support_adm : ∀ D, Squarefree D → ¬ adm D → a D = 0)
+    (depth : ∀ D, Squarefree D → adm D →
+      (2 : R) ^ (min (T : ℤ) (δ + ArithmeticFunction.cardDistinctFactors D)).toNat ∣ a D)
+    (mul : ∀ x y, χ (x * y) = χ x * χ y) (one : χ 1 = 1) :
+    ZInQ.Manuscript.RC.Odd.SourceHyp T δ χ GoodPrime adm
       (fun q => (ZInQ.Manuscript.curve (m : ℚ)).LFunction q) a :=
-  sourceHyp_curve m hgood recur zero depth mul one
+  { toSourceCore := sourceCore_curve m hgood recur zero support support_adm mul one
+    depth := depth }
+
+/-- **Lane RC12's `OddStageCore` at the actual curve** (App F, tex 8409–9100, 9471–9636), with
+coefficients in `𝒪/2^M𝒪` and `prime`, `odd`, `ap_mod` discharged as in `sourceCore_curve`. PROVED.
+Consumer: `Odd.OddStageCore` (hence, through App G's stage choice `Odd.oddStageSource_eventually`,
+`Odd.O9_odd_stage`, `Odd.O11_odd_stage`). -/
+theorem oddStageCore_curve {O : Type*} [CommRing O] {M : ℕ}
+    {η : ℕ → ZInQ.Manuscript.RC.Odd.StageRing O M} {Good adm : ℕ → Prop}
+    {a : ℕ → ZInQ.Manuscript.RC.Odd.StageRing O M} (m : ℤ)
+    (hgood : ∀ q, Good q → q.Prime ∧ ¬ (q : ℤ) ∣ 6 * m)
+    (recur : ∀ q (hq : Good q), ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
+      @ZInQ.Manuscript.RC.Odd.RecAt (ZInQ.Manuscript.RC.Odd.StageRing O M) _ q
+        ⟨(hgood q hq).1⟩ (η q) ε ((ZInQ.Manuscript.curve (m : ℚ)).LFunction q) a)
+    (zero : a 0 = 0) (support : ∀ n, (∃ q ∈ n.primeFactors, ¬ Good q) → a n = 0)
+    (support_adm : ∀ D, Squarefree D → ¬ adm D → a D = 0)
+    (mul : ∀ x y, η (x * y) = η x * η y) (one : η 1 = 1) :
+    ZInQ.Manuscript.RC.Odd.OddStageCore O M η Good adm
+      (fun q => (ZInQ.Manuscript.curve (m : ℚ)).LFunction q) a :=
+  sourceCore_curve m hgood recur zero support support_adm mul one
+
+/-- **Lane RC12's `OddStageSource` at the actual curve** (App F, tex 8409–9100, 9471–9636; App G,
+tex 10208–10227), with coefficients in `𝒪/2^M𝒪` and `prime`, `odd`, `ap_mod` discharged as in
+`sourceCore_curve`: a stage valid for the budget `(W_U, R)` with odd minimum `δ_o` (`N_0 + R ≤ M`
+and the depth truncated at `N_0 + R`). PROVED. Consumer: `Odd.OddStageSource` (hence
+`Odd.O9_odd_stage`, `Odd.O11_odd_stage`); the depth itself is produced by
+`Odd.sourceHyp_depth_of_oddMinimumF6` / `Odd.oddStageSource_eventually`. -/
+theorem oddStageSource_curve {O : Type*} [CommRing O] {WU R M : ℕ} {δo : ℤ}
+    {η : ℕ → ZInQ.Manuscript.RC.Odd.StageRing O M} {Good adm : ℕ → Prop}
+    {a : ℕ → ZInQ.Manuscript.RC.Odd.StageRing O M} (m : ℤ)
+    (hgood : ∀ q, Good q → q.Prime ∧ ¬ (q : ℤ) ∣ 6 * m)
+    (recur : ∀ q (hq : Good q), ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
+      @ZInQ.Manuscript.RC.Odd.RecAt (ZInQ.Manuscript.RC.Odd.StageRing O M) _ q
+        ⟨(hgood q hq).1⟩ (η q) ε ((ZInQ.Manuscript.curve (m : ℚ)).LFunction q) a)
+    (zero : a 0 = 0) (support : ∀ n, (∃ q ∈ n.primeFactors, ¬ Good q) → a n = 0)
+    (support_adm : ∀ D, Squarefree D → ¬ adm D → a D = 0)
+    (hM : ZInQ.Manuscript.RC.Odd.budgetLevel δo WU R ≤ M)
+    (depth : ∀ D, Squarefree D → adm D →
+      (2 : ZInQ.Manuscript.RC.Odd.StageRing O M) ^
+        (min ((ZInQ.Manuscript.RC.Odd.budgetLevel δo WU R : ℕ) : ℤ)
+          (δo + ArithmeticFunction.cardDistinctFactors D)).toNat ∣ a D)
+    (mul : ∀ x y, η (x * y) = η x * η y) (one : η 1 = 1) :
+    ZInQ.Manuscript.RC.Odd.OddStageSource O WU R M δo η Good adm
+      (fun q => (ZInQ.Manuscript.curve (m : ℚ)).LFunction q) a :=
+  ⟨hM, sourceHyp_curve m hgood recur zero support support_adm depth mul one⟩
 
 /-- **Lane RC12's `cp_sum_odd` at the actual curve** (tex 9924–9925): `C_p(vr₀) + C_p(vr₁) =
 a_p − 1` is odd, with `hap : Even a_p` discharged for `p ∤ 6m` (`ap_mod_four_curve` and lane RC12's

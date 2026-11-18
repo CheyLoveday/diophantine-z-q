@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.RC.PrintsAnalytic.Waldspurger
 import ZInQKernel.Contrib.OneProof.RC.Even.EvenSource
+import Mathlib.NumberTheory.PrimesCongruentOne
 
 /-!
 # Theorem 5.3, Lane RC11-even: the actual even form, (E.10)–(E.12) and its minimum
@@ -17,13 +18,20 @@ lane RC8's genuine definitions (`IsHalfIntegralWeightCuspForm`, `hiwCoeff`, `hec
   `a(p²n) = {η(p)a_p − ψ(p)(−n/p)} a(n) − pη(p)² a(n/p²)`, from the eigenvalue equation and
   `ψ² = η²`; `closedForm_of_eigenspace` — its closed form with integer `A_{p,r}(D)`
   (tex 8162–8182);
+* `S0Filter S₀ D₀ D` — **the `S₀` filter** of the reference `D₀` (tex 7793–7817): `D > 0`
+  squarefree, prime to `S₀`, in the unit squareclasses of `D₀` at every prime of `S₀`;
+  `S0Filter.infinite` — it is infinite for a finite set `S₀ ∋ 2` of primes;
 * `EvenPhaseData` — the remaining inputs of the proposition (ELLIOT: the nonzero reference form
   with scalar character and level on `S₀`, the phase `z_D` and the Galois comparison
-  `a(D)/z_D ∈ ℚ`, tex 7812–7940, 8041–8134);
+  `a(D)/z_D ∈ ℚ`, tex 7812–7940, 8041–8134), for the fixed `σ`, `S₀` and `D₀`; its retained set
+  contains the whole `S₀` filter (field `filter_mem`, tex 7800–7801, 7816–7817), so it is
+  infinite in every instance (`EvenPhaseData.retained_infinite`, `retained_ne_singleton`);
 * `EvenPhaseData.E11` — **(E.11)** (tex 8136–8142): `a(D) = z_D r_D`, `r_D ∈ ℚ`,
   `r_D² = L_*(σD)/L_*(σD₀)`;
 * `EvenPhaseData.minimum` — **the attained minimum** of `v₂ a(D) − ω(D)` (tex 7807–7810,
-  8193–8199), from (E.9) and (E.11).
+  8193–8199), from (E.9) and (E.11); `minimum_on` (any set of retained indices containing `D₀`)
+  and `minimum_sieved` (on the `S₀` filter after the extra coprimality sieve `B`,
+  tex 8148–8155; `B = ∅` gives the whole filter).
 -/
 
 noncomputable section
@@ -175,27 +183,134 @@ theorem closedForm_of_eigenspace {E : WeierstrassCurve ℚ} {N : ℕ} (hN : 4 �
         (Nat.Coprime.coprime_dvd_left (Nat.dvd_of_mem_primeFactors hpm) hmN)
         (Nat.dvd_of_mem_primeFactors hpS)
 
+/-! ## The `S₀` filter (tex 7793–7817) -/
+
+/-- **The `S₀` filter of `D₀`** (tex 7793–7795, 7800–7801, 7812–7817): `D > 0` squarefree, prime
+to every prime of `S₀`, in the unit squareclass of `D₀` at every prime of `S₀`: `DD₀ ≡ 1 (mod 8)`
+at `p = 2` and `DD₀` a nonzero square modulo an odd `p ∈ S₀` (by Hensel, `D/D₀ ∈ (ℚ_p^×)²`). The
+text: "Fix a sign `σ` and unit squareclasses at a finite support `S₀` containing two and every
+prime dividing `N`. Let `D₀ > 0` be squarefree in these prescribed classes, with
+`L_*(σD₀) ≠ 0`. In (E.10)–(E.11), `D` ranges over positive squarefree parameters in these same
+unit squareclasses at every prime of `S₀`" (tex 7812–7817). These are the retained parameters
+before the extra coprimality sieve `B` (tex 8148–8155). -/
+def S0Filter (S₀ : Finset ℕ) (D₀ D : ℕ) : Prop :=
+  0 < D ∧ Squarefree D ∧ (∀ p ∈ S₀, ¬ p ∣ D) ∧
+    ∀ p ∈ S₀, (p = 2 → (D * D₀) % 8 = 1) ∧ (p ≠ 2 → IsSquare ((D * D₀ : ℕ) : ZMod p))
+
+/-- A natural number prime to every prime of a positive `N`'s prime support is prime to `N`
+(PROVED). -/
+theorem coprime_of_support {S₀ : Finset ℕ} {N D : ℕ}
+    (hNS : ∀ p : ℕ, p.Prime → p ∣ N → p ∈ S₀) (hD : ∀ p ∈ S₀, ¬ p ∣ D) : D.Coprime N := by
+  refine Nat.coprime_of_dvd fun p hp hpD hpN => hD p (hNS p hp hpN) hpD
+
+/-- **The upper bound `retained_spec`** (PROVED): at a level `N` with prime support in `S₀`, a
+`D` of the `S₀` filter is positive, squarefree, prime to `N`, and in the unit squareclasses of
+`D₀` at every prime of `N` (tex 7960–7963, 7989–7991). -/
+theorem S0Filter.spec {S₀ : Finset ℕ} {D₀ D N : ℕ} (hNS : ∀ p : ℕ, p.Prime → p ∣ N → p ∈ S₀)
+    (h : S0Filter S₀ D₀ D) :
+    0 < D ∧ Squarefree D ∧ D.Coprime N ∧ SameUnitClassesAtLevel N D D₀ :=
+  ⟨h.1, h.2.1, coprime_of_support hNS h.2.2.1, fun p hp hpN => h.2.2.2 p (hNS p hp hpN)⟩
+
+/-- An odd square is `1` modulo `8` (PROVED). -/
+theorem odd_mul_self_mod_eight {D : ℕ} (hD : ¬ 2 ∣ D) : (D * D) % 8 = 1 := by
+  have h8 : D % 8 < 8 := Nat.mod_lt _ (by norm_num)
+  have hodd : D % 2 = 1 := by omega
+  rw [Nat.mul_mod]
+  have : D % 8 = 1 ∨ D % 8 = 3 ∨ D % 8 = 5 ∨ D % 8 = 7 := by omega
+  rcases this with h | h | h | h <;> rw [h]
+
+/-- **`D₀` is in its own filter** (PROVED; tex 7794–7795, 7814–7815: "a positive squarefree
+reference `D₀` in that filter"): `D₀ > 0` squarefree, prime to `S₀ ∋ 2`. -/
+theorem S0Filter.self {S₀ : Finset ℕ} (h2 : 2 ∈ S₀) {D₀ : ℕ} (hD₀ : 0 < D₀)
+    (hsq : Squarefree D₀) (hS : ∀ p ∈ S₀, ¬ p ∣ D₀) : S0Filter S₀ D₀ D₀ := by
+  refine ⟨hD₀, hsq, hS, fun p _ => ⟨fun _ => odd_mul_self_mod_eight (hS 2 h2), fun _ => ?_⟩⟩
+  exact ⟨(D₀ : ZMod p), by push_cast; ring⟩
+
+/-- **The `S₀` filter is infinite** (PROVED): for a finite set `S₀ ∋ 2` of primes and `D₀ > 0`
+squarefree prime to `S₀`, every bound `n` is exceeded by a member `D = D₀ q` of the filter, with
+`q` a prime, `q > n + D₀ + max S₀` and `q ≡ 1 (mod 8 ∏_{p ∈ S₀} p)` (Mathlib's
+`Nat.exists_prime_gt_modEq_one`): `DD₀ = D₀² q` is `≡ 1 (mod 8)` and `≡ D₀²` modulo every odd
+`p ∈ S₀`. -/
+theorem S0Filter.infinite {S₀ : Finset ℕ} (hS₀ : ∀ p ∈ S₀, p.Prime) (h2 : 2 ∈ S₀) {D₀ : ℕ}
+    (hD₀ : 0 < D₀) (hsq : Squarefree D₀) (hS : ∀ p ∈ S₀, ¬ p ∣ D₀) :
+    {D | S0Filter S₀ D₀ D}.Infinite := by
+  refine Set.infinite_of_not_bddAbove ?_
+  rintro ⟨n, hn⟩
+  have hM : 8 * ∏ p ∈ S₀, p ≠ 0 :=
+    mul_ne_zero (by norm_num) (Finset.prod_ne_zero_iff.mpr fun p hp => (hS₀ p hp).ne_zero)
+  obtain ⟨q, hq, hqn, hqM⟩ := Nat.exists_prime_gt_modEq_one (n + D₀ + S₀.sup id) hM
+  have hq8 : q % 8 = 1 := Nat.ModEq.of_mul_right (∏ p ∈ S₀, p) hqM
+  have hqD₀ : ¬ q ∣ D₀ := fun h => by
+    have := Nat.le_of_dvd hD₀ h
+    omega
+  have hqS : q ∉ S₀ := fun h => by
+    have := Finset.le_sup (f := id) h
+    simp only [id] at this
+    omega
+  have hmem : S0Filter S₀ D₀ (D₀ * q) := by
+    refine ⟨Nat.mul_pos hD₀ hq.pos, ?_, ?_, ?_⟩
+    · exact Nat.squarefree_mul_iff.mpr
+        ⟨((Nat.Prime.coprime_iff_not_dvd hq).mpr hqD₀).symm, hsq, hq.prime.squarefree⟩
+    · intro p hp hpd
+      rcases (Nat.Prime.dvd_mul (hS₀ p hp)).mp hpd with h | h
+      · exact hS p hp h
+      · exact hqS ((Nat.prime_dvd_prime_iff_eq (hS₀ p hp) hq).mp h ▸ hp)
+    · intro p hp
+      refine ⟨fun _ => ?_, fun _ => ?_⟩
+      · rw [show D₀ * q * D₀ = D₀ * D₀ * q by ring, Nat.mul_mod,
+          odd_mul_self_mod_eight (hS 2 h2), hq8]
+      · have hqp : q ≡ 1 [MOD p] :=
+          Nat.ModEq.of_dvd (dvd_mul_of_dvd_right (Finset.dvd_prod_of_mem _ hp) 8) hqM
+        have hq1 : (q : ZMod p) = 1 := by
+          have := (ZMod.natCast_eq_natCast_iff q 1 p).mpr hqp
+          simpa using this
+        exact ⟨(D₀ : ZMod p), by push_cast; rw [hq1]; ring⟩
+  have hle : D₀ * q ≤ n := hn hmem
+  have : q ≤ D₀ * q := Nat.le_mul_of_pos_left q hD₀
+  omega
+
 /-! ## The proposition `ex:app-even-phase` -/
 
 /-- **The actual even form and its phase** (Proposition `ex:app-even-phase`, tex 7792–7811;
-ELLIOT inputs). For the fixed sign `σ = ±1` and positive squarefree reference `D₀` with
-`L_*(σD₀) ≠ 0`:
+ELLIOT inputs). For the fixed sign `σ = ±1`, the fixed finite support `S₀` (a set of primes,
+`hS₀`; it contains `2`, `EvenPhaseData.two_mem`) and the positive squarefree reference `D₀` prime
+to `S₀` (`hD₀S`), with `L_*(σD₀) ≠ 0` (tex 7793–7795, 7812–7815):
 * `N, ψ, η, g` — the nonzero reference form: a weight-`3/2` cusp form in the full good-Hecke
-  eigenspace of `E` and `η = ψχ_{−σ}`, at a level `N` (`4 ∣ N`) supported on `S₀`, with
-  `a(D₀) ≠ 0` (Waldspurger's theta theorem and Elliot's local scalar type, tex 7821–7940; RC8's
-  `WaldspurgerNonvanishing`);
+  eigenspace of `E` and `η = ψχ_{−σ}`, at a level `N` (`4 ∣ N`) with prime support in `S₀`
+  (`hNS`; tex 7963, 7989), with `a(D₀) ≠ 0` (Waldspurger's theta theorem and Elliot's local scalar
+  type, tex 7821–7940; RC8's `WaldspurgerNonvanishing`);
 * `retained` — the retained positive squarefree `D` (prime to `N`, in the unit squareclasses of
-  `D₀` at every prime of the level), containing `D₀`;
+  `D₀` at every prime of the level, `retained_spec`), containing `D₀` and **the whole `S₀`
+  filter** (`filter_mem`): "For every retained positive squarefree `D` in the original `S₀`
+  filter" (tex 7800–7801); "In (E.10)–(E.11), `D` ranges over positive squarefree parameters in
+  these same unit squareclasses at every prime of `S₀`" (tex 7816–7817); "This supplies the
+  valuation and nonvanishing comparison on the whole filter. ... The comparison is proved at the
+  original support `S₀` before any extra coprimality sieve `B`" (tex 2562–2566). The minimum on
+  the filter after a sieve `B` (tex 8148–8155, 8193–8199) is `EvenPhaseData.minimum_sieved`;
 * `z` — the phase `z_D = ∏_{p ∣ cond η} η_p(u_p)` with `u_p² = D/D₀` (tex 8116–8128): a two-power
   root of unity with `z_D² = η(D/D₀) = ψ(D/D₀)` (`ψ/η = χ_{−σ}` is trivial on the local square
   `D/D₀`, tex 8136–8138);
 * `rational` — the Galois comparison (tex 8086–8134, on Ramsey's algebraic model,
   tex 8041–8083): `a(D)/(a(D₀) z_D)` is fixed by every automorphism of `ℚ̄`, hence rational
-  (PROVED algebra: `galois_fixed_div`, `pow_half_eq`, `mem_bot_of_fixed`). -/
-structure EvenPhaseData (E : WeierstrassCurve ℚ) (L : CentralNormalization E) (σ : ℤ) (D₀ : ℕ)
-    where
+  (PROVED algebra: `galois_fixed_div`, `pow_half_eq`, `mem_bot_of_fixed`).
+
+**Non-vacuity.** (1) The retained set is not a token set: by `filter_mem` every instance retains
+the whole `S₀` filter, which is infinite (`S0Filter.infinite`), so `retained` is infinite
+(`EvenPhaseData.retained_infinite`) and `retained = {D₀}` is impossible
+(`EvenPhaseData.retained_ne_singleton`); `EvenPhaseData.minimum` is a minimum over a set
+containing the whole `S₀` filter, and `EvenPhaseData.minimum_sieved` a minimum over exactly the
+filter (prime to a sieve `B`). (2) The structure is inhabited from the prints: Appendix E's
+`evenPhaseData_of_prints` and `evenPhaseData_Ecurve` (PROVED from the PRINTs
+`WaldspurgerNonvanishing`, `WaldspurgerCor2`, `RamseyAlgebraicModel`, BCDT, the GLUE
+`HasseConvergence` and the GLUE hypothesis `HalfIntegralTwist`) build an instance whose retained set
+is exactly the `S₀` filter. -/
+structure EvenPhaseData (E : WeierstrassCurve ℚ) (L : CentralNormalization E) (σ : ℤ)
+    (S₀ : Finset ℕ) (D₀ : ℕ) where
+  hS₀ : ∀ p ∈ S₀, p.Prime
+  hD₀S : ∀ p ∈ S₀, ¬ p ∣ D₀
   N : ℕ
   hN : 4 ∣ N
+  hNS : ∀ p : ℕ, p.Prime → p ∣ N → p ∈ S₀
   ψ : DirichletCharacter ℂ N
   η : DirichletCharacter ℂ N
   hψη : ∀ n : ℕ, n.Coprime N → η n = ψ n * (kronecker (-σ) n : ℂ)
@@ -205,18 +320,56 @@ structure EvenPhaseData (E : WeierstrassCurve ℚ) (L : CentralNormalization E) 
   retained : Set ℕ
   retained_spec : ∀ D ∈ retained,
     0 < D ∧ Squarefree D ∧ D.Coprime N ∧ SameUnitClassesAtLevel N D D₀
+  filter_mem : ∀ D, S0Filter S₀ D₀ D → D ∈ retained
   D₀_mem : D₀ ∈ retained
   z : ℕ → ℂ
   z_root : ∀ D ∈ retained, ∃ k : ℕ, z D ^ (2 ^ k) = 1
   z_sq : ∀ D ∈ retained, z D ^ 2 = ψ D * (ψ D₀)⁻¹
   rational : ∀ D ∈ retained, ∃ r : ℚ, hiwCoeff g D / hiwCoeff g D₀ = z D * (r : ℂ)
 
+/-- `2 ∈ S₀` (PROVED): `2 ∣ 4 ∣ N` and the level has prime support in `S₀`. -/
+theorem EvenPhaseData.two_mem {E : WeierstrassCurve ℚ} {L : CentralNormalization E} {σ : ℤ}
+    {S₀ : Finset ℕ} {D₀ : ℕ} (P : EvenPhaseData E L σ S₀ D₀) : 2 ∈ S₀ :=
+  P.hNS 2 Nat.prime_two (dvd_trans (by norm_num) P.hN)
+
+/-- `D₀` lies in its own `S₀` filter (PROVED; tex 7794–7795). -/
+theorem EvenPhaseData.D₀_filter {E : WeierstrassCurve ℚ} {L : CentralNormalization E} {σ : ℤ}
+    {S₀ : Finset ℕ} {D₀ : ℕ} (P : EvenPhaseData E L σ S₀ D₀) : S0Filter S₀ D₀ D₀ :=
+  S0Filter.self P.two_mem (P.retained_spec D₀ P.D₀_mem).1 (P.retained_spec D₀ P.D₀_mem).2.1 P.hD₀S
+
+/-- **Every instance retains infinitely many `D`** (PROVED; the non-vacuity of `retained`):
+`retained` contains the whole `S₀` filter (`filter_mem`), which is infinite
+(`S0Filter.infinite`). -/
+theorem EvenPhaseData.retained_infinite {E : WeierstrassCurve ℚ} {L : CentralNormalization E}
+    {σ : ℤ} {S₀ : Finset ℕ} {D₀ : ℕ} (P : EvenPhaseData E L σ S₀ D₀) : P.retained.Infinite :=
+  (S0Filter.infinite P.hS₀ P.two_mem (P.retained_spec D₀ P.D₀_mem).1
+    (P.retained_spec D₀ P.D₀_mem).2.1 P.hD₀S).mono fun D hD => P.filter_mem D hD
+
+/-- **No instance has `retained = {D₀}`** (PROVED, from `retained_infinite`): the token instance
+with only the reference index does not satisfy the structure. -/
+theorem EvenPhaseData.retained_ne_singleton {E : WeierstrassCurve ℚ}
+    {L : CentralNormalization E} {σ : ℤ} {S₀ : Finset ℕ} {D₀ : ℕ}
+    (P : EvenPhaseData E L σ S₀ D₀) : P.retained ≠ {D₀} := fun h =>
+  P.retained_infinite (h ▸ Set.finite_singleton D₀)
+
+/-- **`retained = {D₀}` contradicts the field `filter_mem` when the `S₀` filter has another
+element** (PROVED). -/
+theorem EvenPhaseData.retained_ne_singleton_of_mem {E : WeierstrassCurve ℚ}
+    {L : CentralNormalization E} {σ : ℤ} {S₀ : Finset ℕ} {D₀ : ℕ}
+    (P : EvenPhaseData E L σ S₀ D₀) {D : ℕ} (hD : S0Filter S₀ D₀ D) (hne : D ≠ D₀) :
+    P.retained ≠ {D₀} := by
+  intro h
+  have hmem := P.filter_mem D hD
+  rw [h, Set.mem_singleton_iff] at hmem
+  exact hne hmem
+
 /-- **(E.11)** (tex 8136–8142; PROVED from `E10_of_waldspurgerCor2` and `E11_of_E10`): with the
-normalization `a(D₀) = 1` (that is, `a(D) := a_g(D)/a_g(D₀)`), every retained `D` has
-`a(D) = z_D r_D` with `r_D ∈ ℚ` and `r_D² = L_*(σD)/L_*(σD₀)`. -/
+normalization `a(D₀) = 1` (that is, `a(D) := a_g(D)/a_g(D₀)`), every retained `D` (in particular
+every `D` of the `S₀` filter, `filter_mem`) has `a(D) = z_D r_D` with `r_D ∈ ℚ` and
+`r_D² = L_*(σD)/L_*(σD₀)`. -/
 theorem EvenPhaseData.E11 (hW : WaldspurgerCor2) {E : WeierstrassCurve ℚ} (hE : E.IsElliptic)
-    {L : CentralNormalization E} {σ : ℤ} (hσ : σ = 1 ∨ σ = -1) {D₀ : ℕ}
-    (P : EvenPhaseData E L σ D₀) (hL₀ : L.Lstar (σ * D₀) ≠ 0)
+    {L : CentralNormalization E} {σ : ℤ} (hσ : σ = 1 ∨ σ = -1) {S₀ : Finset ℕ} {D₀ : ℕ}
+    (P : EvenPhaseData E L σ S₀ D₀) (hL₀ : L.Lstar (σ * D₀) ≠ 0)
     (hcont : ∀ h : ℤ, h ≠ 0 → ∃ F, IsLContinuation (qtwist E h) F) :
     ∀ D ∈ P.retained, ∃ r : ℚ, hiwCoeff P.g D / hiwCoeff P.g D₀ = P.z D * (r : ℂ) ∧
       r ^ 2 = L.Lstar (σ * D) / L.Lstar (σ * D₀) := by
@@ -241,20 +394,21 @@ theorem EvenPhaseData.E11 (hW : WaldspurgerCor2) {E : WeierstrassCurve ℚ} (hE 
     mul_left_cancel₀ (pow_ne_zero 2 hz) h10
   exact_mod_cast h'
 
-/-- **The finite attained minimum of `v₂ a(D) − ω(D)`** (tex 7807–7810, 8193–8199; PROVED from
-(E.11) and (E.9) via `even_phase_minimum`): among the retained `D` with nonzero coefficient, the
-values `v₂ r_D − ω(D)` (`v₂ a(D) = v₂ r_D`, since `z_D` is a root of unity) have a least element.
+/-- **The finite attained minimum of `v₂ a(D) − ω(D)` on a set of retained indices**
+(tex 7807–7810, 8193–8199; PROVED from (E.11) and (E.9) via `even_phase_minimum`): for any set
+`𝒟` of retained indices containing `D₀`, among the `D ∈ 𝒟` with nonzero coefficient the values
+`v₂ r_D − ω(D)` (`v₂ a(D) = v₂ r_D`, since `z_D` is a root of unity) have a least element.
 (E.9) is only needed at the retained `σD`, which are odd (`D` is prime to `N`, `2 ∣ N`) and
 squarefree, so `EvenLowerBound` applies to `L_*` restricted to them. -/
-theorem EvenPhaseData.minimum (hW : WaldspurgerCor2) {E : WeierstrassCurve ℚ} (hE : E.IsElliptic)
-    {L : CentralNormalization E} {σ : ℤ} (hσ : σ = 1 ∨ σ = -1) {D₀ : ℕ}
-    (P : EvenPhaseData E L σ D₀) (hL₀ : L.Lstar (σ * D₀) ≠ 0)
+theorem EvenPhaseData.minimum_on (hW : WaldspurgerCor2) {E : WeierstrassCurve ℚ}
+    (hE : E.IsElliptic) {L : CentralNormalization E} {σ : ℤ} (hσ : σ = 1 ∨ σ = -1)
+    {S₀ : Finset ℕ} {D₀ : ℕ} (P : EvenPhaseData E L σ S₀ D₀) (hL₀ : L.Lstar (σ * D₀) ≠ 0)
     (hcont : ∀ h : ℤ, h ≠ 0 → ∃ F, IsLContinuation (qtwist E h) F)
-    (h9 : EvenLowerBound E L) :
+    (h9 : EvenLowerBound E L) (𝒟 : Set ℕ) (h𝒟 : 𝒟 ⊆ P.retained) (hD₀𝒟 : D₀ ∈ 𝒟) :
     ∃ r : ℕ → ℚ, (∀ D ∈ P.retained, hiwCoeff P.g D / hiwCoeff P.g D₀ = P.z D * (r D : ℂ) ∧
         r D ^ 2 = L.Lstar (σ * D) / L.Lstar (σ * D₀)) ∧
-      ∃ δ : ℤ, (∃ D ∈ P.retained, r D ≠ 0 ∧ padicValRat 2 (r D) - omegaN D = δ) ∧
-        ∀ D ∈ P.retained, r D ≠ 0 → δ ≤ padicValRat 2 (r D) - omegaN D := by
+      ∃ δ : ℤ, (∃ D ∈ 𝒟, r D ≠ 0 ∧ padicValRat 2 (r D) - omegaN D = δ) ∧
+        ∀ D ∈ 𝒟, r D ≠ 0 → δ ≤ padicValRat 2 (r D) - omegaN D := by
   classical
   -- the rational parts `r_D` of (E.11), extended by `0` outside the retained set
   have hE11 := P.E11 hW hE hσ hL₀ hcont
@@ -274,12 +428,12 @@ theorem EvenPhaseData.minimum (hW : WaldspurgerCor2) {E : WeierstrassCurve ℚ} 
     if ∃ D ∈ P.retained, h = σ * (D : ℤ) then L.Lstar h else 0 with hLdef
   have hL' : ∀ D ∈ P.retained, Lstar' (σ * D) = L.Lstar (σ * D) := fun D hD =>
     ite_eq_left ⟨D, hD, rfl⟩
-  refine even_phase_minimum Lstar' (shaLen E) σ hσ P.retained P.D₀_mem ?_ r ?_ 0 C ?_
+  refine even_phase_minimum Lstar' (shaLen E) σ hσ 𝒟 hD₀𝒟 ?_ r ?_ 0 C ?_
   · rw [hL' D₀ P.D₀_mem]
     exact hL₀
   · intro D hD
-    rw [hL' D hD, hL' D₀ P.D₀_mem]
-    exact (hr D hD).2
+    rw [hL' D (h𝒟 hD), hL' D₀ P.D₀_mem]
+    exact (hr D (h𝒟 hD)).2
   · -- (E.9) at a retained `σD`: it is odd and squarefree
     intro h hh
     have hex : ∃ D ∈ P.retained, h = σ * (D : ℤ) := by
@@ -307,5 +461,48 @@ theorem EvenPhaseData.minimum (hW : WaldspurgerCor2) {E : WeierstrassCurve ℚ} 
     have h9D := hC (σ * D) hodd hsqz hh
     rw [sub_zero]
     exact h9D
+
+/-- **The finite attained minimum of `v₂ a(D) − ω(D)`** (tex 7807–7810, 8193–8199; PROVED from
+(E.11) and (E.9) via `even_phase_minimum`, as `minimum_on` with `𝒟 = retained`): among the
+retained `D` with nonzero coefficient, the values `v₂ r_D − ω(D)` (`v₂ a(D) = v₂ r_D`, since `z_D`
+is a root of unity) have a least element. The retained set contains the whole `S₀` filter
+(`filter_mem`), so this is a minimum over the whole filter whenever `retained` is the filter (as in
+Appendix E's `evenPhaseData_of_prints`); the minimum on the filter itself, for every instance, is
+`minimum_sieved` with `B = ∅`. -/
+theorem EvenPhaseData.minimum (hW : WaldspurgerCor2) {E : WeierstrassCurve ℚ} (hE : E.IsElliptic)
+    {L : CentralNormalization E} {σ : ℤ} (hσ : σ = 1 ∨ σ = -1) {S₀ : Finset ℕ} {D₀ : ℕ}
+    (P : EvenPhaseData E L σ S₀ D₀) (hL₀ : L.Lstar (σ * D₀) ≠ 0)
+    (hcont : ∀ h : ℤ, h ≠ 0 → ∃ F, IsLContinuation (qtwist E h) F)
+    (h9 : EvenLowerBound E L) :
+    ∃ r : ℕ → ℚ, (∀ D ∈ P.retained, hiwCoeff P.g D / hiwCoeff P.g D₀ = P.z D * (r D : ℂ) ∧
+        r D ^ 2 = L.Lstar (σ * D) / L.Lstar (σ * D₀)) ∧
+      ∃ δ : ℤ, (∃ D ∈ P.retained, r D ≠ 0 ∧ padicValRat 2 (r D) - omegaN D = δ) ∧
+        ∀ D ∈ P.retained, r D ≠ 0 → δ ≤ padicValRat 2 (r D) - omegaN D :=
+  P.minimum_on hW hE hσ hL₀ hcont h9 P.retained (fun _ h => h) P.D₀_mem
+
+/-- **The minimum on the `S₀` filter after the extra coprimality sieve `B`** (tex 7796–7797,
+7807–7810, 7818–7819, 8148–8155, 8193–8199; PROVED, `minimum_on` with `𝒟` the `D` of the `S₀`
+filter prime to `B`, a set of retained indices by `filter_mem`): "Only now impose the extra finite
+coprimality sieve `B`. The zero-or-retain Fourier sieve ... keeps every coefficient whose index is
+prime to `B` ... In particular it keeps `a(D₀) = 1`" (tex 8148–8152). For a finite set `B` prime
+to `D₀`, the values `v₂ r_D − ω(D)` at the `D` of the original `S₀` filter prime to `B` (the
+retained indices of the text) with nonzero coefficient have a least element. The index set is the
+text's, whatever superset of the filter `retained` is; `B = ∅` gives the minimum on the whole
+`S₀` filter. -/
+theorem EvenPhaseData.minimum_sieved (hW : WaldspurgerCor2) {E : WeierstrassCurve ℚ}
+    (hE : E.IsElliptic) {L : CentralNormalization E} {σ : ℤ} (hσ : σ = 1 ∨ σ = -1)
+    {S₀ : Finset ℕ} {D₀ : ℕ} (P : EvenPhaseData E L σ S₀ D₀) (hL₀ : L.Lstar (σ * D₀) ≠ 0)
+    (hcont : ∀ h : ℤ, h ≠ 0 → ∃ F, IsLContinuation (qtwist E h) F)
+    (h9 : EvenLowerBound E L) (B : Finset ℕ) (hB : ∀ p ∈ B, ¬ p ∣ D₀) :
+    ∃ r : ℕ → ℚ, (∀ D ∈ P.retained, hiwCoeff P.g D / hiwCoeff P.g D₀ = P.z D * (r D : ℂ) ∧
+        r D ^ 2 = L.Lstar (σ * D) / L.Lstar (σ * D₀)) ∧
+      ∃ δ : ℤ, (∃ D, S0Filter S₀ D₀ D ∧ (∀ p ∈ B, ¬ p ∣ D) ∧ r D ≠ 0 ∧
+          padicValRat 2 (r D) - omegaN D = δ) ∧
+        ∀ D, S0Filter S₀ D₀ D → (∀ p ∈ B, ¬ p ∣ D) → r D ≠ 0 →
+          δ ≤ padicValRat 2 (r D) - omegaN D := by
+  obtain ⟨r, hr, δ, ⟨D, hD, hrD, hδ⟩, hmin⟩ := P.minimum_on hW hE hσ hL₀ hcont h9
+    {D | S0Filter S₀ D₀ D ∧ ∀ p ∈ B, ¬ p ∣ D} (fun D h => P.filter_mem D h.1)
+    ⟨P.D₀_filter, hB⟩
+  exact ⟨r, hr, δ, ⟨D, hD.1, hD.2, hrD, hδ⟩, fun D hD hDB hrD => hmin D ⟨hD, hDB⟩ hrD⟩
 
 end ZInQ.Manuscript.RC.Even

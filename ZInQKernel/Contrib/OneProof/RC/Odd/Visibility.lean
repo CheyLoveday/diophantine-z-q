@@ -1,5 +1,6 @@
 import Mathlib
 import ZInQKernel.Contrib.OneProof.RC.Odd.Comparison
+import ZInQKernel.Contrib.OneProof.RC.Odd.Detector
 
 /-!
 # Lane RC12-odd: visibility (O.8) (App F, `ex:app-visibility`, tex 9407–9445)
@@ -26,6 +27,35 @@ vanishes modulo `2^M`."
 The conclusion is the shape of the skeleton's Prop `RCSteps.visibility` (lane RC0), with
 `SimpleZero D` to be instantiated by `ord_{s=1} L(E^{(D)}, s) = 1` and `vZ` the 2-adic valuation
 `Padic.addValuation` on `ℤ ⊂ ℚ₂` (definitionally the skeleton's `vZ`).
+
+**The fixed witness and (O.2)** (lane RC27). What the text asserts about `λ_M(\bar Q)`,
+`Q = L P_{D_w}`, is (O.2)/(3.7): at every stage of the detecting sequence,
+`v₂ λ_M(\bar Q) = c_w < M` with `c_w = a + 1` fixed before the precision varies (tex 8236–8239,
+8396–8398, 2486–2493). The proof: `λ_M = b ∘ κ_M`, and "for the fixed witness, specialization of a
+compatible division point identifies this evaluation with the cocycle value at `σ²`, whose `b`-value
+is `2^{a+1}`" (tex 8457–8460), where `σ = hτ`, `ρ(h) = 1`, `c_Q(h) = 2^a t₀`, `b t₀ = 1`, `bC = b`
+(tex 8343–8360). The hypotheses `hlam1`, `hlam2` of `witness_exact_order` / `witness_vZ` are (O.2)
+read on an integer lift `λ` of `λ_M(\bar Q)` (with `c_w < M`, implied by `hM`); they are not supplied
+by batch 3's `FixedWitness`, which gives only the nontorsion of the genus point and of a rational
+point `Q` on `E^{(D_w)}` (the input of tex 8314–8330). Here:
+* `WitnessDetector` — the detector data of tex 8308–8360 (abstract interface: the Kummer cocycle
+  `c_Q` on a group with a representation `ρ`, `h ∈ ker ρ`, complex conjugation `τ`, the row `b`, `t₀`,
+  `a`); non-vacuity `witnessDetector_example`;
+* `WitnessDetector.row_sq` (**PROVED**, from `IsCocycle.sigma_sq`, `row_value`):
+  `b c_Q(σ²) = 2^{c_w}`;
+* `WitnessDetector.lambda_eq_two_pow` (**PROVED**): the specialization identity
+  `λ_M(\bar Q) = b c_Q(σ²) mod 2^M` gives `λ_M(\bar Q) = 2^{c_w}` in `ℤ/2^M`;
+* `exact_order_of_eq_two_pow`, `exact_order_of_residue` (**PROVED**): (O.2) on the residue gives
+  `hlam1`, `hlam2` for every integer lift;
+* `witness_vZ_of_detector`, `witness_vZ_of_O2` (**PROVED**): `v₂ a_M(D_w) = c_θ + c_w` from (O.7) and
+  the detector data with the specialization identity (resp. from (O.2) on the residue).
+The step from the nontorsion of `Q` (batch 3's `FixedWitness`) to the detector data — Serre's open
+image theorem for `A = E^{(D_w)}` (PRINT, lane RC9's `SerreThm3`), the Kummer injection
+`A(ℚ) ⊗ ℚ₂ ↪ H¹(ℚ, V₂A)` (GLUE), the central-scalar coboundary (PROVED,
+`IsCocycle.coboundary_of_central`), `c_Q(h^d) = d c_Q(h)` (PROVED, `IsCocycle.pow_of_ker`), the row
+`b` of the `+1`-eigenspace of `C` (GLUE, `C² = 1`, `det C = −1`) — and the specialization identity at
+every stage (finite Chebotarev for `F₀(E[2^M], A[2^M], 2^{−M}Q)`, GLUE; good reduction identifying the
+reduced division cocycle with `κ_M`, GLUE, tex 8392–8398) remain ELLIOT/GLUE/PRINT inputs.
 -/
 
 namespace ZInQ.Manuscript.RC.Odd
@@ -101,7 +131,10 @@ theorem visibility_O8 (M : ℕ → ℕ) (aθ lam : ℕ → ℤ → ℤ) (admissi
     push_cast at this
     omega
 
-/-- **PROVED (tex 9391–9399, `v₂`-form).** At the fixed witness, `v₂ a_M(D_w) = c_θ + c_w`. -/
+/-- **PROVED (tex 9391–9399, `v₂`-form).** At the fixed witness, `v₂ a_M(D_w) = c_θ + c_w`. The
+hypotheses `hlam1`, `hlam2` are (O.2) (tex 8396–8398: `v₂ λ_M(\bar Q) = c_w < M`) read on an integer
+lift `λ` of `λ_M(\bar Q)`; they are derived from the detector data in `witness_vZ_of_detector` and from
+(O.2) on the residue in `witness_vZ_of_O2` (see the module docstring). -/
 theorem witness_vZ (ω M cw : ℕ) {a ζ lam : ℤ} (hζ : Odd ζ)
     (hlam1 : (2 : ℤ) ^ cw ∣ lam) (hlam2 : ¬ (2 : ℤ) ^ (cw + 1) ∣ lam)
     (hcong : (2 : ℤ) ^ M ∣ a - (c0 : ℤ) * 2 ^ ω * ζ * lam) (hM : 9 + ω + cw < M) :
@@ -118,5 +151,161 @@ theorem witness_vZ (ω M cw : ℕ) {a ζ lam : ℤ} (hζ : Odd ζ)
     have h2' : ¬ ((9 + ω + cw + 1 : ℕ) : ℤ) ≤ (padicValInt 2 a : ℤ) := hnle
     omega
   rw [this]
+
+/-! ### (O.2) at the fixed witness (tex 8225–8405, 2469–2493) -/
+
+/-- **The detector data of the fixed witness** (App F, Proposition `ex:app-detector`, proof,
+tex 8308–8360; §7, tex 2469–2482), abstract interface (DEPARTURE of form: the absolute Galois group,
+the Tate module `T = T₂A` and the Kummer cocycle `c_Q` of `Q = L P_{D_w}` are not formalized; the
+group `Gp`, the module `T` and the cocycle stand for them). Fields: the representation `ρ`
+(`ρ_A`), the cocycle `c = c_Q` (`c(gh) = c(g) + ρ(g) c(h)`, tex 8308–8312), `h ∈ H = ker ρ`
+(tex 8312, 8340–8350), complex conjugation `τ` (`τ² = 1`, tex 8343–8346), the primitive row
+`b : T → ℤ₂` with `bC = b`, `C = ρ(τ)` (tex 8346–8348), `t₀` with `b t₀ = 1`, and `a` with
+`c(h) = v = 2^a t₀` (tex 8349). The existence of such data for the genuine `c_Q` is the ELLIOT +
+PRINT + GLUE step listed in the module docstring. Non-vacuity: `witnessDetector_example`. -/
+structure WitnessDetector (Gp T : Type*) [Group Gp] [AddCommGroup T] where
+  ρ : Gp →* AddMonoid.End T
+  c : Gp → T
+  cocycle : IsCocycle ρ c
+  h : Gp
+  τ : Gp
+  ker_h : ρ h = 1
+  invol : τ * τ = 1
+  b : T →+ ℤ_[2]
+  row_fixed : ∀ x, b (ρ τ x) = b x
+  t₀ : T
+  row_one : b t₀ = 1
+  a : ℕ
+  translation : c h = (2 ^ a) • t₀
+
+namespace WitnessDetector
+
+variable {Gp T : Type*} [Group Gp] [AddCommGroup T]
+
+/-- `σ = hτ` (tex 8350). -/
+def σ (X : WitnessDetector Gp T) : Gp := X.h * X.τ
+
+/-- `c_w = a + 1` (tex 8358). -/
+def cw (X : WitnessDetector Gp T) : ℕ := X.a + 1
+
+/-- **PROVED (tex 8350–8358).** `c_Q(σ²) = (1 + C) v` and `b c_Q(σ²) = 2^{a+1} = 2^{c_w}`. -/
+theorem row_sq (X : WitnessDetector Gp T) : X.b (X.c (X.σ * X.σ)) = 2 ^ X.cw := by
+  obtain ⟨-, hsq⟩ := X.cocycle.sigma_sq X.ker_h X.invol
+  rw [σ, hsq, X.translation, cw]
+  exact row_value (X.ρ X.τ) X.b X.row_fixed X.t₀ X.row_one X.a
+
+/-- **PROVED (tex 8457–8460, (O.2)).** If the stage value `λ_M(\bar Q) ∈ ℤ/2^M` is the reduction of
+the row value of the cocycle at `σ²` (the specialization identity), then `λ_M(\bar Q) = 2^{c_w}`. -/
+theorem lambda_eq_two_pow (X : WitnessDetector Gp T) {M : ℕ} {lamM : ZMod (2 ^ M)}
+    (hspec : lamM = PadicInt.toZModPow M (X.b (X.c (X.σ * X.σ)))) : lamM = 2 ^ X.cw := by
+  rw [hspec, X.row_sq, map_pow, map_ofNat]
+
+end WitnessDetector
+
+/-- **PROVED (non-vacuity of `WitnessDetector`).** On the free group `ℤ` (multiplicatively) acting
+trivially on `T = ℤ₂` with the cocycle `n ↦ n`, `h = 1`, `τ = 0`, `b = id`, `t₀ = 1`, `a = 0`: all
+fields hold (`c_w = 1`). -/
+noncomputable def witnessDetector_example : WitnessDetector (Multiplicative ℤ) ℤ_[2] where
+  ρ := 1
+  c := fun g => ((Multiplicative.toAdd g : ℤ) : ℤ_[2])
+  cocycle := fun g h => by simp
+  h := Multiplicative.ofAdd 1
+  τ := 1
+  ker_h := rfl
+  invol := mul_one 1
+  b := AddMonoidHom.id ℤ_[2]
+  row_fixed := fun x => by simp
+  t₀ := 1
+  row_one := rfl
+  a := 0
+  translation := by simp
+
+/-- **PROVED.** An integer lift of `2^{c_w}` modulo `2^M`, `c_w < M`, has exact `2`-adic order `c_w`:
+the hypotheses `hlam1`, `hlam2` of `witness_exact_order`. -/
+theorem exact_order_of_eq_two_pow {M cw : ℕ} (hcw : cw < M) {lam : ℤ}
+    (h : ((lam : ℤ) : ZMod (2 ^ M)) = 2 ^ cw) :
+    (2 : ℤ) ^ cw ∣ lam ∧ ¬ (2 : ℤ) ^ (cw + 1) ∣ lam := by
+  have h' : ((lam : ℤ) : ZMod (2 ^ M)) = (((2 : ℤ) ^ cw : ℤ) : ZMod (2 ^ M)) := by
+    rw [h]; push_cast; rfl
+  rw [ZMod.intCast_eq_intCast_iff_dvd_sub] at h'
+  push_cast at h'
+  have hM1 : (2 : ℤ) ^ cw ∣ (2 : ℤ) ^ M := pow_dvd_pow 2 hcw.le
+  have hM2 : (2 : ℤ) ^ (cw + 1) ∣ (2 : ℤ) ^ M := pow_dvd_pow 2 hcw
+  constructor
+  · have := dvd_sub (dvd_refl ((2 : ℤ) ^ cw)) (dvd_trans hM1 h')
+    rwa [sub_sub_cancel] at this
+  · intro hd
+    have h2 : (2 : ℤ) ^ (cw + 1) ∣ (2 : ℤ) ^ cw := by
+      have := dvd_add (dvd_trans hM2 h') hd
+      rwa [sub_add_cancel] at this
+    have h3 : (2 : ℤ) ^ (cw + 1) ≤ 2 ^ cw := Int.le_of_dvd (by positivity) h2
+    have h4 : (2 : ℤ) ^ cw < 2 ^ (cw + 1) := pow_lt_pow_right₀ (by norm_num) (Nat.lt_succ_self cw)
+    omega
+
+/-- **PROVED.** (O.2) on the residue: if `x = λ_M(\bar Q) ∈ ℤ/2^M` has exact `2`-adic order `c_w`
+(`2^{c_w} ∣ x`, `2^{c_w+1} ∤ x`) with `c_w < M`, every integer lift `λ` of `x` satisfies `hlam1`,
+`hlam2`. -/
+theorem exact_order_of_residue {M cw : ℕ} (hcw : cw < M) {x : ZMod (2 ^ M)}
+    (h1 : (2 : ZMod (2 ^ M)) ^ cw ∣ x) (h2 : ¬ (2 : ZMod (2 ^ M)) ^ (cw + 1) ∣ x) {lam : ℤ}
+    (hlift : ((lam : ℤ) : ZMod (2 ^ M)) = x) :
+    (2 : ℤ) ^ cw ∣ lam ∧ ¬ (2 : ℤ) ^ (cw + 1) ∣ lam := by
+  refine ⟨?_, fun hd => h2 ?_⟩
+  · obtain ⟨y, rfl⟩ := h1
+    have : NeZero (2 ^ M) := ⟨by positivity⟩
+    have hcast :
+        ((lam : ℤ) : ZMod (2 ^ M)) = (((2 : ℤ) ^ cw * (y.val : ℤ) : ℤ) : ZMod (2 ^ M)) := by
+      rw [hlift]; push_cast; rw [ZMod.natCast_val, ZMod.cast_id', id]
+    rw [ZMod.intCast_eq_intCast_iff_dvd_sub] at hcast
+    push_cast at hcast
+    have hM1 : (2 : ℤ) ^ cw ∣ (2 : ℤ) ^ M := pow_dvd_pow 2 hcw.le
+    have := dvd_sub (dvd_mul_right ((2 : ℤ) ^ cw) (y.val : ℤ)) (dvd_trans hM1 hcast)
+    rwa [sub_sub_cancel] at this
+  · rw [← hlift]
+    have := map_dvd (Int.castRingHom (ZMod (2 ^ M))) hd
+    rwa [map_pow, map_ofNat, eq_intCast] at this
+
+/-- **PROVED (non-vacuity of the residue form of (O.2)).** For `c_w < M`, the residue `2^{c_w}` in
+`ℤ/2^M` has `2`-adic valuation exactly `c_w`. -/
+theorem residue_exact_order_two_pow {M cw : ℕ} (hcw : cw < M) :
+    (2 : ZMod (2 ^ M)) ^ cw ∣ (2 : ZMod (2 ^ M)) ^ cw ∧
+      ¬ (2 : ZMod (2 ^ M)) ^ (cw + 1) ∣ (2 : ZMod (2 ^ M)) ^ cw := by
+  refine ⟨dvd_refl _, ?_⟩
+  rintro ⟨y, hy⟩
+  have : NeZero (2 ^ M) := ⟨by positivity⟩
+  have hcast : (((2 : ℤ) ^ cw : ℤ) : ZMod (2 ^ M)) =
+      (((2 : ℤ) ^ (cw + 1) * (y.val : ℤ) : ℤ) : ZMod (2 ^ M)) := by
+    push_cast; rw [ZMod.natCast_val, ZMod.cast_id', id]; exact hy
+  rw [ZMod.intCast_eq_intCast_iff_dvd_sub] at hcast
+  push_cast at hcast
+  have hM2 : (2 : ℤ) ^ (cw + 1) ∣ (2 : ℤ) ^ M := pow_dvd_pow 2 hcw
+  have h2 : (2 : ℤ) ^ (cw + 1) ∣ (2 : ℤ) ^ cw := by
+    have := dvd_sub (dvd_mul_right ((2 : ℤ) ^ (cw + 1)) (y.val : ℤ)) (dvd_trans hM2 hcast)
+    rwa [sub_sub_cancel] at this
+  have h3 : (2 : ℤ) ^ (cw + 1) ≤ 2 ^ cw := Int.le_of_dvd (by positivity) h2
+  have h4 : (2 : ℤ) ^ cw < 2 ^ (cw + 1) := pow_lt_pow_right₀ (by norm_num) (Nat.lt_succ_self cw)
+  omega
+
+/-- **PROVED (tex 9391–9399 with (O.2) in its detector form, tex 8343–8360, 8457–8460).** From (O.7)
+at the witness and the detector data with the specialization identity
+`λ_M(\bar Q) = b c_Q(σ²) mod 2^M` (for the integer lift `λ`): `v₂ a_M(D_w) = c_θ + c_w`,
+`c_θ = 9 + ω(N)`, `c_w = a + 1`, whenever `M > c_θ + c_w`. -/
+theorem witness_vZ_of_detector {Gp T : Type*} [Group Gp] [AddCommGroup T]
+    (X : WitnessDetector Gp T) (ω M : ℕ) {a ζ lam : ℤ} (hζ : Odd ζ)
+    (hspec : ((lam : ℤ) : ZMod (2 ^ M)) = PadicInt.toZModPow M (X.b (X.c (X.σ * X.σ))))
+    (hcong : (2 : ℤ) ^ M ∣ a - (c0 : ℤ) * 2 ^ ω * ζ * lam) (hM : 9 + ω + X.cw < M) :
+    vZ a = (((9 + ω + X.cw : ℕ) : ℤ) : WithTop ℤ) := by
+  obtain ⟨h1, h2⟩ := exact_order_of_eq_two_pow (by omega) (X.lambda_eq_two_pow hspec)
+  exact witness_vZ ω M X.cw hζ h1 h2 hcong hM
+
+/-- **PROVED (tex 9391–9399 with (O.2) as printed, tex 8396–8398).** From (O.7) at the witness and
+(O.2) on the residue `x = λ_M(\bar Q)` (`v₂ x = c_w`) with `λ` an integer lift of `x`:
+`v₂ a_M(D_w) = c_θ + c_w` whenever `M > c_θ + c_w`. -/
+theorem witness_vZ_of_O2 (ω M cw : ℕ) {a ζ lam : ℤ} {x : ZMod (2 ^ M)} (hζ : Odd ζ)
+    (h1 : (2 : ZMod (2 ^ M)) ^ cw ∣ x) (h2 : ¬ (2 : ZMod (2 ^ M)) ^ (cw + 1) ∣ x)
+    (hlift : ((lam : ℤ) : ZMod (2 ^ M)) = x)
+    (hcong : (2 : ℤ) ^ M ∣ a - (c0 : ℤ) * 2 ^ ω * ζ * lam) (hM : 9 + ω + cw < M) :
+    vZ a = (((9 + ω + cw : ℕ) : ℤ) : WithTop ℤ) := by
+  obtain ⟨h1', h2'⟩ := exact_order_of_residue (by omega) h1 h2 hlift
+  exact witness_vZ ω M cw hζ h1' h2' hcong hM
 
 end ZInQ.Manuscript.RC.Odd

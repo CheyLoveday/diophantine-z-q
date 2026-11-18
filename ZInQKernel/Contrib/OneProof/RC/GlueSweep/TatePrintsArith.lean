@@ -14,10 +14,13 @@ The bridges below are lane RC9's statements with the determinant hypothesis remo
 * `serre_SL2_part_of` (tex 3597–3605) and `kato_hyp_v_of` (tex 7228–7231, 1887–1889), for every
   elliptic non-CM `E/ℚ`, from `SerreThm3` only;
 * for the curves `E_ℓ` (`ZInQ.Contrib.CloudB3RC53.Ecurve ℓ`, `ℓ > 0`), the replacements of lane RC9's
-  `ecurve_hasNoCM`, `ecurve_serre_scalar`, `ecurve_serre_SL2_part`, `ecurve_kato_hyp_v`, which take
-  the uninhabitable bundle `GlueArith` (`TateGlueArith.not_glueArith`) together with the bundle
-  `ArithPrints`, of which only the field `serre` is used: here they take only Serre's print
-  `SerreThm3` (supplied by `P.serre` for `P : ArithPrints`) and the GLUE `CMjInteger`.
+  `ecurve_hasNoCM`, `ecurve_serre_scalar`, `ecurve_serre_SL2_part`, `ecurve_kato_hyp_v`, which took
+  the then uninhabitable bundle `GlueArith` (its former field `det` fails at the cusp,
+  `TateGlueArith.not_forall_detTateTwoCyclotomic`) together with the bundle `ArithPrints`, of which
+  only the field `serre` is used: here they take only Serre's print `SerreThm3` (supplied by
+  `P.serre` for `P : ArithPrints`) and the GLUE `CMjInteger`. Lane RC27 dropped the field `det`
+  (`GlueArith` is now `CMjInteger`, `PrintsArith.glueArith_iff`), so lane RC9's theorems are no longer
+  vacuous and say the same as these bridges.
 
 `CMjInteger` (rational CM `j`-invariants are integers; Silverman, *Advanced Topics*, II.6.1) is not
 proved anywhere in the tree; it is a true statement over the vendored morphism type
@@ -62,8 +65,8 @@ theorem kato_hyp_v_of (hS : SerreThm3) (E : WeierstrassCurve ℚ) [E.IsElliptic]
 /-! ### The curves `E_ℓ` -/
 
 /-- **`E_ℓ` has no complex multiplication** (tex 1765–1767, 1012–1013: `j = 35152/9 ∉ ℤ`). Kind:
-PROVED from `CMjInteger` (GLUE). Consumer: lane RC9's `ecurve_hasNoCM`, which takes the
-uninhabitable `GlueArith`; discharger: lane RC9's `curve_hasNoCM` (needs only `CMjInteger`). -/
+PROVED from `CMjInteger` (GLUE). Consumer: lane RC9's `ecurve_hasNoCM`, which takes the bundle
+`GlueArith` (now equivalent to `CMjInteger`); discharger: lane RC9's `curve_hasNoCM`. -/
 theorem ecurve_hasNoCM_of (hcm : CMjInteger) {ℓ : ℕ} (hℓ : 0 < ℓ) :
     @HasNoCM (Ecurve ℓ) (ecurve_isElliptic hℓ) :=
   curve_hasNoCM hcm (by exact_mod_cast hℓ.ne')
@@ -71,8 +74,8 @@ theorem ecurve_hasNoCM_of (hcm : CMjInteger) {ℓ : ℕ} (hℓ : 0 < ℓ) :
 /-- **The scalar element of tex 2883–2887 for `E_ℓ`**: `ρ₂(g) = (1 + 2^n) · id` on `T₂E_ℓ` for some
 `n ≥ 2`, `g ∈ G_ℚ`. Kind: PROVED from `SerreThm3` (PRINT; lane RC9's `ArithPrints.serre`) and
 `CMjInteger` (GLUE). Consumer: lane RC9's `ecurve_serre_scalar` (hypotheses `P : ArithPrints`, of
-which only `P.serre` is used, and `G : GlueArith`, uninhabitable, replaced by `CMjInteger`);
-discharger of non-CM: `ecurve_hasNoCM_of`. -/
+which only `P.serre` is used, and `G : GlueArith`, equivalent to `CMjInteger`); discharger of non-CM:
+`ecurve_hasNoCM_of`. -/
 theorem ecurve_serre_scalar_of (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ} (hℓ : 0 < ℓ) :
     ∃ n : ℕ, 2 ≤ n ∧ ∃ g : GalQ,
       ∀ x : TateMod (Ecurve ℓ) 2, tateRep (Ecurve ℓ) 2 g x = (1 + (2 : ℤ_[2]) ^ n) • x :=
@@ -80,7 +83,7 @@ theorem ecurve_serre_scalar_of (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ} (
 
 /-- **`Γ_d ⊆ J` for `E_ℓ`** (tex 3597–3605). Kind: PROVED from `SerreThm3` (PRINT; lane RC9's
 `ArithPrints.serre`) and `CMjInteger` (GLUE). Consumer: lane RC9's `ecurve_serre_SL2_part`
-(hypotheses `P : ArithPrints`, only `P.serre` used, and `G : GlueArith`, uninhabitable);
+(hypotheses `P : ArithPrints`, only `P.serre` used, and `G : GlueArith`, equivalent to `CMjInteger`);
 dischargers: `ecurve_hasNoCM_of` and
 `ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoCyclotomic` (through `serre_SL2_part_of`). -/
 theorem ecurve_serre_SL2_part_of (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ} (hℓ : 0 < ℓ) :
@@ -94,7 +97,7 @@ theorem ecurve_serre_SL2_part_of (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ}
 /-- **Kato's hypothesis (v) for `T₂E_ℓ ⊗ χ`** (tex 7228–7231). Kind: PROVED from `SerreThm3`
 (PRINT; lane RC9's `ArithPrints.serre`) and `CMjInteger` (GLUE). Consumer: lane RC9's
 `ecurve_kato_hyp_v` (hypotheses `P : ArithPrints`, only `P.serre` used, and `G : GlueArith`,
-uninhabitable); dischargers: `ecurve_hasNoCM_of` and
+equivalent to `CMjInteger`); dischargers: `ecurve_hasNoCM_of` and
 `ZInQ.Contrib.CloudB3RC53.DetTateCyclotomic.detTateTwoCyclotomic` (through `kato_hyp_v_of`). -/
 theorem ecurve_kato_hyp_v_of (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ} (hℓ : 0 < ℓ)
     (χ : GalQ →* ℤˣ) :

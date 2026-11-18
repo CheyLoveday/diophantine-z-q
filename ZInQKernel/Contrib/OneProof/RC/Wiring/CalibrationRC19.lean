@@ -8,10 +8,10 @@ import ZInQKernel.Contrib.OneProof.RC.Height.Discharge
 3987–4141) takes the isogeny and regulator data of the proof as abstract numbers:
 
 * `alpha`, `beta`, `hIJ : alpha * beta = 2` (the dual isogeny indices, tex 4082–4090, ELLIOT);
-* `rhoReg`, `hadj : alpha * rhoReg = beta * 1` (the height adjunction read on generators,
-  tex 4084–4090, GLUE);
-* `RegA`, `hRegA : RegA ≠ 0` (the regulator of `𝒜`, definition), and `hmilne` stated with the
-  regulators `RegA` and `rhoReg * RegA`.
+* `RegA`, `RegB : ℝ` (the real regulators of `𝒜` and `ℬ`) and
+  `hadj : alpha * RegB = beta * RegA` (the height adjunction read on generators, tex 4022–4025,
+  4082–4090, GLUE);
+* `hRegA : RegA ≠ 0`, and `hmilne` stated with the regulators `RegA` and `RegB`.
 
 Lane RC19 (`RC/Height/SumDifference.lean`, `RC/Height/Discharge.lean`) constructs the
 sum/difference isogenies `φ = diffMap : 𝒜(ℚ) → ℬ(ℚ)`, `ψ = sumMap : ℬ(ℚ) → 𝒜(ℚ)` between
@@ -22,7 +22,7 @@ lattices, integers `α, β` with `φ g_𝒜 ≡ α g_ℬ`, `ψ g_ℬ ≡ β g_�
 adjunction `α ĥ_ℬ(g_ℬ) = β ĥ_𝒜(g_𝒜)`, `ĥ_ℬ(g_ℬ) = (2/α²) ĥ_𝒜(g_𝒜)`, `v₂(2/α²) = ±1` and
 `ĥ_𝒜(g_𝒜) > 0`.
 
-This file replaces the seven fields `alpha`, `beta`, `hIJ`, `rhoReg`, `hadj`, `RegA`, `hRegA` of
+This file replaces the seven fields `alpha`, `beta`, `hIJ`, `RegA`, `RegB`, `hadj`, `hRegA` of
 `CalibrationModel` by the quadratic field `K = ℚ(√k)` with its datum, the two free generators and
 their freeness (`CalibrationModelR`; the two twists are elliptic for `ℓ > 0`, `h_x ≠ 0`, `k ≠ 0`
 by `ellA_of`, `ellB_of`, so no field is needed for that), and states the Milne field with the
@@ -31,8 +31,11 @@ those of `CalibrationModel`, verbatim. The free generators themselves are derive
 forward theorems in `CalibrationPrints.lean` (`CalibrationModelP`).
 
 * `CalibrationModelR.nonempty_model : 0 < ℓ → h_x ≠ 0 → CalibrationModelR D vL G₀ F x →
-  Nonempty (CalibrationModel …)` (PROVED: `α`, `β`, `IJ = 2`, `ρ_Reg = 2/α²`, the adjunction and
-  `Reg_𝒜 ≠ 0` by lane RC19);
+  Nonempty (CalibrationModel …)` (PROVED: `α`, `β`, `IJ = 2`, the adjunction
+  `α ĥ_ℬ(g_ℬ) = β ĥ_𝒜(g_𝒜)` and `Reg_𝒜 ≠ 0` by lane RC19; the genuine real regulators
+  `Reg_𝒜 = ĥ_𝒜(g_𝒜)`, `Reg_ℬ = ĥ_ℬ(g_ℬ)` are the fields `RegA`, `RegB` of `CalibrationModel`
+  directly, and the rational ratio `2/α²` is derived downstream by lane RC15's
+  `regulator_eq_ratCast_mul`);
 * `calibrationInputs_of_R : 0 < ℓ → CalibrationInputsR D → CalibrationInputs D` (PROVED);
 * `calibrationTarget_of_R : 0 < ℓ → CalibrationInputsR D → CalibrationTarget D` (PROVED, with lane
   RC15's `calibration_46` through `calibrationTarget_of_inputs`).
@@ -69,8 +72,8 @@ kinds and owners as there).
 
 No longer fields (PROVED by lane RC19's `regulator_inputs_sumDiff`, see
 `CalibrationModelR.nonempty_model`): the indices `α, β` with `αβ = 2` (tex 4082–4090), the
-regulator ratio `ρ_Reg = 2/α²` and the adjunction `α ρ_Reg = β` (tex 4084–4090), the regulator
-`Reg_𝒜 = ĥ_𝒜(g_𝒜)` and `Reg_𝒜 ≠ 0`. -/
+regulators `Reg_𝒜 = ĥ_𝒜(g_𝒜)`, `Reg_ℬ = ĥ_ℬ(g_ℬ)` with the adjunction `α Reg_ℬ = β Reg_𝒜`
+(tex 4022–4025, 4082–4090), and `Reg_𝒜 ≠ 0`. -/
 structure CalibrationModelR {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : Family)
     (x : Addr Fam.b) : Type 1 where
   /-- `|Ш(𝒜)[2^∞]|` -/
@@ -208,30 +211,19 @@ theorem QuadData.k_ne_zero {K : Type*} [Field K] [Algebra ℚ K] {k : ℚ}
   rw [map_zero] at h
   exact Q.hs (pow_eq_zero_iff (n := 2) (by norm_num) |>.mp h)
 
-/-- **The regulator data of `CalibrationModel` from lane RC19** (tex 4082–4090, 4106–4112):
-a `CalibrationModelR` gives a `CalibrationModel` with `α, β` the integers of
-`regulator_inputs_sumDiff` (`αβ = 2`), `ρ_Reg = 2/α²` (the adjunction `α ρ_Reg = β` follows from
-`αβ = 2`), `Reg_𝒜 = ĥ_𝒜(g_𝒜) > 0`, and Milne's identity rewritten with
-`ĥ_ℬ(g_ℬ) = ρ_Reg ĥ_𝒜(g_𝒜)`. PROVED. -/
+/-- **The regulator data of `CalibrationModel` from lane RC19** (tex 4022–4025, 4082–4090,
+4106–4112): a `CalibrationModelR` gives a `CalibrationModel` whose real regulators are the genuine
+canonical heights `Reg_𝒜 = ĥ_𝒜(g_𝒜) > 0` and `Reg_ℬ = ĥ_ℬ(g_ℬ)`, with `α, β` the integers of
+`regulator_inputs_sumDiff` (`αβ = 2`) and its height adjunction `α Reg_ℬ = β Reg_𝒜`; Milne's
+identity is the field `hmilne` itself, at the genuine regulators (no rational stand-in). PROVED. -/
 theorem CalibrationModelR.nonempty_model {ℓ : ℕ} {D : RCData ℓ} {vL G₀ : ℤ} {Fam : Family}
     {x : Addr Fam.b} (hℓ : 0 < ℓ) (hx0 : Fam.h x ≠ 0) (M : CalibrationModelR D vL G₀ Fam x) :
     Nonempty (CalibrationModel D vL G₀ Fam x) := by
   have := ellA_of hℓ hx0
   have := ellB_of hℓ hx0 (QuadData.k_ne_zero M.quad)
-  obtain ⟨α, β, -, -, hαβ, -, -, hρ, -, hpos⟩ :=
+  obtain ⟨α, β, -, -, hαβ, hadj, -, -, -, hpos⟩ :=
     ZInQ.Manuscript.RC.Height.regulator_inputs_sumDiff (K := M.K) (Ecurve ℓ) (Fam.h x : ℚ)
       (D.kfin : ℚ) M.quad M.gA M.gB M.freeA M.freeB
-  have hα0 : (α : ℚ) ≠ 0 := by
-    have : α ≠ 0 := by
-      rintro rfl
-      simp at hαβ
-    exact_mod_cast this
-  have hαβQ : (α : ℚ) * β = 2 := by exact_mod_cast hαβ
-  have hadj : (α : ℚ) * (2 / (α : ℚ) ^ 2) = (β : ℚ) * 1 := by
-    rw [mul_one, ← mul_div_assoc, div_eq_iff (pow_ne_zero 2 hα0)]
-    linear_combination (-(α : ℚ)) * hαβQ
-  have hmilne := M.hmilne
-  rw [hρ] at hmilne
   exact ⟨{
     shaA := M.shaA
     shaB := M.shaB
@@ -254,7 +246,8 @@ theorem CalibrationModelR.nonempty_model {ℓ : ℕ} {D : RCData ℓ} {vL G₀ :
     alpha := α
     beta := β
     hIJ := hαβ
-    rhoReg := 2 / (α : ℚ) ^ 2
+    RegA := M.gA.canonicalHeight
+    RegB := ZInQ.Manuscript.RC.Height.heightB (Ecurve ℓ) (Fam.h x : ℚ) (D.kfin : ℚ) M.gB
     hadj := hadj
     aPull := M.aPull
     bPull := M.bPull
@@ -263,13 +256,12 @@ theorem CalibrationModelR.nonempty_model {ℓ : ℕ} {D : RCData ℓ} {vL G₀ :
     kap := M.kap
     hgam := M.hgam
     hkap := M.hkap
-    RegA := M.gA.canonicalHeight
     OmA := M.OmA
     hRegA := hpos.ne'
     hOmA := M.hOmA
     rhoOm := M.rhoOm
     hcv := M.hcv
-    hmilne := hmilne
+    hmilne := M.hmilne
     hsB := M.hsB
     hgB := M.hgB
     rmov := M.rmov

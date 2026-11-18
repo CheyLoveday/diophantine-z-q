@@ -22,7 +22,8 @@ The node `UpperBound C B` of the shared top layer (tex 5730–5733: `v₂ ũ_x(0
 * `h39_of_finalFamily`: lane RC15's `h39` at the family `h_x`, from (3.9) and (3.4).
 * `upperBound_node_of_finalFamily`: lane RC15's `upperBound_node` with `h39` removed.
 * `upperBound_of_milne_finalFamily_sumDiff`: the node from Milne's print on the genuine regulators
-  (`upperBound_of_milne_sumDiff`) with `h39` also removed.
+  (`upperBound_of_milne_sumDiff`, the rational regulator ratios derived there) with `h39` also
+  removed.
 
 Every theorem in this file is PROVED (from the stated remaining inputs).
 -/
@@ -93,12 +94,12 @@ Consumer: lane RC15's `ZInQ.Manuscript.RC.Central.upperBound_of_calibration`, at
 RC19's `ZInQ.Manuscript.RC.Height.regulator_inputs_sumDiff` (through `upperBound_of_milne_sumDiff`)
 and the shared top layer's `AppGEndpoints.rcUpperCJ_proof` (through `h39_of_finalFamily`).
 
-PROVED, from the remaining inputs: at every `x ≠ 0`, rank one (free generators), the rational
-regulator ratio `hρ`, the nonvanishing of the orders and periods, Milne's print on the genuine
-regulators (PRINT), lane RC15's `hprimne`, `hprim` (ELLIOT), `hvN`, `hsB`, `hvC` (with Edixhoven's
-PRINT), `hΩ` (GLUE real change of variables), `hgB` (ELLIOT), `hvL`, `h47`, `he`, `hs`, and the two
-bounds of (3.9) with (3.4) (`hj`, `hL`, `h34`). The bound: `B ≥ C_J + 2 v₂L + 2G₀ + 5` with
-`C_J = 2C_o + C_e − v₂ L_*(h_*) + (C_per + 2)`. -/
+PROVED, from the remaining inputs: at every `x ≠ 0`, rank one (free generators), the nonvanishing
+of the orders and periods, Milne's print on the genuine regulators (PRINT; the rational regulator
+ratio `Reg_B/Reg_A = 2/α²` is derived from them, not an input), lane RC15's `hprimne`, `hprim`
+(ELLIOT), `hvN`, `hsB`, `hvC` (with Edixhoven's PRINT), `hΩ` (GLUE real change of variables), `hgB`
+(ELLIOT), `hvL`, `h47`, `he`, `hs`, and the two bounds of (3.9) with (3.4) (`hj`, `hL`, `h34`).
+The bound: `B ≥ C_J + 2 v₂L + 2G₀ + 5` with `C_J = 2C_o + C_e − v₂ L_*(h_*) + (C_per + 2)`. -/
 theorem upperBound_of_milne_finalFamily_sumDiff {K : Type*} [Field K] [NumberField K]
     [DecidableEq K] [Algebra.IsQuadraticExtension ℚ K] (E : WeierstrassCurve ℚ) (k : ℤ)
     (Dq : QuadData K (k : ℚ)) {b : ℕ} (hfam : (Fin b → ZMod 2) → ℤ)
@@ -108,9 +109,6 @@ theorem upperBound_of_milne_finalFamily_sumDiff {K : Type*} [Field K] [NumberFie
     (genB : ∀ x, ((qtwist E (hfam x : ℚ)).baseChange ℚ).toAffine.Point ×
       ((qtwist E ((hfam x : ℚ) * (k : ℚ))).baseChange ℚ).toAffine.Point)
     (hA : ∀ x, x ≠ 0 → IsFreeGenerator (genA x)) (hB : ∀ x, x ≠ 0 → IsFreeGenerator (genB x))
-    (ρReg : (Fin b → ZMod 2) → ℚ)
-    (hρ : ∀ x, x ≠ 0 →
-      heightB E (hfam x : ℚ) (k : ℚ) (genB x) = (ρReg x : ℝ) * (genA x).canonicalHeight)
     (shaA shaB tA tB CA CB : (Fin b → ZMod 2) → ℕ) (ΩA : (Fin b → ZMod 2) → ℝ)
     (ρΩ : (Fin b → ZMod 2) → ℚ)
     (hnz : ∀ x, x ≠ 0 → shaA x ≠ 0 ∧ shaB x ≠ 0 ∧ tA x ≠ 0 ∧ tB x ≠ 0 ∧ CA x ≠ 0 ∧ CB x ≠ 0 ∧
@@ -142,7 +140,7 @@ theorem upperBound_of_milne_finalFamily_sumDiff {K : Type*} [Field K] [NumberFie
     (hs : ∀ x, x ≠ 0 → 0 ≤ sh x ∧ 0 ≤ shk x ∧ 0 ≤ T x)
     (B : ℕ) (hB' : (2 * Co + Ce - padicValRat 2 (Lstar hstar) + (Cper + 2)) +
       (2 * vL + 2 * G₀ + 5) ≤ B) : UpperBound C B :=
-  upperBound_of_milne_sumDiff E (k : ℚ) Dq (fun x => (hfam x : ℚ)) C genA genB hA hB ρReg hρ
+  upperBound_of_milne_sumDiff E (k : ℚ) Dq (fun x => (hfam x : ℚ)) C genA genB hA hB
     shaA shaB tA tB CA CB ΩA ρΩ hnz hMilne uprim0 e (fun x => jrc (hfam x) k) vm vN
     (fun x => (omega (hfam x) : ℤ)) sh shk T vL G₀
     (2 * Co + Ce - padicValRat 2 (Lstar hstar) + (Cper + 2)) hprimne hprim hvN hsB hvC hΩ hgB hvL

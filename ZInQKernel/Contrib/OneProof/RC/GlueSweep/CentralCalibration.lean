@@ -14,16 +14,24 @@ ratio `2/I²`", then the arithmetic isogeny identity
 Lane RC15 takes the regulator facts as hypotheses:
 
 * `Calibration.calibration_46` and `Nodes.upperBound_of_calibration` take
-  `hReg : v₂(Reg_B/Reg_A) = 1 ∨ v₂(Reg_B/Reg_A) = −1` (for an abstract integer `vReg`; the height
-  adjunction behind it is GLUE in lane RC15);
+  `hReg : v₂(Reg_B/Reg_A) = 1 ∨ v₂(Reg_B/Reg_A) = −1` (for an abstract integer `vReg`);
 * `Calibration.milne_valuation_form` takes `hRegA : Reg_A ≠ 0` and `hρReg : ρ_Reg ≠ 0` with
-  `Reg_B = ρ_Reg Reg_A`, `ρ_Reg ∈ ℚ`.
+  `Reg_B = ρ_Reg Reg_A`, `ρ_Reg ∈ ℚ`;
+* `Calibration.regulator_ratio` (over `ℝ`) and `milne_valuation_form_of_adjunction` take the height
+  adjunction `α Reg_B = β Reg_A` with `αβ = 2` for real regulators and derive the rational ratio
+  `Reg_B/Reg_A = 2/α²`.
 
-Lane RC19 proved these for the genuine regulators (`ZInQ.Manuscript.RC.Height.regulator_inputs_sumDiff`:
-for rank-one free generators `g_A` of `A(ℚ) = E^{(h)}(K)` and `g_B` of
-`B(ℚ) = E^{(h)}(ℚ) × E^{(hk)}(ℚ)`, `Reg_B = (2/α²) Reg_A`, `v₂(2/α²) = ±1`, `Reg_A > 0`; lane RC19's
-DEPARTURE D1 and GLUE G1 fix the pairings of `A` and `B`), but did not compose them with lane RC15's
-consumers. This file does, so that the consumers no longer take the regulator hypotheses.
+Lane RC19 proved these for the genuine regulators
+(`ZInQ.Manuscript.RC.Height.regulator_ratio_sumDiff` and `regulator_inputs_sumDiff`: for rank-one
+free generators `g_A` of `A(ℚ) = E^{(h)}(K)` and `g_B` of `B(ℚ) = E^{(h)}(ℚ) × E^{(hk)}(ℚ)`, the
+adjunction on the real canonical heights,
+`Reg_B = (2/α²) Reg_A`, `v₂(2/α²) = ±1`, `Reg_A > 0`; lane RC19's DEPARTURE D1 and GLUE G1 fix the
+pairings of `A` and `B`). This file composes them with lane RC15's consumers, so that the consumers
+no longer take the regulator hypotheses. Where a statement names the rational ratio `ρ_Reg`, the
+hypothesis `hρ : Reg_B = ρ_Reg Reg_A` only names the rational value of the real ratio of the genuine
+regulators (it exists and is `2/α²`: `exists_regulator_ratio_sumDiff`; it is unique as `Reg_A > 0`);
+it is not an assumption on the regulators, and the node-level statements
+(`calibration_46_of_milne_genuine_sumDiff`, `upperBound_of_milne_sumDiff`) do not take it.
 
 * `padicValRat_regulator_sumDiff`, `exists_regulator_ratio_sumDiff`: the regulator ratio is a
   rational number of two-adic valuation `±1` (lane RC15's `hReg`).
@@ -32,9 +40,12 @@ consumers. This file does, so that the consumers no longer take the regulator hy
 * `calibration_46_sumDiff`: lane RC15's `calibration_46`, `hReg` removed.
 * `calibration_46_of_milne_sumDiff`: (4.6) from Milne's print on the genuine regulators (the
   valuation identity, `hReg`, `hRegA`, `hρReg` all derived).
+* `calibration_46_of_milne_genuine_sumDiff`: the same with the regulator ratio produced, not named:
+  `Reg_B/Reg_A = 2/α²` for the indices `α, β` of the free generators (lane RC15's
+  `regulator_ratio_div` and `milne_valuation_form_of_adjunction` on lane RC19's adjunction).
 * `upperBound_of_calibration_sumDiff`: lane RC15's `upperBound_of_calibration`, `hReg` removed.
 * `upperBound_of_milne_sumDiff`: the node `UpperBound C B` from Milne's print on the genuine
-  regulators at every address.
+  regulators at every address (the rational regulator ratios are derived, not inputs).
 
 Every theorem in this file is PROVED (from the stated remaining inputs).
 -/
@@ -109,8 +120,9 @@ Consumer: lane RC15's `ZInQ.Manuscript.RC.Central.milne_valuation_form`, whose i
 applied with `Reg_A = ĥ(g_A)` and `Reg_B = ĥ_B(g_B)`, the genuine regulators at rank one; the
 conclusion also records `v₂ ρ_Reg = ±1`.
 
-PROVED, from the remaining inputs: rank one (free generators), the rational regulator ratio `ρ_Reg`
-(`hρ`), the nonvanishing of the orders and periods, and the print. -/
+PROVED, from the remaining inputs: rank one (free generators), the nonvanishing of the orders and
+periods, and the print; `hρ` only names the rational value `ρ_Reg` of the real ratio
+`Reg_B/Reg_A` (it exists: `exists_regulator_ratio_sumDiff`). -/
 theorem milne_valuation_form_sumDiff (genA : ((qtwist E h).baseChange K).toAffine.Point)
     (genB : ((qtwist E h).baseChange ℚ).toAffine.Point ×
       ((qtwist E (h * k)).baseChange ℚ).toAffine.Point)
@@ -142,9 +154,10 @@ genuine regulator ratio, so its hypothesis `hReg : vReg = 1 ∨ vReg = −1` is 
 lane RC19's `ZInQ.Manuscript.RC.Height.regulator_inputs_sumDiff` (through
 `padicValRat_regulator_sumDiff`).
 
-PROVED, from the remaining inputs: rank one (free generators) and `hρ`; and lane RC15's other
-inputs with their kinds: `hprim` (ELLIOT), `hvN` (PROVED in lane RC15 as `padicValInt_movingNorm`),
-`hMilne` (the valuation form of Milne's PRINT), `hsB`, `hvC` (component ratio, with Edixhoven's
+PROVED, from the remaining inputs: rank one (free generators) (`hρ` only names the rational value
+of the real ratio `Reg_B/Reg_A`); and lane RC15's other inputs with their kinds: `hprim` (ELLIOT),
+`hvN` (PROVED in lane RC15 as `padicValInt_movingNorm`), `hMilne` (the valuation form of Milne's
+PRINT), `hsB`, `hvC` (component ratio, with Edixhoven's
 PRINT), `hΩ` (period ratio, GLUE real change of variables), `hgB` (ELLIOT torsion bound), `hvL`. -/
 theorem calibration_46_sumDiff (genA : ((qtwist E h).baseChange K).toAffine.Point)
     (genB : ((qtwist E h).baseChange ℚ).toAffine.Point ×
@@ -167,15 +180,16 @@ theorem calibration_46_sumDiff (genA : ((qtwist E h).baseChange K).toAffine.Poin
 4044–4047, 4082–4113).
 
 Consumers: lane RC15's `calibration_46` and `milne_valuation_form` composed, with the Kummer
-torsion and Tate–Shafarevich lengths read off the orders: `g_A = v₂ t_A`, `s_A = v₂ #Ш(A)`,
-`g_B = v₂ t_B`, `s_B = v₂ #Ш(B)`, `v₂(C_B/C_A)` and `v₂ ρ_Ω`. Removed: `hReg`, `hRegA`, `hρReg`
+torsion and Tate–Shafarevich lengths read off the orders: `g_A = v₂ t_A`, `s_A = v₂ |Ш(A)|`,
+`g_B = v₂ t_B`, `s_B = v₂ |Ш(B)|`, `v₂(C_B/C_A)` and `v₂ ρ_Ω`. Removed: `hReg`, `hRegA`, `hρReg`
 and the valuation identity `hMilne` (now derived from the print). Dischargers: lane RC19's
 `ZInQ.Manuscript.RC.Height.regulator_inputs_sumDiff` and lane RC15's own `milne_valuation_form`.
 
-PROVED, from the remaining inputs: rank one (free generators), the rational regulator ratio `hρ`,
-the nonvanishing of the orders and periods, Milne's print `MilneIsogenyInvariance` at
-`Reg_A = ĥ(g_A)`, `Reg_B = ĥ_B(g_B)` (PRINT), and lane RC15's `hprim` (ELLIOT), `hvN`, `hsB`,
-`hvC` (with Edixhoven's PRINT), `hΩ` (GLUE real change of variables), `hgB` (ELLIOT), `hvL`. -/
+PROVED, from the remaining inputs: rank one (free generators), the nonvanishing of the orders and
+periods, Milne's print `MilneIsogenyInvariance` at `Reg_A = ĥ(g_A)`, `Reg_B = ĥ_B(g_B)` (PRINT),
+and lane RC15's `hprim` (ELLIOT), `hvN`, `hsB`, `hvC` (with Edixhoven's PRINT), `hΩ` (GLUE real
+change of variables), `hgB` (ELLIOT), `hvL`; `hρ` only names the rational value of the real ratio
+`Reg_B/Reg_A` (see `calibration_46_of_milne_genuine_sumDiff` for the form without it). -/
 theorem calibration_46_of_milne_sumDiff (genA : ((qtwist E h).baseChange K).toAffine.Point)
     (genB : ((qtwist E h).baseChange ℚ).toAffine.Point ×
       ((qtwist E (h * k)).baseChange ℚ).toAffine.Point)
@@ -203,6 +217,58 @@ theorem calibration_46_of_milne_sumDiff (genA : ((qtwist E h).baseChange K).toAf
   exact ZInQ.Manuscript.RC.Central.calibration_46 hprim hvN hid hsB hvC hv hΩ
     ⟨Int.natCast_nonneg _, hgB⟩ hvL
 
+/-- **The calibration (4.6) from Milne's print on the genuine regulators, the regulator ratio
+derived** (tex 4022–4030, 4044–4047, 4082–4113).
+
+As `calibration_46_of_milne_sumDiff`, without naming the ratio: the indices `α, β` of the free
+generators are produced (`φ g_A ≡ α g_B`, `ψ g_B ≡ β g_A` modulo torsion, `αβ = 2`), the real ratio
+of the genuine regulators `ĥ_B(g_B) / ĥ_A(g_A)` is the rational number `2/α²` (lane RC15's
+`regulator_ratio_div`, over `ℝ`, fed with lane RC19's adjunction `regulator_ratio_sumDiff`), and
+(4.6) holds with the error `2v₂L + 2g_B − v₂(2/α²) − v₂ρ_Ω`, `|error| ≤ 2v₂L + 2G₀ + 5`. Consumers:
+lane RC15's `milne_valuation_form_of_adjunction` and `calibration_46`. Dischargers: lane RC19's
+`regulator_ratio_sumDiff`, `regulator_inputs_sumDiff`.
+
+PROVED, from the remaining inputs: rank one (free generators), the nonvanishing of the orders and
+periods, Milne's print at `Reg_A = ĥ(g_A)`, `Reg_B = ĥ_B(g_B)` (PRINT), and lane RC15's `hprim`
+(ELLIOT), `hvN`, `hsB`, `hvC` (with Edixhoven's PRINT), `hΩ` (GLUE real change of variables), `hgB`
+(ELLIOT), `hvL`. No rational regulator ratio is an input: the hypotheses are those of
+`calibration_46_of_milne_sumDiff` without `ρ_Reg` and `hρ`. -/
+theorem calibration_46_of_milne_genuine_sumDiff
+    (genA : ((qtwist E h).baseChange K).toAffine.Point)
+    (genB : ((qtwist E h).baseChange ℚ).toAffine.Point ×
+      ((qtwist E (h * k)).baseChange ℚ).toAffine.Point)
+    (hA : IsFreeGenerator genA) (hB : IsFreeGenerator genB)
+    {shaA shaB tA tB CA CB : ℕ} {ΩA : ℝ} {ρΩ : ℚ}
+    (hshaA : shaA ≠ 0) (hshaB : shaB ≠ 0) (htA : tA ≠ 0) (htB : tB ≠ 0) (hCA : CA ≠ 0)
+    (hCB : CB ≠ 0) (hΩA : ΩA ≠ 0) (hρΩ : ρΩ ≠ 0)
+    (hMilne : MilneIsogenyInvariance shaA shaB tA tA tB tB CA CB genA.canonicalHeight
+      (heightB E h k genB) ΩA ((ρΩ : ℝ) * ΩA))
+    {j vL vm vN ω sh shk T vprim G₀ : ℤ}
+    (hprim : vprim = (j + vL + vm) + (j + vL + vm) +
+      (diskContribution 1 (padicValNat 2 tA) + diskContribution 2 (padicValNat 2 shaA) +
+        diskContribution 3 (padicValNat 2 tA)) +
+      (2 * diskContribution 2 vN + ω * (2 * diskContribution 2 2)))
+    (hvN : vN = vm) (hsB : (padicValNat 2 shaB : ℤ) = sh + shk)
+    (hvC : padicValRat 2 ((CB : ℚ) / CA) = T) (hΩ : |padicValRat 2 ρΩ| ≤ 4)
+    (hgB : (padicValNat 2 tB : ℤ) ≤ G₀) (hvL : 0 ≤ vL) :
+    ∃ α β : ℤ, IsOfFinAddOrder (ZInQ.Manuscript.RC.Height.diffMap E h k Dq genA - α • genB) ∧
+      IsOfFinAddOrder (ZInQ.Manuscript.RC.Height.sumMap E h k Dq genB - β • genA) ∧
+      α * β = 2 ∧
+      heightB E h k genB / genA.canonicalHeight = ((2 / (α : ℚ) ^ 2 : ℚ) : ℝ) ∧
+      vprim = 2 * j - 4 * ω - sh - shk - T +
+        (2 * vL + 2 * (padicValNat 2 tB : ℤ) - padicValRat 2 (2 / (α : ℚ) ^ 2) -
+          padicValRat 2 ρΩ) ∧
+      |2 * vL + 2 * (padicValNat 2 tB : ℤ) - padicValRat 2 (2 / (α : ℚ) ^ 2) -
+          padicValRat 2 ρΩ| ≤ 2 * vL + 2 * G₀ + 5 := by
+  obtain ⟨α, β, hα, hβ, hαβ, hadj, -, -, -, hpos⟩ :=
+    ZInQ.Manuscript.RC.Height.regulator_inputs_sumDiff E h k Dq genA genB hA hB
+  obtain ⟨hid, hv⟩ := ZInQ.Manuscript.RC.Central.milne_valuation_form_of_adjunction hαβ hadj
+    hshaA hshaB htA htB hCA hCB hpos.ne' hΩA hρΩ hMilne
+  obtain ⟨hcal, hbd⟩ := ZInQ.Manuscript.RC.Central.calibration_46 hprim hvN hid hsB hvC hv hΩ
+    ⟨Int.natCast_nonneg _, hgB⟩ hvL
+  exact ⟨α, β, hα, hβ, hαβ,
+    (ZInQ.Manuscript.RC.Central.regulator_ratio_div hαβ hadj hpos.ne').1, hcal, hbd⟩
+
 end Regulator
 
 /-! ### `UpperBound` at every address -/
@@ -224,7 +290,8 @@ companion `k`, `K = ℚ(√k)`), so its hypothesis `hReg` is removed. Discharger
 `ZInQ.Manuscript.RC.Height.regulator_inputs_sumDiff` (through `padicValRat_regulator_sumDiff`).
 
 PROVED, from the remaining inputs: at each `x ≠ 0`, rank one (free generators `genA x`, `genB x`)
-and the rational regulator ratio (`hρ`); and lane RC15's other inputs of
+(`hρ` only names the rational value of the real ratio `Reg_B/Reg_A`, which enters the valuation
+identity `hMilne`); and lane RC15's other inputs of
 `upperBound_of_calibration` with their kinds (`hprim` ELLIOT, `hvN`, `hMilne` in valuation form,
 `hsB`, `hvC`, `hΩ` GLUE, `hgB` ELLIOT, `hvL`, `h47`, `he`, `h39` = (3.9) + (3.4), `hs`). -/
 theorem upperBound_of_calibration_sumDiff (C : CoordData b)
@@ -261,24 +328,24 @@ theorem upperBound_of_calibration_sumDiff (C : CoordData b)
 4022–4030, 4044–4047, 4082–4113, 5730–5733, 10886–10893).
 
 Consumer: lane RC15's `ZInQ.Manuscript.RC.Central.upperBound_of_calibration`, with the lengths read
-off the orders (`g_A = v₂ t_A`, `s_A = v₂ #Ш(A)`, `g_B = v₂ t_B`, `s_B = v₂ #Ш(B)`,
+off the orders (`g_A = v₂ t_A`, `s_A = v₂ |Ш(A)|`, `g_B = v₂ t_B`, `s_B = v₂ |Ш(B)|`,
 `v_C = v₂(C_B/C_A)`, `v_Ω = v₂ ρ_Ω`, `v_Reg = v₂ ρ_Reg` at each address `x ≠ 0`). Removed: `hReg`,
 and the valuation identity `hMilne` (now derived at each address from Milne's print by lane RC15's
 `milne_valuation_form`, whose inputs `hRegA`, `hρReg` are discharged). Dischargers: lane RC19's
-`ZInQ.Manuscript.RC.Height.regulator_inputs_sumDiff` (through `milne_valuation_form_sumDiff`).
+`ZInQ.Manuscript.RC.Height.regulator_inputs_sumDiff` (through `exists_regulator_ratio_sumDiff` and
+`milne_valuation_form_sumDiff`): the rational regulator ratio `ρ_Reg(x) = Reg_B/Reg_A` at each
+address is derived from the genuine regulators, it is not an input.
 
-PROVED, from the remaining inputs: at each `x ≠ 0`, rank one (free generators), the rational
-regulator ratio `hρ`, the nonvanishing of the orders and periods, Milne's print on
-`Reg_A = ĥ(g_A)`, `Reg_B = ĥ_B(g_B)` (PRINT); and lane RC15's other inputs (`hprimne`, `hprim`
-ELLIOT, `hvN`, `hsB`, `hvC` with Edixhoven's PRINT, `hΩ` GLUE, `hgB` ELLIOT, `hvL`, `h47`, `he`,
-`h39` = (3.9) + (3.4), `hs`). The bound is lane RC15's `B ≥ C_J + 2 v₂L + 2G₀ + 5`. -/
+PROVED, from the remaining inputs: at each `x ≠ 0`, rank one (free generators), the nonvanishing
+of the orders and periods, Milne's print on `Reg_A = ĥ(g_A)`, `Reg_B = ĥ_B(g_B)` (PRINT); and lane
+RC15's other inputs (`hprimne`, `hprim` ELLIOT, `hvN`, `hsB`, `hvC` with Edixhoven's PRINT, `hΩ`
+GLUE, `hgB` ELLIOT, `hvL`, `h47`, `he`, `h39` = (3.9) + (3.4), `hs`). The bound is lane RC15's
+`B ≥ C_J + 2 v₂L + 2G₀ + 5`. -/
 theorem upperBound_of_milne_sumDiff (C : CoordData b)
     (genA : ∀ x, ((qtwist E (h x)).baseChange K).toAffine.Point)
     (genB : ∀ x, ((qtwist E (h x)).baseChange ℚ).toAffine.Point ×
       ((qtwist E (h x * k)).baseChange ℚ).toAffine.Point)
     (hA : ∀ x, x ≠ 0 → IsFreeGenerator (genA x)) (hB : ∀ x, x ≠ 0 → IsFreeGenerator (genB x))
-    (ρReg : (Fin b → ZMod 2) → ℚ)
-    (hρ : ∀ x, x ≠ 0 → heightB E (h x) k (genB x) = (ρReg x : ℝ) * (genA x).canonicalHeight)
     (shaA shaB tA tB CA CB : (Fin b → ZMod 2) → ℕ) (ΩA : (Fin b → ZMod 2) → ℝ)
     (ρΩ : (Fin b → ZMod 2) → ℚ)
     (hnz : ∀ x, x ≠ 0 → shaA x ≠ 0 ∧ shaB x ≠ 0 ∧ tA x ≠ 0 ∧ tB x ≠ 0 ∧ CA x ≠ 0 ∧ CB x ≠ 0 ∧
@@ -303,6 +370,16 @@ theorem upperBound_of_milne_sumDiff (C : CoordData b)
     (h39 : ∀ x, x ≠ 0 → 2 * j x ≤ 4 * ω x + CJ)
     (hs : ∀ x, x ≠ 0 → 0 ≤ sh x ∧ 0 ≤ shk x ∧ 0 ≤ T x)
     (B : ℕ) (hB' : CJ + (2 * vL + 2 * G₀ + 5) ≤ B) : UpperBound C B := by
+  -- the rational regulator ratio at each address, derived from the genuine regulators
+  have hex : ∀ x, ∃ ρ : ℚ, x ≠ 0 →
+      heightB E (h x) k (genB x) = (ρ : ℝ) * (genA x).canonicalHeight := by
+    intro x
+    by_cases hx : x = 0
+    · exact ⟨0, fun h0 => absurd hx h0⟩
+    · obtain ⟨ρ, hρ, -⟩ :=
+        exists_regulator_ratio_sumDiff E (h x) k Dq (genA x) (genB x) (hA x hx) (hB x hx)
+      exact ⟨ρ, fun _ => hρ⟩
+  choose ρReg hρ using hex
   have hid : ∀ x, x ≠ 0 →
       (padicValNat 2 (shaA x) : ℤ) - padicValNat 2 (shaB x) =
         2 * (padicValNat 2 (tA x) : ℤ) - 2 * padicValNat 2 (tB x) + padicValRat 2 (ρReg x) +

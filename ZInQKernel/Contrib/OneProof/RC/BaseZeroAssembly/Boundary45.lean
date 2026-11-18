@@ -45,7 +45,8 @@ Contents (every theorem `PROVED`):
    `z(0) − L m j(P) = d v` in the Selmer cone, with `v` explicit (retained).
    `classAtBase_of_construction` (tex 2867–2868, 3030–3032, 3074–3081, 3258–3262, 3293–3295): the
    class of the base is the Kummer class of the `L`-multiplied weighted point with
-   `L = m₀ C_π C_bad 2^{2e}` (lane RC10's `H11_empty` and the coefficient push);
+   `L = m₀ C_π C_bad 2^{2e}` (lane RC10's `H11_empty`, as restated by Lane RC27 over a general
+   five-term sequence, and the coefficient push);
    `boundary45_finite_of_construction`: (4.5) at a finite stage "with the same fixed `L`".
 4. `Boundary45Base P n z̄` (the inputs of (4.5) at the base in the central two-term model): one
    `SplitNormStage` per stage, the fixed multiplier `L ≠ 0`, the central Kummer comparison
@@ -226,41 +227,55 @@ theorem boundary45_finite {G : Type} [AddCommGroup G] {P : G} (S : SplitNormStag
 /-- **The class of the base is the Kummer class of the `L`-multiplied weighted point, with
 `L = m₀ C_π C_bad 2^{2e}`** (Proposition `ex:arith-finite-heegner` for `I = ∅`: tex 2867–2868,
 3030–3032, 3074–3081, 3232–3234, 3258–3262, 3293–3295). The class `b_∅ = m₀ C_bad d_a(δ_a(C_π y_r))`
-over `H_r` (paragraphs 4–5 of the proof; for `I = ∅` the relative group is trivial, `hres`), pushed
-to `K` by the coefficient map `Tr` ((H20)–(H21)), is `δ(L W)`, where `W` is the weighted point.
-Inputs: lane RC10's `InfResInput` (PRINT/GLUE (H8), with (H2)); the trace `Wsum : E(H_r) → E(K)`
-(definition); `hTr`, "Kummer of this sum equals the cohomological transfer" (tex 3258–3262; at the
-cocycle level batch 3's `HeegnerCohomology.kummer_weighted_sum`, PROVED there; here on classes,
-GLUE). PROVED from lane RC10's `H11_empty`. -/
+over `H_r` (paragraphs 4–5 of the proof), pushed to `K` by the coefficient map `Tr` ((H20)–(H21)),
+is `δ(L W)`, where `W` is the weighted point. Inputs: lane RC10's `InfResInput` (PRINT/GLUE (H8),
+with (H2)), over a general five-term sequence `A → B → C → D` (`B = H¹(H_r, E[2^a])`,
+`C = H¹(M_∅, E[2^a])^Γ`); the Kummer maps `κ : E(H_r) → B` over the base and `δa : E(H_r) → C`
+over `M_∅`, related by restriction (`hκ`: for `I = ∅`, `M_∅ = H_r`, so the class over `M_∅` is the
+restriction of the class over `H_r`); the trace `Wsum : E(H_r) → E(K)` (definition); `hTr`,
+"Kummer of this sum equals the cohomological transfer" (tex 3258–3262; at the cocycle level batch
+3's `HeegnerCohomology.kummer_weighted_sum`, PROVED there; here on classes, GLUE), stated for the
+Kummer map `κ` over `H_r`, whose classes `Tr` pushes. PROVED from lane RC10's `H11_empty`.
+
+Restated by Lane RC27: the earlier form took `InfResInput A B B D e` with `res = id` and one map
+`δa : E(H_r) → B` (the form of RC10's earlier `H11_empty`, which the genuine five-term sequence
+cannot satisfy). Non-vacuity: `classAtBase_nonvacuous` (file `NonVacuity.lean`). -/
 theorem classAtBase_of_construction {G : Type} [AddCommGroup G] {P : G} (S : SplitNormStage P)
-    {A B D H1 : Type*} [AddCommGroup A] [AddCommGroup B] [AddCommGroup D] [AddCommGroup H1]
-    (e : ℕ) (Inp : HeegnerAlgebra.InfResInput A B B D e) (hres : ∀ b, Inp.seq.res b = b)
-    (δa : S.Pt →+ B) (m0 Cπ Cbad : ℕ) (Tr : B →+ H1) (δ : G →+ H1) (Wsum : S.Pt →+ G)
-    (hWsum : ∀ x, S.incl (Wsum x) = ∑ δ', S.act δ' x) (hTr : ∀ x, Tr (δa x) = δ (Wsum x)) :
+    {A B C D H1 : Type*} [AddCommGroup A] [AddCommGroup B] [AddCommGroup C] [AddCommGroup D]
+    [AddCommGroup H1]
+    (e : ℕ) (Inp : HeegnerAlgebra.InfResInput A B C D e) (κ : S.Pt →+ B) (δa : S.Pt →+ C)
+    (hκ : ∀ x, Inp.seq.res (κ x) = δa x) (m0 Cπ Cbad : ℕ) (Tr : B →+ H1) (δ : G →+ H1)
+    (Wsum : S.Pt →+ G) (hWsum : ∀ x, S.incl (Wsum x) = ∑ δ', S.act δ' x)
+    (hTr : ∀ x, Tr (κ x) = δ (Wsum x)) :
     Tr (((m0 * Cbad : ℕ) : ℤ) • Inp.seq.descend e Inp.killD (δa ((Cπ : ℤ) • S.yr))) =
       δ (HeegnerAlgebra.Lmult m0 Cπ Cbad e • S.W) := by
   have hW : Wsum S.yr = S.W := S.hincl (by rw [hWsum, S.hW])
-  rw [HeegnerAlgebra.H11_empty e Inp hres δa m0 Cπ Cbad S.yr, hTr, map_zsmul, hW]
+  rw [HeegnerAlgebra.H11_empty e Inp κ δa hκ m0 Cπ Cbad S.yr, hTr, map_zsmul, hW]
 
 /-- **(4.5) at the base at one finite stage, from the construction of the class** (tex 3895–3919):
 `boundary45_finite` with the class of `z_i(0)` given as the pushed constructed class (`hzcls`,
 definition: `z_i(0)` represents it) and `L = m₀ C_π C_bad 2^{2e}`, the fixed multiplier of (H11)
-("with the same fixed `L`", tex 3897). PROVED. -/
+("with the same fixed `L`", tex 3897). The construction inputs are those of
+`classAtBase_of_construction` (restated by Lane RC27 over a general five-term sequence, with the
+Kummer maps `κ` over `H_r` and `δa` over `M_∅` related by restriction, `hκ`); they are jointly
+satisfiable (`classAtBase_nonvacuous`), and the Selmer-cone inputs are those of
+`boundary45_finite`. PROVED. -/
 theorem boundary45_finite_of_construction {G : Type} [AddCommGroup G] {P : G}
     (S : SplitNormStage P)
-    {G0 G1 G2 U0 U1 U2 L0 L1 H1 A B D : Type*} [AddCommGroup G0] [AddCommGroup G1]
+    {G0 G1 G2 U0 U1 U2 L0 L1 H1 A B C D : Type*} [AddCommGroup G0] [AddCommGroup G1]
     [AddCommGroup G2] [AddCommGroup U0] [AddCommGroup U1] [AddCommGroup U2] [AddCommGroup L0]
-    [AddCommGroup L1] [AddCommGroup H1] [AddCommGroup A] [AddCommGroup B] [AddCommGroup D]
+    [AddCommGroup L1] [AddCommGroup H1] [AddCommGroup A] [AddCommGroup B] [AddCommGroup C]
+    [AddCommGroup D]
     (dG0 : G0 →+ G1) (dG1 : G1 →+ G2) (dU0 : U0 →+ U1) (dU1 : U1 →+ U2) (dL0 : L0 →+ L1)
     (loc0 : G0 →+ L0) (loc1 : G1 →+ L1) (ι0 : U0 →+ L0) (ι1 : U1 →+ L1)
     (hloc : ∀ g, loc1 (dG0 g) = dL0 (loc0 g)) (hι : ∀ u, ι1 (dU0 u) = dL0 (ι0 u))
     (honto : ∀ c : L0, dL0 c = 0 → ∃ w : U0, dU0 w = 0 ∧ ι0 w = c)
     (hinj : ∀ u : U1, dU1 u = 0 → (∃ c : L0, ι1 u = dL0 c) → ∃ w : U0, dU0 w = u)
     (cls : G1 →+ H1) (hexact : ∀ c : G1, dG1 c = 0 → cls c = 0 → ∃ g : G0, dG0 g = c)
-    (δ : G →+ H1) (e : ℕ) (Inp : HeegnerAlgebra.InfResInput A B B D e)
-    (hres : ∀ b, Inp.seq.res b = b) (δa : S.Pt →+ B) (m0 Cπ Cbad : ℕ) (Tr : B →+ H1)
+    (δ : G →+ H1) (e : ℕ) (Inp : HeegnerAlgebra.InfResInput A B C D e) (κ : S.Pt →+ B)
+    (δa : S.Pt →+ C) (hκ : ∀ x, Inp.seq.res (κ x) = δa x) (m0 Cπ Cbad : ℕ) (Tr : B →+ H1)
     (Wsum : S.Pt →+ G) (hWsum : ∀ x, S.incl (Wsum x) = ∑ δ', S.act δ' x)
-    (hTr : ∀ x, Tr (δa x) = δ (Wsum x))
+    (hTr : ∀ x, Tr (κ x) = δ (Wsum x))
     {zG jG : G1} {zU jU : U1} {zL jL : L0}
     (hzG : dG1 zG = 0) (hjG : dG1 jG = 0) (hzU : dU1 zU = 0) (hjU : dU1 jU = 0)
     (hz : loc1 zG - ι1 zU = dL0 zL) (hj : loc1 jG - ι1 jU = dL0 jL)
@@ -273,7 +288,7 @@ theorem boundary45_finite_of_construction {G : Type} [AddCommGroup G] {P : G}
       loc0 v - ι0 w = zL - (HeegnerAlgebra.Lmult m0 Cπ Cbad e * (S.a - 2)) • jL :=
   boundary45_finite S dG0 dG1 dU0 dU1 dL0 loc0 loc1 ι0 ι1 hloc hι honto hinj cls hexact δ
     (HeegnerAlgebra.Lmult m0 Cπ Cbad e) hzG hjG hzU hjU hz hj
-    (hzcls.trans (classAtBase_of_construction S e Inp hres δa m0 Cπ Cbad Tr δ Wsum hWsum hTr))
+    (hzcls.trans (classAtBase_of_construction S e Inp κ δa hκ m0 Cπ Cbad Tr δ Wsum hWsum hTr))
     hjcls
 
 /-! ## 4. (4.5) at the base in the central model -/

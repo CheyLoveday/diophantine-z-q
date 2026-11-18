@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.RC.Height.Discharge
+import ZInQKernel.Contrib.OneProof.RC.Height.ArtinG2
 import ZInQKernel.Contrib.OneProof.RC.Rings.LambdaT
 import ZInQKernel.Contrib.CloudB3RC53.MinimalComplexes.BaseZeroBridge
 import ZInQKernel.Contrib.CloudB3RC53.BaseZeroEndToEnd.TwoTerm
@@ -43,6 +44,12 @@ This file composes them, so that no discharged input remains.
 * `complex_hypotheses_nonvacuous`: the complex hypotheses that replace `D`, `hcentral` hold for the
   two-term complex of the zero `1 × 1` differential (over any local ring, any residue map), so the
   two complex forms are not vacuous on that account.
+* Lane RC27 (item 7): `baseZero_node_of_CST_of_artin`, `baseZero_node_genuine_of_CST_of_artin`,
+  `baseZero_node_genuine_of_complex_CST_of_artin`: the same nodes with RC19's GLUE
+  `LFactorizationConductorOne E K k` replaced by the shared top layer's GLUE
+  `GenusOdd.ArtinFactorization`, `K` split at `2` and `K = ℚ(√k)` (lane RC27's
+  `lFactorizationConductorOne_of_artin`; non-vacuity of the conditions on `K`:
+  `artinG2_field_hypotheses_nonvacuous`).
 
 Every theorem in this file is PROVED (from the stated remaining inputs).
 -/
@@ -115,6 +122,95 @@ theorem baseZero_node_genuine_of_CST {E : WeierstrassCurve ℚ} [E.IsElliptic] {
     (ZInQ.Manuscript.RC.Height.hheight_of_CST E k f hf Lat hLat hnCM scale hscale K hK2 hKc hD3
       hD4 hsplit a₀ b₀ c₀ hH ι y hy P hP hL)
     D hcentral z w hz uprim hu kum Lm h45 ε₀ utilde0 h47 wHalf hwHalf hC
+
+open Classical in
+/-- **RC15's `baseZero_node` with `hheight` discharged through `ArtinFactorization`** (tex
+4319–4373; tex 5736 with tex 2599, 2720). PROVED: lane RC15's `Central.baseZero_node` with
+`CSTThm11 := CSTThm11Split` and `hheight` from lane RC27's `hheight_of_CST_of_artin`. The inputs
+are those of RC19's `baseZero_node_of_CST` with `hL` (RC19's GLUE) replaced by the shared top
+layer's GLUE `GenusOdd.ArtinFactorization`, `K` split at `2` (`h2`) and `K = ℚ(√k)` (`t`, `ht`,
+`htk`). -/
+theorem baseZero_node_of_CST_of_artin {E : WeierstrassCurve ℚ} [E.IsElliptic] {k : ℚ} {b : ℕ}
+    (C : CoordData b)
+    (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2)
+    (hf : ∀ n : ℕ, 0 < n → (UpperHalfPlane.qExpansion 1 f).coeff n = (E.LFunction n : ℂ))
+    (Lat : PeriodPair) (hLat : IsLatticeOf E Lat) (hnCM : IsNonCMLattice Lat)
+    (scale : ℂ) (hscale : IsParamScale (newformLevel E) f Lat scale)
+    (K : Type) [Field K] [NumberField K] [DecidableEq K] (hK2 : Module.finrank ℚ K = 2)
+    (hKc : IsTotallyComplex K) (hD3 : discr K ≠ -3) (hD4 : discr K ≠ -4)
+    (hsplit : ∀ p : ℕ, p.Prime → p ∣ newformLevel E → SplitsIn K p)
+    (a₀ b₀ c₀ : ℤ) (hH : IsHeegnerForm (newformLevel E) (discr K * (1 : ℕ) ^ 2) a₀ b₀ c₀)
+    (ι : ringClassField (conductorOrder K 1) →ₐ[ℚ] ℂ)
+    (y : (E.baseChange (ringClassField (conductorOrder K 1))).toAffine.Point)
+    (hy : Point.map (W' := E.toAffine) ι y =
+      phiAn E f Lat scale (cmPoint a₀ b₀ (discr K * (1 : ℕ) ^ 2)))
+    (P : (E.baseChange K).toAffine.Point)
+    (hP : Point.baseChange K (ringClassField (conductorOrder K 1)) P =
+      ∑ σ : ringClassField (conductorOrder K 1) ≃ₐ[K] ringClassField (conductorOrder K 1),
+        Point.map (W' := E.toAffine) (σ.toAlgHom.restrictScalars ℚ) y)
+    (hA : GenusOdd.ArtinFactorization) (h2 : SplitsIn K 2) (t : K)
+    (ht : t ∉ (algebraMap ℚ K).range) (htk : t ^ 2 = algebraMap ℚ K k) (hCST : CSTThm11Split)
+    {A F : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] [Field F]
+    [Algebra A F] [IsFractionRing A F] (ρ : A →+* ℚ_[2])
+    (hρ : ∀ x ∈ IsLocalRing.maximalIdeal A, ρ x = 0) {m : ℕ}
+    (Dm : Matrix (Fin (m + 1)) (Fin (m + 1)) A) (hcentral : (Dm.map ρ).rank = m)
+    (z w : Fin (m + 1) → A) (hz : Dm *ᵥ z = 0) (uprim : F)
+    (hu : ZInQ.Manuscript.RC.Central.IsClassFunctionalCoord (Dm.map (algebraMap A F))
+      (fun i => algebraMap A F (z i)) (fun i => algebraMap A F (w i)) uprim)
+    (kum : (E.baseChange K).toAffine.Point →+ (Fin (m + 1) → ℚ_[2])) (Lm : ℤ)
+    (h45 : (fun i => ρ (z i)) = (Lm : ℚ_[2]) • kum P)
+    (ε₀ : A) (utilde0 : F) (h47 : utilde0 = algebraMap A F ε₀ * uprim)
+    (hcoef : ∀ a : A, algebraMap A F a = utilde0 → ρ a = C.u 0 0) :
+    BaseZero E k C :=
+  ZInQ.Manuscript.RC.Central.baseZero_node C K P CSTThm11Split hCST
+    (ZInQ.Manuscript.RC.Height.hheight_of_CST_of_artin E k f hf Lat hLat hnCM scale hscale K hK2
+      hKc hD3 hD4 hsplit a₀ b₀ c₀ hH ι y hy P hP hA h2 t ht htk)
+    ρ hρ Dm hcentral z w hz uprim hu kum Lm h45 ε₀ utilde0 h47 hcoef
+
+open Classical in
+/-- **`BaseZero` with `hheight`, `hρ`, `hcoef` discharged and RC19's G2 from `ArtinFactorization`**
+(tex 4330–4373; tex 5736 with tex 2599, 2720). PROVED: `baseZero_node_genuine_of_CST` with
+`hL := lFactorizationConductorOne_of_artin hA E K hK2 hKc h2 hsplit ht htk` (lane RC27). The input
+`hL` (RC19's GLUE) is replaced by the shared top layer's GLUE `GenusOdd.ArtinFactorization`, `K`
+split at `2` (`h2`) and `K = ℚ(√k)` (`t`, `ht`, `htk`); all other inputs are those of
+`baseZero_node_genuine_of_CST`. -/
+theorem baseZero_node_genuine_of_CST_of_artin {E : WeierstrassCurve ℚ} [E.IsElliptic] {k : ℚ}
+    {b : ℕ} (C : CoordData b)
+    (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2)
+    (hf : ∀ n : ℕ, 0 < n → (UpperHalfPlane.qExpansion 1 f).coeff n = (E.LFunction n : ℂ))
+    (Lat : PeriodPair) (hLat : IsLatticeOf E Lat) (hnCM : IsNonCMLattice Lat)
+    (scale : ℂ) (hscale : IsParamScale (newformLevel E) f Lat scale)
+    (K : Type) [Field K] [NumberField K] [DecidableEq K] (hK2 : Module.finrank ℚ K = 2)
+    (hKc : IsTotallyComplex K) (hD3 : discr K ≠ -3) (hD4 : discr K ≠ -4)
+    (hsplit : ∀ p : ℕ, p.Prime → p ∣ newformLevel E → SplitsIn K p)
+    (a₀ b₀ c₀ : ℤ) (hH : IsHeegnerForm (newformLevel E) (discr K * (1 : ℕ) ^ 2) a₀ b₀ c₀)
+    (ι : ringClassField (conductorOrder K 1) →ₐ[ℚ] ℂ)
+    (y : (E.baseChange (ringClassField (conductorOrder K 1))).toAffine.Point)
+    (hy : Point.map (W' := E.toAffine) ι y =
+      phiAn E f Lat scale (cmPoint a₀ b₀ (discr K * (1 : ℕ) ^ 2)))
+    (P : (E.baseChange K).toAffine.Point)
+    (hP : Point.baseChange K (ringClassField (conductorOrder K 1)) P =
+      ∑ σ : ringClassField (conductorOrder K 1) ≃ₐ[K] ringClassField (conductorOrder K 1),
+        Point.map (W' := E.toAffine) (σ.toAlgHom.restrictScalars ℚ) y)
+    (hA : GenusOdd.ArtinFactorization) (h2 : SplitsIn K 2) (t : K)
+    (ht : t ∉ (algebraMap ℚ K).range) (htk : t ^ 2 = algebraMap ℚ K k) (hCST : CSTThm11Split)
+    {m : ℕ} (D : Matrix (Fin (m + 1)) (Fin (m + 1)) LambdaT) (hcentral : (D.map rhoT).rank = m)
+    (z w : Fin (m + 1) → LambdaT) (hz : D *ᵥ z = 0) (uprim : FractionRing Lambda)
+    (hu : ZInQ.Manuscript.RC.Central.IsClassFunctionalCoord
+      (D.map (algebraMap LambdaT (FractionRing Lambda)))
+      (fun i => algebraMap LambdaT (FractionRing Lambda) (z i))
+      (fun i => algebraMap LambdaT (FractionRing Lambda) (w i)) uprim)
+    (kum : (E.baseChange K).toAffine.Point →+ (Fin (m + 1) → ℚ_[2])) (Lm : ℤ)
+    (h45 : (fun i => rhoT (z i)) = (Lm : ℚ_[2]) • kum P)
+    (ε₀ : LambdaT) (utilde0 : FractionRing Lambda)
+    (h47 : utilde0 = algebraMap LambdaT (FractionRing Lambda) ε₀ * uprim)
+    (wHalf : LambdaHalf) (hwHalf : lambdaHalfToFrac wHalf = utilde0)
+    (hC : C.u 0 0 = centralSpecialization wHalf) :
+    BaseZero E k C :=
+  baseZero_node_genuine_of_CST C f hf Lat hLat hnCM scale hscale K hK2 hKc hD3 hD4 hsplit a₀ b₀ c₀
+    hH ι y hy P hP
+    (ZInQ.Manuscript.RC.Height.lFactorizationConductorOne_of_artin hA E K hK2 hKc h2 hsplit ht htk)
+    hCST D hcentral z w hz uprim hu kum Lm h45 ε₀ utilde0 h47 wHalf hwHalf hC
 
 /-! ### The two-term model replaced by the actual complex -/
 
@@ -268,5 +364,60 @@ theorem baseZero_node_genuine_of_complex_CST {E : WeierstrassCurve ℚ} [E.IsEll
   exact baseZero_node_genuine_of_CST C f hf Lat hLat hnCM scale hscale K hK2 hKc hD3 hD4 hsplit
     a₀ b₀ c₀ hH ι y hy P hP hL hCST (entryModel (Pm * d * Qm) s₂ s₁) hc z w hz uprim hu kum Lm h45
     ε₀ utilde0 h47 wHalf hwHalf hC
+
+open Classical in
+/-- **`BaseZero` with every discharged input removed and RC19's G2 from `ArtinFactorization`**
+(tex 4330–4373; tex 5736 with tex 2599, 2720). PROVED: `baseZero_node_genuine_of_complex_CST`
+with `hL := lFactorizationConductorOne_of_artin hA E K hK2 hKc h2 hsplit ht htk` (lane RC27); the
+input `hL` (RC19's GLUE) is replaced by the shared top layer's GLUE `GenusOdd.ArtinFactorization`,
+`K` split at `2` and `K = ℚ(√k)`; the conclusion is that of
+`baseZero_node_genuine_of_complex_CST`. -/
+theorem baseZero_node_genuine_of_complex_CST_of_artin {E : WeierstrassCurve ℚ} [E.IsElliptic]
+    {k : ℚ} {b : ℕ} (C : CoordData b)
+    (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2)
+    (hf : ∀ n : ℕ, 0 < n → (UpperHalfPlane.qExpansion 1 f).coeff n = (E.LFunction n : ℂ))
+    (Lat : PeriodPair) (hLat : IsLatticeOf E Lat) (hnCM : IsNonCMLattice Lat)
+    (scale : ℂ) (hscale : IsParamScale (newformLevel E) f Lat scale)
+    (K : Type) [Field K] [NumberField K] [DecidableEq K] (hK2 : Module.finrank ℚ K = 2)
+    (hKc : IsTotallyComplex K) (hD3 : discr K ≠ -3) (hD4 : discr K ≠ -4)
+    (hsplit : ∀ p : ℕ, p.Prime → p ∣ newformLevel E → SplitsIn K p)
+    (a₀ b₀ c₀ : ℤ) (hH : IsHeegnerForm (newformLevel E) (discr K * (1 : ℕ) ^ 2) a₀ b₀ c₀)
+    (ι : ringClassField (conductorOrder K 1) →ₐ[ℚ] ℂ)
+    (y : (E.baseChange (ringClassField (conductorOrder K 1))).toAffine.Point)
+    (hy : Point.map (W' := E.toAffine) ι y =
+      phiAn E f Lat scale (cmPoint a₀ b₀ (discr K * (1 : ℕ) ^ 2)))
+    (P : (E.baseChange K).toAffine.Point)
+    (hP : Point.baseChange K (ringClassField (conductorOrder K 1)) P =
+      ∑ σ : ringClassField (conductorOrder K 1) ≃ₐ[K] ringClassField (conductorOrder K 1),
+        Point.map (W' := E.toAffine) (σ.toAlgHom.restrictScalars ℚ) y)
+    (hA : GenusOdd.ArtinFactorization) (h2 : SplitsIn K 2) (t : K)
+    (ht : t ∉ (algebraMap ℚ K).range) (htk : t ^ 2 = algebraMap ℚ K k) (hCST : CSTThm11Split)
+    (I : Type*) [Fintype I] [DecidableEq I] (deg : I → ℤ) (d : Matrix I I LambdaT)
+    (hg : IsGradedDiff deg d) (hd : d * d = 0)
+    (h0 : ∀ n, n ≠ 1 → n ≠ 2 → resDimAt rhoT deg d n = 0) (h1 : resDimAt rhoT deg d 1 = 1)
+    (h2' : resDimAt rhoT deg d 2 = 1) :
+    ∃ (Pm Qm : Matrix I I LambdaT) (kind : I → Fin 3) (partner : I → I) (s₁ s₂ : I),
+      Pm * Qm = 1 ∧ Qm * Pm = 1 ∧ IsDegPreserving deg Pm ∧ IsDegPreserving deg Qm ∧
+      SplitForm (Pm * d * Qm) kind partner ∧
+      kind s₁ = 0 ∧ kind s₂ = 0 ∧ deg s₁ = 1 ∧ deg s₂ = 2 ∧
+      (∀ x, kind x = 0 → x = s₁ ∨ x = s₂) ∧
+      (Pm * d * Qm) s₂ s₁ ∈ IsLocalRing.maximalIdeal LambdaT ∧
+      ∀ (z w : Fin (0 + 1) → LambdaT) (uprim : FractionRing Lambda),
+        entryModel (Pm * d * Qm) s₂ s₁ *ᵥ z = 0 →
+        ZInQ.Manuscript.RC.Central.IsClassFunctionalCoord
+          ((entryModel (Pm * d * Qm) s₂ s₁).map (algebraMap LambdaT (FractionRing Lambda)))
+          (fun i => algebraMap LambdaT (FractionRing Lambda) (z i))
+          (fun i => algebraMap LambdaT (FractionRing Lambda) (w i)) uprim →
+        ∀ (kum : (E.baseChange K).toAffine.Point →+ (Fin (0 + 1) → ℚ_[2])) (Lm : ℤ),
+        (fun i => rhoT (z i)) = (Lm : ℚ_[2]) • kum P →
+        ∀ (ε₀ : LambdaT) (utilde0 : FractionRing Lambda),
+        utilde0 = algebraMap LambdaT (FractionRing Lambda) ε₀ * uprim →
+        ∀ wHalf : LambdaHalf, lambdaHalfToFrac wHalf = utilde0 →
+        C.u 0 0 = centralSpecialization wHalf →
+        BaseZero E k C :=
+  baseZero_node_genuine_of_complex_CST C f hf Lat hLat hnCM scale hscale K hK2 hKc hD3 hD4 hsplit
+    a₀ b₀ c₀ hH ι y hy P hP
+    (ZInQ.Manuscript.RC.Height.lFactorizationConductorOne_of_artin hA E K hK2 hKc h2 hsplit ht htk)
+    hCST I deg d hg hd h0 h1 h2'
 
 end ZInQ.Manuscript.RC.GlueSweep.Central

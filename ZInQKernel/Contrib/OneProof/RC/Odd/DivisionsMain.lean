@@ -5,7 +5,10 @@ import ZInQKernel.Contrib.OneProof.RC.Odd.Divisions
 # Lane RC12-odd: (O.9), (O.11), the fresh reading and the omission coefficient
 
 Manuscript (11/5), Appendix F, proof of Proposition `ex:app-coefficient-rules`
-(tex 9558–9636, 9681–9687, 9905–9918). See `Divisions.lean` for the setting. All PROVED.
+(tex 9558–9636, 9681–9687, 9905–9918). See `Divisions.lean` for the setting. The hypothesis
+bundles `SourceCore` and `SourceHyp` (restated by lane RC27: the depth at the squarefree parameters of
+the stage support, with an integer depth, and the support conditions made explicit) are stated here;
+every theorem is PROVED.
 -/
 
 namespace ZInQ.Manuscript.RC.Odd
@@ -28,27 +31,60 @@ theorem legendreSym_neg_eq_one_or {p : ℕ} [Fact p.Prime] {n : ℕ} (hpn : ¬ p
   rcases legendreSym.eq_one_or_neg_one p h0 with h | h <;> rcases hε with rfl | rfl <;>
     simp [h]
 
-/-- The hypotheses on the coefficient source (see the module docstring of `Divisions.lean`). -/
-structure SourceHyp (T δ : ℕ) (χ : ℕ → R) (GoodPrime : ℕ → Prop) (ap : ℕ → ℤ) (a : ℕ → R) :
-    Prop where
+/-- **The coefficient source at one stage, without its depth** (App F: Proposition
+`ex:app-theta-form`, tex 8409–8428, 9083–9098, and the proof of `ex:app-coefficient-rules`,
+tex 9471–9480). The coefficient function `a` (indices `n`, coefficient ring `R`), the phase
+character `χ = η`, the good primes (the primes outside the actual coefficient support `S`) and the
+stage support `adm` (the squarefree parameters `D` that are admissible, with `(D/ℓ₀) = 1` at an odd
+stage, tex 8209–8212, 2530–2532) satisfy:
+* `prime`, `odd`, `ap_mod`: good primes are odd primes with `a_q ≡ q + 1 (mod 4)` (every prime is
+  split in `ℚ(E[2]) = ℚ`, tex 9585, 9593);
+* `recur`: the recurrence (O.6) at every good prime, with `ψ(q)/η(q) = ±1` (tex 8424–8426,
+  9083–9093);
+* `zero`: `a(0) = 0`;
+* `support`: "The coefficients of `g` vanish at all indices not prime to `S`" (tex 9472–9476);
+* `support_adm`: a squarefree parameter outside the stage support has coefficient zero ("the local
+  Schwartz support instead gives `a_{M_θ}(D) = 0`", tex 2530–2532; the local supports, tex
+  8496–8566, and the unit-squareclass conditions, tex 8563–8566);
+* `mul`, `one`: `η` is completely multiplicative.
+Non-vacuity: `sourceHyp_example` (`DivisionsFinal.lean`) inhabits `SourceHyp`, hence this
+structure, with a nonzero coefficient function. -/
+structure SourceCore (χ : ℕ → R) (GoodPrime : ℕ → Prop) (adm : ℕ → Prop) (ap : ℕ → ℤ)
+    (a : ℕ → R) : Prop where
   prime : ∀ q, GoodPrime q → q.Prime
   odd : ∀ q, GoodPrime q → Odd (q : ℤ)
   ap_mod : ∀ q, GoodPrime q → ap q ≡ q + 1 [ZMOD 4]
   recur : ∀ q (hq : GoodPrime q), ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
     @RecAt R _ q ⟨prime q hq⟩ (χ q) ε (ap q) a
   zero : a 0 = 0
-  depth : ∀ n, (2 : R) ^ (min T (δ + (oddPart n).card)) ∣ a n
+  support : ∀ n, (∃ q ∈ n.primeFactors, ¬ GoodPrime q) → a n = 0
+  support_adm : ∀ D, Squarefree D → ¬ adm D → a D = 0
   mul : ∀ x y, χ (x * y) = χ x * χ y
   one : χ 1 = 1
 
-theorem SourceHyp.pow {T δ : ℕ} {χ : ℕ → R} {G : ℕ → Prop} {ap : ℕ → ℤ} {a : ℕ → R}
-    (H : SourceHyp T δ χ G ap a) (q t : ℕ) : χ (q ^ t) = χ q ^ t := by
+/-- **The coefficient source with its depth inequality** (the hypotheses of (O.9)–(O.11); see the
+module docstring of `Divisions.lean`). The depth is stated where the text states it: at the
+squarefree parameters `D` of the stage support, `v₂ a(D) ≥ min(T, δ + ω(D))`, with an integer depth
+`δ` and a truncation level `T`. For the even source this is its fixed minimum depth; at an odd stage
+it is App G's conclusion for one finite operator budget (Proposition `ex:app-odd-minimum`,
+tex 10208–10227: `δ = δ_o`, `T = max(0, δ_o + W_U) + R ≤ M`), which holds only eventually along
+the ultrafilter on the stages and only for that budget — `Statements.lean`, `OddStageSource` and
+`oddStageSource_eventually`. The bound at every Fourier index is `SourceHyp.depth_all` (PROVED from
+the recurrence and the support). Non-vacuity: `sourceHyp_example` (`DivisionsFinal.lean`). -/
+structure SourceHyp (T : ℕ) (δ : ℤ) (χ : ℕ → R) (GoodPrime : ℕ → Prop) (adm : ℕ → Prop)
+    (ap : ℕ → ℤ) (a : ℕ → R) : Prop extends SourceCore χ GoodPrime adm ap a where
+  depth : ∀ D, Squarefree D → adm D →
+    (2 : R) ^ (min (T : ℤ) (δ + ArithmeticFunction.cardDistinctFactors D)).toNat ∣ a D
+
+theorem SourceHyp.pow {T : ℕ} {δ : ℤ} {χ : ℕ → R} {G : ℕ → Prop} {adm : ℕ → Prop} {ap : ℕ → ℤ}
+    {a : ℕ → R} (H : SourceHyp T δ χ G adm ap a) (q t : ℕ) : χ (q ^ t) = χ q ^ t := by
   induction t with
   | zero => simp [H.one]
   | succ t ih => rw [pow_succ, H.mul, ih, pow_succ]
 
 /-- **PROVED (the inductive step behind (O.9) and (O.11), tex 9567–9617).** -/
-theorem DivInv.step {T δ : ℕ} {χ : ℕ → R} {GoodPrime : ℕ → Prop} {U : Finset ℕ} {b : ℕ → R}
+theorem DivInv.step {T : ℕ} {δ : ℤ} {χ : ℕ → R} {GoodPrime : ℕ → Prop} {U : Finset ℕ}
+    {b : ℕ → R}
     (h : DivInv T δ χ GoodPrime U b) {p : ℕ} [hp : Fact p.Prime] (hpU : p ∉ U)
     (hpodd : Odd (p : ℤ)) {ε ap : ℤ} (hε : ε = 1 ∨ ε = -1) (hap : ap ≡ p + 1 [ZMOD 4])
     (hrec : RecAt p (χ p) ε ap b) (hχ : ∀ x y, χ (x * y) = χ x * χ y) (hχ1 : χ 1 = 1) :
@@ -74,7 +110,7 @@ theorem DivInv.step {T δ : ℕ} {χ : ℕ → R} {GoodPrime : ℕ → Prop} {U 
       rw [oddPart_mul_prime hp.out hn' hpn', Finset.insert_sdiff_of_notMem _ hpU,
         Finset.card_insert_of_notMem (fun h' => hnp (Finset.mem_sdiff.mp h').1)] at hb
       apply dvd_mul_of_dvd_right
-      convert hb using 3; ring
+      exact two_pow_dvd_of_le (by omega) hb
     · rw [Top_odd hrec hpn' s, oddPart_pow_odd_mul hp.out hn' hpn', Finset.insert_sdiff_insert,
         Finset.sdiff_insert_of_notMem hnp, hcard]
       have hb := h.bound n'
@@ -143,7 +179,7 @@ theorem DivInv.step {T δ : ℕ} {χ : ℕ → R} {GoodPrime : ℕ → Prop} {U 
       apply dvd_mul_of_dvd_right
       apply dvd_add
       · apply dvd_mul_of_dvd_right
-        convert hIH using 3; ring
+        exact two_pow_dvd_of_le (by omega) hIH
       · refine two_pow_dvd_of_le ?_ (two_pow_dvd_intCast_even_mul hev
           (dvd_mul_of_dvd_right hb _))
         omega

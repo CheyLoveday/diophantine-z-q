@@ -12,8 +12,12 @@ at the old places" (tex 3034–3086), and the corestriction compatibility of `d_
   `Interfaces.lean`) enters as abstract exactness data `FiveTerm`.  When the outer terms are
   killed by `2^e` (by (H2)), `d_a(c) = 2^e b` for any `b` with `res b = 2^e c` is well defined,
   additive, natural (coefficient reduction, transport of the field diagram, corestriction in
-  Cartesian squares), restricts to `2^{2e} c`, and equals `2^{2e} c` when the relative group is
-  trivial (`I = ∅`).  All `PROVED`.
+  Cartesian squares), restricts to `2^{2e} c`, and sends every restricted class `res b` to
+  `2^{2e} b`.  When the relative group is trivial (`I = ∅`) restriction is an isomorphism onto the
+  invariants, and `d_a(c) = 2^{2e} c` with `c` read in `H¹(B, V)` through it
+  (`FiveTerm.descend_trivial`; restated by Lane RC27 over a general `FiveTerm A B C D`, so that the
+  genuine sequence, whose third term `H¹(M, V)^Γ` is a different group from `H¹(B, V)`, is an
+  instance).  All `PROVED`.
 * (H10) and the Kummer descent: from `c_B H¹(Gal(F'/F), B(F')) = 0` (Lang's theorem and the
   formal-group filtration: `PRINT`/`GLUE`, see `Interfaces.lean`), a class that becomes Kummer
   over the unramified `F'` becomes Kummer over `F` after multiplication by `c_B`: `PROVED`
@@ -117,15 +121,97 @@ theorem FiveTerm.descend_cor {A' B' C' D' : Type*} [AddCommGroup A'] [AddCommGro
     S'.descend e hD' (corM c) = cor (S.descend e hD c) :=
   S.descend_natural e S' hA' hD hD' cor corM hsq c
 
-/-- tex 3030–3032, `PROVED`: for `I = ∅` the relative group is trivial, restriction is the
-identity, and the same definition gives `d_a(c) = 2^{2e} c` (the same normalizing multiplier for
-the primitive class and its derivatives). -/
-theorem FiveTerm.descend_trivial (S : FiveTerm A B B D) (hres : ∀ b, S.res b = b)
-    (hA : ∀ x : A, ((2 : ℤ) ^ e) • x = 0) (hD : ∀ x : D, ((2 : ℤ) ^ e) • x = 0) (c : B) :
-    S.descend e hD c = ((2 : ℤ) ^ (2 * e)) • c := by
-  rw [S.descend_eq e hA hD c (((2 : ℤ) ^ e) • c) (hres _), smul_smul, ← pow_add, two_mul]
+/-- (H9) on restricted classes, tex 3021–3024 and 3030–3032, `PROVED`: for every class `b` of
+`H¹(B, V)`, `d_a(res b) = 2^{2e} b`.  Indeed `2^e b` is a lift of `2^e res b`, and the choice of
+the lift does not matter (`descend_eq`).  This identity holds for every five-term sequence, with no
+condition on the relative group; it is what "this same definition gives `d_a(c) = 2^{2e} c`"
+(tex 3031) computes once the invariant class `c` is a restriction, which for `I = ∅` every invariant
+class is (`descend_trivial`).  Non-vacuity: the hypotheses hold for the genuine sequence (the
+interface `infResInputGenuine` of the `CloudB3RC53` layer) and for `FiveTerm.ofTrivialRelative`. -/
+theorem FiveTerm.descend_res (hA : ∀ x : A, ((2 : ℤ) ^ e) • x = 0)
+    (hD : ∀ x : D, ((2 : ℤ) ^ e) • x = 0) (b : B) :
+    S.descend e hD (S.res b) = ((2 : ℤ) ^ (2 * e)) • b := by
+  rw [S.descend_eq e hA hD (S.res b) (((2 : ℤ) ^ e) • b) (map_zsmul S.res _ b), smul_smul,
+    ← pow_add, two_mul]
+
+/-- A trivial relative group makes restriction an isomorphism, tex 3030, `PROVED`: when the outer
+terms `H¹(Γ, V^{G_M})` and `H²(Γ, V^{G_M})` of (H8) vanish (as they do for `Γ` trivial, the case
+`I = ∅`), exactness at `H¹(B, V)` and at `H¹(M, V)^Γ` makes `res : H¹(B, V) → H¹(M, V)^Γ`
+bijective.  Non-vacuity: the genuine sequence for `N = ⊤` meets these hypotheses
+(`GlueSweep.Heeg.explicitResConj1_top_bijective`), and so does `FiveTerm.ofTrivialRelative`
+(outer terms `Unit`). -/
+theorem FiveTerm.res_bijective_of_subsingleton [Subsingleton A] [Subsingleton D] :
+    Function.Bijective S.res := by
+  refine ⟨(injective_iff_map_eq_zero S.res).mpr fun b hb => ?_, fun c => ?_⟩
+  · obtain ⟨x, rfl⟩ := (S.exact_B b).mp hb
+    rw [Subsingleton.elim x 0, map_zero]
+  · exact (S.exact_C c).mp (Subsingleton.elim _ _)
+
+/-- tex 3030–3032, `PROVED`: "For `I = ∅`, the relative group is trivial and this same definition
+gives `d_a(c) = 2^{2e} c`."  For `I = ∅` (`M_∅ = B`) restriction `H¹(B, V) → H¹(M, V)^Γ` is an
+isomorphism onto the invariants (`hres`; it follows from the triviality of the relative group by
+`res_bijective_of_subsingleton`); reading the invariant class `c` in `H¹(B, V)` through it, the
+same definition (H9) gives `d_a(c) = 2^{2e} c`.  The `2^e`-vanishing of `H¹(Γ, V^{G_M})` is not
+assumed: it follows from `hres`.  The multiplier `2^{2e}` is the one of `res_descend`, the same for
+the primitive class and its derivatives.
+
+Restated by Lane RC27 over a general `FiveTerm A B C D`: the earlier form required the third term
+to be the second one with `res = id`, which the genuine sequence (third term
+`H1ConjInvariants G M ⊤`, restriction `explicitResConj1 G M ⊤`) cannot satisfy.  DEPARTURE (form
+only): the text identifies `H¹(M_∅, V)^Γ` with `H¹(B, V)` (they coincide for `M_∅ = B`); here
+that identification is the isomorphism `res`, made explicit, because the genuine third term is a
+different group from `H¹(B, V)`.  Non-vacuity: the hypotheses hold for the genuine sequence at `N = ⊤`
+(`GlueSweep.Heeg.descend_trivial_top`, `GlueSweep.Heeg.descend_trivial_torsion_top`) and for the
+toy data `FiveTerm.ofTrivialRelative` (`FiveTerm.descend_trivial_nonvacuous`, where the
+conclusion is `d_a(1) = 4 ≠ 0` in `ℤ/16`). -/
+theorem FiveTerm.descend_trivial (hres : Function.Bijective S.res)
+    (hD : ∀ x : D, ((2 : ℤ) ^ e) • x = 0) (c : C) :
+    S.descend e hD c = ((2 : ℤ) ^ (2 * e)) • (AddEquiv.ofBijective S.res hres).symm c := by
+  have hA : ∀ x : A, ((2 : ℤ) ^ e) • x = 0 := fun x => by
+    have h0 : S.inf x = 0 :=
+      hres.1 (by rw [map_zero]; exact (S.exact_B _).mpr ⟨x, rfl⟩)
+    rw [S.inf_injective (h0.trans (map_zero S.inf).symm), smul_zero]
+  conv_lhs => rw [← AddEquiv.ofBijective_apply_symm_apply (n := c) S.res hres]
+  exact S.descend_res e hA hD _
 
 end Descent
+
+/-! ## Non-vacuity of `descend_trivial`: the five-term data of a trivial relative group -/
+
+/-- The five-term data of a trivial relative group in identified form: zero outer terms and
+restriction the identity of `B` (the literal picture of tex 3030 for `I = ∅`, `M_∅ = B`).  A toy
+instance for the non-vacuity of `FiveTerm.descend_trivial` and `H11_empty`. -/
+def FiveTerm.ofTrivialRelative (B : Type*) [AddCommGroup B] : FiveTerm Unit B B Unit where
+  inf := 0
+  res := AddMonoidHom.id B
+  tg := 0
+  inf_injective _ _ _ := Subsingleton.elim _ _
+  exact_B b := by
+    simp only [AddMonoidHom.id_apply, AddMonoidHom.zero_apply, exists_const]
+    exact eq_comm
+  exact_C c := ⟨fun _ => ⟨c, rfl⟩, fun _ => Subsingleton.elim _ _⟩
+
+/-- The restriction of the trivial-relative-group data is bijective, `PROVED`. -/
+theorem FiveTerm.ofTrivialRelative_res_bijective (B : Type*) [AddCommGroup B] :
+    Function.Bijective (FiveTerm.ofTrivialRelative B).res :=
+  Function.bijective_id
+
+/-- `descend_trivial` for the trivial-relative-group data, `PROVED`: `d_a(c) = 2^{2e} c`. -/
+theorem FiveTerm.descend_ofTrivialRelative (B : Type*) [AddCommGroup B] (e : ℕ) (c : B) :
+    (FiveTerm.ofTrivialRelative B).descend e (fun _ => Subsingleton.elim _ _) c =
+      ((2 : ℤ) ^ (2 * e)) • c := by
+  rw [FiveTerm.descend_trivial _ e (FiveTerm.ofTrivialRelative_res_bijective B)]
+  congr 1
+  exact (AddEquiv.ofBijective _ _).symm_apply_eq.mpr rfl
+
+/-- Non-vacuity of `descend_trivial`, `PROVED`: its hypotheses hold for the trivial-relative-group
+data over `ℤ/16` with `e = 1`, and the conclusion is not trivial: `d_a(1) = 4 ≠ 0`. -/
+theorem FiveTerm.descend_trivial_nonvacuous :
+    (FiveTerm.ofTrivialRelative (ZMod 16)).descend 1 (fun _ => Subsingleton.elim _ _) 1 = 4 ∧
+      (4 : ZMod 16) ≠ 0 := by
+  refine ⟨?_, by decide⟩
+  rw [FiveTerm.descend_ofTrivialRelative]
+  decide
 
 /-! ## (H10): integral local descent at the old places -/
 

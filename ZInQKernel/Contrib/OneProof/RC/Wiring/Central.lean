@@ -21,9 +21,9 @@ hypotheses. In particular the following are **not** hypotheses here, but consequ
 | derived here | by lane RC15's | tex |
 |---|---|---|
 | `v₂ N_i = v₂ m_i` at the moving prime | `padicValInt_movingNorm` | 4066–4074 |
-| `v₂(Reg_ℬ/Reg_𝒜) = ±1` | `regulator_ratio`, `padicValRat_regulator_ratio` | 4080–4091 |
+| `Reg_ℬ = (2/α²) Reg_𝒜` for the real regulators, `2/α² ∈ ℚ`, and `v₂(Reg_ℬ/Reg_𝒜) = ±1` | `regulator_ratio` (over `ℝ`), `regulator_eq_ratCast_mul`, `padicValRat_regulator_ratio` | 4082–4091 |
 | `a ∈ {±1, ±2, ±4}` and `|v₂(Ω_ℬ/Ω_𝒜)| ≤ 4` | `pullback_values`, `padicValRat_period_ratio` | 4093–4104 |
-| `s_𝒜 − s_ℬ = 2g_𝒜 − 2g_ℬ + v₂ρ_Reg + v₂ρ_Ω + v₂(C_ℬ/C_𝒜)` | `milne_valuation_form` | 4105–4112 |
+| `s_𝒜 − s_ℬ = 2g_𝒜 − 2g_ℬ + v₂(2/α²) + v₂ρ_Ω + v₂(C_ℬ/C_𝒜)` | `milne_valuation_form_of_adjunction` (through `milne_valuation_form`) | 4105–4112 |
 | `v₂(C_ℬ/C_𝒜) = Σ_{p ∣ k} t_p` | `padicValRat_component_ratio` | 4118–4135 |
 | (4.6) itself, with `|ε| ≤ 2v₂L + 2G₀ + 5` | `calibration_46` | 4044–4047 |
 | the base-zero dichotomy and `ũ₀(0) = 0` | `baseZero_node`, over lane RC20's genuine `A = Λ_(t)` (`baseZero_node_genuine`) | 4330–4376 |
@@ -84,19 +84,19 @@ parameters, fixed before the family.
 
 | field | content | tex | kind | owner |
 |---|---|---|---|---|
-| `shaA`–`tB_ne` | the two-primary orders `|Ш|`, `|tors|` of `𝒜` and `ℬ`, nonzero (finite `Ш` at a known simple zero, by the forward theorem) | 4020–4021, 4050–4057 | existential orders (genuine witnesses finite by Kolyvagin, `lem:forward-rank`, tex 1086–1093) | RC9 |
+| `shaA`–`tB_ne` | the two-primary orders `|Ш|`, `|tors|` of `𝒜` and `ℬ`, nonzero (finite `Ш` at a known simple zero, by the forward theorem) | 4016–4023 | ELLIOT + PRINT (Kolyvagin Thm 1) | RC9 |
 | `Scomp`, `cA`, `cB`, `tp`, `hTS`, `hcpos`, `hcancel`, `hA1`, `hB` | the component numbers: cancellation at split primes, `c_p(𝒜) = 1` (connected Weil restriction), `c_p(ℬ) = 2^{t_p}` at `p ∣ k` | 4118–4135 | ELLIOT + PRINT (Edixhoven Thm 5.3, Rem 5.4.1) | RC15 / RC9 |
 | `htp` | `t_p = dim_{𝔽₂} E[2]^{Fr_p} ≤ 2` | 4136–4138 | ELLIOT | RC15 |
-| `alpha`, `beta`, `hIJ` | the dual isogeny indices with `IJ = 2` | 4082–4088 | ELLIOT | RC15 |
-| `rhoReg`, `hadj` | the height adjunction read on generators: `I·(Reg_ℬ/Reg_𝒜) = J` | 4088–4090 | GLUE (functoriality of the canonical height) | RC15 |
+| `alpha`, `beta`, `hIJ` | the dual isogeny indices with `IJ = 2` (`φ g_𝒜 ≡ α g_ℬ`, `ψ g_ℬ ≡ β g_𝒜` on free generators) | 4082–4088 | ELLIOT (PROVED by lane RC19 for the genuine generators: `CalibrationModelR.nonempty_model`) | RC15 / RC19 |
+| `RegA`, `RegB`, `hadj` | the **real** regulators of `𝒜` and `ℬ` (canonical heights of free generators at rank one) and the height adjunction read on generators, `α Reg_ℬ = β Reg_𝒜`; the rational ratio `Reg_ℬ/Reg_𝒜 = 2/α²` is derived from it (`Central.regulator_eq_ratCast_mul`), it is not a field | 4022–4025, 4082–4090 | GLUE (functoriality of the canonical height; PROVED by lane RC19 for the genuine heights, `regulator_ratio_sumDiff`) | RC15 / RC19 |
 | `aPull`, `bPull`, `hab` | the integral pullbacks of the Néron differentials, `ab = 4` | 4093–4096 | ELLIOT | RC15 |
 | `gam`, `kap`, `hgam`, `hkap`, `hcv` | the real change of variables, both finite groups of order at most four | 4096–4104 | GLUE | RC15 |
-| `RegA`, `OmA`, `hRegA`, `hOmA`, `rhoOm` | the chosen Néron regulator and period of `𝒜`, nonzero, and the rational period ratio | 4089–4092 | definition | RC15 |
-| `hmilne` | Cassels' isogeny invariance of the Birch–Swinnerton-Dyer quotient, with self-dual torsion counts (principal polarizations) | 4027–4030, 4106–4113 | PRINT (Milne ADT I.7.3, (7.3.1)) + GLUE | RC15 |
-| `hsB` | `Ш(ℬ) = Ш(E^{(h_x)}) × Ш(E^{(h_x k)})`: `s_ℬ = s(h_x) + s(h_x k)` | 4053–4057 (implicit), and the signs at 4138–4139 | ELLIOT | RC15 |
-| `hgB` | the rational torsion of `ℬ` is bounded by the fixed `G₀` | 4115–4116 | ELLIOT | RC15 |
+| `OmA`, `hRegA`, `hOmA`, `rhoOm` | the chosen Néron period of `𝒜`, `Reg_𝒜 ≠ 0`, `Ω_𝒜 ≠ 0`, and the rational period ratio | 4090–4104 | definition | RC15 |
+| `hmilne` | Cassels' isogeny invariance of the Birch–Swinnerton-Dyer quotient at the real regulators `Reg_𝒜`, `Reg_ℬ`, with self-dual torsion counts (principal polarizations) | 4024–4027, 4105–4112 | PRINT (Milne ADT I.7.3, (7.3.1)) + GLUE | RC15 |
+| `hsB` | `Ш(ℬ) = Ш(E^{(h_x)}) × Ш(E^{(h_x k)})`: `s_ℬ = s(h_x) + s(h_x k)` | 4113–4114 | ELLIOT | RC15 |
+| `hgB` | the rational torsion of `ℬ` is bounded by the fixed `G₀` | 4114–4115 | ELLIOT | RC15 |
 | `rmov`–`hBexp` | the moving prime: `r ≡ 1 (mod 2^B)`, `χ = ±1`, `m = a_r − 2χ ≠ 0`, `v₂m < B` (lane RC17's `moving_character_genuine` produces exactly such a prime over the genuine Tate image) | 4066–4074 | ELLIOT | RC4 / RC17 |
-| `hvprim` | determinant multiplicativity in the support triangles: the primitive central value is regular with the computed valuation | 4058–4080 | ELLIOT | RC15 (with the Duality and RankCounts areas) |
+| `hvprim` | determinant multiplicativity in the support triangles: the primitive central value is regular with the computed valuation | 4058–4078, V19 20063–20079 | ELLIOT | RC15 (with the Duality and RankCounts areas) |
 -/
 structure CalibrationModel {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : Family)
     (x : Addr Fam.b) : Type where
@@ -142,10 +142,12 @@ structure CalibrationModel {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : F
   beta : ℤ
   /-- `IJ = 2` -/
   hIJ : alpha * beta = 2
-  /-- the rational regulator ratio `Reg_ℬ/Reg_𝒜` -/
-  rhoReg : ℚ
-  /-- the height adjunction on generators -/
-  hadj : (alpha : ℚ) * rhoReg = (beta : ℚ) * 1
+  /-- the regulator of `𝒜`, a real number (the canonical height of a free generator) -/
+  RegA : ℝ
+  /-- the regulator of `ℬ`, a real number (the canonical height of a free generator) -/
+  RegB : ℝ
+  /-- the height adjunction on generators: `α Reg_ℬ = β Reg_𝒜` -/
+  hadj : (alpha : ℝ) * RegB = (beta : ℝ) * RegA
   /-- `φ^*ω_ℬ = a ω_𝒜` -/
   aPull : ℤ
   /-- `ψ^*ω_𝒜 = b ω_ℬ` -/
@@ -160,8 +162,6 @@ structure CalibrationModel {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : F
   hgam : 1 ≤ gam ∧ gam ≤ 4
   /-- both at most four -/
   hkap : 1 ≤ kap ∧ kap ≤ 4
-  /-- the Néron regulator of `𝒜` -/
-  RegA : ℝ
   /-- the Néron period of `𝒜` -/
   OmA : ℝ
   /-- nonzero regulator -/
@@ -172,9 +172,9 @@ structure CalibrationModel {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam : F
   rhoOm : ℚ
   /-- the real change of variables -/
   hcv : (|aPull| : ℝ) * OmA = ((kap : ℝ) / gam) * ((rhoOm : ℝ) * OmA)
-  /-- Cassels' isogeny invariance in Milne's form -/
+  /-- Cassels' isogeny invariance in Milne's form, at the real regulators `Reg_𝒜`, `Reg_ℬ` -/
   hmilne : Central.MilneIsogenyInvariance shaA shaB tA tA tB tB
-    (∏ p ∈ Scomp, cA p) (∏ p ∈ Scomp, cB p) RegA ((rhoReg : ℝ) * RegA) OmA ((rhoOm : ℝ) * OmA)
+    (∏ p ∈ Scomp, cA p) (∏ p ∈ Scomp, cB p) RegA RegB OmA ((rhoOm : ℝ) * OmA)
   /-- `s_ℬ = s(h_x) + s(h_x k)` -/
   hsB : ((padicValNat 2 shaB : ℕ) : ℤ) =
     (shaLength (Etw ℓ (Fam.h x)) : ℤ) + (shaLength (Etw ℓ (Fam.h x * D.kfin)) : ℤ)
@@ -239,22 +239,6 @@ theorem calibrationTarget_of_inputs {ℓ : ℕ} {D : RCData ℓ} (h : Calibratio
       (((∏ p ∈ M.Scomp, M.cA p) : ℕ) : ℚ)) = ∑ p ∈ D.kfin.natAbs.primeFactors, (M.tp p : ℤ) := by
     rw [hprodcast]
     exact Central.padicValRat_component_ratio M.hTS M.cA M.cB M.tp M.hcpos M.hcancel M.hA1 M.hB
-  -- the regulator ratio
-  have hα0 : M.alpha ≠ 0 := by
-    intro h0'
-    have hIJ := M.hIJ
-    rw [h0', zero_mul] at hIJ
-    exact absurd hIJ (by norm_num)
-  have hα0' : ((M.alpha : ℚ)) ≠ 0 := by exact_mod_cast hα0
-  have hregeq : M.rhoReg = 2 / (M.alpha : ℚ) ^ 2 := by
-    have hr := Central.regulator_ratio M.hIJ M.hadj
-    field_simp
-    linarith [hr]
-  have hReg : padicValRat 2 M.rhoReg = 1 ∨ padicValRat 2 M.rhoReg = -1 := by
-    rw [hregeq]; exact Central.padicValRat_regulator_ratio M.hIJ
-  have hρReg0 : M.rhoReg ≠ 0 := by
-    rw [hregeq]
-    exact div_ne_zero (by norm_num) (pow_ne_zero 2 hα0')
   -- the period ratio
   have hper := Central.padicValRat_period_ratio (ΩB := (M.rhoOm : ℝ) * M.OmA) M.hOmA
     (Central.pullback_values M.hab) M.hgam M.hkap M.hcv
@@ -278,9 +262,10 @@ theorem calibrationTarget_of_inputs {ℓ : ℕ} {D : RCData ℓ} (h : Calibratio
       have : M.kap ≠ 0 := by omega
       exact_mod_cast this
     exact div_ne_zero (by exact_mod_cast h1) h2
-  -- Milne
-  have hMilne := Central.milne_valuation_form M.shaA_ne M.shaB_ne M.tA_ne M.tB_ne hCA hCB
-    M.hRegA M.hOmA hρReg0 hρΩ0 M.hmilne
+  -- the regulator ratio and Milne: from the height adjunction on the real regulators,
+  -- `Reg_ℬ = (2/α²) Reg_𝒜` with `2/α² ∈ ℚ` and `v₂(2/α²) = ±1` (derived, not assumed)
+  obtain ⟨hMilne, hReg⟩ := Central.milne_valuation_form_of_adjunction M.hIJ M.hadj M.shaA_ne
+    M.shaB_ne M.tA_ne M.tB_ne hCA hCB M.hRegA M.hOmA hρΩ0 M.hmilne
   -- the moving prime
   have hvN : ((padicValInt 2 (M.rmov + 1 - M.chimov * M.amov) : ℕ) : ℤ) =
       ((padicValInt 2 (M.amov - 2 * M.chimov) : ℕ) : ℤ) := by
@@ -301,7 +286,8 @@ theorem calibrationTarget_of_inputs {ℓ : ℕ} {D : RCData ℓ} (h : Calibratio
   obtain ⟨hcal, hcalbd⟩ := Central.calibration_46 (G₀ := G₀) hprim hvN hMilne M.hsB hvC hReg hΩ
     ⟨Int.natCast_nonneg _, M.hgB⟩ hvL
   refine ⟨fun p => min (M.tp p) 2, 2 * vL + 2 * ((padicValNat 2 M.tB : ℕ) : ℤ) -
-    padicValRat 2 M.rhoReg - padicValRat 2 M.rhoOm, fun p => min_le_right _ _, hcalbd, ?_⟩
+    padicValRat 2 (2 / (M.alpha : ℚ) ^ 2) - padicValRat 2 M.rhoOm, fun p => min_le_right _ _,
+    hcalbd, ?_⟩
   have hsum : ∑ p ∈ D.kfin.natAbs.primeFactors, ((min (M.tp p) 2 : ℕ) : ℤ) =
       ∑ p ∈ D.kfin.natAbs.primeFactors, ((M.tp p : ℕ) : ℤ) :=
     Finset.sum_congr rfl fun p hp => by rw [min_eq_left (M.htp p hp)]
@@ -517,8 +503,9 @@ theorem commonCoordinateTarget_of_inputs {ℓ : ℕ} {D : RCData ℓ} (h : Commo
 The inputs of (4.6) and (4.7) are jointly satisfiable, with a **nonzero** primitive central value
 at every address: the deductions above are not vacuous. The witness is the interface data with the
 trivial companion `k = 1`, no graph primes and the primitive coordinate prescribed to have the
-calibrated valuation; the Milne instance is the genuine real identity
-`2^{s+1}/1 = 2^s · 2 · 1 / 1`.
+calibrated valuation; the regulators are the irrational reals `Reg_𝒜 = π`, `Reg_ℬ = 2π` (indices
+`α = 1`, `β = 2`, adjunction `1 · 2π = 2 · π`), and the Milne instance is the genuine real identity
+`2^{s+1} · π / 1 = 2^s · 2π / 1`.
 -/
 
 /-- `v₂((2 : ℚ₂)^n) = n` for every integer exponent (PROVED). -/
@@ -567,9 +554,12 @@ theorem witnessData_central_ne_zero (ℓ : ℕ) (G : Family) (y : Addr G.b) :
   rw [witnessData_central_uPrim]
   exact zpow_ne_zero _ (by norm_num)
 
-/-- **The inputs of (4.6) are satisfiable** (PROVED): every address of every family carries a
-`CalibrationModel` over the witness data, with `v₂L = 0`, `G₀ = 0` (hence `C_cal = 5`) and a
-nonzero primitive central value. -/
+/-- **The inputs of (4.6) are satisfiable** (PROVED; the non-vacuity witness of
+`CalibrationModel`): every address of every family carries a `CalibrationModel` over the witness
+data, with `v₂L = 0`, `G₀ = 0` (hence `C_cal = 5`), a nonzero primitive central value, and the
+irrational real regulators `Reg_𝒜 = π`, `Reg_ℬ = 2π` related by the height adjunction with
+`α = 1`, `β = 2` (so the real carrier of the regulators is genuinely used; their ratio `2 = 2/1²`
+is rational, as it must be). -/
 theorem calibrationInputs_witness (ℓ : ℕ) : CalibrationInputs (witnessData ℓ) := by
   refine ⟨0, 0, le_refl 0, ?_⟩
   intro Co Ce G hG y _ _
@@ -595,8 +585,9 @@ theorem calibrationInputs_witness (ℓ : ℕ) : CalibrationInputs (witnessData �
     alpha := 1
     beta := 2
     hIJ := by norm_num
-    rhoReg := 2
-    hadj := by norm_num
+    RegA := Real.pi
+    RegB := 2 * Real.pi
+    hadj := by push_cast; ring
     aPull := 1
     bPull := 4
     hab := by norm_num
@@ -604,9 +595,8 @@ theorem calibrationInputs_witness (ℓ : ℕ) : CalibrationInputs (witnessData �
     kap := 1
     hgam := by norm_num
     hkap := by norm_num
-    RegA := 1
     OmA := 1
-    hRegA := one_ne_zero
+    hRegA := Real.pi_ne_zero
     hOmA := one_ne_zero
     rhoOm := 1
     hcv := by norm_num

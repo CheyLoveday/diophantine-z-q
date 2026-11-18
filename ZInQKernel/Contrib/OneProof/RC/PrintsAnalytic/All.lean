@@ -19,8 +19,10 @@ the shared vocabulary `ZInQ.Contrib.CloudB3RC53` (`qtwist`, `IsLContinuation`, `
 * PRINT: `HoffsteinLuoTheorem`, `TwistedFunctionalEquation`, `BFHTheorem` (literal, over newforms);
   `HoffsteinLuoCurve`, `TwistedRootNumberCurve`, `BFHCurve` (curve forms, PROVED from the literal
   ones in `Bridges.lean`); `DesjardinsRootNumberFilter` (global-consequence form);
-  `WaldspurgerCor2`, `WaldspurgerNonvanishing` (print not read); `ModularNewform` (BCDT Theorem A
-  condition (2), Milne Theorem 11.19 / Proposition 11.21).
+  `WaldspurgerCor2`, `WaldspurgerNonvanishing` (print not read; the latter includes Elliot's local
+  construction, with its conclusion that the scalar character has two-power order, App E
+  L7918–7919, L7943–7944); `ModularNewform` (BCDT Theorem A condition (2), Milne Theorem 11.19 /
+  Proposition 11.21).
 * GLUE: `HasseConvergence`, `TwistDictionary` (the latter PROVED as `twistDictionary`,
   `TwistDictionary/Dictionary.lean`).
 * Dokchitser–Dokchitser Theorem 1.8, BCDT Theorem A, Kolyvagin Theorem 1 and Cai–Shu–Tian

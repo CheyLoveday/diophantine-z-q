@@ -36,10 +36,11 @@ PROVED here:
 
 The inputs that are not finite algebra are hypotheses, each with its tex lines and kind: the orbit
 parametrization (ELLIOT, tex 9136–9170), the weights along the torsor (ELLIOT, tex 9171–9194,
-9297–9305), the reduction identity at the reference tuple (PRINT Cornut–Jetchev, UNVERIFIED here,
-+ ELLIOT, tex 9195–9296), the orientation changes (ELLIOT, tex 9329–9364), the stabilizers
-`𝒪_F^× = {±1}` (ELLIOT/GLUE, tex 9308–9309) and, for the phase removal, that the phase is a unit
-(ELLIOT, tex 9325–9327) and `2^M𝒪 ∩ ℤ = 2^Mℤ` (GLUE).
+9297–9305), the reduction identity at the reference tuple (PRINT Cornut–Jetchev, arXiv:1012.0725v1,
+Theorem 3.1 (§3.5, p. 9), Corollary 3.2, §§4.9–4.10 — the one statement is
+`PrintsArith.CJSetting.Thm31` — + ELLIOT, tex 9195–9296), the orientation changes (ELLIOT,
+tex 9329–9364), the stabilizers `𝒪_F^× = {±1}` (ELLIOT/GLUE, tex 9308–9309) and, for the phase
+removal, that the phase is a unit (ELLIOT, tex 9325–9327) and `2^M𝒪 ∩ ℤ = 2^Mℤ` (GLUE).
 
 Convention: `u ∈ R_z^×` acts by conjugation `x ↦ u x u⁻¹` (a left action). As `R_z^×` is a group,
 invariance under it is the same statement as Elliot's invariance under `x ↦ u⁻¹ x u` (tex 8573).
@@ -375,9 +376,10 @@ theorem orbit_count (S : ThetaStage O a b) (z : S.X) (n : ℚ)
   (`a` centralizes `x₀`) and the norm factor is the genus character: on the orbit `(t, [a])`,
   `χ_{h_*}(Nrd z_a) f(z_a⁻¹ x z_a) = ζ₀(t) χ_F([a])`;
 * `hred` (PRINT: C. Cornut and D. Jetchev, *Liftings of reduction maps for quaternion algebras*,
-  2010 preprint, Theorem 3.1, Corollary 3.2, §3.6 and §§4.9–4.10, as cited at tex 9195–9296 —
-  UNVERIFIED here, not read; lane RC12's `Odd.CornutJetchevThm31` records its locators — + ELLIOT,
-  tex 9195–9296) — the reduction identity at the reference tuple `t₀`,
+  2010 preprint, arXiv:1012.0725v1, Theorem 3.1 (§3.5, p. 9), Corollary 3.2, §3.6 and §§4.9–4.10,
+  as cited at tex 9195–9296 (read; the one statement is `PrintsArith.CJSetting.Thm31`, the `κ = 1`
+  torsor bijection `PrintsArith.CJReductionData.thm3_1KappaOne_of_print`) + ELLIOT, tex 9195–9296)
+  — the reduction identity at the reference tuple `t₀`,
   `∑_{[a]} χ_F([a]) P_M(z_a) = λ_M(\overline{LP_D})` in `ℤ/2^M`, for integer lifts:
   `2^M ∣ ∑_c χF(c) P(zc(t₀,c)) − λ` with `λ` an integer lift of `λ_M(\overline{LP_D})`;
 * `horient` (ELLIOT, tex 9329–9364; the sign algebra is lane RC12's `Odd.orientation_signs`) —
@@ -509,7 +511,7 @@ structure ComparisonInputs (S : ThetaStage O a b) (M : ℕ) (m D : ℤ) (ω : �
   /-- The reference tuple, realized by the image of the reference Heegner point `x_D`
   (tex 9272–9274). -/
   t₀ : Tup
-  /-- PRINT (Cornut–Jetchev Theorem 3.1, Corollary 3.2, §§4.9–4.10; UNVERIFIED here) + ELLIOT
+  /-- PRINT (Cornut–Jetchev Theorem 3.1, Corollary 3.2, §§4.9–4.10; arXiv:1012.0725v1) + ELLIOT
   (tex 9195–9296): the reduction identity at the reference tuple (`O7_of_inputs`, `hred`). -/
   reduction : (2 : O) ^ M ∣ ∑ c, χF c * (S.P (zc param (t₀, c)) : O) - (lam : O)
   /-- ELLIOT (tex 9329–9364): the orientation changes (`O7_of_inputs`, `horient`). -/

@@ -65,7 +65,10 @@ because unary theta series have good eigenvalues of absolute value `p + 1 > 2√
 prime to the level, so `ψ(D/D₀) = ψ(D)ψ(D₀)^{-1}` ✓. `WaldspurgerCor2` states the corollary in exactly
 this specialization. `WaldspurgerNonvanishing` states the classical form of the nonvanishing input
 that App E extracts from Proposition 18 and the ICM theorem: it includes Elliot's local
-construction of a scalar `K₀`-type (App E L7837–7940; ELLIOT), and its print is UNVERIFIED.
+construction of a scalar `K₀`-type (App E L7837–7940; ELLIOT), and its print is UNVERIFIED. That
+construction also gives the scalar character `ψ` two-power order (App E L7918–7919, L7943–7944),
+which the statement records as a conjunct of its conclusion (ELLIOT, see its docstring); App E
+uses it for `z_D ∈ μ_{2^∞}` (L8123).
 -/
 
 noncomputable section
@@ -151,7 +154,18 @@ scalar character and level supported on `S₀` is Elliot's local construction, A
 print UNVERIFIED). Let `S₀ ∋ 2` contain every prime of the conductor of `E` (the level of a
 functional equation of `L(E, s)`), `σ = ±1`, and `D₀ > 0` squarefree prime to `S₀` with
 `L(E^{(σD₀)}, 1) ≠ 0`. Then for some `N` with `4 ∣ N` and prime support in `S₀`, and characters
-`ψ, η = ψχ_{-σ}` modulo `N`, the eigenspace of `E` and `η` contains `g` with `a_g(D₀) ≠ 0`. -/
+`ψ, η = ψχ_{-σ}` modulo `N` with `ψ` of two-power order (`ψ ^ (2 ^ k) = 1` for some `k`), the
+eigenspace of `E` and `η` contains `g` with `a_g(D₀) ≠ 0`.
+
+**The two-power order of `ψ`** (ELLIOT; App E L7918–7919 and L7943–7944) is Elliot's conclusion
+from his local construction, not part of Waldspurger's print: at each `p ∈ S₀` the unit
+eigencharacter `α` is chosen of two-power order (L7864–7868) and the theta-cubed (Weil) multiplier
+has two-power root-of-unity values (L7846–7849), so "The Weil normalization contributes only
+two-power roots of unity, so the resulting classical character has two-power order" (L7918–7919);
+"Let the resulting scalar character be `ψ` and put `η = ψχ_{−σ}`. Both have two-power order"
+(L7943–7944). App E uses it for "`z_D` is a two-power root of unity" (L8123), the field `z_root` of
+`EvenPhaseData`. The two-power order of `η` then follows (PROVED, `eta_pow_two_pow_eq_one` in the
+Appendix E files). -/
 def WaldspurgerNonvanishing : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → ∀ σ : ℤ, (σ = 1 ∨ σ = -1) →
     ∀ S₀ : Finset ℕ, (∀ p ∈ S₀, p.Prime) → 2 ∈ S₀ →
@@ -161,6 +175,7 @@ def WaldspurgerNonvanishing : Prop :=
         ∃ N : ℕ, 4 ∣ N ∧ (∀ p : ℕ, p.Prime → p ∣ N → p ∈ S₀) ∧
           ∃ ψ η : DirichletCharacter ℂ N,
             (∀ n : ℕ, n.Coprime N → η n = ψ n * (kronecker (-σ) n : ℂ)) ∧
+            (∃ k : ℕ, ψ ^ (2 ^ k) = 1) ∧
             ∃ g : ℍ → ℂ, IsInWaldspurgerEigenspace E N ψ η g ∧ hiwCoeff g D₀ ≠ 0
 
 end ZInQ.Manuscript.RC.PrintsAnalytic
