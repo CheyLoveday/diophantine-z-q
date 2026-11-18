@@ -34,8 +34,20 @@ parametrization of Darmon's Theorem 5.4:
 
 The old leaf is not relabelled: its premise is not Kolyvagin's.
 
+A stronger printed source, used as an alternative route (a governance choice, disclosed here): Darmon's
+Theorem 5.3 (same paper, §5, p. 53 of the 2008 author version) states the conclusion of
+`KolyvaginThm1Printed` for EVERY elliptic curve over `ℚ`, with no modularity premise
+(`DarmonThm53`, PRINT), so `kolyvaginThm1Printed_of_darmon53` (PROVED) gives the packaged leaf
+from it. The definitions match: Darmon's `L(E, s)` is the Hasse–Weil `L`-series, the Euler product
+of the local factors `F_p(p^{-s})^{-1}`, convergent on `Re s > 3/2` and continued to `ℂ` by
+modularity, and `r := ord_{s=1} L(E, s)`; here `AnalyticRank E r` asks for an entire function equal
+to Mathlib's `L(E, s)` (the Euler product of the local factors of the minimal models) on
+`Re s > 3/2` with order `r` at `s = 1`. Darmon's `r(E, ℚ)` is the rank of `E(ℚ)`
+(`Module.rank ℤ E(ℚ)` here) and `Ш(E/ℚ)` the Shafarevich–Tate group (`SelmerTwoPower.sha`, Tau
+Ceti's group of classes locally trivial at every place).
+
 Classification: `KolyvaginThm1WeilParam`, `DarmonThm54` PRINT (analytic form of the
-parametrization, as above); the bridges PROVED.
+parametrization, as above); `DarmonThm53` PRINT; the bridges PROVED.
 -/
 
 noncomputable section
@@ -87,5 +99,22 @@ Dokchitser–Dokchitser Theorem 1.8 and Cai–Shu–Tian Theorem 1.1. -/
 theorem prints_of_weilParam (hB : BCDTThmA) (hD : DarmonThm54) (hK : KolyvaginThm1WeilParam)
     (hdd : DokchitserThm18) (hcst : CST.CSTThm11Split) : Prints :=
   ⟨hB, kolyvaginThm1Printed_of_weilParam hD hK, hdd, hcst⟩
+
+/-- **Darmon, Theorem 5.3: rank and Shafarevich–Tate group in analytic rank `≤ 1`** (printed leaf;
+H. Darmon, "Rational points on curves", §5, Theorem 5.3; read in the author's version dated April
+11, 2008, p. 53; published page UNVERIFIED): "Let `E` be an elliptic curve over `ℚ`, and let
+`L(E, s)` be its Hasse–Weil `L`-series. If `r := ord_{s=1} L(E, s) ≤ 1`, then `r(E, ℚ) = r` and
+`Ш(E/ℚ)` is finite." A stronger printed source than the packaged Kolyvagin leaf (no modularity
+premise; Darmon derives it from modularity, Gross–Zagier and Kolyvagin); see the module docstring
+for the match of the definitions. -/
+def DarmonThm53 : Prop :=
+  ∀ E : WeierstrassCurve ℚ, E.IsElliptic → ∀ r : ℕ, r ≤ 1 → AnalyticRank E r →
+    Module.rank ℤ E.toAffine.Point = r ∧ Finite (sha E)
+
+/-- **The packaged Kolyvagin leaf from Darmon's Theorem 5.3** (PROVED; an alternative route by a
+stronger printed source, disclosed above): the modularity premise of `KolyvaginThm1Printed` is not
+needed. -/
+theorem kolyvaginThm1Printed_of_darmon53 (hD : DarmonThm53) : KolyvaginThm1Printed :=
+  fun E hE _ r hr hA => hD E hE r hr hA
 
 end ZInQ.Contrib.CloudB3RC53
