@@ -3,10 +3,10 @@ import ZInQKernel.Contrib.CloudB3RC53.Prints
 /-!
 # RC53 blueprint: the top-level nodes of the proof of Theorem 5.3
 
-The top-level deduction of Theorem 5.3 (tex L1793–1797, L2593–2602, L5666–5741; restated at
+The top-level deduction of Theorem 5.3 (tex L1792–1796, L2593–2602, L5666–5741; restated at
 L10862–10935) is:
 
-1. **Root number.** Selmer parity gives `w(E_ℓ) = -1` (`RootNumberNode`, tex L1793–1797), so
+1. **Root number.** Selmer parity gives `w(E_ℓ) = -1` (`RootNumberNode`, tex L1792–1796), so
    `L(E_ℓ, 1) = 0` (`CentralValueZeroNode`).
 2. **Branch 1 / Branch 2** (`BranchPackageNode`, Sections 7–9 and Appendices E–G). Either the
    odd limit symbol is a unit at the empty configuration, and visibility (O.8) at `D = 1` gives
@@ -16,7 +16,8 @@ L10862–10935) is:
    uniform upper bound `v₂ ũ_x(0) ≤ B` at `x ≠ 0` from (3.9), (3.4), (4.6), (4.7), and the
    base-zero lemma `ex:arith-base-zero`. This package is `FixedFieldPackage`.
 3. **Missing address** (`MissingAddressNode`, tex L5666–5735, (5.10)–(5.11)): from the clearing
-   identity alone, some `x ≠ 0` has `v₂(ũ_x(0) - ũ_0(0)) ≥ M - 2c`.
+   identity, the pole bound, the regular base and the numerical choices (5.10), some `x ≠ 0` has
+   `v₂(ũ_x(0) - ũ_0(0)) ≥ M - 2c`.
 4. **Final deduction** (`FinalRankDeductionNode`, tex L5734–5736, L10922–10924): with the root
    number `−1` of step 1, if `L'(E/K,1) ≠ 0` and `L(E^{(k)},1) ≠ 0`, then `ord_{s=1} L(E,s) = 1`.
 
@@ -36,7 +37,7 @@ open ZInQ.Manuscript ZInQ.Manuscript.SelmerTwoPower Filter Topology
 
 /-! ### Root number and the central value -/
 
-/-- **Root number `-1`** (tex L1793–1797): for `ℓ` in the domain of Theorem 5.3,
+/-- **Root number `-1`** (tex L1792–1796): for `ℓ` in the domain of Theorem 5.3,
 `corank_{ℤ₂} Sel_{2^∞}(E_ℓ/ℚ) = 1` gives root number `-1`. Proved from Dokchitser–Dokchitser
 Theorem 1.8 (`rootNumberNode_proof`, `Assembly.lean`). -/
 def RootNumberNode : Prop :=

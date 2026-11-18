@@ -31,7 +31,7 @@ calibration, common coordinate, central specialization, base zero; RC16 switches
 | node | Lean | tex | depends on | owner | status |
 |---|---|---|---|---|---|
 | Theorem 5.3 | `restrictedConverseGenuine_of_nodes` | 1771–1776, 5666–5741 | Prints, BranchPackageNode, MissingAddressNode, the rows below | TOP | PROVED (from the two open nodes) |
-| root number −1 | `RootNumberNode`, `rootNumberNode_proof` | 1793–1797 | DD Thm 1.8; rational 2-torsion of `E_ℓ` (`PoleRC`) | TOP | PROVED |
+| root number −1 | `RootNumberNode`, `rootNumberNode_proof` | 1792–1796 | DD Thm 1.8; rational 2-torsion of `E_ℓ` (`PoleRC`) | TOP | PROVED |
 | `L(E,1) = 0` | `CentralValueZeroNode`, `centralValueZeroNode_proof` | (not a sentence of the text; used implicitly at 5734–5736, 10922–10924, from the root number −1 of 1792–1796) | functional equation at `s = 1` | TOP | PROVED |
 | final deduction | `FinalRankDeductionNode`, `finalRankDeductionNode_proof` | 5734–5736, 10922–10924 | root number −1; order of a product | TOP | PROVED |
 | missing address (5.10)–(5.11) | `MissingAddressNode`; `ZInQ.Manuscript.RC.Boolean.missingAddressNode` | 5666–5735 | Boolean bit degree, cube parity, Gauss lemma for `𝒪` | RC1 | PROVED (on `rc/thm53-proof-20261117`) |
