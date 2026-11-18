@@ -67,8 +67,39 @@ theorem tt_eq_logTeich : tt p Z = logTeich p (untilt_eps Z) := by
   rw [hsplit, ← neg_sub, add_sub_cancel_right]
   exact neg_mem (Ideal.pow_le_pow_right (Nat.le_succ n) htail)
 
+open HDec.PkgI4.BmaxOne (IsGenEps)
+
+/-- Every compatible primitive root system gives a generator of the Tate line. -/
+theorem isGenEps_eps : IsGenEps p (eps Z) := by
+  refine ⟨untilt_eps Z, ?_⟩
+  have h : (frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).symm (eps Z) = eps1 Z := by
+    apply (frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).injective
+    rw [RingEquiv.apply_symm_apply, frobeniusEquiv_apply, frobenius_def, eps1_pow]
+  change PreTilt.untilt ((frobeniusEquiv (PreTilt 𝓞_ℂ_[p] p) p).symm^[1] (eps Z)) ≠ 1
+  rw [Function.iterate_one, h, untilt_eps1]
+  exact Z.one_ne
+
+/-- The Fontaine period used for localization transforms by the cyclotomic character. -/
+theorem bdrPlusMap_tt (σ : GQp p) :
+    DR.bdrPlusMap p (oAct p σ) (tt p Z) = qpToPlus p (cycPow p σ 1) * tt p Z := by
+  have h := DeRhamScholze.TT.plus_logTeich p σ (untilt_eps Z)
+  rw [DeRhamScholze.TT.logTeich_flatAct p (isGenEps_eps p Z) σ,
+    DeRhamScholze.TT.zpB_eq_qpToPlus] at h
+  rw [tt_eq_logTeich, DeRhamScholze.TT.cycPow_one_eq]
+  exact h
+
+/-- The same transformation law in the kernel's fraction field. -/
+theorem bdrAct_tt (σ : GQp p) :
+    bdrAct p σ (algebraMap (BDeRhamPlus 𝓞_ℂ_[p] p) (BdR p) (tt p Z)) =
+      qpToBdR p (cycPow p σ 1) * algebraMap (BDeRhamPlus 𝓞_ℂ_[p] p) (BdR p) (tt p Z) := by
+  rw [BdRInv.bdrAct_algebraMap, bdrPlusMap_tt, map_mul]
+  rfl
+
 end
 
 end DeRhamPrint.BdRT
 
 #print axioms DeRhamPrint.BdRT.tt_eq_logTeich
+#print axioms DeRhamPrint.BdRT.isGenEps_eps
+#print axioms DeRhamPrint.BdRT.bdrPlusMap_tt
+#print axioms DeRhamPrint.BdRT.bdrAct_tt

@@ -23,3 +23,7 @@
   `IsUnit.map_ringInverse`; the tail after degree `n` lies in
   `(xi)^(n+1)`. The axiom check gave `propext`, `Classical.choice`,
   and `Quot.sound`.
+- VERIFIED (Lean): `isGenEps_eps` gives a generator for every `RootSystem p`.
+  `bdrPlusMap_tt` and `bdrAct_tt` give `sigma(t) = chi(sigma) * t` in
+  the positive ring and the kernel's period field, respectively. All four
+  checks so far gave the three standard axioms.
