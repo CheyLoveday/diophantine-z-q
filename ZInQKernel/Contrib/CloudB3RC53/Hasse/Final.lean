@@ -8,7 +8,8 @@ import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.ArtinUnconditional
 The PRINT `HasseBound` (Silverman V.1.1) is proved in `WeilIsogeny/HasseProof.lean`
 (`hasseBoundProved_proof`, same statement), so lane RC8's `HasseConvergence` holds outright
 (`hasseConvergence_proved`), and `ArtinFactorization` needs only `ModularNewform`
-(`artinFactorization_unconditional`, from `artinFactorization_of_newform'`).
+(`artinFactorization_unconditional`, from `artinFactorization_of_newform'`), and (3.4) follows from
+the printed leaves and `ModularNewform` (`genusLower34_unconditional`).
 
 Classification: PROVED.
 -/
@@ -23,5 +24,11 @@ theorem hasseConvergence_proved : ZInQ.Manuscript.RC.PrintsAnalytic.HasseConverg
 theorem artinFactorization_unconditional (hMN : ZInQ.Manuscript.RC.PrintsAnalytic.ModularNewform) :
     ZInQ.Contrib.CloudB3RC53.GenusOdd.ArtinFactorization :=
   ZInQ.Contrib.CloudB3RC53.GenusOdd.artinFactorization_of_newform' hasseConvergence_proved hMN
+
+/-- **(3.4) from the printed leaves and `ModularNewform`.** -/
+theorem genusLower34_unconditional (P : ZInQ.Contrib.CloudB3RC53.Prints)
+    (hMN : ZInQ.Manuscript.RC.PrintsAnalytic.ModularNewform) :
+    ZInQ.Contrib.CloudB3RC53.GenusOdd.GenusLower34 :=
+  ZInQ.Contrib.CloudB3RC53.GenusOdd.genusLower34_of_newform' P hasseConvergence_proved hMN
 
 end ZInQ.Contrib.CloudB3RC53.Hasse
