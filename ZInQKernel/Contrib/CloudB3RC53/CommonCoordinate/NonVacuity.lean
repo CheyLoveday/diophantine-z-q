@@ -22,27 +22,28 @@ namespace ZInQ.Contrib.CloudB3RC53.CommonCoordinate
 
 open Matrix ZInQ.Manuscript ZInQ.Manuscript.RC ZInQ.Manuscript.RC.Central
 
-local notation "K" => PowerSeries ℚ_[2]
+/-- The coefficient field of the example. -/
+abbrev KPS : Type := PowerSeries ℚ_[2]
 
 /-- The relaxed model of the example: `diag(0, 1, 1, 1, 1)` on `Fin 1 ⊕ (Fin 2 ⊕ Fin 2)`. -/
-noncomputable def exDiag : Fin 1 ⊕ (Fin 2 ⊕ Fin 2) → K := Sum.elim (fun _ => 0) (fun _ => 1)
+noncomputable def exDiag : Fin 1 ⊕ (Fin 2 ⊕ Fin 2) → KPS := Sum.elim (fun _ => 0) (fun _ => 1)
 
 theorem twoPlaceBlock_example :
-    twoPlaceBlock (1 : Matrix (Fin 2) (Fin 2) K) 1 2 2 = 1 := by
+    twoPlaceBlock (1 : Matrix (Fin 2) (Fin 2) KPS) 1 2 2 = 1 := by
   unfold twoPlaceBlock
-  rw [show (2 : K) • (1 : Matrix (Fin 2) (Fin 2) K) - (1 : K) • 1 = 1 by
+  rw [show (2 : KPS) • (1 : Matrix (Fin 2) (Fin 2) KPS) - (1 : KPS) • 1 = 1 by
     rw [one_smul, two_smul, add_sub_cancel_right]]
   exact fromBlocks_one
 
 theorem relaxed_example :
-    fromBlocks (0 : Matrix (Fin 1) (Fin 1) K) 0 0 (twoPlaceBlock (1 : Matrix (Fin 2) (Fin 2) K) 1 2 2) =
+    fromBlocks (0 : Matrix (Fin 1) (Fin 1) KPS) 0 0 (twoPlaceBlock (1 : Matrix (Fin 2) (Fin 2) KPS) 1 2 2) =
       Matrix.diagonal exDiag := by
   rw [twoPlaceBlock_example, ← diagonal_zero, ← diagonal_one, fromBlocks_diagonal]
   rfl
 
 /-- **Non-vacuity of `ActualStep`** with `Λ`-unit basis comparisons, over `ℚ₂[[t]]`. -/
 theorem actualStep_example :
-    ActualStep (1 : Matrix (Fin 2) (Fin 2) K) 1 1 2 2 2 1 4 1 LamUnit LamUnit := by
+    ActualStep (1 : Matrix (Fin 2) (Fin 2) KPS) 1 1 2 2 2 1 4 1 LamUnit LamUnit := by
   refine ⟨1, 0, 1, 1, Matrix.diagonal exDiag, 1, 1, 0, fun _ => 1, fun _ => 1,
     Sum.elim (fun _ => -2) (fun _ => 0), Sum.elim (fun _ => -2) (fun _ => 0),
     by simp, by simp, by simp, by simp, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
