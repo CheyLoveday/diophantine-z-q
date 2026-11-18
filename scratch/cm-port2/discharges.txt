@@ -1,0 +1,43 @@
+Discharges.lean (selected output; exit 0)
+DISCHARGES [OpenResearchLeaves64.cmFibreSplit] by HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder324_R6U
+  still assumes: [HDec.QMLattice.YuB6Alg,
+ ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC,
+ G0ModField.FibreCoverExists,
+ PkgI2.NeronOggShafarevich,
+ HDec.D2A6.R6U,
+ PkgI2.TorsionStructure]
+  axioms: [propext, Classical.choice, Quot.sound]
+
+DISCHARGES [OpenResearchLeaves64.cmFibreSplit] by HDec.CMBranch.FibreSplit.cmFibreSplit_of_liveInputs
+  still assumes: [ZInQ.Contrib.GroupLawNeron.NeronSchemeExtensionDedekind,
+ NOSSepDict.NeronOggShafarevichSep,
+ SZRaynaud.SilverbergZarhinThm35,
+ SZRaynaud.ElliotWildInertiaTrivial,
+ Y3RouteA.Y3FullThreeRepZ30,
+ Y3Hodge.DeligneCanonicalModelY3EveryPrint,
+ Y3P1j.Y3ToP1j]
+  axioms: [propext, Classical.choice, Quot.sound]
+
+#discharges: 36 open hypotheses, 14026 theorems checked, 135 discharge one
+
+DischargesField.lean (selected output; exit 0)
+DISCHARGES [cmFibreSplit] by HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder324_R6U
+  still assumes: [HDec.QMLattice.YuB6Alg,
+ ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC,
+ G0ModField.FibreCoverExists,
+ PkgI2.NeronOggShafarevich,
+ HDec.D2A6.R6U,
+ PkgI2.TorsionStructure]
+  axioms: [propext, Classical.choice, Quot.sound]
+
+DISCHARGES [cmFibreSplit] by HDec.CMBranch.FibreSplit.cmFibreSplit_of_liveInputs
+  still assumes: [ZInQ.Contrib.GroupLawNeron.NeronSchemeExtensionDedekind,
+ NOSSepDict.NeronOggShafarevichSep,
+ SZRaynaud.SilverbergZarhinThm35,
+ SZRaynaud.ElliotWildInertiaTrivial,
+ Y3RouteA.Y3FullThreeRepZ30,
+ Y3Hodge.DeligneCanonicalModelY3EveryPrint,
+ Y3P1j.Y3ToP1j]
+  axioms: [propext, Classical.choice, Quot.sound]
+
+#discharges: 9 open hypotheses, 14057 theorems checked, 11 discharge one

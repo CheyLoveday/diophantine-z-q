@@ -1,0 +1,6 @@
+ 22:15:17 up 4 days,  5:53,  7 users,  load average: 4.84, 4.80, 4.61
+               total        used        free      shared  buff/cache   available
+Mem:             235          81          21           0         135         154
+Swap:            255          62         193
+'HDec.CMBranch.FibreSplit.cmCurveOrder324_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder324' depends on axioms: [propext, Classical.choice, Quot.sound]

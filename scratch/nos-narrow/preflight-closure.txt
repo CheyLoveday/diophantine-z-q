@@ -1,0 +1,16 @@
+'HDec.HSyn.sixContactMin_of_open80_nos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.sixContactMin_of_open81' depends on axioms: [propext, Classical.choice, Quot.sound]
+HDec.HSyn.sixContactMin_of_open79_hm: closure size 273640
+  NOSSepDict.NeronOggShafarevichSep: PRESENT
+  PkgI2.NeronOggShafarevich: PRESENT
+  NOSSepDict.neronOggShafarevich_of_sep: PRESENT
+  NOSNarrow.NeronOggShafarevichSepPerfect: absent
+  NOSNarrow.nosForward_proof: absent
+  sorryAx: absent
+HDec.HSyn.sixContactMin_of_open81: closure size 273777
+  NOSSepDict.NeronOggShafarevichSep: absent
+  PkgI2.NeronOggShafarevich: absent
+  NOSSepDict.neronOggShafarevich_of_sep: absent
+  NOSNarrow.NeronOggShafarevichSepPerfect: absent
+  NOSNarrow.nosForward_proof: PRESENT
+  sorryAx: absent

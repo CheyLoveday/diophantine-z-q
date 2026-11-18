@@ -1,0 +1,9 @@
+{"name": "nos-proof",
+ "imports": ["ZInQKernel.Contrib.OneProof.NeronOggShafarevich"],
+ "discharges": [
+  {"field": "r7a",
+   "proof": "_root_.NOSProof.neronOggShafarevich_of_converse {n}.nosConverseSep",
+   "leaves": [{"name": "nosConverseSep", "type": "_root_.NOSProof.NOSConverseSep",
+     "doc": "Serre-Tate, Ann. of Math. 88 (1968), section 1, Thm 1 (Neron-Ogg-Shafarevich criterion), direction (c) => (a), over a separable closure K_s: inertia of a valuation ring of K_s over O trivial on A(K_s)[m] for infinitely many m prime to the residue characteristic implies good reduction (numbering UNVERIFIED). The directions (a) => (b) => (c) are proved (nos-proof).",
+     "kind": "published", "flag": "",
+     "source": "Serre-Tate 1968 Thm 1, direction (c) => (a), over IsSepClosure K Ks (one implication of the printed equivalence); (a) => (b) proved in Lean from the proved row ReductionTorsionBijective (MulEtale, fork PR #19), (b) => (c) and the Kbar transport proved (nos-proof)"}]}]}

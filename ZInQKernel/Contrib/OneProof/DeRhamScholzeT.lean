@@ -231,7 +231,7 @@ theorem fontaineTwistT'_iff : FontaineTwistT' ↔ DeRhamScholze.HT.FontaineTwist
 /-- **`FontaineTwistT`, proved.** -/
 theorem fontaineTwistT : DeRhamScholze.HT.FontaineTwistT := fontaineTwistT_proof
 
-/-- **`DeRhamHodgeTate01`, proved** (the manuscript's "consequently", L10995): from Fontaine's `t` and Tate's
+/-- **`DeRhamHodgeTate01`, proved** (the manuscript's "consequently", L10997): from Fontaine's `t` and Tate's
 theorems. -/
 theorem deRhamHodgeTate01_proof : DeRhamScholze.DeRhamHodgeTate01 :=
   DeRhamScholze.HT.deRhamHodgeTate01_of_fontaineT fontaineTwistT
