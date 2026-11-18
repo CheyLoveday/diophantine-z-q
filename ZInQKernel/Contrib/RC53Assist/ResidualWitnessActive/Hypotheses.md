@@ -147,3 +147,5 @@ Milne, *Arithmetic Duality Theorems*, 2nd ed. (2006), Ch. I: Theorem 4.10(c) (pp
 Theorem 5.1 (p. 67), Theorem 2.8 (p. 31), Corollary 2.3 (p. 28); Nekovář, *Selmer complexes*,
 Astérisque 310 (2006), Proposition 7.8.8(ii) (pp. 186–187). They are explicit hypotheses of the
 statements; the locators are those of the repository's statements of these propositions.
+
+Note (independent review, 2026-11-18): the input `hM0` of the constructors holds trivially at this instance and should be read as TRIVIAL in the tables below. `Axioms.txt` was regenerated so that declaration names containing an apostrophe are printed in full.
