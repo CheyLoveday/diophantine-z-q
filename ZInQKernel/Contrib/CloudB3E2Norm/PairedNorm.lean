@@ -34,13 +34,18 @@ the unramified condition). The consumer is lane RC30's `hlamR_of_genuine`
   equivalent to these three component identities.
 * Non-vacuity: `nonVacuity_paired`, `nonVacuity_components`.
 
-**What remains** to supply `hlift` for the genuine paired complexes: the global component (1)
-needs the identification of `G^1` (continuous cochains of `G_{K,S}` with finite coefficients) with
-the cochains of this file and the paired points `y'_T`; components (2) and (3) are local: the local
-Kummer cocycles of the paired points lie in the local conditions (the Kummer condition at the old
-places, zero/unramified at `q`), with the homotopy component read off from those local identities.
+**What remains** to supply `hlift` for the genuine paired complexes:
+* the consumer obligations of `paired_transfer_kummer_norm_of_transversal`: `hconj` (the paired
+  character takes the inverse Frobenius value) and `hθ'` (the paired character at support `S` is
+  inflated from the one at `P⊥`); see `GlobalChar.lean` for both from one global character;
+* the global component (1): the identification of `G^1` (continuous cochains of `G_{K,S}` with
+  finite coefficients) with the cochains of this file, of `M[k]` with the genuine finite coefficient
+  module, and of the paired points `y'_T`, and the passage to the inner limit (`Λ`);
+* components (2) and (3), which are local: the local Kummer cocycles of the paired points lie in
+  the local conditions (the Kummer condition at the old places, zero/unramified at `q`), with the
+  homotopy component read off from those local identities.
 
-Kinds: definitions and PROVED.
+Kinds: PROVED (this file adds no definitions).
 -/
 
 noncomputable section
