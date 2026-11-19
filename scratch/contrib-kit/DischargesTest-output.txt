@@ -41,19 +41,19 @@ DISCHARGES [OpenAddedLeaves28.scholzeH1AbVar] by DeRhamScholze.HTMerge.scholzeH1
 DISCHARGES [OpenResearchLeaves68.cmHeight62] by HDec.CMBranch.CMInputs2.cmHeight62
   still assumes: [HDec.CMBranch.CMInputs2]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.CMBranch.CMInputs2.cmjDegree
+DISCHARGES [OpenResearchLeaves68.cmPotentialGood] by HDec.CMBranch.CMInputs2.cmPotentialGood
   still assumes: [HDec.CMBranch.CMInputs2]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.fowlerProp27] by HDec.CMBranch.CMInputs2.fowlerProp27
+DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.CMBranch.CMInputs2.cmjDegree
   still assumes: [HDec.CMBranch.CMInputs2]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.cmHeight62] by HDec.CMBranch.CMInputs3.cmHeight62
   still assumes: [HDec.CMBranch.CMInputs3]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.CMBranch.CMInputs3.cmjDegree
+DISCHARGES [OpenResearchLeaves68.cmPotentialGood] by HDec.CMBranch.CMInputs3.cmPotentialGood
   still assumes: [HDec.CMBranch.CMInputs3]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.fowlerProp27] by HDec.CMBranch.CMInputs3.fowlerProp27
+DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.CMBranch.CMInputs3.cmjDegree
   still assumes: [HDec.CMBranch.CMInputs3]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves28.conradAppB] by HDec.G0Galois.C8Conrad.C8Inputs.conradAppB
@@ -854,6 +854,9 @@ DISCHARGES [OpenResearchLeaves68.carayolThmAFrob] by HDec.HSyn.OpenResearchLeave
 DISCHARGES [OpenResearchLeaves68.cmHeight62] by HDec.HSyn.OpenResearchLeaves63NOS.cmHeight62
   still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves68.cmPotentialGood] by HDec.HSyn.OpenResearchLeaves63NOS.cmPotentialGood
+  still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.HSyn.OpenResearchLeaves63NOS.cmjDegree
   still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -867,9 +870,6 @@ DISCHARGES [OpenResearchLeaves68.dsThm966Printed] by HDec.HSyn.OpenResearchLeave
   still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.elliotWildInertiaTrivial] by HDec.HSyn.OpenResearchLeaves63NOS.elliotWildInertiaTrivial
-  still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.fowlerProp27] by HDec.HSyn.OpenResearchLeaves63NOS.fowlerProp27
   still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.gaudronRemondSec9LowerAnSS] by HDec.HSyn.OpenResearchLeaves63NOS.gaudronRemondSec9LowerAnSS
@@ -926,6 +926,9 @@ DISCHARGES [OpenResearchLeaves68.carayolThmAFrob] by HDec.HSyn.OpenResearchLeave
 DISCHARGES [OpenResearchLeaves68.cmHeight62] by HDec.HSyn.OpenResearchLeaves64NOS.cmHeight62
   still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves68.cmPotentialGood] by HDec.HSyn.OpenResearchLeaves64NOS.cmPotentialGood
+  still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.HSyn.OpenResearchLeaves64NOS.cmjDegree
   still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -939,9 +942,6 @@ DISCHARGES [OpenResearchLeaves68.dsThm966Printed] by HDec.HSyn.OpenResearchLeave
   still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.elliotWildInertiaTrivial] by HDec.HSyn.OpenResearchLeaves64NOS.elliotWildInertiaTrivial
-  still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.fowlerProp27] by HDec.HSyn.OpenResearchLeaves64NOS.fowlerProp27
   still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.gaudronRemondSec9LowerAnSS] by HDec.HSyn.OpenResearchLeaves64NOS.gaudronRemondSec9LowerAnSS
@@ -1062,4 +1062,4 @@ DISCHARGES [OpenResearchLeaves68.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 32 open hypotheses, 15236 theorems checked, 341 discharge one
+#discharges: 33 open hypotheses, 15316 theorems checked, 341 discharge one

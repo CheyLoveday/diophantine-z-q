@@ -13,14 +13,14 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**28 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves68`), plus four manuscript hypotheses outside the H part (`hRC`, `hCT`, `hB`, `hK`: pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
+**29 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves68`), plus four manuscript hypotheses outside the H part (`hRC`, `hCT`, `hB`, `hK`: pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
 
-* **Strict count: 5 published / 23 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 6 published / 23 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: consequence 17, published 11.
+* By kind: consequence 18, published 11.
 
 ## Kernel-wide readings
 
@@ -65,8 +65,6 @@ Readings that apply to every statement built on a shared kernel definition.
 ## Good first targets
 
 * [`r9a`](#r9a): a good first target; published, tier T4, [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
-* [`dsThm965Printed`](#dsthm965printed): a good first target; published, tier T4, [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
-* [`dsThm966Printed`](#dsthm966printed): a good first target; published, tier T4, [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * [`silverbergZarhinThm35`](#silverbergzarhinthm35): a good first target; published, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * [`faltingsLemma1DVRPrint`](#faltingslemma1dvrprint): a good first target; published, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 
@@ -78,6 +76,12 @@ ping, and is released if there is no reply within 7 days of the ping.
 
 | hypothesis | holder | since |
 | --- | --- | --- |
+| [`neronSchemeExtensionDedekind`](#neronschemeextensiondedekind) | @mccorvie ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7002504399)) | 2026-11-19 |
+| [`dsThm965Printed`](#dsthm965printed) | @zachbaugher ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6985165731)) | 2026-11-18 |
+| [`dsThm966Printed`](#dsthm966printed) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) | 2026-11-17 |
+| [`carayolThmAFrob`](#carayolthmafrob) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) | 2026-11-19 |
+| [`shimuraThm1Af`](#shimurathm1af) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6997431192)) | 2026-11-19 |
+| [`t10TateDuality`](#t10tateduality) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6996190309)) | 2026-11-19 |
 | [`hRC`](#hrc) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) | 2026-11-17 |
 
 ## Packets
@@ -132,29 +136,30 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`conradAppB`](#conradappb) | added | consequence | GLUE | pending-review |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
 | [`scholzeH1AbVar`](#scholzeh1abvar) | added | consequence | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
-| [`t10TateDuality`](#t10tateduality) | added | consequence | GLUE | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
+| [`t10TateDuality`](#t10tateduality) | added | consequence | GLUE | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6996190309)) |
 | [`afCharpolyDS965`](#afcharpolyds965) | research | consequence | GLUE | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`bergerSurveyF`](#bergersurveyf) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`bShStandardModel`](#bshstandardmodel) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
-| [`carayolThmAFrob`](#carayolthmafrob) | research | published | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
+| [`carayolThmAFrob`](#carayolthmafrob) | research | published | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) |
 | [`cmHeight62`](#cmheight62) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
-| [`cmjDegree`](#cmjdegree) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
+| [`cmjDegree`](#cmjdegree) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open (last released by [@zachbaugher](https://github.com/zachbaugher): reports delivered (https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973387139 for `fowlerProp27`, https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973419601 for...) |
+| [`cmPotentialGood`](#cmpotentialgood) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
-| [`dsThm965Printed`](#dsthm965printed) | research | published | GLUE | unread, unverified-locator | good-first | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
+| [`dsThm965Printed`](#dsthm965printed) | research | published | GLUE | unread, unverified-locator | good-first | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by [@zachbaugher](https://github.com/zachbaugher) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6985165731)) |
 | [`elliotWildInertiaTrivial`](#elliotwildinertiatrivial) | research | consequence | GLUE | note |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`fowlerProp27`](#fowlerprop27) | research | published | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`gaudronRemondSec9LowerAnSS`](#gaudronremondsec9loweranss) | research | published | GLUE | pending-reading | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`gaudronRemondThm14AnSS`](#gaudronremondthm14anss) | research | published | GLUE | pending-review | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`javanpeykarThm111An`](#javanpeykarthm111an) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`modularHTCoeff`](#modularhtcoeff) | research | consequence | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
-| [`neronSchemeExtensionDedekind`](#neronschemeextensiondedekind) | research | published | GLUE | unverified-locator |  | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`neronSchemeExtensionDedekind`](#neronschemeextensiondedekind) | research | published | GLUE | unverified-locator |  | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7002504399)) |
 | [`panPrintedF`](#panprintedf) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`shimuraThm1Af`](#shimurathm1af) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
+| [`shimuraThm1Af`](#shimurathm1af) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6997431192)) |
 | [`y3FullThreeRepZ30`](#y3fullthreerepz30) | research | consequence | GLUE | unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`y3ToP1j`](#y3top1j) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
-| [`dsThm966Printed`](#dsthm966printed) | research | published | LEAF | note | good-first | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
+| [`dsThm966Printed`](#dsthm966printed) | research | published | LEAF | note | good-first | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) |
 | [`faltingsLemma1DVRPrint`](#faltingslemma1dvrprint) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`fowlerProp27PrintCanonical`](#fowlerprop27printcanonical) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`r9a`](#r9a) | research | published | LEAF |  | good-first | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`r9b`](#r9b) | research | published | LEAF |  | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`silverbergZarhinThm35`](#silverbergzarhinthm35) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
@@ -199,7 +204,7 @@ DeRhamScholze.HTMerge.ScholzeH1AbVar
 * Source: Milne, Abelian Varieties v2.0 (March 16, 2008, bibitem milne-av), Thm 12.1(a) p. 55 with Rem. 12.5 p. 56 (manuscript's citation, L10966-10970); earlier source text: Milne, Abelian varieties v2.00 Part I Thm 12.1(a) (manuscript's citation, L10966-10970) / Milne 1986 Thm 15.1(a): V_l(A) = H^1_et(A_Kbar, Q_l)^dual, Galois-equivariantly, over Mathlib's pro-etale l-adic cohomology (T10Etale.T10_TateDuality)
 * packet [R7](#packet-r7); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6996190309)).
 
 ```lean
 T10Etale.T10_TateDuality
@@ -255,7 +260,7 @@ R16Thm1.BShStandardModel
 * Source: Darmon-Diamond-Taylor, Fermat's Last Theorem, Current Developments in Mathematics 1995 (1997), Thm 3.1 (a)-(d) and section 2 (conductor); Carayol, Ann. Sci. ENS (4) 19 (1986) 409-468, sections 0.3-0.7 and Theoreme (A), pp. 409-411 (the manuscript's locator, L9778; normalization L9784-9796); Casselman, Math. Ann. 201 (1973) Thm 1, pp. 302-306 (manuscript L9802-9806); Ribet, LNM 601 (1977) Thm 2.3; Shimura 1971 Thm 7.14; locators UNVERIFIED
 * label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)).
 
 ```lean
 CarayolRefold.CarayolThmAFrob
@@ -283,13 +288,27 @@ HDec.CMBranch.CMHeight62
 * Source: diophantine_zq.tex L586-587 (uncited); classical: [Q(j(E)):Q] = h(R) for End(E) = R (Cox, Primes of the form x^2+ny^2, Thm 11.1, UNVERIFIED number)
 * discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
 * Human readings recorded: none.
-* Status: open.
+* Status: open (last released by [@zachbaugher](https://github.com/zachbaugher): reports delivered (https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973387139 for `fowlerProp27`, https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973419601 for...).
 
 ```lean
 HDec.CMBranch.CMjDegree
 ```
 
 > cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, #Pic(R) <= [L:Q] (L586-587).
+
+### cmPotentialGood
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves68.cmPotentialGood`; kind **consequence**, strict **GLUE**; flag: pending review (new leaf, GLUE until a reviewer rates it); ELLIOT-literature: classical fact the manuscript uses without citation (diophantine_zq.tex L596-597, 'After a finite extension E has everywhere good reduction, since its j-invariant is integral'); locators (Serre-Tate 1968; Silverman AEC VII.5.5) UNVERIFIED; pending review: GLUE until a reviewer rates it.
+* Source: diophantine_zq.tex L596-597 (uncited; reason given there: j integral); classical: Serre-Tate, Good reduction of abelian varieties, Ann. of Math. 88 (1968) (UNVERIFIED locator); Barquero-Sanchez et al. 2017 proof of Thm 1.3, p. 15 (upstream audit)
+* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+HDec.CMBranch.CMPotentialGood
+```
+
+> cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially good reduction (L596-597).
 
 ### deligneCanonicalModelY3EveryPrint
 
@@ -311,7 +330,7 @@ Y3Hodge.DeligneCanonicalModelY3EveryPrint
 * Source: Diamond-Shurman, GTM 228, Thm 9.6.5 (Deligne 1971; Shimura 1971 Thm 7.14 for k = 2), printed form over K_{f,lambda}: rho_{f,lambda}(Frob_p) has characteristic polynomial (or satisfies) x^2 - a_p x + chi(p) p^(k-1)
 * packet [R7](#packet-r7); label good-first (a good first target); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by [@zachbaugher](https://github.com/zachbaugher) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6985165731)).
 
 ```lean
 DSCoeffExt.DSThm965Printed
@@ -332,20 +351,6 @@ SZRaynaud.ElliotWildInertiaTrivial
 ```
 
 > ELLIOT (provenance (a): the uncited sentence of diophantine_zq.tex L817-818, 'Its wild inertia acts trivially on each V_l(A) with l != p'), stated at a finite place of a number field (SZRaynaud.ElliotWildInertiaTrivial): semistable reduction in Silverberg-Zarhin's sense implies every wild inertia element acts trivially on T_l(A), l invertible. True and standard (SGA 7 IX 3.5 with wild inertia pro-p; SZRaynaud.elliot_of_semistableUnipotent), but the manuscript cites nothing. With silverbergZarhinThm35 it gives D2 (d2a6-reroute: Contrib/OneProof/D2WildNF.lean) and replaces sga7_IX_3_5_ForwardGeom_Def34.
-
-### fowlerProp27
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves68.fowlerProp27`; kind **published**, strict **GLUE**; flag: pending review (new leaf, GLUE until a reviewer rates it); CITED (manuscript \cite[Proposition 2.7]{fowler}, diophantine_zq.tex L588-590); printed form over orders through h(Delta) = #Pic(O_Delta), Delta = f^2 d_k; print read by the upstream audit (AUDIT.md item 1), not re-read here; pending review: GLUE until a reviewer rates it.
-* Source: Fowler, Some uniform effective results on Andre-Oort for sums of powers in C^n, Math. Proc. Cambridge Philos. Soc. 180 (2026) 607-641, Prop. 2.7, printed pp. 615-616 (read by the upstream audit, AUDIT.md item 1); manuscript \cite[Proposition 2.7]{fowler}, diophantine_zq.tex L588-590
-* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-HDec.CMBranch.FowlerProp27
-```
-
-> cm-branch (leaf, printed form, pending review): Fowler, Math. Proc. Cambridge Philos. Soc. 180 (2026), Prop. 2.7 (L588-590).
 
 ### gaudronRemondSec9LowerAnSS
 
@@ -409,7 +414,7 @@ HTNewAssembly.ModularHTCoeff
 * Source: Bosch-Lutkebohmert-Raynaud, Neron models (1990), 1.4 Thm 3 with 1.2 Def 1: an abelian variety over the fraction field of a Dedekind domain D has a Neron model over Spec D (existence half; smooth, separated, quasi-compact, extension property for smooth D-schemes); numbers UNVERIFIED; group-law-dvr, goodmodel-iso. Replaces mumfordGroupLawConn (GIT 6.14 over a DVR follows: GoodModelIso.mumfordGroupLawDVR_of_dedekind) and the textbook field neronSchemeExtensionExists (its case D = O_L)
 * packet [R2](#packet-r2); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7002504399)).
 
 ```lean
 ZInQ.Contrib.GroupLawNeron.NeronSchemeExtensionDedekind
@@ -451,7 +456,7 @@ ZInQ.HeightSplit.PazukiCor13Upper
 * Source: Shimura, On the factors of the jacobian variety of a modular function field, J. Math. Soc. Japan 25 (1973), 523-544, Theorem 1 and its construction (pp. 525-527; AI page read); cited by diophantine_zq.tex (shimura-factors)
 * discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6997431192)).
 
 ```lean
 R16Thm1b.ShimuraThm1Af
@@ -493,7 +498,7 @@ Y3P1j.Y3ToP1j
 * Source: Deligne-Serre, Thm 4.1 with (4.1.1), pp. 513-514: f != 0 of type (1, eps), eigenvector of T_p (p not dividing N) with eigenvalues a_p => rho : G_Q -> GL_2(C), unramified outside N, Tr rho(Frob_p) = a_p, det rho(Frob_p) = eps(p)
 * packet [R7](#packet-r7); label good-first (a good first target); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)).
 
 ```lean
 DSThm966EV.DSThm966Printed
@@ -514,6 +519,20 @@ ZInQ.FaltingsRestate.FaltingsLemma1DVRPrint
 ```
 
 > Faltings 1983, p. 350, Lemma 1 (page read by the reading desk): a generic-fibre homomorphism of semiabelian schemes with abelian generic fibres extends uniquely as a morphism. S = Spec O is normal and U is its dense generic open. The model hypotheses give extensions by actual torus group schemes on both residue-field fibres, by isSemiabelianModelO_imp_faltingsDefScheme. The specialization is faltingsLemma1DVRPrint_of_printed; faltingsLemma1DVR_iff_print proves equivalence to the homomorphism form.
+
+### fowlerProp27PrintCanonical
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves68.fowlerProp27PrintCanonical`; kind **published**, strict **LEAF**; flag: p. 615: "Proposition 2·7. Let Δ < 0 be such that Δ ≡ 0, 1 mod 4 and let k ∈ Z>0. If h(Δ) ≤ k, then |Δ|^{1/2} ≤ 2k²e^{21000k²}." p. 613: "where cl(Δ) denotes the class group of the unique imaginary quadratic order of discriminant Δ" and "where h(Δ) denotes the class number of the imaginary quadratic order of discriminant Δ." Lean proves the order and its proper class number are determined by Δ (orders_ringEquiv_of_discr_eq, properClassNumber_ringEquiv, hDelta_eq_properClassNumber).
+* Source: Fowler, Some uniform effective results on André–Oort for sums of powers in ℂⁿ, Math. Proc. Cambridge Philos. Soc. 180 (2026), Proposition 2·7, p. 615; definition p. 613; manuscript L588–593.
+* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+HDec.CMBranch.FowlerBridges.FowlerProp27PrintCanonical
+```
+
+> Fowler, Proposition 2·7: for an imaginary quadratic order discriminant Δ < 0 congruent to 0 or 1 modulo 4 and positive n, h(Δ) ≤ n implies √|Δ| ≤ 2n² exp(21000n²), with h(Δ) the proper ideal class number of the unique order of discriminant Δ.
 
 ### r9a
 

@@ -121,12 +121,14 @@ source. The automatic check on a pull request starts from a cached build of `mai
 | upstream's kernel job on a GitHub-hosted runner | not recorded | not recorded | needed a 180-minute timeout and 8 GiB of extra swap |
 | `lake build +ZInQKernel.OneProof.Main` on a 12-core, 18 GB machine, `LEAN_NUM_THREADS=8` (AI audit, [#62](https://github.com/Deicyde/diophantine-z-q/issues/62)) | cold, stopped for disk | `e1b31749` | 694 of the 5,225 project modules in 41 minutes, no errors; 0.44 GB of `.olean` and 3.4 GB of per-module `.setup.json` files (median 3.4 MB; they embed absolute paths, so a short checkout path matters) |
 | the discharge check's build step on GitHub-hosted runners, before the build cache | cold | several pull requests | five runs stopped at the 270-minute limit (43981996517, 43968843468, 43920004200, 43839513202, 43751567891) |
+| `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` in the main build cache workflow on GitHub-hosted runners (`ubuntu-latest`: 15 GiB of memory, 47 GiB of swap added) | cold, over two runs | `f3402e89`, then `be73b91c` | 16,331 Lake jobs in 451 minutes of build time. Run [44170383906](https://github.com/Deicyde/diophantine-z-q/actions/runs/44170383906) found no cache, stopped at the workflow's 310-minute limit and saved its progress; run [44219370755](https://github.com/Deicyde/diophantine-z-q/actions/runs/44219370755) restored it, finished in 141 minutes and passed the axiom check. By `du -sh`, the finished build is 37 GiB for this repository and 6.7 GiB for Mathlib; its cache archive is 3.0 GiB |
+| the same workflow's next nine finished runs on pushes to `main`, each starting from the previous build | partial rebuild | `1121bf19` to `8ecaadef`, 2026-11-18 | eight jobs took 10 to 14 minutes, with 31 seconds to 5 minutes in the build step; the one at `41892618` (run [44243377928](https://github.com/Deicyde/diophantine-z-q/actions/runs/44243377928)) took 93 minutes, with 84 in the build step |
 
-No cold build of `lake build +ZInQKernel.OneProof.Main` has finished on a GitHub-hosted runner yet; the main build
-cache workflow carries its progress from run to run until one does, and its first finished run belongs in this table.
-On a laptop a full build is a bigger investment: allow several hours and roughly 20 GB of disk. A measured row from
-your machine (commit, cold or partial, cores, memory cap, peak memory, disk, Lake jobs, wall-clock) is welcome and
-credited.
+A cold build does not fit in one job on a GitHub-hosted runner. The main build cache workflow stops its build at
+310 minutes, saves the progress and continues in the next run, and the first cold build finished that way on
+2026-11-18. On a laptop a full build is a bigger investment: allow several hours and about 50 GB of disk. A
+measured row from your machine (commit, cold or partial, cores, memory cap, peak memory, disk, Lake jobs,
+wall-clock) is welcome and credited.
 
 ## For the integrator: folding a contribution
 
@@ -189,19 +191,19 @@ DISCHARGES [OpenAddedLeaves28.scholzeH1AbVar] by DeRhamScholze.HTMerge.scholzeH1
 DISCHARGES [OpenResearchLeaves68.cmHeight62] by HDec.CMBranch.CMInputs2.cmHeight62
   still assumes: [HDec.CMBranch.CMInputs2]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.CMBranch.CMInputs2.cmjDegree
+DISCHARGES [OpenResearchLeaves68.cmPotentialGood] by HDec.CMBranch.CMInputs2.cmPotentialGood
   still assumes: [HDec.CMBranch.CMInputs2]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.fowlerProp27] by HDec.CMBranch.CMInputs2.fowlerProp27
+DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.CMBranch.CMInputs2.cmjDegree
   still assumes: [HDec.CMBranch.CMInputs2]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.cmHeight62] by HDec.CMBranch.CMInputs3.cmHeight62
   still assumes: [HDec.CMBranch.CMInputs3]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.CMBranch.CMInputs3.cmjDegree
+DISCHARGES [OpenResearchLeaves68.cmPotentialGood] by HDec.CMBranch.CMInputs3.cmPotentialGood
   still assumes: [HDec.CMBranch.CMInputs3]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.fowlerProp27] by HDec.CMBranch.CMInputs3.fowlerProp27
+DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.CMBranch.CMInputs3.cmjDegree
   still assumes: [HDec.CMBranch.CMInputs3]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenAddedLeaves28.conradAppB] by HDec.G0Galois.C8Conrad.C8Inputs.conradAppB
@@ -1002,6 +1004,9 @@ DISCHARGES [OpenResearchLeaves68.carayolThmAFrob] by HDec.HSyn.OpenResearchLeave
 DISCHARGES [OpenResearchLeaves68.cmHeight62] by HDec.HSyn.OpenResearchLeaves63NOS.cmHeight62
   still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves68.cmPotentialGood] by HDec.HSyn.OpenResearchLeaves63NOS.cmPotentialGood
+  still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.HSyn.OpenResearchLeaves63NOS.cmjDegree
   still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -1015,9 +1020,6 @@ DISCHARGES [OpenResearchLeaves68.dsThm966Printed] by HDec.HSyn.OpenResearchLeave
   still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.elliotWildInertiaTrivial] by HDec.HSyn.OpenResearchLeaves63NOS.elliotWildInertiaTrivial
-  still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.fowlerProp27] by HDec.HSyn.OpenResearchLeaves63NOS.fowlerProp27
   still assumes: [HDec.HSyn.OpenResearchLeaves63NOS]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.gaudronRemondSec9LowerAnSS] by HDec.HSyn.OpenResearchLeaves63NOS.gaudronRemondSec9LowerAnSS
@@ -1074,6 +1076,9 @@ DISCHARGES [OpenResearchLeaves68.carayolThmAFrob] by HDec.HSyn.OpenResearchLeave
 DISCHARGES [OpenResearchLeaves68.cmHeight62] by HDec.HSyn.OpenResearchLeaves64NOS.cmHeight62
   still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenResearchLeaves68.cmPotentialGood] by HDec.HSyn.OpenResearchLeaves64NOS.cmPotentialGood
+  still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.cmjDegree] by HDec.HSyn.OpenResearchLeaves64NOS.cmjDegree
   still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
   axioms: [propext, Classical.choice, Quot.sound]
@@ -1087,9 +1092,6 @@ DISCHARGES [OpenResearchLeaves68.dsThm966Printed] by HDec.HSyn.OpenResearchLeave
   still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.elliotWildInertiaTrivial] by HDec.HSyn.OpenResearchLeaves64NOS.elliotWildInertiaTrivial
-  still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenResearchLeaves68.fowlerProp27] by HDec.HSyn.OpenResearchLeaves64NOS.fowlerProp27
   still assumes: [HDec.HSyn.OpenResearchLeaves64NOS]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves68.gaudronRemondSec9LowerAnSS] by HDec.HSyn.OpenResearchLeaves64NOS.gaudronRemondSec9LowerAnSS
@@ -1210,7 +1212,7 @@ DISCHARGES [OpenResearchLeaves68.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 32 open hypotheses, 15236 theorems checked, 341 discharge one
+#discharges: 33 open hypotheses, 15316 theorems checked, 341 discharge one
 ```
 <!-- worked-example:end -->
 
