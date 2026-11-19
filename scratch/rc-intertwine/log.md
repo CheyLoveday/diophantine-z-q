@@ -8,3 +8,6 @@
 - An attempted run was skipped at load 129.26; verification resumed at load 106.87 with 117 GB available.
 - `FinitePlaces.lean`: compiled; all 10 theorem audits list only the three allowed axioms. This instantiates the finite phase on the restricted product over the rational primes and proves its local product formula.
 - `Cosets.lean`: compiled; all six theorem audits list only the allowed axioms. The polar dual is the disjoint union of the labeled cosets; the occurrence of every label gives injectivity of the extension. The upper operator is handled via `extendCosets_twist`.
+- `Fourier.lean`: compiled; six theorem audits. For additive invariant Haar measure and the displayed lattice volume, the finite Fourier matrix agrees everywhere with the normalized Haar integral of the extension, including vanishing off the dual.
+- `Comparison.lean`: compiled; three theorem audits. The common index product defines the same generator scalar; a lifted pair transports to the literal table pair.
+- `Normalization.lean`: compiled; three theorem audits. The finite determinant product is the exact complex grid coefficient.
