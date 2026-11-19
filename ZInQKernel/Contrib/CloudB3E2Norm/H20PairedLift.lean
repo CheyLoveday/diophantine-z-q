@@ -19,8 +19,8 @@ Manuscript `diophantine_zq.tex`, tex 4166–4171 ("The generic paired strict lif
   holds (for the actual Heegner points: `gx_step_heegner_at` at `π⁻¹`). CAVEAT: at a finite
   stage ring with `ι ≠ ∅` and a nonzero `G_{K_w}`-invariant at `w = place (p, false)`,
   `OrthComparisonInverse` is uninhabited for any `φo` (lane E1's `not_orthComparisonInverse`,
-  `CloudB3E1Torsion/OrthNoInverse.lean`), so this result is conditional on an unsatisfiable input
-  there, and nothing in the headline uses it. The text's inverse lives after the inner limit, over
+  `CloudB3E1Torsion/OrthNoInverse.lean`, on lane E1's branch, not yet in this tree), so this
+  result is conditional on an unsatisfiable input there, and nothing in the headline uses it. The text's inverse lives after the inner limit, over
   the generic coefficient ring, with the retained old-place lattice comparison (tex 3704–3790); a
   localized `OrthComparisonInverseLoc` is planned for lane RC32's round 17. The proof here uses
   only `ψ`, `hd` and `hsw`.

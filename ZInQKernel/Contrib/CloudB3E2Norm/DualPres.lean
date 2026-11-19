@@ -330,8 +330,9 @@ ring. This structure is that inverse, as the one named input; `hright` already f
 unless every degree-one cocycle of `C'_T` is a coboundary. CAVEAT: at a finite stage ring with
 `ι ≠ ∅` and a nonzero `G_{K_w}`-invariant at a place `w = place (p, false)`, it is uninhabited for
 any `φo` (lane E1's `not_orthComparisonInverse`, `CloudB3E1Torsion/OrthNoInverse.lean`, from
-`no_H1_inverse`). Results taking it (`hlift_of_transport`, `hlift_stepRetention`, `hlift_actual`)
-are conditional on an unsatisfiable input there, and nothing in the headline uses them. The text's
+`no_H1_inverse`; on lane E1's branch, not yet in this tree). Results taking it
+(`hlift_of_transport`, `hlift_stepRetention`, `hlift_actual`) are conditional on an unsatisfiable
+input there, and nothing in the headline uses them. The text's
 inverse lives after the inner limit, over the generic coefficient ring (`Frac Λ`, or `𝒪[G]` with
 `𝒪` the completion of `ℤ₂[[t]]_(2)`), with the retained old-place lattice comparison
 (tex 3704–3790); a localized restatement `OrthComparisonInverseLoc` is planned for lane RC32's
