@@ -2,3 +2,7 @@
 - Actual weight-two product at tex 9647–9648; tex 9573 is (O.9).
 - `BlockLevels.old_good` requires explicit alignment with the actual coefficient support; ambient exclusion alone does not supply this.
 - Trivial/trivial Eisenstein coordinates: retain positive dilates in the coefficient space; only the appropriate combinations are modular in weight two.
+- `Diamond.lean`, `Constituents.lean`, `Galois.lean`: passed serial `lake env lean -j1` with the devserver resource checks.
+- `diamondCharacters`: actual units of the common level; characters `(d/u)` constructed using Jacobi periodicity and multiplication.
+- `coordinates_of_span`: lower-level and characterwise span membership gives supported coordinates of the identical coefficients.
+- `Inventory.attachment`: one representation per normalized source, reused literally on all its dilations; Eisenstein diagonal built from the ordered pair.
