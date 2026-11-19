@@ -22,9 +22,8 @@ two descriptions agree:
   `G_{K,S} → G_{K,S₁}` to the point support), transported along
   `ringClassOrder_eq_conductorOrder`;
 * **`exists_sigma_field_iv`** (PROVED): at a place `w` over `q` not over `d` with ideal `𝔮`, there
-  is
-  `σ = p_w(φ)`, `φ` an arithmetic Frobenius lift, with `infl(σ) = Frob_w` (the leaf's Frobenius,
-  `H20Frob.eq_frobLift`) and satisfying the hypothesis of `field_iv` at `𝔮`.
+  is `σ = p_w(φ)`, `φ` an arithmetic Frobenius lift, with `infl(σ) = Frob_w` (the leaf's
+  Frobenius, `H20Frob.eq_frobLift`) and satisfying the hypothesis of `field_iv` at `𝔮`.
 
 Kinds: PROVED.
 -/
