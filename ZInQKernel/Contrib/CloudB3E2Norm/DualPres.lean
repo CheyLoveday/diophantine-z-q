@@ -35,8 +35,8 @@ literally at a finite stage ring. It is therefore the one named input here:
 * `orthComparison T` (definition): the comparison `c_T : C_{T⊥} → C'_T` from the orthogonal
   conditions to the transported ones (zero to full at `T`, the identity of the unramified condition
   off `T`, a given comparison `φo` at the old places).
-* `OrthComparisonInverse` (GLUE, tex 3740–3745): chain-level maps `ψ_T : C'_T → C_{T⊥}` in degrees
-  `0, 1`, inverse to `c_T` on degree-one cohomology, commuting with the differential, and
+* `OrthComparisonInverse` (GLUE, tex 3740–3745): chain-level maps `ψ_T : C'_T → C_{T⊥}` commuting
+  with the differential in degrees `0 → 1 → 2`, inverse to `c_T` on degree-one cohomology, and
   compatible with the switches: `j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T`.
 * **`hlift_of_transport`** (PROVED): from the transported norm identity
   `z'_R = e · i'(z'_P) + d b'` in `C'_{T ∪ {p}}` (lane E2's `gxClass_step` for `π⁻¹`, with
@@ -318,15 +318,15 @@ def orthComparison (φo : ∀ v₀ : Places K S₀, GHom (Δ'.U v₀) (Δ''.U v�
 
 /-- **The chain-level inverse of the orthogonal comparison** (GLUE, tex 3740–3745): with the
 comparison `c_T : C_{T⊥} → C'_T` (`orthComparison`, from the given comparison `φo` of the old
-orthogonal conditions `Δ'` with the transported ones `Δ''`), maps `ψ_T : C'_T → C_{T⊥}` in degrees
-`0, 1` that are mutually inverse to `c_T` on degree-one cohomology (`hright`, `hleft`: up to
-coboundaries on cocycles), commute with the differential, and commute with the switches
-(`j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T`). The text's comparison from the orthogonal condition to the
-transported condition is a quasi-isomorphism only at a localization where the full local
-complexes at the active and moving primes are acyclic (tex 3736–3753): its inverse is taken in the
-derived category there, so it does not exist literally at a finite stage ring. This structure is
-that inverse, as the one named input; `hright` already fails for `ψ = 0` unless every degree-one
-cocycle of `C'_T` is a coboundary. Kind: definition (GLUE). -/
+orthogonal conditions `Δ'` with the transported ones `Δ''`), maps `ψ_T : C'_T → C_{T⊥}` commuting
+with the differential in degrees `0 → 1 → 2` (`hd`, `hd₁`; so `ψ_T` induces a map on `H¹`), mutually
+inverse to `c_T` on degree-one cohomology (`hright`, `hleft`: up to coboundaries on cocycles), and
+commuting with the switches (`j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T`). The text's comparison from the
+orthogonal condition to the transported condition is a quasi-isomorphism only at a localization
+where the full local complexes at the active and moving primes are acyclic (tex 3736–3753): its
+inverse is taken in the derived category there, so it does not exist literally at a finite stage
+ring. This structure is that inverse, as the one named input; `hright` already fails for `ψ = 0`
+unless every degree-one cocycle of `C'_T` is a coboundary. Kind: definition (GLUE). -/
 structure OrthComparisonInverse where
   /-- the comparison of the old orthogonal conditions with the transported ones -/
   φo : ∀ v₀ : Places K S₀, GHom (Δ'.U v₀) (Δ''.U v₀)
@@ -340,6 +340,10 @@ structure OrthComparisonInverse where
   hd : ∀ (T : Finset ι) (x : (suppCxS K S₀ S k M Δ'' place X EU T).X 0),
     ψ T 1 ((suppCxS K S₀ S k M Δ'' place X EU T).d 0 1 rfl x) =
       (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl (ψ T 0 x)
+  /-- it commutes with the differential in degree one (so it sends cocycles to cocycles) -/
+  hd₁ : ∀ (T : Finset ι) (x : (suppCxS K S₀ S k M Δ'' place X EU T).X 1),
+    ψ T 2 ((suppCxS K S₀ S k M Δ'' place X EU T).d 1 2 rfl x) =
+      (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 1 2 rfl (ψ T 1 x)
   /-- it commutes with the switches: `j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T` -/
   hsw : ∀ (T : Finset ι) (p : ι), p ∉ T → ∀ x : (suppCxS K S₀ S k M Δ'' place X EU T).X 1,
     (changeMap (dsuppDataS K S₀ S k M Δ' place X EU T) (dfS K S₀ S k M Δ' place X EU T p)).f 1 1
