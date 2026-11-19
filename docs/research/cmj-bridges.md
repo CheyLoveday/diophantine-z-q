@@ -1,5 +1,12 @@
 # Fowler's singular modulus degree and the CM branch
 
+> **Update (11-19): closed and landed.** j-descent4 proved `abVarFunctionFieldGenusOne` unconditionally and j-descent5
+> derived `cmjDegree_of_print_of_genusOne` from it, so `CMPeriodJDescends` is no longer needed: Lean proves
+> `CMjDegreePrint → CMjDegree` (`HDec.CMBranch.CMjBridges.cmjDegree_of_print_closed`, `Contrib/OneProof/CMjClose.lean`).
+> The cmj-close fold (autofold `TailZ98`, `sixContactMin_of_open91`) replaced the field `cmjDegree` by the leaf
+> `cmjDegreePrint` (Fowler 2026, section 2·1, p. 613; rated LEAF). The text below is the earlier scoped stop, kept as written.
+
+
 **Scoped stop: the analytic j-value of the scheme curve still needs a field-of-definition proof.**
 Lean proves `CMPeriodJDescends → CMjDegreePrint → CMjDegree`. The one remaining glue
 statement, `CMPeriodJDescends`, says that if `τ` is an actual period of a CM elliptic curve
