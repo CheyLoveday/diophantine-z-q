@@ -1059,12 +1059,12 @@ def Faltings1983Satz3EllipticQ : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (ℓ : ℕ) [Fact ℓ.Prime],
     IsSemisimpleModule (MonoidAlgebra ℚ_[ℓ] GlueC10.GQ) (rationalTateRep E ℓ).asModule
 
-/-- **GLUE, GLOBALIZATION OF A PROVED DICTIONARY**, the global integral-
-closure Frobenius reading of the exact local dictionary. Locators:
-Silverman VII.3.1, VII.7.1 and the completion restriction of the Tate action.
-The premise is the existing local dictionary, proved above by
-`goodReductionFrobeniusTraceDictionaryQ_proved`, not an unproved local formula. This globalization is not proved
-here, and is not called a statement of Carayol (A). -/
+/-- **GLOBALIZATION OF A PROVED DICTIONARY**, PROVED in `GlobalTrace/GoodReductionReading.lean` as
+`globalGoodReductionTraceReading_proved` (that proof does not use the premise); first stated here as
+GLUE. The global integral-closure Frobenius reading of the exact local dictionary. Locators:
+Silverman VII.3.1, VII.7.1 and the completion restriction of the Tate action. The premise is the
+existing local dictionary, proved above by `goodReductionFrobeniusTraceDictionaryQ_proved`, not an
+unproved local formula. It is not called a statement of Carayol (A). -/
 def GlobalGoodReductionTraceReading : Prop :=
   GoodReductionFrobeniusTraceDictionaryQ →
     ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (ℓ : ℕ) [Fact ℓ.Prime]
