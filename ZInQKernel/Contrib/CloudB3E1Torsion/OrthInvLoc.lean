@@ -175,4 +175,184 @@ def LocHInv.id (ι : GHom U₁ L) : LocHInv ι ι (idGHom U₁) where
 
 end Local
 
+/-! ### The inverse on Selmer complexes -/
+
+section Sel
+
+variable {k : Type u} [CommRing k] {GS : Type u} [Group GS] [TopologicalSpace GS]
+  [IsTopologicalGroup GS] {ι : Type u} {Gv : ι → Type u} [∀ v, Group (Gv v)]
+  [∀ v, TopologicalSpace (Gv v)] [∀ v, IsTopologicalGroup (Gv v)] {loc : ∀ v, Gv v →ₜ* GS}
+  {M : Type u} [AddCommGroup M] [Module k M] [DistribMulAction GS M] [SMulCommClass GS k M]
+  [TopologicalSpace M] [ContinuousAdd M] [ContinuousConstSMul k M] [ContinuousSMul GS M]
+  {Δ₁ Δ₂ : LocalConditions k GS Gv loc M} {F : ∀ v, GHom (Δ₁.U v) (Δ₂.U v)}
+  (I : ∀ v, LocHInv (Δ₁.i v) (Δ₂.i v) (F v))
+
+/-- `g` on the product of the conditions. Kind: definition. -/
+abbrev gU (n : ℤ) : (selData k GS Gv loc M Δ₂).U.X n →ₗ[k] (selData k GS Gv loc M Δ₁).U.X n :=
+  (piMap fun v => (I v).g).f n n rfl
+
+/-- `H` on the product, degree `0`. Kind: definition. -/
+def HU0 : (selData k GS Gv loc M Δ₂).U.X 0 →ₗ[k] (selData k GS Gv loc M Δ₂).L.X (0 - 1) :=
+  (LinearMap.pi fun v => (I v).H0.comp (LinearMap.proj v) :
+    (piCx Δ₂.U).X 0 →ₗ[k] ∀ v, (localCx k GS Gv loc M v).X (-1))
+
+/-- `H` on the product, degree `1`. Kind: definition. -/
+def HU1 : (selData k GS Gv loc M Δ₂).U.X 1 →ₗ[k] (selData k GS Gv loc M Δ₂).L.X (1 - 1) :=
+  (LinearMap.pi fun v => (I v).H1.comp (LinearMap.proj v) :
+    (piCx Δ₂.U).X 1 →ₗ[k] ∀ v, (localCx k GS Gv loc M v).X (0))
+
+/-- `H` on the product, degree `2`. Kind: definition. -/
+def HU2 : (selData k GS Gv loc M Δ₂).U.X 2 →ₗ[k] (selData k GS Gv loc M Δ₂).L.X (2 - 1) :=
+  (LinearMap.pi fun v => (I v).H2.comp (LinearMap.proj v) :
+    (piCx Δ₂.U).X 2 →ₗ[k] ∀ v, (localCx k GS Gv loc M v).X (1))
+
+/-- **`ψ(a, u, x) = (a, g u, x + H u)`**, degree `0`. Kind: definition. -/
+def ψ0 : (selCx (selData k GS Gv loc M Δ₂)).X 0 →ₗ[k] (selCx (selData k GS Gv loc M Δ₁)).X 0 where
+  toFun c := show selT (selData k GS Gv loc M Δ₁) 0 from
+    ((c : selT (selData k GS Gv loc M Δ₂) 0).1, gU I 0 (c : selT (selData k GS Gv loc M Δ₂) 0).2.1,
+      (c : selT (selData k GS Gv loc M Δ₂) 0).2.2 + HU0 I (c : selT (selData k GS Gv loc M Δ₂) 0).2.1)
+  map_add' c c' := by
+    obtain ⟨a, u, x⟩ := c
+    obtain ⟨a', u', x'⟩ := c'
+    refine Prod.ext rfl (Prod.ext (map_add _ _ _) ?_)
+    change (x + x') + HU0 I (u + u') = (x + HU0 I u) + (x' + HU0 I u')
+    rw [map_add]
+    abel
+  map_smul' r c := by
+    obtain ⟨a, u, x⟩ := c
+    refine Prod.ext rfl (Prod.ext (map_smul _ _ _) ?_)
+    change r • x + HU0 I (r • u) = r • (x + HU0 I u)
+    rw [map_smul, smul_add]
+
+/-- `ψ`, degree `1`. Kind: definition. -/
+def ψ1 : (selCx (selData k GS Gv loc M Δ₂)).X 1 →ₗ[k] (selCx (selData k GS Gv loc M Δ₁)).X 1 where
+  toFun c := show selT (selData k GS Gv loc M Δ₁) 1 from
+    ((c : selT (selData k GS Gv loc M Δ₂) 1).1, gU I 1 (c : selT (selData k GS Gv loc M Δ₂) 1).2.1,
+      (c : selT (selData k GS Gv loc M Δ₂) 1).2.2 + HU1 I (c : selT (selData k GS Gv loc M Δ₂) 1).2.1)
+  map_add' c c' := by
+    obtain ⟨a, u, x⟩ := c
+    obtain ⟨a', u', x'⟩ := c'
+    refine Prod.ext rfl (Prod.ext (map_add _ _ _) ?_)
+    change (x + x') + HU1 I (u + u') = (x + HU1 I u) + (x' + HU1 I u')
+    rw [map_add]
+    abel
+  map_smul' r c := by
+    obtain ⟨a, u, x⟩ := c
+    refine Prod.ext rfl (Prod.ext (map_smul _ _ _) ?_)
+    change r • x + HU1 I (r • u) = r • (x + HU1 I u)
+    rw [map_smul, smul_add]
+
+/-- `ψ`, degree `2`. Kind: definition. -/
+def ψ2 : (selCx (selData k GS Gv loc M Δ₂)).X 2 →ₗ[k] (selCx (selData k GS Gv loc M Δ₁)).X 2 where
+  toFun c := show selT (selData k GS Gv loc M Δ₁) 2 from
+    ((c : selT (selData k GS Gv loc M Δ₂) 2).1, gU I 2 (c : selT (selData k GS Gv loc M Δ₂) 2).2.1,
+      (c : selT (selData k GS Gv loc M Δ₂) 2).2.2 + HU2 I (c : selT (selData k GS Gv loc M Δ₂) 2).2.1)
+  map_add' c c' := by
+    obtain ⟨a, u, x⟩ := c
+    obtain ⟨a', u', x'⟩ := c'
+    refine Prod.ext rfl (Prod.ext (map_add _ _ _) ?_)
+    change (x + x') + HU2 I (u + u') = (x + HU2 I u) + (x' + HU2 I u')
+    rw [map_add]
+    abel
+  map_smul' r c := by
+    obtain ⟨a, u, x⟩ := c
+    refine Prod.ext rfl (Prod.ext (map_smul _ _ _) ?_)
+    change r • x + HU2 I (r • u) = r • (x + HU2 I u)
+    rw [map_smul, smul_add]
+
+/-- **`ψ` commutes with `d` in degree `0`.** Kind: PROVED. -/
+theorem ψ_d0 (x : (selCx (selData k GS Gv loc M Δ₂)).X 0) :
+    ψ1 I ((selCx (selData k GS Gv loc M Δ₂)).d 0 1 rfl x) =
+      (selCx (selData k GS Gv loc M Δ₁)).d 0 1 rfl (ψ0 I x) := by
+  obtain ⟨a, u, w⟩ := x
+  refine Prod.ext rfl (Prod.ext ?_ ?_)
+  · funext v
+    exact ((I v).g.comm 0 1 0 1 rfl rfl rfl rfl (u v))
+  · funext v
+    change (resS k GS Gv loc M).f 0 0 rfl a v - (Δ₂.i v).f 0 0 rfl (u v) -
+        (localCx k GS Gv loc M v).d (-1) 0 rfl (show (localCx k GS Gv loc M v).X (-1) from w v) +
+          (I v).H1 ((Δ₂.U v).d 0 1 rfl (u v)) =
+      (resS k GS Gv loc M).f 0 0 rfl a v - (Δ₁.i v).f 0 0 rfl ((I v).g.f 0 0 rfl (u v)) -
+        (localCx k GS Gv loc M v).d (-1) 0 rfl
+          ((show (localCx k GS Gv loc M v).X (-1) from w v) + (I v).H0 (u v))
+    have h := (I v).hH0 (u v)
+    rw [map_add, sub_eq_iff_eq_add.mp h]
+    abel
+
+/-- **`ψ` commutes with `d` in degree `1`.** Kind: PROVED. -/
+theorem ψ_d1 (x : (selCx (selData k GS Gv loc M Δ₂)).X 1) :
+    ψ2 I ((selCx (selData k GS Gv loc M Δ₂)).d 1 2 rfl x) =
+      (selCx (selData k GS Gv loc M Δ₁)).d 1 2 rfl (ψ1 I x) := by
+  obtain ⟨a, u, w⟩ := x
+  refine Prod.ext rfl (Prod.ext ?_ ?_)
+  · funext v
+    exact ((I v).g.comm 1 2 1 2 rfl rfl rfl rfl (u v))
+  · funext v
+    change (resS k GS Gv loc M).f 1 1 rfl a v - (Δ₂.i v).f 1 1 rfl (u v) -
+        (localCx k GS Gv loc M v).d 0 1 rfl (show (localCx k GS Gv loc M v).X 0 from w v) +
+          (I v).H2 ((Δ₂.U v).d 1 2 rfl (u v)) =
+      (resS k GS Gv loc M).f 1 1 rfl a v - (Δ₁.i v).f 1 1 rfl ((I v).g.f 1 1 rfl (u v)) -
+        (localCx k GS Gv loc M v).d 0 1 rfl
+          ((show (localCx k GS Gv loc M v).X 0 from w v) + (I v).H1 (u v))
+    have h := (I v).hH1 (u v)
+    rw [map_add, sub_eq_iff_eq_add.mp h]
+    abel
+
+variable (hF : ∀ v (i : ℤ) (u : (Δ₁.U v).X i),
+  (Δ₂.i v).f i i rfl ((F v).f i i rfl u) = (Δ₁.i v).f i i rfl u)
+
+/-- **`c ∘ ψ = 1` on `H¹`** (PROVED): every degree-one cocycle `x` of `C₂` satisfies
+`c(ψ x) = x + d y`. -/
+theorem selHInv_right (x : (selCx (selData k GS Gv loc M Δ₂)).X 1)
+    (hx : (selCx (selData k GS Gv loc M Δ₂)).d 1 2 rfl x = 0) :
+    ∃ y : (selCx (selData k GS Gv loc M Δ₂)).X 0,
+      (condMap Δ₁ Δ₂ F hF).f 1 1 rfl (ψ1 I x) = x + (selCx (selData k GS Gv loc M Δ₂)).d 0 1 rfl y := by
+  obtain ⟨a, u, w⟩ := x
+  have hu : ∀ v, (Δ₂.U v).d 1 2 rfl (u v) = 0 := fun v =>
+    congrFun (congrArg (fun c : selT (selData k GS Gv loc M Δ₂) 2 => c.2.1) hx) v
+  refine ⟨((0, fun v => (I v).s₂ (u v), fun v => (I v).K₂ (u v)) :
+    selT (selData k GS Gv loc M Δ₂) 0), Prod.ext ?_ (Prod.ext ?_ ?_)⟩
+  · change a = a + (selData k GS Gv loc M Δ₂).G.d 0 1 rfl 0
+    rw [map_zero, add_zero]
+  · funext v
+    change (F v).f 1 1 rfl ((I v).g.f 1 1 rfl (u v)) = u v + (Δ₂.U v).d 0 1 rfl ((I v).s₂ (u v))
+    rw [← (I v).hs₂ (u v) (hu v), add_sub_cancel]
+  · funext v
+    change (show (localCx k GS Gv loc M v).X 0 from w v) + (I v).H1 (u v) =
+      (show (localCx k GS Gv loc M v).X 0 from w v) + ((resS k GS Gv loc M).f 0 0 rfl 0 v -
+        (Δ₂.i v).f 0 0 rfl ((I v).s₂ (u v)) - (localCx k GS Gv loc M v).d (-1) 0 rfl ((I v).K₂ (u v)))
+    have h := (I v).hK₂ (u v) (hu v)
+    rw [map_zero]
+    change _ = _ + ((0 : (localCx k GS Gv loc M v).X 0) - _ - _)
+    rw [neg_eq_iff_eq_neg.mp h.symm]
+    abel
+
+/-- **`ψ ∘ c = 1` on `H¹`** (PROVED): every degree-one cocycle `z` of `C₁` satisfies
+`ψ(c z) = z + d y`. -/
+theorem selHInv_left (z : (selCx (selData k GS Gv loc M Δ₁)).X 1)
+    (hz : (selCx (selData k GS Gv loc M Δ₁)).d 1 2 rfl z = 0) :
+    ∃ y : (selCx (selData k GS Gv loc M Δ₁)).X 0,
+      ψ1 I ((condMap Δ₁ Δ₂ F hF).f 1 1 rfl z) = z + (selCx (selData k GS Gv loc M Δ₁)).d 0 1 rfl y := by
+  obtain ⟨a, u, w⟩ := z
+  have hu : ∀ v, (Δ₁.U v).d 1 2 rfl (u v) = 0 := fun v =>
+    congrFun (congrArg (fun c : selT (selData k GS Gv loc M Δ₁) 2 => c.2.1) hz) v
+  refine ⟨((0, fun v => (I v).s₁ (u v), fun v => (I v).K₁ (u v)) :
+    selT (selData k GS Gv loc M Δ₁) 0), Prod.ext ?_ (Prod.ext ?_ ?_)⟩
+  · change a = a + (selData k GS Gv loc M Δ₁).G.d 0 1 rfl 0
+    rw [map_zero, add_zero]
+  · funext v
+    change (I v).g.f 1 1 rfl ((F v).f 1 1 rfl (u v)) = u v + (Δ₁.U v).d 0 1 rfl ((I v).s₁ (u v))
+    rw [← (I v).hs₁ (u v) (hu v), add_sub_cancel]
+  · funext v
+    change (show (localCx k GS Gv loc M v).X 0 from w v) + (I v).H1 ((F v).f 1 1 rfl (u v)) =
+      (show (localCx k GS Gv loc M v).X 0 from w v) + ((resS k GS Gv loc M).f 0 0 rfl 0 v -
+        (Δ₁.i v).f 0 0 rfl ((I v).s₁ (u v)) - (localCx k GS Gv loc M v).d (-1) 0 rfl ((I v).K₁ (u v)))
+    have h := (I v).hK₁ (u v) (hu v)
+    rw [map_zero]
+    change _ = _ + ((0 : (localCx k GS Gv loc M v).X 0) - _ - _)
+    rw [neg_eq_iff_eq_neg.mp h.symm]
+    abel
+
+end Sel
+
 end ZInQ.Contrib.CloudB3E1Torsion
