@@ -32,10 +32,12 @@ Apply its inverse in the derived category to the transported class" (tex 3740–
 exists only where those full local complexes are acyclic (tex 3736–3753); it does not exist
 literally at a finite stage ring. It is therefore the one named input here:
 
-* `OrthComparisonInverse` (GLUE, tex 3740–3745): chain-level maps `ψ_T` from the transported
-  presentation `C'_T` (full at `T`, unramified off `T`, transported old conditions `Δ''`) to the
-  dual complex `C_{T⊥}` in degrees `0, 1`, commuting with the differential, and compatible with the
-  switches: `j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T` (the inverse of the comparison commutes with `i`, `j`).
+* `orthComparison T` (definition): the comparison `c_T : C_{T⊥} → C'_T` from the orthogonal
+  conditions to the transported ones (zero to full at `T`, the identity of the unramified condition
+  off `T`, a given comparison `φo` at the old places).
+* `OrthComparisonInverse` (GLUE, tex 3740–3745): chain-level maps `ψ_T : C'_T → C_{T⊥}` in degrees
+  `0, 1`, inverse to `c_T` on degree-one cohomology, commuting with the differential, and
+  compatible with the switches: `j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T`.
 * **`hlift_of_transport`** (PROVED): from the transported norm identity
   `z'_R = e · i'(z'_P) + d b'` in `C'_{T ∪ {p}}` (lane E2's `gxClass_step` for `π⁻¹`, with
   `e^c = e`: `H20Paired.eq_paired`), the paired strict lift
@@ -270,16 +272,67 @@ variable (K : Type) [Field K] [NumberField K] (S₀ S : Set (HeightOneSpectrum (
   (X : (j : ι × Bool) → TopRep.{0} k (GUr K (place j).1))
   (EU : ∀ j, SplitInclusion (genuineUq K S k (place j) (X j)) (genuineLq K S k M (place j)))
 
-/-- **The chain-level inverse of the orthogonal comparison** (GLUE, tex 3740–3745): maps
-`ψ_T : C'_T → C_{T⊥}` in degrees `0, 1` from the transported presentation (`Δ''` the transported
-old conditions; full at `T`, unramified off `T`) to the dual complex (`Δ'` the old orthogonal
-conditions; zero at `T`, unramified off `T`), commuting with the differential and with the
-switches (`j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T`). The text's comparison from the orthogonal condition to
-the transported condition is a quasi-isomorphism only at a localization where the full local
-complexes at the active and moving primes are acyclic (tex 3736–3753), so its inverse does not
-exist literally at a finite stage ring; this structure is that inverse, as a named input.
-Kind: definition (GLUE). -/
+/-- The comparison from an orthogonal condition at a new place to the transported condition:
+zero to full (`true`), the identity of the unramified condition (`false`). Kind: definition. -/
+def dcomp (j : ι × Bool) : (b : Bool) →
+    GHom (dcondCxS K S k place X j b) (condCxS K S k M place X j b)
+  | true => zeroGHom _ _
+  | false => idGHom _
+
+omit [DecidableEq ι] in
+theorem dcomp_compat (j : ι × Bool) (b : Bool) (n : ℤ) (x : (dcondCxS K S k place X j b).X n) :
+    (condιS K S k M place X EU j b).f n n rfl ((dcomp K S k M place X j b).f n n rfl x) =
+      (dcondιS K S k M place X EU j b).f n n rfl x := by
+  cases b <;> rfl
+
+/-- **The orthogonal comparison at each place** (tex 3740–3745): the given comparison `φo` of the
+old orthogonal conditions with the transported ones, and `dcomp` at the new places.
+Kind: definition. -/
+def presComparison (φo : ∀ v₀ : Places K S₀, GHom (Δ'.U v₀) (Δ''.U v₀)) (T : Finset ι) :
+    ∀ v : Places K S₀ ⊕ (ι × Bool), GHom ((dpresCondS K S₀ S k M Δ' place X EU T).U v)
+      ((presCondS K S₀ S k M Δ'' place X EU T).U v)
+  | .inl v₀ => φo v₀
+  | .inr j => dcomp K S k M place X j (decide (j.1 ∈ T))
+
+theorem presComparison_compat (φo : ∀ v₀ : Places K S₀, GHom (Δ'.U v₀) (Δ''.U v₀))
+    (hφo : ∀ v₀ (n : ℤ) (x : (Δ'.U v₀).X n),
+      (Δ''.i v₀).f n n rfl ((φo v₀).f n n rfl x) = (Δ'.i v₀).f n n rfl x) (T : Finset ι)
+    (v : Places K S₀ ⊕ (ι × Bool)) (n : ℤ)
+    (x : ((dpresCondS K S₀ S k M Δ' place X EU T).U v).X n) :
+    ((presCondS K S₀ S k M Δ'' place X EU T).i v).f n n rfl
+        ((presComparison K S₀ S k M Δ' Δ'' place X EU φo T v).f n n rfl x) =
+      ((dpresCondS K S₀ S k M Δ' place X EU T).i v).f n n rfl x := by
+  match v with
+  | .inl v₀ => exact hφo v₀ n x
+  | .inr j => exact dcomp_compat K S k M place X EU j _ n x
+
+/-- **The orthogonal comparison `c_T : C_{T⊥} → C'_T`** (tex 3740–3745): from the orthogonal
+conditions to the transported conditions (lane RC26's `condMap`). Kind: definition. -/
+def orthComparison (φo : ∀ v₀ : Places K S₀, GHom (Δ'.U v₀) (Δ''.U v₀))
+    (hφo : ∀ v₀ (n : ℤ) (x : (Δ'.U v₀).X n),
+      (Δ''.i v₀).f n n rfl ((φo v₀).f n n rfl x) = (Δ'.i v₀).f n n rfl x) (T : Finset ι) :
+    GHom (selCx (dsuppDataS K S₀ S k M Δ' place X EU T))
+      (suppCxS K S₀ S k M Δ'' place X EU T) :=
+  condMap _ _ (presComparison K S₀ S k M Δ' Δ'' place X EU φo T)
+    (presComparison_compat K S₀ S k M Δ' Δ'' place X EU φo hφo T)
+
+/-- **The chain-level inverse of the orthogonal comparison** (GLUE, tex 3740–3745): with the
+comparison `c_T : C_{T⊥} → C'_T` (`orthComparison`, from the given comparison `φo` of the old
+orthogonal conditions `Δ'` with the transported ones `Δ''`), maps `ψ_T : C'_T → C_{T⊥}` in degrees
+`0, 1` that are mutually inverse to `c_T` on degree-one cohomology (`hright`, `hleft`: up to
+coboundaries on cocycles), commute with the differential, and commute with the switches
+(`j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T`). The text's comparison from the orthogonal condition to the
+transported condition is a quasi-isomorphism only at a localization where the full local
+complexes at the active and moving primes are acyclic (tex 3736–3753): its inverse is taken in the
+derived category there, so it does not exist literally at a finite stage ring. This structure is
+that inverse, as the one named input; `hright` already fails for `ψ = 0` unless every degree-one
+cocycle of `C'_T` is a coboundary. Kind: definition (GLUE). -/
 structure OrthComparisonInverse where
+  /-- the comparison of the old orthogonal conditions with the transported ones -/
+  φo : ∀ v₀ : Places K S₀, GHom (Δ'.U v₀) (Δ''.U v₀)
+  /-- it is compatible with the maps to the local complexes -/
+  φo_compat : ∀ v₀ (n : ℤ) (x : (Δ'.U v₀).X n),
+    (Δ''.i v₀).f n n rfl ((φo v₀).f n n rfl x) = (Δ'.i v₀).f n n rfl x
   /-- the inverse of the comparison, degreewise -/
   ψ : ∀ (T : Finset ι) (n : ℤ), (suppCxS K S₀ S k M Δ'' place X EU T).X n →ₗ[k]
     (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X n
@@ -292,6 +345,18 @@ structure OrthComparisonInverse where
     (changeMap (dsuppDataS K S₀ S k M Δ' place X EU T) (dfS K S₀ S k M Δ' place X EU T p)).f 1 1
         rfl (ψ (insert p T) 1 ((suppInclS K S₀ S k M Δ'' place X EU T p).f 1 1 rfl x)) =
       ψ T 1 x
+  /-- `c_T ∘ ψ_T` is the identity on degree-one cohomology -/
+  hright : ∀ (T : Finset ι) (x : (suppCxS K S₀ S k M Δ'' place X EU T).X 1),
+    (suppCxS K S₀ S k M Δ'' place X EU T).d 1 2 rfl x = 0 →
+      ∃ y : (suppCxS K S₀ S k M Δ'' place X EU T).X 0,
+        (orthComparison K S₀ S k M Δ' Δ'' place X EU φo φo_compat T).f 1 1 rfl (ψ T 1 x) =
+          x + (suppCxS K S₀ S k M Δ'' place X EU T).d 0 1 rfl y
+  /-- `ψ_T ∘ c_T` is the identity on degree-one cohomology -/
+  hleft : ∀ (T : Finset ι) (z : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 1),
+    (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 1 2 rfl z = 0 →
+      ∃ y : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 0,
+        ψ T 1 ((orthComparison K S₀ S k M Δ' Δ'' place X EU φo φo_compat T).f 1 1 rfl z) =
+          z + (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl y
 
 variable {K S₀ S k M Δ' Δ'' place X EU}
 
