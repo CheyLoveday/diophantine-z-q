@@ -1,6 +1,6 @@
 # Modular parametrization coordinates in the rational function field
 
-**Scoped stop: the complex converse at level `N`.** At the specified nonzero rational scale, both coordinates have convergent rational Laurent series at infinity, with pole bounds two and three; the coefficient of `q⁻²` in `x` is `κ⁻²`. The series satisfy the formal affine Weierstrass equation. Both coordinates also have meromorphic germs and convergent Laurent series in the local parameter at every cusp. Rational descent from the specified complex Laurent subfield is proved. `coordinates_in_modularFunctionField` gives the exact bilateral `HasSum` proposition of [the at-scale report](rc-param-at-scale.md) assuming only the complex converse below in addition to the existing curve and scale data. Field membership and the downstream at-scale proposition are still open unconditionally. No print was added. The work here is on-the-spot (c): the manuscript supplies the map by a quotient and isogeny, and does not cite the analytic classification used in this route.
+**Scoped stop: the complex converse at level `N`.** At the specified nonzero rational scale, both coordinates have convergent rational Laurent series at infinity, with pole bounds two and three; the coefficient of `q⁻²` in `x` is `κ⁻²`. The series satisfy the formal affine Weierstrass equation. Both coordinates also have meromorphic germs and convergent Laurent series in the local parameter at every cusp. Rational descent from the specified complex Laurent subfield is proved. Assuming the complex converse below and the existing curve and scale data, `coordinates_in_modularFunctionField` gives the exact bilateral `HasSum` proposition of [the at-scale report](rc-param-at-scale.md), and `dominant_morphism_of_classification` gives the dominant ℚ-morphism from any supplied source model with those generic coordinates. Field membership is still open unconditionally. The full at-scale proposition also needs the projective point comparison. No print was added. The work here is on-the-spot (c): the manuscript supplies the map by a quotient and isogeny, and does not cite the analytic classification used in this route.
 
 ## Exact remaining proposition
 
@@ -26,7 +26,7 @@ To prove the converse by the proposed route, first prove the level-one statement
 
 ## Checked statements
 
-All theorem names below are in `ZInQ.Manuscript.RC.ModFnField`, in the indicated file under `ZInQKernel/Contrib/OneProof/RC/ModFnField/`.
+All theorem names below are in `ZInQ.Manuscript.RC.ModFnField`, in the indicated file under `ZInQKernel/Contrib/OneProof/RC/ModFnField/`. All 12 files compile with serial `lake env lean -j1 -DautoImplicit=false`; all 55 theorem audits report only `propext`, `Classical.choice`, and `Quot.sound`.
 
 | File and theorem | Statement and use |
 | --- | --- |
@@ -68,6 +68,9 @@ All theorem names below are in `ZInQ.Manuscript.RC.ModFnField`, in the indicated
 | `FieldMembership.qParam_zpow_widthOne` (private) | `q^m` equals the width-one exponential monomial used by the at-scale proposition. Step 4 interface. |
 | `FieldMembership.coordinates_in_modularFunctionField_with_equation` | Under the same inputs, gives rational field elements realizing the coordinates, with the formal equation and leading x-coefficient. Step 4 field map. |
 | `FieldMembership.coordinates_in_modularFunctionField` | Given the complex converse, a rational scale with `IsParamScale`, `IsLatticeOf`, and the Fourier normalization, produces two elements of the exact rational modular function field and a common height with the exact bilateral exponential sums. Discharges the at-scale report's proposition conditional on the converse. |
+| `FunctionField.fieldHom_of_transcendental_point` | If a point over a field extension of ℚ satisfies the affine equation and its x-coordinate is transcendental over ℚ, there is a field homomorphism evaluating the two generic coordinates at that point. Step 4 function field map. |
+| `FunctionField.functionField_coordinates` | Assuming the complex converse and the fixed rational-scale hypotheses, gives the map from the elliptic function field into the specified `modularFunctionField N` and both analytic Laurent realizations on the images of the generic coordinates. The `q⁻²` coefficient proves transcendence by the existing Laurent-series lemma; it uses no identification with the other field presentation. Step 4 function field map. |
+| `FunctionField.dominant_morphism_of_classification` | For a parameter `X : X0Model N` and an elliptic target, the preceding map extends to a dominant ℚ-morphism with the prescribed generic square and both analytic Laurent realizations. Step 4 algebraization via `ParamAtScale.morphism_of_functionField`. |
 
 ## Remaining hypotheses and owners
 
@@ -75,13 +78,13 @@ All theorem names below are in `ZInQ.Manuscript.RC.ModFnField`, in the indicated
 | --- | --- |
 | Complex converse stated above. Remaining analytic ingredients: complex level-one classification allowing interior poles, orbit-polynomial coefficients at level one with their cusp compatibility, identification of analytic cosets with the finite index count, and the map from meromorphic functions to the embedded Laurent field. | 1781–1787, 2836–2838; missing theory (large). |
 | Matching fixed scale: for the originally fixed complex `κ₀`, a nonzero `κ : ℚ` with `(κ : ℂ) = κ₀`; also the existing `IsParamScale` for that lattice. Changing to another scale would not prove agreement with the fixed map. `IsLatticeOf`, the elliptic Dirichlet coefficients, and the period inclusion are the existing curve/analytic setup hypotheses. | 1779–1787, 1825–1828; ELLIOT input for the fixed normalization, existing tree for the supplied curve data and period interfaces. |
-| Transfer the affine equation to the two Laurent series by convergence and uniqueness; use the nonzero leading coefficient to obtain a field embedding, then compare projective chart values including the identity. Identify the analytic basepoint with the specialization at the algebraic cusp for the manuscript's normalization. | 1785–1787, 2836–2838; missing theory (local to medium after the converse). |
+| After the converse, the proved generic map and the existing affine comparison give regular germ representatives on the affine chart. Compare their residues with the two analytic coordinates when the primitive is off the lattice, and check the chart `Y ≠ 0` via `Z/Y` at the identity to account for the analytic poles. This is the remaining point equality in `AlgebraicParametrizationAtScale`. Identify the analytic basepoint with the specialization at the algebraic cusp for the manuscript's normalization. | 1785–1787, 2836–2838; missing theory (local to medium for interior chart values; algebraic cusp specialization separate). |
 | A source `X0Model N` with its interior chart and section expansions; the algebraic cusp used for normalization is additional. | 1781–1787, 2836–2838; sibling `rc-x0-model-2` for the source model. |
 | `CMFieldOfDefinition X` for the prepared-param and Stage Kummer consumers. | 2839–2844, 2915–2917; ELLIOT input isolated in `RC/PreparedParam/`. |
 | Elkik's genuine cusp class comparison: the image of `[c(r)] − [∞]` under `α q_f` is the specialization of the based map, identified with the analytic cusp torus limit. The earlier cusp limit already gives a single rational scalar at every cusp. | 1785–1788, 2937–2946; missing Jacobian and cusp specialization theory (large, excluded here). |
 | Oriented CM representatives and embeddings with the specified chart equalities. For the CCL trace conclusion there are also Hecke compatibility, `T_q[∞]=(q+1)[∞]` and trace-to-Galois comparisons. | 2839–2846, 2915–2936; sibling `rc-heegner-values` for the CCL route, missing geometric comparison (large). |
 
-The at-scale consumers therefore keep their existing conditions. The prepared-param chain would get its common dominant morphism at the fixed scale, the Heegner-values chain would get the specified values after each chosen embedding, and the Elkik chain would have the analytic germ comparison on the rational map. The comparison with genuine cusp classes for Elkik remains separate.
+The at-scale consumers therefore keep their existing conditions. After the converse and the chart point comparison, the prepared-param chain would get its common morphism with analytic values at the fixed scale, and the Heegner-values chain would get the specified values after each chosen embedding. The Elkik chain also needs the comparison with genuine cusp classes.
 
 ## Known issues
 
@@ -94,7 +97,7 @@ The at-scale consumers therefore keep their existing conditions. The prepared-pa
 | --- | --- |
 | 1779–1780: modularity at the conductor. | OK — the existing modularity interface supplies the coefficient normalization for the actual curve. |
 | 1781–1784: the rational newform and elliptic quotient. | Unverified — the rational Fourier data are used; the Jacobian quotient is outside this proof and the existing source audit gives the more precise newform locator. |
-| 1785–1786: choose the isogeny and form the based rational map. | Gap filled — for the alternative analytic route the coordinate series are rational and have the required cusp germs, and descent from the complex field is proved; the complex converse and projective comparison are still open. |
+| 1785–1786: choose the isogeny and form the based rational map. | Gap filled — the coordinate series are rational with the required cusp germs, descent from the complex field is proved, and the generic coordinates give the rational map conditional on the complex converse. The projective comparison is still open. |
 | 1787: `π(∞)=0`. | Unverified — the primitive has value zero in the analytic cusp parameter; comparison to the algebraic cusp is open. |
 | 1787–1788: Hecke equivariance. | Unverified — the cited pair does not supply this identity and it is unused here. |
 | 1825–1828: use the fixed period normalization. | OK — the statements keep the specified scale as a parameter and use only its rationality, nonvanishing and period condition. |

@@ -13,3 +13,6 @@
 - Equation: coordinates_laurent_equation; six supporting theorems. Compiled; standard three axioms.
 - Complex converse: the rational globally convergent level-one polynomial theorem is narrower; interior poles of complex functions and the analytic coset and cusp comparison remain open.
 - FieldMembership: coordinates_in_modularFunctionField_with_equation and coordinates_in_modularFunctionField. Compiled; standard three axioms for both and the width-one conversion. Exact stop supplied conditional on ComplexCuspClassification N.
+- FunctionField: fieldHom_of_transcendental_point; functionField_coordinates; dominant_morphism_of_classification. All compiled; standard three axioms. Exact target field used; source X stays a parameter.
+- Verification: 12 Lean files, 55 theorem audits; propext, Classical.choice, Quot.sound only. No new prints.
+- Final stop: ComplexCuspClassification N for unconditional field membership; projective point comparison after the generic algebraization remains.
