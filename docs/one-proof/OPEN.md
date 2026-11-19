@@ -165,7 +165,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`silverbergZarhinThm35`](#silverbergzarhinthm35) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
 | [`hCT`](#hct) | frozenTarget | published | LEAF | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
-| [`hB`](#hb) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
+| [`hB`](#hb) | frozenTarget | published | LEAF | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
 | [`hK`](#hk) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
 
 ## The hypotheses
@@ -609,25 +609,53 @@ ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves
 
 ### hB
 
-* Argument `hB` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: BCDT's modular = weight-2 eigenform of level N(E) on Gamma1 (condition (2), p. 3); IsModular follows by trivial nebentypus; AI page read 11-17.
-* Source: Breuil-Conrad-Diamond-Taylor, J. Amer. Math. Soc. 14 (2001), Theorem A (every elliptic curve over Q is modular)
+* Argument `hB` of `frozenTarget`; kind **published**, strict **LEAF**; flag: BCDT Theorem A as printed, read with condition (2) of the Introduction (author manuscript pp. 1-3, page images read, AI): 'Theorem A. If E/Q is an elliptic curve, then E is modular.' (p. 1); 'It is known that the following conditions are equivalent. (1) The L-function L(E, s) of E equals the L-function L(f, s) for some eigenform f. (2) The L-function L(E, s) of E equals the L-function L(f, s) for some eigenform f of weight 2 and level N(E). [...] When these equivalent conditions are satisfied we call E modular.' (pp. 2-3), with cusp forms on Gamma1(N) (p. 1) and eigenforms for the T_p with p not dividing N (p. 2); formalized as ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted (condition (2) at some level N >= 1, implied by the print since the library has no conductor); the former hypothesis PoleS12.BCDTThmA follows by bcdtThmA_of_printed (trivial nebentypus proved).
+* Source: Breuil-Conrad-Diamond-Taylor, On the modularity of elliptic curves over Q: wild 3-adic exercises, J. Amer. Math. Soc. 14 (2001), 843-939, Theorem A with condition (2) of the Introduction; the author manuscript (bibitem bcdt) pp. 1-3; cited at diophantine_zq.tex L1092
 * discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
 * Human readings recorded: none.
 * Status: open.
 
 ```lean
-ZInQ.Manuscript.PoleS12.BCDTThmA
+ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted
 ```
 
-> **Breuil–Conrad–Diamond–Taylor, Theorem A** (printed leaf; J. Amer. Math. Soc. 14 (2001)
-> 843–939; the manuscript cites the author manuscript, `\cite[Theorem A]{bcdt}`, tex L1092):
-> every elliptic curve over `ℚ` is modular (Theorem A, p. 1 of the author manuscript). The print's
-> notion of "modular" is its Introduction's conditions (1)–(6) (p. 3); condition (2) says that
-> `L(E, s) = L(f, s)` for an eigenform `f` of weight 2 and level `N(E)`, on `Γ₁(N(E))` (cusp forms
-> p. 1, eigenforms p. 2). `IsModular` is a consequence of (2): trivial nebentypus takes `Γ₁(N(E))`
-> to `Γ₀(N(E))`, and equality of the Dirichlet series gives equality of the coefficients for every
-> `n ≥ 1`. Read (AI) on fork issue #83:
-> https://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6962416523
+> **PRINT**, Breuil–Conrad–Diamond–Taylor, Theorem A, read with condition (2) of the
+> Introduction; J. Amer. Math. Soc. 14 (2001) 843–939; the author manuscript is the cited copy
+> (bibitem `bcdt`), pp. 1–3, page images read. This is a proposition, not an axiom.
+> 
+> Verbatim printed text. Theorem A (p. 1): "Theorem A. If `E/ℚ` is an elliptic curve, then `E`
+> is modular." Definitions (p. 1): "If `N` is a positive integer then we let `Γ₁(N)` denote the
+> subgroup of `SL₂(ℤ)` consisting of matrices that modulo `N` are of the form `(1 ∗; 0 1)`. [...]
+> Recall that a cusp form of weight `k ≥ 1` and level `N ≥ 1` is a holomorphic function `f` on the
+> upper half complex plane `𝔥` such that • for all matrices `(a b; c d) ∈ Γ₁(N)` and all `z ∈ 𝔥`,
+> we have `f((az + b)/(cz + d)) = (cz + d)^k f(z)`; • and `|f(z)|² (Im z)^k` is bounded on `𝔥`.
+> The space `S_k(N)` of cusp forms of weight `k` and level `N` is a finite dimensional complex
+> vector space. If `f ∈ S_k(N)` then it has an expansion `f(z) = ∑_{n=1}^∞ c_n(f) e^{2πinz}` and
+> we define the L-series of `f` to be `L(f, s) = ∑_{n=1}^∞ c_n(f)/n^s`." Hecke operators and
+> eigenforms (p. 2): "For each prime `p ∤ N` there is a linear operator `T_p` on `S_k(N)` defined
+> by `(f|T_p)(z) = p^{−1} ∑_{i=0}^{p−1} f((z + i)/p) + p^{k−1} (cpz + d)^{−k}
+> f((apz + b)/(cpz + d))` for any `(a b; c d) ∈ SL₂(ℤ)` with `c ≡ 0 mod N` and `d ≡ p mod N`.
+> The operators `T_p` for `p ∤ N` can be simultaneously diagonalised on the space `S_k(N)` and a
+> simultaneous eigenvector is called an eigenform. If `f` is an eigenform then the corresponding
+> eigenvalues, `a_p(f)`, are algebraic integers and we have `c_p(f) = a_p(f) c_1(f)`." Modularity
+> (pp. 2–3): "Now consider an elliptic curve `E/ℚ`. [...] Let `N(E)` denote the conductor of `E`.
+> It is known that the following conditions are equivalent. (1) The L-function `L(E, s)` of `E`
+> equals the L-function `L(f, s)` for some eigenform `f`. (2) The L-function `L(E, s)` of `E`
+> equals the L-function `L(f, s)` for some eigenform `f` of weight 2 and level `N(E)`. [...]
+> When these equivalent conditions are satisfied we call `E` modular."
+> 
+> Formalized: every elliptic curve `E/ℚ` satisfies condition (2) (`Condition2At`) at some positive
+> level. Faithfulness notes: (i) the level is not identified with the conductor `N(E)`, which the
+> library lacks, so the statement is implied by the print and is weaker only in that respect
+> (`BCDTThmAPrintedAtLevel` is the printed form at a prescribed level); (ii) `S_k(N)` is Mathlib's
+> `CuspForm` on `Γ₁(N)`, which `Dictionary.lean` identifies with the printed definition
+> (`isPrintedCuspForm_iff`); (iii) `T_p` is the vendored double-coset operator, given by the
+> printed formula (`heckeTCuspNat_apply_eq_printed`); (iv) an eigenform is exactly
+> `IsBCDTEigenform`; (v) the equality of L-functions is required on some right half-plane only,
+> which for an eigenform is equivalent to `c_n(f) = a_n(E)` for all `n ≥ 1` (`condition2At_iff`).
+> `Literal.lean` writes the same statement with the printed definitions themselves (cusp forms as
+> functions, the printed `T_p`, the printed expansion) and proves it equivalent
+> (`bcdtThmAPrintedLiteral_iff`).
 
 ### hK
 
