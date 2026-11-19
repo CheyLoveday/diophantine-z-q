@@ -16,7 +16,8 @@
   "pdf": {
     "file_name": "diophantine_zq-97cec7f.pdf",
     "cache_dir": ".lake/overlay-pdf",
-    "route": "/__overlay_pdf__/diophantine_zq-97cec7f.pdf"
+    "route": "/__overlay_pdf__/diophantine_zq-97cec7f.pdf",
+    "remote": true
   },
   "site": {
     "output_root": "site",

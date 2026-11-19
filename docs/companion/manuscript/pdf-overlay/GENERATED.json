@@ -4,7 +4,7 @@
   "generator": {
     "name": "formal-companion",
     "version": "0.2.0",
-    "commit": "7c58ed8dcbf815aa108f92160aff43ba851e8f91"
+    "commit": "768b0f935c228561c4d6730347e87ececb2143ab"
   },
   "format": {
     "package": "literature-links",
@@ -18,7 +18,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "c624f8b98ea6236079323785e71ac8d59d744263ff7ebbe3114eb6214684de0f"
+      "sha256": "92bd579475aacec017db27bcbfd225ddcc73fbc457f0428ba9ef11e4d8e27fac"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -26,15 +26,15 @@
     },
     {
       "path": "schema/overlay-config-v1.schema.json",
-      "sha256": "8c92daeb858c6c5ee9a72d8b3b1d9ac3c041299f572fe6f995057c1c4f55e316"
+      "sha256": "140262a36d8bf211774ce2be9a315116cb08bce2f40df57b21ca73bbbbe6c1c0"
     },
     {
       "path": "tools/build_site.py",
-      "sha256": "2f6cca5add954df245853a0b6645697eee3a5ed686d866de5dc1d1cd000d923c"
+      "sha256": "c296cb98bdfb9f5fc326fa50bacf218903294c847aeeef846ff417d768299882"
     },
     {
       "path": "tools/check_generated.py",
-      "sha256": "c521a240fe440c73833f7e48302b7617027112faadd38fa6f009ab6d43e4a9f9"
+      "sha256": "ca9ad71e5d3e770db5c4998184cbc106c0d6c92d923f2642b5685662e5e5e4e1"
     },
     {
       "path": "tools/literature_links/__init__.py",
@@ -74,7 +74,7 @@
     },
     {
       "path": "tools/serve.py",
-      "sha256": "08317f2a08efe62aaa45c998cc9258551869923a1857063312ddd8f5b2780378"
+      "sha256": "acc591fb9ed489eadf16b6746931b67245af39c414e28508611c648d7975387a"
     },
     {
       "path": "tools/verso_extract.py",
@@ -114,7 +114,7 @@
     },
     {
       "path": "viewer/viewer-core.js",
-      "sha256": "08695c6a7f3bfdacf05508b13b7e9db55d29a18d709b9b6934d4271abc1378ee"
+      "sha256": "aee68d0aa4a750dc9cec590d4458d9aad70ba88f008dabb75b33fa5fa2b8f6d9"
     },
     {
       "path": "viewer/viewer-layout.js",
@@ -134,7 +134,7 @@
     },
     {
       "path": "viewer/viewer.js",
-      "sha256": "2e803cad637f548a4fa998b649781295e803285e8a9f7db67688449e83058c5a"
+      "sha256": "6329aa60875a03f5bc42c508f90cbade15167936b633d1d23ad7760118b420b9"
     }
   ],
   "annotations": {

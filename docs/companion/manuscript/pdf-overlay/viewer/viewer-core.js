@@ -345,7 +345,7 @@ export function readConfig(raw) {
   if (!title) {
     fail("overlay.config.json names no title.");
   }
-  const { pdfLicense, pdfUrl } = readPdf(isObject(raw.pdf) ? raw.pdf : {});
+  const { pdfLicense, pdfRemote, pdfUrl } = readPdf(isObject(raw.pdf) ? raw.pdf : {});
   // No back_link, or one whose href is refused, is no back link: the top bar starts with the title.
   const back = isObject(raw.back_link) ? raw.back_link : {};
   const backHref = safeBackLinkHref(back.href);
@@ -356,6 +356,7 @@ export function readConfig(raw) {
     backLink: backHref && backText ? { href: backHref, text: backText } : null,
     lede: text(raw.lede),
     pdfLicense,
+    pdfRemote,
     pdfUrl,
     // build_site.py publishes the annotation files at the site root, the same
     // place relative to the built pages as in the repository; it is this far up.
@@ -371,16 +372,28 @@ export function readConfig(raw) {
 /**
  * Where the PDF is fetched from, relative to the viewer page: `pdf.route` on
  * loopback, or, when `pdf.publish` names an open license, `../<file_name>`,
- * beside `overlay.config.json` in the built site.
+ * beside `overlay.config.json` in the built site. With `pdf.remote` it is
+ * neither: the address is the one the records' PDF end names, which
+ * `pdfFetchUrl` reads once the records are in.
  */
 function readPdf(pdf) {
+  if (pdf.remote !== undefined && typeof pdf.remote !== "boolean") {
+    fail(`overlay.config.json has pdf.remote ${JSON.stringify(pdf.remote)}; it is true or false.`);
+  }
+  if (pdf.remote === true) {
+    if (pdf.publish !== undefined) {
+      fail("overlay.config.json has both pdf.remote and pdf.publish; they are two ways to show "
+           + "one PDF.");
+    }
+    return { pdfLicense: null, pdfRemote: true, pdfUrl: null };
+  }
   if (pdf.publish === undefined) {
     const route = text(pdf.route);
     if (!route.startsWith(ROUTE_PREFIX) || route.includes("..")) {
       fail(`overlay.config.json has pdf.route ${JSON.stringify(route)}; a route starts with `
            + `"${ROUTE_PREFIX}" and carries no "..".`);
     }
-    return { pdfLicense: null, pdfUrl: route };
+    return { pdfLicense: null, pdfRemote: false, pdfUrl: route };
   }
   const license = isObject(pdf.publish) ? pdf.publish.license : undefined;
   if (!OPEN_LICENSES.includes(license)) {
@@ -391,12 +404,38 @@ function readPdf(pdf) {
     fail(`overlay.config.json has pdf.file_name ${JSON.stringify(pdf.file_name ?? null)}; `
          + "a published PDF is one plain file name ending in .pdf.");
   }
-  return { pdfLicense: license, pdfUrl: `../${pdf.file_name}` };
+  return { pdfLicense: license, pdfRemote: false, pdfUrl: `../${pdf.file_name}` };
 }
 
-/** The absolute URL the viewer fetches the PDF from, resolved against its own page. */
-export function pdfFetchUrl(config, pageUrl) {
+/**
+ * The absolute URL the viewer fetches the PDF from: resolved against its own
+ * page, or, with `pdf.remote`, the `uri` of `source`, the records' PDF end.
+ */
+export function pdfFetchUrl(config, pageUrl, source) {
+  if (config.pdfRemote) {
+    return remotePdfUrl(source);
+  }
   return new URL(config.pdfUrl, pageUrl).href;
+}
+
+/**
+ * The address a remote PDF is fetched from, held to what the tools hold one
+ * they fetch to: HTTPS, no credentials, no fragment, no port other than 443.
+ */
+function remotePdfUrl(source) {
+  const uri = text(isObject(source) ? source.uri : "");
+  let url = null;
+  try {
+    url = new URL(uri);
+  } catch {
+    // A relative reference, or no address at all: refused below.
+  }
+  if (!url || url.protocol !== "https:" || url.username || url.password || url.hash
+      || (url.port && url.port !== "443")) {
+    fail(`pdf.remote needs the PDF end's uri to be an HTTPS address with no credentials, fragment `
+         + `or port; it is ${JSON.stringify(uri)}.`);
+  }
+  return url.href;
 }
 
 // --- the bundle -------------------------------------------------------------
@@ -729,6 +768,8 @@ function card(record, end, context) {
     module: text(location.module),
     name: stripPrefix(fullName, context.stripPrefix) || fullName,
     provenanceMethod: isObject(recordExt.provenance) ? text(recordExt.provenance.method) : "",
+    // "" until `nameRepositories` finds a card of the same name from another repository
+    repository: "",
     reviewed: isObject(recordExt.provenance) && typeof recordExt.provenance.confirmed_by_human === "boolean"
       ? recordExt.provenance.confirmed_by_human : null,
     resolution: text(destination?.resolution),
@@ -736,8 +777,49 @@ function card(record, end, context) {
     proofContext: proofContext(ext.proof_context, href, end.title),
     snippet,
     target: ours ? cardTarget(end) : null,
+    uri: text(end.uri),
     verdict,
   };
+}
+
+/**
+ * A repository as a card names it: the last two parts of its address, which on
+ * a git host are the owner and the name (`an-owner/notes-companion`), without
+ * a closing `.git`; an address with no path is itself.
+ */
+export function repositoryName(uri) {
+  const value = text(uri).replace(/\/+$/, "").replace(/\.git$/, "");
+  const hosted = /^[a-z][a-z0-9+.-]*:\/\/[^/]+\/(.+)$/i.exec(value);
+  const parts = (hosted ? hosted[1] : value).split("/").filter(Boolean);
+  return parts.slice(-2).join("/") || value;
+}
+
+/**
+ * Says which repository a card is of where the item has another card of the
+ * same name from another one. A source formalized in two repositories links
+ * one declaration name twice, and nothing else on the two cards tells them
+ * apart; their ids are told apart the same way. A card whose name no other
+ * repository's card shares says nothing, so an overlay of one repository, or
+ * of a library and the dependencies under it, reads as it did.
+ */
+function nameRepositories(cards) {
+  const addresses = new Map();
+  for (const entry of cards) {
+    if (!addresses.has(entry.fullName)) {
+      addresses.set(entry.fullName, new Set());
+    }
+    addresses.get(entry.fullName).add(entry.uri);
+  }
+  for (const entry of cards) {
+    const shared = addresses.get(entry.fullName);
+    if (shared.size > 1) {
+      // two addresses that end alike are named in full
+      const names = new Set([...shared].map(repositoryName));
+      entry.repository = names.size === shared.size ? repositoryName(entry.uri) : entry.uri;
+      entry.id = `${entry.id}@${entry.repository}`;
+    }
+  }
+  return cards;
 }
 
 /** Optional, authored explanations. Source links stay on the card's already validated URL. */
@@ -999,7 +1081,7 @@ export function buildIndex(files, config, { pageOrigin = "", siteUrl = null } = 
   }
   for (const item of items.values()) {
     if (!isStep(item)) {
-      item.cards = orderCards(item.cards);
+      item.cards = orderCards(nameRepositories(item.cards));
     }
   }
   linkSteps(items, folders);
@@ -1094,6 +1176,31 @@ export const COVERAGE_WORDS = Object.freeze({
 /** The coverage pill's word, or "" for an unknown status. */
 export function coverageWord(coverage) {
   return COVERAGE_WORDS[coverage] ?? "";
+}
+
+/**
+ * The one word for where an item stands: its coverage's, and for an item whose
+ * records name none, what its links show, a key declaration or no key
+ * declaration. A key link says a declaration is linked as the item's
+ * statement; only a record's own status says the item is formalized.
+ */
+export function standingWord(item) {
+  return coverageWord(text(item?.coverage)) || (firstKeyCard(item) ? "Key declaration" : "No key declaration");
+}
+
+/**
+ * The legend's word for a solid region. Every solid region has a key
+ * declaration, and "Formalized" is said only when each item drawn solid says
+ * so itself; where a producer wrote key links and no status, the word is the
+ * one that is true of them all.
+ */
+export function solidWord(items) {
+  for (const item of items) {
+    if (!isStep(item) && regionCoverage(item) === "formalized" && text(item?.coverage) !== "formalized") {
+      return "Key declaration";
+    }
+  }
+  return "Formalized";
 }
 
 /** The statuses whose region is drawn dashed: something, but not a key statement of the item. */

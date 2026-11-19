@@ -26,7 +26,8 @@
  * hover card and the text layer's scale are placed through CSSOM, never a
  * style attribute; the PDF is requested only from `pdf.route`, or, when
  * `pdf.publish` names an open license, from `../<file_name>` beside the
- * config; PDF.js runs with `isEvalSupported: false`.
+ * config, or, with `pdf.remote`, from the address its records name, with no
+ * credentials and no referrer; PDF.js runs with `isEvalSupported: false`.
  */
 import { mathRuns, mathNode } from "./viewer-math.js";
 import { installPanelResize } from "./viewer-layout.js";
@@ -62,6 +63,8 @@ import {
   readAnnotationsBlock,
   readVerso,
   regionCoverage,
+  solidWord,
+  standingWord,
   regionVerdict,
   reviewFooter,
   safeHttpsUrl,
@@ -82,6 +85,7 @@ import {
 import { createPdfTextIndex, searchTextRange } from "./viewer-search.js";
 
 export const PDF_MEDIA_TYPE = "application/pdf";
+const BYTES_MEDIA_TYPE = "application/octet-stream";
 
 /** The hash the viewer writes and reads back for the current page. */
 const PAGE_HASH = /^#page=(\d{1,6})$/;
@@ -166,27 +170,32 @@ export async function loadVerso(fetchImpl = globalThis.fetch, url = VERSO_URL) {
 
 /**
  * Fetch the PDF from the configured loopback route, or from beside the config
- * when it is published, and verify its bytes against the sha256 its subject
- * ends state before anything renders them.
+ * when it is published, or, with `pdf.remote`, from the address its records
+ * name, and verify its bytes against the sha256 its subject ends state before
+ * anything renders them.
  */
 export async function loadPdfBytes(config, index, fetchImpl = globalThis.fetch,
                                    cryptoProvider = globalThis.crypto, pageUrl = globalThis.location?.href) {
   if (typeof fetchImpl !== "function") {
     throw new Error("Fetch is unavailable; the verified PDF cannot be loaded.");
   }
-  // An error names the PDF as the reader knows it: on loopback, or published with the site.
-  const what = config.pdfLicense ? "published PDF" : "loopback PDF";
-  const response = await fetchImpl(pdfFetchUrl(config, pageUrl), {
-    cache: "no-store",
-    credentials: "same-origin",
-  });
+  // An error names the PDF as the reader knows it: on loopback, published with the site, or
+  // at its own address.
+  const remote = config.pdfRemote === true;
+  const what = remote ? "PDF at its source" : config.pdfLicense ? "published PDF" : "loopback PDF";
+  // Another host is told nothing about the reader or the page. Its copy is immutable for
+  // this purpose, since the sha256 below decides, so the browser may keep it.
+  const response = await fetchImpl(pdfFetchUrl(config, pageUrl, index.source), remote
+    ? { credentials: "omit", referrerPolicy: "no-referrer" }
+    : { cache: "no-store", credentials: "same-origin" });
   if (!response?.ok) {
     throw new Error(
       `Unable to load the verified ${what} (${response?.status ?? "no response"}).`,
     );
   }
   const mediaType = response.headers?.get?.("Content-Type")?.split(";", 1)[0].trim().toLowerCase();
-  if (mediaType !== PDF_MEDIA_TYPE) {
+  // A host that keeps a file for download may call it a byte stream; the sha256 says what it is.
+  if (mediaType !== PDF_MEDIA_TYPE && !(remote && mediaType === BYTES_MEDIA_TYPE)) {
     throw new Error(`The ${what} response has unexpected media type ${mediaType || "missing"}.`);
   }
   const bytes = new Uint8Array(await response.arrayBuffer());
@@ -465,10 +474,15 @@ export async function bootstrapViewer({
     ui["page-lede"].hidden = !config.lede;
     // `display.minimal`: the toolbar buttons name their own shortcuts.
     ui.keys.hidden = config.minimal;
-    // The shell says the PDF never leaves loopback; a published one did, under its license.
+    // The shell says the PDF never leaves loopback; a published one did, under its license,
+    // and a remote one is read where it already was.
     if (config.pdfLicense) {
       ui["status-note"].textContent = `The PDF is published with this site under ${config.pdfLicense}. `
         + "This page checks its SHA-256 against the one the annotations pin before PDF.js renders it.";
+    } else if (config.pdfRemote) {
+      ui["status-note"].textContent = "The PDF is fetched from the address its annotations name; "
+        + "this site holds no copy of it. This page checks its SHA-256 against the one the "
+        + "annotations pin before PDF.js renders it.";
     }
     // With no back link the top bar starts with the title; the stylesheet drops the divider too.
     const back = config.backLink;
@@ -966,7 +980,7 @@ export async function bootstrapViewer({
       row.dataset.itemId = item.id;
       // The same mark as the region's outline and the legend: solid, dashed or dotted.
       const mark = make("span", `swatch mini ${regionCoverage(item)}`);
-      mark.title = coverageWord(item.coverage) || "No key declaration";
+      mark.title = standingWord(item);
       row.append(mark);
       const cell = make("span", "index-label");
       const label = makeTitle("span", "index-title", labelParts(item.label).title);
@@ -993,8 +1007,7 @@ export async function bootstrapViewer({
       } else if (relation) {
         right.textContent = relation;
       } else {
-        right.textContent = item.cards.length ? coverageWord(item.coverage) || "No key declaration"
-          : "No declaration linked";
+        right.textContent = item.cards.length ? standingWord(item) : "No declaration linked";
       }
       if (lead && relation) {
         right.append(make("span", "more", ` ${relation}`));
@@ -1025,7 +1038,7 @@ export async function bootstrapViewer({
       ui["page-index"].append(li);
     }
     ui.legend.replaceChildren(
-      legendEntry("swatch formalized", "Formalized"),
+      legendEntry("swatch formalized", solidWord(state.index?.items.values() ?? [])),
       legendEntry("swatch partial", "Partial"),
       legendEntry("swatch quiet", "No key declaration"),
     );
@@ -1243,6 +1256,10 @@ export async function bootstrapViewer({
     for (const badge of state.config.minimal ? [] : card.badges) {
       left.append(make("span", badge.startsWith("sorry") ? "tag is-sorry" : "tag", badge));
     }
+    if (card.repository) {
+      // which of two look-alike links this is: kept in a minimal overlay, like where a link goes
+      left.append(make("span", "tag is-repository", card.repository));
+    }
     row.append(left, sourceLink(card));
     return row;
   }
@@ -1406,7 +1423,7 @@ export async function bootstrapViewer({
     }
     const fallback = card.href && card.resolution === "fallback";
     const where = fallback ? card.fallbackLabel || "module page" : card.href ? "" : "No rendered page";
-    row.title = [card.fullName, ...card.badges, where].filter(Boolean).join("\n");
+    row.title = [card.fullName, card.repository, ...card.badges, where].filter(Boolean).join("\n");
     const name = nameNode(card.name, "related-name", previous);
     const tag = make("span", "related-tag");
     if (state.faithfulness && card.verdict) {
@@ -1418,7 +1435,7 @@ export async function bootstrapViewer({
     const role = card.role === shared ? "" : card.role;
     // A minimal overlay drops the role and kind words, never where the link goes.
     const words = [state.config.minimal ? "" : role, state.config.minimal || card.kind === role ? "" : card.kind,
-                   fallback ? "module page" : "", card.href ? "" : "no page"];
+                   card.repository, fallback ? "module page" : "", card.href ? "" : "no page"];
     tag.append(words.filter(Boolean).join(" · "));
     if (!state.config.minimal && card.badges.some((badge) => badge.startsWith("sorry"))) {
       tag.append(make("span", "tag is-sorry", "sorry"));
@@ -1590,7 +1607,7 @@ export async function bootstrapViewer({
       peek.append(make("span", "peek-more", relation));
     } else {
       peek.append(make("span", "peek-more",
-                       item.cards.length ? coverageWord(item.coverage) || "No key declaration" : "No declaration linked"));
+                       item.cards.length ? standingWord(item) : "No declaration linked"));
     }
     peek.hidden = false;
     const stageWidth = Number.parseFloat(ui["page-stage"].style.width) || 0;

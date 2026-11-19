@@ -28,13 +28,20 @@ This folder sits in [F]. Its verdicts are about [F] at the pin above, not at the
 
 ## Viewing it
 
+On the project's site: <https://deicyde.github.io/diophantine-z-q/companion/pdf-overlay/viewer/index.html>. The
+site holds no copy of the manuscript. The page fetches the PDF from `raw.githubusercontent.com` at [M]'s pin, in
+your browser, and checks its sha256 before showing it (`"remote": true` in `pdf-overlay/overlay.config.json`). The
+site is rebuilt when a Lean change on `main` passes its hosted build, so a change here shows up with the next one.
+
+On your own machine:
+
 ```sh
 cd docs/companion/manuscript
 python3 pdf-overlay/tools/serve.py --build
 ```
 
-then open <http://127.0.0.1:8000/pdf-overlay/viewer/index.html>. `serve.py` fetches the PDF from
-`raw.githubusercontent.com` at [M]'s pin, checks its sha256 and serves it on loopback only; the PDF is not in this
+then open <http://127.0.0.1:8000/pdf-overlay/viewer/index.html>. `serve.py` fetches the PDF from the same
+address, checks its sha256 and keeps it in a local cache; the PDF is not in this
 folder. A card's kind names its repository (`theorem · fork`, `def · nasqret`, `… · nasqret dependency`) and
 any standing short of proved (`conditional`, `assumed`, `sorry`). The panel shows one note per item, from the
 item's first record; every record's note, naming its repository and standing, is in its file under
