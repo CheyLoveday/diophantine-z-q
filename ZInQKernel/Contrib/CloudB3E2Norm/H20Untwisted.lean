@@ -28,6 +28,10 @@ factor is `a − z − z⁻¹` with `z = θ(σ) = χ_h(σ)[π σ]`, the text's (
   `thetaU_local` from the ELLIOT input), with the local module, `ψ`, `j_B` of `H20Twist.lean`.
 * `inertiaFixesU`, `inertiaImage_le_U`, `ambIotaU_injective`, **`hPw_actualU`**, **`hur_actualU`**
   (PROVED): `hPw` and the unramified lifts for the presentation, with no further input.
+* **Arbitrary transfer subgroups** `H ≤ ker(χ_h [π] ∘ infl)` (for the text `G_{H_R} ≤ G_{H_P}`):
+  `thetaH`, `thetaH_compat` (the `hθ` of `h1_shapiro`), **`ambIotaU_equivariantH`**, `thetaH_local`,
+  **`hPw_actualUH`**, **`hur_actualUH`** (for `H ⊇ ker(G_{K,S} → G_{K,S₀})`). The special case
+  `H = ker(χ_h [π] ∘ infl)` is `thetaU`, `ambIotaU_equivariant`, `hPw_actualU`, `hur_actualU`.
 * `dictJU`, `ambRhoU_oneTmul`, **`heegnerTransportOn_of_dictionaryU`** (PROVED): the transport of
   the Heegner point data into the untwisted ambient module from the explicit `ℚ̄ → K̄` dictionary of
   `H20Transport.lean`, with no condition on `χ_h`.
@@ -387,6 +391,115 @@ theorem hur_actualU [Fintype (GKS K S ⧸ (alphaInfl hS s hs hs0 π).ker)]
   hPw_actualU hS W i s hs hs0 π (place j) (hw j) r hr kk hQ a hz
 
 end UnramifiedLifts
+
+/-! ### Arbitrary transfer subgroups `H ≤ ker(χ_h [π] ∘ infl)` -/
+
+section General
+
+variable {K : Type} [Field K] [NumberField K] {S S₀ : Set (HeightOneSpectrum (𝓞 K))}
+  (hS : S₀ ⊆ S) (W : WeierstrassCurve K) [W.IsElliptic] (i : ℕ) [NeZero i] (s : KS K S₀) {h : K}
+  (hs : s ^ 2 = algebraMap K (KS K S₀) h) (hs0 : s ≠ 0)
+  [TopologicalSpace (Acoef i)] [DiscreteTopology (Acoef i)]
+  {Δ : Type} [CommGroup Δ] [Finite Δ] (π : GKS K S₀ →* Δ)
+  (H : Subgroup (GKS K S)) [H.Normal] (hH : H ≤ (alphaInfl hS s hs hs0 π).ker)
+
+/-- **The transfer character `θ_H = χ_h [π]` of `G_{K,S}/H`** for a normal `H` on which `χ_h [π]`
+is trivial (for the text: `H = G_{H_R}`, `G_{H_P}`). Kind: definition. -/
+def thetaH : GKS K S ⧸ H →* (MonoidAlgebra ℤ Δ)ˣ :=
+  QuotientGroup.lift H (alphaInfl hS s hs hs0 π) hH
+
+theorem thetaH_mk (g : GKS K S) :
+    thetaH hS s hs hs0 π H hH (g : GKS K S ⧸ H) = alphaShap s hs hs0 π (inflMap K hS g) := rfl
+
+/-- **The compatibility `hθ` of `h1_shapiro`** for two transfer subgroups (PROVED): both
+characters are `χ_h [π]`. -/
+theorem thetaH_compat (H' : Subgroup (GKS K S)) [H'.Normal]
+    (hH' : H' ≤ (alphaInfl hS s hs hs0 π).ker) (x : GKS K S) :
+    ((thetaH hS s hs hs0 π H hH (x : GKS K S ⧸ H) : (MonoidAlgebra ℤ Δ)ˣ) : MonoidAlgebra ℤ Δ) =
+      thetaH hS s hs hs0 π H' hH' (x : GKS K S ⧸ H') := rfl
+
+/-- **`hιeq` for an arbitrary transfer subgroup `H ≤ ker(χ_h [π] ∘ infl)`** (PROVED). -/
+theorem ambIotaU_equivariantH (g : GKS K S) (m : shapMod hS W i s hs hs0 π) :
+    ambIotaU hS W i s hs hs0 π (g • m) =
+      R H (ambRhoU hS W Δ) (thetaH hS s hs hs0 π H hH) g (ambIotaU hS W i s hs hs0 π m) :=
+  iotaU₀_smul W i s hs hs0 π (inflMap K hS g) m
+
+/-- **`θ_H` restricts to `χ_h` at the places of `P`** (PROVED from the ELLIOT input). -/
+theorem thetaH_local {P : Set (HeightOneSpectrum (𝓞 K))} (ψ : Δ →* (Acoef i)ˣ)
+    (hψ : Function.Injective ψ) (hΨ : PsiTrivialAt2N i π ψ P) {v : HeightOneSpectrum (𝓞 K)}
+    (hv : v ∈ P) (σ : Gloc K v) :
+    thetaH hS s hs hs0 π H hH ((locMap K S v σ : GKS K S) : GKS K S ⧸ H) =
+      chiZ s hs hs0 (Δ := Δ) (locMap K S₀ v σ) :=
+  thetaU_local hS i s hs hs0 π ψ hψ hΨ hv σ
+
+variable (w : Places K S) (hw : w.1 ∉ S₀)
+
+include hw in
+/-- **`hPw` for the untwisted ambient module and an arbitrary transfer subgroup** (PROVED; tex
+3471–3487): for `H` containing `ker(G_{K,S} → G_{K,S₀})` (its fixed field lies in `K_{S₀}`; for the
+ring class fields, `RingClassKS.ringClassField_le_KS`). -/
+theorem hPw_actualUH [IsOpenKer (alphaShap s hs hs0 π)] [Fintype (GKS K S ⧸ H)]
+    (hker : ∀ g : GKS K S, inflMap K hS g = 1 → g ∈ H)
+    (r : GKS K S ⧸ H → GKS K S) (hr : ∀ δ, ((r δ : GKS K S) : GKS K S ⧸ H) = δ)
+    [ContinuousSMul (GUr K w.1)
+      (urRep (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (newPlace w hw)).V]
+    (kk : ℤ) {Q y : ambU hS W Δ} (hQ : kk • Q = y)
+    (a : (globalCx (MonoidAlgebra ℤ Δ) (GKS K S) (shapMod hS W i s hs hs0 π)).X 1)
+    (hz : ∀ g : Fin 1 → GKS K S,
+      ambIotaU hS W i s hs hs0 π
+          (gval (A := MonoidAlgebra ℤ Δ) (M := shapMod hS W i s hs hs0 π) a g) =
+        T H r hr (ambRhoU hS W Δ) (thetaH hS s hs hs0 π H hH) 1
+          (kummerCochain (ambRhoU hS W Δ) H Q) g) :
+    ∃ y : (genuineUq K S (MonoidAlgebra ℤ Δ) w
+        (urRep (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (newPlace w hw))).X 1,
+      (genuineιq K S (MonoidAlgebra ℤ Δ) (shapMod hS W i s hs hs0 π) w
+        (urRep (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (newPlace w hw))
+        (urId hS (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (newPlace w hw))
+        (urId_compat hS (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) w hw)).f 1 1 rfl y =
+      (stageRes K S (MonoidAlgebra ℤ Δ) (shapMod hS W i s hs hs0 π) w).f 1 1 rfl a :=
+  hPw_of_transfer hS (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (ambRhoU hS W Δ)
+    H r hr (thetaH hS s hs hs0 π H hH) (ambIotaU hS W i s hs hs0 π)
+    (ambIotaU_injective hS W i s hs hs0 π) (ambIotaU_equivariantH hS W i s hs hs0 π H hH) w hw kk
+    hQ a hz (inertiaImage_le_of_ker hS w hw H hker) (inertiaFixesU hS W w hw Q)
+
+end General
+
+section GeneralLifts
+
+variable {K : Type} [Field K] [NumberField K] {S S₀ : Set (HeightOneSpectrum (𝓞 K))}
+  (hS : S₀ ⊆ S) (W : WeierstrassCurve K) [W.IsElliptic] (i : ℕ) [NeZero i] (s : KS K S₀) {h : K}
+  (hs : s ^ 2 = algebraMap K (KS K S₀) h) (hs0 : s ≠ 0)
+  [TopologicalSpace (Acoef i)] [DiscreteTopology (Acoef i)]
+  {Δ : Type} [CommGroup Δ] [Finite Δ] (π : GKS K S₀ →* Δ) [IsOpenKer (alphaShap s hs hs0 π)]
+  (H : Subgroup (GKS K S)) [H.Normal] (hH : H ≤ (alphaInfl hS s hs hs0 π).ker)
+  {ι : Type} (place : ι × Bool → Places K S) (hw : ∀ j, (place j).1 ∉ S₀)
+  [∀ j, ContinuousSMul (GUr K (place j).1)
+    (urRep (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (newPlace (place j) (hw j))).V]
+
+/-- **The unramified lifts `hurR`/`hurP` for an arbitrary transfer subgroup** (PROVED;
+`hPw_actualUH`): for `H ≤ ker(χ_h [π] ∘ infl)` containing `ker(G_{K,S} → G_{K,S₀})` (take
+`H = G_{H_R}` for `a_R`, `H = G_{H_P}` for `a_P`). -/
+theorem hur_actualUH [Fintype (GKS K S ⧸ H)]
+    (hker : ∀ g : GKS K S, inflMap K hS g = 1 → g ∈ H)
+    (r : GKS K S ⧸ H → GKS K S) (hr : ∀ δ, ((r δ : GKS K S) : GKS K S ⧸ H) = δ)
+    (kk : ℤ) {Q y : ambU hS W Δ} (hQ : kk • Q = y)
+    (a : (globalCx (MonoidAlgebra ℤ Δ) (GKS K S) (shapMod hS W i s hs hs0 π)).X 1)
+    (hz : ∀ g : Fin 1 → GKS K S,
+      ambIotaU hS W i s hs hs0 π
+          (gval (A := MonoidAlgebra ℤ Δ) (M := shapMod hS W i s hs hs0 π) a g) =
+        T H r hr (ambRhoU hS W Δ) (thetaH hS s hs hs0 π H hH) 1
+          (kummerCochain (ambRhoU hS W Δ) H Q) g)
+    (j : ι × Bool) :
+    ∃ u, (genuineιq K S (MonoidAlgebra ℤ Δ) (shapMod hS W i s hs hs0 π) (place j)
+        (urRep (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (newPlace (place j) (hw j)))
+        (urId hS (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (newPlace (place j) (hw j)))
+        (urId_compat hS (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (place j) (hw j))).f 1 1 rfl
+          u =
+      (natHom (resCochains (k := MonoidAlgebra ℤ Δ) (M := shapMod hS W i s hs hs0 π)
+        (locMap K S (place j).1))).f 1 1 rfl a :=
+  hPw_actualUH hS W i s hs hs0 π H hH (place j) (hw j) hker r hr kk hQ a hz
+
+end GeneralLifts
 
 /-! ### The transport into the untwisted ambient module -/
 
