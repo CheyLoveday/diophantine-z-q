@@ -21,7 +21,9 @@ character of the same construction with `π` replaced by `π⁻¹`: `θ' = χ_h 
 * **`paired_norm_ambientS`** (PROVED): the paired transfer identity
   `z'_S(g) = e_q z'_{P⊥}(g) + (R'(g) b' − b')` on `ℤ[Δ] ⊗ E(K_{S₁})` for the paired characters
   `θ' = thetaH (π⁻¹)` at `H_P` and `H_R`, with the ORIGINAL point factor `e_q`, from the same norm
-  relation (4.1) — the global component (1) of `PairedNorm.hlift_of_components`.
+  relation (4.1) — the transfer-level form of the global component (1) of
+  `PairedNorm.hlift_of_components` (its push to the stage rings and its packaging into the global
+  cochains of `DPp` are part of the deferred identification below).
 
 Not here: the identification of lane RC30's orthogonal Selmer data `DPp` and strict conditions
 `fS` of a switch (`StepRetention`) with genuine complexes, and the local components (2), (3) of
