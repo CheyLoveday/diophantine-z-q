@@ -279,7 +279,7 @@ has a kernel of order (2^{2i}). -/
 theorem card_locH0_active {E : WeierstrassCurve ℚ} [E.IsElliptic] (v : Places K S)
     (H : ActiveLocalAction (E.baseChange K) s hs hs0 v)
     (hRat : ∀ (g : GKS K S) (P : TorsS K S (E.baseChange K) (2 : ℤ)), g • P = P)
-    (i : ℕ) (hi : 2 ≤ i) (hFull : FullTorsion K S (E.baseChange K) (2 ^ i)) :
+    (i : ℕ) (hi : i ≠ 0) (hFull : FullTorsion K S (E.baseChange K) (2 ^ i)) :
     Nat.card (locH (E.baseChange K) i (centralChar i s hs hs0) v 0) = 2 ^ (2 * i) := by
   let e := centralCoordinates (s := s) (hs := hs) (hs0 := hs0) E i hFull
   let B : Matrix (Fin 2) (Fin 2) ℤ_[2] := (2 : ℤ_[2]) • 1
@@ -309,7 +309,18 @@ theorem card_locH0_active {E : WeierstrassCurve ℚ} [E.IsElliptic] (v : Places 
     change (2 : ℕ) • x = 0 ↔ (2 : Acoef i) • e x = 0
     rw [← Nat.cast_ofNat (R := Acoef i), Nat.cast_smul_eq_nsmul, ← map_nsmul e]
     exact (map_eq_zero_iff e e.injective).symm)
-  rw [Nat.card_congr ((locH0EquivFixed _ i _ v).trans ef), card_ker_eq_card_coker,
-    card_coker_acoef B hn i (by omega) (hval.symm ▸ hi), hval]
+  rw [Nat.card_congr ((locH0EquivFixed _ i _ v).trans ef)]
+  by_cases hi2 : 2 ≤ i
+  · rw [card_ker_eq_card_coker, card_coker_acoef B hn i hi (hval.symm ▸ hi2), hval]
+  · have hi1 : i = 1 := by omega
+    subst i
+    have h0 : (2 : Acoef 1) = 0 := by simpa using acoef_two_pow_eq_zero 1
+    have hk : LinearMap.ker (B.map (constRed 1)).mulVecLin = ⊤ := by
+      apply Submodule.eq_top_iff'.2
+      intro x
+      rw [LinearMap.mem_ker, hB, LinearMap.smul_apply, LinearMap.id_apply, h0]
+      exact zero_smul (Acoef 1) x
+    rw [hk, Nat.card_congr Submodule.topEquiv.toEquiv, Nat.card_fun, card_acoef 1 one_ne_zero]
+    simp
 
 end ZInQ.Contrib.RC53Assist.Calibration
