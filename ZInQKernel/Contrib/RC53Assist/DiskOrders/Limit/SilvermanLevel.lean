@@ -5,14 +5,14 @@ import ZInQKernel.Contrib.RC53Assist.DiskOrders.ShaBridge
 
 Silverman, *The Arithmetic of Elliptic Curves*, second edition, Theorem X.4.2:
 `0 → E'(K)/φ(E(K)) → S^(φ)(E/K) → Ш(E/K)[φ] → 0`.
-Here `φ = [2^n]`, so `E' = E`. The theorem locator is supplied; the page locator is
-UNVERIFIED, since the printed page was not checked.
+Here `φ = [2^n]`, so `E' = E`. Locator: Theorem X.4.2(a), page 333 (the Selmer and
+Shafarevich-Tate groups are defined on page 332; pages checked).
 
 The field is `K = ℚ(r)` inside `ℚˢ`. Rational points are realized as fixed geometric
 points, `H⁰(G_K, E(ℚˢ))`. The finite Selmer group uses the same localizations at all
 finite and infinite places as the two-primary Selmer group.
 
-Kinds: definitions, PRINT input, and PROVED algebraic identifications.
+Kinds: definitions, a PRINT statement proved below, and PROVED algebraic identifications.
 -/
 
 noncomputable section
@@ -191,8 +191,9 @@ end Limit
 `0 → E(K)/2^n E(K) → Sel_{2^n}(E/K) → Ш(E/K)[2^n] → 0`, for `K = ℚ(√k)`.
 All maps are the canonical finite Kummer and coefficient maps. Rational points
 are realized as fixed geometric points; no direct-limit or divisibility claim is
-part of this input. Kind: definition (PRINT input); Silverman, *The Arithmetic of
-Elliptic Curves*, second edition, Theorem X.4.2. Page locator UNVERIFIED: not checked. -/
+part of this input. Kind: PRINT statement, proved below
+(`silvermanX42TwoPowerLevelPrint`); Silverman, *The Arithmetic of Elliptic Curves*, second
+edition, Theorem X.4.2(a), page 333. -/
 def SilvermanX42TwoPowerLevelPrint : Prop :=
   ∀ (k : ℤ) (E : WeierstrassCurve ℚ) (hE : E.IsElliptic),
     letI := hE
