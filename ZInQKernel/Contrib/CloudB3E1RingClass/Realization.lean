@@ -29,7 +29,9 @@ interface whose ring-class data are these genuine objects.
   - `q r j` is the Artin class of `𝔭_j` at active `j`;
   - the places of `P` are among the `𝔭_j`, `𝔭̄_j` over `2N`.
   For a genuine construction of the interface (`P r := Gal(H_r/K)` with these subgroups and
-  classes) each field holds by definition.
+  classes) the fields `e`, `inertia_eq`, `decomp_eq`, `decompBar_eq` and `q_eq` hold by definition.
+  The fields `placeR`, `P_sub`, `ideal` and `place_not_over` are true facts about the chosen places
+  (a place over `r` exists for `r > 1`; `K` is split at `2N`; the active primes are good).
 * **`movingRealization_of_identification`** (PROVED): `RingClassIdentification` and
   `FrobeniusCompat` give `MovingRealization M r P`. The restriction is onto
   (`ringClassRes_surjective`), and the three compatibilities follow from the definitions and
@@ -96,7 +98,8 @@ attribute [instance] MovingSetting.pGrp
 
 /-- **The interface's ring-class data are the genuine ones at `r`** (tex 3565–3595, 3679–3684,
 2720, 3528–3531). For a genuine construction of the interface, with `P r := Gal(H_r/K)` and these
-subgroups and classes, each field holds by definition. Kind: definition (of the structure). -/
+subgroups and classes, the identification fields hold by definition. The place fields are true
+facts about the chosen places. Kind: definition (of the structure). -/
 structure RingClassIdentification (M : MovingSetting T n) (r : ℕ) (hr : r ≠ 0)
     (S : Set (HeightOneSpectrum (𝓞 K)))
     (hS : ∀ v : HeightOneSpectrum (𝓞 K), (r : 𝓞 K) ∈ v.asIdeal → v ∈ S)
