@@ -19,7 +19,9 @@ private theorem padicInt_exists_nat_add_mul {ℓ : ℕ} [hℓ : Fact ℓ.Prime] 
   obtain ⟨b, hb⟩ := Ideal.mem_span_singleton.mp hmem
   exact ⟨k, b, by rw [← hb]; ring⟩
 
-private theorem tensor_exists_one_tmul_add_nsmul {ℓ : ℕ} [Fact ℓ.Prime] (n : ℕ)
+/-- Modulo any power of ℓ, a tensor is represented by a single element of
+the original abelian group. -/
+theorem tensor_exists_one_tmul_add_nsmul {ℓ : ℕ} [Fact ℓ.Prime] (n : ℕ)
     {H : Type*} [AddCommGroup H] (ξ : ℤ_[ℓ] ⊗[ℤ] H) :
     ∃ (g : H) (ζ : ℤ_[ℓ] ⊗[ℤ] H), ξ = (1 : ℤ_[ℓ]) ⊗ₜ[ℤ] g + (ℓ ^ n : ℕ) • ζ := by
   induction ξ using TensorProduct.inductionOn with
