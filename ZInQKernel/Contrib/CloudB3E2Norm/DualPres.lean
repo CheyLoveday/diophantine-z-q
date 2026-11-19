@@ -17,6 +17,9 @@ coefficient module `M` (for the paired side: the module of the inverse character
   `C_{T⊥}` (definitions). These are lane RC30's `DPp` (`dsuppDataS T`).
 * `dfS T p` (definition): the strict-to-orthogonal map `U_{(T ∪ {p})⊥} → U_{T⊥}` (zero to
   unramified at the two places above `p`, the identity elsewhere); lane RC30's `fS`.
+* `dpPp`, `dpS`, `dqPp` (definitions), `dret_S`, `dq_S` (PROVED): the components of `U_{T⊥}` and
+  `U_{(T ∪ {p})⊥}` at the old places and at `p`, and lane RC30's retention inputs `ret_S`, `q_S`
+  for them (with `Uo' = dpresCondS T`, `Uq' = switchUq p`).
 * **`selRestrict_dsuppDataS`** (PROVED): `selRestrict (dsuppDataS T) (dfS T p) =
   dsuppDataS (insert p T)` — the strict side of a step is the orthogonal side of the next
   (`R_{i+1}.DPp = selRestrict R_i.DPp R_i.fS`).
@@ -179,6 +182,76 @@ theorem selD_restrict (T : Finset ι) (p : ι)
       ((dfS K S₀ S k M Δ' place X EU T p).f 0 0 rfl u) - _) = (_, _, _ - _ - _)
   rw [dfS_compat]
   rfl
+
+/-! ### The components of the dual chain for lane RC30's retention inputs -/
+
+/-- An orthogonal condition off the support is the genuine unramified condition. Kind: definition.
+-/
+def dToUr (j : ι × Bool) : (b : Bool) → b = false →
+    GHom (dcondCxS K S k place X j b) (genuineUq K S k (place j) (X j))
+  | false, _ => idGHom _
+  | true, h => Bool.noConfusion h
+
+omit [DecidableEq ι] in
+/-- The strict map out of a zero condition is zero. Kind: PROVED. -/
+theorem dcondSplit_of_true (j : ι × Bool) (b b' : Bool) (hb' : b' = true)
+    (h : b = true → b' = true) (n : ℤ) (y : (dcondCxS K S k place X j b').X n) :
+    (dcondSplit K S k place X j b b' h).f n n rfl y = 0 := by
+  subst hb'
+  cases b <;> rfl
+
+/-- **The old orthogonal components `p_{P⊥,v}`** (lane RC30's `pPp`): the projections of
+`U_{T⊥}` onto its factors. Kind: definition. -/
+def dpPp (T : Finset ι) (v : Places K S₀ ⊕ (ι × Bool)) (n : ℤ) :
+    (dsuppDataS K S₀ S k M Δ' place X EU T).U.X n →ₗ[k]
+      ((dpresCondS K S₀ S k M Δ' place X EU T).U v).X n :=
+  LinearMap.proj v
+
+/-- **The old strict components `p_{S,v}`** (lane RC30's `pS`): `p_{P⊥,v} ∘ j`.
+Kind: definition. -/
+def dpS (T : Finset ι) (p : ι) (v : Places K S₀ ⊕ (ι × Bool)) (n : ℤ) :
+    (dsuppDataS K S₀ S k M Δ' place X EU (insert p T)).U.X n →ₗ[k]
+      ((dpresCondS K S₀ S k M Δ' place X EU T).U v).X n :=
+  (dpPp K S₀ S k M Δ' place X EU T v n).comp ((dfS K S₀ S k M Δ' place X EU T p).f n n rfl)
+
+/-- **Every old orthogonal condition is retained by `j`** (lane RC30's `ret_S`; PROVED, by
+definition). -/
+theorem dret_S (T : Finset ι) (p : ι) (v : Places K S₀ ⊕ (ι × Bool)) (n : ℤ)
+    (x : (dsuppDataS K S₀ S k M Δ' place X EU (insert p T)).U.X n) :
+    dpPp K S₀ S k M Δ' place X EU T v n ((dfS K S₀ S k M Δ' place X EU T p).f n n rfl x) =
+      dpS K S₀ S k M Δ' place X EU T p v n x :=
+  rfl
+
+/-- **The `q`-component of `U_{T⊥}`** (lane RC30's `qPp`): the projection onto the two
+unramified conditions above `p ∉ T`, in lane RC32's `switchUq p`. Kind: definition. -/
+def dqPp (T : Finset ι) (p : ι) (hp : p ∉ T) (n : ℤ) :
+    (dsuppDataS K S₀ S k M Δ' place X EU T).U.X n →ₗ[k] (switchUq K S k place X p).X n :=
+  LinearMap.prod
+    (((dToUr K S k place X (p, false) (decide (p ∈ T)) (decide_eq_false hp)).f n n rfl).comp
+      (LinearMap.proj (R := k) (φ := fun v => ((dpresCondS K S₀ S k M Δ' place X EU T).U v).X n)
+        (Sum.inr (p, false))))
+    (((dToUr K S k place X (p, true) (decide (p ∈ T)) (decide_eq_false hp)).f n n rfl).comp
+      (LinearMap.proj (R := k) (φ := fun v => ((dpresCondS K S₀ S k M Δ' place X EU T).U v).X n)
+        (Sum.inr (p, true))))
+
+/-- **At `q`, `j` is the map from zero to the unramified condition** (lane RC30's `q_S`;
+tex 4163–4164; PROVED). -/
+theorem dq_S (T : Finset ι) (p : ι) (hp : p ∉ T) (n : ℤ)
+    (x : (dsuppDataS K S₀ S k M Δ' place X EU (insert p T)).U.X n) :
+    dqPp K S₀ S k M Δ' place X EU T p hp n
+      ((dfS K S₀ S k M Δ' place X EU T p).f n n rfl x) = 0 := by
+  have h0 : ∀ b : Bool, (dfS K S₀ S k M Δ' place X EU T p).f n n rfl x (.inr (p, b)) = 0 :=
+    fun b => dcondSplit_of_true K S k place X (p, b) _ _
+      (decide_eq_true (Finset.mem_insert_self p T)) _ n _
+  refine Prod.ext ?_ ?_
+  · change (dToUr K S k place X (p, false) (decide (p ∈ T)) (decide_eq_false hp)).f n n rfl
+      ((dfS K S₀ S k M Δ' place X EU T p).f n n rfl x (Sum.inr (p, false))) = 0
+    rw [h0 false]
+    exact map_zero _
+  · change (dToUr K S k place X (p, true) (decide (p ∈ T)) (decide_eq_false hp)).f n n rfl
+      ((dfS K S₀ S k M Δ' place X EU T p).f n n rfl x (Sum.inr (p, true))) = 0
+    rw [h0 true]
+    exact map_zero _
 
 end Dual
 
