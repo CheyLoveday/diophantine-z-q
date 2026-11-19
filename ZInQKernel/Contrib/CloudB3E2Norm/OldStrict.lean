@@ -13,8 +13,9 @@ RC28/RC29 (`kummerConditionIn`, `actualKummerAt`, `actualKummerAtS`):
 
 * `mem_range_cocycleConditionι_iff` (PROVED): a degree-one local cochain `c` lies in the image of a
   cocycle condition `U¹ = Z ⊔ B¹ → C¹_cont(G_v, M)` iff `c ∈ Z ⊔ B¹`;
-  `mem_kummer_of_eq_add_d0` (PROVED): for the Kummer condition, `c = ι ∘ κ(a, P) + d⁰ b` (an
-  extended local Kummer cocycle of a local point `P ∈ B(K_v)` plus a coboundary) suffices.
+  `mem_kummer_of_eq_add_d0`, `mem_kummer_of_eq_sum_add_d0` (PROVED): for the Kummer condition,
+  `c = ∑_j ι ∘ κ(a_j, P_j) + d⁰ b` (extended local Kummer cocycles of local points `P_j ∈ B(K_v)`
+  plus a coboundary) suffices.
 * `exists_lift_selData` (PROVED): for the genuine Selmer data `selData Δ` of any local conditions
   `Δ`, a global cochain `a` has a lift `u` with `ι u = res a` as soon as its localization at every
   place lies in the image of that place's condition.
@@ -41,10 +42,12 @@ identification of the local coefficient module through the local twist (`E^{(h)}
 over `K̄_v` and the embedding `K_S → K̄_v`, the GLUE input of `KummerAt.lean`), and the local
 points of the twist over `K_v` obtained as local norms. **Coefficient mismatch**: lanes RC28/RC29's
 conditions live over the stage ring `Acoef i` (module `Mcoef`/`MinS`), while RC32's abbrevs
-`genuineOld`/`genuineRelaxed` are declared over a topological field `k`; everything in this file
-and in `LocalComponents.lean` except `hzR_genuine_of_strictLifts` is stated for any commutative
-ring and any `selData Δ`, so it applies to `Acoef i` directly; the genuine abbrevs themselves would
-need their `[Field k]` binder relaxed.
+`genuineOld`/`genuineRelaxed` are declared over a topological field `k`. The generic reductions
+here and in `LocalComponents.lean` (`exists_lift_selData`, `exists_lift_relaxedAt`,
+`exists_lift_addPlace`, `exists_hPloc_primToRel`, `hU_hL_of_strictLifts`, `hzR_of_strictLifts`) are
+stated for any commutative ring and any `selData Δ`, so they apply to `Acoef i` directly; the
+genuine wrappers `exists_hRloc_genuine` and `hzR_genuine_of_strictLifts` carry `[Field k]` and
+would be generalized together with the genuine abbrevs.
 
 Kinds: definitions and PROVED.
 -/
@@ -100,6 +103,22 @@ theorem mem_kummer_of_eq_add_d0 (c : (natCx (contCochains k (Field.absoluteGaloi
   change (show contCochain k (Field.absoluteGaloisGroup F) M 1 from c) ∈ _
   rw [hc]
   exact Submodule.add_mem_sup (kummerCocycleIn_mem ι a P) (LinearMap.mem_range.2 ⟨b, rfl⟩)
+
+/-- **A finite combination of local Kummer cocycles plus a coboundary lies in the Kummer
+condition** (PROVED): if `c = ∑_j ι ∘ κ(a_j, P_j) + d⁰ b`, then `c` is in the image of the extended
+Kummer condition in degree one (the form of the arithmetic input stated in the module docstring). -/
+theorem mem_kummer_of_eq_sum_add_d0
+    (c : (natCx (contCochains k (Field.absoluteGaloisGroup F) M)).X 1)
+    {J : Type} (s : Finset J) (a : J → k) (P : J → B.toAffine.Point)
+    (b : contCochain k (Field.absoluteGaloisGroup F) M 0)
+    (hc : (show contCochain k (Field.absoluteGaloisGroup F) M 1 from c) =
+      ∑ j ∈ s, kummerCocycleIn ι (a j) (P j) + contD k (Field.absoluteGaloisGroup F) M 0 b) :
+    ∃ u, (kummerConditionInι k ι hι).f 1 1 rfl u = c := by
+  rw [kummerConditionInι, mem_range_cocycleConditionι_iff]
+  change (show contCochain k (Field.absoluteGaloisGroup F) M 1 from c) ∈ _
+  rw [hc]
+  exact Submodule.add_mem_sup (Submodule.sum_mem _ fun j _ => kummerCocycleIn_mem ι (a j) (P j))
+    (LinearMap.mem_range.2 ⟨b, rfl⟩)
 
 end Kummer
 
