@@ -26,7 +26,9 @@ are the RC53 group's inputs with `Ecurve ℓ` replaced by `curve t`:
   a positive address exactly the original at `ℓ · h.toNat`
   (`nonempty_kummerCoefficientComparisonSigned_iff_of_pos`); at a negative address no original is
   available, and its truth is the same Galois-cohomological statement for the curve `E_{ℓh}`. No
-  inhabitant is constructed here (as for the original);
+  inhabitant is constructed here; RC37's `kcKummerCoefficientComparisonSigned`
+  (`KummerCompArith.lean`) inhabits it for `k < 0` and `S` finite containing the primes above `2`,
+  from the named finite-level Selmer description `KcArithSelmerLevel`;
 * `SelmerCorankOneOverKSigned` is the original at `t = ℓ` (`selmerCorankOneOverKSigned_natCast`)
   and at positive addresses (`selmerCorankOneOverKSigned_iff_of_pos`).
 
