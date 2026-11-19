@@ -18,7 +18,8 @@ primitive coordinate with `RegularityInputsILF u`: either `u = 0`, or at every h
 conjugation and the curve `W = E_ℓ ⊗ K` with full two-torsion, such that
 * the actual fibre of the family is the genuine Selmer complex of the `Λ`-adic fibre
   `V_𝔭 = k(𝔭) ⊗ T₂E` (twisted by a continuous `Λ`-valued character) with some genuine local
-  conditions (lane RC28's `fibreSelData`): the fibres are pinned to the `Λ`-adic module;
+  conditions (lane RC28's `fibreSelData`): the actual fibre is pinned to the `Λ`-adic module (the
+  other configurations' fibres are only genuine Galois Selmer data);
 * at a nonquadratic specialization `InnerLimitSwitchFamily` over the family, and at a quadratic
   specialization `HomologySwitchDataPK`.
 
@@ -30,12 +31,20 @@ PROVED: `RegularityInputsILF.toMdl`, `PrimRegularityInputsILF.toMdl`,
   equivalent to `PrimRegularityInputs` as soon as some genuine Galois Selmer complex over each
   `k(𝔭)` has the homotopy type of `[k --0--> k]` (no switch is then required).
 * `primRegularityInputsILF_iff_of_unitFibre`: the pinned leaf is equivalent to
-  `PrimRegularityInputs` only if some genuine Selmer complex OF THE `Λ`-ADIC FIBRE `V_𝔭` (for some
-  local conditions and some continuous character) has that homotopy type at each `𝔭`.
+  `PrimRegularityInputs` as soon as some genuine Selmer complex OF THE `Λ`-ADIC FIBRE `V_𝔭` (for
+  some local conditions and some continuous character) has that homotopy type at each `𝔭` (a
+  sufficient condition; no converse is proved).
 The actual fibres must come from the `Λ`-adic module; `RC/LambdaCoef` provides conditional
 fixed-character constructions; their identification with the retained inner-limit diagrams
-remains open. The pin fixes the module, not the local conditions or the character, which remain
-existential (the text's are the old conditions of the address and `χ_{h_x} Ψ_i`, tex 2791).
+remains open. The pin fixes the module of the actual fibre only, not its local conditions or
+character, which remain existential and are not tied to the stage family's characters and old
+conditions; the successor fibres and the family's actual class and functional (`zAct`, `lamAct`)
+are not pinned (the text's conditions are the old conditions of the address and its character is
+`χ_{h_x} Ψ_i`, tex 2791). DEPARTURE: the pinned character and the stage family's characters are
+characters of `G_{K,S}` for the fixed finite `S`, whereas the text's `χ_h Ψ_i` ramify at conductor
+primes `r_i` that vary with the precision and need not be restrictions of one character (tex
+2727–2741, 4268–4272), so neither can be the text's characters; the leaf is stated for
+fixed-support characters (lane RC28's conditional construction).
 -/
 
 noncomputable section
@@ -206,7 +215,8 @@ theorem primRegularityInputsILM_iff_of_unitFibre (D : RCData ℓ) (hmloc : Milne
     ((primRegularityInputs_iff D).mp hD Co Ce F hF x)
   exact ⟨u, hu, (regularityInputsILM_iff_of_unitFibre hmloc hmglob K S Cn W hW hWE hE u).mpr hr⟩
 
-/-- **The pinned leaf is target-shaped only under a one-stage `Λ`-adic fibre**: given, at every
+/-- **The pinned leaf is target-shaped under a one-stage `Λ`-adic fibre** (a sufficient
+condition; no converse is proved): given, at every
 height-one prime `𝔭 ≠ (2)`, `2 ≠ 0` in `k(𝔭)`, a curve datum `W = E_ℓ ⊗ K`, a continuous character
 and genuine local conditions for which the genuine Selmer complex of the `Λ`-adic fibre `V_𝔭` is
 a genuine Galois Selmer complex homotopy equivalent to `[k --0--> k]`,
@@ -238,8 +248,8 @@ theorem regularityInputsILF_iff_of_unitFibre
     intro c _ hd
     exact absurd hd (collapse_no_switch _ e r h2 u hr c)
 
-/-- **The pinned leaf is equivalent to `PrimRegularityInputs` only under a one-stage `Λ`-adic
-fibre at every height-one prime**. Kind: PROVED. -/
+/-- **The pinned leaf is equivalent to `PrimRegularityInputs` under a one-stage `Λ`-adic fibre at
+every height-one prime** (a sufficient condition; no converse is proved). Kind: PROVED. -/
 theorem primRegularityInputsILF_iff_of_unitFibre (D : RCData ℓ)
     (hE : ∀ (P : Ideal Lambda) [P.IsPrime] (hP : P.height = 1) (hne : P ≠ Ideal.span {2}),
       haveI : IsHeightOneOdd P := ⟨hP, hne⟩

@@ -7,8 +7,12 @@ equivalence**
 
 Lemma `ex:limits-inner-limit` (tex 4391–4451, normalized retract data tex 4423–4437) and the split
 local model at the new prime `q_i` (tex 4859–4873). The link `projection_model` of
-`ILStageStepFamilyLinked` asks, at every positive stage, for a homotopy equivalence of the local
-cochains at `q_i` with the split model whose forward map is the projection of the stage record.
+`ILStageStepFamilyLinked` asserts a quasi-isomorphism over `A_i` on a `U`-large set of positive
+stages; eventuality weakens the stage quantifier, not the coefficient ring, and the genuine label
+precision must cover `A_i`. The supplied same-stage trivial-action and fixed-root hypotheses and
+the normalized retract prove the stronger property constructed here: at every positive stage, a
+homotopy equivalence of the local cochains at `q_i` with the split model whose forward map is the
+projection of the stage record.
 
 * `retractProjectionEquiv`: a normalized retract of `X` onto `Y` is a homotopy equivalence
   `X ≃ Y` with forward map its projection (`GRetract.homotopyEquiv` reversed). PROVED.
@@ -38,10 +42,10 @@ cochains at `q_i` with the split model whose forward map is the projection of th
   `conjMatrixK_lift_sq`, `conjMatrixK_lift_det`: the inputs `hJ`, `hJdet` of
   `RetainedLocalArithmetic.of_splitStages` for that matrix. PROVED.
 
-The stages `producedStages` of the RC53 group are `Classical.choice` of
-`Nonempty (SplitStage …)`. The record `SplitStage` keeps no retraction, and the producer
-`exists_stagePairing_trace` exports only the projection, so the link is not derivable for that
-family. `producedStagesModel` is the same construction, keeping the retract.
+The existing `producedStages` statement does not export a local projection equivalence or
+identify its chosen record with the normalized retract witness. `producedStagesModel` supplies
+these guarantees by choosing from the strengthened statement. No logical non-derivability theorem
+for the old family is asserted here.
 -/
 
 noncomputable section

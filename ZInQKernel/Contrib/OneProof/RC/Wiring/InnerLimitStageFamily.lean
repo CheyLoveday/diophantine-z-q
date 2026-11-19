@@ -4,7 +4,7 @@ import ZInQKernel.Contrib.RC53Assist.ResidueIdentity.FullTransport
 import ZInQKernel.Contrib.OneProof.RC.Wiring.StageProjectionModel
 
 /-!
-# Theorem 5.3, Lane RC0 round 15: the inner-limit switch on the stage family of the text
+# Theorem 5.3, Lane RC0 round 15: the inner-limit switch on a fixed-old-support stage family
 
 Proposition `ex:limits-uniform-lower-bound`, height-one regularity (tex 4976–5195), with the switch
 at a derivative label on the inner-limit objects (tex 4385–4451, 4834–4907, 5027–5086).
@@ -17,13 +17,20 @@ this directly. Its global complex at stage `i` is the Selmer complex of the enla
 are stated on that family, with the RC53 group's split-stage records, so no condition at `q_i` has
 to be named and the RC53 group's producers apply verbatim.
 
+**DEPARTURE.** The family's old support `S` and its characters `α_i` of `G_{K,S}` are fixed across
+the stages. This is a fixed-old-support auxiliary case, not the manuscript's stage family: the
+text's characters `χ_h Ψ_i` ramify at conductor primes `r_i` that vary with the stage and need not
+be restrictions of one character (tex 2727–2741, 4268–4272), and an injective sequence of such
+conductors cannot descend to one finite support.
+
 * `ILStageStepFamily`: the inputs of one switch on the stage family (old support `S`, the support
   of the actual conjugation). PROVED: `ILStageStepFamily.toILStageStep` (the flat terms by
   `ActualStageFamily.flat`; the residue identity of tex 5037 by
   `RetainedLocalArithmetic.hloc_at_conj`, with `σ = 1`, `ε₀ = −ε`, `ε₂ = ε`) and
   `ILStageStepFamily.stepData`.
-* `ILStageStepFamilyLinked`: with the links (at the retained precision the split projection a
-  quasi-isomorphism onto the zero-differential split model; on a `U`-large set the retained
+* `ILStageStepFamilyLinked`: with the links (on a `U`-large set of positive stages the split
+  projection a quasi-isomorphism over `A_i` onto the zero-differential split model; on a `U`-large
+  set the retained
   realization on the family's stage complexes, in the RC53 group's form
   `RetainedStageRealization`). PROVED: `projection_model_of_homotopyEquiv`.
 * `ILStageStepFamilyLinked.ofAssembled`: the RC53 group's realized assembly supplies every field
@@ -69,7 +76,9 @@ variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 
 
 /-- **The inputs of one switch on the stage family of the text** (tex 4385–4451, 4834–4907,
 5027–5086); the old support is `S`, the support of the actual conjugation:
-* `hS`, `α`, `hα`: `S` finite and the coefficient characters on `G_{K,S}` (data and ELLIOT);
+* `hS`, `α`, `hα`: `S` finite and the coefficient characters on `G_{K,S}` (data and ELLIOT); not
+  the text's moving characters `χ_h Ψ_i`, which ramify at primes `r_i` varying with the stage (tex
+  2727–2741, 4268–4272);
 * `Fam`: the RC53 group's stage family, with the new primes `q_i ∉ S` and the old conditions
   (data and GLUE, tex 4401–4406, 4809–4830, 5055–5059); `hOld`: flat terms of the old conditions
   other than zero and full (GLUE);
@@ -85,8 +94,9 @@ variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 
 * `rla`, `h02`, `hJ`: the retained local arithmetic at the derivative label, its zero/two
   realization and the identification of its conjugation matrix with `ρ_T(τ)` (GLUE, tex
   4860–4863, 5027–5043); the residue identity of tex 5037 is PROVED from them;
-* `hdet`: the detection `F ≤ U` (GLUE, tex 5055–5072);
-* `φ`, `φ'`: the side-to-stage isomorphisms (GLUE, tex 5040–5054).
+* `hdet`: the detection `F ≤ U` (ELLIOT + GLUE: Lemma `ex:limits-kernel-detection`, tex
+  4748–4833, applied at tex 4997–5001);
+* `φ`, `φ'`: the side-to-stage isomorphisms (GLUE, tex 4986–4991, 5072–5080).
 Kind: definition (inputs). -/
 structure ILStageStepFamily (Z₀ Z₁ : TwoTermStage ι) where
   /-- The old support is finite. -/
@@ -201,11 +211,13 @@ abbrev ILStageStepFamily.stepData {Z₀ Z₁ : TwoTermStage ι}
 variable (P Cn W hW) in
 /-- **The inputs of one switch on the stage family, with their links** (tex 4385–4451,
 4859–4868):
-* `projection_model`: at the retained precision, i.e. on a `U`-large set of positive stages, the
-  split projection at `q_i` is a quasi-isomorphism of the local cochains with the split model
-  `D⁰ ⊕ (F ⊕ S)[−1] ⊕ D²[−2]`, whose differential is zero (tex 4860–4862; GLUE). An exact
-  homotopy equivalence at every stage, as the RC53 group's normalized local retraction gives,
-  implies it (`projection_model_of_homotopyEquiv`);
+* `projection_model`: on a `U`-large set of positive stages the split projection at `q_i` is a
+  quasi-isomorphism over `A_i` of the local cochains with the split model
+  `D⁰ ⊕ (F ⊕ S)[−1] ⊕ D²[−2]`, whose differential is zero (tex 4860–4862; GLUE). Eventuality
+  weakens the stage quantifier, not the coefficient ring: the genuine label precision must cover
+  `A_i`. The supplied same-stage trivial-action and fixed-root hypotheses and the normalized
+  retract prove the stronger homotopy-equivalence property, which implies it
+  (`projection_model_of_homotopyEquiv`);
 * `realized`: on a `U`-large set of positive stages the retained data are realized on the family's
   stage complexes: a finite free model with a normalized retract and coordinates in which the
   model's differential, its localization and its global trace pairing are the stage images of
@@ -218,7 +230,7 @@ split model.
 Kind: definition (inputs). -/
 structure ILStageStepFamilyLinked (Z₀ Z₁ : TwoTermStage ι) extends
     ILStageStepFamily P Cn W hW Z₀ Z₁ where
-  /-- At the retained precision the split projection is a quasi-isomorphism. -/
+  /-- On a `U`-large set of stages the split projection is a quasi-isomorphism over `A_i`. -/
   projection_model : ∀ᶠ i in (U : Filter ℕ), ∀ [NeZero i],
     QuasiIso (GHom.toCC (stages i).projection)
   /-- The retained data are realized on the family's stage complexes. -/
