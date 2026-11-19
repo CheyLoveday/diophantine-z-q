@@ -7,3 +7,8 @@
 - Valuation.lean: integral two-adic normalization and bit, phase removal in the coefficient residue field, exact integer-power divisibility. Passed; 4 axiom audits.
 - TwoTrace.lean: product density of all Frobenius lifts; continuous double trace; exact even two-fresh input on the pre-model lattice. Passed; 3 axiom audits.
 - Valuation and TwoTrace audits use only propext, Classical.choice, and Quot.sound.
+- Place.lean: undivided common field and place, scalar character and squarefree phases; `source_at_place` at every cutoff with exact signed recurrence and arbitrary integer shift; character order gives `eta_phase_of_character`. Passed; 6 axiom audits.
+- Realization.lean: `evenH_off`, `evenH_two_fresh`, `even_two_hecke`, and `even_source_symbol` give the exact arithmetic comparisons; `thetaDataOfEven` and `budgetRealization_of_blocks` use the expansion identity, formwise Hecke, and existing local blocks. Passed; 7 axiom audits.
+- Compare.lean: `commonCoeff_complex` and `commonCoeff_place` compare the same divided series with shift canceled; `unary_timesTheta_mem` proves the correction's shell support. Passed; 7 axiom audits.
+- Scoped stop: actual even modular forms with the all-index weight-two expansion identity, common coefficient place and stable constituent lattice across all tested sets, and actual formwise Hecke, diamond, inertia and local attachments. A fixed finite window omits tests when B ≥ 2.
+- Compile invocation: `lake env lean -j1`, one file at a time with the merged import artifacts, checked load and available memory before each invocation. All 51 audits use only propext, Classical.choice, and Quot.sound. No new prints.
