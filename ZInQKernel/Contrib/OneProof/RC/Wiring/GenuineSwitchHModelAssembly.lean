@@ -102,7 +102,8 @@ theorem tmod_homology_zero_of_equiv {m : ℕ} (D : Matrix (Fin m) (Fin m) k)
   exact Module.finrank_zero_of_subsingleton
 
 
-/-- PROVED. **`dim H²` of a square two-term complex is `dim ker D`** (`H² = coker D`, rank–nullity). -/
+/-- PROVED. **`dim H²` of a square two-term complex is `dim ker D`** (`H² = coker D`,
+rank–nullity). -/
 theorem tmod_finrank_h2 {m : ℕ} (D : Matrix (Fin m) (Fin m) k) :
     finrank k ((tmodCx D).homology 2) = finrank k (LinearMap.ker D.mulVecLin) := by
   set K := tmodCx D
