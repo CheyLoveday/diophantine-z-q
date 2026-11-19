@@ -18,7 +18,8 @@ Inputs: Silverman AEC, Appendix C, §14, Theorem C.14.1;
 Silverberg-Zarhin, *Reduction of Abelian Varieties*, arXiv:alg-geom/9602014v2,
 Theorem 4.1, PDF page 4 (text body read), referring to SGA 7 I, IX,
 Proposition 3.5 and Corollaire 3.8; Serre, *Local Fields*, I, §8 and III, §5.
-The Silverman, Serre, and original SGA source pages have not been checked.
+The Silverman pages have been checked (Theorem 14.1, page 445); the Serre and original SGA
+pages have not. The printed existence form of Tate's theorem is used in `LiteralTate.lean`.
 No basis, cocycle formula, inertia reading, or Frobenius sign is an input.
 -/
 
@@ -83,7 +84,7 @@ open scoped Classical WithZero
 field and semistability theorems, not equivalent Tate-module readings.
 The Kummer basis, both Galois columns, both inertia character readings,
 nonzero Kummer inertia, and the arithmetic Frobenius sign are derived.
-Locators: C.14.1; Silverberg-Zarhin, Theorem 4.1 (SGA 7 I, IX,
+Locators: C.14.1; Silverberg-Zarhin, *Reduction of Abelian Varieties*, Theorem 4.1 (SGA 7 I, IX,
 Proposition 3.5 and Corollaire 3.8); Serre, *Local Fields*, I, §8 and III, §5. -/
 theorem tateCurveTateModulePrint_of_literature
     (hT : SilvermanC141TateUniformizationPrint)
