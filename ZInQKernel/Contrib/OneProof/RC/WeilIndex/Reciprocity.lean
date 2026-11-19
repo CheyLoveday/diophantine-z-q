@@ -19,7 +19,7 @@ These are the standard Gauss sum formulas at moduli four and eight. -/
 def dyadicExponent (e : Bool) (u : ZMod 8) : ZMod 8 :=
   if e then -u else if ZMod.χ₄ (ZMod.cast u) = -1 then 1 else -1
 
-private theorem signExponent_mul {a b : ℤ} (ha : a = 1 ∨ a = -1)
+theorem signExponent_mul {a b : ℤ} (ha : a = 1 ∨ a = -1)
     (hb : b = 1 ∨ b = -1) : signExponent (a * b) = signExponent a + signExponent b := by
   rcases ha with rfl | rfl <;> rcases hb with rfl | rfl <;> decide
 

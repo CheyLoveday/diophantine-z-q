@@ -26,10 +26,12 @@ private theorem signedCoefficient_ne_zero (negative oddValuation : Bool) (s : Fi
 private def rationalUnit (z : ℤ) (h : z ≠ 0) : ℚˣ :=
   Units.mk0 (z : ℚ) (Int.cast_ne_zero.mpr h)
 
-private def atPrime (p : Place) : ℚˣ →* ℚ_[p.val]ˣ :=
+/-- Base change of a nonzero rational scalar to a finite place. -/
+def atPrime (p : Place) : ℚˣ →* ℚ_[p.val]ˣ :=
   Units.map (algebraMap ℚ ℚ_[p.val]).toMonoidHom
 
-private def atReal : ℚˣ →* ℝˣ := Units.map (algebraMap ℚ ℝ).toMonoidHom
+/-- Base change of a nonzero rational scalar to the real place. -/
+def atReal : ℚˣ →* ℝˣ := Units.map (algebraMap ℚ ℝ).toMonoidHom
 
 private theorem atPrime_rationalUnit (p : Place) (z : ℤ) (hz : z ≠ 0) :
     (atPrime p (rationalUnit z hz) : ℚ_[p.val]) = z := by
