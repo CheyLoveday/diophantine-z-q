@@ -83,9 +83,11 @@ theorem levelWeilUnit_pow (E : WeierstrassCurve ℚ) [E.IsElliptic]
   exact (Additive.toMul (weilPairing (E.baseChange GlueC10.Qbar) (ℓ ^ n)
     (Nat.cast_ne_zero.mpr (pow_ne_zero n (Fact.out : ℓ.Prime).ne_zero)) P Q)).property
 
-/-- **PRINT INPUT, SPECIALIZATION**: Galois equivariance of the Weil pairing:
-`e_N(σP,σQ) = σ(e_N(P,Q))`. Locator: Silverman, *The Arithmetic of Elliptic
-Curves*, second edition, III.8.1(d), manuscript bibitem `silverman`.
+/-- **DEFINITION (proved in `AdditiveOneInput.lean`)**: Galois equivariance of the Weil pairing:
+`e_N(σP,σQ) = σ(e_N(P,Q))`; `silvermanIII81GaloisWeilPairingPrint_proved` derives it from the
+vendored library. Locator: Silverman, *The Arithmetic of Elliptic
+Curves*, second edition, III.8.1 (the property letter is not checked), manuscript bibitem
+`silverman`.
 Only `N = ℓ^n` and `E/ℚ` are used. Page not checked; this mathematical
 transcription is not claimed to be a checked verbatim quotation.
 This is a proposition, not an axiom. -/

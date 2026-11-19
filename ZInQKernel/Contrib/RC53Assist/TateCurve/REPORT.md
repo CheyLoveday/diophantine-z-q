@@ -145,3 +145,14 @@ from the stated literature. No new glue equivalent to C1 or C2 is introduced.
 Silverman and Serre theorem-page verification remains open, as does checking
 the original SGA page bodies. No commit, checkout, dependency update, or
 integration was performed, and no original file was edited.
+
+## Classification after independent review
+
+- `LocalSemistableTatePrint` and `GrothendieckSemistableReductionPrint`: faithful specializations of
+  Silverberg-Zarhin, *Reduction of Abelian Varieties*, Theorem 4.1 (PDF page 4), a source that is not
+  one of the manuscript's bibliography entries.
+- `SilvermanC141TateUniformizationPrint`, `LocalUnramifiedValueGroupPrint` and
+  `LocalFrobeniusGenerationPrint`: readings (GLUE), not certified literal printed statements.
+- `SilvermanIII81GaloisWeilPairingPrint`: proved (`silvermanIII81GaloisWeilPairingPrint_proved`,
+  `AdditiveOneInput.lean`), so the additive reading follows from the semistability criterion alone
+  (`additiveReductionCoinvariantsVanish_of_semistability`).
