@@ -32,16 +32,21 @@ discrete `G`-module `M` (the finite coefficient module) through an injective equ
   point defined over a finite extension inside `K_S`, and `H` is open) and the values of
   `𝒯_θ(κ(Q))` lie in `ι(M)`, then there is a continuous genuine `z` with `ι ∘ z = 𝒯_θ(κ(Q))`.
 * **`hG_genuine_of_transfer`** (PROVED): the same at lane RC32's genuine relaxed Selmer data
-  `genuineRelaxed K S₀ S k M Δ w`, for the global components `zR.1` and `primG D f 1 zP`; the
-  conclusion is literally the hypothesis `hG` of `hzR_of_components`.
+  `genuineRelaxed K S₀ S k M Δ w`, for the global components `zR.1` and `primG D f 1 zP`; after
+  destructuring its existential, it supplies exactly the arguments `bG` and `hG` of
+  `hzR_of_components`.
 * Non-vacuity: `nonVacuity_genuine`.
 
-**What remains**: (1) the fields of definition of the points inside `K_S` (openness of the
-stabilizers) and the ring class fields `H_T` as intermediate fields of `K_S/K`; (2) the
-identification of the genuine coefficient module `M` with `D[k]` through `ι` and of the genuine
-action with the twisted action `R = θ ρ` (`hιeq`); (3) the identification of the division points
-`Q_T` with those of the actual Heegner points (`CCLThm2_15Applied`'s anchor); (4) the local
-components `hU`, `hL` (item 3 of the common-coordinate step).
+**What remains**: (1) the character compatibility `hθ` of `transfer_kummer_norm_of_transversal`
+(removed for descents of one global character in `GlobalChar.lean`); (2) witnesses for the
+actual-class identifications `hzR`, `hzP`: by `exists_gval_eq_transfer` they exist once the
+stabilizers are open, but the open-stabilizer witnesses for the actual points (their fields of
+definition inside `K_S`) and the ring class fields `H_T` as intermediate fields of `K_S/K` are not
+in the tree; (3) the identification of the genuine coefficient module `M` with `D[k]` through `ι`
+and of the genuine action with the twisted action `R = θ ρ` (`hιeq`, `htors`); (4) the
+identification of the division points `Q_T` with those of the actual Heegner points
+(`CCLThm2_15Applied`'s anchor); (5) the local components `hU`, `hL` (item 3 of the
+common-coordinate step).
 
 Kinds: definitions and PROVED.
 -/
@@ -190,8 +195,8 @@ include hrP hrR hU ht in
 /-- **`hG` of lane RC32's `hzR_of_components` at the genuine relaxed Selmer data**
 `genuineRelaxed K S₀ S k M Δ w` (PROVED): its global complex is `globalCx k (GKS K S) M`, so
 `hG_of_transfer` applies to the global components `zR.1` and `primG D f 1 zP` (the global
-component of `i` is the identity, `changeMap_global`). The conclusion is literally the hypothesis
-`hG` of `hzR_of_components`. -/
+component of `i` is the identity, `changeMap_global`). After destructuring the existential, the
+conclusion supplies exactly the arguments `bG` and `hG` of `hzR_of_components`. -/
 theorem hG_genuine_of_transfer
     (Δ : LocalConditions k (GKS K S) (fun v : Places K S₀ => Gloc K v.1)
       (fun v => locMap K S v.1) M) (w : Places K S) {U' : GCx k}
