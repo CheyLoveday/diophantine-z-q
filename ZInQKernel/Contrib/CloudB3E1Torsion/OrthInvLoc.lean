@@ -33,6 +33,9 @@ t · unit` at the moving prime (tex 3787–3789); no comparison is needed at unu
   limit): `φo` with a `LocHInv` at each old place, and a `LocContraction` at every new place.
   **`OrthComparisonInverseLoc.ψ`** with `hd`, `hd₁`, `hright`, `hleft` (PROVED): the fields of
   lane E2's `OrthComparisonInverse` other than `hsw`.
+* `HswUpToD` (named input) and **`hlift_of_transport_loc`** (PROVED): the bridge. Lane E2's
+  `hlift_of_transport` holds with the switch compatibility up to coboundaries on cocycles, and
+  its conclusion holds up to a coboundary of `C_{T⊥}`.
 * `orthComparisonInverseLoc_of_isEmpty` (PROVED, non-vacuity): for no new places and `φo` the
   identity of the old conditions (`LocHInv.id`). A non-degenerate instance needs the localized
   coefficients.
@@ -48,8 +51,8 @@ Remainder (the bridge to `hlift_of_transport`, not proved here): lane E2's `hsw`
 `h¹_p(ι u_p)` to the local component. The difference `(0, −u_p, h¹_p(ι u_p))` is a coboundary of
 `C_{T⊥}` exactly when `u_p ∈ (Φ − 1)W` up to the contraction. That holds once the unramified
 condition `[W --(Φ−1)--> W]` at `p` is contracted too, which is the unit `A = Φ − 1` of tex
-3727–3732. So the bridge needs (i) a second contraction field, of the unramified condition at the
-new places, and (ii) `hsw` and `hlift_of_transport` in their up-to-`d` form on cocycles.
+3727–3732. So the bridge goes through `HswUpToD`. Proving it needs a second contraction field, of the
+unramified condition at the new places.
 
 Kinds: definitions, named input (`OrthComparisonInverseLoc`), PROVED.
 -/
@@ -458,6 +461,36 @@ theorem hleft (T : Finset ι) (z : (selCx (dsuppDataS K S₀ S k M Δ' place X E
         z + (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl y :=
   selHInv_left (presInv Ψ T)
     (presComparison_compat K S₀ S k M Δ' Δ'' place X EU Ψ.φo Ψ.φo_compat T) z hz
+
+/-- **The switch compatibility up to coboundaries** (the remainder; see the module docstring):
+for `p ∉ T` and a degree-one cocycle `x` of `C'_T`, `j(ψ_{T ∪ {p}}(i' x)) = ψ_T x + d b`.
+Kind: definition (named input). -/
+def HswUpToD : Prop :=
+  ∀ (T : Finset ι) (p : ι), p ∉ T → ∀ x : (suppCxS K S₀ S k M Δ'' place X EU T).X 1,
+    (suppCxS K S₀ S k M Δ'' place X EU T).d 1 2 rfl x = 0 →
+      ∃ b : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 0,
+        jmap T p 1 (Ψ.ψ (X := X) (EU := EU) (insert p T)
+            ((suppInclS K S₀ S k M Δ'' place X EU T p).f 1 1 rfl x)) =
+          Ψ.ψ (X := X) (EU := EU) T x + (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl b
+
+/-- **The paired strict lift at the localization** (PROVED from `HswUpToD`; tex 4169–4171): from
+the transported norm identity `z'_R = e · i'(z'_P) + d b'` with `z'_P` a cocycle, the lift
+`j z_S = e z_{P⊥} + d b` for `z_S = ψ_{T ∪ {p}}(z'_R)`, `z_{P⊥} = ψ_T(z'_P)`: lane E2's
+`hlift_of_transport` with `hsw` up to coboundaries. -/
+theorem hlift_of_transport_loc (hsw : Ψ.HswUpToD (X := X) (EU := EU)) {T : Finset ι} {p : ι}
+    (hp : p ∉ T) (zR : (suppCxS K S₀ S k M Δ'' place X EU (insert p T)).X 1)
+    (zP : (suppCxS K S₀ S k M Δ'' place X EU T).X 1)
+    (hzP : (suppCxS K S₀ S k M Δ'' place X EU T).d 1 2 rfl zP = 0) (e : k)
+    (b' : (suppCxS K S₀ S k M Δ'' place X EU (insert p T)).X 0)
+    (hnorm : zR = e • (suppInclS K S₀ S k M Δ'' place X EU T p).f 1 1 rfl zP +
+      (suppCxS K S₀ S k M Δ'' place X EU (insert p T)).d 0 1 rfl b') :
+    ∃ b : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 0,
+      jmap T p 1 (Ψ.ψ (X := X) (EU := EU) (insert p T) zR) =
+        e • Ψ.ψ (X := X) (EU := EU) T zP + (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl b := by
+  obtain ⟨b₁, hb₁⟩ := hsw T p hp zP hzP
+  refine ⟨e • b₁ + jmap T p 0 (ψ0 (presInv Ψ (insert p T)) b'), ?_⟩
+  rw [hnorm, map_add, map_smul, Ψ.hd, map_add, map_smul, hb₁, jmap_d, map_add, map_smul, smul_add]
+  abel
 
 end OrthComparisonInverseLoc
 
