@@ -30,14 +30,17 @@ and at the new place `w` of the relaxed complex, where the condition is the full
 * **`hzR_genuine_of_strictLifts`** (PROVED): at lane RC32's genuine relaxed Selmer data, the full
   `hzR` for strict lifts of the genuine transferred Kummer cochains (`hG` from
   `hG_genuine_of_transfer`).
-* Non-vacuity: `nonVacuity_strictLifts`, `nonVacuity_injective`.
+* Non-vacuity: `nonVacuity_strictLifts`, `nonVacuity_injective`, `nonVacuity_surjective`.
 
 **What remains**: (1) that the actual classes are strict lifts of the transferred Kummer cochains:
 `res_v a_T ∈ ι_v(U_v¹)` at the old places (the survival of the old Kummer conditions under the
-coefficient push, tex 3262–3270) with `u_T` the corresponding local cochains; (2) injectivity of
-the old local conditions in degree one (the Kummer conditions are subcomplexes:
-`kummerConditionι_injective`) and their degree-zero liftability (`U⁰ = C⁰`); (3) the global
-inputs listed in `GlobalCochain.lean`.
+coefficient push, tex 3262–3270) with `u_T` the corresponding local cochains (`hRloc`, `hPloc`);
+(2) for the primitive class, additionally, its localization at the new place `w` must lie exactly
+in the unramified condition through `f` (`hPloc` at `w`; the full condition makes the
+corresponding part of `hRloc` automatic, but not this one); (3) injectivity of the old local
+conditions in degree one (`hιold`; for the genuine coefficient-extended Kummer conditions:
+`kummerConditionInι_injective`, `kummerGaloisLocalConditions_injective`) and their degree-zero
+liftability (`hsold`; `U⁰ = C⁰`); (4) the global inputs listed in `GlobalCochain.lean`.
 
 Kinds: definitions and PROVED.
 -/
@@ -58,11 +61,12 @@ component `u` (zero homotopy component). Kind: definition. -/
 def strictLift (a : D.G.X 1) (u : D.U.X 1) : (selCx D).X 1 :=
   ((a, u, 0) : selT D 1)
 
-/-- The strict lift in the primitive Selmer complex (condition `U'`, through `f`). -/
+/-- The strict lift in the primitive Selmer complex (condition `U'`, through `f`).
+Kind: definition. -/
 def strictLiftP (a : D.G.X 1) (u : U'.X 1) : (selCx (selRestrict D f)).X 1 :=
   ((a, u, 0) : selT (selRestrict D f) 1)
 
-/-- **`hU` and `hL` for strict lifts** (PROVED). -/
+/-- **`hU` and `hL` for strict lifts**. Kind: PROVED. -/
 theorem hU_hL_of_strictLifts (aR aP : D.G.X 1) (uR : D.U.X 1) (uP : U'.X 1) (e : S)
     (bG : D.G.X 0) (bU : D.U.X 0)
     (hι : Function.Injective (D.ι.f 1 1 rfl))
@@ -88,7 +92,7 @@ theorem hU_hL_of_strictLifts (aR aP : D.G.X 1) (uR : D.U.X 1) (uP : U'.X 1) (e :
     exact (sub_eq_zero.mpr hbU.symm).symm
 
 /-- **The full norm identity `hzR` for strict lifts** (PROVED): `z_R = e • i(z_P) + d b` with
-`b = (b_G, b_U, 0)`. -/
+`b = (b_G, b_U, 0)`. Kind: PROVED. -/
 theorem hzR_of_strictLifts (aR aP : D.G.X 1) (uR : D.U.X 1) (uP : U'.X 1) (e : S)
     (bG : D.G.X 0) (bU : D.U.X 0)
     (hι : Function.Injective (D.ι.f 1 1 rfl))
@@ -108,7 +112,7 @@ section AddPlace
 variable {S : Type} [CommRing S] (D : SelData S) {Lq : GCx S} (resq : GHom D.G Lq)
 
 /-- **Injectivity of the relaxed local conditions in degree one** (PROVED): it reduces to the
-old conditions (the condition at the new place is the identity). -/
+old conditions (the condition at the new place is the identity). Kind: PROVED. -/
 theorem addPlace_ι_injective (hι : Function.Injective (D.ι.f 1 1 rfl)) :
     Function.Injective ((relaxedAt D resq).ι.f 1 1 rfl) := by
   rintro ⟨u, y⟩ ⟨u', y'⟩ h
@@ -118,7 +122,7 @@ theorem addPlace_ι_injective (hι : Function.Injective (D.ι.f 1 1 rfl)) :
   rw [hι hu]
 
 /-- **Degree-zero liftability for the relaxed local conditions** (PROVED): it reduces to the old
-conditions. -/
+conditions. Kind: PROVED. -/
 theorem addPlace_ι_surjective (hs : ∀ y : D.L.X 0, ∃ x : D.U.X 0, D.ι.f 0 0 rfl x = y)
     (y : (relaxedAt D resq).L.X 0) :
     ∃ x : (relaxedAt D resq).U.X 0, (relaxedAt D resq).ι.f 0 0 rfl x = y := by
@@ -156,7 +160,7 @@ include hrP hrR hU ht in
 4157–4170 at a finite coefficient stage): for strict lifts `z_R = (a_R, u_R, 0)`,
 `z_P = (a_P, u_P, 0)` of genuine global cochains `a_R`, `a_P` carried by `ι` to the transferred
 Kummer cocycles (`hzR`, `hzP`), with the old local conditions injective in degree one and
-liftable in degree zero, `z_R = e_q • i(z_P) + d b` for some `b`. -/
+liftable in degree zero, `z_R = e_q • i(z_P) + d b` for some `b`. Kind: PROVED. -/
 theorem hzR_genuine_of_strictLifts
     (Δ : LocalConditions k (GKS K S) (fun v : Places K S₀ => Gloc K v.1)
       (fun v => locMap K S v.1) M) (w : Places K S) {U' : GCx k}
@@ -201,7 +205,8 @@ end GenuineTriangle
 /-! ### Non-vacuity -/
 
 /-- **Non-vacuity of the equational hypotheses of `hU_hL_of_strictLifts`**: for any Selmer data,
-the zero cochains with `b_G = b_U = 0` (injectivity: `nonVacuity_injective`). -/
+the zero cochains with `b_G = b_U = 0` (injectivity: `nonVacuity_injective`; degree-zero
+liftability: `nonVacuity_surjective`). Kind: PROVED. -/
 theorem nonVacuity_strictLifts {S : Type} [CommRing S] (D : SelData S) {U' : GCx S}
     (f : GHom U' D.U) (e : S) :
     D.ι.f 1 1 rfl 0 = D.res.f 1 1 rfl 0 ∧ D.ι.f 1 1 rfl (f.f 1 1 rfl 0) = D.res.f 1 1 rfl 0 ∧
@@ -211,9 +216,17 @@ theorem nonVacuity_strictLifts {S : Type} [CommRing S] (D : SelData S) {U' : GCx
 
 /-- **Non-vacuity of the injectivity hypothesis**: the Selmer data with the full condition
 `L --id--> L` (the condition at the new place of the relaxed data) have injective local
-condition in degree one. -/
+condition in degree one. Kind: PROVED. -/
 theorem nonVacuity_injective {S : Type} [CommRing S] (G L : GCx S) (res : GHom G L) :
     Function.Injective ((⟨G, L, L, res, idGHom L⟩ : SelData S).ι.f 1 1 rfl) :=
   fun _ _ h => h
+
+/-- **Non-vacuity of the degree-zero liftability hypothesis** (`hsold` shape): the Selmer data with
+the full condition `L --id--> L` lift every degree-zero local cochain. Kind: PROVED. -/
+theorem nonVacuity_surjective {S : Type} [CommRing S] (G L : GCx S) (res : GHom G L)
+    (y : (⟨G, L, L, res, idGHom L⟩ : SelData S).L.X 0) :
+    ∃ x : (⟨G, L, L, res, idGHom L⟩ : SelData S).U.X 0,
+      (⟨G, L, L, res, idGHom L⟩ : SelData S).ι.f 0 0 rfl x = y :=
+  ⟨y, rfl⟩
 
 end ZInQ.Contrib.CloudB3E2.NormCochain
