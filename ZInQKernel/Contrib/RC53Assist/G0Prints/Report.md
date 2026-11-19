@@ -10,17 +10,14 @@ Its additional `Shimura1973RationalGeometricReading` is explicitly classified **
 The canonical realization of Shimura's holomorphic differential spaces in the algebraic objects
 used by that interface remains unproved. The final source does not call this gap a PRINT.
 
-All ten new Lean modules build
-and lifted the temporary hold. The final author build includes the explicit common-domain
-summability proofs. The audited declarations use only `propext`, `Classical.choice`,
+All ten new Lean modules build. The build includes the explicit common-domain summability
+proofs. The audited declarations use only `propext`, `Classical.choice`,
 and `Quot.sound`; literature propositions and bad-prime inputs remain explicit hypotheses,
 not new axioms or unconditional proofs of the destination propositions.
 
 
 All Lean source files are new files under `ZInQKernel/Contrib/RC53Assist/G0Prints/`.
-No existing source or destination definition was edited. No history command or dependency
-update command was issued. Generated compiler artifacts and the reported shared-dependency
-incident are distinct from source edits.
+No existing source or destination definition was edited.
 
 ## 1. B1: Faltings's printed iii ⇒ iv
 
