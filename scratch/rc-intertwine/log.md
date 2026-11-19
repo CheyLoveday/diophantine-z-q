@@ -1,8 +1,8 @@
 - Base: `6ae9dd512701135b899138d20a21aa3cf842f125`.
-- Conventions: (U(-n)) with the negative finite character gives the positive real phase. The inverse Weyl lift with positive polar argument at finite places gives the negative discriminant pairing.
-- Character check: rational adèle decomposition uses a (p)-power denominator at each nonintegral place; its rational fraction is integral at every other place.
+- Conventions: `U(-n)` with the negative finite character gives the positive real phase. The inverse Weyl lift with positive polar argument at finite places gives the negative discriminant pairing.
+- Character check: rational adèle decomposition uses a `p`-power denominator at each nonintegral place; its rational fraction is integral at every other place.
 - Fourier check: translate each coset to the rectangular subgroup; the integral of a nontrivial character on it vanishes. On the dual, the translation gives the finite pairing and the subgroup contributes its volume.
-- Normalization: for (D=\prod_i 2a_i), the norm product is (D^{-1}); the square-root product is (D^{-1/2}).
+- Normalization: for `D = ∏ i, 2aᵢ`, the norm product is `D⁻¹` and the square-root product is `D^(-1/2)`.
 - Build uses one sequential `lake env lean -j1` invocation at a time, with the host resource check before each invocation.
 - `Characters.lean`: compiled; all 12 theorem audits list only `propext`, `Classical.choice`, `Quot.sound`. This proves the phase on any occupied coset, the polar annihilator, and the value at the two coset centers, over an integral quotient with rational representatives.
 - An attempted run was skipped at load 129.26; verification resumed at load 106.87 with 117 GB available.
@@ -11,3 +11,5 @@
 - `Fourier.lean`: compiled; six theorem audits. For additive invariant Haar measure and the displayed lattice volume, the finite Fourier matrix agrees everywhere with the normalized Haar integral of the extension, including vanishing off the dual.
 - `Comparison.lean`: compiled; three theorem audits. The common index product defines the same generator scalar; a lifted pair transports to the literal table pair.
 - `Normalization.lean`: compiled; three theorem audits. The finite determinant product is the exact complex grid coefficient.
+- `AdelicFourier.lean`: compiled; 13 theorem audits. The restricted product has the compact open rectangular lattice, its normalized Haar volume is explicit, and the two generator comparisons share their lifts and scalar function.
+- Final audit: all seven files compile; all 53 theorem audits use only `propext`, `Classical.choice`, `Quot.sound`. No admitted proof, new print leaf, or local notation.
