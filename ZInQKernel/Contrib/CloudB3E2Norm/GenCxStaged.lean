@@ -37,6 +37,7 @@ variable {ℓ : ℕ} [(Ecurve ℓ).IsElliptic] {C : TateCoef (Ecurve ℓ)} {D : 
   {Fam : Family} {x : Addr Fam.b} {Ψ : FamilyMovingCharacter C.K ℓ Fam.Q}
   (P : StagedPresentation C D Fam x Ψ)
 
+omit [(Ecurve ℓ).IsElliptic] in
 /-- The places of `S s` are those of `S₀ s` and of the chain (PROVED). -/
 theorem staged_cov (s : ℕ) :
     ∀ v ∈ P.S s, v ∈ P.S₀ s ∨ ∃ j, (P.place s j).1 = v := by
