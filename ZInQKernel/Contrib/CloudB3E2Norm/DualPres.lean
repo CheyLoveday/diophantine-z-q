@@ -44,7 +44,8 @@ literally at a finite stage ring. It is therefore the one named input here:
   `j z_S = e z_{P⊥} + d b` for `z_S = ψ_{T ∪ {p}}(z'_R)`, `z_{P⊥} = ψ_T(z'_P)` — the field
   `hlift` of lane RC32's `StepRetention`.
 
-Kinds: definitions, GLUE (`OrthComparisonInverse`), PROVED.
+Kinds: definitions, GLUE (`OrthComparisonInverse`; uninhabited at a finite stage ring, see its
+docstring), PROVED.
 -/
 
 noncomputable section
@@ -326,7 +327,11 @@ orthogonal condition to the transported condition is a quasi-isomorphism only at
 where the full local complexes at the active and moving primes are acyclic (tex 3736–3753): its
 inverse is taken in the derived category there, so it does not exist literally at a finite stage
 ring. This structure is that inverse, as the one named input; `hright` already fails for `ψ = 0`
-unless every degree-one cocycle of `C'_T` is a coboundary. Kind: definition (GLUE). -/
+unless every degree-one cocycle of `C'_T` is a coboundary. CAVEAT: at a finite stage ring it is
+uninhabited once a moving place carries a nonzero `G_{K_w}`-invariant, for any `φo` (lane E1's
+`not_orthComparisonInverse`, from `no_H1_inverse`); the faithful form is the inverse over the
+generic coefficient ring (tex 3720–3721, 3736–3753), and of its fields only `ψ`, `hd` and `hsw` are
+used (`hlift_of_transport`). Kind: definition (GLUE; not satisfiable at a finite stage ring). -/
 structure OrthComparisonInverse where
   /-- the comparison of the old orthogonal conditions with the transported ones -/
   φo : ∀ v₀ : Places K S₀, GHom (Δ'.U v₀) (Δ''.U v₀)
