@@ -1,0 +1,7 @@
+- Base: c2e8ccd0803190c13f4a1077a4ba87ec0c8b10f4.
+- Torus frame: chosen representative = diagonal q * (embed(a_c) * z_t) * r; the transported generator represents the orbit.
+- Norm: evaluate the local factors on valuations of the integral ideal norm; use normalized ramified coordinates and NormCharacterDescent on the same ideal.
+- Schwartz: conjugation in the chosen frame is by the inverse of the same r. Nonzero support makes the base product nonzero.
+- Existing issue recorded by the orbit report: the bare norm factor need not descend through right order units. The combined weight is independent of the representative.
+- Verification in progress: use the base import cache with an isolated overlay, one Lean invocation at a time.
+- Norm.lean: passed `lake env lean --threads=1`. `localNrd`, `NormFactors.onIntegralNorm`, and `descent_of_filter`: `propext`, `Classical.choice`, `Quot.sound` only.
