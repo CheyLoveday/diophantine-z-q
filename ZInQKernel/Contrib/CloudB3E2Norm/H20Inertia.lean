@@ -2,12 +2,13 @@ import ZInQKernel.Contrib.CloudB3E2Norm.H20Twist
 import ZInQKernel.Contrib.CloudB3E2Norm.H20Primitive
 
 /-!
-# `InertiaFixesDivisionPoint` and `H_f` unramified at `w`, for the actual data
+# `InertiaFixesDivisionPoint` and the transfer field unramified at `w`, for the actual data
 
 Manuscript `diophantine_zq.tex`, tex 3471–3487 (the unramified condition at a new place `w ∉ S₀`).
 
 `H20Primitive.hPw_of_transfer` takes two inputs at the new place `w`: the image of the inertia
-group at `w` lies in `H` (`H_f` unramified at `w`), and `InertiaFixesDivisionPoint` (every conjugate
+group at `w` lies in `H` (the transfer field unramified at `w`; for the actual data `H = G_L`, `L`
+the field cut out by `Ψ_i`), and `InertiaFixesDivisionPoint` (every conjugate
 of the inertia image fixes the division point `Q`). For a new place `w ∉ S₀`:
 
 * **`infl_inertiaImage`** (PROVED): the inertia image at `w` maps trivially to `G_{K,S₀}` (lane
@@ -96,8 +97,8 @@ theorem inertiaFixes_actual (Q : ambD hS W s hs hs0 (Δ := Δ)) :
     rw [hg, one_smul]
 
 include hw in
-/-- **`H_f` unramified at `w` for the actual data** (PROVED): the inertia image at `w ∉ S₀` lies
-in `ker(π ∘ infl)`. -/
+/-- **`L` unramified at `w` for the actual data** (PROVED): the inertia image at `w ∉ S₀` lies
+in `ker(π ∘ infl) = G_L`. -/
 theorem inertiaImage_le_actual : inertiaImage w ⊆ ((piInfl hS π).ker : Set (GKS K S)) :=
   inertiaImage_le_of_ker hS w hw _ fun g hg => by
     rw [MonoidHom.mem_ker, MonoidHom.comp_apply]
