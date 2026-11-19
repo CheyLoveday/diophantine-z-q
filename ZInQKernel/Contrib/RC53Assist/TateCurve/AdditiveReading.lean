@@ -39,7 +39,9 @@ Corollaire 3.8; those original pages have not been checked. This is the
 elliptic-curve specialization of that literal criterion. For elliptic
 curves semistable means good or multiplicative reduction, and unipotent
 means `ρ(i)-1` is nilpotent for every inertia element. The representation
-is the actual rational Tate representation, not a supplied replacement. -/
+is the actual rational Tate representation, not a supplied replacement. This source is not
+one of the manuscript's bibliography entries (the manuscript cites a different
+Silverberg-Zarhin paper, Theorem 3.5). -/
 def GrothendieckSemistableReductionPrint : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (ℓ : ℕ) [Fact ℓ.Prime]
     (p : ℕ) (hp : p.Prime), p ≠ ℓ → ∀ D : LocalArithmeticFrobenius p,
