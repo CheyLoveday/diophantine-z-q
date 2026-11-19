@@ -7,3 +7,8 @@
 - `Congruence.lean`: passed `lake env lean`; 9 theorem audits, only `propext`, `Classical.choice`, `Quot.sound`.
 - `Roots.lean`: for p = 2m+1 the odd root-difference product squares to (−1)^m p; at the negative root its phase is (−i)^(m mod 2) and its positive amplitude is √p.
 - `Roots.lean`: passed `lake env lean`; 7 theorem audits, only `propext`, `Classical.choice`, `Quot.sound`.
+- `Sign.lean`: `oddGauss p 1 = (exponentRoot (oddBase (p.val : ZMod 4)) : ℂ)` for every odd prime.
+- `Product.lean`: `gaussGamma = finiteGamma`; `WeilIndexProductFormula gaussGamma`; both rectangular product-one identities.
+- `Sign.lean` and `Product.lean`: passed `lake env lean`; 3 and 4 theorem audits respectively, only `propext`, `Classical.choice`, `Quot.sound`.
+- All four new files checked sequentially; 23 theorem audits; no new prints, axioms or unfinished proofs.
+- The scalar product citation at tex 9000–9004 is discharged. Common lifts and actions, old-level realization, and fixed-pool identification remain outside scope.
