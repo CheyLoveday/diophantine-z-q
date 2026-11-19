@@ -1,0 +1,5 @@
+- Base 36701da4a392a674d9d6a031b07d1868b5aa8f9c; merged c2bb312793a4de6142f0695d87961aeb7edf6e2e.
+- Tex 8427–8428, 9471–9483: exact sieve defined by the zero-or-retain operations; no enumeration of odd-stage sieve primes.
+- Tex 10527–10531: bounded label groups require control of the extra sieve coordinates.
+- `Sieve.lean`: exact zero-or-retain on both stage and lift; mask uses `m * b ∣ k` at norm `k` and is invariant under the square of a good prime.
+- `Sieve.lean` passed `lake env lean -j1` with lint warnings; ten audits, all limited to `propext`, `Classical.choice`, and `Quot.sound`.
