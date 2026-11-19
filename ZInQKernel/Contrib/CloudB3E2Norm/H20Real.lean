@@ -16,15 +16,14 @@ realization `hreal`: the localization at `v ∈ P` of the weighted sum `∑_δ �
 **proves** it for the points of the ambient module `y = 1 ⊗ P` with `P ∈ E(K_{S₀})` fixed by the
 transfer subgroup `H` (the Heegner point over the fixed field of `H`):
 
-* `exists_basePt_of_fixed` (PROVED): a point of `B(F̄)` fixed by `G_F` (`F` of characteristic zero)
-  comes from `B(F)`.
 * `alphaShap_eq_one` (PROVED): `χ_h(g) [π g] = 1` in `ℤ[Δ]` forces `χ_h(g) = 1` and `π g = 1`.
 * `realX d` (definition): `X_d = ∑_{δ : π(r_δ) = d} χ_h(r_δ) · j(r_δ P) ∈ E(K̄_v)`, the part of the
   localized weighted sum on the coset fibre over `d ∈ Δ`.
 * `smul_realX` (PROVED; the local Mackey step): for `σ ∈ G_{K_v}`, `v ∈ P`, `σ X_d = χ_h(σ) X_d`
   (`σ` permutes the fibre since `π` is trivial on the decomposition group, `PsiTrivialAt2N`).
 * `exists_twist_point` (PROVED): hence `X_d = j_B(Q_d)` for a point `Q_d ∈ B(K_v)` (the twist
-  identification `twistPt` turns the `χ_h`-twisted invariance into invariance).
+  identification `twistPt` turns the `χ_h`-twisted invariance into invariance; Galois descent is the
+  tree's `CoefModules.exists_basePt_of_fixed`).
 * `psi_wsum` (PROVED): `ψ(∑_δ θ(r_δ) ρ(r_δ)(1 ⊗ P)) = ∑_d [d] ⊗ X_d`.
 * **`hreal_actual`** (PROVED): the realization, with `J = Δ`, `a_d = [d]`, `P_d = Q_d`.
 * **`oldPlaceInput_of_point`** (PROVED): the old-place input of `h1_shapiro` at `v ∈ Pl` (the old
@@ -47,39 +46,6 @@ open NumberField IsDedekindDomain TensorProduct WeierstrassCurve
 attribute [local instance] groupRingTop ptSAction
 
 set_option linter.unusedSectionVars false
-
-/-! ### Galois-fixed points are rational -/
-
-section Fixed
-
-variable {F : Type} [Field F] [CharZero F] [DecidableEq F] (B : WeierstrassCurve F)
-
-/-- **A point of `B(F̄)` fixed by `G_F` comes from `B(F)`** (PROVED; `F` of characteristic zero,
-so `F̄/F` is Galois). -/
-theorem exists_basePt_of_fixed (R : PtAlg F B) (hR : ∀ σ : Field.absoluteGaloisGroup F, σ • R = R) :
-    ∃ Q : B.toAffine.Point, basePt F B Q = R := by
-  classical
-  obtain ⟨R₀, rfl⟩ := (ptEquiv F B).surjective R
-  have hfix : ∀ σ : Field.absoluteGaloisGroup F,
-      Affine.Point.map (W' := B) σ.toAlgHom R₀ = R₀ := fun σ =>
-    (ptEquiv F B).injective ((smul_ptEquiv σ R₀).symm.trans (hR σ))
-  have hmem : ∀ x : AlgebraicClosure F,
-      (∀ σ : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F, σ x = x) →
-      x ∈ Set.range (Algebra.ofId F (AlgebraicClosure F)) := by
-    intro x hx
-    have := (InfiniteGalois.mem_bot_iff_fixed (k := F) x).2 hx
-    rw [IntermediateField.mem_bot] at this
-    exact this
-  obtain ⟨Q', hQ'⟩ := (Affine.Point.exists_map_eq_iff R₀ (Algebra.ofId F (AlgebraicClosure F))).2
-    ⟨hmem _ fun σ => ((Affine.Point.map_eq_self_iff σ.toAlgHom R₀).1 (hfix σ)).1,
-     hmem _ fun σ => ((Affine.Point.map_eq_self_iff σ.toAlgHom R₀).1 (hfix σ)).2⟩
-  refine ⟨(Affine.Point.equivBaseChangeSelf B.toAffine).symm Q', ?_⟩
-  change ptEquiv F B (Affine.Point.map (W' := B.toAffine) (Algebra.ofId F (AlgebraicClosure F))
-    ((Affine.Point.equivBaseChangeSelf B.toAffine) ((Affine.Point.equivBaseChangeSelf
-      B.toAffine).symm Q'))) = _
-  rw [AddEquiv.apply_symm_apply, hQ']
-
-end Fixed
 
 /-! ### The units `±[d]` of `ℤ[Δ]` -/
 
@@ -229,7 +195,7 @@ theorem exists_twist_point (hP : ∀ x ∈ H, inflMap K hS x • P = P)
       smul_realX hS W s hs hs0 π H hH r hr P v hP σ (hloc σ) d,
       twistSign_localSqrt (S := S₀) s hs hs0 v σ, smul_smul, ← Units.val_mul, Int.units_mul_self,
       Units.val_one, one_smul]
-  obtain ⟨Q, hQ⟩ := exists_basePt_of_fixed (localTwist W h v) _ hfix
+  obtain ⟨Q, hQ⟩ := ZInQ.Manuscript.RC.CoefModules.exists_basePt_of_fixed hfix
   exact ⟨Q, by rw [hQ, tw.apply_symm_apply]⟩
 
 /-- `ρ₀(g)(1 ⊗ P) = 1 ⊗ g P` on the untwisted ambient module. Kind: PROVED. -/
@@ -248,6 +214,7 @@ theorem ambRhoU_oneTmul' (g : GKS K S) :
 abbrev tL (a : MonoidAlgebra ℤ Δ) (x : PtV W v) : locL W s hs hs0 v Δ :=
   (a ⊗ₜ x : MonoidAlgebra ℤ Δ ⊗[ℤ] PtV W v)
 
+/-- `a ⊗ ∑ f = ∑ a ⊗ f`. Kind: PROVED. -/
 theorem tL_sum (a : MonoidAlgebra ℤ Δ) {ι : Type} (t : Finset ι) (f : ι → PtV W v) :
     tL W s hs hs0 v a (∑ i ∈ t, f i) = ∑ i ∈ t, tL W s hs hs0 v a (f i) :=
   TensorProduct.tmul_sum _ _ _
