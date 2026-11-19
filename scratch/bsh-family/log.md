@@ -8,3 +8,4 @@
 - `lake build +ZInQKernel.Contrib.OneProof.BShFamilySplittingCriterion`: passed; both axiom scans contain only `propext`, `Classical.choice`, and `Quot.sound`.
 - `BShFamilySections`: built as part of the family build. The Möbius change of basis and meromorphic torsion sections have only `propext`, `Classical.choice`, and `Quot.sound` in their axiom scans.
 - `BShFamilyLattice`, `BShFamilyTorsion`, `BShFamilySplit`: built as part of the family build. The division-root atlas, multiplication and x-coordinate comparison, and restriction of meromorphic germs have only the three allowed axioms.
+- `BShFamilyResidues`, `BShFamilyLocal`, `BShFamilyKernels`: built as part of the family build. Nonzero residue permutations, splitting at every local meromorphic field, and Galois equivariance of both algebraic Vélu coordinates have only the allowed axioms.
