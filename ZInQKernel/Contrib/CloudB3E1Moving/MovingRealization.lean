@@ -169,7 +169,10 @@ theorem movingPsiAt_active {P : Set (HeightOneSpectrum (𝓞 K))}
 
 variable (M) in
 /-- **The moving character `Ψ_i` on `G_{K,S₀}`, from the interface** (tex 2720–2735, 3500–3506,
-3694–3701). Given a realization at every good prime, for every finite avoidance set `S` there is a
+3694–3701). The ramification set may depend on the prime: `Sr r` is the set of places for the
+stage at `r`, which must contain the places above `r` for the genuine `H_r ⊆ K_{Sr r}` (the manuscript
+adds `r_i` to the stage's support). Given a realization at every good prime, for every finite
+avoidance set `S` there is a
 good prime `r ∉ S`, `r ≡ 1 (mod 2^B)`, and `Ψ : P r → A_i^×` from `moving_character_Psi`, such
 that `Ψ_i = Ψ ∘ res` has three properties:
 * it takes the value `1 + t` on a genuine inertia element at a place over `r`;
@@ -178,15 +181,16 @@ that `Ψ_i = Ψ ∘ res` has three properties:
 Kind: PROVED (from the interface `MovingSetting` and the GLUE `MovingRealization`). -/
 theorem exists_psiTrivialAt2N [NeZero i] [TopologicalSpace (Acoef i)] [DiscreteTopology (Acoef i)]
     (hn : 2 * i ≤ n) (P : Set (HeightOneSpectrum (𝓞 K)))
-    (R : ∀ r, M.good r → MovingRealization M r (K := K) (S₀ := S₀) P) (B : ℕ) (S : Finset ℕ) :
+    (Sr : ℕ → Set (HeightOneSpectrum (𝓞 K)))
+    (R : ∀ r, M.good r → MovingRealization M r (K := K) (S₀ := Sr r) P) (B : ℕ) (S : Finset ℕ) :
     ∃ (r : ℕ) (hr : M.good r), r ∉ S ∧ r.Prime ∧ (2 : ℤ) ^ B ∣ (r : ℤ) - 1 ∧
       ∃ Ψ : M.P r →+ Additive (Acoef i)ˣ,
         (∃ σ ∈ TauCeti.inertiaSubgroup ((R r hr).placeR.adicCompletion K),
-          ((movingPsiAt Ψ (R r hr) (locMap K S₀ (R r hr).placeR σ) : (Acoef i)ˣ) : Acoef i) =
+          ((movingPsiAt Ψ (R r hr) (locMap K (Sr r) (R r hr).placeR σ) : (Acoef i)ˣ) : Acoef i) =
             1 + tA i) ∧
         (∀ j, M.act j → ∃ φ : Gloc K ((R r hr).place j),
           TauCeti.IsArithFrobeniusLift (((R r hr).place j).adicCompletion K) φ ∧
-            ((movingPsiAt Ψ (R r hr) (locMap K S₀ ((R r hr).place j) φ) : (Acoef i)ˣ) :
+            ((movingPsiAt Ψ (R r hr) (locMap K (Sr r) ((R r hr).place j) φ) : (Acoef i)ˣ) :
               Acoef i) = 1 + tA i) ∧
         PsiTrivialAt2N i (movingPi i (movingPsiAt Ψ (R r hr)))
           (movingPsi i (movingPsiAt Ψ (R r hr))) P := by
@@ -204,9 +208,9 @@ theorem exists_psiTrivialAt2N_ecurve [NeZero i] [TopologicalSpace (Acoef i)] [Di
     (hS : SerreThm3) (hcm : CMjInteger) {ℓ : ℕ} (hℓ : 0 < ℓ)
     (hT : FrobeniusTrace (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ))
     (D : MovingDataK (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) n) (hn : 2 * i ≤ n)
-    (P : Set (HeightOneSpectrum (𝓞 K)))
+    (P : Set (HeightOneSpectrum (𝓞 K))) (Sr : ℕ → Set (HeightOneSpectrum (𝓞 K)))
     (R : ∀ r, (movingSettingEcurveS hS hcm hℓ hT D).good r →
-      MovingRealization (movingSettingEcurveS hS hcm hℓ hT D) r (K := K) (S₀ := S₀) P)
+      MovingRealization (movingSettingEcurveS hS hcm hℓ hT D) r (K := K) (S₀ := Sr r) P)
     (B : ℕ) (S : Finset ℕ) :
     ∃ (r : ℕ) (hr : (movingSettingEcurveS hS hcm hℓ hT D).good r), r ∉ S ∧ r.Prime ∧
       (2 : ℤ) ^ B ∣ (r : ℤ) - 1 ∧
@@ -214,7 +218,7 @@ theorem exists_psiTrivialAt2N_ecurve [NeZero i] [TopologicalSpace (Acoef i)] [Di
         PsiTrivialAt2N i (movingPi i (movingPsiAt Ψ (R r hr)))
           (movingPsi i (movingPsiAt Ψ (R r hr))) P := by
   obtain ⟨r, hr, hrS, hrp, hr1, Ψ, -, -, hP⟩ :=
-    exists_psiTrivialAt2N (movingSettingEcurveS hS hcm hℓ hT D) hn P R B S
+    exists_psiTrivialAt2N (movingSettingEcurveS hS hcm hℓ hT D) hn P Sr R B S
   exact ⟨r, hr, hrS, hrp, hr1, Ψ, hP⟩
 
 /-! ### Non-vacuity of `MovingRealization`
