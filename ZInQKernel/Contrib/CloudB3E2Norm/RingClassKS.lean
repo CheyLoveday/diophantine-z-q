@@ -58,11 +58,12 @@ def toAlgClosure (L : IntermediateField K (SeparableClosure K)) :
     IntermediateField K (AlgebraicClosure K) :=
   L.map (separableClosure K (AlgebraicClosure K)).val
 
+/-- The image of a finite subextension is finite. Kind: PROVED. -/
 instance finiteDimensional_toAlgClosure (L : IntermediateField K (SeparableClosure K))
     [FiniteDimensional K L] : FiniteDimensional K (toAlgClosure L) :=
   LinearEquiv.finiteDimensional (IntermediateField.equivMap L _).toLinearEquiv
 
-/-- A finite subextension of `Kˢ/K` is a number field. -/
+/-- A finite subextension of `Kˢ/K` is a number field. Kind: PROVED. -/
 instance numberField_of_finiteDimensional_sep (L : IntermediateField K (SeparableClosure K))
     [FiniteDimensional K L] : NumberField L :=
   @NumberField.mk _ _ inferInstance (Module.Finite.trans K L)
@@ -113,6 +114,7 @@ def ringClassFieldS (S : Set (HeightOneSpectrum (𝓞 K)))
     IntermediateField K (KS K S) :=
   IntermediateField.restrict (ringClassField_le_KS O S hS)
 
+/-- The ring class field inside `K_S` is finite over `K`. Kind: PROVED. -/
 instance finiteDimensional_ringClassFieldS (S : Set (HeightOneSpectrum (𝓞 K)))
     (hS : ∀ v : HeightOneSpectrum (𝓞 K), v.asIdeal ∣ O.conductor → v ∈ S) :
     FiniteDimensional K (ringClassFieldS O S hS) :=
