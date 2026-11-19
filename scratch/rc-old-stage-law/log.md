@@ -5,3 +5,5 @@
 - `Grid.lean`: integral-support translation, dual residue sum with the negative finite pairing, and normalized finite Fourier inversion. `lake env lean` passed with the three permitted axioms for all seven statements.
 - `Series.lean`: absolute product and finite outer sum of the shifted Gaussians, and the exact natural-exponent `qParam` formula. `lake env lean` passed; all five audits use only the permitted axioms.
 - Base imports: reused the identical fixed-pool revision's compiled dependencies. No source imported from a sibling branch absent at base.
+- `Local.lean`: Fourier annihilator support and lower-unipotent depth criterion; extracted unit diagonal scalar via the existing `Visibility/WeilIndex`; triangular factorization and Jacobi reciprocity with the dyadic sign. `lake env lean` passed; all six audits use only the permitted axioms.
+- `Words.lean`: words for the full modular group, composition of generator formulas, and bounded normalized values at all rational cusps. `lake env lean` passed; all ten audits use only the permitted axioms.

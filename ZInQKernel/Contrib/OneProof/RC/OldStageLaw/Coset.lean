@@ -49,8 +49,8 @@ theorem line_holo {a : ℝ} (ha : 0 < a) (r : ℝ) : MDiff (fun z : ℍ => line 
     (fun w : ℂ => exp (π * I * (r : ℂ) ^ 2 * (2 * (a : ℂ) * w))) (z : ℂ))).mul
     (hg.comp (z : ℂ) hf)).mdifferentiableAt.comp z z.mdifferentiable_coe
 
-/-- Poisson summation on an offset line. The dual index `n` has Fourier
-phase `e(nr)` with the finite-place sign convention in tex 8640–8647. -/
+/-- Poisson summation on an offset line. This form of the Jacobi identity
+uses phase `e(nr)`; reindexing the even dual Gaussian also gives `e(-nr)`. -/
 theorem line_inversion {a : ℝ} (ha : 0 < a) (r : ℝ) (z : ℍ) :
     line a r (-1 / (z : ℂ)) =
       (1 / (2 * (a : ℂ) * I / (z : ℂ)) ^ (1 / 2 : ℂ)) *
