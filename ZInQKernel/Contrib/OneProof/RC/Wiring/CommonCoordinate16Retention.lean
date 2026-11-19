@@ -424,7 +424,15 @@ def switchHP (T : Finset ι) (p : ι) (hp : p ∉ T) {EL : GCx k} {DPp : SelData
 (tex 4157–4175, 3489–3498): everything that is not a component of the presentation. The orthogonal
 Selmer data `DPp` (`C_{P⊥}`) and the strict conditions `fS : U_S → U_{P⊥}` are parameters (inputs:
 the text's orthogonal diagrams, tex 4160–4164, 3830–3833). The relaxed data, the primitive data, the
-new place and its `q`-components `qR`, `qP` are those of the presentation. Kind: definition. -/
+new place and its `q`-components `qR`, `qP` are those of the presentation.
+
+The text's convention is Nekovář's (Selmer complexes 6.2.1.3, 6.3.1; tex 3829–3835): the local
+products land in `τ≥2 C•_cont(G_v, A(1))`, and isotropy is required only after this truncation.
+Instantiate `E`, `EL`, `resE`, `cupG`, `cupL` with the truncated pairing data
+`(genuinePairDataTrunc …).toSelPairData` (`SelPairDataTrunc`, `TruncIsotropyData`), with the traces
+`trOfTrunc`/`trT`. With the untruncated local target, `isoP` in total degree zero would force the
+degree-zero cup of condition cocycles to vanish.
+Kind: definition. -/
 structure SwitchRetentionInputs (T : Finset ι) (p : ι) (hp : p ∉ T) (DPp : SelData k)
     {US : GCx k} (fS : GHom US DPp.U) where
   /-- Data, not pinned: the genuine cup product (Nekovář 6.2.5–6.4.3) is the intended instance.

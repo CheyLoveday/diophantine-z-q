@@ -13,21 +13,26 @@ inner limit of Lemma `ex:limits-inner-limit` (tex 4385–4451).
 * `elliptic` (definition): `E_ℓ` is elliptic;
 * `milne` (PRINT; Milne, *Arithmetic Duality Theorems*, I.2.8; the comparison with the cochain
   model is GLUE, tex 3470–3487): `MilneADT_I_2_8`;
-* `iwasawa` (PRINT; Iwasawa, Trans. AMS 80 (1955), p. 448 and §3; tex 3470–3480):
-  `IwasawaGenerators`;
-* `genuineInj` (GLUE, derivable: Nöbeling, Invent. Math. 6 (1968), Thm 2, with Bass–Papp over a
-  Noetherian self-injective ring; tex 3470–3480): `GenuineCochainsInjective`;
+* `iwasawa` (GLUE: Iwasawa 1955, the tame quotient, joined with the splitting over the wild inertia;
+  Iwasawa, Trans. AMS 80 (1955), p. 448 and §3; tex 3470–3480): `IwasawaGenerators`;
+* `genuineInj` (a statement PROVED by Nöbeling, Invent. Math. 6 (1968), Thm 2, with Bass–Papp
+  over a Noetherian self-injective ring: `genuineCochainsInjective_proved`; tex 3470–3480):
+  `GenuineCochainsInjective`;
 * `chains`: a coefficient datum `C`; for every final family ONE nonprincipal ultrafilter on the
   coefficient stages (tex 4401–4404); and at every address `x`:
-  - an actual presentation `A : ActualPresentation C D F x` (`CommonCoordinate17Actual.lean`):
-    `K = C.K = ℚ(√k)`, the coefficient support `S₀` with `E[2^∞]` rational over `K_{S₀}` (GLUE),
-    the conjugation, the twist by `h_x`, the moving character with its prescribed value at the
-    first place of each step and its anticyclotomy (GLUE), the Kummer places, the chain's places
-    outside `S₀` in split pairs above the unused primes; the objects are then definitions:
-    `S = S₀ ∪ {places}`, `M_s = (T₂E ⊗ A_s)(χ_{h_x} Ψ_s)` (lane E2's `MinS` over the stage ring),
-    the conditions `Δ_s` (lane RC29's Kummer conditions at the Kummer places, full at the other
-    places of `S₀`), the unramified representations `urRep` with `f = urId` and the splits of the
-    genuine inflations;
+  - an actual presentation `A : ActualPresentation C D F x` (`CommonCoordinate17Actual.lean`)
+    (chosen per address: the text uses one moving character for all characters of the family,
+    tex 2737, and one support; `Ψ_s` is constrained only by its values at the chain's places,
+    `moving`, its anticyclotomy and its triviality at the Kummer places — its ramification at the
+    moving conductors is not recorded): `K = C.K = ℚ(√k)`, the coefficient support `S₀` with
+    `E[2^∞]` rational over `K_{S₀}` (GLUE), the conjugation, the twist by `h_x`, the moving
+    character with its prescribed value at the first place of each step and its anticyclotomy
+    (ELLIOT: data properties of the text's construction, Proposition `ex:arith-moving-character`),
+    the Kummer places, the chain's places outside `S₀` in split pairs above the unused primes; the
+    objects are then definitions: `S = S₀ ∪ {places}`, `M_s = (T₂E ⊗ A_s)(χ_{h_x} Ψ_s)` (lane E2's
+    `MinS` over the stage ring), the conditions `Δ_s` (lane RC29's Kummer conditions at the chosen
+    Kummer places (free data), full at the other places of `S₀`), the unramified representations
+    `urRep` with `f = urId` and the splits of the genuine inflations;
   - genuine stage chains on these objects at the family's ultrafilter (`GenuineStageSTUE`,
     `CommonCoordinate17Pinned.lean`), relaxing the primes in the presentation's order
     (`Gs.ps = A.ps`), retained at nonzero stages only (where `Δ_s` is lane RC29's; at the zero
@@ -57,23 +62,25 @@ dévissage of the tame comparison, `quasiIso_inflation_ring_of_milne`).
    `ε_x = 1` when `U_x = ∅`, as in the NF form; the pinned form `ε_x = ∏_{q ∈ U_x} q⁻⁴` (cone sign
    `1`, `chainSign_eq_one`; each step `ε = q⁻⁴`) is no longer required.
 3. The objects are the text's: `K = ℚ(√k)`, `S = S₀ ∪ {places}` with the places outside `S₀`,
-   `M_s = (T₂E ⊗ A_s)(χ_{h_x} Ψ_s)`, `Δ_s` lane RC29's Kummer conditions, the unramified
-   representations and the inflations; the step complexes are the genuine Selmer complexes of
-   these objects; the NF form has existential triangular models over `Frac Λ` instead, and an
-   existential support triangle at a step is equivalent to (4.7) at that step
-   (`supportTriangleAt_iff_h47`).
+   `M_s = (T₂E ⊗ A_s)(χ_{h_x} Ψ_s)`, `Δ_s` lane RC29's Kummer conditions at the chosen Kummer places
+   (free data), the unramified representations and the inflations; the step complexes are the
+   genuine Selmer complexes of these objects; the NF form has existential triangular models over
+   `Frac Λ` instead, and an existential support triangle at a step is equivalent to (4.7) at that
+   step (`supportTriangleAt_iff_h47`).
 4. No field mentions (4.7), a `KmStep` or the coordinate of an intermediate support; (4.7) at each
    step is a theorem of the matrix identities (`ChainMat.chain_h47`) PROVED from the genuine
    complexes (`toChainMat_holds`).
-5. Still conclusion-shaped in part: the global classes are free data (their identification with
-   the Kummer classes of the actual points awaits lane E2's repaired ambient module at the switch
-   primes), so the step identities can be met by a choice of the global classes, and the
-   cup-product data of the retention are not pinned; the identification of the limit of the
-   genuine stage models with the genuine Λ-adic complexes (only the matrix identities pass to the
-   limit, not the retained homotopy inverses, tex 4403–4404, 4448–4450) is the content of `hprim`
-   and `htildeE`. The NF form is equivalent to (4.7) with `ε_x = 1` where no graph prime is unused
-   and `u_{prim,x} ∈ F` (for `ℓ > 0` and a support containing `S₀`); this form is not shown to be
-   equivalent to anything of the kind.
+5. Still conclusion-shaped in part: the global classes are free data (their identification with the
+   Kummer classes of the actual points is open: lane E2's ambient module over `K_{S₁}`
+   (`H20AmbientS`, no `hker`) supplies the unramified lifts at the chain's places, but the pushed
+   Kummer classes of the actual points and their norm identity at the switch primes are not yet
+   produced on this presentation), so the step identities can be met by a choice of the global
+   classes, and the cup-product data of the retention are not pinned; the identification of the
+   limit of the genuine stage models with the genuine Λ-adic complexes (only the matrix identities
+   pass to the limit, not the retained homotopy inverses, tex 4403–4404, 4448–4450) is the content
+   of `hprim` and `htildeE`. The NF form is equivalent to (4.7) with `ε_x = 1` where no graph prime
+   is unused and `u_{prim,x} ∈ F` (for `ℓ > 0` and a support containing `S₀`); this form is not
+   shown to be equivalent to anything of the kind.
 
 What stays existential: the coefficient datum `C`; the data fields of the presentation and its
 GLUE inputs; the order of the primes; the models of `C_∅` and their ranks; the global classes; the
@@ -120,16 +127,21 @@ structure CommonCoordinateInputsGenuine {ℓ : ℕ} (D : RCData ℓ) : Prop wher
   /-- PRINT: Milne, *Arithmetic Duality Theorems*, I.2.8; the comparison with the cochain model is
   GLUE (tex 3470–3487) -/
   milne : MilneADT_I_2_8
-  /-- PRINT: Iwasawa, Trans. AMS 80 (1955), p. 448 and §3: generators of the tame quotient
-  (tex 3470–3480) -/
+  /-- GLUE (Iwasawa 1955, the tame quotient, joined with the splitting over the wild inertia):
+  generators of the tame quotient (Iwasawa, Trans. AMS 80 (1955), p. 448 and §3), with the splitting
+  over the wild inertia (tex 3470–3480) -/
   iwasawa : IwasawaGenerators
-  /-- GLUE, derivable (Nöbeling, Invent. Math. 6 (1968), Thm 2, with Bass–Papp): the genuine
-  local cochain modules are injective at the stage rings (tex 3470–3480) -/
+  /-- the genuine local cochain modules are injective at the stage rings (a statement PROVED by
+  Nöbeling, Invent. Math. 6 (1968), Thm 2, with Bass–Papp: `genuineCochainsInjective_proved`;
+  tex 3470–3480) -/
   genuineInj : GenuineCochainsInjective
-  /-- one ultrafilter per final family, and at every address the actual presentation with the
-  pinned genuine stage chains on it, relaxing the primes in the presentation's order, at
-  nonzero stages (where the conditions are lane RC29's) (data, ELLIOT, GLUE; tex 2720–2741,
-  3455–3498, 4142–4194, 4385–4451) -/
+  /-- one ultrafilter per final family, and at every address the actual presentation (chosen per
+  address: the text uses one moving character for all characters of the family, tex 2737, and one
+  support; `Ψ_s` is constrained only by its values at the chain's places, `moving`, its
+  anticyclotomy and its triviality at the Kummer places — its ramification at the moving conductors
+  is not recorded) with the pinned genuine stage chains on it, relaxing the primes in the
+  presentation's order, at nonzero stages (where the conditions are lane RC29's) (data, ELLIOT,
+  GLUE; tex 2720–2741, 3455–3498, 4142–4194, 4385–4451) -/
   chains : ∃ C : TateCoef (Ecurve ℓ), ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F →
     ∃ (U : Ultrafilter ℕ) (hU : (U : Filter ℕ) ≤ cofinite), ∀ x : Addr F.b,
       ∃ A : ActualPresentation C D F x, ∃ _ : DecidableEq (Places C.K A.S₀),

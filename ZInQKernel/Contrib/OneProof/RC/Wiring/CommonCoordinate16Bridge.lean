@@ -55,6 +55,13 @@ variable (K S₀ S M Δ place X EU) in
 /-- **The retention data of one switch of the chain** (tex 4157–4172): lane RC30's retention
 inputs for `suppSwitchS T p` (`SwitchRetentionInputs`), a trace killing the coboundaries, the
 paired strict lift `z_S` of the orthogonal class `z_{P⊥}` with factor `e` and its boundary.
+
+For a chain, the retention data of consecutive steps share the pairing on the common support
+complex. `R_{i+1}.DPp` is the restriction `selRestrict R_i.DPp R_i.fS`, with the same truncated
+pairing data, the same trace, and `zP(R_{i+1}) = zS(R_i)` as cochains, so that the state's
+functional of step `i + 1` is the relaxed functional of step `i` (`hR`, `hP`). The step's own
+relation needs the naturality on cocycles only; `exists_stepHyps_of_natural` absorbs the off-cocycle
+defect into the coboundary `μ`.
 Kind: definition (data). -/
 structure StepRetention (s : ℕ) (T : Finset ι) (p : ι) (hp : p ∉ T) : Type 1 where
   /-- the orthogonal Selmer data -/

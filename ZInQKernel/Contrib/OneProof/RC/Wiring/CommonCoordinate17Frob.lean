@@ -28,12 +28,12 @@ Props; here they are closed at the leaf's values `leafFrobΛ C Fam x ps`.
 * (5) **`nonempty_stageChainFrob_leaf`**, **`nonempty_stageChainFrob_leaf_E2`**: the `D` of
   `GenuineStageSteps.ofFrob` at the leaf's values, from `LeafStepInputs` at each step.
 
-Remaining inputs: `FrobQFixes` (GLUE; PROVED for `K = ℚ(√k)`, `(k/q) = 1` by
-`frobQFixes_of_sqrt`), `MovingValueAt` and `MovingAnticyclotomic` (GLUE: the prescribed value and
-the anticyclotomy of the moving character, tex 2731–2736, 2781–2788), and the data
-`SplitPlacesAt`.
+Remaining inputs: `FrobQFixes` (GLUE; PROVED for `K = ℚ(√k)`, `(k/q) = 1` by `frobQFixes_of_sqrt`),
+`MovingValueAt` and `MovingAnticyclotomic` (ELLIOT (data property of the text's construction,
+Proposition `ex:arith-moving-character`, tex 2731–2736, 2781–2788): the prescribed value and the
+anticyclotomy of the moving character), and the data `SplitPlacesAt`.
 
-Kinds: definitions, PROVED, and GLUE (the input statements).
+Kinds: definitions, PROVED, GLUE and ELLIOT (the input statements).
 -/
 
 noncomputable section
@@ -559,17 +559,20 @@ theorem stageMap_X (s : ℕ) :
   rw [← neg_sub, Ideal.neg_mem_iff]
   exact Ideal.mem_span_singleton.mpr h
 
-/-- **GLUE input: the moving part of the stage character at the Frobenius of `w`** (tex
+/-- **ELLIOT input: the moving part of the stage character at the Frobenius of `w`** (tex
 2731–2736: "prescribing `ξ_i(Fr_q) = 1` at each finite stage", `Ψ_i = (1 + t)^{ξ_i}`,
 tex 2783): `ψ(π(Frob_w)) = 1 + t`; for lane RC28's `alphaChar` it follows from `ξ(Frob_w) = 1`
-(`movingValueAt_of_xi`). Kind: GLUE. -/
+(`movingValueAt_of_xi`).
+Kind: ELLIOT (data property of the text's construction, Proposition `ex:arith-moving-character`,
+tex 2731–2736, 2781–2788). -/
 def MovingValueAt {Δ : Type} [CommGroup Δ] (s : ℕ) (π : GKS K S₀ →* Δ) (ψ : Δ →* (Acoef s)ˣ)
     (w : NewPlaces K S₀ S) : Prop :=
   ψ (π (urFrobElt K w)) = ZInQ.Manuscript.RC.CoefModules.onePlusT s
 
-/-- **GLUE input: the moving part of the stage character is anticyclotomic** (tex 2781–2788:
+/-- **ELLIOT input: the moving part of the stage character is anticyclotomic** (tex 2781–2788:
 "Conjugation acts on this ring-class group by inversion", `Ψ_i(τgτ⁻¹) = Ψ_i(g)⁻¹`).
-Kind: GLUE. -/
+Kind: ELLIOT (data property of the text's construction, Proposition `ex:arith-moving-character`,
+tex 2731–2736, 2781–2788). -/
 def MovingAnticyclotomic (Cc : ActualConj K S₀) {Δ : Type} [CommGroup Δ] (π : GKS K S₀ →* Δ)
     {s : ℕ} (ψ : Δ →* (Acoef s)ˣ) : Prop :=
   ∀ σ, ψ (π (Cc.conj σ)) = (ψ (π σ))⁻¹
@@ -914,7 +917,8 @@ theorem stageRingChar_conj {K : Type} [Field K] [NumberField K]
   rw [stageRingChar, MonoidHom.comp_apply, MonoidHom.comp_apply, hα, map_inv]
 
 /-- **The arithmetic inputs of the leaf at one step** (tex 2720–2736, 4142–4145): the data of
-the unused split prime and its places, and the GLUE inputs `FrobQFixes`, `MovingValueAt`.
+the unused split prime and its places, the GLUE input `FrobQFixes` and the ELLIOT input
+`MovingValueAt`.
 Kind: definition. -/
 structure LeafStepInputs (C : TateCoef E) (Cc : ActualConj C.K C.S) (Fam : Family)
     (x : Addr Fam.b) (s : ℕ) {Δ : Type} [CommGroup Δ] (π : GKS C.K C.S →* Δ)
@@ -932,7 +936,8 @@ structure LeafStepInputs (C : TateCoef E) (Cc : ActualConj C.K C.S) (Fam : Famil
   fixes : FrobQFixes C q
   /-- the two places above `q` -/
   places : SplitPlacesAt C Cc q w w'
-  /-- GLUE: the moving character at the Frobenius of the first place -/
+  /-- ELLIOT (data property of the text's construction, Proposition `ex:arith-moving-character`,
+  tex 2731–2736, 2781–2788): the moving character at the Frobenius of the first place -/
   moving : MovingValueAt s π ψ w
 
 variable [E.IsElliptic]

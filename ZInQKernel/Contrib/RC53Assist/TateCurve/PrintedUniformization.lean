@@ -74,12 +74,11 @@ structure EquivariantTateUniformization (q : Kˣ) where
         (uniformization.map (Additive.ofMul x)) =
       uniformization.map (Additive.ofMul (Units.map σ.toAlgHom.toMonoidHom x))
 
-/-- **PRINT INPUT**: Tate's theorem, in uniformization, unique-parameter,
-and splitting form. Locator: Silverman, AEC, second edition, Appendix C,
-§14, Theorem C.14.1. Section-level locator; page and theorem body not checked.
-The coefficient equation is the one defined immediately before the theorem.
-This is a proposition, not an axiom. No derived Tate-module or inertia
-assertion is packaged into it. -/
+/-- **GLUE (a reading of a printed theorem)**: Tate's theorem, in uniformization, unique-parameter,
+and splitting form; not certified as a literal page-checked statement. Locator: Silverman, AEC,
+second edition, Appendix C, §14, Theorem C.14.1. Section-level locator; page and theorem body not
+checked. The coefficient equation is the one defined immediately before the theorem. This is a
+proposition, not an axiom. No derived Tate-module or inertia assertion is packaged into it. -/
 def SilvermanC141TateUniformizationPrint : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] [Valued K ℤᵐ⁰] [CompleteSpace K]
     [IsDiscreteValuationRing (Valued.v.valuationSubring : ValuationSubring K)]
