@@ -4,3 +4,6 @@
 - Source.lean: exact stationary support and radical domain; normalized mask commutes with (E.12); squarefree App E phase, off-filter vanishing, and algebraicity at every coefficient. Passed; 11 axiom audits.
 - Divided.lean: exact raw bounds; binary unary subtraction at all Fourier indices and integral quotient for any integer exponent; two-fresh Fourier weight and divisibility; ordinary theta congruence. Passed; 13 axiom audits.
 - Both files report only propext, Classical.choice, and Quot.sound (some declarations use a subset).
+- Valuation.lean: integral two-adic normalization and bit, phase removal in the coefficient residue field, exact integer-power divisibility. Passed; 4 axiom audits.
+- TwoTrace.lean: product density of all Frobenius lifts; continuous double trace; exact even two-fresh input on the pre-model lattice. Passed; 3 axiom audits.
+- Valuation and TwoTrace audits use only propext, Classical.choice, and Quot.sound.
