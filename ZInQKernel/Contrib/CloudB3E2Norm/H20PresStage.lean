@@ -27,7 +27,8 @@ file makes the actual instance generic over a commutative ring `k` with a ring i
   the genuine inflations along `urId`) for the pushes of Shapiro-level classes, from Shapiro-level
   inputs; point factor `phiK e₁`.
 * **`hnorm_pres_of_transferK`** (PROVED): the same from the named inputs of `h1_shapiro` and the
-  unramified lifts (which `hur_actual` supplies for the ambient module of points).
+  unramified lifts (which `H20AmbientS.hur_actualS` supplies for the ambient module of points;
+  `H20Untwisted.hur_actualUH` when the fixed fields of the transfer subgroups lie in `K_{S₀}`).
 
 For lane RC32's stages take `k = StageRing s = Λ ⧸ stageIdeal s` with `stageIsoA s`
 (`e = stageEquiv s`; `StageA s = Acoef s` by `rfl`). The splits match lane RC32's
@@ -389,7 +390,8 @@ include hrP hrR hU ht hE hψ in
 /-- **The norm identity at each switch of the presentation over `k` from the transfer inputs**
 (PROVED; tex 4142–4194, 4157–4170, 4385–4451): the input `hnorm` of lane RC32's `CMStepHyps` over
 any stage ring `k ≃+* A_i` (for lane RC32's `StageRing s`: `stageIsoA s`), from the named inputs of
-`h1_shapiro` and the unramified lifts (`hur_actual`); point factor `phiK (e_q)`. -/
+`h1_shapiro` and the unramified lifts (`H20AmbientS.hur_actualS`; `H20Untwisted.hur_actualUH` when
+the fixed fields of the transfer subgroups lie in `K_{S₀}`); point factor `phiK (e_q)`. -/
 theorem hnorm_pres_of_transferK (Tp : Finset ι) (p : ι)
     (aR aP : (globalCx (MonoidAlgebra ℤ Δ) (GKS K S) (shapMod hS W i s hs hs0 π)).X 1)
     (hle : HR ≤ HP)

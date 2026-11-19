@@ -16,6 +16,10 @@ realization `hreal`: the localization at `v ∈ P` of the weighted sum `∑_δ �
 **proves** it for the points of the ambient module `y = 1 ⊗ P` with `P ∈ E(K_{S₀})` fixed by the
 transfer subgroup `H` (the Heegner point over the fixed field of `H`):
 
+For the ambient points over a larger support `S₁` (needed for the relaxed points, see
+`H20Untwisted`), the same statements are `H20AmbientS.hreal_actualS` and
+`H20AmbientS.oldPlaceInput_of_pointS`.
+
 * `alphaShap_eq_one` (PROVED): `χ_h(g) [π g] = 1` in `ℤ[Δ]` forces `χ_h(g) = 1` and `π g = 1`.
 * `realX d` (definition): `X_d = ∑_{δ : π(r_δ) = d} χ_h(r_δ) · j(r_δ P) ∈ E(K̄_v)`, the part of the
   localized weighted sum on the coset fibre over `d ∈ Δ`.
