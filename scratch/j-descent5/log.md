@@ -16,3 +16,8 @@
 
 - **VERIFIED (Lean):** `abVar_shortSections_of_genusOne` realizes the normalized coordinates as regular sections on the complement of the identity. The proof uses the injectivity of the correspondence from closed points to stalk images in the generic field. The sections on a cover agree in the generic stalk and therefore glue; the cubic equation also lifts by injectivity there.
 - **VERIFIED (Lean):** `JDescent5Sections.lean` compiled under `lake env lean`; all six theorem checks report only the standard three axioms.
+
+## Pole-space action of an involution
+
+- **VERIFIED (Lean):** `shortCubic_parity_of_place_involution` proves that any ground-field involution preserving the marked place fixes the short abscissa and sends the ordinate to itself or its negative. The proof expands the transformed coordinates in pole spaces of dimensions two and three. The involution forces both leading coefficients to square to one, while the cubic relates their cube and square. This fixes the abscissa coefficient and makes its translation zero.
+- **VERIFIED (Lean):** Both theorem checks in `JDescent5Parity.lean` list only the three standard axioms.
