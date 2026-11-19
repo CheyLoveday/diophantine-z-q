@@ -7,8 +7,9 @@ Theorem 5.3, Lane RC0 round 14: the RC53 group's remaining inputs give the switc
 Proposition `ex:limits-uniform-lower-bound`, height-one regularity (tex 4976–5195), with the switch
 at a derivative label taken on the inner-limit objects (tex 4391–4451, 5027–5086).
 
-The side models of `InnerLimitSwitchModel` are chain-level: the Selmer complex of each limit side
-is to be homotopy equivalent to the family fibre. The RC53 group's integral side models give them.
+The side models of `InnerLimitSwitchModel` are homotopy equivalences over `k(𝔭)` between the
+Selmer complex of each limit side and the family fibre. The RC53 group's integral side models give
+them.
 For a retained side, the identification behind its side-to-stage cohomology isomorphism `φ` is a
 composite of cochain isomorphisms (the literal side datum, the derivative Selmer cone, the residue
 of the integral matrix limit) and of the scalar extension of the minimal-model homotopy
@@ -17,6 +18,15 @@ cochain isomorphism: the residual minimal model and the stage's fibre complex bo
 differentials (minimality, resp. the stage matrix reduces to zero) and the same based terms in
 degrees one and two (tex 4976–4996). Composing with the inverse family model gives the side
 models (tex 4997–5003, 5040–5086).
+
+This is a conditional bridge from the supplied integral minimal models and frame.
+`residualStageIso` compares two zero-differential models with the stated degree-one and degree-two
+bases; it does not extend arbitrary H¹-only data. The full composites compare the Selmer complexes
+of the supplied step sides with the fibres of `atlas.family`. Those fibres are retained matrix
+presentations. Transporting these model comparisons to the prescribed genuine arithmetic family,
+and supplying a frame for actual classes whose residue may vanish, remain separate ELLIOT + GLUE
+obligations. The bridge does not prove `IsGenuineFamilyAt` or construct `InnerLimitSwitchActual`
+from `RemainingInputsIso` alone.
 
 * `residualStageIso` (PROVED): the residual complex of a based minimal model is isomorphic, as a
   complex, to the fibre complex of any stage of the same size whose matrix reduces to zero.
@@ -327,7 +337,8 @@ def RemainingInputsIso.toInnerLimitSwitchModel
         (X.frame.model (X.atlas.next c (X.atlas.primeOfLabel T.detection.label))).symm⟩⟩
 
 /-- **The original remaining inputs give the switch model**, through the adapted inputs
-(`ofRemainingInputs`). Kind: PROVED. -/
+(`ofRemainingInputs`). Their original literal-source and residue-primitivity requirements remain;
+this conversion does not enlarge the class of original inputs. Kind: PROVED. -/
 def RemainingInputs.toInnerLimitSwitchModel
     (X : ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs (E := E) αStage Cn e χ P ι u) :
     InnerLimitSwitchModel P X.atlas.family ι u :=

@@ -16,9 +16,13 @@ second switch, since a singular side is never a finite side as Selmer data (the 
 equivalences of the Selmer complexes (the side models), keep the starting identifications of the
 family, and ask the actual class of every reached configuration only to be nonzero (tex 4992,
 5137–5144); the primitive kernel vector is then proved over the DVR `Λ_𝔭` (tex 4987–4992). The
-descent uses only the step's side-to-stage cohomology isomorphisms; the side models tie the step
-sides to the genuine fibres at chain level, which a cohomology isomorphism in degree one alone (an
-equality of dimensions) does not.
+descent uses only the step's side-to-stage cohomology isomorphisms and does not use the side
+models. The side models are homotopy equivalences over the residue field `k(𝔭)`; given the frame
+they amount to homotopy equivalences with the stages' two-term fibre complexes, i.e. each side has
+the cohomology `k^s` in degrees one and two and zero elsewhere. In degree one this is already given
+by `φ`, `φ'` and the frame's models; the side models add the other degrees. They are not required
+to be compatible with `φ`, `φ'`, the frame's models, or the step's localization, strict, relaxed
+and duality maps, and the step data are not tied to the chosen derivative label.
 
 * `SwitchModelFrame`: the family frame (stages, models of the fibres, the starting class,
   functional and coordinate, nonquadraticity, the classes nonzero);
@@ -105,7 +109,9 @@ configuration with fiber dimension `> 1`, a successor with a coordinate step and
 nonquadratic step (`QuasiNonquadStep`: the relaxed localization, the finite and singular sides,
 the duality `U = U^⊥`, the detection `F ≤ U`, the side-to-stage cohomology isomorphisms), whose
 side Selmer complexes are homotopy equivalent to the fibres of the configuration and of its
-successor (tex 4997–5003, 5040–5086). Kind: definition (inputs). -/
+successor (over `k(𝔭)`; given the frame, equivalently to the stages' two-term fibre complexes:
+isomorphic cohomology in every degree, with no compatibility with the step's maps; tex 4997–5003,
+5040–5086). Kind: definition (inputs). -/
 structure SwitchModelInputs (Φ : SwitchFamily k A) (ι : A →+* F) (ρ : A →+* k) (u : F)
     extends SwitchModelFrame Φ ι ρ u where
   /-- The switches, with side models. -/
@@ -193,8 +199,9 @@ frame over `Λ_𝔭` and, at each reached configuration with fiber dimension `> 
 coordinate step and inner-limit step data (`InnerLimitStepData`: the retained stage complexes and
 pairing data, the retained global duality, the residue identity at the derivative label, the
 detection, the side-to-stage cohomology isomorphisms), whose limit sides' Selmer complexes are
-homotopy equivalent to the fibres of the configuration and of its successor. Kind: definition
-(inputs). -/
+homotopy equivalent to the fibres of the configuration and of its successor (over `k(𝔭)`; given
+the frame, equivalently to the stages' two-term fibre complexes: isomorphic cohomology in every
+degree, with no compatibility with the step's maps). Kind: definition (inputs). -/
 structure InnerLimitSwitchModel (Φ : SwitchFamily (ResAt P) (Localization.AtPrime P))
     (ι : Localization.AtPrime P →+* F) (u : F) extends SwitchModelFrame Φ ι (resAt P) u where
   /-- The inner-limit switches, with side models. -/
@@ -312,7 +319,9 @@ variable (P Cn W hW) in
 5027–5086): the frame over `Λ_𝔭` and, at each reached configuration with fiber dimension `> 1`, a
 successor with a coordinate step and a linked switch on the actual stage complexes
 (`ILStageStepLinked`) whose limit sides' Selmer complexes are homotopy equivalent to the fibres of
-the configuration and of its successor. Kind: definition (inputs). -/
+the configuration and of its successor (over `k(𝔭)`; given the frame, equivalently to the stages'
+two-term fibre complexes: isomorphic cohomology in every degree, with no compatibility with the
+step's maps). Kind: definition (inputs). -/
 structure InnerLimitSwitchActual (Φ : SwitchFamily (ResAt P) (Localization.AtPrime P))
     (ι : Localization.AtPrime P →+* F) (u : F) extends SwitchModelFrame Φ ι (resAt P) u where
   /-- The linked switches, with side models. -/
