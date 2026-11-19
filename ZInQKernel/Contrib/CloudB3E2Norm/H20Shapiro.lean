@@ -28,7 +28,8 @@ lemma in continuous cohomology for the coinduced module `Coind_H^G M` (`TauCeti.
   isomorphism in continuous cohomology.
 * **`shapiro_coeff_transfer`** (PROVED): every value of `shCocycle c`, read back in the induced
   module and pushed by the coefficient map (H20), is the twisted transfer `𝒯_θ(c)`: the text's
-  class "Shapiro⁻¹ then (H20)" is represented by the explicit transfer.
+  class "Shapiro⁻¹ then (H20)" is represented by the explicit transfer (a pointwise cochain
+  identity; degree one only).
 * `exists_section_one` (PROVED): a normalized section exists, so `hr1` is dischargeable.
 * Non-vacuity: `nonVacuity_shapiro` (the trivial group).
 
@@ -139,7 +140,7 @@ theorem continuous_sh1 (c : H → M) (hcont : Continuous c) : Continuous (sh1 H 
       (r ((g : G ⧸ H) * δ)) (iota H (c ⟨hc H r g δ, hc_mem H r hr g δ⟩)) :=
     funext (sh1_eq H r hr c)
   rw [hfun]
-  refine continuous_finset_sum _ fun δ _ => ?_
+  refine continuous_finsetSum _ fun δ _ => ?_
   have hq : Continuous fun g : G => ((g : G) : G ⧸ H) := continuous_quotient_mk'
   have hh : Continuous fun g : G => hc H r g δ := by
     have h1 : Continuous fun g : G => (r ((g : G ⧸ H) * δ))⁻¹ :=
@@ -230,7 +231,10 @@ theorem shapiro_identification (hr1 : r 1 = 1) (c : Z1 H M) :
 include hHo in
 /-- **Shapiro⁻¹ followed by (H20) is the twisted transfer** (PROVED; tex 3203–3250): every value of
 the explicit Shapiro cocycle, read back in the induced module (`ofCoind`) and pushed by the
-coefficient map (H20), is `𝒯_θ(c)`. -/
+coefficient map (H20), is `𝒯_θ(c)`. (The reading of `shCocycle c` as a representative of
+`Shapiro⁻¹ [c]` is `shapiro_identification`, which uses a normalized section `r 1 = 1`.) This is a
+pointwise cochain identity; the class-level statement in the twisted target `H¹(G, M(θ))` would need
+the comparison packaged as an equivariant equivalence and is not formalized here. -/
 theorem shapiro_coeff_transfer {A : Type} [CommRing A] [Module A M] [SMulCommClass G A M]
     (θ : G ⧸ H →* Aˣ) (c : Z1 H M) (g : G) :
     coeff H θ (ofCoind H r ((shCocycle H hHo r hr c : G → DiscreteCoind G H M) g)) =
@@ -256,8 +260,9 @@ theorem exists_section_one : ∃ r : G ⧸ H → G, (∀ δ, ((r δ : G) : G ⧸
   · simp [h]
   · simp [h]
 
-/-- **Non-vacuity of the hypotheses of `shapiro_identification`**: the trivial group, with
-`H = ⊤` open and the section `r = 1`. Kind: PROVED. -/
+/-- **Non-vacuity of the subgroup and section hypotheses of `shapiro_identification`**: the trivial
+group, with `H = ⊤` open and the section `r = 1` (the remaining hypotheses — `G` profinite, `M` a
+discrete `G`-module, `G/H` finite — hold for `G = G_{K,S}` and `H = G_L`). Kind: PROVED. -/
 theorem nonVacuity_shapiro :
     IsOpen ((⊤ : Subgroup Unit) : Set Unit) ∧ ∃ r : Unit ⧸ (⊤ : Subgroup Unit) → Unit,
       (∀ δ, ((r δ : Unit) : Unit ⧸ (⊤ : Subgroup Unit)) = δ) ∧ r 1 = 1 :=
