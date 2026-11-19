@@ -11,7 +11,9 @@ Shapiro, followed by the equivariant coefficient map `E[2^m] ⊗ A[Δ_f] → (E[
 unramified condition at the new place).
 
 Setting. `Δ` is a finite abelian group with a homomorphism `π : G_{K,S₀} → Δ` with open kernel and
-an injective character `ψ : Δ → A_i^×`; the moving character is `Ψ_i = ψ ∘ π` and the actual
+an injective character `ψ : Δ → A_i^×`; the reading of `shapMod₀` as the induced module needs `π`
+surjective, which holds for the instance `Δ = im Ψ_i` of the section `Moving` (`movingPi`,
+`movingPsi`, `moving_spec`, `h20ConditionsPush_moving`); the moving character is `Ψ_i = ψ ∘ π` and the actual
 character is `α = χ_h · Ψ_i` (`alphaStage`). For the text, `Δ` is the image of `Ψ_i` (a quotient of
 the ring class group `Δ_f`), so the Shapiro-level module below is the module induced from the field
 `L` cut out by `Ψ_i` (a subfield of `H_f`), twisted by `χ_h`. Using `Δ_f` itself (with `ψ` not
@@ -41,10 +43,15 @@ decomposition (`LocalIdentity.lean`, the orbit sums) replaces this file's direct
   unramified conditions `urRep`/`urId` at a new place `w ∉ S₀` — the actual conditions survive
   (H20). **`hzR_stage_actual`** (PROVED): the Shapiro-level norm identity for the actual Selmer data
   gives the stage-level one with point factor `φ(e₁)`.
-* Non-vacuity: `nonVacuity_psiTrivial` (the trivial `Δ`).
+* **`Δ = im Ψ_i`** (section `Moving`): `movingPi` (surjective), `movingPsi` (injective),
+  `moving_spec`, `psiTrivialAt2N_moving_iff`, **`h20ConditionsPush_moving`** (PROVED).
+* Non-vacuity: `nonVacuity_psiTrivial` (the trivial `Δ`), `urRep_hyps_actual`.
 
-What this does not do: it does not prove the Shapiro-level norm identity itself (the hypothesis
-`h₁` of `hzR_stage_actual`); that is the content of `TransferNorm.lean` … `LocalIdentity.lean` at the
+What this does not do (named): (1) **the `Δ_f`-to-`im Ψ_i` bridge**: the manuscript's Shapiro-level
+classes live over `A[Δ_f]` (induced from `H_f`); passing to `ℤ[im Ψ_i]` (induced from the field cut
+out by `Ψ_i`) is a further coefficient push `[δ] ↦ [Ψ_i(δ)]` whose local conditions at `P` are the
+orbit (local norm) conditions of `LocalIdentity.lean`, not the plain Kummer conditions used here;
+(2) the Shapiro-level norm identity itself (the hypothesis `h₁` of `hzR_stage_actual`); that is the content of `TransferNorm.lean` … `LocalIdentity.lean` at the
 coefficient ring `ℤ[Δ]` (conditional there on `LocalTwistIdentification` and the realization of the
 actual points). Nor does it identify the cohomology of the Shapiro-level module with that of
 `E[2^i]` over `G_L` (Shapiro's lemma itself, Tau Ceti's `ContCohomology/Shapiro`).
@@ -470,6 +477,83 @@ theorem hzR_stage_actual (w : Places K S) (hw : w.1 ∉ S₀)
     (h20ConditionsPush_actual hS W i s hs hs0 hFull π ψ P hψ hΨ w hw) zR₁ zP₁ e₁ h₁
 
 end Conditions
+
+/-! ### The moving character: `Δ = im Ψ_i` -/
+
+section Moving
+
+variable {K : Type} [Field K] [NumberField K] {S S₀ : Set (HeightOneSpectrum (𝓞 K))}
+  (hS : S₀ ⊆ S) (W : WeierstrassCurve K) [W.IsElliptic] (i : ℕ) [NeZero i] (s : KS K S₀) {h : K}
+  (hs : s ^ 2 = algebraMap K (KS K S₀) h) (hs0 : s ≠ 0) (hFull : FullTorsion K S₀ W (2 ^ i))
+  [TopologicalSpace (Acoef i)] [DiscreteTopology (Acoef i)]
+  (Ψ : GKS K S₀ →* (Acoef i)ˣ)
+
+/-- The image `im Ψ_i` with its commutative group structure. -/
+abbrev MovingΔ : Type := Ψ.range
+
+/-- **`π = Ψ_i` onto its image** `Δ = im Ψ_i` (surjective). Kind: definition. -/
+def movingPi : @MonoidHom (GKS K S₀) (MovingΔ i Ψ) _
+    (@MulOneClass.toMulOne _ (@CommGroup.toGroup (MovingΔ i Ψ) inferInstance).toMulOneClass) :=
+  { toFun := fun g => ⟨Ψ g, g, rfl⟩
+    map_one' := Subtype.ext (map_one Ψ)
+    map_mul' := fun a b => Subtype.ext (map_mul Ψ a b) }
+
+/-- **`ψ` = the inclusion of the image** (injective). Kind: definition. -/
+def movingPsi : @MonoidHom (MovingΔ i Ψ) (Acoef i)ˣ
+    (@MulOneClass.toMulOne _ (@CommGroup.toGroup (MovingΔ i Ψ) inferInstance).toMulOneClass) _ :=
+  { toFun := fun x => x.1
+    map_one' := rfl
+    map_mul' := fun _ _ => rfl }
+
+/-- With `Δ = im Ψ_i`, `π` is surjective (so `shapMod₀` is the module induced from `ker Ψ_i`, the
+absolute Galois group of the field cut out by `Ψ_i`, twisted by `χ_h`), `ψ` is injective, and
+`ψ ∘ π = Ψ_i`. Kind: PROVED. -/
+theorem moving_spec :
+    Function.Surjective (movingPi i Ψ) ∧ Function.Injective (movingPsi i Ψ) ∧
+      ∀ g, movingPsi i Ψ (movingPi i Ψ g) = Ψ g :=
+  ⟨fun ⟨_, g, hg⟩ => ⟨g, Subtype.ext hg⟩, Subtype.val_injective, fun _ => rfl⟩
+
+/-- **The ELLIOT input for `Δ = im Ψ_i`** is exactly "`Ψ_i` is trivial on the decomposition
+groups at the places of `P`" (tex 2729, 3431, 3500–3506). Kind: PROVED. -/
+theorem psiTrivialAt2N_moving_iff (P : Set (HeightOneSpectrum (𝓞 K))) :
+    PsiTrivialAt2N i (movingPi i Ψ) (movingPsi i Ψ) P ↔
+      ∀ v ∈ P, ∀ σ : Gloc K v, Ψ (locMap K S₀ v σ) = 1 :=
+  Iff.rfl
+
+/-- **The actual local conditions survive (H20), for the moving character** (PROVED):
+`h20ConditionsPush_actual` with `Δ = im Ψ_i`, `π` its corestriction (surjective) and `ψ` the
+inclusion (injective). The only inputs are the ELLIOT statement that `Ψ_i` is trivial on the
+decomposition groups at `P`, `FullTorsion`, and the open kernels. -/
+theorem h20ConditionsPush_moving
+    [IsOpenKer (alphaShap s hs hs0 (movingPi i Ψ))]
+    [IsOpenKer (alphaStage i s hs hs0 (movingPi i Ψ) (movingPsi i Ψ))]
+    (P : Set (HeightOneSpectrum (𝓞 K)))
+    (hΨ : ∀ v ∈ P, ∀ σ : Gloc K v, Ψ (locMap K S₀ v σ) = 1) (w : Places K S) (hw : w.1 ∉ S₀)
+    [ContinuousSMul (GUr K w.1)
+      (urRep (MonoidAlgebra ℤ (MovingΔ i Ψ)) (shapMod₀ W i s hs hs0 (movingPi i Ψ)) (newPlace w hw)).V]
+    [ContinuousSMul (GUr K w.1) (urRep (Acoef i)
+      (Mcoef K S₀ W i (alphaStage i s hs hs0 (movingPi i Ψ) (movingPsi i Ψ))) (newPlace w hw)).V] :
+    H20ConditionsPush (h20RingHom (movingPsi i Ψ))
+      (shapPush hS W i s hs hs0 (movingPi i Ψ) (movingPsi i Ψ))
+      (shapPush_smul hS W i s hs hs0 (movingPi i Ψ) (movingPsi i Ψ))
+      (shapConditions hS W i s hs hs0 hFull (movingPi i Ψ) (movingPsi i Ψ) P
+        (moving_spec i Ψ).2.1 hΨ)
+      (stageConditions hS W i s hs hs0 hFull (movingPi i Ψ) (movingPsi i Ψ) P hΨ) w
+      (genuineιq K S (MonoidAlgebra ℤ (MovingΔ i Ψ)) (shapMod hS W i s hs hs0 (movingPi i Ψ)) w
+        (urRep (MonoidAlgebra ℤ (MovingΔ i Ψ)) (shapMod₀ W i s hs hs0 (movingPi i Ψ)) (newPlace w hw))
+        (urId hS (MonoidAlgebra ℤ (MovingΔ i Ψ)) (shapMod₀ W i s hs hs0 (movingPi i Ψ)) (newPlace w hw))
+        (urId_compat hS (MonoidAlgebra ℤ (MovingΔ i Ψ)) (shapMod₀ W i s hs hs0 (movingPi i Ψ)) w hw))
+      (genuineιq K S (Acoef i) (MinS hS W i (alphaStage i s hs hs0 (movingPi i Ψ) (movingPsi i Ψ)))
+        w (urRep (Acoef i) (Mcoef K S₀ W i (alphaStage i s hs hs0 (movingPi i Ψ) (movingPsi i Ψ)))
+          (newPlace w hw))
+        (urId hS (Acoef i) (Mcoef K S₀ W i (alphaStage i s hs hs0 (movingPi i Ψ) (movingPsi i Ψ)))
+          (newPlace w hw))
+        (urId_compat hS (Acoef i)
+          (Mcoef K S₀ W i (alphaStage i s hs hs0 (movingPi i Ψ) (movingPsi i Ψ))) w hw)) :=
+  h20ConditionsPush_actual hS W i s hs hs0 hFull (movingPi i Ψ) (movingPsi i Ψ) P
+    (moving_spec i Ψ).2.1 hΨ w hw
+
+end Moving
 
 /-! ### Non-vacuity -/
 
