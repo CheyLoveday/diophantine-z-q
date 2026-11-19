@@ -923,10 +923,10 @@ theorem inertiaAt_normalized {p : ℕ} (D : LocalArithmeticFrobenius p) :
 inertia-fixed space. Locator: `inertiaEulerPolynomial`, Carayol §0.5,
 p. 410, with arithmetic and dual normalization displayed above.
 
-**Warning: not the classical local factor at primes of multiplicative reduction.** The polynomial uses the
-arithmetic Frobenius on the inertia invariants of the homological representation. For a Tate
-curve the invariants are the line `ℚ_ℓ(1) ⊗ ε`, on which the arithmetic Frobenius acts by `ε p`,
-so this side is `1 - ε p X`, while the classical factor is `1 - ε X` (for the curve 11a1 at
+**Warning: not the classical local factor at primes of multiplicative reduction.** The polynomial
+uses the arithmetic Frobenius on the inertia invariants of the homological representation. For a
+Tate curve the invariants are the line `ℚ_ℓ(1) ⊗ ε`, on which the arithmetic Frobenius acts by
+`ε p`, so this side is `1 - ε p X`, while the classical factor is `1 - ε X` (for the curve 11a1 at
 `p = 11`: `1 - 11 X` against `1 - X`). The correct reading uses the inertia coinvariants
 (equivalently the dual representation with the inverse Frobenius). The printed-corollary route
 `Descent.liCarayolNewformOfModular_of_printed_corollaries` does not use this definition. -/
