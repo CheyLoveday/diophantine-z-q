@@ -39,15 +39,15 @@ The Kummer cocycle of a division point `Q` on a subgroup `H` is `κ_H(Q)(h) = h 
   `b = ∑ₜ t Q_R − (a Q_P − σ Q_P − σ⁻¹ Q_P)` explicit and `m`-torsion (`m • b = 0`), so `d⁰ b` is a
   coboundary of the finite coefficient module `A[m]` (`d0_mem_torsionBy`).
 * `cor_kummer_eq_normOp_add_d0_of_choice`: the same for any other division point of the norm.
-* Non-vacuity (`nonVacuity`): a concrete instance of every hypothesis (trivial group acting on
+* Non-vacuity (`nonVacuity`): a concrete instance of every hypothesis (`ℤˣ` acting on
   `ℤ`).
 
 **What remains** for the consumer's hypothesis `hzR` (lane RC32's
 `SupportTriangle.kmStep_of_supportTriangle`, `z_R = e_q • i z_P + d b` in the genuine complexes):
 1. Shapiro / twisted transfer from `HP` to `G_K` (tex 3219–3250, `HeegnerCohomology/Transfer.lean`),
-   which turns the conjugation action `σ ⋆` into multiplication by the scalar Frobenius value `z`
-   on the twisted coefficients, and its compatibility with corestriction from `U`, both up to an
-   explicit boundary;
+   which turns the conjugation action `σ ⋆` into multiplication by the scalar Frobenius value `z`:
+   done in the companion file `TransferNorm.lean` (`transfer_kummer_norm_of_transversal`), for
+   coefficient characters compatible across the supports;
 2. the local components of `z_P`, `z_R` in the Selmer cones (the local Kummer cocycles lie in the
    Kummer condition, `RC/CoefModules/Kummer.lean`) and the identification of `i` with the identity
    on global cochains plus the inclusion of local conditions at the old places and at `q`;
