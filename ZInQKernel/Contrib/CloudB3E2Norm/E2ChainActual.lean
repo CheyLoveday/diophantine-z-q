@@ -15,8 +15,9 @@ genuinely external inputs:
 * the address data: `St : RCSteps D` in the branch `¬ D.OddEmptyUnit` (the companion facts),
   `Fam.Admissible D.S D.kfin`, the primes of `2N` in `D.S` (`hS2N`), `r_{t+1} ∤ k` (`hrk`), the
   places above the primes `q` with `λ_q(x) = 1` in the stage support (`hQS0`), every index of the
-  chain is the index of a step (`hpidx`), `3 ∉ Q` (`hQ3`), and good reduction outside the stage
-  support (`hgood`; GLUE: Néron–Ogg–Shafarevich for the places outside `S₀ ⊇` the places of `N`).
+  chain is the index of a step (`hpidx`), no step prime is `3` (`hQ3`), and good reduction outside
+  the stage support (`hgood`; GLUE: Néron–Ogg–Shafarevich for the places outside `S₀ ⊇` the
+  places of `N`).
 
 The other fields are derived: `k < 0`, squarefree, `≡ 1 (mod 4)` from `RCSteps.companion`; the
 base conductor `d = θ-conductor = r_{t+1} ∏_{λ_q(x) = 1} q`, positive, divisible by itself, prime to
@@ -124,9 +125,9 @@ theorem coprime_two_N_disc {p : ℕ} (hp : p.Prime) {k : ℤ}
   requirement of `StagedPresentation`, whose `S₀` is free beyond `Sr ⊆ S₀`;
 * `hpidx` — every index of the chain is the index of a step: a formalization requirement (the
   text's chain has one index per unused prime, tex 4142–4146);
-* `hQ3` — `3 ∉ Q`: a formalization requirement for the factor `6` of `hq` (the text's
-  admissibility `q ∤ 6 d N D_K`, tex 2920–2921, is a condition on the step primes; with `q ≠ 2`
-  from `hprime` it amounts to `q ≠ 3`);
+* `hQ3` — no unused (step) prime is `3`: a formalization requirement for the factor `6` of `hq`
+  (the text's admissibility `q ∤ 6 d N D_K`, tex 2920–2921, is a condition on the step primes;
+  with `q ≠ 2` from `hprime` it amounts to `q ≠ 3`);
 * `hgood` — good reduction outside the stage support: GLUE (Néron–Ogg–Shafarevich, Silverman AEC
   VII.7.1; the support contains the primes above `N`, tex 2729–2741, 2836–2838).
 
@@ -139,7 +140,7 @@ def e2ChainInputsS_of_actual (P : StagedPresentation C D Fam x G.toFamily) (t : 
     (hrk : ¬ ((G.r (t + 1) : ℕ) : ℤ) ∣ D.kfin)
     (hQS0 : ∀ q ∈ Fam.Q, Fam.lam q x = 1 → ∀ v : HeightOneSpectrum (𝓞 C.K),
       ((q : ℕ) : 𝓞 C.K) ∈ v.asIdeal → v ∈ P.S₀ (t + 1))
-    (hpidx : ∀ p : P.ι, ∃ j < P.ps.length, P.pidx j = p) (hQ3 : 3 ∉ Fam.Q)
+    (hpidx : ∀ p : P.ι, ∃ j < P.ps.length, P.pidx j = p) (hQ3 : ∀ q ∈ unusedAt Fam x, q ≠ 3)
     (hgood : ∀ v : HeightOneSpectrum (𝓞 C.K), v ∉ P.S₀ (t + 1) →
       ZInQ.Manuscript.RC.DivisionPoints.HasGoodReductionAt ((Ecurve ℓ).baseChange C.K) v) :
     E2ChainInputsS P t :=
@@ -210,7 +211,7 @@ def e2ChainInputsS_of_actual (P : StagedPresentation C D Fam x G.toFamily) (t : 
             have h6 : P.ps.getD i 1 ∣ 2 * 3 := h3
             rcases (Nat.Prime.dvd_mul hqp).1 h6 with h4 | h4
             · exact (P.hprime _ hqQ).2 ((Nat.prime_dvd_prime_iff_eq hqp Nat.prime_two).1 h4)
-            · exact hQ3 ((Nat.prime_dvd_prime_iff_eq hqp Nat.prime_three).1 h4 ▸ hqQ)
+            · exact hQ3 _ (P.mem_unused hi) ((Nat.prime_dvd_prime_iff_eq hqp Nat.prime_three).1 h4)
           · -- `q ∣ d_i`
             rcases prime_dvd_chainCond hqp _ _ i h3 with h4 | ⟨m, hm, h4⟩
             · rcases (Nat.Prime.dvd_mul hqp).1 h4 with h5 | h5
