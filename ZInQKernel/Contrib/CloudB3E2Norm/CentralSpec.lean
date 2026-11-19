@@ -26,7 +26,8 @@ with the specialization is the augmentation `ε : ℤ[Δ] → ℤ`. On the ambie
   of the step identity at the moving prime is `m = a_r − 2χ_h(r)`.
 * **`CentralStageComparison`** (definition; GLUE, the named input): the comparison of the
   presentation at a stage with the compact central complex — (C1) the coefficients at the center
-  and the twist identification, (C2) the support/reduction comparison, (C3) the local conditions.
+  and the twist identification, (C2) the support/reduction comparison, with faithfulness of the
+  read-out; the local conditions (C3), needed for the lift to the Selmer cones, stay named.
 * **`central45_global`** (PROVED from the named comparison, `gx_step_heegner_at` and (C4)): the
   specialization of the class of `A_R` is `m · red(κ(P)) + dZ(…)` — the retained boundary
   `z̄ = i(m · P)` of (4.5), global component, at a stage. The multiplier `L` of (H11) is not
@@ -267,10 +268,12 @@ attribute [local instance] mcoefModuleK
   `2`-adic cochains of `G_{K,S_C}` to `Z1` (reduction mod `2^s` followed by inflation to
   `G_{K,S}`), with the reduction of a global Kummer cochain the read-out of the `χ_h`-twisted
   Kummer cocycle of the twisted division point (`hred`);
-* (C3) the local conditions (tex 3913–3915: "the local degree-zero maps are onto and the
-  degree-one maps inject"; the central Kummer conditions map into the presentation's conditions):
-  the Prop `C3` (used for the lift of (4.5) to the Selmer cones; not used by
-  `central45_global`).
+* faithfulness: `Φ` is injective on `2^i`-torsion-valued cochains and `twistPt` is injective
+  (the genuine read-out and twist identification are), so the target is not degenerate.
+
+The local conditions (C3: the central Kummer conditions map into the presentation's conditions,
+tex 3913–3915) are needed only for the lift of (4.5) to the Selmer cones and are not part of this
+global-component comparison; they remain a separately named input.
 
 Kind: definition (GLUE; the comparison of complexes is not in the tree). -/
 structure CentralStageComparison where
@@ -318,11 +321,22 @@ structure CentralStageComparison where
     red (globalKummerCochain hR) = Φ (fun g =>
       ((quadChar s hs hs0 (inflMap K hS (g 0)) : ℤˣ) : ℤ) •
         (inflMap K h1 (g 0) • twistPt (Rt i)) - twistPt (Rt i))
-  /-- (C3) the central Kummer conditions map into the presentation's conditions -/
-  C3 : Prop
+  /-- faithfulness: `Φ` is injective on `2^i`-torsion-valued cochains -/
+  hΦinj : ∀ f : (Fin 1 → GKS K S) → PtS K S₁ W, (∀ g, (2 ^ i : ℕ) • f g = 0) → Φ f = 0 → f = 0
+  /-- faithfulness: the twist identification is injective -/
+  twistPt_injective : Function.Injective twistPt
 
 attribute [instance] CentralStageComparison.ringR0 CentralStageComparison.acgZ1
   CentralStageComparison.modZ1 CentralStageComparison.acgZ0
+
+/-- **The comparison's target is not degenerate** (PROVED): if `E(K_{S₁})` has a nonzero
+`2^i`-torsion point (e.g. under full `2^i`-torsion), the degree-one target `Z1` is nontrivial. -/
+theorem CentralStageComparison.nontrivial_Z1
+    (C : CentralStageComparison hS h01 h1 W i s hs hs0 π ψ k G)
+    {t : PtS K S₁ W} (ht : t ≠ 0) (ht2 : (2 ^ i : ℕ) • t = 0) : Nontrivial C.Z1 := by
+  refine ⟨⟨C.Φ (fun _ => t), 0, fun h0 => ht ?_⟩⟩
+  have := C.hΦinj (fun _ => t) (fun _ => ht2) h0
+  exact congrFun this (fun _ => 1)
 
 variable {hS h01 h1 W i s hs hs0 π ψ k G}
 
