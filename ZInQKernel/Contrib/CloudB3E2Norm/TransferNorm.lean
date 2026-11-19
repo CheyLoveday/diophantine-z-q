@@ -38,7 +38,9 @@ The actual classes are `z_T = 𝒯_θ(κ(Q_T))`, the twisted transfer of the Kum
   `HR`, the twisted weighted sum of `y` over `G/HR` is the twisted weighted sum over `G/HP` of the
   transversal norm `∑_τ ρ(t_τ) y`; this is `hW`, with `Tr y_R = ∑_τ ρ(t_τ) y_R`.
 * **`transfer_kummer_norm_of_transversal`** (PROVED): the identity from (4.1) in its transversal
-  form `∑_τ ρ(t_τ) y_R = a y_P − σ y_P − σ⁻¹ y_P` directly.
+  form `∑_τ ρ(t_τ) y_R = a y_P − σ y_P − σ⁻¹ y_P` directly, together with `k • z_R(g) = 0` and
+  `k • z_P(g) = 0` (`R_wsum`, `zsmul_transfer_kummer`): all cochains in the identity take values in
+  `M[k]`, so it is an identity of `M[k]`-valued cochains through the injective coercion.
 * Non-vacuity: `nonVacuity_transfer`, `nonVacuity_transversal`.
 
 **Hypotheses to be supplied by the consumer.** `hθ` (the coefficient character at support `R` is
@@ -48,9 +50,11 @@ such compatible characters across supports is to be checked against tex 3219–3
 
 **What remains** for `hzR` in the genuine complexes: (1) the local components of the classes in the
 Selmer cones (the local Kummer cocycles lie in the Kummer condition) and the identification of `i`
-with the identity on global cochains plus the inclusion of local conditions; (2) continuity of the
-cochains (the genuine complexes are continuous cochains; the identities here are pointwise); (3) the
-inner limit to `Λ` and the identification of the actual classes with those of the Heegner points.
+with the identity on global cochains plus the inclusion of local conditions; (2) the identification
+of `M[k]` (here a subgroup of the ambient `M`) with the finite coefficient module of the genuine
+complexes, and continuity of the cochains (the genuine complexes are continuous cochains; the
+identities here are pointwise); (3) the inner limit to `Λ` and the identification of the actual
+classes with those of the Heegner points.
 
 Kinds: definitions and PROVED.
 -/
@@ -108,6 +112,29 @@ theorem wsum_smul_frob (σ : G) {y : M} (hy : ∀ h ∈ H, ρ h y = y) :
   refine Finset.sum_congr rfl fun δ _ => ?_
   rw [map_mul, map_inv, Units.val_mul, mul_comm, mul_smul, frobValueInv]
 
+include hr in
+/-- **The weighted sum of an `H`-fixed element is fixed by the twisted action** (PROVED):
+`R(g) ∑_δ R(r_δ) y = ∑_δ R(r_δ) y`. -/
+theorem R_wsum (g : G) {y : M} (hy : ∀ h ∈ H, ρ h y = y) :
+    R H ρ θ g (wsum ρ H r θ y) = wsum ρ H r θ y := by
+  simp only [wsum, map_sum]
+  have key : ∀ δ : G ⧸ H, R H ρ θ g (R H ρ θ (r δ) y) = R H ρ θ (r ((g : G ⧸ H) * δ)) y := by
+    intro δ
+    rw [← Module.End.mul_apply, ← R_r_mul_hc H r hr ρ θ g δ, Module.End.mul_apply,
+      hy _ (hc_mem H r hr g δ)]
+  simp_rw [key]
+  exact Fintype.sum_equiv (Equiv.mulLeft (g : G ⧸ H)) _ _ (fun _ => rfl)
+
+include hr in
+/-- **The transferred Kummer cocycle takes values in `M[k]`** (PROVED): for `k Q = y` with `y`
+fixed by `H`, `k • 𝒯_θ(κ(Q))(g) = 0` for every `g`. -/
+theorem zsmul_transfer_kummer (k : ℤ) {Q y : M} (hQ : k • Q = y) (hy : ∀ h ∈ H, ρ h y = y)
+    (g : Fin 1 → G) : k • T H r hr ρ θ 1 (kummerCochain ρ H Q) g = 0 := by
+  obtain ⟨hk, hT⟩ := kummer_weighted_sum H r hr ρ θ k y Q hQ
+  have e : kummerCochain ρ H Q = fun x => ρ (x 0 : G) Q - Q := rfl
+  rw [e, hT g, smul_sub, ← map_zsmul, hk]
+  exact sub_eq_zero.mpr (R_wsum ρ H r hr θ (g 0) hy)
+
 end Frob
 
 section Norm
@@ -129,7 +156,9 @@ include hrP hrR in
 tex 4157–4170 at a finite coefficient stage). With `z_T = 𝒯_θ(κ(Q_T))` the twisted transfers of the
 Kummer cocycles, the compatibility `hθ` of the characters, the inflation-compatibility `hW` of the
 twisted norm and the point relation (4.1) `Tr y_R = a y_P − σ y_P − σ⁻¹ y_P`:
-`z_R(g) = e_q z_P(g) + (R(g) b − b)` for every `g`, and `k • b = 0`. -/
+`z_R(g) = e_q z_P(g) + (R(g) b − b)` for every `g`, and `k • b = 0` (an identity of `M`-valued
+cochains; with `y_R` fixed by `HR` the values of `z_R`, `z_P` lie in `M[k]`, see
+`transfer_kummer_norm_of_transversal`). -/
 theorem transfer_kummer_norm
     (hθ : ∀ x : G, ((θR (x : G ⧸ HR) : Aˣ) : A) = θP (x : G ⧸ HP))
     (k a : ℤ) (σ : G) {yR yP QR QP TrR : M}
@@ -250,7 +279,8 @@ include hrP hrR hU ht in
 transversal `t` (lifts of `Gal(H_R/H_P)`), `θR` inflated from `θP`, `y_R` fixed by `HR`, `y_P` fixed
 by `HP`, and (4.1) in the form `∑_τ ρ(t_τ) y_R = a y_P − σ y_P − σ⁻¹ y_P`:
 `z_R(g) = e_q z_P(g) + (R(g) b − b)` for every `g ∈ G`, with `z_T = 𝒯_θ(κ(Q_T))`, `e_q = a − z − z⁻¹`,
-`z = θP(σ)`, and the retained boundary `b` explicit and `k`-torsion. -/
+`z = θP(σ)`, and the retained boundary `b` explicit and `k`-torsion; and `z_R`, `z_P` take values in
+`M[k]` (so the identity is one of `M[k]`-valued cochains through the injective coercion). -/
 theorem transfer_kummer_norm_of_transversal (hle : HR ≤ HP)
     (hθ : ∀ x : G, ((θR (x : G ⧸ HR) : Aˣ) : A) = θP (x : G ⧸ HP))
     (k a : ℤ) (σ : G) {yR yP QR QP : M}
@@ -261,9 +291,13 @@ theorem transfer_kummer_norm_of_transversal (hle : HR ≤ HP)
         eq_ HP θP a σ • T HP rP hrP ρ θP 1 (kummerCochain ρ HP QP) g +
           (R HR ρ θR (g 0) (retainedBoundaryT ρ HP HR rP rR θP θR a σ QR QP) -
             retainedBoundaryT ρ HP HR rP rR θP θR a σ QR QP)) ∧
-      k • retainedBoundaryT ρ HP HR rP rR θP θR a σ QR QP = 0 :=
-  transfer_kummer_norm ρ HP HR rP hrP rR hrR θP θR hθ k a σ hQR hQP hfixP
+      k • retainedBoundaryT ρ HP HR rP rR θP θR a σ QR QP = 0 ∧
+      (∀ g : Fin 1 → G, k • T HR rR hrR ρ θR 1 (kummerCochain ρ HR QR) g = 0) ∧
+      (∀ g : Fin 1 → G, k • T HP rP hrP ρ θP 1 (kummerCochain ρ HP QP) g = 0) := by
+  obtain ⟨h1, h2⟩ := transfer_kummer_norm ρ HP HR rP hrP rR hrR θP θR hθ k a σ hQR hQP hfixP
     (wsum_inflation ρ HP HR rP hrP rR hrR θP θR U hU t ht hle hθ hfixR) hnorm
+  exact ⟨h1, h2, zsmul_transfer_kummer ρ HR rR hrR θR k hQR hfixR,
+    zsmul_transfer_kummer ρ HP rP hrP θP k hQP hfixP⟩
 
 end Inflation
 
@@ -287,14 +321,18 @@ theorem nonVacuity_transfer :
     fun δ => Subsingleton.elim _ _, fun _ => rfl, by norm_num, by norm_num, fun _ _ => rfl, rfl,
     by norm_num⟩
 
-/-- **Non-vacuity of the hypotheses of `transfer_kummer_norm_of_transversal`**: the trivial group
-acting trivially on `ℤ`, `HP = HR = ⊤`, `U = ⊤`, trivial characters, sections and transversal,
-`k = 2`, `a = 3`, `y_P = y_R = 2`, `Q_P = Q_R = 1` (so `∑_τ t_τ y_R = 2 = 3·2 − 2 − 2`). -/
+/-- **Non-vacuity of the hypotheses of `transfer_kummer_norm_of_transversal`** (all of them,
+instances, sections and transversal included): the trivial group acting trivially on `ℤ`,
+`HP = HR = ⊤`, `U = ⊤`, trivial characters, sections and transversal, `k = 2`, `a = 3`,
+`y_P = y_R = 2`, `Q_P = Q_R = 1` (so `∑_τ t_τ y_R = 2 = 3·2 − 2 − 2`). -/
 theorem nonVacuity_transversal :
-    ∃ (ρ : Unit →* Module.End ℤ ℤ) (HP HR : Subgroup Unit) (_ : HR ≤ HP) (U : Subgroup HP)
-      (_ : ∀ h : HP, h ∈ U ↔ (h : Unit) ∈ HR) (_ : Fintype (HP ⧸ U)) (t : HP ⧸ U → HP)
-      (θP : Unit ⧸ HP →* ℤˣ) (θR : Unit ⧸ HR →* ℤˣ) (yR yP QR QP : ℤ),
-      (∀ τ : HP ⧸ U, (QuotientGroup.mk (t τ) : HP ⧸ U) = τ) ∧
+    ∃ (ρ : Unit →* Module.End ℤ ℤ) (HP HR : Subgroup Unit) (_ : HP.Normal) (_ : HR.Normal)
+      (_ : Fintype (Unit ⧸ HP)) (_ : Fintype (Unit ⧸ HR)) (rP : Unit ⧸ HP → Unit)
+      (rR : Unit ⧸ HR → Unit) (θP : Unit ⧸ HP →* ℤˣ) (θR : Unit ⧸ HR →* ℤˣ) (U : Subgroup HP)
+      (_ : Fintype (HP ⧸ U)) (t : HP ⧸ U → HP) (yR yP QR QP : ℤ),
+      (∀ δ, ((rP δ : Unit) : Unit ⧸ HP) = δ) ∧ (∀ δ, ((rR δ : Unit) : Unit ⧸ HR) = δ) ∧
+      (∀ h : HP, h ∈ U ↔ (h : Unit) ∈ HR) ∧
+      (∀ τ : HP ⧸ U, (QuotientGroup.mk (t τ) : HP ⧸ U) = τ) ∧ HR ≤ HP ∧
       (∀ x : Unit, ((θR (x : Unit ⧸ HR) : ℤˣ) : ℤ) = θP (x : Unit ⧸ HP)) ∧
       (2 : ℤ) • QR = yR ∧ (2 : ℤ) • QP = yP ∧ (∀ h ∈ HR, ρ h yR = yR) ∧
       (∀ h ∈ HP, ρ h yP = yP) ∧
@@ -304,8 +342,10 @@ theorem nonVacuity_transversal :
     | H x => exact QuotientGroup.eq.mpr (Subgroup.mem_top _)
   let _ : Fintype ((⊤ : Subgroup Unit) ⧸ (⊤ : Subgroup (⊤ : Subgroup Unit))) :=
     ⟨{1}, fun τ => by simp [hq τ]⟩
-  refine ⟨1, ⊤, ⊤, le_rfl, ⊤, fun h => by simp, inferInstance, fun _ => 1, 1, 1, 2, 2, 1, 1,
-    fun τ => (hq τ).symm ▸ rfl, fun _ => rfl, by norm_num, by norm_num, fun _ _ => rfl,
+  refine ⟨1, ⊤, ⊤, inferInstance, inferInstance, Fintype.ofFinite _, Fintype.ofFinite _,
+    fun _ => (), fun _ => (), 1, 1, ⊤, inferInstance, fun _ => 1, 2, 2, 1, 1,
+    fun δ => Subsingleton.elim _ _, fun δ => Subsingleton.elim _ _, fun h => by simp,
+    fun τ => (hq τ).symm ▸ rfl, le_rfl, fun _ => rfl, by norm_num, by norm_num, fun _ _ => rfl,
     fun _ _ => rfl, ?_⟩
   have hcard : (Finset.univ : Finset ((⊤ : Subgroup Unit) ⧸ (⊤ : Subgroup (⊤ : Subgroup Unit)))) =
       {1} := Finset.eq_singleton_iff_unique_mem.mpr ⟨Finset.mem_univ _, fun τ _ => hq τ⟩

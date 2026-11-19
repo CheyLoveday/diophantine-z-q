@@ -38,9 +38,12 @@ The Kummer cocycle of a division point `Q` on a subgroup `H` is `κ_H(Q)(h) = h 
   `cor κ_U(Q_R) = e_q ⋆ κ_HP(Q_P) + d⁰ b`, with the retained boundary
   `b = ∑ₜ t Q_R − (a Q_P − σ Q_P − σ⁻¹ Q_P)` explicit and `m`-torsion (`m • b = 0`), so `d⁰ b` is a
   coboundary of the finite coefficient module `A[m]` (`d0_mem_torsionBy`).
+* `cor_kummer_eq_normOp_add_d0_torsion` (PROVED): with `y_R` fixed by `U` and `y_P` by `HP`, every
+  cochain in the identity takes values in `A[m]`, so it is an identity of `A[m]`-valued cochains
+  (through the injective coercion `A[m] → A`).
 * `kummer_eq_normOp_add_d0_of_choice`: the same for any other division point of the norm.
-* Non-vacuity (`nonVacuity`): a concrete instance of every hypothesis (`ℤˣ` acting on
-  `ℤ`).
+* Non-vacuity (`nonVacuity`): a concrete instance of every hypothesis, fixedness included
+  (`ℤˣ` acting on `ℤ`, `HP = ⊥`).
 
 **What remains** for the consumer's hypothesis `hzR` (lane RC32's
 `SupportTriangle.kmStep_of_supportTriangle`, `z_R = e_q • i z_P + d b` in the genuine complexes):
@@ -51,7 +54,9 @@ The Kummer cocycle of a division point `Q` on a subgroup `H` is `κ_H(Q)(h) = h 
 2. the local components of `z_P`, `z_R` in the Selmer cones (the local Kummer cocycles lie in the
    Kummer condition, `RC/CoefModules/Kummer.lean`) and the identification of `i` with the identity
    on global cochains plus the inclusion of local conditions at the old places and at `q`;
-3. the passage through the inner limit to the `Λ`-adic coefficients and the identification of the
+3. the identification of `A[m]` (here a subgroup of the ambient `A`) with the finite coefficient
+   module of the genuine complexes, and continuity of the cochains;
+4. the passage through the inner limit to the `Λ`-adic coefficients and the identification of the
    actual classes with the classes of the Heegner points `y_T` (the anchor of `CCLThm2_15Applied`).
 
 Kinds: definitions and PROVED. The relation (4.1) is a hypothesis here (in the tree it is
@@ -189,6 +194,41 @@ theorem cor_kummer_eq_normOp_add_d0 (m : ℕ) (a : ℤ) (σ : Γ) {yR yP QR QP :
   rw [cor_kummer, ← kummer_pointFactor, kummer, kummer, ← map_add, retainedBoundary,
     add_sub_cancel]
 
+/-- **The values lie in `A[m]`** (PROVED). Under the fixedness of the points (`y_R` by `U`, `y_P`
+by `HP`), every cochain in `cor_kummer_eq_normOp_add_d0` takes values in the finite coefficient
+module `A[m]`: the corestricted Kummer cocycle, the point factor applied to the Kummer cocycle of
+`y_P`, and the retained coboundary. Since `A[m] → A` is injective, the identity of
+`cor_kummer_eq_normOp_add_d0` is therefore an identity of `A[m]`-valued cochains. -/
+theorem cor_kummer_eq_normOp_add_d0_torsion (m : ℕ) (a : ℤ) (σ : Γ) {yR yP QR QP : A}
+    (hQR : m • QR = yR) (hQP : m • QP = yP)
+    (hfixR : ∀ u : U, ((u : HP) : Γ) • yR = yR) (hfixP : ∀ h : HP, (h : Γ) • yP = yP)
+    (hnorm : trNorm HP U t yR = a • yP - σ • yP - σ⁻¹ • yP) :
+    (∀ h : HP, cochainsCor1 HP A U t ht (d0 U A QR) h ∈ AddSubgroup.torsionBy A (m : ℤ)) ∧
+      (∀ h : HP, normOp HP a σ (kummer HP QP) h ∈ AddSubgroup.torsionBy A (m : ℤ)) ∧
+      (∀ h : HP, d0 HP A (retainedBoundary HP U t a σ QR QP) h ∈
+        AddSubgroup.torsionBy A (m : ℤ)) := by
+  have hκP : ∀ h : HP, kummer HP QP h ∈ AddSubgroup.torsionBy A (m : ℤ) :=
+    kummer_mem_torsionBy HP m QP (fun h => by rw [hQP, hfixP h])
+  have hconj : ∀ (τ : Γ) (h : HP), conjCochain HP τ (kummer HP QP) h ∈
+      AddSubgroup.torsionBy A (m : ℤ) := by
+    intro τ h
+    have := hκP (conjElt HP τ h)
+    rw [AddSubgroup.torsionBy.nsmul_iff] at this ⊢
+    rw [conjCochain, smul_comm, this, smul_zero]
+  refine ⟨fun h => ?_, fun h => ?_, d0_mem_torsionBy HP m _
+    (nsmul_retainedBoundary HP U t m a σ hQR hQP hnorm)⟩
+  · rw [cor_kummer]
+    refine kummer_mem_torsionBy HP m _ (fun h' => ?_) h
+    rw [nsmul_trNorm, hQR]
+    have hmem : trNorm HP U t yR ∈ H0 HP A := by
+      refine sum_transversal_smul_mem_H0 HP A U t ht ?_
+      exact (FixedPoints.mem_addSubgroup U A yR).2 fun u => by
+        rw [Subgroup.smul_def, Subgroup.smul_def]; exact hfixR u
+    exact (FixedPoints.mem_addSubgroup HP A _).1 hmem h'
+  · simp only [normOp, Pi.sub_apply, Pi.smul_apply]
+    exact AddSubgroup.sub_mem _ (AddSubgroup.sub_mem _ (AddSubgroup.zsmul_mem _ (hκP h) a)
+      (hconj σ h)) (hconj σ⁻¹ h)
+
 /-- **The norm identity for any division point of the norm** (PROVED): if `Q'` is any element with
 `m Q' = ∑ₜ t y_R` (e.g. the division point chosen by the Kummer map of the base field), then
 `κ_HP(Q') = e_q ⋆ κ_HP(Q_P) + d⁰ b'` with `b' = Q' − (a Q_P − σ Q_P − σ⁻¹ Q_P)`, `m • b' = 0`. -/
@@ -206,20 +246,23 @@ end Norm
 
 /-! ### Non-vacuity -/
 
-/-- **Non-vacuity of the hypotheses of `cor_kummer_eq_normOp_add_d0`**: `Γ = ℤˣ` acting on `ℤ` by
-multiplication, `HP = U = ⊤` with the constant transversal, `σ = 1`, `m = 2`, `a = 3`,
+/-- **Non-vacuity of the hypotheses of `cor_kummer_eq_normOp_add_d0` and
+`cor_kummer_eq_normOp_add_d0_torsion`**: `Γ = ℤˣ` acting on `ℤ` by multiplication, `HP = ⊥` (so the
+points are fixed), `U = ⊤` in `HP` with the constant transversal, `σ = 1`, `m = 2`, `a = 3`,
 `y_P = y_R = 2`, `Q_P = Q_R = 1` (so `∑ₜ t y_R = 2 = 3·2 − 2 − 2`). -/
 theorem nonVacuity :
     ∃ (HP : Subgroup ℤˣ) (_ : HP.Normal) (U : Subgroup HP) (_ : U.FiniteIndex)
       (t : HP ⧸ U → HP) (_ : ∀ u : HP ⧸ U, (QuotientGroup.mk (t u) : HP ⧸ U) = u)
       (yR yP QR QP : ℤ), (2 : ℕ) • QR = yR ∧ (2 : ℕ) • QP = yP ∧
+      (∀ u : U, ((u : HP) : ℤˣ) • yR = yR) ∧ (∀ h : HP, (h : ℤˣ) • yP = yP) ∧
       trNorm HP U t yR = (3 : ℤ) • yP - (1 : ℤˣ) • yP - (1 : ℤˣ)⁻¹ • yP := by
-  have hq : ∀ u : (⊤ : Subgroup ℤˣ) ⧸ (⊤ : Subgroup (⊤ : Subgroup ℤˣ)), u = 1 := fun u => by
+  have hq : ∀ u : (⊥ : Subgroup ℤˣ) ⧸ (⊤ : Subgroup (⊥ : Subgroup ℤˣ)), u = 1 := fun u => by
     induction u using QuotientGroup.induction_on with
     | H x => exact QuotientGroup.eq.mpr (Subgroup.mem_top _)
-  refine ⟨⊤, inferInstance, ⊤, inferInstance, fun _ => 1, fun u => (hq u).symm ▸ rfl, 2, 2, 1, 1,
-    by norm_num, by norm_num, ?_⟩
-  have hcard : Fintype.card ((⊤ : Subgroup ℤˣ) ⧸ (⊤ : Subgroup (⊤ : Subgroup ℤˣ))) = 1 :=
+  have hbot : ∀ h : (⊥ : Subgroup ℤˣ), (h : ℤˣ) = 1 := fun h => Subgroup.mem_bot.mp h.2
+  refine ⟨⊥, inferInstance, ⊤, inferInstance, fun _ => 1, fun u => (hq u).symm ▸ rfl, 2, 2, 1, 1,
+    by norm_num, by norm_num, fun u => by rw [hbot, one_smul], fun h => by rw [hbot, one_smul], ?_⟩
+  have hcard : Fintype.card ((⊥ : Subgroup ℤˣ) ⧸ (⊤ : Subgroup (⊥ : Subgroup ℤˣ))) = 1 :=
     Fintype.card_eq_one_iff.mpr ⟨1, hq⟩
   simp only [trNorm, OneMemClass.coe_one, one_smul, Finset.sum_const, Finset.card_univ, hcard,
     inv_one]
