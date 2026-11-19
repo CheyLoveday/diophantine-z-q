@@ -2,7 +2,8 @@ import ZInQKernel.Contrib.OneProof.RC.Metaplectic2.Spherical
 import ZInQKernel.Contrib.OneProof.RC.Metaplectic2.Matrices
 
 /-! Spherical splitting of a genuine cover above the integral subgroup,
-tex 8884–8886 and 8944–8946. The stabilizer argument is on-the-spot (c). -/
+tex 8884–8886 and 8944–8946. The argument also works for a faithful
+scalar kernel and is on-the-spot (c). -/
 
 noncomputable section
 
@@ -32,7 +33,7 @@ def sphericalStabilizer (R : G →* Module.End ℂ (SchwartzBruhat p)) : Subgrou
     change R g⁻¹ (spherical p) = spherical p
     simpa only [hg] using h
 
-/-- Given local lifts of the three generators and a genuine kernel,
+/-- Given local lifts of the three generators and a faithful scalar kernel,
 every integral matrix has a unique lift fixing the spherical vector.
 The section is multiplicative because the fixes form a subgroup. -/
 theorem integral_spherical_section (a : Fin 3 → ℕ) [∀ i, NeZero (2 * a i)]
@@ -45,7 +46,8 @@ theorem integral_spherical_section (a : Fin 3 → ℕ) [∀ i, NeZero (2 * a i)]
     (hU : ∀ b, R (u b) = upperUnipotent a p (b : ℚ_[p.val]))
     (hM : ∀ t, R (m t) = diagonal a p (Units.map (PadicInt.Coe.ringHom (p := p.val)) t))
     (hW : R w = Metaplectic.weyl a p)
-    (hker : ∀ g : G, π g = 1 → g ≠ 1 → R g = -1) :
+    (hker : ∀ g : G, π g = 1 → g ≠ 1 →
+      ∃ z : ℂ, z ≠ 1 ∧ R g = z • (1 : Module.End ℂ (SchwartzBruhat p))) :
     ∃ s : SL(2, ℤ_[p.val]) →* G,
       (∀ k, π (s k) = k) ∧ (∀ k, R (s k) (spherical p) = spherical p) ∧
         ∀ k g, π g = k → R g (spherical p) = spherical p → g = s k := by
@@ -77,12 +79,13 @@ theorem integral_spherical_section (a : Fin 3 → ℕ) [∀ i, NeZero (2 * a i)]
     by_contra hn
     have hh : R (g : G) (spherical p) = spherical p := g.property
     have hg' : π (g : G) = 1 := hg
-    rw [hker _ hg' hn] at hh
+    obtain ⟨z, hzne, heq⟩ := hker _ hg' hn
+    rw [heq] at hh
     have he := congrArg (fun f : SchwartzBruhat p => f.1 0) hh
     have hz : (0 : LocalVectors p) ∈ localLattice p := by simp [localLattice]
-    change -(spherical p).1 0 = (spherical p).1 0 at he
-    rw [spherical_apply, ite_eq_left hz] at he
-    norm_num at he
+    change z * (spherical p).1 0 = (spherical p).1 0 at he
+    rw [spherical_apply, ite_eq_left hz, mul_one] at he
+    exact hzne he
   let e : H ≃* SL(2, ℤ_[p.val]) := MulEquiv.ofBijective q ⟨hinj, hsurj⟩
   let s := H.subtype.comp e.symm.toMonoidHom
   refine ⟨s, e.apply_symm_apply, fun k => (e.symm k).property, ?_⟩
