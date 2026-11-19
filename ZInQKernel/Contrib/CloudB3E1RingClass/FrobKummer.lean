@@ -308,4 +308,89 @@ theorem frob_kummer_genuine {E : WeierstrassCurve ℚ} {s : Qbar} {n t : ℕ} (k
   exact frob_kummer_at w hgood.2.1 kd.hζ hdvd' (kd.γ_pow a) (kd.γ_ne a)
     (fix_of_mem_quadField hs (kd.α_mem a)) (hαunit r ⟨h, w⟩ hgood a)
 
+/-- **The residue of `ζ` is a primitive `2^n`-th root of unity in `𝐅_r`** at every place over an
+odd prime `r ≡ 1 (mod 2^n)`. Kind: PROVED. -/
+theorem exists_unit_kummerRes_zeta (v : kummerPlaces r) (hr2 : r ≠ 2) {n : ℕ} {ζ : Qbar}
+    (hζ : IsPrimitiveRoot ζ (2 ^ n)) (hdvd : 2 ^ n ∣ r - 1) :
+    ∃ u : (ZMod r)ˣ, (u : ZMod r) = kummerRes v ζ ∧ IsPrimitiveRoot u (2 ^ n) := by
+  classical
+  set V := v.2.valuationRing.valuation
+  have Vζ : V ζ = 1 := val_eq_one_of_pow v (m := 2 ^ n) (pow_ne_zero _ two_ne_zero)
+    (by rw [hζ.pow_eq_one, map_one])
+  let 𝒪 := V.valuationSubring
+  let res : 𝒪 →+* ResidueField 𝒪 := residue 𝒪
+  let ζ' : 𝒪 := ⟨ζ, Vζ.le⟩
+  obtain ⟨m, hm⟩ := hdvd
+  have hr1 : r = (r - 1) + 1 := (Nat.succ_pred_eq_of_pos (Fact.out : r.Prime).pos).symm
+  have hζr : ζ ^ r = ζ := by
+    rw [hr1, hm, pow_succ, pow_mul, hζ.pow_eq_one, one_pow, one_mul]
+  have F6 : res ζ' ^ r = res ζ' := by
+    rw [← map_pow]
+    exact congrArg res (Subtype.ext (by simpa using hζr))
+  obtain ⟨zζ, hzζ⟩ := exists_zmod_of_pow_eq_self (res ζ') F6
+  have hxζ : kummerRes v ζ = zζ := kummerRes_spec v Vζ.le hzζ
+  have hpr : IsPrimitiveRoot (res ζ') (2 ^ n) := by
+    rcases Nat.eq_zero_or_pos n with rfl | hn
+    · have hζ1 : ζ = 1 := by simpa using hζ
+      have : res ζ' = 1 := by
+        rw [← map_one res]; exact congrArg res (Subtype.ext hζ1)
+      rw [this, pow_zero]; exact IsPrimitiveRoot.one
+    obtain ⟨n', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hn.ne'
+    refine IsPrimitiveRoot.iff_orderOf.mpr (orderOf_eq_prime_pow ?_ ?_)
+    · have hpow : ζ ^ 2 ^ n' = -1 :=
+        (hζ.pow (pow_pos two_pos _) (by rw [pow_succ])).eq_neg_one_of_two_right
+      have hres : res ζ' ^ 2 ^ n' = -1 := by
+        rw [← map_pow, ← map_one res, ← map_neg res 1]
+        exact congrArg res (Subtype.ext (by simpa using hpow))
+      rw [hres]
+      intro h1
+      have h2 : ((2 : ℕ) : ResidueField 𝒪) = 0 := by
+        have : (1 : ResidueField 𝒪) + 1 = 0 := by
+          calc (1 : ResidueField 𝒪) + 1 = -1 + 1 := by rw [h1]
+            _ = 0 := neg_add_cancel 1
+        exact_mod_cast this
+      rw [CharP.cast_eq_zero_iff (ResidueField 𝒪) r] at h2
+      exact hr2 ((Nat.prime_dvd_prime_iff_eq (Fact.out : r.Prime) Nat.prime_two).mp h2)
+    · rw [← map_pow, ← map_one res]
+      exact congrArg res (Subtype.ext (by simpa using hζ.pow_eq_one))
+  have hzζ0 : zζ ≠ 0 := by
+    rintro rfl; rw [map_zero] at hzζ; exact residue_ne_zero_of_val v Vζ hzζ.symm
+  have hUζ : IsUnit zζ := isUnit_iff_ne_zero.mpr hzζ0
+  refine ⟨hUζ.unit, by rw [IsUnit.unit_spec, hxζ], ?_⟩
+  rw [← IsPrimitiveRoot.coe_units_iff, IsUnit.unit_spec,
+    ← IsPrimitiveRoot.map_iff_of_injective (f := ZMod.castHom (dvd_refl r) (ResidueField 𝒪))
+      (ZMod.castHom (dvd_refl r) (ResidueField 𝒪)).injective, hzζ]
+  exact hpr
+
+/-- **The power-residue character is onto** at every place over an odd prime `r ≡ 1 (mod 2^n)`
+(tex 3585–3586). Kind: PROVED. -/
+theorem kummerKappa_surjective (v : kummerPlaces r) (hr2 : r ≠ 2) {n : ℕ} {ζ : Qbar}
+    (hζ : IsPrimitiveRoot ζ (2 ^ n)) (hdvd : 2 ^ n ∣ r - 1) :
+    Function.Surjective (kummerKappa n ζ v) := by
+  classical
+  obtain ⟨u, hu, hprim⟩ := exists_unit_kummerRes_zeta v hr2 hζ hdvd
+  have hex : ∃ (hr : r.Prime) (u : (ZMod r)ˣ), (u : ZMod r) = kummerRes v ζ ∧
+      IsPrimitiveRoot u (2 ^ n) ∧ 2 ^ n ∣ r - 1 := ⟨hr.out, u, hu, hprim, hdvd⟩
+  have hk : kummerKappa n ζ v = (exists_powerResidueChar (r := r) hex.choose_spec.choose_spec.2.2
+      hex.choose_spec.choose_spec.2.1).choose := by
+    rw [kummerKappa, dite_eq_left_of_eq_true (eq_true hex)]
+  rw [hk]
+  exact (exists_powerResidueChar (r := r) hex.choose_spec.choose_spec.2.2
+      hex.choose_spec.choose_spec.2.1).choose_spec.1
+
+omit hr in
+/-- **The interface's `κ_surj` for the genuine power-residue characters** (tex 3585–3586).
+Kind: PROVED. -/
+theorem kappa_surj_genuine {E : WeierstrassCurve ℚ} {s : Qbar} {n t : ℕ} (kd : KummerData s n t)
+    (Sexc : Finset ℕ) :
+    ∀ r, GoodPrime E s Sexc r → ∀ v : kummerPlaces r, (2 : ℤ) ^ n ∣ (r : ℤ) - 1 →
+      Function.Surjective (kummerKappa n kd.ζ v) := by
+  intro r hgood v hdvd
+  have : Fact r.Prime := ⟨hgood.1⟩
+  have hdvd' : 2 ^ n ∣ r - 1 := by
+    have h1 : ((r - 1 : ℕ) : ℤ) = (r : ℤ) - 1 := by
+      rw [Nat.cast_sub hgood.1.one_lt.le, Nat.cast_one]
+    exact_mod_cast (h1 ▸ hdvd)
+  exact kummerKappa_surjective v hgood.2.1 kd.hζ hdvd'
+
 end ZInQ.Contrib.CloudB3E1RingClass
