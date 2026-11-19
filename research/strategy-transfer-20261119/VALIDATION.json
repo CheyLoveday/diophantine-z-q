@@ -1,0 +1,49 @@
+{
+  "schema": "lean-mathematics-transfer-standalone-v1",
+  "source_path": "research/strategy-transfer-20261119/CoupledSource.lean",
+  "source_sha256": "496901ab3b44a2cc558ce0d140532116b11e4bdd47859ce3f8f2f7de7988de2d",
+  "source_commit": "a78f5004ee6896206fdd502f1e69670f48f07f5f",
+  "action_workflow": "Lean source-coupling pilot",
+  "action_run_id": 44615668875,
+  "action_url": "https://github.com/CheyLoveday/diophantine-z-q/actions/runs/44615668875",
+  "compiler": "Lean 4.35.0 x86_64-unknown-linux-gnu",
+  "compiler_commit": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+  "compilation": {
+    "status": "PASS",
+    "flags": [
+      "-DautoImplicit=false",
+      "-DwarningAsError=true"
+    ]
+  },
+  "theorems": [
+    {
+      "name": "Research.StrategyTransfer.coupled_implies_marginal",
+      "axioms": [],
+      "status": "LEAN_COMPILED"
+    },
+    {
+      "name": "Research.StrategyTransfer.coupled_of_common_source",
+      "axioms": [],
+      "status": "LEAN_COMPILED"
+    },
+    {
+      "name": "Research.StrategyTransfer.bool_marginal",
+      "axioms": [],
+      "status": "LEAN_COMPILED"
+    },
+    {
+      "name": "Research.StrategyTransfer.bool_not_coupled",
+      "axioms": [],
+      "status": "LEAN_COMPILED"
+    }
+  ],
+  "finite_oracle": {
+    "status": "PASS",
+    "boolean_function_pairs_and_outputs": 64,
+    "invalid_converse_rejected": true
+  },
+  "independent_multi_checker": "NOT_RUN",
+  "actual_dzq_arithmetic_consumer": "OPEN",
+  "full_309_derivative_switch": "PARKED_RESOURCE_RESEARCH",
+  "notes": "Standalone abstract source-coupling theorem, not restricted-converse closure"
+}

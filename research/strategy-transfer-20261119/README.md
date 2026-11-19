@@ -15,7 +15,7 @@ cd lean
 lake env lean ../research/strategy-transfer-20261119/CoupledSource.lean
 ```
 
-The Python finite oracle passed all 64 combinations in the initiating work session. Exact pinned Lean compilation and checker replay are **NOT_RUN** in that session; the Lean source is an uncompiled research candidate until tested with the receiving project's pinned toolchain.
+The independent Boolean oracle passed **64/64** in GitHub Actions. The exact source passed **strict Lean 4.35.0 compilation**, with `-DautoImplicit=false -DwarningAsError=true`; all four `#print axioms` reports were **axiom-free**. [CI receipt](https://github.com/CheyLoveday/diophantine-z-q/actions/runs/44615668875), source SHA-256 `496901ab3b44a2cc558ce0d140532116b11e4bdd47859ce3f8f2f7de7988de2d`. Separate independent native checker replay is **NOT_RUN**; the actual DZQ arithmetic adapter remains **OPEN**.
 
 The required next mathematical bridge is an **actual DZQ source** `S` together with both maps from that same source to the paired Selmer/trace/determinant data. This small theorem does not supply that arithmetic witness and does not close the restricted converse.
 
