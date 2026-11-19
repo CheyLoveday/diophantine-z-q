@@ -304,4 +304,81 @@ theorem clsGen_of_closure {s : ℕ} (C : RingClassSetup K s)
   rw [toMul_zsmul]
   rfl
 
+/-- A prime containing `q`, where `(q) = 𝔭 𝔭'`, is `𝔭` or `𝔭'`. Kind: PROVED. -/
+theorem eq_or_eq_of_mul_eq_span {𝔭 𝔭' w : HeightOneSpectrum (𝓞 K)} {q : ℤ}
+    (hmul : 𝔭.asIdeal * 𝔭'.asIdeal = Ideal.span {(q : 𝓞 K)}) (hw : (q : 𝓞 K) ∈ w.asIdeal) :
+    w = 𝔭 ∨ w = 𝔭' := by
+  have hle : 𝔭.asIdeal * 𝔭'.asIdeal ≤ w.asIdeal := by
+    rw [hmul, Ideal.span_le, Set.singleton_subset_iff]; exact hw
+  rcases w.isPrime.mul_le.mp hle with h | h
+  · exact Or.inl (HeightOneSpectrum.ext (𝔭.isMaximal.eq_of_le w.isPrime.ne_top h).symm)
+  · exact Or.inr (HeightOneSpectrum.ext (𝔭'.isMaximal.eq_of_le w.isPrime.ne_top h).symm)
+
+/-- **Finitely many split primes in distinct conjugate pairs outside `T` generate `Cl(K)`**
+(tex 3528–3534): as `exists_split_generators`, with distinct rational primes `p_j`, so that the
+pairs `{𝔭_j, 𝔭̄_j}` are pairwise disjoint. Kind: PROVED. -/
+theorem exists_split_generators_distinct (hK : Module.finrank ℚ K = 2)
+    (T : Finset (HeightOneSpectrum (𝓞 K))) :
+    ∃ (s : ℕ) (𝔭 𝔭bar : Fin s → HeightOneSpectrum (𝓞 K)) (p : Fin s → ℕ),
+      (∀ j, (p j).Prime) ∧ Function.Injective p ∧ (∀ j, 𝔭 j ≠ 𝔭bar j) ∧
+      (∀ j, 𝔭 j ∉ T ∧ 𝔭bar j ∉ T) ∧
+      (∀ j, (𝔭 j).asIdeal * (𝔭bar j).asIdeal = Ideal.span {(((p j : ℤ)) : 𝓞 K)}) ∧
+      Subgroup.closure (Set.range fun j =>
+        ClassGroup.mk0 ⟨(𝔭 j).asIdeal, mem_nonZeroDivisors_of_ne_zero (𝔭 j).ne_bot⟩) = ⊤ := by
+  classical
+  obtain ⟨s₀, 𝔭₀, 𝔭bar₀, p₀, hp₀, hne₀, hT₀, hmul₀, hcl₀⟩ := exists_split_generators hK T
+  let Q : Finset ℕ := Finset.univ.image p₀
+  have hrep : ∀ q : Q, ∃ j, p₀ j = q := fun q => by
+    obtain ⟨j, -, hj⟩ := Finset.mem_image.mp q.2; exact ⟨j, hj⟩
+  choose rep hrep using hrep
+  let e : Fin Q.card ≃ Q := Q.equivFin.symm
+  let ι : Fin Q.card → Fin s₀ := fun i => rep (e i)
+  refine ⟨Q.card, 𝔭₀ ∘ ι, 𝔭bar₀ ∘ ι, p₀ ∘ ι, fun i => hp₀ _, ?_, fun i => hne₀ _,
+    fun i => hT₀ _, fun i => hmul₀ _, ?_⟩
+  · intro i i' h
+    have h1 : (e i : ℕ) = e i' := by
+      change p₀ (rep (e i)) = p₀ (rep (e i')) at h
+      rw [hrep, hrep] at h; exact h
+    exact e.injective (Subtype.ext h1)
+  · rw [eq_top_iff, ← hcl₀]
+    refine (Subgroup.closure_le _).mpr ?_
+    rintro _ ⟨j, rfl⟩
+    -- the representative over the same rational prime
+    have hq : p₀ j ∈ Q := Finset.mem_image_of_mem _ (Finset.mem_univ j)
+    let i := e.symm ⟨p₀ j, hq⟩
+    have hpi : p₀ (ι i) = p₀ j := by
+      change p₀ (rep (e (e.symm ⟨p₀ j, hq⟩))) = _
+      rw [Equiv.apply_symm_apply, hrep]
+    have hmem : (((p₀ j : ℤ)) : 𝓞 K) ∈ (𝔭₀ j).asIdeal := by
+      have : (((p₀ j : ℤ)) : 𝓞 K) ∈ (𝔭₀ j).asIdeal * (𝔭bar₀ j).asIdeal := by
+        rw [hmul₀ j]; exact Ideal.mem_span_singleton_self _
+      exact Ideal.mul_le_left (I := (𝔭₀ j).asIdeal) (J := (𝔭bar₀ j).asIdeal) this
+    have hmul_i := hmul₀ (ι i)
+    rw [hpi] at hmul_i
+    have hgen : ClassGroup.mk0 ⟨(𝔭₀ (ι i)).asIdeal,
+        mem_nonZeroDivisors_of_ne_zero (𝔭₀ (ι i)).ne_bot⟩ ∈ Subgroup.closure (Set.range fun i =>
+          ClassGroup.mk0 ⟨((𝔭₀ ∘ ι) i).asIdeal,
+            mem_nonZeroDivisors_of_ne_zero ((𝔭₀ ∘ ι) i).ne_bot⟩) :=
+      Subgroup.subset_closure ⟨i, rfl⟩
+    change ClassGroup.mk0 ⟨(𝔭₀ j).asIdeal, mem_nonZeroDivisors_of_ne_zero (𝔭₀ j).ne_bot⟩ ∈ _
+    rcases eq_or_eq_of_mul_eq_span hmul_i hmem with h | h
+    · rw [h]; exact hgen
+    · rw [h]
+      have hprod : ClassGroup.mk0 ⟨(𝔭₀ (ι i)).asIdeal,
+            mem_nonZeroDivisors_of_ne_zero (𝔭₀ (ι i)).ne_bot⟩ *
+          ClassGroup.mk0 ⟨(𝔭bar₀ (ι i)).asIdeal,
+            mem_nonZeroDivisors_of_ne_zero (𝔭bar₀ (ι i)).ne_bot⟩ = 1 := by
+        rw [← map_mul]
+        have hsub : (⟨(𝔭₀ (ι i)).asIdeal, mem_nonZeroDivisors_of_ne_zero (𝔭₀ (ι i)).ne_bot⟩ *
+            ⟨(𝔭bar₀ (ι i)).asIdeal, mem_nonZeroDivisors_of_ne_zero (𝔭bar₀ (ι i)).ne_bot⟩ :
+              (Ideal (𝓞 K))⁰) =
+            ⟨Ideal.span {(((p₀ j : ℤ)) : 𝓞 K)}, hmul_i ▸ mul_mem
+              (mem_nonZeroDivisors_of_ne_zero (𝔭₀ (ι i)).ne_bot)
+              (mem_nonZeroDivisors_of_ne_zero (𝔭bar₀ (ι i)).ne_bot)⟩ :=
+          Subtype.ext hmul_i
+        rw [hsub, ClassGroup.mk0_eq_one_iff]
+        exact ⟨⟨_, rfl⟩⟩
+      rw [eq_inv_of_mul_eq_one_right hprod]
+      exact inv_mem hgen
+
 end ZInQ.Contrib.CloudB3E1RingClass
