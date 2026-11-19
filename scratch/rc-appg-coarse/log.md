@@ -1,0 +1,11 @@
+- Base: `9dcd60cd4e80c2ac528bfd1b03f4f68d29da15f8`.
+- Existing: `Wiring.coarseF5_of_leaves`, `oddMinimumF6_proof`, `Visibility.witnessValuation_of_O2`, `Odd.witness_vZ`, `O12StageVal.integerDepth_of_data`.
+- Source scope: `LabelData.oddAdmissible_iff` is restricted to indices avoiding the enlarged address support.
+- Tex 10176: `C_H` undefined; the existing arithmetic proof uses `C_per + 2`.
+- Tex 2360–2361, 10131–10132: the literal all-types seed instruction includes sign −1 types without even units; the existing companion interface uses the prepared companion types.
+- `coarse_on_filter`: uniform (F.5) on the supplied domain via (F.3), (3.4), (3.5), and (O.8).
+- `fixed_witness_on_filter`: fixed admitted `Dw`, valuation `9 + ω(N) + cw`, strictly below `M` eventually.
+- `minimum_on_filter`: `IsLeast` for `DepthSet` over that exact domain.
+- `depths_on_filter`: (F.5) and the attained depth installed in `integerDepth_of_data`; eventual `IntegerDepth` for every fixed budget.
+- `restricted_minimum_iff`: an intrinsic least depth is preserved by a subfilter exactly when the subfilter attains it.
+- `Intrinsic.lean`: `lake env lean -j1` passed after restoring matching imported artifacts and typing the `RCData` update at `ℓ`; five axiom checks, only `propext`, `Classical.choice`, `Quot.sound`.
