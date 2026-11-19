@@ -712,8 +712,9 @@ over Q. Furthermore, the one-dimensional part of the zeta function of A over
 Q coincides, up to finitely many Euler factors for bad primes, with ∏_{σ∈I}(∑_{n=1}^∞ a_n^σ n^{−s}),
 provided that Γ = Γ₀(N), or ∑_{σ∈I} Cf_σ is stable under the map h(z) ↦ h(−1/Nz)/z².
 
-The printed `f` after `a_n^σ` is retained verbatim, without replacing it by
-`f_σ`. No unreadable mathematical symbol remains in this transcription.
+The printed `f` after `a_n^σ` is retained verbatim in this transcription; the Lean statement reads
+it as `f_σ`, as in the proof on p. 527. No unreadable mathematical symbol remains in this
+transcription.
 -/
 def Shimura1973ConjugateEigenforms : Prop :=
   ∀ (M : ℕ) [NeZero M] (F : Newform M 2), F.χ = 1 →
@@ -846,7 +847,8 @@ theorem coefficientField_eq_bot_of_almost_all_primes
   obtain ⟨b, hb⟩ := hrat n
   exact IntermediateField.mem_bot.mpr ⟨b, hb.symm⟩
 
-/-- **GLUE**: joint reading of Shimura 1973, Thm 1, and Carayol 1986, §0.8 Corollaire; GLUE until a two-lens skeptic pass clears it.
+/-- **GLUE**: joint reading of Shimura 1973, Thm 1, and Carayol 1986, §0.8 Corollaire (a
+statement joining two sources is a reading, not a print).
 The rational coefficient field in Shimura's theorem gives the associated
 one-dimensional quotient; Carayol's Corollaire, p. 411, identifies its local
 Euler factors with those of the rational newform. The associated-curve,
@@ -861,7 +863,8 @@ def Carayol1986RationalNewformEulerFactors : Prop :=
           (localPolynomialQ A (primeIdealQ p hp)).map (Int.castRingHom ℂ) =
             newformEulerPolynomial F hχ p
 
-/-- **GLUE**: local-factor reading of Faltings 1983, §5, Korollar 2 (iii ⇒ iv); GLUE unless restated as the printed implication with the local-factor step proved.
+/-- **GLUE**: local-factor reading of Faltings 1983, §5, Korollar 2 (iii ⇒ iv); GLUE unless
+restated as the printed implication with the local-factor step proved.
 Equal local Euler factors almost everywhere imply equal local Euler factors
 everywhere, for two actual elliptic curves. The normalized factor is read
 as the reciprocal of the existing minimal Weierstrass local polynomial.
@@ -1035,7 +1038,11 @@ def rationalNewformPolynomial (M ℓ : ℕ) [Fact ℓ.Prime] (b : ℕ → ℚ) (
 /-- **PRINT SPECIALIZATION**, manuscript bibitem `faltings1983`,
 Faltings 1983, §5, Satz 3, p. 360, page image checked: the actual rational
 Tate module of an elliptic curve over the rationals is semisimple.
-No scalar-extension semisimplicity is silently added to this statement. -/
+No scalar-extension semisimplicity is silently added to this statement.
+
+Verbatim printed text (§5, p. 360): "§ 5. Endomorphismen. Sei K Zahlkörper, A/K eine abelsche
+Varietät der Dimension g, l eine Primzahl, T_l = T_l(A) der Tate-Modul, auf dem π = Gal(K̄/K)
+operiert. Satz 3. Die Operation von π auf T_l ⊗_{ℤ_l} ℚ_l ist halbeinfach." -/
 def Faltings1983Satz3EllipticQ : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (ℓ : ℕ) [Fact ℓ.Prime],
     IsSemisimpleModule (MonoidAlgebra ℚ_[ℓ] GlueC10.GQ) (rationalTateRep E ℓ).asModule
