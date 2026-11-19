@@ -599,7 +599,7 @@ structure RCLeaves where
   is the newform's Euler polynomial. -/
   carayolEulerFactors :
     ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Carayol1986RationalNewformEulerFactors
-  /-- Faltings 1983, §5, Korollar 2 (iii ⇒ iv), p. 361, with Satz 3, p. 360 (PRINT, manuscript
+  /-- Faltings 1983, §5, Korollar 2 (iii ⇒ iv), p. 361 (PRINT, manuscript
   bibitem `faltings1983`; faithful with notes, in the reading through the minimal Weierstrass local
   polynomials at the finite places, the standard local-factor dictionary): two elliptic curves over
   `ℚ` whose local Euler factors agree at almost every prime have the same local factors at every

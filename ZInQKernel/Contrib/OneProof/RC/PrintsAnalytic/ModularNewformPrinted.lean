@@ -5,10 +5,10 @@ import ZInQKernel.Contrib.RC53Assist.NewformGlueG0.GaloisCompletion
 # Modularity in newform form from Theorem A and four printed corollaries
 
 `PrintsAnalytic.ModularNewform` (every elliptic curve `E/ℚ` has a weight-two newform of trivial
-nebentypus with the coefficients of `L(E, s)`, `IsNewformOf`) is used by the proof of Theorem 5.3
-as a composite input: Theorem A of Breuil–Conrad–Diamond–Taylor together with the passage from a
-`Γ₀(N)` eigenform with the curve's coefficients to the newform (tex 1779–1784). Here that passage is
-a proof from printed statements:
+nebentypus with the coefficients of `L(E, s)`, `IsNewformOf`) was an input of the proof of
+Theorem 5.3 (the former field `RCLeaves.modularNewform`), a composite of Theorem A of
+Breuil–Conrad–Diamond–Taylor and the passage from a `Γ₀(N)` eigenform with the curve's
+coefficients to the newform (tex 1779–1784). Here that passage is a proof from printed statements:
 
 * `PoleS12.BCDTThmA` (Breuil–Conrad–Diamond–Taylor, Theorem A, with the Introduction's condition
   (2); the blueprint's print `Prints.bcdt`): a weight-two `Γ₀(N)` cusp form with the coefficients
@@ -16,11 +16,14 @@ a proof from printed statements:
 * `LiCarayolNewformOfModular` from four printed corollaries (a contributor's
   `RC53Assist/NewformGlueG0`): Shimura 1973, Theorem 1, pp. 525–526 (conjugate eigenforms and the
   finite coefficient field); Li 1975, Theorem 5, p. 298 (strong multiplicity one, weight two,
-  trivial character); Carayol 1986, §0.8 Corollaire, p. 411 (the elliptic curve of a rational
-  newform and its Euler factors); Faltings 1983, §5, Korollar 2 (iii ⇒ iv), p. 361 (Euler factors
-  equal almost everywhere are equal everywhere). The divisor-level extraction of the newform, the
-  descent of its coefficient field to `ℚ` and the comparison of every positive-index coefficient
-  are proved there.
+  trivial character); a joint reading of Shimura 1973, Theorem 1, at rational coefficient field,
+  and Carayol 1986, §0.8 Corollaire, p. 411 (a rational newform has an elliptic curve whose
+  minimal Weierstrass local polynomial at every prime is the newform's Euler polynomial; the
+  newform–curve association is erased, not constructed); Faltings 1983, §5, Korollar 2
+  (iii ⇒ iv), p. 361, read through the minimal Weierstrass local polynomials at the finite places
+  (local factors equal almost everywhere are equal everywhere). The divisor-level extraction of
+  the newform, the descent of its coefficient field to `ℚ` and the comparison of every
+  positive-index coefficient are proved there.
 
 `modularNewform_of_printed` gives `ModularNewform` from these five statements.
 -/
@@ -45,8 +48,9 @@ theorem modularNewform_of_bcdt_liCarayol (hB : ZInQ.Manuscript.PoleS12.BCDTThmA)
   exact ⟨M, hM0, F, hχ, fun n hn => by simpa [nfCoeff, lcoeff] using hcoeff n hn⟩
 
 /-- **Modularity in newform form from five printed statements** (PROVED): Theorem A of
-Breuil–Conrad–Diamond–Taylor with Shimura 1973 Theorem 1, Li 1975 Theorem 5, Carayol 1986 §0.8
-Corollaire and Faltings 1983 §5 Korollar 2 (iii ⇒ iv). -/
+Breuil–Conrad–Diamond–Taylor with Shimura 1973 Theorem 1, Li 1975 Theorem 5, the joint reading
+of Shimura 1973 Theorem 1 and Carayol 1986 §0.8 Corollaire, and Faltings 1983 §5 Korollar 2
+(iii ⇒ iv). -/
 theorem modularNewform_of_printed (hB : ZInQ.Manuscript.PoleS12.BCDTThmA)
     (hS : Shimura1973ConjugateEigenforms) (hL : Li1975StrongMultiplicityOneWeightTwo)
     (hC : Carayol1986RationalNewformEulerFactors) (hF : Faltings1983EulerFactorRigidityQ) :
