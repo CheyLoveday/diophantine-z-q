@@ -5,3 +5,5 @@
 - Route (iii), cyclotomic congruence (c): compare the first relevant coefficients after shifting the variable by one and reducing modulo the odd prime.
 - `Congruence.lean`: the translated degree-m coefficients agree after scaling by m! (both −1), and a polynomial vanishing at the primitive root has zero coefficient there modulo p. Therefore equality of squares implies equality of evaluations.
 - `Congruence.lean`: passed `lake env lean`; 9 theorem audits, only `propext`, `Classical.choice`, `Quot.sound`.
+- `Roots.lean`: for p = 2m+1 the odd root-difference product squares to (−1)^m p; at the negative root its phase is (−i)^(m mod 2) and its positive amplitude is √p.
+- `Roots.lean`: passed `lake env lean`; 7 theorem audits, only `propext`, `Classical.choice`, `Quot.sound`.
