@@ -36,6 +36,7 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate6
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf3
 import ZInQKernel.Contrib.OneProof.RC.Wiring.StageData
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35H
+import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35R
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate9
 
 /-!
@@ -139,9 +140,13 @@ witnesses:
   the finite-dimensional cochain modules `fG`, `fL`, `fF`, `fS` of the earlier steps), so the
   infinite dimension of `C¹_cont` is no obstruction there; the stage models are, as before,
   existential homotopy equivalences from the fibres' Selmer complexes to the stages' two-term
-  fibres. The outer models of the eq35 leaf are unchanged: their switch steps (`OuterSwitchStep`)
-  carry an existential Selmer-level datum (`SelmerNonquadStep`) with finite-dimensional cochain
-  modules, not tied to the genuine complexes and met by finite models;
+  fibres. The outer models of the eq35 leaf carry the actual retained classes, required only to be
+  nonzero, with the scalar relating them to the primitive kernel vectors carried by the functionals
+  (`RetainedOuterModels`; tex 4927–4953, 4948–4950), so the primitivity of the selected outer
+  model's class (`InstanceModel.hprim`) is no longer asked; their switch input on the actual data
+  (`RetainedOuterSwitchData`) still carries an existential Selmer-level datum
+  (`SelmerNonquadStep`) with finite-dimensional cochain modules, not tied to the genuine complexes
+  and met by finite models;
 * `PostLeaves.clearing_model`: the full-condition triangle (5.6) is modelled, with the two
   conjugate new places over each prime of the family (`Identification3Q2`), but
   `clearingInputsG3_of_G3Q2` discards the two-place data, so their faithfulness carries no weight
@@ -162,10 +167,17 @@ witnesses:
   reads the odd source on its own filter (lane RC24's intrinsic odd filter), so the fresh prime of
   `k` no longer vetoes the odd readings (fixed);
 * closed: the model family of (3.5) is chosen for each `A`, at the companion pairs with
-  `ω(k') ≤ A`, with sizes at most the cap of (5.1) (`Eq35InputsGenuineABoundedH`, whose outer clause
-  is that of `Eq35InputsGenuineABounded`; tex
+  `ω(k') ≤ A`, with sizes at most the cap of (5.1) (`Eq35InputsGenuineABoundedR`, equivalent to
+  `Eq35InputsGenuineABoundedH`; tex
   2442–2446, 4453–4460, 4910); before, one family with one size function was fixed for all ring
   instances before `A`, a bound the text does not state;
+* closed: the outer models of (3.5) carry the actual retained classes, required only to be nonzero
+  (`RetainedOuterModels`; tex 4927–4953, 4948–4950: "The actual inner class is a nonzero scalar
+  multiple of `v_j`"), instead of a primitive class (`InstanceModel.hprim`, batch 3's departure);
+  on realization the scalar is carried by the functional (`RetainedInstanceModel.ofPrimitiveVector`,
+  the same class-functional tensor and coordinate) and the primitive vector is proved to exist;
+  the form with retained models is equivalent to the form with batch 3's models
+  (`eq35InputsGenuineABoundedR_iff`), so the leaf's strength is unchanged;
 * closed: the coefficient dictionary's input (O.9) is consumed in the manuscript's form
   `a_p ≡ p + 1 (mod 4)` at every good prime (tex 9585, 9593–9594), proved for the actual curves
   (batch 3's `apModFour_curve_typeData`) and passed to the dictionary's weaker `ApEven` by
@@ -281,7 +293,7 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   theta models are supplied, and away from the selected datum the fields do not identify `ev` with
   reduction at the constructed primes. -/
   odd_staged : Nonempty (OddStagedInstance W)
-  /-- The inputs of (3.5) in the text's quantifier order and form (`Eq35InputsGenuineABoundedH`):
+  /-- The inputs of (3.5) in the text's quantifier order and form (`Eq35InputsGenuineABoundedR`):
   chosen before `A`, the primitive coordinates at the companion pairs with homology-level switch
   data `HomologySwitchDataPK` (each stage model a homotopy equivalence from the fibre's Selmer
   complex to the stage's two-term fibre, as in the earlier form; the actual classes nonzero instead
@@ -291,12 +303,16 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   configuration families genuine at every height-one prime
   (`RegularityInputsHPK`: lane RC26's Galois fibers, the genuine moving variable) and (4.6) at the
   companion pairs; then for every `A`,
-  a family of switched models over `𝒪` for the companion pairs with `ω(k') ≤ A`, of size at most the
-  cap of (5.1) at each configuration (`eq51Cap`; equivalent to the sizes equal to the cap, by
+  a family of retained switched models over `𝒪` for the companion pairs with `ω(k') ≤ A`
+  (`RetainedOuterModels`: at every configuration the actual retained class, required only to be
+  nonzero, and the actual paired functional; tex 4927–4953, 4948–4950), of size at most the
+  cap of (5.1) at each configuration (`eq51Cap`; for the equivalent form with batch 3's models,
+  equivalent to the sizes equal to the cap, by
   padding with contractible blocks `[𝒪 --(-1)--> 𝒪]`: `eq35InputsGenuineA_iff_bounded`, which keeps
-  the coordinates, the outer dimensions and the switch steps), each a two-term model of genuine
-  Galois Selmer data over `𝒪`, the actual models' coordinates having the valuations of `ι_𝒪 u_prim`,
-  with batch 3's `GenuineOuterSwitchData` (switch GLUE between the determined stages) for every
+  the coordinates, the outer dimensions and the switch steps), each actual matrix a two-term model
+  of genuine Galois Selmer data over `𝒪` (`IsGenuineTwoTermModel`), the actual coordinates of the
+  starting models having the valuations of `ι_𝒪 u_prim`, with the switch input on the actual data
+  `RetainedOuterSwitchData` (switch GLUE between the actual configurations) for every
   sequence of those pairs (ELLIOT + GLUE; tex 2441–2446, 3987–4047, 4453–4460, 4909–5202; owners
   RC16, RC15, RC6, RC26, batch 3 SwitchInputs). The bound is on the matrix index `nOf`; each free
   term has rank `nOf + 1`. The text's total-rank estimate `2 * (nOf + 1) ≤ eq51Cap` implies this
@@ -307,21 +323,28 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   `exists_primitiveKernelVector`), `pos` from them, `minor_link`, the integral cycles and
   functionals, the nonzero outer class, the Cramer terminal step, the equal inner valuations,
   regularity (`regular_of_homologyPK`, through the RC53 group's `regular_of_switchDataPK`), and
-  RC16's (3.5) over RC20's genuine valuation (`eq35Target_of_inputsAH`). The earlier form, whose
-  switch steps demand finite-dimensional cochain modules (`fG`, `fL`, `fF`, `fS`) and cochain-level
-  local coordinates, implies this one (`Eq35InputsGenuineABounded.toH`). Caveats: the
+  RC16's (3.5) over RC20's genuine valuation (`eq35Target_of_inputsAR`, through
+  `eq35InputsGenuineABoundedR_iff`: this form is equivalent to `Eq35InputsGenuineABoundedH`, with
+  batch 3's outer models whose classes are primitive; realization `toGenuine` at the primitive
+  kernel vectors, the scalar moved into the functional, one way, and the reading `ofGenuine` of an
+  old family the other). The earlier form, whose regularity switch steps demand finite-dimensional
+  cochain modules (`fG`, `fL`, `fF`, `fS`) and cochain-level local coordinates, implies this one
+  (`Eq35InputsGenuineABounded.toR`). Caveats: the
   configuration family is existential and only required to be some genuine Galois Selmer data with
   `t = X`. With one genuine complex of the homotopy type of `[k --0--> k]` at each `𝔭` (true, not
   formalized), its regularity part is equivalent to `uprim h k' ∈ Λ[1/2]` at the companion pairs,
   Elliot's regularity assertion (ELLIOT). The homology-level steps need only finite cohomology, so
   the infinite-dimensional continuous cochains of the genuine fibres are allowed in the regularity
   part; its homotopy equivalences are existential, not tied to the text's finite free models (the
-  intended source is the graded finite free models of `RC/Limits`). The outer model family is
-  existential as well: the genuine Galois Selmer data in `IsGenuineInstanceModel` are not tied to
-  the instance `i`, and the outer switch steps (`OuterSwitchStep`) carry an existential Selmer-level
-  datum `SelmerNonquadStep` with finite-dimensional cochain modules (`fG`, `fL`, `fF`, `fS`), not
-  tied to the genuine complexes and met by finite models (unchanged from the earlier form). -/
-  eq35 : Eq35InputsGenuineABoundedH W
+  intended source is the graded finite free models of `RC/Limits`). The outer models carry the
+  actual retained classes with the scalar in the functionals (tex 4948–4950), so batch 3's
+  primitivity departure (`InstanceModel.hprim`) no longer applies. The outer model family is
+  existential as well: the genuine Galois Selmer data in `IsGenuineTwoTermModel` are not tied to
+  the instance `i`, and the switch input on the actual data (`RetainedSwitchStep`, transported to
+  batch 3's `OuterSwitchStep`) carries an existential Selmer-level datum `SelmerNonquadStep` with
+  finite-dimensional cochain modules (`fG`, `fL`, `fF`, `fS`), not tied to the genuine complexes
+  and met by finite models (unchanged from the earlier form). -/
+  eq35 : Eq35InputsGenuineABoundedR W
 
 /-- **The data specification from the leaves** (PROVED: the fixed support and the stage link of the
 staged odd instance, by the stage construction's `preDataSpec_preparedStages`; formerly the leaf
@@ -627,7 +650,7 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
   obtain ⟨A, CE, h33⟩ := hF3
   obtain ⟨Cper, h34, h34k⟩ := gz34Target_of_genusOdd P L.artin L.rootNumberExists I
   have h35 : Eq35Target W₁ :=
-    eq35Target_of_inputsAH W₁ hp.eq35
+    eq35Target_of_inputsAR W₁ hp.eq35
   obtain ⟨CR, h35A⟩ := h35 A
   obtain ⟨δ, hδ⟩ := exists_oddMinimum W₁ h33 h34 h35A hCdet hglue
     (witnessLeaf_of_oddInstance Io hstages)
