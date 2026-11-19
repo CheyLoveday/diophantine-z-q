@@ -13,3 +13,5 @@
 - **VERIFIED (Lean):** `JDescent4Degree.lean` compiles with `lake env lean` and only the three standard axioms. The generic-fibre comparison, the finite flat rank comparison, compatibility of doubling with base change, and the existing degree calculation give field degree four for the actual doubling pullback.
 
 - **VERIFIED (Lean):** `JDescent4Genus.lean` compiles with `lake env lean`. The two new theorems `abVarFunctionFieldGenusOne` and `abVar_identityPoleSpaces` use only the three standard axioms. They apply characteristic-zero tameness and Hurwitz to the finite étale degree-four self-extension, with the module structures explicitly coming from the doubling pullback.
+
+- **VERIFIED (Lean and dry run):** The row-only `#discharges` scan checked 236 theorems against the live type of `cmjDegree`; its most reduced provider still assumes `CMPeriodShortCoordinatesDoublePole` and `CMjDegreePrint` on this base. The genus-only dry run leaves strict and strictest unchanged. The inherited conditional preview assumes a placeholder for the coordinate comparison. No fold was applied.
