@@ -37,7 +37,8 @@ the unramified condition). The consumer is lane RC30's `hlamR_of_genuine`
 **What remains** to supply `hlift` for the genuine paired complexes:
 * the consumer obligations of `paired_transfer_kummer_norm_of_transversal`: `hconj` (the paired
   character takes the inverse Frobenius value) and `hθ'` (the paired character at support `S` is
-  inflated from the one at `P⊥`); see `GlobalChar.lean` for both from one global character;
+  inflated from the one at `P⊥`); `GlobalChar.lean` removes `hθ'` by taking both characters as
+  descents of one global character, while `hconj` remains;
 * the global component (1): the identification of `G^1` (continuous cochains of `G_{K,S}` with
   finite coefficients) with the cochains of this file, of `M[k]` with the genuine finite coefficient
   module, and of the paired points `y'_T`, and the passage to the inner limit (`Λ`);

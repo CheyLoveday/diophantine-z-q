@@ -24,7 +24,9 @@ inflated from the one at support `P`) therefore holds as soon as both are descen
   `θP`, `θR` the descents of a global `α` trivial on `HP`; `hθ` is gone and
   `e_q = pointFactor a α(σ) α(σ)⁻¹`.
 * **`paired_transfer_kummer_norm_of_global_char`** (PROVED): the paired twin for a paired global
-  character `α'` trivial on `HP` with `α'(σ) = α(σ)⁻¹`, with the same `e_q`.
+  character `α'` trivial on `HP` with `α'(σ) = α(σ)⁻¹`, with the same `e_q`; `hθ'` is gone, while
+  `hconj : α'(σ) = α(σ)⁻¹` remains a hypothesis (for the paired family it is the action of complex
+  conjugation on the anticyclotomic character at `σ_q`, to be supplied by the consumer).
 * `fixS_le_ker_inflChar` (PROVED): the tree's inflated family character `inflChar H ξ` of a
   character `ξ` of `Gal(H/K)` is trivial on `G_{K,S}`-fixing subgroups `fixS L` of every
   intermediate field `L ⊇ H`; so for `H = H_{r_i}` contained in the ring class field `H_P` of the
@@ -36,8 +38,9 @@ inflated from the one at support `P`) therefore holds as soon as both are descen
    `HeegnerPointData.H` lives in `ℚ̄/ℚ`), and the inclusion `H_{r_i} ⊆ H_P`;
 2. the treatment of the quadratic factor `χ_h` of `α_i = χ_h Ψ_i` (tex 2791): it is trivial on
    `G_{H_P}` only if `K(√h) ⊆ H_P`; the manuscript instead absorbs it into the coefficient module
-   through the fixed quadratic-twist identification (tex 3264–3268), so the character to which
-   these results apply is `Ψ_i` (or `α_i` on the twisted module);
+   through the fixed quadratic-twist identification (tex 3264–3268), so these results apply with
+   `α = Ψ_i` and `χ_h` absorbed into the base representation `ρ`, yielding the total `α_i`-action
+   (the full `α_i` itself need not be trivial on `HP`);
 3. for `a`: the trace of `Frob_q` on the Tate module is `a_q` (`Wiring.FrobeniusTrace`, proved
    from the Frobenius-trace dictionary and `LocalGlobalFrobenius` in
    `RC/Wiring/CommonCoordinate7Frobenius.lean`), and (4.1) uses `a = a_q` (`NormRelations`).
