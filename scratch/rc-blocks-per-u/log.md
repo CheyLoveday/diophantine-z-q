@@ -1,0 +1,15 @@
+- Base merged with formwise at `82a6450d4`.
+- Actual weight-two product at tex 9647–9648; tex 9573 is (O.9).
+- `BlockLevels.old_good` requires explicit alignment with the actual coefficient support; ambient exclusion alone does not supply this.
+- Trivial/trivial Eisenstein coordinates: retain positive dilates in the coefficient space; only the appropriate combinations are modular in weight two.
+- `Diamond.lean`, `Constituents.lean`, `Galois.lean`: passed serial `lake env lean -j1` with the devserver resource checks.
+- `diamondCharacters`: actual units of the common level; characters `(d/u)` constructed using Jacobi periodicity and multiplication.
+- `coordinates_of_span`: lower-level and characterwise span membership gives supported coordinates of the identical coefficients.
+- `Inventory.attachment`: one representation per normalized source, reused literally on all its dilations; Eisenstein diagonal built from the ordered pair.
+- `Window.lean`: passed; `realize` gives `∃ A C V ρ₀ levels, AtLevel levels ρ₀` over the same stage and pool.
+- `ThetaTransform.lean`: passed; holomorphy and nonvanishing of ordinary theta and the weight-two slash and cusp proofs checked.
+- `Descent.lean`: passed; complex span membership descends along the chosen comparison to the coefficient field, preserving the eligible index subtype.
+- `Fourier.lean`: passed; the exact positive-square convolution is the Fourier expansion of multiplication by ordinary theta.
+- `Sieve.lean`: passed; `OldStageLaw` uses the actual `Lift.aθ`; the moving and unary laws are separate. Signed integer-power normalization follows from `B_spec`.
+- `Assemble.lean`: passed; `realize_of_stage` composes the analytic and coefficient descent lemmas with assembly of the four consumer inputs.
+- Final serial pass: 9 modules, 47 axiom checks, no warnings or errors; only `propext`, `Classical.choice`, and `Quot.sound`.
