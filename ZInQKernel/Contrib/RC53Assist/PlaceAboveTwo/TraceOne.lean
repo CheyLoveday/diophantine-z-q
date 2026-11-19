@@ -59,9 +59,12 @@ private theorem lower_class (a : ℕ) (c : cycles F (a + 1))
   change FiniteTrace.finiteInvariant F (2 ^ a) _
     (actualMuH2Equiv F a (kerToH2 (lower F a c))) = 1
   rw [class_transition, ← finiteInvariant_transition]
-  change (ZMod.castHom (pow_dvd_pow 2 a.le_succ) (ZMod (2 ^ a)))
-    (coordinate F (a + 1) (kerToH2 c)) = 1
-  rw [hc, oneClass, AddEquiv.apply_symm_apply, map_one]
+  let castDown := ZMod.castHom (pow_dvd_pow 2 a.le_succ) (ZMod (2 ^ a))
+  change castDown (coordinate F (a + 1) (kerToH2 c)) = 1
+  have hcoord : coordinate F (a + 1) (kerToH2 c) = 1 :=
+    (congrArg (coordinate F (a + 1)) hc).trans
+      ((coordinate F (a + 1)).apply_symm_apply 1)
+  exact (congrArg (fun t => castDown t) hcoord).trans (map_one castDown)
 
 private abbrev reps (a : ℕ) := {c : cycles F a // kerToH2 c = oneClass F a}
 
