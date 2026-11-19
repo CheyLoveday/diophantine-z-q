@@ -60,7 +60,9 @@ private abbrev sieveFrame (B : LateSieve) (m : ℕ) (Φ : AppF.PFrame p A)
   F := Φ.F
   scale := Φ.scale
   coord_det k x hx := Φ.coord_det k x (by
-    by_cases hk : B.KeepNorm m k <;> simpa [hk] using hx)
+    by_cases hk : B.KeepNorm m k
+    · simpa only [ite_eq_left hk] using hx
+    · simp [hk] at hx)
   scale_mem k x hx := by
     have h := keepNorm_mul_sq (B := B) (n := k) hp hm hB
     by_cases hk : B.KeepNorm m k
@@ -70,7 +72,7 @@ private abbrev sieveFrame (B : LateSieve) (m : ℕ) (Φ : AppF.PFrame p A)
   div_mem k y hy hd := by
     have hk : B.KeepNorm m k := by
       by_contra h
-      simpa [h] using hy
+      simp [h] at hy
     obtain ⟨hdk, x, hx, he⟩ := Φ.div_mem k y (by simpa only [ite_eq_left hk] using hy) hd
     have hj : B.KeepNorm m (k / p ^ 2) :=
       (keepNorm_mul_sq hp hm hB).mp (by rwa [Nat.mul_div_cancel' hdk])
@@ -87,8 +89,9 @@ private theorem sieveFrame_nbrSum (Φ : AppF.PFrame p A)
     (hp : p.Prime) (hm : ¬ p ∣ m) (hB : p ∉ B.primes) (k : ℕ) (j : Option (ZMod p)) :
     (sieveFrame B m Φ hp hm hB).nbrSum j k = if B.KeepNorm m k then Φ.nbrSum j k else 0 := by
   rw [← keepNorm_mul_sq hp hm hB (n := k)]
-  by_cases hk : B.KeepNorm m (p ^ 2 * k) <;>
-    simp [AppF.PFrame.nbrSum, AppF.PFrame.mem1, sieveFrame, hk] <;> rfl
+  by_cases hk : B.KeepNorm m (p ^ 2 * k)
+  · simp [AppF.PFrame.nbrSum, AppF.PFrame.mem1, sieveFrame, hk] <;> rfl
+  · simp [AppF.PFrame.nbrSum, sieveFrame, hk]
 
 /-- Apply the actual Fourier sieve to the weighted stage, retaining precisely
 the original good primes that are outside the sieve list. -/
@@ -118,7 +121,7 @@ theorem sieveStage_aθ (S : AppF.ThetaStage A) (B : LateSieve) (hm : S.m ≠ 0) 
     (sieveStage S B).aθ n = if B.Keep n then S.aθ n else 0 := by
   have hk := keepNorm_extract (B := B) (n := n) hm
   by_cases hn : B.Keep n <;>
-    simp [AppF.ThetaStage.aθ, AppF.ThetaStage.H, sieveStage, hk, hn] <;> rfl
+    simp [AppF.ThetaStage.aθ, AppF.ThetaStage.H, sieveStage, hk, hn]
 
 variable {O : Type} [CommRing O] {M : ℕ}
 variable {S : AppF.ThetaStage (StageRing O M)}
@@ -158,7 +161,7 @@ private theorem sieveWeight_sum {a b : ℚ} (B : LateSieve) (m : ℕ) (f : ℍ[�
         apply finsum_congr
         intro x
         by_cases hx : x.re = 0 ∧ Visibility.nrd x = (k : ℚ)
-        · simp [finsum_eq_if, hx, sieveWeight_at B m f hx.2, hk]
+        · simp [hx, sieveWeight_at B m f hx.2, hk]
         · simp [finsum_eq_if, hx]
       _ = 0 := finsum_zero
 
@@ -196,9 +199,22 @@ def sieveLift (B : LateSieve) (E : Lift S) : Lift (sieveStage S B) where
 theorem sieveLift_aθ (B : LateSieve) (E : Lift S) (hm : S.m ≠ 0) (n : ℕ) :
     (sieveLift B E).aθ n = if B.Keep n then E.aθ n else 0 := by
   have hk := keepNorm_extract (B := B) (n := n) hm
-  by_cases hn : B.Keep n <;>
-    simp only [Lift.aθ, Lift.H, Visibility.thetaCoeff, sieveLift, sieveStage, sieveWeight_sum, hk,
-      hn, ite_true, ite_false, mul_zero, Finset.sum_const_zero] <;> rfl
+  simp only [Lift.aθ, Lift.H, Visibility.thetaCoeff, sieveLift, sieveStage, sieveWeight_sum, hk]
+  by_cases hn : B.Keep n
+  · simp only [hn, ite_true] <;> rfl
+  · simp [hn]
+
+/-- Keep the exact list with the integral source. Both projections are computed
+from that single list, including primes where the original coefficient was zero. -/
+structure SievedSource (S : AppF.ThetaStage (StageRing O M)) where
+  late : LateSieve
+  before : Lift S
+
+abbrev SievedSource.stage (C : SievedSource S) : AppF.ThetaStage (StageRing O M) :=
+  sieveStage S C.late
+
+abbrev SievedSource.lift (C : SievedSource S) : Lift C.stage :=
+  sieveLift C.late C.before
 
 #print axioms keepNorm_extract
 #print axioms keepNorm_mul_sq
