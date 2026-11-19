@@ -9,3 +9,7 @@
 - `Bounds.lean`: PASS, 13 theorem audits, only allowed axioms.
 - `Residues.lean`: PASS, 8 theorem audits, only allowed axioms.
 - Inherited issue (EisForm report, tex 9660–9668): coefficientwise integrality of good Hecke images does not imply preservation of the diamond-only span.
+- `Characters.lean`: PASS, 6 theorem audits, only allowed axioms. Pullback at the lower-right unit gives the existing product nebentypus in both orders.
+- `Mean.lean`: PASS, 4 theorem audits, only allowed axioms. A nontrivial factor makes the sum of the residue weights zero.
+- `Reduction.lean`: PASS, 5 theorem audits, only allowed axioms. One Fourier identification supplies both checks and the exact `BaseForm`.
+- Mathlib documentation issues: sign of the solved `G2_S_transform` display; extra separate constant in the display for `G2_eq_tsum_G2Term`. Neither display is used.
