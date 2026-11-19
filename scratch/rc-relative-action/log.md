@@ -3,3 +3,6 @@
 - `Fourier.lean`: `lake env lean` passed; six theorem audits, only `propext`, `Classical.choice`, `Quot.sound`.
 - `StageGrid.extracts` provides integral support for upper phases via `stageGrid_twist_eq`. `StageGrid.constant` concerns the rectangular lattice, not the additional finite translations needed at the actual old level.
 - `PMLocal` source inspected on an existing ref; absent from this base. `f` is the lifted weight; `finiteSupp` concerns one norm sphere; `frameScale` concerns a good-prime frame. Neither supplies the full translation depth or scaling of the fixed-sieved adèlic factors.
+- `Unipotents.lean`: `S T^{-k} S^{-1} = n^-(k)`; exact fixing iff the phase is one on the Fourier support. The annihilator integrality test suffices, and the reference test needs only `4 ∣ k`.
+- `Unipotents.lean`: the two table equations hold on the explicit upper and lower words (`c_l=1`) and on the reflection word for even weights and an even character. The paired action composes by list concatenation.
+- `Unipotents.lean`: `lake env lean` passed; 14 theorem audits, only `propext`, `Classical.choice`, `Quot.sound`.
