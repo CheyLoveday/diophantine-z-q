@@ -105,10 +105,11 @@ theorem kcInfl_mem_ker {m : ℕ}
         (Lev (QuadraticField k) S (E.baseChange (QuadraticField k)) m)).d 1 2).hom f) at e
   rw [e, hf, map_zero]
 
-/-- **The named input (GLUE): `Sel_{2^m}(E/K)` through `G_{K,S}` and the places of `S`.** Under
-the hypotheses of the classical description — `K = ℚ(√k)` totally complex (`k < 0`), `S` a finite
-set of primes of `K` containing those above `2`, and `E[2^∞] ⊂ E(K_S)` (so `E` has good reduction
-outside `S`, by Néron–Ogg–Shafarevich) — for a continuous cocycle `f : G_{K,S} → E(K_S)[2^m]`:
+/-- **The named input (GLUE): `Sel_{2^m}(E/K)` through `G_{K,S}` and the places of `S`.** Under the
+hypotheses of the classical description — `E` elliptic, `K = ℚ(√k)` totally complex (`k < 0`), `S` a
+finite set of primes of `K` containing those above `2`, and `E[2^∞] ⊂ E(K_S)` (so `E` has good
+reduction outside `S`, by Néron–Ogg–Shafarevich) — for a continuous cocycle `f : G_{K,S} →
+E(K_S)[2^m]`:
 * `sel_of_loc`: if `f` is locally trivial at every place of `S` (`KcLocTriv`: its restriction to
   `G_{K_v}` is a coboundary in `E(K̄_v)`), its inflation to `G_K = Gal(ℚˢ/K)` lies in
   `Sel_{2^m}(E/K)` (at `v ∉ S` the class is unramified at a prime of good reduction, hence locally
@@ -121,7 +122,7 @@ outside `S`, by Néron–Ogg–Shafarevich) — for a continuous cocycle `f : G_
 The Selmer group is the tree's `selmerLevelK` (local triviality at every place of `K`), the
 inflation the bridge's `kcInfl`. Kind: definition (input, GLUE). -/
 structure KcArithSelmerLevel : Prop where
-  sel_of_loc : k < 0 → S.Finite →
+  sel_of_loc : E.IsElliptic → k < 0 → S.Finite →
     (∀ v : HeightOneSpectrum (𝓞 (QuadraticField k)), (2 : 𝓞 (QuadraticField k)) ∈ v.asIdeal →
       v ∈ S) →
     (∀ n : ℕ, FullTorsion (QuadraticField k) S (E.baseChange (QuadraticField k)) (2 ^ n)) →
@@ -132,7 +133,7 @@ structure KcArithSelmerLevel : Prop where
       KcLocTriv (E.baseChange (QuadraticField k)) f →
         kerToH1 (k := ℤ) ⟨((kcInfl k S E m).f 1).hom f, kcInfl_mem_ker k S E hf⟩ ∈
           selmerLevelK (sqrtK k) E m
-  loc_of_sel : k < 0 → S.Finite →
+  loc_of_sel : E.IsElliptic → k < 0 → S.Finite →
     (∀ v : HeightOneSpectrum (𝓞 (QuadraticField k)), (2 : 𝓞 (QuadraticField k)) ∈ v.asIdeal →
       v ∈ S) →
     (∀ n : ℕ, FullTorsion (QuadraticField k) S (E.baseChange (QuadraticField k)) (2 ^ n)) →
@@ -167,10 +168,11 @@ theorem kcSelmerSupport_of_level (hk : k < 0) (hS : S.Finite)
     KcSelmerSupport (kcArithLevelData k S E hFull) (selmerK (sqrtK k) E) where
   sel_of_loc m f hf hloc := by
     rw [← kc_levelToInfinite_kerToH1 k S E hFull m f hf]
-    exact levelToInfinite_mem_selmer (sqrtK k) E (G.sel_of_loc hk hS h2 hFull m f hf hloc)
+    exact levelToInfinite_mem_selmer (sqrtK k) E
+      (G.sel_of_loc inferInstance hk hS h2 hFull m f hf hloc)
   loc_of_sel s hs := by
     obtain ⟨n, c, hc⟩ := selmer_class_from_level (sqrtK k) E ⟨s, hs⟩
-    obtain ⟨f, hf, hloc, hcf⟩ := G.loc_of_sel hk hS h2 hFull n c c.2
+    obtain ⟨f, hf, hloc, hcf⟩ := G.loc_of_sel inferInstance hk hS h2 hFull n c c.2
     refine ⟨n, f, hf, hloc, ?_⟩
     rw [← kc_levelToInfinite_kerToH1 k S E hFull n f hf, hcf]
     exact hc

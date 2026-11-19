@@ -8,8 +8,9 @@ Manuscript `diophantine_zq.tex`, tex 4005–4014 (the Kummer coefficient compari
 calibration).
 
 `KcArithSelmerLevel k S E` (the named input of the concrete Kummer coefficient comparison) has two
-fields: (i) locally trivial cocycles of `G_{K,S}` inflate into `Sel_{2^m}(E/K)`, and (ii) every
-class of `Sel_{2^m}(E/K)` is such an inflation. Here:
+fields, each with the premises `E` elliptic, `k < 0`, `S` finite containing the primes above `2`,
+and `E[2^∞] ⊂ E(K_S)`: (i) locally trivial cocycles of `G_{K,S}` inflate into `Sel_{2^m}(E/K)`, and
+(ii) every class of `Sel_{2^m}(E/K)` is such an inflation. Here:
 
 * `KcSelOfLoc`, `KcLocOfSel` (definitions) and `kcArithSelmerLevel_iff` (PROVED): the split;
 * `decomp_subsingleton`, `locK_real_eq_zero` (PROVED): for `k < 0` the decomposition group at a
@@ -20,7 +21,8 @@ class of `Sel_{2^m}(E/K)` is such an inflation. Here:
 * `kcArithSelmerLevel_of` (PROVED): `KcArithSelmerLevel` from `KcSelOfLocFinite` and (ii).
 
 Kinds: definitions and PROVED; the named inputs `KcSelOfLocFinite` (PRINT + GLUE) and `KcLocOfSel`
-(GLUE: Silverman X.4.4, the Néron–Ogg–Shafarevich criterion, inflation–restriction).
+(GLUE: Silverman X.4.4, locator unverified; the Néron–Ogg–Shafarevich criterion;
+inflation–restriction).
 -/
 
 noncomputable section
@@ -102,7 +104,7 @@ variable (k : ℤ) (S : Set (HeightOneSpectrum (𝓞 (QuadraticField k))))
 /-- **Field (i) of `KcArithSelmerLevel`**: locally trivial cocycles of `G_{K,S}` inflate into
 `Sel_{2^m}(E/K)`. Kind: definition (the statement). -/
 def KcSelOfLoc : Prop :=
-  k < 0 → S.Finite →
+  E.IsElliptic → k < 0 → S.Finite →
     (∀ v : HeightOneSpectrum (𝓞 (QuadraticField k)), (2 : 𝓞 (QuadraticField k)) ∈ v.asIdeal →
       v ∈ S) →
     (∀ n : ℕ, FullTorsion (QuadraticField k) S (E.baseChange (QuadraticField k)) (2 ^ n)) →
@@ -117,7 +119,7 @@ def KcSelOfLoc : Prop :=
 /-- **Field (ii) of `KcArithSelmerLevel`**: every class of `Sel_{2^m}(E/K)` is such an
 inflation. Kind: definition (the statement; the named input). -/
 def KcLocOfSel : Prop :=
-  k < 0 → S.Finite →
+  E.IsElliptic → k < 0 → S.Finite →
     (∀ v : HeightOneSpectrum (𝓞 (QuadraticField k)), (2 : 𝓞 (QuadraticField k)) ∈ v.asIdeal →
       v ∈ S) →
     (∀ n : ℕ, FullTorsion (QuadraticField k) S (E.baseChange (QuadraticField k)) (2 ^ n)) →
@@ -152,7 +154,7 @@ embedding `τ : ℚˢ → ℚ_pˢ` (a place `v` of `K` above `p`), the localizat
   needs.
 Kind: definition (the statement; the named input). -/
 def KcSelOfLocFinite : Prop :=
-  k < 0 → S.Finite →
+  E.IsElliptic → k < 0 → S.Finite →
     (∀ v : HeightOneSpectrum (𝓞 (QuadraticField k)), (2 : 𝓞 (QuadraticField k)) ∈ v.asIdeal →
       v ∈ S) →
     (∀ n : ℕ, FullTorsion (QuadraticField k) S (E.baseChange (QuadraticField k)) (2 ^ n)) →
@@ -168,10 +170,10 @@ def KcSelOfLocFinite : Prop :=
 /-- **Field (i) from the finite-place input** (PROVED): the real places are discharged
 (`locK_real_eq_zero`). -/
 theorem kcSelOfLoc_of_finite (h : KcSelOfLocFinite k S E) : KcSelOfLoc k S E := by
-  intro hk hS h2 hF m f hf hloc
+  intro hE hk hS h2 hF m f hf hloc
   change levelIncl (sqrtK k) E m _ ∈ shaK (sqrtK k) E
   rw [mem_shaK]
-  exact ⟨fun p τ => h hk hS h2 hF m f hf hloc p τ, fun τ => locK_real_eq_zero hk E τ _⟩
+  exact ⟨fun p τ => h hE hk hS h2 hF m f hf hloc p τ, fun τ => locK_real_eq_zero hk E τ _⟩
 
 /-- **`KcArithSelmerLevel` from the finite-place input and field (ii)** (PROVED). -/
 theorem kcArithSelmerLevel_of (h1 : KcSelOfLocFinite k S E) (h2 : KcLocOfSel k S E) :
