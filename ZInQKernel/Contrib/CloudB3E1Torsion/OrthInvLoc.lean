@@ -33,7 +33,10 @@ t · unit` at the moving prime (tex 3787–3789); no comparison is needed at unu
   limit): `φo` with a `LocHInv` at each old place, and a `LocContraction` at every new place.
   **`OrthComparisonInverseLoc.ψ`** with `hd`, `hd₁`, `hright`, `hleft` (PROVED): the fields of
   lane E2's `OrthComparisonInverse` other than `hsw`.
-* `HswUpToD` (named input) and **`hlift_of_transport_loc`** (PROVED): the bridge. Lane E2's
+* `UrSurj` (named input: `Φ − 1` onto the unramified condition at the new places),
+  `newPlace_switch`, `place_switch`, **`hswUpToD_of_urSurj`**, **`hlift_of_urSurj`** (PROVED):
+  the switch compatibility up to coboundaries, and the paired strict lift, from `UrSurj`.
+* `HswUpToD` and **`hlift_of_transport_loc`** (PROVED): the bridge. Lane E2's
   `hlift_of_transport` holds with the switch compatibility up to coboundaries on cocycles, and
   its conclusion holds up to a coboundary of `C_{T⊥}`.
 * `orthComparisonInverseLoc_of_isEmpty` (PROVED, non-vacuity): for no new places and `φo` the
@@ -51,8 +54,9 @@ Remainder (the bridge to `hlift_of_transport`, not proved here): lane E2's `hsw`
 `h¹_p(ι u_p)` to the local component. The difference `(0, −u_p, h¹_p(ι u_p))` is a coboundary of
 `C_{T⊥}` exactly when `u_p ∈ (Φ − 1)W` up to the contraction. That holds once the unramified
 condition `[W --(Φ−1)--> W]` at `p` is contracted too, which is the unit `A = Φ − 1` of tex
-3727–3732. So the bridge goes through `HswUpToD`. Proving it needs a second contraction field, of the
-unramified condition at the new places.
+3727–3732. So the bridge goes through `HswUpToD`, which is PROVED from `UrSurj` (`Φ − 1` onto the
+unramified condition at the new places, the unit `A` of tex 3727–3732):
+`hswUpToD_of_urSurj`, `hlift_of_urSurj`.
 
 Kinds: definitions, named input (`OrthComparisonInverseLoc`), PROVED.
 -/
@@ -407,7 +411,7 @@ variable {K S₀ S k M Δ' Δ'' place X EU}
 
 /-- The homotopy inverse at a new place: the contraction (zero → full) or the identity.
 Kind: definition. -/
-def newInv (c : LocContraction (genuineLq K S k M (place j))) : (b : Bool) →
+def newInv {j : ι × Bool} (c : LocContraction (genuineLq K S k M (place j))) : (b : Bool) →
     LocHInv (dcondιS K S k M place X EU j b) (condιS K S k M place X EU j b)
       (dcomp K S k M place X j b)
   | true => c.toLocHInv
@@ -420,6 +424,45 @@ def presInv (Ψ : OrthComparisonInverseLoc K S₀ S k M Δ' Δ'' place) (T : Fin
       (presComparison K S₀ S k M Δ' Δ'' place X EU Ψ.φo T v)
   | .inl v₀ => Ψ.φoInv v₀
   | .inr j => newInv (Ψ.ctr j) (decide (j.1 ∈ T))
+
+/-- **`Φ − 1` is onto the unramified condition at every new place** (the unit `A = Φ − 1` of
+tex 3727–3732, at the localization). Kind: definition (named input). -/
+def UrSurj : Prop :=
+  ∀ j (y : (genuineUq K S k (place j) (X j)).X 1),
+    ∃ w, (genuineUq K S k (place j) (X j)).d 0 1 rfl w = y
+
+omit [DecidableEq ι] in
+/-- **The switch at one new place** (PROVED): the per-place components of
+`j ∘ ψ_{T ∪ {p}} ∘ i' − ψ_T` are those of a coboundary. -/
+theorem newPlace_switch (c : LocContraction (genuineLq K S k M (place j))) (b b' : Bool)
+    (h : b = true → b' = true)
+    (hsurj : ∀ y : (genuineUq K S k (place j) (X j)).X 1,
+      ∃ w, (genuineUq K S k (place j) (X j)).d 0 1 rfl w = y)
+    (u : (condCxS K S k M place X j b).X 1) :
+    ∃ w : (dcondCxS K S k place X j b).X 0,
+      (dcondSplit K S k place X j b b' h).f 1 1 rfl ((newInv (EU := EU) c b').g.f 1 1 rfl
+          ((condSplitS K S k M place X EU j b b' h).i.f 1 1 rfl u)) =
+        (newInv (EU := EU) c b).g.f 1 1 rfl u + (dcondCxS K S k place X j b).d 0 1 rfl w ∧
+      (newInv (EU := EU) c b').H1 ((condSplitS K S k M place X EU j b b' h).i.f 1 1 rfl u) =
+        (newInv (EU := EU) c b).H1 u - (dcondιS K S k M place X EU j b).f 0 0 rfl w := by
+  cases b <;> cases b'
+  · refine ⟨0, ?_, ?_⟩
+    · rw [map_zero, add_zero]; rfl
+    · rw [map_zero, sub_zero]; rfl
+  · obtain ⟨w₀, hw₀⟩ := hsurj u
+    refine ⟨-w₀, ?_, ?_⟩
+    · change (0 : (dcondCxS K S k place X j false).X 1) =
+        (show (genuineUq K S k (place j) (X j)).X 1 from u) +
+          (genuineUq K S k (place j) (X j)).d 0 1 rfl (-w₀)
+      rw [map_neg, hw₀, add_neg_cancel]
+      rfl
+    · change c.h1 ((EU j).i.f 1 1 rfl u) = (0 : (genuineLq K S k M (place j)).X 0) -
+        (EU j).i.f 0 0 rfl (-w₀)
+      rw [← hw₀, (EU j).i.comm 0 1 0 1 rfl rfl rfl rfl w₀, c.hc0, map_neg, zero_sub, neg_neg]
+  · exact absurd (h rfl) (by decide)
+  · refine ⟨0, ?_, ?_⟩
+    · rw [map_zero, add_zero]; rfl
+    · rw [map_zero, sub_zero]; rfl
 
 namespace OrthComparisonInverseLoc
 
@@ -473,6 +516,27 @@ def HswUpToD : Prop :=
             ((suppInclS K S₀ S k M Δ'' place X EU T p).f 1 1 rfl x)) =
           Ψ.ψ (X := X) (EU := EU) T x + (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl b
 
+/-- **The switch at every place** (PROVED, from `UrSurj`). -/
+theorem place_switch (hsurj : UrSurj (K := K) (S := S) (k := k) (place := place) (X := X))
+    (T : Finset ι) (p : ι) (v : Places K S₀ ⊕ (ι × Bool)) (y : ((presCondS K S₀ S k M Δ'' place X EU T).U v).X 1) :
+    ∃ w : ((dpresCondS K S₀ S k M Δ' place X EU T).U v).X 0,
+      (dpresSplit K S₀ S k M Δ' place X EU T p v).f 1 1 rfl
+          ((presInv (EU := EU) Ψ (insert p T) v).g.f 1 1 rfl
+            ((presSplitS K S₀ S k M Δ'' place X EU T p v).i.f 1 1 rfl y)) =
+        (presInv (EU := EU) Ψ T v).g.f 1 1 rfl y +
+          ((dpresCondS K S₀ S k M Δ' place X EU T).U v).d 0 1 rfl w ∧
+      (presInv (EU := EU) Ψ (insert p T) v).H1
+          ((presSplitS K S₀ S k M Δ'' place X EU T p v).i.f 1 1 rfl y) =
+        (presInv (EU := EU) Ψ T v).H1 y -
+          ((dpresCondS K S₀ S k M Δ' place X EU T).i v).f 0 0 rfl w := by
+  match v with
+  | .inl v₀ =>
+    refine ⟨0, ?_, ?_⟩
+    · rw [map_zero, add_zero]; rfl
+    · rw [map_zero, sub_zero]; rfl
+  | .inr j =>
+    exact newPlace_switch (Ψ.ctr j) _ _ _ (hsurj j) y
+
 /-- **The paired strict lift at the localization** (PROVED from `HswUpToD`; tex 4169–4171): from
 the transported norm identity `z'_R = e · i'(z'_P) + d b'` with `z'_P` a cocycle, the lift
 `j z_S = e z_{P⊥} + d b` for `z_S = ψ_{T ∪ {p}}(z'_R)`, `z_{P⊥} = ψ_T(z'_P)`: lane E2's
@@ -491,6 +555,50 @@ theorem hlift_of_transport_loc (hsw : Ψ.HswUpToD (X := X) (EU := EU)) {T : Fins
   refine ⟨e • b₁ + jmap T p 0 (ψ0 (presInv Ψ (insert p T)) b'), ?_⟩
   rw [hnorm, map_add, map_smul, Ψ.hd, map_add, map_smul, hb₁, jmap_d, map_add, map_smul, smul_add]
   abel
+
+/-- **`HswUpToD` from `UrSurj`** (PROVED; tex 3727–3732): with `Φ − 1` onto the unramified
+condition at the new places, `j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T + d b`, where `b = (0, w, 0)` and `w`
+is chosen place by place (`place_switch`). -/
+theorem hswUpToD_of_urSurj (hsurj : UrSurj (K := K) (S := S) (k := k) (place := place) (X := X)) :
+    Ψ.HswUpToD (X := X) (EU := EU) := by
+  intro T p _ x _
+  obtain ⟨a, u, z⟩ := x
+  choose w hw using fun v => Ψ.place_switch hsurj T p v (u v)
+  refine ⟨((0, w, 0) : selT (dsuppDataS K S₀ S k M Δ' place X EU T) 0),
+    Prod.ext ?_ (Prod.ext ?_ ?_)⟩
+  · change (show (globalCx k (GKS K S) M).X 1 from a) =
+      (show (globalCx k (GKS K S) M).X 1 from a) + (globalCx k (GKS K S) M).d 0 1 rfl 0
+    rw [map_zero, add_zero]
+  · funext v
+    exact (hw v).1
+  · funext v
+    change (show (localCx k (GKS K S) (presGv K S₀ S place) (presLoc K S₀ S place) M v).X 0
+        from z v) + (presInv (EU := EU) Ψ (insert p T) v).H1
+          ((presSplitS K S₀ S k M Δ'' place X EU T p v).i.f 1 1 rfl (u v)) =
+      ((show (localCx k (GKS K S) (presGv K S₀ S place) (presLoc K S₀ S place) M v).X 0
+        from z v) + (presInv (EU := EU) Ψ T v).H1 (u v)) +
+        ((resS k (GKS K S) (presGv K S₀ S place) (presLoc K S₀ S place) M).f 0 0 rfl 0 v -
+          ((dpresCondS K S₀ S k M Δ' place X EU T).i v).f 0 0 rfl (w v) -
+          (localCx k (GKS K S) (presGv K S₀ S place) (presLoc K S₀ S place) M v).d (-1) 0 rfl
+            (0 : (localCx k (GKS K S) (presGv K S₀ S place) (presLoc K S₀ S place) M v).X (-1)))
+    rw [(hw v).2, map_zero, map_zero]
+    change _ = _ + ((0 : (localCx k (GKS K S) (presGv K S₀ S place) (presLoc K S₀ S place) M v).X 0)
+      - _ - 0)
+    abel
+
+/-- **The paired strict lift at the localization, from `UrSurj`** (PROVED). Kind: PROVED. -/
+theorem hlift_of_urSurj (hsurj : UrSurj (K := K) (S := S) (k := k) (place := place) (X := X))
+    {T : Finset ι} {p : ι}
+    (hp : p ∉ T) (zR : (suppCxS K S₀ S k M Δ'' place X EU (insert p T)).X 1)
+    (zP : (suppCxS K S₀ S k M Δ'' place X EU T).X 1)
+    (hzP : (suppCxS K S₀ S k M Δ'' place X EU T).d 1 2 rfl zP = 0) (e : k)
+    (b' : (suppCxS K S₀ S k M Δ'' place X EU (insert p T)).X 0)
+    (hnorm : zR = e • (suppInclS K S₀ S k M Δ'' place X EU T p).f 1 1 rfl zP +
+      (suppCxS K S₀ S k M Δ'' place X EU (insert p T)).d 0 1 rfl b') :
+    ∃ b : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 0,
+      jmap T p 1 (Ψ.ψ (X := X) (EU := EU) (insert p T) zR) =
+        e • Ψ.ψ (X := X) (EU := EU) T zP + (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl b :=
+  Ψ.hlift_of_transport_loc (Ψ.hswUpToD_of_urSurj hsurj) hp zR zP hzP e b' hnorm
 
 end OrthComparisonInverseLoc
 
