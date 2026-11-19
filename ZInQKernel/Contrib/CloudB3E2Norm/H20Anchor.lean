@@ -20,7 +20,8 @@ parametrization
 
 * **`GenuineHeegnerAnchor E K f Lat κ ι D`** (definition): `D.N` is the newform level of `E`,
   `D.DK = disc K`, and for every conductor `d ≥ 1` prime to `N D_K` the point `D.y d` is defined
-  over `D.H d` and its image under `ι : ℚ̄ → ℂ` is `φ(τ)` for the root `τ` of a Heegner form of level `N`
+  over `D.H d` and its image under `ι : ℚ̄ → ℂ` is `φ(τ)` for the root `τ` of a Heegner form of
+  level `N`
   and discriminant `D_K d²` — the CST quantification "any `y` with `ι(y) = φ(τ)`", at every
   conductor.
 * `CCLGenuine E K f Lat κ ι := CCLThm2_15Applied E (GenuineHeegnerAnchor …)` (definition): the
