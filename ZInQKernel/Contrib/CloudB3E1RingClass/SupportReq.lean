@@ -20,8 +20,8 @@ This file reduces both to statements about the base support `S0 ℓ = {2, 3} ∪
   newform of `E` is a prime at which no model of `E` is good. Equivalently, good reduction at `p`
   forces `p ∤ N`. This is H. Carayol, *Sur les représentations ℓ-adiques associées aux formes
   modulaires de Hilbert*, Ann. Sci. ÉNS 19 (1986), Théorème (A) (the level of the newform is the
-  conductor `N_E`), with the conductor exponent `0` at a prime of good reduction (Ogg's formula;
-  J. Silverman, *Advanced Topics*, IV.10.2). It is the converse of the tree's proved
+  conductor `N_E`), with the definition of the conductor (its exponent at `p` is `0` exactly when
+  `E` has good reduction at `p`). It is the converse of the tree's proved
   `GoodReductionOffLevel`. The tree's `newformLevel` is the least level of a cusp form with the
   coefficients of `L(E, s)`, and no conductor computation is formalized. In the tree's eigenform
   structure the newform carries Hecke eigenvalues only at the good indices, so `U_p` at `p ∣ N` is
@@ -57,9 +57,9 @@ open ZInQ.Contrib.CloudB3RC53.CST (newformLevel)
 open ZInQ.Manuscript.RC.Nonvanishing (GoodAt bad_curve_mem)
 
 /-- **A prime of the level of the newform of `E` is bad for every model of `E`** (named input;
-GLUE, uncited by the text): Carayol 1986, Théorème (A) (level = conductor `N_E`) with Ogg's formula
-(the conductor exponent vanishes at the primes of good reduction; Silverman, *Advanced Topics*,
-IV.10.2). Stated for the tree's `newformLevel` and `Nonvanishing.GoodAt` (the given model is good
+GLUE): Carayol 1986, Théorème (A) (bibitem `carayol`: level = conductor `N_E`), with the
+definition of the conductor (its exponent vanishes exactly at the primes of good reduction).
+Stated for the tree's `newformLevel` and `Nonvanishing.GoodAt` (the given model is good
 at `p`, which implies good reduction). It includes modularity (BCDT): for a non-modular `E` the
 tree's `newformLevel E` would be `0`. Kind: definition (named input). -/
 def LevelPrimesBad : Prop :=
