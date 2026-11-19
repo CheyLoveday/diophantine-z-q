@@ -5,16 +5,18 @@ import ZInQKernel.Contrib.RC53Assist.TateCurve.KummerUniformization
 
 The manuscript bibitem `silverman` is J. H. Silverman, *The Arithmetic of
 Elliptic Curves*, second edition, Springer, 2009. The locator is Appendix C,
-§14, Theorem C.14.1 (Tate). The page and theorem body have not been checked;
-this is a mathematical transcription, not a checked verbatim quotation.
+§14, Theorem C.14.1 (Tate): the equation is displayed on page 444 and the theorem is
+on page 445 (pages checked). The theorem prints existence of the parameter only; the
+uniqueness clause below is not printed (see `LiteralTate.lean` for the printed form).
 
 For `0 < |q| < 1`, the Tate equation is
 `y² + xy = x³ - 5 s₃(q) x - (5 s₃(q) + 7 s₅(q))/12`, where
 `s_k(q) = ∑_{n≥1} n^k q^n/(1-q^n)`. Tate's theorem supplies a
 Galois-equivariant multiplicative uniformization with kernel `q^ℤ`.
-For an elliptic curve with `|j| > 1`, the admissible parameter with its
-`j`-invariant is unique. The curve is isomorphic to the Tate curve over the
-base field exactly in the split multiplicative case. The quadratic descent
+For an elliptic curve with `|j| > 1`, there is an admissible parameter with its
+`j`-invariant (the statement below also asserts uniqueness, which is not
+printed). The curve is isomorphic to the Tate curve over the base field
+exactly in the split multiplicative case. The quadratic descent
 character, its ramification, and the Tate-module columns are derived in
 separate proofs and are not clauses of this print.
 
@@ -76,8 +78,9 @@ structure EquivariantTateUniformization (q : Kˣ) where
 
 /-- **GLUE (a reading of a printed theorem)**: Tate's theorem, in uniformization, unique-parameter,
 and splitting form; not certified as a literal page-checked statement. Locator: Silverman, AEC,
-second edition, Appendix C, §14, Theorem C.14.1. Section-level locator; page and theorem body not
-checked. The coefficient equation is the one defined immediately before the theorem. This is a
+second edition, Appendix C, §14, Theorem C.14.1, page 445 (checked). The coefficient equation is
+the display of page 444. The uniqueness of the parameter is not printed, so this is stronger than
+the printed theorem; `SilvermanC141TateUniformizationLiteral` is the printed form. This is a
 proposition, not an axiom. No derived Tate-module or inertia assertion is packaged into it. -/
 def SilvermanC141TateUniformizationPrint : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] [Valued K ℤᵐ⁰] [CompleteSpace K]

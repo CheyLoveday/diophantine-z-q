@@ -1,0 +1,156 @@
+'ZInQ.Contrib.RC53Assist.TateCurve.finite_frobenius_subgroup_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteField_isGalois_algebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.primeField_closed_subgroup_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.primeField_open_subgroup_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.primeField_frobenius_nonvacuity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.primeField_open_subgroup_nonvacuity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.integral_valuation_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.isIntegral_of_spectralNorm_le_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.spectral_hasExtension' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.valuationSubring_eq_spectral' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_valuation_isEquiv_spectral' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_valuation_galois' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.LocalBaseQ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.LocalClosureQ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.LocalBaseIntegersQ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.LocalResidueQ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_integral_iff_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_integer_isIntegralClosure' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_mem_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localDecompositionHom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueRingHom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueRingHom_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.mem_localInertia_iff_residueRingHom_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueRingHom_frobenius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueBaseMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueAlgebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_residue_charP' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_residue_isAlgebraic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.primeFieldRingAutHom' depends on axioms: [propext, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.primeFieldRingAutHom_injective' depends on axioms: [propext, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueHom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueHom_ker' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueHom_frobenius' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.continuous_galoisHom_of_element_lifts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.compact_subgroup_eq_top_of_residue_frobenius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueHom_continuous' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_arithmeticFrobenius_exists' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localResidueHom_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localFrobeniusGenerationPrint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.LocalFiniteQ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalValuation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalIntegers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocal_hasExtension' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocal_integer_isIntegralClosure' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalIntegerAlgebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalInteger_scalarTower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocal_integer_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocal_integer_isDedekindDomain' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocal_integer_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocal_integer_isDVR' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalIntegerAction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalIntegerAction_coe' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalInertia' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.mem_finiteLocalInertia' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localInertia_restrict_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalFieldAlgebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalField_scalarTower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalField_closureTower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalRestrict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalRestrict_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalRestrict_comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localFiniteRestriction_continuous' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalTowerIntegerAlgebra' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocalInertia_map_of_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.absolute_restrict_inertia_of_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.LocalFiniteInertiaLifting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_inertia_lift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localFiniteInertiaLifting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocal_ramification_eq_one_of_inertia_bot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteLocal_unit_value_eq_of_inertia_bot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localInertia_normal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.inertia_fixed_finiteGalois_exists' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localUnramifiedValueGroupPrint_of_finite_inertia_lifting' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localUnramifiedValueGroupPrint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.finiteField_frobenius_nonidentity_quadratic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.local_readings_nonvacuity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.localArithmeticReadings' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.TateCurve.localUnramifiedValueGroupPrint :
+  ZInQ.Contrib.RC53Assist.TateCurve.LocalUnramifiedValueGroupPrint
+ZInQ.Contrib.RC53Assist.TateCurve.localFrobeniusGenerationPrint :
+  ZInQ.Contrib.RC53Assist.TateCurve.LocalFrobeniusGenerationPrint
+ZInQ.Contrib.RC53Assist.TateCurve.localArithmeticReadings :
+  ZInQ.Contrib.RC53Assist.TateCurve.LocalUnramifiedValueGroupPrint ∧
+    ZInQ.Contrib.RC53Assist.TateCurve.LocalFrobeniusGenerationPrint

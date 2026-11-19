@@ -86,7 +86,7 @@ theorem levelWeilUnit_pow (E : WeierstrassCurve ℚ) [E.IsElliptic]
 /-- **DEFINITION (proved in `AdditiveOneInput.lean`)**: Galois equivariance of the Weil pairing:
 `e_N(σP,σQ) = σ(e_N(P,Q))`; `silvermanIII81GaloisWeilPairingPrint_proved` derives it from the
 vendored library. Locator: Silverman, *The Arithmetic of Elliptic
-Curves*, second edition, III.8.1 (the property letter is not checked), manuscript bibitem
+Curves*, second edition, III.8.1(d), page 94, manuscript bibitem
 `silverman`.
 Only `N = ℓ^n` and `E/ℚ` are used. Page not checked; this mathematical
 transcription is not claimed to be a checked verbatim quotation.
