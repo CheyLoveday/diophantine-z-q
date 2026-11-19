@@ -185,7 +185,8 @@ subgroup `ker(π ∘ infl)` has an unramified lift at every place above an unuse
 **Superseded for the wiring** (see `H20Untwisted.lean`): the statement is valid, but with the
 `χ_h`-twisted ambient module the norm relation needed by `h1_shapiro` holds only when `χ_h(σ_q) =
 1`, and the point factor loses the text's sign `z = χ_h(σ_q) Ψ(σ_q)` (tex 3915, 4158–4172); wire the
-untwisted instance instead (`hur_actualU`). -/
+untwisted instance instead (for the relaxed points over a ramified ring class field, the ambient
+module over a larger support, `H20AmbientS.hur_actualS`). -/
 theorem hur_actual [Fintype (GKS K S ⧸ (piInfl hS π).ker)]
     (r : GKS K S ⧸ (piInfl hS π).ker → GKS K S)
     (hr : ∀ δ, ((r δ : GKS K S) : GKS K S ⧸ (piInfl hS π).ker) = δ)
