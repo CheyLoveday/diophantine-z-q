@@ -21,6 +21,11 @@ action `ρ₀` and the transfer character `θ = χ_h · [π]` (the Shapiro-level
 through `G_{K,S} → G_{K,S₀}`). The required form is then the plain norm relation, and the point
 factor is `a − z − z⁻¹` with `z = θ(σ) = χ_h(σ)[π σ]`, the text's (`thetaU_apply`).
 
+**Superseded for the relaxed points.** The ambient points here lie over `K_{S₀}`, the support of
+the coefficient module; the Heegner point `y_{dq}` lies over `H_{dq}`, ramified at the switch prime
+`q ∉ S₀`, so it is not such a point. `H20AmbientS.lean` takes the ambient points over a larger
+support `S₁` (the same `ambU`, with point support `S₁`) and replaces `hker` by inertia hypotheses.
+
 * `ambU₀`, `ambU`, `ambRhoU`, `ambIotaU`, `alphaInfl`, **`thetaU`** (definitions), `thetaU_apply`.
 * **`ambIotaU_equivariant`** (PROVED): `hιeq` for `(ambU, ρ₀, thetaU)`.
 * `locPsiU`, `psiU₀_smul`; **`localTwistIdentificationU`**, **`oldPlaceInputU`** (PROVED): the
@@ -436,8 +441,10 @@ variable (w : Places K S) (hw : w.1 ∉ S₀)
 
 include hw in
 /-- **`hPw` for the untwisted ambient module and an arbitrary transfer subgroup** (PROVED; tex
-3471–3487): for `H` containing `ker(G_{K,S} → G_{K,S₀})` (its fixed field lies in `K_{S₀}`; for the
-ring class fields, `RingClassKS.ringClassField_le_KS`). -/
+3471–3487): for `H` containing `ker(G_{K,S} → G_{K,S₀})` (its fixed field lies in `K_{S₀}`; for a
+ring class field `H_f` this holds only when the primes dividing `f` lie in `S₀`,
+`RingClassKS.ringClassField_le_KS`; it fails for `H_{dq}` at a switch prime `q ∉ S₀`, where
+`H20AmbientS.hPw_actualS` applies). -/
 theorem hPw_actualUH [IsOpenKer (alphaShap s hs hs0 π)] [Fintype (GKS K S ⧸ H)]
     (hker : ∀ g : GKS K S, inflMap K hS g = 1 → g ∈ H)
     (r : GKS K S ⧸ H → GKS K S) (hr : ∀ δ, ((r δ : GKS K S) : GKS K S ⧸ H) = δ)
@@ -477,8 +484,9 @@ variable {K : Type} [Field K] [NumberField K] {S S₀ : Set (HeightOneSpectrum (
     (urRep (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (newPlace (place j) (hw j))).V]
 
 /-- **The unramified lifts `hurR`/`hurP` for an arbitrary transfer subgroup** (PROVED;
-`hPw_actualUH`): for `H ≤ ker(χ_h [π] ∘ infl)` containing `ker(G_{K,S} → G_{K,S₀})` (take
-`H = G_{H_R}` for `a_R`, `H = G_{H_P}` for `a_P`). -/
+`hPw_actualUH`): for `H ≤ ker(χ_h [π] ∘ infl)` containing `ker(G_{K,S} → G_{K,S₀})` (e.g.
+`H = G_{H_R}` only when `H_R ⊆ K_{S₀}`; at a switch prime outside `S₀` use
+`H20AmbientS.hur_actualS`). -/
 theorem hur_actualUH [Fintype (GKS K S ⧸ H)]
     (hker : ∀ g : GKS K S, inflMap K hS g = 1 → g ∈ H)
     (r : GKS K S ⧸ H → GKS K S) (hr : ∀ δ, ((r δ : GKS K S) : GKS K S ⧸ H) = δ)

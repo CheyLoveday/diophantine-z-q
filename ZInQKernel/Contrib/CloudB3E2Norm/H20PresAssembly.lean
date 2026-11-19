@@ -10,7 +10,8 @@ lane RC32's one presentation of the support complexes for lane RC29's actual sta
 **`hnorm_pres_actual_of_transfer`** (PROVED): at each switch `C_T ⊂ C_{T ∪ {p}}` of the
 presentation over `A_i`, the pushes of the transferred Shapiro-level classes `a_R`, `a_P` (carried
 by `ι` to `𝒯_{θ_R}(κ(Q_R))` and `𝒯_{θ_P}(κ(Q_P))`) have strict lifts with
-`z_R = φ(e_q) · i(z) + d b`, `e_q = a_q − [σ_q] − [σ_q]⁻¹` — the input `hnorm` of lane RC32's
+`z_R = φ(e_q) · i(z) + d b`, `e_q = a_q − z − z⁻¹` with `z = θ(σ_q)` (for the untwisted instance
+`z = χ_h(σ_q)[π σ_q]`) — the input `hnorm` of lane RC32's
 `CMStepHyps` — from the same named inputs as `H20Assembly.h1_shapiro`:
 
 * the norm relation `hnorm` (`H20HeegnerNorm.hnorm_of_print`, the Cai–Chen–Liu print), the division

@@ -289,7 +289,8 @@ open scoped Classical in
 include hrP hrR hU ht hψ in
 /-- **The stage norm identity for lane RC29's actual data from the named inputs** (PROVED;
 `h1_shapiro` + `hzR_stage_actual`): there are stage classes over `A_i` for RC29's actual
-conditions with `z_R² = φ(e_q) • i(z_P²) + d b`, `φ(e_q) = a_q − ψ(σ_q) − ψ(σ_q)⁻¹`. -/
+conditions with `z_R² = φ(e_q) • i(z_P²) + d b`, `φ(e_q) = a_q − z − z⁻¹` with `z = φ(θ(σ_q))` (for
+the untwisted instance `z = χ_h(σ_q) ψ(π σ_q)`). -/
 theorem hzR_stage_actual_of_inputs
     (aR aP : (globalCx (MonoidAlgebra ℤ Δ) (GKS K S) (shapMod hS W i s hs hs0 π)).X 1)
     (hle : HR ≤ HP)

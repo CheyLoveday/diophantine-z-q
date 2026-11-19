@@ -34,7 +34,9 @@ From these the field-level dictionary of `H20Dictionary` is **proved**:
   Heegner points from the anchored print `CCLThm2_15Applied E (FullAnchor …)` alone, given the
   transfer data `HP = G_{H_d}`, `HR = G_{H_{dq}}` and a `σ` with the Artin restriction.
 
-No monotonicity `H_d ⊆ H_{dq}` of ring class fields is needed.
+No monotonicity `H_d ⊆ H_{dq}` of ring class fields is needed. Here `S₀` is the support of the
+ambient points; for the relaxed points take it to be the larger support `S₁` of `H20AmbientS`
+(containing the primes dividing `dq`).
 
 Kinds: definitions and PROVED from the PRINT with the full anchor.
 -/

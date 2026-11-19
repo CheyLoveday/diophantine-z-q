@@ -440,8 +440,9 @@ theorem h20ConditionsPush_actual (w : Places K S) (hw : w.1 ∉ S₀)
 /-- **The stage norm identity for the actual data from the Shapiro-level one** (PROVED; tex
 3203–3215, 3257–3290): for genuine relaxed and primitive classes over `ℤ[Δ]` with the Shapiro-level
 conditions satisfying the norm identity with retained boundary and point factor `e₁` (for the text
-`a_q − [σ_q] − [σ_q]⁻¹`), there are classes for lane RC29's actual conditions over `A_i` satisfying it
-with point factor `φ(e₁)` (`a_q − ψ(σ_q) − ψ(σ_q)⁻¹`, `eq_transport`). -/
+`a_q − z − z⁻¹`, `z = χ_h(σ_q)[π σ_q]`), there are classes for lane RC29's actual conditions over
+`A_i` satisfying it with point factor `φ(e₁)` (`a_q − z − z⁻¹`, `z = χ_h(σ_q) ψ(π σ_q)`,
+`eq_transport`). -/
 theorem hzR_stage_actual (w : Places K S) (hw : w.1 ∉ S₀)
     [ContinuousSMul (GUr K w.1)
       (urRep (MonoidAlgebra ℤ Δ) (shapMod₀ W i s hs hs0 π) (newPlace w hw)).V]
