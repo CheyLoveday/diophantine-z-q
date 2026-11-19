@@ -18,7 +18,8 @@ of `KappaGen.hκ_central`).
   for `d = [a/2ⁿ]` (a chosen representative), `levelToInfinite n (δₙ(a P))`;
   **`kummerInf_injective_gen`** (PROVED): `kummerInf g d = 0 → d = 0` for a free generator — the
   input `hδ` of `KappaGen.hκ_central`; `hδ_of_equiv` (PROVED): the same for `δ = kummerInf ∘ ι`
-  with `ι` an identification of the points (which belongs to the GLUE `hcomp`).
+  with `ι` an identification of the points (`ι` and `hcomp` are PROVED: `kc_hcomp_central`,
+  `KummerCompHcomp.lean`).
 
 Kinds: definitions and PROVED.
 -/
@@ -218,8 +219,8 @@ theorem kummerInf_injective_gen {g : pointsK r E} (hg : ¬ IsOfFinAddOrder g)
 
 /-- **`hδ` through an identification of the points** (PROVED): for an additive equivalence
 `ι : V ≃ E(K)` (the identification of a model of the rational points with the fixed-geometric-point
-model, part of the GLUE `hcomp`) and a free generator `gen` of `V` modulo torsion, the Kummer map
-`δ = kummerInf ∘ ι` satisfies `δ(gen, d) = 0 → d = 0`. -/
+model; `ι` and `hcomp` are PROVED, `kc_hcomp_central`) and a free generator `gen` of `V` modulo
+torsion, the Kummer map `δ = kummerInf ∘ ι` satisfies `δ(gen, d) = 0 → d = 0`. -/
 theorem hδ_of_equiv {V : Type} [AddCommGroup V] (ι : V ≃+ pointsK r E) {gen : V}
     (hg : ¬ IsOfFinAddOrder gen) (hgen : ∀ P : V, ∃ c : ℤ, IsOfFinAddOrder (P - c • gen))
     (d : Q2Z2) (h : kummerInf r E (ι gen) d = 0) : d = 0 := by

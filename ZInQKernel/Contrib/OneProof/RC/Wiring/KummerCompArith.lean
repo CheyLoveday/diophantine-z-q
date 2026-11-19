@@ -17,7 +17,8 @@ Manuscript `diophantine_zq.tex`, tex 4005–4014 (the universal-coefficient iden
   `G_{K,S}`** — for `K` totally complex (`k < 0`), `S` finite containing the primes above `2`,
   and `E[2^∞] ⊂ E(K_S)`, a continuous cocycle `f : G_{K,S} → E(K_S)[2^m]` inflates to a class of
   `Sel_{2^m}(E/K)` iff ... (`sel_of_loc`), and every class of `Sel_{2^m}(E/K)` is such an
-  inflation (`loc_of_sel`). Classical (Silverman X.4.4, the Néron–Ogg–Shafarevich criterion and
+  inflation (`loc_of_sel`). Classical (Silverman X.4.4, locator unverified; the
+  Néron–Ogg–Shafarevich criterion and
   inflation–restriction); the content not in the tree is the description of classes unramified
   outside `S` as inflations from `G_{K,S}` (the named statement (b) of the comparison).
 * `kcSelmerSupport_of_level`: PROVED, the passage to `Sel_{2^∞}` (`selmer_class_from_level`,
@@ -28,8 +29,7 @@ Manuscript `diophantine_zq.tex`, tex 4005–4014 (the universal-coefficient iden
 
 The real-quadratic case is excluded on purpose: for `k > 0` the target imposes local triviality at
 the two real places, where `H¹(ℝ, E) = E(ℝ)/N(E(ℂ))` need not vanish, while `C_K` has local
-conditions only at the finite places of `S`; the comparison is then not a quasi-isomorphism in
-general.
+conditions only at the finite places of `S`; a quasi-isomorphism then need not exist.
 
 Kinds: definitions, PROVED, and the named input `KcArithSelmerLevel` (GLUE).
 -/
@@ -114,10 +114,10 @@ E(K_S)[2^m]`:
   `G_{K_v}` is a coboundary in `E(K̄_v)`), its inflation to `G_K = Gal(ℚˢ/K)` lies in
   `Sel_{2^m}(E/K)` (at `v ∉ S` the class is unramified at a prime of good reduction, hence locally
   trivial; at the complex places there is nothing to check);
-* `loc_of_sel`: every class of `Sel_{2^m}(E/K)` is the inflation of such a cocycle (Silverman
-  X.4.4: Selmer classes are unramified outside `S`; an unramified-outside-`S` class with values
-  in `E[2^m] ⊂ E(K_S)` is inflated from `G_{K,S}` — the named statement (b): such a class
-  restricts to zero on `ker(G_K → G_{K,S})` — and inflation–restriction; at `v ∈ S` local
+* `loc_of_sel`: every class of `Sel_{2^m}(E/K)` is the inflation of such a cocycle (Silverman X.4.4,
+  locator unverified: Selmer classes are unramified outside `S`; an unramified-outside-`S` class
+  with values in `E[2^m] ⊂ E(K_S)` is inflated from `G_{K,S}` — the named statement (b): such a
+  class restricts to zero on `ker(G_K → G_{K,S})` — and inflation–restriction; at `v ∈ S` local
   triviality is `KcLocTriv`).
 The Selmer group is the tree's `selmerLevelK` (local triviality at every place of `K`), the
 inflation the bridge's `kcInfl`. Kind: definition (input, GLUE). -/
