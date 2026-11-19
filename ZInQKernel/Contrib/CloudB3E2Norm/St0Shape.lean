@@ -68,7 +68,7 @@ structure GenCxResidualIso (Rk : ℕ → ℤ → ℕ) : Prop where
 
 /-- **The Euler characteristic of the residual Selmer cone is zero at `U`-many stages** (PRINT;
 used at tex 4520–4550 for the global term): J. S. Milne, *Arithmetic Duality Theorems*, 2nd ed.,
-2006, https://www.jmilne.org/math/Books/ADTnot.pdf — I, Theorem 5.1 (the global Euler
+2006 — I, Theorem 5.1 (the global Euler
 characteristic; for the residual module `W = E[2]` over the imaginary quadratic `K` the text reads
 it as `h⁰ − h¹ + h² = −2`, tex 4525–4529), I, Theorem 4.10 (vanishing of global cohomology in
 degrees `> 2` for a totally imaginary field; part (c), printed pp. 56–57), and I, Theorem 2.8
