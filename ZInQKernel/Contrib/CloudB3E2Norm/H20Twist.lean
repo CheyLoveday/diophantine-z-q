@@ -29,7 +29,9 @@ already in the tree (lane RC29's `compPt`, `compTors`, `twistPt`; lane RC28's `C
   5. `ψ(ι(ι_v t)) = j_B(t)` (unfolding RC29's `genIotaBase`).
 * **`oldPlaceInput_actual`** (PROVED): `OldPlaceInput` (the hypothesis `hinR`/`hinP` of
   `h1_shapiro`) at `v ∈ P` from the realization `hreal` alone.
-* `thetaPi` (the character `[π]` of `G_{K,S}/ker(π ∘ infl)`), `thetaPi_trivial` (PROVED from the
+* `thetaPi` (the character `[π]` of `G_{K,S}/ker(π ∘ infl)`; so the transfer subgroup is
+  `H = ker(π ∘ infl) = G_L`, `L` the field cut out by `Ψ_i` for `Δ = im Ψ_i` — the `im Ψ_i` level of
+  `H20Bridge.lean`, not the manuscript's `G_{H_f}`, which is reached through `bridge_class`), `thetaPi_trivial` (PROVED from the
   ELLIOT input: the hypothesis `hθ` above at `v ∈ P`), **`ambIota_equivariant`** (PROVED: `ι`
   intertwines the Shapiro-level action with `R = [π]ρ`, the hypothesis `hιeq` of `h1_shapiro`).
 * Non-vacuity: the hypotheses are those of `H20Actual.lean` (witnessed there), `FullTorsion`
@@ -64,7 +66,7 @@ variable (K : Type) [Field K] [NumberField K] (S₀ : Set (HeightOneSpectrum (�
 abbrev PtS : Type := (W.baseChange (KS K S₀)).toAffine.Point
 
 /-- **The Galois action of `G_{K,S₀}` on `E(K_{S₀})`** (coordinatewise). Kind: definition. -/
-def ptSAction : DistribMulAction (GKS K S₀) (PtS K S₀ W) where
+@[reducible] def ptSAction : DistribMulAction (GKS K S₀) (PtS K S₀ W) where
   smul σ P := Affine.Point.map (galS K S₀ σ).toAlgHom P
   one_smul P := pointMap_one P
   mul_smul σ τ P := (Affine.Point.map_map (galS K S₀ τ).toAlgHom (galS K S₀ σ).toAlgHom P).symm
