@@ -42,3 +42,9 @@
 
 - **VERIFIED (Lean):** The congruence for doubling lifts to an identity of sections on an open about the identity. Along the specified period it is `f(2z) = 2f(z) + f(z)^2 g(z)` near zero. The analytic germ `f` cannot vanish locally because `f²x=u` on a punctured neighborhood with `u(0) ≠ 0`. If `f(z)=z^n v(z)` with `v(0) ≠ 0`, cancel `z^n` off zero and pass to the limit; the resulting `2^n = 2` gives `n=1`. There is no remaining derivative premise.
 - **VERIFIED (Lean):** `cmPeriodShortCoordinatesDoublePole_of_genusOne` and `cmjDegree_of_print_of_genusOne` compile under `lake env lean`. The hypotheses of the latter are exactly `AbVarFunctionFieldGenusOne` and `CMjDegreePrint`. Both final theorem checks list only the three standard axioms.
+
+## Verification
+
+- **VERIFIED (Lean):** All nine new modules and the row-only `#discharges` check compiled. Every new theorem has a `#print axioms` invocation. The consolidated audit checks 52 declarations and contains only `propext`, `Classical.choice` and `Quot.sound`.
+- **VERIFIED (Lean):** `#discharges` matches `cmjDegree` and reports exactly the expected genus and print hypotheses for the new reduction.
+- **VERIFIED (dry run):** The preview carries forward the existing Fowler statement and has a placeholder only for the genus proof. The excerpt records the pinned base; the command did not apply a fold.
