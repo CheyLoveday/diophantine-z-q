@@ -75,17 +75,18 @@ theorem realizes_mem_complexJField {a : LaurentSeries ℂ} {g : ℂ → ℂ}
 /-- A meromorphic level function with all of its cusp germs gives a monic
 equation over `ℂ(j(q))` for its Laurent expansion. The degree is bounded by
 `ψ(N)`, including when the function has interior poles. -/
-theorem formal_degree_bound {N : ℕ} [NeZero N] {s : LaurentSeries ℂ} {g : ℂ → ℂ}
+theorem formal_degree_bound_of_growth {N : ℕ} [NeZero N] {s : LaurentSeries ℂ} {g : ℂ → ℂ}
     (hg : MeromorphicOn g upperDomain) (hi : LevelInvariant N g)
-    (h : SL(2, ℤ) → ℝ) (hh : ∀ σ, 0 < h σ)
-    (hc : ∀ σ : SL(2, ℤ), CuspGerm (h σ) (fun τ => g (σ • τ : ℍ)))
+    (ha' : ∀ σ : SL(2, ℤ), ∀ᶠ z : ℂ in comap Complex.im atTop,
+      DifferentiableAt ℂ (fun w => g (σ • ofComplex w : ℍ)) z)
+    (hb' : ∀ σ : SL(2, ℤ), CuspGrowth 1 (fun τ => g (σ • τ : ℍ)))
     (hs : Realizes s (fun τ => g τ)) :
     IsIntegral complexJField s ∧ (minpoly complexJField s).natDegree ≤ dedekindPsi N := by
   classical
   let d := Nat.card (LevelCosets N)
   let F (n : ℕ) (z : ℂ) := (orbitPoly hi (ofComplex z)).coeff n
   have hex (n : ℕ) : ∃ a : complexJField, Realizes a (fun τ => F n τ) := by
-    obtain ⟨hm, hinv, hcusp⟩ := orbitCoefficient_cusp hg hi h hh hc n
+    obtain ⟨hm, hinv, hcusp⟩ := orbitCoefficient_cusp_of_growth hg hi ha' hb' n
     obtain ⟨a, ha⟩ := cuspGerm_realizes hcusp
     exact ⟨⟨a, realizes_mem_complexJField hm hinv hcusp ha⟩, ha⟩
   choose a ha using hex
@@ -130,6 +131,15 @@ theorem formal_degree_bound {N : ℕ} [NeZero N] {s : LaurentSeries ℂ} {g : �
   exact ((minpoly.monic hInt).natDegree_le_of_dvd hP.ne_zero (minpoly.dvd _ _ hr)).trans
     (hp_le.trans (card_levelCosets_le N))
 
+theorem formal_degree_bound {N : ℕ} [NeZero N] {s : LaurentSeries ℂ} {g : ℂ → ℂ}
+    (hg : MeromorphicOn g upperDomain) (hi : LevelInvariant N g)
+    (h : SL(2, ℤ) → ℝ) (hh : ∀ σ, 0 < h σ)
+    (hc : ∀ σ : SL(2, ℤ), CuspGerm (h σ) (fun τ => g (σ • τ : ℍ)))
+    (hs : Realizes s (fun τ => g τ)) :
+    IsIntegral complexJField s ∧ (minpoly complexJField s).natDegree ≤ dedekindPsi N := by
+  obtain ⟨ha, hb⟩ := cuspGerm_translates_analytic_growth h hh hc
+  exact formal_degree_bound_of_growth hg hi ha hb hs
+
 /-- The analytic hypotheses of the exact converse already give the uniform
 elementwise degree bound. -/
 theorem complexCusp_degree_bound {N : ℕ} [NeZero N] {s : LaurentSeries ℂ} {g : ℂ → ℂ}
@@ -154,6 +164,7 @@ theorem complexCusp_degree_bound {N : ℕ} [NeZero N] {s : LaurentSeries ℂ} {g
 #print axioms realizes_finsetSum
 #print axioms realizes_complexPolynomial
 #print axioms realizes_mem_complexJField
+#print axioms formal_degree_bound_of_growth
 #print axioms formal_degree_bound
 #print axioms complexCusp_degree_bound
 

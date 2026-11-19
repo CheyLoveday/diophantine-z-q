@@ -108,10 +108,11 @@ private theorem coeff_orbitProduct_closed {α ι : Type*} (s : Finset ι) (g : �
 /-- Each coefficient is level-one invariant and meromorphic in the upper
 half-plane and in the width-one cusp parameter. No polynomiality in `j`
 is asserted for a coefficient that may have interior poles. -/
-theorem orbitCoefficient_cusp {N : ℕ} [NeZero N] {g : ℂ → ℂ}
+theorem orbitCoefficient_cusp_of_growth {N : ℕ} [NeZero N] {g : ℂ → ℂ}
     (hg : MeromorphicOn g upperDomain) (hi : LevelInvariant N g)
-    (h : SL(2, ℤ) → ℝ) (hh : ∀ σ, 0 < h σ)
-    (hc : ∀ σ : SL(2, ℤ), CuspGerm (h σ) (fun τ => g (σ • τ : ℍ)))
+    (ha' : ∀ σ : SL(2, ℤ), ∀ᶠ z : ℂ in comap Complex.im atTop,
+      DifferentiableAt ℂ (fun w => g (σ • ofComplex w : ℍ)) z)
+    (hb' : ∀ σ : SL(2, ℤ), CuspGrowth 1 (fun τ => g (σ • τ : ℍ)))
     (n : ℕ) :
     let a : ℂ → ℂ := fun z => (orbitPoly hi (ofComplex z)).coeff n
     MeromorphicOn a upperDomain ∧ LevelOneInvariant a ∧ CuspGerm 1 (fun τ => a τ) := by
@@ -136,19 +137,10 @@ theorem orbitCoefficient_cusp {N : ℕ} [NeZero N] {g : ℂ → ℂ}
   have hAnal (c : LevelCosets N) : ∀ᶠ z : ℂ in comap Complex.im atTop,
       DifferentiableAt ℂ (fun w => orbitValue hi c (ofComplex w)) z := by
     induction c using Quotient.inductionOn with
-    | _ σ =>
-      have hcs : CuspGerm (h σ) (fun τ => g (σ • ofComplex (τ : ℂ) : ℍ)) := by
-        simpa only [ofComplex_apply] using hc σ
-      obtain ⟨T, hT⟩ := cuspGerm_analytic_tail (g := fun w => g (σ • ofComplex w : ℍ)) (hh σ) hcs
-      filter_upwards [(eventually_gt_atTop (max T 0)).comap Complex.im] with z hz
-      have hz' : z ∈ upperDomain := (le_max_right _ _).trans_lt hz
-      have hval : AnalyticAt ℂ (fun w => g (σ • ofComplex w : ℍ)) z :=
-        hT z hz' ((le_max_left _ _).trans_lt hz)
-      exact hval.differentiableAt
+    | _ σ => exact ha' σ
   have hgrowth (c : LevelCosets N) : CuspGrowth 1 (orbitValue hi c) := by
     induction c using Quotient.inductionOn with
-    | _ σ =>
-      exact cuspGrowth_changeWidth (hh σ) one_pos (cuspGerm_growth (hh σ) (hc σ))
+    | _ σ => exact hb' σ
   have hm : MeromorphicOn a upperDomain := by
     apply coeff_orbitProduct_closed Finset.univ (fun c z => orbitValue hi c (ofComplex z))
       (fun f => MeromorphicOn f upperDomain)
@@ -184,6 +176,33 @@ theorem orbitCoefficient_cusp {N : ℕ} [NeZero N] {g : ℂ → ℂ}
   filter_upwards [isOpen_upperHalfPlaneSet.mem_nhds hz] with w hw
   simp only [a, Function.comp_apply, ofComplex_apply_of_im_pos hw, coe_mk]
 
+/-- At any positive cusp width, a meromorphic germ provides eventual
+differentiability and width-one growth for the translate. -/
+theorem cuspGerm_translates_analytic_growth {g : ℂ → ℂ}
+    (h : SL(2, ℤ) → ℝ) (hh : ∀ σ, 0 < h σ)
+    (hc : ∀ σ : SL(2, ℤ), CuspGerm (h σ) (fun τ => g (σ • τ : ℍ))) :
+    (∀ σ : SL(2, ℤ), ∀ᶠ z : ℂ in comap Complex.im atTop,
+      DifferentiableAt ℂ (fun w => g (σ • ofComplex w : ℍ)) z) ∧
+    (∀ σ : SL(2, ℤ), CuspGrowth 1 (fun τ => g (σ • τ : ℍ))) := by
+  constructor
+  · intro σ
+    have hcs : CuspGerm (h σ) (fun τ => g (σ • ofComplex (τ : ℂ) : ℍ)) := by
+      simpa only [ofComplex_apply] using hc σ
+    obtain ⟨T, hT⟩ := cuspGerm_analytic_tail (g := fun w => g (σ • ofComplex w : ℍ)) (hh σ) hcs
+    filter_upwards [(eventually_gt_atTop (max T 0)).comap Complex.im] with z hz
+    exact (hT z ((le_max_right _ _).trans_lt hz) ((le_max_left _ _).trans_lt hz)).differentiableAt
+  · exact fun σ => cuspGrowth_changeWidth (hh σ) one_pos (cuspGerm_growth (hh σ) (hc σ))
+
+theorem orbitCoefficient_cusp {N : ℕ} [NeZero N] {g : ℂ → ℂ}
+    (hg : MeromorphicOn g upperDomain) (hi : LevelInvariant N g)
+    (h : SL(2, ℤ) → ℝ) (hh : ∀ σ, 0 < h σ)
+    (hc : ∀ σ : SL(2, ℤ), CuspGerm (h σ) (fun τ => g (σ • τ : ℍ)))
+    (n : ℕ) :
+    let a : ℂ → ℂ := fun z => (orbitPoly hi (ofComplex z)).coeff n
+    MeromorphicOn a upperDomain ∧ LevelOneInvariant a ∧ CuspGerm 1 (fun τ => a τ) := by
+  obtain ⟨ha, hb⟩ := cuspGerm_translates_analytic_growth h hh hc
+  exact orbitCoefficient_cusp_of_growth hg hi ha hb n
+
 /-- The coefficients of the orbit polynomial are rational functions of
 `j`, as meromorphic germs on the upper half-plane. -/
 theorem orbitCoefficient_rational_in_j {N : ℕ} [NeZero N] {g : ℂ → ℂ}
@@ -202,6 +221,8 @@ theorem orbitCoefficient_rational_in_j {N : ℕ} [NeZero N] {g : ℂ → ℂ}
 #print axioms orbitPoly_root
 #print axioms orbitPoly_monic_degree
 #print axioms coeff_orbitProduct_closed
+#print axioms orbitCoefficient_cusp_of_growth
+#print axioms cuspGerm_translates_analytic_growth
 #print axioms orbitCoefficient_cusp
 #print axioms orbitCoefficient_rational_in_j
 
