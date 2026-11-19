@@ -1,0 +1,92 @@
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.conjugateHom : {F : Type} →
+  [inst : Field.{0} F] →
+    (a : RingEquiv.{0, 0} (AlgebraicClosure.{0} F) (AlgebraicClosure.{0} F)) →
+      (κ : RingEquiv.{0, 0} F F) →
+        (∀ (x : F),
+            Eq.{1} (a ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) x))
+              ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) (κ x))) →
+          MonoidHom.{0, 0} Gal(AlgebraicClosure.{0} F/F) Gal(AlgebraicClosure.{0} F/F)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.conjugateHom' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.conjugateHom_apply : ∀ {F : Type} [inst : Field.{0} F]
+  (a : RingEquiv.{0, 0} (AlgebraicClosure.{0} F) (AlgebraicClosure.{0} F)) (κ : RingEquiv.{0, 0} F F)
+  (ha :
+    ∀ (x : F),
+      Eq.{1} (a ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) x))
+        ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) (κ x)))
+  (g : Gal(AlgebraicClosure.{0} F/F)) (x : AlgebraicClosure.{0} F),
+  Eq.{1} (((ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.conjugateHom a κ ha) g) x)
+    (a (g ((RingEquiv.symm.{0, 0} a) x)))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.conjugateHom_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.kummerVal_conjugate : ∀ {F : Type} [inst : Field.{0} F] {n : ℕ}
+  (a : RingEquiv.{0, 0} (AlgebraicClosure.{0} F) (AlgebraicClosure.{0} F)) (κ : RingEquiv.{0, 0} F F)
+  (ha :
+    ∀ (x : F),
+      Eq.{1} (a ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) x))
+        ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) (κ x)))
+  {b : F} {β : AlgebraicClosure.{0} F},
+  Eq.{1} (HPow.hPow.{0, 0, 0} β n) ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) b) →
+    Ne.{1} β 0 →
+      Eq.{1} (a β) β →
+        ∀ (r : ℕ),
+          (∀ (ζ : AlgebraicClosure.{0} F),
+              Eq.{1} (HPow.hPow.{0, 0, 0} ζ n) 1 → Eq.{1} (a ζ) (HPow.hPow.{0, 0, 0} ζ r)) →
+            ∀ (g : Gal(AlgebraicClosure.{0} F/F)),
+              Eq.{1}
+                (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} β
+                  ((ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.conjugateHom a κ ha) g))
+                (HPow.hPow.{0, 0, 0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} β g) r)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.kummerVal_conjugate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.kummerLog_conjugate : ∀ {F : Type} [inst : Field.{0} F] {n : ℕ}
+  [inst_1 : NeZero.{0} n] (a : RingEquiv.{0, 0} (AlgebraicClosure.{0} F) (AlgebraicClosure.{0} F))
+  (κ : RingEquiv.{0, 0} F F)
+  (ha :
+    ∀ (x : F),
+      Eq.{1} (a ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) x))
+        ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) (κ x)))
+  {b : F} {β : AlgebraicClosure.{0} F}
+  (hβ : Eq.{1} (HPow.hPow.{0, 0, 0} β n) ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) b)) (hβ0 : Ne.{1} β 0)
+  {σ : Gal(AlgebraicClosure.{0} F/F)}
+  (hprim : IsPrimitiveRoot.{0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} β σ) n),
+  Eq.{1} (a β) β →
+    ∀ (r : ℕ),
+      (∀ (ζ : AlgebraicClosure.{0} F), Eq.{1} (HPow.hPow.{0, 0, 0} ζ n) 1 → Eq.{1} (a ζ) (HPow.hPow.{0, 0, 0} ζ r)) →
+        ∀ (g : Gal(AlgebraicClosure.{0} F/F)),
+          Eq.{1}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.kummerLog hβ hβ0 hprim
+              ((ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.conjugateHom a κ ha) g))
+            (HMul.hMul.{0, 0, 0} (↑r) (ZInQ.Contrib.RC53Assist.InnerLimitArith.kummerLog hβ hβ0 hprim g))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.kummerLog_conjugate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.coefficient_kummerLog_conjugate : ∀ {F : Type}
+  [inst : Field.{0} F] {n : ℕ} [inst_1 : NeZero.{0} n] (R : Type) [inst_2 : CommRing.{0} R]
+  [inst_3 : Algebra.{0, 0} (ZMod n) R] (a : RingEquiv.{0, 0} (AlgebraicClosure.{0} F) (AlgebraicClosure.{0} F))
+  (κ : RingEquiv.{0, 0} F F)
+  (ha :
+    ∀ (x : F),
+      Eq.{1} (a ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) x))
+        ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) (κ x)))
+  {b : F} {β : AlgebraicClosure.{0} F}
+  (hβ : Eq.{1} (HPow.hPow.{0, 0, 0} β n) ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) b)) (hβ0 : Ne.{1} β 0)
+  {σ : Gal(AlgebraicClosure.{0} F/F)}
+  (hprim : IsPrimitiveRoot.{0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} β σ) n),
+  Eq.{1} (a β) β →
+    ∀ (r : ℕ),
+      (∀ (ζ : AlgebraicClosure.{0} F), Eq.{1} (HPow.hPow.{0, 0, 0} ζ n) 1 → Eq.{1} (a ζ) (HPow.hPow.{0, 0, 0} ζ r)) →
+        ∀ (g : Gal(AlgebraicClosure.{0} F/F)),
+          Eq.{1}
+            ((Algebra.algebraMap.{0, 0} (ZMod n) R)
+              (ZInQ.Contrib.RC53Assist.InnerLimitArith.kummerLog hβ hβ0 hprim
+                ((ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.conjugateHom a κ ha) g)))
+            (HMul.hMul.{0, 0, 0} (↑r)
+              ((Algebra.algebraMap.{0, 0} (ZMod n) R)
+                (ZInQ.Contrib.RC53Assist.InnerLimitArith.kummerLog hβ hβ0 hprim g)))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RootPullback.coefficient_kummerLog_conjugate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
