@@ -5,3 +5,4 @@
 - Open input: `PreparedParamValue` at the chosen form for each uncovered admissible nonwitness parameter.
 - Selector: preserve `some` entries; fill admissible nonwitness holes; provide an exact selection equation for `lamOf_admissible` and preserve `jgen` at prepared simple zeros.
 - Checks: `Forms.lean` passed `lake env lean -j1`; all three theorem audits list only `propext`, `Classical.choice`, and `Quot.sound`.
+- Checks: `Character.lean` passed `lake env lean -j1`; all eight theorem audits list only `propext`, `Classical.choice`, and `Quot.sound`.
