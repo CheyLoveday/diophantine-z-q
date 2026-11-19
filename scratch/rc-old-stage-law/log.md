@@ -7,3 +7,7 @@
 - Base imports: reused the identical fixed-pool revision's compiled dependencies. No source imported from a sibling branch absent at base.
 - `Local.lean`: Fourier annihilator support and lower-unipotent depth criterion; extracted unit diagonal scalar via the existing `Visibility/WeilIndex`; triangular factorization and Jacobi reciprocity with the dyadic sign. `lake env lean` passed; all six audits use only the permitted axioms.
 - `Words.lean`: words for the full modular group, composition of generator formulas, and bounded normalized values at all rational cusps. `lake env lean` passed; all ten audits use only the permitted axioms.
+- `Transform.lean`: `RelativeFiniteAction` is the joint scalar equation for the two finite tables; `halfIntegral_of_finiteAction` gives the exact classical law. `lake env lean` passed; all four audits use only the permitted axioms.
+- `Stage.lean`: `StageGrid` presents the original weights; their summed grid vector has trivial translation and expansion `Lift.aθ`; `oldStageLaw_of_finiteAction` supplies `BlocksPerU.OldStageLaw` at `Dₗ.old`. `lake env lean` passed; all seven audits use only the permitted axioms.
+- Final Coset recheck passed. Total: seven modules and 44 theorem audits.
+- Scoped stop: provide `StageGrid` for the prescribed weight, identify the old character by `hchar`, and prove `RelativeFiniteAction` at the stated old level by comparison with the local Weil action. No additional printed leaf.
