@@ -17,10 +17,13 @@ Manuscript `diophantine_zq.tex`, tex 4166–4171 ("The generic paired strict lif
   `z_S = ψ_{T ∪ {p}}([y'_R])`, `z_{P⊥} = ψ_T([y'_T])` satisfy lane RC32's `hlift`
   `j z_S = e z_{P⊥} + d b` (`DualPres.hlift_of_transport`) whenever the transported global identity
   holds (for the actual Heegner points: `gx_step_heegner_at` at `π⁻¹`). CAVEAT: at a finite
-  stage ring `OrthComparisonInverse` is uninhabited once a moving place carries a nonzero
-  `G_{K_w}`-invariant (lane E1's `not_orthComparisonInverse`); the text's inverse is generic, after
-  the inner limit and at a localization where the full local complexes at active and moving primes
-  are acyclic (tex 3720–3721, 3736–3753). The proof here uses only `ψ`, `hd` and `hsw`.
+  stage ring with `ι ≠ ∅` and a nonzero `G_{K_w}`-invariant at `w = place (p, false)`,
+  `OrthComparisonInverse` is uninhabited for any `φo` (lane E1's `not_orthComparisonInverse`,
+  `CloudB3E1Torsion/OrthNoInverse.lean`), so this result is conditional on an unsatisfiable input
+  there, and nothing in the headline uses it. The text's inverse lives after the inner limit, over
+  the generic coefficient ring, with the retained old-place lattice comparison (tex 3704–3790); a
+  localized `OrthComparisonInverseLoc` is planned for lane RC32's round 17. The proof here uses
+  only `ψ`, `hd` and `hsw`.
 * `alphaStage_inv_pi`, **`pointFactor_paired`** (PROVED): `α_{π⁻¹} = α_π⁻¹`, so the transported
   factor `pointFactor a z' z'⁻¹` at `z' = α_{π⁻¹}(Frob_w)` is the original `pointFactor a z z⁻¹`
   (`e_q^c = e_q`); `psiTrivialAt2N_inv`, `thetaOfDelta_inv` (PROVED): the hypotheses of the
