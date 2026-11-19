@@ -3,3 +3,5 @@
 - `Visibility/WeilIndex.lean` already has `O5a_ternary`, `hs_extracted_QB`, `W_U_W`, and `O5b_mul`; actual p-adic Fourier operators and the comparison with their global action remain separate.
 - `Coset.lean`: shifted Gaussian `HasSum`, holomorphy, inversion, weighted coset sum inversion. `lake env lean` passed; all five axioms audits list only `propext`, `Classical.choice`, `Quot.sound`.
 - `Grid.lean`: integral-support translation, dual residue sum with the negative finite pairing, and normalized finite Fourier inversion. `lake env lean` passed with the three permitted axioms for all seven statements.
+- `Series.lean`: absolute product and finite outer sum of the shifted Gaussians, and the exact natural-exponent `qParam` formula. `lake env lean` passed; all five audits use only the permitted axioms.
+- Base imports: reused the identical fixed-pool revision's compiled dependencies. No source imported from a sibling branch absent at base.
