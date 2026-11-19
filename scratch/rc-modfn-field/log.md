@@ -1,0 +1,9 @@
+- Base: 63d0529eeab02ad3e2ac3c30b606b7ad4c86722d.
+- Coset coefficients: use rational functions of j; the polynomial claim in the proposed route is false for general meromorphic functions with interior poles.
+- No new prints.
+- Cusps: scaledPrimitive_cusp; coordinates_cusp_meromorphic. Both compiled; axioms: propext, Classical.choice, Quot.sound.
+- Laurent: hasSum_laurent_shift; meromorphicAt_hasSum_laurent; coordinates_cusp_hasSum. Compiled; same axiom set.
+- Descent: complexify; mem_rat_adjoin_of_complexify_mem; modularFunctionField_descent. Compiled; same axiom set for all eight theorem checks.
+- Degree: integral_degree_of_orbit_product; intermediateField_eq_top_of_degree_bound. Compiled; same axiom set.
+- Weierstrass: regularPart_derivatives_rational; five supporting theorems. Compiled; same axiom set.
+- RationalTaylor: 10 closure and factorization theorems. Compiled; same axiom set.
