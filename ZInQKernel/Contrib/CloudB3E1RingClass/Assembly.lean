@@ -116,7 +116,7 @@ def GenuineMovingCore.toInputs (I : GenuineMovingCore E n s C) : GenuineMovingIn
   inertia_eq := I.inertia_eq
   frob_kummer := frob_kummer_genuine I.kd I.Sexc (hαunit_of_support s I.kd I.Sexc I.hsupp)
 
-open ZInQ.Manuscript.RC.GlueSweep.Tate in
+open ZInQ.Manuscript.RC.GlueSweep.Tate ZInQ.Manuscript.RC.Moving in
 /-- **The moving character on the genuine groups, from the core inputs** (tex 2729–2737,
 3500–3506, 4258–4268): `moving_character_genuine` for `GenuineMovingCore.toInputs`. Kind: PROVED. -/
 theorem moving_character_core {ℓ : ℕ}
@@ -141,9 +141,18 @@ theorem moving_character_core {ℓ : ℕ}
         (∀ j, I.act j → ∀ φ : ZInQ.Manuscript.RC.SelmerComplex.Gloc (quadField s) (C.𝔭bar j),
           TauCeti.IsArithFrobeniusLift ((C.𝔭bar j).adicCompletion (quadField s)) φ →
             ξ (ZInQ.Manuscript.RC.SelmerComplex.locMap (quadField s) (C.Sr r) (C.𝔭bar j) φ) =
-              Multiplicative.ofAdd (-1)) := by
-  obtain ⟨r, hrT, hrp, hgood, hr1, ξ, h1, h2, h3, h4, -⟩ :=
-    moving_character_genuine I.toInputs hS hcm hℓ hT P hP B T
-  exact ⟨r, hrT, hrp, hgood, hr1, ξ, h1, h2, h3, h4⟩
+              Multiplicative.ofAdd (-1)) ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+          2 + (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+          2 - (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+          1 + (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r + r ∧
+        ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+          1 - (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r + r ∧
+        ∀ χ : ℤ, (χ = 1 ∨ χ = -1) →
+          ¬ (2 : ℤ) ^ (cE (tateImageEcurveS hS hcm hℓ).d + 1) ∣
+            (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).LFunction r - 2 * χ :=
+  moving_character_genuine I.toInputs hS hcm hℓ hT P hP B T
 
 end ZInQ.Contrib.CloudB3E1RingClass
