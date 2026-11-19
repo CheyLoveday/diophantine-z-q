@@ -577,31 +577,38 @@ structure RCLeaves where
   /-- Hoffstein–Luo over newforms (PRINT, Math. Res. Lett. 4 (1997), §1, Theorem, pp. 435–436, as
   stated by lane RC8; tex 1984–1991, App G 9995–9999, 10016–10027, 10049–10053). -/
   hlPrint : PrintsAnalytic.HoffsteinLuoTheorem
-  /-- Shimura 1973, Theorem 1, pp. 525–526 (PRINT, manuscript bibitem `shimura-factors`; read
-  against the page images, faithful with notes): the coefficient field of a weight-two newform of
-  trivial character on `Γ₀(M)` is a number field, and each of its complex embeddings gives a
-  normalized eigenform of the same level with the embedded coefficients. With the next three
-  fields and `Prints.bcdt` it gives modularity in newform form (`RCLeaves.modularNewform`, tex
-  1779–1784). -/
+  /-- Shimura 1973, Theorem 1, pp. 525–526 (PRINT, manuscript bibitem `shimura-factors`; the
+  full printed theorem and the definitions it uses are quoted verbatim in the docstring of
+  `Shimura1973ConjugateEigenforms`). The printed theorem gives "(iii) dim(A) = [K: Q]" and "for
+  every σ ∈ I, there exists an element f_σ of S₂(Γ) such that f_σ | T_n = a_n^σ f for all n, and
+  f_σ(z) = ∑_{n=1}^∞ a_n^σ e^{2πinz}"; the statement used here: the coefficient field of a
+  weight-two newform of trivial character on `Γ₀(M)` is a number field, and each of its complex
+  embeddings gives a normalized eigenform of the same level with the embedded coefficients. With
+  the next three fields and `Prints.bcdt` it gives modularity in newform form
+  (`RCLeaves.modularNewform`, tex 1779–1784). -/
   shimuraConjugates : ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Shimura1973ConjugateEigenforms
-  /-- Li 1975, Theorem 5, p. 298 (PRINT, manuscript bibitem `li-newforms`; faithful): strong
-  multiplicity one for weight-two newforms of trivial character — two newforms whose coefficients
-  agree at almost every prime have the same level and are equal. -/
+  /-- Li 1975, Theorem 5, p. 298 (PRINT, manuscript bibitem `li-newforms`), verbatim: "Theorem 5.
+  Let F(τ) = ∑_{n≥1} a(n) z₁ⁿ, G(τ) = ∑_{n≥1} b(n) z₁ⁿ be normalized newforms in C_ε(M, 1),
+  C_ε(N, 1) respectively such that a(p) = b(p) for almost all primes p. Then F = G and M = N."
+  Used at weight two and trivial character: two newforms whose coefficients agree at almost every
+  prime have the same level and are equal. -/
   liMultiplicityOne : ZInQ.Contrib.RC53Assist.NewformGlueG0.Li1975StrongMultiplicityOneWeightTwo
-  /-- The elliptic curve of a newform with rational coefficients and its Euler factors (PRINT, a
-  joint reading of Shimura 1973, Theorem 1, at rational coefficient field, and Carayol 1986, §0.8
-  Corollaire, p. 411, with the normalization of §§0.4–0.5 and Théorème (A) of §0.7, pp. 409–411;
-  manuscript bibitems `shimura-factors`, `carayol`; faithful with notes: it is not the literal
+  /-- The elliptic curve of a newform with rational coefficients and its Euler factors (GLUE: a
+  joint reading of two sources, Shimura 1973, Theorem 1, at rational coefficient field, and
+  Carayol 1986, §0.8 Corollaire, p. 411, with the normalization of §§0.4–0.5 and Théorème (A) of
+  §0.7, pp. 409–411; manuscript bibitems `shimura-factors`, `carayol`; it is not the literal
   statement of Carayol's corollary alone, and the newform–curve association is erased rather than
-  constructed): such a newform has an elliptic curve over `ℚ` whose local polynomial at every prime
-  is the newform's Euler polynomial. -/
+  constructed; GLUE until an independent two-lens check clears the reading): such a newform has an
+  elliptic curve over `ℚ` whose local polynomial at every prime is the newform's Euler polynomial.
+  -/
   carayolEulerFactors :
     ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Carayol1986RationalNewformEulerFactors
-  /-- Faltings 1983, §5, Korollar 2 (iii ⇒ iv), p. 361 (PRINT, manuscript
-  bibitem `faltings1983`; faithful with notes, in the reading through the minimal Weierstrass local
-  polynomials at the finite places, the standard local-factor dictionary): two elliptic curves over
-  `ℚ` whose local Euler factors agree at almost every prime have the same local factors at every
-  prime. -/
+  /-- Faltings 1983, §5, Korollar 2 (iii ⇒ iv), p. 361, in the local-factor reading (GLUE:
+  manuscript bibitem `faltings1983`; the statement is a reading of the printed implication through
+  the minimal Weierstrass local polynomials at the finite places, the standard local-factor
+  dictionary, not the printed implication itself; GLUE unless restated as the printed implication
+  with the local-factor step proved): two elliptic curves over `ℚ` whose local Euler factors agree
+  at almost every prime have the same local factors at every prime. -/
   faltingsRigidity :
     ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Faltings1983EulerFactorRigidityQ
   /-- The interface data, given the genus partner `h_*`: chosen by whoever discharges `RCLeaves`
@@ -629,9 +636,10 @@ theorem RCLeaves.hasse (_L : RCLeaves) : PrintsAnalytic.HasseConvergence :=
 
 /-- **Modularity in newform form** (PROVED: every elliptic curve over `ℚ` has a weight-two newform
 of trivial nebentypus with the coefficients of `L(E, s)`, from Theorem A of
-Breuil–Conrad–Diamond–Taylor, `Prints.bcdt`, and the four printed corollaries above, through the
-newform of a modular curve: the divisor-level extraction of the newform, the descent of its
-coefficient field to `ℚ` and the comparison of every coefficient are proved;
+Breuil–Conrad–Diamond–Taylor, `Prints.bcdt`, and the four fields above (two prints, Shimura 1973
+Theorem 1 and Li 1975 Theorem 5, and two GLUE readings, of Carayol 1986 and of Faltings 1983),
+through the newform of a modular curve: the divisor-level extraction of the newform, the descent of
+its coefficient field to `ℚ` and the comparison of every coefficient are proved;
 `PrintsAnalytic.modularNewform_of_printed`; tex 1779–1784). Formerly the composite field
 `modularNewform` (PRINT BCDT with the GLUE "the eigenform of level `N(E)` is the newform"). -/
 theorem RCLeaves.modularNewform (L : RCLeaves) (P : Prints) : PrintsAnalytic.ModularNewform :=
