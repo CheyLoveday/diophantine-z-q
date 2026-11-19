@@ -20,8 +20,8 @@ interface whose ring-class data are these genuine objects.
 * `inertiaGal v`: the genuine inertia group at `v`, the image of the inertia subgroup `I_{K_v}`.
 * `artinClass J`: the Artin class of an ideal `J` prime to `r`, the image of the Picard class of
   `J ∩ (ℤ + r𝒪_K)` under `Pic(ℤ + r𝒪_K) ≃ Gal(H_r/K)` (tex 3575–3576, [Cox, (9.1)]).
-* `FrobeniusCompat` (the stage-2 statement, a Prop): at a place `v` prime to `r`, every arithmetic
-  Frobenius lift of `G_{K_v}` restricts to the Artin class of `v`.
+* `FrobeniusCompat` (a Prop, PROVED in `Frobenius.lean`): at a place `v` not over `r`, some
+  arithmetic Frobenius lift of `G_{K_v}` restricts to the Artin class of `v`.
 * `RingClassIdentification M r P`: the interface's ring-class data are the genuine ones. That is:
   - an additive isomorphism `P r ≃ Gal(H_r/K)`;
   - `decomp`, `decompBar` and `inertia` are the genuine decomposition and inertia groups at
@@ -37,8 +37,8 @@ interface whose ring-class data are these genuine objects.
 * **`psiTrivialAt2N_of_identification`** (PROVED): the moving character's `PsiTrivialAt2N` for the
   norm-cochain chain, from the same inputs.
 
-Kinds: definitions and PROVED; `FrobeniusCompat` is the stage-2 target (a named Prop, not assumed
-anywhere except as the hypothesis of the two theorems).
+Kinds: definitions and PROVED. `FrobeniusCompat` is a hypothesis of the two theorems here; it is
+PROVED in `Frobenius.lean`, which states the unconditional forms.
 -/
 
 noncomputable section
@@ -77,15 +77,16 @@ def artinClass (J : integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conduct
     ringClassGal f hf S hS :=
   ringClassPicEquiv f hf S hS ((ringClassOrder (K := K) f hf).picClass J)
 
-/-- **Local–global Frobenius compatibility** (the stage-2 target, tex 3575–3576 and 3681–3682):
-at a place `v` whose ideal `J` is prime to `f`, every arithmetic Frobenius lift of `G_{K_v}`
-restricts to the Artin class of `J` in `Gal(H_f/K)`. Kind: definition (of the Prop). -/
+/-- **Local–global Frobenius compatibility** (tex 3575–3576 and 3681–3682): at a place `v` not
+over `f`, whose ideal is `J`, some arithmetic Frobenius lift of `G_{K_v}` restricts to the Artin
+class of `J` in `Gal(H_f/K)`. PROVED in `Frobenius.lean` (`frobeniusCompat`).
+Kind: definition (of the Prop). -/
 def FrobeniusCompat : Prop :=
-  ∀ (v : HeightOneSpectrum (𝓞 K))
-    (J : integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus),
-    (J : Ideal (𝓞 K)) = v.asIdeal →
-      ∀ φ : Gloc K v, TauCeti.IsArithFrobeniusLift (v.adicCompletion K) φ →
-        locGal f hf S hS v φ = artinClass f hf S hS J
+  ∀ (v : HeightOneSpectrum (𝓞 K)), (f : 𝓞 K) ∉ v.asIdeal →
+    ∀ J : integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus,
+      (J : Ideal (𝓞 K)) = v.asIdeal →
+        ∃ φ : Gloc K v, TauCeti.IsArithFrobeniusLift (v.adicCompletion K) φ ∧
+          locGal f hf S hS v φ = artinClass f hf S hS J
 
 /-! ### The identification of the interface with the genuine objects -/
 
@@ -120,6 +121,8 @@ structure RingClassIdentification (M : MovingSetting T n) (r : ℕ) (hr : r ≠ 
   /-- at an active orientation, the ideal of `𝔭_j`, prime to `r` -/
   ideal : ∀ j, M.act j → integralIdealsPrimeTo (ringClassOrder (K := K) r hr).conductorModulus
   ideal_eq : ∀ j (hj : M.act j), ((ideal j hj : Ideal (𝓞 K))) = (place j).asIdeal
+  /-- the active primes are prime to `r` (`r` is good) -/
+  place_not_over : ∀ j, M.act j → (r : 𝓞 K) ∉ (place j).asIdeal
   /-- `q r j` is the Artin class of `𝔭_j` -/
   q_eq : ∀ j (hj : M.act j), Additive.toMul (e (M.q r j)) = artinClass r hr S hS (ideal j hj)
 
@@ -182,12 +185,13 @@ def movingRealization_of_identification (I : RingClassIdentification M r hr S hS
     exact hσz
   place := I.place
   frob_act j hj := by
-    obtain ⟨φ, hφ⟩ := TauCeti.exists_isArithFrobeniusLift ((I.place j).adicCompletion K)
+    obtain ⟨φ, hφ, hφq⟩ :=
+      hF (I.place j) (I.place_not_over j hj) (I.ideal j hj) (I.ideal_eq j hj)
     refine ⟨φ, hφ, ?_⟩
     apply I.e.injective
     apply Additive.toMul.injective
     rw [I.e_res, I.q_eq j hj]
-    exact hF (I.place j) (I.ideal j hj) (I.ideal_eq j hj) φ hφ
+    exact hφq
 
 /-- **`PsiTrivialAt2N` for the genuine ring class field** (tex 2729, 3431, 3500–3506): the moving
 character `Ψ_i = Ψ ∘ res`, with `res` the genuine restriction to `Gal(H_r/K)`, satisfies the
