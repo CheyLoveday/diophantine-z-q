@@ -1,0 +1,5 @@
+- Base: `bc5d7a6b916ac38d266a7eb0738e129019e4cdc0`.
+- `Fourier.lean`: `F_a^2 w(r)=w(-r)`, `F_a^4=1`, by primitive-character orthogonality and the given normalization.
+- `Fourier.lean`: `lake env lean` passed; six theorem audits, only `propext`, `Classical.choice`, `Quot.sound`.
+- `StageGrid.extracts` provides integral support for upper phases via `stageGrid_twist_eq`. `StageGrid.constant` concerns the rectangular lattice, not the additional finite translations needed at the actual old level.
+- `PMLocal` source inspected on an existing ref; absent from this base. `f` is the lifted weight; `finiteSupp` concerns one norm sphere; `frameScale` concerns a good-prime frame. Neither supplies the full translation depth or scaling of the fixed-sieved adèlic factors.
