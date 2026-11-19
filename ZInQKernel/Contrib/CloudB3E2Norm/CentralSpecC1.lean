@@ -20,10 +20,13 @@ augmented classes, which lie in `E[2^i]` over `K_{S₀}`), with `hpush` through 
   `E[2^i]`-valued cochains and `hred` stated for any `E[2^i]`-valued form of the twisted Kummer
   cocycle; **`central45_global₂`** (PROVED): (4.5) at a stage, global component, as
   `central45_global`.
-* **(C1) concrete** (PROVED): `evalT0 : A_i → ℤ/2^i` (`t ↦ 0`); the target `Zc = ℤ/2^i ⊗ E[2^i]`
-  with the `χ_h`-twisted action, its plain cochains `Z1`, `Z0 = Zc`, `dZ`; `specG`, `specG0`
-  (`evalT0 ⊗ id`), `hd`, `hsmul`; `Φ` (`t ↦ 1 ⊗ t`) with `hΦinj`; `hpush` — under the named
-  hypothesis `Ψ ≡ 1 mod t` (`evalT0 ∘ ψ = 1`, true for `ψ = (1 + t)^{ξ}`).
+* **(C1) concrete, ambient pointwise form** (PROVED): `evalT0 : A_i → ℤ/2^i` (`t ↦ 0`); the
+  target `E[2^i]` (a `ℤ/2^i`-module) with the `χ_h`-twisted action; `Z1C`, the ambient group of
+  all `E[2^i]`-valued `1`-cochains (it contains the continuous cochains of the central stage
+  complex; `specGC_continuous`: the specialization lands in them), `Z0 = E[2^i]`, `dZ`; `specG`,
+  `specG0` (`evalT0 ⊗ id`), `hd`, `hsmul`; `Φ = id` with `hΦinj`; `hpush` — under the named
+  hypothesis `Ψ ≡ 1 mod t` (`evalT0 ∘ ψ = 1`, true for `ψ = (1 + t)^{ξ}`). The comparison is the
+  pointwise one into this ambient target, not a map of complexes onto the central stage complex.
 * **`centralStageComparison₂_of_C2`** (definition): the comparison built from the concrete (C1)
   data and the (C2) data alone (`twistPt`, `red`, `hred`, `twistPt_injective`), which stay named.
 
@@ -409,6 +412,18 @@ def specGC : (globalCx k (GKS K S) (MinS hS W i (alphaStage i s hs hs0 π ψ))).
   map_zero' := by funext g; exact map_zero _
   map_add' x y := by funext g; exact map_add _ _ _
 
+/-- **The specialization lands in the continuous cochains** (PROVED): `specGC x` is continuous for
+the discrete topology on `E[2^i]`. The target `Z1C` of the concrete comparison is the ambient group
+of all `E[2^i]`-valued `1`-cochains, which contains the continuous ones (the read-out `Φ` of the
+comparison is defined on all cochains). -/
+theorem specGC_continuous
+    (x : (globalCx k (GKS K S) (MinS hS W i (alphaStage i s hs hs0 π ψ))).X 1) :
+    @Continuous _ _ _ (⊥ : TopologicalSpace (TorsT S₀ W i)) (specGC hS W i s hs hs0 π ψ k x) := by
+  let _ : TopologicalSpace (TorsT S₀ W i) := ⊥
+  exact (continuous_of_discreteTopology (f := fun m : MinS hS W i (alphaStage i s hs hs0 π ψ) =>
+    mapZ W i (asTens hS W i s hs hs0 π ψ m))).comp
+      ((contSubCx k (GKS K S) (MinS hS W i (alphaStage i s hs hs0 π ψ))).el x).2
+
 /-- **Degree zero**. Kind: definition. -/
 def specG0C : (globalCx k (GKS K S) (MinS hS W i (alphaStage i s hs hs0 π ψ))).X 0 →+
     TorsT S₀ W i where
@@ -491,9 +506,10 @@ theorem specGC_push (hψ1 : ∀ d : Δ, evalT0 i (ψ d : Acoef i) = 1)
   exact key _
 
 variable {ψ} in
-/-- **The comparison from the concrete (C1) data and the (C2) data alone** (tex 3911–3933): the
-center `R0 = ℤ/2^i`, `sp = evalT0 ∘ e`, the target `E[2^i]` with the `χ_h`-twisted action, its
-plain cochains, `specG = evalT0 ⊗ id`, `Φ = id` — all PROVED under `Ψ ≡ 1 mod t` (`hψ1`); the
+/-- **The comparison from the concrete (C1) data and the (C2) data alone** (tex 3911–3933), in
+ambient pointwise form: the center `R0 = ℤ/2^i`, `sp = evalT0 ∘ e`, the target `E[2^i]` with the
+`χ_h`-twisted action, the ambient group of its `1`-cochains (containing the continuous ones),
+`specG = evalT0 ⊗ id`, `Φ = id` — all PROVED under `Ψ ≡ 1 mod t` (`hψ1`); the
 named inputs are the (C2) data: the twist identification `twistPt` (injective), the reduction
 `red` of the central `2`-adic cochains, and its value `hred` on the global Kummer cochains.
 Kind: definition. -/
@@ -552,9 +568,9 @@ variable {K : Type} [Field K] [NumberField K] [DecidableEq K]
   [IsOpenKer (alphaShap s hs hs0 π)] [IsOpenKer (alphaStage i s hs hs0 π ψ)]
   {k : Type} [CommRing k] [TopologicalSpace k] [DiscreteTopology k] [StageIsoA k i]
 
-/-- **(4.5) at a stage on the concrete target** (PROVED from the (C2) data): with the concrete
-(C1) comparison, `evalT0 ⊗ id` of the class of `A_R` is
-`(a(0) − 2χ_h(σ)) · red(κ(P)) + d(evalT0 ⊗ id (b_G))` in `E[2^i]`-valued `1`-cochains. -/
+/-- **(4.5) at a stage on the concrete target, pointwise** (PROVED from the (C2) data): with the
+concrete (C1) comparison, `evalT0 ⊗ id` of the class of `A_R` is
+`(a(0) − 2χ_h(σ)) · red(κ(P)) + d(evalT0 ⊗ id (b_G))` as `E[2^i]`-valued `1`-cochains. -/
 theorem central45_C2 (hFull : FullTorsion K S₀ W (2 ^ i)) {P : Set (HeightOneSpectrum (𝓞 K))}
     {ι : Type} {place : ι × Bool → Places K S} {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
     (G : GenuineKummerData K E₀ hZ) (hψ1 : ∀ d : Δ, evalT0 i (ψ d : Acoef i) = 1)
