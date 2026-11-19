@@ -7,3 +7,4 @@
 - `BShFamily.splits_of_eventually_exhaustion`: a monic polynomial with eventual pointwise root exhaustion over an algebraically closed field splits over the field supplying its germ coefficients and those roots; compiled.
 - `lake build +ZInQKernel.Contrib.OneProof.BShFamilySplittingCriterion`: passed; both axiom scans contain only `propext`, `Classical.choice`, and `Quot.sound`.
 - `BShFamilySections`: built as part of the family build. The Möbius change of basis and meromorphic torsion sections have only `propext`, `Classical.choice`, and `Quot.sound` in their axiom scans.
+- `BShFamilyLattice`, `BShFamilyTorsion`, `BShFamilySplit`: built as part of the family build. The division-root atlas, multiplication and x-coordinate comparison, and restriction of meromorphic germs have only the three allowed axioms.
