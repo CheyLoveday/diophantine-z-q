@@ -140,10 +140,13 @@ witnesses:
   the finite-dimensional cochain modules `fG`, `fL`, `fF`, `fS` of the earlier steps), so the
   infinite dimension of `C¹_cont` is no obstruction there; the stage models are, as before,
   existential homotopy equivalences from the fibres' Selmer complexes to the stages' two-term
-  fibres. The outer models of the eq35 leaf carry the actual retained classes, required only to be
-  nonzero, with the scalar relating them to the primitive kernel vectors carried by the functionals
+  fibres. The outer models of the eq35 leaf have model classes required only to be nonzero
   (`RetainedOuterModels`; tex 4927–4953, 4948–4950), so the primitivity of the selected outer
-  model's class (`InstanceModel.hprim`) is no longer asked; their switch input on the actual data
+  model's class (`InstanceModel.hprim`) is no longer asked and a divisible class is admitted; the
+  classes, functionals and matrices remain existential model data, not identified with the
+  instance's actual retained classes, and the leaf is equivalent to the earlier form
+  (`eq35InputsGenuineABoundedR_iff`; on realization the class is replaced by a primitive kernel
+  vector and the scalar is moved into the functional); their switch input on the model data
   (`RetainedOuterSwitchData`) still carries an existential Selmer-level datum
   (`SelmerNonquadStep`) with finite-dimensional cochain modules, not tied to the genuine complexes
   and met by finite models;
@@ -171,10 +174,12 @@ witnesses:
   `Eq35InputsGenuineABoundedH`; tex
   2442–2446, 4453–4460, 4910); before, one family with one size function was fixed for all ring
   instances before `A`, a bound the text does not state;
-* closed: the outer models of (3.5) carry the actual retained classes, required only to be nonzero
+* closed (form only): the outer models of (3.5) have model classes required only to be nonzero
   (`RetainedOuterModels`; tex 4927–4953, 4948–4950: "The actual inner class is a nonzero scalar
   multiple of `v_j`"), instead of a primitive class (`InstanceModel.hprim`, batch 3's departure);
-  on realization the scalar is carried by the functional (`RetainedInstanceModel.ofPrimitiveVector`,
+  the classes remain existential and are not identified with the instance's actual retained
+  classes; on realization the scalar is carried by the functional
+  (`RetainedInstanceModel.ofPrimitiveVector`,
   the same class-functional tensor and coordinate) and the primitive vector is proved to exist;
   the form with retained models is equivalent to the form with batch 3's models
   (`eq35InputsGenuineABoundedR_iff`), so the leaf's strength is unchanged;
@@ -304,15 +309,17 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   (`RegularityInputsHPK`: lane RC26's Galois fibers, the genuine moving variable) and (4.6) at the
   companion pairs; then for every `A`,
   a family of retained switched models over `𝒪` for the companion pairs with `ω(k') ≤ A`
-  (`RetainedOuterModels`: at every configuration the actual retained class, required only to be
-  nonzero, and the actual paired functional; tex 4927–4953, 4948–4950), of size at most the
+  (`RetainedOuterModels`: at every configuration a model class, required only to be nonzero, and a
+  closed integral functional, in the roles of the text's retained class and paired functional but
+  existential and not tied to the instance; tex 4927–4953, 4948–4950), of size at most the
   cap of (5.1) at each configuration (`eq51Cap`; for the equivalent form with batch 3's models,
   equivalent to the sizes equal to the cap, by
   padding with contractible blocks `[𝒪 --(-1)--> 𝒪]`: `eq35InputsGenuineA_iff_bounded`, which keeps
-  the coordinates, the outer dimensions and the switch steps), each actual matrix a two-term model
-  of genuine Galois Selmer data over `𝒪` (`IsGenuineTwoTermModel`), the actual coordinates of the
-  starting models having the valuations of `ι_𝒪 u_prim`, with the switch input on the actual data
-  `RetainedOuterSwitchData` (switch GLUE between the actual configurations) for every
+  the coordinates, the outer dimensions and the switch steps), each model matrix a two-term model
+  of genuine Galois Selmer data over `𝒪` (`IsGenuineTwoTermModel`), the coordinates of the
+  starting models (computed from their classes and functionals) having the valuations of
+  `ι_𝒪 u_prim`, with the switch input `RetainedOuterSwitchData` on these model data (switch GLUE
+  between the configurations of the family) for every
   sequence of those pairs (ELLIOT + GLUE; tex 2441–2446, 3987–4047, 4453–4460, 4909–5202; owners
   RC16, RC15, RC6, RC26, batch 3 SwitchInputs). The bound is on the matrix index `nOf`; each free
   term has rank `nOf + 1`. The text's total-rank estimate `2 * (nOf + 1) ≤ eq51Cap` implies this
@@ -336,11 +343,15 @@ structure PreLeaves {ℓ : ℕ} (W : WData ℓ) : Prop where
   Elliot's regularity assertion (ELLIOT). The homology-level steps need only finite cohomology, so
   the infinite-dimensional continuous cochains of the genuine fibres are allowed in the regularity
   part; its homotopy equivalences are existential, not tied to the text's finite free models (the
-  intended source is the graded finite free models of `RC/Limits`). The outer models carry the
-  actual retained classes with the scalar in the functionals (tex 4948–4950), so batch 3's
-  primitivity departure (`InstanceModel.hprim`) no longer applies. The outer model family is
+  intended source is the graded finite free models of `RC/Limits`). The outer model classes are
+  required only to be nonzero (tex 4948–4950), so batch 3's primitivity departure
+  (`InstanceModel.hprim`) no longer applies in the sense that a divisible class is admitted. The
+  strength is unchanged (`eq35InputsGenuineABoundedR_iff`; on realization the class becomes a
+  primitive kernel vector and the scalar moves into the functional), and every witness can be
+  replaced by one whose classes are primitive, so the model classes are not identified with the
+  instance's actual retained classes. The outer model family is
   existential as well: the genuine Galois Selmer data in `IsGenuineTwoTermModel` are not tied to
-  the instance `i`, and the switch input on the actual data (`RetainedSwitchStep`, transported to
+  the instance `i`, and the switch input on the model data (`RetainedSwitchStep`, transported to
   batch 3's `OuterSwitchStep`) carries an existential Selmer-level datum `SelmerNonquadStep` with
   finite-dimensional cochain modules (`fG`, `fL`, `fF`, `fS`), not tied to the genuine complexes
   and met by finite models (unchanged from the earlier form). -/

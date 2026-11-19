@@ -9,23 +9,24 @@ class-functional coordinate of `ex:arith-coordinate` (tex L3877–3892) and the 
 functional of `ex:arith-paired-functional` with exponent `a = 0` (tex L3864–3869).
 
 **The departure.** `SwitchInputs.InstanceModel` (`GenuineOuter.lean`) asks that its class `zR` be
-primitive (`hprim : ∃ i, ¬ ϖ ∣ zR i`), so its class is an existential primitive vector that is not
-identified with the actual retained class. The text keeps the two apart (tex L4939–4950): "In each
-generic one-dimensional kernel choose a primitive vector `v_j`. Its outer image is nonzero, so the
-outer kernel dimension `s` is at least one. [...] The actual inner class is a nonzero scalar
-multiple of `v_j`. Even if this scalar tends to zero, its generic localization is nonzero on an
-outer-large set. Exact switch preservation therefore keeps each inner determinant valuation." The
-actual class may be divisible by `ϖ`; the coordinate is that of the actual class and the actual
-functional (tex L3882–3892).
+primitive (`hprim : ∃ i, ¬ ϖ ∣ zR i`), so its class must be primitive, whereas the text's actual
+retained class may be divisible. The text keeps the two apart (tex L4939–4950): "In each generic
+one-dimensional kernel choose a primitive vector `v_j`. Its outer image is nonzero, so the outer
+kernel dimension `s` is at least one. [...] The actual inner class is a nonzero scalar multiple of
+`v_j`. Even if this scalar tends to zero, its generic localization is nonzero on an outer-large set.
+Exact switch preservation therefore keeps each inner determinant valuation." The actual class may be
+divisible by `ϖ`; the coordinate is that of the actual class and the actual functional (tex
+L3882–3892).
 
-**The realization.** `RetainedInstanceModel R K n` holds the actual data of one instance: the
-integral two-term model `M`, the actual retained class `z` (an integral cycle, required only to be
-NONZERO, tex L4928–4934), the actual paired functional `lam` (integral and closed) and an admissible
-complement. Its coordinate `coord` is computed from `z` and `lam`. A primitive kernel vector of its
-two-term stage (`UniformSwitch.PrimitiveKernelVector` for the residue map of `R`: `M v = 0`,
-`v̄ ≠ 0`, `ι z = c · ι v` with `c ≠ 0`, tex L4987–4992) gives the integral scalar `c₀`
-(`pkScalar`, `ι c₀ = c`), and `ofPrimitiveVector` is the `InstanceModel` with class `zR = v` and
-functional `lamR = c₀ • lam`: the scalar is moved into the functional. PROVED:
+**The realization.** `RetainedInstanceModel R K n` holds the data of one instance in the roles of
+the text's actual data (the structure does not tie them to the instance; in the (3.5) leaf the
+family is existential): the integral two-term model `M`, the actual retained class `z` (an integral
+cycle, required only to be NONZERO, tex L4928–4934), the actual paired functional `lam` (integral
+and closed) and an admissible complement. Its coordinate `coord` is computed from `z` and `lam`. A
+primitive kernel vector of its two-term stage (`UniformSwitch.PrimitiveKernelVector` for the residue
+map of `R`: `M v = 0`, `v̄ ≠ 0`, `ι z = c · ι v` with `c ≠ 0`, tex L4987–4992) gives the integral
+scalar `c₀` (`pkScalar`, `ι c₀ = c`), and `ofPrimitiveVector` is the `InstanceModel` with class
+`zR = v` and functional `lamR = c₀ • lam`: the scalar is moved into the functional. PROVED:
 
 * `ofPrimitiveVector_class_functional`: `c₀ ≠ 0`, `ι z = ι c₀ · ι zR` (the actual class is the
   nonzero scalar multiple of the model class, tex L4948) and `lamR = c₀ • lam`;
@@ -49,7 +50,8 @@ dimension of the actual matrices (`toGenuine_stage_outerDim`) and the actual inn
 the outer kernel vector of a realized stage is the nonzero outer image of the primitive vectors
 (`toGenuine_stage_zout`), so the outer kernel dimension of the actual matrices is at least one
 (`one_le_outerKerDim`, tex L4940–4941). The switch input is stated on the actual data alone:
-`RetainedSwitchStep` (GLUE: Elliot's switch lemma, tex L4940–4950) and `RetainedOuterSwitchData`;
+`RetainedSwitchStep` (definition; ELLIOT switch input with GLUE comparisons, tex L4940–4950) and
+`RetainedOuterSwitchData`;
 `retainedOuterSwitchData_iff` identifies them with `SwitchInputs.GenuineOuterSwitchData` of
 `toGenuine`. PROVED: `uniform_lower_bound_of_retained` ((5.5) for the actual coordinates),
 `retainedOuterPart_iff` (the outer conjunct of the (3.5) leaves, on retained families, is equivalent
@@ -60,11 +62,17 @@ right side with `cap = eq51Cap ℓ A` is verbatim the outer conjunct at `A` of
 `RetainedInstanceModel.h1_nontrivial` (a genuine retained model forces nonzero genuine `H¹`, from
 the nonzero actual class) and `RetainedInstanceModel.zeroSelData_not_model`.
 
+**Scope of the data.** The structures record supplied matrices, classes, functionals and
+complements. Their identification with the actual arithmetic instance and its retained class and
+paired functional is OPEN (ELLIOT + GLUE). References below to actual data are conditional on
+that identification. `IsGenuineTwoTermModel` concerns the matrix alone and supplies no class or
+functional identification. Examples with `Gen := True` establish structural satisfiability only.
+
 **What remains.** The retained family itself (the actual minimal models, the actual classes with
 `z ≠ 0` at every configuration, the actual paired functionals and complements: ELLIOT + GLUE, tex
 L4927–4953, L3864–3869), the genuineness of the matrices, the coordinate clause, and the switch
-input `RetainedOuterSwitchData` (GLUE, tex L4940–4950). Primitivity of the actual class is not
-among them.
+input `RetainedOuterSwitchData` (ELLIOT switch input with GLUE comparisons, tex L4940–4950).
+Primitivity of the actual class is not among them.
 
 Non-vacuity: `exRetained` over `ℤ₂ ⊂ ℚ₂`, the model `[ℤ₂ --0--> ℤ₂]` with the DIVISIBLE actual
 class `2` (`exRetained_not_primitive`) and functional `1`; its realization `exRealized` has class
@@ -95,13 +103,14 @@ section Retained
 variable {R : Type} [CommRing R] {K : Type} [Field K] [Algebra R K]
 
 variable (R K) in
-/-- **The actual retained data of one instance** (tex L4927–4940, L4957–4961, L3864–3869): an
-integral two-term model `[R^{n+1} --M--> R^{n+1}]` over `R`, the actual retained class `z` (an
-integral cycle, required only to be nonzero: tex L4928–4934, "the retained central class nonzero
-[...] the actual lifted cycle would vanish, contradicting its central value"), the actual paired
-functional `lam` (integral and closed, exponent `a = 0`) and an admissible complement `(w, y)`
-(tex L3882–3892). No primitivity is asked of `z` (tex L4948: "The actual inner class is a nonzero
-scalar multiple of `v_j`"). Kind: definition. -/
+/-- **The retained data of one instance** (in the roles of the text's actual data; not tied to the
+instance) (tex L4927–4940, L4957–4961, L3864–3869): an integral two-term model
+`[R^{n+1} --M--> R^{n+1}]` over `R`, the actual retained class `z` (an integral cycle, required only
+to be nonzero: tex L4928–4934, "the retained central class nonzero [...] the actual lifted cycle
+would vanish, contradicting its central value"), the actual paired functional `lam` (integral and
+closed, exponent `a = 0`) and an admissible complement `(w, y)` (tex L3882–3892). No primitivity is
+asked of `z` (tex L4948: "The actual inner class is a nonzero scalar multiple of `v_j`"). Kind:
+definition. -/
 structure RetainedInstanceModel (n : ℕ) where
   /-- The integral model (tex L4937–4938). -/
   M : Matrix (Fin (n + 1)) (Fin (n + 1)) R
@@ -484,9 +493,10 @@ theorem realizedStage_coord (hinj : Function.Injective (algebraMap R K)) {n : �
 
 namespace RetainedOuterModels
 
-/-- **The genuine outer models of a retained family** (tex L4936–4950): every model realized on
-its actual retained class (`RetainedInstanceModel.toInstanceModel`: class the chosen primitive
-kernel vector, the scalar moved into the actual functional). Kind: definition. -/
+/-- **The primitive-vector realization of a retained family** (tex L4936–4950): every supplied
+model is realized at a primitive kernel vector, with the scalar moved into the functional. The
+matrix, class-functional tensor and coordinate are preserved; the class and functional need not be
+preserved separately. Arithmetic identification remains open. Kind: definition. -/
 def toGenuine (T : RetainedOuterModels R K Inst P) (hinj : Function.Injective (algebraMap R K)) :
     GenuineOuterModels ϖ K Inst P where
   nOf := T.nOf
@@ -544,13 +554,13 @@ theorem one_le_outerKerDim (T : RetainedOuterModels R K Inst P)
 
 end RetainedOuterModels
 
-/-- **The switch input on the actual data** (tex L4940–4950; the GLUE input of Elliot's switch
-lemma for the actual configurations): the fields of `OuterSwitchStep` with the outer dimensions
-those of the actual matrices and the inner coordinates the actual coordinates — a Selmer-level
-nonquadratic step over `Frac 𝒪_∞` (Plug's `SelmerNonquadStep`) whose side dimensions are the outer
-kernel dimensions before and after the switch, and, on an outer-large set, switch coordinate data
-with volume normalizations images of units of `R` whose finite and singular coordinates are the
-actual coordinates before and after the switch. Kind: definition. -/
+/-- **The switch input on the actual data** (tex L4940–4950; definition; ELLIOT switch input with
+GLUE comparisons, for the actual configurations): the fields of `OuterSwitchStep` with the outer
+dimensions those of the actual matrices and the inner coordinates the actual coordinates — a
+Selmer-level nonquadratic step over `Frac 𝒪_∞` (Plug's `SelmerNonquadStep`) whose side dimensions
+are the outer kernel dimensions before and after the switch, and, on an outer-large set, switch
+coordinate data with volume normalizations images of units of `R` whose finite and singular
+coordinates are the actual coordinates before and after the switch. Kind: definition. -/
 structure RetainedSwitchStep {n n' : ℕ} (X : J → RetainedInstanceModel R K n)
     (X' : J → RetainedInstanceModel R K n') where
   sel : SelmerNonquadStep (FractionRing (OInf 𝒰 ϖ))
@@ -606,10 +616,10 @@ def RetainedSwitchStep.ofInstanceModels {n n' : ℕ} {X : J → InstanceModel ϖ
 
 variable (𝒰 ϖ)
 
-/-- **The outer switching data on the actual data** (tex L4936–4964; the GLUE input of Elliot's
-switch lemma for the actual configurations): for a retained family `T` and a sequence `inst` of
-instances, at every configuration `l` whose actual matrices have outer kernel dimension `> 1`, a
-derivative-prime label `p` and a `RetainedSwitchStep` between the actual data at `l` and at
+/-- **The outer switching data on the actual data** (tex L4936–4964; definition; ELLIOT switch input
+with GLUE comparisons, for the actual configurations): for a retained family `T` and a sequence
+`inst` of instances, at every configuration `l` whose actual matrices have outer kernel dimension
+`> 1`, a derivative-prime label `p` and a `RetainedSwitchStep` between the actual data at `l` and at
 `l ++ [p]`. Kind: definition. -/
 structure RetainedOuterSwitchData (T : RetainedOuterModels R K Inst P) (inst : J → Inst) :
     Prop where

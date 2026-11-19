@@ -2,14 +2,15 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35H
 import ZInQKernel.Contrib.RC53Assist.OuterRealization.RetainedClass
 
 /-!
-**Theorem 5.3: the (3.5) leaf with the outer models on the actual retained classes**
+**Theorem 5.3: the (3.5) leaf with outer model classes required only to be nonzero**
 
 Proposition `ex:limits-uniform-lower-bound` (tex 4909–5202) at the ring instances of Proposition
 `ex:sec7-genus-lower` (tex 2418–2446), in the text's quantifier order, with the size bound (5.1),
-homology-level regularity data (`Eq35InputsGenuineABoundedH`, `GenuineEq35H.lean`) and the outer
-switching models of the text.
+homology-level regularity data (`Eq35InputsGenuineABoundedH`, `GenuineEq35H.lean`) and outer
+switching models in the text's form (model classes only nonzero).
 
-**The departure removed.** The outer conjunct of `Eq35InputsGenuineABoundedH` asks for batch 3's
+**The departure of form removed (strength unchanged).** The outer conjunct of
+`Eq35InputsGenuineABoundedH` asks for batch 3's
 `GenuineOuterModels`, whose instance models (`SwitchInputs.InstanceModel`) carry `hprim`: the
 selected outer model's class must be primitive. The text keeps the primitive kernel vector apart
 from the actual class (tex 4939–4950): "In each generic one-dimensional kernel choose a primitive
@@ -17,29 +18,38 @@ vector `v_j`. Its outer image is nonzero, so the outer kernel dimension `s` is a
 The actual inner class is a nonzero scalar multiple of `v_j`. Even if this scalar tends to zero,
 its generic localization is nonzero on an outer-large set." `Eq35InputsGenuineABoundedR W` asks
 instead for the outer models of the RC53 group's `RetainedOuterModels`
-(`RC53Assist/OuterRealization/RetainedClass.lean`): every model carries the ACTUAL retained class
-(required only to be nonzero, tex 4928–4934), the actual paired functional and the actual
-coordinate; the switch input is stated on the actual data (`RetainedOuterSwitchData`). The scalar
+(`RC53Assist/OuterRealization/RetainedClass.lean`): every model carries a class required only to
+be nonzero (tex 4928–4934), so the text's possibly divisible actual class is admitted, a closed
+integral functional and the coordinate computed from them; the switch input is stated on these
+data (`RetainedOuterSwitchData`). The data are existential: nothing ties them to the instance's
+actual retained class, paired functional or complexes, and by `eq35InputsGenuineABoundedR_iff`
+the leaf has the strength of the earlier form. The scalar
 relating the actual class to the primitive vector is carried by the functional when the family is
 realized (`RetainedInstanceModel.ofPrimitiveVector`: class `v`, functional `c₀ • lam`, the same
 class-functional tensor and coordinate); the primitive vector itself is PROVED to exist (the RC53
 group's `exists_primitiveKernelVector`, the saturation of `ker d`, tex 4987–4990).
+
+**Scope of the data.** The structures record supplied matrices, classes, functionals and
+complements. Their identification with the actual arithmetic instance and its retained class and
+paired functional is OPEN (ELLIOT + GLUE). References below to actual data are conditional on that
+identification. `IsGenuineTwoTermModel` concerns the matrix alone and supplies no class or
+functional identification. Examples with `Gen := True` establish structural satisfiability only.
 
 PROVED:
 * **`eq35InputsGenuineABoundedR_iff`: `Eq35InputsGenuineABoundedR W ↔
   Eq35InputsGenuineABoundedH W`** — the two forms have the same strength (the RC53 group's
   `eq35OuterPart_iff` at `cap = eq51Cap ℓ A` for every `A`; realization `toGenuine` one way, the
   reading `ofGenuine` of an old family the other);
-* `eq35Target_of_inputsAR` ((3.5) for each `A`), `eq55_of_inputsAR` ((5.5) for the actual
-  coordinates, directly from the retained data through `eq55_of_retained`);
+* `eq35Target_of_inputsAR` ((3.5) for each `A`), `eq55_of_inputsAR` ((5.5) for the coordinates
+  `u_prim` chosen before `A`, directly from the retained model data through `eq55_of_retained`);
 * the comparisons `Eq35InputsGenuineABoundedH.toR`, `Eq35InputsGenuineABoundedR.toH`,
   `Eq35InputsGenuineABounded.toR` (from the cochain-level leaf) and the degenerate satisfiability
   `eq35InputsGenuineABoundedR_of_not_prepared`.
 
 Non-vacuity at the level of the structures (over `ℤ₂ ⊂ ℚ₂`): `eq35R_outerPart_divisible` (the
-retained outer conjunct holds for a family whose actual class `2` is divisible, which is the class
+retained outer conjunct holds for a family whose model class `2` is divisible, which is the class
 of no old instance model, `eq35R_divisible_not_instanceClass`) and `eq35R_outerPart_scaled` (it
-holds for the family of actual classes `2^j`, the scalar tending to zero, tex 4949).
+holds for the family of model classes `2^j`, the scalar tending to zero as in tex 4949).
 
 **What remains.** The retained family itself (the actual minimal models, the actual classes with
 `z ≠ 0`, the actual paired functionals and complements; ELLIOT + GLUE, tex 4927–4953, 3864–3869),
@@ -65,16 +75,17 @@ attribute [local instance] Nat.fact_prime_two
 
 variable {ℓ : ℕ} (W : WData ℓ)
 
-/-- **The inputs of (3.5) with the outer models on the actual retained classes** (Proposition
+/-- **The inputs of (3.5) with outer model classes required only to be nonzero** (Proposition
 `ex:limits-uniform-lower-bound`, tex 4909–5202, at the ring instances `(h, k')` of Proposition
 `ex:sec7-genus-lower`, tex 2418–2446): `Eq35InputsGenuineABoundedH W` with its outer conjunct at
 every `A` replaced by the outer conjunct on retained families — a label type `Pl` and a family
-`T` of `RetainedOuterModels` over `𝒪` for the companion pairs with `ω(k') ≤ A` (the actual
-classes only nonzero, not primitive; the actual paired functionals; tex 4927–4953, 4948–4950),
-of size at most the cap of (5.1) (tex 4453–4460, 4936–4938, 4954–4956), every actual matrix a
-two-term model of genuine Galois Selmer data (`IsGenuineTwoTermModel`; GLUE), the ACTUAL
-coordinates of the starting models with the valuations of `ι_𝒪 u_prim` (tex 3877–3892), and the
-switch input on the actual data `RetainedOuterSwitchData` for every sequence of instances (tex
+`T` of `RetainedOuterModels` over `𝒪` for the companion pairs with `ω(k') ≤ A` (model classes
+only nonzero, not primitive, and closed integral functionals, existential and not tied to the
+instance; tex 4927–4953, 4948–4950), of size at most the cap of (5.1) (tex 4453–4460,
+4936–4938, 4954–4956), every model matrix a two-term model of genuine Galois Selmer data
+(`IsGenuineTwoTermModel`; GLUE), the coordinates of the starting models with the valuations of
+`ι_𝒪 u_prim` (tex 3877–3892), and the switch input `RetainedOuterSwitchData` on these data for
+every sequence of instances (tex
 4940–4950; GLUE). The data `u_prim`, `C₀`, the regularity (`RegularityInputsHPK`) and (4.6) are
 chosen before `A`, as in `Eq35InputsGenuineABoundedH`. Kind: definition. -/
 def Eq35InputsGenuineABoundedR : Prop :=
@@ -140,9 +151,10 @@ homology-level form (`eq35Target_of_inputsAH`). Kind: PROVED from the inputs. -/
 theorem eq35Target_of_inputsAR (hin : Eq35InputsGenuineABoundedR W) : Eq35Target W :=
   eq35Target_of_inputsAH W (Eq35InputsGenuineABoundedR.toH W hin)
 
-/-- **(5.5) for the actual coordinates, directly from the retained form** (tex 4927–4972): for each
-`A`, `v_𝒪 (ι_𝒪 u_prim) ≥ −C(E, A)` at every companion pair with `ω(k') ≤ A`, from the retained
-family and the switch input on the actual data (the RC53 group's `eq55_of_retained`). Kind: PROVED
+/-- **(5.5) for the coordinates `u_prim`, directly from the retained form** (tex 4927–4972): for
+each `A`, `v_𝒪 (ι_𝒪 u_prim) ≥ −C(E, A)` at every companion pair with `ω(k') ≤ A`, from the
+retained model family and the switch input on these model data (the RC53 group's
+`eq55_of_retained`). Kind: PROVED
 from the inputs. -/
 theorem eq55_of_inputsAR (hin : Eq35InputsGenuineABoundedR W) :
     ∃ uprim : ℤ → ℤ → FractionRing Lambda, ∀ A : ℕ, ∃ C : ℕ, ∀ i : CompanionPair W A,
@@ -189,7 +201,9 @@ theorem eq35R_divisible_not_instanceClass :
 (tex 4927–4953, 4948–4950; over `ℤ₂ ⊂ ℚ₂`, the RC53 group's constant family `exRetainedModels`
 with actual class `2`, functional `1` and coordinate `2`): the retained form accepts the actual
 class, which the old instance models cannot carry (`eq35R_divisible_not_instanceClass`); the
-realization moves the scalar `2` into the functional (`exRealized_spec`). -/
+realization moves the scalar `2` into the functional (`exRealized_spec`); the old outer conjunct
+holds for the realized data, so the example separates the model types, not the conjuncts
+(`eq35R_outerPart_iff`). -/
 theorem eq35R_outerPart_divisible :
     RetainedOuterPart (2 : ℤ_[2]) ℚ_[2] Unit (fun _ => 0) (fun _ => True)
         (Padic.addValuation (p := 2)) (fun _ => 2) ∧
