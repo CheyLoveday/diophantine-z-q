@@ -11,3 +11,8 @@
 
 - **VERIFIED (Lean):** `abVar_shortCubic_of_genusOne` constructs the normalized short equation in the actual generic stalk, with pole orders −2 and −3 and no other poles. Distinct-order independence makes six monomials a basis of the sixth pole space. A zero cubic coefficient would place the square of the ordinate in the fifth pole space. The singular case is excluded by a quotient with sole pole of order one.
 - **VERIFIED (Lean):** `JDescent5Cubic.lean` compiled under `lake env lean`; all five theorem checks report only the standard three axioms.
+
+## Sections
+
+- **VERIFIED (Lean):** `abVar_shortSections_of_genusOne` realizes the normalized coordinates as regular sections on the complement of the identity. The proof uses the injectivity of the correspondence from closed points to stalk images in the generic field. The sections on a cover agree in the generic stalk and therefore glue; the cubic equation also lifts by injectivity there.
+- **VERIFIED (Lean):** `JDescent5Sections.lean` compiled under `lake env lean`; all six theorem checks report only the standard three axioms.
