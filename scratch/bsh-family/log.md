@@ -12,3 +12,4 @@
 - `BShFamilyAtlas`, `BShFamilyAssembly`: built as part of the family build. Exhaustion and multiplication for the actual local roots, and the descent from simultaneous kernel profiles to the fixed prime trace, have only the allowed axioms.
 - `lake build +ZInQKernel.OneProof.Discharges`: target built for the focused check.
 - `BShFamilyLocalKernels`: built as part of the family build. The splitting-field lift, mark test, and bijection with the allowed local branches have only the allowed axioms.
+- `BShFamilyCoordinates`: built as part of the family build. The short Vélu sums on the weighted kernel agree with the lattice sums and pass to germs; all four axiom scans have only the allowed axioms.
