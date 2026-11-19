@@ -15,15 +15,17 @@ Selmer cone because the local degree-zero maps are onto and the degree-one maps 
   read-out into the presentation's Kummer condition `kummerAt (localTwist W h v) (2^i)` at `t = 0`
   is the named field `hκU` of `CentralConeComparison` (the local analogue of `hpush`/`hred`); at
   `v ∉ P` the presentation's condition is the full one.
-* **`CentralConeComparison`** (definition; GLUE): `CentralStageComparison` with the target's local
-  cochains `ZL` and local condition `ZU`, the injective degree-one inclusion `ιZ` (tex 3914), the
-  localization `locZ`, the read-outs `specL`/`specU` of the presentation's local terms commuting
-  with `resS` and the condition inclusions, and `hκU`.
+* **`CentralConeComparison Tq`** (definition; GLUE): `CentralStageComparison` with the target's
+  local cochains `ZL`, the localization `locZ` (on read-out cochains the faithful read-out `ΦL` of
+  their restrictions), the read-out `specL` of the presentation's local cochains commuting with
+  `resS`, and (C3) `hκU`: the localized central Kummer class is the read-out of an element of the
+  presentation's own local condition at the support `Tq`.
 * `CentralConeComparison.locZ_red_kummer` (PROVED): the localized central Kummer class is the
   read-out of the local twisted Kummer cocycles.
-* **`central45_cone`** (PROVED from it, `ux_spec` and `central45_global`): the local-condition
-  components satisfy `ιZ(specU(u_R) − m · u_κ) = locZ(dZ(…))` — (4.5) on the Selmer cones, at a
-  stage, with `m = a_r − 2χ_h(r)`.
+* **`central45_conditions`** (PROVED from it, `ux_spec` and `central45_global`): the read-outs of
+  the local-condition components satisfy `specL(ι u_R) − m · specL(ι u_κ) = locZ(dZ(…))`, with
+  `u_κ` in the presentation's condition — the local-condition part of (4.5) at a stage,
+  `m = a_r − 2χ_h(r)`.
 
 Kinds: definitions, GLUE and PROVED.
 -/
@@ -104,34 +106,25 @@ variable {K : Type} [Field K] [NumberField K] [DecidableEq K]
 /-- **The comparison on the Selmer cones** (tex 3911–3915; GLUE): the global comparison
 `CentralStageComparison` together with
 
-* the target's degree-one local cochains `ZL` and local condition `ZU` (`R0`-modules), the
-  inclusion `ιZ : ZU → ZL`, injective ("the degree-one maps inject", tex 3914), and the
-  localization `locZ : Z1 → ZL`, which on read-out cochains is the read-out `ΦL` of their
+* the target's degree-one local cochains `ZL` (an `R0`-module) and the localization
+  `locZ : Z1 → ZL`, which on read-out cochains is the read-out `ΦL` of their
   restrictions to the decomposition groups (`hlocΦ`), `ΦL` faithful on torsion-valued local
   cochains (`hΦLinj`);
 * the read-out `specL` of the presentation's degree-one local cochains, commuting with the
-  localization `resS` (`hspecL`), and the read-outs `specU T` of the presentation's degree-one
-  local conditions (support `T`), commuting with the condition inclusions (`hspecU`);
-* (C3, old places) `hκU`: the localization of the reduction of a central global Kummer cochain lies
-  in the target's local condition — the read-out of `C_K`'s Kummer conditions (level `i`:
-  `compTors_tateKummerFunOf`) inside the presentation's `kummerAt (localTwist W h v) (2^i)` at
-  `t = 0`; at the new places this is `loc_infl_eq_urFactor`.
+  localization `resS` (`hspecL`);
+* (C3) `hκU`: the localization of the reduction of a central global Kummer cochain is the
+  read-out of an element of the presentation's local condition at the support `Tq` — the
+  read-out of `C_K`'s Kummer conditions (level `i`: `compTors_tateKummerFunOf`) inside the
+  presentation's `kummerAt (localTwist W h v) (2^i)` at `t = 0`; at the new places this is
+  `loc_infl_eq_urFactor`.
 
 Kind: definition (GLUE). -/
-structure CentralConeComparison extends
+structure CentralConeComparison (Tq : Finset ι) extends
     CentralStageComparison hS h01 h1 W i s hs hs0 π ψ k G where
   /-- the target's degree-one local cochains -/
   ZL : Type
   [acgZL : AddCommGroup ZL]
   [modZL : Module R0 ZL]
-  /-- the target's degree-one local condition -/
-  ZU : Type
-  [acgZU : AddCommGroup ZU]
-  [modZU : Module R0 ZU]
-  /-- its inclusion -/
-  ιZ : ZU →ₗ[R0] ZL
-  /-- the degree-one maps inject -/
-  hιZ : Function.Injective ιZ
   /-- the localization of the target -/
   locZ : Z1 →ₗ[R0] ZL
   /-- the read-out of local torsion cochains at the places of the presentation -/
@@ -147,31 +140,29 @@ structure CentralConeComparison extends
   /-- it commutes with the localization -/
   hspecL : ∀ x, specL ((resS k (GKS K S) (presGv K S₀ S place) (presLoc K S₀ S place)
     (MinS hS W i (alphaStage i s hs hs0 π ψ))).f 1 1 rfl x) = locZ (specG x)
-  /-- the read-out of the presentation's local conditions -/
-  specU : ∀ Tp : Finset ι, (piCx (presCondS K S₀ S k (MinS hS W i (alphaStage i s hs hs0 π ψ))
-    (stageCondsK hS W i s hs hs0 hFull π ψ P hΨ k) place
-    (fun j => urRep k (Mcoef K S₀ W i (alphaStage i s hs hs0 π ψ)) (newPlace (place j) (hw j)))
-    EU Tp).U).X 1 →+ ZU
-  /-- it commutes with the condition inclusions -/
-  hspecU : ∀ Tp u, ιZ (specU Tp u) = specL ((piMap (presCondS K S₀ S k
-    (MinS hS W i (alphaStage i s hs hs0 π ψ)) (stageCondsK hS W i s hs hs0 hFull π ψ P hΨ k) place
-    (fun j => urRep k (Mcoef K S₀ W i (alphaStage i s hs hs0 π ψ)) (newPlace (place j) (hw j)))
-    EU Tp).i).f 1 1 rfl u)
-  /-- (C3) the central Kummer conditions read into the target's condition -/
+  /-- (C3) the central Kummer conditions map into the presentation's conditions (support `Tq`):
+  the localized central Kummer class is the read-out of an element of the presentation's degree-one
+  local condition -/
   hκU : ∀ {Pc : (centralCurve G).toAffine.Point}
     {Rt : ℕ → ((centralCurve G).baseChange (KS K G.S)).toAffine.Point}
     (hR : IsGlobalDivTower (centralCurve G) Pc Rt),
-    ∃ u : ZU, ιZ u = locZ (red (globalKummerCochain hR))
+    ∃ u : (piCx (presCondS K S₀ S k (MinS hS W i (alphaStage i s hs hs0 π ψ))
+      (stageCondsK hS W i s hs hs0 hFull π ψ P hΨ k) place
+      (fun j => urRep k (Mcoef K S₀ W i (alphaStage i s hs hs0 π ψ)) (newPlace (place j) (hw j)))
+      EU Tq).U).X 1,
+      specL ((piMap (presCondS K S₀ S k (MinS hS W i (alphaStage i s hs hs0 π ψ))
+        (stageCondsK hS W i s hs hs0 hFull π ψ P hΨ k) place
+        (fun j => urRep k (Mcoef K S₀ W i (alphaStage i s hs hs0 π ψ)) (newPlace (place j) (hw j)))
+        EU Tq).i).f 1 1 rfl u) = locZ (red (globalKummerCochain hR))
 
 attribute [instance] CentralConeComparison.acgZL CentralConeComparison.modZL
-  CentralConeComparison.acgZU CentralConeComparison.modZU
 
 variable {hS h01 h1 W i s hs hs0 hFull π ψ P hψ hΨ k place hw EU hE G}
 
 /-- **The localized central Kummer class is the read-out of the local twisted Kummer cocycles**
 (PROVED from `hred`, `hlocΦ`): the class `hκU` asks to lie in the target's local condition. -/
-theorem CentralConeComparison.locZ_red_kummer
-    (C : CentralConeComparison hS h01 h1 W i s hs hs0 hFull π ψ P hΨ k place hw EU G)
+theorem CentralConeComparison.locZ_red_kummer {Tq : Finset ι}
+    (C : CentralConeComparison hS h01 h1 W i s hs hs0 hFull π ψ P hΨ k place hw EU G Tq)
     {Pc : (centralCurve G).toAffine.Point}
     {Rt : ℕ → ((centralCurve G).baseChange (KS K G.S)).toAffine.Point}
     (hR : IsGlobalDivTower (centralCurve G) Pc Rt) :
@@ -180,13 +171,15 @@ theorem CentralConeComparison.locZ_red_kummer
         (inflMap K h1 (presLoc K S₀ S place v (σ 0)) • C.twistPt (Rt i)) - C.twistPt (Rt i)) := by
   rw [C.hred hR, C.hlocΦ]
 
-/-- **(4.5) on the Selmer cones, at a stage** (PROVED from the cone comparison; tex 3911–3915):
-with the hypotheses of `central45_global`, and `u_κ` the read-out of the central Kummer condition
+/-- **(4.5) between the local-condition components, at a stage** (PROVED from the comparison;
+tex 3911–3915): with the hypotheses of `central45_global`, and `u_κ` an element of the
+presentation's local condition (support `Tq`) reading out the localized central Kummer class
 (`hκU`), the local-condition component `u_R = ux A_R` of the class of `A_R` satisfies
-`ιZ(specU(u_R) − m · u_κ) = locZ(dZ(specG0 b_G))`, `m = sp a − 2χ_h(σ)`. -/
-theorem central45_cone
-    (C : CentralConeComparison hS h01 h1 W i s hs hs0 hFull π ψ P hΨ k place hw EU G)
-    {Tp Tq : Finset ι}
+`specL(ι u_R) − m · specL(ι u_κ) = locZ(dZ(specG0 b_G))`, `m = sp a − 2χ_h(σ)`: the read-out of
+the local-condition part of (4.5). -/
+theorem central45_conditions {Tq : Finset ι}
+    (C : CentralConeComparison hS h01 h1 W i s hs hs0 hFull π ψ P hΨ k place hw EU G Tq)
+    {Tp : Finset ι}
     (AT : ActualPoint hS h01 h1 W i s hs hs0 hFull π P place Tp)
     (AR : ActualPoint hS h01 h1 W i s hs hs0 hFull π P place Tq)
     (a : k) (σ : GKS K S₀)
@@ -200,13 +193,26 @@ theorem central45_cone
     {Rt : ℕ → ((centralCurve G).baseChange (KS K G.S)).toAffine.Point}
     (hR : IsGlobalDivTower (centralCurve G) Pc Rt)
     (htower : C.twistPt (Rt i) = augAmb h1 W AT.wsumQ)
-    (uκ : C.ZU) (huκ : C.ιZ uκ = C.locZ (C.red (globalKummerCochain hR))) :
-    C.ιZ (C.specU Tq (ux hS h01 h1 W i s hs hs0 hFull π ψ P hψ hΨ k place hw EU hE AR) -
-        (C.sp a - 2 * (((quadChar s hs hs0 σ : ℤˣ) : ℤ) : C.R0)) • uκ) =
+    (uκ : (piCx (presCondS K S₀ S k (MinS hS W i (alphaStage i s hs hs0 π ψ))
+      (stageCondsK hS W i s hs hs0 hFull π ψ P hΨ k) place
+      (fun j => urRep k (Mcoef K S₀ W i (alphaStage i s hs hs0 π ψ)) (newPlace (place j) (hw j)))
+      EU Tq).U).X 1)
+    (huκ : C.specL ((piMap (presCondS K S₀ S k (MinS hS W i (alphaStage i s hs hs0 π ψ))
+        (stageCondsK hS W i s hs hs0 hFull π ψ P hΨ k) place
+        (fun j => urRep k (Mcoef K S₀ W i (alphaStage i s hs hs0 π ψ)) (newPlace (place j) (hw j)))
+        EU Tq).i).f 1 1 rfl uκ) = C.locZ (C.red (globalKummerCochain hR))) :
+    C.specL ((piMap (presCondS K S₀ S k (MinS hS W i (alphaStage i s hs hs0 π ψ))
+        (stageCondsK hS W i s hs hs0 hFull π ψ P hΨ k) place
+        (fun j => urRep k (Mcoef K S₀ W i (alphaStage i s hs hs0 π ψ)) (newPlace (place j) (hw j)))
+        EU Tq).i).f 1 1 rfl (ux hS h01 h1 W i s hs hs0 hFull π ψ P hψ hΨ k place hw EU hE AR)) -
+      (C.sp a - 2 * (((quadChar s hs hs0 σ : ℤˣ) : ℤ) : C.R0)) •
+        C.specL ((piMap (presCondS K S₀ S k (MinS hS W i (alphaStage i s hs hs0 π ψ))
+          (stageCondsK hS W i s hs hs0 hFull π ψ P hΨ k) place
+          (fun j => urRep k (Mcoef K S₀ W i (alphaStage i s hs hs0 π ψ))
+            (newPlace (place j) (hw j))) EU Tq).i).f 1 1 rfl uκ) =
       C.locZ (C.dZ (C.specG0 bG)) := by
   have h45 := central45_global hFull C.toCentralStageComparison AT AR a σ bG hG hR htower
-  rw [map_sub, C.hspecU, ux_spec, C.hspecL, h45, map_smul, huκ, map_add, map_smul,
-    add_sub_cancel_left]
+  rw [ux_spec, C.hspecL, h45, huκ, map_add, map_smul, add_sub_cancel_left]
 
 end Cone
 
