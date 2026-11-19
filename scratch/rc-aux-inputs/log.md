@@ -1,0 +1,4 @@
+- Base: `7afaba512428d51f2cd610721003df71f5312353`.
+- ER1: tex 2360–2361, 10131–10132 require seeds beyond the prepared total types; tex 10139 uses only nonvanishing types.
+- `WData.Partitionable` is opaque for arbitrary `W`; use a definitional installation or forward comparison.
+- `Types.lean`: conductor support, residue sign, quadratic character descent, product type, and exact App E filter equivalence. Individual Lean check: pass; 9 theorem axiom checks use only `propext`, `Classical.choice`, `Quot.sound`.
