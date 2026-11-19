@@ -89,7 +89,11 @@ variable {K : Type} [Field K] [NumberField K] {S S₀ : Set (HeightOneSpectrum (
 
 include hw in
 /-- **`InertiaFixesDivisionPoint` for the actual ambient module** (PROVED): every element of
-`ambD` (inflated from `G_{K,S₀}`) is fixed by the conjugates of the inertia image at `w ∉ S₀`. -/
+`ambD` (inflated from `G_{K,S₀}`) is fixed by the conjugates of the inertia image at `w ∉ S₀`.
+**Superseded for the wiring** (see `H20Untwisted.lean`): the statement is valid, but with the
+`χ_h`-twisted ambient module the norm relation needed by `h1_shapiro` holds only when `χ_h(σ_q) =
+1`, and the point factor loses the text's sign `z = χ_h(σ_q) Ψ(σ_q)` (tex 3915, 4158–4172); wire the
+untwisted instance instead (`inertiaFixesU`). -/
 theorem inertiaFixes_actual (Q : ambD hS W s hs hs0 (Δ := Δ)) :
     InertiaFixesDivisionPoint (ambRho hS W s hs hs0 (Δ := Δ)) (inertiaImage w) Q :=
   inertiaFixes_of_inflated hS w hw _ fun g hg => by
@@ -120,7 +124,11 @@ include hw in
 /-- **`hPw` for the actual data** (PROVED; tex 3471–3487): at a new place `w ∉ S₀`, for every
 genuine global cochain `a` over `ℤ[Δ]` carried by `ι` to `𝒯_{[π]}(κ(Q))` with `Q` in the ambient
 module of points (`k Q = y`), the localization at `w` lies in the image of RC30's unramified
-condition (RC26's `urRep`, `urId`). -/
+condition (RC26's `urRep`, `urId`).
+**Superseded for the wiring** (see `H20Untwisted.lean`): the statement is valid, but with the
+`χ_h`-twisted ambient module the norm relation needed by `h1_shapiro` holds only when `χ_h(σ_q) =
+1`, and the point factor loses the text's sign `z = χ_h(σ_q) Ψ(σ_q)` (tex 3915, 4158–4172); wire the
+untwisted instance instead (`hPw_actualU`). -/
 theorem hPw_actual [TopologicalSpace (Acoef i)] [DiscreteTopology (Acoef i)]
     [IsOpenKer (alphaShap s hs hs0 π)]
     [Fintype (GKS K S ⧸ (piInfl hS π).ker)] (r : GKS K S ⧸ (piInfl hS π).ker → GKS K S)

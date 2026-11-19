@@ -306,7 +306,11 @@ open scoped Classical in
 /-- **`LocalTwistIdentification` for the actual data** (PROVED; tex 3251–3270, 3413–3438): at an
 old place `v ∈ P` (where the Shapiro-level character is `χ_h`), for any normal `H` and character `θ`
 trivial on `p_v(G_{K_v})`, with `ι` = `ambIota`, `ψ` = `locPsi`, `j_B` = `locJB` and `ι_v` the
-Shapiro-level Kummer map. -/
+Shapiro-level Kummer map.
+**Superseded for the wiring** (see `H20Untwisted.lean`): the statement is valid, but with the
+`χ_h`-twisted ambient module the norm relation needed by `h1_shapiro` holds only when `χ_h(σ_q) =
+1`, and the point factor loses the text's sign `z = χ_h(σ_q) Ψ(σ_q)` (tex 3915, 4158–4172); wire the
+untwisted instance instead (`localTwistIdentificationU`). -/
 theorem localTwistIdentification_actual (v : Places K S) (H : Subgroup (GKS K S)) [H.Normal]
     (θ : GKS K S ⧸ H →* (MonoidAlgebra ℤ Δ)ˣ)
     (hθ : ∀ σ : Gloc K v.1, θ ((locMap K S v.1 σ : GKS K S) : GKS K S ⧸ H) = 1)
@@ -336,7 +340,11 @@ open scoped Classical in
 /-- **`OldPlaceInput` for the actual data from the realization alone** (PROVED): at `v ∈ P`, the
 input of `LocalIdentity.lean` / `H20Assembly.lean` reduces to the realization `hreal` of the
 weighted sum by local points of the twist (the coefficient/twist identification is
-`localTwistIdentification_actual`). -/
+`localTwistIdentification_actual`).
+**Superseded for the wiring** (see `H20Untwisted.lean`): the statement is valid, but with the
+`χ_h`-twisted ambient module the norm relation needed by `h1_shapiro` holds only when `χ_h(σ_q) =
+1`, and the point factor loses the text's sign `z = χ_h(σ_q) Ψ(σ_q)` (tex 3915, 4158–4172); wire the
+untwisted instance instead (`oldPlaceInputU`). -/
 theorem oldPlaceInput_actual (v : Places K S) (H : Subgroup (GKS K S)) [H.Normal]
     [Fintype (GKS K S ⧸ H)] (r : GKS K S ⧸ H → GKS K S)
     (θ : GKS K S ⧸ H →* (MonoidAlgebra ℤ Δ)ˣ)
@@ -368,7 +376,11 @@ variable {K : Type} [Field K] [NumberField K] {S S₀ : Set (HeightOneSpectrum (
 /-- `π ∘ infl : G_{K,S} → Δ`. -/
 abbrev piInfl : GKS K S →* Δ := π.comp (inflMap K hS : GKS K S →* GKS K S₀)
 
-/-- **The character `[π]` of `G_{K,S}/ker(π ∘ infl)`** with values in `ℤ[Δ]^×`. Kind: definition. -/
+/-- **The character `[π]` of `G_{K,S}/ker(π ∘ infl)`** with values in `ℤ[Δ]^×`. Kind: definition.
+**Superseded for the wiring** (see `H20Untwisted.lean`): the statement is valid, but with the
+`χ_h`-twisted ambient module the norm relation needed by `h1_shapiro` holds only when `χ_h(σ_q) =
+1`, and the point factor loses the text's sign `z = χ_h(σ_q) Ψ(σ_q)` (tex 3915, 4158–4172); wire the
+untwisted instance instead (`thetaU`). -/
 def thetaPi : GKS K S ⧸ (piInfl hS π).ker →* (MonoidAlgebra ℤ Δ)ˣ :=
   QuotientGroup.lift _ ((univChar Δ).comp (piInfl hS π)) (fun g hg => by
     rw [MonoidHom.mem_ker] at hg ⊢
@@ -426,7 +438,11 @@ theorem iota₀_smul (g₀ : GKS K S₀) (m : shapMod₀ W i s hs hs0 π) :
     rw [smul_add, map_add, hx, hy, map_add, smul_add, smul_add]
 
 /-- **`ι` intertwines the Shapiro-level action with `R = [π] ρ`** (PROVED): the hypothesis `hιeq`
-of `h1_shapiro` for `ι = ambIota`, `ρ = ambRho`, `θ = thetaPi`. -/
+of `h1_shapiro` for `ι = ambIota`, `ρ = ambRho`, `θ = thetaPi`.
+**Superseded for the wiring** (see `H20Untwisted.lean`): the statement is valid, but with the
+`χ_h`-twisted ambient module the norm relation needed by `h1_shapiro` holds only when `χ_h(σ_q) =
+1`, and the point factor loses the text's sign `z = χ_h(σ_q) Ψ(σ_q)` (tex 3915, 4158–4172); wire the
+untwisted instance instead (`ambIotaU_equivariant`). -/
 theorem ambIota_equivariant (g : GKS K S) (m : shapMod hS W i s hs hs0 π) :
     ambIota hS W i s hs hs0 π (g • m) =
       R (piInfl hS π).ker (ambRho hS W s hs hs0 (Δ := Δ)) (thetaPi hS π) g

@@ -154,6 +154,7 @@ abbrev incS (S₀ : Set (HeightOneSpectrum (𝓞 K))) (W : WeierstrassCurve K) :
     PtS K S₀ W →+ (W.baseChange (AlgebraicClosure K)).toAffine.Point :=
   Affine.Point.map (W' := W) (unramifiedOutside K S₀).val
 
+/-- `incS` is injective. Kind: PROVED. -/
 theorem incS_injective (S₀ : Set (HeightOneSpectrum (𝓞 K))) (W : WeierstrassCurve K) :
     Function.Injective (incS S₀ W) :=
   Affine.Point.map_injective (W' := W) (unramifiedOutside K S₀).val
@@ -182,6 +183,7 @@ def preS (κ : Qbar →ₐ[ℚ] AlgebraicClosure K) :
       Classical.choose_spec (AddMonoidHom.mem_range.1 y.2)]
     exact map_add _ _ _
 
+/-- The realization of a realized point is the given point. Kind: PROVED. -/
 theorem preS_eq (κ : Qbar →ₐ[ℚ] AlgebraicClosure K) (x : (E⁄Qbar).toAffine.Point)
     (P : PtS K S₀ (E.baseChange K)) (hx : compQ E κ x = incS S₀ (E.baseChange K) P) :
     preS (S₀ := S₀) E κ ⟨x, ⟨P, hx.symm⟩⟩ = P := by
@@ -196,6 +198,7 @@ def dictJ (κ : Qbar →ₐ[ℚ] AlgebraicClosure K) :
   (TensorProduct.mk ℤ (MonoidAlgebra ℤ Δ) (PtS K S₀ (E.baseChange K)) 1).toAddMonoidHom.comp
     (preS E κ)
 
+/-- The value of `dictJ` at a realized point. Kind: PROVED. -/
 theorem dictJ_apply (κ : Qbar →ₐ[ℚ] AlgebraicClosure K) (x : (E⁄Qbar).toAffine.Point)
     (P : PtS K S₀ (E.baseChange K)) (hx : compQ E κ x = incS S₀ (E.baseChange K) P) :
     dictJ E hS s hs hs0 (Δ := Δ) κ ⟨x, ⟨P, hx.symm⟩⟩ =
@@ -225,7 +228,11 @@ variable {G : Type} (HP : Subgroup (GKS K S)) (U : Subgroup HP) [Fintype (HP ⧸
 `W = E ×_ℚ K`, the ambient module of points and `ρ = ambRho`, the realization of `y_{dq}`, `y_d` in
 `E(K_{S₀})` along `κ`, the matching of `relGal d q` with the transversal `t` and of `frob` with `σ`,
 and the triviality of `χ_h` on `t_τ` and `σ` give the transport with `y_R = 1 ⊗ P_R`,
-`y_P = 1 ⊗ P_P`. -/
+`y_P = 1 ⊗ P_P`.
+**Superseded for the wiring** (see `H20Untwisted.lean`): the statement is valid, but with the
+`χ_h`-twisted ambient module the norm relation needed by `h1_shapiro` holds only when `χ_h(σ_q) =
+1`, and the point factor loses the text's sign `z = χ_h(σ_q) Ψ(σ_q)` (tex 3915, 4158–4172); wire the
+untwisted instance instead (`heegnerTransportOn_of_dictionaryU`). -/
 theorem heegnerTransportOn_of_dictionary (D : HeegnerPointData E) (d q : ℕ) (σ : GKS K S)
     (κ : Qbar →ₐ[ℚ] AlgebraicClosure K) (PR PP : PtS K S₀ (E.baseChange K))
     (hR : compQ E κ (D.y (d * q)) = incS S₀ (E.baseChange K) PR)
