@@ -25,11 +25,17 @@ classes:
 * **`hzR_stage_actual_of_inputs`** (PROVED): the stage norm identity for lane RC29's actual data
   from the same inputs (`h1_shapiro` + `hzR_stage_actual`).
 
-Named inputs left: ELLIOT `PsiTrivialAt2N` (tex 2729, 3431, 3500–3506); GLUE
-`LocalTwistIdentification` and the realization `hreal` (inside `OldPlaceInput`, tex 3251–3270);
-the norm relation `hnorm` of the Heegner points (tex 4157–4170); the unramified localization of
-the primitive class at `w` (`hPw`, tex 3471–3487); GLUE `FullTorsion`; the torsion lifting `htors`
-of the coefficient embedding.
+Named inputs left (mathematical): ELLIOT `PsiTrivialAt2N` (tex 2729, 3431, 3500–3506), with `ψ`
+injective (for `Δ = im Ψ_i` automatic, `moving_spec`); GLUE `LocalTwistIdentification` and the
+realization `hreal` (inside `OldPlaceInput`, for `y_R` and `y_P`, tex 3251–3270); the norm relation
+`hnorm` of the Heegner points (tex 4157–4170); the unramified localization of the primitive class
+at `w` (`hPw`, tex 3471–3487); GLUE `FullTorsion`. Structural inputs (properties of the chosen
+ambient module of points and coefficient embedding): the points `y_R`, `y_P` fixed by `H_R`, `H_P`
+(`hfixR`, `hfixP`: they are defined over `H_R`, `H_P`), their division points (`hQR`, `hQP`), the
+character compatibility `hθ` and `H_R ≤ H_P`, the coefficient embedding `ι` injective and
+equivariant (`hι`, `hιeq`) with torsion lifting (`htors`), and the classes carried to `𝒯_θ(κ(Q))`
+(`hzR`, `hzP`). Infrastructure instances: open kernels of the characters (`isOpenKer_alphaShap`,
+`isOpenKer_alphaStage`) and discreteness of the unramified modules (`urRep_hyps_actual`).
 
 Non-vacuity: the hypotheses are those of results with witnesses in this directory
 (`nonVacuity_transversal` for the transfer inputs, `nonVacuity_localTwist_identity` and
@@ -72,8 +78,8 @@ theorem condAt_dite {k M : Type} [CommRing k] [AddCommGroup M] [Module k M]
     (c₁ : p → CondAt K S k M v) (c₂ : ¬p → CondAt K S k M v) (Pr : CondAt K S k M v → Prop)
     (h₁ : ∀ hp, Pr (c₁ hp)) (h₂ : ∀ hp, Pr (c₂ hp)) : Pr (dite p c₁ c₂) := by
   by_cases hp : p
-  · rw [dif_pos hp]; exact h₁ hp
-  · rw [dif_neg hp]; exact h₂ hp
+  · rw [dite_eq_left_of_eq_true (eq_true hp)]; exact h₁ hp
+  · rw [dite_eq_right_of_eq_false (eq_false hp)]; exact h₂ hp
 
 open scoped Classical in
 /-- One old condition is injective in degree one. Kind: PROVED. -/
@@ -117,7 +123,7 @@ theorem exists_oldLift_shap_at {D : Type} [AddCommGroup D] [Module (MonoidAlgebr
     (ι : shapMod hS W i s hs hs0 π →ₗ[MonoidAlgebra ℤ Δ] D)
     (hιeq : ∀ (g : GKS K S) (x : shapMod hS W i s hs hs0 π), ι (g • x) = R H ρ θ g (ι x))
     {Q y : D} (hQ : ((2 ^ i : ℕ) : ℤ) • Q = y)
-    (hin : ∀ v : Places K S₀, ∀ hP : v.1 ∈ P,
+    (hin : ∀ v : Places K S₀, v.1 ∈ P →
       haveI := isElliptic_localTwist W (ne_zero_of_sqrt s hs hs0) v.1
       OldPlaceInput ρ H r θ v.1 (localTwist W h v.1) (2 ^ i)
         (shapIota hS W i s hs hs0 hFull π ⟨v.1, hS v.2⟩) ι y)
@@ -133,10 +139,10 @@ theorem exists_oldLift_shap_at {D : Type} [AddCommGroup D] [Module (MonoidAlgebr
   unfold shapCond
   by_cases hP : v.1 ∈ P
   swap
-  · rw [dite_cond_eq_false (eq_false hP)]
+  · rw [dite_eq_right_of_eq_false (eq_false hP)]
     exact ⟨_, rfl⟩
-  rw [dif_pos hP]
-  haveI := isElliptic_localTwist W (ne_zero_of_sqrt s hs hs0) v.1
+  rw [dite_eq_left_of_eq_true (eq_true hP)]
+  have := isElliptic_localTwist W (ne_zero_of_sqrt s hs hs0) v.1
   obtain ⟨L, _, _, _, _, ψL, jB, hT, J, sJ, a, Pt, hreal⟩ := hin v hP
   exact res_mem_kummer_at ρ H r hr θ v.1 (localTwist W h v.1) (2 ^ i)
     (shapIota hS W i s hs hs0 hFull π ⟨v.1, hS v.2⟩)
@@ -154,7 +160,7 @@ theorem exists_oldLift_shap {D : Type} [AddCommGroup D] [Module (MonoidAlgebra �
     (ι : shapMod hS W i s hs hs0 π →ₗ[MonoidAlgebra ℤ Δ] D)
     (hιeq : ∀ (g : GKS K S) (x : shapMod hS W i s hs hs0 π), ι (g • x) = R H ρ θ g (ι x))
     {Q y : D} (hQ : ((2 ^ i : ℕ) : ℤ) • Q = y)
-    (hin : ∀ v : Places K S₀, ∀ hP : v.1 ∈ P,
+    (hin : ∀ v : Places K S₀, v.1 ∈ P →
       haveI := isElliptic_localTwist W (ne_zero_of_sqrt s hs hs0) v.1
       OldPlaceInput ρ H r θ v.1 (localTwist W h v.1) (2 ^ i)
         (shapIota hS W i s hs hs0 hFull π ⟨v.1, hS v.2⟩) ι y)
@@ -232,11 +238,11 @@ theorem h1_shapiro
     (hzP : ∀ g : Fin 1 → GKS K S,
       ι (gval (A := MonoidAlgebra ℤ Δ) (M := shapMod hS W i s hs hs0 π) aP g) =
         T HP rP hrP ρ θP 1 (kummerCochain ρ HP QP) g)
-    (hinR : ∀ v : Places K S₀, ∀ hP : v.1 ∈ P,
+    (hinR : ∀ v : Places K S₀, v.1 ∈ P →
       haveI := isElliptic_localTwist W (ne_zero_of_sqrt s hs hs0) v.1
       OldPlaceInput ρ HR rR θR v.1 (localTwist W h v.1) (2 ^ i)
         (shapIota hS W i s hs hs0 hFull π ⟨v.1, hS v.2⟩) ι yR)
-    (hinP : ∀ v : Places K S₀, ∀ hP : v.1 ∈ P,
+    (hinP : ∀ v : Places K S₀, v.1 ∈ P →
       haveI := isElliptic_localTwist W (ne_zero_of_sqrt s hs hs0) v.1
       OldPlaceInput ρ HP rP θP v.1 (localTwist W h v.1) (2 ^ i)
         (shapIota hS W i s hs hs0 hFull π ⟨v.1, hS v.2⟩) ι yP)
@@ -302,11 +308,11 @@ theorem hzR_stage_actual_of_inputs
     (hzP : ∀ g : Fin 1 → GKS K S,
       ι (gval (A := MonoidAlgebra ℤ Δ) (M := shapMod hS W i s hs hs0 π) aP g) =
         T HP rP hrP ρ θP 1 (kummerCochain ρ HP QP) g)
-    (hinR : ∀ v : Places K S₀, ∀ hP : v.1 ∈ P,
+    (hinR : ∀ v : Places K S₀, v.1 ∈ P →
       haveI := isElliptic_localTwist W (ne_zero_of_sqrt s hs hs0) v.1
       OldPlaceInput ρ HR rR θR v.1 (localTwist W h v.1) (2 ^ i)
         (shapIota hS W i s hs hs0 hFull π ⟨v.1, hS v.2⟩) ι yR)
-    (hinP : ∀ v : Places K S₀, ∀ hP : v.1 ∈ P,
+    (hinP : ∀ v : Places K S₀, v.1 ∈ P →
       haveI := isElliptic_localTwist W (ne_zero_of_sqrt s hs hs0) v.1
       OldPlaceInput ρ HP rP θP v.1 (localTwist W h v.1) (2 ^ i)
         (shapIota hS W i s hs hs0 hFull π ⟨v.1, hS v.2⟩) ι yP)
