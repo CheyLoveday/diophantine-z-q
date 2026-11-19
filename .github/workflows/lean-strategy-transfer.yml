@@ -1,0 +1,42 @@
+name: Lean source-coupling pilot
+
+on:
+  pull_request:
+    paths:
+      - 'research/strategy-transfer-20261119/**'
+      - '.github/workflows/lean-strategy-transfer.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  coupled:
+    name: Standalone Lean 4.35 source-coupling theorem
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install pinned elan 4.2.4
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/elan-install"
+          cd "$RUNNER_TEMP/elan-install"
+          curl --fail --location --retry 3 -o elan.tar.gz https://github.com/leanprover/elan/releases/download/v4.2.4/elan-x86_64-unknown-linux-gnu.tar.gz
+          echo '42b94d4244e8353142c456ec0e4ca6528fd898a6c604d4059f494e706e431f63  elan.tar.gz' | sha256sum --check -
+          tar -xzf elan.tar.gz
+          ./elan-init -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Run exact finite countermodel oracle
+        shell: bash
+        run: python3 -B research/strategy-transfer-20261119/check_coupled.py
+      - name: Strict standalone Lean proof and axiom report
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat lean/lean-toolchain)" = 'leanprover/lean4:v4.35.0'
+          elan toolchain install leanprover/lean4:v4.35.0
+          lean +leanprover/lean4:v4.35.0 --version
+          sha256sum research/strategy-transfer-20261119/CoupledSource.lean
+          lean +leanprover/lean4:v4.35.0 -DautoImplicit=false -DwarningAsError=true research/strategy-transfer-20261119/CoupledSource.lean

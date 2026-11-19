@@ -44,3 +44,8 @@ theorem bool_not_coupled :
   | true => cases hb
 
 end Research.StrategyTransfer
+
+#print axioms Research.StrategyTransfer.coupled_implies_marginal
+#print axioms Research.StrategyTransfer.coupled_of_common_source
+#print axioms Research.StrategyTransfer.bool_marginal
+#print axioms Research.StrategyTransfer.bool_not_coupled
