@@ -28,7 +28,7 @@ retained homotopy inverses and the maps to the original cochains (tex 4403–440
 carried, and the identification of the limit model with the genuine Λ-adic complexes is the
 content of `hprim` and `htildeE`.
 
-What stays existential in a leaf built on this structure (the review's item R9-7): the
+What stays existential in a leaf built on this structure: the
 presentation's parameters (its objects are pinned in `CommonCoordinate17Actual.lean`), the order of
 the primes, the models of `C_∅` and their ranks, the global classes (pinned only through the norm
 identity in `hstep`; their identification with the Kummer classes of the actual points is lane

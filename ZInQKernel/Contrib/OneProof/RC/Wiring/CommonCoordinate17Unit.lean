@@ -9,7 +9,7 @@ satisfy (4.7) with `ε_q ∈ Λ^×`, and `ũ_x = ε_x u_{prim,x}` with `ε_x ∈
 determinants of unit disks of the retained models (tex 4187–4194). The inner limit fixes one
 nonprincipal ultrafilter for one active support and binary family (tex 4401–4404).
 
-* The cone sign is one (proofs from the final review, round nine). `linkOrient_apply_eq`: the
+* The cone sign is one. `linkOrient_apply_eq`: the
   orientation of a link is the block orientation; hence `linkSign_eq_one`, `chainSign_eq_one`,
   and `fracChain_v_end_one`: the last value of the limit chain is the coordinate of the model of
   the full support, with no sign.
@@ -46,19 +46,19 @@ section SignOne
 open ZInQ.Contrib.CloudB3RC53.ClearingComplex ZInQ.Contrib.CloudB3RC53.CoordLink
 
 /-- The comparison of the cone bases fixes an old basis vector (tex 4189–4191: "Their comparison
-is a sign"). Proof from the final review, round nine. Kind: PROVED. -/
+is a sign"). Kind: PROVED. -/
 theorem chE2_symm_old (m1 m2 i : ℕ) (a : Fin (m1 + 4 * i)) :
     (chE2 m1 m2 i).symm (Sum.inl (joinF m1 i (Sum.inl a))) = Sum.inl (Sum.inl a) := by
   rw [Equiv.symm_apply_eq]; rfl
 
 /-- The comparison of the cone bases fixes a new basis vector (tex 4189–4191: "Their comparison
-is a sign"). Proof from the final review, round nine. Kind: PROVED. -/
+is a sign"). Kind: PROVED. -/
 theorem chE2_symm_new (m1 m2 i : ℕ) (n : NS) :
     (chE2 m1 m2 i).symm (Sum.inl (joinF m1 i (Sum.inr n))) = Sum.inr n := by
   rw [Equiv.symm_apply_eq]; rfl
 
 /-- **The orientation of a link is the block orientation** (tex 4189–4191: "Their comparison is
-a sign"). Proof from the final review, round nine. Kind: PROVED. -/
+a sign"). Kind: PROVED. -/
 theorem linkOrient_apply_eq (m0 m1 m2 i : ℕ) (x) :
     linkOrient m0 m1 m2 i x = σBlock m0 (m1 + 4 * (i + 1)) m2 x := by
   rcases x with ((e | u) | (b | (u | c)))
@@ -82,7 +82,7 @@ theorem linkOrient_apply_eq (m0 m1 m2 i : ℕ) (x) :
   · rfl
 
 /-- **Every link sign is one** (tex 4189–4191: "Their comparison is a sign"; here the sign is
-`1`). Proof from the final review, round nine. Kind: PROVED. -/
+`1`). Kind: PROVED. -/
 theorem linkSign_eq_one (m0 m1 m2 i : ℕ) : linkSign m0 m1 m2 i = 1 := by
   have h : (σBlock m0 (m1 + 4 * (i + 1)) m2).trans (linkOrient m0 m1 m2 i).symm =
       Equiv.refl _ := by
@@ -94,7 +94,7 @@ theorem linkSign_eq_one (m0 m1 m2 i : ℕ) : linkSign m0 m1 m2 i = 1 := by
   exact Equiv.Perm.sign_refl
 
 /-- **The sign of the comparison of the cone bases is one** along every chain (tex 4189–4191:
-"Their comparison is a sign"). Proof from the final review, round nine. Kind: PROVED. -/
+"Their comparison is a sign"). Kind: PROVED. -/
 theorem chainSign_eq_one (m0 m1 m2 n : ℕ) : chainSign m0 m1 m2 n = 1 := by
   cases n with
   | zero => rfl
@@ -102,7 +102,7 @@ theorem chainSign_eq_one (m0 m1 m2 n : ℕ) : chainSign m0 m1 m2 n = 1 := by
 
 /-- **The last value is the coordinate of the full support** (tex 4185–4193, 4189–4191): on the
 limit chain over `Frac Λ`, `v_n = vPrim n`, the sign `σ_n` of `fracChain_v_end` being `1`.
-Proof from the final review, round nine. Kind: PROVED. -/
+Kind: PROVED. -/
 theorem fracChain_v_end_one {m0 m1 m2 : ℕ} (c : ℕ → ChainMat LamI m0 m1 m2) {U : Ultrafilter ℕ}
     (hU : (U : Filter ℕ) ≤ Filter.cofinite) (f : FrobSeq LamI) (n : ℕ)
     (hs : ∀ᶠ s in (U : Filter ℕ), (c s).Holds (ZInQ.Manuscript.RC.Limits.stageIdeal s) f n) :
