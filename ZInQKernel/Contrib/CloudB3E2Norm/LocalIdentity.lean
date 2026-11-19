@@ -8,10 +8,18 @@ into decomposition-group orbits: this is the local Mackey formula, a sum of the 
 corestrictions from the transported places … Kummer of this sum equals the cohomological
 transfer … Thus the old Kummer conditions proved in paragraph 5 survive (H20)").
 
-At an old place `v`, the localization of the genuine transferred Kummer class `z_T = 𝒯_θ(κ(Q_T))`
-must lie in the local Kummer condition (`kummerConditionIn`, lanes RC28/RC29). This file proves
-it from ONE named open statement, the coefficient/twist identification
-`LocalTwistIdentification`, and the realization of the actual points (`hreal`):
+**Scope.** This file works at the Shapiro level of (H20): one coefficient ring `k` for the points'
+ambient module, the genuine coefficient module and the character, which must not kill the
+points' division (e.g. `ℤ[Δ_f]` with the universal character; see "Coefficient ring" below). At
+that level, the localization at an old place `v` of the genuine transferred Kummer class
+`z_T = 𝒯_θ(κ(Q_T))` lies in the local Kummer condition (`kummerConditionIn`, lanes RC28/RC29),
+from ONE named open statement, the coefficient/twist identification
+`LocalTwistIdentification`, and the realization of the actual points (`hreal`). The passage to
+the stage ring `A_i` with `θ = χ_h Ψ_i` is the coefficient push (H20), named separately as
+`H20CoefficientPush` (`H20Push.lean`); the stage-level norm identity follows from the
+Shapiro-level one and that push (`hzR_of_H20`). So the actual stage-level `hzR` is conditional on
+`LocalTwistIdentification`, `hreal` and `H20CoefficientPush` (with the further inputs listed in
+the earlier files), not on the first two alone.
 
 * **The group-theoretic part (PROVED).** In degree one the transferred Kummer cocycle is the
   Kummer cocycle `g ↦ R(g) P̃ − P̃` of the weighted point `P̃ = ∑_δ R(r_δ) Q`, a division point of
@@ -66,7 +74,8 @@ genuine wrappers is removed in `StageRing.lean`.)
 as in the previous paragraph; (2) the realization `hreal` of the actual points at the old places
 (the orbit sums of the Heegner points over the ring class fields `H_T` as local norms, and these as
 points of the local twist over `K_v`); (3) the coefficient change `ℤ[Δ_f] → A_i`, `δ ↦ θ(δ)`, of
-(H20) for the Selmer complexes and their local conditions.
+(H20) for the Selmer complexes and their local conditions: the open statement
+`H20CoefficientPush` (`H20Push.lean`, tex 3203–3215, 3262–3270, 3281–3290).
 
 Kinds: definitions and PROVED; `LocalTwistIdentification` is the GLUE statement left open.
 -/
