@@ -108,12 +108,6 @@
    "docstring":
    "carirr-refold, consequence of Darmon-Diamond-Taylor 1997 Thm 3.1 (proved: CarayolRefold.frob_of_DDT31 from carirr-odd's transcription CarayolDDT.CarayolDDT31), with the Frobenius clause in the normalization the manuscript reads off Carayol 1986 Theoreme (A) (diophantine_zq.tex L9784-9796): for a printed newform f (Tau Ceti Newform N 2, psi = f.chi) with number field K_f and a place lambda | l, a continuous rho : G_Q -> GL_2(K_{f,lambda}) that is irreducible (Ribet 1977), unramified at p not dividing N l with arithmetic Frobenius of trace a_p and determinant p psi(p) (polynomial X^2 - a_p X + p psi(p)), and with codim V^{I_p} + integral_0^infty codim V^{G_p^u} du = v_p(N) at every p != l (Carayol Thm A + conductor of local Langlands + Casselman 1973 Thm 1; packaged in DDT 3.1). Oddness is proved from the Frobenius determinant (CarayolRefold.odd_of_frobDet, one Chebotarev element). Carayol's own form (sigma_lambda(pi)|G_{Q_p} <-> pi_p under local Langlands) has no Lean form (no pi_{f,p}, Weil-Deligne representations or local Langlands in Lean). Replaces carayolThmAIrr. ",
    "bundle": "OpenResearchLeaves69"},
-  {"type": "R16Thm1.BShStandardModel",
-   "statement": "R16Thm1.BShStandardModel",
-   "field": "bShStandardModel",
-   "docstring":
-   "r16-thm1 (round 2), kept in r16-thm1b: the bridge B-Sh. Shimura's standard model of X_1(N) over Q with its Q-rational Hecke correspondences xi_p and diamond operators <d> is the kernel's model: for every X with IsX1Gen, a rational point and Jacobian J, there are endomorphisms T_p, <d> of J over Q acting on classes of the points x_tau by the double-coset formulas IsHeckeT, IsDiamond (pinned by AfTateLam.HeckePin). Same statement as AfTateLam.HeckeJ1DS (heckeJ1DS_of_bSh). Split (r16-thm1b section 3): (B2) rationality of the Hecke ring over Q on Shimura's model is printed in Shimura 1973 p. 526 (AI page read, no citation on the page); (B3) a Q-rational correspondence induces an endomorphism of J over Q (standard); left ON THE SPOT: (B1) the kernel's IsX1Gen model is Shimura's standard model (defined in Shimura 1971, which the 1973 print cites) and (B4) Shimura's xi_p, <d> act on the classes of the x_tau by DS's double-coset formulas (convention dictionary). ",
-   "bundle": "OpenResearchLeaves69"},
   {"type": "R16Thm1b.ShimuraThm1Af",
    "statement": "R16Thm1b.ShimuraThm1Af",
    "field": "shimuraThm1Af",
@@ -125,6 +119,12 @@
    "field": "cmjDegree",
    "docstring":
    "cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, #Pic(R) <= [L:Q] (L586-587). ",
+   "bundle": "OpenResearchLeaves69"},
+  {"type": "HDec.CMBranch.CMPotentialGood",
+   "statement": "HDec.CMBranch.CMPotentialGood",
+   "field": "cmPotentialGood",
+   "docstring":
+   "cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially good reduction (L596-597). ",
    "bundle": "OpenResearchLeaves69"},
   {"type": "HDec.CMBranch.CMHeight62",
    "statement": "HDec.CMBranch.CMHeight62",

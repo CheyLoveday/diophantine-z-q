@@ -81,6 +81,7 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`dsThm966Printed`](#dsthm966printed) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) | 2026-11-17 |
 | [`carayolThmAFrob`](#carayolthmafrob) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) | 2026-11-19 |
 | [`shimuraThm1Af`](#shimurathm1af) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6997431192)) | 2026-11-19 |
+| [`cmHeight62`](#cmheight62) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) | 2026-11-19 |
 | [`t10TateDuality`](#t10tateduality) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6996190309)) | 2026-11-19 |
 | [`hRC`](#hrc) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) | 2026-11-17 |
 
@@ -139,10 +140,10 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`t10TateDuality`](#t10tateduality) | added | consequence | GLUE | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6996190309)) |
 | [`afCharpolyDS965`](#afcharpolyds965) | research | consequence | GLUE | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`bergerSurveyF`](#bergersurveyf) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
-| [`bShStandardModel`](#bshstandardmodel) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`carayolThmAFrob`](#carayolthmafrob) | research | published | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) |
-| [`cmHeight62`](#cmheight62) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
+| [`cmHeight62`](#cmheight62) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) |
 | [`cmjDegree`](#cmjdegree) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open (last released by [@zachbaugher](https://github.com/zachbaugher): reports delivered (https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973387139 for `fowlerProp27`, https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6973419601 for...) |
+| [`cmPotentialGood`](#cmpotentialgood) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`dsThm965Printed`](#dsthm965printed) | research | published | GLUE | unread, unverified-locator | good-first | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by [@zachbaugher](https://github.com/zachbaugher) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6985165731)) |
 | [`elliotWildInertiaTrivial`](#elliotwildinertiatrivial) | research | consequence | GLUE | note |  |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
@@ -239,20 +240,6 @@ HDec.PkgI4.PanDict.BergerSurveyF
 
 > R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.6 = Theoreme 5.19 of arXiv:math/0102179v3; Theoreme 0.7 there is Sen's theorem) in the printed form of Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT.
 
-### bShStandardModel
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves69.bShStandardModel`; kind **consequence**, strict **GLUE**; flag: pending review: bridge B-Sh; rationality of the Hecke ring over Q printed in Shimura 1973 p. 526 (AI page read, no citation on the page); ON THE SPOT: the kernel's IsX1Gen model is Shimura's standard model (defined by citation of Shimura 1971) and xi_p, <d> act by DS's double-coset formulas (convention dictionary).
-* Source: Shimura, J. Math. Soc. Japan 25 (1973), 523-544, p. 526 (rationality of the Hecke ring; AI page read); the model and the double-coset dictionary are not printed there (Shimura 1971, cited by the 1973 print for its standard model)
-* discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-R16Thm1.BShStandardModel
-```
-
-> r16-thm1 (round 2), kept in r16-thm1b: the bridge B-Sh. Shimura's standard model of X_1(N) over Q with its Q-rational Hecke correspondences xi_p and diamond operators <d> is the kernel's model: for every X with IsX1Gen, a rational point and Jacobian J, there are endomorphisms T_p, <d> of J over Q acting on classes of the points x_tau by the double-coset formulas IsHeckeT, IsDiamond (pinned by AfTateLam.HeckePin). Same statement as AfTateLam.HeckeJ1DS (heckeJ1DS_of_bSh). Split (r16-thm1b section 3): (B2) rationality of the Hecke ring over Q on Shimura's model is printed in Shimura 1973 p. 526 (AI page read, no citation on the page); (B3) a Q-rational correspondence induces an endomorphism of J over Q (standard); left ON THE SPOT: (B1) the kernel's IsX1Gen model is Shimura's standard model (defined in Shimura 1971, which the 1973 print cites) and (B4) Shimura's xi_p, <d> act on the classes of the x_tau by DS's double-coset formulas (convention dictionary).
-
 ### carayolThmAFrob
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves69.carayolThmAFrob`; kind **published**, strict **GLUE**; flag: unread: new printed leaf (packaged form; consequence of DDT 1997 Thm 3.1 (a)-(d) via CarayolRefold.frob_of_DDT31, of which every clause was found printed by reviewer verdict queue10 carIrr and AI audit #65); statement check: (i) irreducible over K_{f,lambda} (Ribet LNM 601 Thm 2.3 or DDT 3.1(c) 'absolutely irreducible'); (ii) arithmetic Frobenius polynomial X^2 - a_p X + p psi(p) (manuscript L9794 from Carayol's normalization; DDT 3.1 trace a_p and det = psi chi_l); (iii) the conductor clause is a consequence of Carayol 1986 Theoreme (A) with the conductor compatibility of local Langlands and Casselman 1973 Thm 1, printed as one statement only in DDT 3.1 ('N(rho) is the prime-to-l part of N', AI reading); Carayol's form of Theorem A is not expressible in Lean (report section 2); locators UNVERIFIED.
@@ -273,7 +260,7 @@ CarayolRefold.CarayolThmAFrob
 * Source: Barquero-Sanchez, Cadwallader, Cannon, Genao, Masri, Faltings heights of CM elliptic curves and special Gamma values, Res. Number Theory 3 (2017) art. 13, section 6, Eq. (6.2), pp. 13-14 (read by the upstream audit); manuscript \cite[Eq. (6.2)]{cmheight}, diophantine_zq.tex L605 (normalization L598-605)
 * discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)).
 
 ```lean
 HDec.CMBranch.CMHeight62
@@ -294,6 +281,20 @@ HDec.CMBranch.CMjDegree
 ```
 
 > cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, #Pic(R) <= [L:Q] (L586-587).
+
+### cmPotentialGood
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves69.cmPotentialGood`; kind **consequence**, strict **GLUE**; flag: pending review (new leaf, GLUE until a reviewer rates it); ELLIOT-literature: classical fact the manuscript uses without citation (diophantine_zq.tex L596-597, 'After a finite extension E has everywhere good reduction, since its j-invariant is integral'); locators (Serre-Tate 1968; Silverman AEC VII.5.5) UNVERIFIED; pending review: GLUE until a reviewer rates it.
+* Source: diophantine_zq.tex L596-597 (uncited; reason given there: j integral); classical: Serre-Tate, Good reduction of abelian varieties, Ann. of Math. 88 (1968) (UNVERIFIED locator); Barquero-Sanchez et al. 2017 proof of Thm 1.3, p. 15 (upstream audit)
+* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+HDec.CMBranch.CMPotentialGood
+```
+
+> cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially good reduction (L596-597).
 
 ### deligneCanonicalModelY3EveryPrint
 
