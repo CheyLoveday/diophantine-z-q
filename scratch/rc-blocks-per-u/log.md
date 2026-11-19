@@ -8,3 +8,8 @@
 - `Inventory.attachment`: one representation per normalized source, reused literally on all its dilations; Eisenstein diagonal built from the ordered pair.
 - `Window.lean`: passed; `realize` gives `∃ A C V ρ₀ levels, AtLevel levels ρ₀` over the same stage and pool.
 - `ThetaTransform.lean`: passed; holomorphy and nonvanishing of ordinary theta and the weight-two slash and cusp proofs checked.
+- `Descent.lean`: passed; complex span membership descends along the chosen comparison to the coefficient field, preserving the eligible index subtype.
+- `Fourier.lean`: passed; the exact positive-square convolution is the Fourier expansion of multiplication by ordinary theta.
+- `Sieve.lean`: passed; `OldStageLaw` uses the actual `Lift.aθ`; the moving and unary laws are separate. Signed integer-power normalization follows from `B_spec`.
+- `Assemble.lean`: passed; `realize_of_stage` composes the analytic and coefficient descent lemmas with assembly of the four consumer inputs.
+- Final serial pass: 9 modules, 47 axiom checks, no warnings or errors; only `propext`, `Classical.choice`, and `Quot.sound`.
