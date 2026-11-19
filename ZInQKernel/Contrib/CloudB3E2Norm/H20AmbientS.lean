@@ -8,8 +8,8 @@ Manuscript `diophantine_zq.tex`, tex 2914–2936, 3080–3084, 3251–3262, 3471
 
 **Why.** `H20Untwisted.lean` takes the ambient module of points to be `ℤ[Δ] ⊗ E(K_{S₀})` with `S₀`
 the support of the coefficient module. The Heegner point `y_{dq}` of a step of the chain lies over
-the ring class field `H_{dq}`, which is ramified at the switch prime `q`; the switch primes lie outside
-`S₀` (the unramified conditions of the presentation sit there), so `y_{dq}` is not a point of
+the ring class field `H_{dq}`, which is ramified at the switch prime `q`; the switch primes lie
+outside `S₀` (the unramified conditions of the presentation sit there), so `y_{dq}` is not a point of
 `E(K_{S₀})`, and the hypothesis `hker` of `hPw_actualUH` (the fixed field of the transfer subgroup
 inside `K_{S₀}`) fails for `H = G_{H_{dq}}`. **This file** takes the ambient points over a larger
 support `S₁` (`S₀ ⊆ S₁ ⊆ S`; for the text `S₁` contains the primes of the chain), keeps the
@@ -21,7 +21,8 @@ coefficient module over `S₀`, and replaces `hker` by the inertia hypotheses at
   the transfer character `thetaH hS s hs hs0 π H hH = χ_h [π]` of the coefficient module
   (unchanged).
 * `ambIotaS` (definition), **`ambIotaS_equivariantH`**, `ambIotaS_injective` (PROVED):
-  `ι = 1 ⊗ incl` from the coefficient module into the ambient module, and the hypothesis `hιeq` of `h1_shapiro`.
+  `ι = 1 ⊗ incl` from the coefficient module into the ambient module, and the hypothesis `hιeq`
+  of `h1_shapiro`.
 * `locPsiS`, `psiS_smul`, `locPsiS_iota`, **`localTwistIdentificationS`**, **`oldPlaceInputS`**
   (PROVED): the coefficient/twist identification at `v ∈ P`.
 * `realFS`, `realXS`, `smul_realXS`, `exists_twist_pointS`, `psi_wsumS`, **`hreal_actualS`**,
