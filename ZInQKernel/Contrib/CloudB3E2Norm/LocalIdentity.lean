@@ -16,11 +16,13 @@ it from ONE named open statement, the coefficient/twist identification
 * **The group-theoretic part (PROVED).** In degree one the transferred Kummer cocycle is the
   Kummer cocycle `g ↦ R(g) P̃ − P̃` of the weighted point `P̃ = ∑_δ R(r_δ) Q`, a division point of
   the weighted sum `P = ∑_δ R(r_δ) y` (`TwistedTransfer.kummer_weighted_sum`); restricted to the
-  decomposition group it is the local Kummer cocycle of the same point. The weighted sum splits
-  over the orbits of the decomposition group on `G/H` (the double cosets `G_v \ G / G_{H_T}`):
-  `wsum_eq_sum_orbitSum`, and each orbit sum `P_O = ∑_{δ ∈ O} R(r_δ) y` is fixed by the
-  decomposition group (`orbitSum_fixed`): it is the local norm from the place of `H_T` above `v`
-  corresponding to `O` (`realization_of_orbits` assembles realizations orbit by orbit).
+  decomposition group it is the local Kummer cocycle of the same point. For any partition of
+  `G/H` into finite sets (e.g. the orbits of the decomposition group, the double cosets
+  `G_v \ G / G_{H_T}`), the weighted sum is the sum of the orbit sums (`wsum_eq_sum_orbitSum`),
+  and an orbit sum `P_O = ∑_{δ ∈ O} R(r_δ) y` is fixed by every `g` stabilizing `O`
+  (`orbitSum_fixed`); `realization_of_orbits` assembles realizations orbit by orbit. The
+  identification of `P_O` with the local norm from the place of `H_T` above `v` corresponding to
+  `O` is NOT formalized here: it is part of the realization input `hreal`.
 * **`LocalTwistIdentification ψ jB` (Prop; kind GLUE).** A local ambient module `L` with
   `G_{K_v}`-action, a `k`-linear map `ψ : D → L` from the global ambient module (for the text:
   induced by an embedding `K_S → K̄_v`) and an additive map `jB : B(K̄_v) → L` from the points of
@@ -45,11 +47,26 @@ it from ONE named open statement, the coefficient/twist identification
   (`∃ u, ι u = res a`) of the genuine Selmer data follows from `LocalTwistIdentification` and the
   realization at every old place (`OldPlaceInput`); `exists_hRloc_of_oldInputs` (PROVED): `hRloc`
   of `hzR_genuine_of_strictLifts` at the genuine relaxed data.
-* Non-vacuity: `nonVacuity_localTwist`, `nonVacuity_oldPlaceInput`.
+* Non-vacuity: `nonVacuity_localTwist_identity` (non-degenerate: `ι_v` injective, `M = B(K̄)[m]`),
+  `nonVacuity_localTwist`, `nonVacuity_oldPlaceInput` (trivial `M`).
 
-**What remains**: `LocalTwistIdentification` itself (GLUE as above) and the realization `hreal` of
-the actual points at the old places (Heegner points over the ring class fields `H_T`, their local
-norms as points of the local twist over `K_v`).
+**Coefficient ring.** The framework (one coefficient ring `k` for the ambient module `D` of the
+points, the genuine coefficient module `M` and the character `θ`) must be instantiated at a ring
+over which the ambient modules are not killed by `m`, e.g. the group ring `ℤ[Δ_f]` of the ring
+class group with its universal character `δ ↦ [δ]` (the Shapiro level of (H20), tex 3203–3215,
+with `D = E(K̄) ⊗ ℤ[Δ_f]`, `M = E[2^m] ⊗ ℤ[Δ_f]`). At the stage ring `A_i = Acoef i` (with
+`2^i = 0`) every module is `2^i`-torsion: division points degenerate (`2^i Q = y` forces `y = 0`),
+and for `m = 2^i` every additive map from the divisible group `B(K̄_v)` to an `A_i`-module is zero,
+so `LocalTwistIdentification` with a nonzero `ι_v` is uninhabitable. The passage to `A_i` and the
+actual character `θ = χ_h Ψ_i` is the coefficient map of (H20) (`v ⊗ [δ] ↦ θ(δ) v`), applied to
+the Selmer complexes AFTER the identity; it is not formalized here. (The `[Field k]` binder of the
+genuine wrappers is removed in `StageRing.lean`.)
+
+**What remains**: (1) `LocalTwistIdentification` itself (GLUE as above), at a coefficient ring
+as in the previous paragraph; (2) the realization `hreal` of the actual points at the old places
+(the orbit sums of the Heegner points over the ring class fields `H_T` as local norms, and these as
+points of the local twist over `K_v`); (3) the coefficient change `ℤ[Δ_f] → A_i`, `δ ↦ θ(δ)`, of
+(H20) for the Selmer complexes and their local conditions.
 
 Kinds: definitions and PROVED; `LocalTwistIdentification` is the GLUE statement left open.
 -/
@@ -101,6 +118,18 @@ theorem orbitSum_fixed (g : G) (O : Finset (G ⧸ H))
     (fun δ _ => rfl)
   · simp [← mul_assoc]
   · simp [← mul_assoc]
+
+/-- **Realization orbit by orbit** (PROVED): if the image of every orbit sum of a partition is a
+`k`-combination `∑_j a i j • e i j`, so is the image of the weighted sum (indexed by pairs). -/
+theorem realization_of_orbits [Fintype (G ⧸ H)] [DecidableEq (G ⧸ H)] {L : Type*}
+    [AddCommGroup L] [Module k L] (ψ : D →ₗ[k] L) {ι : Type*} (s : Finset ι)
+    (O : ι → Finset (G ⧸ H)) (hdisj : (s : Set ι).PairwiseDisjoint O)
+    (hcover : s.biUnion O = Finset.univ) (x : D) {J : ι → Type*} (t : ∀ i, Finset (J i))
+    (a : ∀ i, J i → k) (e : ∀ i, J i → L)
+    (h : ∀ i ∈ s, ψ (orbitSum ρ H r θ (O i) x) = ∑ j ∈ t i, a i j • e i j) :
+    ψ (wsum ρ H r θ x) = ∑ p ∈ s.sigma t, a p.1 p.2 • e p.1 p.2 := by
+  rw [wsum_eq_sum_orbitSum ρ H r θ s O hdisj hcover, map_sum, Finset.sum_sigma]
+  exact Finset.sum_congr rfl h
 
 end Orbits
 
@@ -417,5 +446,22 @@ theorem nonVacuity_oldPlaceInput {K : Type} [Field K] [NumberField K]
       fun _ _ => Subsingleton.elim _ _, fun _ _ => Subsingleton.elim _ _,
       fun _ => Subsingleton.elim _ _⟩,
     Empty, ∅, fun e => e.elim, fun e => e.elim, Subsingleton.elim _ _⟩
+
+/-- **A non-degenerate witness of `LocalTwistIdentification`** (Kind: PROVED): for every local
+twist `B` and every `m`, the identification holds with coefficient ring `ℤ`, genuine coefficient
+module `M = B(K̄)[m]` (nonzero for `m ≥ 2`), `ι_v = id` (injective), `D = L = B(K̄)` with the Galois
+action, `ψ = jB = id`, trivial `H = ⊤` and trivial character. -/
+theorem nonVacuity_localTwist_identity {F : Type} [Field F] [CharZero F] [DecidableEq F]
+    (B : WeierstrassCurve F) [B.IsElliptic] (m : ℕ) [NeZero m] :
+    LocalTwistIdentification (DistribMulAction.toModuleEnd ℤ (PtAlg F B))
+      (⊤ : Subgroup (Field.absoluteGaloisGroup F)) 1
+      ((AddSubgroup.torsionBy (PtAlg F B) (m : ℤ)).subtype.toIntLinearMap) B m (MonoidHom.id _)
+      (AddMonoidHom.id (TorsAlg F B m)) (LinearMap.id : PtAlg F B →ₗ[ℤ] PtAlg F B)
+      (AddMonoidHom.id (PtAlg F B)) :=
+  ⟨fun x y h => Subtype.ext h,
+    fun x hx => ⟨⟨x, (AddSubgroup.torsionBy.nsmul_iff).2 hx⟩, rfl⟩,
+    fun σ x => by simp [R],
+    fun σ p => rfl,
+    fun t => rfl⟩
 
 end ZInQ.Contrib.CloudB3E2.NormCochain
