@@ -4,7 +4,9 @@
 
 The binary sign criterion and signed-curve calculations below are mathematical results. The rank argument is a proved conditional implication from the actual coefficient/Selmer/descent data specified below, not a declaration that those original comparisons have been constructed.
 
-The reported signed-calibration implementation is carried by [PR 141](https://github.com/Deicyde/diophantine-z-q/pull/141), including the eight RC36 files at commit `68637bf4b`. Compilation and internal fixes were reported for that implementation; a separate external review and current-tree integration checks must be recorded before landing. No merged-to-main or whole-Theorem-5.3 status is asserted here.
+An integration receipt received on 19 November 2026 records the eight RC36 signed-calibration files as merged with [PR 141](https://github.com/Deicyde/diophantine-z-q/pull/141) at main commit `740aa8edc`, byte-identical to `68637bf4b`. The external review at integration commit `35d83d594119f7fb570d2ac8064997565883c1c6` rated RC36 SOUND, reporting a clean project-source rebuild, exact signed rank-one type match, and standard logical axioms. This is a dated integration/review receipt, not continuous verification of the remote branch or a proof of the whole restricted converse.
+
+The merged implementation remains conditional on its explicit coefficient comparison, finite-generation, rational-corank and calibration-book inputs. Classical support for an input is not a Lean inhabitant of it. In particular, Mordell–Weil and algebraic rank one determine the point-group contribution but do not by themselves prove finiteness of Sha. A finite-Sha step needs its actual finiteness premise or the applicable analytic-rank/Kolyvagin result. The exact remaining premises must remain visible in the roadmap. RC37's concrete comparison and its required ellipticity correction are separate from this RC36 landing.
 
 ## Exact binary-family sign criterion
 
