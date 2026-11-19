@@ -16,6 +16,11 @@ The printed-corollary assembly uses coefficient-field descent, Carayol's
 rational Corollaire, and Faltings's local-factor rigidity. The representation
 assembly uses the actual rational Tate module and the normalized Carayol
 representation, with its two remaining Tate local readings named explicitly.
+Two of its inputs, `Carayol1986ThmARationalWeightTwo` (through
+`CarayolRationalRealization.local_factor`) and `BadReductionTatePolynomialReading`, are false as
+formalized at primes of multiplicative reduction, so that assembly is not usable as it stands; a
+corrected assembly on inertia coinvariants is in `GlobalTrace/CoinvariantAssembly.lean`, and the
+printed-corollary assembly does not use them.
 All mathematical definitions and printed-source locators are stated below.
 -/
 
@@ -852,14 +857,16 @@ to the theorem.
 For a rational weight-two newform the coefficient completion can be taken
 to be `ℚ_ℓ`, by the realization on the associated elliptic curve in §0.8.
 The rationality premise is separate and is proved by coefficient-field descent
-in `ConjugateG0.lean` when the prime coefficients agree with those of the
+in the `Descent` section of this file (`coefficients_rational_of_almost_all_primes`) when the
+prime coefficients agree with those of the
 input elliptic curve almost everywhere.
 
 The two elliptic-curve local readings are explicitly GLUE, not attributed to
 Carayol as statements about an arbitrary elliptic curve. The newly proved
 local good-reduction dictionary is not re-assumed. The remaining good reading
 is its globalization; the bad reading identifies the actual Tate invariants
-with the actual minimal-reduction polynomial. The independent route through
+with the actual minimal-reduction polynomial, which fails at primes of multiplicative reduction
+(see the warning on `BadReductionTatePolynomialReading`). The independent route through
 Carayol's rational Corollaire and Faltings's iii ⇒ iv does not assume them.
 -/
 
@@ -916,13 +923,13 @@ theorem inertiaAt_normalized {p : ℕ} (D : LocalArithmeticFrobenius p) :
 inertia-fixed space. Locator: `inertiaEulerPolynomial`, Carayol §0.5,
 p. 410, with arithmetic and dual normalization displayed above.
 
-**Warning: false as stated at primes of multiplicative reduction.** The polynomial uses the
+**Warning: not the classical local factor at primes of multiplicative reduction.** The polynomial uses the
 arithmetic Frobenius on the inertia invariants of the homological representation. For a Tate
 curve the invariants are the line `ℚ_ℓ(1) ⊗ ε`, on which the arithmetic Frobenius acts by `ε p`,
 so this side is `1 - ε p X`, while the classical factor is `1 - ε X` (for the curve 11a1 at
 `p = 11`: `1 - 11 X` against `1 - X`). The correct reading uses the inertia coinvariants
 (equivalently the dual representation with the inverse Frobenius). The printed-corollary route
-`Descent.liCarayolNewformOfModular_of_printed_corollaries` does not use this statement. -/
+`Descent.liCarayolNewformOfModular_of_printed_corollaries` does not use this definition. -/
 def localTatePolynomial (E : WeierstrassCurve ℚ) [E.IsElliptic]
     (ℓ : ℕ) [Fact ℓ.Prime] {p : ℕ} (D : LocalArithmeticFrobenius p) : Polynomial ℚ_[ℓ] :=
   inertiaEulerPolynomial (rationalTateRep E ℓ) (inertiaAt D) D.element
@@ -993,7 +1000,15 @@ dual-normalized for arithmetic Frobenius; its dual is Carayol's cohomological
 normalization. The local polynomial reading uses manuscript-cited Li 1975,
 Theorem 3(i), p. 295, and Casselman 1973, Theorem 4, p. 313. Compatibility
 at all `p ≠ ℓ` is retained; no claim is made at `p = ℓ`. This source proposition
-contains no input elliptic curve and no newform-existence conclusion for it. -/
+contains no input elliptic curve and no newform-existence conclusion for it.
+
+**Warning: false as formalized.** Its last clause reads the local factor on inertia invariants
+with the arithmetic Frobenius, for a representation with arithmetic-Frobenius trace `a_p` (hence
+determinant `p`). At a prime `p ∥ M` that side is `1 - a_p p X`, while the right side is
+`1 - a_p X` (for the rational newform of level 11 at `p = 11`, with any auxiliary `ℓ ≠ 11`:
+`1 - 11 X` against `1 - X`). The correct reading uses the inertia coinvariants. No declaration
+uses this proposition; in particular the printed-corollary route
+`Descent.liCarayolNewformOfModular_of_printed_corollaries` does not. -/
 def Carayol1986ThmAWeightTwoQ : Prop :=
   ∀ (M : ℕ) [NeZero M] (F : Newform M 2), F.χ = 1 →
     ∃ (K : IntermediateField ℚ ℂ) (hK : NumberField K),
