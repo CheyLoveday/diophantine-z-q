@@ -914,7 +914,15 @@ theorem inertiaAt_normalized {p : ℕ} (D : LocalArithmeticFrobenius p) :
 
 /-- **DEFINITION**, the literal Frobenius polynomial on the actual
 inertia-fixed space. Locator: `inertiaEulerPolynomial`, Carayol §0.5,
-p. 410, with arithmetic and dual normalization displayed above. -/
+p. 410, with arithmetic and dual normalization displayed above.
+
+**Warning: false as stated at primes of multiplicative reduction.** The polynomial uses the
+arithmetic Frobenius on the inertia invariants of the homological representation. For a Tate
+curve the invariants are the line `ℚ_ℓ(1) ⊗ ε`, on which the arithmetic Frobenius acts by `ε p`,
+so this side is `1 - ε p X`, while the classical factor is `1 - ε X` (for the curve 11a1 at
+`p = 11`: `1 - 11 X` against `1 - X`). The correct reading uses the inertia coinvariants
+(equivalently the dual representation with the inverse Frobenius). The printed-corollary route
+`Descent.liCarayolNewformOfModular_of_printed_corollaries` does not use this statement. -/
 def localTatePolynomial (E : WeierstrassCurve ℚ) [E.IsElliptic]
     (ℓ : ℕ) [Fact ℓ.Prime] {p : ℕ} (D : LocalArithmeticFrobenius p) : Polynomial ℚ_[ℓ] :=
   inertiaEulerPolynomial (rationalTateRep E ℓ) (inertiaAt D) D.element
@@ -952,7 +960,15 @@ structure CarayolRationalRealization {M : ℕ} [NeZero M]
       LinearMap.trace ℚ_[ℓ] (Fin 2 → ℚ_[ℓ]) (normalizedRep g) = (b p : ℚ_[ℓ])
   /-- **CONSEQUENCE OF PRINTED LOCAL COMPATIBILITY**, at every `p ≠ ℓ`,
   with the actual subgroup and actual Frobenius. Locators: Carayol (A), pp. 410–411;
-  Li Theorem 3(i), p. 295; Casselman Theorem 4, p. 313. -/
+  Li Theorem 3(i), p. 295; Casselman Theorem 4, p. 313.
+
+  **Warning: false as stated at primes of multiplicative reduction.** The polynomial uses the
+  arithmetic Frobenius on the inertia invariants of the homological representation. For a Tate
+  curve the invariants are the line `ℚ_ℓ(1) ⊗ ε`, on which the arithmetic Frobenius acts by `ε p`,
+  so this side is `1 - ε p X`, while the classical factor is `1 - ε X` (for the curve 11a1 at
+  `p = 11`: `1 - 11 X` against `1 - X`). The correct reading uses the inertia coinvariants
+  (equivalently the dual representation with the inverse Frobenius). The printed-corollary route
+  `Descent.liCarayolNewformOfModular_of_printed_corollaries` does not use this statement. -/
   local_factor : ∀ (p : ℕ), p.Prime → p ≠ ℓ → ∀ D : LocalArithmeticFrobenius p,
     inertiaEulerPolynomial normalizedRep (inertiaAt D) D.element (inertiaAt_normalized D) =
       rationalNewformPolynomial M ℓ b p
@@ -1010,7 +1026,11 @@ bibitem `carayol`, Carayol 1986, Théorème (A), pp. 410–411, Remarque and
 reading is manuscript-cited Casselman 1973, Theorem 4, p. 313, with Li 1975,
 Theorem 3(i), p. 295. Rationality of `F` is a premise here and is proved
 separately for the extracted form, rather than assumed for the input curve.
-This is a proposition, not an axiom or a proof of these printed facts. -/
+This is a proposition, not an axiom or a proof of these printed facts.
+
+**Warning: false as formalized.** Its field `CarayolRationalRealization.local_factor` reads the
+local factor on inertia invariants with the arithmetic Frobenius, which fails at primes `p ∥ M`
+(for the rational newform of level 11 at `p = 11`); see the warning on `local_factor`. -/
 def Carayol1986ThmARationalWeightTwo : Prop :=
   ∀ (M : ℕ) [NeZero M] (F : Newform M 2) (hχ : F.χ = 1) (b : ℕ → ℚ)
     (hb : ∀ n : ℕ, (qExpansion 1 F.toCuspForm).coeff n = (b n : ℂ))
@@ -1046,7 +1066,15 @@ polynomial is the Frobenius polynomial on the actual Tate inertia invariants.
 Locators: the local determinant definition before Faltings Korollar 2,
 p. 361; Silverman VII.6–7 and Appendix C.16, p. 449 (body not page-checked).
 Carayol's theorem concerns the newform representation, not this assertion
-for every arbitrary elliptic curve. This proposition remains explicit. -/
+for every arbitrary elliptic curve. This proposition remains explicit.
+
+**Warning: false as stated at primes of multiplicative reduction.** The polynomial uses the
+arithmetic Frobenius on the inertia invariants of the homological representation. For a Tate
+curve the invariants are the line `ℚ_ℓ(1) ⊗ ε`, on which the arithmetic Frobenius acts by `ε p`,
+so this side is `1 - ε p X`, while the classical factor is `1 - ε X` (for the curve 11a1 at
+`p = 11`: `1 - 11 X` against `1 - X`). The correct reading uses the inertia coinvariants
+(equivalently the dual representation with the inverse Frobenius). The printed-corollary route
+`Descent.liCarayolNewformOfModular_of_printed_corollaries` does not use this statement. -/
 def BadReductionTatePolynomialReading : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (ℓ : ℕ) [Fact ℓ.Prime]
     (p : ℕ) (hp : p.Prime), p ≠ ℓ → ¬GoodReductionAt E (primeIdealQ p hp) →
@@ -1228,7 +1256,11 @@ Locators: Carayol (A) and §0.8, pp. 410–411; Faltings Satz 3, p. 360;
 Shimura Theorem 1, p. 526; Li Theorem 5, p. 298. The two actual Tate local
 readings remain displayed hypotheses. Brauer–Nesbitt, actual invariant-space
 transport, avoidance of `p = ℓ`, and coefficient assembly are all proved.
-No input asserts the existence conclusion of G0 for the original curve. -/
+No input asserts the existence conclusion of G0 for the original curve.
+
+**Warning.** The hypotheses `hC` and `hB` are false as formalized (see the warnings on
+`CarayolRationalRealization.local_factor` and `BadReductionTatePolynomialReading`), so this
+route is not usable until both are restated on inertia coinvariants. -/
 theorem liCarayolNewformOfModular_of_representations
     (hS : ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Shimura1973ConjugateEigenforms)
     (hL : Li1975StrongMultiplicityOneWeightTwo)
