@@ -353,6 +353,29 @@ theorem mem_range_homT_iff_coord_in_kernel {K : Type} [Field K] {A B : PkgI3.AbV
       PkgI3.Tate.pow_smul_shift (homT (ℓ := ℓ) r y).2 n j] at hj
     exact hj.symm
 
+/-- An isogeny with geometric kernel killed by `ℓ^n` supplies the Tate lattice
+defined by that kernel at level `n`. -/
+theorem exists_homT_range_of_geometric_kernel {K : Type} [Field K] [CharZero K]
+    {A B : PkgI3.AbVar K} (f : Hom A B) (hf : IsIsogeny f.hom) (ℓ n : ℕ) [Fact ℓ.Prime]
+    (hk : ∀ P : ZInQ.DefFaltings.ptObj K (AlgebraicClosure K) ⟶ A.X,
+      P ≫ f.hom = 1 → P ^ (ℓ ^ n) = 1) :
+    ∃ r : Hom B A, ∀ x : A.T ℓ,
+      x ∈ LinearMap.range (homT (ℓ := ℓ) r) ↔ Additive.toMul (x.1 n) ≫ f.hom = 1 := by
+  haveI : IsMonHom ((𝟙 A.X : A.X ⟶ A.X) ^ (ℓ ^ n)) :=
+    MilneQuasiInverse.Descent.GroupDescent.Construction.groupHom_pow_isMonHom _ _
+  let m : Hom A A := Hom.mk' ((𝟙 A.X : A.X ⟶ A.X) ^ (ℓ ^ n))
+  obtain ⟨hepi, r, hr, hcomp⟩ := epi_and_descend_of_geometric_kernel f m hf (fun P hP => by
+    change P ≫ (𝟙 A.X : A.X ⟶ A.X) ^ (ℓ ^ n) = 1
+    rw [MonObj.comp_pow, Category.comp_id]
+    exact hk P hP)
+  haveI : IsMonHom r := hr
+  haveI : Epi f.hom := hepi
+  change f.hom ≫ r = (𝟙 A.X : A.X ⟶ A.X) ^ (ℓ ^ n) at hcomp
+  have hrc : r ≫ f.hom = (𝟙 B.X : B.X ⟶ B.X) ^ (ℓ ^ n) := by
+    apply (cancel_epi f.hom).mp
+    rw [← Category.assoc, hcomp, MonObj.pow_comp, Category.id_comp, MonObj.comp_pow, Category.comp_id]
+  exact ⟨Hom.mk' r, mem_range_homT_iff_coord_in_kernel f (Hom.mk' r) ℓ n hcomp hrc⟩
+
 /-- Divisibility on the Tate module detects divisibility of the original
 abelian-variety homomorphism by the same prime power. -/
 theorem exists_eq_nsmul_of_homT_dvd {K : Type} [Field K] [CharZero K] {A B : PkgI3.AbVar K}
@@ -394,5 +417,7 @@ end ZInQ.Contrib.GRUniformQuasiInverse
 #print axioms ZInQ.Contrib.GRUniformQuasiInverse.exists_anStableHeightSS
 
 #print axioms ZInQ.Contrib.GRUniformQuasiInverse.mem_range_homT_iff_coord_in_kernel
+
+#print axioms ZInQ.Contrib.GRUniformQuasiInverse.exists_homT_range_of_geometric_kernel
 
 #print axioms ZInQ.Contrib.GRUniformQuasiInverse.exists_eq_nsmul_of_homT_dvd
