@@ -1,0 +1,6 @@
+- Base 55a6a0045072501471c55a7b3ca1a02d1b18e15f; merged b21658e759af2b623711adae66506e51fa90ad20 as 83f5ccc0b3dc9d76851ca45e96a67ad8619749bc.
+- Tex 8162–8167: literal shell normalization omits the base coefficient; use the explicit formula at 8168–8176.
+- O12Theta.window_misses_test: one finite pool cannot cover all tests when B ≥ 2. StageJoin's PMLocal is for the odd source; EvenSource has no moving prime.
+- Source.lean: exact stationary support and radical domain; normalized mask commutes with (E.12); squarefree App E phase, off-filter vanishing, and algebraicity at every coefficient. Passed; 11 axiom audits.
+- Divided.lean: exact raw bounds; binary unary subtraction at all Fourier indices and integral quotient for any integer exponent; two-fresh Fourier weight and divisibility; ordinary theta congruence. Passed; 13 axiom audits.
+- Both files report only propext, Classical.choice, and Quot.sound (some declarations use a subset).
