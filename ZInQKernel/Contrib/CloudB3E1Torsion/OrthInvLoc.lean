@@ -48,7 +48,7 @@ inverses of `A = Φ − 1`, `D = Φ − N_q(g)` (active primes) and `C = t · un
 localized coefficients (tex 3727–3732, 3787–3789). Those inverses exist in `Frac Λ`, not at a
 finite stage.
 
-Remainder (the bridge to `hlift_of_transport`, not proved here): lane E2's `hsw`
+The bridge to `hlift_of_transport`: lane E2's `hsw`
 (`j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T`) does not hold on the nose for this `ψ`. At the places above `p`,
 `ψ_T` keeps the unramified component `u_p`, while `j ∘ ψ_{T ∪ {p}} ∘ i'` sends it to `0` and adds
 `h¹_p(ι u_p)` to the local component. The difference `(0, −u_p, h¹_p(ι u_p))` is a coboundary of
@@ -58,7 +58,12 @@ condition `[W --(Φ−1)--> W]` at `p` is contracted too, which is the unit `A =
 unramified condition at the new places, the unit `A` of tex 3727–3732):
 `hswUpToD_of_urSurj`, `hlift_of_urSurj`.
 
-Kinds: definitions, named input (`OrthComparisonInverseLoc`), PROVED.
+Remaining named inputs, both localized (true at the text's localization, false at a finite
+stage): `OrthComparisonInverseLoc` (the contractions) and `UrSurj` (`Φ − 1` onto). Passing to
+`Frac Λ` gives them once `det(Φ − 1) ≠ 0` and the units `D`, `C` are invertible there (tex
+3727–3732, 3787–3789); that arithmetic input is RC32's.
+
+Kinds: definitions, named inputs (`OrthComparisonInverseLoc`, `UrSurj`), PROVED.
 -/
 
 noncomputable section
