@@ -161,17 +161,20 @@ variable {T : TypeData L ε} {R : Finset ℕ → ZMod 2} {ap : ℕ → ℤ} {B :
 variable {chiType : GalQ →* Multiplicative L} {X : GaloisConstituentModel T R ap B chiType}
 
 /-- If the constituent realization chooses the explicit character sum in the
-model, its attachment data are automatic outside the primes of the pair level. -/
+model, its attachment data are automatic for any finite exclusion that
+contains the primes of the pair level. This permits a common exclusion set
+for a family of labeled columns. -/
 theorem repInput_of_split_choice [CharZero X.K] [TopologicalSpace X.K] [IsTopologicalRing X.K]
     (E : CharacterPair X.K p) (j : ℤ_[2] →+* X.K) (hj : Continuous j) (hp₂ : p ≠ 2)
-    (P : LocalPair p) (i : X.I) (hρ : X.ρ i = normalizedRep E j) :
-    RepInput (X := X) E i (pairLevel E).primeFactors := by
+    (P : LocalPair p) (i : X.I) (hρ : X.ρ i = normalizedRep E j)
+    (avoid : Finset ℕ) (havoid : (pairLevel E).primeFactors ⊆ avoid) :
+    RepInput (X := X) E i avoid := by
   have hn : pairLevel E ≠ 0 :=
     mul_ne_zero (mul_ne_zero (Fact.out : p.Prime).ne_zero (NeZero.ne E.awayLevel))
       (NeZero.ne E.unramLevel)
-  have tests (q : ℕ) (hq : T.Good q) (ha : q ∉ (pairLevel E).primeFactors) :
+  have tests (q : ℕ) (hq : T.Good q) (ha : q ∉ avoid) :
       q.Coprime E.unramLevel ∧ q.Coprime (p * E.awayLevel) := by
-    have hm : ¬ q ∣ pairLevel E := fun h => ha (Nat.mem_primeFactors.mpr ⟨hq.1, h, hn⟩)
+    have hm : ¬ q ∣ pairLevel E := fun h => ha (havoid (Nat.mem_primeFactors.mpr ⟨hq.1, h, hn⟩))
     exact ⟨hq.1.coprime_iff_not_dvd.mpr (fun h => hm (h.trans (dvd_mul_left _ _))),
       hq.1.coprime_iff_not_dvd.mpr (fun h => hm (h.trans (dvd_mul_right _ _)))⟩
   refine ⟨hρ.symm ▸ normalizedRep_semisimple E j hp₂ P,
