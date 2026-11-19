@@ -23,7 +23,7 @@ def complexify : LaurentSeries ℚ →+* LaurentSeries ℂ where
   map_add' x y := by ext n; simp
   map_mul' _ _ := HahnSeries.map_mul (Rat.castHom ℂ).toNonUnitalRingHom
 
-@[simp] private theorem complexify_coeff (a : LaurentSeries ℚ) (n : ℤ) :
+@[simp] theorem complexify_coeff (a : LaurentSeries ℚ) (n : ℤ) :
     (complexify a).coeff n = (a.coeff n : ℂ) := rfl
 
 /-- Apply a rational linear functional on the coefficients of a Laurent series. -/

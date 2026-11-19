@@ -7,3 +7,9 @@
 - Degree: integral_degree_of_orbit_product; intermediateField_eq_top_of_degree_bound. Compiled; same axiom set.
 - Weierstrass: regularPart_derivatives_rational; five supporting theorems. Compiled; same axiom set.
 - RationalTaylor: 10 closure and factorization theorems. Compiled; same axiom set.
+- Infinity: primitive_rationalTaylor; coordinates_rationalTaylor. Compiled; standard three axioms.
+- RationalExpansion: rationalLaurent_of_cleared; coordinates_rationalLaurent. Compiled; standard three axioms. Leading coefficient of x at -2 is κ⁻²; coefficients below -2 for x and -3 for y vanish.
+- Tail: laurent_unique_of_tail; hasSum_mul_of_tail; five supporting theorems. Compiled; standard three axioms.
+- Equation: coordinates_laurent_equation; six supporting theorems. Compiled; standard three axioms.
+- Complex converse: the rational globally convergent level-one polynomial theorem is narrower; interior poles of complex functions and the analytic coset and cusp comparison remain open.
+- FieldMembership: coordinates_in_modularFunctionField_with_equation and coordinates_in_modularFunctionField. Compiled; standard three axioms for both and the width-one conversion. Exact stop supplied conditional on ComplexCuspClassification N.
