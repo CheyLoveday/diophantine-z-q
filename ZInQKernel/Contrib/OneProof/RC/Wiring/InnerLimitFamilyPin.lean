@@ -34,10 +34,14 @@ leaf with the text's moving character and quantifier order.
   (`PrimRegularityInputsILQ.toMdl`, `primRegularityInputs_of_ILQ`, `heightOneTarget_of_ILQ`), the
   degenerate case (`primRegularityInputsILQ_of_uPrim_zero`).
 * The collapse. PROVED: `AddressMovingFamilyR.inertia_onto` (the address's exponents are surjective
-  on inertia at `r_i`), `AddressMovingFamilyR.exponent_ne_one` and
-  `AddressMovingFamilyR.character_ne_quad` (so `ξ_i = 1`, the non-moving family `α_i = χ_h`, is
-  excluded at every positive stage), and `PinnedLimitAt.terminal_of_stationary` (a stationary
-  family forces `dim H¹ = 1` of the finite fibre of the fixed limit, in both branches).
+  on inertia at `r_i`) and `AddressMovingFamilyR.exponent_ne_one` (so the exponent `ξ_i = 1`, the
+  non-moving family, is excluded at every positive stage; the character `χ_h (1 + t)^{ψ_i}` differs
+  from `χ_h` from stage two on, while at stage one `t = 0` in `A_1`), and
+  `PinnedLimitAt.terminal_of_stationary_family` (`Wiring/InnerLimitFamilyPinFix.lean`: a
+  configuration family without proper successors, pinned to the fixed limit, forces `dim H¹ = 1`
+  of its finite fibre, in both branches). The earlier `PinnedLimitAt.terminal_of_stationary`
+  below assumes that every configuration family is stationary, which no instance satisfies; it is
+  vacuous and not cited.
 
 At the quadratic primes `(t)`, `(t + 2)` only the actual fibre is pinned: the switches and
 successor fibres of the homology-level data are not tied to the address's families (F3,
@@ -90,6 +94,7 @@ prime supports of the family, tex 2732): at each stage `i`
   arithmetic Frobenius lift (tex 2733–2735, 4275–4277);
 * `orientBar`, `orientBar_neg`: at the conjugate orientation, value `−1` on every arithmetic
   Frobenius lift (tex 4262–4264).
+The text also excludes the theta prime from the moving primes (tex 4269); this is not recorded.
 Kind: definition (data and ELLIOT). -/
 structure FamilyMovingCharacter (ℓ : ℕ) (Q : Finset ℕ) where
   /-- The moving conductor primes. -/
@@ -177,7 +182,10 @@ as `AddressMovingFamily`, but
 * `character`: the characters are `χ_h (1 + t)^{ψ_i}` with the family's moving exponent `ψ_i`
   inflated to the old support: the same `Ψ_i` for all characters of the family (tex 2737).
 The family's character carries the text's ramification at `r_i`, its inertia surjectivity and
-its orientation values (`FamilyMovingCharacter`). Kind: definition (data and GLUE). -/
+its orientation values (`FamilyMovingCharacter`). The moving support may contain further places,
+which then carry the full condition; in the text the old support is `2N`, the active primes and
+the moving conductors, and unused good primes keep the unramified condition (tex 5189–5190).
+Kind: definition (data and GLUE). -/
 structure AddressMovingFamilyR {ℓ : ℕ} {Q : Finset ℕ} (Ψ : FamilyMovingCharacter K ℓ Q) (h : ℤ)
     (W : WeierstrassCurve K) [W.IsElliptic] where
   /-- The moving stage family. -/
@@ -429,9 +437,14 @@ theorem RegularityInputsILQFam.toMdl {Ψ : FamilyMovingCharacter K ℓ Q} {h : �
     · exact Or.inl ⟨X.toMoving.toInner.toModelInputs⟩
     · exact Or.inr ⟨hq, ⟨G⟩⟩
 
-/-- **The collapse is the terminal case of the fixed limit** (tex 4976–4980, 5154–5159): if the
-clause holds at `𝔭` for a family without proper successors, the finite fibre at `𝔭` of the fixed
-limit `L` of the address's moving family has `dim H¹ = 1`; both branches. Kind: PROVED. -/
+/-- **The collapse under a stationarity hypothesis on all families** (tex 4976–4980, 5154–5159):
+if the clause holds at `𝔭` and every configuration family at `𝔭` is without proper successors, the
+finite fibre at `𝔭` of the fixed limit `L` of the address's moving family has `dim H¹ = 1`; both
+branches. The hypothesis quantifies over all configuration families, which no instance satisfies
+(a family of two configurations exchanged by a switch has a proper successor), so the statement is
+vacuous; the statement for the witness's own family is
+`PinnedLimitAt.terminal_of_stationary_family` (`Wiring/InnerLimitFamilyPinFix.lean`).
+Kind: PROVED. -/
 theorem PinnedLimitAt.terminal_of_stationary {Ψ : FamilyMovingCharacter K ℓ Q} {h : ℤ}
     {A : AddressMovingFamilyR Ψ h W} {L : MovingRetainedLimit A.Fam} {u : FractionRing Lambda}
     {P : Ideal Lambda} [P.IsPrime] (hP : P.height = 1) (hI : PinnedLimitAt Cn hW A L u P)

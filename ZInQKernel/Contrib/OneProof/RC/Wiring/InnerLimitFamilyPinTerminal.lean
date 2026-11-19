@@ -10,9 +10,11 @@ address family `A : AddressMovingFamilyR Ψ h W` over the family's moving charac
 retained limit `L` of `A.Fam` (the clause `PinnedLimitAt`). The switching argument stops at fibre
 dimension one: "After cancellation the terminal complex has one free generator in each of degrees
 one and two; its differential is zero because its generic kernel has rank one" (tex 5154–5161).
-`PinnedLimitAt.terminal_of_stationary` shows that a stationary family forces `dim H¹ = 1` of the
-finite fibre of `L`. This file proves the converse, with the terminal family, the finite-fibre
-model and the quadratic-branch data of `InnerLimitAddressPinTerminal` reused unchanged.
+`PinnedLimitAt.terminal_of_stationary_family` (`Wiring/InnerLimitFamilyPinFix.lean`) and
+`InnerLimitSwitchPinnedOn.terminal_of_stationary` below show that a configuration family without
+proper successors forces `dim H¹ = 1` of the finite fibre of `L`. This file proves the converse,
+with the terminal family, the finite-fibre model and the quadratic-branch data of
+`InnerLimitAddressPinTerminal` reused unchanged.
 
 * `terminalPinnedOn` (with `terminalPinnedOn_stage`): the linked-switch inputs on the label
   families of any base family over the terminal family, whose stage is the stage of the integral

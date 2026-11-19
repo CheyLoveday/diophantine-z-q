@@ -47,11 +47,12 @@ central Kummer duality `integralCentralKummerDuality_of_literature_with_finitene
   cited printed result for the objects named (finite discrete modules, elliptic curves over local
   fields, finite free two-adic coefficients). Verbatim quotations are at
   `MilneLocalDualityPrint` and `MilneFiniteLocalDualityPrint`, each joined with an
-  identification; `MilneLocalFiniteness` and `MilneGlobalFiniteness` paraphrase single
-  statements; `MilneFiniteDegreeBoundPrint`, `MilneGlobalDimensionTwo`, `MilneLocalDimensionTwo`,
-  `NekovarIntegralCompactLocality` and `NekovarIntegralGlobalDuality` are readings or joins. The
-  page locators are in the docstrings of the definitions. That they say what the books say is a
-  human check.
+  identification, and, in the fields of `CalibrationBookProps`, of the printed statements behind
+  `MilneLocalFiniteness`, `MilneGlobalFiniteness` (single statements) and `MilneGlobalDimensionTwo`
+  (with its specialization to fields without real places); `MilneFiniteDegreeBoundPrint`,
+  `MilneLocalDimensionTwo`, `NekovarIntegralCompactLocality` and `NekovarIntegralGlobalDuality`
+  are readings or joins. The page locators are in the docstrings of the definitions and of the
+  fields. That they say what the books say is a human check.
 * H2, the supporting definitions: continuous cochains, the compact Kummer complex of the central
   twist (`compactCentralComplex`, `tateKummerSelData`), the twist model `twistK`, the Kummer
   local conditions, the finite-level Kummer Selmer data `centralKummerSelData`, the retained
@@ -97,9 +98,11 @@ attribute [local instance] Nat.fact_prime_two
 rated at each field; tex 3413–3498, 4005–4018, 4385–4451). Each field is a Lean proposition citing
 a printed statement: verbatim quotations at `MilneLocalDualityPrint` and
 `MilneFiniteLocalDualityPrint` (both joined with an identification — the diagrams of I.3.2, I.3.5
-and I.3.3, resp. the Weil self-duality of `B[n]` — so PRINT + GLUE); `MilneLocalFiniteness` and
-`MilneGlobalFiniteness` paraphrase single statements (I.2.1, I.4.15); `MilneFiniteDegreeBoundPrint`,
-`MilneLocalDimensionTwo` and `MilneGlobalDimensionTwo` are readings of I.2.3 and I.4.10(c) (GLUE);
+and I.3.3, resp. the Weil self-duality of `B[n]` — so PRINT + GLUE); the single statements behind
+`MilneLocalFiniteness` and `MilneGlobalFiniteness` (I.2.1, I.4.15) are quoted verbatim in the
+fields below (PRINT), as is I.4.10(c) behind `MilneGlobalDimensionTwo`, with its specialization to
+fields without real places (PRINT + GLUE); `MilneFiniteDegreeBoundPrint` and
+`MilneLocalDimensionTwo` are readings of I.2.3 (GLUE);
 `NekovarIntegralCompactLocality` and `NekovarIntegralGlobalDuality` join 5.4.1 / 5.4.3(ii) with
 5.1, 5.2.1, 5.3.1 and 2.4.4–2.7 and transport them to the tree's cones and bounded finite free
 models (GLUE). None is given an inhabitant here (the human-review boundary H1).
@@ -117,16 +120,25 @@ structure CalibrationBookProps : Prop where
   coefficient families used. -/
   milneFiniteDegreeBound :
     ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound.MilneFiniteDegreeBoundPrint
-  /-- GLUE (paraphrase of a single statement, PRINT once quoted verbatim at the definition),
-  Milne, I.2.1, last sentence (p. 27; the manuscript cites I.2.3): finiteness of local cohomology
-  of finite discrete modules. -/
+  /-- PRINT, Milne, *Arithmetic Duality Theorems*, 2nd ed. (the author's online edition), Chapter
+  I, Theorem 2.1, last sentence (p. 27; the manuscript cites I.2.3), for `G = Gal(K^s/K)` with `K`
+  a local field (here `K_v`, of characteristic zero, so every order is prime to `char(K)`): "The
+  groups Ext^r_G(M, K^{s×}) and H^r(G, M) are finite for all r if M is of finite order prime to
+  char(K), and the groups Ext^1_G(M, K^{s×}) and H^1(G, M) are finite for all finitely generated M
+  whose torsion subgroup is of order prime to char(K)." The proposition is the clause on
+  `H^r(G, M)` for finite discrete `M`. -/
   milneLocalFiniteness : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness
-  /-- GLUE (paraphrase of a single statement, PRINT once quoted verbatim at the definition),
-  Milne, I.4.15 (p. 62; the manuscript cites I.4.10): finiteness of `H^n(G_{K,S}, M)` for finite
-  discrete `M`. -/
+  /-- PRINT, Milne, *Arithmetic Duality Theorems*, 2nd ed. (the author's online edition), Chapter
+  I, Corollary 4.15 (p. 62; the manuscript cites I.4.10): "If S is finite and M is a finite
+  G_S-module whose order is a unit in R_{K,S}, then the groups H^r(G_S, M) are finite for all r."
+  The proposition is this statement for `G_{K,S}`, with `S` a finite set of finite places
+  containing those above the order of `M` (no condition at the infinite places). -/
   milneGlobalFiniteness : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness
-  /-- GLUE (reading of Milne, I.4.10(c), p. 57, without real places): no global cohomology above
-  degree two. -/
+  /-- PRINT + GLUE, Milne, *Arithmetic Duality Theorems*, 2nd ed. (the author's online edition),
+  Chapter I, Theorem 4.10, for "M a finite G_S-module whose order is a unit in R_{K,S}" (p. 56),
+  part (c) (p. 57): "For r ≥ 3, β^r is a bijection H^r(G_S, M) → ∏_{v real} H^r(K_v, M)." The
+  specialization to fields without real places, where the product is zero, is GLUE: no global
+  cohomology above degree two. -/
   milneGlobalDimensionTwo : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo
   /-- GLUE (reading of Milne, I.2.3, p. 28, cohomological dimension two in characteristic zero):
   no local cohomology above degree two; the constant of the calibration shape, by full name, not
