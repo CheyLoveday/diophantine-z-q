@@ -37,9 +37,10 @@ number field `K`, for the completion `K_w = w.adicCompletion K` and `G_{K_w} = G
 
 No wild inertia subgroup and no splitting of the tame quotient is available in the imported
 libraries; the existing tame constructions give the relation only modulo a finite tame level
-kernel. Hence `IwasawaGeneratorsAt` stays an input (GLUE).
+kernel. Hence `IwasawaGeneratorsAt` stays an input (PRINT + GLUE: Iwasawa 1955, p. 448 and §3,
+read as an Iwasawa triple).
 
-Kinds: definitions, PROVED, and one GLUE (`IwasawaGeneratorsAt`).
+Kinds: definitions, PROVED, and one PRINT + GLUE (`IwasawaGeneratorsAt`).
 -/
 
 noncomputable section
