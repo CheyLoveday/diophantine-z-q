@@ -51,20 +51,27 @@ private def coordinate (a : ℕ) :=
 
 private def oneClass (a : ℕ) := (coordinate F a).symm 1
 
+private theorem coordinate_lower (a : ℕ) (c : cycles F (a + 1)) :
+    coordinate F a (kerToH2 (lower F a c)) =
+      (ZMod.castHom (pow_dvd_pow 2 a.le_succ) (ZMod (2 ^ a)))
+        (coordinate F (a + 1) (kerToH2 c)) := by
+  exact (congrArg (fun z => FiniteTrace.finiteInvariant F (2 ^ a) (twoPower_isUnit F a) z)
+    (class_transition F a c)).trans
+    (finiteInvariant_transition F a (actualMuH2Equiv F (a + 1) (kerToH2 c))).symm
+
 private theorem lower_class (a : ℕ) (c : cycles F (a + 1))
     (hc : kerToH2 c = oneClass F (a + 1)) :
     kerToH2 (lower F a c) = oneClass F a := by
   apply (coordinate F a).injective
-  rw [oneClass, AddEquiv.apply_symm_apply]
-  change FiniteTrace.finiteInvariant F (2 ^ a) _
-    (actualMuH2Equiv F a (kerToH2 (lower F a c))) = 1
-  rw [class_transition, ← finiteInvariant_transition]
   let castDown := ZMod.castHom (pow_dvd_pow 2 a.le_succ) (ZMod (2 ^ a))
-  change castDown (coordinate F (a + 1) (kerToH2 c)) = 1
-  have hcoord : coordinate F (a + 1) (kerToH2 c) = 1 :=
-    (congrArg (coordinate F (a + 1)) hc).trans
-      ((coordinate F (a + 1)).apply_symm_apply 1)
-  exact (congrArg (fun t => castDown t) hcoord).trans (map_one castDown)
+  calc
+    coordinate F a (kerToH2 (lower F a c)) = castDown (coordinate F (a + 1) (kerToH2 c)) :=
+      coordinate_lower F a c
+    _ = castDown (coordinate F (a + 1) (oneClass F (a + 1))) :=
+      congrArg (fun x => castDown (coordinate F (a + 1) x)) hc
+    _ = castDown 1 := congrArg (fun t => castDown t) ((coordinate F (a + 1)).apply_symm_apply 1)
+    _ = 1 := map_one castDown
+    _ = coordinate F a (oneClass F a) := ((coordinate F a).apply_symm_apply 1).symm
 
 private abbrev reps (a : ℕ) := {c : cycles F a // kerToH2 c = oneClass F a}
 
