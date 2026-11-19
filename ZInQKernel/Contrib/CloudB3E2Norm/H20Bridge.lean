@@ -28,8 +28,9 @@ in the passage, at the level of cochains:
   is satisfied by the pushed class up to a coboundary.
 * **`term_fixed_of_mem`**, **`locMap_mem_ker_movingPi`** (PROVED): at `v ∈ P` (where `Ψ_i` is
   trivial, ELLIOT) the decomposition group lies in `ker π = G_L`, so the orbit (local-norm)
-  conditions of `LocalIdentity.lean` at the `im Ψ_i` level are trivial orbits: every term is a point
-  of the local twist over `K_v`, i.e. RC29's plain Kummer condition.
+  conditions of `LocalIdentity.lean` at the `im Ψ_i` level are trivial orbits: every term is
+  invariant under the twisted action of `G_{K_v}` (that it is a point of the local twist over `K_v`,
+  in RC29's plain Kummer image, is `LocalTwistIdentification` with `hreal`).
 * Non-vacuity: `nonVacuity_bridge`.
 
 **How the conditions compare, and which the text uses.** At the `Δ_f` level (Shapiro from `H_f`)
@@ -38,7 +39,7 @@ the local condition at `v ∈ P` is the induced one: a sum over the places of `H
 (the local Mackey formula, tex 3251–3256). After the push `[δ] ↦ [Ψ_i(δ)]` the orbits are those of
 `G_{K_v}` on `im Ψ_i`, which are singletons because `Ψ_i` is trivial on `G_{K_v}` (tex 2729, 3431):
 the orbit sums become twisted norms `∑_{δ ∈ O} χ(δ) δ Q`, points of the twist `B = E^{(h)}` over `K_v`
-(tex 3257–3262, batch 3's `old_kummer_survives`), and the condition is the plain Kummer condition of
+(tex 3257–3262, `KummerPush.old_kummer_survives`), and the condition is the plain Kummer condition of
 `B` over `K_v`. The text's stage Selmer complex uses the latter, the actual Kummer condition of
 paragraph 5 extended to `A_i` ("Thus the old Kummer conditions proved in paragraph 5 survive (H20)",
 tex 3262–3270), i.e. RC29's `actualKummerAtS`/`actLCondA`. The bridge above works at the cochain
@@ -46,7 +47,9 @@ level (transitivity of the transfer), so no `Δ_f`-level local condition has to 
 
 So the remaining inputs at the `im Ψ_i` level are the ones already named (`LocalTwistIdentification`,
 the realization `hreal` at `H = ker π`, now of the norms `N_{H_f/L}` of the Heegner points); no
-`Δ_f`-level local conditions are needed.
+`Δ_f`-level local conditions are needed. Not packaged here: the specialization to the actual
+quotient and coefficient maps, and the construction of the `selCx` classes and the Shapiro-level
+identity `h₁` required by `hzR_stage_actual` (the next step).
 
 Kinds: PROVED.
 -/
@@ -175,13 +178,14 @@ include hr in
 weighted sum is a local point** (PROVED): for `g ∈ H` and `y` fixed by `H`,
 `R(g)(R(r_δ) y) = R(r_δ) y`. With `H = ker π = G_L` and `g` in the image of `G_{K_v}`, `v ∈ P`
 (`locMap_mem_ker_movingPi`), the orbit (local-norm) decomposition of `LocalIdentity.lean` at `v`
-is trivial: each term is a point of the local twist over `K_v` itself, so the realization at the
-`im Ψ_i` level is by Kummer images of points over `K_v` — RC29's plain Kummer condition. -/
+is trivial: each term is invariant under the twisted action of `G_{K_v}`. That such an invariant
+term is the image of a point of the local twist over `K_v`, lying in RC29's Kummer image, is the
+content of `LocalTwistIdentification` and the realization `hreal` (not proved here). -/
 theorem term_fixed_of_mem {g : G} (hg : g ∈ H) (δ : G ⧸ H) {y : M}
     (hy : ∀ h ∈ H, ρ h y = y) : R H ρ θ g (R H ρ θ (r δ) y) = R H ρ θ (r δ) y := by
   have h1 : ((g : G) : G ⧸ H) = 1 := (QuotientGroup.eq_one_iff g).2 hg
   have := orbitSum_fixed ρ H r hr θ g {δ} (fun δ' hδ' => by simp_all)
-    (fun δ' hδ' => by simp_all [QuotientGroup.mk_inv]) hy
+    (fun δ' hδ' => by simp_all) hy
   simpa [orbitSum] using this
 
 end Orbits
