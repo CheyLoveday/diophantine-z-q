@@ -34,17 +34,22 @@ t · unit` at the moving prime (tex 3787–3789); no comparison is needed at unu
   **`OrthComparisonInverseLoc.ψ`** with `hd`, `hd₁`, `hright`, `hleft` (PROVED): the fields of
   lane E2's `OrthComparisonInverse` other than `hsw`.
 * `orthComparisonInverseLoc_of_isEmpty` (PROVED, non-vacuity): for no new places and `φo` the
-  identity of the old conditions.
+  identity of the old conditions (`LocHInv.id`). A non-degenerate instance needs the localized
+  coefficients.
 
 What the actual instance needs: at the places passing from zero to full, `h¹, h²` built from the
 inverses of `A = Φ − 1`, `D = Φ − N_q(g)` (active primes) and `C = t · unit` (moving prime) in the
 localized coefficients (tex 3727–3732, 3787–3789). Those inverses exist in `Frac Λ`, not at a
 finite stage.
 
-Remainder (not proved here): lane E2's `hsw` (`j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T`) does not hold on the
-nose for this `ψ`. At the places above `p`, `ψ_T` keeps the unramified component `u`, while
-`j ∘ ψ_{T ∪ {p}} ∘ i'` sends it to `0` and adds `h_p(ι u)` to the local component. They agree on
-cocycles up to a coboundary, so `hlift_of_transport` needs its up-to-`d` variant.
+Remainder (the bridge to `hlift_of_transport`, not proved here): lane E2's `hsw`
+(`j ∘ ψ_{T ∪ {p}} ∘ i' = ψ_T`) does not hold on the nose for this `ψ`. At the places above `p`,
+`ψ_T` keeps the unramified component `u_p`, while `j ∘ ψ_{T ∪ {p}} ∘ i'` sends it to `0` and adds
+`h¹_p(ι u_p)` to the local component. The difference `(0, −u_p, h¹_p(ι u_p))` is a coboundary of
+`C_{T⊥}` exactly when `u_p ∈ (Φ − 1)W` up to the contraction. That holds once the unramified
+condition `[W --(Φ−1)--> W]` at `p` is contracted too, which is the unit `A = Φ − 1` of tex
+3727–3732. So the bridge needs (i) a second contraction field, of the unramified condition at the
+new places, and (ii) `hsw` and `hlift_of_transport` in their up-to-`d` form on cocycles.
 
 Kinds: definitions, named input (`OrthComparisonInverseLoc`), PROVED.
 -/
@@ -354,5 +359,115 @@ theorem selHInv_left (z : (selCx (selData k GS Gv loc M Δ₁)).X 1)
     abel
 
 end Sel
+
+/-! ### The localized input for lane E2's presentation -/
+
+section Pres
+
+open NumberField IsDedekindDomain
+open ZInQ.Manuscript.RC.Wiring ZInQ.Manuscript.RC.CoefModules
+open ZInQ.Contrib.CloudB3RC53.UnramifiedComplex ZInQ.Contrib.CloudB3RC53.RankCounts
+open ZInQ.Contrib.CloudB3E2.DualPres
+open ZInQ.Manuscript.RC.Limits (SplitInclusion)
+open ZInQ.Contrib.CloudB3RC53.SelmerDuality (idGHom zeroGHom)
+
+attribute [local instance] TopRep.distribMulAction TopRep.smulCommClass
+
+variable (K : Type) [Field K] [NumberField K] (S₀ S : Set (HeightOneSpectrum (𝓞 K)))
+  (k : Type) [CommRing k] [TopologicalSpace k]
+  (M : Type) [AddCommGroup M] [Module k M] [DistribMulAction (GKS K S) M]
+  [SMulCommClass (GKS K S) k M] [TopologicalSpace M] [DiscreteTopology M]
+  [ContinuousSMul (GKS K S) M]
+  (Δ' Δ'' : LocalConditions k (GKS K S) (fun v : Places K S₀ => Gloc K v.1)
+    (fun v => locMap K S v.1) M)
+  {ι : Type} [DecidableEq ι] (place : ι × Bool → Places K S)
+  (X : (j : ι × Bool) → TopRep.{0} k (GUr K (place j).1))
+  (EU : ∀ j, SplitInclusion (genuineUq K S k (place j) (X j)) (genuineLq K S k M (place j)))
+
+/-- **The orthogonal comparison inverse at the localization** (named input for lane RC32;
+tex 3704–3790): the old-place comparison `φo` with a homotopy inverse at every old place, and the
+displayed contraction of the full local complex at every new place (built in the localized
+coefficients from the units `A = Φ − 1`, `D = Φ − N_q(g)` at active primes, tex 3727–3732, and
+`C = t · unit` at the moving prime, tex 3787–3789). Kind: definition (named input). -/
+structure OrthComparisonInverseLoc where
+  /-- the comparison of the old orthogonal conditions with the transported ones -/
+  φo : ∀ v₀ : Places K S₀, GHom (Δ'.U v₀) (Δ''.U v₀)
+  /-- it is compatible with the maps to the local complexes -/
+  φo_compat : ∀ v₀ (n : ℤ) (x : (Δ'.U v₀).X n),
+    (Δ''.i v₀).f n n rfl ((φo v₀).f n n rfl x) = (Δ'.i v₀).f n n rfl x
+  /-- a homotopy inverse at every old place -/
+  φoInv : ∀ v₀, LocHInv (Δ'.i v₀) (Δ''.i v₀) (φo v₀)
+  /-- the contraction of the full local complex at every new place -/
+  ctr : ∀ j, LocContraction (genuineLq K S k M (place j))
+
+variable {K S₀ S k M Δ' Δ'' place X EU}
+
+/-- The homotopy inverse at a new place: the contraction (zero → full) or the identity.
+Kind: definition. -/
+def newInv (c : LocContraction (genuineLq K S k M (place j))) : (b : Bool) →
+    LocHInv (dcondιS K S k M place X EU j b) (condιS K S k M place X EU j b)
+      (dcomp K S k M place X j b)
+  | true => c.toLocHInv
+  | false => LocHInv.id _
+
+/-- The homotopy inverses at every place of the presentation. Kind: definition. -/
+def presInv (Ψ : OrthComparisonInverseLoc K S₀ S k M Δ' Δ'' place) (T : Finset ι) :
+    ∀ v : Places K S₀ ⊕ (ι × Bool), LocHInv ((dpresCondS K S₀ S k M Δ' place X EU T).i v)
+      ((presCondS K S₀ S k M Δ'' place X EU T).i v)
+      (presComparison K S₀ S k M Δ' Δ'' place X EU Ψ.φo T v)
+  | .inl v₀ => Ψ.φoInv v₀
+  | .inr j => newInv (Ψ.ctr j) (decide (j.1 ∈ T))
+
+namespace OrthComparisonInverseLoc
+
+variable (Ψ : OrthComparisonInverseLoc K S₀ S k M Δ' Δ'' place)
+
+/-- **The inverse `ψ_T : C'_T → C_{T⊥}`** in degree `1`. Kind: definition. -/
+def ψ (T : Finset ι) : (suppCxS K S₀ S k M Δ'' place X EU T).X 1 →ₗ[k]
+    (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 1 :=
+  ψ1 (presInv (EU := EU) Ψ T)
+
+/-- **`ψ_T` commutes with the differential** in degree `0` (PROVED). -/
+theorem hd (T : Finset ι) (x : (suppCxS K S₀ S k M Δ'' place X EU T).X 0) :
+    Ψ.ψ (X := X) (EU := EU) T ((suppCxS K S₀ S k M Δ'' place X EU T).d 0 1 rfl x) =
+      (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl (ψ0 (presInv Ψ T) x) :=
+  ψ_d0 (presInv Ψ T) x
+
+/-- **`ψ_T` commutes with the differential** in degree `1` (PROVED). -/
+theorem hd₁ (T : Finset ι) (x : (suppCxS K S₀ S k M Δ'' place X EU T).X 1) :
+    ψ2 (presInv (EU := EU) Ψ T) ((suppCxS K S₀ S k M Δ'' place X EU T).d 1 2 rfl x) =
+      (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 1 2 rfl (Ψ.ψ (X := X) (EU := EU) T x) :=
+  ψ_d1 (presInv Ψ T) x
+
+/-- **`c_T ∘ ψ_T = 1` on `H¹`** (PROVED). -/
+theorem hright (T : Finset ι) (x : (suppCxS K S₀ S k M Δ'' place X EU T).X 1)
+    (hx : (suppCxS K S₀ S k M Δ'' place X EU T).d 1 2 rfl x = 0) :
+    ∃ y : (suppCxS K S₀ S k M Δ'' place X EU T).X 0,
+      (orthComparison K S₀ S k M Δ' Δ'' place X EU Ψ.φo Ψ.φo_compat T).f 1 1 rfl
+        (Ψ.ψ (X := X) (EU := EU) T x) =
+        x + (suppCxS K S₀ S k M Δ'' place X EU T).d 0 1 rfl y :=
+  selHInv_right (presInv Ψ T)
+    (presComparison_compat K S₀ S k M Δ' Δ'' place X EU Ψ.φo Ψ.φo_compat T) x hx
+
+/-- **`ψ_T ∘ c_T = 1` on `H¹`** (PROVED). -/
+theorem hleft (T : Finset ι) (z : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 1)
+    (hz : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 1 2 rfl z = 0) :
+    ∃ y : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 0,
+      Ψ.ψ (X := X) (EU := EU) T
+        ((orthComparison K S₀ S k M Δ' Δ'' place X EU Ψ.φo Ψ.φo_compat T).f 1 1 rfl z) =
+        z + (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl y :=
+  selHInv_left (presInv Ψ T)
+    (presComparison_compat K S₀ S k M Δ' Δ'' place X EU Ψ.φo Ψ.φo_compat T) z hz
+
+end OrthComparisonInverseLoc
+
+omit [TopologicalSpace k] [DecidableEq ι] in
+/-- **Non-vacuity** (PROVED): with no new places and `φo` the identity of the old conditions,
+the localized input exists. Kind: PROVED. -/
+theorem orthComparisonInverseLoc_of_isEmpty [IsEmpty ι] :
+    Nonempty (OrthComparisonInverseLoc K S₀ S k M Δ' Δ' place) :=
+  ⟨⟨fun _ => idGHom _, fun _ _ _ => rfl, fun _ => LocHInv.id _, fun j => isEmptyElim j.1⟩⟩
+
+end Pres
 
 end ZInQ.Contrib.CloudB3E1Torsion
