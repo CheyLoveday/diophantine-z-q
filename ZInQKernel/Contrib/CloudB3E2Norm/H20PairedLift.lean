@@ -19,11 +19,12 @@ Manuscript `diophantine_zq.tex`, tex 4166–4171 ("The generic paired strict lif
   Heegner points: `gx_step_heegner_at` at `π⁻¹`). CAVEAT: at a finite stage ring with `ι ≠ ∅` and a
   nonzero `G_{K_w}`-invariant at `w = place (p, false)`, `OrthComparisonInverse` is uninhabited for
   any `φo` (lane E1's `not_orthComparisonInverse`, `CloudB3E1Torsion/OrthNoInverse.lean`, on lane
-  E1's branch, not yet in this tree), so this result is conditional on an unsatisfiable input there,
-  and nothing in the headline uses it. The text's inverse lives after the inner limit, over the
-  generic coefficient ring, with the retained old-place lattice comparison (tex 3704–3790); a
-  localized `OrthComparisonInverseLoc` is planned for lane RC32's round 17. The proof here uses only
-  `ψ`, `hd` and `hsw`.
+  E1's branch, not yet in this tree; on the actual `MinS` of `E_ℓ` at every stage `i ≥ 1` it is
+  refuted outright, `not_orthComparisonInverse_ecurve`), so this result is conditional on an
+  unsatisfiable input there, and nothing in the headline uses it. The text's inverse lives after the
+  inner limit, over the generic coefficient ring, with the retained old-place lattice comparison
+  (tex 3704–3790); a localized `OrthComparisonInverseLoc` is planned for lane RC32's round 17. The
+  proof here uses only `ψ`, `hd` and `hsw`.
 * `alphaStage_inv_pi`, **`pointFactor_paired`** (PROVED): `α_{π⁻¹} = α_π⁻¹`, so the transported
   factor `pointFactor a z' z'⁻¹` at `z' = α_{π⁻¹}(Frob_w)` is the original `pointFactor a z z⁻¹`
   (`e_q^c = e_q`); `psiTrivialAt2N_inv`, `thetaOfDelta_inv` (PROVED): the hypotheses of the
