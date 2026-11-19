@@ -41,7 +41,8 @@ namespace ZInQ.Contrib.CloudB3E1Dihedral
 open NumberField IsDedekindDomain Ideal
 open ZInQ.Contrib.CloudB3E1RingClass
 open ZInQ.Manuscript.RC.SelmerComplex
-open ZInQ.Manuscript.RC.CoefModules (conjGKS conjGKS_apply tauS galConjFun galConj tauS_algebraMap KS galS)
+open ZInQ.Manuscript.RC.CoefModules
+  (conjGKS conjGKS_apply tauS galConjFun galConj tauS_algebraMap KS galS)
 open TauCeti.GlobalNumberFields TauCeti.GlobalNumberFields.NumberFieldOrder TauCeti.ClassFieldTheory
 open scoped Pointwise
 
@@ -217,12 +218,14 @@ end Transport
 section TauCetiModel
 
 variable (f : ℕ) (hf : f ≠ 0) (κ : K ≃+* K)
-  (t : ringClassField (ringClassOrder (K := K) f hf) ≃+* ringClassField (ringClassOrder (K := K) f hf))
+  (t : ringClassField (ringClassOrder (K := K) f hf) ≃+*
+    ringClassField (ringClassOrder (K := K) f hf))
   (ht : ∀ x : K, t (algebraMap K (ringClassField (ringClassOrder (K := K) f hf)) x) =
     algebraMap K (ringClassField (ringClassOrder (K := K) f hf)) (κ x))
 
 /-- A nonzero prime is maximal. Kind: PROVED. -/
-theorem isMaximal_of_primeTo (J : integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus)
+theorem isMaximal_of_primeTo
+    (J : integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus)
     [hJ : (J : Ideal (𝓞 K)).IsPrime] : (J : Ideal (𝓞 K)).IsMaximal :=
   hJ.isMaximal ((mem_integralIdealsPrimeTo_conductorModulus_iff _).mp J.2).1
 
@@ -328,7 +331,8 @@ theorem ringClassRes_conjGKS (hst : RingClassFieldConjStable f hf S hS κ τ hτ
 
 /-- `τ` transported to Tau Ceti's ring class field `R` along `H_f ≃ R`. Kind: definition. -/
 def tauR (hst : RingClassFieldConjStable f hf S hS κ τ hτ hSst) :
-    ringClassField (ringClassOrder (K := K) f hf) ≃+* ringClassField (ringClassOrder (K := K) f hf) :=
+    ringClassField (ringClassOrder (K := K) f hf) ≃+*
+      ringClassField (ringClassOrder (K := K) f hf) :=
   (ringClassFieldOfEquiv f hf S hS).toRingEquiv.symm.trans
     ((tauH hst).trans (ringClassFieldOfEquiv f hf S hS).toRingEquiv)
 
@@ -347,7 +351,8 @@ theorem tauR_algebraMap (hst : RingClassFieldConjStable f hf S hS κ τ hτ hSst
 theorem autCongr_galConjFun (hst : RingClassFieldConjStable f hf S hS κ τ hτ hSst)
     (g : ringClassGal f hf S hS) :
     AlgEquiv.autCongr (ringClassFieldOfEquiv f hf S hS)
-        (galConjFun (K := K) (L := ringClassFieldOf f hf S hS) κ (tauH hst) (tauH_algebraMap hst) g) =
+        (galConjFun (K := K) (L := ringClassFieldOf f hf S hS) κ (tauH hst)
+          (tauH_algebraMap hst) g) =
       galConjFun (K := K) (L := ringClassField (ringClassOrder (K := K) f hf)) κ (tauR hst)
         (tauR_algebraMap hst) (AlgEquiv.autCongr (ringClassFieldOfEquiv f hf S hS) g) := by
   apply AlgEquiv.ext
@@ -371,7 +376,8 @@ theorem galConj_artinClass (hst : RingClassFieldConjStable f hf S hS κ τ hτ h
   exact galConj_ringClassArtin f hf κ (tauR hst) (tauR_algebraMap hst) J
 
 /-- `artinClass` is multiplicative. Kind: PROVED. -/
-theorem artinClass_mul (J J' : integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus) :
+theorem artinClass_mul
+    (J J' : integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus) :
     artinClass f hf S hS (J * J') = artinClass f hf S hS J * artinClass f hf S hS J' := by
   simp only [artinClass, map_mul]
 
@@ -402,7 +408,8 @@ theorem galConj_eq_inv (hK : Module.finrank ℚ K = 2) (hκ : ringEquivAlg κ �
       intro hI
       have hx1 : x = ⊤ := Ideal.isUnit_iff.mp hx
       subst hx1
-      have : (⟨⊤, hI⟩ : integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus) = 1 :=
+      have : (⟨⊤, hI⟩ :
+          integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus) = 1 :=
         Subtype.ext Ideal.one_eq_top.symm
       rw [this, artinClass_one, map_one]
     | h₃ a P ha hP ih =>
@@ -418,7 +425,8 @@ theorem galConj_eq_inv (hK : Module.finrank ℚ K = 2) (hκ : ringEquivAlg κ �
         refine ⟨ha, eq_top_iff.mpr ?_⟩
         rw [← hI'.2]
         exact sup_le_sup_right (Ideal.mul_le_right (I := P) (J := a)) _
-      have e : (⟨P * a, hI⟩ : integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus) =
+      have e : (⟨P * a, hI⟩ :
+          integralIdealsPrimeTo (ringClassOrder (K := K) f hf).conductorModulus) =
           ⟨P, hPmem⟩ * ⟨a, hamem⟩ := Subtype.ext rfl
       rw [e, artinClass_mul, map_mul, ih hamem, mul_one]
       have : ((⟨P, hPmem⟩ : integralIdealsPrimeTo

@@ -171,7 +171,8 @@ theorem kmCoord_comparison_unit (E : HEMat R A0 A1 A2 A3 B0 B1 B2 B3) (hE : E.Ho
   rw [hB] at key
   refine ⟨(-1) ^ Fintype.card (A1 ⊕ (A3 ⊕ Unit)) * hunit.unit, ?_⟩
   set t := algebraMap R K (tau (BasedCx.coneR (augF E hE hzR hlR)) HR.coneContraction σ)
-  have ht : t ≠ 0 := fun h => hunit.ne_zero ((map_eq_zero_iff _ (IsFractionRing.injective R K)).mp h)
+  have ht : t ≠ 0 := fun h =>
+    hunit.ne_zero ((map_eq_zero_iff _ (IsFractionRing.injective R K)).mp h)
   have hs : ((-1 : K) ^ Fintype.card (A1 ⊕ (A3 ⊕ Unit))) ^ 2 = 1 := by
     rw [← pow_mul, mul_comm, pow_mul, neg_one_sq, one_pow]
   have hc : algebraMap R K a * algebraMap R K b ≠ 0 := mul_ne_zero ha0 hb0

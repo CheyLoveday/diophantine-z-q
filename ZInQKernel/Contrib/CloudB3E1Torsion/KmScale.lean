@@ -52,11 +52,13 @@ def vE (c : K) : (ι0 ⊕ Unit) ⊕ ι2 → K := Sum.elim (Sum.elim (fun _ => 1)
 def vO (e : K) : ι1 ⊕ (ι3 ⊕ Unit) → K := Sum.elim (fun _ => 1) (Sum.elim (fun _ => 1) (fun _ => e))
 
 omit [Fintype ι0] [Fintype ι2] [DecidableEq ι0] [DecidableEq ι2] in
-theorem vE_ne_zero {c : K} (hc : c ≠ 0) (i : (ι0 ⊕ Unit) ⊕ ι2) : vE (ι0 := ι0) (ι2 := ι2) c i ≠ 0 := by
+theorem vE_ne_zero {c : K} (hc : c ≠ 0) (i : (ι0 ⊕ Unit) ⊕ ι2) :
+    vE (ι0 := ι0) (ι2 := ι2) c i ≠ 0 := by
   rcases i with (i | i) | i <;> simp [vE, hc]
 
 omit [Fintype ι1] [Fintype ι3] [DecidableEq ι1] [DecidableEq ι3] in
-theorem vO_ne_zero {e : K} (he : e ≠ 0) (i : ι1 ⊕ (ι3 ⊕ Unit)) : vO (ι1 := ι1) (ι3 := ι3) e i ≠ 0 := by
+theorem vO_ne_zero {e : K} (he : e ≠ 0) (i : ι1 ⊕ (ι3 ⊕ Unit)) :
+    vO (ι1 := ι1) (ι3 := ι3) e i ≠ 0 := by
   rcases i with i | i | i <;> simp [vO, he]
 
 /-- `diagonal v⁻¹ * diagonal v = 1` for a nowhere-zero `v`. Kind: PROVED. -/

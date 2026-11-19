@@ -199,7 +199,8 @@ theorem conjField_ringClassField_le (hK : Module.finrank ℚ K = 2) (hκ : ringE
   have hfr : Module.finrank K E' = Module.finrank K R := finrank_conjField _ _ _ _
   have : FiniteDimensional K E' :=
     Module.finite_of_finrank_pos (by rw [hfr]; exact Module.finrank_pos)
-  have : Normal K E' := normal_conjField' (tauSep κ τ hτ) (ringEquivAlg κ) (tauSep_algebraMap κ τ hτ) R
+  have : Normal K E' :=
+    normal_conjField' (tauSep κ τ hτ) (ringEquivAlg κ) (tauSep_algebraMap κ τ hτ) R
   have : IsGalois K E' := IsGalois.mk
   refine le_of_splitSet_diff_subset _ (finite_conductor_primes' f hf) ?_
   rintro 𝔭 ⟨h𝔭, hT𝔭⟩
