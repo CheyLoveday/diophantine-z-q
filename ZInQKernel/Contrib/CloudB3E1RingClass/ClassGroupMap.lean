@@ -16,6 +16,10 @@ Manuscript `diophantine_zq.tex`, tex 3566–3576 (the map `π : Pic(ℤ + r𝒪_
   `galToClassGroup_artinClass`: the Artin class of `J` maps to the class of `J` (the interface's
   `π_q`).
 * `galToClassGroup_surjective`.
+* `residuePic O : (𝒪_K/𝔣)^× → Pic O` and `ker_picToClassGroup`: exactness at `Pic O` (the kernel of
+  `Pic O → Cl(K)` is the image of the residue units modulo the conductor), from Tau Ceti's ray
+  class exact sequence. `galResidue`, `ker_galToClassGroup`: the same at `Gal(H_f/K)` (the
+  interface's `exact`, before the residues are identified with `𝐅_r^×`).
 
 Kinds: definitions and PROVED.
 -/
@@ -92,5 +96,72 @@ theorem galToClassGroup_surjective : Function.Surjective (galToClassGroup f hf S
   exact ⟨ringClassPicEquiv f hf S hS x, by
     rw [galToClassGroup, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom,
       MulEquiv.symm_apply_apply]⟩
+
+/-! ### Exactness at `Pic O`: the residue map `(𝒪_K/𝔣)^× → Pic O` -/
+
+/-- **The residue map `(𝒪_K/𝔣)^× → Pic O`** (tex 3566–3575, [Cox, Prop. 7.22, (7.25)]): the Picard
+class of the principal ideal of an element with the given residue modulo the conductor `𝔣` (the
+principal ray class, through `Cl_𝔣 → Pic O`). Kind: definition. -/
+def residuePic : (𝓞 K ⧸ O.conductor)ˣ →* Pic O :=
+  O.rayClassToPic.comp ((residueSignRayClass O.conductorModulus).comp
+    (MonoidHom.inl (𝓞 K ⧸ O.conductorModulus.finitePart)ˣ
+      (O.conductorModulus.infinitePart → ℤˣ)))
+
+/-- **Exactness at `Pic O`** (tex 3566–3575; the interface's `exact`, before the identification of
+the residues with `𝐅_r^×`): a Picard class has trivial ideal class in `𝒪_K` exactly when it is the
+class of a residue unit modulo the conductor. Kind: PROVED. -/
+theorem ker_picToClassGroup : (picToClassGroup O).ker = (residuePic O).range := by
+  ext x
+  obtain ⟨c, rfl⟩ := O.rayClassToPic_surjective x
+  have hc : picToClassGroup O (O.rayClassToPic c) = rayClassToClassGroup O.conductorModulus c :=
+    MonoidHom.liftOfRightInverse_comp_apply _ _ _ ⟨_, ker_rayClassToPic_le O⟩ _
+  rw [MonoidHom.mem_ker, hc]
+  constructor
+  · intro h1
+    have hmem : c ∈ (rayClassToClassGroup O.conductorModulus).ker := h1
+    rw [← range_residueSignRayClass] at hmem
+    obtain ⟨⟨a, s⟩, rfl⟩ := hmem
+    have hs : s = 1 := by
+      funext w
+      exact absurd w.2 (by simp)
+    exact ⟨a, by rw [hs]; rfl⟩
+  · rintro ⟨a, ha⟩
+    have hmem : residueSignRayClass O.conductorModulus (MonoidHom.inl _ _ a) ∈
+        (rayClassToClassGroup O.conductorModulus).ker := by
+      rw [← range_residueSignRayClass]
+      exact ⟨_, rfl⟩
+    obtain ⟨c', hc'⟩ : ∃ c', O.rayClassToPic c' = O.rayClassToPic c ∧
+        rayClassToClassGroup O.conductorModulus c' = 1 :=
+      ⟨_, ha, hmem⟩
+    rw [← hc, ← hc'.1]
+    have hc'' : picToClassGroup O (O.rayClassToPic c') =
+        rayClassToClassGroup O.conductorModulus c' :=
+      MonoidHom.liftOfRightInverse_comp_apply _ _ _ ⟨_, ker_rayClassToPic_le O⟩ _
+    rw [hc'', hc'.2]
+
+/-- **The residue map into `Gal(H_f/K)`**: `(𝒪_K/𝔣)^× → Pic(ℤ + f𝒪_K) ≃ Gal(H_f/K)`.
+Kind: definition. -/
+def galResidue (f : ℕ) (hf : f ≠ 0) (S : Set (HeightOneSpectrum (𝓞 K)))
+    (hS : ∀ v : HeightOneSpectrum (𝓞 K), (f : 𝓞 K) ∈ v.asIdeal → v ∈ S) :
+    (𝓞 K ⧸ (ringClassOrder (K := K) f hf).conductor)ˣ →* ringClassGal f hf S hS :=
+  (ringClassPicEquiv f hf S hS).toMonoidHom.comp (residuePic (ringClassOrder (K := K) f hf))
+
+/-- **Exactness at `Gal(H_f/K)`** (tex 3566–3575): `ker(Gal(H_f/K) → Cl(K))` is the image of the
+residue units modulo the conductor. Kind: PROVED. -/
+theorem ker_galToClassGroup (f : ℕ) (hf : f ≠ 0) (S : Set (HeightOneSpectrum (𝓞 K)))
+    (hS : ∀ v : HeightOneSpectrum (𝓞 K), (f : 𝓞 K) ∈ v.asIdeal → v ∈ S) :
+    (galToClassGroup f hf S hS).ker = (galResidue f hf S hS).range := by
+  ext σ
+  obtain ⟨x, rfl⟩ := (ringClassPicEquiv f hf S hS).surjective σ
+  have h1 : galToClassGroup f hf S hS (ringClassPicEquiv f hf S hS x) =
+      picToClassGroup (ringClassOrder (K := K) f hf) x := by
+    rw [galToClassGroup, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom,
+      MulEquiv.symm_apply_apply]
+  rw [MonoidHom.mem_ker, h1, ← MonoidHom.mem_ker, ker_picToClassGroup]
+  constructor
+  · rintro ⟨a, rfl⟩
+    exact ⟨a, rfl⟩
+  · rintro ⟨a, ha⟩
+    exact ⟨a, (ringClassPicEquiv f hf S hS).injective ha⟩
 
 end ZInQ.Contrib.CloudB3E1RingClass
