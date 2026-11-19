@@ -9,6 +9,7 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.Address
 import ZInQKernel.Contrib.OneProof.RC.Wiring.Height
 import ZInQKernel.Contrib.OneProof.RC.Boolean.Node
 import ZInQKernel.Contrib.OneProof.RC.TwistDictionary.Uses
+import ZInQKernel.Contrib.OneProof.RC.PrintsAnalytic.TwistedFE
 import ZInQKernel.Contrib.CloudB3RC53.KummerCorankZero.Basic
 import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.Node34
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenusOdd34
@@ -49,8 +50,10 @@ wired in; each field carries its tex lines, kind and owner. The deduction, for e
 with Selmer corank one:
 
 1. root number `−1` (the blueprint's `rootNumberNode_proof`, Dokchitser–Dokchitser);
-2. a genus partner `h_*` (lane RC13's `genusPartner`, via `exists_genusPartner`; Hoffstein–Luo and
-   BFH's twist sign from lane RC8's literal prints with lane RC18's proved `twistDictionary`);
+2. a genus partner `h_*` (lane RC13's `genusPartner`, via `exists_genusPartner`; Hoffstein–Luo
+   from lane RC8's literal print, and BFH's twist sign from the twisted functional equation,
+   PROVED by lane RC33 as `twistedFunctionalEquation_proved`, both with lane RC18's proved
+   `twistDictionary`);
 3. the attained odd minimum `δ_o` (batch 3's (F.4)–(F.6), `exists_oddMinimum`, from the fixed
    visible witness);
 4. the thirteen steps `RCSteps` of the skeleton, each a theorem from the leaves and the lanes'
@@ -574,11 +577,6 @@ structure RCLeaves where
   /-- Hoffstein–Luo over newforms (PRINT, Math. Res. Lett. 4 (1997), §1, Theorem, pp. 435–436, as
   stated by lane RC8; tex 1984–1991, App G 9995–9999, 10016–10027, 10049–10053). -/
   hlPrint : PrintsAnalytic.HoffsteinLuoTheorem
-  /-- The twisted functional equation over newforms, for `(D, N) = 1` (GLUE, textbook: Shimura,
-  Atkin–Li; recalled as display (1) of Hoffstein–Luo, Math. Res. Lett. 4 (1997), p. 435, and by
-  Bump–Friedberg–Hoffstein, Invent. Math. 102 (1990), p. 543; lane RC8). The manuscript uses it
-  without citation at tex 2346, 8586–8588, 10025–10026 and 10044–10047. -/
-  twistedFE : PrintsAnalytic.TwistedFunctionalEquation
   /-- Shimura 1973, Theorem 1, pp. 525–526 (PRINT, manuscript bibitem `shimura-factors`; read
   against the page images, faithful with notes): the coefficient field of a weight-two newform of
   trivial character on `Γ₀(M)` is a number field, and each of its complex embeddings gives a
@@ -645,12 +643,17 @@ theorem RCLeaves.hl (L : RCLeaves) (P : Prints) : Nonvanishing.HoffsteinLuo :=
   Nonvanishing.FromRC8.hoffsteinLuo_of_curve
     (TwistDictionary.hoffsteinLuoCurve_of_print L.hlPrint (L.modularNewform P) L.hasse)
 
-/-- BFH's twist sign for elliptic curves (PROVED from the twisted functional equation; lane
-RC18's `twistDictionary`; the level of the functional equation is supported on the bad primes by
-lane RC22's `levelSupport_of_modularNewform`). -/
+/-- BFH's twist sign for elliptic curves (PROVED from the twisted functional equation, itself
+PROVED by lane RC33 as `PrintsAnalytic.twistedFunctionalEquation_proved` (formerly the GLUE field
+`twistedFE`: Shimura, Atkin–Li; display (1) of Hoffstein–Luo, Math. Res. Lett. 4 (1997), p. 435,
+and Bump–Friedberg–Hoffstein, Invent. Math. 102 (1990), p. 543; used without citation at tex 2346,
+8586–8588, 10025–10026 and 10044–10047); lane RC18's `twistDictionary`; the level of the
+functional equation is supported on the bad primes by lane RC22's
+`levelSupport_of_modularNewform`). -/
 theorem RCLeaves.twistSign (L : RCLeaves) (P : Prints) : Nonvanishing.BFHTwistSign :=
   Nonvanishing.FromRC8.bfhTwistSign_of_curve
-    (TwistDictionary.twistedRootNumberCurve_of_print L.twistedFE (L.modularNewform P) L.hasse)
+    (TwistDictionary.twistedRootNumberCurve_of_print
+      PrintsAnalytic.twistedFunctionalEquation_proved (L.modularNewform P) L.hasse)
     (GlueSweep.Ana.levelSupport_of_modularNewform (L.modularNewform P))
 
 /-- The Artin factorization of the ring-class `L`-functions (PROVED from modularity in newform form
