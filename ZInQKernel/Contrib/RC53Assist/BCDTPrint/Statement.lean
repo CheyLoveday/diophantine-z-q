@@ -109,9 +109,11 @@ def BCDTThmAPrinted : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → ∃ (N : ℕ) (_ : NeZero N), Condition2At E N
 
 /-- **DEFINITION**, Theorem A with condition (2) at a prescribed level function. For
-`level E = N(E)`, the conductor, this is the printed statement of `BCDTThmAPrinted` word for word;
-for another level function it is merely the corresponding statement, asserted by nothing here.
-It implies `BCDTThmAPrinted` (`bcdtThmAPrinted_of_atLevel`). -/
+`level E = N(E)`, the conductor, this is condition (2) at level N(E) as printed; for another level
+function it is merely the corresponding statement, asserted by nothing here, and it can be false
+(for example for the constant level 1, since there are no weight-two cusp forms of level one).
+It is not used as the printed statement. It implies `BCDTThmAPrinted`
+(`bcdtThmAPrinted_of_atLevel`). -/
 def BCDTThmAPrintedAtLevel (level : WeierstrassCurve ℚ → ℕ+) : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → Condition2At E (level E : ℕ)
 
