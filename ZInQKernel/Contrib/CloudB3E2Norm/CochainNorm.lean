@@ -38,7 +38,7 @@ The Kummer cocycle of a division point `Q` on a subgroup `H` is `κ_H(Q)(h) = h 
   `cor κ_U(Q_R) = e_q ⋆ κ_HP(Q_P) + d⁰ b`, with the retained boundary
   `b = ∑ₜ t Q_R − (a Q_P − σ Q_P − σ⁻¹ Q_P)` explicit and `m`-torsion (`m • b = 0`), so `d⁰ b` is a
   coboundary of the finite coefficient module `A[m]` (`d0_mem_torsionBy`).
-* `cor_kummer_eq_normOp_add_d0_of_choice`: the same for any other division point of the norm.
+* `kummer_eq_normOp_add_d0_of_choice`: the same for any other division point of the norm.
 * Non-vacuity (`nonVacuity`): a concrete instance of every hypothesis (`ℤˣ` acting on
   `ℤ`).
 
