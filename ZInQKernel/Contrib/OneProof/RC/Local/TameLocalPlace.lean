@@ -14,10 +14,10 @@ PROVED here (`tameLocalModelPrintField_of_prints`) from exactly two literature i
 * `TameCochainQuasiIso` (PRINT, `TameFreeModelCochains.lean`): for Iwasawa generators the
   comparison `tameCochainMap` of the continuous cochains with the tame free model is a
   quasi-isomorphism (degrees `≤ 1` are PROVED, `TameQuasiIsoLow.lean`);
-* `IwasawaGenerators` (GLUE, through `IwasawaGeneratorsAt`, `TamePlaceBridge.lean`): Iwasawa
-  generators exist at every finite place not above `2` (Iwasawa 1955, the tame quotient, joined with
-  the splitting over the wild inertia; the cited Neukirch–Schmidt–Wingberg reference for the
-  splitting is UNVERIFIED).
+* `IwasawaGenerators` (PRINT + GLUE, through `IwasawaGeneratorsAt`, `TamePlaceBridge.lean`):
+  Iwasawa generators exist at every finite place not above `2` (Iwasawa, Trans. Amer. Math. Soc.
+  80 (1955), p. 448 and §3: the tame quotient and the splitting over the wild inertia, both
+  announced on p. 448; the reading as an Iwasawa triple is GLUE).
 
 The rest is PROVED: the strict unramified square (`unr_square`), the passage from
 quasi-isomorphisms to homotopy equivalences over a field (`tameLocalModelAt_of_cochainQuasiIso`),
@@ -57,10 +57,15 @@ theorem two_not_mem_of_odd_card {K : Type} [Field K] [NumberField K]
   rw [Nat.card_eq_fintype_card, hn, h2] at hodd
   exact (Nat.not_even_iff_odd.2 hodd) ((Nat.even_pow' n.ne_zero).2 even_two)
 
-/-- **GLUE: Iwasawa generators at every finite place not above `2`** (tex 3470–3480; Iwasawa,
-Trans. AMS 80 (1955), for the tame quotient; Neukirch–Schmidt–Wingberg, *Cohomology of Number
-Fields*, UNVERIFIED, for the splitting over the wild inertia): the family of `IwasawaGeneratorsAt`.
-Kind: GLUE (Iwasawa 1955, the tame quotient, joined with the splitting over the wild inertia). -/
+/-- **PRINT + GLUE: Iwasawa generators at every finite place not above `2`** (tex 3470–3480): the
+family of `IwasawaGeneratorsAt`. Literature: K. Iwasawa, "On Galois groups of local fields",
+Trans. Amer. Math. Soc. 80 (1955), 448–469; verbatim, p. 448: "We shall first determine the
+structure of the groups G(V/k) = G(Ω/k)/G(Ω/V), and G(Ω/V) and show that the group extension
+G(Ω/k)/G(Ω/V) splits." (`V` the ramification field: "the composite of all finite tamely ramified
+extensions of k in Ω"; the proofs are in §3). The fuller quotation and the reading are at
+`IwasawaGeneratorsAt`.
+Kind: PRINT (Iwasawa 1955, p. 448 and §3: the tame quotient and the splitting over the wild
+inertia) + GLUE (the reading as an Iwasawa triple at each place). -/
 def IwasawaGenerators : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K)),
     (2 : 𝓞 K) ∉ w.asIdeal → IwasawaGeneratorsAt K w
