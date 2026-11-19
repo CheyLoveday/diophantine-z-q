@@ -12,7 +12,7 @@ noncomputable section
 attribute [local instance] abVar_isIntegral abVarFunctionFieldAlgebra
 set_option maxHeartbeats 1000000
 
-private def fixedStalkMap {X : Scheme} (f : X ⟶ X) (p : X) (hp : f p = p) :
+def fixedStalkMap {X : Scheme} (f : X ⟶ X) (p : X) (hp : f p = p) :
     X.presheaf.stalk p ⟶ X.presheaf.stalk p :=
   X.presheaf.stalkSpecializes (Inseparable.of_eq hp).specializes ≫ f.stalkMap p
 

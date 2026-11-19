@@ -28,3 +28,7 @@
 - **VERIFIED (Lean):** The order-two abscissa has a parameter and unit numerator on one algebraic neighborhood of the identity. On this neighborhood, regular sections evaluate holomorphically along the specified period. The parameter vanishes and the numerator is nonzero at zero. Off the lattice and sufficiently near zero the section identity evaluates to the parameter identity for an exact double pole.
 - **VERIFIED (Lean):** The analytic double-pole conclusion and the row proof compile with the parameter evaluation's nonzero derivative as the sole extra comparison beyond genus and Fowler. This formulation uses exactly the period witness in the input.
 - **VERIFIED (source):** `Contrib/MulEtale/Direct/PowerAtIdentity.lean` additionally computes multiplication by two on the actual dual-number tangent arrows. This could bypass a general analytification comparison by comparing the first nonzero analytic term under doubling.
+
+## Doubling on the identity parameter
+
+- **VERIFIED (Lean):** `abVar_double_parameter_mod_square` proves `[2]^*t = 2t + t²g` in the actual identity stalk for every order-one parameter. The rational identity splits the residue map, valuation order one gives the generator of its kernel, and the resulting normalized residue derivation is represented by the existing dual-number tangent arrow. Applying the proved multiplication formula to that arrow gives the congruence. All five theorem checks in `JDescent5Doubling.lean` give only the standard three axioms.
