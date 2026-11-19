@@ -11,3 +11,4 @@
 - `BShFamilyResidues`, `BShFamilyLocal`, `BShFamilyKernels`: built as part of the family build. Nonzero residue permutations, splitting at every local meromorphic field, and Galois equivariance of both algebraic Vélu coordinates have only the allowed axioms.
 - `BShFamilyAtlas`, `BShFamilyAssembly`: built as part of the family build. Exhaustion and multiplication for the actual local roots, and the descent from simultaneous kernel profiles to the fixed prime trace, have only the allowed axioms.
 - `lake build +ZInQKernel.OneProof.Discharges`: target built for the focused check.
+- `BShFamilyLocalKernels`: built as part of the family build. The splitting-field lift, mark test, and bijection with the allowed local branches have only the allowed axioms.
