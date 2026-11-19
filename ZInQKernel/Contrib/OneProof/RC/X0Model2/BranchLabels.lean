@@ -129,7 +129,7 @@ theorem gamma0_of_eventuallyEq_analyticJN (N : ℕ) [NeZero N]
   exact he.symm
 
 /-- If local monodromy matches the two punctured germs by an element fixing
-the center, the corresponding left cosets are in the same right orbit. -/
+the center, the labels `Γ₀(N)γ₁` and `Γ₀(N)γ₂` are in the same right orbit. -/
 theorem rightOrbit_of_eventuallyEq_analyticJN (N : ℕ) [NeZero N]
     (τ : UpperHalfPlane) (γ₁ γ₂ s : SL(2, ℤ)) (hs : s • τ = τ)
     (h : (fun w : ℂ => X0Model.analyticJN N (γ₁ • UpperHalfPlane.ofComplex w))

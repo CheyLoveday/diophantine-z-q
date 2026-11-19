@@ -180,6 +180,20 @@ theorem hasSum_meromorphicContinuation (N : ℕ) [NeZero N] (a : modularFunction
   rw [hfg.eq_of_nhds]
   exact (cuspSum_exp N a τ (f τ)).mp hs
 
+/-- Every modular function admits a meromorphic continuation with its
+prescribed Laurent sum high in the upper half-plane. -/
+theorem exists_hasSum_meromorphicContinuation (N : ℕ) [NeZero N]
+    (a : modularFunctionField N) :
+    ∃ (g : ℂ → ℂ) (T : ℝ), MeromorphicNFOn g {z : ℂ | 0 < z.im} ∧
+      (∀ τ : UpperHalfPlane, (g : PuncturedGerm (τ : ℂ)) =
+        X0Model.meromorphicIncl (τ : ℂ) (X0Model.fieldGerm N τ a)) ∧
+      ∀ τ : UpperHalfPlane, T < τ.im →
+        HasSum (fun n : ℤ => ((a : LaurentSeries ℚ).coeff n : ℂ) *
+          Complex.exp (2 * Real.pi * Complex.I * (n : ℂ) * (τ : ℂ))) (g τ) := by
+  obtain ⟨g, hg, he⟩ := X0Model.exists_meromorphicContinuation N a
+  obtain ⟨T, hT⟩ := hasSum_meromorphicContinuation N a g hg he
+  exact ⟨g, T, hg, he, hT⟩
+
 /-- The section expansion required by the rational model, including its value
 at every upper half-plane parameter where the section is regular. -/
 theorem sectionExpansion (N : ℕ) [NeZero N] (U : (X0Model.curve N).Opens) [Nonempty U]
@@ -209,6 +223,7 @@ theorem sectionExpansion (N : ℕ) [NeZero N] (U : (X0Model.curve N).Opens) [Non
 #print axioms cuspSum_ratCast
 #print axioms exists_cuspRepresentative
 #print axioms hasSum_meromorphicContinuation
+#print axioms exists_hasSum_meromorphicContinuation
 #print axioms sectionExpansion
 
 end ZInQ.Manuscript.RC.X0Model2
