@@ -139,6 +139,8 @@ theorem abVar_shortSections_of_genusOne {L : Type} [Field L] [NumberField L]
       have := abVarPunctured_nonempty A P hp
       P.ord (A.X.left.germToFunctionField (abVarPunctured A) x) = -2 ∧
       P.ord (A.X.left.germToFunctionField (abVarPunctured A) y) = -3 ∧
+      (∀ Q, Q ≠ P → 0 ≤ Q.ord (A.X.left.germToFunctionField (abVarPunctured A) x) ∧
+        0 ≤ Q.ord (A.X.left.germToFunctionField (abVarPunctured A) y)) ∧
       y ^ 2 = x ^ 3 + abVarSectionConst A _ a * x + abVarSectionConst A _ b ∧
       (⟨0, 0, 0, a, b⟩ : WeierstrassCurve L).Δ ≠ 0 := by
   obtain ⟨P, X, Y, a, b, hp, _, _, hxo, hyo, hreg, heq, hΔ⟩ :=
@@ -146,7 +148,7 @@ theorem abVar_shortSections_of_genusOne {L : Type} [Field L] [NumberField L]
   have := abVarPunctured_nonempty A P hp
   obtain ⟨x, hx⟩ := abVar_section_of_nonnegative_orders A hdim P hp X (fun Q hQ => (hreg Q hQ).1)
   obtain ⟨y, hy⟩ := abVar_section_of_nonnegative_orders A hdim P hp Y (fun Q hQ => (hreg Q hQ).2)
-  refine ⟨P, hp, x, y, a, b, hx ▸ hxo, hy ▸ hyo, ?_, hΔ⟩
+  refine ⟨P, hp, x, y, a, b, hx ▸ hxo, hy ▸ hyo, fun Q hQ => hx ▸ hy ▸ hreg Q hQ, ?_, hΔ⟩
   apply A.X.left.germToFunctionField_injective (abVarPunctured A)
   change (A.X.left.germToFunctionField (abVarPunctured A)).hom _ =
     (A.X.left.germToFunctionField (abVarPunctured A)).hom _

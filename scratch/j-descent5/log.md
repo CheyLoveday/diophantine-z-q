@@ -21,3 +21,10 @@
 
 - **VERIFIED (Lean):** `shortCubic_parity_of_place_involution` proves that any ground-field involution preserving the marked place fixes the short abscissa and sends the ordinate to itself or its negative. The proof expands the transformed coordinates in pole spaces of dimensions two and three. The involution forces both leading coefficients to square to one, while the cubic relates their cube and square. This fixes the abscissa coefficient and makes its translation zero.
 - **VERIFIED (Lean):** Both theorem checks in `JDescent5Parity.lean` list only the three standard axioms.
+
+## Scheme inversion, local parameter, and period evaluation
+
+- **VERIFIED (Lean):** Scheme inversion induces an involutive automorphism of the actual generic stalk preserving the identity place. The abscissa is fixed as a rational function and as a section on the punctured scheme, and evaluates to an even function of the specified period.
+- **VERIFIED (Lean):** The order-two abscissa has a parameter and unit numerator on one algebraic neighborhood of the identity. On this neighborhood, regular sections evaluate holomorphically along the specified period. The parameter vanishes and the numerator is nonzero at zero. Off the lattice and sufficiently near zero the section identity evaluates to the parameter identity for an exact double pole.
+- **VERIFIED (Lean):** The analytic double-pole conclusion and the row proof compile with the parameter evaluation's nonzero derivative as the sole extra comparison beyond genus and Fowler. This formulation uses exactly the period witness in the input.
+- **VERIFIED (source):** `Contrib/MulEtale/Direct/PowerAtIdentity.lean` additionally computes multiplication by two on the actual dual-number tangent arrows. This could bypass a general analytification comparison by comparing the first nonzero analytic term under doubling.
