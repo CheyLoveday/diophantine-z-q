@@ -9,3 +9,5 @@
 - **VERIFIED (Lean):** `abVar_exists_placeCenter` and `abVar_exists_placeOf_closedPoint` compile and depend only on `propext`, `Classical.choice`, and `Quot.sound`.
 
 - **VERIFIED (Lean):** `JDescent4Places.lean` compiles with `lake env lean`. The stalk square, constants tower, and `abVar_ramificationIdx_eq_one_of_finite_unramified` all have the three standard axioms only. The restriction is identified by containment of valuation rings. The unramified local map sends the target maximal ideal onto the source maximal ideal after extension, which takes a normalized uniformizer to a normalized uniformizer.
+
+- **VERIFIED (Lean):** `JDescent4Degree.lean` compiles with `lake env lean` and only the three standard axioms. The generic-fibre comparison, the finite flat rank comparison, compatibility of doubling with base change, and the existing degree calculation give field degree four for the actual doubling pullback.
