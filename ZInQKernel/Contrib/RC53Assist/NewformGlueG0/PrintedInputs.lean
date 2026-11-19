@@ -49,9 +49,17 @@ def Li1975BadPrimeWeightTwo : Prop :=
       (¬p ^ 2 ∣ M → (qExpansion 1 F.toCuspForm).coeff p ^ 2 = 1)
 
 /-- **PRINT INPUT, SPECIAL CASE**, Li 1975, bibitem `li-newforms`,
-Theorem 5, p. 298, weight two and trivial character; page image checked.
+Theorem 5, p. 298, weight two and trivial character. The printed page is
+page 15 of the Göttingen article scan; its page image was read.
 Only two genuine normalized newforms are compared, with no elliptic curve
-and no hypothesis equivalent to G0. This is a proposition, not an axiom. -/
+and no hypothesis equivalent to G0. This is a proposition, not an axiom.
+
+Verbatim printed text (Theorem 5, p. 298):
+
+Theorem 5. Let F(τ) = ∑_{n≥1} a(n) z₁ⁿ, G(τ) = ∑_{n≥1} b(n) z₁ⁿ be normalized
+newforms in C_ε(M, 1), C_ε(N, 1) respectively such that a(p) = b(p) for almost
+all primes p. Then F = G and M = N.
+-/
 def Li1975StrongMultiplicityOneWeightTwo : Prop :=
   ∀ (M N : ℕ) [NeZero M] [NeZero N] (F : Newform M 2) (G : Newform N 2),
     F.χ = 1 → G.χ = 1 →
