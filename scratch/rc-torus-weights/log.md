@@ -3,5 +3,8 @@
 - Norm: evaluate the local factors on valuations of the integral ideal norm; use normalized ramified coordinates and NormCharacterDescent on the same ideal.
 - Schwartz: conjugation in the chosen frame is by the inverse of the same r. Nonzero support makes the base product nonzero.
 - Existing issue recorded by the orbit report: the bare norm factor need not descend through right order units. The combined weight is independent of the representative.
-- Verification in progress: use the base import cache with an isolated overlay, one Lean invocation at a time.
+- Verification: sequential invocations with the baseline dependency cache.
 - Norm.lean: passed `lake env lean --threads=1`. `localNrd`, `NormFactors.onIntegralNorm`, and `descent_of_filter`: `propext`, `Classical.choice`, `Quot.sound` only.
+- Actual.lean: passed `lake env lean --threads=1`. `sign_square`: `propext`, `Classical.choice`; `NormFactors.rightProduct`, `SchwartzFactors.eval_order`, `frame_transport`, `torus_character`, `orbit_transport`, `actualWeights`, and `datumWeights`: `propext`, `Classical.choice`, `Quot.sound` only.
+- `datumWeights`: produces `O7Actual.TorusWeights s.visibility A₀` on the exact `IntegralSupport.classGroup` of the datum.
+- Right unit derived by `Adelic.fromAdelic_translate_iff` with the rational translation from the supplied orbit presentation.
