@@ -1,0 +1,10 @@
+- Base: `47aa1251116905a35abe9772daecd7134e438f79`.
+- Local conventions: `localPhase` with positive polar argument, `localHaar`, `indexAt gaussGamma (rationalDiagonal a)`.
+- Scale convention: `L_s = {x : sᵢ xᵢ ∈ ℤ_p for every i}`, dual scale `d/s` with `dᵢ = 2aᵢ`.
+- Targets: `upper_elementary`, `weyl_elementary`, `weyl_sq` on the full Schwartz–Bruhat space; no oddness premise.
+- Dependency object cache: scratch overlay; source files in the base unchanged.
+- `Functions.lean`: passed; 13 theorem audits. Every Schwartz–Bruhat function lies in the span of scaled rectangular indicators.
+- `Fourier.lean`: passed; 16 theorem audits. Dual rectangles have reciprocal masses; the transform is a linear endomorphism and squares to reflection.
+- `Generators.lean`: passed; 4 theorem audits. Both literal comparison factors match, and the square is `γ_p(Q)² * f(−x)`.
+- Audit total: 33 distinct theorems; allowed dependencies only `propext`, `Classical.choice`, `Quot.sound`.
+- Stop: local presentation and common cover; spherical restricted tensor action; common global inverse lifts and rectangular restriction.
