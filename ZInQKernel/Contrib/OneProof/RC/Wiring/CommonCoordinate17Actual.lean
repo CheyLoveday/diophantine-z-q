@@ -33,11 +33,12 @@ The free objects `K, S₀, S, M, Δ, place, X, EU` of `GenuineStageSTUM` are pin
   the presentation, through the leaf's matrix over a general support `K_{S₀}`
   (`tateBasisAt`, `frobMatrixAt_frobMatStage_at`, `exists_stageFrobInput_at`).
 
-Remaining inputs: the GLUE fields `full` (Néron–Ogg–Shafarevich), `moving` (the prescribed value
-`ξ_s(Fr_q) = 1`), `movingConj` (the anticyclotomy of `Ψ_s`), and the data fields of
+Remaining inputs: the GLUE field `full` (Néron–Ogg–Shafarevich), the ELLIOT fields `moving` (the
+prescribed value `ξ_s(Fr_q) = 1`) and `movingConj` (the anticyclotomy of `Ψ_s`) (data properties of
+the text's construction, Proposition `ex:arith-moving-character`), and the data fields of
 `ActualPresentation`.
 
-Kinds: definitions, PROVED, and GLUE (fields of `ActualPresentation`).
+Kinds: definitions, PROVED, GLUE and ELLIOT (fields of `ActualPresentation`).
 -/
 
 noncomputable section
@@ -293,21 +294,29 @@ objects. Fields and kinds:
 * `r`, `hr`, `hgen` (definition; tex 2720): `K = ℚ(√k)`, `k = D.kfin`;
 * `hprime`, `split` (definition; tex 2720–2722, 2678–2680): the graph primes are odd primes,
   prime to `k` and split in `K`;
-* `S₀` (definition; tex 2729–2741, 3455–3463): the support of the coefficients (the primes
-  above `2N`, of the twist and the conductors of the moving characters);
+* `S₀` (definition; tex 2729–2741, 3455–3463): the support of the coefficients (the primes above
+  `2N`, of the twist and the conductors of the moving characters); free data: not pinned to the
+  places above `2N`, the twist and the moving conductors, so `Pk = ∅` (full conditions at every
+  place of `S₀`) is allowed (the round-14 leaf `CommonCoordinateInputsGenuineK` pins `Pk` to the
+  places above `2N`);
 * `full` (GLUE: Néron–Ogg–Shafarevich, Silverman AEC VII.7.1; tex 2836–2838):
   `E[2^∞] ⊆ E(K_{S₀})`;
 * `Cc` (definition; tex 2778): an actual complex conjugation, `S₀` stable;
 * `sh`, `hs`, `hs0` (definition; tex 2726): `√h_x ∈ K_{S₀}`, the twist `χ_h`, `h = h_x`;
 * `Dg`, `π`, `ψ`, `hπ` (definition; tex 2729–2741, 2779–2785): the moving character
   `Ψ_s = ψ_s ∘ π_s` at the stage `s`, through a finite quotient, continuous;
-* `Pk`, `hΨ` (definition; tex 2729–2730, 2743–2760): the places of the old Kummer conditions,
-  where `Ψ_s` is trivial;
+* `Pk`, `hΨ` (definition; tex 2729–2730, 2743–2760): the places of the old Kummer conditions, where
+  `Ψ_s` is trivial; free data: not pinned to the places above `2N`, the twist and the moving
+  conductors, so `Pk = ∅` (full conditions at every place of `S₀`) is allowed (the round-14 leaf
+  `CommonCoordinateInputsGenuineK` pins `Pk` to the places above `2N`);
 * `ι`, `pl`, `hw`, `pidx`, `ps`, `hnd`, `hps`, `hnew`, `places` (definition; tex 4142–4146):
   the indices and places of the chain (outside `S₀`), the order of the unused primes, each
   relaxed once, the two places of the `i`-th step above the `i`-th unused prime;
-* `moving` (GLUE; tex 2731–2736): `ψ_s(π_s(Frob_w)) = 1 + t` at the first place of each index;
-* `movingConj` (GLUE; tex 2781–2788): `Ψ_s(τgτ⁻¹) = Ψ_s(g)⁻¹`.
+* `moving` (ELLIOT (data property of the text's construction, Proposition
+  `ex:arith-moving-character`, tex 2731–2736, 2781–2788)): `ψ_s(π_s(Frob_w)) = 1 + t` at the first
+  place of each index;
+* `movingConj` (ELLIOT (data property of the text's construction, Proposition
+  `ex:arith-moving-character`, tex 2731–2736, 2781–2788)): `Ψ_s(τgτ⁻¹) = Ψ_s(g)⁻¹`.
 
 Kind: definition (data). -/
 structure ActualPresentation (C : TateCoef (Ecurve ℓ)) (D : RCData ℓ) (Fam : Family)
@@ -372,11 +381,13 @@ structure ActualPresentation (C : TateCoef (Ecurve ℓ)) (D : RCData ℓ) (Fam :
   /-- the two places of the `i`-th step lie above the `i`-th unused prime (definition;
   tex 4142–4146) -/
   places : ∀ i < ps.length, SplitPair Cc.κ (ps.getD i 1) (pl (pidx i, false)) (pl (pidx i, true))
-  /-- the prescribed value of the moving character at the first place (GLUE; tex 2731–2736) -/
+  /-- the prescribed value of the moving character at the first place (ELLIOT (data property of the
+  text's construction, Proposition `ex:arith-moving-character`, tex 2731–2736, 2781–2788)) -/
   moving : ∀ s (p : ι), MovingValueAt s (π s) (ψ s)
     (⟨pl (p, false), Set.mem_union_right S₀ (Set.mem_range_self (p, false)), hw (p, false)⟩ :
       NewPlaces C.K S₀ (S₀ ∪ Set.range pl))
-  /-- the moving characters are anticyclotomic (GLUE; tex 2781–2788) -/
+  /-- the moving characters are anticyclotomic (ELLIOT (data property of the text's construction,
+  Proposition `ex:arith-moving-character`, tex 2731–2736, 2781–2788)) -/
   movingConj : ∀ s, MovingAnticyclotomic Cc (π s) (ψ s)
 
 attribute [instance] ActualPresentation.Dg_comm ActualPresentation.Dg_fin ActualPresentation.decι

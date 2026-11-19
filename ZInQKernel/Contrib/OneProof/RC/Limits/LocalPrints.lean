@@ -39,9 +39,10 @@ noncomputable abbrev trivialGaloisRep (F : Type) [Field F] (V : Type) [AddCommGr
     [ContinuousSMul (ZMod 2) V] : TopRep (ZMod 2) (Field.absoluteGaloisGroup F) :=
   TopRep.of (ContRepresentation.trivial (ZMod 2) (Field.absoluteGaloisGroup F) V)
 
-/-- **PRINT — Milne, *Arithmetic Duality Theorems*, 2nd ed. (2006), Ch. I, p. 31: the sentence
-preceding Theorem 2.8, and Theorem 2.8 (the local Euler–Poincaré characteristic)**, for finite
-discrete `𝔽₂`-representations.  Used at tex 4546–4550.
+/-- **PRINT (paraphrased; the verbatim text is to be added from p. 31) — Milne, *Arithmetic Duality
+Theorems*, 2nd ed. (2006), Ch. I, p. 31: the sentence preceding Theorem 2.8, and Theorem 2.8 (the
+local Euler–Poincaré characteristic)**, for finite discrete `𝔽₂`-representations. Used at
+tex 4546–4550.
 
 Milne: for a nonarchimedean local field `K` with ring of integers `R` and a finite `G_K`-module `M`
 of order `m` prime to `char K`, the groups `H^r(G, M)` are finite, zero for `r > 2`, and

@@ -14,16 +14,17 @@ PROVED here (`tameLocalModelPrintField_of_prints`) from exactly two literature i
 * `TameCochainQuasiIso` (PRINT, `TameFreeModelCochains.lean`): for Iwasawa generators the
   comparison `tameCochainMap` of the continuous cochains with the tame free model is a
   quasi-isomorphism (degrees `≤ 1` are PROVED, `TameQuasiIsoLow.lean`);
-* `IwasawaGenerators` (PRINT, through `IwasawaGeneratorsAt`, `TamePlaceBridge.lean`): Iwasawa
-  generators exist at every finite place not above `2` (Iwasawa; Neukirch–Schmidt–Wingberg,
-  Thm 7.5.3, with 7.5.1–7.5.2 for the splitting over the wild inertia).
+* `IwasawaGenerators` (GLUE, through `IwasawaGeneratorsAt`, `TamePlaceBridge.lean`): Iwasawa
+  generators exist at every finite place not above `2` (Iwasawa 1955, the tame quotient, joined with
+  the splitting over the wild inertia; the cited Neukirch–Schmidt–Wingberg reference for the
+  splitting is UNVERIFIED).
 
 The rest is PROVED: the strict unramified square (`unr_square`), the passage from
 quasi-isomorphisms to homotopy equivalences over a field (`tameLocalModelAt_of_cochainQuasiIso`),
 and the identification of the Frobenius, inertia and residue data at the place
 (`TamePlaceBridge.lean`; `two_not_mem_of_odd_card` here).
 
-Kinds: PRINT (two statements), PROVED.
+Kinds: PRINT (one statement), GLUE (one statement), PROVED.
 -/
 
 noncomputable section
@@ -56,10 +57,10 @@ theorem two_not_mem_of_odd_card {K : Type} [Field K] [NumberField K]
   rw [Nat.card_eq_fintype_card, hn, h2] at hodd
   exact (Nat.not_even_iff_odd.2 hodd) ((Nat.even_pow' n.ne_zero).2 even_two)
 
-/-- **PRINT: Iwasawa generators at every finite place not above `2`** (tex 3470–3480; Iwasawa,
-Trans. AMS 80 (1955); Neukirch–Schmidt–Wingberg, *Cohomology of Number Fields*, Thm 7.5.3, with
-7.5.1–7.5.2 for the splitting over the wild inertia): the family of `IwasawaGeneratorsAt`.
-Kind: PRINT. -/
+/-- **GLUE: Iwasawa generators at every finite place not above `2`** (tex 3470–3480; Iwasawa,
+Trans. AMS 80 (1955), for the tame quotient; Neukirch–Schmidt–Wingberg, *Cohomology of Number
+Fields*, UNVERIFIED, for the splitting over the wild inertia): the family of `IwasawaGeneratorsAt`.
+Kind: GLUE (Iwasawa 1955, the tame quotient, joined with the splitting over the wild inertia). -/
 def IwasawaGenerators : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K)),
     (2 : 𝓞 K) ∉ w.asIdeal → IwasawaGeneratorsAt K w

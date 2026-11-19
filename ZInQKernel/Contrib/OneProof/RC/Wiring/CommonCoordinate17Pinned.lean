@@ -28,13 +28,16 @@ retained homotopy inverses and the maps to the original cochains (tex 4403–440
 carried, and the identification of the limit model with the genuine Λ-adic complexes is the
 content of `hprim` and `htildeE`.
 
-What stays existential in a leaf built on this structure: the
-presentation's parameters (its objects are pinned in `CommonCoordinate17Actual.lean`), the order of
-the primes, the models of `C_∅` and their ranks, the global classes (pinned only through the norm
-identity in `hstep`; their identification with the Kummer classes of the actual points is lane
-E2's open repair of the ambient module at the switch primes), the cup-product data of the retention
-(data, not pinned; the genuine cup product of Nekovář 6.2.5–6.4.3 is the intended instance), the
-splittings of the unramified inclusions and the boundaries and coboundaries of the step identities.
+What stays existential in a leaf built on this structure: the presentation's parameters (its objects
+are pinned in `CommonCoordinate17Actual.lean`), the order of the primes, the models of `C_∅` and
+their ranks, the global classes (free: the norm identity in `hstep` relates consecutive classes only
+and is met by `g_{i+1} = e_i g_i` with zero boundary, `GenuineStageSTUE.exists_stepHyps`; their
+identification with the Kummer classes of the actual points is open: lane E2's ambient module over
+`K_{S₁}` (`H20AmbientS`, no `hker`) supplies the unramified lifts at the chain's places, but the
+pushed Kummer classes of the actual points and their norm identity at the switch primes are not yet
+produced on this presentation), the cup-product data of the retention (data, not pinned; the genuine
+cup product of Nekovář 6.2.5–6.4.3 is the intended instance), the splittings of the unramified
+inclusions and the boundaries and coboundaries of the step identities.
 
 Kinds: definitions.
 -/
