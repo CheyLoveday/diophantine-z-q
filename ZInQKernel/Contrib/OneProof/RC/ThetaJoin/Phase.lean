@@ -137,5 +137,44 @@ theorem eta_good (m : ℕ) (q : Prime) (hq : q.val ∉ A.support) :
   classical
   exact ite_eq_left (A.away_of_not_mem q hq)
 
+/-- The sign of the scalar phase at minus one, before multiplying by the
+odd fundamental discriminant character. -/
+def scalarSign : Oˣ :=
+  ∏ q ∈ A.places, A.alpha q (-1)
+
+theorem scalarSign_sq : A.scalarSign * A.scalarSign = 1 := by
+  classical
+  unfold scalarSign
+  rw [← Finset.prod_mul_distrib]
+  apply Finset.prod_eq_one
+  intro q _
+  rw [← map_mul]
+  have h : (-1 : ℤ_[q.val]ˣ) * (-1) = 1 := Units.ext (by simp)
+  rw [h, map_one]
+
+/-- The choice in (O.11). The negative discriminant character supplies an
+extra minus sign; adjust by the odd dyadic sign only when necessary. -/
+def unaryParity : Fin 2 :=
+  open Classical in
+  if (A.scalarSign : O) = 1 then 0 else 1
+
+theorem unaryParity_odd [IsDomain O] :
+    (A.scalarSign : O) * (-1) * (-1) ^ A.unaryParity.val = -1 := by
+  classical
+  have hh : (A.scalarSign : O) * (A.scalarSign : O) = 1 := by
+    simpa only [Units.val_mul, Units.val_one] using
+      congrArg (fun u : Oˣ => (u : O)) A.scalarSign_sq
+  have hz : ((A.scalarSign : O) - 1) * ((A.scalarSign : O) + 1) = 0 := by
+    linear_combination hh
+  rcases mul_eq_zero.mp hz with hp | hn
+  · have he := sub_eq_zero.mp hp
+    simp [unaryParity, he]
+  · have he := eq_neg_of_add_eq_zero_left hn
+    have hem : (A.scalarSign : O) = -1 := he
+    by_cases ho : (A.scalarSign : O) = 1
+    · simp [unaryParity, ho]
+    · rw [unaryParity, ite_eq_right ho, hem]
+      simp
+
 end PhaseData
 end ZInQ.Manuscript.RC.ThetaJoin

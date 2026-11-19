@@ -215,6 +215,14 @@ theorem atRep_nsmul (z : FiniteUnits R) (q : Prime) (n : ℕ) (x : B a b) :
   rw [map_nsmul, map_nsmul]
   rfl
 
+/-- A unit of the local integer ring acts invertibly on the ambient quaternion
+algebra, by restriction of scalars from the local field. -/
+theorem localUnit_smul_cancel (q : Prime) (v : ℤ_[q.val]ˣ) (y : Bp q.val a b) :
+    ((v⁻¹ : ℤ_[q.val]ˣ) : ℤ_[q.val]) • ((v : ℤ_[q.val]) • y) = y := by
+  let V := Units.map (PadicInt.Coe.ringHom (p := q.val)).toMonoidHom v
+  change V.inv • (V.val • y) = y
+  rw [smul_smul, V.inv_val, one_smul]
+
 /-- The global scaling law at integers which are units at all exceptional places.
 The integral gate stays open on the left-order lattice. -/
 theorem weightAt_scale (A : PhaseData O) (w : (q : Prime) → Bp q.val a b → O)
