@@ -12,7 +12,9 @@ The existing interface `ZInQ.Contrib.RC53Assist.GlobalTrace.DecompositionGroupLo
 
 The implementation at reviewed commit `5404d2b6a80a35863194abc8fc736a923a901e52` inhabits this unchanged interface. It adds `PlaceConjugacy.lean`, `SpectralPlace.lean`, `GaloisLift.lean`, `LocalGlobal.lean`, and `Glue.lean` under `ZInQKernel/Contrib/RC53Assist/DecompositionGlue/`. The independent review approved the contribution with notes, with no correction requested to those five files and no additional assumed copy of the glue proposition.
 
-This records a reviewed component proof, not a claim that the whole restricted converse or the original Diophantine theorem is proved. Landing, current-tree isolated verification, and integration into the public ledgers are separate checks. The contribution is carried by [PR 141](https://github.com/Deicyde/diophantine-z-q/pull/141); this note does not declare that mixed PR, or this component, merged to main.
+A dated integration receipt on 19 November 2026 records all five files on main `320e81c0c878dadd6e81bac494c19f5cd0fe1c5e`, with file blobs identical to the reviewed `5404d2b6a80a35863194abc8fc736a923a901e52` source. The original review commit is not an ancestor of main: [PR 141](https://github.com/Deicyde/diophantine-z-q/pull/141) carried the same files in its own commits, including `7b950b3253b5ccb232cab9e98cfbbd7aeb3afb5a`, and landed through merge `740aa8edca40a1e583381a51e0a142bb29512d95`. This records file-level integration without changing or erasing the original proof history.
+
+The separate isolated build, axiom check and Jacobian import-closure check remain blocked in that receipt; they have not run. File presence on main and the earlier review do not substitute for those checks. Public credit/roadmap integration is also a separate delivery step. No whole restricted-converse or original Diophantine proof is asserted.
 
 ## Classical ingredients
 
@@ -44,9 +46,9 @@ The reviewed construction uses the nonnegative reals as an ordered commutative v
 
 The independent review reports exact-statement checks, re-elaboration of byte-identical source copies, non-vacuity probes, stronger place/restriction checks, and a proof/type dependency audit. The axiom output is the three standard logical axioms. No nonstandard axiom, admission, unsafe or partial dependency, or project-authored opaque constant was reported in the reached closure.
 
-A literal assertion that the entire dependency graph has zero opaque constants would be false: safe standard-library and Mathlib implementation wrappers remain. Imported Lean/Mathlib artifacts retain their ordinary trust boundary; the review did not independently rebuild every upstream artifact. The isolated current-tree verification required for landing must be recorded separately.
+A literal assertion that the entire dependency graph has zero opaque constants would be false: safe standard-library and Mathlib implementation wrappers remain. Imported Lean/Mathlib artifacts retain their ordinary trust boundary; the review did not independently rebuild every upstream artifact. The additional isolated current-tree verification remains an open, separately recorded gate; it is not retroactively completed by the merge.
 
-The appropriate roadmap entry is completion of this glue component under the stated review boundary. It is not completion of Theorem 5.3, pole completeness, the original Z-in-Q definition, or the H10 consequence. Existing claim, credit and review ledgers remain canonical; this research note is not a second claim hub.
+The appropriate roadmap classification is a completed classical argument and reviewed implementation present on main, with isolated current-tree verification still pending. It is not completion of Theorem 5.3, pole completeness, the original Z-in-Q definition, or the H10 consequence. Existing claim, credit and review ledgers remain canonical; this research note is not a second claim hub.
 
 ## References
 
