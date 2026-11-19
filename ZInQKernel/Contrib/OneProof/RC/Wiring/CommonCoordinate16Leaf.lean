@@ -18,15 +18,18 @@ leaf data are therefore needed on a `U`-large set only:
   of the switch quotients from the tame inputs) give `CommonCoordinateLimitST`, hence the current
   leaf.
 
-**The end identifications** (tex 4185–4193): the text's coordinate `u_T` of a support `T` is the
-Knudsen–Mumford coordinate of its class and functional in the iterated cone basis of `C_T`; the
-leaf asks `u_∅ = u_prim` and `η u_{U_x} = ũ`. On the limit chain over `Frac Λ`:
+**The end identifications** (tex 4185–4193): the text's coordinate `u_T` is taken in the
+retained integral basis (tex 3886–3888); here it is normalized to the iterated cone basis of
+`C_T`, which the text replaces by the retained models at the cost of a sign and unit-disk
+determinants (tex 4189–4193); the coordinate is the Knudsen–Mumford coordinate of the class and
+functional of `C_T` in that basis. The leaf asks `u_∅ = u_prim` and `η u_{U_x} = ũ`. On the limit
+chain over `Frac Λ`:
 
 * `fracChain_v_zero`: the first value `v₀` is the coordinate `vPrim 0` of the model of `C_∅` at the
   limit primitive class and functional;
 * `fracChain_v_end`: the last value is `v_n = σ_n · vPrim n`, the coordinate of the model of
-  `C_{U_x}` (the iterated cone) at the last relaxed class and functional, times the sign `σ_n` of
-  the comparison of the cone bases;
+  `C_{U_x}` (the iterated cone) at the last relaxed class and functional, times the sign `σ_n`;
+  `σ = 1` identically (`chainSign_eq_one`); the orientations are compatible by construction;
 * **`hprim_htilde_iff_ends`**: the leaf's `hprim` and `htilde` are exactly
   `IsTExpansion (vPrim 0) u_prim` and `IsTExpansion (η σ_n vPrim n) ũ` (`LeafEnds`).
 
@@ -176,7 +179,13 @@ structure GenuineStageSTU (hT : TameCochainQuasiIso) (hI : IwasawaGenerators)
     ((fracChain (stageMatsOn G (fun s h => (gs s h).toChain hT hI hInj) bw μ) U).chainV
       (fracChain_holds _ hU _ _ (stageMatsOn_hs G _ bw μ _ U a hG hstep hfrob)) 0)
     (D.uPrim Fam x)
-  /-- the corrected coordinate of the limit at `U_x` has `t`-expansion `ũ_x` (tex 4150–4151) -/
+  /-- the corrected coordinate of the limit at `U_x` has `t`-expansion `ũ_x` (tex 4150–4151).
+  Conclusion-shaped: since `chainSign = 1` and each step has `ε = q⁻⁴`,
+  `η_x v_n = (∏_{q∈U_x} q⁻⁴) v₀`, so given `hprim` this field is equivalent to
+  `ũ_x = (∏_{q∈U_x} q⁻⁴) u_{prim,x}`, the conclusion of Lemma `ex:arith-common-coordinate` with
+  the unit pinned (stronger than the text's `ε_x ∈ Λ^×`, whose unit-disk factors, tex 4189–4193,
+  are absorbed into the choice of the model and class of `C_∅`). The text's `ũ = η u_rel` is one
+  common family (tex 4224–4225); that is not represented. -/
   htilde : IsTExpansion (etaF ℓ Fam x *
     (fracChain (stageMatsOn G (fun s h => (gs s h).toChain hT hI hInj) bw μ) U).chainV
       (fracChain_holds _ hU _ _ (stageMatsOn_hs G _ bw μ _ U a hG hstep hfrob)) ps.length)
@@ -227,7 +236,8 @@ theorem fracChain_v_zero :
 
 /-- **The last value is the signed coordinate of `C_{U_x}`** (tex 4185–4193): `v_n = σ_n vPrim n`,
 the coordinate of the iterated cone model of the full support at the last relaxed class and
-functional, times the sign of the comparison of the cone bases. Kind: PROVED. -/
+functional, times the sign `σ_n`; `σ = 1` identically (`chainSign_eq_one`); the orientations are
+compatible by construction. Kind: PROVED. -/
 theorem fracChain_v_end :
     (fracChain c U).chainV (fracChain_holds c hU f n hs) n =
       ((chainSign m0 m1 m2 n : ℤ) : FracLam) *

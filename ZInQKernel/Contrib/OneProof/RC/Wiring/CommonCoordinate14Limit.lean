@@ -9,6 +9,10 @@ ultrafilter. Each finite tuple of matrix entries then has a compatible limit at 
 precision, giving matrices over `Λ`. Every polynomial identity between the matrices survives"
 (tex 4444–4448).
 
+Only the matrix identities pass to the limit; the retained homotopy inverses and the maps to the
+original cochains (tex 4403–4404, 4448–4450) are not carried, so the limit model is not identified
+with the genuine Λ-adic complexes — that identification is the content of `hprim`/`htilde`.
+
 The matrix data of a chain of relaxations at the finite coefficient stages `A_s = Λ/(2^s, t^s)`
 are given by lifts to `Λ` (`c s : ChainMat Λ m₀ m₁ m₂`, the ranks fixed on a set of the
 ultrafilter) whose identities hold modulo the stage ideals `(2^s, t^s)`. This file passes them to
@@ -152,7 +156,10 @@ theorem holds_prod (c : ℕ → ChainMat LamI m0 m1 m2) (U : Ultrafilter ℕ) (f
   exact ((prodChain c).holds_map_iff (evalAt s) (stageIdeal s) (f.map diag) n).1 h'
 
 /-- **The limit data over `Λ`** (tex 4444–4448: "giving matrices over `Λ`"): the entrywise
-ultralimits of the stage data. Kind: definition. -/
+ultralimits of the stage data. Only the matrix identities pass to the limit; the retained homotopy
+inverses and the maps to the original cochains (tex 4403–4404, 4448–4450) are not carried, so the
+limit model is not identified with the genuine Λ-adic complexes — that identification is the
+content of `hprim`/`htilde`. Kind: definition. -/
 def limitChain (c : ℕ → ChainMat LamI m0 m1 m2) (U : Ultrafilter ℕ) : ChainMat LamI m0 m1 m2 :=
   (prodChain c).map (ulimHom U)
 

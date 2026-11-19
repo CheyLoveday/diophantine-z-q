@@ -29,7 +29,7 @@ their global and local components, and the identity at every step is lane E2's
 
 The global identities and the local lifts at a stage are lane E2's push of the Shapiro-level
 identities (`stage_globalK`, `stage_oldLiftK`, `stage_urLiftK` in `H20PresStage.lean`; from the
-named inputs of `h1_shapiro` and the unramified lifts `hur_actual`).
+named inputs of `h1_shapiro` and the unramified lifts `hur_actualUH`).
 
 Kinds: definitions and PROVED.
 -/

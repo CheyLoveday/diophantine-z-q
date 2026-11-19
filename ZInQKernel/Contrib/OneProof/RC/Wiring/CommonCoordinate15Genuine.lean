@@ -204,7 +204,13 @@ structure GenuineStageST (hT : TameCochainQuasiIso) (hI : IwasawaGenerators)
   /-- the primitive coordinate of the limit has `t`-expansion `u_{prim,x}` (tex 4153) -/
   hprim : IsTExpansion ((fracChain (stageMats (fun s => (gs s).toChain hT hI hInj) bw μ) U).chainV
     (fracChain_holds _ hU _ _ (stageMats_hs _ bw μ _ U a hstep hfrob)) 0) (D.uPrim Fam x)
-  /-- the corrected coordinate of the limit at `U_x` has `t`-expansion `ũ_x` (tex 4150–4151) -/
+  /-- the corrected coordinate of the limit at `U_x` has `t`-expansion `ũ_x` (tex 4150–4151).
+  Conclusion-shaped: since `chainSign = 1` and each step has `ε = q⁻⁴`,
+  `η_x v_n = (∏_{q∈U_x} q⁻⁴) v₀`, so given `hprim` this field is equivalent to
+  `ũ_x = (∏_{q∈U_x} q⁻⁴) u_{prim,x}`, the conclusion of Lemma `ex:arith-common-coordinate` with
+  the unit pinned (stronger than the text's `ε_x ∈ Λ^×`, whose unit-disk factors, tex 4189–4193,
+  are absorbed into the choice of the model and class of `C_∅`). The text's `ũ = η u_rel` is one
+  common family (tex 4224–4225); that is not represented. -/
   htilde : IsTExpansion (etaF ℓ Fam x *
     (fracChain (stageMats (fun s => (gs s).toChain hT hI hInj) bw μ) U).chainV
       (fracChain_holds _ hU _ _ (stageMats_hs _ bw μ _ U a hstep hfrob)) ps.length)

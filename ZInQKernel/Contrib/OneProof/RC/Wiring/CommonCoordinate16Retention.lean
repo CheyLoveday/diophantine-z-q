@@ -427,16 +427,21 @@ the text's orthogonal diagrams, tex 4160–4164, 3830–3833). The relaxed data,
 new place and its `q`-components `qR`, `qP` are those of the presentation. Kind: definition. -/
 structure SwitchRetentionInputs (T : Finset ι) (p : ι) (hp : p ∉ T) (DPp : SelData k)
     {US : GCx k} (fS : GHom US DPp.U) where
-  /-- GLUE (tex 4164–4168; Nekovář 6.2.5–6.2.8): the global target of the cup product. -/
+  /-- Data, not pinned: the genuine cup product (Nekovář 6.2.5–6.4.3) is the intended instance.
+  GLUE (tex 4164–4168; Nekovář 6.2.5–6.2.8): the global target of the cup product. -/
   E : GCx k
-  /-- GLUE (tex 4164–4168; Nekovář 6.2.5–6.2.8): the local target of the cup product. -/
+  /-- Data, not pinned: the genuine cup product (Nekovář 6.2.5–6.4.3) is the intended instance.
+  GLUE (tex 4164–4168; Nekovář 6.2.5–6.2.8): the local target of the cup product. -/
   EL : GCx k
-  /-- GLUE (tex 4164–4168): the restriction of the targets. -/
+  /-- Data, not pinned: the genuine cup product (Nekovář 6.2.5–6.4.3) is the intended instance.
+  GLUE (tex 4164–4168): the restriction of the targets. -/
   resE : GHom E EL
-  /-- GLUE (tex 4164–4168, 3829–3833; Nekovář 6.4.1–6.4.3): the global cup product, shared by
+  /-- Data, not pinned: the genuine cup product (Nekovář 6.2.5–6.4.3) is the intended instance.
+  GLUE (tex 4164–4168, 3829–3833; Nekovář 6.4.1–6.4.3): the global cup product, shared by
   both pairings. -/
   cupG : GPair DPp.G (suppDataS K S₀ S k M Δ place X EU (insert p T)).G E
-  /-- GLUE (tex 4164–4168, 3829–3833; Nekovář 6.4.1–6.4.3): the local cup product, shared by
+  /-- Data, not pinned: the genuine cup product (Nekovář 6.2.5–6.4.3) is the intended instance.
+  GLUE (tex 4164–4168, 3829–3833; Nekovář 6.4.1–6.4.3): the local cup product, shared by
   both pairings. -/
   cupL : GPair DPp.L (suppDataS K S₀ S k M Δ place X EU (insert p T)).L EL
   /-- GLUE (tex 4164–4168; Nekovář 6.4.1–6.4.3): restriction commutes with the cup products. -/

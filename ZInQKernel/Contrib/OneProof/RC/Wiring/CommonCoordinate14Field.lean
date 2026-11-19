@@ -351,7 +351,9 @@ theorem vPrim_eq_chainV (H : c.Holds ⊥ f n) :
 
 /-- **(4.7) at step `i` of the chain** (tex 4157–4194, 4185–4193): if `q_i q_i⁻¹ = 1`,
 `tr Fr_i = a_i`, `det Fr_i = q_i` and the two-place block of step `i < n` is invertible, then
-`l_i v_{i+1} = e_i² q_i⁻⁴ σ_i v_i`. Kind: PROVED (from `kmStep`, `KmStep.h47` and the link). -/
+`l_i v_{i+1} = e_i² q_i⁻⁴ σ_i v_i`. Here `ε_i = q_i⁻⁴`; the text's `ε_q` also contains unit-disk
+determinants (tex 4189–4193), which this normalization absorbs; this is not a proof of the text's
+unit step. Kind: PROVED (from `kmStep`, `KmStep.h47` and the link). -/
 theorem chain_h47 (H : c.Holds ⊥ f n) (i : ℕ) (hi : i < n) (hq : f.q i * f.qi i = 1)
     (ha : (f.Fr i).trace = f.a i) (hd : (f.Fr i).det = f.q i)
     (hU : IsUnit (twoPlaceBlock (f.Fr i) (f.q i) (f.z i) (f.zi i)).det) :

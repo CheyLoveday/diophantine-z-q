@@ -7,7 +7,9 @@ Manuscript `diophantine_zq.tex`, Lemma `ex:arith-common-coordinate`, proof (tex 
 text relaxes the unused primes `U_x` of the address one at a time, along one chain
 `p₀, p₁, …, p_{n−1}` enumerating `U_x`; each step is a support triangle and gives (4.7) at the
 step, and the retained bases of consecutive steps are compared by a sign (tex 4185–4193). With
-`v_i` the coordinate after `i` steps and `σ_i = ±1` that sign, the chain's data are
+`v_i` the coordinate after `i` steps and `σ_i = ±1` that sign (for the limit chain `σ = 1`
+identically, `chainSign_eq_one`; the orientations are compatible by construction), the chain's
+data are
 `l_{p_i} v_{i+1} = e_{p_i}² p_i⁻⁴ σ_i v_i` for `i < n`, `v₀` with `t`-expansion `u_{prim,x}`, and
 `η_x v_n` with `t`-expansion `ũ_x`.
 

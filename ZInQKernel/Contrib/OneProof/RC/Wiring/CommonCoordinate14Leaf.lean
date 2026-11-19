@@ -116,14 +116,21 @@ structure CommonCoordinateLimitST (C : TateCoef (Ecurve ℓ)) (D : RCData ℓ) (
   /-- the primitive coordinate of the limit has `t`-expansion `u_{prim,x}` (tex 4153) -/
   hprim : IsTExpansion ((fracChain c U).chainV (fracChain_holds c hU f ps.length hs) 0)
     (D.uPrim Fam x)
-  /-- the corrected coordinate of the limit at `U_x` has `t`-expansion `ũ_x` (tex 4150–4151) -/
+  /-- the corrected coordinate of the limit at `U_x` has `t`-expansion `ũ_x` (tex 4150–4151).
+  Conclusion-shaped: since `chainSign = 1` and each step has `ε = q⁻⁴`,
+  `η_x v_n = (∏_{q∈U_x} q⁻⁴) v₀`, so given `hprim` this field is equivalent to
+  `ũ_x = (∏_{q∈U_x} q⁻⁴) u_{prim,x}`, the conclusion of Lemma `ex:arith-common-coordinate` with
+  the unit pinned (stronger than the text's `ε_x ∈ Λ^×`, whose unit-disk factors, tex 4189–4193,
+  are absorbed into the choice of the model and class of `C_∅`). The text's `ũ = η u_rel` is one
+  common family (tex 4224–4225); that is not represented. -/
   htilde : IsTExpansion (etaF ℓ Fam x *
     (fracChain c U).chainV (fracChain_holds c hU f ps.length hs) ps.length) (D.uTilde Fam x)
 
 /-- **The leaf's chain values from the inner limit** (tex 4142–4194, 4385–4451): the values are
-the coordinates of the limit chain over `Frac Λ` in the iterated cone bases, the signs those of
-the comparison of the cone bases, and (4.7) holds at every step (`ChainMat.chain_h47`; the new
-block is invertible at the leaf's values, `det B = p⁴ l_p(x) ≠ 0`). Kind: definition. -/
+the coordinates of the limit chain over `Frac Λ` in the iterated cone bases, `σ = 1` identically
+(`chainSign_eq_one`; the orientations are compatible by construction), and (4.7) holds at every
+step (`ChainMat.chain_h47`; the new block is invertible at the leaf's values,
+`det B = p⁴ l_p(x) ≠ 0`). Kind: definition. -/
 def CommonCoordinateLimitST.toChainValues {C : TateCoef (Ecurve ℓ)} {D : RCData ℓ}
     {Fam : Family} {x : Addr Fam.b} (H : CommonCoordinateLimitST C D Fam x) :
     ChainValues C D Fam x where
