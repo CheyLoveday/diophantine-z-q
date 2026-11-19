@@ -1,0 +1,397 @@
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} (P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X)
+  {rank : ℤ → ℕ} (S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank) : Type 1
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.cast {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} (P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X)
+  {rank : ℤ → ℕ} (S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank) {rank' : ℤ → ℕ} (h : rank = rank')
+  (R : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S) :
+  ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P
+    (ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram.cast h S)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.cast' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.homotopyEquiv {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} (P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X)
+  {rank : ℤ → ℕ} (S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank)
+  (R : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S) :
+  HomotopyEquiv R.model.toCC X.toCC
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.homotopyEquiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.exists_stageDiagramRealization {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} (P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X)
+  (R : ZInQ.Manuscript.RC.Limits.GradedModel X)
+  (hdual :
+    QuasiIso (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC (ZInQ.Manuscript.RC.FibreDuality.stageDualityMap P)))
+  (lo hi : ℤ) (hr : ∀ (n : ℤ), n < lo ∨ hi < n → R.rank n = 0) :
+  ∃ S, S.loc = P.loc ∧ Nonempty (ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.exists_stageDiagramRealization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization {U : Ultrafilter ℕ}
+  (C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U)
+  (D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C) (i : ℕ)
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  (P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X) : Type 1
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.homotopyEquiv {U : Ultrafilter ℕ}
+  (C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U)
+  (D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C) (i : ℕ)
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  (P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X)
+  (R : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i P) :
+  HomotopyEquiv R.model.toCC X.toCC
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.homotopyEquiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.toRetained {U : Ultrafilter ℕ}
+  (C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U)
+  (D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C) (i : ℕ)
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  (P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X) {rank : ℤ → ℕ}
+  (S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram (ZInQ.Manuscript.RC.Limits.StageA i) rank)
+  (R : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S) (h : rank = C.rank)
+  (hd :
+    ∀ (a b : ℤ) (hab : a + 1 = b),
+      (C.d i a b hab).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i) =
+        (ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram.cast h S).dC a b hab)
+  (hr :
+    ∀ (n : ℤ),
+      (D.res n i).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i) =
+        (ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram.cast h S).res n)
+  (hg :
+    ∀ (a b : ℤ) (hab : a + b = 3),
+      (D.glob a b hab i).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i) =
+        (ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram.cast h S).glob a b hab) :
+  ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i P
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.toRetained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.exists_stageDiagram_of_inputs_realized (i : ℕ)
+  (G : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i))
+  (hflat : ∀ (n : ℤ), Module.Flat (ZInQ.Manuscript.RC.Limits.StageA i) ↑(G.X n))
+  (P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput G)
+  (hdual :
+    QuasiIso (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC (ZInQ.Manuscript.RC.FibreDuality.stageDualityMap P)))
+  (hres : ∀ [inst : NeZero i], ZInQ.Contrib.RC53Assist.InnerLimitArith.ResidualCohomologyFinite G) (lo hi : ℤ)
+  (hbdd :
+    ∀ [inst : NeZero i] (n : ℤ),
+      n < lo ∨ hi < n →
+        Module.finrank (IsLocalRing.ResidueField (ZInQ.Manuscript.RC.Limits.StageA i))
+            (ZInQ.Manuscript.RC.Limits.residualCohomologyAt G n) =
+          0)
+  (B : ℕ)
+  (hB :
+    ∀ [inst : NeZero i] (n : ℤ),
+      Module.finrank (IsLocalRing.ResidueField (ZInQ.Manuscript.RC.Limits.StageA i))
+          (ZInQ.Manuscript.RC.Limits.residualCohomologyAt G n) ≤
+        B) :
+  ∃ rk,
+    (∀ (n : ℤ), n < lo ∨ hi < n → rk n = 0) ∧
+      (∀ (n : ℤ), rk n ≤ B) ∧
+        (∀ [inst : NeZero i] (n : ℤ),
+            rk n =
+              Module.finrank (IsLocalRing.ResidueField (ZInQ.Manuscript.RC.Limits.StageA i))
+                (ZInQ.Manuscript.RC.Limits.residualCohomologyAt G n)) ∧
+          ∃ S,
+            (i ≠ 0 → S.loc = P.loc) ∧
+              ∀ [NeZero i],
+                Nonempty (ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.exists_stageDiagram_of_inputs_realized' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.exists_retained_of_stageInputs_realized (U : Ultrafilter ℕ)
+  (hU : ↑U ≤ Filter.cofinite)
+  (G : (i : ℕ) → ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i))
+  (hflat : ∀ (i : ℕ) (n : ℤ), Module.Flat (ZInQ.Manuscript.RC.Limits.StageA i) ↑((G i).X n))
+  (Uc : (i : ℕ) → ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i))
+  (res :
+    (i : ℕ) →
+      ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom (G i)
+        (ZInQ.Contrib.RC53Assist.InnerLimit.splitLocalComplex (ZInQ.Manuscript.RC.Limits.StageA i)))
+  (ι :
+    (i : ℕ) →
+      ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom (Uc i)
+        (ZInQ.Contrib.RC53Assist.InnerLimit.splitLocalComplex (ZInQ.Manuscript.RC.Limits.StageA i)))
+  (Q :
+    (i : ℕ) →
+      ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelPairData
+        (ZInQ.Manuscript.RC.FibreDuality.splitSelData (G i) (res i) (Uc i) (ι i))
+        (ZInQ.Manuscript.RC.FibreDuality.splitSelData (G i) (res i) (Uc i) (ι i)))
+  (tr :
+    (i : ℕ) →
+      ↑((ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx (Q i).resE).X 3) →ₗ[ZInQ.Manuscript.RC.Limits.StageA i]
+        ZInQ.Manuscript.RC.Limits.StageA i)
+  (htr :
+    ∀ (i : ℕ) (z : ↑((ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx (Q i).resE).X 2)),
+      (tr i) (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx (Q i).resE).d 2 3 ⋯) z) = 0)
+  (hdual :
+    ∀ (i : ℕ),
+      QuasiIso
+        (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC
+          (ZInQ.Contrib.CloudB3RC53.SelmerDuality.globalDualityMap (Q i) (tr i) ⋯)))
+  (hres : ∀ (i : ℕ) [inst : NeZero i], ZInQ.Contrib.RC53Assist.InnerLimitArith.ResidualCohomologyFinite (G i))
+  (lo hi : ℤ)
+  (hbdd :
+    ∀ (i : ℕ) [inst : NeZero i] (n : ℤ),
+      n < lo ∨ hi < n →
+        Module.finrank (IsLocalRing.ResidueField (ZInQ.Manuscript.RC.Limits.StageA i))
+            (ZInQ.Manuscript.RC.Limits.residualCohomologyAt (G i) n) =
+          0)
+  (B : ℕ)
+  (hB :
+    ∀ (i : ℕ) [inst : NeZero i] (n : ℤ),
+      Module.finrank (IsLocalRing.ResidueField (ZInQ.Manuscript.RC.Limits.StageA i))
+          (ZInQ.Manuscript.RC.Limits.residualCohomologyAt (G i) n) ≤
+        B) :
+  ∃ r₀ C D x,
+    C.rank = r₀ ∧
+      C.low = lo ∧
+        C.high = hi ∧
+          (∀ (n : ℤ), r₀ n ≤ B) ∧
+            (∀ᶠ (i : ℕ) in ↑U,
+                ∀ [inst : NeZero i] (n : ℤ),
+                  r₀ n =
+                    Module.finrank (IsLocalRing.ResidueField (ZInQ.Manuscript.RC.Limits.StageA i))
+                      (ZInQ.Manuscript.RC.Limits.residualCohomologyAt (G i) n)) ∧
+              (∀ (i : ℕ),
+                  i ≠ 0 →
+                    ∀ (a b : ℤ),
+                      (D.loc a b i).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i) =
+                        ZInQ.Manuscript.RC.FibreDuality.stageLocMat (Q i) (tr i) a b) ∧
+                ∀ᶠ (i : ℕ) in ↑U,
+                  ∀ [NeZero i],
+                    Nonempty
+                      (ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i
+                        (ZInQ.Manuscript.RC.FibreDuality.stagePairingInputOfSel (Q i) (tr i) ⋯))
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.exists_retained_of_stageInputs_realized' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.AssembledLimit.Realized {K : Type} [Field K] [NumberField K]
+  {S₀ : Set (IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K))} {W : WeierstrassCurve K} [W.IsElliptic]
+  {α : (i : ℕ) → ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀ →* (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)ˣ}
+  [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (α i)] [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  {F : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.ActualStageFamily S₀ W α}
+  {O : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.OldDualityData F}
+  {R : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StandardOldReference S₀ W α} {width : ℕ}
+  {a : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.ArithmeticInputs F O R width} {U : Ultrafilter ℕ}
+  {hU : ↑U ≤ Filter.cofinite} {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S₀} {hW : W.map ↑Cn.κ = W}
+  (L : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.AssembledLimit a U hU Cn hW) : Prop
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.AssembledLimit.Realized' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.assemble_inner_limit_realized {K : Type} [Field K]
+  [NumberField K] {S₀ : Set (IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K))}
+  {W : WeierstrassCurve K} [W.IsElliptic]
+  {α : (i : ℕ) → ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀ →* (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)ˣ}
+  [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (α i)] [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  {F : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.ActualStageFamily S₀ W α}
+  {O : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.OldDualityData F}
+  {R : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StandardOldReference S₀ W α} {width : ℕ}
+  (p : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.ArithmeticPrints K) (hK : NumberField.IsTotallyComplex K)
+  (hS₀ : S₀.Finite)
+  (h2 : ∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)), 2 ∈ v.asIdeal → v ∈ S₀)
+  (a : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.ArithmeticInputs F O R width) (U : Ultrafilter ℕ)
+  (hU : ↑U ≤ Filter.cofinite) (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S₀) (hW : W.map ↑Cn.κ = W) :
+  ∃ L, L.stages = ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.producedStages a p hK hS₀ h2 ∧ L.Realized
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.assemble_inner_limit_realized' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.assemble_from_support_change_realized {K : Type} [Field K]
+  [NumberField K] {S₀ : Set (IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K))}
+  {W : WeierstrassCurve K} [W.IsElliptic]
+  {α : (i : ℕ) → ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀ →* (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)ˣ}
+  [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (α i)] [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  {F : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.ActualStageFamily S₀ W α}
+  {O : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.OldDualityData F}
+  {R : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StandardOldReference S₀ W α}
+  (p : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.ArithmeticPrints K)
+  (h788 : ZInQ.Manuscript.RC.SelmerComplex.NekovarProp788ii K) (hK : NumberField.IsTotallyComplex K) (hS₀ : S₀.Finite)
+  (h2 : ∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)), 2 ∈ v.asIdeal → v ∈ S₀)
+  (P : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.ActualSupportPresentation F R)
+  (oldFlat : F.NontrivialOldFlat)
+  (stage :
+    (i : ℕ) → [inst : NeZero i] → ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageArithmeticInput F O i)
+  (U : Ultrafilter ℕ) (hU : ↑U ≤ Filter.cofinite) (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S₀)
+  (hW : W.map ↑Cn.κ = W) :
+  ∃ T L,
+    L.stages =
+        ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.producedStages
+          { oldFlat := oldFlat, residualSupport := T, stage := stage } p hK hS₀ h2 ∧
+      L.Realized
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.assemble_from_support_change_realized' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.mk {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  {rank : ℤ → ℕ} {S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank}
+  (model : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A) (retract : ZInQ.Manuscript.RC.Limits.GRetract X model)
+  (coordinate : (n : ℤ) → ↑(model.X n) ≃ₗ[A] Fin (rank n) → A)
+  (differential :
+    ∀ (a b : ℤ) (hab : a + 1 = b) (x : ↑(model.X a)),
+      (coordinate b) ((model.d a b hab) x) = (S.dC a b hab).mulVec ((coordinate a) x))
+  (localization :
+    ∀ (n : ℤ) (x : ↑(model.X n)),
+      (ZInQ.Manuscript.RC.FibreDuality.lCoordR A n) ((P.res.f n n ⋯) ((retract.i.f n n ⋯) x)) =
+        (S.res n).mulVec ((coordinate n) x))
+  (globalTrace :
+    ∀ (a b : ℤ) (hab : a + b = 3) (x : ↑(model.X a)) (y : ↑(model.X b)),
+      ((P.glob a b hab) ((retract.i.f a a ⋯) x)) ((retract.i.f b b ⋯) y) =
+        (coordinate a) x ⬝ᵥ (S.glob a b hab).mulVec ((coordinate b) y)) :
+  ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.mk' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.model {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  {rank : ℤ → ℕ} {S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S) :
+  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.model' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.retract {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  {rank : ℤ → ℕ} {S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S) :
+  ZInQ.Manuscript.RC.Limits.GRetract X self.model
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.retract' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.coordinate {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  {rank : ℤ → ℕ} {S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S) (n : ℤ) :
+  ↑(self.model.X n) ≃ₗ[A] Fin (rank n) → A
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.coordinate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.differential {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  {rank : ℤ → ℕ} {S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S) (a b : ℤ)
+  (hab : a + 1 = b) (x : ↑(self.model.X a)) :
+  (self.coordinate b) ((self.model.d a b hab) x) = (S.dC a b hab).mulVec ((self.coordinate a) x)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.differential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.localization {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  {rank : ℤ → ℕ} {S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S) (n : ℤ)
+  (x : ↑(self.model.X n)) :
+  (ZInQ.Manuscript.RC.FibreDuality.lCoordR A n) ((P.res.f n n ⋯) ((self.retract.i.f n n ⋯) x)) =
+    (S.res n).mulVec ((self.coordinate n) x)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.localization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.globalTrace {A : Type} [CommRing A]
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  {rank : ℤ → ℕ} {S : ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A rank}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization P S) (a b : ℤ)
+  (hab : a + b = 3) (x : ↑(self.model.X a)) (y : ↑(self.model.X b)) :
+  ((P.glob a b hab) ((self.retract.i.f a a ⋯) x)) ((self.retract.i.f b b ⋯) y) =
+    (self.coordinate a) x ⬝ᵥ (S.glob a b hab).mulVec ((self.coordinate b) y)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.StageDiagramRealization.globalTrace' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.mk {U : Ultrafilter ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} {i : ℕ}
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  (model : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i))
+  (retract : ZInQ.Manuscript.RC.Limits.GRetract X model)
+  (coordinate :
+    (n : ℤ) → ↑(model.X n) ≃ₗ[ZInQ.Manuscript.RC.Limits.StageA i] Fin (C.rank n) → ZInQ.Manuscript.RC.Limits.StageA i)
+  (differential :
+    ∀ (a b : ℤ) (hab : a + 1 = b) (x : ↑(model.X a)),
+      (coordinate b) ((model.d a b hab) x) =
+        ((C.d i a b hab).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i)).mulVec ((coordinate a) x))
+  (localization :
+    ∀ (n : ℤ) (x : ↑(model.X n)),
+      (ZInQ.Manuscript.RC.FibreDuality.lCoordR (ZInQ.Manuscript.RC.Limits.StageA i) n)
+          ((P.res.f n n ⋯) ((retract.i.f n n ⋯) x)) =
+        ((D.res n i).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i)).mulVec ((coordinate n) x))
+  (globalTrace :
+    ∀ (a b : ℤ) (hab : a + b = 3) (x : ↑(model.X a)) (y : ↑(model.X b)),
+      ((P.glob a b hab) ((retract.i.f a a ⋯) x)) ((retract.i.f b b ⋯) y) =
+        (coordinate a) x ⬝ᵥ
+          ((D.glob a b hab i).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i)).mulVec ((coordinate b) y)) :
+  ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i P
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.mk' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.model {U : Ultrafilter ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} {i : ℕ}
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i P) :
+  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.model' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.retract {U : Ultrafilter ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} {i : ℕ}
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i P) :
+  ZInQ.Manuscript.RC.Limits.GRetract X self.model
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.retract' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.coordinate {U : Ultrafilter ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} {i : ℕ}
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i P) (n : ℤ) :
+  ↑(self.model.X n) ≃ₗ[ZInQ.Manuscript.RC.Limits.StageA i] Fin (C.rank n) → ZInQ.Manuscript.RC.Limits.StageA i
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.coordinate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.differential {U : Ultrafilter ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} {i : ℕ}
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i P) (a b : ℤ)
+  (hab : a + 1 = b) (x : ↑(self.model.X a)) :
+  (self.coordinate b) ((self.model.d a b hab) x) =
+    ((C.d i a b hab).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i)).mulVec ((self.coordinate a) x)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.differential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.localization {U : Ultrafilter ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} {i : ℕ}
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i P) (n : ℤ)
+  (x : ↑(self.model.X n)) :
+  (ZInQ.Manuscript.RC.FibreDuality.lCoordR (ZInQ.Manuscript.RC.Limits.StageA i) n)
+      ((P.res.f n n ⋯) ((self.retract.i.f n n ⋯) x)) =
+    ((D.res n i).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i)).mulVec ((self.coordinate n) x)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.localization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.globalTrace {U : Ultrafilter ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} {i : ℕ}
+  {X : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx (ZInQ.Manuscript.RC.Limits.StageA i)}
+  {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput X}
+  (self : ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization C D i P) (a b : ℤ)
+  (hab : a + b = 3) (x : ↑(self.model.X a)) (y : ↑(self.model.X b)) :
+  ((P.glob a b hab) ((self.retract.i.f a a ⋯) x)) ((self.retract.i.f b b ⋯) y) =
+    (self.coordinate a) x ⬝ᵥ
+      ((D.glob a b hab i).map ⇑(ZInQ.Manuscript.RC.Limits.stageMap i)).mulVec ((self.coordinate b) y)
+'ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.RetainedStageRealization.globalTrace' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

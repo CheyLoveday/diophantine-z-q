@@ -1,0 +1,233 @@
+@ZInQ.Contrib.RC53Assist.MattuckModel.integralTwist_map : ∀ {R : Type} [inst : CommRing.{0} R] {T : Type}
+  [inst_1 : CommRing.{0} T] (W : WeierstrassCurve.{0} R) (h : R) (f : RingHom.{0, 0} R T),
+  Eq.{1} (WeierstrassCurve.map.{0, 0} (ZInQ.Contrib.RC53Assist.MattuckModel.integralTwist W h) f)
+    (ZInQ.Contrib.RC53Assist.MattuckModel.integralTwist (WeierstrassCurve.map.{0, 0} W f) (f h))
+'ZInQ.Contrib.RC53Assist.MattuckModel.integralTwist_map' depends on axioms: [propext]
+@ZInQ.Contrib.RC53Assist.MattuckModel.integralTwist_generic_fibre : ∀ {R : Type} [inst : CommRing.{0} R] {F : Type}
+  [inst_1 : Field.{0} F] [CharZero.{0} F] [inst_3 : Algebra.{0, 0} R F] (W : WeierstrassCurve.{0} R) (h : R),
+  Eq.{1} (WeierstrassCurve.a₁.{0} W) 0 →
+    Eq.{1} (WeierstrassCurve.a₃.{0} W) 0 →
+      Eq.{1} (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.RC53Assist.MattuckModel.integralTwist W h) F)
+        (ZInQ.Manuscript.RC.TwistDictionary.twistK.{0} (WeierstrassCurve.baseChange.{0, 0} W F)
+          ((Algebra.algebraMap.{0, 0} R F) h))
+'ZInQ.Contrib.RC53Assist.MattuckModel.integralTwist_generic_fibre' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.MattuckModel.baseChange_tower : ∀ {R : Type} [inst : CommRing.{0} R] {T F : Type}
+  [inst_1 : CommRing.{0} T] [inst_2 : CommRing.{0} F] [inst_3 : Algebra.{0, 0} R T] [inst_4 : Algebra.{0, 0} T F]
+  [inst_5 : Algebra.{0, 0} R F] [IsScalarTower.{0, 0, 0} R T F] (W : WeierstrassCurve.{0} R),
+  Eq.{1} (WeierstrassCurve.baseChange.{0, 0} (WeierstrassCurve.baseChange.{0, 0} W T) F)
+    (WeierstrassCurve.baseChange.{0, 0} W F)
+'ZInQ.Contrib.RC53Assist.MattuckModel.baseChange_tower' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.MattuckModel.local_integer_tower : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  IsScalarTower.{0, 0, 0} (NumberField.RingOfIntegers.{0} K)
+    (↥(IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.{0, 0} K v))
+    (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)
+'ZInQ.Contrib.RC53Assist.MattuckModel.local_integer_tower' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.MattuckModel.hC_localIntegralTwist : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (W : WeierstrassCurve.{0} (NumberField.RingOfIntegers.{0} K))
+  (h : NumberField.RingOfIntegers.{0} K),
+  Eq.{1} (WeierstrassCurve.a₁.{0} W) 0 →
+    Eq.{1} (WeierstrassCurve.a₃.{0} W) 0 →
+      ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+        Eq.{1}
+          (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.RC53Assist.MattuckModel.localIntegralTwist W h v)
+            (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+          (ZInQ.Manuscript.RC.KummerMaps.localTwist (WeierstrassCurve.baseChange.{0, 0} W K)
+            ((Algebra.algebraMap.{0, 0} (NumberField.RingOfIntegers.{0} K) K) h) v)
+'ZInQ.Contrib.RC53Assist.MattuckModel.hC_localIntegralTwist' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.MattuckModel.localIntegralTwist_isElliptic : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (W : WeierstrassCurve.{0} (NumberField.RingOfIntegers.{0} K))
+  [WeierstrassCurve.IsElliptic.{0} (WeierstrassCurve.baseChange.{0, 0} W K)] (h : NumberField.RingOfIntegers.{0} K),
+  Ne.{1} h 0 →
+    Eq.{1} (WeierstrassCurve.a₁.{0} W) 0 →
+      Eq.{1} (WeierstrassCurve.a₃.{0} W) 0 →
+        ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+          WeierstrassCurve.IsElliptic.{0}
+            (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.RC53Assist.MattuckModel.localIntegralTwist W h v)
+              (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+'ZInQ.Contrib.RC53Assist.MattuckModel.localIntegralTwist_isElliptic' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.MattuckModel.oldKummer_count_integralTwist : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} (NumberField.RingOfIntegers.{0} K))
+  [inst_2 : WeierstrassCurve.IsElliptic.{0} (WeierstrassCurve.baseChange.{0, 0} W K)]
+  (h : NumberField.RingOfIntegers.{0} K),
+  Eq.{1} (WeierstrassCurve.a₁.{0} W) 0 →
+    Eq.{1} (WeierstrassCurve.a₃.{0} W) 0 →
+      ∀ (s : ZInQ.Manuscript.RC.CoefModules.KS K S)
+        (hs :
+          Eq.{1} (HPow.hPow.{0, 0, 0} s 2)
+            ((Algebra.algebraMap.{0, 0} K (ZInQ.Manuscript.RC.CoefModules.KS K S))
+              ((Algebra.algebraMap.{0, 0} (NumberField.RingOfIntegers.{0} K) K) h)))
+        (hs0 : Ne.{1} s 0)
+        (α :
+          MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+            (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef 1)))
+        [inst_3 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+        (hFull :
+          ZInQ.Manuscript.RC.CoefModules.FullTorsion K S (WeierstrassCurve.baseChange.{0, 0} W K)
+            (HPow.hPow.{0, 0, 0} 2 1))
+        (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+        (hα : ZInQ.Manuscript.RC.KummerMaps.IsLocallyQuadAt 1 α (ZInQ.Manuscript.RC.CoefModules.quadChar s hs hs0) ↑v)
+        [Finite.{1}
+            (ModN.{0}
+              (WeierstrassCurve.Affine.Point.{0}
+                (WeierstrassCurve.toAffine.{0}
+                  (ZInQ.Manuscript.RC.KummerMaps.localTwist (WeierstrassCurve.baseChange.{0, 0} W K)
+                    ((Algebra.algebraMap.{0, 0} (NumberField.RingOfIntegers.{0} K) K) h) ↑v)))
+              2)],
+        Eq.{1}
+          (HMul.hMul.{0, 0, 0}
+            (Nat.card.{0}
+              ↑(HomologicalComplex.homology.{0, 1, 0}
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                    (ZInQ.Manuscript.RC.KummerMaps.actualKummerAt (WeierstrassCurve.baseChange.{0, 0} W K) 1 s hs hs0 α
+                        hFull v hα).U)
+                  0))
+            (Nat.card.{0}
+              ↑(HomologicalComplex.homology.{0, 1, 0}
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                    (ZInQ.Manuscript.RC.KummerMaps.actualKummerAt (WeierstrassCurve.baseChange.{0, 0} W K) 1 s hs hs0 α
+                        hFull v hα).U)
+                  1)))
+          (HPow.hPow.{0, 0, 0} 2
+            (ZInQ.Contrib.CloudB3RC53.GenuineInst.genCondDim2 K S (↑v)
+              ZInQ.Manuscript.RC.Limits.LocalCondition.oldKummer
+              (ZInQ.Contrib.CloudB3RC53.Mattuck.kummerResidualDim.{0, 0} (↑v)
+                (ZInQ.Contrib.RC53Assist.MattuckModel.localIntegralTwist W h ↑v))))
+'ZInQ.Contrib.RC53Assist.MattuckModel.oldKummer_count_integralTwist' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.MattuckModel.oldKummer_count_integralTwist_odd : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} (NumberField.RingOfIntegers.{0} K))
+  [inst_2 : WeierstrassCurve.IsElliptic.{0} (WeierstrassCurve.baseChange.{0, 0} W K)]
+  (h : NumberField.RingOfIntegers.{0} K),
+  Eq.{1} (WeierstrassCurve.a₁.{0} W) 0 →
+    Eq.{1} (WeierstrassCurve.a₃.{0} W) 0 →
+      ∀ (s : ZInQ.Manuscript.RC.CoefModules.KS K S)
+        (hs :
+          Eq.{1} (HPow.hPow.{0, 0, 0} s 2)
+            ((Algebra.algebraMap.{0, 0} K (ZInQ.Manuscript.RC.CoefModules.KS K S))
+              ((Algebra.algebraMap.{0, 0} (NumberField.RingOfIntegers.{0} K) K) h)))
+        (hs0 : Ne.{1} s 0)
+        (α :
+          MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+            (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef 1)))
+        [inst_3 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+        (hFull :
+          ZInQ.Manuscript.RC.CoefModules.FullTorsion K S (WeierstrassCurve.baseChange.{0, 0} W K)
+            (HPow.hPow.{0, 0, 0} 2 1))
+        (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+        (hα : ZInQ.Manuscript.RC.KummerMaps.IsLocallyQuadAt 1 α (ZInQ.Manuscript.RC.CoefModules.quadChar s hs hs0) ↑v),
+        2 ∉ IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} ↑v →
+          Eq.{1}
+              (Nat.card.{0}
+                ↥(Submodule.torsionBy.{0, 0} ℤ
+                    (WeierstrassCurve.Affine.Point.{0}
+                      (WeierstrassCurve.toAffine.{0}
+                        (ZInQ.Manuscript.RC.KummerMaps.localTwist (WeierstrassCurve.baseChange.{0, 0} W K)
+                          ((Algebra.algebraMap.{0, 0} (NumberField.RingOfIntegers.{0} K) K) h) ↑v)))
+                    2))
+              4 →
+            Eq.{1}
+              (HMul.hMul.{0, 0, 0}
+                (Nat.card.{0}
+                  ↑(HomologicalComplex.homology.{0, 1, 0}
+                      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                        (ZInQ.Manuscript.RC.KummerMaps.actualKummerAt (WeierstrassCurve.baseChange.{0, 0} W K) 1 s hs
+                            hs0 α hFull v hα).U)
+                      0))
+                (Nat.card.{0}
+                  ↑(HomologicalComplex.homology.{0, 1, 0}
+                      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                        (ZInQ.Manuscript.RC.KummerMaps.actualKummerAt (WeierstrassCurve.baseChange.{0, 0} W K) 1 s hs
+                            hs0 α hFull v hα).U)
+                      1)))
+              (HPow.hPow.{0, 0, 0} 2 (ZInQ.Manuscript.RC.Limits.LocalCondition.oldKummer.dim 0))
+'ZInQ.Contrib.RC53Assist.MattuckModel.oldKummer_count_integralTwist_odd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.MattuckModel.oldKummer_count_integralTwist_two : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} (NumberField.RingOfIntegers.{0} K))
+  [inst_2 : WeierstrassCurve.IsElliptic.{0} (WeierstrassCurve.baseChange.{0, 0} W K)]
+  (h : NumberField.RingOfIntegers.{0} K),
+  Eq.{1} (WeierstrassCurve.a₁.{0} W) 0 →
+    Eq.{1} (WeierstrassCurve.a₃.{0} W) 0 →
+      ∀ (s : ZInQ.Manuscript.RC.CoefModules.KS K S)
+        (hs :
+          Eq.{1} (HPow.hPow.{0, 0, 0} s 2)
+            ((Algebra.algebraMap.{0, 0} K (ZInQ.Manuscript.RC.CoefModules.KS K S))
+              ((Algebra.algebraMap.{0, 0} (NumberField.RingOfIntegers.{0} K) K) h)))
+        (hs0 : Ne.{1} s 0)
+        (α :
+          MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+            (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef 1)))
+        [inst_3 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+        (hFull :
+          ZInQ.Manuscript.RC.CoefModules.FullTorsion K S (WeierstrassCurve.baseChange.{0, 0} W K)
+            (HPow.hPow.{0, 0, 0} 2 1))
+        (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+        [inst_4 :
+          Ideal.LiesOver.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} ↑v)
+            (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0}
+              (ZInQ.Contrib.CloudB3RC53.RankCounts.vP (Subtype.mk.{1} 2 Nat.prime_two)))]
+        (hα : ZInQ.Manuscript.RC.KummerMaps.IsLocallyQuadAt 1 α (ZInQ.Manuscript.RC.CoefModules.quadChar s hs hs0) ↑v),
+        Eq.{1}
+            (Nat.card.{0}
+              ↥(Submodule.torsionBy.{0, 0} ℤ
+                  (WeierstrassCurve.Affine.Point.{0}
+                    (WeierstrassCurve.toAffine.{0}
+                      (ZInQ.Manuscript.RC.KummerMaps.localTwist (WeierstrassCurve.baseChange.{0, 0} W K)
+                        ((Algebra.algebraMap.{0, 0} (NumberField.RingOfIntegers.{0} K) K) h) ↑v)))
+                  2))
+            4 →
+          Eq.{1}
+            (HMul.hMul.{0, 0, 0}
+              (Nat.card.{0}
+                ↑(HomologicalComplex.homology.{0, 1, 0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                      (ZInQ.Manuscript.RC.KummerMaps.actualKummerAt (WeierstrassCurve.baseChange.{0, 0} W K) 1 s hs hs0
+                          α hFull v hα).U)
+                    0))
+              (Nat.card.{0}
+                ↑(HomologicalComplex.homology.{0, 1, 0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                      (ZInQ.Manuscript.RC.KummerMaps.actualKummerAt (WeierstrassCurve.baseChange.{0, 0} W K) 1 s hs hs0
+                          α hFull v hα).U)
+                    1)))
+            (HPow.hPow.{0, 0, 0} 2
+              (ZInQ.Manuscript.RC.Limits.LocalCondition.oldKummer.dim
+                (Module.finrank.{0, 0} ℚ_[2] (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))))
+'ZInQ.Contrib.RC53Assist.MattuckModel.oldKummer_count_integralTwist_two' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.MattuckModel.integralEcurve_baseChange : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (ℓ : ℕ),
+  Eq.{1} (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.RC53Assist.MattuckModel.integralEcurve ℓ) K)
+    (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) K)
+'ZInQ.Contrib.RC53Assist.MattuckModel.integralEcurve_baseChange' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.MattuckModel.hC_Ecurve_integer : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (ℓ : ℕ) (h : ℤ) (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  Eq.{1}
+    (WeierstrassCurve.baseChange.{0, 0}
+      (ZInQ.Contrib.RC53Assist.MattuckModel.localIntegralTwist (ZInQ.Contrib.RC53Assist.MattuckModel.integralEcurve ℓ)
+        (↑h) v)
+      (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+    (ZInQ.Manuscript.RC.KummerMaps.localTwist (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ) K)
+      (↑h) v)
+'ZInQ.Contrib.RC53Assist.MattuckModel.hC_Ecurve_integer' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+
+[exit code: 0]

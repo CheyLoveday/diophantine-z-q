@@ -14,9 +14,10 @@ witness (`OddInstance.hO2 : WitnessValuation …`, ELLIOT + PRINT). Both are now
 construction of `RC/Stages` (Appendix F, tex 8225–8405; App G 10190–10191):
 
 * `StageSupport W` (definitions): the fixed support consists of primes and contains `S₀` and the
-  primes of `h_*` (tex 1974–1975, 2460–2461, 8250–8254), and the prepared filter imposes positive unit-squareclass tests at the intrinsic support and only
-  coprimality at its later enlargement (`preparedSeparated`, tex 2027–2029, 2460–2462,
-  8247–8248, 8254–8258, 10594–10596). `StageSupport.preparedSpec` (PROVED) gives the old leaf
+  primes of `h_*` (tex 1974–1975, 2461–2462, 8254–8256), and the prepared filter imposes positive
+  unit-squareclass tests at the intrinsic support and only coprimality at its later enlargement
+  (`preparedSeparated`, tex 2027–2029, 2460–2462, 8247–8248, 8254–8258, 10594–10596).
+  `StageSupport.preparedSpec` (PROVED) gives the old leaf
   `PreparedSpec` (the square class at `2` forces `≡ 1 (mod 8)`).
 * `StagesFrom W q` (definitions): the stage fields of `W` are the construction at a stage sequence
   `q`: the hyperfilter, `M_θ = c_w + 1 + θ` and the prepared filter cut by the Legendre test of the
@@ -84,7 +85,7 @@ def preparedSeparated (Sunit Sexcl : Finset ℕ) (D : ℤ) : Prop :=
 * `support_prime`, `support_base`: the support consists of primes and contains
   `S₀ ℓ = {2, 3} ∪ primes(ℓ)` (tex 1974–1975);
 * `support_hstar`: it contains the primes of `h_*`, adjoined before the witness is chosen (tex
-  2405–2408, 2460–2461, App F 8250–8254);
+  2405–2408, 2461–2462, App F 8254–8256);
 * `prepared_eq`: unit-squareclass tests use an intrinsic support containing the base primes and
   the primes of `h_*`, disjoint from the primes of `k`; the enlarged support imposes only prime
   exclusions (tex 2027–2029, 2460–2462, 8247–8248, 8254–8258, 10594–10596). The primes of `k`,
@@ -170,23 +171,23 @@ end Link
 * `eE`, `eA`: `E_ℓ` and `A = E^{(D_w)}` are elliptic (definitions, instance arguments; PROVED-able
   for `ℓ > 0`, `D_w ≠ 0`; owner RC0);
 * `Dw`, `hDw`, `dat`, `hdat`: the fixed witness, in the prepared filter, and its selected
-  conductor-one genus datum (definitions; tex 2460–2462, 8249–8256; the selection exists at a
+  conductor-one genus datum (definitions; tex 2460–2462, 8254–8258; the selection exists at a
   prepared simple zero by `GenusOddInstance.hselG`);
 * `w`: the exact witness, an embedding of the datum's ring class field, a root of `D_w` in it and a
   rational point `R` of `A` whose twist by that root is `L P_{D_w}` (`ExactWitnessOn`; ELLIOT, tex
-  2462–2466, 8295–8306, PROVED by the construction's `exact_twist_of_genusPoint` when `L` is a
-  multiple `L₀ · 4B` of the uniform bound, tex 8295–8297; owner: the Appendix F stage
-  construction);
+  2462–2466, 8295–8306; a leaf field; its existence at the multiplier `L₀ · 4B` (a multiple of the
+  uniform bound, tex 8295–8297) is PROVED by `exists_exactWitnessOn_Ecurve` (from `Prints`,
+  `StageDataNonVacuity`; not used by the deduction); owner: the Appendix F stage construction);
 * `Q`, `hQw`, `hQ`, `d`, `F₀`, `σ`, `hσ`, `a`, `b`, `hvalue`, `B`, `q`: the outputs of the detector
   construction at `R`: the point `Q = R` over `ℚ̄` (`hQw`), Galois fixed, a compatible division
   tower, the auxiliary field, the detecting element `σ = hτ` with `σ²` trivial on the Tate module
   of `E` (`hσ`), the fixed row `b` with `b c_Q(σ²) = 2^{a+1}` (`c_w = a + 1`), a finite exclusion
   and an actual detecting sequence at precisions `a + 2 + θ` (ELLIOT, Proposition
-  `ex:app-detector`, tex 2468–2493, 8295–8405, PROVED by the construction's
-  `exists_detector_stages` from a nontorsion rational point of `A`, PRINT Serre, GLUE no CM and a
-  definitional auxiliary field, see `RC/Wiring/StageDataNonVacuity.lean`; `hσ` from its
-  `tateRep E σ = tateRep E τ`, `sq_trivial_of_tateRep_eq_conj`; owner: the Appendix F stage
-  construction);
+  `ex:app-detector`, tex 2468–2493, 8295–8405; leaf fields; their existence for a nontorsion
+  rational point of `A`, given Serre's open image (`SerreThm3`, PRINT, not in `Prints`) and the
+  absence of CM (with a definitional auxiliary field), is PROVED by `exists_detector_stages`
+  (`StageDataNonVacuity`; not used by the deduction); `hσ` from its `tateRep E σ = tateRep E τ`,
+  `sq_trivial_of_tateRep_eq_conj`; owner: the Appendix F stage construction);
 * `hstages`: the stage fields of `W` are the construction at `q` (definitions, `StagesFrom`);
 * `hev`: at the selected datum the stage maps are the actual stage map at the places of the
   selected Frobenius elements (`actualStageMapOn`: reduction into the square-fixed group, the

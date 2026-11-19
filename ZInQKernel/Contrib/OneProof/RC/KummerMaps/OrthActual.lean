@@ -26,7 +26,12 @@ Lemma `ex:arith-conjugate-duality` (tex 2761–2830).
   inflations of `G_{K,S₀}`-modules `M₀, M₀'` with a perfect pairing into `T₀ ≅ R(1)`, from (a)
   (`orthogonalComplementsT_ofCondAt`), the PRINT `NekovarProp756` at `S − S₀` and per-place
   hypotheses at `S₀`; `orthSelmerDuality_urOutside`: finite Selmer duality through lane RC26's
-  `genuineSelmerDualityT`.
+  `genuineSelmerDualityT`. The given conditions at `S₀` are required to be concentrated in degrees
+  `0, 1` (`hc`, `hc'`), which excludes a genuine full condition with nonzero coefficients: these
+  theorems do not cover the full active and moving conditions of the text (tex 2865–2867,
+  5055–5061). Lane RC29's round-3 `actualLocalComplements` (`ActualComplements.lean`) does, through
+  the arbitrary-condition assembly `orthogonalComplementsT_ofCondAt` and the full/zero comparison
+  `orthLocalMap_full_zero_quasiIso`.
 * The actual data: `orthogonalComplementsT_actualKummer` and `orthSelmerDuality_actualKummer` —
   RC28's `actualConditions` with the Kummer condition `kummerAt` at `S₀` on `M_i` and on
   `M_i(α⁻¹) ≅ M_i^*(1)` against each other through the inflated Weil pairing `weilPairingM`.
@@ -191,7 +196,9 @@ theorem orth_urOutside_isotropic (v : Places K S) :
   · exact orthUr_cup_mem_range hS R β₀ hβ₀ v h
 
 /-- **The isotropy homotopies of the actual-shape conditions**: the zero homotopy at every place
-(a `τ≥2` isotropy homotopy by the isotropy at `S₀` and Lemma 7.5.2 at `S − S₀`). -/
+(a `τ≥2` isotropy homotopy by the isotropy at `S₀` and Lemma 7.5.2 at `S − S₀`). It needs the given
+conditions at `S₀` concentrated in degrees `0, 1`, so it does not apply to a genuine full condition;
+for full/zero places see round 3's `ActLTZ` and `actLIso` (`ActualComplements.lean`). -/
 def orthOutsideIsotropy (v : Places K S) :
     LocalTruncIsotropy (urOutside hS R M₀ c v).i (urOutside hS R M₀' c' v).i
       (orthUrPair hS R β₀ hβ₀ v) :=
@@ -199,7 +206,8 @@ def orthOutsideIsotropy (v : Places K S) :
     (orth_urOutside_concentrated hS R M₀' c' hc' v) (orth_urOutside_isotropic hS R β₀ hβ₀ c c' hiso v)
 
 /-- The `τ≥2` isotropy data of the actual-shape conditions (lane RC26's
-`TruncIsotropyData.ofLocal` of `orthOutsideIsotropy`). -/
+`TruncIsotropyData.ofLocal` of `orthOutsideIsotropy`), for given conditions at `S₀` concentrated in
+degrees `0, 1` (not a genuine full condition; see round 3's `actLTrunc`). -/
 abbrev orthOutsideTrunc :
     GaloisTruncIsotropyData K S R (orthInflPair hS R β₀) (orthInflPair_smul hS R β₀ hβ₀)
       (ofCondAt K S R (InflMod hS M₀) (urOutside hS R M₀ c))

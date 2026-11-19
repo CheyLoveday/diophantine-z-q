@@ -12,8 +12,8 @@ Nekovář, *Selmer complexes*, Astérisque 310 (2006), 6.1.3, 6.4.2(i), 7.8.8(ii
 Over the new support `S' ⊇ S`, with the old local conditions at the old places, this file
 constructs
 
-* `fullSelData`: the Selmer data with the **full** condition `id : C^•_cont(G_q, M) → C^•_cont(G_q, M)`
-  at every new place `q` (the complex `(C_b)₀` of (5.6));
+* `fullSelData`: the Selmer data with the **full** condition
+  `id : C^•_cont(G_q, M) → C^•_cont(G_q, M)` at every new place `q` (the complex `(C_b)₀` of (5.6));
 * `urInFull`: the unramified conditions `C^•_cont(G_q/I_q, M) → C^•_cont(G_q, M)` (inflation) inside
   the full conditions, identity at the old places; `restrictData_urInFull`: restricting the full
   data along it is literally the unramified support data `newSelData` of Nekovář 7.8.8(ii) (`rfl`);

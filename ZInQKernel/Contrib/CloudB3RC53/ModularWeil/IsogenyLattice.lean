@@ -13,7 +13,8 @@ glues, separating its analytic and its algebraic content:
   field of the source, denominators cleared:
   `(2y₁ + a₁x₁ + a₃) · d(β^* x₂) = r · β^*(2y₂ + a₁x₂ + a₃) · dx₁` in `Ω[K(E₁)/F]`.
   In characteristic zero `Ω[K(E₁)/F]` is a line spanned by `dx₁ ≠ 0`, so the scalar, if it exists,
-  is unique (not formalised; not needed below). Non-vacuity: `isPullbackScalar_id` (the identity
+  is unique (Tau Ceti's `existsUnique_smul_invariantDifferential`; `IsogenyScalar.lean` proves
+  `IsPullbackScalar β r ↔ β^* ω₂ = r • ω₁`). Non-vacuity: `isPullbackScalar_id` (the identity
   isogeny, `r = 1`; PROVED).
 * `IsLatticeOfEmb σ E Lat` (definition): for `E` over a field `F` with an embedding `σ : F → ℂ`,
   `Lat` is the normalized period lattice of `E` over `ℂ` (`g₂ = σ(c₄)/12`, `g₃ = σ(c₆)/216`);
@@ -29,7 +30,8 @@ glues, separating its analytic and its algebraic content:
   is a nonzero rational number. Classical proof: `β^* ω₂` is a holomorphic invariant differential
   on `E₁`, so `β^* ω₂ = h ω₁` with `h ∈ ℚ(E₁)` without zeros or poles, hence a constant of
   `ℚ(E₁)`, i.e. `h ∈ ℚ`; `h ≠ 0` since `β` is nonconstant and separable in characteristic zero
-  (Silverman III.5.2, II.4.2(c)). Not proved here.
+  (Silverman III.5.2, II.4.2(c)). Not proved here; `IsogenyScalar.lean` reduces it to the
+  constancy of the pull-back coefficient (`PullbackCoefficientConstantGlue`), proving the rest.
 * **`isogenyLatticeGlue_of_glues` (PROVED)**: `IsogenyLatticeAnalyticGlue →
   IsogenyScalarRationalGlue → IsogenyLatticeGlue`.
 

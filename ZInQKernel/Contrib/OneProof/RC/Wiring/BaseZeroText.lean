@@ -7,14 +7,16 @@ import ZInQKernel.Contrib.OneProof.RC.BaseZeroLimit.NonVacuity
 
 Lemma `ex:arith-base-zero` (tex 4330–4376). The leaf `BaseZeroLeafInputsSqrt` (`BaseZeroSqrt.lean`)
 carries lane RC25's `BaseZeroCore`, whose fields `hcentral`, `boundary` (with its limit statement
-`hlim`), `lam`, `hlam` and `hu` state conclusions of steps of the text. Here the core states the
-steps themselves:
+`hlim`), `lam`, `hlam` and `hu` state conclusions of steps of the text.
+Here the core records weaker algebraic inputs named after those steps. The fields do not
+identify `CU` with the actual primitive complex, `cz` with conjugate transport of `z`, or `ψ`
+with the inverse of the orthogonal comparison:
 
 | field of `BaseZeroCore` | replaced by | how the field is recovered | tex |
 |---|---|---|---|
 | `hcentral : rank ρ(Dm) = m` | `central`: the central degree-one cohomology is `V₂ Sel_{2^∞}(E/ℚ) × V₂ Sel_{2^∞}(E^{(k)}/ℚ)` (`CentralSelmerComparison`; ELLIOT + GLUE) | PROVED from the lemma's own hypothesis `SelmerCorankOneOverK` (lane RC30's `hcentral_of_selmer`) | 4350–4352, 3952–3962, 5305–5311 |
 | `boundary` (its `hlim : z̄ = lim_i L κ(W_i)`) | `limit`: the retained inner-limit data of (4.5) at the base (`InnerLimit45Base`; the stage boundaries ELLIOT, the inner limit PROVED, the comparison definitions) | PROVED (lane RC30's `InnerLimit45Base.toBoundary45Base`) | 3912–3921, 3952–3968 |
-| `lam`, `hlam` | the pairing `pd1`, `pd2` with its Leibniz identity `hL1` (GLUE), a chain map `ψ` (in the proposition a homotopy inverse of `j`) and the cocycle `c z` (`hcz`); `lam` is the paired functional `PD(·, ψ(c z))` (definition) | `hlam` PROVED from `hL1` and `hcz` (the RC53 group's `baseLam_closed`), as in the text | 3752–3754, 3860–3863 |
+| `lam`, `hlam` | the pairing `pd1`, `pd2` with its Leibniz identity `hL1` (GLUE), a chain map `ψ` (in the proposition a homotopy inverse of `j`) and the cocycle `c z` (`hcz`); `lam` is the paired functional `PD(·, ψ(c z))` (definition) | `hlam` PROVED from `hL1` and `hcz` (the RC53 group's `baseLam_closed`), as in the text | 3742–3749, 3845–3849, 3860–3863 |
 | `hu` (for every row representing `lam`) | `hu`: the coordinate statement for the single row of the paired functional (Definition `ex:arith-coordinate`) | PROVED (uniqueness of the row, `BaseZeroCore.ofClosed`) | 3877–3892 |
 
 The conductor-one Heegner data stay in the form `HeegnerDataSqrt` (`K = ℚ(√k)` split at `2`; the
@@ -25,10 +27,13 @@ factorization `L(E/K, s) = L(E, s) L(E^{(k)}, s)` PROVED from the Artin factoriz
   and `baseZeroLeafInputs_of_text` (PROVED): the previous leaves from the new one;
 * non-vacuity (PROVED): `baseZeroCoreText_nonvacuous`. Under the lemma's hypothesis
   `SelmerCorankOneOverK`, for interface data whose base coordinate is the image of `f ∈ Λ`, there
-  is a core on the rank-one model `[A --0--> A]` with the multiplication pairing, `ψ = 𝟙` and
+  is a core whose degree-one/two matrix window is `[A --0--> A]`; its stored `exCU` has `A`
+  in every integer degree and zero differentials. It uses the multiplication pairing, `ψ = 𝟙` and
   `c z = 1`, with generic coordinate `f` and central cycle `f(0)`; with `f = 1` neither is zero
   (`baseZeroCoreText_not_forced`). As for lanes RC25 and RC30, the Heegner data are not
-  constructed here.
+  constructed here. The example lives at the infinite-order point `1 ∈ ℤ` of `G = ℤ` (not a
+  point of `E(K)`; the Heegner data are not constructed). At a torsion point the core forces
+  `u_{prim,0}(0) = 0`.
 
 As abstract inputs the new fields are equivalent to those they replace: an `InnerLimit45Base`
 exists iff `z̄ = L κ(P)` with `L ≠ 0` (lane RC30's `nonempty_innerLimit45Base_iff`), the central
@@ -37,11 +42,12 @@ comparison exists iff the central kernel has the Selmer dimension
 degenerate pairing (`ε = 0`). The gain is that `hcentral`, `hlim` and `hlam` are proofs from the
 steps of the text, and each remaining input is a named step with its kind.
 
-What remains of the leaf: the Heegner data (definition + GLUE), the two-term model of the
-primitive complex at the base and its identification (`CU`, `e1`, `e2`, `hd`; no genuine two-term
-model over `Λ_(t)` is constructed in the project), the pairing with its Leibniz identity and the
-class `c z`, the central comparison, the stage data of (4.5), and `hprimId` (the interface's
-`u_{prim,0}` is the `t`-expansion of the generic coordinate).
+What remains of the leaf is an existential matrix model and pairing data, the Heegner data,
+the central dimension comparison, the inner-limit compatibility equations, and `hprimId`.
+The fields `CU`, `e1`, `e2`, `hd` specify only the degree-one/two differential; they impose
+neither two-term support nor an identification with the actual primitive complex. The cocycle
+`cz` is independent of `z`, and `ψ` is an arbitrary chain map. Supplying the genuine retained
+complex, class, duality and comparison maps remains an arithmetic discharge obligation.
 -/
 
 noncomputable section
@@ -75,13 +81,17 @@ structure BaseZeroCoreText {ℓ : ℕ} (D : RCData ℓ) (Fam : Family) {G : Type
   m : ℕ
   /-- the differential of the two-term model, over `A = Λ_(t)` -/
   Dm : Matrix (Fin (m + 1)) (Fin (m + 1)) Rings.LambdaT
-  /-- the central degree-one cohomology is the rational full Selmer group -/
-  central : CentralSelmerComparison (selmerTwoPower (Ecurve ℓ)) (selmerTwoPower (Etw ℓ D.kfin)) Dm
+  /-- An abstract equivalence from the central matrix kernel to the rational full Selmer
+  product; under `SelmerCorankOneOverK`, its existence is equivalent to the central rank
+  condition. No naturality or actual cohomology-map compatibility is required. -/
+  central : CentralSelmerComparison (selmerTwoPower (Ecurve ℓ))
+    (selmerTwoPower (Etw ℓ D.kfin)) Dm
   /-- the retained integral cycle -/
   z : Fin (m + 1) → Rings.LambdaT
   /-- it is a cycle -/
   hz : Dm *ᵥ z = 0
-  /-- the complex of the model -/
+  /-- A complex with the specified degree-one/two matrix window. Other degrees and the
+  incoming differential are not constrained by this structure. -/
   CU : CochainComplex (ModuleCat.{0} Rings.LambdaT) ℤ
   /-- the complex paired with it -/
   C' : CochainComplex (ModuleCat.{0} Rings.LambdaT) ℤ
@@ -101,9 +111,11 @@ structure BaseZeroCoreText {ℓ : ℕ} (D : RCData ℓ) (Fam : Family) {G : Type
   ε : Rings.LambdaT
   /-- the Leibniz identity of the pairing -/
   hL1 : ∀ w y, pd2 ((CU.d 1 2).hom w) y = ε * pd1 w ((C'.d 1 2).hom y)
-  /-- the chain map `ψ : C → C'` -/
+  /-- An arbitrary chain map; the structure does not require an orthogonal-comparison
+  homotopy inverse. -/
   ψ : C ⟶ C'
-  /-- the class `c z` -/
+  /-- An independent cocycle. Identification with conjugate transport of the retained
+  cycle `z` is not a field of this structure. -/
   cz : C.X 1
   /-- it is a cocycle -/
   hcz : (C.d 1 2).hom cz = 0
@@ -178,10 +190,13 @@ theorem baseZeroLeafInputs_of_text {ℓ : ℕ} {D : RCData ℓ} (hA : GenusOdd.A
 
 /-- **The core on the text's steps is satisfiable** (PROVED), under the lemma's hypothesis
 `SelmerCorankOneOverK ℓ D.kfin`: if `D.uPrim F 0` is the image of `f ∈ Λ`, there is a
-`BaseZeroCoreText D F 1` on the rank-one model `[A --0--> A]` (the RC53 group's `exCU`), with the
-multiplication pairing (Leibniz identity with `ε = 1`), `ψ = 𝟙`, `c z = 1`, the cycle `z = f`,
+`BaseZeroCoreText D F 1` whose degree-one/two matrix window is `[A --0--> A]`; the stored
+`exCU` has `A` in every integer degree. It uses the multiplication pairing (Leibniz identity
+with `ε = 1`), `ψ = 𝟙`, an independent cocycle `cz = 1`, and the retained cycle `z = f`, with
 generic coordinate `f`, central cycle `f(0)`, the central comparison of lane RC30's
-`centralSelmerComparison_of_selmer` and the inner-limit data `constLimit`. -/
+`centralSelmerComparison_of_selmer` and the inner-limit data `constLimit`. The example lives at
+the infinite-order point `1 ∈ ℤ` of `G = ℤ` (not a point of `E(K)`; the Heegner data are not
+constructed). At a torsion point the core forces `u_{prim,0}(0) = 0`. -/
 theorem baseZeroCoreText_nonvacuous {ℓ : ℕ} (D : RCData ℓ) (Fam : Family)
     (hSel : SelmerCorankOneOverK ℓ D.kfin) (f : Uniform.Lambda) (hf : D.uPrim Fam 0 = lamIncl f) :
     ∃ M : BaseZeroCoreText D Fam (1 : ℤ),
@@ -228,7 +243,9 @@ theorem baseZeroCoreText_nonvacuous {ℓ : ℕ} (D : RCData ℓ) (Fam : Family)
     exact rhoT_algebraMap f
 
 /-- **The core does not force the conclusion** (PROVED): with `f = 1` the generic coordinate and
-the central cycle are `1 ≠ 0`; the specified point `1 ∈ ℤ` has infinite order. -/
+the central cycle are `1 ≠ 0`; the specified point `1 ∈ ℤ` has infinite order. The example lives
+at the infinite-order point `1 ∈ ℤ` of `G = ℤ` (not a point of `E(K)`; the Heegner data are not
+constructed). At a torsion point the core forces `u_{prim,0}(0) = 0`. -/
 theorem baseZeroCoreText_not_forced {ℓ : ℕ} (D : RCData ℓ) (Fam : Family)
     (hSel : SelmerCorankOneOverK ℓ D.kfin) (hf : D.uPrim Fam 0 = lamIncl 1) :
     ∃ M : BaseZeroCoreText D Fam (1 : ℤ), M.uprim ≠ 0 ∧ ∀ i, Rings.rhoT (M.z i) ≠ 0 := by
