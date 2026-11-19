@@ -1,7 +1,7 @@
-import ZInQKernel.Contrib.OneProof.JDescent5Inversion
+import ZInQKernel.Contrib.OneProof.JDescent5Odd
 import ZInQKernel.Contrib.OneProof.JDescent5Period
 
-/-! The CM degree row after the genus and the local period derivative comparisons. -/
+/-! The CM degree row after the genus comparison. -/
 
 namespace HDec.CMBranch.CMjBridges
 
@@ -53,28 +53,8 @@ theorem abVar_period_abscissa_even {L : Type} [Field L] [NumberField L]
     (heq : y ^ 2 = x ^ 3 + abVarSectionConst A _ a * x + abVarSectionConst A _ b) :
     ∀ z : ℂ, cEvalAt (Φ (fun _ => s * (-z))) (abVarPunctured A) x =
       cEvalAt (Φ (fun _ => s * z)) (abVarPunctured A) x := by
-  have := abVarPunctured_nonempty A P hp
   let U := abVarPunctured A
-  let X := A.X.left
-  let F := AbVarFunctionField A
-  let Xf : F := X.germToFunctionField U x
-  let Yf : F := X.germToFunctionField U y
-  have hx' : P.ord Xf = -2 := hx
-  have hy' : P.ord Yf = -3 := hy
-  have hX : Xf ≠ 0 := fun he => by rw [he, P.ord_zero] at hx'; omega
-  have hY : Yf ≠ 0 := fun he => by rw [he, P.ord_zero] at hy'; omega
-  have hEq : Yf ^ 2 = Xf ^ 3 + algebraMap L F a * Xf + algebraMap L F b := by
-    have hh := congrArg (X.germToFunctionField U).hom heq
-    rw [map_pow, map_add, map_add, map_mul, map_pow] at hh
-    change Yf ^ 2 = Xf ^ 3 +
-      X.germToFunctionField U (abVarSectionConst A U a) * Xf +
-      X.germToFunctionField U (abVarSectionConst A U b) at hh
-    rwa [germToFunctionField_abVarSectionConst, germToFunctionField_abVarSectionConst] at hh
-  have hf := abVarInv_abscissa_of_genusOne hg A hdim P hp hX hY hx hy hreg hEq
-  have hu : (abVarInv A).appLE U U (abVarInv_stable_punctured A) x = x := by
-    apply X.germToFunctionField_injective U
-    rw [← abVarInvFunctionField_section A U (abVarInv_stable_punctured A)]
-    exact hf
+  have hu := (abVarInv_sections_of_genusOne hg A hdim hΦ hs hΛ P hp x y a b hx hy hreg heq).1
   let v : ℂ → (Fin 1 → ℂ) := fun z _ => s * z
   have hinv (z : ℂ) : Φ (v (-z)) = (Φ (v z))⁻¹ := by
     apply eq_inv_of_mul_eq_one_left
@@ -97,11 +77,10 @@ theorem abVar_period_abscissa_even {L : Type} [Field L] [NumberField L]
     rw [(hΦ.2.1 _).mpr hv, inv_one]
   · exact cEvalAt_inv_eq_of_fixed (Φ (v z)) U x _ hu (abVar_period_mem_punctured hΦ hs hΛ hz)
 
-/-- Genus one supplies the nonsingular short sections and evenness. The remaining input
-identifies an algebraic uniformizer with a first-order analytic parameter. -/
-theorem cmPeriodShortCoordinatesDoublePole_of_genusOne_of_parameterDerivative
-    (hgenus : AbVarFunctionFieldGenusOne) (hd : CMPeriodIdentityParameterDerivative) :
-    CMPeriodShortCoordinatesDoublePole := by
+/-- Genus one supplies nonsingular short coordinates with an even abscissa and an analytic
+double pole on the specified period. -/
+theorem cmPeriodShortCoordinatesDoublePole_of_genusOne
+    (hgenus : AbVarFunctionFieldGenusOne) : CMPeriodShortCoordinatesDoublePole := by
   intro L _ _ E hE k _ _ R _ _ σ τ hτ
   let A := LeafAdopt.abVarEquiv L E
   have hA : A.dim = 1 := by rw [LeafAdopt.abVarEquiv_dim]; exact hE
@@ -110,20 +89,17 @@ theorem cmPeriodShortCoordinatesDoublePole_of_genusOne_of_parameterDerivative
   exact ⟨Λ, Φ, hΦ, s, hs, hΛ, abVarPunctured A, x, y, a, b, hΔ, heq,
     fun z hz => abVar_period_mem_punctured hΦ hs hΛ hz,
     abVar_period_abscissa_even hgenus A hA hΦ hs hΛ P hp x y a b hx hy hreg heq,
-    abVar_evaluatedPole_of_parameterDerivative hd A hA hΦ hs hΛ P hp x hx⟩
+    abVar_evaluatedPole_of_order A hΦ hs hΛ P hp x hx⟩
 
-/-- The live row from Fowler's degree statement, the genus comparison and the single local
-derivative comparison on the actual period map. -/
-theorem cmjDegree_of_print_of_genusOne_of_parameterDerivative
-    (hgenus : AbVarFunctionFieldGenusOne) (hd : CMPeriodIdentityParameterDerivative) :
-    CMjDegreePrint → CMjDegree :=
-  cmjDegree_of_print_of_doublePole
-    (cmPeriodShortCoordinatesDoublePole_of_genusOne_of_parameterDerivative hgenus hd)
+/-- The live row follows from Fowler's degree statement and the genus comparison. -/
+theorem cmjDegree_of_print_of_genusOne
+    (hgenus : AbVarFunctionFieldGenusOne) : CMjDegreePrint → CMjDegree :=
+  cmjDegree_of_print_of_doublePole (cmPeriodShortCoordinatesDoublePole_of_genusOne hgenus)
 
 #print axioms cEvalAt_inv_eq_of_fixed
 #print axioms abVar_period_abscissa_even
-#print axioms cmPeriodShortCoordinatesDoublePole_of_genusOne_of_parameterDerivative
-#print axioms cmjDegree_of_print_of_genusOne_of_parameterDerivative
+#print axioms cmPeriodShortCoordinatesDoublePole_of_genusOne
+#print axioms cmjDegree_of_print_of_genusOne
 
 end
 
