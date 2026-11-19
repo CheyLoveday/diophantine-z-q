@@ -14,3 +14,8 @@
 - **VERIFIED (Lean):** `abVar_identityPoleSpaces_of_genusOne` gives every positive dimension at that place and a function of each exact pole order at least two, assuming the named comparison `AbVarFunctionFieldGenusOne`. All nine theorem checks in `axioms-output.txt` list only the three standard axioms.
 - **SPECULATIVE (size):** To prove the named equality, compare an invariant differential with Tau Ceti's Weil differential divisor, or compare the local ramification indices of multiplication by two with the scheme's étale condition and apply Tau Ceti's Hurwitz formula. Each route needs an all-places comparison, beyond the identity-stalk calculation checked here.
 - **VERIFIED (dry run):** The copied autofold spec reports strict and strictest 4/25 → 5/24 on 29 rows with a placeholder for the missing provider. The counts actually remain 4/25 in both classifications.
+
+## Row check and stop
+
+- **VERIFIED (Lean):** The row-only `#discharges` scan used the exact live type of `OpenResearchLeaves66.cmjDegree`. It still finds `cmjDegree_of_print_of_doublePole` with `CMPeriodShortCoordinatesDoublePole` and `CMjDegreePrint` as premises. No new theorem matches the row. The full entry point would bring in imports outside the task's scope.
+- **VERIFIED (scope):** The stop is at `AbVarFunctionFieldGenusOne`. The short cubic and the analytic local-parameter comparison are unproved. No existing Lean statement or fold was changed.
