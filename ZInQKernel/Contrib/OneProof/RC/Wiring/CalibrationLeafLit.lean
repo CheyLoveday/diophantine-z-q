@@ -16,7 +16,7 @@ model (`diskTie_of_finite_cohomology`, with the canonical reductions proved) and
 central Kummer duality `integralCentralKummerDuality_of_literature_with_finiteness`.
 
 * `CalibrationBookProps`: the nine book statements, each a Lean proposition with its source
-  (PRINT; no inhabitant is supplied):
+  (PRINT and GLUE as rated at each field; no inhabitant is supplied):
   Milne, *Arithmetic Duality Theorems*, 2nd ed., I.3.4 (with 3.2, 3.5), I.2.3 (twice: the finite
   local duality and its higher-degree part), I.2.1 (last sentence), I.4.15, I.4.10(c) and I.2.3
   (cohomological dimension two); Nekovář, *Selmer complexes*, 5.4.1 and 5.4.3(ii).
@@ -35,17 +35,23 @@ central Kummer duality `integralCentralKummerDuality_of_literature_with_finitene
   PROVED: `CalibrationInputsLit.toHK2`, `CalibrationInputsLit.toH`, `calibrationTarget_of_Lit`;
   `CalibrationModelLit.ofHK2`, `nonempty_modelLit_iff` and `calibrationInputsLit_iff` (a
   `CalibrationModelLit` is exactly a `CalibrationModelHK2` with the named inputs for its Kummer
-  data, the tie being derived);
+  data, the tie being derived; of these inputs `hfinite` follows from the two finiteness
+  statements and `h2`, and given the nine statements the three length identifications are
+  equivalent to the tie, by `DiskTie.of_valuation_eq` and `DiskTie.determined`, so the literature
+  form amounts to the nine statements and the RC53 form with `h2`, `hK`, `finite2` and `rank_one`
+  at every address; that reduced equivalence is not stated in Lean here);
   `calibrationInputsLit_of_noAddress` (non-vacuity in the degenerate case).
 
 **The human-review boundary.**
 * H1, the faithfulness of the nine formulations: each Lean proposition is meant to state the
   cited printed result for the objects named (finite discrete modules, elliptic curves over local
-  fields, finite free two-adic coefficients); the quotations and page locators are in the
-  docstrings of the definitions (`MilneLocalDualityPrint`, `MilneFiniteLocalDualityPrint`,
-  `MilneFiniteDegreeBoundPrint`, `MilneLocalFiniteness`, `MilneGlobalFiniteness`,
-  `MilneGlobalDimensionTwo`, `MilneLocalDimensionTwo`, `NekovarIntegralCompactLocality`,
-  `NekovarIntegralGlobalDuality`). That they say what the books say is a human check.
+  fields, finite free two-adic coefficients). Verbatim quotations are at
+  `MilneLocalDualityPrint` and `MilneFiniteLocalDualityPrint`, each joined with an
+  identification; `MilneLocalFiniteness` and `MilneGlobalFiniteness` paraphrase single
+  statements; `MilneFiniteDegreeBoundPrint`, `MilneGlobalDimensionTwo`, `MilneLocalDimensionTwo`,
+  `NekovarIntegralCompactLocality` and `NekovarIntegralGlobalDuality` are readings or joins. The
+  page locators are in the docstrings of the definitions. That they say what the books say is a
+  human check.
 * H2, the supporting definitions: continuous cochains, the compact Kummer complex of the central
   twist (`compactCentralComplex`, `tateKummerSelData`), the twist model `twistK`, the Kummer
   local conditions, the finite-level Kummer Selmer data `centralKummerSelData`, the retained
@@ -55,6 +61,10 @@ central Kummer duality `integralCentralKummerDuality_of_literature_with_finitene
   identification, the coordinate transfer, the free coefficients, the arithmetic orders, the
   rank one, the disk-length identification and the non-Kummer fields of the calibration) are what
   the manuscript supplies for Proposition `ex:arith-central-calibration` is a reading of the paper.
+  Only the disk part of the Kummer valuation is tied to the genuine Kummer complex of the address
+  (through the disk-length identification and the arithmetic orders); the free coefficients
+  `aP`, `bP` with the bare valuation equations `haP`, `hbP`, `hu₀` carry the `2(j_rc + v₂L + v₂m)`
+  part of the Kummer valuation, and remain conclusion-shaped.
 -/
 
 noncomputable section
@@ -83,38 +93,52 @@ attribute [local instance] Nat.fact_prime_two
 
 /-! **The nine book statements** -/
 
-/-- **The nine cited book statements of the integral central Kummer duality** (PRINT; tex
-3413–3498, 4005–4018, 4385–4451). Each field is a Lean proposition whose docstring at its
-definition quotes the printed statement; none is given an inhabitant here (the human-review
-boundary H1 of the module docstring). Kind: definition (PRINT inputs). -/
+/-- **The nine cited book statements of the integral central Kummer duality** (PRINT and GLUE, as
+rated at each field; tex 3413–3498, 4005–4018, 4385–4451). Each field is a Lean proposition citing
+a printed statement: verbatim quotations at `MilneLocalDualityPrint` and
+`MilneFiniteLocalDualityPrint` (both joined with an identification — the diagrams of I.3.2, I.3.5
+and I.3.3, resp. the Weil self-duality of `B[n]` — so PRINT + GLUE); `MilneLocalFiniteness` and
+`MilneGlobalFiniteness` paraphrase single statements (I.2.1, I.4.15); `MilneFiniteDegreeBoundPrint`,
+`MilneLocalDimensionTwo` and `MilneGlobalDimensionTwo` are readings of I.2.3 and I.4.10(c) (GLUE);
+`NekovarIntegralCompactLocality` and `NekovarIntegralGlobalDuality` join 5.4.1 / 5.4.3(ii) with
+5.1, 5.2.1, 5.3.1 and 2.4.4–2.7 and transport them to the tree's cones and bounded finite free
+models (GLUE). None is given an inhabitant here (the human-review boundary H1).
+Kind: definition (PRINT and GLUE inputs). -/
 structure CalibrationBookProps : Prop where
-  /-- PRINT, Milne, *Arithmetic Duality Theorems*, 2nd ed., I.3.4 (p. 43), with the diagram of
-  the proof of I.3.2 (p. 42) and I.3.5 (p. 44): local Tate duality for an elliptic curve over a
-  local field of characteristic zero, compatible with the Weil-cup pairings. -/
+  /-- PRINT + GLUE, Milne, *Arithmetic Duality Theorems*, 2nd ed., I.3.4 (p. 43), joined with the
+  diagram of the proof of I.3.2 (p. 42), I.3.5 (p. 44) and I.3.3 (p. 41), with a sign and
+  polarization choice: local Tate duality for an elliptic curve over a local field of
+  characteristic zero, compatible with the Weil-cup pairings. -/
   milneLocalDuality : ZInQ.Contrib.RC53Assist.DerivedKummer.MilneLocalDualityPrint
-  /-- PRINT, Milne, I.2.3 (p. 28): finite local duality for `B[n]`, the degree-one perfect
-  pairing and the degree-two isomorphism. -/
+  /-- PRINT + GLUE, Milne, I.2.3 (p. 28), with the Weil identification `B[n]^D ≅ B[n]`: finite
+  local duality for `B[n]`, the degree-one perfect pairing and the degree-two isomorphism. -/
   milneFiniteLocalDuality : ZInQ.Contrib.RC53Assist.DerivedKummer.MilneFiniteLocalDualityPrint
-  /-- PRINT, Milne, I.2.3 (p. 28), its finite higher-degree part, for the two coefficient
-  families used. -/
+  /-- GLUE (reading of Milne, I.2.3, p. 28, `r ≥ 3`): its finite higher-degree part, for the two
+  coefficient families used. -/
   milneFiniteDegreeBound :
     ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound.MilneFiniteDegreeBoundPrint
-  /-- PRINT, Milne, I.2.1, last sentence (p. 27; the manuscript cites I.2.3): finiteness of local
-  cohomology of finite discrete modules. -/
+  /-- GLUE (paraphrase of a single statement, PRINT once quoted verbatim at the definition),
+  Milne, I.2.1, last sentence (p. 27; the manuscript cites I.2.3): finiteness of local cohomology
+  of finite discrete modules. -/
   milneLocalFiniteness : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness
-  /-- PRINT, Milne, I.4.15 (p. 62; the manuscript cites I.4.10): finiteness of `H^n(G_{K,S}, M)`
-  for finite discrete `M`. -/
+  /-- GLUE (paraphrase of a single statement, PRINT once quoted verbatim at the definition),
+  Milne, I.4.15 (p. 62; the manuscript cites I.4.10): finiteness of `H^n(G_{K,S}, M)` for finite
+  discrete `M`. -/
   milneGlobalFiniteness : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness
-  /-- PRINT, Milne, I.4.10(c) (p. 57), without real places: no global cohomology above degree
-  two. -/
+  /-- GLUE (reading of Milne, I.4.10(c), p. 57, without real places): no global cohomology above
+  degree two. -/
   milneGlobalDimensionTwo : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo
-  /-- PRINT, Milne, I.2.3 (p. 28): no local cohomology above degree two. -/
+  /-- GLUE (reading of Milne, I.2.3, p. 28, cohomological dimension two in characteristic zero):
+  no local cohomology above degree two; the constant of the calibration shape, by full name, not
+  its namesake in the residual bounds. -/
   milneLocalDimensionTwo : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo
-  /-- PRINT, Nekovář, *Selmer complexes*, 5.4.1: the top cohomology of the compact cochains with
-  general coefficients and its finite-place localization. -/
+  /-- GLUE (reading of Nekovář, *Selmer complexes*, 5.4.1, pp. 125–126, joined with 5.1.3–5.1.5,
+  5.2.1 and 5.3.1 and transported to the tree's compact cone): the top cohomology of the compact
+  cochains with general coefficients and its finite-place localization. -/
   nekovarCompactLocality : ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralCompactLocality
-  /-- PRINT, Nekovář, *Selmer complexes*, 5.4.3(ii) (p. 127), global form over `ℤ₂`: the traced
-  global cup adjoint is a quasi-isomorphism on bounded finite free models. -/
+  /-- GLUE (reading of Nekovář, *Selmer complexes*, 5.4.3(ii), p. 127, with 5.1, 5.4.1–5.4.2 and
+  2.4.4–2.7; unit and model invariance), global form over `ℤ₂`: the traced global cup adjoint is
+  a quasi-isomorphism on bounded finite free models. -/
   nekovarGlobalDuality : ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralGlobalDuality
 
 /-! **The order tie from the literature** -/
@@ -216,7 +240,9 @@ and in its place the inputs of `diskTie_of_literature` for the address's genuine
 generation, the places above `2`, no real places, finite `2`-primary torsion of the central twist,
 rank one of the integral central first cohomology) and the identification of the lengths of the
 three disks of the Knudsen–Mumford identification with those of the constructed integral disks
-(GLUE). Kind: definition (inputs). -/
+(GLUE; given the nine statements and the named inputs it is equivalent to the RC53 form's order
+tie `DiskTie`, by `DiskTie.of_valuation_eq` and `DiskTie.determined`). Kind: definition
+(inputs). -/
 structure KummerCoordinateBlockLit (K : Type) [Field K] [NumberField K] (E₀ : WeierstrassCurve ℚ)
     (hZ : ℤ) {n : ℕ} (DK : Matrix (Fin n) (Fin n) (PowerSeries ℚ_[2]))
     (zK wK : Fin n → PowerSeries ℚ_[2]) (j vL m : ℤ) (tA shaA : ℕ) : Type 1 where
@@ -273,17 +299,25 @@ structure KummerCoordinateBlockLit (K : Type) [Field K] [NumberField K] (E₀ : 
   /-- the genuine orders are those of the actual torsion and `Ш` -/
   arith : DiskArith G tA shaA
   /-- finite generation of the integral compact central cohomology (it follows from the two
-  finiteness prints, `centralCohomologyFinite`; a proposition, so its proof is irrelevant) -/
+  finiteness statements and `h2`, `centralCohomologyFinite`; a proposition, so its proof is
+  irrelevant) -/
   hfinite : ∀ n : ℤ, Module.Finite ℤ_[2] ((compactCentralComplex G).homology n)
-  /-- the support contains the places above `2` -/
+  /-- the support contains the places above `2` (implied by the full two-power torsion through
+  the Weil pairing, `μ_{2^∞} ⊆ K_S`; not formalized) -/
   h2 : ∀ v : HeightOneSpectrum (𝓞 K), (2 : 𝓞 K) ∈ v.asIdeal → v ∈ G.S
-  /-- `K` has no real places -/
+  /-- `K` has no real places (for `K = ℚ(√k)` equivalent to `k < 0`, derivable from the model's
+  quadratic data; not derived here) -/
   hK : IsTotallyComplex K
   /-- the `2`-primary torsion of the central twist over `K` is finite (for any decidable equality
   on `K`, on which the group law depends only through its proofs) -/
   finite2 : ∀ [DecidableEq K],
     Finite (AddCommGroup.primaryComponent (centralCurve G).toAffine.Point 2)
-  /-- the integral central first cohomology has rank one (`s₂(E^{(h)}/K) = 1`) -/
+  /-- the integral central first cohomology has rank one (`s₂(E^{(h)}/K) = 1`; at every covered
+  address of either sign of `h_x` it holds by Gross–Zagier–Kolyvagin and the finiteness of `Ш`,
+  tex 4006–4021, not formalized; the in-tree discharge `centralRankOne_of_arithmetic_pos` covers
+  `h_x > 0` only, and Lean's admissible families do have `h_x < 0` (`qstar 3 = -3`) unless
+  `D.prepared` excludes them; the text's families have one real sign, `ε(c) = 1`, tex 1864–1869,
+  so `h_x > 0`) -/
   rank_one : Module.finrank ℤ_[2] ((compactCentralComplex G).homology 1) = 1
   /-- the degree-one disk has the length of the constructed integral disk -/
   hval₁ : x₁.valuation = (centralDiskMatrix G hfinite 1).det.valuation
@@ -564,8 +598,10 @@ def CalibrationModelLit.ofHK2 (M : CalibrationModelHK2 D vL G₀ Fam x)
       hval₃ }
 
 /-- **A literature model is exactly an RC53 model with the named inputs for its Kummer data**
-(given the nine statements): the order tie of the RC53 model is derived, and nothing else
-changes. Kind: PROVED. -/
+(given the nine statements): the order tie of the RC53 model is derived. Of the named inputs on
+the right, `hfinite` follows from the two finiteness statements and `h2`, and the three length
+identifications are equivalent to the tie (`DiskTie.of_valuation_eq`, `DiskTie.determined`).
+Kind: PROVED. -/
 theorem nonempty_modelLit_iff (B : CalibrationBookProps) :
     Nonempty (CalibrationModelLit D vL G₀ Fam x) ↔
       ∃ M : CalibrationModelHK2 D vL G₀ Fam x,
@@ -588,7 +624,8 @@ theorem nonempty_modelLit_iff (B : CalibrationBookProps) :
     exact ⟨CalibrationModelLit.ofHK2 M hfinite h2 hK finite2 rank_one hval₁ hval₂ hval₃⟩
 
 /-- **The calibration leaf with its duality input from the literature** ((4.6), tex 3987–4141):
-the nine book statements (`CalibrationBookProps`; PRINT) and, as in `CalibrationInputsH`, constants
+the nine book statements (`CalibrationBookProps`; PRINT and GLUE as rated at each field) and, as
+in `CalibrationInputsH`, constants
 `vL ≥ 0`, `G₀` before the families and at every address of a final family with
 `ord L(E^{(h_x)}) = 1` and `ord L(E^{(h_x k)}) = 0` a `CalibrationModelLit`. Kind: definition. -/
 def CalibrationInputsLit (D : RCData ℓ) : Prop :=

@@ -9,9 +9,11 @@ import ZInQKernel.Contrib.RC53Assist.RetainedAssembly.SupportChange.SeveralPlace
 
 Proposition `ex:limits-uniform-lower-bound`, height-one regularity (tex 4976–5200): "use the
 actual primitive scalar Selmer complex over `R = Λ_𝔭`" (tex 4976–4980). The configuration family's
-actual fibre is not a free choice: it is the specialization at `𝔭` of the retained inner limit
-(tex 4385–4451) of the address's actual stage family, whose coefficient modules are
-`M_i = (T₂E ⊗ A_i)(χ_{h_x} Ψ_i)` over `K = ℚ(√k)` (tex 2723–2741), with the actual Kummer
+actual fibre is pinned: it is homotopy equivalent to the specialization at `𝔭` of the retained
+inner limit (tex 4385–4451) of the address's actual stage family, whose coefficient modules are
+`M_i = (T₂E ⊗ A_i)(χ_{h_x} Ψ_i)` over a quadratic `K` containing `√k` (this is `ℚ(√k)` when `k`
+is not a rational square; that `K` is imaginary and split at `2N` is not recorded; tex
+2723–2741), with the actual Kummer
 conditions at the places above `2N` and the full conditions at the active and moving primes (lane
 RC29's table, tex 2748–2760, 3080–3085, 3413–3468), on moving supports (tex 4255–4280).
 
@@ -120,8 +122,15 @@ def placesOf (h : ℤ) : Set (HeightOneSpectrum (𝓞 K)) :=
   (`actualKummerAtS`, read in the enlarged-support coefficient model through `condToMinS`) and the
   full conditions at the active and moving primes (GLUE, tex 2748–2760, 3080–3085).
 At the start no previous derivative label is old. The moving exponents `ξ_i`, the conductor
-primes `r_i` and the new primes `q_i` remain choices, as in the text (Proposition
-`ex:arith-moving-character`). Kind: definition (data and GLUE). -/
+primes `r_i` and the new primes `q_i` remain choices. DEPARTURE: the properties the text requires
+of `Ψ_i` (ramified at `r_i` and surjective on inertia there, tex 2729–2731, 4260–4262;
+`ξ_i(Fr_q) = 1` at the orientations above `Q`, tex 2733–2735, 4275–4277; the same `Ψ_i` for all
+characters of the family, tex 2737) are not recorded; in particular `ξ_i = 1` (`α_i = χ_h`) is
+allowed. DEPARTURE: the moving conductor is one place `r i`, whereas the text's `Ψ_i`, a
+character of the ring class field of conductor the rational prime `r_i` (split in `K`, tex 4258),
+is ramified at both places above it. The family-level form `AddressMovingFamilyR` over
+`FamilyMovingCharacter` (`Wiring/InnerLimitFamilyPin.lean`) records these properties, with the
+moving support containing every place above `r_i`. Kind: definition (data and GLUE). -/
 structure AddressMovingFamily (ℓ : ℕ) (h : ℤ) (W : WeierstrassCurve K) [W.IsElliptic] where
   /-- The moving stage family. -/
   Fam : MovingStageFamily W
@@ -171,8 +180,8 @@ derivative labels `labels i` (outside the address's old support), whose characte
 address's characters inflated (`characterAfterSupport`), and whose old conditions at the address's
 old places are the address's: the actual Kummer conditions above `2N` (`actualKummerAtS`, through
 `condToMinS`) and the full conditions at the active and moving primes. The derivative conditions
-at the previous labels (the finite or the singular side chosen at the earlier switches, tex
-5055–5065) are not pinned. Kind: definition (data and GLUE). -/
+at the previous labels (in the text the singular side: "all earlier singular conditions", tex
+5141–5143, 5168–5170) are not pinned. Kind: definition (data and GLUE). -/
 structure AddressLabelFamily {ℓ : ℕ} {h : ℤ} {W : WeierstrassCurve K} [W.IsElliptic]
     (A : AddressMovingFamily ℓ h W) where
   /-- The moving stage family. -/
@@ -508,7 +517,9 @@ end Pinned
 section Leaf
 
 /-- **The faithful-pin clause at a height-one prime** (tex 4976–5200), for the curve `E_ℓ`, the
-twist `h` (`h = h_x`) and the companion `k` (`K = ℚ(√k)`): a configuration family `Φ` genuine at
+twist `h` (`h = h_x`) and the companion `k` (`K` quadratic containing `√k`, which is `ℚ(√k)`
+when `k` is not a rational square; that `K` is imaginary and split at `2N` is not recorded): a
+configuration family `Φ` genuine at
 `𝔭` (GLUE), the
 field `K` (quadratic, containing `√k`), places `S`, the actual conjugation and the curve
 `W = E_ℓ ⊗ K` with full two-torsion, the address's actual moving stage family `A`, a retained
