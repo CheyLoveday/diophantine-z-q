@@ -15,19 +15,20 @@ Manuscript `diophantine_zq.tex`:
 
 The cochain-level norm identity of this directory (`TransferNorm.lean` … `LocalIdentity.lean`) is
 meaningful at the Shapiro level: a coefficient ring that does not kill the points' division, e.g.
-`ℤ[Δ_f]` (or `A[Δ_f]` before reduction) with the universal character `δ ↦ [δ]`. At the stage ring
+`ℤ[Δ_f]` with the universal character `δ ↦ [δ]` (not `A[Δ_f]` with the manuscript's
+`A = (ℤ/2^m)[t]/t^b`, which also kills `2^m`: the identity can be pushed there after its integral
+proof, but not reproved there from the present transfer hypotheses). At the stage ring
 `A_i` (`2^i = 0`) its transfer hypotheses force the points to vanish. The actual classes over `A_i`
 with `θ = χ_h Ψ_i` are obtained by applying the coefficient map (H20) to the Selmer complexes
 afterwards. This file names that step and proves that the norm identity survives it:
 
 * **`H20CoefficientPush`** (Prop; kind ELLIOT/GLUE: the coefficient push of tex 3203–3215 with
-  its local conditions, tex 3262–3270): for Selmer data `D₁` over the Shapiro-level ring `k₁`
-  (with primitive condition `f₁`, classes `z_R¹`, `z_P¹` and point factor `e₁`) and Selmer data
-  `D₂` over the stage ring `k₂` (with `f₂`, the actual classes `z_R²`, `z_P²` and `e₂ = e_q`),
-  there are additive maps `Φ⁰`, `Φ¹` of the Selmer complexes in degrees `0`, `1` commuting with the
-  differential, semilinear for the coefficient map (`Φ¹(e₁ • x) = e₂ • Φ¹(x)`: for the text,
-  `e₁ = a_q − [σ_q] − [σ_q]⁻¹ ↦ e₂ = a_q − θ(σ_q) − θ(σ_q)⁻¹`), and carrying `z_R¹ ↦ z_R²` and
-  `i₁(z_P¹) ↦ i₂(z_P²)`.
+  its local conditions, tex 3262–3270): a ring homomorphism `φ : k₁ →+* k₂` from the
+  Shapiro-level ring to the stage ring (for the text, `[δ] ↦ θ(δ)`), `φ`-semilinear maps `Φ⁰`, `Φ¹`
+  of the Selmer complexes in degrees `0`, `1` commuting with the differential, the point factors
+  related by `e₂ = φ(e₁)` (for the text, `a_q − [σ_q] − [σ_q]⁻¹ ↦ a_q − θ(σ_q) − θ(σ_q)⁻¹`, tex
+  3281–3290), and `Φ¹` carrying `z_R¹ ↦ z_R²` and `i₁(z_P¹) ↦ i₂(z_P²)`. (Only degrees `0`, `1`
+  are recorded: those are the degrees the norm identity uses.)
 * **`hzR_of_H20`** (PROVED): the norm identity with retained boundary at the Shapiro level and
   `H20CoefficientPush` give the norm identity with retained boundary at the stage level, boundary
   `Φ⁰(b)`.
@@ -46,14 +47,19 @@ open ZInQ.Manuscript.RC.Wiring
 variable {k₁ k₂ : Type} [CommRing k₁] [CommRing k₂]
 
 /-- **The coefficient push (H20) on Selmer complexes** (Prop; tex 3203–3215, 3262–3270,
-3281–3290; kind ELLIOT/GLUE). See the module docstring. -/
+3281–3290; kind ELLIOT/GLUE). A ring homomorphism `φ : k₁ →+* k₂` (for the text:
+`ℤ[Δ_f] → A_i`, `[δ] ↦ θ(δ)`, `θ = χ_h Ψ_i`) with `e₂ = φ(e₁)`, and `φ`-semilinear maps `Φ⁰`, `Φ¹`
+of the Selmer complexes in degrees `0`, `1` (for the text: Shapiro followed by `v ⊗ [δ] ↦ θ(δ) v`,
+applied to the global cochains and to the local conditions, which survive by tex 3262–3270)
+commuting with the differential and carrying `z_R¹ ↦ z_R²` and `i₁(z_P¹) ↦ i₂(z_P²)`. -/
 def H20CoefficientPush (D₁ : SelData k₁) {U₁ : GCx k₁} (f₁ : GHom U₁ D₁.U)
     (zR₁ : (selCx D₁).X 1) (zP₁ : (selCx (selRestrict D₁ f₁)).X 1) (e₁ : k₁)
     (D₂ : SelData k₂) {U₂ : GCx k₂} (f₂ : GHom U₂ D₂.U)
     (zR₂ : (selCx D₂).X 1) (zP₂ : (selCx (selRestrict D₂ f₂)).X 1) (e₂ : k₂) : Prop :=
-  ∃ (Φ₀ : (selCx D₁).X 0 →+ (selCx D₂).X 0) (Φ₁ : (selCx D₁).X 1 →+ (selCx D₂).X 1),
+  ∃ (φ : k₁ →+* k₂) (Φ₀ : (selCx D₁).X 0 →ₛₗ[φ] (selCx D₂).X 0)
+    (Φ₁ : (selCx D₁).X 1 →ₛₗ[φ] (selCx D₂).X 1),
+    e₂ = φ e₁ ∧
     (∀ b, Φ₁ ((selCx D₁).d 0 1 rfl b) = (selCx D₂).d 0 1 rfl (Φ₀ b)) ∧
-    (∀ x, Φ₁ (e₁ • x) = e₂ • Φ₁ x) ∧
     Φ₁ zR₁ = zR₂ ∧
     Φ₁ ((changeMap D₁ f₁).f 1 1 rfl zP₁) = (changeMap D₂ f₂).f 1 1 rfl zP₂
 
@@ -68,15 +74,15 @@ theorem hzR_of_H20 (D₁ : SelData k₁) {U₁ : GCx k₁} (f₁ : GHom U₁ D�
     (hpush : H20CoefficientPush D₁ f₁ zR₁ zP₁ e₁ D₂ f₂ zR₂ zP₂ e₂) :
     ∃ b, zR₂ = e₂ • (changeMap D₂ f₂).f 1 1 rfl zP₂ + (selCx D₂).d 0 1 rfl b := by
   obtain ⟨b, hb⟩ := h₁
-  obtain ⟨Φ₀, Φ₁, hd, hsm, hR, hP⟩ := hpush
+  obtain ⟨φ, Φ₀, Φ₁, he, hd, hR, hP⟩ := hpush
   refine ⟨Φ₀ b, ?_⟩
-  rw [← hR, hb, map_add, hsm, hP, hd]
+  rw [← hR, hb, map_add, LinearMap.map_smulₛₗ, hP, hd, he]
 
-/-- **Non-vacuity of `H20CoefficientPush`** (Kind: PROVED): the identity push of any Selmer data
-and classes to themselves. -/
+/-- **Non-vacuity of `H20CoefficientPush`** (Kind: PROVED): the identity push (`φ = id`) of any
+Selmer data and classes to themselves. -/
 theorem nonVacuity_H20 (D : SelData k₁) {U : GCx k₁} (f : GHom U D.U) (zR : (selCx D).X 1)
     (zP : (selCx (selRestrict D f)).X 1) (e : k₁) :
     H20CoefficientPush D f zR zP e D f zR zP e :=
-  ⟨AddMonoidHom.id _, AddMonoidHom.id _, fun _ => rfl, fun _ => rfl, rfl, rfl⟩
+  ⟨RingHom.id _, LinearMap.id, LinearMap.id, rfl, fun _ => rfl, rfl, rfl⟩
 
 end ZInQ.Contrib.CloudB3E2.NormCochain
