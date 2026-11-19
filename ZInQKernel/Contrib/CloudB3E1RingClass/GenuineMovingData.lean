@@ -105,7 +105,8 @@ def setupQ (r : ℕ) (j : Fin s) : Additive (setupGal C r) := by
       (primeToIdeal (max r 1) (max_one_ne_zero r) (C.𝔭 j) h))
   else 0
 
-/-- **`qbar r j`**: the Artin class of `𝔭̄_j`. Kind: definition. -/
+/-- **`qbar r j`**: the Artin class of `𝔭̄_j` (`0` when `𝔭̄_j` lies over `r`, never for good `r`).
+Kind: definition. -/
 def setupQbar (r : ℕ) (j : Fin s) : Additive (setupGal C r) := by
   classical
   exact if h : ((max r 1 : ℕ) : 𝓞 K) ∉ (C.𝔭bar j).asIdeal then
