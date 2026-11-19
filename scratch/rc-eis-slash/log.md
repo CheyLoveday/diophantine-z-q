@@ -13,3 +13,6 @@
 - `Mean.lean`: PASS, 4 theorem audits, only allowed axioms. A nontrivial factor makes the sum of the residue weights zero.
 - `Reduction.lean`: PASS, 5 theorem audits, only allowed axioms. One Fourier identification supplies both checks and the exact `BaseForm`.
 - Mathlib documentation issues: sign of the solved `G2_S_transform` display; extra separate constant in the display for `G2_eq_tsum_G2Term`. Neither display is used.
+- `Regroup.lean`: PASS, 6 theorem audits, only allowed axioms. The original order of the two integer sums is preserved during finite residue regrouping.
+- `Fourier.lean`: PASS, 12 theorem audits, only allowed axioms. The common constant is the zero row divided by the nonzero Gauss normalization. Primitivity and even product parity yield `MissingModularity` and `Nonempty (BaseForm E c)`.
+- Final verification: all eight files compiled individually with `lake env lean -j1`; 65/65 audits list only permitted axioms. No warnings or errors on the final checks.
