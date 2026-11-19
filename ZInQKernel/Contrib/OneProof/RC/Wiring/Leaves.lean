@@ -37,6 +37,7 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.CalibrationLeaf3
 import ZInQKernel.Contrib.OneProof.RC.Wiring.StageData
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35H
 import ZInQKernel.Contrib.OneProof.RC.Wiring.GenuineEq35R
+import ZInQKernel.Contrib.OneProof.RC.PrintsAnalytic.ModularNewformPrinted
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate9
 
 /-!
@@ -578,11 +579,33 @@ structure RCLeaves where
   Bump–Friedberg–Hoffstein, Invent. Math. 102 (1990), p. 543; lane RC8). The manuscript uses it
   without citation at tex 2346, 8586–8588, 10025–10026 and 10044–10047. -/
   twistedFE : PrintsAnalytic.TwistedFunctionalEquation
-  /-- Modularity in newform form: every elliptic curve over `ℚ` has a weight-two newform with the
-  same `L`-function (PRINT: BCDT Thm A, author manuscript p. 1, with Introduction condition (2),
-  p. 3; GLUE: Atkin–Lehner/Carayol, the eigenform of level `N(E)` is the newform; tex 1779–1784;
-  lane RC8). -/
-  modularNewform : PrintsAnalytic.ModularNewform
+  /-- Shimura 1973, Theorem 1, pp. 525–526 (PRINT, manuscript bibitem `shimura-factors`; read
+  against the page images, faithful with notes): the coefficient field of a weight-two newform of
+  trivial character on `Γ₀(M)` is a number field, and each of its complex embeddings gives a
+  normalized eigenform of the same level with the embedded coefficients. With the next three
+  fields and `Prints.bcdt` it gives modularity in newform form (`RCLeaves.modularNewform`, tex
+  1779–1784). -/
+  shimuraConjugates : ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Shimura1973ConjugateEigenforms
+  /-- Li 1975, Theorem 5, p. 298 (PRINT, manuscript bibitem `li-newforms`; faithful): strong
+  multiplicity one for weight-two newforms of trivial character — two newforms whose coefficients
+  agree at almost every prime have the same level and are equal. -/
+  liMultiplicityOne : ZInQ.Contrib.RC53Assist.NewformGlueG0.Li1975StrongMultiplicityOneWeightTwo
+  /-- The elliptic curve of a newform with rational coefficients and its Euler factors (PRINT, a
+  joint reading of Shimura 1973, Theorem 1, at rational coefficient field, and Carayol 1986, §0.8
+  Corollaire, p. 411, with the normalization of §§0.4–0.5 and Théorème (A) of §0.7, pp. 409–411;
+  manuscript bibitems `shimura-factors`, `carayol`; faithful with notes: it is not the literal
+  statement of Carayol's corollary alone, and the newform–curve association is erased rather than
+  constructed): such a newform has an elliptic curve over `ℚ` whose local polynomial at every prime
+  is the newform's Euler polynomial. -/
+  carayolEulerFactors :
+    ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Carayol1986RationalNewformEulerFactors
+  /-- Faltings 1983, §5, Korollar 2 (iii ⇒ iv), p. 361, with Satz 3, p. 360 (PRINT, manuscript
+  bibitem `faltings1983`; faithful with notes, in the reading through the minimal Weierstrass local
+  polynomials at the finite places, the standard local-factor dictionary): two elliptic curves over
+  `ℚ` whose local Euler factors agree at almost every prime have the same local factors at every
+  prime. -/
+  faltingsRigidity :
+    ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Faltings1983EulerFactorRigidityQ
   /-- The interface data, given the genus partner `h_*`: chosen by whoever discharges `RCLeaves`
   and constrained only by the leaves (see the module docstring). -/
   data : ∀ ℓ : ℕ, ℤ → WData ℓ
@@ -606,31 +629,45 @@ bound itself is cited at tex 1590–1591 and 6323–6324, for point counts). -/
 theorem RCLeaves.hasse (_L : RCLeaves) : PrintsAnalytic.HasseConvergence :=
   ZInQ.Contrib.CloudB3RC53.Hasse.hasseConvergence_proved
 
+/-- **Modularity in newform form** (PROVED: every elliptic curve over `ℚ` has a weight-two newform
+of trivial nebentypus with the coefficients of `L(E, s)`, from Theorem A of
+Breuil–Conrad–Diamond–Taylor, `Prints.bcdt`, and the four printed corollaries above, through the
+newform of a modular curve: the divisor-level extraction of the newform, the descent of its
+coefficient field to `ℚ` and the comparison of every coefficient are proved;
+`PrintsAnalytic.modularNewform_of_printed`; tex 1779–1784). Formerly the composite field
+`modularNewform` (PRINT BCDT with the GLUE "the eigenform of level `N(E)` is the newform"). -/
+theorem RCLeaves.modularNewform (L : RCLeaves) (P : Prints) : PrintsAnalytic.ModularNewform :=
+  PrintsAnalytic.modularNewform_of_printed P.bcdt L.shimuraConjugates L.liMultiplicityOne
+    L.carayolEulerFactors L.faltingsRigidity
+
 /-- Hoffstein–Luo for elliptic curves (PROVED from the print; lane RC18's `twistDictionary`). -/
-theorem RCLeaves.hl (L : RCLeaves) : Nonvanishing.HoffsteinLuo :=
+theorem RCLeaves.hl (L : RCLeaves) (P : Prints) : Nonvanishing.HoffsteinLuo :=
   Nonvanishing.FromRC8.hoffsteinLuo_of_curve
-    (TwistDictionary.hoffsteinLuoCurve_of_print L.hlPrint L.modularNewform L.hasse)
+    (TwistDictionary.hoffsteinLuoCurve_of_print L.hlPrint (L.modularNewform P) L.hasse)
 
 /-- BFH's twist sign for elliptic curves (PROVED from the twisted functional equation; lane
 RC18's `twistDictionary`; the level of the functional equation is supported on the bad primes by
 lane RC22's `levelSupport_of_modularNewform`). -/
-theorem RCLeaves.twistSign (L : RCLeaves) : Nonvanishing.BFHTwistSign :=
+theorem RCLeaves.twistSign (L : RCLeaves) (P : Prints) : Nonvanishing.BFHTwistSign :=
   Nonvanishing.FromRC8.bfhTwistSign_of_curve
-    (TwistDictionary.twistedRootNumberCurve_of_print L.twistedFE L.modularNewform L.hasse)
-    (GlueSweep.Ana.levelSupport_of_modularNewform L.modularNewform)
+    (TwistDictionary.twistedRootNumberCurve_of_print L.twistedFE (L.modularNewform P) L.hasse)
+    (GlueSweep.Ana.levelSupport_of_modularNewform (L.modularNewform P))
 
-/-- The Artin factorization of the ring-class `L`-functions (PROVED from the `modularNewform` print
-alone; batch 3's `artinFactorization_unconditional`: Hasse's bound is proved, and the factorization's
+/-- The Artin factorization of the ring-class `L`-functions (PROVED from modularity in newform form
+alone, `RCLeaves.modularNewform`; batch 3's `artinFactorization_unconditional`: Hasse's bound is
+proved, and the factorization's
 own hypothesis splits every level prime in `K`, so the inert primes are good and the proved good
-case of the inert clause applies; tex 2411–2440). (3.4) thus rests on `modularNewform` alone, with
-no local GLUE. -/
-theorem RCLeaves.artin (L : RCLeaves) : ZInQ.Contrib.CloudB3RC53.GenusOdd.ArtinFactorization :=
-  ZInQ.Contrib.CloudB3RC53.Hasse.artinFactorization_unconditional L.modularNewform
+case of the inert clause applies; tex 2411–2440). (3.4) thus rests on Theorem A and the four
+printed corollaries, with no local GLUE. -/
+theorem RCLeaves.artin (L : RCLeaves) (P : Prints) :
+    ZInQ.Contrib.CloudB3RC53.GenusOdd.ArtinFactorization :=
+  ZInQ.Contrib.CloudB3RC53.Hasse.artinFactorization_unconditional (L.modularNewform P)
 
 /-- Every elliptic curve over `ℚ` has a root number (PROVED from modularity in newform form and
 Hasse's convergence; lane RC8's `exists_rootNumber`). -/
-theorem RCLeaves.rootNumberExists (L : RCLeaves) : Nonvanishing.FromRC8.RootNumberExists :=
-  fun _ hA => PrintsAnalytic.exists_rootNumber L.modularNewform L.hasse hA
+theorem RCLeaves.rootNumberExists (L : RCLeaves) (P : Prints) :
+    Nonvanishing.FromRC8.RootNumberExists :=
+  fun _ hA => PrintsAnalytic.exists_rootNumber (L.modularNewform P) L.hasse hA
 
 /-- **The thirteen steps of the skeleton from the leaves** (PROVED). -/
 theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm ℓ)
@@ -642,24 +679,24 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
   -- `M_θ → ∞` along the ultrafilter (batch 3's `stagesAdvance_of_nonprincipal`)
   have hstages : Tendsto W₁.Mθ (W₁.stages : Filter ℕ) atTop :=
     ZInQ.Contrib.CloudB3RC53.GenusOdd.stagesAdvance_of_nonprincipal _ hnonp _ hidx
-  have hHL := L.hl
-  have hTS := L.twistSign
+  have hHL := (L.hl P)
+  have hTS := (L.twistSign P)
   obtain ⟨Io⟩ := hp.odd
   have I := Io.toGenusOddInstance
   have hL : LstarTarget W₁.toRCData :=
-    lstarTarget_of hadm.1 L.rootNumberExists (lstarNormalized_of_instance I)
+    lstarTarget_of hadm.1 (L.rootNumberExists P) (lstarNormalized_of_instance I)
   have hvis : VisibilityTarget W₁.toRCData :=
-    visibilityTarget_of_inputs _ (visibilityInputs_of_oddInstance P L.artin Io hglue)
+    visibilityTarget_of_inputs _ (visibilityInputs_of_oddInstance P (L.artin P) Io hglue)
   obtain ⟨A₀, haux⟩ := auxFactor_of_inputs W₁ hsupp hp.aux_factor
   obtain ⟨C₁, h33b⟩ := evenUpper33b_of_RC11Inputs W₁ P hadm.1 hL (lstarNormalized_of_instance I)
     hp.even_upper
   have hF3 : F3Target W₁ := f3Target_of W₁ P
     ZInQ.Contrib.CloudB3RC53.KummerCorankZero.kummerCorankZero_proof hHL hTS
-    L.rootNumberExists hadm.1 hL hsupp hp.prepared_spec haux h33b
+    (L.rootNumberExists P) hadm.1 hL hsupp hp.prepared_spec haux h33b
   -- the attained odd minimum
   obtain ⟨Cdet, hCdet⟩ := hvis
   obtain ⟨A, CE, h33⟩ := hF3
-  obtain ⟨Cper, h34, h34k⟩ := gz34Target_of_genusOdd P L.artin L.rootNumberExists I
+  obtain ⟨Cper, h34, h34k⟩ := gz34Target_of_genusOdd P (L.artin P) (L.rootNumberExists P) I
   have h35 : Eq35Target W₁ :=
     eq35Target_of_inputsAR W₁ hp.eq35
   obtain ⟨CR, h35A⟩ := h35 A
@@ -687,7 +724,7 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
   have hbz : BaseZeroTarget W₂.toRCData :=
     baseZeroTarget_of_LF P (commonCoordinateInputsLF_of_NF hq.common_coordinate)
       (primRegularityInputs_of_HPK _ hq.prim_regular)
-      (baseZeroLeafInputs_of_text L.artin hq.base_zero)
+      (baseZeroLeafInputs_of_text (L.artin P) hq.base_zero)
   exact rcSteps_of_targets _ hL₂ hG₂ hvis₂ hstages hone
     (companionTarget_of hL₂ hq.companion)
     ⟨Cper, h34k⟩ hfam (calibrationTarget_of_H P hadm.1 hq.calibration) h47 hheight hclear hbz
@@ -698,7 +735,7 @@ theorem rcSteps_of_leaves (P : Prints) (L : RCLeaves) {ℓ : ℕ} (hadm : Adm �
 theorem branchPackageNode_of_leaves (P : Prints) (L : RCLeaves) : BranchPackageNode := by
   intro ℓ hadm hSel
   have hw := rootNumberNode_proof P ℓ hadm hSel
-  obtain ⟨h, hG⟩ := exists_genusPartner L.hl L.twistSign P.bcdt hadm.1 hw
+  obtain ⟨h, hG⟩ := exists_genusPartner (L.hl P) (L.twistSign P) P.bcdt hadm.1 hw
   obtain ⟨δ, S⟩ := rcSteps_of_leaves P L hadm hSel hG
   by_cases hU : ((L.data ℓ h).withChoices h δ).OddEmptyUnit
   · exact Or.inl (rc_of_oddEmptyUnit _ S hU)
