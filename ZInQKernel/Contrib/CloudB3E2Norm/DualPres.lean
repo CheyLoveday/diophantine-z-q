@@ -44,7 +44,8 @@ literally at a finite stage ring. It is therefore the one named input here:
   `j z_S = e z_{P⊥} + d b` for `z_S = ψ_{T ∪ {p}}(z'_R)`, `z_{P⊥} = ψ_T(z'_P)` — the field
   `hlift` of lane RC32's `StepRetention`.
 
-Kinds: definitions, GLUE (`OrthComparisonInverse`), PROVED.
+Kinds: definitions, GLUE (`OrthComparisonInverse`; uninhabited at a finite stage ring, see its
+docstring), PROVED.
 -/
 
 noncomputable section
@@ -326,7 +327,17 @@ orthogonal condition to the transported condition is a quasi-isomorphism only at
 where the full local complexes at the active and moving primes are acyclic (tex 3736–3753): its
 inverse is taken in the derived category there, so it does not exist literally at a finite stage
 ring. This structure is that inverse, as the one named input; `hright` already fails for `ψ = 0`
-unless every degree-one cocycle of `C'_T` is a coboundary. Kind: definition (GLUE). -/
+unless every degree-one cocycle of `C'_T` is a coboundary. CAVEAT: at a finite stage ring with
+`ι ≠ ∅` and a nonzero `G_{K_w}`-invariant at a place `w = place (p, false)`, it is uninhabited for
+any `φo` (lane E1's `not_orthComparisonInverse`, `CloudB3E1Torsion/OrthNoInverse.lean`, from
+`no_H1_inverse`; on lane E1's branch, not yet in this tree). Results taking it
+(`hlift_of_transport`, `hlift_stepRetention`, `hlift_actual`) are conditional on an unsatisfiable
+input there, and nothing in the headline uses them. The text's
+inverse lives after the inner limit, over the generic coefficient ring (`Frac Λ`, or `𝒪[G]` with
+`𝒪` the completion of `ℤ₂[[t]]_(2)`), with the retained old-place lattice comparison
+(tex 3704–3790); a localized restatement `OrthComparisonInverseLoc` is planned for lane RC32's
+round 17. Of the fields only `ψ`, `hd` and `hsw` are used (`hlift_of_transport`).
+Kind: definition (GLUE; not satisfiable at a finite stage ring). -/
 structure OrthComparisonInverse where
   /-- the comparison of the old orthogonal conditions with the transported ones -/
   φo : ∀ v₀ : Places K S₀, GHom (Δ'.U v₀) (Δ''.U v₀)
@@ -382,7 +393,9 @@ theorem jmap_d (T : Finset ι) (p : ι)
     ((changeMap (dsuppDataS K S₀ S k M Δ' place X EU T)
       (dfS K S₀ S k M Δ' place X EU T p)).comm 0 1 0 1 rfl rfl rfl rfl y)
 
-/-- **The paired strict lift `j z_S = e z_{P⊥} + d b`** (PROVED; tex 4169–4171): from the
+/-- **The paired strict lift `j z_S = e z_{P⊥} + d b`** (PROVED, conditional on `Ψ`, which is
+uninhabited at a finite stage ring: see the caveat at `OrthComparisonInverse`; tex 4169–4171): from
+the
 transported norm identity `z'_R = e · i'(z'_P) + d b'` in `C'_{T ∪ {p}}` and the inverse `Ψ` of
 the orthogonal comparison, with `z_S = ψ_{T ∪ {p}}(z'_R)`, `z_{P⊥} = ψ_T(z'_P)` and
 `b = j(ψ_{T ∪ {p}}(b'))`. -/
