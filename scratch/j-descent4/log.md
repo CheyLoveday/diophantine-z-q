@@ -7,3 +7,5 @@
 - **SPECULATIVE (size):** Choose the étale route. The local comparison should fit in a small pair of modules using the existing place-centering and unramified ideal interfaces. The remaining degree inequality should need only a nontrivial kernel point or the existing geometric degree calculation, without its numerical value. The differential route would need a new order-preserving comparison with the repartition dual.
 
 - **VERIFIED (Lean):** `abVar_exists_placeCenter` and `abVar_exists_placeOf_closedPoint` compile and depend only on `propext`, `Classical.choice`, and `Quot.sound`.
+
+- **VERIFIED (Lean):** `JDescent4Places.lean` compiles with `lake env lean`. The stalk square, constants tower, and `abVar_ramificationIdx_eq_one_of_finite_unramified` all have the three standard axioms only. The restriction is identified by containment of valuation rings. The unramified local map sends the target maximal ideal onto the source maximal ideal after extension, which takes a normalized uniformizer to a normalized uniformizer.
