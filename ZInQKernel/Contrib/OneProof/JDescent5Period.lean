@@ -175,15 +175,15 @@ private theorem deriv_ne_zero_of_eventual_doubling {f g : ℂ → ℂ}
 
 private theorem cEvalAt_doubling_pullback {L : Type} [Field L] (A : PkgI3.AbVar L)
     {σ : L →+* ℂ} (p : CPts A σ) (V W : A.X.left.Opens)
-    (hWV : W ≤ (abVarDouble A).left ⁻¹ᵁ V) (t : Γ(A.X.left, V))
+    (hWV : W ≤ (abVarDoubleOver A).left ⁻¹ᵁ V) (t : Γ(A.X.left, V))
     (hp : ⊤ ≤ p.left ⁻¹ᵁ W) :
-    cEvalAt (p ≫ abVarDouble A) V t =
-      cEvalAt p W ((abVarDouble A).left.appLE V W hWV t) := by
-  have hq : ⊤ ≤ (p ≫ abVarDouble A).left ⁻¹ᵁ V := hp.trans (p.left.preimage_mono hWV)
+    cEvalAt (p ≫ abVarDoubleOver A) V t =
+      cEvalAt p W ((abVarDoubleOver A).left.appLE V W hWV t) := by
+  have hq : ⊤ ≤ (p ≫ abVarDoubleOver A).left ⁻¹ᵁ V := hp.trans (p.left.preimage_mono hWV)
   simp only [cEvalAt, dite_eq_left hp, dite_eq_left hq]
-  have he := Scheme.Hom.appLE_comp_appLE p.left (abVarDouble A).left V W ⊤ hWV hp
-  have he' : (abVarDouble A).left.appLE V W hWV ≫ p.left.appLE W ⊤ hp =
-      (p ≫ abVarDouble A).left.appLE V ⊤ hq := he
+  have he := Scheme.Hom.appLE_comp_appLE p.left (abVarDoubleOver A).left V W ⊤ hWV hp
+  have he' : (abVarDoubleOver A).left.appLE V W hWV ≫ p.left.appLE W ⊤ hp =
+      (p ≫ abVarDoubleOver A).left.appLE V ⊤ hq := he
   exact (congrArg (fun h : Γ(A.X.left, V) ⟶ Γ(Spec (CommRingCat.of ℂ), ⊤) =>
     (Scheme.ΓSpecIso (CommRingCat.of ℂ)).hom (h t)) he').symm
 
@@ -201,7 +201,7 @@ private theorem abVar_period_parameter_derivative {L : Type} [Field L]
     deriv (fun z => cEvalAt (Φ (fun _ => s * z)) V t) 0 ≠ 0 := by
   let X := A.X.left
   let O := abVarIdentity A
-  let d := (abVarDouble A).left
+  let d := (abVarDoubleOver A).left
   let t₀ := X.presheaf.germ V O hV t
   let F := AbVarFunctionField A
   have : Nonempty V := ⟨⟨O, hV⟩⟩
@@ -266,10 +266,10 @@ private theorem abVar_period_parameter_derivative {L : Type} [Field L]
   refine deriv_ne_zero_of_eventual_doubling (han V hV t) (han W hW gw).continuousAt
     (cEvalAt_via_germ_nonunit (ev 0) hsupp V hV t htNU) hne ?_
   filter_upwards [(hopen W).mem_nhds (hmem W hW)] with z (hz : v z ∈ cDom Φ W)
-  have hdoub : ev z ≫ abVarDouble A = ev (2 * z) := by
+  have hdoub : ev z ≫ abVarDoubleOver A = ev (2 * z) := by
     have hh : v (2 * z) = v z + v z := by ext i; simp only [v, Pi.add_apply]; ring
-    change ev z ≫ abVarDouble A = Φ (v (2 * z))
-    rw [hh, hΦ.1, abVarDouble, MonObj.comp_pow, Category.comp_id, pow_two]
+    change ev z ≫ abVarDoubleOver A = Φ (v (2 * z))
+    rw [hh, hΦ.1, abVarDoubleOver, MonObj.comp_pow, Category.comp_id, pow_two]
   have he := cEvalAt_doubling_pullback A (ev z) V W hWd t hz
   rw [hdoub] at he
   change cEvalAt (ev (2 * z)) V t = cEvalAt (ev z) W td at he

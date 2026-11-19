@@ -15,13 +15,13 @@ set_option maxHeartbeats 1200000
 set_option backward.isDefEq.respectTransparency.types false
 set_option backward.isDefEq.respectTransparency false
 
-def abVarDouble {L : Type} [Field L] (A : PkgI3.AbVar L) : A.X ⟶ A.X :=
+def abVarDoubleOver {L : Type} [Field L] (A : PkgI3.AbVar L) : A.X ⟶ A.X :=
   (𝟙 A.X) ^ (2 : ℕ)
 
 theorem abVarDouble_fix_identity {L : Type} [Field L] (A : PkgI3.AbVar L) :
-    (abVarDouble A).left (abVarIdentity A) = abVarIdentity A := by
-  have h : η[A.X] ≫ abVarDouble A = η[A.X] := by
-    rw [abVarDouble, MonObj.comp_pow, Category.comp_id, MonObj.one_eq_one, one_pow]
+    (abVarDoubleOver A).left (abVarIdentity A) = abVarIdentity A := by
+  have h : η[A.X] ≫ abVarDoubleOver A = η[A.X] := by
+    rw [abVarDoubleOver, MonObj.comp_pow, Category.comp_id, MonObj.one_eq_one, one_pow]
   exact congrArg (fun f : 𝟙_ (Over (Spec (CommRingCat.of L))) ⟶ A.X =>
     f.left (IsLocalRing.closedPoint L)) h
 
@@ -132,14 +132,14 @@ theorem abVar_double_parameter_mod_square {L : Type} [Field L] (A : PkgI3.AbVar 
     (ht : P.ord (algebraMap (A.X.left.presheaf.stalk (abVarIdentity A))
       (AbVarFunctionField A) t) = 1)
     (ht0 : A.X.left.residue (abVarIdentity A) t = 0) :
-    ∃ u, fixedStalkMap (abVarDouble A).left (abVarIdentity A) (abVarDouble_fix_identity A) t =
+    ∃ u, fixedStalkMap (abVarDoubleOver A).left (abVarIdentity A) (abVarDouble_fix_identity A) t =
       2 * t + t ^ 2 * u := by
   let G := A.X
   let X := G.left
   let O := abVarIdentity A
   let R := X.presheaf.stalk O
   let K := X.residueField O
-  let d := (abVarDouble A).left
+  let d := (abVarDoubleOver A).left
   let p := G.hom
   let B := (Spec (CommRingCat.of L)).presheaf.stalk (p O)
   let b := (p.stalkMap O).hom
