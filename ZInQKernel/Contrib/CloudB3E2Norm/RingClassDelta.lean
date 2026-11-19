@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.CloudB3E1RingClass.ClassGroupMap
+import ZInQKernel.Contrib.CloudB3E1RingClass.GenuineMovingData
 
 /-!
 # The connecting map `𝐅_r^× → Gal(H_r/K)` at a split prime and its exactness
@@ -68,18 +68,23 @@ variable {f : ℕ} (sp : SplitPair K f)
 /-- The pair with the primes exchanged. Kind: definition. -/
 def swap : SplitPair K f := ⟨sp.Q, sp.P, sp.ne.symm, by rw [sp.span_eq, mul_comm]⟩
 
+/-- `f𝒪_K ⊆ 𝔯`. Kind: PROVED. -/
 theorem span_le_P : Ideal.span {(f : 𝓞 K)} ≤ sp.P.asIdeal := by
   rw [sp.span_eq]; exact Ideal.mul_le_left (I := sp.P.asIdeal) (J := sp.Q.asIdeal)
 
+/-- `f𝒪_K ⊆ 𝔯̄`. Kind: PROVED. -/
 theorem span_le_Q : Ideal.span {(f : 𝓞 K)} ≤ sp.Q.asIdeal := by
   rw [sp.span_eq]; exact Ideal.mul_le_right (I := sp.P.asIdeal) (J := sp.Q.asIdeal)
 
+/-- `f ∈ 𝔯`. Kind: PROVED. -/
 theorem f_mem_P : (f : 𝓞 K) ∈ sp.P.asIdeal := sp.span_le_P (Ideal.subset_span rfl)
 
+/-- `𝔯 + 𝔯̄ = 𝒪_K`. Kind: PROVED. -/
 theorem sup_eq_top : sp.P.asIdeal ⊔ sp.Q.asIdeal = ⊤ :=
   Ideal.IsMaximal.coprime_of_ne sp.P.isMaximal sp.Q.isMaximal fun h => sp.ne
     (HeightOneSpectrum.ext h)
 
+/-- `𝔯̄ ⊄ 𝔯`. Kind: PROVED. -/
 theorem not_Q_le_P : ¬ sp.Q.asIdeal ≤ sp.P.asIdeal := fun h =>
   sp.ne (HeightOneSpectrum.ext (sp.Q.isMaximal.eq_of_le sp.P.isMaximal.ne_top h).symm)
 
@@ -165,7 +170,7 @@ theorem absNorm_eq (hK : Module.finrank ℚ K = 2) : Ideal.absNorm sp.P.asIdeal 
 
 /-- `𝒪_K/𝔯` has characteristic `f`. Kind: PROVED. -/
 theorem charP_P : CharP (𝓞 K ⧸ sp.P.asIdeal) f := by
-  haveI : sp.P.asIdeal.IsPrime := sp.P.isPrime
+  have : sp.P.asIdeal.IsPrime := sp.P.isPrime
   have h0 : ((f : ℕ) : 𝓞 K ⧸ sp.P.asIdeal) = 0 := by
     rw [← map_natCast (Ideal.Quotient.mk sp.P.asIdeal), Ideal.Quotient.eq_zero_iff_mem]
     exact sp.f_mem_P
@@ -333,7 +338,6 @@ theorem galResidue_intCast (n : ℤ)
   have hone : (ringClassOrder (K := K) f hf.ne_zero).picClass ⟨_, hJ⟩ = 1 :=
     ((ringClassOrder (K := K) f hf.ne_zero).picClass_eq_one_iff _).2 ⟨(n : 𝓞 K), by
       rw [mem_toRingOfIntegers]
-      push_cast
       exact Subalgebra.intCast_mem _ n, rfl⟩
   simp only [galResidue, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom]
   rw [← huu, hpic, hone, map_one]
@@ -466,6 +470,7 @@ variable {r : ℕ} (hr : (max r 1).Prime) (sp : SplitPair K (max r 1))
   (hK : Module.finrank ℚ K = 2) (S : Set (HeightOneSpectrum (𝓞 K)))
   (hS : ∀ v : HeightOneSpectrum (𝓞 K), ((max r 1 : ℕ) : 𝓞 K) ∈ v.asIdeal → v ∈ S)
 
+/-- `r = max r 1` for `max r 1` prime. Kind: PROVED. -/
 theorem eq_max (hr : (max r 1).Prime) : r = max r 1 := by
   rcases Nat.eq_zero_or_pos r with h | h
   · subst h; exact absurd hr (by simp [Nat.not_prime_one])
@@ -511,6 +516,7 @@ open NumberField.InfinitePlace NumberField.Units
 /-- The coercion `𝒪_K^× → K`. Kind: definition. -/
 def unitsToK : (𝓞 K)ˣ →* K := (algebraMap (𝓞 K) K).toMonoidHom.comp (Units.coeHom (𝓞 K))
 
+/-- The coercion `𝒪_K^× → K` is injective. Kind: PROVED. -/
 theorem unitsToK_injective : Function.Injective (unitsToK (K := K)) := fun _ _ h =>
   Units.ext (FaithfulSMul.algebraMap_injective (𝓞 K) K h)
 
@@ -601,5 +607,13 @@ theorem deltaR_injective_of_imagQuad {r : ℕ} (hr : (max r 1).Prime) (sp : Spli
     (hS : ∀ v : HeightOneSpectrum (𝓞 K), ((max r 1 : ℕ) : 𝓞 K) ∈ v.asIdeal → v ∈ S) :
     Function.Injective (deltaR hr sp hK S hS) :=
   deltaR_injective hr sp hK S hS (units_eq_one_or_neg_one hK hi hω)
+
+/-- **`exact` in lane E1's setup form** (PROVED; `deltaR_exact` with `setupPi`). -/
+theorem deltaR_exact_setup {s : ℕ} (C : RingClassSetup K s) {r : ℕ} (hr : (max r 1).Prime)
+    (sp : SplitPair K (max r 1)) (hK : Module.finrank ℚ K = 2) (p : Additive (setupGal C r)) :
+    setupPi C r p = 0 ↔ ∃ y, deltaR hr sp hK (C.Sr r) (C.hSr r) y = p := by
+  have h := deltaR_exact hr sp hK (C.Sr r) (C.hSr r) p
+  unfold setupPi
+  convert h using 0
 
 end ZInQ.Contrib.CloudB3E2.RingClassDelta
