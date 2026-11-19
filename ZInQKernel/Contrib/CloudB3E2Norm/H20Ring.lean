@@ -17,8 +17,9 @@ coefficient map `E[2^m] ⊗ A[Δ_f] → (E[2^m] ⊗ A)(θ)`, `v ⊗ [δ] ↦ θ(
 * **`transfer_coeff`** (PROVED): the twisted transfer commutes with a `φ`-semilinear equivariant
   coefficient map `c` (`c(ρ₁(g) x) = ρ₂(g) c(x)`): `c(𝒯_{θ₁}(b)) = 𝒯_{θ₂}(c ∘ b)` in every degree; in
   particular (`transfer_kummer_coeff`) the pushed transferred Kummer class of `Q` is the
-  transferred Kummer class of `c(Q)` (this is `(H20) ∘ Shapiro = 𝒯_θ`, tex 3203–3250, in the form
-  needed here; the tree's `coeff_shapiro_eq_transfer` is the same identity at one ring).
+  transferred Kummer class of `c(Q)`. This is the naturality of the twisted transfer in the
+  coefficients, not itself `(H20) ∘ Shapiro = 𝒯_θ`: that identity (at one ring) is the tree's
+  `coeff_shapiro_eq_transfer` (tex 3203–3250); naturality is what carries it along `φ`.
 * `nonVacuity_h20Ring`.
 
 Kinds: definitions and PROVED.

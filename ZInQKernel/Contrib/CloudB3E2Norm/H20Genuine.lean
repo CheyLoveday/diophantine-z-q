@@ -22,10 +22,12 @@ Manuscript `diophantine_zq.tex`, tex 3203–3215, 3262–3270, 3281–3290. For 
 * **`h20CoefficientPush_genuine`** (PROVED): `H20CoefficientPush` for the genuine relaxed data
   with the old Kummer conditions, the classes pushed by the coefficient change, and the
   primitive data at `w` given by a push of the condition at `w` compatible with `ι_q`
-  (`WPush`, for the unramified condition: kept as an explicit hypothesis).
+  (`WPush`; constructed for the genuine unramified condition in `H20Unramified.lean`,
+  `wPushUr`).
 * **`pushed_class_transfer`** (PROVED): the global component of the pushed class is the stage
   transferred Kummer class of the pushed point, `ι₂(f ∘ z) = 𝒯_{θ₂}(κ(c Q))`, when the source
-  class is `𝒯_{θ₁}(κ(Q))` (Shapiro + the explicit character: `transfer_kummer_coeff`).
+  class is `𝒯_{θ₁}(κ(Q))` (the coefficient-push step, by the naturality `transfer_kummer_coeff`;
+  the source identity is the hypothesis `hz`).
 * Non-vacuity: `nonVacuity_condPush`.
 
 Kinds: definitions and PROVED.
@@ -305,8 +307,8 @@ theorem h20CoefficientPush_genuine
   h20CoefficientPush_relaxed (selDataPush φ f hf Δ₁ Δ₂ C) _ _ (locPush φ f hf w.1)
     (fun _ => rfl) ιq₁ ιq₂ W zR₁ zP₁ e₁
 
-/-- **The pushed class is the stage transferred Kummer class of the pushed point** (PROVED;
-Shapiro + the explicit character, tex 3203–3250): if the global component of the source class
+/-- **The pushed class is the stage transferred Kummer class of the pushed point** (PROVED; the
+coefficient-push step, by naturality of the transfer, tex 3203–3250): if the global component of the source class
 is carried by `ι₁` to `𝒯_{θ₁}(κ(Q))` in a `k₁`-module `D₁` of points, and `c : D₁ → D₂` is a
 `φ`-semilinear equivariant coefficient map with `ι₂ ∘ f = c ∘ ι₁` and `φ ∘ θ₁ = θ₂`, then the
 global component of the pushed class is carried by `ι₂` to `𝒯_{θ₂}(κ(c Q))`. -/
