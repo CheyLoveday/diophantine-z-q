@@ -9,3 +9,7 @@
 - `depths_on_filter`: (F.5) and the attained depth installed in `integerDepth_of_data`; eventual `IntegerDepth` for every fixed budget.
 - `restricted_minimum_iff`: an intrinsic least depth is preserved by a subfilter exactly when the subfilter attains it.
 - `Intrinsic.lean`: `lake env lean -j1` passed after restoring matching imported artifacts and typing the `RCData` update at `ℓ`; five axiom checks, only `propext`, `Classical.choice`, `Quot.sound`.
+- `preparedSpec_of_intrinsic`: the positive squareclass filter with `2 ∈ S` meets `PreparedSpec`.
+- `depths_of_prepared_stages`: prepared unit-squareclass source plus the moving Legendre test; (O.8) and precision advance supplied by existing proofs; uniform (F.5), one attained depth, and eventual `IntegerDepth` for each budget.
+- `Prepared.lean`: `lake env lean -j1` passed with the explicit `RCData` projection for the visibility result; two axiom checks, only `propext`, `Classical.choice`, `Quot.sound`.
+- Remaining actual inputs: (F.3), (3.4), (3.5), (O.7), native and torsion comparisons, and detector (O.2) on the same intrinsic stage data. No new leaves.
