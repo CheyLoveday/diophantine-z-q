@@ -1,6 +1,7 @@
 import ZInQKernel.Contrib.CloudB3E1RingClass.KummerUnits
 import ZInQKernel.Contrib.TauCeti.NumberTheory.NumberField.Cyclotomic.Ramification
 import Mathlib.NumberTheory.RamificationInertia.Valuation
+import ZInQKernel.Contrib.OneProof.RC.WitnessSpec.Restriction
 
 /-!
 # The Kummer relations are divisible at the active primes (`KR_val`)
@@ -19,6 +20,10 @@ For `K = ℚ(s) ⊂ ℚ̄` and `k ≥ 0`:
 **`krVal_genuine`** (PROVED): if the active primes `𝔭_j` of `K` are odd and
 `v_{𝔭_j}(α_a) = m_j^{(a)}`, then `2^n ∣ ∑_a b_a m_j^{(a)}` for every Kummer relation `b`. This is the
 interface field `KR_val` (ELLIOT/GLUE in RC4) for the Kummer data over `K`.
+
+**`hαunit_of_support`** (PROVED): `frob_kummer`'s `hαunit` from the radicands having valuation one
+at every prime of `K` over a prime outside `Sexc` (the Frobenius place restricts to such a prime,
+with compatible valuation rings).
 
 Kinds: definitions and PROVED.
 -/
@@ -171,5 +176,45 @@ theorem krVal_genuine {n t S : ℕ} (kd : KummerData s n t) (act : Fin S → Pro
   rw [nsmul_eq_mul] at hlies
   push_cast at hlies
   linarith
+
+/-! ### `hαunit` from the prime supports of the radicands -/
+
+open ZInQ.Manuscript.RC.WitnessSpec in
+/-- **`hαunit` from the prime supports** (tex 3536–3540): if every radicand `α_a ∈ K` has
+valuation one at every prime of `K` over a prime outside `Sexc` (`α_a = β_a/β̄_a` is supported on the
+chosen primes, which lie over `Sexc`), then the radicands are units at every Frobenius place over a
+good prime. The Frobenius place restricts to a prime of `K` over `r` with compatible valuation rings
+(`valuation_le_one_restrict`). Kind: PROVED. -/
+theorem hαunit_of_support {E : WeierstrassCurve ℚ} {n t : ℕ} (kd : KummerData s n t)
+    (Sexc : Finset ℕ)
+    (hsupp : ∀ a (𝔯 : HeightOneSpectrum (𝓞 (quadField s))) (q : ℕ), q.Prime → q ∉ Sexc →
+      ((q : ℤ) : 𝓞 (quadField s)) ∈ 𝔯.asIdeal →
+        𝔯.valuation (quadField s) ⟨kd.α a, kd.α_mem a⟩ = 1) :
+    ∀ (r : ℕ) [Fact r.Prime] (v : kummerPlaces r), GoodPrime E s Sexc r →
+      ∀ a, v.2.valuationRing.valuation (kd.α a) = 1 := by
+  intro r _ v hgood a
+  let e : quadField s →ₐ[ℚ] Qbar := (quadField s).val
+  let 𝔯 := v.2.restrictHeightOne e
+  have hr𝔯 : ((r : ℤ) : 𝓞 (quadField s)) ∈ 𝔯.asIdeal := by
+    have h := v.2.restrictPrime_under e
+    have hm : (r : ℤ) ∈ (v.2.restrictPrime e).under ℤ := by
+      rw [h]; exact Ideal.mem_span_singleton_self _
+    change algebraMap ℤ (𝓞 (quadField s)) (r : ℤ) ∈ v.2.restrictPrime e at hm
+    have h𝔯 : 𝔯.asIdeal = v.2.restrictPrime e := rfl
+    rw [h𝔯]
+    simpa using hm
+  have h1 := hsupp a 𝔯 r hgood.1 hgood.2.2.2.1 hr𝔯
+  set x : quadField s := ⟨kd.α a, kd.α_mem a⟩
+  have hx0 : x ≠ 0 := fun h => kd.α_ne a (congrArg Subtype.val h)
+  have le1 : v.2.valuationRing.valuation (e x) ≤ 1 :=
+    (v.2.valuation_le_one_restrict e x).mpr h1.le
+  have le2 : v.2.valuationRing.valuation (e x⁻¹) ≤ 1 :=
+    (v.2.valuation_le_one_restrict e x⁻¹).mpr (by rw [map_inv₀, h1, inv_one])
+  change v.2.valuationRing.valuation (e x) = 1
+  rw [map_inv₀, map_inv₀] at le2
+  have hV0 : v.2.valuationRing.valuation (e x) ≠ 0 := by
+    rw [Ne, Valuation.zero_iff]; exact (map_ne_zero e).mpr hx0
+  rw [inv_le_one₀ (zero_lt_iff.mpr hV0)] at le2
+  exact le_antisymm le1 le2
 
 end ZInQ.Contrib.CloudB3E1RingClass
