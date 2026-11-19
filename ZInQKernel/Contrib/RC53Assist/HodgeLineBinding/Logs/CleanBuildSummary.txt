@@ -1,0 +1,14 @@
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.PointEvaluation (2.2s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.WeierstrassParameter (2.8s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.CurveOrigin (2.0s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.ModelOrigin (6.3s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.ProjectiveParameter (6.7s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.CurveExpansion (6.3s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.Binding (7.6s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.Linearity (6.2s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.HodgeLine (5.7s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.LineComparison (6.1s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.NonVacuity (6.2s)
+Built ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.All (4.9s)
+Build completed successfully (10682 jobs).
+Command: lake build +ZInQKernel.Contrib.RC53Assist.HodgeLineBinding.All (after deleting this directory's build outputs); exit 0.
