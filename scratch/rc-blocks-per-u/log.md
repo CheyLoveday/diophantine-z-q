@@ -6,3 +6,5 @@
 - `diamondCharacters`: actual units of the common level; characters `(d/u)` constructed using Jacobi periodicity and multiplication.
 - `coordinates_of_span`: lower-level and characterwise span membership gives supported coordinates of the identical coefficients.
 - `Inventory.attachment`: one representation per normalized source, reused literally on all its dilations; Eisenstein diagonal built from the ordered pair.
+- `Window.lean`: passed; `realize` gives `∃ A C V ρ₀ levels, AtLevel levels ρ₀` over the same stage and pool.
+- `ThetaTransform.lean`: passed; holomorphy and nonvanishing of ordinary theta and the weight-two slash and cusp proofs checked.
