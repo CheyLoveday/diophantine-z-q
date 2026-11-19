@@ -6,3 +6,5 @@
 - Selector: preserve `some` entries; fill admissible nonwitness holes; provide an exact selection equation for `lamOf_admissible` and preserve `jgen` at prepared simple zeros.
 - Checks: `Forms.lean` passed `lake env lean -j1`; all three theorem audits list only `propext`, `Classical.choice`, and `Quot.sound`.
 - Checks: `Character.lean` passed `lake env lean -j1`; all eight theorem audits list only `propext`, `Classical.choice`, and `Quot.sound`.
+- Checks: `Selector.lean` passed `lake env lean -j1`; all nine theorem audits and both datum and selector audits list only `propext`, `Classical.choice`, and `Quot.sound`.
+- Interfaces: `extendSelG_witness` keeps the original witness equation; `exists_selected_of_admissible` supplies the equation for `StageMap.lamOf_admissible`; `preparedGlue_of_withStages` obtains the filter bridge from the existing stage equality.
