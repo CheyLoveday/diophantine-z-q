@@ -1,0 +1,11 @@
+- Bases merged: 042555fd5357b6286d8020a5b3d2f8846aa07e0e and 52d2c0f7a409ead53b7bf7fa0c402db543b8e281.
+- Tex 8469–8474: audit A052 records Jetchev–Kane at N > 1, prime to ell, without squarefreeness. Citation scope issue recorded in report and handoff.
+- `adelic`: five fields of `PMGeometry.Adelic` from `Adelic.algebraicGeometry`.
+- `neighbourMultiset_eq`: two line indices enumerate the same actual neighbours; equal class multisets. Used with `Adelic.hecke_eq_neighbours`.
+- `JetchevKane`: double-coset/coarse supersingular equivalence; good Hecke multiset, right Atkin–Lehner and right uniformizer/Frobenius comparisons.
+- `idealClasses`, `hecke_compare`, `atkin_compare`, `frobenius_compare`, `frobenius_ss`: ideal class comparisons via `classesEquiv`.
+- `geometricInput`, `geometry`: `JetchevKane` + ELLIOT `SpecialFibre` give the existing geometry on `levelOrder`.
+- Heegner: `CJReductionData.PrintRealization.red_eq` concerns abstract oriented fibres. Missing actual enhanced CM reductions and parametrization commutation; `OddStagedInstance.hev` constrains the witness only, so the other read entries of `StageKummer` still need same-place comparison.
+- `Comparison.lean`: passed `lake env lean --threads=1`; 11 axiom checks.
+- `Geometry.lean`: passed `lake env lean --threads=1`; 3 axiom checks.
+- All 14 audits returned `propext`, `Classical.choice`, `Quot.sound`. Serial queue with resource checks before each run; no main-module import.
