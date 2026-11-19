@@ -145,7 +145,8 @@ theorem cochainSEquiv_d {e : k ≃+* k'} (hfk : ∀ (r : k) (m : M), f (r • m)
     (hfg : ∀ (g : G) (m : M), f (g • m) = g • f m) (n : ℕ) (c : (contCochains k G M).X n) :
     cochainSEquiv (k := k) (k' := k') f hfc hfc' (n + 1)
         (((contCochains k G M).d n (n + 1)).hom c) =
-      ((contCochains k' G M').d n (n + 1)).hom (cochainSEquiv (k := k) (k' := k') f hfc hfc' n c) := by
+      ((contCochains k' G M').d n (n + 1)).hom
+        (cochainSEquiv (k := k) (k' := k') f hfc hfc' n c) := by
   apply Subtype.ext
   funext g
   have h1 := contCochains_d_apply (k := k) (G := G) (M := M) n c g

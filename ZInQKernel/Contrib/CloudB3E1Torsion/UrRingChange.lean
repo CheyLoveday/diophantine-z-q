@@ -77,11 +77,13 @@ abbrev i1 {R : Type} [Ring R] {W : Type} [AddCommGroup W] [Module R W] (Ψ : W �
 
 /-- The degree-`0` identification. Kind: definition. -/
 def frobX0 : (frobCx Φ).X 0 ≃+ (frobCx Φ').X 0 :=
-  (i0 Φ).toLinearEquiv.toAddEquiv.trans ((AddEquiv.refl V).trans (i0 Φ').symm.toLinearEquiv.toAddEquiv)
+  (i0 Φ).toLinearEquiv.toAddEquiv.trans
+    ((AddEquiv.refl V).trans (i0 Φ').symm.toLinearEquiv.toAddEquiv)
 
 /-- The degree-`1` identification. Kind: definition. -/
 def frobX1 : (frobCx Φ).X 1 ≃+ (frobCx Φ').X 1 :=
-  (i1 Φ).toLinearEquiv.toAddEquiv.trans ((AddEquiv.refl V).trans (i1 Φ').symm.toLinearEquiv.toAddEquiv)
+  (i1 Φ).toLinearEquiv.toAddEquiv.trans
+    ((AddEquiv.refl V).trans (i1 Φ').symm.toLinearEquiv.toAddEquiv)
 
 /-- The degreewise identification of the Frobenius complexes. Kind: definition. -/
 def frobXEquiv : ∀ n : ℤ, (frobCx Φ).X n ≃+ (frobCx Φ').X n
@@ -143,7 +145,8 @@ theorem frobXEquiv_smul : ∀ (n : ℤ) (r : k) (x : (frobCx Φ).X n),
 
 include hΦ in
 theorem frobXEquiv_comm (i j : ℤ) (h : i + 1 = j) (x : (frobCx Φ).X i) :
-    frobXEquiv Φ Φ' j (((frobCx Φ).d i j).hom x) = ((frobCx Φ').d i j).hom (frobXEquiv Φ Φ' i x) := by
+    frobXEquiv Φ Φ' j (((frobCx Φ).d i j).hom x) =
+      ((frobCx Φ').d i j).hom (frobXEquiv Φ Φ' i x) := by
   by_cases hj : j = 0 ∨ j = 1
   · rcases hj with rfl | rfl
     · have := frobCx_subsingleton Φ i (by omega) (by omega)

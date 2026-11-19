@@ -57,7 +57,8 @@ def dbl (j : ℕ) : TorsS K S W ((2 ^ (j + 1) : ℕ) : ℤ) →+ TorsS K S W ((2
   map_add' t t' := Subtype.ext (smul_add _ _ _)
 
 /-- The kernel of the doubling map is `E[2]`. Kind: definition. -/
-def dblKerEquiv (j : ℕ) : (dbl (K := K) (S := S) (W := W) j).ker ≃ TorsS K S W ((2 ^ 1 : ℕ) : ℤ) where
+def dblKerEquiv (j : ℕ) :
+    (dbl (K := K) (S := S) (W := W) j).ker ≃ TorsS K S W ((2 ^ 1 : ℕ) : ℤ) where
   toFun t := ⟨t.1.1, by
     have h : (2 : ℤ) • t.1.1 = 0 := congrArg Subtype.val t.2
     refine memT.mpr ?_

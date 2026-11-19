@@ -142,7 +142,8 @@ theorem condP_iff (Z : Submodule k (contCochain k G M 1))
       exact Submodule.add_mem_sup ((hZ z).1 hz) ((contB1_iff hV b).1 hb)
     · intro hx
       obtain ⟨z', hz', b', hb', hzb⟩ := Submodule.mem_sup.1 hx
-      have hz : (φs (k' := k') 1).symm z' ∈ Z := (hZ _).2 (by rw [AddEquiv.apply_symm_apply]; exact hz')
+      have hz : (φs (k' :=
+        k') 1).symm z' ∈ Z := (hZ _).2 (by rw [AddEquiv.apply_symm_apply]; exact hz')
       have hb : (φs (k' := k') 1).symm b' ∈ contB1 k G M :=
         (contB1_iff hV _).2 (by rw [AddEquiv.apply_symm_apply]; exact hb')
       have hx' : x = (φs (k' := k') 1).symm z' + (φs (k' := k') 1).symm b' := by
@@ -163,7 +164,8 @@ variable {F : Type} [Field F] [CharZero F] [DecidableEq F] {B : WeierstrassCurve
   {k k' : Type} [CommRing k] [CommRing k'] {e : k ≃+* k'}
   {M : Type} [AddCommGroup M] [Module k M] [Module k' M]
   [DistribMulAction (Field.absoluteGaloisGroup F) M]
-  [SMulCommClass (Field.absoluteGaloisGroup F) k M] [SMulCommClass (Field.absoluteGaloisGroup F) k' M]
+  [SMulCommClass (Field.absoluteGaloisGroup F) k M]
+  [SMulCommClass (Field.absoluteGaloisGroup F) k' M]
   [TopologicalSpace M] [DiscreteTopology M] [ContinuousSMul (Field.absoluteGaloisGroup F) M]
   (hV : ∀ (r : k) (m : M), r • m = e r • m)
   (ι : TorsAlg F B m →+ M)

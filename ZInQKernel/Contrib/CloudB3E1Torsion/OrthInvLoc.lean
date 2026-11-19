@@ -7,7 +7,8 @@ Manuscript `diophantine_zq.tex`, proof of Proposition `ex:arith-paired-functiona
 tex 3704–3790 (in particular 3720, 3727–3732, 3736–3753, 3779–3781, 3787–3789).
 
 Lane E2's `DualPres.OrthComparisonInverse` asks for the inverse of the orthogonal comparison
-`c_T : C_{T⊥} → C'_T` at a finite stage, where it does not exist (`not_orthComparisonInverse_ecurve`).
+`c_T : C_{T⊥} → C'_T` at a finite stage,
+where it does not exist (`not_orthComparisonInverse_ecurve`).
 The text inverts `c_T` only after a localization in which the full local complexes at the
 places passing from zero to full are contracted by explicit homotopies. It writes them with
 units `A = Φ − 1`, `D = Φ − N_q(g)` at active primes (tex 3727–3732) and `C = (inertia − 1) =
@@ -227,7 +228,8 @@ def HU2 : (selData k GS Gv loc M Δ₂).U.X 2 →ₗ[k] (selData k GS Gv loc M �
 def ψ0 : (selCx (selData k GS Gv loc M Δ₂)).X 0 →ₗ[k] (selCx (selData k GS Gv loc M Δ₁)).X 0 where
   toFun c := show selT (selData k GS Gv loc M Δ₁) 0 from
     ((c : selT (selData k GS Gv loc M Δ₂) 0).1, gU I 0 (c : selT (selData k GS Gv loc M Δ₂) 0).2.1,
-      (c : selT (selData k GS Gv loc M Δ₂) 0).2.2 + HU0 I (c : selT (selData k GS Gv loc M Δ₂) 0).2.1)
+      (c : selT (selData k GS Gv loc M Δ₂) 0).2.2 +
+        HU0 I (c : selT (selData k GS Gv loc M Δ₂) 0).2.1)
   map_add' c c' := by
     obtain ⟨a, u, x⟩ := c
     obtain ⟨a', u', x'⟩ := c'
@@ -245,7 +247,8 @@ def ψ0 : (selCx (selData k GS Gv loc M Δ₂)).X 0 →ₗ[k] (selCx (selData k 
 def ψ1 : (selCx (selData k GS Gv loc M Δ₂)).X 1 →ₗ[k] (selCx (selData k GS Gv loc M Δ₁)).X 1 where
   toFun c := show selT (selData k GS Gv loc M Δ₁) 1 from
     ((c : selT (selData k GS Gv loc M Δ₂) 1).1, gU I 1 (c : selT (selData k GS Gv loc M Δ₂) 1).2.1,
-      (c : selT (selData k GS Gv loc M Δ₂) 1).2.2 + HU1 I (c : selT (selData k GS Gv loc M Δ₂) 1).2.1)
+      (c : selT (selData k GS Gv loc M Δ₂) 1).2.2 +
+        HU1 I (c : selT (selData k GS Gv loc M Δ₂) 1).2.1)
   map_add' c c' := by
     obtain ⟨a, u, x⟩ := c
     obtain ⟨a', u', x'⟩ := c'
@@ -263,7 +266,8 @@ def ψ1 : (selCx (selData k GS Gv loc M Δ₂)).X 1 →ₗ[k] (selCx (selData k 
 def ψ2 : (selCx (selData k GS Gv loc M Δ₂)).X 2 →ₗ[k] (selCx (selData k GS Gv loc M Δ₁)).X 2 where
   toFun c := show selT (selData k GS Gv loc M Δ₁) 2 from
     ((c : selT (selData k GS Gv loc M Δ₂) 2).1, gU I 2 (c : selT (selData k GS Gv loc M Δ₂) 2).2.1,
-      (c : selT (selData k GS Gv loc M Δ₂) 2).2.2 + HU2 I (c : selT (selData k GS Gv loc M Δ₂) 2).2.1)
+      (c : selT (selData k GS Gv loc M Δ₂) 2).2.2 +
+        HU2 I (c : selT (selData k GS Gv loc M Δ₂) 2).2.1)
   map_add' c c' := by
     obtain ⟨a, u, x⟩ := c
     obtain ⟨a', u', x'⟩ := c'
@@ -323,7 +327,8 @@ variable (hF : ∀ v (i : ℤ) (u : (Δ₁.U v).X i),
 theorem selHInv_right (x : (selCx (selData k GS Gv loc M Δ₂)).X 1)
     (hx : (selCx (selData k GS Gv loc M Δ₂)).d 1 2 rfl x = 0) :
     ∃ y : (selCx (selData k GS Gv loc M Δ₂)).X 0,
-      (condMap Δ₁ Δ₂ F hF).f 1 1 rfl (ψ1 I x) = x + (selCx (selData k GS Gv loc M Δ₂)).d 0 1 rfl y := by
+      (condMap Δ₁ Δ₂ F hF).f 1 1 rfl (ψ1 I x) =
+        x + (selCx (selData k GS Gv loc M Δ₂)).d 0 1 rfl y := by
   obtain ⟨a, u, w⟩ := x
   have hu : ∀ v, (Δ₂.U v).d 1 2 rfl (u v) = 0 := fun v =>
     congrFun (congrArg (fun c : selT (selData k GS Gv loc M Δ₂) 2 => c.2.1) hx) v
@@ -337,7 +342,8 @@ theorem selHInv_right (x : (selCx (selData k GS Gv loc M Δ₂)).X 1)
   · funext v
     change (show (localCx k GS Gv loc M v).X 0 from w v) + (I v).H1 (u v) =
       (show (localCx k GS Gv loc M v).X 0 from w v) + ((resS k GS Gv loc M).f 0 0 rfl 0 v -
-        (Δ₂.i v).f 0 0 rfl ((I v).s₂ (u v)) - (localCx k GS Gv loc M v).d (-1) 0 rfl ((I v).K₂ (u v)))
+        (Δ₂.i v).f 0 0 rfl ((I v).s₂ (u v)) -
+          (localCx k GS Gv loc M v).d (-1) 0 rfl ((I v).K₂ (u v)))
     have h := (I v).hK₂ (u v) (hu v)
     rw [map_zero]
     change _ = _ + ((0 : (localCx k GS Gv loc M v).X 0) - _ - _)
@@ -349,7 +355,8 @@ theorem selHInv_right (x : (selCx (selData k GS Gv loc M Δ₂)).X 1)
 theorem selHInv_left (z : (selCx (selData k GS Gv loc M Δ₁)).X 1)
     (hz : (selCx (selData k GS Gv loc M Δ₁)).d 1 2 rfl z = 0) :
     ∃ y : (selCx (selData k GS Gv loc M Δ₁)).X 0,
-      ψ1 I ((condMap Δ₁ Δ₂ F hF).f 1 1 rfl z) = z + (selCx (selData k GS Gv loc M Δ₁)).d 0 1 rfl y := by
+      ψ1 I ((condMap Δ₁ Δ₂ F hF).f 1 1 rfl z) =
+        z + (selCx (selData k GS Gv loc M Δ₁)).d 0 1 rfl y := by
   obtain ⟨a, u, w⟩ := z
   have hu : ∀ v, (Δ₁.U v).d 1 2 rfl (u v) = 0 := fun v =>
     congrFun (congrArg (fun c : selT (selData k GS Gv loc M Δ₁) 2 => c.2.1) hz) v
@@ -363,7 +370,8 @@ theorem selHInv_left (z : (selCx (selData k GS Gv loc M Δ₁)).X 1)
   · funext v
     change (show (localCx k GS Gv loc M v).X 0 from w v) + (I v).H1 ((F v).f 1 1 rfl (u v)) =
       (show (localCx k GS Gv loc M v).X 0 from w v) + ((resS k GS Gv loc M).f 0 0 rfl 0 v -
-        (Δ₁.i v).f 0 0 rfl ((I v).s₁ (u v)) - (localCx k GS Gv loc M v).d (-1) 0 rfl ((I v).K₁ (u v)))
+        (Δ₁.i v).f 0 0 rfl ((I v).s₁ (u v)) -
+          (localCx k GS Gv loc M v).d (-1) 0 rfl ((I v).K₁ (u v)))
     have h := (I v).hK₁ (u v) (hu v)
     rw [map_zero]
     change _ = _ + ((0 : (localCx k GS Gv loc M v).X 0) - _ - _)
@@ -523,7 +531,8 @@ def HswUpToD : Prop :=
 
 /-- **The switch at every place** (PROVED, from `UrSurj`). -/
 theorem place_switch (hsurj : UrSurj (K := K) (S := S) (k := k) (place := place) (X := X))
-    (T : Finset ι) (p : ι) (v : Places K S₀ ⊕ (ι × Bool)) (y : ((presCondS K S₀ S k M Δ'' place X EU T).U v).X 1) :
+    (T : Finset ι) (p : ι) (v : Places K S₀ ⊕ (ι × Bool))
+    (y : ((presCondS K S₀ S k M Δ'' place X EU T).U v).X 1) :
     ∃ w : ((dpresCondS K S₀ S k M Δ' place X EU T).U v).X 0,
       (dpresSplit K S₀ S k M Δ' place X EU T p v).f 1 1 rfl
           ((presInv (EU := EU) Ψ (insert p T) v).g.f 1 1 rfl
@@ -555,7 +564,8 @@ theorem hlift_of_transport_loc (hsw : Ψ.HswUpToD (X := X) (EU := EU)) {T : Fins
       (suppCxS K S₀ S k M Δ'' place X EU (insert p T)).d 0 1 rfl b') :
     ∃ b : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 0,
       jmap T p 1 (Ψ.ψ (X := X) (EU := EU) (insert p T) zR) =
-        e • Ψ.ψ (X := X) (EU := EU) T zP + (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl b := by
+        e • Ψ.ψ (X := X) (EU := EU) T zP +
+          (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl b := by
   obtain ⟨b₁, hb₁⟩ := hsw T p hp zP hzP
   refine ⟨e • b₁ + jmap T p 0 (ψ0 (presInv Ψ (insert p T)) b'), ?_⟩
   rw [hnorm, map_add, map_smul, Ψ.hd, map_add, map_smul, hb₁, jmap_d, map_add, map_smul, smul_add]
@@ -602,7 +612,8 @@ theorem hlift_of_urSurj (hsurj : UrSurj (K := K) (S := S) (k := k) (place := pla
       (suppCxS K S₀ S k M Δ'' place X EU (insert p T)).d 0 1 rfl b') :
     ∃ b : (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).X 0,
       jmap T p 1 (Ψ.ψ (X := X) (EU := EU) (insert p T) zR) =
-        e • Ψ.ψ (X := X) (EU := EU) T zP + (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl b :=
+        e • Ψ.ψ (X := X) (EU := EU) T zP +
+          (selCx (dsuppDataS K S₀ S k M Δ' place X EU T)).d 0 1 rfl b :=
   Ψ.hlift_of_transport_loc (Ψ.hswUpToD_of_urSurj hsurj) hp zR zP hzP e b' hnorm
 
 end OrthComparisonInverseLoc

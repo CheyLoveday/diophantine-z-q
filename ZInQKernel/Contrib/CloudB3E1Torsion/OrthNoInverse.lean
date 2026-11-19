@@ -78,7 +78,8 @@ theorem res_zero_of_res_zero (a : (globalCx k GS M).X 0) (v w : ι)
   exact hv default
 
 variable (Δ₁ Δ₂ : LocalConditions k GS Gv loc M) (F : ∀ v, GHom (Δ₁.U v) (Δ₂.U v))
-  (hF : ∀ v (i : ℤ) (u : (Δ₁.U v).X i), (Δ₂.i v).f i i rfl ((F v).f i i rfl u) = (Δ₁.i v).f i i rfl u)
+  (hF : ∀ v (i : ℤ) (u : (Δ₁.U v).X i),
+    (Δ₂.i v).f i i rfl ((F v).f i i rfl u) = (Δ₁.i v).f i i rfl u)
 
 /-- **The `H¹` comparison is not injective** (PROVED): two places where `Δ₁` is zero in degree `0`
 and a degree-`0` cocycle of `Δ₂` at the first with nonzero local image give a non-coboundary
