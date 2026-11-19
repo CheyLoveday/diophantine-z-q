@@ -51,7 +51,7 @@ bodies not re-checked here).
 
 ## Classification
 
-Definitions and PROVED. `TateCurveTateModulePrint` is a print specialization,
+Definitions and PROVED. `TateCurveTateModulePrint` is a print with derived readings,
 `DecompositionGroupLocalGlobalGlue` and `AdditiveReductionCoinvariantsVanish` are glue, and the
 three corrected readings are explicit propositions; all are theorem parameters, not axioms.
 -/
@@ -681,18 +681,19 @@ def DecompositionGroupLocalGlobalGlue : Prop :=
       ∃ σ : LocalGaloisQ p hp,
         IsArithmeticFrobeniusOnClosureQ (primeIdealQ p hp) Γ w σ ∧ r σ = D.element
 
-/-- **PRINT SPECIALIZATION WITH EXPLICIT READINGS**, manuscript bibitem Silverman, *The Arithmetic
-of Elliptic Curves*, Appendix C, Theorem C.14.1 (Tate), read on the local `ℓ`-adic Tate module.
-For `E/ℚ` with multiplicative reduction at `p` and `ℓ ≠ p`, Tate's theorem gives `q ∈ ℚ_p` with
-`|q| < 1` and a Galois-equivariant uniformization `\bar ℚ_p^× / q^ℤ ≅ E(\bar ℚ_p)` (over `ℚ_p` in the
-split case, after the unramified quadratic twist in the non-split case). Read through Kummer
-theory this gives a basis `(e₀, e₁)` of `T_ℓ(E/\bar ℚ_p)` (`e₀` the roots of unity, `e₁` the
-compatible roots of `q`) with `σ e₀ = ε(σ) χ(σ) e₀` and `σ e₁ = ε(σ) (e₁ + κ(σ) e₀)`, where `χ` is
-the cyclotomic character, `κ` the Kummer cocycle of `q`, and `ε` is trivial in the split case and the
-unramified quadratic character otherwise. The readings used: `ε` and `χ` are trivial on inertia,
-`κ` is not identically zero on inertia (`v(q) ≠ 0`), and `ε` of an arithmetic Frobenius is `1` or
-`-1` according as the reduction is split or not. Section-level locator; page not checked. This is a
-proposition, not an axiom or a proof of the printed theorem. -/
+/-- **PRINT + DERIVED READING**, manuscript bibitem Silverman, *The Arithmetic of Elliptic Curves*,
+Appendix C, Theorem C.14.1 (Tate), read on the local `ℓ`-adic Tate module. For `E/ℚ` with
+multiplicative reduction at `p` and `ℓ ≠ p`, Tate's theorem gives `q ∈ ℚ_p` with `|q| < 1` and a
+Galois-equivariant uniformization `\bar ℚ_p^× / q^ℤ ≅ E(\bar ℚ_p)` (over `ℚ_p` in the split case,
+after the unramified quadratic twist in the non-split case). Read through Kummer theory this gives a
+basis `(e₀, e₁)` of `T_ℓ(E/\bar ℚ_p)` (`e₀` the roots of unity, `e₁` the compatible roots of `q`)
+with `σ e₀ = ε(σ) χ(σ) e₀` and `σ e₁ = ε(σ) (e₁ + κ(σ) e₀)`, where `χ` is the cyclotomic character,
+`κ` the Kummer cocycle of `q`, and `ε` is trivial in the split case and the unramified quadratic
+character otherwise. The readings used: `ε` and `χ` are trivial on inertia, `κ` is not identically
+zero on inertia (`v(q) ≠ 0`), and `ε` of an arithmetic Frobenius is `1` or `-1` according as the
+reduction is split or not. Section-level locator; page not checked. The unramified twist in the
+non-split case and the Kummer description of the Tate module are derived readings, not literal
+statements of C.14.1. This is a proposition, not an axiom or a proof of the printed theorem. -/
 def TateCurveTateModulePrint : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic] (p : ℕ) (hp : p.Prime) (ℓ : ℕ) [Fact ℓ.Prime],
     ℓ ≠ p →
