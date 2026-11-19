@@ -1,0 +1,4 @@
+- Base merged with formwise at `82a6450d4`.
+- Actual weight-two product at tex 9647–9648; tex 9573 is (O.9).
+- `BlockLevels.old_good` requires explicit alignment with the actual coefficient support; ambient exclusion alone does not supply this.
+- Trivial/trivial Eisenstein coordinates: retain positive dilates in the coefficient space; only the appropriate combinations are modular in weight two.

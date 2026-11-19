@@ -1,0 +1,6 @@
+**Scoped stop.** The first analytic input is the weight-(3/2) transformation and cusp holomorphy of the extracted, fixed-sieved **weighted ternary** theta series of the actual stage, with the cubed theta multiplier and the character in (O.5). Weight two occurs after multiplying by ordinary theta (tex 9647–9648).
+
+## Known issues
+
+- Existing interface mismatch: `O12Formwise.BlockLevels.old_good` requires every `T.Good` prime to be prime to the old level. This cannot hold if an old-level prime (for example the moving theta prime, if present in the level) is only an ambient exclusion and is prime to `T.m`. By definition that prime is still `T.Good`. Tex 9471–9483 and 9670–9674 explicitly exclude coefficient support, including the current theta prime; the assembly below keeps `old_good` as a domain-alignment hypothesis and does not infer it from membership in `avoid`. No manuscript error follows from this mismatch.
+- In weight two with trivial character, the trivial/trivial Eisenstein pair must be handled via modular differences (E_2(z)-d E_2(dz)). (E_2) itself is quasimodular. Its normalized positive Fourier sequence and dilations can serve as coordinates in a larger coefficient space; asserting that every such coordinate is itself a modular form would be incorrect.
