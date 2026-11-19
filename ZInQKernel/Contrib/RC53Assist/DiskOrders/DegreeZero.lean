@@ -571,7 +571,8 @@ end Arith0
 section MordellWeil
 
 /-- **PRINT** (Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Theorem VIII.6.7, the
-Mordell–Weil theorem; cited at tex 295, 3905, 3976): "Let `K` be a number field, and let `E/K` be
+Mordell–Weil theorem, page 239; used, without citation, at tex 295, 3905, 3976): "Let `K` be a
+number field, and let `E/K` be
 an elliptic curve. Then the group `E(K)` is finitely generated." Kind: definition (PRINT input;
 no inhabitant is supplied). -/
 def MordellWeilNumberFieldPrint : Prop :=

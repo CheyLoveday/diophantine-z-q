@@ -280,8 +280,10 @@ structure MovingRetainedLimit (Fam : MovingStageFamily W) where
     (RetainedStageRealization C D i (stagePairingInputOfSel (Q i) (tr i) (htr i)))
 
 /-- **The finite fibre of the retained limit at `𝔭`**: the Selmer complex at `𝔭` of the retained
-limit with the finite (unramified) condition at the derivative label, i.e. the old-condition
-Selmer complex of the stage family at `𝔭` (tex 4385–4451, 5040–5054). Kind: definition. -/
+limit with the finite plane of the split model as the condition at the derivative label (the
+unramified condition through the split projection `p`, which the structure constrains only to be
+a quasi-isomorphism on `U`-large stages; GLUE), i.e. the old-condition Selmer complex of the stage
+family at `𝔭` (tex 4385–4451, 5040–5054). Kind: definition. -/
 abbrev MovingRetainedLimit.finiteFibre {Fam : MovingStageFamily W} (L : MovingRetainedLimit Fam)
     (P : Ideal Lambda) [P.IsPrime] : GCx (ResAt P) :=
   selCx (finiteLimitSide (fibreLimitGlobal L.U L.hU P L.C) (L.D.resLimit L.hU P)).Dside
