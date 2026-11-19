@@ -5,8 +5,9 @@ import ZInQKernel.Contrib.CloudB3E2Norm.H20Anchor
 
 Manuscript `diophantine_zq.tex`, tex 2914–2936. The interface `HeegnerPointData E`
 (`RC/PrintsArith/Heegner.lean`) describes its fields as: `H d ⊆ ℚ̄` the ring class field of
-conductor `d`; `relGal d ℓ` elements of `G_ℚ` restricting to the elements of `Gal(H_{dℓ}/H_d)`;
-`frob d q` an element of `G_ℚ` restricting to the Frobenius `σ_q` at a prime above the split `q` in `Gal(H_d/K)`.
+conductor `d`; `relGal d ℓ` elements of `G_ℚ` restricting to the elements of
+`Gal(H_{dℓ}/H_d)`; `frob d q` an element of `G_ℚ` restricting to the Frobenius `σ_q` at a prime
+above the split `q` in `Gal(H_d/K)`.
 The print `CCLThm2_15Applied` is existential in the datum, so these descriptions must be part of the
 anchor. `FullAnchor` adds them to `GenuineHeegnerAnchor`, along a fixed isomorphism `κ : ℚ̄ ≃ K̄` of
 algebraic closures (`exists_kappa`):
