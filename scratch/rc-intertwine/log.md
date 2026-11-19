@@ -6,3 +6,4 @@
 - Build uses one sequential `lake env lean -j1` invocation at a time, with the host resource check before each invocation.
 - `Characters.lean`: compiled; all 12 theorem audits list only `propext`, `Classical.choice`, `Quot.sound`. This proves the phase on any occupied coset, the polar annihilator, and the value at the two coset centers, over an integral quotient with rational representatives.
 - An attempted run was skipped at load 129.26; verification resumed at load 106.87 with 117 GB available.
+- `FinitePlaces.lean`: compiled; all 10 theorem audits list only the three allowed axioms. This instantiates the finite phase on the restricted product over the rational primes and proves its local product formula.
