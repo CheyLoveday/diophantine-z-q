@@ -581,7 +581,8 @@ structure RCLeaves where
   full printed theorem and the definitions it uses are quoted verbatim in the docstring of
   `Shimura1973ConjugateEigenforms`). The printed theorem gives "(iii) dim(A) = [K: Q]" and "for
   every σ ∈ I, there exists an element f_σ of S₂(Γ) such that f_σ | T_n = a_n^σ f for all n, and
-  f_σ(z) = ∑_{n=1}^∞ a_n^σ e^{2πinz}"; the statement used here: the coefficient field of a
+  f_σ(z) = ∑_{n=1}^∞ a_n^σ e^{2πinz}"; the printed `f` after `a_n^σ` is read as `f_σ`, as in the
+  proof on p. 527. The statement used here: the coefficient field of a
   weight-two newform of trivial character on `Γ₀(M)` is a number field, and each of its complex
   embeddings gives a normalized eigenform of the same level with the embedded coefficients. With
   the next three fields and `Prints.bcdt` it gives modularity in newform form
@@ -590,15 +591,17 @@ structure RCLeaves where
   /-- Li 1975, Theorem 5, p. 298 (PRINT, manuscript bibitem `li-newforms`), verbatim: "Theorem 5.
   Let F(τ) = ∑_{n≥1} a(n) z₁ⁿ, G(τ) = ∑_{n≥1} b(n) z₁ⁿ be normalized newforms in C_ε(M, 1),
   C_ε(N, 1) respectively such that a(p) = b(p) for almost all primes p. Then F = G and M = N."
-  Used at weight two and trivial character: two newforms whose coefficients agree at almost every
-  prime have the same level and are equal. -/
+  In Li's notation (Introduction, pp. 285–286) `C_ε(M, N)` is the space of cusp forms of the fixed
+  weight `k` and character `ε` for `Γ(M, N)`, and `Γ₀(M, 1) = Γ₀(M)`, so `C_ε(M, 1)` with `k = 2`
+  and `ε` trivial is `S₂(Γ₀(M))`. Used at weight two and trivial character: two newforms whose
+  coefficients agree at almost every prime have the same level and are equal. -/
   liMultiplicityOne : ZInQ.Contrib.RC53Assist.NewformGlueG0.Li1975StrongMultiplicityOneWeightTwo
   /-- The elliptic curve of a newform with rational coefficients and its Euler factors (GLUE: a
   joint reading of two sources, Shimura 1973, Theorem 1, at rational coefficient field, and
   Carayol 1986, §0.8 Corollaire, p. 411, with the normalization of §§0.4–0.5 and Théorème (A) of
   §0.7, pp. 409–411; manuscript bibitems `shimura-factors`, `carayol`; it is not the literal
   statement of Carayol's corollary alone, and the newform–curve association is erased rather than
-  constructed; GLUE until an independent two-lens check clears the reading): such a newform has an
+  constructed; a statement joining two sources is a reading, not a print): such a newform has an
   elliptic curve over `ℚ` whose local polynomial at every prime is the newform's Euler polynomial.
   -/
   carayolEulerFactors :
@@ -669,7 +672,8 @@ alone, `RCLeaves.modularNewform`; batch 3's `artinFactorization_unconditional`: 
 proved, and the factorization's
 own hypothesis splits every level prime in `K`, so the inert primes are good and the proved good
 case of the inert clause applies; tex 2411–2440). (3.4) thus rests on Theorem A and the four
-printed corollaries, with no local GLUE. -/
+fields behind `RCLeaves.modularNewform` (the prints of Shimura 1973 and Li 1975 and the GLUE
+readings of Carayol 1986 and Faltings 1983), with no further local GLUE. -/
 theorem RCLeaves.artin (L : RCLeaves) (P : Prints) :
     ZInQ.Contrib.CloudB3RC53.GenusOdd.ArtinFactorization :=
   ZInQ.Contrib.CloudB3RC53.Hasse.artinFactorization_unconditional (L.modularNewform P)

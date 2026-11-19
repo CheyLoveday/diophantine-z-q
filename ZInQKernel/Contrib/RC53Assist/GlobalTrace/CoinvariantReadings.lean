@@ -51,7 +51,7 @@ bodies not re-checked here).
 
 ## Classification
 
-Definitions and PROVED. `TateCurveTateModulePrint` is a print with derived readings,
+Definitions and PROVED. `TateCurveTateModulePrint` is a reading of a printed theorem (GLUE),
 `DecompositionGroupLocalGlobalGlue` and `AdditiveReductionCoinvariantsVanish` are glue, and the
 three corrected readings are explicit propositions; all are theorem parameters, not axioms.
 -/
@@ -311,12 +311,12 @@ def CarayolRationalRealizationCoinv.cohomologicalRep {M : ℕ} [NeZero M]
     Representation ℚ_[ℓ] GlueC10.GQ (Module.Dual ℚ_[ℓ] (Fin 2 → ℚ_[ℓ])) :=
   R.normalizedRep.dual
 
-/-- **PRINT SPECIALIZATION WITH CORRECTED LOCAL READING**, the rational weight-two realization
-with arithmetic Frobenius on inertia coinvariants. The excluded invariant-space statement is
-archived in `docs/research/g0-representation-route-invariants.md`. Locators: Carayol 1986,
-Théorème (A), pp. 410–411, Remarque and §0.8, p. 411; Casselman 1973, Theorem 4, p. 313;
-Li 1975, Theorem 3(i), p. 295. This is a proposition, not an axiom or a proof of these printed
-facts. -/
+/-- **GLUE (a reading of Carayol's theorem) WITH CORRECTED LOCAL READING**, the rational weight-two
+realization with arithmetic Frobenius on inertia coinvariants. The excluded invariant-space
+statement is archived in `docs/research/g0-representation-route-invariants.md`. Locators: Carayol
+1986, Théorème (A), pp. 410–411, Remarque and §0.8, p. 411; Casselman 1973, Theorem 4, p. 313; Li
+1975, Theorem 3(i), p. 295. This is a proposition, not an axiom or a proof of these printed facts.
+-/
 def Carayol1986ThmARationalWeightTwoCoinv : Prop :=
   ∀ (M : ℕ) [NeZero M] (F : Newform M 2) (hχ : F.χ = 1) (b : ℕ → ℚ)
     (hb : ∀ n : ℕ, (qExpansion 1 F.toCuspForm).coeff n = (b n : ℂ))
@@ -697,8 +697,9 @@ def DecompositionGroupLocalGlobalGlue : Prop :=
       ∃ σ : LocalGaloisQ p hp,
         IsArithmeticFrobeniusOnClosureQ (primeIdealQ p hp) Γ w σ ∧ r σ = D.element
 
-/-- **PRINT + DERIVED READING**, manuscript bibitem Silverman, *The Arithmetic of Elliptic Curves*,
-Appendix C, Theorem C.14.1 (Tate), read on the local `ℓ`-adic Tate module. For `E/ℚ` with
+/-- **GLUE (a reading of a printed theorem) WITH DERIVED READINGS**, manuscript bibitem Silverman,
+*The Arithmetic of Elliptic Curves*, Appendix C, Theorem C.14.1 (Tate), read on the local `ℓ`-adic
+Tate module. For `E/ℚ` with
 multiplicative reduction at `p` and `ℓ ≠ p`, Tate's theorem gives `q ∈ ℚ_p` with `|q| < 1` and a
 Galois-equivariant uniformization `\bar ℚ_p^× / q^ℤ ≅ E(\bar ℚ_p)` (over `ℚ_p` in the split case,
 after the unramified quadratic twist in the non-split case). Read through Kummer theory this gives a
