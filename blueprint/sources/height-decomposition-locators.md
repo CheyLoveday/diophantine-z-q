@@ -10,7 +10,7 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the twenty-nine statements of the chapter in the
+The minimal height hypothesis is proved from the twenty-seven statements of the chapter in the
 project's assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof
 is the project-authored note `docs/research/h-trust.md`.
 
@@ -145,15 +145,6 @@ citation, with §0.8, p. 411 (read in the numdam copy); W. Casselman, Math. Ann.
 1; K. Ribet, LNM 601 (1977), Theorem 2.3. The numbers of Casselman's and Ribet's theorems are
 unverified.
 
-## Hecke operators on J1(N)
-
-G. Shimura, *On the factors of the jacobian variety of a modular function field*, J. Math. Soc.
-Japan 25 (1973), 523–544: the Hecke operators $\xi_n$, p. 525; the standard model over $\mathbb Q$,
-by citation of his 1971 book, §7.3, and the rationality of the Hecke ring over $\mathbb Q$, p. 526
-(AI page read). G. Shimura, *Introduction to the Arithmetic Theory of Automorphic Functions* (1971),
-§§7.2–7.3 (unread). The double-coset formulas: F. Diamond and J. Shurman, *A First Course in Modular
-Forms*, GTM 228 (2005), §6.3, pp. 226–227, Proposition 5.2.1, p. 171, and §7.9, p. 300 (AI-read).
-
 ## Shimura abelian varieties
 
 G. Shimura, *On the factors of the jacobian variety of a modular function field*, J. Math. Soc.
@@ -165,15 +156,6 @@ use has a harmless misprint, "$f_\sigma\mid T_n=a_n^\sigma f$" for
 "$f_\sigma\mid T_n=a_n^\sigma f_\sigma$". F. Diamond and J. Shurman, *A First Course in Modular
 Forms*, GTM 228 (2005), Definition 6.6.3, p. 241 (AI-read).
 
-## Fowler Proposition 2.7
-
-G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.
-Proc. Cambridge Philos. Soc. 180 (2026), 607–641, Proposition 2.7, printed pp. 615–616 (article pp.
-9–10), read in the publisher's full text by the upstream review of the manuscript's CM argument
-(project note `docs/reviews/height-replacement/height/AUDIT.md`, item 1); the manuscript's citation
-(`diophantine_zq.tex`, lines 588–593). Discriminants and class numbers of orders: D. A. Cox, *Primes
-of the form $x^2+ny^2$*, Lemma 7.2 and Theorem 7.7 (numbers unverified).
-
 ## Degree of singular moduli
 
 The 11/5 manuscript (`diophantine_zq.tex`, lines 585–587), without a citation. D. A. Cox, *Primes of
@@ -181,16 +163,6 @@ the form $x^2+ny^2$*, Theorem 11.1 (number unverified). The upstream audit of th
 citations (project note `docs/theorem-application-audit/FINDINGS.md`) attributes the degree and the
 integrality of the class polynomial of an order to G. Fowler, Math. Proc. Cambridge Philos. Soc. 180
 (2026), 607–641, §2.1 (not read).
-
-## CM potential good reduction
-
-The 11/5 manuscript (`diophantine_zq.tex`, lines 596–597), without a citation. J.-P. Serre and J.
-Tate, *Good reduction of abelian varieties*, Ann. of Math. 88 (1968), 492–517 (locator unverified);
-J. H. Silverman, *The Arithmetic of Elliptic Curves*, Proposition VII.5.5 (number unverified); A.
-Barquero-Sanchez, L. Cadwallader, O. Cannon, T. Genao and R. Masri, *Faltings heights of CM elliptic
-curves and special Gamma values*, Res. Number Theory 3 (2017), art. 13, proof of Theorem 1.3, p. 15,
-read by the upstream review of the manuscript's CM argument (project note
-`docs/reviews/height-replacement/height/AUDIT.md`, item 2).
 
 ## Barquero-Sanchez et al. Eq. (6.2)
 
@@ -221,6 +193,12 @@ G. Faltings, *Endlichkeitssätze für abelsche Varietäten über Zahlkörpern*, 
 349–366, §2, the Definition and Lemma 1, p. 350, read from the page image of the GDZ scan; the paper
 is in the manuscript's bibliography (`diophantine_zq.tex`, lines 11084–11086) and cited at lines 621
 and 733 for other results.
+
+## Fowler Proposition 2.7
+
+G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.
+Proc. Cambridge Philos. Soc. 180 (2026), 607–641, Proposition 2.7, p. 615, with the class number
+defined on p. 613; the manuscript's citation (`diophantine_zq.tex`, lines 588–593).
 
 ## Conrad Appendix B
 

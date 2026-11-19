@@ -3,17 +3,16 @@ article_id: af_45fff05ecc3aee55a906d96a
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenResearchLeaves67.shimuraThm1Af
+lean: HDec.HSyn.OpenResearchLeaves70.shimuraThm1Af
 ---
 
 # Shimura's abelian variety attached to a newform
 
 The *Shimura statement* is the following assertion. Let $f\in S_2(\Gamma_1(N))$ be a newform with
-character $\chi$, $N\ge2$; let $X$, $P_0$ and $J$ be as in the statement on
-[Hecke operators](hecke-operators-jacobian.md), and $T_p$ ($p$ prime) and $\langle d\rangle$
-($d\in(\mathbb Z/N)^\times$) endomorphisms of $J$ over $\mathbb Q$ acting by the formulas there. Let
-$I_f$ be the set of endomorphisms $h(T_p,\langle d\rangle)$ of $J$, for $h$ a polynomial with
-integer coefficients in noncommuting variables, one for each prime $p$ and each $d$, such that
+character $\chi$, $N\ge2$; let $X$, $P_0$ and $J$ be as in the [introduction](README.md), and $T_p$
+($p$ prime) and $\langle d\rangle$ ($d\in(\mathbb Z/N)^\times$) Hecke operators on $J$ in the sense
+there. Let $I_f$ be the set of endomorphisms $h(T_p,\langle d\rangle)$ of $J$, for $h$ a polynomial
+with integer coefficients in noncommuting variables, one for each prime $p$ and each $d$, such that
 $h(a_p(f),\chi(d))=0$; a homomorphism $\phi$ from $J$ *kills $I_fJ$* when $\phi\circ u=0$ for every
 $u\in I_f$. For an abelian variety $A$ over $\mathbb Q$, a homomorphism $\nu:J\to A$ and a ring
 homomorphism $\theta:K_f\to\operatorname{End}^0(A)$, consider the clauses: (i) $\nu$ is surjective
@@ -47,7 +46,7 @@ hypothesis, not proved here.
 
 ## Depends on
 
-- [Hecke operators on J₁(N) over ℚ](hecke-operators-jacobian.md)
+None.
 
 ## Sources
 

@@ -3,7 +3,7 @@ article_id: af_2f1cfccdb3cd7896e3e972ee
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenResearchLeaves67.elliotWildInertiaTrivial
+lean: HDec.HSyn.OpenResearchLeaves70.elliotWildInertiaTrivial
 ---
 
 # Wild inertia acts trivially under semistable reduction
