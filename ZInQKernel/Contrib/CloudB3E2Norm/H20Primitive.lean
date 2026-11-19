@@ -23,10 +23,13 @@ unramified cochain `c_x`, `x = a(p_w(Frob))` — exactly (the `d⁰`-term is `d�
   above `w` (`InertiaFixesDivisionPoint`).
 * **`InertiaFixesDivisionPoint`** (Prop; kind GLUE, standard): every conjugate of the image of the
   inertia group at `w` fixes `Q`. For `Q` a `2^i`-division point of a point of `E` over the ring class
-  field `H_f`, `w ∤ 2f` a place of good reduction, this is the criterion of Néron–Ogg–Shafarevich
-  (Serre–Tate, *Good reduction of abelian varieties*, Ann. Math. 88 (1968), Thm. 1) applied to
-  `E` over the completions of `H_f(Q)` — division points of a point with good reduction at a place
-  prime to `2` generate an unramified extension (Silverman, *AEC*, VIII.1.5(b), for the Kummer map).
+  field `H_f`, `w ∤ 2f` a place of good reduction, this is the finite étaleness of `[2^i]` on the
+  Néron model of `E` over each completion of `H_f` above `w` (residue characteristic prime to `2`):
+  the torsion is unramified by Néron–Ogg–Shafarevich (Serre–Tate, *Good reduction of abelian
+  varieties*, Ann. Math. 88 (1968), Thm. 1) and the Kummer fibres (division points of a local point)
+  are unramified (Silverman, *AEC*, VIII.1.5(b)). (Algebraically the proof only uses conjugation by
+  the chosen representatives `r_δ`; the statement for all conjugates is the natural arithmetic
+  form.)
 * **`hPw_of_transfer`** (PROVED): `hPw` for the transferred Kummer class from `H_f` unramified at `w`
   and `InertiaFixesDivisionPoint`.
 * Non-vacuity: `nonVacuity_inertia`.
@@ -205,11 +208,11 @@ def inertiaImage : Set (GKS K S) :=
 
 include hr hι hιeq in
 /-- **`hPw` for the transferred Kummer class** (PROVED; tex 3471–3487, 4157–4170): for a genuine
-global cochain `a` carried to `𝒯_θ(κ(Q))` (`k Q = y`, `y` fixed by `H`), if `H_f` is unramified at
+global cochain `a` carried to `𝒯_θ(κ(Q))` (`k Q = y`), if `H_f` is unramified at
 `w` (`inertiaImage w ⊆ H`) and `InertiaFixesDivisionPoint` holds for `Q`, the localization at `w`
 lies in the image of RC30's unramified condition. -/
 theorem hPw_of_transfer [ContinuousSMul (GUr K w.1) (urRep k M₀ (newPlace w hw)).V]
-    (kk : ℤ) {Q y : D} (hQ : kk • Q = y) (hy : ∀ h ∈ H, ρ h y = y)
+    (kk : ℤ) {Q y : D} (hQ : kk • Q = y)
     (a : (globalCx k (GKS K S) (InflMod hS M₀)).X 1)
     (hz : ∀ g : Fin 1 → GKS K S,
       ι (gval (A := k) (M := InflMod hS M₀) a g) = T H r hr ρ θ 1 (kummerCochain ρ H Q) g)
@@ -230,7 +233,8 @@ end Transfer
 
 /-! ### Non-vacuity -/
 
-/-- **Non-vacuity of `InertiaFixesDivisionPoint`**: the trivial representation fixes everything.
+/-- **Non-vacuity of `InertiaFixesDivisionPoint`** (logical consistency only): the trivial
+representation fixes everything; the intended elliptic instance is the cited arithmetic fact.
 Kind: PROVED. -/
 theorem nonVacuity_inertia {G : Type*} [Group G] {k : Type*} [CommRing k] {D : Type*}
     [AddCommGroup D] [Module k D] (I : Set G) (Q : D) :
