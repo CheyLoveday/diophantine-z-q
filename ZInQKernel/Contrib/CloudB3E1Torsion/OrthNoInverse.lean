@@ -26,8 +26,11 @@ and the full condition there has a nonzero invariant.
   soon as there is an index `p` and a nonzero `m ∈ M` fixed by `G_{K_w}` at the place
   `w = place (p, false)`. With `T = {p}`, both places above `p` pass from zero to full, and
   `u₁ = m` (a constant `0`-cochain) is a cocycle of the full condition. No property of `φo` is
-  used. For the actual coefficient modules `M_i = (E[2^i] ⊗ A_i)(α)`, `i ≥ 1`, such an `m` exists:
-  `G_{K,S₀}` acts through `α` with values in `A_i^× = 1 + 𝔪`, which fixes the socle `M[𝔪] ≠ 0`.
+  used. For the actual coefficient modules `M_i = (E[2^i] ⊗ A_i)(α)`, `i ≥ 1`, such an `m` exists
+  (argued here, not formalized): `m = c ⊗ Q` with `c = 2^{i−1} t^{i−1}` spanning the socle of
+  `A_i` and `Q ∈ E[2^i] ∖ 2E[2^i]`, so `m ≠ 0`. For `g ∈ G_{K_w}`, `α(g) ∈ A_i^× = 1 + 𝔪` fixes
+  `c`. Also `gQ − Q ∈ 2E[2^i]`, because `G` acts trivially on `E[2^i]/2E[2^i] ≅ E[2]`
+  (`E_ℓ : y² = x(x − ℓ)(x + 3ℓ)` has full rational `2`-torsion). Since `2c = 0`, `g • m = m`.
 
 **The corrected form** (the text's, tex 3736–3753). The inverse exists only after a localization at
 which the cones of the zero → full comparisons are acyclic. Those cones are the full local complexes
