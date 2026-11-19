@@ -1,0 +1,13 @@
+- Base: `53109239c3236c49fbf9e308d946cdc066322884`.
+- `PMLocal` is absent at base; inspected its fields on the existing stage branch. `Lift.geom.f` is the unchanged stage weight at the fixed-pool interface. Its sphere support alone does not imply a Schwartz coset presentation.
+- `Visibility/WeilIndex.lean` already has `O5a_ternary`, `hs_extracted_QB`, `W_U_W`, and `O5b_mul`; actual p-adic Fourier operators and the comparison with their global action remain separate.
+- `Coset.lean`: shifted Gaussian `HasSum`, holomorphy, inversion, weighted coset sum inversion. `lake env lean` passed; all five axioms audits list only `propext`, `Classical.choice`, `Quot.sound`.
+- `Grid.lean`: integral-support translation, dual residue sum with the negative finite pairing, and normalized finite Fourier inversion. `lake env lean` passed with the three permitted axioms for all seven statements.
+- `Series.lean`: absolute product and finite outer sum of the shifted Gaussians, and the exact natural-exponent `qParam` formula. `lake env lean` passed; all five audits use only the permitted axioms.
+- Base imports: reused the identical fixed-pool revision's compiled dependencies. No source imported from a sibling branch absent at base.
+- `Local.lean`: Fourier annihilator support and lower-unipotent depth criterion; extracted unit diagonal scalar via the existing `Visibility/WeilIndex`; triangular factorization and Jacobi reciprocity with the dyadic sign. `lake env lean` passed; all six audits use only the permitted axioms.
+- `Words.lean`: words for the full modular group, composition of generator formulas, and bounded normalized values at all rational cusps. `lake env lean` passed; all ten audits use only the permitted axioms.
+- `Transform.lean`: `RelativeFiniteAction` is the joint scalar equation for the two finite tables; `halfIntegral_of_finiteAction` gives the exact classical law. `lake env lean` passed; all four audits use only the permitted axioms.
+- `Stage.lean`: `StageGrid` presents the original weights; their summed grid vector has trivial translation and expansion `Lift.aθ`; `oldStageLaw_of_finiteAction` supplies `BlocksPerU.OldStageLaw` at `Dₗ.old`. `lake env lean` passed; all seven audits use only the permitted axioms.
+- Final Coset recheck passed. Total: seven modules and 44 theorem audits.
+- Scoped stop: provide `StageGrid` for the prescribed weight, identify the old character by `hchar`, and prove `RelativeFiniteAction` at the stated old level by comparison with the local Weil action. No additional printed leaf.
