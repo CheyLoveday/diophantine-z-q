@@ -13,3 +13,8 @@
 - `lake build +ZInQKernel.OneProof.Discharges`: target built for the focused check.
 - `BShFamilyLocalKernels`: built as part of the family build. The splitting-field lift, mark test, and bijection with the allowed local branches have only the allowed axioms.
 - `BShFamilyCoordinates`: built as part of the family build. The short Vélu sums on the weighted kernel agree with the lattice sums and pass to germs; all four axiom scans have only the allowed axioms.
+- `BShFamily.local_kernel_profiles`: built. A single lift of the splitting field and a single bijection of kernels match both coordinates at every parameter.
+- `BShFamily.exists_primeTrace`: built. Every prime has the fixed `IsPrimeTrace` on each admissible model.
+- `BShFamily.bShStandardModel_proof : R16Thm1.BShStandardModel` and `BShFamily.heckeJ1DS_proof : AfTateLam.HeckeJ1DS`: built.
+- `lake build +ZInQKernel.Contrib.OneProof.BShFamily +ZInQKernel.OneProof.Discharges`: passed offline. All 74 new theorem scans are subsets of `[propext, Classical.choice, Quot.sound]`.
+- Focused `#discharges`: `DISCHARGES [bShStandardModel] by BShFamily.bShStandardModel_proof`; still assumes `[]`; axioms `[propext, Classical.choice, Quot.sound]`. The scan checked 1652 theorems and also reported the predecessor's conditional theorem.
