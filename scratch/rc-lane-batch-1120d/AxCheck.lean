@@ -14,113 +14,164 @@ import ZInQKernel.Contrib.OneProof.RC.EisSlash.Residues
 import ZInQKernel.Contrib.OneProof.RC.TwoFresh.Main
 import ZInQKernel.Contrib.OneProof.RC.TwoFresh.Stage
 
-#print axioms ZInQ.Manuscript.RC.EisForm.divisorCoeff_eq_eisenstein
-#print axioms ZInQ.Manuscript.RC.EisForm.pair_goodRec
-#print axioms ZInQ.Manuscript.RC.EisForm.old_goodRec
-#print axioms ZInQ.Manuscript.RC.EisForm.weightTwist_eq_one_of_inertia
-#print axioms ZInQ.Manuscript.RC.EisForm.normalizedRep_unramified
-#print axioms ZInQ.Manuscript.RC.EisForm.normalizedRep_goodAttachment
-#print axioms ZInQ.Manuscript.RC.EisForm.baseForm_good_trace
-#print axioms ZInQ.Manuscript.RC.EisForm.continuous_finiteChar
-#print axioms ZInQ.Manuscript.RC.EisForm.continuous_splitTrace
-#print axioms ZInQ.Manuscript.RC.EisForm.repInput_of_split_choice
-#print axioms ZInQ.Manuscript.RC.EisForm.divisorCoeff_eq_sum_divisors
-#print axioms ZInQ.Manuscript.RC.EisForm.norm_divisorCoeff_le
-#print axioms ZInQ.Manuscript.RC.EisForm.summable_seriesCoeff
-#print axioms ZInQ.Manuscript.RC.EisForm.series_radius
-#print axioms ZInQ.Manuscript.RC.EisForm.hasSum_series
-#print axioms ZInQ.Manuscript.RC.EisForm.series_holo
-#print axioms ZInQ.Manuscript.RC.EisForm.series_periodic
-#print axioms ZInQ.Manuscript.RC.EisForm.series_boundedAtInfty
-#print axioms ZInQ.Manuscript.RC.EisForm.coeff_of_hasSum
-#print axioms ZInQ.Manuscript.RC.EisForm.qExpansion_series
-#print axioms ZInQ.Manuscript.RC.EisForm.summable_lambertTerm
-#print axioms ZInQ.Manuscript.RC.EisForm.series_eq_lambert
-#print axioms ZInQ.Manuscript.RC.EisForm.primitive_ringHomComp
-#print axioms ZInQ.Manuscript.RC.EisForm.qParam_shift_pow
-#print axioms ZInQ.Manuscript.RC.EisForm.lipschitzRow_eq
-#print axioms ZInQ.Manuscript.RC.EisForm.gaussInv_ne_zero
-#print axioms ZInQ.Manuscript.RC.EisForm.series_eq_lipschitz
-#print axioms ZInQ.Manuscript.RC.EisForm.pairSeries_eq_lipschitz
-#print axioms ZInQ.Manuscript.RC.EisForm.pairSeries_positive
-#print axioms ZInQ.Manuscript.RC.EisForm.pairSeries_holo
-#print axioms ZInQ.Manuscript.RC.EisForm.pairSeries_boundedAtInfty
-#print axioms ZInQ.Manuscript.RC.EisForm.baseForm_of_modularity
-#print axioms ZInQ.Manuscript.RC.EisForm.atLevel_coeff_degree
-#print axioms ZInQ.Manuscript.RC.EisForm.scale_of_labeled_line
-#print axioms ZInQ.Manuscript.RC.EisForm.column_of_labeled_line
-#print axioms ZInQ.Manuscript.RC.EisForm.realizedCoordinate_of_labeled_line
-#print axioms ZInQ.Manuscript.RC.EisSlash.gridRow_eq_kernel
-#print axioms ZInQ.Manuscript.RC.EisSlash.rowKernel_neg
-#print axioms ZInQ.Manuscript.RC.EisSlash.rowKernel_zero
-#print axioms ZInQ.Manuscript.RC.EisSlash.positiveShift_im
-#print axioms ZInQ.Manuscript.RC.EisSlash.rowKernel_fourier
-#print axioms ZInQ.Manuscript.RC.EisSlash.decay_lt_one
-#print axioms ZInQ.Manuscript.RC.EisSlash.summable_decay
-#print axioms ZInQ.Manuscript.RC.EisSlash.rowKernel_bound_pos
-#print axioms ZInQ.Manuscript.RC.EisSlash.gridRow_majorant
-#print axioms ZInQ.Manuscript.RC.EisSlash.summable_gridRows
-#print axioms ZInQ.Manuscript.RC.EisSlash.gridSeries_bounded
-#print axioms ZInQ.Manuscript.RC.EisSlash.latticeDiff_eq_gridSeries_sub
-#print axioms ZInQ.Manuscript.RC.EisSlash.latticeDiff_shift
-#print axioms ZInQ.Manuscript.RC.EisSlash.rowWeight_grid
-#print axioms ZInQ.Manuscript.RC.EisSlash.characterWeight_on_row
-#print axioms ZInQ.Manuscript.RC.EisSlash.rowWeight_transform
-#print axioms ZInQ.Manuscript.RC.EisSlash.characterWeight_pullback
-#print axioms ZInQ.Manuscript.RC.EisSlash.pairNebentypus_value
-#print axioms ZInQ.Manuscript.RC.EisSlash.pairWeight_pullback
-#print axioms ZInQ.Manuscript.RC.EisSlash.rowWeight_mul
-#print axioms ZInQ.Manuscript.RC.EisSlash.weightedRow_mul
-#print axioms ZInQ.Manuscript.RC.EisSlash.weightedRow_zero
-#print axioms ZInQ.Manuscript.RC.EisSlash.weightedRow_even
-#print axioms ZInQ.Manuscript.RC.EisSlash.weightedRows_restrict
-#print axioms ZInQ.Manuscript.RC.EisSlash.weightedRow_positive
-#print axioms ZInQ.Manuscript.RC.EisSlash.ordered_grid_fourier
-#print axioms ZInQ.Manuscript.RC.EisSlash.inv_apply_neg_one
-#print axioms ZInQ.Manuscript.RC.EisSlash.ramified_complex_ne_one
-#print axioms ZInQ.Manuscript.RC.EisSlash.pair_grid_fourier
-#print axioms ZInQ.Manuscript.RC.EisSlash.pair_modularity
-#print axioms ZInQ.Manuscript.RC.EisSlash.pair_baseForm
-#print axioms ZInQ.Manuscript.RC.EisSlash.linear_eq_zero_iff
-#print axioms ZInQ.Manuscript.RC.EisSlash.summand_eq
-#print axioms ZInQ.Manuscript.RC.EisSlash.grid_injective
-#print axioms ZInQ.Manuscript.RC.EisSlash.linear_grid_bigO
-#print axioms ZInQ.Manuscript.RC.EisSlash.summable_lattice_diff
-#print axioms ZInQ.Manuscript.RC.EisSlash.latticeDiff_add
-#print axioms ZInQ.Manuscript.RC.EisSlash.latticeDiff_slash
-#print axioms ZInQ.Manuscript.RC.EisSlash.summable_gridRow_inner
-#print axioms ZInQ.Manuscript.RC.EisSlash.summable_gridDiff_prod
-#print axioms ZInQ.Manuscript.RC.EisSlash.latticeDiff_eq_rows
-#print axioms ZInQ.Manuscript.RC.EisSlash.gridSeries_shift
-#print axioms ZInQ.Manuscript.RC.EisSlash.splitResidue_val
-#print axioms ZInQ.Manuscript.RC.EisSlash.sum_residue_second
-#print axioms ZInQ.Manuscript.RC.EisSlash.sum_residue_first
-#print axioms ZInQ.Manuscript.RC.EisSlash.characterWeight_sum_zero
-#print axioms ZInQ.Manuscript.RC.EisSlash.orderedScale_ne_zero
-#print axioms ZInQ.Manuscript.RC.EisSlash.pairScale_ne_zero
-#print axioms ZInQ.Manuscript.RC.EisSlash.pair_checks_of_grid_eq
-#print axioms ZInQ.Manuscript.RC.EisSlash.missingModularity_of_gridFourier
-#print axioms ZInQ.Manuscript.RC.EisSlash.baseForm_of_gridFourier
-#print axioms ZInQ.Manuscript.RC.EisSlash.summable_finite_prod
-#print axioms ZInQ.Manuscript.RC.EisSlash.sum_residue_rows
-#print axioms ZInQ.Manuscript.RC.EisSlash.residue_vec
-#print axioms ZInQ.Manuscript.RC.EisSlash.grid_residue_vec
-#print axioms ZInQ.Manuscript.RC.EisSlash.weightedRow_on_residue
-#print axioms ZInQ.Manuscript.RC.EisSlash.gridCombination_eq_weightedRows
-#print axioms ZInQ.Manuscript.RC.EisSlash.rowResidue_lift
-#print axioms ZInQ.Manuscript.RC.EisSlash.exists_grid_of_residue_eq
-#print axioms ZInQ.Manuscript.RC.EisSlash.rowResidue_vecMul
-#print axioms ZInQ.Manuscript.RC.EisSlash.gridCombination_eq_rows
-#print axioms ZInQ.Manuscript.RC.EisSlash.latticeDiff_residue_slash
-#print axioms ZInQ.Manuscript.RC.EisSlash.gridCombination_slash
-#print axioms ZInQ.Manuscript.RC.EisSlash.gridCombination_slash_scalar
-#print axioms ZInQ.Manuscript.RC.EisSlash.gridCombination_bounded_slash
-#print axioms ZInQ.Manuscript.RC.TwoFresh.two_hecke_coeff
-#print axioms ZInQ.Manuscript.RC.TwoFresh.dense_twoFreshTests
-#print axioms ZInQ.Manuscript.RC.TwoFresh.continuous_twoTraces
-#print axioms ZInQ.Manuscript.RC.TwoFresh.h2fresh
-#print axioms ZInQ.Manuscript.RC.TwoFresh.fresh_squarefree_weight
-#print axioms ZInQ.Manuscript.RC.TwoFresh.ne_unary_of_oddPart
-#print axioms ZInQ.Manuscript.RC.TwoFresh.map_TL
-#print axioms ZInQ.Manuscript.RC.TwoFresh.dvd_of_stage_dvd
-#print axioms ZInQ.Manuscript.RC.TwoFresh.fresh_normalizations
+namespace ZInQ.Manuscript.RC.EisForm
+section
+open AddressGenuine O12 O12EisConst O12Eisenstein PrintsArith TraceLimits Matrix
+open Filter Topology UpperHalfPlane
+open ZInQ.Contrib.CloudB3RC53.CoefficientDictionary
+open scoped MatrixGroups
+#print axioms pair_goodRec
+#print axioms old_goodRec
+#print axioms normalizedRep_unramified
+#print axioms normalizedRep_goodAttachment
+#print axioms baseForm_good_trace
+#print axioms continuous_splitTrace
+#print axioms repInput_of_split_choice
+end
+end ZInQ.Manuscript.RC.EisForm
+namespace ZInQ.Manuscript.RC.EisForm
+section
+open O12Eisenstein UpperHalfPlane Function
+open scoped Manifold
+#print axioms divisorCoeff_eq_sum_divisors
+#print axioms norm_divisorCoeff_le
+#print axioms hasSum_series
+#print axioms series_holo
+#print axioms series_periodic
+#print axioms series_boundedAtInfty
+#print axioms qExpansion_series
+end
+end ZInQ.Manuscript.RC.EisForm
+namespace ZInQ.Manuscript.RC.EisForm
+section
+open O12Eisenstein UpperHalfPlane Complex
+open scoped Real
+#print axioms series_eq_lambert
+#print axioms primitive_ringHomComp
+#print axioms series_eq_lipschitz
+end
+end ZInQ.Manuscript.RC.EisForm
+namespace ZInQ.Manuscript.RC.EisForm
+section
+open O12 O12EisConst O12Eisenstein UpperHalfPlane TauCeti
+open CongruenceSubgroup Matrix.SpecialLinearGroup
+open ZInQ.Contrib.CloudB3RC53.CoefficientDictionary
+open scoped MatrixGroups Manifold ModularForm
+#print axioms pairSeries_eq_lipschitz
+#print axioms pairSeries_positive
+#print axioms pairSeries_holo
+#print axioms pairSeries_boundedAtInfty
+#print axioms baseForm_of_modularity
+end
+end ZInQ.Manuscript.RC.EisForm
+namespace ZInQ.Manuscript.RC.EisForm
+section
+open AddressGenuine O12 O12EisConst O12Eisenstein UpperHalfPlane TauCeti PrintsArith
+open CongruenceSubgroup Matrix.SpecialLinearGroup
+open ZInQ.Contrib.CloudB3RC53.CoefficientDictionary
+#print axioms atLevel_coeff_degree
+#print axioms scale_of_labeled_line
+#print axioms column_of_labeled_line
+#print axioms realizedCoordinate_of_labeled_line
+end
+end ZInQ.Manuscript.RC.EisForm
+namespace ZInQ.Manuscript.RC.EisSlash
+section
+open Matrix ModularForm UpperHalfPlane EisensteinSeries
+open scoped MatrixGroups
+#print axioms summable_gridRows
+#print axioms gridSeries_bounded
+#print axioms latticeDiff_eq_gridSeries_sub
+#print axioms latticeDiff_shift
+end
+end ZInQ.Manuscript.RC.EisSlash
+namespace ZInQ.Manuscript.RC.EisSlash
+section
+open Matrix Matrix.SpecialLinearGroup ModularForm UpperHalfPlane CongruenceSubgroup
+open O12Eisenstein O12EisConst EisForm
+open scoped MatrixGroups
+#print axioms characterWeight_on_row
+#print axioms characterWeight_pullback
+#print axioms pairWeight_pullback
+end
+end ZInQ.Manuscript.RC.EisSlash
+namespace ZInQ.Manuscript.RC.EisSlash
+section
+open Matrix UpperHalfPlane EisensteinSeries O12Eisenstein O12EisConst EisForm
+#print axioms ordered_grid_fourier
+#print axioms pair_grid_fourier
+#print axioms pair_modularity
+#print axioms pair_baseForm
+end
+end ZInQ.Manuscript.RC.EisSlash
+namespace ZInQ.Manuscript.RC.EisSlash
+section
+open Matrix Matrix.SpecialLinearGroup ModularForm UpperHalfPlane EisensteinSeries
+open Filter Asymptotics
+open scoped MatrixGroups Real
+#print axioms summable_lattice_diff
+#print axioms latticeDiff_add
+#print axioms latticeDiff_slash
+#print axioms summable_gridRow_inner
+#print axioms latticeDiff_eq_rows
+#print axioms gridSeries_shift
+end
+end ZInQ.Manuscript.RC.EisSlash
+namespace ZInQ.Manuscript.RC.EisSlash
+section
+open Matrix O12Eisenstein O12EisConst EisForm
+#print axioms characterWeight_sum_zero
+end
+end ZInQ.Manuscript.RC.EisSlash
+namespace ZInQ.Manuscript.RC.EisSlash
+section
+open Matrix Matrix.SpecialLinearGroup ModularForm UpperHalfPlane CongruenceSubgroup
+open O12Eisenstein O12EisConst EisForm
+open scoped MatrixGroups ModularForm
+#print axioms orderedScale_ne_zero
+#print axioms pairScale_ne_zero
+#print axioms pair_checks_of_grid_eq
+#print axioms missingModularity_of_gridFourier
+#print axioms baseForm_of_gridFourier
+end
+end ZInQ.Manuscript.RC.EisSlash
+namespace ZInQ.Manuscript.RC.EisSlash
+section
+open Matrix ModularForm UpperHalfPlane EisensteinSeries
+#print axioms sum_residue_rows
+#print axioms gridCombination_eq_weightedRows
+end
+end ZInQ.Manuscript.RC.EisSlash
+namespace ZInQ.Manuscript.RC.EisSlash
+section
+open Matrix Matrix.SpecialLinearGroup ModularForm UpperHalfPlane
+open scoped MatrixGroups
+#print axioms rowResidue_lift
+#print axioms exists_grid_of_residue_eq
+#print axioms rowResidue_vecMul
+#print axioms gridCombination_eq_rows
+#print axioms gridCombination_slash
+#print axioms gridCombination_slash_scalar
+#print axioms gridCombination_bounded_slash
+end
+end ZInQ.Manuscript.RC.EisSlash
+namespace ZInQ.Manuscript.RC.TwoFresh
+section
+open AddressGenuine PrintsArith Symbols TraceLimits
+open ZInQ.Contrib.CloudB3RC53.CoefficientDictionary
+open scoped MatrixGroups
+open ZInQ.Manuscript.RC.Odd
+#print axioms two_hecke_coeff
+#print axioms dense_twoFreshTests
+#print axioms continuous_twoTraces
+#print axioms h2fresh
+end
+end ZInQ.Manuscript.RC.TwoFresh
+namespace ZInQ.Manuscript.RC.TwoFresh
+section
+open ZInQ.Manuscript.RC.Odd
+#print axioms fresh_squarefree_weight
+#print axioms ne_unary_of_oddPart
+#print axioms fresh_normalizations
+end
+end ZInQ.Manuscript.RC.TwoFresh
