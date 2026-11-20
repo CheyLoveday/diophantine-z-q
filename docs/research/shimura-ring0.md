@@ -115,7 +115,28 @@ is claimed.
 | Lines in `diophantine_zq.tex` | Verdict | Finding |
 | --- | --- | --- |
 | L770–773, base Lean encoding of the construction | error | The zero-index pair could force the surjective quotient map to be zero. This was an error in the inherited Lean encoding, now repaired. |
+| L767–770, choice of primitive form and Fricke proviso | unverified | The reduction takes a weight-two newform as given. It does not derive that newform from the representation or use Fricke stability. |
 | L770–771, quotient construction | OK | The citation reaches Shimura's construction on p. 526. The identification `ker ν = C` is in the proof. |
 | L770–773, quotient row used by the formalization | gap filled | The split exposes the proof's universal property as its own input; the existing Lean comparison transports it and derives compatible uniqueness. |
 | L771–773, Euler identity, choice of Tate constituent and dual | unverified | These claims are outside the quotient row and were not checked here. |
 | L11053–11057, bibliography | OK | The citation names the paper, Theorem 1 and DOI identified by the reviewer. |
+
+## Verification
+
+The serial offline Lake build passed for `ShimuraSteps`, `ShimuraHeckeJ`,
+`ShimuraPointDict`, `SameDimFinite`, `ShimuraOrbits`, `ShimuraHeckeClosed`,
+`ShimuraRing0`, `BShFamily`, and the `OneProof.Discharges` harness.
+It used Lean 4.35.0 and Mathlib v4.35.0, with Lake validating the cached
+dependencies. The [axiom scan](../../scratch/shimura-ring0/Axioms-output.txt)
+reports only `propext`, `Classical.choice`, and `Quot.sound` for all seven
+new theorems, `shimuraThm1Af_of_printed`, and
+`BShFamily.bShStandardModel_proof`.
+
+The [focused output](../../scratch/shimura-ring0/Discharges-output.txt)
+uses the exact `R16Thm1b.ShimuraThm1Af` type in a one-row harness:
+
+```text
+DISCHARGES [shimuraThm1Af] by ShimuraSteps.shimuraThm1Af_of_split_closed
+  still assumes: [ShimuraSteps.ShimuraThm1Printed, ShimuraSteps.ShimuraQuotientByC]
+  axioms: [propext, Classical.choice, Quot.sound]
+```

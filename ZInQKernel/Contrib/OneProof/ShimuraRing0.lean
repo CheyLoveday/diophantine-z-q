@@ -19,8 +19,6 @@ theorem printRing_update_zero (t : AbVar.End J) :
     printRing (Function.update ξ 0 t) f = printRing ξ f := by
   unfold printRing
   congr 2
-  funext n
-  rw [Function.update_of_ne (Nat.succ_ne_zero n)]
 
 /-- If the zero operator is normalized, its pair is already in every subring.
 This recovers the all-index closure on the Hecke bridge. -/

@@ -13,3 +13,7 @@
 - `shimuraThm1Af_of_split`: the two split inputs, `ShimuraHeckeRelations`, and `SameDimSurjectiveFinite` give `R16Thm1b.ShimuraThm1Af`.
 - `shimuraThm1Af_of_split_closed`: the two split inputs alone give the same row.
 - Source comparison against the base: exact conjunct deletion; construction binders unchanged through `XiAction`; fixed propositions unchanged; only docstrings changed in `SameDimFinite.lean` and `ShimuraOrbits.lean`.
+- Draft build: redundant `funext` after `congr 2` in `printRing_update_zero` produced `No goals to be solved`; removed the redundant tactics.
+- PASS: serial offline Lake build (12,977 jobs) for `ShimuraSteps`, `ShimuraHeckeJ`, `ShimuraPointDict`, `SameDimFinite`, `ShimuraOrbits`, `ShimuraHeckeClosed`, `ShimuraRing0`, `BShFamily`, and `OneProof.Discharges`.
+- PASS: `Axioms-output.txt`, all seven new theorems plus `shimuraThm1Af_of_printed` and `BShFamily.bShStandardModel_proof`: only `propext`, `Classical.choice`, `Quot.sound`.
+- PASS: `Discharges-output.txt`, the only assumptions of `shimuraThm1Af_of_split_closed` are `ShimuraThm1Printed` and `ShimuraQuotientByC`.
