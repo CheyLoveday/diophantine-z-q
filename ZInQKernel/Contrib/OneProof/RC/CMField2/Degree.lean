@@ -57,7 +57,7 @@ private theorem mkPic_picRepresentative (O : NumberFieldOrder K) (c : Pic O) :
 
 /-- The degree of a singular modulus over ℚ is at most the proper class number,
 assuming exact-order conjugacy. -/
-theorem singularModulus_finrank_le (hconj : ConjugateSingularModulus)
+theorem singularModulus_finrank_le_of_conjugate (hconj : ConjugateSingularModulus)
     (O : NumberFieldOrder K) (hk : finrank ℚ K = 2) (hc : IsTotallyComplex K)
     (κ : K →+* ℂ) (I : O.invertibleProperFractionalIdeals) :
     finrank ℚ ℚ⟮singularModulus O hk hc κ I⟯ ≤ Nat.card (Pic O) := by
@@ -71,7 +71,7 @@ theorem singularModulus_finrank_le (hconj : ConjugateSingularModulus)
 
 /-- The same bound over the quadratic field through the chosen embedding.
 Restriction to the simple rational field preserves the image of the generator. -/
-theorem singularModulus_finrank_over_base_le (hconj : ConjugateSingularModulus)
+theorem singularModulus_finrank_over_base_le_of_conjugate (hconj : ConjugateSingularModulus)
     (O : NumberFieldOrder K) (hk : finrank ℚ K = 2) (hc : IsTotallyComplex K)
     (κ : K →+* ℂ) (I : O.invertibleProperFractionalIdeals) :
     letI : Algebra K ℂ := κ.toAlgebra
@@ -94,7 +94,7 @@ theorem singularModulus_finrank_over_base_le (hconj : ConjugateSingularModulus)
 #print axioms ConjugateSingularModulus
 #print axioms finrank_adjoin_le_of_conjugate_family
 #print axioms mkPic_picRepresentative
-#print axioms singularModulus_finrank_le
-#print axioms singularModulus_finrank_over_base_le
+#print axioms singularModulus_finrank_le_of_conjugate
+#print axioms singularModulus_finrank_over_base_le_of_conjugate
 
 end ZInQ.Manuscript.RC.CMField2

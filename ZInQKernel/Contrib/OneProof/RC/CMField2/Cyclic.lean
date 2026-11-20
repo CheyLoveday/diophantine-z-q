@@ -64,7 +64,47 @@ theorem isAddCyclic_sublatticeQuotient_of_primitive (L M : PeriodPair)
     obtain ⟨y, hy⟩ := hincl ⟨x, h hx⟩ hx
     exact ⟨y, y.property, congrArg Subtype.val hy⟩
 
+/-- A cyclic rank-two quotient cannot come from a sublattice inside a
+nontrivial integer dilation. -/
+theorem primitive_of_isAddCyclic_quotient {M : Type*} [AddCommGroup M]
+    (b : Basis (Fin 2) ℤ M) (S : Submodule ℤ M) (hS : finrank ℤ S = finrank ℤ M)
+    (hc : IsAddCyclic (M ⧸ S)) (k : ℕ) (hk : 1 < k)
+    (hd : ∀ x ∈ S, ∃ y : M, x = (k : ℤ) • y) : False := by
+  let a := S.smithNormalFormCoeffs b hS
+  let v := S.smithNormalFormBotBasis b hS
+  let w := S.smithNormalFormTopBasis b hS
+  let e := (S.quotientEquivPiZMod b hS).trans
+    (LinearEquiv.piFinTwo ℤ (fun i : Fin 2 => ZMod ((a i).natAbs))).toAddEquiv
+  obtain ⟨_, _, hcp⟩ := AddGroup.isAddCyclic_prod_iff.mp (e.isAddCyclic.mp hc)
+  simp only [Nat.card_zmod, Nat.coprime_iff_gcd_eq_one] at hcp
+  have ha (i : Fin 2) : k ∣ (a i).natAbs := by
+    obtain ⟨y, hy⟩ := hd (v i) (v i).property
+    have h := congrArg (fun x => w.repr x i)
+      ((S.smithNormalFormBotBasis_def b hS i).symm.trans hy)
+    have h' : (k : ℤ) ∣ a i := ⟨w.repr y i, by simpa [w, a] using h⟩
+    exact Int.natCast_dvd.mp h'
+  have hg := Nat.dvd_gcd (ha 0) (ha 1)
+  rw [hcp] at hg
+  exact (Nat.ne_of_gt hk) (Nat.dvd_one.mp hg)
+
+/-- The converse primitive criterion on the period-lattice quotient. -/
+theorem primitive_of_isAddCyclic_sublatticeQuotient (L M : PeriodPair)
+    (h : M.lattice ≤ L.lattice) (hc : IsAddCyclic (L.sublatticeQuotient M))
+    (k : ℕ) (hk : 1 < k)
+    (hd : ∀ x ∈ M.lattice, ∃ y ∈ L.lattice, x = (k : ℤ) • y) : False := by
+  let S := (M.lattice.toAddSubgroup.addSubgroupOf L.lattice.toAddSubgroup).toIntSubmodule
+  let e₀ : S ≃+ M.lattice := AddSubgroup.addSubgroupOfEquivOfLe
+    (show M.lattice.toAddSubgroup ≤ L.lattice.toAddSubgroup from h)
+  let e : S ≃ₗ[ℤ] M.lattice := e₀.toIntLinearEquiv
+  refine primitive_of_isAddCyclic_quotient L.latticeBasis S
+    (e.finrank_eq.trans (M.finrank_lattice.trans L.finrank_lattice.symm)) hc k hk ?_
+  intro x hx
+  obtain ⟨y, hy, he⟩ := hd x hx
+  exact ⟨⟨y, hy⟩, Subtype.ext he⟩
+
 #print axioms isAddCyclic_quotient_of_primitive
 #print axioms isAddCyclic_sublatticeQuotient_of_primitive
+#print axioms primitive_of_isAddCyclic_quotient
+#print axioms primitive_of_isAddCyclic_sublatticeQuotient
 
 end ZInQ.Manuscript.RC.CMField2
