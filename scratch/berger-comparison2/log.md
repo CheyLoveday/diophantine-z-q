@@ -214,3 +214,17 @@ dimension premise gives an invariant de Rham basis. The paper-ring
 basis implication then supplies the unchanged `BergerThm06Print`
 draft and its existing bridge to `bergerSurveyF`. The argument
 retains the witness field supplied by that implication.
+
+## Axioms and row match (VERIFIED)
+
+- `lake env lean scratch/berger-comparison2/Axioms.lean` succeeded.
+  There are 58 explicit `#print axioms` results. The allowlist check
+  passed for 422 declarations, including 324 theorems (public, private
+  and generated). Only `propext`, `Classical.choice` and `Quot.sound`
+  occur.
+- `lake env lean scratch/berger-comparison2/Discharges.lean` succeeded.
+  The focused fixture verifies the headline's exact row type against the
+  source. The matcher reports that `bergerSurveyF_of_cyclotomic_basis`
+  supplies `bergerSurveyF` with just the paper-ring basis implication
+  as a premise. No ring-comparison hypothesis remains.
+- The outputs are `axioms-output.txt` and `discharges-output.txt`.
