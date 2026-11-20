@@ -1,0 +1,9 @@
+- Base: `77255b723c39631f737224bb96e3393b79b6bc7c`.
+- Consumer: `ParamJoin.algebraicParametrizationAtScale` → `X0Branch.model`.
+- Matrix check: reduced determinant Qad - (N/Q)bc = 1. Pullbacks j(Qτ), j((N/Q)τ).
+- New declarations: `levelInvariant_of_dvd`, `jqN_mem_of_dvd`. Source commit `e41a81671`.
+- Build: initial artifact-lookup attempt issued outside the requested scope; failed before elaboration. Subsequent Lean invocation with cache artifacts in place was under `systemd-run --user --scope -p MemoryMax=60G`.
+- Scoped build: retained declarations elaborated. Axiom output for both: `propext, Classical.choice, Quot.sound`. Full attempt failed on matrix elaboration; no module artifact.
+- Isolated `lake build`: automatic review rejected a rerun due to another active Lean job; subsequent guarded command exited before launching Lean. No successful standalone build.
+- Open: `RationalAtkin (X0Branch.model N) hQ`; represent the point difference on the actual projective target; prove `BasedAtkinOnPoints` and formal cusp normalization; expose the unconditional producer at the pinned sign.
+- No newly identified manuscript error. Inherited citation issues recorded in the report.
