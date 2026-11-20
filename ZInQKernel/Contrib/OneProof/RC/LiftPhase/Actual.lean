@@ -120,10 +120,5 @@ theorem actualOldStageLaw {a : Fin 3 → ℕ} [∀ i, NeZero (2 * a i)] {step : 
   oldStageLaw_of_finiteAction _ Dₗ _ grid _
     (actual_hchar h hN hcop H w G d L Dₗ hm he hlevel κ) action
 
-#print axioms actualEta_reduce
-#print axioms actualLift_order
-#print axioms extractionNonzero
-#print axioms actual_hchar
-#print axioms actualOldStageLaw
 
 end ZInQ.Manuscript.RC.LiftPhase

@@ -73,9 +73,5 @@ theorem poolPhase_order (h4 : 4 ∣ D) (hm : m ∣ D) (h3 : m % 4 = 3)
   rw [poolPhase_eval C hn h4 hm h3 hc u]
   exact ⟨_, eta_order_of_away C hn (representative_away C hn hc u)⟩
 
-#print axioms residueModuli_dvd
-#print axioms representative_away
-#print axioms poolPhase_eval
-#print axioms poolPhase_order
 
 end ZInQ.Manuscript.RC.LiftPhase

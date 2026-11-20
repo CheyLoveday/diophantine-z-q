@@ -242,7 +242,9 @@ theorem rational_of_projective_values_on_tail (E : WeierstrassCurve ℚ) [E.IsEl
     exact hsy τ ((le_max_right _ _).trans_lt ((le_max_right _ _).trans_lt hτ))
 
 /-- For the constructed curve, rationality is precisely the obstruction to
-the interior map at the specified scale. The converse uses only a cusp tail. -/
+the interior map at the specified scale. The converse uses only a cusp tail.
+
+The → direction must not be cited as the source of κ ∈ ℚ (circularity rule). -/
 theorem algebraicParametrizationAtScale_iff (E : WeierstrassCurve ℚ) [E.IsElliptic]
     [NeZero (newformLevel E)] (X : X0Model (newformLevel E))
     (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2)
@@ -254,11 +256,5 @@ theorem algebraicParametrizationAtScale_iff (E : WeierstrassCurve ℚ) [E.IsElli
     exact rational_of_projective_values_on_tail E X f hf hL hκ.1 π hQ 0 (fun τ _ => hp τ)
   · exact ModFnClassify.algebraicParametrizationAtScale E X f hf hL hκ
 
-#print axioms coordinate_leading_terms
-#print axioms scaledPrimitive_off_lattice_on_tail
-#print axioms leading_coefficient
-#print axioms rational_of_coordinate_expansions
-#print axioms rational_of_projective_values_on_tail
-#print axioms algebraicParametrizationAtScale_iff
 
 end ZInQ.Manuscript.RC.KappaRational

@@ -69,7 +69,5 @@ theorem oldCharacter_comp_eq_bCharacter_iff_of_extraction (κ : K →+* ℂ)
     (fun p => (α p (ZMod.unitsMap ((hc p).trans Dₗ.old_dvd) u) : ℂ))
     (fun p hp => hextract p hp u)]
 
-#print axioms phase_without_extraction
-#print axioms oldCharacter_comp_eq_bCharacter_iff_of_extraction
 
 end ZInQ.Manuscript.RC.PoolCharacter

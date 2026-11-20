@@ -214,15 +214,5 @@ theorem eta_order_of_away {n : ℕ} (h : (schwartzPhase C m hn).Away n) :
     pow_succ (2 : ℕ), pow_mul, hs, one_pow, one_mul, mul_comm (2 ^ A.exponent) 2,
     pow_mul, genus_sq C hn h, one_pow]
 
-#print axioms eta_order_of_away
-#print axioms prime_dvd_rootModulus
-#print axioms reduce_natUnit
-#print axioms residueQuadratic_nat
-#print axioms legendreUnit_nat
-#print axioms residueAlpha_nat
-#print axioms dvd_product_of_extraction
-#print axioms extraction_prod
-#print axioms genus_sq
-#print axioms etaSource_eq
 
 end ZInQ.Manuscript.RC.LiftPhase

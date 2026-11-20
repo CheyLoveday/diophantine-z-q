@@ -126,9 +126,5 @@ theorem oldCharacter_comp_eq_bCharacter_of_phase (κ : K →+* ℂ) (Dₗ : Leve
   simpa using congrArg (κ.comp (algebraMap O K))
     (phaseCharacter_value Dₗ.common_four hm4 s c (fun i => (hc i).trans Dₗ.old_dvd) α u)
 
-#print axioms embedded_bCharacter_empty
-#print axioms phaseCharacter_value
-#print axioms oldCharacter_comp_eq_bCharacter_iff
-#print axioms oldCharacter_comp_eq_bCharacter_of_phase
 
 end ZInQ.Manuscript.RC.PoolCharacter
