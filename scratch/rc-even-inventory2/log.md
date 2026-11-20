@@ -1,0 +1,7 @@
+# Sizing and results
+
+- VERIFIED (tree): the joint handoff is merged. The preceding inventory, descent, and joint omission theorems are unchanged.
+- VERIFIED (Lean statements): the outstanding coordinate premise of `budgetRealization_of_joined_scoped` is `∀ n, n ≠ 0 → κ (algebraMap X.O X.K (A.coeff n (X.F U))) = (qExpansion 1 (joinedForm hS i U hU hodd)).coeff n`. Its expansion conclusion compares those coefficients with the image of the divided series in the fixed ring. `coordinate_match_of_joined_vector` reduces the premise to the column and seed identities of a constructor on one set.
+- VERIFIED (tree): `ActualInventory` gives the finite cuspidal lists, `ModelColumns` turns a label-by-label inclusion into restricted spans, and `BlockDescent` descends those spans and evaluates the combined seed. The odd `Blocks.coeff_F` performs the corresponding evaluation by construction. None of these lemmas asserts that a previously chosen abstract model has those columns.
+- VERIFIED (tex 9649–9668, 9754–9771): form the union of genuine newform and dilation labels for this set, keeping the intrinsic level and lifted character for each occurrence. Use the same source on all its old degrees. The finite complete extension and the trace module belong to this set only.
+- STANDARD (bibliographic locator UNVERIFIED): W.-C. Li, Math. Ann. 212 (1975), Theorem 5 and its corollary, old/new direct sum with character. The single printed input is the independence of genuine normalized newform dilations in characteristic zero.
