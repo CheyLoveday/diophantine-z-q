@@ -104,9 +104,5 @@ theorem realizedCoordinate_of_labeled_line [TopologicalSpace X.K]
     column := Cs
     attachment := hρ }⟩
 
-#print axioms atLevel_coeff_degree
-#print axioms scale_of_labeled_line
-#print axioms column_of_labeled_line
-#print axioms realizedCoordinate_of_labeled_line
 
 end ZInQ.Manuscript.RC.EisForm

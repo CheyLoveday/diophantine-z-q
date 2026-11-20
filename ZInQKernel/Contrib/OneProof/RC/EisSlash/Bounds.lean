@@ -184,18 +184,5 @@ theorem latticeDiff_shift (N : ℕ) [NeZero N] (a b r s : Fin 2 → ℤ) :
     latticeDiff N (grid N a r) (grid N b s) = latticeDiff N a b := by
   simp only [latticeDiff_eq_gridSeries_sub, gridSeries_shift]
 
-#print axioms gridRow_eq_kernel
-#print axioms rowKernel_neg
-#print axioms rowKernel_zero
-#print axioms positiveShift_im
-#print axioms rowKernel_fourier
-#print axioms decay_lt_one
-#print axioms summable_decay
-#print axioms rowKernel_bound_pos
-#print axioms gridRow_majorant
-#print axioms summable_gridRows
-#print axioms gridSeries_bounded
-#print axioms latticeDiff_eq_gridSeries_sub
-#print axioms latticeDiff_shift
 
 end ZInQ.Manuscript.RC.EisSlash

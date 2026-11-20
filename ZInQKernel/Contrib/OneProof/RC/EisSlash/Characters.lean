@@ -181,11 +181,5 @@ theorem pairWeight_pullback (E : CharacterPair D p) (c : D →+* ℂ)
     rw [mul_comm ((E.unram.ringHomComp c) _)]
     exact characterWeight_pullback (mul_comm _ _) _ _ g r
 
-#print axioms rowWeight_grid
-#print axioms characterWeight_on_row
-#print axioms rowWeight_transform
-#print axioms characterWeight_pullback
-#print axioms pairNebentypus_value
-#print axioms pairWeight_pullback
 
 end ZInQ.Manuscript.RC.EisSlash

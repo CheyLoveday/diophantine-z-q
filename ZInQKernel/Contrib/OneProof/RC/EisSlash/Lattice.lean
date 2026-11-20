@@ -194,16 +194,5 @@ theorem gridSeries_shift (N : ℕ) (a t : Fin 2 → ℤ) :
         _ = gridRow N a z (m + t 0) := (Equiv.addRight (t 1)).tsum_eq (fun n => eisSummand 2 (grid N a ![m + t 0, n]) z)
     _ = _ := (Equiv.addRight (t 0)).tsum_eq (gridRow N a z)
 
-#print axioms linear_eq_zero_iff
-#print axioms summand_eq
-#print axioms grid_injective
-#print axioms linear_grid_bigO
-#print axioms summable_lattice_diff
-#print axioms latticeDiff_add
-#print axioms latticeDiff_slash
-#print axioms summable_gridRow_inner
-#print axioms summable_gridDiff_prod
-#print axioms latticeDiff_eq_rows
-#print axioms gridSeries_shift
 
 end ZInQ.Manuscript.RC.EisSlash

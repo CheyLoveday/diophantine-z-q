@@ -98,11 +98,5 @@ theorem gridCombination_eq_weightedRows (N : ℕ) [NeZero N] (w : (Fin 2 → ZMo
       Fintype.sum_prod_type _
     _ = _ := rfl
 
-#print axioms summable_finite_prod
-#print axioms sum_residue_rows
-#print axioms residue_vec
-#print axioms grid_residue_vec
-#print axioms weightedRow_on_residue
-#print axioms gridCombination_eq_weightedRows
 
 end ZInQ.Manuscript.RC.EisSlash

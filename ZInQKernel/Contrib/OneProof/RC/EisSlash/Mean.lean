@@ -71,9 +71,5 @@ theorem characterWeight_sum_zero {m₁ m₂ N : ℕ} [NeZero m₁] [NeZero m₂]
   · have hbi : b⁻¹ ≠ 1 := by simpa
     rw [MulChar.sum_eq_zero_of_ne_one hbi, mul_zero, mul_zero]
 
-#print axioms splitResidue_val
-#print axioms sum_residue_second
-#print axioms sum_residue_first
-#print axioms characterWeight_sum_zero
 
 end ZInQ.Manuscript.RC.EisSlash

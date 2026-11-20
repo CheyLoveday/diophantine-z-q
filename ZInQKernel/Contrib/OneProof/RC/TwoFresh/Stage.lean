@@ -110,10 +110,5 @@ theorem fresh_normalizations {K : Type*} [Field K] [CharZero K] [Algebra O K]
   exact ⟨(2 : O) ^ l * b, by simpa only [add_zero] using scale 0 2 (by norm_num),
     by simpa only [pow_one] using scale 1 1 (by norm_num)⟩
 
-#print axioms fresh_squarefree_weight
-#print axioms ne_unary_of_oddPart
-#print axioms map_TL
-#print axioms dvd_of_stage_dvd
-#print axioms fresh_normalizations
 
 end ZInQ.Manuscript.RC.TwoFresh

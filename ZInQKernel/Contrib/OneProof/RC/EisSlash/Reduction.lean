@@ -93,10 +93,5 @@ theorem baseForm_of_gridFourier (E : CharacterPair D p) (c : D →+* ℂ)
   obtain ⟨C, hs, hc⟩ := missingModularity_of_gridFourier E c hu hr h
   exact baseForm_of_modularity E c hu hr C hs hc
 
-#print axioms orderedScale_ne_zero
-#print axioms pairScale_ne_zero
-#print axioms pair_checks_of_grid_eq
-#print axioms missingModularity_of_gridFourier
-#print axioms baseForm_of_gridFourier
 
 end ZInQ.Manuscript.RC.EisSlash

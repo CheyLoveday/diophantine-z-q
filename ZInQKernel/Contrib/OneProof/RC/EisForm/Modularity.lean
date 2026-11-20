@@ -99,10 +99,5 @@ theorem baseForm_of_modularity (E : CharacterPair D p) (c : D →+* ℂ)
     character := (mem_modFormCharSpace_iff_nebentypus 2 _ f).mpr hslash
     positive_expansion := pairSeries_positive E c C }⟩
 
-#print axioms pairSeries_eq_lipschitz
-#print axioms pairSeries_positive
-#print axioms pairSeries_holo
-#print axioms pairSeries_boundedAtInfty
-#print axioms baseForm_of_modularity
 
 end ZInQ.Manuscript.RC.EisForm

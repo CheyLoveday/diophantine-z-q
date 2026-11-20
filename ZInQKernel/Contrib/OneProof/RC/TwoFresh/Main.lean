@@ -165,9 +165,5 @@ theorem h2fresh [CharZero K] (B : ℕ) (F : Finset ℕ → Λ)
   rw [hb]
   exact m.mul_mem_right b hm2
 
-#print axioms two_hecke_coeff
-#print axioms dense_twoFreshTests
-#print axioms continuous_twoTraces
-#print axioms h2fresh
 
 end ZInQ.Manuscript.RC.TwoFresh

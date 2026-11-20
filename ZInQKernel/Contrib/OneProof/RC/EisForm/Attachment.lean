@@ -188,15 +188,5 @@ theorem repInput_of_split_choice [CharZero X.K] [TopologicalSpace X.K] [IsTopolo
     obtain ⟨hu, hr⟩ := tests q hq ha
     exact (normalizedRep_good E j hq.1 hq.ne_two hu hr (X.frob_spec q hq)).1
 
-#print axioms divisorCoeff_eq_eisenstein
-#print axioms pair_goodRec
-#print axioms old_goodRec
-#print axioms weightTwist_eq_one_of_inertia
-#print axioms normalizedRep_unramified
-#print axioms normalizedRep_goodAttachment
-#print axioms baseForm_good_trace
-#print axioms continuous_finiteChar
-#print axioms continuous_splitTrace
-#print axioms repInput_of_split_choice
 
 end ZInQ.Manuscript.RC.EisForm

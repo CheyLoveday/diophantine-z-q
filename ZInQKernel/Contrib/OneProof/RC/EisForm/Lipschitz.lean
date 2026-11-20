@@ -178,12 +178,5 @@ theorem series_eq_lipschitz (a : DirichletCharacter ℂ m₁) (b : DirichletChar
 
 end Rows
 
-#print axioms summable_lambertTerm
-#print axioms series_eq_lambert
-#print axioms primitive_ringHomComp
-#print axioms qParam_shift_pow
-#print axioms lipschitzRow_eq
-#print axioms gaussInv_ne_zero
-#print axioms series_eq_lipschitz
 
 end ZInQ.Manuscript.RC.EisForm

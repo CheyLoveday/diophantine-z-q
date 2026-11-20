@@ -136,15 +136,5 @@ theorem qExpansion_series (a : DirichletCharacter ℂ m₁)
   coeff_of_hasSum one_pos (series_periodic a b C) (series_holo a b C)
     (series_boundedAtInfty a b C) (hasSum_series a b C) n
 
-#print axioms divisorCoeff_eq_sum_divisors
-#print axioms norm_divisorCoeff_le
-#print axioms summable_seriesCoeff
-#print axioms series_radius
-#print axioms hasSum_series
-#print axioms series_holo
-#print axioms series_periodic
-#print axioms series_boundedAtInfty
-#print axioms coeff_of_hasSum
-#print axioms qExpansion_series
 
 end ZInQ.Manuscript.RC.EisForm

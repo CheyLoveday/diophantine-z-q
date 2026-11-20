@@ -126,13 +126,5 @@ theorem gridCombination_bounded_slash (N : ℕ) [NeZero N] (w : (Fin 2 → ZMod 
   rw [latticeDiff_eq_gridSeries_sub]
   exact A.sub_mem (gridSeries_bounded N _) (gridSeries_bounded N _)
 
-#print axioms rowResidue_lift
-#print axioms exists_grid_of_residue_eq
-#print axioms rowResidue_vecMul
-#print axioms gridCombination_eq_rows
-#print axioms latticeDiff_residue_slash
-#print axioms gridCombination_slash
-#print axioms gridCombination_slash_scalar
-#print axioms gridCombination_bounded_slash
 
 end ZInQ.Manuscript.RC.EisSlash

@@ -207,17 +207,5 @@ theorem pair_baseForm (E : CharacterPair D p) (c : D →+* ℂ)
     (he : E.unram (-1) * E.ramified (-1) = 1) : Nonempty (BaseForm E c) :=
   baseForm_of_gridFourier E c hu hr (pair_grid_fourier E c hu hr he)
 
-#print axioms rowWeight_mul
-#print axioms weightedRow_mul
-#print axioms weightedRow_zero
-#print axioms weightedRow_even
-#print axioms weightedRows_restrict
-#print axioms weightedRow_positive
-#print axioms ordered_grid_fourier
-#print axioms inv_apply_neg_one
-#print axioms ramified_complex_ne_one
-#print axioms pair_grid_fourier
-#print axioms pair_modularity
-#print axioms pair_baseForm
 
 end ZInQ.Manuscript.RC.EisSlash
