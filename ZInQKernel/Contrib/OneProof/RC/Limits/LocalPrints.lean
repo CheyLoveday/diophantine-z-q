@@ -39,22 +39,36 @@ noncomputable abbrev trivialGaloisRep (F : Type) [Field F] (V : Type) [AddCommGr
     [ContinuousSMul (ZMod 2) V] : TopRep (ZMod 2) (Field.absoluteGaloisGroup F) :=
   TopRep.of (ContRepresentation.trivial (ZMod 2) (Field.absoluteGaloisGroup F) V)
 
-/-- **PRINT — Milne, *Arithmetic Duality Theorems*, 2nd ed. (2006), Ch. I, p. 31: the sentence
-preceding Theorem 2.8, and Theorem 2.8 (the local Euler–Poincaré characteristic)**, for finite
-discrete `𝔽₂`-representations.  Used at tex 4546–4550.
+/-- **PRINT + GLUE — Milne, *Arithmetic Duality Theorems*, 2nd ed. (2006; the author's online
+edition), Ch. I, §2, p. 31: the sentence preceding Theorem 2.8, and Theorem 2.8 (the local
+Euler–Poincaré characteristic)**, for finite discrete `𝔽₂`-representations. Used at
+tex 4546–4550.
 
-Milne: for a nonarchimedean local field `K` with ring of integers `R` and a finite `G_K`-module `M`
-of order `m` prime to `char K`, the groups `H^r(G, M)` are finite, zero for `r > 2`, and
-`χ(G, M) = [H⁰(G,M)][H²(G,M)]/[H¹(G,M)] = (R : mR)⁻¹`.  For `K = F` a finite extension of `ℚ_p`
-and `M` an `𝔽₂`-vector space of dimension `n`, `m = 2ⁿ` and `(R : mR) = 2^{n[F:ℚ₂]}` if `p = 2`,
-`= 1` if `p` is odd; in dimensions this is
-`h⁰ − h¹ + h² = −[F : ℚ₂]·n` if `p = 2`, and `0` otherwise.
+Verbatim, Ch. I, §2, p. 26 (the standing conventions of §2): "Unless stated otherwise, K will be
+a nonarchimedean local field, complete with respect to the discrete valuation ord: K^× ↠ ℤ, and
+with finite residue field k. Let R be the ring of integers in K, and let K^un be a largest
+unramified extension of K. Write G = Gal(K^s/K) and I = Gal(K^s/K^un)."
+
+Verbatim, Ch. I, §2, p. 31 (under the heading "Euler-Poincaré characteristics"): "If M is a
+finite G-module, then the groups H^r(G, M) are finite for all r and zero for r ≥ 2. We define
+χ(G, M) = [H^0(G, M)][H^2(G, M)] / [H^1(G, M)]." Then: "THEOREM 2.8 Let M be a finite G-module
+of order m relatively prime to char(K). Then χ(G, M) = (R: mR)^{-1}."
+
+The vanishing bound is printed "r ≥ 2" in that edition; since `H²` enters `χ` and is in general
+nonzero (Corollary 2.3, p. 28: `H²(G, M) ≅ H⁰(G, M^D)^*`), the bound read here is `r > 2`
+(GLUE: a reading of the printed bound).
+
+The specialization (GLUE: arithmetic): for `K = F` a finite extension of `ℚ_p` and `M` an
+`𝔽₂`-vector space of dimension `n`, `m = 2ⁿ` and `(R : mR) = 2^{n[F:ℚ₂]}` if `p = 2`, `= 1` if
+`p` is odd; in dimensions this is `h⁰ − h¹ + h² = −[F : ℚ₂]·n` if `p = 2`, and `0` otherwise.
 
 As a Lean proposition this is Milne's theorem together with the comparison of Mathlib's
 `continuousCohomology` (homogeneous continuous cochains) with the standard continuous cochain
-cohomology of a profinite group with discrete coefficients (a standard fact, still a Mathlib TODO);
-for compact `G` and discrete `M` every cochain module is discrete, so the homology taken in
-`TopModuleCat` is the algebraic one. -/
+cohomology of a profinite group with discrete coefficients (GLUE: a standard fact, still a Mathlib
+TODO); for compact `G` and discrete `M` every cochain module is discrete, so the homology taken in
+`TopModuleCat` is the algebraic one.
+Kind: PRINT (Theorem 2.8 and the finiteness sentence, p. 31) + GLUE (the reading of the printed
+vanishing bound, the `𝔽₂`-dimension arithmetic, and the cochain comparison). -/
 def MilneADT_I_2_8 : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
     (M : TopRep.{0} (ZMod 2) (Field.absoluteGaloisGroup F)),

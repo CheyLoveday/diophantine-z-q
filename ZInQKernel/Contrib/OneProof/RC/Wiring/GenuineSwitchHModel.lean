@@ -369,8 +369,10 @@ theorem tmod_subsingleton_fin {n : ℕ} (h : n = 0) : Subsingleton (Fin n → k)
 theorem tmod_matCx_d (r : ℤ → ℕ)
     (hsq : ∀ a b c (_ : a + 1 = b) (_ : b + 1 = c),
       (0 : Matrix (Fin (r c)) (Fin (r b)) k) * (0 : Matrix (Fin (r b)) (Fin (r a)) k) = 0)
-    (i j : ℤ) : (matCx r (fun a b _ => (0 : Matrix (Fin (r b)) (Fin (r a)) k)) hsq).toCC.d i j = 0 := by
-  change (if h : i + 1 = j then ModuleCat.ofHom (Matrix.toLin' (0 : Matrix (Fin (r j)) (Fin (r i)) k))
+    (i j : ℤ) :
+    (matCx r (fun a b _ => (0 : Matrix (Fin (r b)) (Fin (r a)) k)) hsq).toCC.d i j = 0 := by
+  change (if h : i + 1 = j then
+      ModuleCat.ofHom (Matrix.toLin' (0 : Matrix (Fin (r j)) (Fin (r i)) k))
     else 0) = 0
   split_ifs
   · rw [map_zero]
@@ -446,7 +448,8 @@ def tmodMatEquiv (r : ℤ → ℕ)
     · refine ModuleCat.hom_ext (LinearMap.ext fun x => ?_)
       exact tmodCastLin_cast h2 x
     · have := tmod_subsingleton_fin (k := k)
-        (h0 (Int.ofNat (n + 3)) (by rw [Int.ofNat_eq_natCast]; omega) (by rw [Int.ofNat_eq_natCast]; omega))
+        (h0 (Int.ofNat (n + 3)) (by rw [Int.ofNat_eq_natCast]; omega)
+          (by rw [Int.ofNat_eq_natCast]; omega))
       ext x
       exact Subsingleton.elim (α := Fin (r (Int.ofNat (n + 3))) → k) _ _
     · have := tmod_subsingleton_fin (k := k)

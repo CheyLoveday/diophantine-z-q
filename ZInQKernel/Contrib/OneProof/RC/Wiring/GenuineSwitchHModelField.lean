@@ -65,7 +65,8 @@ def twoTermModel (X : GCx k) (hfin : ∀ n, FiniteDimensional k (X.toCC.homology
     ((fsplitModel_rank_eq_homology X (fsplit_hfin_of_homology X hfin) 2).trans hsq)
 
 /-- PROVED. The kernel of the `1 × 1` identity matrix is zero. -/
-theorem tmod_finrank_ker_one : finrank k (LinearMap.ker (1 : Matrix (Fin 1) (Fin 1) k).mulVecLin) = 0 := by
+theorem tmod_finrank_ker_one :
+    finrank k (LinearMap.ker (1 : Matrix (Fin 1) (Fin 1) k).mulVecLin) = 0 := by
   rw [Matrix.mulVecLin_one, LinearMap.ker_id, finrank_bot]
 
 /-- PROVED. The kernel of a zero square matrix is everything. -/
@@ -295,7 +296,8 @@ theorem tmodAnchor_hz0 (Φ : SwitchFamily k A) (ρ : A →+* k) (S : TwoTermStag
 theorem tmodAnchor_hw0 (Φ : SwitchFamily k A) (ρ : A →+* k) (S : TwoTermStage ι)
     (e : HomotopyEquiv (selCx (Φ.fibre Φ.actual)).toCC (twoTermFiberComplex ρ S))
     (y : (selCx (Φ.fibre Φ.actual)).toCC.X 2) :
-    (tmodAnchor Φ ρ S e).lamAct y = (fun i => ρ (S.w i)) ⬝ᵥ ((e.hom.f 2).hom y : Fin (S.n + 1) → k) :=
+    (tmodAnchor Φ ρ S e).lamAct y =
+      (fun i => ρ (S.w i)) ⬝ᵥ ((e.hom.f 2).hom y : Fin (S.n + 1) → k) :=
   rfl
 
 end ClassFunctional
