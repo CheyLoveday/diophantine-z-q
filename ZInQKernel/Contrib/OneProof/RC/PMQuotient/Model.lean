@@ -49,15 +49,15 @@ structure GoodRow (R : Type) [CommRing R] [Algebra R ℚ]
     (ell N : ℕ) [Fact ell.Prime] (K : Type) [Field K] [Algebra (ZMod ell) K] [DecidableEq K]
     (Ebar : WeierstrassCurve (ZMod ell)) (X : PMAdelic.CoarseFibre)
     {XQ EQ : Over (Spec (.of ℚ))} (π : XQ ⟶ EQ) where
-  /-- The prime residue map of the good local base (tex 8476–8479). -/
+  /-- The reduction map of the local base at the rational detector prime (c). -/
   closed : R →+* ZMod ell
   /-- Deligne–Rapoport, LNM 349 (1973), VI.6; Igusa (1959), locators UNVERIFIED. -/
   M : Over (Spec (.of R))
-  /-- Good elliptic group model for the given good Weierstrass equation. -/
+  /-- Good elliptic model from the integral Weierstrass equation with unit discriminant. -/
   E : Over (Spec (.of R))
   /-- Smooth good reduction of the modular curve, Deligne–Rapoport VI.6 (UNVERIFIED). -/
   [smoothM : Smooth M.hom]
-  /-- The elliptic group structure of the good model. -/
+  /-- The group law on the smooth Weierstrass cubic with its zero section. -/
   [groupE : GrpObj E]
   /-- Néron property of the good group model, proved by
   `NeronExt.isNeronModelOver_of_grpObj` over a DVR. -/
@@ -68,9 +68,9 @@ structure GoodRow (R : Type) [CommRing R] [Algebra R ℚ]
   jE : (generic R ℚ).obj E ≅ EQ
   /-- The cusp at infinity of the good modular model (Deligne–Rapoport VI.6, UNVERIFIED). -/
   infinity : X.Point
-  /-- Good modular model and the coarse supersingular description (Ribet,
-  Invent. Math. 100 (1990), Prop. 3.3, Prop. 3.6, Rem. 3.5(a)(b), UNVERIFIED):
-  the coarse points (including the cusps) read as geometric sections. -/
+  /-- Read the coarse points as sections of the modular fibre (Deligne–Rapoport
+  VI.6), using Ribet's supersingular description (Invent. Math. 100 (1990),
+  Prop. 3.3, Prop. 3.6, Rem. 3.5(a)(b)); locators UNVERIFIED. -/
   point : X.Point →
     (residueSource ell K ⟶ (Over.pullback (Spec.map (CommRingCat.ofHom closed))).obj M)
   /-- Integral section at the rational cusp infinity; Deligne–Rapoport VI.6 (UNVERIFIED). -/
@@ -80,7 +80,7 @@ structure GoodRow (R : Type) [CommRing R] [Algebra R ℚ]
     (Over.pullback (Spec.map (CommRingCat.ofHom closed))).map cusp
   /-- The full prime-power Atkin–Lehner operator on the integral curve;
   Deligne–Rapoport VI.6 (UNVERIFIED), via the cyclic-isogeny moduli action. -/
-  W : ∀ q : ℕ, q.Prime → 0 < N.factorization q → M ⟶ M
+  W : ∀ q : ℕ, q.Prime → 0 < N.factorization q → (M ⟶ M)
   /-- The coarse action of the same Atkin–Lehner operator, including at the cusp (c). -/
   point_W : ∀ q hq he x, point (X.W q x) =
     point x ≫ (Over.pullback (Spec.map (CommRingCat.ofHom closed))).map (W q hq he)
@@ -98,7 +98,8 @@ structure GoodRow (R : Type) [CommRing R] [Algebra R ℚ]
   frobenius_sq : Function.Involutive X.frobenius
   /-- Rationality of the cusp at infinity (Deligne–Rapoport VI.6, UNVERIFIED). -/
   frobenius_infinity : X.frobenius infinity = infinity
-  /-- The good Hecke correspondence at the base cusp, with multiplicities (tex 8486–8487). -/
+  /-- The good Hecke correspondence at the base cusp with multiplicities,
+  from the prime-to-level cyclic correspondences (tex 8486–8487). -/
   T_infinity : ∀ q, q.Prime → ¬ q ∣ N * ell → X.T q infinity = (q + 1) • of infinity
 
 attribute [instance] GoodRow.smoothM GoodRow.groupE
@@ -161,8 +162,9 @@ theorem frobenius_quotient (x : X.Point) :
   apply Subtype.ext
   change (G.evaluate (G.point (X.frobenius x)) - G.evaluate (G.point G.infinity)) -
       (G.evaluate (G.point (X.frobenius G.infinity)) - G.evaluate (G.point G.infinity)) =
-    curveFrob (K := K) Ebar (G.evaluate (G.point x) - G.evaluate (G.point G.infinity))
-  rw [G.evaluate_frob, G.evaluate_frob, map_sub]
+    curveFrob (K := K) Ebar (G.evaluate (G.point x)) -
+      curveFrob (K := K) Ebar (G.evaluate (G.point G.infinity))
+  rw [G.evaluate_frob, G.evaluate_frob]
   abel
 
 end GoodRow

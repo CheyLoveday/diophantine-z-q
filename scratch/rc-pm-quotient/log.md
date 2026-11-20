@@ -12,3 +12,9 @@
 - Initial `lake build`, Model: FAIL (Frobenius rewrite and model field elaboration in the first draft). Source edits applied; no revised module ran before handoff.
 - Operators, Cusps, CM, Assembly, focused `#discharges`: NOT RUN (Lean process gate; no Model artifact).
 - Axiom audit: NOT VERIFIED. Static source check: no `sorry`, `admit`, axiom declaration, local notation, or import of `OneProof.Main`; whitespace check passed.
+
+## Continuation
+
+- Citation errors at tex 1784–1788 and 8468–8474 carried forward in `.fleet/rc-pm-quotient2-verdict.md`.
+- The first workspace build could not reach the user scope from the sandbox. It ran with escalation but started missing prerequisites in parallel; stopped that scope. The subsequent focused Lake builds use source-matched prerequisites, a private compiler lock, the load/memory gate and a 60 GB user scope.
+- `Model`: PASS after parenthesizing the integral endomorphism type and fixing the coerced Frobenius subtraction. Its five axiom prints list only `propext`, `Classical.choice`, `Quot.sound`.
