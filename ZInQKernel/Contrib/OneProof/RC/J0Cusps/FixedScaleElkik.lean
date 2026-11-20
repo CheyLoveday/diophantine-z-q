@@ -30,6 +30,5 @@ theorem hElkikMD_atScale {ℓ : ℕ} [(Ecurve ℓ).IsElliptic] {d : ℤ}
   letI := g
   exact hElkikMD_atScale_of_projectiveGroup hg hElkik hf hgp hLat hκ hr
 
-#print axioms hElkikMD_atScale
 
 end ZInQ.Manuscript.RC.J0Cusps

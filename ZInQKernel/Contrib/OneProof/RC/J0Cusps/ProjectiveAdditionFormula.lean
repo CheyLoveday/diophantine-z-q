@@ -303,25 +303,11 @@ theorem projectiveAddition_cover {F : Type*} [Field F]
     rw [← Projective.add_of_not_equiv h]
     exact projectiveNonsingular_ne_zero (W.nonsingular_add hP hQ)
 
-#print axioms symmetricAddition_map
-#print axioms symmetricAddition_smul
-#print axioms symmetricAddition_comm
-#print axioms symmetricAddition_atInfinity
-#print axioms symmetricAddition_secant
-#print axioms symmetricAddition_opposite
-#print axioms short_eqn_affine
-#print axioms symmetricAddition_dbl_affine
 
-#print axioms symmetricAddition_affine
 
-#print axioms vector_atInfinity
 
-#print axioms symmetricAddition_eq_smul_add
 
-#print axioms symmetricAddition_diagonal
 
-#print axioms projectiveNonsingular_ne_zero
 
-#print axioms projectiveAddition_cover
 
 end ZInQ.Manuscript.RC.J0Cusps

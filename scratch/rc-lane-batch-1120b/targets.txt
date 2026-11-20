@@ -178,3 +178,10 @@ ZInQKernel.Contrib.OneProof.RC.X0Model3.Model
 ZInQKernel.Contrib.OneProof.RC.X0Model3.Overlap
 ZInQKernel.Contrib.OneProof.RC.X0Model3.Specialize
 ZInQKernel.Contrib.OneProof.RC.X0Model3.Unramified
+ZInQKernel.Contrib.OneProof.RC.J0Cusps.FixedScaleElkik
+ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveAdditionCoordinates
+ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveAdditionFormula
+ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveChartGluing
+ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveGroupIdentities
+ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveGroupLaw
+ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveSchemeCharts

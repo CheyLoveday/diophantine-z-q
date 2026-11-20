@@ -178,3 +178,10 @@ ZInQKernel/Contrib/OneProof/RC/X0Model3/Model.lean
 ZInQKernel/Contrib/OneProof/RC/X0Model3/Overlap.lean
 ZInQKernel/Contrib/OneProof/RC/X0Model3/Specialize.lean
 ZInQKernel/Contrib/OneProof/RC/X0Model3/Unramified.lean
+ZInQKernel/Contrib/OneProof/RC/J0Cusps/FixedScaleElkik.lean
+ZInQKernel/Contrib/OneProof/RC/J0Cusps/ProjectiveAdditionCoordinates.lean
+ZInQKernel/Contrib/OneProof/RC/J0Cusps/ProjectiveAdditionFormula.lean
+ZInQKernel/Contrib/OneProof/RC/J0Cusps/ProjectiveChartGluing.lean
+ZInQKernel/Contrib/OneProof/RC/J0Cusps/ProjectiveGroupIdentities.lean
+ZInQKernel/Contrib/OneProof/RC/J0Cusps/ProjectiveGroupLaw.lean
+ZInQKernel/Contrib/OneProof/RC/J0Cusps/ProjectiveSchemeCharts.lean

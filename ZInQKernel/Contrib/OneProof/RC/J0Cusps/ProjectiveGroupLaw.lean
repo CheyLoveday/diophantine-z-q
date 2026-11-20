@@ -85,8 +85,5 @@ theorem projectiveGroup_exists (E : WeierstrassCurve ℚ) [E.IsElliptic] :
   intro p q
   exact hm ℂ p q
 
-#print axioms exists_projectiveMultiplication
-#print axioms exists_projectiveInversion
-#print axioms projectiveGroup_exists
 
 end ZInQ.Manuscript.RC.J0Cusps

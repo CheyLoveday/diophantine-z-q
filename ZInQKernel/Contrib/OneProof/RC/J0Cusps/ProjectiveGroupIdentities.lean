@@ -169,14 +169,5 @@ def projectiveGroupOfOperations (E : WeierstrassCurve ℚ) [E.IsElliptic]
     rw [comp_lift_assoc, Category.comp_id, hm, hn, add_neg_cancel, ← Category.assoc, comp_toUnit,
       projectiveUnit_value]
 
-#print axioms projectiveUnit_value
-#print axioms projectiveHom_ext
-#print axioms projectiveHom_ext_value
-#print axioms projectiveTarget_reduced
-#print axioms projectiveTarget_product_reduced
-#print axioms projectiveTarget_square_reduced
-#print axioms projectiveTarget_unit_product_reduced
-#print axioms projectiveTarget_product_unit_reduced
-#print axioms projectiveGroupOfOperations
 
 end ZInQ.Manuscript.RC.J0Cusps

@@ -371,29 +371,13 @@ theorem projectiveValue_fromChart (E : WeierstrassCurve ℚ) [E.IsElliptic]
   have hv := projectiveValue_chartMorphism E v hn i hu
   simpa only [projectiveChartMorphism, e] using hv
 
-#print axioms denominatorUnit_val
-#print axioms chartFraction_val
-#print axioms chartRatio_val
-#print axioms projectiveChartRatio_self
-#print axioms projectiveChart_dehomogenize
-#print axioms projectiveChart_equation
-#print axioms projectiveChart_ringHom_ext
-#print axioms projectiveChartEval_ratio
 
-#print axioms projectiveChartMorphism_map
 
-#print axioms projectiveEvalAway_fraction
 
-#print axioms projectiveEvalAway_overlap
 
-#print axioms projectiveChartMorphism_independent
 
-#print axioms zChartInclusion_point_ne_origin
 
-#print axioms chartCoord_mem_iff
 
-#print axioms projectiveValue_chartMorphism
 
-#print axioms projectiveValue_fromChart
 
 end ZInQ.Manuscript.RC.J0Cusps

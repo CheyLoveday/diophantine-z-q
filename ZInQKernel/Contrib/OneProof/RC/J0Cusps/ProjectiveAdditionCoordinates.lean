@@ -258,16 +258,6 @@ theorem additionCoordinates_map (E : WeierstrassCurve ℚ) {R S : Type*}
       (additionShortChange E • E).baseChange S from hw _]
     rfl
 
-#print axioms additionShortChange_short
-#print axioms linearCoordinates_map
-#print axioms linearCoordinates_smul
-#print axioms linearCoordinates_equiv
-#print axioms linearCoordinates_ne_zero
-#print axioms linearCoordinates_equation
-#print axioms nonsingular_of_equation_ne_zero
-#print axioms linearCoordinates_toAffine
-#print axioms additionCoordinates_fields
 
-#print axioms additionCoordinates_map
 
 end ZInQ.Manuscript.RC.J0Cusps

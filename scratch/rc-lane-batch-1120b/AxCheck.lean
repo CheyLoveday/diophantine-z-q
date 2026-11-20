@@ -178,6 +178,13 @@ import ZInQKernel.Contrib.OneProof.RC.X0Model3.Model
 import ZInQKernel.Contrib.OneProof.RC.X0Model3.Overlap
 import ZInQKernel.Contrib.OneProof.RC.X0Model3.Specialize
 import ZInQKernel.Contrib.OneProof.RC.X0Model3.Unramified
+import ZInQKernel.Contrib.OneProof.RC.J0Cusps.FixedScaleElkik
+import ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveAdditionCoordinates
+import ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveAdditionFormula
+import ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveChartGluing
+import ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveGroupIdentities
+import ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveGroupLaw
+import ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveSchemeCharts
 
 #print axioms ZInQ.Manuscript.RC.AppE32Fixed.det_rows_eq_zero_iff
 #print axioms ZInQ.Manuscript.RC.AppE32Fixed.central_zero_iff_of_wedge
@@ -678,3 +685,64 @@ import ZInQKernel.Contrib.OneProof.RC.X0Model3.Unramified
 #print axioms ZInQ.Manuscript.RC.X0Model3.pairEval_self
 #print axioms ZInQ.Manuscript.RC.X0Model3.continuousPairTest
 #print axioms ZInQ.Manuscript.RC.X0Model3.eventually_eq_of_unramified
+#print axioms ZInQ.Manuscript.RC.J0Cusps.hElkikMD_atScale
+#print axioms ZInQ.Manuscript.RC.J0Cusps.additionShortChange_short
+#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_map
+#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_smul
+#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_equiv
+#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_ne_zero
+#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_equation
+#print axioms ZInQ.Manuscript.RC.J0Cusps.nonsingular_of_equation_ne_zero
+#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_toAffine
+#print axioms ZInQ.Manuscript.RC.J0Cusps.additionCoordinates_fields
+#print axioms ZInQ.Manuscript.RC.J0Cusps.additionCoordinates_map
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_map
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_smul
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_comm
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_atInfinity
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_secant
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_opposite
+#print axioms ZInQ.Manuscript.RC.J0Cusps.short_eqn_affine
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_dbl_affine
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_affine
+#print axioms ZInQ.Manuscript.RC.J0Cusps.vector_atInfinity
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_eq_smul_add
+#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_diagonal
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveNonsingular_ne_zero
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveAddition_cover
+#print axioms ZInQ.Manuscript.RC.J0Cusps.schemeMapsToRat_unique
+#print axioms ZInQ.Manuscript.RC.J0Cusps.overlapEq
+#print axioms ZInQ.Manuscript.RC.J0Cusps.fieldPoint_lifts
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveMorphism_of_local
+#print axioms ZInQ.Manuscript.RC.J0Cusps.equation_of_field_evaluations
+#print axioms ZInQ.Manuscript.RC.J0Cusps.openLift_ring_map
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChart_covers
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveMorphism_of_formulas
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveUnit_value
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveHom_ext
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveHom_ext_value
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_reduced
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_product_reduced
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_square_reduced
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_unit_product_reduced
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_product_unit_reduced
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveGroupOfOperations
+#print axioms ZInQ.Manuscript.RC.J0Cusps.exists_projectiveMultiplication
+#print axioms ZInQ.Manuscript.RC.J0Cusps.exists_projectiveInversion
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveGroup_exists
+#print axioms ZInQ.Manuscript.RC.J0Cusps.denominatorUnit_val
+#print axioms ZInQ.Manuscript.RC.J0Cusps.chartFraction_val
+#print axioms ZInQ.Manuscript.RC.J0Cusps.chartRatio_val
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChartRatio_self
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChart_dehomogenize
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChart_equation
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChart_ringHom_ext
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChartEval_ratio
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChartMorphism_map
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveEvalAway_fraction
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveEvalAway_overlap
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChartMorphism_independent
+#print axioms ZInQ.Manuscript.RC.J0Cusps.zChartInclusion_point_ne_origin
+#print axioms ZInQ.Manuscript.RC.J0Cusps.chartCoord_mem_iff
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveValue_chartMorphism
+#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveValue_fromChart

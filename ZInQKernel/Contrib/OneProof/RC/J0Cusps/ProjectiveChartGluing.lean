@@ -270,14 +270,6 @@ theorem projectiveMorphism_of_formulas (E : WeierstrassCurve ℚ) [E.IsElliptic]
         rw [ea]
         exact (projectiveValue_fromChart E (i a) (u.comp (g a)) (hv K u a)).symm
 
-#print axioms schemeMapsToRat_unique
-#print axioms overlapEq
-#print axioms fieldPoint_lifts
-#print axioms projectiveMorphism_of_local
-#print axioms equation_of_field_evaluations
-#print axioms openLift_ring_map
-#print axioms projectiveChart_covers
 
-#print axioms projectiveMorphism_of_formulas
 
 end ZInQ.Manuscript.RC.J0Cusps
