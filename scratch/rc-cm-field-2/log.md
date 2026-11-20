@@ -31,3 +31,9 @@ Base `60b162a0d`; merged `cb118b8c28` as `33937701f`. Sizing recorded before run
   reductions for each automorphism of the overfield fixing the proposed
   subfield imply membership by Galois correspondence. Both theorems use
   only `propext`, `Classical.choice` and `Quot.sound`.
+- VERIFIED (Lean): `Diagonal.lean` compiles with the three standard axioms.
+  Diagonal evaluation specializes both slots; embeddings preserve the
+  multiplicity of the diagonal root. A cyclic self-isogeny of nonsquare
+  degree gives a monic integral equation, and every quadratic norm
+  polynomial of negative discriminant has a value between consecutive
+  positive integer squares.
