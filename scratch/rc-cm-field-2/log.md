@@ -45,3 +45,7 @@ VERIFIED with the guarded local Lean check: `Lattices.lean` constructs period pa
 
 VERIFIED (Lean): `Kronecker.lean` proves `kroneckerCongruence_of_prime` for the existing vendored definition, and `pow_eq_of_modularPolynomial_diagonal_root` for any characteristic-`p` residue field. It reduces the integral Laurent-series relation, applies characteristic-`p` Frobenius and transcendence, then uses symmetry, monicity and degree to identify the entire polynomial. All axiom checks returned only `propext`, `Classical.choice`, and `Quot.sound`.
 
+### Specialized coset product
+
+VERIFIED (Lean): `Factorization.lean` proves the product with multiplicities at every analytic specialization. For transcendental parameters, coincident translates would give a nonzero quadratic relation over ℚ; the vanishing coefficient case forces the two triangular representatives to agree. The monic degree count at such parameters is extended by density and continuity. `CosetLattice.lean` constructs a cyclic sublattice for each specialized root, proves surjectivity of analytic j, and transfers a detected cyclic self-isogeny degree to every embedded conjugate. All declarations checked with the three standard axioms.
+
