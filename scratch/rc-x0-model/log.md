@@ -1,0 +1,24 @@
+# Results
+
+- Base: `433db7d632d91dc9542deeffbac7cc677acd64ca`. Other branch inspected at `eb89a3638bf12b15ecc0f0de35262fc9d7a523dd`.
+- `X`, `overQ`, `integral`, `proper`: base has `CloudW07JacobiansCurves.NormalModel.Xn` (normalization finite over the projective line), with all relevant instances for finite extensions of `RatFunc ℚ`. Specialization to the modular field is small.
+- `smooth`: base has `CurveSplit.normalCurveSmoothQ_of_regularSmooth` and the proved `RegularSmoothPerfect.regularSmoothPerfect_proof`. Specialization is small.
+- `functionField`: base has `NormalModel.functionFieldEquiv`; the vendored all-level modular polynomial is monic over `ℚ(j)`, and `jq` is transcendental. The scalar and finiteness wiring is small.
+- `complexPoint`: no matching canonical map for the normalized model in the base. The vendored layer has the classical modular relation, lattice j and its Laurent expansion. Need to lift the analytic branch through normalization at each upper half-plane parameter.
+- `complexPoint_eq_iff`: no matching result in either tree. Need separation by the normalized branch, including when different cyclic subgroups give the same pair of j-invariants at special parameters; raw plane coordinates do not give this field.
+- `sectionExpansion`: no section comparison for this scheme in either tree. The analytic expansions of the generators are available in the base; need meromorphic continuation of rational expressions and comparison to specialization of sections of the normalization.
+- `IsX1Gen` specifies generation and analytic polynomial relations on a supplied scheme; it is not a model constructor. `BShFamily.bShStandardModel_proof` works on a supplied curve with this hypothesis and supplies operators on its Jacobian. It does not supply a scheme quotient, the fixed-field identification, or the X₀ analytic comparison.
+- Citation discrepancy: the pinned tex has no direct Shimura 1971 entry or citation, including at 1781–1788, 2836–2844 and 2915–2919. Lines 770–771 and 11053–11057 cite Shimura 1973 for a different step; the other branch reports a secondary reference to 1971 through that article. No new print.
+
+- Scout update: `ShimuraPointDictGerms.lean` supplies the finite-value valuation subring of a field of meromorphic germs and evaluation into `ℂ`. Imported unchanged from `eb89a3638bf12b15ecc0f0de35262fc9d7a523dd` in `6c0ebb012523646444e923c436877a9bdd4459d8`; the per-path diff against that revision is empty. No other files imported.
+- `Rational.lean`: `finite_jAlgebra`, `curve`, `overQ`, `integral`, `proper`, `smooth`, `functionField`. Finite normalization over `RatFunc ℚ` with variable mapped to `jq`; `jqN` is integral over `ℚ(jq)`.
+- `Expansion.lean`: `analyticOn_j`, `analyticOn_jN`, `hasSum_j`, `hasSum_jN`. The generator sums match the exact exponent in `X0Model.sectionExpansion`.
+- `Specialization.lean`: `existsUnique_specialization`, `sectionMap_generic`, `formalQArc_generic`, `cusp_overQ`. Proper lifts along valuation subrings; closed specialization of the Laurent inclusion at `q = 0`.
+- `ComplexGerms.lean`: `meromorphic_isField`, `valueOfGerm_isLocalHom`, `jPolynomial_injective`. Every analytic j-germ is transcendental over `ℚ`.
+- `Chart.lean`: `fieldGerm`, `fieldGerm_j`, `fieldGerm_jN`, `analyticArc_generic`, `complexPoint`, `complexPoint_overQ`. Minimal polynomial relation on germs, followed by valuative specialization.
+- `Section.lean`: `sectionGerm`, `sectionAnalyticAt`, `exists_meromorphicContinuation`, `sectionMeromorphicContinuation`. The local germ, its holomorphic value on the regular locus, and one global meromorphic normal form for all upper half-plane parameters.
+- Open, tex 2915–2919: compare normalized branches over `j(τ)` with `Γ₀(N) \ SL₂(ℤ)` modulo the right action of the stabilizer of `τ`; distinguish branch collisions.
+- Open, tex 2837–2838 and 2915–2919 through the `sectionExpansion` specification: show the Laurent coefficients of arbitrary elements of `ℚ(jq,jqN)` sum to their meromorphic realization sufficiently high in the upper half-plane. The missing closure step is inversion of the analytic unit after extracting the leading q-power of a nonzero denominator.
+- `X0Model N` assembly open; no new prints or hypothesis structures. `AlgebraicParametrizationAtScale`, `CMFieldOfDefinition`, and Hecke work not used.
+- Final serial `lake env lean -j1 -DautoImplicit=false` runs: `ShimuraPointDictGerms.lean`, `Rational.lean`, `Expansion.lean`, `Specialization.lean`, `ComplexGerms.lean`, `Chart.lean`, and `Section.lean` all exited 0 with no warnings. `uptime` and `free -g` checked before each run.
+- `#print axioms` audit counts: unchanged helper 10; `Rational` 16; `Expansion` 5; `Specialization` 12; `ComplexGerms` 7; `Chart` 15; `Section` 8. All reported dependencies are in `{propext, Classical.choice, Quot.sound}`.

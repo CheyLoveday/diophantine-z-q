@@ -1,0 +1,12 @@
+- Base: `d5c0c5b498610fe1bebfa031df7047a02c478eb8`.
+- `coefficientSupport S N late = {2, S.ℓ₀} ∪ N.primeFactors ∪ S.m.primeFactors ∪ late`.
+- Missing stage data: Eichler level and exact late sieve list for the same lift; recognition of all outside-support primes by `S.Good`; identifications of `S.ℓ₀` and `S.m` with the selected stage.
+- `coveredType_primeFactors`: `T.m.primeFactors = m₁.primeFactors ∪ Scoeff`.
+- `good_iff_old_good_and_outside`: `T.Good q ↔ T₁.Good q ∧ q ∉ Scoeff`. `exists_good_of_type`: every refined type occurs outside any finite exclusion.
+- `isTypeChar_covered`, `openTypeKernel_covered`, `detects_radicals_covered`: existing character, kernel, and radical interfaces for the refined type. `project_coveredChar`, `project_sign`, `project_realization`: compatibility with original type, sign, and graph realization.
+- `unchanged_char_cannot_detect`: for any old good prime in the proposed support, fixed old character cannot detect its radicals there.
+- `stage_good`: manuscript's outside-support good domain gives `∀ p, T.Good p → S.Good p`. `old_good`, `test_coprime_old`, `levelSetup`, `test_coprime_common`: old level bound and unchanged realization input.
+- `inertiaOn_of_atLevel`, `window_hseed`, `window_hexcl`: original per-form domains and lattice; existing `window_good_hecke` combines ambient and excluded branches.
+- `Coverage.lean`: `lake env lean -j1` passed; 18 theorem and two definition audits.
+- `Consumers.lean`: `lake env lean -j1` passed; eight theorem and one definition audits.
+- All 29 audits: `propext`, `Classical.choice`, `Quot.sound` only. No new prints.
