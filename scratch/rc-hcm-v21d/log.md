@@ -1,0 +1,9 @@
+# Detector Hom lattices
+
+**VERIFIED (inventory).** The base includes the preceding geometric kernel factorization, prime-to-characteristic Tate divisibility, split chain calculations and inverse adelic orbit. The existing `DeuringSupersingularEndOrder` candidate gives a maximal order and an abstract isomorphism for one supersingular curve. It provides neither a common rational quasi-isogeny frame nor a map into the detector's chosen class set.
+
+- `HCMV21/GeometricKernel.lean` proves finite étale kernel descent and tests the actual level subgroup in the integral Tate module. `PrimeToGeometry.lean` supplies surjectivity of multiplication on geometric points and the Tate divisibility test.
+- `HDecomp/Objects.lean` has the scheme Hom group and its Tate action, plus the existing `PkgI3.TateModuleFree` interface. Tau Ceti proves the rank-two theorem for its Weierstrass point Tate module. Comparing the two presentations requires a bridge.
+- `RC/Adelic/Patch.lean` and `FullPatch.lean` patch rationally framed local lattices, and `RC/Eichler/Local.lean` defines local principality using actual integral spans.
+- `PMGeometry/Geometry.lean` supplies a coarse equivalence and divisor-valued Hecke comparisons. It does not specify the image of an individual labelled kernel or give the endomorphism ring of its curve.
+- Tex 8462–8476 uses the coarse classes and their stabilizers. Tex 9136–9169 uses the level and tangent orientations and the adelic orbit. Tex 9265–9279 identifies the actual quotient at the detector, before the independent parametrization square at tex 9279–9295.
