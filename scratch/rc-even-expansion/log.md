@@ -1,0 +1,13 @@
+# Sizing and results
+
+VERIFIED: the requested old-stage merge succeeded; see `merge.txt`.
+
+| Step | Existing input (VERIFIED by reading) | Missing work |
+| --- | --- | --- |
+| Mask and bridge | App E supplies the actual cusp form; `hiwForm_changeLevel`, `halfIntegralTwist`, and the square-covariant finite translation theorem already include cusp decay. `hiwForm_periodic_comp`, `hiwForm_mdiff`, and `hasSum_qExpansion` give period-one convergence. | Small: finite quadratic character projector or its equivalent DFT, support under level raising, normalization, bottom-right-entry evaluation and cusp boundedness in the second interface. The proved twist construction already gives all twists at one level and proves the character and cusp statements for sums with square-invariant coefficient multipliers. |
+| Moving block | `Top`, `TL` and rational-translate cusp tools; tex supplies the two matrix calculations. | Substantial: exact theta-multiplier comparisons for dilation and the (U_{p^2}) conjugates, together with the permutation modulo (p^2) and q-series reindexing. No abstract operator facility in the imported half-integral files does these at level exponent one. |
+| Unary | `unaryCoeff` and the ordinary Gaussian coset inversion, cusp and word computations. | Substantial: add the odd linear factor to the Poisson transform, then identify the scalar and conductor of the sieved unary form. The base level must be large enough for that character and the fixed support sieve. |
+| Ordinary theta | `gridTheta_cusps` and `gridTheta_reference` for boundedness of the cube; nonvanishing and the one-variable Jacobi inversion and period formulas. | Small for the cusp field (cube root). The fourth-power transformation requires a separate calculation on `Gamma0 4`; the grid bound supplies no phase. |
+| Weight two and transfer | `theta_product_modular`, `qExpansion_theta_product`, `commonCoeff_place` and `commonCoeff_complex`. | Small: retain separate characters at each intrinsic level, raise to a common Gamma1 space, assemble a period-one expansion, and inject through the given common place and the actual constituent coordinates. |
+
+VERIFIED (tex 7898–7910, 7929–7934, 7813–7817): the manuscript's additive projection is on every integral frequency, including indices with square factors; only the subsequent phase comparison uses the full odd squarefree filter. The manuscript already describes the additive realization of the mask.
