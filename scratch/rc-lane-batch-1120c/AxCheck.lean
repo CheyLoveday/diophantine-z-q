@@ -5,34 +5,59 @@ import ZInQKernel.Contrib.OneProof.RC.LiftPhase.Pool
 import ZInQKernel.Contrib.OneProof.RC.PoolCharacter.Extraction
 import ZInQKernel.Contrib.OneProof.RC.PoolCharacter.Identification
 
-#print axioms ZInQ.Manuscript.RC.KappaRational.coordinate_leading_terms
-#print axioms ZInQ.Manuscript.RC.KappaRational.scaledPrimitive_off_lattice_on_tail
-#print axioms ZInQ.Manuscript.RC.KappaRational.leading_coefficient
-#print axioms ZInQ.Manuscript.RC.KappaRational.rational_of_coordinate_expansions
-#print axioms ZInQ.Manuscript.RC.KappaRational.rational_of_projective_values_on_tail
-#print axioms ZInQ.Manuscript.RC.KappaRational.algebraicParametrizationAtScale_iff
-#print axioms ZInQ.Manuscript.RC.LiftPhase.actualEta_reduce
-#print axioms ZInQ.Manuscript.RC.LiftPhase.actualLift_order
-#print axioms ZInQ.Manuscript.RC.LiftPhase.extractionNonzero
-#print axioms ZInQ.Manuscript.RC.LiftPhase.actual_hchar
-#print axioms ZInQ.Manuscript.RC.LiftPhase.actualOldStageLaw
-#print axioms ZInQ.Manuscript.RC.LiftPhase.eta_order_of_away
-#print axioms ZInQ.Manuscript.RC.LiftPhase.prime_dvd_rootModulus
-#print axioms ZInQ.Manuscript.RC.LiftPhase.reduce_natUnit
-#print axioms ZInQ.Manuscript.RC.LiftPhase.residueQuadratic_nat
-#print axioms ZInQ.Manuscript.RC.LiftPhase.legendreUnit_nat
-#print axioms ZInQ.Manuscript.RC.LiftPhase.residueAlpha_nat
-#print axioms ZInQ.Manuscript.RC.LiftPhase.dvd_product_of_extraction
-#print axioms ZInQ.Manuscript.RC.LiftPhase.extraction_prod
-#print axioms ZInQ.Manuscript.RC.LiftPhase.genus_sq
-#print axioms ZInQ.Manuscript.RC.LiftPhase.etaSource_eq
-#print axioms ZInQ.Manuscript.RC.LiftPhase.residueModuli_dvd
-#print axioms ZInQ.Manuscript.RC.LiftPhase.representative_away
-#print axioms ZInQ.Manuscript.RC.LiftPhase.poolPhase_eval
-#print axioms ZInQ.Manuscript.RC.LiftPhase.poolPhase_order
-#print axioms ZInQ.Manuscript.RC.PoolCharacter.phase_without_extraction
-#print axioms ZInQ.Manuscript.RC.PoolCharacter.oldCharacter_comp_eq_bCharacter_iff_of_extraction
-#print axioms ZInQ.Manuscript.RC.PoolCharacter.embedded_bCharacter_empty
-#print axioms ZInQ.Manuscript.RC.PoolCharacter.phaseCharacter_value
-#print axioms ZInQ.Manuscript.RC.PoolCharacter.oldCharacter_comp_eq_bCharacter_iff
-#print axioms ZInQ.Manuscript.RC.PoolCharacter.oldCharacter_comp_eq_bCharacter_of_phase
+namespace ZInQ.Manuscript.RC.KappaRational
+section
+open Filter Topology UpperHalfPlane AlgebraicGeometry CategoryTheory WeierstrassCurve
+open ZInQ.Contrib.RC53Assist.IsogenyScheme
+open ZInQ.Manuscript.RC.PreparedParam
+open ZInQ.Contrib.CloudB3RC53.CST
+open ZInQ.Manuscript.RC.ModFnField ZInQ.Manuscript.RC.ParamAtScale
+#print axioms coordinate_leading_terms
+#print axioms scaledPrimitive_off_lattice_on_tail
+#print axioms rational_of_coordinate_expansions
+#print axioms rational_of_projective_values_on_tail
+#print axioms algebraicParametrizationAtScale_iff
+end
+end ZInQ.Manuscript.RC.KappaRational
+namespace ZInQ.Manuscript.RC.LiftPhase
+section
+open ThetaClose ThetaJoin ThetaCoeff BlocksPerU WeilIndex
+open ZInQ.Contrib.CloudB3RC53.CoefficientDictionary
+#print axioms actualEta_reduce
+#print axioms actualLift_order
+#print axioms actual_hchar
+#print axioms actualOldStageLaw
+end
+end ZInQ.Manuscript.RC.LiftPhase
+namespace ZInQ.Manuscript.RC.LiftPhase
+section
+open Adelic ThetaJoin LocalWeights
+open scoped BigOperators
+#print axioms eta_order_of_away
+#print axioms prime_dvd_rootModulus
+#print axioms residueAlpha_nat
+#print axioms etaSource_eq
+end
+end ZInQ.Manuscript.RC.LiftPhase
+namespace ZInQ.Manuscript.RC.LiftPhase
+section
+open Adelic ThetaJoin BlocksPerU PoolCharacter
+open scoped BigOperators
+#print axioms residueModuli_dvd
+#print axioms poolPhase_eval
+#print axioms poolPhase_order
+end
+end ZInQ.Manuscript.RC.LiftPhase
+namespace ZInQ.Manuscript.RC.PoolCharacter
+section
+open BlocksPerU ThetaCoeff WeilIndex
+open ZInQ.Contrib.CloudB3RC53.CoefficientDictionary
+open scoped BigOperators
+#print axioms phase_without_extraction
+#print axioms oldCharacter_comp_eq_bCharacter_iff_of_extraction
+#print axioms embedded_bCharacter_empty
+#print axioms phaseCharacter_value
+#print axioms oldCharacter_comp_eq_bCharacter_iff
+#print axioms oldCharacter_comp_eq_bCharacter_of_phase
+end
+end ZInQ.Manuscript.RC.PoolCharacter
