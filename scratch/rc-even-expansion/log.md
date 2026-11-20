@@ -15,3 +15,7 @@ VERIFIED (tex 7898–7910, 7929–7934, 7813–7817): the manuscript's additive 
 VERIFIED: `Jacobi.jacobiTheta_fourth_transform` compiles. The fourth power transforms in weight two on Gamma0(4). The proof uses Poisson inversion at the Fricke map, then centered Euclidean reduction by upper and lower unipotents. All 13 theorem audits are standard.
 
 VERIFIED: `Projector.dual_orthogonality` compiles and its axioms are standard. The normalized sum over the dual of a finite group equals the indicator of the fixed label.
+
+VERIFIED: `Operators.lean` compiles with seven standard theorem audits. Its actual dilation inserts zeros; its normalized finite additive average retains the multiples, including index zero. In particular `U_(p²) V_p` has the coefficients of `U_p`, and their difference with the weighted dilation has `Top` as its convergent expansion. The multiplier comparison is separate.
+
+Build setup: the initial Lake import build was stopped when Lake's default compiler concurrency was noticed. Subsequent Lake builds use a compiler lock; direct checks are sequential.
