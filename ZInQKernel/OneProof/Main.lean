@@ -3,6 +3,7 @@ import ZInQKernel.MainGreenTao
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRCGenuineFinal
 import ZInQKernel.Contrib.OneProof.CasselsTatePairing
+import ZInQKernel.Contrib.RC53Assist.BCDTPrint.Descent
 
 /-!
 # The whole proof in one theorem
@@ -12,8 +13,9 @@ the development fork, and from nothing else: the open bundles of the H chain, th
 converse, `ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine`, `diophantine_zq.tex` lines 1005–1011, over the genuine
 `Sel_{2^∞}(E_ℓ/ℚ)`), the Cassels–Tate pairing on the curves `E_ℓ` of Theorem 5.3
 (`ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves`, the printed input the manuscript cites for its Lemma 5.4 at
-`diophantine_zq.tex` L1079–1081; Lemma 5.4 itself is proved from it), the printed leaf BCDT Theorem A
-(`ZInQ.Manuscript.PoleS12.BCDTThmA`) and a consequence of Kolyvagin's Theorem 1
+`diophantine_zq.tex` L1079–1081; Lemma 5.4 itself is proved from it), BCDT Theorem A as printed
+(`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`, which implies the project's
+`ZInQ.Manuscript.PoleS12.BCDTThmA` by `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed`) and a consequence of Kolyvagin's Theorem 1
 (`ZInQ.Manuscript.PoleS12.KolyvaginThm1`, through Shimura's construction and Faltings' isogeny theorem).
 Pole completeness PC (`ZInQ.PoleCompleteness`, Theorem 5.2, lines 1001–1004, for the manuscript's pole polynomial) is
 proved from these by the manuscript's descent (lines 1019–1121):
@@ -219,6 +221,13 @@ Math. Proc. Cambridge Philos. Soc. 180 (2026) section 2·1, p. 613; leaf, rated 
 (proved unconditionally) and Lean proving that the order of discriminant Δ and its proper class number are determined
 by Δ. `OpenResearchLeaves72` (`TailZ98`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open91` the new top.
 
+bcdt-print replaced the frozen `ZInQ.Manuscript.PoleS12.BCDTThmA` by BCDT Theorem A as printed
+(`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`: condition (2) of Breuil–Conrad–Diamond–Taylor,
+J. Amer. Math. Soc. 14 (2001), Theorem A, for an eigenform of weight 2 on `Γ₁(N)` at some level `N`;
+leaf, rated LEAF): the hypothesis is `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed` from the
+leaf, Lean proving the trivial nebentypus (the Hecke relation against the recurrence of the curve's
+coefficients at good primes, Dirichlet's theorem for the diamond operators, then `Γ₀(N)`).
+
 The hypotheses of `frozenTarget` are therefore exactly the open statements. Discharging one means replacing a field or
 hypothesis by its proof; the theorem's statement then loses that hypothesis.
 -/
@@ -233,12 +242,14 @@ completeness PC (the manuscript's Theorem 5.2) is proved from the last four, wit
 theorem _root_.ZInQ.OneProof.frozenTarget
     (r : HDec.HSyn.OpenResearchLeaves72) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves28)
     (hRC : ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine)
-    (hCT : ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves) (hB : ZInQ.Manuscript.PoleS12.BCDTThmA)
+    (hCT : ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves)
+    (hB : ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted)
     (hK : ZInQ.Manuscript.PoleS12.KolyvaginThm1) :
     ZInQ.FrozenTarget :=
   ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness
     (HDec.HSyn.sixContactMin_of_open91 r t l)
-    (ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing hRC hCT hB hK)
+    (ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing hRC hCT
+      (ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed hB) hK)
 
 end ZInQ.OneProof
 
