@@ -4,20 +4,25 @@ import ZInQKernel.Contrib.PoleRC.LocalP
 import ZInQKernel.Contrib.PoleRC.DescentM
 
 /-!
-# The printed leaves of Lemmas 5.4 and 5.5 over genuine definitions, and the support bound
+# Lemma 5.4 of the manuscript and the leaves of Lemma 5.5 over genuine definitions, and the support bound
 
 Fork issue #83, round 2 (task pc-s12), corrections (a), (b), (e) of the Theorem 5.3 design review.
 
 * `IsModular`: modularity of `E/ℚ`, written fresh: the Dirichlet coefficients of Mathlib's
   `E.LFunction` are the `q`-expansion coefficients of a weight-2 cusp form on `Γ₀(N)`.
 * `BCDTThmA` (printed leaf): every elliptic curve over `ℚ` is modular.
-* `KolyvaginThm1` (printed leaf, the `r = 1` case): a modular elliptic curve with
-  `ord_{s=1} L(E,s) = 1` has rank one and finite `Ш(E/ℚ)` (Tau Ceti's Ш, `SelmerTwoPower.sha`).
+* `KolyvaginThm1` (consequence of Kolyvagin's Theorem 1, the `r = 1` case: Kolyvagin assumes a weak Weil
+  parametrization, and `IsModular` gives one through Shimura's construction and Faltings' isogeny theorem):
+  a modular elliptic curve with `ord_{s=1} L(E,s) = 1` has rank one and finite `Ш(E/ℚ)` (Tau Ceti's Ш,
+  `SelmerTwoPower.sha`).
 * `kolyvaginRankOne_of_printed`: round 1's `KolyvaginRankOne` from the two prints.
-* `Lemma54` (printed leaf, tex `lem:corank`, Cassels–Tate via Poonen–Stoll): full rational
+* `Lemma54` (a lemma of the manuscript, tex `lem:corank`, not a printed leaf: the manuscript proves it
+  from the Kummer sequence and Cassels–Tate via Poonen–Stoll): full rational
   two-torsion and `#Sel₂(E/ℚ) = 8` give `corank_{ℤ₂} Sel_{2^∞}(E/ℚ) = 1`, over Tau Ceti's
   `Sel₂ = selmerAt E 1` and `SelmerTwoPower.SelmerCorankOne`.
-* `KummerSelmerM` (textbook GLUE, not proved): for `E_ℓ`, the explicit system `SelM ℓ` has as many
+* `KummerSelmerM` (textbook GLUE, proved by `PoleS12.kummerSelmerM` in
+  `Contrib/OneProof/PoleCompletenessFromRCGenuineFinal.lean`, from `PoleRC.kummerSelmerM_proof`): for `E_ℓ`,
+  the explicit system `SelM ℓ` has as many
   elements as the cohomological `Sel₂(E_ℓ/ℚ)` (the Kummer identification, Silverman X.1.4).
 * `lemma54At_of_printed`: round 1's interface `Lemma54At SelmerCorankOne` from the two.
 * `selM_finite` (correction (e), proved): `SelM ℓ` is finite, so `ncard = 8` is not vacuous.
@@ -49,14 +54,16 @@ https://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6962416523 -/
 def BCDTThmA : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → IsModular E
 
-/-- **Kolyvagin, Theorem 1, the case `r = 1`** (printed leaf as cited: "On the Mordell–Weil group
+/-- **Kolyvagin, Theorem 1, the case `r = 1`** (consequence of the print, not the printed statement; cited: "On the Mordell–Weil group
 and the Shafarevich–Tate group of modular elliptic curves", MPIM preprint MPI/90-69 (1990),
 Theorems 1–5, pp. 4–5; tex L1093, `\cite[Theorem 1, pp. 4–5]{kolyvagin}`; read (AI) on fork
 issue #83: https://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6962416523):
 a modular elliptic curve `E/ℚ` with `ord_{s=1} L(E, s) = 1` has `rank E(ℚ) = 1` and finite
 `Ш(E/ℚ)`. Theorem 1 (p. 4) assumes a weak Weil parametrization `X₀(N) → E` with `N` the conductor
-(p. 3). `IsModular` is a weaker hypothesis, so this leaf follows from the print only through
-Shimura's construction and Faltings' isogeny theorem (with trivial nebentypus), the step BCDT cite
+(p. 3). `IsModular` is a weaker hypothesis, so this statement is a consequence of the print: it follows
+from Kolyvagin's weak Weil parametrization hypothesis only through Shimura's construction (an abelian
+variety quotient of `J₀(N)` attached to the newform) and Faltings' isogeny theorem (with trivial
+nebentypus), the step BCDT cite
 for (2) ⇒ (6) on p. 3 of their author manuscript. `Ш` is `SelmerTwoPower.sha` (Tau Ceti's Shafarevich–Tate group, local triviality at every
 place). The print is a preprint, not a refereed paper (Known issue, round 1); its `r = 0` case is
 not used. -/
@@ -78,17 +85,20 @@ theorem kolyvaginRankOne_of_printed (hB : BCDTThmA) (hK : KolyvaginThm1) : Kolyv
 def FullTwoTorsion (E : WeierstrassCurve ℚ) : Prop :=
   Nat.card (nsmulAddMonoidHom 2 : E.toAffine.Point →+ _).ker = 4
 
-/-- **Lemma 5.4 (`lem:corank`, tex L1072–1084), printed form over genuine definitions.** For an
+/-- **Lemma 5.4 (`lem:corank`, tex L1072–1084), a lemma of the manuscript (not a printed leaf),
+stated over genuine definitions.** For an
 elliptic curve `E/ℚ` with full rational two-torsion, `dim_{𝔽₂} Sel₂(E/ℚ) = 3` (`#Sel₂ = 8`, with
 `Sel₂ = selmerAt E 1`, Tau Ceti's 2-Selmer group with the conditions at every place) implies
 `corank_{ℤ₂} Sel_{2^∞}(E/ℚ) = 1` (`SelmerTwoPower.SelmerCorankOne`). Provenance (b): the manuscript
 proves it from the Kummer sequence and the Cassels–Tate pairing, citing Poonen–Stoll, Ann. of
-Math. 150 (1999) 1109–1149 (`\cite{poonenstoll}`, tex L1081). A cited leaf here; not proved. -/
+Math. 150 (1999) 1109–1149 (`\cite{poonenstoll}`, tex L1081). It is a hypothesis here, a lemma that
+the manuscript proves and not a published theorem; it is not proved in Lean. -/
 def Lemma54 : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → FullTwoTorsion E →
     Nat.card (selmerAt E 1) = 8 → SelmerCorankOne E
 
-/-- **The Kummer identification for `E_ℓ`** (textbook GLUE, not proved in Lean; Silverman, *The
+/-- **The Kummer identification for `E_ℓ`** (textbook GLUE, proved: `PoleS12.kummerSelmerM`, with standard
+axioms only; Silverman, *The
 Arithmetic of Elliptic Curves*, 2nd ed., Prop. X.1.4, p. 315, as S12 L242 cites it): for positive
 squarefree `ℓ`, the explicit 2-Selmer system `SelM ℓ` (pairs of squarefree integers whose class
 is in the local Kummer image of `E_ℓ` in the coordinates `(x + 3ℓ, x − ℓ)` at `ℝ` and every

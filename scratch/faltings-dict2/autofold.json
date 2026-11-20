@@ -1,0 +1,22 @@
+{
+  "name": "faltings-dict2",
+  "imports": [
+    "ZInQKernel.Contrib.OneProof.FaltingsDict2Models"
+  ],
+  "discharges": [
+    {
+      "field": "faltingsSemistableHeightBC",
+      "proof": "_root_.ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_faltingsLemma1Print {n}.faltingsLemma1DVRPrint {n}.silverbergZarhinThm35 {n}.neronSchemeExtensionDedekind",
+      "leaves": [
+        {
+          "name": "faltingsLemma1DVRPrint",
+          "type": "_root_.ZInQ.FaltingsRestate.FaltingsLemma1DVRPrint",
+          "doc": "Faltings 1983, p. 350, Lemma 1 (page read by the reading desk): a generic-fibre homomorphism of semiabelian schemes with abelian generic fibres extends uniquely as a morphism. S = Spec O is normal and U is its dense generic open. The model hypotheses give extensions by actual torus group schemes on both residue-field fibres, by isSemiabelianModelO_imp_faltingsDefScheme. The specialization is faltingsLemma1DVRPrint_of_printed; faltingsLemma1DVR_iff_print proves equivalence to the homomorphism form.",
+          "kind": "published",
+          "flag": "AI page read by the reading desk: p. 350, Def. and Lemma 1; DVR reading checked by closedFibre_hasTorusExtension, fibre_dims, isCommMonObj_groupModelO, jO_genericOpen, and faltingsLemma1DVR_of_printed; print form: the extension as a morphism",
+          "source": "Faltings, Invent. Math. 73 (1983), 349–366, p. 350, Lemma 1; paper cited in diophantine_zq.tex L621 and L733 and listed at L11084–11086"
+        }
+      ]
+    }
+  ]
+}

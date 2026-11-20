@@ -12,7 +12,7 @@ Lane R7 of fork issue #83. `PoleS12.poleCompleteness_of_restrictedConverseGenuin
 Prop. X.1.4, on the vendored Tau Ceti Galois cohomology). This file removes that hypothesis.
 
 The remaining hypotheses of `poleCompleteness_of_restrictedConverseGenuine_final` are Theorem 5.3
-(`SelmerTwoPower.RestrictedConverseGenuine`) and the printed leaves `PoleS12.Lemma54`,
+(`SelmerTwoPower.RestrictedConverseGenuine`), the manuscript's Lemma 5.4 `PoleS12.Lemma54`, and the leaves
 `PoleS12.BCDTThmA` and `PoleS12.KolyvaginThm1`.
 -/
 
@@ -24,7 +24,7 @@ theorem kummerSelmerM : ZInQ.Manuscript.PoleS12.KummerSelmerM :=
   fun ℓ h1 h2 => ZInQ.Manuscript.PoleRC.kummerSelmerM_proof ℓ h1 h2
 
 /-- **Theorem 5.2 from the printed Theorem 5.3** (`diophantine_zq.tex` lines 1019–1121): from
-Theorem 5.3 over the genuine Selmer condition and the printed leaves Lemma 5.4
+Theorem 5.3 over the genuine Selmer condition, the manuscript's Lemma 5.4
 (`PoleS12.Lemma54`), BCDT Theorem A (`PoleS12.BCDTThmA`) and Kolyvagin's Theorem 1
 (`PoleS12.KolyvaginThm1`). Mordell's theorem for `E_ℓ` (`PoleRC.mordellWeilM`) and the Kummer
 identification (`kummerSelmerM`) are proved. -/

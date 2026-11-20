@@ -1,6 +1,6 @@
 import ZInQKernel.Contrib.CloudB3E2Norm.GenCxStaged
 import ZInQKernel.Contrib.RC53Assist.ResidualBounds.StageBounds
-import ZInQKernel.Contrib.CloudB3RC53.Finiteness.TwoInSupport
+import ZInQKernel.Contrib.CloudB3RC53.Finiteness.TwoInSupportCompositum
 
 /-!
 # The producer bounds of the standard-old family for the staged presentation

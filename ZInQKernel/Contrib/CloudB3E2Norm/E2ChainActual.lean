@@ -1,5 +1,5 @@
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19E2
-import ZInQKernel.Contrib.CloudB3RC53.Finiteness.TwoInSupport
+import ZInQKernel.Contrib.CloudB3RC53.Finiteness.TwoInSupportCompositum
 
 /-!
 # The actual chain inputs of the staged leaf

@@ -8,6 +8,10 @@
 # axioms of ZInQ.OneProof.frozenTarget and fails unless they are among propext, Classical.choice and Quot.sound
 # (scripts/one_proof/check_axioms.py). A run that passes is the evidence that this commit's proof compiles on a
 # hosted runner; blueprint-pages.yml deploys the site only for such a commit.
+#
+# For that reason it also runs after a push that changes what the site is built from besides Lean and the
+# blueprint: the formal companion, the theme and mkdocs.yml. Such a change would otherwise wait, unpublished, for
+# the next Lean change. Its run restores the cache, has nothing new to compile, and checks the axioms again.
 
 name: main build cache
 
@@ -21,6 +25,11 @@ on:
       - 'lean-toolchain'
       - 'lean/lakefile.toml'
       - '.github/workflows/main-build-cache.yml'
+      # Site inputs that are not Lean (see the note above). blueprint/ is not listed: it changes with nearly
+      # every pull request, almost always beside the Lean it describes.
+      - 'docs/companion/**'
+      - 'theme/**'
+      - 'mkdocs.yml'
       # scratch/ is outside every build target.
       - '!scratch/**'
   workflow_dispatch:
@@ -98,8 +107,17 @@ jobs:
           ./elan-init -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
+      # One stalled download held this step for almost six hours (run 44115543349). Each attempt gets ten minutes;
+      # a retry downloads every file again, since a stopped download can leave a truncated archive.
       - name: Fetch the Mathlib build cache
-        run: lake exe cache get
+        timeout-minutes: 35
+        run: |
+          timeout -k 30 600 lake exe cache get && exit 0
+          for attempt in 2 3; do
+            echo "::warning::lake exe cache get did not finish; attempt $attempt downloads every file again."
+            timeout -k 30 600 lake exe cache get! && exit 0
+          done
+          exit 1
 
       # The newest earlier build of main for the same toolchain and Lake configuration, if any.
       - name: Restore the previous build of main

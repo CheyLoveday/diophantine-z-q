@@ -7,8 +7,15 @@ Inputs (run from the repository root):
   labels, tiers, flag classes and area issues);
 * docs/one-proof/claims.tsv, who holds what (only a public claim line, on the claims issue or in a draft pull
   request that links it, holds a hypothesis, and the project's own holds may point at a pushed branch; a project
-  brief is shown as project interest, free to claim; a released claim shows as open);
+  brief is shown as project interest, free to claim; a released claim shows as open; a row whose hypothesis is no
+  longer open is skipped with a note, and the claims sync removes it);
 * docs/one-proof/reviews.tsv and credits.tsv, the ledgers of statement checks and credit;
+* docs/one-proof/volatile.tsv (optional: field, note, since), board rows that a queued fold will remove or rename.
+  Unless held, such a row's status reads "may change soon, not offered" (a held row keeps its holder, marked "may
+  change soon"); the Packets lists mark it, and Good first targets and pages-wanted.md leave it out. The integrator
+  adds rows when it queues such a fold and the fold that lands removes them; with each volatile.tsv edit the
+  integrator re-renders OPEN.md and pages-wanted.md in the same commit (this script reads only committed files and
+  needs no Lean build);
 * docs/one-proof/issues.json, the claim issue, the statement-checks issue, the packet issues and the issue that
   logs folds and landings;
 * scratch/contrib-kit/DischargesTest-output.txt, the saved output of scratch/contrib-kit/DischargesTest.lean.
@@ -87,16 +94,21 @@ if os.environ.get('ONE_PROOF_HYGIENE_FILE'):
             rx, what = row.split('\t', 1)
             HYGIENE.append((re.compile(rx), what))
 PUBLIC_DOCS = ['CONTRIBUTING.md', D + 'CONTRIBUTING.md', D + 'STATEMENT-CHECKS.md']
-TABLES = [D + 'kinds.tsv', D + 'claims.tsv', D + 'reviews.tsv', D + 'credits.tsv', D + 'fold-queue.tsv']
+TABLES = [D + 'kinds.tsv', D + 'claims.tsv', D + 'reviews.tsv', D + 'credits.tsv', D + 'fold-queue.tsv',
+          D + 'volatile.tsv']
 
 
-def read_tsv(path, required=True):
+def read_tsv(path, required=True, quoting=csv.QUOTE_NONE):
+    """Rows of a tab-separated table as dicts. By default a cell is raw text and a double quote is an ordinary
+    character (csv.QUOTE_NONE), as sync_claims.py reads and writes claims.tsv; with csv quoting, a cell that starts
+    with a double quote would swallow the rows after it. load() reads kinds.tsv with csv quoting."""
     if not os.path.exists(path):
         if required:
             sys.exit(f'missing {path}')
         return []
     with open(path, newline='') as fh:
-        return [{k: (v or '') for k, v in r.items() if k is not None} for r in csv.DictReader(fh, delimiter='\t')]
+        return [{k: (v or '') for k, v in r.items() if k is not None}
+                for r in csv.DictReader(fh, delimiter='\t', quoting=quoting)]
 
 
 def words(n):
@@ -125,7 +137,9 @@ def issue_link(ref):
 
 def load():
     data = json.load(open(D + 'open-statements.json'))
-    kinds_rows = read_tsv(D + 'kinds.tsv')
+    # kinds.tsv keeps csv quoting: autofold.py writes it with csv.DictWriter, which quotes a cell holding a double
+    # quote, a tab or a newline, and reads it back the same way
+    kinds_rows = read_tsv(D + 'kinds.tsv', quoting=csv.QUOTE_MINIMAL)
     issues = {'claims_issue': 'Deicyde/diophantine-z-q#14', 'statement_checks_issue': '', 'packet_issues': {},
               'log_issue': 'Deicyde/diophantine-z-q#3'}
     if os.path.exists(ISSUES):
@@ -137,6 +151,7 @@ def load():
         claims_rows=read_tsv(D + 'claims.tsv'),
         reviews=read_tsv(D + 'reviews.tsv', required=False),
         credits=read_tsv(D + 'credits.tsv', required=False),
+        volatile={r['field']: r for r in read_tsv(D + 'volatile.tsv', required=False)},
         issues=issues,
     )
 
@@ -201,9 +216,9 @@ def validate(m):
             problems.append(f"kinds.tsv: {h['field']} has bundle {k['bundle']}, the Lean data says {h['bundle']}")
     held = set()
     for c in m['claims_rows']:
+        # a row whose field is no longer open is not a problem: render() skips it, main() notes it, and the claims
+        # sync removes it once the fold has landed
         f, hold, kind = c['field'], c['hold'], c['holder_kind']
-        if f not in open_fields:
-            problems.append(f'claims.tsv names {f}, which is not an open hypothesis')
         if hold not in HOLDS:
             problems.append(f'claims.tsv: {f}: hold must be one of {sorted(HOLDS)}, not {hold!r}')
         if kind not in HOLDER_KINDS:
@@ -263,7 +278,7 @@ def render(m):
     hyps, kinds, iss = m['hyps'], m['kinds'], m['issues']
     h_fields = [h['field'] for h in hyps if h['bundle'] != 'frozenTarget']
     tops = [h['field'] for h in hyps if h['bundle'] == 'frozenTarget']
-    claims = {c['field']: c for c in m['claims_rows']}
+    claims = {c['field']: c for c in m['claims_rows'] if c['field'] in h_fields + tops}  # rows of open fields only
     reads = human_reads(m)
     n = len(h_fields)
     strict = Counter(kinds[f]['strict'] for f in h_fields)
@@ -279,6 +294,15 @@ def render(m):
         return f"[@{c['public_holder']}](https://github.com/{c['public_holder']})"
 
     def status(f):
+        v = m.get('volatile', {}).get(f)
+        c = claims.get(f)
+        if v and not (c and c['hold'] == 'held'):
+            # a queued fold removes or renames the row: not offered, whatever its label or claims row says
+            return 'may change soon, not offered' + (f": {v['note']}" if v.get('note') else '')
+        base = held_status(f)
+        return base + (f" (may change soon: {v['note']})" if v and v.get('note') else ' (may change soon)' if v else '')
+
+    def held_status(f):
         c = claims.get(f)
         if c and c['hold'] == 'held':
             return f"held by {holder(c)} ([claim]({c['claim_url']}))"
@@ -293,7 +317,8 @@ def render(m):
 
     def free(f):
         c = claims.get(f)
-        return not (c and c['hold'] == 'held') and kinds[f]['label'] not in NOT_OFFERED
+        return (not (c and c['hold'] == 'held') and kinds[f]['label'] not in NOT_OFFERED
+                and f not in m.get('volatile', {}))
 
     def packet_venue(p):
         ref = iss.get('packet_issues', {}).get(p) or checks_ref or iss['claims_issue']
@@ -302,8 +327,9 @@ def render(m):
     count_lines = [
         f'**{n} hypotheses of the H part** (in the bundles '
         f'`{"`, `".join(sorted({h["bundle"] for h in hyps if h["bundle"] != "frozenTarget"}))}`), '
-        f'plus {words(len(tops))} manuscript hypothes{"is" if len(tops) == 1 else "es"} outside the H part '
-        f'(`{"`, `".join(tops)}`: pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.',
+        f'plus {words(len(tops))} hypothes{"is" if len(tops) == 1 else "es"} outside the H part '
+        f'(`{"`, `".join(tops)}`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), '
+        f'listed at the end.',
         '',
         f'* **Strict count: {strictest["LEAF"]} published / {strictest["GLUE"]} glue** (the strictest flagged reading; '
         + (f'{strict["LEAF"]}/{strict["GLUE"]} without the {words(n_flags)} strictest-reading '
@@ -346,21 +372,28 @@ def render(m):
     w('')
     w('* **Published means read.** A hypothesis counts as published only after a reader has checked it against the printed')
     w('  page; unread and unverified rows count as glue (ruling 2026-11-17).')
-    w("* **B_dR.** The kernel's B_dR is Mathlib's `BDeRham O_Cp p`, in four textual copies, each `rfl` to it:")
-    w('  `ZInQ.Contrib.G9.PkgI4.BdR` (I4Layer.lean), `BdrKer.BdR` (KerTheta.lean), `HDec.PkgI4.BdR`')
-    w('  (OneProof/H/LPrefix.lean) and the KerTheta copy in OneProof/H/TailC.lean. Lean proves (KerTheta) that')
-    w('  B_dR^+ = `BDeRhamPlus` is a xi-adically complete DVR with maximal ideal (xi), xi = p - [p-flat], and that')
-    w('  `BDeRham` is its fraction field and is isomorphic to B_dR^+[1/xi], with the functorial G_Qp-action. The')
-    w("  construction of B_dR^+ (W(PreTilt O_Cp)[1/p] completed at ker theta) is the print's (Fontaine, Asterisque 223")
-    w('  Exp. II; Berger 2002 section 1.2): a definition-level reading. A print defining B_dR as Frac(B_dR^+) or')
-    w('  B_dR^+[1/xi] is matched by proved lemmas (`isFractionRing_BDeRham`, `bdREquivAway`). A print defining')
-    w('  B_dR = B_dR^+[1/t], t = log[eps] (Berger 2002 section 1.2), is matched only through t != 0 in B_dR^+, which')
-    w('  Lean does not prove (t is not constructed in B_dR^+): a step, so a statement read through that definition is')
-    w("  GLUE. No statement's rating depends on it today (deRhamH1AbVarT, the only row whose statement reaches B_dR, is")
-    w('  GLUE for another reason). To close it: construct t in B_dR^+ and prove t != 0 from [eps] - 1 != 0 in W(R),')
-    w('  injectivity of W(R)[1/p] -> B_dR^+ (xi-adic separatedness of A_inf) and log(1 + x) = x times a unit for x in')
-    w("  the maximal ideal; then B_dR^+[1/t] = B_dR^+[1/xi] by `eq_xi_pow_mul_unit`. Fontaine's uniformizer theorem is")
-    w('  not needed.')
+    w('* **B_dR.** The manuscript uses `B_dR` in its invariant spaces (L10984–L10992) without defining the ring. Use')
+    w("  Brinon–Conrad (provenance (b), the manuscript's `brinon-conrad`), Def. 4.4.7, p. 60 and the discussion on p. 131,")
+    w("  before Def. 9.1.4 (which defines B_cris), for `B_dR` and the `B_dR^+[1/t]` presentation. The kernel's ring is")
+    w("  Mathlib's `BDeRham 𝓞_ℂ_[p] p`: the `ZInQ.Contrib.G9.PkgI4.BdR`, `ZInQ.Contrib.G9.BdrKer.BdR`, `HDec.PkgI4.BdR`,")
+    w("  and `ZInQKernel/OneProof/H/TailC.lean` copies are each definitionally equal to it. The positive ring is Mathlib's")
+    w('  `BDeRhamPlus`, the completion of `W(PreTilt 𝓞_ℂ_[p])[1/p]` at `ker θ`. In `ZInQ.Contrib.G9.BdrKer.Cp`,')
+    w('  `ker_fontaineTheta_Cp` and `ker_fontaineThetaInvertP_Cp` supply the generator `xi = p - [p-flat]` before and after')
+    w('  inverting `p`; `isAdicComplete_BDeRhamPlus`, `isDiscreteValuationRing_BDeRhamPlus`, and `maximalIdeal_BDeRhamPlus`')
+    w('  give the complete DVR and its maximal ideal. `isFractionRing_BDeRham` and `bdREquivAway` match the fraction field')
+    w('  and the presentation inverting `xi`. The period `t = log[ε]` is `DeRhamPrint.TDict.tt`;')
+    w('  `DeRhamPrint.BdRT.tt_eq_logTeich` identifies it with `HDec.PkgI4.BergerBst.logTeich` for the same `ε`, and')
+    w('  `DeRhamPrint.BdRT.fontaineT_reading` gives `t ≠ 0`, the uniformizer properties, and `σ(t) = χ(σ)t`. The `[1/t]`')
+    w('  presentation is matched by `DeRhamPrint.TDict.bdREquivAwayT`. Its Galois action is `DeRhamPrint.BdRT.awayTAction`,')
+    w("  extending the action on the positive ring by `DeRhamPrint.BdRT.awayTAct_comp` and matching the kernel's `bdrAct`")
+    w('  by `DeRhamPrint.BdRT.bdREquivAwayT_intertwines`. A print defining B_dR as B_dR^+[1/t] is now matched by proved')
+    w('  lemmas (TDict.bdREquivAwayT, BdRT.fontaineT_reading), so reading a statement through that definition no longer')
+    w('  makes it GLUE. The row whose statement reaches `B_dR` is `scholzeH1AbVar` (`DeRhamScholze.HTMerge.ScholzeH1AbVar`,')
+    w('  over `DeRhamScholze.ddrFam`, `D_dR = (B_dR ⊗ W)^{G_F}`, and `DeRhamScholze.filD`, `Fil^j D_dR = D_dR ∩ (t^j B_dR^+')
+    w('  ⊗ W)`); its rating is unchanged. `deRhamVpAbVarDirect` is no longer a row: it is derived from `scholzeH1AbVar` and')
+    w("  `t10TateDuality` (`DeRhamScholze.HTMerge.deRhamVpAbVarDirect_of_scholzeH1Milne`, fork PR #106). Fontaine,")
+    w("  *Astérisque* 223, Exp. II is outside the manuscript's bibliography and unread. Berger 2002 §1.2 is UNVERIFIED as a")
+    w('  locator for this definition.')
     w('')
     w('## How to help')
     w('')
@@ -424,7 +457,8 @@ def render(m):
         for f in members:
             k = kinds[f]
             cls = ', '.join(x for x in k['flag_class'].split(',') if x and x != 'note')
-            w(f"* [`{f}`](#{anchor(f)}) ({k['strictest']}" + (f'; {cls}' if cls else '') + f"): {k['source']}")
+            soon = ' (may change soon)' if f in m.get('volatile', {}) else ''
+            w(f"* [`{f}`](#{anchor(f)}) ({k['strictest']}" + (f'; {cls}' if cls else '') + f"){soon}: {k['source']}")
         w('')
 
     w('## Index')
@@ -457,7 +491,9 @@ def render(m):
         if k['packet']:
             bits.append(f"packet [{k['packet']}](#packet-{k['packet'].lower()})")
         if k['label']:
-            bits.append(f"label {k['label']} ({LABELS[k['label']]})")
+            # a volatile row that is not held is not offered, so its label is shown without the offer's gloss
+            offered = not (f in m.get('volatile', {}) and not (f in claims and claims[f]['hold'] == 'held'))
+            bits.append(f"label {k['label']}" + (f" ({LABELS[k['label']]})" if offered else ''))
         if k['tier']:
             bits.append(f"tier {k['tier']} (model triage, unreviewed)")
         if k['area_issue']:
@@ -481,11 +517,14 @@ def render(m):
     w('')
     for f in order:
         section(f)
-    w('## Manuscript hypotheses outside the H part')
+    w('## Hypotheses outside the H part')
     w('')
     w("These are `frozenTarget`'s other arguments (outside the H bundles); they are not part of the counts above.")
     w('Pole completeness PC (`ZInQ.PoleCompleteness`) is Theorem 5.2 of the 11/5 manuscript for its own pole')
-    w('polynomial; the manuscript derives it from its restricted converse, Theorem 5.3. The former Route K inputs')
+    w('polynomial. Lean proves it from these by the manuscript\'s descent (Section 5.1):')
+    w('`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`')
+    w('(`ZInQKernel/Contrib/OneProof/CasselsTatePairing.lean`). Only `hRC`, the restricted converse (Theorem 5.3), is')
+    w('the manuscript\'s own theorem; each entry\'s kind says what the others are. The former Route K inputs')
     w('(Tian–Yuan–Zhang and Gross–Zagier) are no longer hypotheses.')
     w('')
     for f in tops:
@@ -507,7 +546,8 @@ def render(m):
           '[OPEN.md](OPEN.md). How to do it, and what makes a reading count: [STATEMENT-CHECKS.md](STATEMENT-CHECKS.md).',
           '']
     for cls in PAGES_WANTED:
-        rows = [f for f in h_fields + tops if cls in kinds[f]['flag_class'].split(',')]
+        rows = [f for f in h_fields + tops if cls in kinds[f]['flag_class'].split(',')
+                and f not in m.get('volatile', {})]  # a queued fold removes or renames volatile rows
         if not rows:
             continue
         pw += [f'## {cls}', '']
@@ -580,6 +620,13 @@ def main():
         print('\n'.join(problems))
         sys.exit(1)
     res, marker_problems = outputs(m)
+    stale = sorted(set(m.get('volatile', {})) - {h['field'] for h in m['hyps']})
+    if stale:
+        print(f"note: volatile.tsv names rows that are no longer open (remove them): {', '.join(stale)}")
+    gone = sorted({c['field'] for c in m['claims_rows']} - {h['field'] for h in m['hyps']})
+    if gone:
+        print(f"note: claims.tsv names rows that are no longer open (skipped; the claims sync removes them): "
+              f"{', '.join(gone)}")
     if '--check' in sys.argv:
         problems += marker_problems
         for p, content in res.items():

@@ -47,8 +47,9 @@ Theorem A (J. Amer. Math. Soc. 14 (2001) 843–939; the manuscript cites the aut
 and Kolyvagin, Theorem 1, pp. 4–5 of "On the Mordell–Weil group and the Shafarevich–Tate group
 of modular elliptic curves", MPIM preprint MPI/90-69 (1990) (UNVERIFIED: not read here; the
 manuscript says its Theorems 3–5 supply the auxiliary imaginary quadratic field and the nonzero
-Heegner height). Kolyvagin's theorem also gives `Ш(E/ℚ)` finite, which has no Lean definition
-and is not stated; the Lean statement is the rank half, a consequence. The `rank` of the print is
+Heegner height). Kolyvagin's theorem also gives `Ш(E/ℚ)` finite; `Ш` has a Lean definition
+(`SelmerTwoPower.sha`) and the finiteness is stated in `PoleS12.KolyvaginThm1`; the statement here is the
+rank half, a consequence. The `rank` of the print is
 the rank of the finitely generated group `E(ℚ)`, here `Module.rank ℤ E(ℚ)`. -/
 def KolyvaginRankOne : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → AnalyticRankOne E →

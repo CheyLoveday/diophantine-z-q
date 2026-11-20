@@ -1,0 +1,11 @@
+# Results log
+
+- **VERIFIED (source):** The starting revision is `7d23f6776`. The recorded reading of p. 350 gives uniqueness as a morphism. Restricting morphisms on the unit and square of a smooth model is injective by the existing separated target lemma.
+- **VERIFIED (source):** Mathlib supplies the relative `algΓ ⊣ algSpec` adjunction, fully faithful `Spec` on algebras, and gluing on affine open covers.
+- **VERIFIED (compiled):** `FaltingsDict2.lean` proves `isMonHom_of_generic`, `faltingsLemma1DVR_iff_print`, and the specialization with the pointwise fibre conditions. The input homomorphism and all model hypotheses of the old leaf are unchanged.
+- **VERIFIED (source):** `SemiAbelianDescendsPerfect.lean` already supplies the Laurent polynomial coordinate ring and the affine test for isomorphisms. `MilneQuasiInverse/Kernel.lean` supplies the fibre product with its group structure and its multiplicative equivalence on points.
+- **VERIFIED (compiled):** `FaltingsDict2SplitTorus.lean` constructs the split torus as a group scheme whose affine points are naturally tuples of units. `FaltingsDict2Torus.lean` proves that the actual kernel of the quotient is a closed subgroup and becomes isomorphic to that torus over the algebraic closure, with its group law.
+- **VERIFIED (compiled):** `FaltingsDict2Models.lean` applies the scheme-kernel bridge to both residue-field fibres and specializes the printed premise with a morphism conclusion. Its height wrapper takes the print-form leaf and the same two existing inputs.
+- **VERIFIED (Lean audit):** All four new modules compile against the matching base. All 13 new theorems, including private helpers, and four checked definitions use precisely `propext`, `Classical.choice`, and `Quot.sound`. No contribution imports `ZInQKernel.OneProof.Main`.
+- **VERIFIED (live discharge):** The print-form height wrapper matches `OpenResearchLeaves61.faltingsSemistableHeightBC` with inputs `FaltingsLemma1DVRPrint`, `SilverbergZarhinThm35`, and `NeronSchemeExtensionDedekind`, and the three standard axioms. Of 12,396 theorems checked, 27 discharge one of 30 open hypotheses; the unchanged headline uses only standard axioms.
+- **VERIFIED (computed):** The autofold dry run records 5/24 → 6/23 on 29 H fields in both the strict and strictest counts. No fold was applied.

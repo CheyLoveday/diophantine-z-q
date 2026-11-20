@@ -1,0 +1,39 @@
+name: PR guard
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-guard-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  guard:
+    name: Board rows, owners and generated files
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      # The default checkout of a pull_request event is GitHub's merge commit: HEAD^1 is main, HEAD the merged result.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12.14'
+      - name: Board rows this pull request removes or adds (fails if unlisted)
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: python scripts/guard/check_pr.py rows --base HEAD^1
+      - name: Files with an owner in OWNERS.tsv (warning only)
+        run: python scripts/guard/check_pr.py owners --base HEAD^1
+      # render_open.py --check here and at HEAD^1; only problems that main does not already have are reported.
+      - name: Problems this pull request brings into the generated contributor files (warning only)
+        run: python scripts/guard/check_pr.py render --base HEAD^1
+      - name: Board render unit tests (fixtures only)
+        run: python -I scripts/one_proof/test_scoring.py
+      - name: Claims sync unit tests (fixtures only, no network)
+        run: python -I -m unittest discover -s scripts/claims -p 'test_*.py'
