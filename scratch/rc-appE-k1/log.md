@@ -27,3 +27,8 @@ Shapiro stage:
 Tensor coefficient stage:
 
 - VERIFIED (Lean and Lake): `CoefModule`, `Cyclotomic` and `Tate` built. `CoefficientCohomology.lean` puts the integral scalar map on the coefficient tensor with the transported action, induces the continuous `H¹` map, and proves the inverse-deck formula for that action. All three axiom checks pass.
+
+Comparison stage:
+
+- VERIFIED (Lean): `Comparison.lean` states `KatoFiniteComparison` and `FixedKatoFiniteComparison` over the actual open cyclotomic kernels in `G_{ℚ,S}` and the actual torsion coefficients, with the concrete reduction, norm and deck maps. Given the comparison, `exists_nonzero_image_of_anchored_weightedSum` detects the anchor at a finite precision. Its axiom check passes. This proof does not assert the comparison or identify the detected class with a specialization of a completed family class.
+- VERIFIED (verification): all five source checks and all 26 `#print axioms` checks passed. The initial build control incident is recorded above; the successful targeted dependency builds and individual checks were serial. No new print was added. The completed class, arithmetic comparison and uniform lattice bound remain open.
