@@ -53,3 +53,24 @@ flag on Lake 5.0.0 / Lean 4.35.0. Builds will use a compiler lock and
 the load/memory gate, with downloads disabled. The pre-run gate is
 `uptime` and `free -g`, load at most 150 and available memory at least
 20 GB. Follow the same gate for each direct check.
+
+## Invariant-basis transport (VERIFIED)
+
+- The import builds for `BergerReroute.BergerReroute` and the
+  `#discharges` matcher succeeded with `lake --old --no-cache build`,
+  reusing local artifacts checked against identical sources. The
+  compiler wrapper serialized compiler invocations. No Lean jobs
+  overlapped. Direct checks use `lake env lean`.
+- `BergerComparison/Transport.lean` compiled with `lake env lean`.
+  An equivariant algebra map between stable rings sends a fixed basis
+  to a fixed basis by scalar extension. The map need not act on
+  `B_dR`, be injective, or induce an automorphism on the fixed scalars.
+- The existing crystalline-to-maximal inclusion supplies one direction.
+  For the reverse direction, the remaining `FrobeniusTransport p`
+  takes only a prime and cyclotomic generator, and asks for one
+  equivariant algebra map between the two specified embedded semistable
+  rings. There is no representation or extension quantified in it.
+  With the logarithm estimate of `bmax_adjoin_eq_bst`, the reduction
+  proves `BergerPaperStComparison p ell`. It also transports an
+  existential finite-extension witness to the basis conclusion of
+  the existing draft.
