@@ -15,8 +15,8 @@ converse, `ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine`, `diophanti
 (`ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves`, the printed input the manuscript cites for its Lemma 5.4 at
 `diophantine_zq.tex` L1079–1081; Lemma 5.4 itself is proved from it), BCDT Theorem A as printed
 (`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`, which implies the project's
-`ZInQ.Manuscript.PoleS12.BCDTThmA` by `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed`) and a consequence of Kolyvagin's Theorem 1
-(`ZInQ.Manuscript.PoleS12.KolyvaginThm1`, through Shimura's construction and Faltings' isogeny theorem).
+`ZInQ.Manuscript.PoleS12.BCDTThmA` by `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed`) and a consequence of BCDT Theorem A and
+Kolyvagin's Theorem 1 together (`ZInQ.Manuscript.PoleS12.KolyvaginThm1`, through Shimura's construction and Faltings' isogeny theorem).
 Pole completeness PC (`ZInQ.PoleCompleteness`, Theorem 5.2, lines 1001–1004, for the manuscript's pole polynomial) is
 proved from these by the manuscript's descent (lines 1019–1121):
 `ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`
@@ -244,7 +244,7 @@ namespace ZInQ.OneProof
 
 /-- **Theorem 1.1, from every statement still open:** the open H bundles, the manuscript's Theorem 5.3 (the restricted
 converse, the manuscript's own theorem (not a printed leaf)), the Cassels–Tate pairing on the curves `E_ℓ`, the printed
-leaf BCDT Theorem A and a consequence of Kolyvagin's Theorem 1 (through Shimura's construction and Faltings' isogeny theorem). Pole
+leaf BCDT Theorem A, and a consequence of it and Kolyvagin's Theorem 1 together (through Shimura's construction and Faltings' isogeny theorem). Pole
 completeness PC (the manuscript's Theorem 5.2) is proved from the last four, with Lemma 5.4 proved from the pairing
 (`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`). -/
 theorem _root_.ZInQ.OneProof.frozenTarget
