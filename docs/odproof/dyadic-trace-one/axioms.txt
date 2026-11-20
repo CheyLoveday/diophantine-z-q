@@ -1,0 +1,26 @@
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.invariant_normalization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.finiteInvariant_kummerClass' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.exists_local_trace' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.duality02' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.trace_duality02' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.exists_normalized_cycle' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.first_reduction_eq_sign_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.exists_trace_one_with_sign' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.orientedTraceOne' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.PlaceAboveTwo.orientedTrace_inducesIsoH2' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

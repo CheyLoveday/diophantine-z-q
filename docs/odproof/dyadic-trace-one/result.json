@@ -1,0 +1,232 @@
+{
+  "verification_date_utc": "2026-11-20",
+  "executor": "odProof on Modal, x86_64 Linux",
+  "assurance": "Native Lean elaboration and kernel checking",
+  "theorem": "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.orientedTrace_inducesIsoH2",
+  "original_stack": {
+    "base": "e2cf301cfde710497612c10e13837851838d4454",
+    "proof_head": "f580c857e04e395d950654585d2e53d8b39453eb",
+    "three_target_build_and_original_scratch": "PASS"
+  },
+  "updated_stack": {
+    "base": "ddf572d40d932c66b98e296454d6268e9caed383",
+    "proof_head": "1742527c7d4e0217f8fd278588f334787ff59efc",
+    "tree": "ff863ace661c2c8cd0e16f0baf7e13b2a633f96e",
+    "unchanged_trace_project_modules": 1982,
+    "cache_check_named_build_and_focused_scratch": "PASS",
+    "project_wide_build_and_reporter": "NOT RUN"
+  },
+  "toolchain": {
+    "lean": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+    "lake": "Lake version 5.0.0-src+eb6cafb (Lean version 4.35.0)"
+  },
+  "dependency_revisions": {
+    "mathlib": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+    "plausible": "dfa4f38190d07c37e315953e08b90fe2d95b3c24",
+    "LeanSearchClient": "d6b4c7be5be75ec4917c873ac50c756dc1436372",
+    "importGraph": "a41f0e9a4dea23188ea9cc1c41ac9f8bbafe0b93",
+    "proofwidgets": "df72b022e558978a1c50264cfc4d7fec86fa8e04",
+    "aesop": "4a174c490d8707121c4a9290800489f105d85e07",
+    "Qq": "dce0ad79c486cb1fb504af04f953c3466b0c6db8",
+    "batteries": "66e469188fe07963e5cf666c7d4433f45b8131c5",
+    "Cli": "c24fe6078c630e89b489bffe59b3e20ac30d12c8"
+  },
+  "bound_sources_sha256": {
+    "ZInQKernel/Contrib/RC53Assist/PlaceAboveTwo/SignLine.lean": "792037d616e007ebbf5d8f4e4d8417d5d71d58836c1178d15afe405423bce4be",
+    "ZInQKernel/Contrib/RC53Assist/PlaceAboveTwo/TraceOne.lean": "47392d13ea94dcc96f6b769df27f155833917eb9e35a04c92cd531673581da0b",
+    "ProofCheck.lean": "75d9d1eca3a0ab12bba24643edc0f67aa56a715f6eb15315dc2e9eb9d19d9270",
+    "TraceOneProofCheck.lean": "a38b62ad449102e4931d305c01f69a8613587e5e904f766f402812b05f9996d4"
+  },
+  "declared_axioms_for_each_audited_declaration": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "audited_declarations": [
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.invariant_normalization",
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.finiteInvariant_kummerClass",
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.exists_local_trace",
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.duality02",
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.SignLine.trace_duality02",
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.exists_normalized_cycle",
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.first_reduction_eq_sign_iff",
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.exists_trace_one_with_sign",
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.orientedTraceOne",
+    "ZInQ.Contrib.RC53Assist.PlaceAboveTwo.orientedTrace_inducesIsoH2"
+  ],
+  "board": {
+    "source_head": "f580c857e04e395d950654585d2e53d8b39453eb",
+    "open_hypotheses": 33,
+    "theorems_checked": 22767,
+    "matching_theorems": 345,
+    "matches_attributed_to_this_contribution": 0
+  },
+  "warnings_in_contributed_sources": 6,
+  "stage_receipts": {
+    "focused_build": {
+      "head": "f580c857e04e395d950654585d2e53d8b39453eb",
+      "modal_run": "4e3471a426fb023fb40b0578940d8a90",
+      "command": [
+        "/opt/lean/bin/lake",
+        "--offline",
+        "--no-cache",
+        "--fail-fast",
+        "build",
+        "+ZInQKernel.Contrib.RC53Assist.PlaceAboveTwo.TraceOne"
+      ],
+      "returncode": 0,
+      "complete": true,
+      "timed_out": false,
+      "log_truncated": false,
+      "cleanup_confirmed": true,
+      "elapsed_seconds": 17.11541451099947,
+      "stdout_sha256": "98286528eb468fb95a72c9833dd5c38c0525e4ce6bf02e8bb10b4a6bb54dcb5d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 257111,
+      "stdout_file": "focused-build.log.gz"
+    },
+    "focused_endpoint_and_axioms": {
+      "head": "f580c857e04e395d950654585d2e53d8b39453eb",
+      "modal_run": "4e3471a426fb023fb40b0578940d8a90",
+      "command": [
+        "/opt/lean/bin/lean",
+        "--root=/inputs",
+        "/inputs/TraceOneProofCheck.lean"
+      ],
+      "returncode": 0,
+      "complete": true,
+      "timed_out": false,
+      "log_truncated": false,
+      "cleanup_confirmed": true,
+      "elapsed_seconds": 4.5456435039995995,
+      "stdout_sha256": "3f0929e75b52a4932863a868a59f5e03fc4d5b5421f632ca69bd5d9974f41812",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 1271,
+      "stdout_file": "axioms.txt"
+    },
+    "full_build": {
+      "head": "f580c857e04e395d950654585d2e53d8b39453eb",
+      "modal_run": "42a2a2ba872de89f40440ebfe8996489",
+      "command": [
+        "/opt/lean/bin/lake",
+        "--offline",
+        "--no-cache",
+        "--fail-fast",
+        "build",
+        "+ZInQKernel.Contrib.RC53Assist.PlaceAboveTwo.TraceOne",
+        "+ZInQKernel.OneProof.Main",
+        "+ZInQKernel.OneProof.Discharges"
+      ],
+      "returncode": 0,
+      "complete": true,
+      "timed_out": false,
+      "log_truncated": false,
+      "cleanup_confirmed": true,
+      "elapsed_seconds": 6082.797818665,
+      "stdout_sha256": "3fd896c9d84f9f08efe21f7335ba2288894f418b24c5761f54b8ab9e424c8d83",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 10648218,
+      "stdout_file": "build.log.gz"
+    },
+    "full_scratch_and_board": {
+      "head": "f580c857e04e395d950654585d2e53d8b39453eb",
+      "modal_run": "42a2a2ba872de89f40440ebfe8996489",
+      "command": [
+        "/opt/lean/bin/lake",
+        "--offline",
+        "--no-cache",
+        "env",
+        "lean",
+        "ProofCheck.lean"
+      ],
+      "returncode": 0,
+      "complete": true,
+      "timed_out": false,
+      "log_truncated": false,
+      "cleanup_confirmed": true,
+      "elapsed_seconds": 10.75092801900064,
+      "stdout_sha256": "9d420af0e475b79f30379222013ec5884d570e4b14ad93e8b09e6b19616ad437",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 77104,
+      "stdout_file": "discharges.txt"
+    },
+    "updated_stack_cache_check": {
+      "head": "1742527c7d4e0217f8fd278588f334787ff59efc",
+      "modal_run": "42a2a2ba872de89f40440ebfe8996489",
+      "command": [
+        "/opt/lean/bin/lake",
+        "--offline",
+        "--no-cache",
+        "--no-build",
+        "--fail-fast",
+        "build",
+        "+ZInQKernel.Contrib.RC53Assist.PlaceAboveTwo.TraceOne"
+      ],
+      "returncode": 0,
+      "complete": true,
+      "timed_out": false,
+      "log_truncated": false,
+      "cleanup_confirmed": true,
+      "elapsed_seconds": 3.5861539489997085,
+      "stdout_sha256": "9bf33f515d34f69f6d60f60997f3e36c6123c4440aeb2a8105b722607f3cc4d6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 257102,
+      "stdout_file": "updated-stack-cache.log.gz"
+    },
+    "updated_stack_named_build": {
+      "head": "1742527c7d4e0217f8fd278588f334787ff59efc",
+      "modal_run": "42a2a2ba872de89f40440ebfe8996489",
+      "command": [
+        "/opt/lean/bin/lake",
+        "--offline",
+        "--no-cache",
+        "--fail-fast",
+        "build",
+        "+ZInQKernel.Contrib.RC53Assist.PlaceAboveTwo.TraceOne"
+      ],
+      "returncode": 0,
+      "complete": true,
+      "timed_out": false,
+      "log_truncated": false,
+      "cleanup_confirmed": true,
+      "elapsed_seconds": 3.5819800549998035,
+      "stdout_sha256": "e5c49b551ea5a07784603c4aa7a2588624f3f4ff3d7575aee2982cc80ca776e1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 257108,
+      "stdout_file": "updated-stack-build.log.gz"
+    },
+    "updated_stack_focused_endpoint_and_axioms": {
+      "head": "1742527c7d4e0217f8fd278588f334787ff59efc",
+      "modal_run": "42a2a2ba872de89f40440ebfe8996489",
+      "command": [
+        "/opt/lean/bin/lean",
+        "--root=/inputs",
+        "/inputs/TraceOneProofCheck.lean"
+      ],
+      "returncode": 0,
+      "complete": true,
+      "timed_out": false,
+      "log_truncated": false,
+      "cleanup_confirmed": true,
+      "elapsed_seconds": 3.6590820540004643,
+      "stdout_sha256": "3f0929e75b52a4932863a868a59f5e03fc4d5b5421f632ca69bd5d9974f41812",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 1271,
+      "stdout_file": "axioms.txt"
+    }
+  },
+  "vm_cleanup": {
+    "4e3471a426fb023fb40b0578940d8a90": "CONFIRMED",
+    "42a2a2ba872de89f40440ebfe8996489": "CONFIRMED"
+  },
+  "open_assurance": [
+    "Independent odProof six-checker replay",
+    "Protected statement comparator",
+    "Independent mathematical review"
+  ],
+  "open_mathematics": [
+    "Trace on the actual Acoef 1 localCx with boundary vanishing and InducesIsoH2",
+    "Degree-three exactness under the current Milne input",
+    "Higher finite coefficients, global calibration, integral determinant bases and RestrictedConverseGenuine assembly"
+  ]
+}
