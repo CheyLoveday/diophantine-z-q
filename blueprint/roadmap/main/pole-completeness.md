@@ -30,14 +30,14 @@ input $B$ as above, the descent works in four steps:
   in the coordinates $(x+3\ell,x-\ell)$.
 - Lemma 5.4 turns dimension $3$ into Selmer corank $1$, so the restricted converse gives analytic rank $1$.
   Lemma 5.5 (modularity with Kolyvagin's theorem, which rests on Gross–Zagier) then gives rank $1$ and a
-  finite Tate–Shafarevich group for both curves.
+  finite Tate–Shafarevich group for both curves; the Lean proof uses only the rank, from Silverman's
+  rank-one implication.
 - So the 2-part of the Tate–Shafarevich group vanishes, and the class $(\beta,1)$ comes from a rational
   point on each curve. Rescaled to abscissas $A$ and $Az^2$, those points give the witnesses.
 
 That derivation is formalized here (fork issue #83), with Lemma 5.4 proved from the Cassels–Tate
-pairing on the curves $E_\ell$ ([pole completeness from the restricted converse](../pole-completeness-from-5-3/README.md)). It leaves four inputs: Theorem 5.3; that pairing, as Poonen and Stoll restate
-Cassels' theorem; the modularity theorem of Breuil, Conrad, Diamond and Taylor; and a consequence of
-Kolyvagin's theorem. Theorem 5.3 is the manuscript's own theorem, proved in its Sections 7–9 and
+pairing on the curves $E_\ell$ ([pole completeness from the restricted converse](../pole-completeness-from-5-3/README.md)). It leaves three inputs: Theorem 5.3; that pairing, as Poonen and Stoll restate
+Cassels' theorem; and Silverman's rank-one implication (AEC, Appendix C, Evidence 16.5.5). Theorem 5.3 is the manuscript's own theorem, proved in its Sections 7–9 and
 Appendices E–G ([the restricted converse](../restricted-converse/README.md)). The [pole obstruction](../multiplication/pole-obstruction.md),
 the manuscript's Lemma 5.1, is proved for this polynomial.
 

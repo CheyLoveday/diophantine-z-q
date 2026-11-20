@@ -4,29 +4,28 @@ declaration: theorem
 origin: cited
 statement: formalized
 proof: formalized
-lean: ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing
+lean: ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne
 ---
 
 # Theorem 5.2 from Theorem 5.3
 
-Assume Theorem 5.3, the Cassels–Tate pairing on the curves $E_\ell$, the modularity theorem of Breuil,
-Conrad, Diamond and Taylor as printed, and the consequence of Kolyvagin's Theorem 1 in
+Assume Theorem 5.3, the Cassels–Tate pairing on the curves $E_\ell$ and Silverman's rank-one implication, as in
 [the cited inputs](cited-inputs.md). Then pole completeness holds: the manuscript's Theorem 5.2, for the
 manuscript's pole polynomial.
 
 This is the manuscript's derivation in Section 5.1. `ZInQ.OneProof.frozenTarget` derives pole
-completeness through it from its hypotheses `hRC`, `hCT`, `hB` and `hK` and passes the result to
+completeness through it from its hypotheses `hRC`, `hCT` and `hRank` and passes the result to
 [the main theorem by Elliot's route](../main/main-theorem.md).
 
-**Proof sketch.** Lemma 5.4 at the curves $E_\ell$ follows from the pairing. Modularity and Kolyvagin's
-theorem give the rank half of Lemma 5.5. With Theorem 5.3 these give $\mathrm{CR}_M$, and $\mathrm{CR}_M$ with
-the simultaneous construction gives Theorem 5.2.
+**Proof sketch.** Lemma 5.4 at the curves $E_\ell$ follows from the pairing. With Theorem 5.3 it gives
+analytic rank $1$, and Silverman's implication gives rank $1$; together these give $\mathrm{CR}_M$, and
+$\mathrm{CR}_M$ with the simultaneous construction gives Theorem 5.2.
 
 ## Depends on
 
 - [Pole completeness](../main/pole-completeness.md)
 - [Theorem 5.3: the restricted converse](../restricted-converse/restricted-converse.md)
-- [The cited inputs: the Cassels–Tate pairing, modularity and Kolyvagin's theorem](cited-inputs.md)
+- [The cited inputs: the Cassels–Tate pairing and Silverman's rank-one implication](cited-inputs.md)
 
 ## Proof depends on
 

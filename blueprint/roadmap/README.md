@@ -20,17 +20,17 @@ flowchart TD
   C["The construction: proved"] --> T
   H["Height input: the minimal height hypothesis"] --> T
   P["Pole input"] --> T
-  HD["Elliot's route: the height decomposition"] --> H
+  HD["The manuscript's proof: the height decomposition"] --> H
   PE["Elliot's route: Theorem 5.2 from Theorem 5.3"] --> P
   PK["The congruent-number route: certified rank"] --> P
 ```
 
 ## Status by route
 
-| Route | Lean | Proved in Lean | Assumed |
+| Route | Lean | Proved in that Lean | Assumed |
 | --- | --- | --- | --- |
-| [Elliot's route](main/main-theorem.md) | this fork's main, `ZInQ.OneProof.frozenTarget` | the construction; Theorem 1.1 from the two inputs; the height input from the open statements of [the height decomposition](height-decomposition/README.md); pole completeness from four inputs | the open statements of the height decomposition (published theorems and consequences of them or of the manuscript's text); Theorem 5.3, the manuscript's own theorem, reduced in Lean to cited results and one structure of remaining hypotheses; the Cassels–Tate pairing on the curves $E_\ell$ and Theorem A of Breuil, Conrad, Diamond and Taylor, both as printed; a consequence of Kolyvagin's Theorem 1 together with Theorem A |
-| [The congruent-number route](main/main-theorem-reading-a-gross-zagier.md) | the tag `route-k-final` (`ZInQ.Contrib.GaussFE.frozenTarget_of_sixContactMin_tyzThm35ReadingA_grossZagier`) | the construction, for a variant of the pole polynomial; Theorem 1.1 from the minimal height hypothesis and the certified rank hypothesis; that hypothesis from the two statements on the right | the minimal height hypothesis, whole; Tian–Yuan–Zhang's Theorem 3.5(2) in reading A, which no refereed text found by the project states; the Gross–Zagier statement, a textbook theorem |
+| [Elliot's route](main/main-theorem.md) | this fork's main, `ZInQ.OneProof.frozenTarget` | the construction; Theorem 1.1 from the two inputs; the height input from the open statements of [the height decomposition](height-decomposition/README.md); pole completeness from three inputs | the open statements of the height decomposition: published theorems, consequences of published theorems, statements from unrefereed sources and the manuscript's own claims, with only a few counted as published under the project's strict count; Theorem 5.3, the manuscript's own theorem, reduced in Lean to cited results and one structure of remaining hypotheses; the Cassels–Tate pairing on the curves $E_\ell$, as Poonen and Stoll restate Cassels' theorem (glue until re-cited and read); Silverman's rank-one implication (AEC, Appendix C, Evidence 16.5.5) |
+| [The congruent-number route](main/main-theorem-reading-a-gross-zagier.md) | the tag `route-k-final` (`ZInQ.Contrib.GaussFE.frozenTarget_of_sixContactMin_tyzThm35ReadingA_grossZagier`) | at that tag: the construction, for a variant of the pole polynomial; Theorem 1.1 from the minimal height hypothesis and the certified rank hypothesis; that hypothesis from the two statements on the right | the minimal height hypothesis, whole; Tian–Yuan–Zhang's Theorem 3.5(2) in reading A, a reading that no refereed text found by the project states (glue); the Gross–Zagier statement, a consequence of Gross–Zagier with an auxiliary field and modularity |
 
 [docs/one-proof/OPEN.md](https://github.com/Deicyde/diophantine-z-q/blob/main/docs/one-proof/OPEN.md)
 lists every open statement of Elliot's route with its Lean statement, source and rating.
@@ -48,9 +48,8 @@ project reaches an ineffective height estimate by another route
 polynomial, whose rational zeros put two points on curves $E_\ell:y^2=x(x-\ell)(x+3\ell)$, has a zero for
 every suitably prepared input. The manuscript derives it from its restricted converse theorem
 (Theorem 5.3) by a simultaneous 2-descent (Section 5.1), and so does the Lean:
-`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`.
-`ZInQ.OneProof.frozenTarget` takes the four inputs of that derivation as its hypotheses `hRC`, `hCT`,
-`hB` and `hK`.
+`ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne`. `ZInQ.OneProof.frozenTarget` takes
+the three inputs of that derivation as its hypotheses `hRC`, `hCT` and `hRank`.
 
 **The congruent-number route to the pole input.** A variant of the pole polynomial, for the congruent
 number curves $C_\ell:y^2=x(x-\ell)(x+\ell)$, has pole completeness from the certified rank hypothesis,
@@ -68,9 +67,12 @@ primes, from a Lean proof of the Green–Tao theorem, and a density theorem for 
 ## How to read this book
 
 Each part below opens with an overview page. Chapters are ordered as the proof uses them; within a
-chapter, every page states one result, says what it depends on, and names its Lean declaration. A page
+chapter, every page states one result, says what it depends on, and names its Lean declaration where
+it has one. A page
 marked as belonging to the congruent-number route has its Lean at the tag `route-k-final` unless it says
-otherwise. Generated chapters (the height decomposition) are rewritten from the Lean at each change.
+otherwise. The height-decomposition chapter is regenerated after each fold by
+`scripts/one_proof/vault_chapter/gen.py`, from the Lean's open bundles, the project's ratings and
+hand-written prose.
 
 ## Chapters
 

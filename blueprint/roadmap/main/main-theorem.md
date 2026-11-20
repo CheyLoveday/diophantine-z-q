@@ -44,8 +44,8 @@ Two of these proofs depart from the manuscript:
 theorem (Theorem 5.3) by a simultaneous 2-descent (Section 5.1). Theorem 5.3 says: for every positive
 squarefree $\ell\equiv11\pmod{12}$, if the $2^\infty$-Selmer group of $y^2=x(x-\ell)(x+3\ell)$ has
 $\mathbb Z_2$-corank $1$, then its L-function vanishes to order exactly $1$ at $s=1$. That derivation is
-formalized (fork issue #83), from Theorem 5.3, the Cassels–Tate pairing on the curves $E_\ell$, the
-modularity theorem and a consequence of Kolyvagin's theorem
+formalized (fork issue #83), from Theorem 5.3, the Cassels–Tate pairing on the curves $E_\ell$ and
+Silverman's rank-one implication
 ([pole completeness from the restricted converse](../pole-completeness-from-5-3/README.md)). This theorem
 keeps pole completeness as its hypothesis, and `ZInQ.OneProof.frozenTarget` combines the two. The proof
 of Theorem 5.3 itself (Sections 7–9 and Appendices E–G) uses Kato's Euler system, Waldspurger's formula,
@@ -57,9 +57,9 @@ Theorem 5.3 as a hypothesis.
 **The open statements.** `ZInQ.OneProof.frozenTarget` is this theorem with the minimal height hypothesis
 replaced by the statements from the literature that imply it
 ([the height-decomposition chapter](../height-decomposition/README.md); the current list is
-`docs/one-proof/OPEN.md`), and pole completeness replaced by its four inputs: Theorem 5.3, the
-Cassels–Tate pairing on the curves $E_\ell$, the modularity theorem and the consequence of Kolyvagin's
-theorem (the hypotheses `hRC`, `hCT`, `hB` and `hK`).
+`docs/one-proof/OPEN.md`), and pole completeness replaced by its three inputs: Theorem 5.3, the
+Cassels–Tate pairing on the curves $E_\ell$ and Silverman's rank-one implication (the hypotheses `hRC`,
+`hCT` and `hRank`).
 
 **The other headline.** The congruent-number route proves the same target statement with a different
 pole input:

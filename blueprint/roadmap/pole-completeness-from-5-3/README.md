@@ -17,8 +17,7 @@ $E_\ell:y^2=x(x-\ell)(x+3\ell)$. The other route to the pole input is
   2-Selmer groups of $E_n$ and $E_{n\theta}$ have dimension $3$ and contain the Kummer class $(\beta,1)$ in the
   coordinates $(x+3\ell,x-\ell)$.
 - Lemma 5.4 turns dimension $3$ into $2^\infty$-Selmer corank $1$ through the Cassels–Tate pairing, so
-  Theorem 5.3 gives analytic rank $1$; Lemma 5.5 (modularity with Kolyvagin's theorem) then gives rank $1$
-  for both curves.
+  Theorem 5.3 gives analytic rank $1$; the rank half of Lemma 5.5 then gives rank $1$ for both curves.
 - The class $(\beta,1)$ then comes from a rational point on each curve, and rescaling the two points gives
   the witnesses of the pole polynomial.
 
@@ -26,17 +25,19 @@ The derivation is formalized in `ZInQKernel/Contrib/PoleRC/`, `ZInQKernel/Contri
 `ZInQKernel/Contrib/OneProof/PoleCompletenessFromRC*.lean`, with Lemma 5.4 in
 `ZInQKernel/Contrib/OneProof/SelmerCorankFam.lean` and `ZInQKernel/Contrib/OneProof/Lemma54FromCasselsTate.lean`,
 the Kummer identification in `ZInQKernel/Contrib/OneProof/KummerSelmerMProof.lean`, and the last step in
-`ZInQKernel/Contrib/OneProof/CasselsTatePairing.lean`. It leaves four inputs: Theorem 5.3, the
-Cassels–Tate pairing on the curves $E_\ell$, the modularity theorem of Breuil, Conrad, Diamond and Taylor
-as printed (`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`), and a consequence of Kolyvagin's Theorem 1
-together with that theorem. `ZInQ.OneProof.frozenTarget` takes these four as its hypotheses `hRC`, `hCT`,
-`hB` and `hK`. Two steps differ from the manuscript's text:
+`ZInQKernel/Contrib/OneProof/CasselsTatePairing.lean`. The theorem that
+`ZInQ.OneProof.frozenTarget` uses is `ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne`. It
+leaves three inputs: Theorem 5.3, the Cassels–Tate pairing on the curves $E_\ell$, and Silverman's
+rank-one implication (AEC, Appendix C, Evidence 16.5.5), the hypotheses `hRC`, `hCT` and `hRank`. Three steps
+differ from the manuscript's text:
 - the manuscript leaves the construction of $n$ to its supplementary files S11 and S12; the Lean proof
   follows S12;
 - the manuscript uses the finiteness of the Tate–Shafarevich group to conclude that its 2-part vanishes;
-  the Lean proof uses only the rank from Kolyvagin's theorem and counts the image of the Kummer map instead.
+  the Lean proof uses only the rank and counts the image of the Kummer map instead;
+- for that rank the manuscript's Lemma 5.5 cites modularity with Kolyvagin's theorem; the Lean proof takes
+  the rank-one line of Silverman's display instead.
 
-- [The cited inputs: the Cassels–Tate pairing, modularity and Kolyvagin's theorem](cited-inputs.md)
+- [The cited inputs: the Cassels–Tate pairing and Silverman's rank-one implication](cited-inputs.md)
 - [Lemma 5.4 from the Cassels–Tate pairing](lemma-5-4.md)
 - [The simultaneous construction](simultaneous-construction.md)
 - [CR_M from Theorem 5.3, Lemma 5.4 and Lemma 5.5](crm.md)

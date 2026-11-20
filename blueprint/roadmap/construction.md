@@ -18,8 +18,8 @@ which the coding needs, is proved.
 
 **Multiplication.** [The multiplication template](multiplication/README.md) accepts a triple of codes
 exactly when it is $\iota(a),\iota(b),\iota(ab)$. Its soundness, on arbitrary rational inputs, uses the
-height input. Its completeness needs every integer to be a sum of three good slopes; the manuscript gets
-this from a pattern of twenty-two primes, and this project instead from long arithmetic progressions of
+height input. Its completeness uses pole completeness for the pole witnesses and needs every integer to
+be a sum of three good slopes; the manuscript gets this from a pattern of twenty-two primes, and this project instead from long arithmetic progressions of
 good primes ([route AP](route-ap/README.md), with [Szemerédi's theorem in the primes](green-tao/README.md)
 and [the density of good slope primes](density/README.md)).
 
@@ -28,8 +28,8 @@ and [the density of good slope primes](density/README.md)).
 outright. Otherwise a shift $\kappa$ is chosen, and two relations share it. *Close* says that $t$ lies
 within $e^{-B(n,\kappa)}$ of $n$; it rests on [an exact precision computation](compiler/README.md) compiled
 into point-code constraints. *Test* forms six local tests from the shift; its soundness uses the pole
-obstruction and the height input to bound the height of $t$ by $B(n,\kappa)$, and its completeness uses
-pole completeness to find a shift that passes. A rational number of height at most $B$ that lies within
+obstruction and the height input to bound the height of $t$ by $B(n,\kappa)$, and its completeness chooses a shift
+deep in the formal groups and uses pole completeness for the pole witness. A rational number of height at most $B$ that lies within
 $e^{-B}$ of an integer is that integer, so the value relation is exactly the graph $t=n$, and the rational
 zero projection of $P_*$ is $\mathbb Z$.
 

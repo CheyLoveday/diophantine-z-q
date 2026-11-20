@@ -10,12 +10,14 @@ $h(u)\le H_6(D)\,M_{S_{\rm mul}}(u)^{24}$, with an explicit constant. Both headl
 published theorem: its proof combines refereed theorems and exact computations with new arguments, the
 manuscript's and this project's, reviewed only by AI models.
 
-**Elliot's route: the height decomposition.** [The height-decomposition chapter](height-decomposition/README.md)
-follows the manuscript's proof of Theorem 4.1 and reduces the minimal height hypothesis in Lean to statements
-of the literature: results on a Shimura curve of discriminant 6, complex multiplication, abelian varieties,
+**The manuscript's proof: the height decomposition.** [The height-decomposition chapter](height-decomposition/README.md)
+follows the manuscript's proof of Theorem 4.1 and reduces the minimal height hypothesis in Lean to open statements:
+published theorems, consequences of them, statements from unrefereed sources and a few of the manuscript's
+own claims, on a Shimura curve of discriminant 6, complex multiplication, abelian varieties,
 Néron models, Faltings heights, $p$-adic Hodge theory and modular forms. Lean proves every step from those
 statements to the hypothesis; the statements themselves are open, and the chapter gives each one's form, its
-difference from the print and its source. The chapter is generated from the Lean at each change.
+difference from the print and its source. The chapter is regenerated after each fold by
+`scripts/one_proof/vault_chapter/gen.py`.
 
 **The $j$-form.** The hypothesis may also be assumed as a bound on the height of the Hauptmodul value (not a
 published theorem), from which [the minimal form is proved](main/j-form/README.md).

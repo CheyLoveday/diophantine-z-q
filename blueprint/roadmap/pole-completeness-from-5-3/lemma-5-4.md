@@ -28,7 +28,7 @@ $\dim F[2]=0$ and $r+s=1$.
 
 ## Depends on
 
-- [The cited inputs: the Cassels–Tate pairing, modularity and Kolyvagin's theorem](cited-inputs.md)
+- [The cited inputs: the Cassels–Tate pairing and Silverman's rank-one implication](cited-inputs.md)
 
 ## Sources
 

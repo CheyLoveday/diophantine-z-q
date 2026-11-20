@@ -34,7 +34,7 @@ The minimal height hypothesis is not proved here: it is the one instance of the 
 Theorem 4.1 that the proof uses, and it is not a published theorem, since its proof combines refereed
 theorems and exact computations with new arguments, the manuscript's and this project's, reviewed only
 by AI models. For Elliot's route, the derivation of pole completeness from Theorem 5.3 is formalized here,
-from Theorem 5.3 and three cited inputs
+from Theorem 5.3 and two cited inputs
 ([pole completeness from the restricted converse](../pole-completeness-from-5-3/README.md)), and the
 proof of Theorem 5.3 has [its own chapter](../restricted-converse/README.md). The manuscript's other
 inputs are proved, two of them by routes that differ from the manuscript's: route AP replaces the
@@ -71,7 +71,7 @@ Pole completeness asserts the rational solubility of one explicit polynomial for
 suitably prepared inputs. A rational zero puts two points on curves $y^2=x(x-\ell)(x+3\ell)$. It is the
 manuscript's Theorem 5.2 and a hypothesis of the main theorem; the manuscript derives it from its
 restricted converse theorem by a simultaneous 2-descent (Section 5.1). That descent is formalized here,
-from Theorem 5.3 and three cited inputs ([its chapter](../pole-completeness-from-5-3/README.md)).
+from Theorem 5.3 and two cited inputs ([its chapter](../pole-completeness-from-5-3/README.md)).
 
 - [Pole completeness](pole-completeness.md)
 

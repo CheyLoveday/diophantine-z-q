@@ -12,8 +12,7 @@ The proof of Theorem 5.3 in Lean takes four cited results as one structure:
 - Breuil, Conrad, Diamond and Taylor, Theorem A: every elliptic curve over $\mathbb Q$ is modular;
 - a consequence of Kolyvagin's Theorem 1 for analytic rank at most one: Kolyvagin assumes a weak Weil
   parametrization, the Lean statement assumes only modularity, and the passage between the two goes
-  through Shimura's construction and Faltings' isogeny theorem, as in
-  [the cited inputs](../pole-completeness-from-5-3/cited-inputs.md);
+  through Shimura's construction and Faltings' isogeny theorem;
 - Dokchitser and Dokchitser, Theorem 1.8, for curves with a rational point of order two: the parity of the
   $2^\infty$-Selmer corank determines the root number. The Lean statement composes it with the
   identification of the root number with the sign of the functional equation, which is not part of the
