@@ -74,3 +74,17 @@ the load/memory gate, with downloads disabled. The pre-run gate is
   proves `BergerPaperStComparison p ell`. It also transports an
   existential finite-extension witness to the basis conclusion of
   the existing draft.
+
+## Residue denominator (VERIFIED)
+
+- `BergerComparison/ResidueLog.lean` compiled with `lake env lean`.
+- Mathlib already has p-adic completeness of the Witt ring over the
+  perfect tilt. For `p ∣ x^♯ − 1`, Fontaine surjectivity gives a
+  denominator lift `1+pa`; its Witt logarithm is the p-adic sum given
+  by `pLog_spec`. The quotient is `1+ξb`, with kernel-adic logarithm.
+  Both contributions to `residueLog` lie in `Amax`.
+- The fixed-lift addition formula and the bounded logarithm correction
+  are proved. `coordinateFromUnit_adjoin_eq` identifies the ring for
+  the candidate built from a small powered unit. The paper's actual
+  cyclotomic unit normalization and branch compatibility (including
+  change of lift) have not been proved.
