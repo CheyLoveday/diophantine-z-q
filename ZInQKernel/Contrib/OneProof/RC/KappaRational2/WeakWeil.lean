@@ -33,8 +33,8 @@ theorem newformPeriodsRational_of_modularToWeakWeil (h : ModularToWeakWeil) :
   rw [hfg]
   exact hsend _ (hr.2 γ hγ τ)
 
-/-- A provider for the existing, independently proved modularity-to-weak-Weil
-glue suffices for rationality of the original admissible scale. -/
+/-- A provider for the existing open GLUE `ModularToWeakWeil` (modularity to a
+weak Weil parametrization, not proved in the tree) suffices for rationality of the original admissible scale. -/
 theorem rational_of_modularToWeakWeil (h : ModularToWeakWeil)
     (E : WeierstrassCurve ℚ) [E.IsElliptic] [NeZero (newformLevel E)]
     (f : CuspForm (CongruenceSubgroup.Gamma0 (newformLevel E) : Subgroup (GL (Fin 2) ℝ)) 2)
