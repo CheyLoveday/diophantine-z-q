@@ -186,3 +186,15 @@ with `lake env lean`: the integral obstruction and maximal
 denominator clearing prove `logPTilde_notInFrac`, hence
 `logPTilde_transcendental` and `fontainePolynomialEmbedding`, both
 with no additional mathematical hypotheses.
+
+## Semistable Frobenius (VERIFIED)
+
+`SemistableDescent.lean` compiled with `lake env lean`. The maximal
+semistable ring has polynomial representatives and evaluation is
+injective by the logarithm theorem. Applying coefficient Frobenius
+and substituting `p * log[p̃]` gives an algebra map into the embedded
+Fontaine ring. Equivariance on constants is the localized coefficient
+calculation. On the variable it follows from the logarithmic Galois
+shift and its scaling by Frobenius. This proves `FrobeniusTransport`;
+the map also intertwines Frobenius and its restriction along the
+inclusion of the Fontaine ring.
