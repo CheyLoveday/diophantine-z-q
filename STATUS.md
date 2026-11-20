@@ -6,7 +6,7 @@ coefficients such that a rational number q is an integer exactly when P(q, w) = 
 numbers. This project checks that proof in the Lean 4 proof assistant, with the Mathlib library.
 
 - Development fork: https://github.com/Deicyde/diophantine-z-q. This file describes the Lean state of fork main
-  116d1d01 (2026-11-20), where a single Lean theorem, `ZInQ.OneProof.frozenTarget`, proves the manuscript's Theorem 1.1
+  8579961f (2026-11-20), where a single Lean theorem, `ZInQ.OneProof.frozenTarget`, proves the manuscript's Theorem 1.1
   from exactly the statements that are still open.
 - Upstream: https://github.com/elliotglazer/diophantine-z-q. Its pull request #139 holds this fork as of c1e4ed1b,
   before the switch away from Route K (below).
@@ -34,7 +34,8 @@ in the Glossary at the end):
   (Theorem 5.2) for the manuscript's own pole polynomial. Lean also proves pole completeness the way the manuscript
   does, from its restricted converse theorem (Theorem 5.3), the Cassels–Tate pairing on its curves (Poonen–Stoll; Lean
   proves the manuscript's Lemma 5.4 from it), the modularity of elliptic curves over Q as printed
-  (Breuil–Conrad–Diamond–Taylor, Theorem A, stated in Lean at some level) and a consequence of Kolyvagin's Theorem 1.
+  (Breuil–Conrad–Diamond–Taylor, Theorem A, stated in Lean at some level) and a consequence of it and Kolyvagin's
+  Theorem 1 together.
   This is the manuscript's route. Lean proves everything else, including every finite computation about the
   polynomial.
 - **Reduced in Lean:** H follows from 22 statements that are still open, and Lean proves every step from them to H
@@ -43,11 +44,11 @@ in the Glossary at the end):
   manuscript's own text. Under the strict count, which also requires that a reader has checked the statement against
   the printed page, 4 of the 22 count as published statements in their printed form and 18 do not.
 - **Open:** the 22 statements behind H, and the four inputs of pole completeness: the manuscript's Theorem 5.3, the
-  Cassels–Tate pairing, Breuil–Conrad–Diamond–Taylor's Theorem A, and a consequence of Kolyvagin's theorem.
+  Cassels–Tate pairing, Breuil–Conrad–Diamond–Taylor's Theorem A, and a consequence of it and Kolyvagin's theorem.
 
 These 26 statements are exactly the hypotheses of `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`).
 Folding in a proof of one removes it from that theorem. The count block above is regenerated at every landing; the
-numbers in the prose describe fork main 116d1d01.
+numbers in the prose describe fork main 8579961f.
 
 ## How far to trust each part
 
@@ -61,7 +62,7 @@ numbers in the prose describe fork main 116d1d01.
 | Theorem 5.3 (restricted converse) of the manuscript | unrefereed; assumed |
 | The Cassels–Tate pairing on the curves of Theorem 5.3 | a direct instance of a published statement (Poonen and Stoll's restatement of Cassels' theorem, specialized to these curves); assumed |
 | Breuil–Conrad–Diamond–Taylor, Theorem A | the printed theorem, with condition (2) of their Introduction (L(E, s) = L(f, s) for an eigenform f of weight 2; Lean states it at some level N rather than the conductor); Lean derives from it the form the proof uses; assumed |
-| Kolyvagin, Theorem 1 (the case of rank one; the cited print is a 1990 MPIM preprint) | a consequence of the theorem, in the form the proof uses; assumed |
+| Kolyvagin, Theorem 1 (the case of rank one; the cited print is a 1990 MPIM preprint) | a consequence of it together with Breuil–Conrad–Diamond–Taylor's Theorem A, in the form the proof uses; assumed |
 | Theorem 1.1 from exactly the statements that are still open | proved in Lean (`ZInQ.OneProof.frozenTarget`) |
 
 "Proved in Lean" means the Lean kernel checked it, with no `sorry` (unproved step), no `native_decide` (trusted
@@ -87,7 +88,7 @@ The headline Lean theorem is
 open statements of H as the fields of `HDec.HSyn.OpenResearchLeaves73` and `HDec.HSyn.OpenAddedLeaves28` (the third
 bundle, `HDec.HSyn.OpenTextbookLeaves18`, has no open field left), and the four inputs of pole completeness as the
 hypotheses `hRC` (Theorem 5.3), `hCT` (the Cassels–Tate pairing on the curves of Theorem 5.3, from which Lean proves
-Lemma 5.4), `hB` (Breuil–Conrad–Diamond–Taylor, Theorem A as printed) and `hK` (Kolyvagin, Theorem 1), and nothing else.
+Lemma 5.4), `hB` (Breuil–Conrad–Diamond–Taylor, Theorem A as printed) and `hK` (Kolyvagin, Theorem 1, with BCDT Theorem A), and nothing else.
 
 ## The open statements
 
@@ -138,11 +139,12 @@ genuine 2-primary Selmer group; `hCT`, the Cassels–Tate pairing on the curves 
 Stoll state Cassels' theorem (Ann. of Math. 150 (1999), Introduction), the source the manuscript cites for its Lemma
 5.4, which Lean proves from it (docs/research/cassels-tate-pairing.md, with docs/research/lemma54-ct.md for the step
 from the square property); `hB`, Breuil–Conrad–Diamond–Taylor's Theorem A as printed, read with condition (2) of
-their Introduction (L(E, s) = L(f, s) for an eigenform f of weight 2, stated in Lean at some level), from which Lean proves the form the
-proof uses (fork PR #142, `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed`); and `hK`, a consequence of Kolyvagin's Theorem 1 in the case of rank one,
-through Shimura's construction and Faltings' isogeny theorem (the cited print is Kolyvagin's 1990 MPIM preprint). The
-project rates `hCT` and `hB` published statements in their printed form, `hK` a consequence of its theorem, and `hRC`
-the manuscript's own theorem. Fork PR #110 reduces Theorem 5.3 in Lean to step-level hypotheses along the manuscript's
+their Introduction (L(E, s) = L(f, s) for an eigenform f of weight 2, stated in Lean at some level), from which Lean
+proves the form the proof uses (fork PR #142, `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed`); and `hK`, a
+consequence of Kolyvagin's Theorem 1 in the case of rank one together with BCDT Theorem A, which with Shimura's
+construction and Faltings' isogeny theorem supplies Kolyvagin's premise, a parametrization by X₀(N) with N the
+conductor (the cited print is Kolyvagin's 1990 MPIM preprint). The project rates `hCT` and `hB` published statements in their
+printed form, `hK` a consequence of these theorems, and `hRC` the manuscript's own theorem. Fork PR #110 reduces Theorem 5.3 in Lean to step-level hypotheses along the manuscript's
 Sections 7–9 and Appendices E–G (`ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves`); `frozenTarget`
 still takes it as one hypothesis, because some of those steps still state their conclusions directly.
 
@@ -191,7 +193,7 @@ main that changes Lean files or the Lake configuration, in the main build cache 
 included, fails it. The first such build finished on 2026-11-18 (run 44219370755, at be73b91c). The last build of main
 that finished and passed the axiom check was at 3078ae6a (run 44513481236, 2026-11-19), where `frozenTarget` took 32 open
 hypotheses. The builds of later commits of main were cancelled by the next landing or stopped before the build
-finished. The last of them, at 116d1d01 (run 44720294467), stopped early at the workflow's disk-space guard (only 14 GB
+finished. The last of them, at 8579961f (run 44725033802), stopped early at the workflow's disk-space guard (only 14 GB
 free), as the run started by hand at ff165f7c (run 44681096024) had, because the saved progress now nearly fills the
 runner; the workflow needs to free more disk space (for example by a smaller swap file on /) before another run can
 finish. A cold build takes more than one job, so each run saves its progress and the next one resumes from it.
@@ -248,7 +250,7 @@ docs/one-proof/STATEMENT-CHECKS.md.
   `ZInQ.SixContactMin`.
 - **Pole completeness:** the manuscript's Theorem 5.2 for its own pole polynomial, `ZInQ.PoleCompleteness`; Lean
   proves it from the manuscript's Theorem 5.3, the Cassels–Tate pairing (from which it proves the manuscript's Lemma
-  5.4), Breuil–Conrad–Diamond–Taylor's Theorem A and a consequence of Kolyvagin's theorem.
+  5.4), Breuil–Conrad–Diamond–Taylor's Theorem A and a consequence of it and Kolyvagin's theorem.
 - **Published / consequence:** a statement printed in the literature, possibly specialized, or one that follows from a
   printed theorem, or from the manuscript's own text, by an argument not yet in Lean.
 - **Strict count:** counts a statement as published only if it is a refereed theorem in its printed form (or a direct

@@ -42,7 +42,8 @@ six-contact height estimate (the manuscript's Theorem 4.1). They differ in how t
   - the Cassels–Tate pairing on the curves of Theorem 5.3 (Poonen–Stoll's statement of Cassels' theorem, the print
     the manuscript cites for its Lemma 5.4; Lean proves Lemma 5.4 from it);
   - the two printed theorems behind its Lemma 5.5: the modularity theorem of Breuil, Conrad, Diamond and Taylor
-    (Theorem A) as printed (stated in Lean at some level), and a consequence of Kolyvagin's Theorem 1.
+    (Theorem A) as printed (stated in Lean at some level), and a consequence of it and Kolyvagin's Theorem 1
+    together.
 
   Theorem 5.3 stays one hypothesis of the main theorem. Separately,
   [#110](https://github.com/Deicyde/diophantine-z-q/pull/110) reduces it, along the manuscript's Sections 7–9 and
@@ -69,7 +70,7 @@ nasqret/z-in-q-lean also has a weaker, qualitative theorem that replaces the hei
 whose constant is not explicit. That bound is ineffective: it shows that a polynomial exists but gives none of
 Theorem 1.1's numbers, such as the count of variables. Neither route above uses it.
 
-## Status (fork `main` at `116d1d01`, 2026-11-20)
+## Status (fork `main` at `8579961f`, 2026-11-20)
 
 - **One theorem, [`ZInQ.OneProof.frozenTarget`](ZInQKernel/OneProof/Main.lean), proves `ZInQ.FrozenTarget` from 26
   open hypotheses, statements not yet proved in Lean.** Lean's kernel checks it with no `sorry` and only the standard
@@ -87,8 +88,8 @@ Theorem 1.1's numbers, such as the count of variables. Neither route above uses 
   to the six-contact height estimate (the manuscript's Theorem 4.1). The other four are the inputs from which Lean
   proves pole completeness (the manuscript's Theorem 5.2), as the manuscript does: its Theorem 5.3, the Cassels–Tate
   pairing on its curves E_ℓ: y² = x(x − ℓ)(x + 3ℓ) (from which Lean proves its Lemma 5.4), the modularity theorem
-  of Breuil, Conrad, Diamond and Taylor as printed (at some level), and a consequence of Kolyvagin's Theorem 1. Of the 22, 9 are classed
-  as published theorems and 13 as consequences of a published theorem or of the manuscript's text. Under the strict
+  of Breuil, Conrad, Diamond and Taylor as printed (at some level), and a consequence of it and Kolyvagin's Theorem 1
+  together. Of the 22, 9 are classed as published theorems and 13 as consequences of a published theorem or of the manuscript's text. Under the strict
   count (a refereed theorem as printed, checked against the page), 4 qualify; the other 18 still need an argument or a
   reading. AI raters assigned these classes. The live list, with each statement's source, rating and holder, is
   [`docs/one-proof/OPEN.md`](docs/one-proof/OPEN.md).
