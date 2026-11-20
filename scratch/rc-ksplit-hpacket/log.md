@@ -67,3 +67,8 @@
   Eisenstein character product and the good-Frobenius density bridge,
   then obtains both block scalars and the integer-two difference from
   the actual character comparisons at the selected lift.
+- VERIFIED (Lean): `Packet.lean` compiles serially. The determinant and
+  trace Fourier readings at the same lift, the given divisions, and the
+  fresh-prime match supply the seed's exact `hpacket` binder.
+- VERIFIED (axioms): `Axioms.lean` compiles and prints checks for all 24
+  new theorems. Only `propext`, `Classical.choice`, and `Quot.sound` occur.
