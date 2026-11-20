@@ -13,8 +13,8 @@ numbers. This project checks that proof in the Lean 4 proof assistant, with the 
 - Start here to help: https://github.com/Deicyde/diophantine-z-q/issues/14 explains how to pick an open statement,
   claim it and prove it; docs/one-proof/OPEN.md lists every open hypothesis with its Lean statement, its kind, its
   source and who is working on it.
-- Blueprint site: https://deicyde.github.io/diophantine-z-q/ (redeployed from main after each passing build, since fork
-  PR #123).
+- Blueprint site: https://deicyde.github.io/diophantine-z-q/ (since fork PR #123, redeployed after each passing build
+  of main that a push started; on this file's date it showed main at 3078ae6a).
 
 The open statements of the current proof (generated from docs/one-proof/OPEN.md; the strict count and glue are defined
 in the Glossary at the end):
@@ -190,8 +190,10 @@ one job, so the workflow resumes from saved progress.
 When the headline from H and pole completeness landed (lane74, fork main d435851d; docs/research/lane74b.md, section
 6), all 463 declarations of `scripts/print_axioms.lean` depended only on the three standard axioms, with no `sorry`,
 and `scripts/check_target.py` confirmed the statement. Since then the fold reports record a build and an axiom check
-of `ZInQ.OneProof.frozenTarget` (docs/research/fold-b112.md, fold-b115.md, fold-b116.md, fold-c8.md, fold-cm.md and
-nos-narrow-fold.md); hecke-sqrt.md, cm-port2.md and lem54-ct-check.md record dry runs.
+of `ZInQ.OneProof.frozenTarget` (docs/research/fold-b112.md, fold-b115.md, fold-b116.md, fold-c8.md, fold-cm.md,
+nos-narrow-fold.md and cm-serre-tate-fold.md); hecke-sqrt.md, cm-port2.md, lem54-ct-check.md, faltings-dict2.md,
+fowler-unique.md, cmj-bridges.md and j-descent5.md record dry runs or previews, and the landings of fork PR #133 and
+of the cmj-close fold have no build record in a report.
 
 ## AI caveat
 

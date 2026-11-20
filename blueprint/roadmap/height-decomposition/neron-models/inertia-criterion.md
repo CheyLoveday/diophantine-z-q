@@ -21,19 +21,18 @@ semistable reduction at $\mathcal O$ if and only if the inertia group $I$ of $w$
 $V_\ell A/(V_\ell A)^I$: that is, $\tau(\sigma x-x)=\sigma x-x$ for all $\sigma,\tau\in I$ and all
 $x\in V_\ell A$.
 
-It is a published statement: the printed theorem, or a direct instance of it that needs no argument.
-Its reading against the print or its review is not complete, and until both are the project's strict
-count does not count it as published. It is Theorem 3.3 of Silverberg and Zarhin, which they
-attribute to Grothendieck, for the print's Galois extension taken to be the separable closure, as
-their proofs of Lemma 5.5 and Proposition 6.1 take it; the algebraic closure $\Omega$ stands in for
-the separable closure. The print defines semistability at a place only for a discrete valuation, so
-for the infinite extension "semistable at $w$" is read as semistable at some finite separable
-subextension, the base allowed: that is the hypothesis above. A two-lens review rated the statement
-glue rather than the printed form, for these readings and because $K$ is any field; a page reading
-alone would not change that. The manuscript cites Theorem 3.5 of the same paper (Raynaud's
-criterion) and then states, without citation, that wild inertia acts trivially on each $V_\ell(A)$
-with $\ell\ne p$. Lean derives that sentence from this statement. It is a hypothesis, not proved
-here.
+It is a published theorem, but a review rated the form stated here glue rather than the printed
+form, so the project's strict count does not count it as published. It is Theorem 3.3 of Silverberg
+and Zarhin, which they attribute to Grothendieck, for the print's Galois extension taken to be the
+separable closure, as their proofs of Lemma 5.5 and Proposition 6.1 take it; the algebraic closure
+$\Omega$ stands in for the separable closure. The print defines semistability at a place only for a
+discrete valuation, so for the infinite extension "semistable at $w$" is read as semistable at some
+finite separable subextension, the base allowed: that is the hypothesis above. A two-lens review
+rated the statement glue rather than the printed form, for these readings and because $K$ is any
+field; a page reading alone would not change that. The manuscript cites Theorem 3.5 of the same
+paper (Raynaud's criterion) and then states, without citation, that wild inertia acts trivially on
+each $V_\ell(A)$ with $\ell\ne p$. Lean derives that sentence from this statement. It is a
+hypothesis, not proved here.
 
 ## Depends on
 

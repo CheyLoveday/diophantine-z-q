@@ -20,8 +20,8 @@ of this chapter taken together: theorems from the literature, grouped by the the
 from the literature, thirteen are published statements, some of them specialized or weakened; and
 fourteen are consequences of published theorems, which take further theorems to reach from the
 print. The project's strict convention, which counts a published statement only once its reading
-against the print and its review are complete, counts seven of the twenty-seven as published. None
-of the twenty-seven is proved here.
+against the print and its review are complete and find it in its printed form, counts seven of the
+twenty-seven as published. None of the twenty-seven is proved here.
 
 The proof follows the manuscript's proof of its Theorem 4.1 at the one instance the main theorem
 uses, which the project has split into named steps, each proved from these statements and the steps
