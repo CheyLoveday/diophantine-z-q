@@ -81,3 +81,5 @@ VERIFIED (Lean): `OrientedIdeals.lean` identifies the additive lattices with inv
 
 VERIFIED (Lean): `LevelTwo.lean` checks the two forms at discriminant −7, coprimality, equality of both plane coordinates, distinct points on the normalization, the middle-coefficient invariant modulo four, and the reflection identity for the parameters. The axiom checks used subsets of the three standard axioms.
 
+VERIFIED (Lean): `AnalyticDegree.lean` also proves the upper degree bound when the singular modulus is specified by a primitive analytic period equation, the input shape of the fork's degree print. `fieldPoint_iff_finitePointEval_range` checks that the branch condition is both necessary and sufficient for descent over a fixed embedded field. Both checked with the standard axioms.
+

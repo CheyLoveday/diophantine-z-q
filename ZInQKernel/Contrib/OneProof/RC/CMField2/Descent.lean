@@ -83,6 +83,38 @@ theorem fieldPoint_of_finitePointEval_range (N : ℕ) [NeZero N] (τ : UpperHalf
   have hp := chart_mem N τ
   exact fieldPoint_of_affineEval_range _ ((X0Branch.model N).complexPoint τ) hU hp ι he
 
+/-- Over a fixed embedded field the chart range condition is also necessary.
+It is a test of descent of the specified branch. -/
+theorem fieldPoint_iff_finitePointEval_range (N : ℕ) [NeZero N] (τ : UpperHalfPlane)
+    {F : Type} [Field F] [Algebra ℚ F] (ι : F →ₐ[ℚ] ℂ) :
+    (∃ x : FieldPoint (X0Branch.model N).overQ F,
+      x.map ι = (X0Branch.model N).complexPoint τ) ↔
+    ∀ r, X0Branch.finitePointEval N τ r ∈ Set.range ι := by
+  refine ⟨?_, fieldPoint_of_finitePointEval_range N τ ι⟩
+  rintro ⟨x, hx⟩ r
+  let U := X0Branch.finiteChart N
+  let p := X0Model.complexPoint N τ
+  let f := Spec.map (CommRingCat.ofHom ι.toRingHom)
+  have he : f ≫ x.val = p := congrArg Subtype.val hx
+  have mem : p (default : Spec (.of ℂ)) ∈ U := chart_mem N τ
+  have hf : ⊤ ≤ (f ≫ x.val) ⁻¹ᵁ U := by
+    rw [he]
+    exact fun z _ => by rwa [Subsingleton.elim z (default : Spec (.of ℂ))]
+  have hu : ⊤ ≤ x.val ⁻¹ᵁ U := by
+    intro z _
+    rw [Subsingleton.elim z (f (default : Spec (.of ℂ)))]
+    change x.val (f (default : Spec (.of ℂ))) ∈ U
+    rw [← Scheme.Hom.comp_apply]
+    exact hf (show default ∈ (⊤ : (Spec (.of ℂ)).Opens) from trivial)
+  have hmap := congrArg (fun g : Γ(X0Model.curve N, U) ⟶ CommRingCat.of ℂ => g r)
+    (X0Model.sectionMap_comp x.val ι.toRingHom U hu hf)
+  change X0Model.sectionMap (f ≫ x.val) U hf r =
+    ι (X0Model.sectionMap x.val U hu r) at hmap
+  refine ⟨X0Model.sectionMap x.val U hu r, ?_⟩
+  rw [← hmap]
+  exact X0Branch.affineEval_congr (U := U) (hf (show default ∈ (⊤ : (Spec (.of ℂ)).Opens)
+    from trivial)) mem he |> fun h => DFunLike.congr_fun h r
+
 /-- The field comparison and the branch comparison imply the manuscript's
 field-of-definition requirement on the full normalized model. -/
 theorem cmFieldOfDefinition_of (N : ℕ) [NeZero N]
@@ -155,6 +187,7 @@ theorem fieldPoint_of_eval_rational_in_coordinates (N : ℕ) [NeZero N] (τ : Up
 #print axioms chart_mem
 #print axioms fieldPoint_of_affineEval_range
 #print axioms fieldPoint_of_finitePointEval_range
+#print axioms fieldPoint_iff_finitePointEval_range
 #print axioms cmFieldOfDefinition_of
 #print axioms fieldPoint_of_eval_mem_adjoin_coordinates
 #print axioms fieldPoint_of_eval_rational_in_coordinates
