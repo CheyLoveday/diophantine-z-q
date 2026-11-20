@@ -1,5 +1,4 @@
 import ZInQKernel.Contrib.OneProof.RC.AtkinRational.Density
-import ZInQKernel.Contrib.OneProof.RC.AtkinRational.Infinity
 import ZInQKernel.Contrib.OneProof.RC.AtkinRational.PointReading
 
 /-! Generic fibre of (O.7), tex 8487–8489 and 9101–9113.
@@ -13,10 +12,8 @@ noncomputable section
 
 open scoped Classical MatrixGroups TauCeti.ExactDivisor
 open AlgebraicGeometry CategoryTheory UpperHalfPlane WeierstrassCurve ModularCurve
-open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CST
 open ZInQ.Contrib.RC53Assist.IsogenyScheme
 open ZInQ.Manuscript.RC.PreparedParam ZInQ.Manuscript.RC.AtkinPin
-open ZInQ.Manuscript.RC.ParamAtScale
 
 namespace ZInQ.Manuscript.RC.AtkinRational
 
@@ -88,49 +85,7 @@ theorem based_of_representedDifference {N Q : ℕ} [NeZero N] {hQ : Q ∥ N}
     projectiveValue (((a.comp W.hom W.overQ).comp π hπ).val))) hh
   convert hh' using 1 <;> abel
 
-/-- The (O.7) generic statement for the at-scale join, conditional only on
-representing the ordinary Weierstrass point operations on the fixed Proj.
-The exact divisor involution and the eigenvalue are the constructed ones. -/
-theorem genericFibreAtScale_of_representsDifference {ℓ Q : ℕ} [(Ecurve ℓ).IsElliptic]
-    [NeZero (newformLevel (Ecurve ℓ))]
-    (f : HeckeRing.GL2.Newform (newformLevel (Ecurve ℓ)) 2) (hχ : f.χ = 1)
-    (hf : ∀ n : ℕ, 0 < n → (qExpansion 1 (f.toCuspFormGamma0 hχ)).coeff n =
-      ((Ecurve ℓ).LFunction n : ℂ))
-    (hQ : Q ∥ newformLevel (Ecurve ℓ)) {Lat : PeriodPair} (hLat : IsLatticeOf (Ecurve ℓ) Lat)
-    {κ : ℂ} (hκ : IsParamScale (newformLevel (Ecurve ℓ)) (f.toCuspFormGamma0 hχ) Lat κ)
-    (hr : ∃ c : ℚ, (c : ℂ) = κ)
-    (hLaw : RepresentsDifference (newformLevel (Ecurve ℓ)) (Ecurve ℓ)) :
-    let N := newformLevel (Ecurve ℓ)
-    let X := X0Branch.model N
-    let W := rationalAtkin hQ
-    let e := (signUnit f hχ hQ : ℤ)
-    ∃ (π : X.X ⟶ Proj (Ecurve ℓ).toProjective.grading)
-      (hπ : π ≫ projectiveOverQ (Ecurve ℓ) = X.overQ), IsDominant π ∧
-      (∀ τ : ℍ, projectiveValue ((X.complexPoint τ).comp π hπ).val =
-        phiAn (Ecurve ℓ) (f.toCuspFormGamma0 hχ) Lat κ τ) ∧
-      projectiveValue ((infinityPoint N).comp π hπ).val = 0 ∧
-      BasedAtkinOnPoints X W π hπ (infinityPoint N) e ∧
-      ∀ (F : Type) [Field F] [Algebra ℚ F] (x : FieldPoint X.overQ F),
-        projectiveValue ((x.comp W.hom W.overQ).comp π hπ).val =
-          e • projectiveValue (x.comp π hπ).val +
-            Affine.Point.map (W' := (Ecurve ℓ).toAffine) (Algebra.ofId ℚ F)
-              (projectiveValue (((infinityPoint N).comp W.hom W.overQ).comp π hπ).val) := by
-  let N := newformLevel (Ecurve ℓ)
-  let X := X0Branch.model N
-  let W := rationalAtkin hQ
-  let e := (signUnit f hχ hQ : ℤ)
-  obtain ⟨π, hπ, hd, hscale, hzero⟩ :=
-    algebraicParametrizationAtScale_atInfinity (f.toCuspFormGamma0 hχ) hf hLat hκ hr
-  obtain ⟨D, hD, hread⟩ :=
-    hLaw (W.hom ≫ π) π (by rw [Category.assoc, hπ, W.overQ]) hπ e
-  have h := based_of_representedDifference W π hπ (infinityPoint N) hzero e
-    (projectiveValue_transform_chart X f hχ hQ Lat κ hLat π hπ hscale) D hD
-    (fun F _ _ x => by simpa only [FieldPoint.comp, Category.assoc] using hread F x)
-  exact ⟨π, hπ, hd, hscale, hzero, h,
-    translatedAtkinAtInfinity W π hπ e h hzero⟩
-
 #print axioms RepresentsDifference
 #print axioms based_of_representedDifference
-#print axioms genericFibreAtScale_of_representsDifference
 
 end ZInQ.Manuscript.RC.AtkinRational
