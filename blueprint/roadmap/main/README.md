@@ -7,10 +7,14 @@ article_id: af_bd6481b675c042d993b6365d
 Throughout, $K_0=\mathbb Q(s)$ with $s^2=2$, $d=75-53s$, and $E:y^2=x^3-d^2x$ over $K_0$.
 For a reduced fraction $a/b$ with $b>0$, $h(a/b)=\log\max(|a|,b)$.
 
+## The target
+
 The target is the manuscript's Theorem 1.1, in the exact form frozen by the upstream
 project.
 
 - [The target statement](frozen-target.md)
+
+## The two headlines
 
 The target has two headline theorems, one for each route to the pole input. They are means to the same
 end, and both prove the target statement from the minimal height hypothesis below and a pole input:
@@ -37,6 +41,8 @@ inputs are proved, two of them by routes that differ from the manuscript's: rout
 twenty-two-prime pattern, and the catalogue bound is proved with a larger cutoff. The rest of this
 chapter follows the manuscript's inputs, gives the form of the theorem closest to them, which also
 assumes the twenty-two-prime pattern, and ends with the pages of the congruent-number route.
+
+## The manuscript's inputs
 
 The manuscript proves the target from six inputs. Three of them depend on deep arithmetic whose
 conclusions are nonetheless elementary statements. The six-contact height estimate bounds
@@ -102,6 +108,8 @@ pattern the target holds; this is the form of the theorem closest to the manuscr
 
 - [The main theorem from three hypotheses](main-theorem-three-hypotheses.md)
 
+## The congruent-number route's forms of the theorem
+
 The congruent-number route does not assume pole completeness for the manuscript's polynomial. It uses a
 different pole polynomial, whose curves are the congruent number curves $y^2=x(x-\ell)(x+\ell)$, with
 its pole completeness proved from a certified rank hypothesis CR₃. CR₃ in turn comes from statements
@@ -114,12 +122,19 @@ elliotglazer/diophantine-z-q, and nasqret/z-in-q-lean builds on it; the project 
 - the [chapter on pole completeness from certified rank](../route-k/README.md), and the chapters on
   [Proposition 0](../selmer/README.md), [the row-5b determinant](../rank-5b/README.md),
   [Rédei's formula](../redei/README.md) and [positive rank](../rank/README.md);
-- its headline, listed above, and the other forms of the main theorem below.
+- its headline, listed above, and the forms of the main theorem below.
+
+The headline's proof passes through intermediate forms of the main theorem. In proof order:
 
 - [The main theorem from two hypotheses](main-theorem-two-hypotheses.md)
-- [The main theorem from the Selmer form of the rank hypothesis](main-theorem-selmer.md)
+- [The main theorem from the Selmer form of the rank hypothesis](main-theorem-selmer.md), from the
+  previous form and the form closest to the manuscript
 - [The main theorem from the Tian–Yuan–Zhang forms of the rank hypothesis](main-theorem-tyz.md)
-- [The main theorem from the positive-rank forms of the rank hypothesis](main-theorem-positive-rank.md)
+- [The main theorem from the positive-rank forms of the rank hypothesis](main-theorem-positive-rank.md),
+  from the Selmer and Tian–Yuan–Zhang forms; the headline is proved from it
+
+Three further forms branch off this chain; the headline does not use them:
+
 - [The main theorem from positive rank on the two curves of a slot choice](main-theorem-two-curves.md)
 - [The main theorem from the infinitely-many-points forms of the rank hypothesis](main-theorem-infinitely-many-points.md)
 - [The main theorem from the $j$-form and the L-series statements](main-theorem-literature.md)
