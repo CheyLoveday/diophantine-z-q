@@ -7,3 +7,4 @@
 - `Operators`: focused Lake build passed; `overRelationAtScale` gives the rational affine relation and `overRelation_baseChange` gives its specialization. Six audits clean.
 - `Cusps`: focused Lake build passed; the represented Abel–Jacobi factor and the geometric cusp class give torsion of the rational translation, and its fixed multiplier annihilates its reduction. Seven audits clean.
 - `Fibre`: focused Lake build passed; the divisor interface uses the same Néron readings on actual coarse points and formal labels for the rational target translations. Thirteen audits clean.
+- `CM`: focused Lake build passed; the generic CM lift into the open gives the same value as the detector's residue map at the contracted place. Eleven audits clean.
