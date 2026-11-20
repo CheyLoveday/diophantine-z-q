@@ -41,3 +41,17 @@ direction needed for the tree's (B_{max}[\log[\widetilde p]]).
   (\log[\bar\pi]) to (\log[\widetilde p]) nor the downstream
   (B_{max}\)-to-(B_{cris}) comparison is proved in the row's Lean
   dependencies.
+
+## 2. Draft and scoped stop
+
+- VERIFIED (source inspection): the new draft retains the invariant-basis
+  conclusion on the normalized Fontaine image at `ξ`. The proposed bridge
+  uses `FontaineSt.isAdmissible_of_pstF` and `bstFOf_eq_xi`.
+- The literal mismatch is `BergerPaperStComparison p ell`, pending a
+  construction of the paper's logarithm and comparison of admissibility.
+  The abstract-polynomial issue is separately `FontainePolynomialEmbedding`;
+  it is not a premise of the bridge for the embedded ring.
+- VERIFIED (build tooling): restored existing Mathlib cache archives with
+  offline `cache unpack!`. Missing project imports are being compiled with
+  offline Lake; the Lean compiler invocations are serialized. The new
+  proof and the headline check are pending the import build.
