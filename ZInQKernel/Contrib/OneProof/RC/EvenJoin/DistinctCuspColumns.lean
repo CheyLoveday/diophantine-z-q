@@ -83,18 +83,21 @@ theorem coeff_form [NeZero N] (n : ℕ) : (qExpansion 1 x.form).coeff n = x.coef
 
 end CuspDilation
 
-/-- W.-C. Li, *Newforms and functional equations*, Math. Ann. 212
-(1975), Theorem 5 and corollary (locator UNVERIFIED): at level `N` the
-distinct dilations `f(dτ)` of normalized cuspidal newforms with
-`d * level(f) ∣ N` are linearly independent. This weight-two consequence
-uses the direct sum for each nebentypus and the diamond character
-decomposition of Γ₁. -/
-def Li1975OldNewIndependenceWeightTwo : Prop :=
+/-- **Old/new independence in weight two** (printed-form leaf, locators
+UNVERIFIED): at level `N` the distinct dilations `f(dτ)` of normalized
+cuspidal newforms with `d * level(f) ∣ N` are linearly independent in
+`S₂(Γ₁(N))`. Diamond–Shurman, *A First Course in Modular Forms* (GTM 228,
+2005), Theorem 5.8.3 (newforms and their dilations form a basis of
+`S_k(Γ₁(N))`); for trivial character, Atkin–Lehner, Math. Ann. 185 (1970),
+Theorem 5, p. 151 (their `k` is classical weight `2k`). W.-C. Li, Math.
+Ann. 212 (1975), uses this independence (pp. 302, 309) without proving it;
+Li's Theorem 5 (p. 298) is strong multiplicity one, not this statement. -/
+def OldNewIndependenceWeightTwo : Prop :=
   ∀ (N : ℕ) [NeZero N], LinearIndependent ℂ (fun x : CuspDilation N => x.form)
 
 /-- Passing from the actual cusp forms to their Fourier series preserves
 the independence asserted by the print. -/
-theorem cuspDilation_coeff_independent (hLi : Li1975OldNewIndependenceWeightTwo)
+theorem cuspDilation_coeff_independent (hLi : OldNewIndependenceWeightTwo)
     {N : ℕ} [NeZero N] : LinearIndependent ℂ (CuspDilation.coeff (N := N)) := by
   let Q : CuspForm ((Gamma1 N).map (mapGL ℝ)) 2 →ₗ[ℂ] (ℕ → ℂ) :=
     LinearMap.pi fun n => CuspForm.qExpansionCoeffₗ one_pos (one_mem_strictPeriods_Gamma1_map _) 2 n

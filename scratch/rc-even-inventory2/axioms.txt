@@ -10,7 +10,7 @@
 'ZInQ.Manuscript.RC.EvenJoin.CuspDilation.old' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Manuscript.RC.EvenJoin.CuspDilation.form' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Manuscript.RC.EvenJoin.CuspDilation.coeff_form' depends on axioms: [propext, Classical.choice, Quot.sound]
-'ZInQ.Manuscript.RC.EvenJoin.Li1975OldNewIndependenceWeightTwo' depends on axioms: [propext,
+'ZInQ.Manuscript.RC.EvenJoin.OldNewIndependenceWeightTwo' depends on axioms: [propext,
 'ZInQ.Manuscript.RC.EvenJoin.cuspDilation_coeff_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Manuscript.RC.EvenJoin.CuspBlockExpansion.liftColumn' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ZInQ.Manuscript.RC.EvenJoin.CuspBlockExpansion.liftColumn_level' depends on axioms: [propext,

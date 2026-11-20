@@ -88,7 +88,7 @@ theorem in_image {z : ℂ} (hz : z ∈ P.E) : ∃ y : FixedField P.w, P.κ y = z
   ⟨FinitePlace.embedding P.w ⟨z, hz⟩, constituentComplexEmbedding_constituent P.w ⟨z, hz⟩⟩
 
 def inventory {L : Type} [AddCommGroup L] {ε : L →+ ZMod 2} (T : TypeData L ε)
-    (hLi : Li1975OldNewIndependenceWeightTwo) :
+    (hLi : OldNewIndependenceWeightTwo) :
     Inventory ↥(distinctCuspColumns A hm) ↥(cuspSources (distinctCuspColumns A hm))
       (FixedField P.w) T N :=
   cuspInventory _ P.κ
@@ -106,7 +106,7 @@ def blockChar (b : D) : (ZMod N)ˣ →* (FixedField P.w)ˣ :=
 pulled back character. The occurrence map retains the exact columns,
 even when several blocks use the same one. -/
 theorem block_span {L : Type} [AddCommGroup L] {ε : L →+ ZMod 2} (T : TypeData L ε)
-    (hLi : Li1975OldNewIndependenceWeightTwo) (b : D) :
+    (hLi : OldNewIndependenceWeightTwo) (b : D) :
     a b ∈ Submodule.span ℂ (blockColumns (P.inventory T hLi) P.κ (m b) (P.blockChar b)) := by
   apply block_span_of_inventory_labels (A b) (P.inventory T hLi) P.κ (P.blockChar b)
     (distinctCuspIndex A hm b)

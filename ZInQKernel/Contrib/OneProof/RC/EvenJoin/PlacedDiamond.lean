@@ -115,7 +115,7 @@ theorem even_blockChar_sign (hS : SupportSpec W)
 
 variable (C₀ : SourceAtPlace P (FixedRing v) (FixedField v))
 variable (hκ : D.κ.comp (D.fieldMap.comp C₀.eK) = C₀.eC)
-variable (hLi : Li1975OldNewIndependenceWeightTwo)
+variable (hLi : OldNewIndependenceWeightTwo)
 variable (hB : IsMovingCharacter P U (A none).χ)
 variable (hJ : ∀ j : ↥(subscripts U), IsUnaryCharacter P i j.val (A (some j)).χ)
 

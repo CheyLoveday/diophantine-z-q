@@ -28,11 +28,16 @@ space by dropping arbitrary columns.
 
 STANDARD, locator UNVERIFIED: W.-C. Li, *Newforms and functional equations*,
 *Math. Ann.* 212 (1975), Theorem 5 and its corollary. The new printed-form
-input is `Li1975OldNewIndependenceWeightTwo`, linear independence of all
+input is `OldNewIndependenceWeightTwo`, linear independence of all
 genuine normalized cuspidal newform dilations `f(dτ)` at `N` with
 `d * level(f) ∣ N`. For each nebentypus it is the old/new direct sum (the trivial-character case is due to Atkin–Lehner,
 *Math. Ann.* 185 (1970)); different nebentypus spaces are independent diamond eigenspaces. The
 reading desk should check the locator and general-character formulation.
+Correction after the page check: Li's Theorem 5 (p. 298) is strong
+multiplicity one, and Li uses old/new independence (pp. 302, 309) without
+proving it. The leaf is renamed `OldNewIndependenceWeightTwo` and cites
+Diamond–Shurman, GTM 228, Theorem 5.8.3 (locator UNVERIFIED), with
+Atkin–Lehner, Math. Ann. 185 (1970), Theorem 5, p. 151 for trivial character.
 The Lean argument transports this one input through the injective
 Fourier map and restricts it to the finite image.
 

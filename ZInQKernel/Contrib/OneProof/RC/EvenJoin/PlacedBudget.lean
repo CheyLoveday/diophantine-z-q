@@ -45,7 +45,7 @@ variable (hK : (FinitePlace.embedding v).comp j = C₀.eK) (hC : F.subtype.comp 
 variable (htwo : (2 : 𝓞 F) ∈ v.asIdeal)
 variable (hodd : P.phaseData.η (-1 : ZMod P.phaseData.N) * (-1 : ℂ) ^ i.val = -1)
 variable (horder : ∃ e : ℕ, P.phaseData.η ^ (2 ^ e) = 1)
-variable (hLi : Li1975OldNewIndependenceWeightTwo)
+variable (hLi : OldNewIndependenceWeightTwo)
 
 /-- One may choose the actual constituent lists and a place containing
 the necessary local data, separately at each set. The only requests on

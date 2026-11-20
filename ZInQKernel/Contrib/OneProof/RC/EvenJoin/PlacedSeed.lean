@@ -113,7 +113,7 @@ variable {A : ∀ b : EvenBlock U, CuspBlockExpansion (evenBlockLevel P b)
   (evenBlockSeries P hS i b)}
 variable [NeZero (movingLevel P U)]
 variable (D : PlacedCuspLists A (evenBlockLevel_dvd (P := P)) v)
-variable (hLi : Li1975OldNewIndependenceWeightTwo)
+variable (hLi : OldNewIndependenceWeightTwo)
 
 abbrev PlacedCuspLists.fieldMap :
     FixedField v →+* FixedField D.w :=

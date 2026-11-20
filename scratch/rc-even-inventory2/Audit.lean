@@ -30,7 +30,7 @@ macro "#print_private_axioms" mod:ident decl:ident : command =>
 #print axioms ZInQ.Manuscript.RC.EvenJoin.CuspDilation.old
 #print axioms ZInQ.Manuscript.RC.EvenJoin.CuspDilation.form
 #print axioms ZInQ.Manuscript.RC.EvenJoin.CuspDilation.coeff_form
-#print axioms ZInQ.Manuscript.RC.EvenJoin.Li1975OldNewIndependenceWeightTwo
+#print axioms ZInQ.Manuscript.RC.EvenJoin.OldNewIndependenceWeightTwo
 #print axioms ZInQ.Manuscript.RC.EvenJoin.cuspDilation_coeff_independent
 #print axioms ZInQ.Manuscript.RC.EvenJoin.CuspBlockExpansion.liftColumn
 #print axioms ZInQ.Manuscript.RC.EvenJoin.CuspBlockExpansion.liftColumn_level

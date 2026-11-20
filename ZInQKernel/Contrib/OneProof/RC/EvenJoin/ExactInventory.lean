@@ -127,7 +127,7 @@ theorem cuspSourceChar (s : ↥(cuspSources D)) (u : (ZMod s.val.level)ˣ) :
 
 /-- One independent inventory per tested set. Its column and character
 equations are part of the construction in the following lemmas. -/
-def cuspInventory (hLi : Li1975OldNewIndependenceWeightTwo) :
+def cuspInventory (hLi : OldNewIndependenceWeightTwo) :
     Inventory ↥D ↥(cuspSources D) K T N where
   sourceLevel s := s.val.level
   source s := s.val.eigen κ (cuspSourceCoeff D κ ha s) (cuspSourceChar D κ hχ s)
@@ -165,7 +165,7 @@ def cuspInventory (hLi : Li1975OldNewIndependenceWeightTwo) :
         map_sum, map_mul, eqc] using congrArg κ (congrFun hv n)
     exact funext fun x => κ.injective (congrFun hs x)
 
-@[simp] theorem cuspInventory_coeff (hLi : Li1975OldNewIndependenceWeightTwo) (x : ↥D) (n : ℕ) :
+@[simp] theorem cuspInventory_coeff (hLi : OldNewIndependenceWeightTwo) (x : ↥D) (n : ℕ) :
     κ ((cuspInventory (T := T) D κ ha hχ hLi).expansion x n) = x.val.coeff n := by
   change κ (Odd.divCoeff (((cuspOrigin D x).val.eigen (T := T) κ
       (cuspSourceCoeff D κ ha (cuspOrigin D x)) (cuspSourceChar D κ hχ (cuspOrigin D x))).a)
@@ -175,7 +175,7 @@ def cuspInventory (hLi : Li1975OldNewIndependenceWeightTwo) :
   · rw [ite_eq_left hd, ite_eq_left hd, NormalizedCuspSource.eigen_a]
   · rw [ite_eq_right hd, ite_eq_right hd, map_zero]
 
-@[simp] theorem cuspInventory_char (hLi : Li1975OldNewIndependenceWeightTwo)
+@[simp] theorem cuspInventory_char (hLi : OldNewIndependenceWeightTwo)
     (x : ↥D) (u : (ZMod N)ˣ) :
     κ ((cuspInventory (T := T) D κ ha hχ hLi).χ (cuspOrigin D x) u : K) =
       (x.val.char u : ℂ) :=

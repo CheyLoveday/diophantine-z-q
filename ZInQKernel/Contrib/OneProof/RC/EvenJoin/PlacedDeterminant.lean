@@ -30,7 +30,7 @@ variable [NeZero (movingLevel P U)]
 variable (D : PlacedCuspLists A (evenBlockLevel_dvd (P := P)) v)
 variable (C₀ : SourceAtPlace P (FixedRing v) (FixedField v))
 variable (hκ : D.κ.comp (D.fieldMap.comp C₀.eK) = C₀.eC)
-variable (hLi : Li1975OldNewIndependenceWeightTwo)
+variable (hLi : OldNewIndependenceWeightTwo)
 variable (hB : IsMovingCharacter P U (A none).χ)
 variable (hJ : ∀ j : ↥(subscripts U), IsUnaryCharacter P i j.val (A (some j)).χ)
 variable (hodd : P.phaseData.η (-1 : ZMod P.phaseData.N) * (-1 : ℂ) ^ i.val = -1)
