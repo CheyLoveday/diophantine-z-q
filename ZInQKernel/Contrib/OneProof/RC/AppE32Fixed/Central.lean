@@ -68,7 +68,5 @@ theorem central_zero_iff_of_wedge {K : Type*} [Field K] [CharZero K]
   rw [hdet, hexp, hrec]
   exact mul_eq_zero_iff_left hk
 
-#print axioms det_rows_eq_zero_iff
-#print axioms central_zero_iff_of_wedge
 
 end ZInQ.Manuscript.RC.AppE32Fixed

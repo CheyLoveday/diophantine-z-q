@@ -91,10 +91,5 @@ theorem singularModulus_finrank_over_base_le_of_conjugate (hconj : ConjugateSing
   refine ⟨O.mkPic J, hJ.trans (singularModulus_eq_of_mkPic_eq _ hk hc κ ?_)⟩
   exact (mkPic_picRepresentative O _).symm
 
-#print axioms ConjugateSingularModulus
-#print axioms finrank_adjoin_le_of_conjugate_family
-#print axioms mkPic_picRepresentative
-#print axioms singularModulus_finrank_le_of_conjugate
-#print axioms singularModulus_finrank_over_base_le_of_conjugate
 
 end ZInQ.Manuscript.RC.CMField2

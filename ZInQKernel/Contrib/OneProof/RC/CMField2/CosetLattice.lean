@@ -131,8 +131,5 @@ theorem conjugate_has_cyclic_self_of_root {F : Type*} [Field F] (x : F)
     exists_cyclic_sublattice_of_modularPolynomial_root N P τ (f x) (by rwa [hτ])
   exact ⟨M, hM, hi, hc, hj.trans ((PeriodPair.jLattice_ofTau τ).trans hτ).symm⟩
 
-#print axioms exists_cyclic_sublattice_of_modularPolynomial_root
-#print axioms exists_analyticJ_eq
-#print axioms conjugate_has_cyclic_self_of_root
 
 end ZInQ.Manuscript.RC.CMField2

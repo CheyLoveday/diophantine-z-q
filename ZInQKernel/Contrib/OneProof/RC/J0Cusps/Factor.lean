@@ -92,10 +92,5 @@ theorem torusHom_cuspClass_of_jacobi_ne_zero (N a m : ℕ) [NeZero N] [NeZero m]
   rw [cuspOrbit_eq_zero_of_jacobi_ne_zero N a m hmN hχ]
   exact torusHom_pointClass g hg u _
 
-#print axioms factor_isMonHom
-#print axioms abelJacobi_comp_factor
-#print axioms abelJacobi_comp_isBased
-#print axioms torusHom_pointClass
-#print axioms torusHom_cuspClass_of_jacobi_ne_zero
 
 end ZInQ.Manuscript.RC.J0Cusps

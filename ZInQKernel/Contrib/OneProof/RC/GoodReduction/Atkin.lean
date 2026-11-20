@@ -80,7 +80,5 @@ theorem atkinQuotient_of_integralRelation
   change (read (point infinity ≫ F.map f)).toAdd = 0
   rw [← hval infinity, hc, map_zero, map_zero]
 
-#print axioms atkinQuotient_of_affine
-#print axioms atkinQuotient_of_integralRelation
 
 end ZInQ.Manuscript.RC.GoodReduction

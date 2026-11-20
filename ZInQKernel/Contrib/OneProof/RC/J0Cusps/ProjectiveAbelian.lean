@@ -43,6 +43,5 @@ def projectiveAbVar (E : WeierstrassCurve ℚ) [GrpObj (projectiveTarget E)] : A
     TauCeti.AlgebraicGeometry.Smooth.geometricallyIntegral X.hom
   exact ⟨X⟩
 
-#print axioms projectiveAbVar
 
 end ZInQ.Manuscript.RC.J0Cusps

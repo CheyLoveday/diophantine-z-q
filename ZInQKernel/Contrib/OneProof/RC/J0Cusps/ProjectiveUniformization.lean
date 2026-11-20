@@ -329,19 +329,5 @@ theorem continuous_projectiveTorusValue :
 
 end Analytic
 
-#print axioms complexProjection_lift
-#print axioms projectiveTorusValue_lift
-#print axioms projectiveTorusValue_lift_of_eval
-#print axioms projectiveTarget_t2
-#print axioms periodQuotient_compact
-#print axioms pointVector_equation
-#print axioms pointVector_ne_zero
-#print axioms pointVector_evaluates
-#print axioms complexProjectiveValues_vector
-#print axioms weierPt_at_lattice
-#print axioms weierPt_off_lattice
-#print axioms periodToProjective_continuous
-#print axioms projectivePeriodHomeomorph
-#print axioms continuous_projectiveTorusValue
 
 end ZInQ.Manuscript.RC.J0Cusps

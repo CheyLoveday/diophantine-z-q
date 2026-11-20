@@ -88,8 +88,5 @@ theorem upSquare_conjugation {p : ℕ} (hp : p.Prime) (M a b c d : ℤ)
   · linear_combination hdet + c * hu
   · simpa only [sub_sub_cancel_left] using dvd_neg.mpr (dvd_mul_of_dvd_left hM ((e r).val : ℤ))
 
-#print axioms fractionalPermutation
-#print axioms upSquare_permutation
-#print axioms upSquare_conjugation
 
 end ZInQ.Manuscript.RC.EvenExpansion

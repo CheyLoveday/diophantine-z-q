@@ -128,12 +128,5 @@ theorem movingOp_series {a : ℕ → ℂ} {g : ℍ → ℂ} (p : ℕ) [NeZero p]
   simpa only [Odd.Top, movingOp, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, sub_mul, mul_assoc]
     using (series_Up_sq_Vp p h z).sub ((series_Vp (NeZero.pos p) h z).mul_left η)
 
-#print axioms up_translation
-#print axioms qParam_dilate
-#print axioms qParam_undilate
-#print axioms series_Vp
-#print axioms series_Up
-#print axioms series_Up_sq_Vp
-#print axioms movingOp_series
 
 end ZInQ.Manuscript.RC.EvenExpansion

@@ -92,14 +92,5 @@ theorem tendsto_zero (N : ℕ) [NeZero N] :
       simpa only [qParam_one_zpow] using X0Model.hasSum_j τ)
   simpa only [Function.comp_def, dilate_contract] using h.comp (tendsto_contract N)
 
-#print axioms analyticJ_invariant
-#print axioms qParam_one_zpow
-#print axioms qParam_at_cusp
-#print axioms tendsto_infinity
-#print axioms dilate_S_dilate
-#print axioms contract
-#print axioms dilate_contract
-#print axioms tendsto_contract
-#print axioms tendsto_zero
 
 end ZInQ.Manuscript.RC.J0Cusps

@@ -145,14 +145,5 @@ theorem tendsto_complexLift_of_sections {I : Type} {F : Filter I} {X : Over (Spe
   filter_upwards [hp'] with i hi
   rw [Function.comp_apply, ← complexLift_comp, hi]
 
-#print axioms maps_to_rat_unique
-#print axioms sectionEval
-#print axioms sectionMap_factor
-#print axioms specPoint
-#print axioms tensorMap
-#print axioms tensorProjection
-#print axioms tensorPoint_eq
-#print axioms tendsto_specPoint
-#print axioms tendsto_complexLift_of_sections
 
 end ZInQ.Manuscript.RC.J0Cusps

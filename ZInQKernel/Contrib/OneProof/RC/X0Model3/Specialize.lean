@@ -132,9 +132,5 @@ theorem specialize_of_integral_extension {A : Type} [CommRing A] [IsDomain A]
     (s ≫ x) ≫ π = s ≫ y := by
   rw [Category.assoc, ext_of_isDominant_of_isSeparated b hbase j hgen]
 
-#print axioms projectiveValue_eq_of_complexPoint
-#print axioms datumReduction_projectiveValue
-#print axioms hpi_iff_specialize_projectiveValue
-#print axioms specialize_of_integral_extension
 
 end ZInQ.Manuscript.RC.X0Model3

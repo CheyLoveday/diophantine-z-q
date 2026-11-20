@@ -33,6 +33,5 @@ theorem outerWitness_of_completed_coefficients {b : ℕ}
   rw [PowerSeries.coeff_map, htwo, PowerSeries.coeff_C_mul] at hc
   simpa only [Int.toNat_natCast, PowerSeries.coeff_smul, smul_eq_mul, PadicInt.Coe.ringHom_apply] using hc
 
-#print axioms outerWitness_of_completed_coefficients
 
 end ZInQ.Manuscript.RC.AppE32Fixed

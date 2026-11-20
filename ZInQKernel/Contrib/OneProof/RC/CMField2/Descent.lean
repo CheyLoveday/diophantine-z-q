@@ -182,14 +182,5 @@ theorem fieldPoint_of_eval_rational_in_coordinates (N : ℕ) [NeZero N] (τ : Up
     show ι (eF q) = eC q from DFunLike.congr_fun he q]
   exact ((eq_div_iff hq).mpr hp).symm
 
-#print axioms BranchDescends
-#print axioms affineEval_factor
-#print axioms chart_mem
-#print axioms fieldPoint_of_affineEval_range
-#print axioms fieldPoint_of_finitePointEval_range
-#print axioms fieldPoint_iff_finitePointEval_range
-#print axioms cmFieldOfDefinition_of
-#print axioms fieldPoint_of_eval_mem_adjoin_coordinates
-#print axioms fieldPoint_of_eval_rational_in_coordinates
 
 end ZInQ.Manuscript.RC.CMField2

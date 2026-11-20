@@ -18,6 +18,5 @@ def SingularModulusMemRingClass : Prop :=
       ∀ I : O.invertibleProperFractionalIdeals,
         singularModulus O hk hc κ I ∈ Set.range ι
 
-#print axioms SingularModulusMemRingClass
 
 end ZInQ.Manuscript.RC.CMField2

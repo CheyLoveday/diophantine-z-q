@@ -164,11 +164,5 @@ theorem diagonal_root_iff_primitive_norm (L : PeriodPair) (m : ℕ) [NeZero m] (
     hbas ⟨w, hS ▸ w.property⟩)
   simpa only [M, hj] using h
 
-#print axioms int_coords_eq
-#print axioms normSq_of_coords
-#print axioms scale_le_of_multiplier
-#print axioms scale_primitive_iff_gcd
-#print axioms diagonal_root_iff_ofTau
-#print axioms diagonal_root_iff_primitive_norm
 
 end ZInQ.Manuscript.RC.CMField2

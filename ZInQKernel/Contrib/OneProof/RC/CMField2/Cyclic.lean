@@ -102,9 +102,5 @@ theorem primitive_of_isAddCyclic_sublatticeQuotient (L M : PeriodPair)
   obtain ⟨y, hy, he⟩ := hd x hx
   exact ⟨⟨y, hy⟩, Subtype.ext he⟩
 
-#print axioms isAddCyclic_quotient_of_primitive
-#print axioms isAddCyclic_sublatticeQuotient_of_primitive
-#print axioms primitive_of_isAddCyclic_quotient
-#print axioms primitive_of_isAddCyclic_sublatticeQuotient
 
 end ZInQ.Manuscript.RC.CMField2

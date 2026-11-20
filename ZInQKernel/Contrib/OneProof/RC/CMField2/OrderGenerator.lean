@@ -163,8 +163,5 @@ theorem exists_heegner_generator_in_embedding (O : NumberFieldOrder K)
       rw [map_sub, map_neg, map_intCast, ← he]
       linear_combination -hz
 
-#print axioms discr_of_basis_one
-#print axioms exists_heegner_generator
-#print axioms exists_heegner_generator_in_embedding
 
 end ZInQ.Manuscript.RC.CMField2

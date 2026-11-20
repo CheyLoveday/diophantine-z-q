@@ -210,17 +210,5 @@ theorem sourceLimit_of_generator_expansions (N : ℕ) [NeZero N] {K : Type} [Fie
   rw [dite_eq_left hi]
   exact (chart_section_value N U r (x i) hi hsi.1 (hf (x i))).symm
 
-#print axioms interior
-#print axioms branchComplex
-#print axioms preimage_top_comp
-#print axioms sectionField
-#print axioms interiorSection
-#print axioms regular_interiorSection
-#print axioms chart_mem_of_regular
-#print axioms eventually_chart_mem
-#print axioms generic_hits_open
-#print axioms chart_section_value
-#print axioms sectionValue_comp
-#print axioms sourceLimit_of_generator_expansions
 
 end ZInQ.Manuscript.RC.J0Cusps

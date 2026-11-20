@@ -222,16 +222,5 @@ def activeTameNormalization (Φ T : V →ₗ[R] V) (q : ℕ) (hq : Odd q)
       (e1 := ((2 : R) • I).comp (LinearMap.snd R V V)) b c0 c1
   exact asIso (GHom.toCC f)
 
-#print axioms splitLocalModel
-#print axioms splitLocalH1
-#print axioms splitLocalH2
-#print axioms quotientOfFirstCoordinate
-#print axioms activeMiddleCoordinates
-#print axioms activeMiddleCoordinates_d0
-#print axioms activeMiddleCoordinates_d1
-#print axioms cx3Hom_isIso
-#print axioms movingTameNormalization
-#print axioms tameNorm_negId
-#print axioms activeTameNormalization
 
 end ZInQ.Contrib.RC53Assist.Calibration

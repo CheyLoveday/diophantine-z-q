@@ -46,6 +46,5 @@ theorem singularModulus_reduction_pow_eq_of_split
   rw [← eval_diagonal]
   exact hr
 
-#print axioms singularModulus_reduction_pow_eq_of_split
 
 end ZInQ.Manuscript.RC.CMField2

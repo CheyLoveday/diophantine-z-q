@@ -122,11 +122,5 @@ theorem pow_eq_of_modularPolynomial_diagonal_root (p : ℕ) [Fact p.Prime]
   apply pow_eq_of_kronecker_diagonal p
   simpa [eval₂_mul, eval₂_sub, eval₂_pow, eval₂_C, eval₂_X, g] using h.symm
 
-#print axioms swap
-#print axioms swap_reduce
-#print axioms jqMod_eq_jqModC
-#print axioms modularPolynomial_reduced_root
-#print axioms kroneckerCongruence_of_prime
-#print axioms pow_eq_of_modularPolynomial_diagonal_root
 
 end ZInQ.Manuscript.RC.CMField2

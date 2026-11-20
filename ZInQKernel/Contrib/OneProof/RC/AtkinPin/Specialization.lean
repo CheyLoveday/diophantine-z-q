@@ -69,7 +69,5 @@ theorem pinned_atkin_quotient_of_specialization
         (wNew f hχ p : ℤ) • quotient (divisorClass (center infinity (of x))) :=
   atkin_quotient_of_specialization V π hπ b infinity divisorClass quotient p _ ha hb
 
-#print axioms atkin_quotient_of_specialization
-#print axioms pinned_atkin_quotient_of_specialization
 
 end ZInQ.Manuscript.RC.AtkinPin

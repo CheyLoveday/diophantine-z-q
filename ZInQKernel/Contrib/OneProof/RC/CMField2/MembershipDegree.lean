@@ -27,6 +27,5 @@ theorem singularModulus_finrank_over_base_le_of_mem (hm : SingularModulusMemRing
   let g := (AlgEquiv.ofInjective f f.injective).symm.toAlgHom.comp (IntermediateField.inclusion hle)
   exact LinearMap.finrank_le_finrank_of_injective (f := g.toLinearMap) g.injective
 
-#print axioms singularModulus_finrank_over_base_le_of_mem
 
 end ZInQ.Manuscript.RC.CMField2

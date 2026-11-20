@@ -160,15 +160,5 @@ theorem exists_algebraic_cusp_limit (N : ℕ) [NeZero N] (σ : SL(2, ℤ)) :
     (fun τ => Periodic.qParam_ne_zero τ)
     (Eventually.of_forall fun τ => (he τ).1) (Eventually.of_forall fun τ => (he τ).2)⟩
 
-#print axioms Qbar
-#print axioms qbarToComplex
-#print axioms exists_cusp_root
-#print axioms qParam_level_pow
-#print axioms hasSum_first
-#print axioms second_form
-#print axioms coeffMap_qExpand
-#print axioms coeffMap_qTwist
-#print axioms translated_generator_expansions
-#print axioms exists_algebraic_cusp_limit
 
 end ZInQ.Manuscript.RC.J0Cusps

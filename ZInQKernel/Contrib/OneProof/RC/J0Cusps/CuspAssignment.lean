@@ -164,22 +164,5 @@ theorem cuspAssignment_zero_limit (N : ℕ) [NeZero N] :
   rw [algebraicCusp_zero]
   exact tendsto_zero N
 
-#print axioms cuspIndex
-#print axioms orbitOfSL
-#print axioms orbitOfSL_surjective
-#print axioms orbitOfSL_eq
-#print axioms rat_label_real
-#print axioms translated_limit_congr
-#print axioms algebraicCusp
-#print axioms extendPoint
-#print axioms extendPoint_injective
-#print axioms rationalAsGeometric
-#print axioms extend_rationalAsGeometric
-#print axioms algebraicCusp_limit
-#print axioms algebraicCusp_zero
-#print axioms algebraicCusp_infinity
-#print axioms algebraicCusp_zero_rational
-#print axioms algebraicCusp_infinity_rational
-#print axioms cuspAssignment_zero_limit
 
 end ZInQ.Manuscript.RC.J0Cusps

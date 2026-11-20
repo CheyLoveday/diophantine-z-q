@@ -146,10 +146,5 @@ theorem hElkikMD_atScale_of_projectiveGroup {ℓ : ℕ} [(Ecurve ℓ).IsElliptic
   simp only [Iso.refl_hom]
   exact hAdd p q
 
-#print axioms hElkikMD_atScale_of_projectiveGroup
-#print axioms targetPeriodEquiv
-#print axioms targetPeriodEquiv_lift
-#print axioms algebraicCuspClass_comparison_atScale
-#print axioms hElkikMD_atScale_of_geometricTorsion
 
 end ZInQ.Manuscript.RC.J0Cusps

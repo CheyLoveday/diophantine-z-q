@@ -56,9 +56,5 @@ theorem cusp_comparison_of_factor
   exact value_eq_of_chart_limit π (fun τ : ℍ => interior N (σ • τ))
     p U hU hs (Eventually.of_forall fun τ => hchart (σ • τ)) (hlim r σ hσ)
 
-#print axioms scalarSpec
-#print axioms extendJacobian
-#print axioms extendJacobian_class
-#print axioms cusp_comparison_of_factor
 
 end ZInQ.Manuscript.RC.J0Cusps

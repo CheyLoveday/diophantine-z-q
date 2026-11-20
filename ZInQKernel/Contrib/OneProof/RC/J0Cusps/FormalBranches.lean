@@ -151,26 +151,5 @@ theorem zeroPoint_overQ (N : ℕ) [NeZero N] : zeroPoint N ≫ X0Model.overQ N =
   apply Spec.homEquiv.injective
   exact CommRingCat.hom_ext (Subsingleton.elim _ _)
 
-#print axioms equation
-#print axioms liftEquation
-#print axioms liftBranch
-#print axioms liftBranch_j
-#print axioms liftBranch_jN
-#print axioms firstAtCusp
-#print axioms firstAtCusp_j
-#print axioms firstAtCusp_eval
-#print axioms triangular_root
-#print axioms triangularField
-#print axioms triangularField_j
-#print axioms triangularField_jN
-#print axioms zero_root
-#print axioms zeroField
-#print axioms zeroField_j
-#print axioms zeroField_jN
-#print axioms formalBranch
-#print axioms formalBranch_generic
-#print axioms branchPoint
-#print axioms zeroPoint
-#print axioms zeroPoint_overQ
 
 end ZInQ.Manuscript.RC.J0Cusps

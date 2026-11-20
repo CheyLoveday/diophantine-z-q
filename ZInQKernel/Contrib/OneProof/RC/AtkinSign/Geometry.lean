@@ -91,9 +91,5 @@ def ofSpecialFibre (S : PMAdelic.SpecialFibre ell N K Ebar ap X)
 
 end SpecialFibreAtSigns
 
-#print axioms SpecialFibreAtSigns
-#print axioms SpecialFibreAtSigns.toSpecialFibre
-#print axioms SpecialFibreAtSigns.atkinSign_eq
-#print axioms SpecialFibreAtSigns.ofSpecialFibre
 
 end ZInQ.Manuscript.RC.AtkinSign

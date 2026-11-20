@@ -134,19 +134,5 @@ theorem levelTwo_distinct :
   rw [hdet] at hdiv
   norm_num at hdiv
 
-#print axioms levelTwo_heegner
-#print axioms hs
-#print axioms hplus
-#print axioms hminus
-#print axioms hshift
-#print axioms hquad
-#print axioms hprod
-#print axioms levelTwo_reflection
-#print axioms S_plus
-#print axioms S_minus
-#print axioms T_dilate
-#print axioms levelTwo_coordinates
-#print axioms middleCoefficient_mod_four
-#print axioms levelTwo_distinct
 
 end ZInQ.Manuscript.RC.CMField2

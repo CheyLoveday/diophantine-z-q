@@ -90,14 +90,5 @@ theorem isJacobian_aj0 (N : ℕ) [NeZero N] :
   have hmon : IsMonHom g := isMonHom_of_isProper_of_geometricallyIntegral g hpoint
   exact ⟨g, ⟨hmon, hg.symm⟩, fun f hf => hg_unique f hf.2.symm⟩
 
-#print axioms infinity
-#print axioms modelCurve
-#print axioms modelPicard_exists
-#print axioms modelPicard
-#print axioms modelPicardRep
-#print axioms J0
-#print axioms aj0
-#print axioms aj0_classifies
-#print axioms isJacobian_aj0
 
 end ZInQ.Manuscript.RC.J0Cusps

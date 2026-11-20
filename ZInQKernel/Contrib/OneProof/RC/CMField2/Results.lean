@@ -34,9 +34,5 @@ theorem heegner_coordinates_mem_ringClass
       X0Model.analyticJN N (cmPoint A B d) ∈ Set.range ι :=
   heegner_coordinates_mem_ringClass_of singularModulusMemRingClass O hk hc hD hd hcop hf
 
-#print axioms cmFieldOfDefinition
-#print axioms cmFieldOfDefinition_modelOne
-#print axioms cmFieldOfDefinition_one
-#print axioms heegner_coordinates_mem_ringClass
 
 end ZInQ.Manuscript.RC.CMField2

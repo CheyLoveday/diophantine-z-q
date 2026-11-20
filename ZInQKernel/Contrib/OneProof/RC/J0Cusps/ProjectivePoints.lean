@@ -262,19 +262,6 @@ theorem projectiveValue_bijective (E : WeierstrassCurve ℚ) [E.IsElliptic]
       · rw [hg, Affine.CoordinateRing.evalAlgHom_of_X]
       · rw [hg, Affine.CoordinateRing.evalAlgHom_root]
 
-#print axioms evalAway_mk
-#print axioms chart_mem_iff
-#print axioms evalZero_Y
-#print axioms weierstrassOrigin
-#print axioms weierstrassOrigin_point
-#print axioms unique_over_origin
-#print axioms zOpen_ne_origin
-#print axioms range_zOpen
-#print axioms zRingMap_toRingHom
-#print axioms value_ne_origin
-#print axioms projectiveValue_eq_zero_iff
-#print axioms pointInZ_factor
-#print axioms projectiveValue_bijective
 
 /-- A multiplication inducing Weierstrass addition on complex points forces
 the rational identity to be the specified projective origin. -/
@@ -309,7 +296,6 @@ theorem projectiveGroup_origin (E : WeierstrassCurve ℚ) [E.IsElliptic]
   rw [(projectiveValue_eq_zero_iff e).mpr hs,
     (projectiveValue_eq_zero_iff (weierstrassOrigin E)).mpr (weierstrassOrigin_point E)]
 
-#print axioms projectiveGroup_origin
 
 section Vectors
 
@@ -488,14 +474,6 @@ theorem tendsto_projectiveVectorPoint {I : Type} {l : Filter I} (P : I → Fin 3
   dsimp only [f]
   rw [dite_eq_left ht] <;> rfl
 
-#print axioms vectorEval_coord
-#print axioms evalAway_overlap
-#print axioms vectorOnChart_independent
-#print axioms exists_nonzero_coord
-#print axioms projectiveVectorPoint_left
-#print axioms projectiveValue_vector_affine
-#print axioms projectiveValue_vector_origin
-#print axioms tendsto_projectiveVectorPoint
 
 end Vectors
 

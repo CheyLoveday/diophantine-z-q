@@ -63,7 +63,5 @@ theorem singularModulus_finrank_le_of_primitive_equation
   rw [hI]
   exact singularModulus_finrank_le O hk hc κ I
 
-#print axioms eq_cmPoint_of_quadratic
-#print axioms singularModulus_finrank_le_of_primitive_equation
 
 end ZInQ.Manuscript.RC.CMField2

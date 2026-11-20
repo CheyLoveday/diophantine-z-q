@@ -173,14 +173,5 @@ theorem periodMultipliers_eq_of_jLattice_eq (L M : PeriodPair) (h : L.jLattice =
     ∀ w ∈ M.lattice, z * w ∈ M.lattice
   rw [hv]
 
-#print axioms periodMultipliers
-#print axioms omega_one_mem
-#print axioms secondCoord
-#print axioms exists_int_of_secondCoord_eq_zero
-#print axioms exists_multiplier_basis_one
-#print axioms integral_trace_norm_of_multiplier
-#print axioms exists_normalized_multiplier
-#print axioms periodMultipliers_scale
-#print axioms periodMultipliers_eq_of_jLattice_eq
 
 end ZInQ.Manuscript.RC.CMField2

@@ -208,14 +208,5 @@ theorem translatedAtkinAtInfinity {E : WeierstrassCurve ℚ} [E.IsElliptic]
   simpa only [hzero, zsmul_zero, sub_zero] using
     translatedAtkinOnPoints (X0Branch.model N) W π hπ (infinityPoint N) e h F x
 
-#print axioms atkinGL_chart_congr
-#print axioms atkinGL_sq_chart
-#print axioms atkinInterior_apply
-#print axioms atkinInterior_involutive
-#print axioms phiAn_transform
-#print axioms projectiveValue_transform_chart
-#print axioms actualParametrization_transform_chart
-#print axioms translatedAtkinOnPoints
-#print axioms translatedAtkinAtInfinity
 
 end ZInQ.Manuscript.RC.AtkinPin

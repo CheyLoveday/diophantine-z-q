@@ -35,7 +35,5 @@ theorem evenScalar32_of_kato_fixed (hK : KatoZetaLeaf) (hcm : CMjInteger)
     (appEOutputs_of_kato_fixed hK hcm hℓ C hE)
   exact ⟨h, (scalar32_iff_even C hCW).mpr h⟩
 
-#print axioms appEOutputs_of_kato_fixed
-#print axioms evenScalar32_of_kato_fixed
 
 end ZInQ.Manuscript.RC.AppE32Fixed

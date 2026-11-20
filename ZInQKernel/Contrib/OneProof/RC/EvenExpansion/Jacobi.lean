@@ -259,19 +259,5 @@ theorem jacobiTheta_fourth_transform (γ : SL(2, ℤ)) (hγ : γ ∈ Gamma0 4) (
   obtain ⟨k, hk⟩ := (ZMod.intCast_zmod_eq_zero_iff_dvd _ 4).mp (Gamma0_mem.mp hγ)
   exact (mem_thetaStabilizer γ).mp (stabilizer_of_c k γ hk) z
 
-#print axioms lower_add
-#print axioms transform_characterization
-#print axioms mem_thetaStabilizer
-#print axioms T_mem_stabilizer
-#print axioms neg_one_mem_stabilizer
-#print axioms jacobiTheta_fricke_fourth
-#print axioms lower_one_mem_stabilizer
-#print axioms lower_mem_stabilizer
-#print axioms triangular_mem
-#print axioms centre
-#print axioms Tmul_entries
-#print axioms lowerMul_entry
-#print axioms stabilizer_of_c
-#print axioms jacobiTheta_fourth_transform
 
 end ZInQ.Manuscript.RC.EvenExpansion

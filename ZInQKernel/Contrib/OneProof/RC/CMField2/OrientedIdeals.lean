@@ -279,15 +279,5 @@ theorem exists_heegner_singularModuli (hk : finrank ℚ K = 2) (hc : IsTotallyCo
   ⟨Classical.choice inferInstance,
     exists_heegner_singularModuli_in_embedding O hk hc _ hD hd hcop hf⟩
 
-#print axioms formIdeal
-#print axioms formIdeal_coe
-#print axioms formIdeal_restrictScalars
-#print axioms formIdeal_mul_conjugate
-#print axioms formIdeal_isUnit
-#print axioms analyticJ_eq_singularModulus_of_generator
-#print axioms formIdeal_mul_scaled
-#print axioms formIdeal_scaled_eq_levelInverse_mul
-#print axioms exists_heegner_singularModuli_in_embedding
-#print axioms exists_heegner_singularModuli
 
 end ZInQ.Manuscript.RC.CMField2

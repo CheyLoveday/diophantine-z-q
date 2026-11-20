@@ -97,10 +97,5 @@ theorem source_limit_unique (N : ℕ) [NeZero N] {I : Type} {F : Filter I} [F.Ne
   let := source_t2 N
   exact complexLift_injective _ (tendsto_nhds_unique hp hq)
 
-#print axioms evaluation_eq_sectionMap
-#print axioms t2_of_affine_pair
-#print axioms source_t2
-#print axioms complexLift_injective
-#print axioms source_limit_unique
 
 end ZInQ.Manuscript.RC.J0Cusps

@@ -295,10 +295,5 @@ theorem exists_singularModulus_of_exact_multiplier (O : NumberFieldOrder k)
     rw [idealPeriod_lattice, hJ, hLI]
   exact ⟨J, (jLattice_scale L u⁻¹).symm.trans (jLattice_eq_of_lattice_eq hlat).symm⟩
 
-#print axioms primitive_quadratic_equation
-#print axioms exists_noninteger
-#print axioms mul_mem_of_mem_pair
-#print axioms proper_iff_isUnit
-#print axioms exists_singularModulus_of_exact_multiplier
 
 end ZInQ.Manuscript.RC.CMField2

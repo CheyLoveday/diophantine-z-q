@@ -315,14 +315,6 @@ def datumWeights (I : IntegralSupport s D)
     exact QuadraticAlgebra.finrank_eq_two _ _
   exact actualWeights T J C W H (descent_of_filter filter degree disc_eq descent)
 
-#print axioms NormFactors.rightProduct
-#print axioms SchwartzFactors.eval_order
-#print axioms sign_square
-#print axioms frame_transport
-#print axioms torus_character
-#print axioms orbit_transport
-#print axioms actualWeights
-#print axioms datumWeights
 
 end Actual
 

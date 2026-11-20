@@ -40,6 +40,5 @@ theorem dual_orthogonality {G : Type} [CommGroup G] [Finite G] (a t : G) :
     simpa [e, map_mul, map_inv] using
       congrArg ((Fintype.card (G →* ℂˣ) : ℂ)⁻¹ * ·) hsum
 
-#print axioms dual_orthogonality
 
 end ZInQ.Manuscript.RC.EvenExpansion

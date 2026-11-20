@@ -26,7 +26,5 @@ theorem mem_of_separating_reductions {K E : Type*} [Field K] [Field E] [Algebra 
   by_contra! hne
   exact hsep (by simpa [ha, hb] using hne) hP
 
-#print axioms pow_eq_of_kronecker_diagonal
-#print axioms mem_of_separating_reductions
 
 end ZInQ.Manuscript.RC.CMField2

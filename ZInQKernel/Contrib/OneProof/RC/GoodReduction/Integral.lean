@@ -79,8 +79,5 @@ theorem integralAffine_baseChange {R K : Type} [CommRing R] [Field K] [Algebra R
   rw [map_mul ψ, map_zpow ψ] at hh
   simpa only [ψ, Functor.homMonoidHom_apply, Functor.map_comp] using hh
 
-#print axioms existsUnique_integralMap
-#print axioms exists_integralPoint
-#print axioms integralAffine_baseChange
 
 end ZInQ.Manuscript.RC.GoodReduction

@@ -33,6 +33,5 @@ theorem summable_squareShell {j : ℕ} (hj : 0 < j) (a : ℕ → ℂ)
   exact mul_le_mul (hle k) (pow_le_pow_of_le_one (norm_nonneg _) hq.le hp)
     (pow_nonneg (norm_nonneg _) _) (Nat.cast_nonneg _)
 
-#print axioms summable_squareShell
 
 end ZInQ.Manuscript.RC.EvenExpansion

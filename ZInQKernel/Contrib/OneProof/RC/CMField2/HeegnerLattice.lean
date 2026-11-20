@@ -142,12 +142,5 @@ theorem dilate_cmPoint_eq {N : ℕ} [NeZero N] {A a B d : ℤ}
   have hac : (a : ℂ) ≠ 0 := by exact_mod_cast hap.ne'
   field_simp
 
-#print axioms coe_cmPoint_of_neg
-#print axioms heegner_middle_coprime
-#print axioms heegner_scaled_form
-#print axioms int_mem_pairLattice
-#print axioms omega_mem_pairLattice
-#print axioms heegner_pairLattice_mul
-#print axioms dilate_cmPoint_eq
 
 end ZInQ.Manuscript.RC.CMField2

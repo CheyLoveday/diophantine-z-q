@@ -271,12 +271,5 @@ theorem prime_diagonal_eq_of_order_multiplier (O : NumberFieldOrder K)
     p P L (L.scale u) hsub hi hcyc
   exact (jLattice_scale L u) ▸ h
 
-#print axioms cast_sublatticeIndex_scale
-#print axioms exists_order_basis_one
-#print axioms orderBasis_im_ne_zero
-#print axioms primitive_scale_of_order_basis
-#print axioms singularModulus_isIntegral
-#print axioms cast_absNorm_span_singleton_complex
-#print axioms prime_diagonal_eq_of_order_multiplier
 
 end ZInQ.Manuscript.RC.CMField2

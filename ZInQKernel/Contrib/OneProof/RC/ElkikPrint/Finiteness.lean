@@ -45,7 +45,5 @@ theorem maninDrinfeld_of_torsion {N : ℕ} [NeZero N] {J : Type*} [AddCommGroup 
     ((AddCommGroup.mem_torsion _).mp (hle x.property))
   exact isOfFinAddOrder_iff_nsmul_eq_zero.mpr ⟨n, hn, Subtype.ext hx⟩
 
-#print axioms cuspClass_finiteRange_of_cuspOrbits
-#print axioms maninDrinfeld_of_torsion
 
 end ZInQ.Manuscript.RC.ElkikPrint

@@ -36,7 +36,5 @@ theorem conjugateSingularModulus_of_exactMultiplier
   obtain ⟨J, hJ⟩ := exists_singularModulus_of_exact_multiplier O hk hc κ L hmul
   exact ⟨J, hL.symm.trans hJ⟩
 
-#print axioms ExactMultiplierOrderOfDiagonalMultiplicities
-#print axioms conjugateSingularModulus_of_exactMultiplier
 
 end ZInQ.Manuscript.RC.CMField2

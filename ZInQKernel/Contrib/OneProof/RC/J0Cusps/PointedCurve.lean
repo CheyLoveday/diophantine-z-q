@@ -45,9 +45,5 @@ def basedJacobian (hExists : LeafModCurves.JacobianExists K)
   let h := hExists X (isCurve_of_point X b) b
   ⟨⟨h.choose, h.choose_spec.choose⟩, h.choose_spec.choose_spec⟩
 
-#print axioms rationalPoint
-#print axioms isCurve_of_point
-#print axioms pointedSourceCurve
-#print axioms basedJacobian
 
 end ZInQ.Manuscript.RC.J0Cusps

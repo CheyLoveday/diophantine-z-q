@@ -105,9 +105,5 @@ theorem cuspComparison_of_zero_chart_limit
   rw [torusHom_cuspClass_of_jacobi_ne_zero N a m hmN hχ g hg u c, ← hUeval, hzero]
   exact cuspLimit_eq_zero_of_jacobi_ne_zero N a m hmN hχ an lim hinv hlim
 
-#print axioms complexLift_comp
-#print axioms value_eq_of_chart_limit
-#print axioms cuspLimit_eq_zero_of_jacobi_ne_zero
-#print axioms cuspComparison_of_zero_chart_limit
 
 end ZInQ.Manuscript.RC.J0Cusps

@@ -216,10 +216,5 @@ theorem exists_coset_of_modularPolynomial_root (N : ℕ) [NeZero N]
   obtain ⟨t, ht, he⟩ := hj
   exact ⟨t, ht, (sub_eq_zero.mp (by simpa only [eval_sub, eval_X, eval_C] using he)).symm⟩
 
-#print axioms coe_cosetParameter
-#print axioms coe_slDenom_ne_zero
-#print axioms injOn_coset_j_of_transcendental
-#print axioms modularPolynomial_eq_coset_product
-#print axioms exists_coset_of_modularPolynomial_root
 
 end ZInQ.Manuscript.RC.CMField2

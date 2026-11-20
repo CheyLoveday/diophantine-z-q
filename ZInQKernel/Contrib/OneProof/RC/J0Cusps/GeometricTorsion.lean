@@ -39,7 +39,5 @@ theorem hElkikMD_of_geometricTorsion {ℓ : ℕ} [(Ecurve ℓ).IsElliptic] {d : 
     (classOfCusp _ (aj0 _) (algebraicCusp _)) (algebraicCuspClass_factors _)
     hf hgp Lat hc φ hAJ
 
-#print axioms geometricCuspidalSubgroup_finite
-#print axioms hElkikMD_of_geometricTorsion
 
 end ZInQ.Manuscript.RC.J0Cusps

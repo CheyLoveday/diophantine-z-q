@@ -58,8 +58,5 @@ theorem cuspOrbit_eq_zero_of_jacobi_ne_zero (N a m : ℕ) [NeZero N] [NeZero m]
   apply hχ
   exact jacobiSym.eq_zero_iff_not_coprime.mpr (by simpa [Nat.Coprime, Int.gcd_eq_natAbs] using ha)
 
-#print axioms exists_gamma0_smul_zero
-#print axioms cuspOrbit_eq_zero_of_coprime
-#print axioms cuspOrbit_eq_zero_of_jacobi_ne_zero
 
 end ZInQ.Manuscript.RC.J0Cusps

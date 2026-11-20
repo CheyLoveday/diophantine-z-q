@@ -51,8 +51,5 @@ theorem heegner_coordinates_mem_ringClass_of (hm : SingularModulusMemRingClass)
   · rw [hJ]
     exact h J
 
-#print axioms cmFieldOfDefinition_modelOne_of
-#print axioms heegner_coordinates_mem_ringClass_of
-#print axioms branchDescends_one
 
 end ZInQ.Manuscript.RC.CMField2

@@ -124,9 +124,5 @@ theorem conjugate_has_nonreal_multiplier_of_root {F : Type*} [Field F] (x : F)
   exact_mod_cast (show (N : ℝ) = (n.natAbs : ℝ) * (n.natAbs : ℝ) by
     rw [Nat.cast_natAbs, Int.cast_abs, ← pow_two, sq_abs, pow_two, hnorm])
 
-#print axioms exists_invariant_scaling
-#print axioms exists_homothetic_of_jLattice_eq
-#print axioms exists_int_eq_of_real_multiplier
-#print axioms conjugate_has_nonreal_multiplier_of_root
 
 end ZInQ.Manuscript.RC.CMField2

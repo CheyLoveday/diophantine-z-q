@@ -115,10 +115,5 @@ theorem evenMasked_expansion (P : EvenSource W L τ) (hS : SupportSpec W) :
   rw [← funext hq]
   exact hasThreeHalves_of_cusp hG
 
-#print axioms threeHalves_of_cusp
-#print axioms hasThreeHalves_of_cusp
-#print axioms evenMasked
-#print axioms evenMasked_reference
-#print axioms evenMasked_expansion
 
 end ZInQ.Manuscript.RC.EvenExpansion

@@ -85,9 +85,5 @@ theorem rootMultiplicity_specialization_eq_of_embeddings {F : Type*} [Field F]
     · simp
   rw [← he e, ← he f, ← eq_rootMultiplicity_map e.injective, ← eq_rootMultiplicity_map f.injective]
 
-#print axioms eval_diagonal
-#print axioms rootMultiplicity_specialization_eq_of_embeddings
-#print axioms isIntegral_jLattice_of_cyclicSelf
-#print axioms exists_nonsquare_quadratic_value
 
 end ZInQ.Manuscript.RC.CMField2

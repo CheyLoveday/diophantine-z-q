@@ -146,10 +146,5 @@ theorem branch_expansion (N : ℕ) [NeZero N] {K : Type} [Field K]
           simpa only [b, c, map_mul, Pi.mul_apply] using hm (f (x i)) (g (x i)) hi.2 hj.2⟩)
     a.property
 
-#print axioms jGenField
-#print axioms jNGenField
-#print axioms fieldGerm_first
-#print axioms germ_inverse
-#print axioms branch_expansion
 
 end ZInQ.Manuscript.RC.J0Cusps

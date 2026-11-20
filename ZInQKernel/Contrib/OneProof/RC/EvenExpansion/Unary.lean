@@ -78,8 +78,5 @@ theorem unary_hasSum {N : ℕ} [NeZero N] (good : ℕ → Prop) (η : DirichletC
     · simpa only [norm_zero] using (Nat.cast_nonneg (α := ℝ) (k + 1))
   · exact Function.Periodic.norm_qParam_lt_one one_pos z.im_pos
 
-#print axioms exists_unary_parity
-#print axioms unary_shell
-#print axioms unary_hasSum
 
 end ZInQ.Manuscript.RC.EvenExpansion

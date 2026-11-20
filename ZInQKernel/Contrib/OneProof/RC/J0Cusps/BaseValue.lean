@@ -46,6 +46,5 @@ theorem cusp_at_infinity_maps_to_unit (N : ℕ) [NeZero N] {A : AbVar ℚ}
   exact @ext_of_isDominant_of_isSeparated _ _ _ _ hred _ _ A.X.hom inferInstance
     (maps_to_rat_unique _ _) i hi he
 
-#print axioms cusp_at_infinity_maps_to_unit
 
 end ZInQ.Manuscript.RC.J0Cusps

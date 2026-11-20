@@ -144,11 +144,5 @@ theorem modelOne_fieldPoint_of_analyticJ (τ : UpperHalfPlane)
     ∃ x : FieldPoint X0Model2.modelOne.overQ F, x.map ι = X0Model2.modelOne.complexPoint τ :=
   fieldPoint_of_finitePointEval_range 1 τ ι (finitePointEval_one_mem_range τ ι h)
 
-#print axioms jPull_one_surjective
-#print axioms finiteEval_jPull
-#print axioms finiteEval_jPull_mem_range
-#print axioms finiteChart_finiteTest
-#print axioms finitePointEval_one_mem_range
-#print axioms modelOne_fieldPoint_of_analyticJ
 
 end ZInQ.Manuscript.RC.CMField2

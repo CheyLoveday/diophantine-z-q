@@ -31,6 +31,5 @@ theorem hElkikMD_of_elkikTorsion {ℓ : ℕ} [(Ecurve ℓ).IsElliptic] {d : ℤ}
     (maninDrinfeld_of_torsion hTorsion (cuspClass_finiteRange_of_cuspOrbits classOfCusp hCuspFactor))
     hf hgp Lat hκ φ hAJ
 
-#print axioms hElkikMD_of_elkikTorsion
 
 end ZInQ.Manuscript.RC.ElkikPrint

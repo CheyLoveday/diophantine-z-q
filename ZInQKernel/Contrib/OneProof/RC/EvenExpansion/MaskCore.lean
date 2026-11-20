@@ -71,7 +71,5 @@ theorem quadraticProjection {N M : ℕ} [NeZero M] {ψ : DirichletCharacter ℂ 
   · rw [dite_eq_right hu]
     simp [MulChar.map_nonunit _ hu]
 
-#print axioms squareTwist_sq
-#print axioms quadraticProjection
 
 end ZInQ.Manuscript.RC.EvenExpansion

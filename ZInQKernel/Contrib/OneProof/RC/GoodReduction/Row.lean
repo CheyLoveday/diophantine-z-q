@@ -80,6 +80,5 @@ theorem hpi_of_integralDiagram
     (hbase c) hgen, hread c]
   exact X0Model3.datumReduction_projectiveValue dat v w hg π hQ han x hx (artin c)
 
-#print axioms hpi_of_integralDiagram
 
 end ZInQ.Manuscript.RC.GoodReduction

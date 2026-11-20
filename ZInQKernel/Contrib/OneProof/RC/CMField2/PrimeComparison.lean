@@ -224,11 +224,5 @@ theorem singularModulusMemRingClass : SingularModulusMemRingClass := by
   exact (not_mem_of_norm_lt p Q D hD ((le_max_right _ _).trans_lt hpgt))
     ((Ideal.span_singleton_le_iff_mem Q).mpr hb)
 
-#print axioms rational_prime_span_ne_bot
-#print axioms absNorm_under_eq_of_pow_fixed
-#print axioms absNorm_under_eq_of_frob_fixes
-#print axioms not_mem_of_norm_lt
-#print axioms splitPrime_of_frob_fixes_ringClass
-#print axioms singularModulusMemRingClass
 
 end ZInQ.Manuscript.RC.CMField2

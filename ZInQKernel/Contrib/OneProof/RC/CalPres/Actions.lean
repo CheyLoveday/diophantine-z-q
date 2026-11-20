@@ -178,15 +178,5 @@ theorem activeReduced_apply (i : ℕ) (x : Fin 2 → Acoef i) :
   simp only [reduceLocalBlock, activeBlock, PresentsLocalQuotient.map_two_smul_one, Matrix.mulVecLin_apply,
     Matrix.smul_mulVec, Matrix.one_mulVec]
 
-#print axioms centralChar_coe
-#print axioms central_tmul_smul
-#print axioms central_smul_of_torsion_fixed
-#print axioms centralSignedTateAction
-#print axioms movingInertiaAction
-#print axioms activeInertiaAction
-#print axioms signedReduced_subScalar
-#print axioms movingReduced_subScalar
-#print axioms activeSignedTate_subOne_even
-#print axioms activeReduced_apply
 
 end ZInQ.Contrib.RC53Assist.Calibration

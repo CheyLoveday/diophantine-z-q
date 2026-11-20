@@ -132,13 +132,5 @@ def presentationAtZero {W : WeierstrassCurve K} [W.IsElliptic] (v : Places K S)
       fun _ => ⟨0, Subsingleton.elim _ _⟩⟩
   exact ⟨trivialEquiv _ _, trivialEquiv _ _⟩
 
-#print axioms kummerFirstCoordinate
-#print axioms presentationOfSplit
-#print axioms movingBlock
-#print axioms movingOrdinary
-#print axioms activeBlock
-#print axioms movingPresentation
-#print axioms activePresentation
-#print axioms presentationAtZero
 
 end ZInQ.Contrib.RC53Assist.Calibration

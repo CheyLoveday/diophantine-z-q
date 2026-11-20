@@ -122,6 +122,5 @@ theorem exists_primitive_triangular (N : ℕ) (hN : 0 < N) (A : Matrix (Fin 2) (
   have hm : m ∣ 1 := by exact_mod_cast hp _ hm0 hm1
   exact Nat.dvd_one.mp hm
 
-#print axioms exists_primitive_triangular
 
 end ZInQ.Manuscript.RC.J0Cusps

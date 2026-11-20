@@ -49,8 +49,5 @@ theorem ordinaryTheta_fourth (γ : SL(2, ℤ)) (hγ : γ ∈ Gamma0 4) (z : ℍ)
 
 theorem ordinaryThetaLaw : OrdinaryThetaLaw := ⟨ordinaryTheta_fourth, ordinaryTheta_cusps⟩
 
-#print axioms ordinaryTheta_cusps
-#print axioms ordinaryTheta_fourth
-#print axioms ordinaryThetaLaw
 
 end ZInQ.Manuscript.RC.EvenExpansion

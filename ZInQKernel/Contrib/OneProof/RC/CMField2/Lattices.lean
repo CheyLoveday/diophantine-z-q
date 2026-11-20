@@ -209,14 +209,5 @@ theorem singularModulus_eq_of_mkPic_eq (hk : finrank ℚ K = 2) (hc : IsTotallyC
     obtain ⟨y, hy, rfl⟩ := hx
     exact ⟨κ y, ⟨y, hy, rfl⟩, (map_mul κ _ _).symm⟩
 
-#print axioms exists_ideal_basis
-#print axioms embedding_indep
-#print axioms idealPeriod
-#print axioms idealPeriod_lattice
-#print axioms singularModulus
-#print axioms jLattice_eq_of_lattice_eq
-#print axioms jLattice_scale
-#print axioms lattice_scale
-#print axioms singularModulus_eq_of_mkPic_eq
 
 end ZInQ.Manuscript.RC.CMField2

@@ -133,8 +133,5 @@ theorem descent_of_filter {F : Type} [Field F] [NumberField F] {D hstar : ℤ}
     exact he ▸ normCharacterDescent_self h₂ ho
   · exact hdesc (by have := H.positive; omega)
 
-#print axioms localNrd
-#print axioms NormFactors.onIntegralNorm
-#print axioms descent_of_filter
 
 end ZInQ.Manuscript.RC.TorusWeights

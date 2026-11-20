@@ -28,7 +28,5 @@ theorem model_smooth_one (N : ℕ) [NeZero N] :
     (X0Model.integral N) (NormalModel.isNormalScheme_Xn (modularFunctionField N))
     (NormalModel.topologicalKrullDim_Xn (modularFunctionField N))
 
-#print axioms source
-#print axioms model_smooth_one
 
 end ZInQ.Manuscript.RC.J0Cusps

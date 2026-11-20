@@ -93,8 +93,5 @@ theorem oddStagedOfPinnedParamValues
 
 end Selector
 
-#print axioms consumerNewform
-#print axioms stageLevel_eq
-#print axioms oddStagedOfPinnedParamValues
 
 end ZInQ.Manuscript.RC.AtkinPin

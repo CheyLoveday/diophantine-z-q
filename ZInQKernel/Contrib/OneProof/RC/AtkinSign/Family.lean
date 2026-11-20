@@ -61,7 +61,5 @@ theorem oddStagedActual
   O7Residual.oddStagedActual s hN hcop H w hm J (fun i => (S i).toSpecialFibre)
     (fun _ _ => rfl) hCusp points ha hL hsign
 
-#print axioms actualRowFamily
-#print axioms oddStagedActual
 
 end ZInQ.Manuscript.RC.AtkinSign

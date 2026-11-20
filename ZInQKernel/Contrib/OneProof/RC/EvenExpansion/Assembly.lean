@@ -341,14 +341,5 @@ theorem evenExpansion (i : Fin 2) (U : Finset ℕ)
   rw [heven, hplace, ← RingHom.comp_apply, hκ, commonCoeff_complex C hS i U.toList n]
   exact hf n
 
-#print axioms moving_nil
-#print axioms moving_of_step
-#print axioms weightTwoBlock
-#print axioms subscripts_dvd
-#print axioms unaryLevel_dvd
-#print axioms includeUnary_mem
-#print axioms evenWeightTwo
-#print axioms evenVector_eval
-#print axioms evenExpansion
 
 end ZInQ.Manuscript.RC.EvenExpansion

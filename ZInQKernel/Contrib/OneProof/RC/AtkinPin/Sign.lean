@@ -35,7 +35,5 @@ theorem wNew_cast (f : HeckeRing.GL2.Newform N k) (hχ : f.χ = 1) (p : ℕ) :
       f.atkinLehnerSign hχ (TauCeti.Nat.isExactDivisor_primePow (p := p)) :=
   signUnit_cast f hχ _
 
-#print axioms signUnit_cast
-#print axioms wNew_cast
 
 end ZInQ.Manuscript.RC.AtkinPin

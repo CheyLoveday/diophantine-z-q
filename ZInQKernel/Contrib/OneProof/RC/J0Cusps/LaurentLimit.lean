@@ -68,7 +68,5 @@ theorem tendsto_powerSeries_eval {I K : Type} [Field K] {F : Filter I} [F.NeBot]
   filter_upwards [hs, hq.eventually he] with j hj hj'
   exact hj'.unique hj
 
-#print axioms powerSeries_analytic_sum
-#print axioms tendsto_powerSeries_eval
 
 end ZInQ.Manuscript.RC.J0Cusps

@@ -71,7 +71,5 @@ theorem weierPt_add (E : WeierstrassCurve ℚ) [E.IsElliptic] (Lat : PeriodPair)
       congr 1 <;> first | exact hx.symm | exact hy.symm
   rw [hg, hg, hg, (Lat.isUniformization_toPoint hΔ).1, map_add]
 
-#print axioms cast_point_some
-#print axioms weierPt_add
 
 end ZInQ.Manuscript.RC.AtkinPin

@@ -109,11 +109,5 @@ theorem weierstrassPeriodEquiv_mk (E : WeierstrassCurve ℚ) [E.IsElliptic]
   change shortPointEquiv E Lat hLat (Lat.toPoint (lattice_discriminant E Lat hLat) z) = _
   exact shortPointEquiv_toPoint E Lat hLat z
 
-#print axioms shortChange_eq
-#print axioms lattice_discriminant
-#print axioms weierstrassCoordinates_nonsingular
-#print axioms shortPointEquiv_toPoint
-#print axioms weierstrassPeriodEquiv
-#print axioms weierstrassPeriodEquiv_mk
 
 end ZInQ.Manuscript.RC.J0Cusps

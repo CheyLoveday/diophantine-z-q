@@ -105,9 +105,5 @@ theorem periodClass_transform (f : HeckeRing.GL2.Newform N 2) (hχ : f.χ = 1)
   simpa only [map_add, map_sub, map_zsmul] using
     congrArg (QuotientAddGroup.mk' Lat.lattice.toAddSubgroup) h
 
-#print axioms slash_eq_signUnit_smul
-#print axioms hasDerivAt_eichlerPotential
-#print axioms scaled_eichler_transform
-#print axioms periodClass_transform
 
 end ZInQ.Manuscript.RC.AtkinPin

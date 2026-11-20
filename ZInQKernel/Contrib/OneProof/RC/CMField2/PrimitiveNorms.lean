@@ -180,14 +180,5 @@ theorem quadraticNormParameters_eq_of_primitiveNormLevels {t₁ t₂ u₁ u₂ :
   · exact (generic_trace_one_gap hu (h.symm ▸ hgap)).elim
   · rfl
 
-#print axioms primitiveNormLevels
-#print axioms min_generic
-#print axioms generic_trace_one_gap
-#print axioms not_primitive_of_even
-#print axioms gaussian_no_three
-#print axioms gaussian_no_four
-#print axioms eisenstein_no_four
-#print axioms eisenstein_no_mod_three
-#print axioms quadraticNormParameters_eq_of_primitiveNormLevels
 
 end ZInQ.Manuscript.RC.CMField2

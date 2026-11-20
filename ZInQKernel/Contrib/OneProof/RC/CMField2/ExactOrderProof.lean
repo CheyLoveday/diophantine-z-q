@@ -173,11 +173,5 @@ theorem singularModulus_finrank_over_base_le {K : Type} [Field K] [NumberField K
     finrank K K⟮singularModulus O hk hc κ I⟯ ≤ Nat.card (Pic O) :=
   singularModulus_finrank_over_base_le_of_conjugate conjugateSingularModulus O hk hc κ I
 
-#print axioms periodMultipliers_idealPeriod
-#print axioms same_normalized_order
-#print axioms exactMultiplierOrderOfDiagonalMultiplicities
-#print axioms conjugateSingularModulus
-#print axioms singularModulus_finrank_le
-#print axioms singularModulus_finrank_over_base_le
 
 end ZInQ.Manuscript.RC.CMField2

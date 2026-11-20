@@ -92,13 +92,5 @@ theorem weighted_comparison_from_limits
     Over.OverMorphism.ext (cusp_at_infinity_maps_to_unit N π u hu U hU hUeval an hchart hzero)
   exact weighted_comparison N m π hb u U hU hUeval an lim hchart hlim
 
-#print axioms algebraicCuspClass
-#print axioms algebraicCuspClass_factors
-#print axioms modularFactor
-#print axioms modularFactor_isMonHom
-#print axioms aj0_comp_modularFactor
-#print axioms cusp_comparison
-#print axioms weighted_comparison
-#print axioms weighted_comparison_from_limits
 
 end ZInQ.Manuscript.RC.J0Cusps
