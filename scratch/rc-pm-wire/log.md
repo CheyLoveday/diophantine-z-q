@@ -3,3 +3,4 @@
 - Integral Atkin–Lehner operator: chosen from extensions of the fixed rational operator; equality on the dense generic fibre and separatedness prove uniqueness.
 - `Generic`, `Model`: successful focused serial Lake build under a 60 GB user scope; audited outputs contain only `propext`, `Classical.choice`, `Quot.sound`.
 - Prerequisites: merged `AtkinRational` and `PMQuotient` artifacts reused; the needed `J0Cusps` chain through `WeightedComparison` compiled serially.
+- `MovingCusp`: focused Lake build passed; the matrix factors through a positive dilation, and the cusp limit and faithfulness identify its geometric point. Four audits clean.
