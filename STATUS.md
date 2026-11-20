@@ -184,8 +184,10 @@ main that changes Lean files or the Lake configuration, in the main build cache 
 included, fails it. The first such build finished on 2026-11-18 (run 44219370755, at be73b91c). The last build of main
 that finished and passed the axiom check was at 3078ae6a (run 44513481236, 2026-11-19), where `frozenTarget` took 32 open
 hypotheses. The builds of later commits of main were cancelled by the next landing or stopped before the build
-finished, the last of them a run started by hand at ff165f7c (run 44681096024). A cold build takes more than one job,
-so each run saves its progress and the next one resumes from it.
+finished. The last of them, a run started by hand at ff165f7c (run 44681096024), stopped early at the workflow's
+disk-space guard (only 14 GB free), because the saved progress now nearly fills the runner; the workflow needs a step
+that frees disk space before another run can finish. A cold build takes more than one job, so each run saves its
+progress and the next one resumes from it.
 
 When the headline from H and pole completeness landed (lane74, fork main d435851d; docs/research/lane74b.md, section
 6), all 463 declarations of `scripts/print_axioms.lean` depended only on the three standard axioms, with no `sorry`,

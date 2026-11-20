@@ -205,8 +205,8 @@ is unique up to isomorphism and that its class number does not depend on the cho
 uses the fact without a citation ("The degree of $j(E)$ is its order class number, so $h(\Delta)\le d\le D$"),
 and Lean derives from this statement the bound it needs: an elliptic curve over a number field $L$
 with complex multiplication by $R$ has $\#\operatorname{Pic}(R)\le[L:\mathbb Q]$. A person's reading
-of the publisher's PDF, recorded as a human reading, compared the sentence with the print. The project
-rates the statement published in its printed form; its rating notes a review still pending.
+of the publisher's PDF, recorded as a human reading, compared the sentence with the print. A two-lens
+review rated the statement published in its printed form.
 """,
         src=r"""
 G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.

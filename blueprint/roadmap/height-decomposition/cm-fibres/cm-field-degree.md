@@ -24,9 +24,8 @@ number does not depend on the choice. The manuscript uses the fact without a cit
 of $j(E)$ is its order class number, so $h(\Delta)\le d\le D$"), and Lean derives from this
 statement the bound it needs: an elliptic curve over a number field $L$ with complex multiplication
 by $R$ has $\#\operatorname{Pic}(R)\le[L:\mathbb Q]$. A person's reading of the publisher's PDF,
-recorded as a human reading, compared the sentence with the print. The project rates the statement
-published in its printed form; its rating notes a review still pending. It is a hypothesis, not
-proved here.
+recorded as a human reading, compared the sentence with the print. A two-lens review rated the
+statement published in its printed form. It is a hypothesis, not proved here.
 
 ## Depends on
 
