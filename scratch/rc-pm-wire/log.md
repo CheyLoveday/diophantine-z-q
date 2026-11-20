@@ -1,0 +1,5 @@
+- Base: `1f06b57007c11f5dae165844e0e9e7bf5bbe0cf1`; merged `9e6887a48ce4f94d1502a69a155898282fb9200e`, then `7a7b6aaa5e0a89d1660bbfd6fbd885800fc2e303`.
+- Generic comparison: existing `isomorphism_of_functionField_equiv` extends the specified ℚ(j,j_N) comparison on the compactification. The actual generic map is its composite with the dense open immersion.
+- Integral Atkin–Lehner operator: chosen from extensions of the fixed rational operator; equality on the dense generic fibre and separatedness prove uniqueness.
+- `Generic`, `Model`: successful focused serial Lake build under a 60 GB user scope; audited outputs contain only `propext`, `Classical.choice`, `Quot.sound`.
+- Prerequisites: merged `AtkinRational` and `PMQuotient` artifacts reused; the needed `J0Cusps` chain through `WeightedComparison` compiled serially.
