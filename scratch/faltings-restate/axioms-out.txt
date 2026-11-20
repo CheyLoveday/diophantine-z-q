@@ -1,0 +1,32 @@
+'ZInQ.FaltingsRestate.faltingsHeightBaseChange' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.semistableNeronIdentification_of_ss2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.semistableNeronIdentification_of_cor33' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_identification' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_leaves' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.identityComponent_of_faltingsLemma1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.identityComponentBaseChangeDVRRange_of_faltingsLemma1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.FaltingsRestate.semistableNeronIdentification_of_faltingsLemma1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_faltingsLemma1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsRestate.0.ZInQ.FaltingsRestate.height_eq_of_two_semistable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsRestateDVR.0.ZInQ.FaltingsRestate.range_pullback' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsRestateDVR.0.ZInQ.FaltingsRestate.generic_iso_of_range' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsRestateDVR.0.ZInQ.FaltingsRestate.closed_fibre_of_range' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsRestateDVR.0.ZInQ.FaltingsRestate.exists_semiabelian_component' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

@@ -1,0 +1,31 @@
+'ZInQ.FaltingsRestate.FaltingsLemma1DVRPrint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.isMonHom_of_generic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.faltingsLemma1DVR_iff_print' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.faltingsLemma1DVRPrint_of_printed_points' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.FaltingsRestate.splitTorus.grpObj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.splitTorusPoints' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.splitTorusPoints_natural' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.torusKernel_isPullback' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.torusKernel_isClosedImmersion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.torusKernel_points' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.hasTorusExtensionScheme_of_hasTorusExtension' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.FaltingsRestate.isSemiabelianModelO_imp_faltingsDefScheme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.FaltingsRestate.faltingsLemma1DVRPrint_of_printed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_faltingsLemma1Print' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsDict2SplitTorus.0.ZInQ.FaltingsRestate.torusEval_natural' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsDict2Torus.0.ZInQ.FaltingsRestate.hom_ext_of_algPt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.FaltingsDict2Torus.0.ZInQ.FaltingsRestate.torusIso_of_points' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

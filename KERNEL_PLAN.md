@@ -1,19 +1,33 @@
 # Kernel-checked formalization plan
 
-> **Superseded on 2026-11-17.** The pole-completeness part of this plan describes Route K, the
-> route the project used until fork issues #76 and #77: a pole polynomial for the congruent
-> number curves `y² = x(x − ℓ)(x + ℓ)`, whose pole completeness was proved from the certified
-> rank hypothesis CR₃, with CR₃ derived from Tian–Yuan–Zhang and Gross–Zagier. Route K is
-> retired and kept at the tag `route-k-final`; `docs/research/rs-pole.md` records why it was
-> adopted. The main theorem now follows the manuscript, apart from route AP and the catalogue
-> bound CAT₈ described below.
+> **Two routes (2026-11-20).** The project keeps two proofs of the theorem side by side, as means
+> to the same end; they differ in how they obtain pole completeness. The pole-completeness
+> part of this plan describes **the congruent-number route** (called Route K below): a pole
+> polynomial for the congruent number curves `y² = x(x − ℓ)(x + ℓ)`, whose pole completeness is
+> proved from the certified rank hypothesis CR₃, with CR₃ derived from Tian–Yuan–Zhang and
+> Gross–Zagier. Since fork issues #76 and #77 it is not in `main`'s build, because the kernel has
+> one pole polynomial. It is kept at the tag `route-k-final`, nasqret/z-in-q-lean builds on it,
+> and fork issue #104 plans bringing the two together upstream; `docs/research/rs-pole.md`
+> records why it was adopted. `main` carries **Elliot's route**, which follows the manuscript,
+> apart from route AP and the catalogue bound CAT₈ described below.
 > `ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`
 > (`ZInQKernel/MainGreenTao.lean`) proves the target from the minimal height hypothesis
 > `SixContactMin` and pole completeness `PoleCompleteness`, the manuscript's Theorem 5.2 for its
 > own polynomial (curves `y² = x(x − ℓ)(x + 3ℓ)`). `ZInQ.OneProof.frozenTarget` replaces
-> `SixContactMin` by the open statements listed in `docs/one-proof/OPEN.md`. The manuscript
-> derives Theorem 5.2 from its restricted converse theorem (Theorem 5.3); formalizing that
-> derivation is fork issue #83. The rest of this document is kept as a record of the plan.
+> `SixContactMin` by the open statements listed in `docs/one-proof/OPEN.md`, and proves
+> `PoleCompleteness` from four hypotheses, as the manuscript's Section 5.1 does:
+> - the restricted converse theorem (Theorem 5.3, `hRC`);
+> - the Cassels–Tate pairing on the curves `E_ℓ` (`hCT`, Poonen–Stoll's statement of Cassels' theorem), from which
+>   Lean proves Lemma 5.4;
+> - consequences of the two printed inputs of Lemma 5.5: BCDT's Theorem A (`hB`) and Kolyvagin's
+>   Theorem 1 (`hK`).
+>
+> The proof is `ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`
+> (the Lemma 5.4 swap, over fork #90's `poleCompleteness_of_restrictedConverseGenuine_final`, squashed as
+> `5eca1103`). Theorem 5.3 stays the hypothesis `hRC`. Fork PR #110 reduces it to step-level hypotheses
+> (`ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves : Prints → RCLeaves → RestrictedConverseGenuine`),
+> some of which still state their step's conclusion directly and are being restated over the manuscript's objects.
+> Proving those steps is fork issue #83. The rest of this document is kept as a record of the plan.
 
 This fork works toward a Lean proof of the 11/5 manuscript's Theorem 1.1, the statement
 frozen upstream as `ZInQ.exists_bounded_integer_polynomial_defining_integers`
