@@ -48,7 +48,6 @@ theorem Vp_threeHalves {M p : ℕ} [Fact p.Prime] (hodd : Odd p) (h4 : 4 ∣ M)
     obtain ⟨t, ht⟩ := hc
     apply (mem_level_iff D).mpr
     refine ⟨t, mul_left_cancel₀ (by exact_mod_cast hp.ne_zero : (p : ℤ) ≠ 0) ?_⟩
-    change (p : ℤ) * D 1 0 = (p : ℤ) * ((M : ℤ) * t)
     rw [hD, ht]
     push_cast
     ring

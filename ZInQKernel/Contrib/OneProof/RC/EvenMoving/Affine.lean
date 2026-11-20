@@ -1,4 +1,5 @@
-import ZInQKernel.Contrib.OneProof.RC.EvenExpansion.Assembly
+import ZInQKernel.Contrib.OneProof.RC.BlocksPerU.ThetaTransform
+import Mathlib.Analysis.Complex.UpperHalfPlane.Manifold
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 /-! Holomorphy and cusp bounds for positive rational affine changes of variable.

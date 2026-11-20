@@ -1,6 +1,7 @@
 import ZInQKernel.Contrib.OneProof.RC.EvenMoving.Matrices
 import ZInQKernel.Contrib.OneProof.RC.EvenMoving.Character
 import ZInQKernel.Contrib.OneProof.RC.EvenMoving.PrimeGauss
+import ZInQKernel.Contrib.OneProof.RC.AppE.Galois
 import Mathlib.NumberTheory.LSeries.PrimesInAP
 
 /-! The theta multiplier comparison at tex 9507–9512. We compare Jacobi
@@ -94,7 +95,7 @@ private theorem theta_prime_formula {q : ℕ} [Fact q.Prime] (hq : q ≠ 2)
     unfold rightTau
     simp only [hd, Int.cast_natCast, hk, Int.cast_mul, Int.cast_ofNat] at hd0 ⊢
     field_simp
-    <;> ring
+    ring
   let w : ℍ := ⟨2 * (z : ℂ), theta_double_im z⟩
   have hinversion :
       jacobiTheta (-1 / (2 * (z : ℂ))) =
