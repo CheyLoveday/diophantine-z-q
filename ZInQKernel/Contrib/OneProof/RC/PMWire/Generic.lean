@@ -8,7 +8,7 @@ integral involution. Tex 8476–8479, 8487–8489; on the spot (c). -/
 noncomputable section
 
 open AlgebraicGeometry CategoryTheory Limits
-open ModularCurve (modularFunctionField)
+open ModularCurve (modularFunctionField jq jqN jq_mem jqN_mem)
 open scoped TauCeti.ExactDivisor
 
 set_option autoImplicit false
@@ -33,7 +33,13 @@ structure GenericSource (B : Over (Spec (.of ℚ))) (N : ℕ) [NeZero N] where
   [proper : IsProper compact.hom]
   [smooth : Smooth compact.hom]
   dimension : topologicalKrullDim compact.left = 1
+  /-- The invariant of the source elliptic curve on the moduli chart. -/
+  sourceJ : compact.left.functionField
+  /-- The invariant after quotienting by the universal cyclic subgroup. -/
+  quotientJ : compact.left.functionField
   chartField : compact.left.functionField ≃+* modularFunctionField N
+  chart_sourceJ : chartField sourceJ = ⟨jq, jq_mem N⟩
+  chart_quotientJ : chartField quotientJ = ⟨jqN N, jqN_mem N⟩
 
 attribute [instance] GenericSource.openIncl GenericSource.denseIncl GenericSource.integral
   GenericSource.proper GenericSource.smooth
@@ -50,6 +56,19 @@ def pullbackField :
     letI : IsIntegral (rationalSource N).left := (X0Branch.model N).integral
     (rationalSource N).left.functionField ≃+* D.compact.left.functionField :=
   (X0Model.functionField N).trans D.chartField.symm
+
+/-- The comparison uses the source and cyclic quotient invariants in
+their ordered roles. This is the moduli chart pin on the generic map. -/
+theorem pullback_generators :
+    letI : IsIntegral (rationalSource N).left := (X0Branch.model N).integral
+    D.pullbackField ((X0Model.functionField N).symm ⟨jq, jq_mem N⟩) = D.sourceJ ∧
+      D.pullbackField ((X0Model.functionField N).symm ⟨jqN N, jqN_mem N⟩) = D.quotientJ := by
+  change D.chartField.symm ((X0Model.functionField N) ((X0Model.functionField N).symm
+    ⟨jq, jq_mem N⟩)) = D.sourceJ ∧
+    D.chartField.symm ((X0Model.functionField N) ((X0Model.functionField N).symm
+      ⟨jqN N, jqN_mem N⟩)) = D.quotientJ
+  rw [RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply, ← D.chart_sourceJ, ← D.chart_quotientJ]
+  exact ⟨D.chartField.symm_apply_apply _, D.chartField.symm_apply_apply _⟩
 
 /-- The proper-curve comparison at the specified function field map. -/
 theorem exists_compactIso :
@@ -146,6 +165,7 @@ theorem extendsAtkin_unique [IsReduced M.left] [IsSeparated M.hom]
 end Integral
 
 #print axioms GenericSource.pullbackField
+#print axioms GenericSource.pullback_generators
 #print axioms GenericSource.exists_compactIso
 #print axioms GenericSource.compactIso
 #print axioms GenericSource.compactIso_generic
