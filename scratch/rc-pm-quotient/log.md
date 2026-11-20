@@ -20,3 +20,5 @@
 - `Model`: PASS after parenthesizing the integral endomorphism type and fixing the coerced Frobenius subtraction. Its five axiom prints list only `propext`, `Classical.choice`, `Quot.sound`.
 - `Operators`: PASS. The identity section is smooth; the Hecke branch sum uses a general list-to-finite-sum lemma. `specialFibre`, `specialize_eq_value`, and both operator proofs passed the axiom check.
 - `Cusps`: PASS. `hCusp` has only the standard three axioms.
+- `CM`: PASS. The residue map uses the valuation ring contracted along the selected datum embedding. `hPM` is discharged by the computed readout and the source section comparison.
+- `Assembly`: PASS. Explicit dependent selector arguments fix elaboration. `hpiAt` uses the actual Artin label and `StageKummer.reduceDatum`; `hCuspAt` uses the same signed family. The constructor has only the standard three axioms.

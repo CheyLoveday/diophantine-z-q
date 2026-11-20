@@ -11,7 +11,7 @@ open AlgebraicGeometry CategoryTheory WeierstrassCurve
 open scoped NumberField WeierstrassCurve Classical
 open NumberField IsDedekindDomain IsDedekindDomain.FiniteAdeleRing
 open TauCeti.ClassFieldTheory TauCeti.GlobalNumberFields
-open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.GenusOdd
+open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CST ZInQ.Contrib.CloudB3RC53.GenusOdd
 open ZInQ.Manuscript.RC.Wiring ZInQ.Manuscript.RC.Stages ZInQ.Manuscript.RC.Visibility
 
 set_option autoImplicit false
@@ -25,7 +25,7 @@ namespace ZInQ.Manuscript.RC.PMQuotient
 open PreparedParam O7Actual O7Assemble O7Orbits O7Residual PMGeometry ThetaClose
   SelectorTotal AtkinPin PicardFibers Eichler Adelic ThetaJoin
 
-attribute [local irreducible] StageKummer.datumOnModel ringClassArtinEquiv
+attribute [local irreducible] StageKummer.datumOnModel ringClassArtinEquiv GoodRow.specialFibre
 
 variable {ℓ : ℕ} {W₀ : WData ℓ} (a : ParamInputs W₀) {L : ℕ}
   (s : StageKummer.Setup (genusInstance a) L)
@@ -56,11 +56,12 @@ parametrization and its Néron extension at their respective places. -/
 abbrev signedFamily (i : ℕ) := (G i).specialFibre (relations i)
 
 /-- Forget the pinned signs to supply the existing PM interface. -/
-abbrev fibreFamily (i : ℕ) := (signedFamily (G := G) (relations := relations) i).toSpecialFibre
+abbrev fibreFamily (i : ℕ) := (signedFamily a s F π hQ G relations i).toSpecialFibre
 
+include cusps in
 /-- The translation is killed in exactly the geometry used by the actual family. -/
 theorem hCuspAt (i : ℕ) (j : Fin (StageKummer.level ℓ).primeFactors.card) :
-    L • (PMAdelic.geometry (J i) (fibreFamily (G := G) (relations := relations) i)).cusp (levelPrime _ j).val = 0 :=
+    L • (PMAdelic.geometry (J i) (fibreFamily a s F π hQ G relations i)).cusp (levelPrime _ j).val = 0 :=
   (G i).hCusp (cusps i) (relations i) (J i) _ (levelPrime _ j).prop (levelPrime_exp hN j)
 
 section Reference
@@ -71,50 +72,55 @@ variable (i : ℕ) (D : ℤ) (hD : (withParamIndices a).admissible i D)
 integral diagram. The conductor-one CM orbit assertion remains separate. -/
 structure Reference where
   /-- The selected field inside the quaternion algebra at this stage. -/
-  embedding : let t := (selectedDatum a s i D hD).val
-    letI := (StageKummer.chosenDatum t).field; letI := (StageKummer.chosenDatum t).nf
-    (StageKummer.chosenDatum t).K →ₐ[ℚ] B (-1) (-((s.q.stage i).p : ℚ))
+  embedding :
+    let t := StageKummer.chosenDatum (I := genusInstance a) (D := (D.toNat : ℤ))
+      (selectedDatum a s i D hD).val
+    letI := t.field
+    letI := t.nf
+    t.K →ₐ[ℚ] B (-1) (-((s.q.stage i).p : ℚ))
   /-- The orientation of the reference reduction. -/
   ref : Orientations (StageKummer.level ℓ).primeFactors.card
   /-- The actual coarse CM reductions (before reading the parametrization). -/
   r : let t := (selectedDatum a s i D hD).val
-    let A := admissibleNatAt s hN hcop H F.signs hm J (fibreFamily (G := G) (relations := relations)) i D hD
-    (supportAt s i hN (hcop i) (H i) F.signs hm (J i) (fibreFamily (G := G) (relations := relations) i) A t).classGroup →
+    let A := admissibleNatAt s hN hcop H F.signs hm J (fibreFamily a s F π hQ G relations) i D hD
+    (supportAt s i hN (hcop i) (H i) F.signs hm (J i) (fibreFamily a s F π hQ G relations i) A t).classGroup →
       (X i).Point
   /-- Geometric conductor-one reduction compared with the reference orbit. -/
   hCM : let t := (selectedDatum a s i D hD).val
-    let S := fibreFamily (G := G) (relations := relations) i
-    let A := admissibleNatAt s hN hcop H F.signs hm J (fibreFamily (G := G) (relations := relations)) i D hD
+    let S := fibreFamily a s F π hQ G relations i
+    let A := admissibleNatAt s hN hcop H F.signs hm J (fibreFamily a s F π hQ G relations) i D hD
     ∀ c, r c = ((J i).idealClasses (Visibility.ThetaStage.zc
       (orbitsAt s i hN (hcop i) (H i) F.signs hm (J i) S A t embedding
         (chartAt s i hN (hcop i) (H i) F.signs hm (J i) S A t embedding)
         (realizationsAt s i hN (hcop i) (H i) F.signs hm (J i) S A t embedding)).param (ref, c))).val
   /-- Comparison with the actual geometric source and elliptic lifts. -/
   diagram : let t := (selectedDatum a s i D hD).val
-    let S := fibreFamily (G := G) (relations := relations) i
-    let A := admissibleNatAt s hN hcop H F.signs hm J (fibreFamily (G := G) (relations := relations)) i D hD
-    CMDiagram (StageKummer.chosenDatum t) (StageKummer.place s i)
+    let S := fibreFamily a s F π hQ G relations i
+    let A := admissibleNatAt s hN hcop H F.signs hm J (fibreFamily a s F π hQ G relations) i D hD
+    CMDiagram (C := EcurveZ ℓ) (StageKummer.chosenDatum (I := genusInstance a) (D := (D.toNat : ℤ)) t)
+      (StageKummer.place s i)
       (StageKummer.chosenDatumPlace s i t
         (show stageTest s.q i (D.toNat : ℤ) from A.detecting))
       (StageKummer.goodAt s i) π hQ (G i) r
       (artinLabelAt s i hN (hcop i) (H i) F.signs hm (J i) S A t)
 
+include han in
 /-- The exact `O7Residual.At` pointwise premise, for the actual selector,
 Artin label and `StageKummer.reduceDatum`. -/
 theorem hpiAt (P : Reference a s F π hQ hN hcop H hm J G relations i D hD) :
     let t := (selectedDatum a s i D hD).val
-    let S := fibreFamily (G := G) (relations := relations) i
-    let A := admissibleNatAt s hN hcop H F.signs hm J (fibreFamily (G := G) (relations := relations)) i D hD
+    let S := fibreFamily a s F π hQ G relations i
+    let A := admissibleNatAt s hN hcop H F.signs hm J (fibreFamily a s F π hQ G relations) i D hD
     ∀ c, (PMAdelic.geometricInput (J i) S).specialize (P.r c) =
       StageKummer.reduceDatum s i t (show stageTest s.q i (D.toNat : ℤ) from A.detecting)
-        (conjugate (StageKummer.chosenDatum t)
+        (conjugate (StageKummer.chosenDatum (I := genusInstance a) (D := (D.toNat : ℤ)) t)
           (artinLabelAt s i hN (hcop i) (H i) F.signs hm (J i) S A t c)) :=
-  hpi_of_cmDiagram _ _ _ _ π hQ (G i) P.r _ (relations i) (J i) han P.diagram
+  hpi_of_cmDiagram (C := EcurveZ ℓ) _ _ _ _ π hQ (G i) P.r _ (relations i) (J i) han P.diagram
 
 /-- Fill the selector's point input using the proved specialization square. -/
 def referenceComparisons (P : Reference a s F π hQ hN hcop H hm J G relations i D hD) :
-    PointComparisons s i hN (hcop i) (H i) F.signs hm (J i) (fibreFamily (G := G) (relations := relations) i)
-      (admissibleNatAt s hN hcop H F.signs hm J (fibreFamily (G := G) (relations := relations)) i D hD)
+    PointComparisons s i hN (hcop i) (H i) F.signs hm (J i) (fibreFamily a s F π hQ G relations i)
+      (admissibleNatAt s hN hcop H F.signs hm J (fibreFamily a s F π hQ G relations) i D hD)
       (selectedDatum a s i D hD).val where
   embedding := P.embedding
   ref := P.ref
@@ -132,22 +138,25 @@ determining the quotient, `hπ`, the special-fibre Atkin equation and
 the specialization of the cusp annihilation. -/
 theorem oddStagedOfGoodRows
     (ha : ∀ i D (hD : (withParamIndices a).admissible i D),
-      let row := actualRows s hN hcop H F.signs hm J (fibreFamily (G := G) (relations := relations))
-        (AtkinSign.actualRowFamily s hN hcop H F.signs hm J (signedFamily (G := G) (relations := relations))
-          (hCuspAt (hN := hN) (hcop := hcop) (J := J) (G := G) (relations := relations) (cusps := cusps))
-          (pointInputs a s hN hcop H F.signs hm J (fibreFamily (G := G) (relations := relations))
+      let row := actualRows s hN hcop H F.signs hm J (fibreFamily a s F π hQ G relations)
+        (AtkinSign.actualRowFamily s hN hcop H F.signs hm J (signedFamily a s F π hQ G relations)
+          (hCuspAt (a := a) (s := s) (F := F) (π := π) (hQ := hQ) (hN := hN) (hcop := hcop)
+            (J := J) (G := G) (relations := relations) (cusps := cusps))
+          (pointInputs a s hN hcop H F.signs hm J (fibreFamily a s F π hQ G relations)
             (fun i D hD => referenceComparisons a s F π hQ han hN hcop H hm J G relations
               i D hD (refs i D hD)))) i D hD
       (2 : Coefficients hN (H 0) F.signs) ^ (withParamIndices a).Mθ i ∣
         row.weights.phase row.reference * ((withParamIndices a).aθ i D : Coefficients hN (H 0) F.signs) -
-          Visibility.thetaCoeff (actualFamily s hN hcop H F.signs hm J (fibreFamily (G := G) (relations := relations)) i).visibility
+          Visibility.thetaCoeff
+            (actualFamily s hN hcop H F.signs hm J (fibreFamily a s F π hQ G relations) i).visibility
             ((m : ℤ) * D : ℤ))
     (hL : MultiplierKillsNativeTorsion (Ecurve ℓ) a.f a.Lat a.κ (withParamIndices a).hstar L)
     (hsign : AdmissibleOddSign (withParamIndices a).toRCData) :
     Nonempty (OddStagedInstance (withParamIndices a)) :=
-  oddStagedOfPinnedParamValues a s F hN hcop H hm J (signedFamily (G := G) (relations := relations))
+  oddStagedOfPinnedParamValues a s F hN hcop H hm J (signedFamily a s F π hQ G relations)
     (fun i D hD => referenceComparisons a s F π hQ han hN hcop H hm J G relations i D hD (refs i D hD))
-    (hCuspAt (hN := hN) (hcop := hcop) (J := J) (G := G) (relations := relations) (cusps := cusps)) ha hL hsign
+    (hCuspAt (a := a) (s := s) (F := F) (π := π) (hQ := hQ) (hN := hN) (hcop := hcop)
+      (J := J) (G := G) (relations := relations) (cusps := cusps)) ha hL hsign
 
 #print axioms hCuspAt
 #print axioms hpiAt
