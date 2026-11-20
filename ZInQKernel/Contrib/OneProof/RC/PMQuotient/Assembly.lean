@@ -158,9 +158,5 @@ theorem oddStagedOfGoodRows
     (hCuspAt (a := a) (s := s) (F := F) (π := π) (hQ := hQ) (hN := hN) (hcop := hcop)
       (J := J) (G := G) (relations := relations) (cusps := cusps)) ha hL hsign
 
-#print axioms hCuspAt
-#print axioms hpiAt
-#print axioms referenceComparisons
-#print axioms oddStagedOfGoodRows
 
 end ZInQ.Manuscript.RC.PMQuotient

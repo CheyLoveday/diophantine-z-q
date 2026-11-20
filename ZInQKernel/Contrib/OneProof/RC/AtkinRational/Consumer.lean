@@ -107,8 +107,5 @@ theorem overRelation_baseChange {S T : Scheme.{0}} (k : T ⟶ S)
   rw [map_mul read, map_zpow read] at hh
   simpa only [read, Functor.homMonoidHom_apply, Functor.map_comp] using hh
 
-#print axioms overRelation_of_dominantPoint
-#print axioms overRelationAtScale
-#print axioms overRelation_baseChange
 
 end ZInQ.Manuscript.RC.AtkinRational

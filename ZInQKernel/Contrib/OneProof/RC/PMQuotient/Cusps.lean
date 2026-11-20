@@ -91,6 +91,5 @@ theorem hCusp {L : ℕ} (C : G.CuspInput L) {ap : ℕ → ℤ} {w : ℕ → ℤ�
   change ((red (G.movedCusp hq he)) ^ L).toAdd = (1 : Multiplicative _).toAdd
   rw [← map_pow, hi, map_one]
 
-#print axioms hCusp
 
 end ZInQ.Manuscript.RC.PMQuotient.GoodRow

@@ -181,18 +181,5 @@ theorem cusp_eq_translation (q : ℕ) :
 
 end GoodRow
 
-#print axioms embedDivisor
-#print axioms adapter
-#print axioms ssEquiv
-#print axioms adaptComparison
-#print axioms GoodRow.extendedValue
-#print axioms GoodRow.quotient
-#print axioms GoodRow.quotient_center
-#print axioms GoodRow.quotient_center_apply
-#print axioms GoodRow.extend_embed
-#print axioms GoodRow.eval_hecke
-#print axioms GoodRow.specialFibre
-#print axioms GoodRow.specialize_eq_value
-#print axioms GoodRow.cusp_eq_translation
 
 end ZInQ.Manuscript.RC.PMWire

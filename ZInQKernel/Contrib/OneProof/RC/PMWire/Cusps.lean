@@ -163,13 +163,6 @@ theorem translation_killed {L : ℕ} (kills : G.KillsTranslation L)
   change ((red (G.translationInt q)) ^ L).toAdd = (1 : Multiplicative _).toAdd
   rw [← map_pow, hi, map_one]
 
-#print axioms based
-#print axioms cuspPhi
-#print axioms geometricValue
-#print axioms geometricValue_injective
-#print axioms translation_torsion
-#print axioms KillsTranslation
-#print axioms translation_killed
 
 end GoodRow
 end ZInQ.Manuscript.RC.PMWire

@@ -203,12 +203,5 @@ theorem specialize_eq_value {ap : ℕ → ℤ} {w : ℕ → ℤˣ} (H : G.Relati
   change G.quotient (center G.infinity (of x)) = _
   rw [G.quotient_center, G.value_infinity H.based, sub_zero]
 
-#print axioms readAt
-#print axioms value_infinity
-#print axioms toAdd_ofFn_prod
-#print axioms atkin_quotient
-#print axioms hecke_quotient
-#print axioms specialFibre
-#print axioms specialize_eq_value
 
 end ZInQ.Manuscript.RC.PMQuotient.GoodRow

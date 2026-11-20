@@ -204,13 +204,5 @@ theorem projectiveValue_specialization (E : WeierstrassCurve ℚ) [E.IsElliptic]
 
 end Valuation
 
-#print axioms spec_to_rat
-#print axioms projectiveOverQ_proper
-#print axioms valuative_ext
-#print axioms read_spec_affine
-#print axioms integralModel_eq_baseChange
-#print axioms reducedModel_eq_baseChange
-#print axioms projectiveReduction
-#print axioms projectiveValue_specialization
 
 end ZInQ.Manuscript.RC.AtkinRational

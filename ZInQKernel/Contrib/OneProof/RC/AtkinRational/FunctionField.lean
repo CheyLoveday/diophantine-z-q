@@ -186,14 +186,5 @@ theorem fieldGerm_pullback (hQ : Q ∥ N) (τ : ℍ) (a : modularFunctionField N
       pullGerm hQ τ (fieldGerm N (atkinGL hQ • τ) a) :=
   (exists_pullback hQ a).choose_spec τ
 
-#print axioms fieldGerm_jqN
-#print axioms mobius
-#print axioms mobius_tendsto
-#print axioms pullPuncturedGerm
-#print axioms pullGerm
-#print axioms fieldGerm_first
-#print axioms exists_pullback
-#print axioms pullback
-#print axioms fieldGerm_pullback
 
 end ZInQ.Manuscript.RC.AtkinRational

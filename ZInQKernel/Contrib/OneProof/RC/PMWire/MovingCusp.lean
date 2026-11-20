@@ -107,9 +107,5 @@ theorem movingCusps (N : ℕ) [NeZero N] : MovingCusps N := by
   apply extendPoint_injective (source N)
   exact source_limit_unique N hσlim hlimit
 
-#print axioms atkin_dilate
-#print axioms tendsto_dilate
-#print axioms MovingCusps
-#print axioms movingCusps
 
 end ZInQ.Manuscript.RC.PMWire

@@ -210,16 +210,5 @@ theorem hpi_of_cmDiagram (B : CMDiagram dat v w hg π hQ G r artin)
 
 end Datum
 
-#print axioms GoodRow.rawSection
-#print axioms GoodRow.rawSection_over
-#print axioms GoodRow.rawSection_map
-#print axioms GoodRow.sectionOf
-#print axioms GoodRow.sectionOf_rawSection
-#print axioms GoodRow.readRaw
-#print axioms GoodRow.readRaw_eq
-#print axioms GoodRow.readRaw_value
-#print axioms fixedMap
-#print axioms genericProjection_comp
-#print axioms hpi_of_cmDiagram
 
 end ZInQ.Manuscript.RC.PMWire

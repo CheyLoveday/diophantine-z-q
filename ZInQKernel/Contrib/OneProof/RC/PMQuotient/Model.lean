@@ -169,10 +169,5 @@ theorem frobenius_quotient (x : X.Point) :
 
 end GoodRow
 
-#print axioms residueFrob
-#print axioms GoodRow.hInt
-#print axioms GoodRow.evaluate_frob
-#print axioms GoodRow.quotient_center
-#print axioms GoodRow.frobenius_quotient
 
 end ZInQ.Manuscript.RC.PMQuotient

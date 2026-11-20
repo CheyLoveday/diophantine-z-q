@@ -236,13 +236,5 @@ theorem hpi_of_cmDiagram {ap : ℕ → ℤ} {signs : ℕ → ℤˣ} (H : G.Relat
 
 end Datum
 
-#print axioms genericInclusion_comp
-#print axioms GoodRow.rawSection_over
-#print axioms GoodRow.rawSection_map
-#print axioms GoodRow.sectionOf_rawSection
-#print axioms GoodRow.readRaw_eq
-#print axioms GoodRow.readRaw_value
-#print axioms cmGeneric_dominant
-#print axioms hpi_of_cmDiagram
 
 end ZInQ.Manuscript.RC.PMQuotient

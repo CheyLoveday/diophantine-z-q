@@ -125,8 +125,5 @@ theorem algebraicParametrizationAtScale_atInfinity {ℓ : ℕ} [(Ecurve ℓ).IsE
   exact ⟨π, hπ, hd, ModFnClassify.projective_value_of_expansions
     E X f hf hLat hc π hπ ι hg hx hy, infinity_zero_of_pole π hπ ι hg hpole⟩
 
-#print axioms formalClosedPoint
-#print axioms infinity_zero_of_pole
-#print axioms algebraicParametrizationAtScale_atInfinity
 
 end ZInQ.Manuscript.RC.AtkinRational

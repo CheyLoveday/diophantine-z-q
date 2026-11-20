@@ -239,13 +239,5 @@ theorem oddStagedOfGoodRows
     (hCuspAt (a := a) (s := s) (F := F) (π := π) (hQ := hQ) (han := han) (hN := hN) (hcop := hcop)
       (J := J) (G := G) (relations := relations) (cusps := cusps)) ha hL hsign
 
-#print axioms transportNewform
-#print axioms transportNormalization
-#print axioms stageZero
-#print axioms normalized
-#print axioms hCuspAt
-#print axioms hpiAt
-#print axioms referenceComparisons
-#print axioms oddStagedOfGoodRows
 
 end ZInQ.Manuscript.RC.PMWire

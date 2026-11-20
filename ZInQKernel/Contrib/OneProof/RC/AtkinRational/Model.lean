@@ -255,17 +255,5 @@ def rationalAtkin (hQ : Q ∥ N) : RationalAtkin (X0Branch.model N) hQ :=
   let hc := modelMap_chart hQ w (exists_modelMap hQ).choose_spec.2
   ⟨w, hq, modelMap_square hQ hq hc, fun τ => Subtype.ext (hc τ)⟩
 
-#print axioms hasValue_pull
-#print axioms pullValuation
-#print axioms pullValuation_residue
-#print axioms spec_to_rat_eq
-#print axioms exists_modelMap
-#print axioms modelMap_chart
-#print axioms exists_transcendental_j
-#print axioms jLinePoint_generic
-#print axioms exists_dominant_chart
-#print axioms ext_model_of_chart
-#print axioms modelMap_square
-#print axioms rationalAtkin
 
 end ZInQ.Manuscript.RC.AtkinRational

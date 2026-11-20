@@ -164,17 +164,5 @@ theorem extendsAtkin_unique [IsReduced M.left] [IsSeparated M.hom]
 
 end Integral
 
-#print axioms GenericSource.pullbackField
-#print axioms GenericSource.pullback_generators
-#print axioms GenericSource.exists_compactIso
-#print axioms GenericSource.compactIso
-#print axioms GenericSource.compactIso_generic
-#print axioms GenericSource.jX
-#print axioms GenericSource.jX_open
-#print axioms GenericSource.jX_dominant
-#print axioms integralEnd_ext
-#print axioms rationalW
-#print axioms ExtendsAtkin
-#print axioms extendsAtkin_unique
 
 end ZInQ.Manuscript.RC.PMWire

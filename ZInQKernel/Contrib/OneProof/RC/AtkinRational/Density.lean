@@ -114,9 +114,5 @@ theorem eq_constant_of_chart {Y : Scheme.{0}} (q : Y ⟶ Spec (.of ℚ)) [IsSepa
     rw [hd, ← Category.assoc, eq_over_rat (b ≫ X0Model.overQ N) (𝟙 _), Category.id_comp]
   rw [hb, ← hd]
 
-#print axioms eq_over_rat
-#print axioms exp_eq_qpow
-#print axioms section_constant_rational
-#print axioms eq_constant_of_chart
 
 end ZInQ.Manuscript.RC.AtkinRational

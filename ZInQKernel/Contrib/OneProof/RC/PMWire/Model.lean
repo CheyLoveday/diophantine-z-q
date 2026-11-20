@@ -175,22 +175,6 @@ def translation (q : ℕ) : PM.ReducedPoints (K := K) Ebar := by
   change curveFrob (K := K) Ebar (curveFrob (K := K) Ebar y) = y
   exact (congrArg (curveFrob (K := K) Ebar) hh.symm).trans hh.symm
 
-#print axioms abVar
-#print axioms W
-#print axioms W_generic
-#print axioms φ
-#print axioms πInt
-#print axioms hInt
-#print axioms hInt_target
-#print axioms readAt
-#print axioms evaluate
-#print axioms evaluate_frob
-#print axioms value
-#print axioms value_frob
-#print axioms translationQ
-#print axioms translationInt
-#print axioms translationInt_generic
-#print axioms translation
 
 end GoodRow
 end ZInQ.Manuscript.RC.PMWire

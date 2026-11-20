@@ -184,12 +184,6 @@ theorem hecke_values {q : ℕ} {x : X.Point} (T : G.HeckePacket q x) {a : ℤ}
     rw [Functor.map_comp, ← Category.assoc, T.source_eq]
     rfl
 
-#print axioms rationalAffine
-#print axioms integralAffine
-#print axioms atkin_value
-#print axioms HeckeIdentity
-#print axioms toAdd_ofFn_prod
-#print axioms hecke_values
 
 end GoodRow
 end ZInQ.Manuscript.RC.PMWire
