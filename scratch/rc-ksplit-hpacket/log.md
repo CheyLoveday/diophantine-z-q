@@ -56,3 +56,6 @@
   coordinates the matrix comparison and scalar algebra prove both
   equations; the split proof adds the old contribution given
   `OldBlockCubic`.
+- VERIFIED (Lean): `Shift.lean` compiles serially. The coefficient-one
+  shift and the two additional shifts in `UpShift` give tex 10330 in
+  the characteristic-zero Fourier coordinates of the model.
