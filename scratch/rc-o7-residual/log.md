@@ -8,3 +8,5 @@
 - Orbit.lean: passed `lake env lean`. If `toClassGroup (a c) = c`, the orbit at `(b,c)` is represented by `e(a c) z_b`.
 - Artin.lean: passed `lake env lean`. The direct dependent comparison timed out; the character and inverse Artin projections compile separately, then the integer sign equality on `J'.pic c` proves `artinMatchAt`.
 - At.lean: passed `lake env lean`. `datumAtActual` constructs the actual row from `ht,hCM,hπ,hSign,hCusp` and fixed data. The explicit Artin label equation lets the specialization hypothesis use the ordinary class group, independent of the norm valuation.
+- Family.lean: passed `lake env lean`. `admissibleNatAt` transfers the full filter to `D.toNat`; `actualRowFamily` supplies the rows; `oddStagedActual` has type `Nonempty (OddStagedInstance W)` with the existing fixed-coefficient reading.
+- Axioms.lean: passed `lake env lean`. All audited declarations use only `propext`, `Classical.choice` and `Quot.sound`; `inverse_after_trans` uses only `Quot.sound`.
