@@ -2,3 +2,6 @@
 - Scope finding: the old anchor asks for every c > 0 coprime to N |D_K|; the manuscript needs c coprime to 2N |D_K|. Both anchor conclusions carry the old range.
 - Field.lean: serial `lake env lean -j1` under MemoryMax=60G passed. Compatible cached imports recovered from local worktrees with byte-identical source closures.
 - Statements: CMFieldOfDefinitionScoped X; cmFieldOfDefinitionScoped_of_broad; cmFieldOfDefinitionScoped_modelOne; cmFieldOfDefinitionScoped_one.
+- Orientation.lean: serial `lake env lean -j1` under MemoryMax=60G passed. `orientation_of_form` inverts the conductor modulo 4N. `CMFieldOfDefinitionScoped.atForm` returns the point in the original form's chart.
+- Anchor stop condition: preserve the old conclusion under an explicit proof of `2 ∣ newformLevel (Ecurve ℓ)`; do not broaden the new input. Use one conductor-one orientation for all conductors.
+- Verification hold: observed one-minute load 182.75 versus the instructed threshold of 120. No new Lean invocation was started at that load.
