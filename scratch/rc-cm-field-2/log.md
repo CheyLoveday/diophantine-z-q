@@ -73,3 +73,7 @@ VERIFIED (Lean): `Descent.lean` states `BranchDescends N`, descends a field poin
 
 VERIFIED (Lean): `OrderGenerator.lean` chooses the sign of the order generator in an arbitrary prescribed complex embedding. `HeegnerLattice.lean` proves the scaled primitive form identity, the product of the two generated lattices `(N, ω)(A/N, ω) = (A, ω)`, and the `cmPoint` dilation formula. Both compiled; each axiom check returned a subset of the three standard axioms.
 
+### Ring class membership
+
+VERIFIED (Lean): `PrimeComparison.lean` proves `singularModulusMemRingClass`. Chebotarev is applied inside a finite normal closure over ℚ, with a bound excluding both the conductor and the norm of a nonzero difference of conjugates. The Frobenius restriction forces prime residue degree one in the two embedded fields, and trivial inertia gives complete splitting over the quadratic field. The split-prime diagonal equation then contradicts a nonzero difference for an automorphism fixing the ring class field. The proof works for every proper ideal in a single embedding of the ring class field extending the chosen quadratic embedding. All six axiom checks returned subsets of the three standard axioms.
+
