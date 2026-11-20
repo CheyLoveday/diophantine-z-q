@@ -59,3 +59,5 @@ At the scalar step the comparison is between two ordinary Jacobi theta ratios, w
 ## Verification
 
 VERIFIED: all 13 proof modules passed direct `lake env lean` checks without `sorry`. The [scratch check](../../scratch/rc-even-unary/Audit.lean) prints the axiom closure of all 72 new theorems, including private helpers. [Its output](../../scratch/rc-even-unary/axioms.txt) contains only `propext`, `Classical.choice`, and `Quot.sound`. No existing statement or module was edited.
+
+The direct checks used matching compiled imports from the base revision. A separate serial Lake dependency rebuild was started and stopped after the machine load crossed the prescribed limit. This did not leave any of the new modules or the axiom audit unchecked.

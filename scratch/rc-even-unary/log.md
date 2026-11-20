@@ -30,3 +30,5 @@ VERIFIED by direct Lean checks: `Assembly.lean` supplies the exact `EvenUnarySta
 VERIFIED by direct Lean checks: `Complete.lean` proves the ordinary comparison on the entire level group, using a right translation to a prime lower-right entry and treating triangular matrices by periodicity and negation. `evenUnaryStageLaw` proves the original proposition for every positive shell, and `evenExpansion_of_unary` removes the unary premise from the fixed even expansion. No hypothesis about the weighted law is left open.
 
 VERIFIED: the scratch audit checks 72 public and private theorems. Their only axioms are `propext`, `Classical.choice`, and `Quot.sound`.
+
+VERIFIED resource stop for the extra dependency rebuild: load remained above the prescribed threshold, so no additional compiler was started. All direct module and scratch checks had already succeeded with compiled imports from the matching base revision. The full dependency rebuild is not claimed.
