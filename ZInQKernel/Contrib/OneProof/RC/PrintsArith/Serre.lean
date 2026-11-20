@@ -158,10 +158,16 @@ theorem serre_SL2_part (hS : SerreThm3) (E : WeierstrassCurve ℚ) [E.IsElliptic
 
 /-! ### `E_ℓ` has no complex multiplication -/
 
-/-- **GLUE (not proved here): rational CM `j`-invariants are integers.** If `E/ℚ` has complex
-multiplication over `ℚ̄`, then `j(E)` is an algebraic integer (Silverman, *Advanced Topics in the
-Arithmetic of Elliptic Curves*, Theorem II.6.1), hence an integer since it is rational. The
-manuscript uses exactly this (tex 1766–1767: "a rational CM `j`-invariant is an integer"). -/
+/-- **PRINT + GLUE (not proved here): rational CM `j`-invariants are integers.** If `E/ℚ` has
+complex multiplication over `ℚ̄`, then `j(E)` is an algebraic integer, hence an integer since it is
+rational. The manuscript uses exactly this (tex 1766–1767: "a rational CM `j`-invariant is an
+integer"). Printed (page-checked; bibitem `milnemf`): Milne, *Modular Functions and Modular Forms*,
+v1.31 (2017), Corollary 12.15, p. 125: "If E is an elliptic curve over a number field k with
+complex multiplication, then j(E) ∈ O_K." (the ring of integers of `k` is meant, as the proof
+shows), with complex multiplication as defined on p. 124. GLUE: the complex multiplication of
+`E_ℚ̄` is defined over a number field `k`, and `O_k ∩ ℚ = ℤ`. Earlier locator: Silverman, *Advanced
+Topics in the Arithmetic of Elliptic Curves*, Theorem II.6.1 (page not checked).
+Kind: definition (PRINT + GLUE input). -/
 def CMjInteger : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], ¬ HasNoCM E → ∃ z : ℤ, E.j = z
 
