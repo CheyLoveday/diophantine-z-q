@@ -155,20 +155,6 @@ This is the manuscript's own claim, which it derives from Buzzard's Theorem 2.1 
 The 11/5 manuscript (`diophantine_zq.tex`, lines 443–477), the construction of the integral model of $Y_3$; K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Theorem 2.1 and Corollary 2.3, read in the author's preprint (Theorem 2.1, p. 5; Corollary 2.3, p. 7; the moduli problem, without a polarization, p. 2; the canonical principal polarization, p. 3). The journal pages are unverified.
 """,
     ),
-    'y3ToP1j': dict(
-        group='shimura-curves', slug='y3-quotient-map',
-        title='The quotient map from Y₃ to the projective line',
-        anchor='Y3 to P1j',
-        statement=r"""
-The *quotient statement for $Y_3$* is the following assertion. Let $\overline{\mathbb Q}$ be an algebraic closure of $\mathbb Q$, and let $Y$ be a proper smooth curve over $\mathbb Q$ with a $\overline{\mathbb Q}$-point and with, for every field $F\supseteq\mathbb Q$, a bijection between $Y(F)$ and the isomorphism classes of QM abelian surfaces over $F$ with a level-$3$ structure; say that a point *classifies* the surfaces in its class. Suppose that, for every homomorphism of fields $F\to F'$, the image in $Y(F')$ of a point of $Y(F)$ classifies the base change to $F'$ of the surfaces that the point classifies, with their actions of $\mathcal O$ and their level structures; that there is a single family over $Y$, that is, a proper smooth morphism $\mathcal A\to Y$ of relative dimension $2$ with, for each $a\in\mathcal O$, an endomorphism $\iota(a)$ of $\mathcal A$ over $Y$ and a section $\eta(a)$ of $\mathcal A\to Y$, no group law or other condition being required, such that each field-valued point of $Y$ classifies the fibre of $\mathcal A$ at that point with the restrictions of the $\iota(a)$ and $\eta(a)$; and that every such family over a proper smooth curve $S$ over $\mathbb Q$ whose fibre at each field-valued point, with the restrictions of the $\iota(a)$ and $\eta(a)$, is a QM abelian surface with level-$3$ structure has a morphism $S\to Y$ over $\mathbb Q$ taking each field-valued point of $S$ to a point classifying its fibre. Then there is a morphism $\pi:Y\to\mathbf P^1_{\mathbb Q}$ with the following four properties, in which $y$ and $y'$ are $\overline{\mathbb Q}$-points of $Y$ classifying $(A,\iota,\eta)$ and $(A',\iota',\eta')$, and $\pi(y)$ is the image of $y$ in $\mathbf P^1(\overline{\mathbb Q})=\overline{\mathbb Q}\cup\{\infty\}$. First, $\pi(y)=\pi(y')$ exactly when $(A',\iota')$ is isomorphic to the twist $(A,\iota\circ\alpha)$ for some ring automorphism $\alpha$ of $\mathcal O$. Second, $\pi(y)=0$ exactly when the ring $\operatorname{End}_{\mathcal O}(A)$ of endomorphisms of $A$ commuting with $\iota(\mathcal O)$ contains an element $\phi$ with $\phi^2=-1$; $\pi(y)=\infty$ exactly when it contains an element $\phi$ with $\phi^2-\phi+1=0$; and $\pi(y)=-16/27$ exactly when it contains an element $\phi$ with $\phi^2=-6$. Third, $\pi$ maps $Y(\overline{\mathbb Q})$ onto $\mathbf P^1(\overline{\mathbb Q})$. Fourth, every fibre of $\pi$ on $Y(\overline{\mathbb Q})$ is finite, with at most $324$ points.
-""",
-        caveat=r"""
-This is the manuscript's own claim. In the proof of its Theorem 4.1 the manuscript shows that central finite ideles act trivially on $Y_3$ and concludes that the whole curve, "with all its determinant components", admits an action of $N/(\mathbb A_f^\times K_3)$, where $N$ is the finite-adelic normalizer of $\widehat{\mathcal O}$, with quotient $\mathbf P^1_j$ and $\deg(Y_3\to\mathbf P^1_j)\le4|(\mathcal O/3\mathcal O)^\times|\le324$; for the identification of the normalizer quotient with $\mathbf P^1_j$, with branch values $0,\infty,-16/27$, it cites Baba and Granath and Lin and Yang. No print states the result at level $3$. The statement is made for every curve with these moduli properties and asserts nothing about the existence of such a curve; nor does it assert the action, only the fibres of $\pi$. It reads the quotient on $\overline{\mathbb Q}$-points as the classes of the underlying QM abelian surfaces up to twist; that these classes are the orbits of $N$ is an argument made on the spot. It reads the branch values as the project reads the table in §3.1 of Baba and Granath, a locator that is unverified: the points at which $\operatorname{End}_{\mathcal O}(A)$ contains a root of $x^2+1$, of $x^2-x+1$ or of $x^2+6$, that is, the CM points of discriminants $-4$, $-3$ and $-24$, are exactly the fibres over $0$, $\infty$ and $-16/27$, respectively. The locator audit found in Baba and Granath's Theorem 2.1 and Lemma 3.1 that the quotient of the Shimura curve of level $\widehat{\mathcal O}^\times$ by its Atkin–Lehner involutions is $\mathbf P^1_{\mathbb Q}$; these results do not fix the numerical values of the coordinate. The indices $4,6,2$ that the manuscript gives with the branch values are not part of the statement, and the fibre bound is the degree bound read on points, since a finite morphism of degree $d$ has at most $d$ points in each geometric fibre. A review of this statement is pending.
-""",
-        src=r"""
-The 11/5 manuscript (`diophantine_zq.tex`, lines 420–440), in the proof of its Theorem 4.1: the normalizer quotient $\mathbf P^1_j$, with branch values $0,\infty,-16/27$ and indices $4,6,2$, cited to Baba–Granath and Lin–Yang (lines 420–422), and the action of $N/(\mathbb A_f^\times K_3)$ on $Y_3$ with the degree bound (lines 423–440). S. Baba and H. Granath, *Genus 2 curves with quaternionic multiplication*, Canad. J. Math. 60 (2008), Theorem 2.1, p. 737, and Lemma 3.1, pp. 739–740, read by the locator audit; the table of §3.1, p. 740, is unverified. The manuscript's bibliography cites the 2005 preprint of that paper (MPI für Mathematik), Sections 2.1 and 3 and Proposition 10, which was not located. Y.-H. Lin and Y. Yang, *Quaternionic loci in Siegel's modular threefold*, arXiv:1807.00466v1 (2018), the version the manuscript cites (journal version Math. Z. 295 (2020), 775–819, unverified); not read for this statement. The count $|(\mathcal O/3\mathcal O)^\times|=72$ is a computation of the project.
-""",
-    ),
     'cmHeight62': dict(
         group='cm-fibres', slug='elliptic-height-discriminant-formula',
         title='The discriminant formula for the Faltings height of an elliptic curve',
@@ -283,26 +269,6 @@ separable closure. Read by an AI model (2026-11-17). The manuscript cites the pa
 at lines 817–818.
 """,
     ),
-    'neronSchemeExtensionDedekind': dict(
-        group='neron-models', slug='neron-models-exist',
-        title='Néron models over Dedekind domains',
-        anchor='Neron models exist',
-        statement=r"""
-The *Néron existence statement* is the following assertion. Let $D$ be a Dedekind domain that is not
-a field, with fraction field $L$, and $A$ an abelian variety over $L$. Then there is a smooth,
-separated, quasi-compact scheme $N$ over $D$ with generic fibre $A$ such that, for every smooth
-$D$-scheme $Y$, every morphism $Y_L\to A$ extends to a morphism $Y\to N$.
-""",
-        caveat=r"""
-It asks only for the existence of the extension, which is unique since $Y$ is flat over $D$ and $N$ is
-separated, and it is stated over an affine base; the group structure of the Néron model is not asked
-for.
-""",
-        src=r"""
-S. Bosch, W. Lütkebohmert and M. Raynaud, *Néron Models* (1990), §1.4, Theorem 3, with §1.2,
-Definition 1, the existence half over an affine Dedekind base. Numbers unverified.
-""",
-    ),
     'silverbergZarhinThm35': dict(
         group='neron-models', slug='raynaud-criterion',
         title="Raynaud's criterion for semistable reduction",
@@ -323,47 +289,6 @@ found the hypothesis $n\ge3$ (the text layer of the scan shows $n>3$).
 A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of abelian varieties*,
 Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.5, p. 406 (proof: SGA 7 I, IX, Proposition 4.7),
 with semistable reduction as defined in §3, p. 405.
-""",
-    ),
-    'faltingsLemma1DVRPrint': dict(
-        group='heights', slug='faltings-extension-lemma',
-        title='Homomorphisms of semiabelian schemes over a discrete valuation ring extend uniquely',
-        anchor='Faltings 1983 Lemma 1',
-        statement=r"""
-The *extension statement for semiabelian schemes* is the following assertion. Let $K$ be a field,
-$\mathcal O\subseteq K$ a valuation ring of $K$ that is a discrete valuation ring, with residue field
-$k$, and $A$ and $B$ abelian varieties over $K$. Let $G$ and $H$ be smooth, separated, quasi-compact
-group schemes over $\mathcal O$ with isomorphisms of group schemes $G_K\cong A$ and $H_K\cong B$ from
-their generic fibres, and suppose that the special fibres $G_k$ and $H_k$ are connected and
-semiabelian: each has an open connected subgroup scheme $U$ with a flat surjective homomorphism
-$U\to C$ onto an abelian variety $C$ over $k$ whose kernel becomes isomorphic as a group scheme to
-$\mathbb G_m^r$, for some $r\ge0$, after base change to an algebraic closure $\bar k$ of $k$; that is,
-for every $\bar k$-algebra $R$ there is an isomorphism of groups from $(R^\times)^r$ onto the kernel of
-$U(R)\to C(R)$, natural in $R$. Then for every homomorphism of group schemes $f:G_K\to H_K$ over $K$
-there is exactly one morphism of $\mathcal O$-schemes $g:G\to H$ whose base change to $K$ is $f$.
-""",
-        caveat=r"""
-Faltings states the lemma over any normal base $S$ with a dense open subscheme $U$, for a
-homomorphism over $U$ between two semiabelian varieties over $S$: smooth algebraic groups whose
-fibres are all connected of one common dimension $g$ and are extensions of an abelian variety by a
-torus. The statement is the case of the spectrum of a discrete valuation ring and its generic point,
-for models whose generic fibres are abelian varieties. Its hypotheses imply Faltings' definition.
-The generic fibre is an abelian variety, hence connected and an extension of itself by the trivial
-torus. A smooth model is flat, so its generic fibre is dense in it and the model is connected;
-smoothness then makes the relative dimension constant on the model, so both fibres have the same
-dimension. The project rates it a published statement in its printed form, a leaf: an AI reader read
-p. 350 verbatim from the page image and found the statement a direct instance, an AI reviewer rated
-it a leaf, and a third AI skeptic pass, checking fidelity to the print and the meaning of the formal
-statement, could not refute it. It replaced the statement that the semistable height does not change
-under extension of the base field, which is proved here from it, with Silverberg–Zarhin's criterion
-and the existence of Néron models over a Dedekind base. The manuscript lists Faltings' paper and
-cites it for other results, not for this lemma.
-""",
-        src=r"""
-G. Faltings, *Endlichkeitssätze für abelsche Varietäten über Zahlkörpern*, Invent. Math. 73 (1983),
-349–366, §2, the Definition and Lemma 1, p. 350, read from the page image of the GDZ scan; the paper
-is in the manuscript's bibliography (`diophantine_zq.tex`, lines 11084–11086) and cited at lines 621
-and 733 for other results.
 """,
     ),
     'gaudronRemondSec9LowerAnSS': dict(
@@ -494,34 +419,6 @@ and whether the argument tolerates the weaker constant has not been checked.
         src=r"""
 F. Pazuki, *Theta height and Faltings height*, Bull. SMF 140 (2012), Corollary 1.3(2), upper half,
 read by the locator audit. The level-$2$ coordinates are a risk (project note height-split, §8).
-""",
-    ),
-    'r9a': dict(
-        group='heights', slug='faltings-semisimplicity',
-        title="Faltings' semisimplicity theorem",
-        anchor='Faltings semisimplicity',
-        statement=r"""
-The *semisimplicity statement* is the following assertion. For an abelian variety $A$ over a number field $K$ and a prime $\ell$, the representation of $G_K$ on $V_\ell(A)$ is semisimple.
-""",
-        caveat=r"""
-
-""",
-        src=r"""
-G. Faltings, *Endlichkeitssätze für abelsche Varietäten über Zahlkörpern*, Invent. Math. 73 (1983), 349–366, §5, Satz 3, p. 360. Locator unverified.
-""",
-    ),
-    'r9b': dict(
-        group='heights', slug='faltings-tate-conjecture',
-        title="Faltings' theorem on Tate's conjecture",
-        anchor='Faltings Tate conjecture',
-        statement=r"""
-The *Tate statement* is the following assertion. For abelian varieties $A$ and $B$ over a number field $K$ and a prime $\ell$, the natural map $\operatorname{Hom}_K(A,B)\otimes\mathbb Z_\ell\to\operatorname{Hom}_{\mathbb Z_\ell}(T_\ell A,T_\ell B)$ is injective, with image the $G_K$-equivariant maps.
-""",
-        caveat=r"""
-
-""",
-        src=r"""
-G. Faltings, Invent. Math. 73 (1983), §5, Satz 4 (the case $A=B$), p. 360, and Korollar 1 (Tate's conjecture), pp. 360–361. Locators unverified.
 """,
     ),
     'bergerSurveyF': dict(
