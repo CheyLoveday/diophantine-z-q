@@ -1,5 +1,4 @@
 import ZInQKernel.Contrib.RC53Assist.DKLocalAdapter.Adapter
-import ZInQKernel.Contrib.RC53Assist.PlaceAboveTwo.SignLine
 
 /-!
 # A trace-one cycle from compatible finite local invariant classes
@@ -130,26 +129,15 @@ theorem exists_normalized_cycle :
   rw [hp, (c a).property]
   exact (actualMuH2Equiv F a).apply_symm_apply _
 
-/-- The first reduction of any integral cycle is the sign class of the same trace value. -/
-theorem first_reduction_eq_sign_iff (z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom)
-    (x : (SignLine.signComplex F).homology 2) :
-    actualMuH2Reduction F 1 z = SignLine.kummerClass F x ↔
-      PadicInt.toZModPow 1 (AllCochainTrace.trv F z.val) = SignLine.invariant F x := by
-  rw [AllCochainTrace.trv_finite_normalization, ← SignLine.finiteInvariant_kummerClass]
-  exact (FiniteTrace.finiteInvariant F 2 (isUnit_iff_ne_zero.mpr two_ne_zero)).injective.eq_iff.symm
-
-/-- The integral cycle has trace one and its first class matches the normalized sign class. -/
-theorem exists_trace_one_with_sign :
+/-- The actual integral local trace has a closed cochain of trace exactly one. -/
+theorem exists_trace_one :
     ∃ z : LinearMap.ker ((actualTraceComplex F).d 2 3).hom,
-      AllCochainTrace.trv F z.val = 1 ∧
-      actualMuH2Reduction F 1 z = SignLine.kummerClass F ((SignLine.invariant F).symm 1) := by
+      AllCochainTrace.trv F z.val = 1 := by
   obtain ⟨z, hz⟩ := exists_normalized_cycle F
-  have h : AllCochainTrace.trv F z.val = 1 := by
-    apply PadicInt.ext_of_toZModPow.mp
-    intro a
-    rw [AllCochainTrace.trv_finite_normalization, hz a, AddEquiv.apply_symm_apply, map_one]
-  refine ⟨z, h, (first_reduction_eq_sign_iff F z _).2 ?_⟩
-  rw [h, map_one, LinearEquiv.apply_symm_apply]
+  refine ⟨z, ?_⟩
+  apply PadicInt.ext_of_toZModPow.mp
+  intro a
+  rw [AllCochainTrace.trv_finite_normalization, hz a, AddEquiv.apply_symm_apply, map_one]
 
 end Tower
 
@@ -161,36 +149,36 @@ open ZInQ.Manuscript.RC.KummerMaps ZInQ.Manuscript.RC.FibreDuality
 variable {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
   (W : WeierstrassCurve K) [W.IsElliptic] [HasFullTwoTorsion K S W]
 
-/-- Trace one at a specified place above two, with the project's global orientation. -/
-theorem orientedTraceOne (w : {v : HeightOneSpectrum (𝓞 K) // (2 : 𝓞 K) ∈ v.asIdeal})
-    [DecidableEq (w.val.adicCompletion K)] :
-    ∃ z : (restrictedLineComplex (S := S) w.val).X 2,
-      ((restrictedLineComplex (S := S) w.val).d 2 3).hom z = 0 ∧
-        orientedLocalTrace (S := S) W w.val z = 1 := by
-  obtain ⟨z, hz, _⟩ := exists_trace_one_with_sign (w.val.adicCompletion K)
-  let y := ((localLineCochainInv (S := S) W w.val).f 2).hom z.val
-  have hc : ((restrictedLineComplex (S := S) w.val).d 2 3).hom y = 0 := by
-    have h := congrArg (fun f => f.hom z.val) ((localLineCochainInv (S := S) W w.val).comm 2 3)
-    have hdz : ((actualTraceComplex (w.val.adicCompletion K)).d 2 3).hom z.val = 0 := z.property
+/-- Trace one at any finite place, with the project's global orientation. -/
+theorem orientedTraceOne (w : HeightOneSpectrum (𝓞 K))
+    [DecidableEq (w.adicCompletion K)] :
+    ∃ z : (restrictedLineComplex (S := S) w).X 2,
+      ((restrictedLineComplex (S := S) w).d 2 3).hom z = 0 ∧
+        orientedLocalTrace (S := S) W w z = 1 := by
+  obtain ⟨z, hz⟩ := exists_trace_one (w.adicCompletion K)
+  let y := ((localLineCochainInv (S := S) W w).f 2).hom z.val
+  have hc : ((restrictedLineComplex (S := S) w).d 2 3).hom y = 0 := by
+    have h := congrArg (fun f => f.hom z.val) ((localLineCochainInv (S := S) W w).comm 2 3)
+    have hdz : ((actualTraceComplex (w.adicCompletion K)).d 2 3).hom z.val = 0 := z.property
     simpa only [ModuleCat.hom_comp, LinearMap.comp_apply, hdz, map_zero] using h
   refine ⟨y, hc, ?_⟩
   have hb := congrArg (fun f => (f.f 2).hom z.val)
-    (localLineCochainInv_map (S := S) W w.val)
-  have he : ((localLineCochainMap (S := S) W w.val).f 2).hom y = z.val := by
+    (localLineCochainInv_map (S := S) W w)
+  have he : ((localLineCochainMap (S := S) W w).f 2).hom y = z.val := by
     simpa only [HomologicalComplex.comp_f, HomologicalComplex.id_f, ModuleCat.hom_comp,
       LinearMap.comp_apply, ModuleCat.hom_id, LinearMap.id_apply] using hb
-  change AllCochainTrace.trv (w.val.adicCompletion K)
-    (((localLineCochainMap (S := S) W w.val).f 2).hom y) = 1
+  change AllCochainTrace.trv (w.adicCompletion K)
+    (((localLineCochainMap (S := S) W w).f 2).hom y) = 1
   rw [he]
   exact hz
 
-/-- The existing integral local trace induces the degree-two isomorphism at this dyadic place. -/
+/-- The existing integral local trace induces the degree-two isomorphism at every finite place. -/
 theorem orientedTrace_inducesIsoH2
-    (w : {v : HeightOneSpectrum (𝓞 K) // (2 : 𝓞 K) ∈ v.asIdeal})
-    [DecidableEq (w.val.adicCompletion K)] :
-    InducesIsoH2 (C := natCx (restrictedLineComplex (S := S) w.val))
-      (orientedLocalTrace (S := S) W w.val) :=
-  ⟨orientedLocalTrace_kernel W w.val, orientedTraceOne W w⟩
+    (w : HeightOneSpectrum (𝓞 K))
+    [DecidableEq (w.adicCompletion K)] :
+    InducesIsoH2 (C := natCx (restrictedLineComplex (S := S) w))
+      (orientedLocalTrace (S := S) W w) :=
+  ⟨orientedLocalTrace_kernel W w, orientedTraceOne W w⟩
 
 end ZInQ.Contrib.RC53Assist.PlaceAboveTwo
 
