@@ -247,7 +247,10 @@ theorem sameDimSurjectiveFinite : SameDimSurjectiveFinite := by
   intro A B f hd hf
   exact PicDict.finiteOfFiniteKerPts ℚ A B f (finite_kerPts_of_sameDim f hd)
 
-/-- Shimura's existing quotient row follows from the printed form and the Hecke bridge. -/
+/-- Shimura's existing quotient row follows from the printed form and the Hecke bridge.
+`ShimuraThm1AsPrinted` is stronger than the printed Theorem 1 (its
+`PrintQuotient` conjunct is the p. 526 construction); the split route is
+`shimuraThm1Af_of_split_closed`. -/
 theorem shimuraThm1Af_of_printed' :
     ShimuraThm1AsPrinted → ShimuraHeckeRelations → R16Thm1b.ShimuraThm1Af :=
   fun hp hh => shimuraThm1Af_of_printed hp hh sameDimSurjectiveFinite

@@ -1,0 +1,18 @@
+- Base: 63d0529eeab02ad3e2ac3c30b606b7ad4c86722d.
+- Coset coefficients: use rational functions of j; the polynomial claim in the proposed route is false for general meromorphic functions with interior poles.
+- No new prints.
+- Cusps: scaledPrimitive_cusp; coordinates_cusp_meromorphic. Both compiled; axioms: propext, Classical.choice, Quot.sound.
+- Laurent: hasSum_laurent_shift; meromorphicAt_hasSum_laurent; coordinates_cusp_hasSum. Compiled; same axiom set.
+- Descent: complexify; mem_rat_adjoin_of_complexify_mem; modularFunctionField_descent. Compiled; same axiom set for all eight theorem checks.
+- Degree: integral_degree_of_orbit_product; intermediateField_eq_top_of_degree_bound. Compiled; same axiom set.
+- Weierstrass: regularPart_derivatives_rational; five supporting theorems. Compiled; same axiom set.
+- RationalTaylor: 10 closure and factorization theorems. Compiled; same axiom set.
+- Infinity: primitive_rationalTaylor; coordinates_rationalTaylor. Compiled; standard three axioms.
+- RationalExpansion: rationalLaurent_of_cleared; coordinates_rationalLaurent. Compiled; standard three axioms. Leading coefficient of x at -2 is κ⁻²; coefficients below -2 for x and -3 for y vanish.
+- Tail: laurent_unique_of_tail; hasSum_mul_of_tail; five supporting theorems. Compiled; standard three axioms.
+- Equation: coordinates_laurent_equation; six supporting theorems. Compiled; standard three axioms.
+- Complex converse: the rational globally convergent level-one polynomial theorem is narrower; interior poles of complex functions and the analytic coset and cusp comparison remain open.
+- FieldMembership: coordinates_in_modularFunctionField_with_equation and coordinates_in_modularFunctionField. Compiled; standard three axioms for both and the width-one conversion. Exact stop supplied conditional on ComplexCuspClassification N.
+- FunctionField: fieldHom_of_transcendental_point; functionField_coordinates; dominant_morphism_of_classification. All compiled; standard three axioms. Exact target field used; source X stays a parameter.
+- Verification: 12 Lean files, 55 theorem audits; propext, Classical.choice, Quot.sound only. No new prints.
+- Final stop: ComplexCuspClassification N for unconditional field membership; projective point comparison after the generic algebraization remains.

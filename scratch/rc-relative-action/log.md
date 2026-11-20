@@ -1,0 +1,15 @@
+- Base: `bc5d7a6b916ac38d266a7eb0738e129019e4cdc0`.
+- `Fourier.lean`: `F_a^2 w(r)=w(-r)`, `F_a^4=1`, by primitive-character orthogonality and the given normalization.
+- `Fourier.lean`: `lake env lean` passed; six theorem audits, only `propext`, `Classical.choice`, `Quot.sound`.
+- `StageGrid.extracts` provides integral support for upper phases via `stageGrid_twist_eq`. `StageGrid.constant` concerns the rectangular lattice, not the additional finite translations needed at the actual old level.
+- `PMLocal` source inspected on an existing ref; absent from this base. `f` is the lifted weight; `finiteSupp` concerns one norm sphere; `frameScale` concerns a good-prime frame. Neither supplies the full translation depth or scaling of the fixed-sieved adèlic factors.
+- `Unipotents.lean`: `S T^{-k} S^{-1} = n^-(k)`; exact fixing iff the phase is one on the Fourier support. The annihilator integrality test suffices, and the reference test needs only `4 ∣ k`.
+- `Unipotents.lean`: the two table equations hold on the explicit upper and lower words (`c_l=1`) and on the reflection word for even weights and an even character. The paired action composes by list concatenation.
+- `Unipotents.lean`: `lake env lean` passed; 14 theorem audits, only `propext`, `Classical.choice`, `Quot.sound`.
+- `LocalFactor.lean`: three lifts in the unit cell give relative scalar `αₚ(u)(u,m)ₚ`; the projection kernel contributes the same scalar to both tables. Weyl conjugation gives the lower matrix. Spherical generator invariance extends to their subgroup, with ratio one for other lifts.
+- `LocalFactor.lean`: the inverse upper-left entry is the original lower-right entry; choose its positive odd unit representative. The prime-factor product for squarefree `m`, including the separate dyadic sign, gives `(m/d)`.
+- `Reference.lean`: six projective bottom-row classes modulo four track six lines in the reference table. `reference_word` proves the reference equation for every word of `Γ₀(N₀)` when `4 ∣ N₀`.
+- `Transport.lean`: the coset extension is injective when every residue is hit; phase comparison reduces to the phase on each coset. `IntertwinesGenerators` propagates the two common generator equations in inverse order and transports a lifted eigenpair to a literal table eigenpair.
+- `Stage.lean`: `stageGrid_paired_upper` uses `StageGrid.extracts`. `stageGrid_paired_lower` uses one annihilator depth check at `N₀` for every multiple of `N₀`.
+- `lake env lean` passed for all six files: Fourier 6 audits; Unipotents 14; LocalFactor 11; Reference 16; Transport 6; Stage 2. All 55 list only `propext`, `Classical.choice`, `Quot.sound` or a subset.
+- Stop: verify the common generator comparison on the two adèlic rectangular coset spaces and instantiate the supplied classwise weights at the actual old level. No new printed leaf; no manuscript error identified in scope.

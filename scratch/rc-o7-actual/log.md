@@ -1,0 +1,13 @@
+- Setup: all three prescribed commits are ancestors of the base; each merge was already up to date.
+- Observed interface: PMLocal.f, f_conj and finiteSupp do not characterize the local support or identify the norm character on an adelic representative.
+- Dependency rebuild: sequential, with devserver precheck before every Lean command.
+- Verified: `Arithmetic.lean`, `Embeddings.lean`, `Orientation.lean` with `lake env lean`: half-integral optimum embeddings, rational quaternion centralizer, norm-one signs, orientation cube, local edge congruences and contraction at two.
+- Verified: `Orbits.lean`, `Genus.lean` with `lake env lean`: the subgroup quotient of a single torus orbit, right-unit cancellation and the trivial Picard norm character at `D = 1`.
+- `NormCharacterDescent`: integral ideals of conductor one whose norms are coprime to the genus partner, valued in the units of the integers, factoring through the Picard group.
+- `Voight1467VToIII`: GLUE, UNVERIFIED, local fields at the two ramified places imply a rational embedding into the explicit quaternion algebra.
+- Class-order support bridge: exact nonzero Schwartz support on the norm sphere iff the affine half-generator is in the rational class order.
+- Verified: `Conjugacy.lean`, `SplitLocal.lean` with `lake env lean`: rational conjugacy; two distinct integral projector orbits in the split Eichler chart, including at two; two residue-field embeddings before lifting to the division order.
+- Verified: `Reduction.lean`, `StageRead.lean` with `lake env lean`: Cornut–Jetchev equivariance on the reference sign, same-place weighted reduction, and the admissible stage's integer read.
+- Verified: `Assembly.lean`, `Family.lean` with `lake env lean`: stabilizer order two for the actual stage, propagation of the orientation congruence, construction of `ComparisonInputs`, and conditional `Odd.ThetaComparison` on the explicit level orders.
+- Axiom audit: 44 theorems and 19 definitions. 57 declarations use the standard triple; `quadratic_parameter_le` and `cancel_edge_sign` use `propext` and `Quot.sound`; `twoPower_mul` and `torsor_weight` use only `propext`; `Orientations` and `flip` use none.
+- Open: exact support, global adelic-to-Picard orbit identification, local classes outside the split positive-level chart, local weight transports on chosen representatives, norm-character descent for `D > 1`, named pointwise geometry and stage joins.

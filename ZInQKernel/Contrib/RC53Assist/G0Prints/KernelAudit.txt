@@ -1,0 +1,103 @@
+'ZInQ.Contrib.RC53Assist.G0Prints.Faltings1983EulerFactorRigidityQ_of_print' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.Carayol1986RationalNewformEulerFactors_of_print' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.Faltings1983EulerFactorRigidityQ_of_print_of_badReading' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.faltingsPv_eq_localPolynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.faltingsLv_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.weierstrassPresentation_of_shimura_triple' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.shimura_rational_differentials_finrank' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.shimuraDelta_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.globalDifferentialPullback_injective_of_dominant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.kaehlerMap_injective_of_essFiniteType' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.dominantRationalRestriction_pullback' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.localPolynomial_eq_newform_of_complete_L' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.coefficients_eq_of_complete_L' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.newform_abscissa_lt_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.elliptic_abscissa_lt_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.sourceLFunction_eq_LFunction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.sourceEulerPolynomial_eq_localPolynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.associatedCohomological_local_factor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.g0_local_factor_fields_of_prints_of_geometricReading' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.liCarayolNewformOfModular_of_prints_of_geometricReading' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.gamma0Newform_isCommonEigenform' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.eulerOp_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.functionFieldEulerReading_D' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.faltings_print_concrete_objects' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.concrete_rational_tate_rank_two' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.concrete_faltings_source_factor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.sourceEulerPolynomial_constant_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.source_abscissa_lt_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.newform_summable_of_two_lt_re' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.elliptic_summable_of_two_lt_re' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.source_and_newform_summable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.G0Prints.shimura_nonzero_line' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.G0Prints.Faltings1983EulerFactorRigidityQ_of_print
+  (hT : ZInQ.Contrib.RC53Assist.GlobalTrace.TateCurveTateModulePrint)
+  (hLG : ZInQ.Contrib.RC53Assist.GlobalTrace.DecompositionGroupLocalGlobalGlue)
+  (hA : ZInQ.Contrib.RC53Assist.GlobalTrace.AdditiveReductionCoinvariantsVanish) :
+  ZInQ.Contrib.RC53Assist.G0Prints.Faltings1983Korollar2iiiivPrint →
+    ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Faltings1983EulerFactorRigidityQ
+ZInQ.Contrib.RC53Assist.G0Prints.Carayol1986RationalNewformEulerFactors_of_print
+  (hT : ZInQ.Contrib.RC53Assist.GlobalTrace.TateCurveTateModulePrint)
+  (hLG : ZInQ.Contrib.RC53Assist.GlobalTrace.DecompositionGroupLocalGlobalGlue)
+  (hA : ZInQ.Contrib.RC53Assist.GlobalTrace.AdditiveReductionCoinvariantsVanish)
+  (hS : ZInQ.Contrib.RC53Assist.G0Prints.Shimura1973RationalGeometricReading) :
+  ZInQ.Contrib.RC53Assist.G0Prints.Carayol1986CorollaireRational →
+    ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Carayol1986RationalNewformEulerFactors
+ZInQ.Contrib.RC53Assist.G0Prints.Carayol1986RationalNewformEulerFactors_of_print_of_geometricReading
+  (hT : ZInQ.Contrib.RC53Assist.GlobalTrace.TateCurveTateModulePrint)
+  (hLG : ZInQ.Contrib.RC53Assist.GlobalTrace.DecompositionGroupLocalGlobalGlue)
+  (hA : ZInQ.Contrib.RC53Assist.GlobalTrace.AdditiveReductionCoinvariantsVanish) :
+  ZInQ.Contrib.RC53Assist.G0Prints.Shimura1973RationalGeometricReading →
+    ZInQ.Contrib.RC53Assist.G0Prints.Carayol1986CorollaireRational →
+      ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent.Carayol1986RationalNewformEulerFactors
+[exit code: 0]

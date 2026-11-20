@@ -1,0 +1,9 @@
+Convention check: the second character of the ordered divisor sum carries the cyclotomic twist. The (O.12) basis orders the unramified line first. The analytic degeneracy is the normalized substitution `f(dz)`; the scale of the basis column is separate. The model's dummy index zero is not an analytic constant term. There is no arithmetic-Frobenius mismatch.
+
+Scoped stop: `realized_branch` supplies the exact ramified Eisenstein clause of `LocalBlocks.newLine` and the projected coefficient comparison at one, given the actual constituent data. `ColumnRealization.expansion` computes the model column from a genuine level raise of the primitive form and a common coefficient lift. `RepInput.split` identifies the model representation over its coefficient field using the primitive good Hecke traces, unramifiedness, continuity, and semisimplicity. The source block's level forces the degeneracy index to be prime to the operator prime. The full Fourier comparison at one reduces to the complementary comparison.
+
+The actual primitive weight-two character-pair existence and positive expansion theorem, the labeled occurrence of those forms in the theta blocks, and the corresponding good-prime attachment remain named inputs. The other local lanes supply the complementary action and Fourier comparison for the full `LocalInput`.
+
+`Forms.lean`, `Galois.lean`, and `Branch.lean` compile individually with `lake env lean -j1`. All 22 theorem audits list only `propext`, `Classical.choice`, and `Quot.sound`. No printed leaf was added. See `docs/research/rc-o12-eis-constituents.md` and `scratch/rc-o12-eis-constituents/log.md`.
+
+Final verified proof and report SHA (parent of this handoff): `f2cac14f594ec11d4417379156c1d8dbbd1a8617`. The handoff commit's SHA is given by `git log -1 --format=%H -- .fleet/rc-o12-eis-constituents.md`.

@@ -1,0 +1,91 @@
+Retained assembly support-change edition — verification
+
+Source:
+  ZInQKernel/Contrib/RC53Assist/RetainedAssembly/SupportChange/Assembly.lean
+  SHA256 ff010bf18c43791908d2983517539436d96554cb4192a937fe3b93c1f8509cba
+  128160 bytes; 2427 lines
+
+Final source check:
+  LEAN_NUM_THREADS=6 taskset -c 0-15 nice -n 10 lake env lean \
+    ZInQKernel/Contrib/RC53Assist/RetainedAssembly/SupportChange/Assembly.lean
+  The prescribed toolchain environment was used.
+  Exit code: 0.
+  No errors or warnings.
+
+Final statement and axiom audit:
+  LEAN_NUM_THREADS=6 taskset -c 0-15 nice -n 10 lake env lean \
+    ZInQKernel/Contrib/RC53Assist/RetainedAssembly/SupportChange/Scratch/Audit.lean
+  The prescribed toolchain environment was used.
+  Exit code: 0.
+  No errors or warnings.
+  The source prefix of the audited scratch file equals Assembly.lean byte-for-byte.
+  All 223 requested axiom reports are present:
+    131 explicit declarations, 11 structure constructors, 81 field projections.
+  Three reports are axiom-free.
+  The axiom union is exactly propext, Classical.choice, Quot.sound.
+
+Principal reports, obtained with scratch #print axioms:
+
+  ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.supportControl_iff_actualResidualPackage
+    [propext, Classical.choice, Quot.sound]
+
+  ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.residualSupport_six_of_support_change
+    [propext, Classical.choice, Quot.sound]
+
+  ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.residualSupport_six_of_stage_dimensions
+    [propext, Classical.choice, Quot.sound]
+
+  ZInQ.Contrib.RC53Assist.RetainedAssembly.SupportChange.assemble_from_support_change
+    [propext, Classical.choice, Quot.sound]
+
+Exact statements and input projections are retained in StatementAudit.txt.
+Diagnostic commands are in Scratch/, not in Assembly.lean.
+
+Source checks:
+  All explicit declarations and all fields have kind and manuscript-locator docstrings.
+  No source line exceeds 100 characters.
+  The maximum heartbeat setting is 800000.
+  No proof gap, new axiom declaration, prohibited evaluation/implementation directive,
+  notation declaration, macro or syntax declaration occurs in Assembly.lean.
+  No wholesale Mathlib import occurs.
+  No private identifiers or external workspace paths occur in the new public source text.
+
+Historical preservation:
+  The four earlier reviewed deliverables were read and hashed again after the checks.
+  Each remains byte-for-byte unchanged:
+
+  Assembly.lean
+    a7406eaae3e511024fa719b7a56736536abae3487458bd43febbfc596deb7aa5
+  Inputs.md
+    1cab5e6da4a67d07813fc2fe8f4478c96db38b594c5b7eb394a5f8b31afba9b4
+  StatementAudit.txt
+    192bd374861a301c3d5ec17f836a7175d61067eaae86bc522eed9677c1e82ca6
+  Verification.txt
+    301a1c7564abbee67016c216554875d2b7233af377dd5585fa62e006f678f52a
+
+No existing reviewed file, version-control history, dependency pin or aggregate build
+was changed. No commit, checkout, dependency update, outreach or memory update occurred.
+Failed exploratory checks are retained separately; they are not presented as passes.
+
+What is proved:
+  The existential-width residual-control record is equivalent to the original actual
+  residual-finiteness/range/uniform-bound package under the stated setting.
+  A genuine residue-field support-change map and a proved Selmer-cone exact sequence
+  give the actual cohomological estimate from the canonical fixed reference complex.
+  Unramified cohomology is finite with range [0,1] and coefficient-rank bound two.
+  The local correction is finite with range [1,3] and bound six, when the stated full
+  local rank estimate is supplied.
+  The exact record ResidualSupportControl F R 6 is constructed after that estimate.
+  The original stage-local dimensions supply the full local bound via the named
+  cochain comparison, so the new assembler needs no additional numerical local bound.
+
+What remains conditional:
+  NekovarProp788ii K is an existing printed input, not proved by this contribution.
+  ActualSupportPresentation F R remains an open old-condition/coefficient/singleton-place
+  cochain identification; the fixed-support suppliers do not construct its fields.
+  The original stage-local dimensions and original stage-pairing arithmetic inputs remain
+  open. Arbitrary old conditions are not assumed to match the standard reference family.
+  The concrete local-form/trace normalization, unmatched complement obligations, arithmetic
+  label/localization matching and side-to-stage identifications are not proved here.
+  No unconditional arithmetic instance, independent review approval, integration or
+  completion of Theorem 5.3 is claimed.

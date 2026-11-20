@@ -1,0 +1,192 @@
+ZInQ.Contrib.RC53Assist.PullbackScalar.regular_weilDivisor_eq_zero.{u_1, u_2} {k : Type u_1} {K : Type u_2} [Field k]
+  [Field K] [Algebra k K] (hK : TauCeti.IsFunctionField k K) (hex : IsIntegrallyClosedIn k K)
+  (hg : TauCeti.genus k K = 1) {ω : Module.Dual k ↥(TauCeti.repartitionSpace k K)}
+  (hmem : ω ∈ TauCeti.weilDifferentialSpace k K) (hω : ω ≠ 0) (hreg : ω ∈ TauCeti.weilDifferentialFiltration 0) :
+  TauCeti.weilDifferentialDivisor hK hex hmem hω = 0
+'ZInQ.Contrib.RC53Assist.PullbackScalar.regular_weilDivisor_eq_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.constant_of_regular_weil_multiple.{u_1, u_2} {k : Type u_1} {K : Type u_2}
+  [Field k] [Field K] [Algebra k K] (hK : TauCeti.IsFunctionField k K) (hex : IsIntegrallyClosedIn k K)
+  (hg : TauCeti.genus k K = 1) {ω : Module.Dual k ↥(TauCeti.repartitionSpace k K)}
+  (hreg : ω ∈ TauCeti.weilDifferentialFiltration 0) (hω : ω ≠ 0) (c : K)
+  (hc : ((TauCeti.repartitionDualMul hK) c) ω ∈ TauCeti.weilDifferentialFiltration 0) : c ∈ Set.range ⇑(algebraMap k K)
+'ZInQ.Contrib.RC53Assist.PullbackScalar.constant_of_regular_weil_multiple' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.comparison_smul (K : Type) [Field K] [Algebra ℚ K]
+  (hK : TauCeti.IsFunctionField ℚ K) (e : ZInQ.Contrib.RC53Assist.PullbackScalar.KaehlerWeilComparison K hK) (c : K)
+  (η : Ω[K⁄ℚ]) : ↑(e (c • η)) = ((TauCeti.repartitionDualMul hK) c) ↑(e η)
+'ZInQ.Contrib.RC53Assist.PullbackScalar.comparison_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.weilPullback_regular {W₁ W₂ : WeierstrassCurve.Affine ℚ}
+  [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂] (β : TauCeti.Isogeny W₁ W₂)
+  (ω : ↥(TauCeti.weilDifferentialSpace ℚ W₂.FunctionField)) (hω : ↑ω ∈ TauCeti.weilDifferentialFiltration 0) :
+  ↑((ZInQ.Contrib.RC53Assist.PullbackScalar.weilPullback β) ω) ∈ TauCeti.weilDifferentialFiltration 0
+'ZInQ.Contrib.RC53Assist.PullbackScalar.weilPullback_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.comparison_pullback (C : ZInQ.Contrib.RC53Assist.PullbackScalar.ComparisonFamily)
+  (hC : ZInQ.Contrib.RC53Assist.PullbackScalar.CotraceCompatibility C) {W₁ W₂ : WeierstrassCurve.Affine ℚ}
+  [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂] (β : TauCeti.Isogeny W₁ W₂)
+  (η : Ω[W₂.FunctionField⁄ℚ]) :
+  (ZInQ.Contrib.RC53Assist.PullbackScalar.curveComparison C W₁) (β.pullbackDifferential η) =
+    (ZInQ.Contrib.RC53Assist.PullbackScalar.weilPullback β)
+      ((ZInQ.Contrib.RC53Assist.PullbackScalar.curveComparison C W₂) η)
+'ZInQ.Contrib.RC53Assist.PullbackScalar.comparison_pullback' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.pullbackCoefficientConstantGlue_of_comparison
+  (C : ZInQ.Contrib.RC53Assist.PullbackScalar.ComparisonFamily)
+  (hC : ZInQ.Contrib.RC53Assist.PullbackScalar.CotraceCompatibility C)
+  (hω : ZInQ.Contrib.RC53Assist.PullbackScalar.InvariantRegularity C) :
+  ZInQ.Contrib.CloudB3RC53.ModularWeil.PullbackCoefficientConstantGlue
+'ZInQ.Contrib.RC53Assist.PullbackScalar.pullbackCoefficientConstantGlue_of_comparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.Local.coordinate_partials_bezout.{u_1} {k : Type u_1} [Field k]
+  (W : WeierstrassCurve.Affine k) [WeierstrassCurve.IsElliptic W] :
+  ∃ a b,
+    a * (WeierstrassCurve.Affine.CoordinateRing.mk W) W.polynomialX +
+        b * (WeierstrassCurve.Affine.CoordinateRing.mk W) W.polynomialY =
+      1
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.coordinate_partials_bezout' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.Local.denominator_mul_derivativeY.{u_1} {k : Type u_1} [Field k]
+  (W : WeierstrassCurve.Affine k) [WeierstrassCurve.IsElliptic W] :
+  W.invariantDifferentialDenom * (TauCeti.derivativeOfSeparating ⋯) W.genericY =
+    -(algebraMap W.CoordinateRing W.FunctionField) ((WeierstrassCurve.Affine.CoordinateRing.mk W) W.polynomialX)
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.denominator_mul_derivativeY' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.Local.invariant_affine_expression.{u_1} {k : Type u_1} [Field k]
+  (W : WeierstrassCurve.Affine k) [WeierstrassCurve.IsElliptic W] {a b : W.CoordinateRing}
+  (hab :
+    a * (WeierstrassCurve.Affine.CoordinateRing.mk W) W.polynomialX +
+        b * (WeierstrassCurve.Affine.CoordinateRing.mk W) W.polynomialY =
+      1) :
+  W.invariantDifferential =
+    (algebraMap W.CoordinateRing W.FunctionField) b • (KaehlerDifferential.D k W.FunctionField) W.genericX +
+      -(algebraMap W.CoordinateRing W.FunctionField) a • (KaehlerDifferential.D k W.FunctionField) W.genericY
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.invariant_affine_expression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.Local.valuation_parameterAtInfinity.{u_1} {k : Type u_1} [Field k]
+  (W : WeierstrassCurve.Affine k) :
+  W.infinityPlace (ZInQ.Contrib.RC53Assist.PullbackScalar.Local.parameterAtInfinity W) = WithZero.exp (-1)
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.valuation_parameterAtInfinity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.Local.valuation_auxiliaryAtInfinity.{u_1} {k : Type u_1} [Field k]
+  (W : WeierstrassCurve.Affine k) :
+  W.infinityPlace (ZInQ.Contrib.RC53Assist.PullbackScalar.Local.auxiliaryAtInfinity W) = WithZero.exp (-3)
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.valuation_auxiliaryAtInfinity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.Local.valuation_differentialUnitAtInfinity.{u_1} {k : Type u_1} [Field k]
+  (W : WeierstrassCurve.Affine k) :
+  W.infinityPlace (ZInQ.Contrib.RC53Assist.PullbackScalar.Local.differentialUnitAtInfinity W) = 1
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.valuation_differentialUnitAtInfinity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.Local.invariant_infinity_expression.{u_1} {k : Type u_1} [Field k]
+  (W : WeierstrassCurve.Affine k) [WeierstrassCurve.IsElliptic W] :
+  W.invariantDifferential =
+    (ZInQ.Contrib.RC53Assist.PullbackScalar.Local.differentialUnitAtInfinity W)⁻¹ •
+      (KaehlerDifferential.D k W.FunctionField) (ZInQ.Contrib.RC53Assist.PullbackScalar.Local.parameterAtInfinity W)
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.invariant_infinity_expression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.Local.invariant_mem_localKaehlerSpace.{u_1} {k : Type u_1} [Field k]
+  (W : WeierstrassCurve.Affine k) [WeierstrassCurve.IsElliptic W] (P : TauCeti.Place k W.FunctionField) :
+  W.invariantDifferential ∈ ZInQ.Contrib.RC53Assist.PullbackScalar.Local.localKaehlerSpace P
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.invariant_mem_localKaehlerSpace' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.comparison_regular_of_local
+  (C : ZInQ.Contrib.RC53Assist.PullbackScalar.ComparisonFamily)
+  (hL : ZInQ.Contrib.RC53Assist.PullbackScalar.LocalExactRegularity C) (K : Type) [Field K] [Algebra ℚ K]
+  (hK : TauCeti.IsFunctionField ℚ K) (hex : IsIntegrallyClosedIn ℚ K) (η : Ω[K⁄ℚ])
+  (hη : ∀ (P : TauCeti.Place ℚ K), η ∈ ZInQ.Contrib.RC53Assist.PullbackScalar.Local.localKaehlerSpace P) :
+  ↑((C K hK hex) η) ∈ TauCeti.weilDifferentialFiltration 0
+'ZInQ.Contrib.RC53Assist.PullbackScalar.comparison_regular_of_local' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.invariantRegularity_of_localExactRegularity
+  (C : ZInQ.Contrib.RC53Assist.PullbackScalar.ComparisonFamily)
+  (hL : ZInQ.Contrib.RC53Assist.PullbackScalar.LocalExactRegularity C) :
+  ZInQ.Contrib.RC53Assist.PullbackScalar.InvariantRegularity C
+'ZInQ.Contrib.RC53Assist.PullbackScalar.invariantRegularity_of_localExactRegularity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.pullbackCoefficientConstantGlue_of_residueComparison
+  (h : ZInQ.Contrib.RC53Assist.PullbackScalar.RationalResidueComparisonFact) :
+  ZInQ.Contrib.CloudB3RC53.ModularWeil.PullbackCoefficientConstantGlue
+'ZInQ.Contrib.RC53Assist.PullbackScalar.pullbackCoefficientConstantGlue_of_residueComparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.PullbackScalar.isogenyScalarRationalGlue_of_residueComparison
+  (h : ZInQ.Contrib.RC53Assist.PullbackScalar.RationalResidueComparisonFact) :
+  ZInQ.Contrib.CloudB3RC53.ModularWeil.IsogenyScalarRationalGlue
+'ZInQ.Contrib.RC53Assist.PullbackScalar.isogenyScalarRationalGlue_of_residueComparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@[reducible] def ZInQ.Contrib.RC53Assist.PullbackScalar.KaehlerWeilComparison : (K : Type) →
+  [inst : Field K] → [inst_1 : Algebra ℚ K] → TauCeti.IsFunctionField ℚ K → Type :=
+fun K [Field K] [Algebra ℚ K] hK => Ω[K⁄ℚ] ≃ₗ[K] ↥(TauCeti.weilDifferentialSpace ℚ K)
+def ZInQ.Contrib.RC53Assist.PullbackScalar.ComparisonFamily : Type 1 :=
+(K : Type) →
+  [inst : Field K] →
+    [inst_1 : Algebra ℚ K] →
+      (hK : TauCeti.IsFunctionField ℚ K) →
+        IsIntegrallyClosedIn ℚ K → ZInQ.Contrib.RC53Assist.PullbackScalar.KaehlerWeilComparison K hK
+def ZInQ.Contrib.RC53Assist.PullbackScalar.CotraceCompatibility : ZInQ.Contrib.RC53Assist.PullbackScalar.ComparisonFamily →
+  Prop :=
+fun C =>
+  ∀ (K L : Type) [inst : Field K] [inst_1 : Field L] [inst_2 : Algebra ℚ K] [inst_3 : Algebra ℚ L]
+    [inst_4 : Algebra K L] [inst_5 : IsScalarTower ℚ K L] [inst_6 : FiniteDimensional K L]
+    [inst_7 : Algebra.IsSeparable K L] (hK : TauCeti.IsFunctionField ℚ K) (hL : TauCeti.IsFunctionField ℚ L)
+    (hexK : IsIntegrallyClosedIn ℚ K) (hexL : IsIntegrallyClosedIn ℚ L) (η : Ω[K⁄ℚ]),
+    (C L hL hexL) ((KaehlerDifferential.map ℚ ℚ K L) η) = (TauCeti.weilDifferentialCotrace ℚ L hK hL) ((C K hK hexK) η)
+def ZInQ.Contrib.RC53Assist.PullbackScalar.LocalExactRegularity : ZInQ.Contrib.RC53Assist.PullbackScalar.ComparisonFamily →
+  Prop :=
+fun C =>
+  ∀ (K : Type) [inst : Field K] [inst_1 : Algebra ℚ K] (hK : TauCeti.IsFunctionField ℚ K)
+    (hex : IsIntegrallyClosedIn ℚ K) (P : TauCeti.Place ℚ K) (f g : K),
+    f ∈ P.integers →
+      g ∈ P.integers → (TauCeti.repartitionDualComponent (↑((C K hK hex) ((KaehlerDifferential.D ℚ K) f))) P) g = 0
+def ZInQ.Contrib.RC53Assist.PullbackScalar.RationalResidueComparisonFact : Prop :=
+∃ C,
+  ZInQ.Contrib.RC53Assist.PullbackScalar.CotraceCompatibility C ∧
+    ZInQ.Contrib.RC53Assist.PullbackScalar.LocalExactRegularity C
+def ZInQ.Contrib.CloudB3RC53.ModularWeil.PullbackCoefficientConstantGlue : Prop :=
+∀ (E₁ E₂ : WeierstrassCurve ℚ) [E₁.IsElliptic] [E₂.IsElliptic] (β : TauCeti.Isogeny E₁.toAffine E₂.toAffine)
+  (c : E₁.toAffine.FunctionField),
+  c • E₁.toAffine.invariantDifferential = β.pullbackDifferential E₂.toAffine.invariantDifferential →
+    c ∈ Set.range ⇑(algebraMap ℚ E₁.toAffine.FunctionField)
+def ZInQ.Contrib.CloudB3RC53.ModularWeil.IsogenyScalarRationalGlue : Prop :=
+∀ (E₁ E₂ : WeierstrassCurve ℚ),
+  E₁.IsElliptic →
+    E₂.IsElliptic →
+      ∀ (β : TauCeti.Isogeny E₁.toAffine E₂.toAffine),
+        ∃ r, r ≠ 0 ∧ ZInQ.Contrib.CloudB3RC53.ModularWeil.IsPullbackScalar β r
+'ZInQ.Contrib.RC53Assist.PullbackScalar.KaehlerWeilComparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.ComparisonFamily' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.CotraceCompatibility' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.curveComparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.InvariantRegularity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.weilPullback' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.parameterAtInfinity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.auxiliaryAtInfinity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.differentialUnitAtInfinity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.Local.localKaehlerSpace' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.LocalExactRegularity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.PullbackScalar.RationalResidueComparisonFact' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
