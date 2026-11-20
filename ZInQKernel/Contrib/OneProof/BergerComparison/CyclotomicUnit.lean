@@ -275,11 +275,13 @@ theorem exists_small_power_of_correction (u : T) (hu : ‖(u.untilt : Cₚ) + 1�
 /-- There is a positive power of the unit correction to which the
 Witt-lift logarithm applies. -/
 theorem exists_cyclotomic_small_unit {ε : T} (hε : IsGenEps p ε) :
-    ∃ (u : T) (m : ℕ), 0 < m ∧ (ε - 1)^(p - 1) = (pFlat p)^p * u^p ∧
+    ∃ (u : T) (m : ℕ), 0 < m ∧ (ε - 1)^(p - 1) = (pFlat p)^p * u ∧
       (p : O) ∣ (u^m).untilt - 1 := by
   obtain ⟨u, he, hsmall⟩ := exists_cyclotomic_correction p hε
   obtain ⟨m, hm, hx⟩ := exists_small_power_of_correction p u hsmall
-  exact ⟨u, m, hm, he, hx⟩
+  refine ⟨u^p, m, hm, he, ?_⟩
+  rw [← pow_mul, Nat.mul_comm p m, pow_mul, map_pow]
+  exact hx.trans (by simpa only [one_pow] using sub_dvd_pow_sub_pow (u^m).untilt 1 p)
 
 /-- A coordinate built from the cyclotomic correction and a near-one
 logarithm. Compatibility with a particular branch requires the
