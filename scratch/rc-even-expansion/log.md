@@ -13,3 +13,5 @@ VERIFIED: the requested old-stage merge succeeded; see `merge.txt`.
 VERIFIED (tex 7898–7910, 7929–7934, 7813–7817): the manuscript's additive projection is on every integral frequency, including indices with square factors; only the subsequent phase comparison uses the full odd squarefree filter. The manuscript already describes the additive realization of the mask.
 
 VERIFIED: `Jacobi.jacobiTheta_fourth_transform` compiles. The fourth power transforms in weight two on Gamma0(4). The proof uses Poisson inversion at the Fricke map, then centered Euclidean reduction by upper and lower unipotents. All 13 theorem audits are standard.
+
+VERIFIED: `Projector.dual_orthogonality` compiles and its axioms are standard. The normalized sum over the dual of a finite group equals the indicator of the fixed label.
