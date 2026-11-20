@@ -5,9 +5,9 @@ The manuscript *Z is Diophantine in Q* (the November 5, 2026 text that the Lean 
 coefficients such that a rational number q is an integer exactly when P(q, w) = 0 for some tuple w of rational
 numbers. This project checks that proof in the Lean 4 proof assistant, with the Mathlib library.
 
-- Development fork: https://github.com/Deicyde/diophantine-z-q. This file describes the Lean state of fork main
-  8579961f (2026-11-20), where a single Lean theorem, `ZInQ.OneProof.frozenTarget`, proves the manuscript's Theorem 1.1
-  from exactly the statements that are still open.
+- Development fork: https://github.com/Deicyde/diophantine-z-q. This file describes the Lean state after the
+  rank-one fold (2026-11-20), where a single Lean theorem, `ZInQ.OneProof.frozenTarget`, proves the manuscript's
+  Theorem 1.1 from exactly the statements that are still open.
 - Upstream: https://github.com/elliotglazer/diophantine-z-q. Its pull request #139 holds this fork as of c1e4ed1b,
   before the switch away from Route K (below).
 - Start here to help: https://github.com/Deicyde/diophantine-z-q/issues/14 explains how to pick an open statement,
@@ -20,7 +20,7 @@ The open statements of the current proof (generated from docs/one-proof/OPEN.md;
 in the Glossary at the end):
 
 <!-- open-count:begin -->
-**22 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves73`), plus four hypotheses outside the H part (`hRC`, `hCT`, `hB`, `hK`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end of docs/one-proof/OPEN.md.
+**22 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves73`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end of docs/one-proof/OPEN.md.
 
 * **Strict count: 4 published / 18 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * By kind: consequence 13, published 9.
@@ -31,24 +31,20 @@ in the Glossary at the end):
 
 - **Proved in Lean, with no gaps:** the manuscript's Theorem 1.1, in exactly the form frozen upstream, follows from
   two inputs: H, one instance of the manuscript's six-contact height estimate (Theorem 4.1), and pole completeness
-  (Theorem 5.2) for the manuscript's own pole polynomial. Lean also proves pole completeness the way the manuscript
-  does, from its restricted converse theorem (Theorem 5.3), the Cassels–Tate pairing on its curves (Poonen–Stoll; Lean
-  proves the manuscript's Lemma 5.4 from it), the modularity of elliptic curves over Q as printed
-  (Breuil–Conrad–Diamond–Taylor, Theorem A, stated in Lean at some level) and a consequence of it and Kolyvagin's
-  Theorem 1 together.
-  This is the manuscript's route. Lean proves everything else, including every finite computation about the
-  polynomial.
+  (Theorem 5.2) for the manuscript's own pole polynomial. Lean proves pole completeness from the restricted converse
+  theorem (Theorem 5.3), the Cassels–Tate pairing on its curves (from which Lean proves Lemma 5.4), and the rank-one
+  line of Silverman's *The Arithmetic of Elliptic Curves*, 2nd ed., Appendix C, Evidence 16.5.5, p. 453.
+  The construction is the manuscript's; the textbook citation replaces the two previous forward-rank inputs.
 - **Reduced in Lean:** H follows from 22 statements that are still open, and Lean proves every step from them to H
   (`HDec.HSyn.sixContactMin_of_open92`, the H part of `ZInQ.OneProof.frozenTarget`). By the project's ratings, 9 of
   them are published theorems (some specialized or weakened) and 13 are consequences of published theorems or of the
   manuscript's own text. Under the strict count, which also requires that a reader has checked the statement against
   the printed page, 4 of the 22 count as published statements in their printed form and 18 do not.
-- **Open:** the 22 statements behind H, and the four inputs of pole completeness: the manuscript's Theorem 5.3, the
-  Cassels–Tate pairing, Breuil–Conrad–Diamond–Taylor's Theorem A, and a consequence of it and Kolyvagin's theorem.
+- **Open:** the 22 statements behind H and the three inputs of pole completeness: the manuscript's Theorem 5.3,
+  the Cassels–Tate pairing, and Silverman's rank-one implication.
 
-These 26 statements are exactly the hypotheses of `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`).
-Folding in a proof of one removes it from that theorem. The count block above is regenerated at every landing; the
-numbers in the prose describe fork main 8579961f.
+These 25 statements are exactly the hypotheses of `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`).
+Folding in a proof can remove a hypothesis from that theorem. The count block above is generated from the Lean type.
 
 ## How far to trust each part
 
@@ -58,11 +54,10 @@ numbers in the prose describe fork main 8579961f.
 | Theorem 1.1 from H and pole completeness | proved in Lean (`ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`) |
 | H, the manuscript's Theorem 4.1 (one instance) | unrefereed; its new arguments reviewed only by AI models; in Lean, derived from 22 open statements (next row) |
 | H from 22 open statements | proved in Lean, in the module chain under `ZInQKernel/OneProof/H/` and `ZInQKernel/Contrib/OneProof/` (built with `ZInQKernel/OneProof/Main.lean`, outside the default library target) |
-| Pole completeness, the manuscript's Theorem 5.2 | proved in Lean from four hypotheses, with the manuscript's Lemma 5.4 proved from the Cassels–Tate pairing (`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`) |
+| Pole completeness, the manuscript's Theorem 5.2 | proved in Lean from three hypotheses, with the manuscript's Lemma 5.4 proved from the Cassels–Tate pairing (`ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne`) |
 | Theorem 5.3 (restricted converse) of the manuscript | unrefereed; assumed |
-| The Cassels–Tate pairing on the curves of Theorem 5.3 | a direct instance of a published statement (Poonen and Stoll's restatement of Cassels' theorem, specialized to these curves); assumed |
-| Breuil–Conrad–Diamond–Taylor, Theorem A | the printed theorem, with condition (2) of their Introduction (L(E, s) = L(f, s) for an eigenform f of weight 2; Lean states it at some level N rather than the conductor); Lean derives from it the form the proof uses; assumed |
-| Kolyvagin, Theorem 1 (the case of rank one; the cited print is a 1990 MPIM preprint) | a consequence of it together with Breuil–Conrad–Diamond–Taylor's Theorem A, in the form the proof uses; assumed |
+| The Cassels–Tate pairing on the curves of Theorem 5.3 | Poonen and Stoll's restatement of Cassels' theorem, specialized to these curves; assumed; classified as glue pending a check against a source that proves it |
+| Silverman, Appendix C, Evidence 16.5.5, p. 453 | the analytic-rank-one to Mordell–Weil-rank-one implication, without the finite-Sha conclusion; assumed; AI-READ, human statement check pending |
 | Theorem 1.1 from exactly the statements that are still open | proved in Lean (`ZInQ.OneProof.frozenTarget`) |
 
 "Proved in Lean" means the Lean kernel checked it, with no `sorry` (unproved step), no `native_decide` (trusted
@@ -86,9 +81,9 @@ The headline Lean theorem is
 (`ZInQKernel/MainGreenTao.lean`), with the two hypotheses `hH : SixContactMin` and `hPC : PoleCompleteness`.
 `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`) applies it to H and to pole completeness. It takes the
 open statements of H as the fields of `HDec.HSyn.OpenResearchLeaves73` and `HDec.HSyn.OpenAddedLeaves28` (the third
-bundle, `HDec.HSyn.OpenTextbookLeaves18`, has no open field left), and the four inputs of pole completeness as the
+bundle, `HDec.HSyn.OpenTextbookLeaves18`, has no open field left), and the three inputs of pole completeness as the
 hypotheses `hRC` (Theorem 5.3), `hCT` (the Cassels–Tate pairing on the curves of Theorem 5.3, from which Lean proves
-Lemma 5.4), `hB` (Breuil–Conrad–Diamond–Taylor, Theorem A as printed) and `hK` (Kolyvagin, Theorem 1, with BCDT Theorem A), and nothing else.
+Lemma 5.4), and `hRank` (Silverman's forward rank-one implication), and nothing else.
 
 ## The open statements
 
@@ -130,21 +125,16 @@ of Fowler's Proposition 2.7 (then the field `fowlerProp27`) and of `cmjDegree` a
 print and checked each quote and step. docs/one-proof/reviews.tsv records these two as human readings, the first ones
 recorded; neither changes a count.
 
-### Pole completeness (4)
+### Pole completeness (3)
 
 Pole completeness is the manuscript's Theorem 5.2 for its own pole polynomial (whose solutions give points on its
-curves E_ℓ: y² = x(x − ℓ)(x + 3ℓ); `diophantine_zq.tex` lines 976-986 and 1001-1004). Lean proves it from four
-statements, as the manuscript does: `hRC`, the manuscript's Theorem 5.3 (the restricted converse), stated over the
-genuine 2-primary Selmer group; `hCT`, the Cassels–Tate pairing on the curves E_ℓ, in the form in which Poonen and
-Stoll state Cassels' theorem (Ann. of Math. 150 (1999), Introduction), the source the manuscript cites for its Lemma
-5.4, which Lean proves from it (docs/research/cassels-tate-pairing.md, with docs/research/lemma54-ct.md for the step
-from the square property); `hB`, Breuil–Conrad–Diamond–Taylor's Theorem A as printed, read with condition (2) of
-their Introduction (L(E, s) = L(f, s) for an eigenform f of weight 2, stated in Lean at some level), from which Lean
-proves the form the proof uses (fork PR #142, `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed`); and `hK`, a
-consequence of Kolyvagin's Theorem 1 in the case of rank one together with BCDT Theorem A, which with Shimura's
-construction and Faltings' isogeny theorem supplies Kolyvagin's premise, a parametrization by X₀(N) with N the
-conductor (the cited print is Kolyvagin's 1990 MPIM preprint). The project rates `hCT` and `hB` published statements in their
-printed form, `hK` a consequence of these theorems, and `hRC` the manuscript's own theorem. Fork PR #110 reduces Theorem 5.3 in Lean to step-level hypotheses along the manuscript's
+curves E_ℓ: y² = x(x − ℓ)(x + 3ℓ); `diophantine_zq.tex` lines 976–986 and 1001–1004). Lean proves it from three
+statements: `hRC`, the manuscript's Theorem 5.3 (the restricted converse), stated over the genuine 2-primary Selmer
+group; `hCT`, the Cassels–Tate pairing on the same curves in Poonen and Stoll's restatement of Cassels' theorem
+(Ann. of Math. 150 (1999), Introduction), from which Lean proves Lemma 5.4; and `hRank`, Silverman's forward rank-one
+implication (2nd ed., Appendix C, Evidence 16.5.5, p. 453). The last replaces `hB` and `hK` at this root, without
+changing the pole construction or using the finiteness of Sha. A human statement check of `hRank` is pending.
+Fork PR #110 reduces Theorem 5.3 in Lean to step-level hypotheses along the manuscript's
 Sections 7–9 and Appendices E–G (`ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves`); `frozenTarget`
 still takes it as one hypothesis, because some of those steps still state their conclusions directly.
 
