@@ -19,3 +19,7 @@ Finite identity stage:
 
 - VERIFIED (Lake): the Kato and family imports built with the serial compiler wrapper. Compatible compiled artifacts were reused only when the source closures agreed byte for byte.
 - VERIFIED (Lean): the full-index range is exactly disjointness from `Sig`; the primitive divisor introduces exactly `unusedPrimes`; repeated two introduces no factor on the covered range. `finite_e1` gives the product formula from that norm and the two transfer laws, with `constituentWeight` retaining both conductor parts. The signed deck sum detected by the abstract reciprocity field is not killed by any nonzero natural number. All twelve finite-identity axiom checks pass.
+
+Shapiro stage:
+
+- VERIFIED (Lean and Lake): the Shapiro imports built; `ShapiroTransfer.lean` proves naturality of inverse Shapiro for the upper coefficient map, then equality with unnormalized corestriction on continuous cochains and on `H¹`. All four axiom checks pass. This proves the map-level bridge independently of the arithmetic identification of the retained input and the finite cyclotomic tensor representation.
