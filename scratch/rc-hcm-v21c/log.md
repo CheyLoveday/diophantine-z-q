@@ -59,3 +59,16 @@ the quadratic sum reindexes by inversion. The geometry file uses the
 kernel, descent and Tate modules directly, with the three small
 comparison proofs adapted from `GRUniformQuasiInverse`. It does not
 import the latter's unrelated height and effective isogeny dependencies.
+
+**VERIFIED (Lean 4.35.0):** `PrimeToGeometry` passed with the in-tree
+étaleness theorem applied to the abelian scheme of the given abelian
+variety. As a result, the saturation theorem needs only nonzero image
+of the prime in the field, rather than three multiplication-morphism
+instances and surjectivity on geometric points.
+
+**VERIFIED (axioms):** All nine files passed `lake env lean`.
+`lake env lean scratch/rc-hcm-v21c/Axioms.lean` exited successfully and
+audited all 63 new theorems (50 public, 13 private). The union of their
+axioms is exactly `propext`, `Classical.choice`, and `Quot.sound`.
+The printed candidate is a definition of a proposition, and no proof
+takes it as an input.
