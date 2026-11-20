@@ -198,3 +198,8 @@ calculation. On the variable it follows from the logarithmic Galois
 shift and its scaling by Frobenius. This proves `FrobeniusTransport`;
 the map also intertwines Frobenius and its restriction along the
 inclusion of the Fontaine ring.
+
+`SemistableComparison.lean` compiled with `lake env lean`. The
+cyclotomic adjunction is the same source ring, so the checked map
+transports a fixed basis and gives `BergerPaperStComparison` without
+changing the representation or finite extension.
