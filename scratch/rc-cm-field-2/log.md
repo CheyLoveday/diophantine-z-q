@@ -49,3 +49,7 @@ VERIFIED (Lean): `Kronecker.lean` proves `kroneckerCongruence_of_prime` for the 
 
 VERIFIED (Lean): `Factorization.lean` proves the product with multiplicities at every analytic specialization. For transcendental parameters, coincident translates would give a nonzero quadratic relation over ℚ; the vanishing coefficient case forces the two triangular representatives to agree. The monic degree count at such parameters is extended by density and continuity. `CosetLattice.lean` constructs a cyclic sublattice for each specialized root, proves surjectivity of analytic j, and transfers a detected cyclic self-isogeny degree to every embedded conjugate. All declarations checked with the three standard axioms.
 
+### Algebraic integrality
+
+VERIFIED (Lean): `Integrality.lean` proves `singularModulus_isIntegral` for every proper invertible ideal in an imaginary quadratic order. The integer index of a scaled sublattice equals the real determinant of multiplication, i.e. squared complex norm. The basis `[1,ω]` and invertibility show that a scalar `n+ω` is primitive in the ideal's multiplier ring. The nonsquare norm lemma and the cyclic quotient criterion then give the monic equation. The same file verifies the norm identity for principal integral ideals and the prime-level diagonal equation for any order multiplier of prime norm. The axiom checks returned only `propext`, `Classical.choice`, and `Quot.sound`.
+
