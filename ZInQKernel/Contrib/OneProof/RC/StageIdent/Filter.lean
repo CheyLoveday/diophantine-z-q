@@ -142,5 +142,15 @@ bits suffice for the second division. This holds before choosing the stage. -/
 theorem reading_budget (B : ℕ) : B ≤ (B - 1) + 1 ∧ 2 ≤ (2 : ℕ) := by
   omega
 
+#print axioms sourceFilter
+#print axioms stageTest_not_dvd
+#print axioms labelsAtStages
+#print axioms labelsAtStages_prime_precision
+#print axioms sourceFilter_eq
+#print axioms bad_mem_support
+#print axioms support_dvd_type
+#print axioms pmLocal_base_support
+#print axioms rodd_atStage
+#print axioms reading_budget
 
 end ZInQ.Manuscript.RC.StageIdent

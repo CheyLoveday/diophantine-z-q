@@ -109,5 +109,15 @@ theorem nuF_volume (a : Fin 3 → ℕ) :
 theorem nuF_eq_normalizedHaar (a : Fin 3 → ℕ) : nuF a = normalizedHaar a := by
   rw [nuF, cylinderMass_eq, normalizedHaar]
 
+#print axioms padicIntegers_compact
+#print axioms padicIntegers_open
+#print axioms localLattice_compact
+#print axioms localLattice_open
+#print axioms localHaar_volume
+#print axioms localHaar_volume_good
+#print axioms rectangular_iff_local
+#print axioms cylinderMass_eq
+#print axioms nuF_volume
+#print axioms nuF_eq_normalizedHaar
 
 end ZInQ.Manuscript.RC.Intertwine2

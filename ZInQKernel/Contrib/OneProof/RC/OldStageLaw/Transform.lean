@@ -72,5 +72,9 @@ theorem halfIntegral_of_finiteAction {a : Fin 3 → ℕ} [∀ i, NeZero (2 * a i
   rw [hθ', h]
   ring
 
+#print axioms gridTheta_reference
+#print axioms gridTheta_scale
+#print axioms theta_ne_zero
+#print axioms halfIntegral_of_finiteAction
 
 end ZInQ.Manuscript.RC.OldStageLaw

@@ -36,5 +36,7 @@ the Schwartz weight and an integer lift of the same finite function. -/
 abbrev visibilityStage :=
   PM.visibilityStage (O := O) G.geometry (evaluationAt v C hg hodd M hagree row hrow hsq) L
 
+#print axioms appFStage
+#print axioms visibilityStage
 
 end ZInQ.Manuscript.RC.PMGeometry

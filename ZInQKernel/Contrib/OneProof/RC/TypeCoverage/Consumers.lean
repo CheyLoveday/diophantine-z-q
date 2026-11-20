@@ -122,5 +122,14 @@ theorem unchanged_char_cannot_detect {L : Type} [AddCommGroup L] {ε : L →+ ZM
   fun hs => no_good_mem_stationary htyp
     (fun _ h => chooseFrob_spec frobeniusExists h.1) hs hq hqS
 
+#print axioms fresh_outside_support
+#print axioms old_good
+#print axioms test_coprime_old
+#print axioms levelSetup
+#print axioms test_coprime_common
+#print axioms inertiaOn_of_atLevel
+#print axioms window_hseed
+#print axioms window_hexcl
+#print axioms unchanged_char_cannot_detect
 
 end ZInQ.Manuscript.RC.TypeCoverage

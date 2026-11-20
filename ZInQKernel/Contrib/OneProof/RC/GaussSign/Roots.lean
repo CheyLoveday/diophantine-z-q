@@ -193,5 +193,12 @@ theorem eval_oddProduct_negativeRoot (p m : ℕ) [Fact p.Prime] (hm : 2 * m + 1 
   have hr : A = Real.sqrt p := (Real.sqrt_sq hA.le).symm.trans (congrArg Real.sqrt hAsq)
   rw [he, hr]
 
+#print axioms prod_odd_complement
+#print axioms eval_oddProduct_sq
+#print axioms negativeRoot_primitive
+#print axioms root_difference_sine
+#print axioms sine_sign
+#print axioms prod_signs
+#print axioms eval_oddProduct_negativeRoot
 
 end ZInQ.Manuscript.RC.GaussSign

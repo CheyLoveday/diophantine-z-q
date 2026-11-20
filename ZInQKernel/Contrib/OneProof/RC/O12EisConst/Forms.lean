@@ -125,5 +125,12 @@ theorem ColumnRealization.expansion (F : BaseForm E c) (k : D →+* X.K)
   unfold degenerate
   split <;> simp [mapPair_coeff]
 
+#print axioms map_ramified
+#print axioms map_divisorCoeff
+#print axioms mapPair_coeff
+#print axioms coeff_one
+#print axioms BaseForm.atLevel_character
+#print axioms BaseForm.atLevel_coeff
+#print axioms ColumnRealization.expansion
 
 end ZInQ.Manuscript.RC.O12EisConst

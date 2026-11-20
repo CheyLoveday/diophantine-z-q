@@ -161,5 +161,11 @@ theorem localFourier_coset (a : Fin 3 → ℕ) (p : Place) (c y : LocalVectors p
       exact ht' (mul_right_cancel₀ hc (h.trans (one_mul _).symm))
     rw [ite_eq_right hy, hz, mul_zero]
 
+#print axioms singlePhase
+#print axioms localPhase_add
+#print axioms localPhase_eq_one
+#print axioms finitePhase_finprod
+#print axioms local_annihilator
+#print axioms localFourier_coset
 
 end ZInQ.Manuscript.RC.Intertwine2

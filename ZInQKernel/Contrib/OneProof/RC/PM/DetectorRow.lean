@@ -44,5 +44,7 @@ theorem ofTateRow_row_proj (b : TateMod A 2 →ₗ[ℤ_[2]] ℤ_[2]) (hell : ell
   simpa only [ofTateRow, AddMonoidHom.comp_apply, AddEquiv.coe_toAddMonoidHom,
     AddEquiv.symm_apply_apply] using finiteRow_proj b M t
 
+#print axioms ofTateRow
+#print axioms ofTateRow_row_proj
 
 end ZInQ.Manuscript.RC.PM.Evaluation

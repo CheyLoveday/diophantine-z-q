@@ -193,5 +193,12 @@ theorem gridTheta_inversion (ha : ∀ i, 0 < a i) (w : Grid a → ℂ) (z : ℍ)
   unfold offset
   ring
 
+#print axioms gridTheta_holo
+#print axioms line_translate
+#print axioms gridTheta_translate
+#print axioms twist_eq_of_integral
+#print axioms jacobi_residues
+#print axioms split_inversionFactor
+#print axioms gridTheta_inversion
 
 end ZInQ.Manuscript.RC.OldStageLaw

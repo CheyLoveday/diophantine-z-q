@@ -150,3 +150,6 @@ theorem root_readings_on_window (hB : P.pool.card + 1 ≤ B) (hbudget : B ≤ W 
 
 end ZInQ.Manuscript.RC.O12Realize
 
+#print axioms ZInQ.Manuscript.RC.O12Realize.expansions_on_window
+#print axioms ZInQ.Manuscript.RC.O12Realize.readings_on_window
+#print axioms ZInQ.Manuscript.RC.O12Realize.root_readings_on_window

@@ -63,5 +63,8 @@ theorem index_products (γ : FiniteIndexFamily) (hγ : WeilIndexProductFormula �
       realIndex (rationalDiagonal a) * finiteIndex γ (rationalDiagonal referenceForm) = 1 := by
   exact ⟨(hγ _).2, realIndex_reference a ▸ (hγ (rationalDiagonal referenceForm)).2⟩
 
+#print axioms realIndex_positive_ternary
+#print axioms realIndex_reference
+#print axioms index_products
 
 end ZInQ.Manuscript.RC.Intertwine2

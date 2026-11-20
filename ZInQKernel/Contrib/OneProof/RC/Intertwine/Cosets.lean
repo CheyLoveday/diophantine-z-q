@@ -108,5 +108,11 @@ theorem J_twist (n : ℤ) (w : Grid a → ℂ) :
   intro x r hx
   exact phase_on_coset M n r ((residue_eq_some M).mp hx)
 
+#print axioms coset_exists
+#print axioms coset_unique
+#print axioms residue_eq_some
+#print axioms residue_eq_none
+#print axioms J_injective
+#print axioms J_twist
 
 end ZInQ.Manuscript.RC.Intertwine

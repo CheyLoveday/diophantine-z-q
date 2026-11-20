@@ -161,5 +161,10 @@ theorem lamOf_reduction_at {a b : ℚ} {R : Order a b}
 
 end Datum
 
+#print axioms InputsAtDatum.point_reduction
+#print axioms InputsAtDatum.lift_at_conjugate
+#print axioms conjugate
+#print axioms datumReduction
+#print axioms lamOf_reduction_at
 
 end ZInQ.Manuscript.RC.PMGeometry

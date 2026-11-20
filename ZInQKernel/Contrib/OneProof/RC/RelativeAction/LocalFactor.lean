@@ -192,5 +192,16 @@ theorem extracted_product_scalar {P : Type*} (places : Finset P) (Î± h lam : P â
   push_cast
   rfl
 
+#print axioms conjugate_fixes
+#print axioms triangular_pair
+#print axioms conjugate_lower_matrix
+#print axioms fixes_of_generators
+#print axioms spherical_pair
+#print axioms extracted_unit_cell
+#print axioms inverse_upper_left
+#print axioms positive_odd_representative
+#print axioms jacobi_prod_den
+#print axioms extracted_squarefree_symbols
+#print axioms extracted_product_scalar
 
 end ZInQ.Manuscript.RC.RelativeAction

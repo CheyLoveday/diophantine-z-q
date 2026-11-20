@@ -149,5 +149,10 @@ theorem pair_of_tensor_generators
   exact ⟨hlift, adelic_pair_comparison E E₀ eval eval₀ heval heval₀ hE hE₀ R R₀ lift
     _ _ _ hi hi₀ hT hT₀ hW hW₀⟩
 
+#print axioms classDelta_eval
+#print axioms sum_classDelta
+#print axioms linear_eq_of_classDelta
+#print axioms generator_descriptions
+#print axioms pair_of_tensor_generators
 
 end ZInQ.Manuscript.RC.Intertwine2

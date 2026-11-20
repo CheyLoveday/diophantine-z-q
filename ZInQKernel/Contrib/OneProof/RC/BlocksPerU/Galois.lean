@@ -167,5 +167,13 @@ def Inventory.attachment (hfrob : ∀ q, T.Good q → IsFrobAt (frob q) q) :
       ((hc q.val q.property).of_dvd_right (X.sourceLevel_dvd i))
       (hfrob q.val q.property.1)
 
+#print axioms SourceAttachment.ofCusp
+#print axioms SourceAttachment.ofEis
+#print axioms SourceAttachment.cusp_restrict
+#print axioms SourceAttachment.eis_restrict
+#print axioms Inventory.sourceLevel_dvd
+#print axioms Inventory.cusp_data
+#print axioms Inventory.eis_data
+#print axioms Inventory.attachment
 
 end ZInQ.Manuscript.RC.BlocksPerU

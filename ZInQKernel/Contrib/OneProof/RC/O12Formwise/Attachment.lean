@@ -112,5 +112,9 @@ theorem seed_good_recursion {U : Finset ℕ} {q : ℕ} (hq : T.Good q) (hqU : q 
     · exact (A.base i).goodRec (Q := Test T avoid) ⟨hq, ha⟩ hq.1
   exact h.degeneracy hq.1.pos (A.degree_pos i) (hc.of_dvd_right (N.degree_dvd i)).symm
 
+#print axioms good_values
+#print axioms seed_good_polynomial
+#print axioms seed_unramified
+#print axioms seed_good_recursion
 
 end ZInQ.Manuscript.RC.O12Formwise

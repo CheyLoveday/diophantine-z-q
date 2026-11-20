@@ -215,3 +215,10 @@ theorem rulesUpTo_of_windows {W : ℕ} (htyp : IsTypeChar T χ) (hap : ApEven T 
 
 end ZInQ.Manuscript.RC.O12Realize
 
+#print axioms ZInQ.Manuscript.RC.O12Realize.o12_at
+#print axioms ZInQ.Manuscript.RC.O12Realize.traceRead_eq_of_labels
+#print axioms ZInQ.Manuscript.RC.O12Realize.fixedU_at
+#print axioms ZInQ.Manuscript.RC.O12Realize.primary_at
+#print axioms ZInQ.Manuscript.RC.O12Realize.o12_of_windows
+#print axioms ZInQ.Manuscript.RC.O12Realize.fixedU_primary_of_windows
+#print axioms ZInQ.Manuscript.RC.O12Realize.rulesUpTo_of_windows

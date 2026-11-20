@@ -234,5 +234,18 @@ theorem dyadic_oddGauss (u : (ZMod 8)ˣ) :
   rw [quadraticSum_eight, mul_comm, mul_div_cancel_right₀ _ (by norm_num)]
   rfl
 
+#print axioms negativeFour
+#print axioms eighth_add_inv
+#print axioms eighth_normalized
+#print axioms dyadic_evenGauss
+#print axioms dyadic_oddGauss
+#print axioms localPhase_fraction
+#print axioms shifted_negative_primitive
+#print axioms quadraticSum_eq_gaussSum
+#print axioms oddGauss_sq
+#print axioms oddGauss_twist
+#print axioms quadraticSum_four
+#print axioms stdChar_eight
+#print axioms quadraticSum_eight
 
 end ZInQ.Manuscript.RC.WeilIndex

@@ -123,5 +123,17 @@ theorem refined_test_coprime_common {W common : ℕ} [NeZero common]
     ∀ q, Test (refinedType G d L F B hm h8 hc) avoid q → q.Coprime common :=
   (refinedLevelSetup G d L F B hm h8 hc hbase old hfour hs hcommon havoid).test_coprime
 
+#print axioms coefficientSupport_pm
+#print axioms refinedType
+#print axioms labelRefinedType
+#print axioms refinedChar
+#print axioms refinedType_primeFactors
+#print axioms refinedChar_spec
+#print axioms refinedType_stage_good
+#print axioms refinedWindow
+#print axioms refined_fresh_domains
+#print axioms refined_old_good
+#print axioms refinedLevelSetup
+#print axioms refined_test_coprime_common
 
 end ZInQ.Manuscript.RC.StageJoin

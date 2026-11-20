@@ -386,5 +386,25 @@ theorem eventually_odd_unit_integral (p : Place) (hp : p ≠ dyadicPlace)
     with N hz hv
   rw [hv, hz, hL, odd_unit_integral p hp a ha]
 
+#print axioms eventually_cutoffGaussian_at_valuation
+#print axioms eventually_odd_unit_integral
+#print axioms scaledLattice_compact
+#print axioms eventually_scaledLattice_subset
+#print axioms polarDualLattice_scaled
+#print axioms eventually_cutoffGaussian_polarDual
+#print axioms continuous_localPhase
+#print axioms norm_localPhase
+#print axioms polarDualLattice_measurable
+#print axioms integral_quadratic_polarDual
+#print axioms cutoffLattice_measurable
+#print axioms eventually_cutoffLattice
+#print axioms eventually_cutoffGaussian
+#print axioms integral_linearPhase
+#print axioms integral_quadratic_coset
+#print axioms lineHaar_integerBall
+#print axioms integral_completeSquare
+#print axioms localPhase_congr_integer
+#print axioms localPhase_integer_div_pow
+#print axioms odd_unit_integral
 
 end ZInQ.Manuscript.RC.WeilIndex

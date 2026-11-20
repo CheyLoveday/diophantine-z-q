@@ -199,5 +199,18 @@ def appFStage {O : Type*} [CommRing O] (ha : a < 0) (hb : b < 0)
   frame_nbr := frameNb
   theta_zero := thetaZero
 
+#print axioms isLift_valLift
+#print axioms dvd_sub_of_cast_eq
+#print axioms lifts_dvd
+#print axioms lift_atkin_dvd
+#print axioms lift_uniformizer_dvd
+#print axioms normWeighted_atkin_dvd
+#print axioms normWeighted_uniformizer_dvd
+#print axioms lift_at_reduction
+#print axioms visibilityStage
+#print axioms visibility_relift_dvd
+#print axioms stageCast
+#print axioms stageCast_P
+#print axioms appFStage
 
 end ZInQ.Manuscript.RC.PM

@@ -102,3 +102,7 @@ theorem root_readings_of_stage {U avoid : Finset ℕ}
 
 end ZInQ.Manuscript.RC.O12Realize
 
+#print axioms ZInQ.Manuscript.RC.O12Realize.fresh_at_on_stage
+#print axioms ZInQ.Manuscript.RC.O12Realize.trace_one_of_good_data
+#print axioms ZInQ.Manuscript.RC.O12Realize.readings_on_of_stage
+#print axioms ZInQ.Manuscript.RC.O12Realize.root_readings_of_stage

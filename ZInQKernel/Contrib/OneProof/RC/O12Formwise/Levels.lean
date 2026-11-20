@@ -74,5 +74,7 @@ theorem seed_level_coprime {U : Finset ℕ} {q : ℕ} (hq : T.Good q) (hqU : q �
     exact hqU (((Nat.prime_dvd_prime_iff_eq hq.1 (P.type_good p (hU hp)).1).mp hqp).symm ▸ hp)
   exact ((N.old_good q hq).mul_right hp).of_dvd_right (seed_level_dvd N hi)
 
+#print axioms seed_level_dvd
+#print axioms seed_level_coprime
 
 end ZInQ.Manuscript.RC.O12Formwise

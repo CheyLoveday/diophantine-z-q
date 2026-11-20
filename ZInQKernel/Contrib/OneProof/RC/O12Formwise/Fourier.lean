@@ -116,5 +116,8 @@ theorem seed_fourier (hinj : Function.Injective (algebraMap O K))
       split_ifs <;> simp only [map_zero, A.coeff_spec, detF, latD_coe, Blocks.F]]
   exact seed_fourier_over_field H hq hqU hf n
 
+#print axioms seed_fourier_over_field
+#print axioms odd_unit
+#print axioms seed_fourier
 
 end ZInQ.Manuscript.RC.O12Formwise

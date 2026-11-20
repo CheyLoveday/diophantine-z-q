@@ -112,5 +112,11 @@ theorem product_eigen {P : Type*} [Fintype P] {X : P → Type*}
     (∏ p, t p (x p)) = (∏ p, lam p) * ∏ p, v p (x p) := by
   simp_rw [h, Pi.smul_apply, smul_eq_mul, Finset.prod_mul_distrib]
 
+#print axioms extendCosets_injective
+#print axioms extendCosets_twist
+#print axioms inverseLiftWord_projects
+#print axioms intertwines_word
+#print axioms paired_of_lifted_eigen
+#print axioms product_eigen
 
 end ZInQ.Manuscript.RC.RelativeAction

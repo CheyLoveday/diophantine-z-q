@@ -36,5 +36,7 @@ theorem stageGrid_paired_lower (ι : O →+* ℂ) (ξ : (ZMod N)ˣ →* ℂˣ)
   push_cast
   linear_combination -((b : ℤ) : ℝ) * hj
 
+#print axioms stageGrid_paired_upper
+#print axioms stageGrid_paired_lower
 
 end ZInQ.Manuscript.RC.RelativeAction

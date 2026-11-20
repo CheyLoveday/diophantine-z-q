@@ -233,5 +233,12 @@ theorem oldStageLaw_of_finiteAction (κ : K →+* ℂ) (Dₗ : LevelSetup P avoi
   exact ⟨ξ, hchar, _, halfIntegral_of_finiteAction G.positive hfin,
     stageGrid_hasSum G (κ.comp (algebraMap O K))⟩
 
+#print axioms quatPoint_injective
+#print axioms exponent_eq
+#print axioms stageWeight_nonzero
+#print axioms stageGrid_twist_eq
+#print axioms stage_weighted_sphere
+#print axioms stageGrid_hasSum
+#print axioms oldStageLaw_of_finiteAction
 
 end ZInQ.Manuscript.RC.OldStageLaw

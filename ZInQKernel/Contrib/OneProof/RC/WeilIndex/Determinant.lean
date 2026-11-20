@@ -85,5 +85,10 @@ theorem dyadic_unit_determinantExponent (u a : ℚ_[dyadicPlace.val]ˣ)
   simp only [show decide ((0 : ℤ) % 2 ≠ 0) = false by decide]
   exact dyadic_unit_exponent_mul _ _ (dyadicUnitResidue u).isUnit (dyadicUnitResidue a).isUnit
 
+#print axioms determinantExponent_value
+#print axioms odd_unit_determinantExponent
+#print axioms zmod8_chi4_sign
+#print axioms dyadic_unit_exponent_mul
+#print axioms dyadic_unit_determinantExponent
 
 end ZInQ.Manuscript.RC.WeilIndex

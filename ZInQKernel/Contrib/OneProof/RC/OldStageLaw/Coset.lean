@@ -106,5 +106,10 @@ theorem cosetSum_inversion {J : Type*} [Fintype J] {a : Fin 3 → ℝ} (ha : ∀
   simp_rw [cosetSum, line_inversion (ha _), Finset.prod_mul_distrib, Finset.mul_sum]
   exact Finset.sum_congr rfl fun j _ => by ring
 
+#print axioms line_hasSum
+#print axioms line_holo
+#print axioms line_inversion
+#print axioms cosetSum_holo
+#print axioms cosetSum_inversion
 
 end ZInQ.Manuscript.RC.OldStageLaw

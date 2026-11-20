@@ -218,5 +218,16 @@ theorem signed_odd_squarefree_exponents (s : Finset ℕ)
       cases negative <;> cases oddValuation <;>
         simp [coefficientSign, twoPart, jacobiSym.at_neg_one ho, jacobiSym.at_two ho, signExponent]
 
+#print axioms odd_coprime_two
+#print axioms signed_odd_squarefree_exponents
+#print axioms signExponent_mul
+#print axioms jacobi_sign
+#print axioms qrSign_cases
+#print axioms oddBase_mul
+#print axioms odd_prod
+#print axioms prime_coprime_prod
+#print axioms jacobiExponent_prod
+#print axioms odd_squarefree_exponents
+#print axioms total_exponent
 
 end ZInQ.Manuscript.RC.WeilIndex

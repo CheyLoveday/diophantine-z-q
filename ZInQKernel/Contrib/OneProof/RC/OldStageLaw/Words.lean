@@ -167,5 +167,15 @@ theorem gridTheta_cusps (ha : ∀ i, 0 < a i) (w : Grid a → ℂ) (γ : SL(2, �
   rw [he]; obtain ⟨M, A, h⟩ := isBoundedAtImInfty_iff.mp (gridTheta_bounded ha (wordAction l w))
   exact isBoundedAtImInfty_iff.mpr ⟨M, A, fun z hz => by simpa using h z hz⟩
 
+#print axioms wordMatrix_append
+#print axioms exists_inverse_word
+#print axioms exists_word
+#print axioms gridTheta_word
+#print axioms norm_inversionFactor
+#print axioms norm_wordFactor
+#print axioms norm_kernel
+#print axioms norm_line_le
+#print axioms gridTheta_bounded
+#print axioms gridTheta_cusps
 
 end ZInQ.Manuscript.RC.OldStageLaw

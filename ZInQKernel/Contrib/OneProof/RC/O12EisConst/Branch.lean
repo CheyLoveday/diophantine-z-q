@@ -166,5 +166,11 @@ theorem withEisensteinUp_atOne_iff [Fintype S] (v : X.I → X.K) :
 
 end Complement
 
+#print axioms degree_coprime_of_level
+#print axioms realized_branch
+#print axioms withEisensteinUp_complement
+#print axioms project_add_complement
+#print axioms withEisensteinUp_eq_ambient
+#print axioms withEisensteinUp_atOne_iff
 
 end ZInQ.Manuscript.RC.O12EisConst

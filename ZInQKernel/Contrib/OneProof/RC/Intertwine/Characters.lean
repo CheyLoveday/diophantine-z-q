@@ -199,5 +199,17 @@ theorem pairing_on_coset (r s : Grid a) {y : Fin 3 → A}
   congr 1
   ring
 
+#print axioms rationalPhase_add
+#print axioms rationalPhase_eq_one
+#print axioms rationalPhase_congr
+#print axioms finitePhase_spec
+#print axioms finitePhase_add
+#print axioms finitePhase_eq_one
+#print axioms finitePhase_eq_product
+#print axioms center_mul
+#print axioms coset_dual
+#print axioms phase_on_coset
+#print axioms annihilator_iff
+#print axioms pairing_on_coset
 
 end ZInQ.Manuscript.RC.Intertwine

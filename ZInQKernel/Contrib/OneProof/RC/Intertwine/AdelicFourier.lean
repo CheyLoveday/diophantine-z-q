@@ -198,5 +198,18 @@ theorem adelic_pair_comparison {a : Fin 3 → ℕ} [∀ i, NeZero (2 * a i)]
   ⟨adelic_comparison E eval heval hE R lift realIndex finiteIndex hindex hT hW,
     adelic_comparison E₀ eval₀ heval₀ hE₀ R₀ lift realIndex finiteIndex₀ hindex₀ hT₀ hW₀⟩
 
+#print axioms integralAdeles_open
+#print axioms integralAdeles_compact
+#print axioms rectangular_eq_pi
+#print axioms rectangular_open
+#print axioms rectangular_compact
+#print axioms normalizedHaar_volume
+#print axioms continuous_finitePhase
+#print axioms integrable_latticeCharacter
+#print axioms adelic_annihilator_placewise
+#print axioms adelic_fourier
+#print axioms adelic_phase
+#print axioms adelic_comparison
+#print axioms adelic_pair_comparison
 
 end ZInQ.Manuscript.RC.Intertwine

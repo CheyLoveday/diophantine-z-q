@@ -102,5 +102,9 @@ theorem inputs_of_pm (F : PMLocal X.O R (D.Mθ i) N ell) (A : FourierData X)
     (fun p hp => F.eta_order hp.1 (hgood p hp).2) hexp ops DF hDF hhecke
     (stageValuation E V C depth hbudget (fun _ _ _ => rfl)) localData
 
+#print axioms integerDepth_of_data
+#print axioms rodd_eq_intrinsic
+#print axioms pmDivisions
+#print axioms inputs_of_pm
 
 end ZInQ.Manuscript.RC.O12StageVal

@@ -46,5 +46,9 @@ theorem gaussGamma_rectangular_products (a : Fin 3 → ℕ) [∀ i, NeZero (2 * 
       realIndex (rationalDiagonal a) * finiteIndex gaussGamma (rationalDiagonal referenceForm) = 1 :=
   index_products gaussGamma gaussGamma_productFormula a
 
+#print axioms unit_sign_root
+#print axioms gaussGamma_eq_finiteGamma
+#print axioms gaussGamma_productFormula
+#print axioms gaussGamma_rectangular_products
 
 end ZInQ.Manuscript.RC.GaussSign

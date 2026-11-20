@@ -111,5 +111,17 @@ theorem pmSieved_newformLevel (u : ClassSet R → ℤ) (hu : PM.IsLift G₀ d L 
   obtain ⟨h, hS, hE⟩ := pmSieved_parameters G₀ d L F₀ B u hu
   exact ⟨StageIdent.level_eq ℓ ▸ h, hS, hE⟩
 
+#print axioms pmSievedStage
+#print axioms pmSievedSource
+#print axioms pmSievedLift
+#print axioms pmStage_good_outside
+#print axioms pmSievedStage_good_iff
+#print axioms pmSievedStage_good
+#print axioms pmLocal_m_ne_zero
+#print axioms pmSievedStage_aθ
+#print axioms pmSievedLift_aθ
+#print axioms pmSievedLift_support
+#print axioms pmSieved_parameters
+#print axioms pmSieved_newformLevel
 
 end ZInQ.Manuscript.RC.StageJoin

@@ -222,5 +222,21 @@ theorem reference_word {N : ℕ} (hfour : 4 ∣ N) (l : List Step)
   subst s
   exact ⟨c, by simpa only [state_zero] using hc⟩
 
+#print axioms state_zero
+#print axioms rowS
+#print axioms rowT
+#print axioms modTwo_cases
+#print axioms modFour_cases
+#print axioms char_two
+#print axioms stateCoeff_S
+#print axioms stateTable_S
+#print axioms phase_quarter
+#print axioms stateCoeff_T
+#print axioms stateTable_T
+#print axioms residueRow_S
+#print axioms residueRow_T
+#print axioms advance
+#print axioms reference_track
+#print axioms reference_word
 
 end ZInQ.Manuscript.RC.RelativeAction
