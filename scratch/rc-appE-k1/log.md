@@ -23,3 +23,7 @@ Finite identity stage:
 Shapiro stage:
 
 - VERIFIED (Lean and Lake): the Shapiro imports built; `ShapiroTransfer.lean` proves naturality of inverse Shapiro for the upper coefficient map, then equality with unnormalized corestriction on continuous cochains and on `H¹`. All four axiom checks pass. This proves the map-level bridge independently of the arithmetic identification of the retained input and the finite cyclotomic tensor representation.
+
+Tensor coefficient stage:
+
+- VERIFIED (Lean and Lake): `CoefModule`, `Cyclotomic` and `Tate` built. `CoefficientCohomology.lean` puts the integral scalar map on the coefficient tensor with the transported action, induces the continuous `H¹` map, and proves the inverse-deck formula for that action. All three axiom checks pass.
