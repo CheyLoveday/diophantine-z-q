@@ -203,3 +203,14 @@ inclusion of the Fontaine ring.
 cyclotomic adjunction is the same source ring, so the checked map
 transports a fixed basis and gives `BergerPaperStComparison` without
 changing the representation or finite extension.
+
+## Survey transfer (VERIFIED)
+
+`DeRhamBasis.lean` and `SurveyTransfer.lean` compiled with
+`lake env lean`. Minimal support of a relation keeps the
+de Rham invariant vectors linearly independent over `B_dR`.
+The underlying coefficient model is finite dimensional, so the
+dimension premise gives an invariant de Rham basis. The paper-ring
+basis implication then supplies the unchanged `BergerThm06Print`
+draft and its existing bridge to `bergerSurveyF`. The argument
+retains the witness field supplied by that implication.
