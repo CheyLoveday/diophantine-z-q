@@ -1,0 +1,1031 @@
+@translate_evaluation : ∀ {k G : Type} [inst : CommRing.{0} k] [inst_1 : TopologicalSpace.{0} k] [inst_2 : Group.{0} G]
+  [inst_3 : TopologicalSpace.{0} G] [inst_4 : IsTopologicalGroup.{0} G] (X : TopRep.{0, 0, 0} k G) (a : G) (m : ℕ)
+  (F : ↑(TopRep.resolutionX.{0, 0, 0} X m)) (x : Fin m → G),
+  Eq.{1}
+    (CloudB3RC53.ContBridge.evIt.{0, 0} X m
+      ((TopRep.Hom.hom.{0, 0, 0} (TauCeti.ContinuousCohomology.resolutionTranslate.{0, 0, 0} X a m)) F) x)
+    (CloudB3RC53.ContBridge.evIt.{0, 0} X m F fun i => HMul.hMul.{0, 0, 0} (x i) a)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.translate_evaluation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@translate_scalar : ∀ {k G : Type} [inst : CommRing.{0} k] [inst_1 : TopologicalSpace.{0} k] [inst_2 : Group.{0} G]
+  [inst_3 : TopologicalSpace.{0} G] [inst_4 : IsTopologicalGroup.{0} G] (X : TopRep.{0, 0, 0} k G) (a : G) (c : k),
+  (∀ (g : G), Eq.{1} (HMul.hMul.{0, 0, 0} g a) (HMul.hMul.{0, 0, 0} a g)) →
+    (∀ (m : ↑X), Eq.{1} (((TopRep.ρ.{0, 0, 0} X) a) m) (HSMul.hSMul.{0, 0, 0} c m)) →
+      ∀ (n : ℕ)
+        (F :
+          ↥(ContRepresentation.invariants.{0, 0, 0}
+              (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 1))))),
+        Eq.{1}
+          ((TopRep.Hom.hom.{0, 0, 0}
+              (TauCeti.ContinuousCohomology.resolutionTranslate.{0, 0, 0} X a (HAdd.hAdd.{0, 0, 0} n 1)))
+            ↑F)
+          (HSMul.hSMul.{0, 0, 0} c ↑F)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.translate_scalar' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@invariantPrism : {k G : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [inst_4 : IsTopologicalGroup.{0} G] →
+            [LocallyCompactSpace.{0} G] →
+              (X : TopRep.{0, 0, 0} k G) →
+                G →
+                  (n : ℕ) →
+                    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k)
+                      ↥(ContRepresentation.invariants.{0, 0, 0}
+                          (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 2))))
+                      ↥(ContRepresentation.invariants.{0, 0, 0}
+                          (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 1))))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.invariantPrism' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@scaledPrism : {k G : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [inst_4 : IsTopologicalGroup.{0} G] →
+            [LocallyCompactSpace.{0} G] →
+              (X : TopRep.{0, 0, 0} k G) →
+                G →
+                  k →
+                    (n : ℕ) →
+                      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k)
+                        ↥(ContRepresentation.invariants.{0, 0, 0}
+                            (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 2))))
+                        ↥(ContRepresentation.invariants.{0, 0, 0}
+                            (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 1))))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.scaledPrism' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@scaledPrism_coe : ∀ {k G : Type} [inst : CommRing.{0} k] [inst_1 : TopologicalSpace.{0} k] [inst_2 : Group.{0} G]
+  [inst_3 : TopologicalSpace.{0} G] [inst_4 : IsTopologicalGroup.{0} G] [inst_5 : LocallyCompactSpace.{0} G]
+  (X : TopRep.{0, 0, 0} k G) (a : G) (c : k) (n : ℕ)
+  (F :
+    ↥(ContRepresentation.invariants.{0, 0, 0}
+        (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 2))))),
+  Eq.{1} (↑((scaledPrism X a c n) F))
+    (HSMul.hSMul.{0, 0, 0} (Ring.inverse.{0} (HSub.hSub.{0, 0, 0} c 1))
+      ((TauCeti.ContinuousCohomology.translateHomotopy.{0, 0, 0} X a (HAdd.hAdd.{0, 0, 0} n 1)) ↑F))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.scaledPrism_coe' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@invariantD : {k G : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [inst_4 : IsTopologicalGroup.{0} G] →
+            (X : TopRep.{0, 0, 0} k G) →
+              (n : ℕ) →
+                LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k)
+                  ↥(ContRepresentation.invariants.{0, 0, 0}
+                      (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 1))))
+                  ↥(ContRepresentation.invariants.{0, 0, 0}
+                      (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 2))))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.invariantD' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@invariantD_coe : ∀ {k G : Type} [inst : CommRing.{0} k] [inst_1 : TopologicalSpace.{0} k] [inst_2 : Group.{0} G]
+  [inst_3 : TopologicalSpace.{0} G] [inst_4 : IsTopologicalGroup.{0} G] (X : TopRep.{0, 0, 0} k G) (n : ℕ)
+  (F :
+    ↥(ContRepresentation.invariants.{0, 0, 0}
+        (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 1))))),
+  Eq.{1} (↑((invariantD X n) F)) ((TopRep.Hom.hom.{0, 0, 0} (TopRep.d.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 1))) ↑F)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.invariantD_coe' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@scaledPrism_identity : ∀ {k G : Type} [inst : CommRing.{0} k] [inst_1 : TopologicalSpace.{0} k] [inst_2 : Group.{0} G]
+  [inst_3 : TopologicalSpace.{0} G] [inst_4 : IsTopologicalGroup.{0} G] [inst_5 : LocallyCompactSpace.{0} G]
+  (X : TopRep.{0, 0, 0} k G) (a : G) (c : k),
+  (∀ (g : G), Eq.{1} (HMul.hMul.{0, 0, 0} g a) (HMul.hMul.{0, 0, 0} a g)) →
+    (∀ (m : ↑X), Eq.{1} (((TopRep.ρ.{0, 0, 0} X) a) m) (HSMul.hSMul.{0, 0, 0} c m)) →
+      IsUnit.{0} (HSub.hSub.{0, 0, 0} c 1) →
+        ∀ (n : ℕ)
+          (F :
+            ↥(ContRepresentation.invariants.{0, 0, 0}
+                (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X (HAdd.hAdd.{0, 0, 0} n 2))))),
+          Eq.{1}
+            (HAdd.hAdd.{0, 0, 0} ((invariantD X n) ((scaledPrism X a c n) F))
+              ((scaledPrism X a c (HAdd.hAdd.{0, 0, 0} n 1)) ((invariantD X (HAdd.hAdd.{0, 0, 0} n 1)) F)))
+            F
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.scaledPrism_identity' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@scaledPrism_identity_zero : ∀ {k G : Type} [inst : CommRing.{0} k] [inst_1 : TopologicalSpace.{0} k]
+  [inst_2 : Group.{0} G] [inst_3 : TopologicalSpace.{0} G] [inst_4 : IsTopologicalGroup.{0} G]
+  [inst_5 : LocallyCompactSpace.{0} G] (X : TopRep.{0, 0, 0} k G) (a : G) (c : k),
+  (∀ (g : G), Eq.{1} (HMul.hMul.{0, 0, 0} g a) (HMul.hMul.{0, 0, 0} a g)) →
+    (∀ (m : ↑X), Eq.{1} (((TopRep.ρ.{0, 0, 0} X) a) m) (HSMul.hSMul.{0, 0, 0} c m)) →
+      IsUnit.{0} (HSub.hSub.{0, 0, 0} c 1) →
+        ∀ (F : ↥(ContRepresentation.invariants.{0, 0, 0} (TopRep.ρ.{0, 0, 0} (TopRep.resolutionX.{0, 0, 0} X 1)))),
+          Eq.{1} ((scaledPrism X a c 0) ((invariantD X 0) F)) F
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.scaledPrism_identity_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@homogeneousComplex : {k G : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [IsTopologicalGroup.{0} G] → TopRep.{0, 0, 0} k G → CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} k) ℕ
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.homogeneousComplex' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@homogeneousPrismMaps : {k G : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [inst_4 : IsTopologicalGroup.{0} G] →
+            [LocallyCompactSpace.{0} G] →
+              (X : TopRep.{0, 0, 0} k G) →
+                G →
+                  k →
+                    (i j : ℕ) →
+                      Quiver.Hom.{0, 1} (HomologicalComplex.X.{0, 1, 0} (homogeneousComplex X) i)
+                        (HomologicalComplex.X.{0, 1, 0} (homogeneousComplex X) j)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.homogeneousPrismMaps' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@homogeneousPrismMaps_succ : ∀ {k G : Type} [inst : CommRing.{0} k] [inst_1 : TopologicalSpace.{0} k]
+  [inst_2 : Group.{0} G] [inst_3 : TopologicalSpace.{0} G] [inst_4 : IsTopologicalGroup.{0} G]
+  [inst_5 : LocallyCompactSpace.{0} G] (X : TopRep.{0, 0, 0} k G) (a : G) (c : k) (n : ℕ),
+  Eq.{1} (homogeneousPrismMaps X a c (HAdd.hAdd.{0, 0, 0} n 1) n) (ModuleCat.ofHom.{0, 0} (scaledPrism X a c n))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.homogeneousPrismMaps_succ' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@homogeneousContraction : {k G : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [inst_4 : IsTopologicalGroup.{0} G] →
+            [LocallyCompactSpace.{0} G] →
+              (X : TopRep.{0, 0, 0} k G) →
+                (a : G) →
+                  (c : k) →
+                    (∀ (g : G), Eq.{1} (HMul.hMul.{0, 0, 0} g a) (HMul.hMul.{0, 0, 0} a g)) →
+                      (∀ (m : ↑X), Eq.{1} (((TopRep.ρ.{0, 0, 0} X) a) m) (HSMul.hSMul.{0, 0, 0} c m)) →
+                        IsUnit.{0} (HSub.hSub.{0, 0, 0} c 1) →
+                          Homotopy.{0, 1, 0} (CategoryTheory.CategoryStruct.id.{0, 1} (homogeneousComplex X)) 0
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.homogeneousContraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@continuousContraction : {k G : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [inst_4 : IsTopologicalGroup.{0} G] →
+            [inst_5 : LocallyCompactSpace.{0} G] →
+              (X : TopRep.{0, 0, 0} k G) →
+                (hcont : Continuous.{0, 0} fun p => ((TopRep.ρ.{0, 0, 0} X) p.1) p.2) →
+                  (a : G) →
+                    (c : k) →
+                      (∀ (g : G), Eq.{1} (HMul.hMul.{0, 0, 0} g a) (HMul.hMul.{0, 0, 0} a g)) →
+                        (∀ (m : ↑X), Eq.{1} (((TopRep.ρ.{0, 0, 0} X) a) m) (HSMul.hSMul.{0, 0, 0} c m)) →
+                          IsUnit.{0} (HSub.hSub.{0, 0, 0} c 1) →
+                            Homotopy.{0, 1, 0}
+                              (CategoryTheory.CategoryStruct.id.{0, 1}
+                                (Manuscript.RC.SelmerComplex.SubCx.toCx.{0}
+                                  (CloudB3RC53.ContBridge.contSub.{0} X hcont)))
+                              0
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.continuousContraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@extendHomotopyMaps : {k : Type} →
+  [inst : CommRing.{0} k] →
+    (C : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} k) ℕ) →
+      Homotopy.{0, 1, 0} (CategoryTheory.CategoryStruct.id.{0, 1} C) 0 →
+        (i j : ℤ) →
+          Quiver.Hom.{0, 1}
+            (HomologicalComplex.X.{0, 1, 0}
+              (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Manuscript.RC.SelmerComplex.natCx.{0} C)) i)
+            (HomologicalComplex.X.{0, 1, 0}
+              (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Manuscript.RC.SelmerComplex.natCx.{0} C)) j)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.extendHomotopyMaps' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@extended_adjacent_d : ∀ {k : Type} [inst : CommRing.{0} k] (C : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} k) ℕ)
+  (n : ℕ),
+  Eq.{1}
+    (have this :=
+      HomologicalComplex.d.{0, 1, 0}
+        (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Manuscript.RC.SelmerComplex.natCx.{0} C)) ↑n
+        ↑(HAdd.hAdd.{0, 0, 0} n 1);
+    this)
+    (HomologicalComplex.d.{0, 1, 0} C n (HAdd.hAdd.{0, 0, 0} n 1))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.extended_adjacent_d' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@extendContraction : {k : Type} →
+  [inst : CommRing.{0} k] →
+    (C : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} k) ℕ) →
+      Homotopy.{0, 1, 0} (CategoryTheory.CategoryStruct.id.{0, 1} C) 0 →
+        Homotopy.{0, 1, 0}
+          (CategoryTheory.CategoryStruct.id.{0, 1}
+            (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Manuscript.RC.SelmerComplex.natCx.{0} C)))
+          0
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.extendContraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@moduleAction : {k G M : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : TopologicalSpace.{0} G] →
+        [inst_3 : AddCommGroup.{0} M] →
+          [inst_4 : Module.{0, 0} k M] →
+            [inst_5 : TopologicalSpace.{0} M] →
+              [inst_6 : IsTopologicalAddGroup.{0} M] →
+                [inst_7 : DistribMulAction.{0, 0} G M] →
+                  [SMulCommClass.{0, 0, 0} G k M] →
+                    [ContinuousSMul.{0, 0} G M] →
+                      MonoidHom.{0, 0} G (ContinuousLinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M M)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.moduleAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@moduleRep : {k G M : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [inst_4 : AddCommGroup.{0} M] →
+            [inst_5 : Module.{0, 0} k M] →
+              [inst_6 : TopologicalSpace.{0} M] →
+                [IsTopologicalAddGroup.{0} M] →
+                  [inst_8 : DistribMulAction.{0, 0} G M] →
+                    [SMulCommClass.{0, 0, 0} G k M] →
+                      [ContinuousSMul.{0, 0} k M] → [ContinuousSMul.{0, 0} G M] → TopRep.{0, 0, 0} k G
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.moduleRep' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@moduleDictionary : {k G M : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [inst_4 : IsTopologicalGroup.{0} G] →
+            [inst_5 : LocallyCompactSpace.{0} G] →
+              [inst_6 : AddCommGroup.{0} M] →
+                [inst_7 : Module.{0, 0} k M] →
+                  [inst_8 : TopologicalSpace.{0} M] →
+                    [inst_9 : IsTopologicalAddGroup.{0} M] →
+                      [inst_10 : DistribMulAction.{0, 0} G M] →
+                        [inst_11 : SMulCommClass.{0, 0, 0} G k M] →
+                          [inst_12 : ContinuousSMul.{0, 0} k M] →
+                            [inst_13 : ContinuousSMul.{0, 0} G M] →
+                              CategoryTheory.Iso.{0, 1}
+                                (Manuscript.RC.SelmerComplex.SubCx.toCx.{0}
+                                  (CloudB3RC53.ContBridge.contSub.{0} moduleRep
+                                    (have this := continuous_smul.{0, 0};
+                                    this)))
+                                (Manuscript.RC.SelmerComplex.contCochains.{0} k G M)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.moduleDictionary' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fullContinuousContraction : {k G M : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : TopologicalSpace.{0} k] →
+      [inst_2 : Group.{0} G] →
+        [inst_3 : TopologicalSpace.{0} G] →
+          [inst_4 : IsTopologicalGroup.{0} G] →
+            [LocallyCompactSpace.{0} G] →
+              [inst_6 : AddCommGroup.{0} M] →
+                [inst_7 : Module.{0, 0} k M] →
+                  [inst_8 : TopologicalSpace.{0} M] →
+                    [inst_9 : IsTopologicalAddGroup.{0} M] →
+                      [inst_10 : DistribMulAction.{0, 0} G M] →
+                        [inst_11 : SMulCommClass.{0, 0, 0} G k M] →
+                          [inst_12 : ContinuousSMul.{0, 0} k M] →
+                            [inst_13 : ContinuousSMul.{0, 0} G M] →
+                              (a : G) →
+                                (c : k) →
+                                  (∀ (g : G), Eq.{1} (HMul.hMul.{0, 0, 0} g a) (HMul.hMul.{0, 0, 0} a g)) →
+                                    (∀ (m : M), Eq.{1} (HSMul.hSMul.{0, 0, 0} a m) (HSMul.hSMul.{0, 0, 0} c m)) →
+                                      IsUnit.{0} (HSub.hSub.{0, 0, 0} c 1) →
+                                        Homotopy.{0, 1, 0}
+                                          (CategoryTheory.CategoryStruct.id.{0, 1}
+                                            (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                              (Manuscript.RC.SelmerComplex.natCx.{0}
+                                                (Manuscript.RC.SelmerComplex.contCochains.{0} k G M))))
+                                          0
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.fullContinuousContraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fullContinuousConstContraction : {k G M : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : TopologicalSpace.{0} G] →
+        [inst_3 : IsTopologicalGroup.{0} G] →
+          [LocallyCompactSpace.{0} G] →
+            [inst_5 : AddCommGroup.{0} M] →
+              [inst_6 : Module.{0, 0} k M] →
+                [inst_7 : TopologicalSpace.{0} M] →
+                  [inst_8 : IsTopologicalAddGroup.{0} M] →
+                    [inst_9 : DistribMulAction.{0, 0} G M] →
+                      [inst_10 : SMulCommClass.{0, 0, 0} G k M] →
+                        [inst_11 : ContinuousConstSMul.{0, 0} k M] →
+                          [inst_12 : ContinuousSMul.{0, 0} G M] →
+                            (a : G) →
+                              (c : k) →
+                                (∀ (g : G), Eq.{1} (HMul.hMul.{0, 0, 0} g a) (HMul.hMul.{0, 0, 0} a g)) →
+                                  (∀ (m : M), Eq.{1} (HSMul.hSMul.{0, 0, 0} a m) (HSMul.hSMul.{0, 0, 0} c m)) →
+                                    IsUnit.{0} (HSub.hSub.{0, 0, 0} c 1) →
+                                      Homotopy.{0, 1, 0}
+                                        (CategoryTheory.CategoryStruct.id.{0, 1}
+                                          (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                            (Manuscript.RC.SelmerComplex.natCx.{0}
+                                              (Manuscript.RC.SelmerComplex.contCochains.{0} k G M))))
+                                        0
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.fullContinuousConstContraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@continuous_character_of_open_kernel : ∀ {G H : Type} [inst : Group.{0} G] [inst_1 : TopologicalSpace.{0} G]
+  [IsTopologicalGroup.{0} G] [inst_3 : Group.{0} H] [inst_4 : TopologicalSpace.{0} H] (χ : MonoidHom.{0, 0} G H),
+  IsOpen.{0} ↑(MonoidHom.ker.{0, 0} χ) → Continuous.{0, 0} ⇑χ
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.continuous_character_of_open_kernel' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreAt : {K : Type} →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        WeierstrassCurve.{0} K →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [Ideal.IsPrime.{0} P] →
+              MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda) →
+                Manuscript.RC.SelmerComplex.Places K S → Type
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.fibreAt' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreAction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : Manuscript.RC.SelmerComplex.Places K S) →
+                  Manuscript.RC.SelmerComplex.Gloc K ↑v →
+                    Module.End.{0, 0} (Manuscript.RC.Wiring.ResAt P) (fibreAt W P α v)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.fibreAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibre_action_of_tate_fix : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : Manuscript.RC.SelmerComplex.Places K S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑v),
+  (∀ (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ) Q) Q) →
+    ∀ (m : fibreAt W P α v),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} σ m)
+        (HSMul.hSMul.{0, 0, 0}
+          ((algebraMap.{0, 0} Manuscript.RC.Uniform.Lambda (Manuscript.RC.Wiring.ResAt P))
+            ↑(α ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)))
+          m)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.fibre_action_of_tate_fix' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibre_primitive_inertia : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (χ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ℤ))
+  (ξ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Multiplicative.{0} ℤ_[2]))
+  (v : Manuscript.RC.SelmerComplex.Places K S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑v),
+  (∀ (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ) Q) Q) →
+    Eq.{1} (χ ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)) (-1) →
+      Eq.{1} (ξ ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)) 1 →
+        ∀ (m : fibreAt W P (Manuscript.RC.LambdaCoef.lambdaChar χ ξ) v),
+          Eq.{1} (HSMul.hSMul.{0, 0, 0} σ m) (Neg.neg.{0} m)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.fibre_primitive_inertia' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibre_primitive_inertia_unit : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P] (χ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ℤ))
+  (ξ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Multiplicative.{0} ℤ_[2]))
+  (v : Manuscript.RC.SelmerComplex.Places K S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑v),
+  (∀ (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ) Q) Q) →
+    Eq.{1} (χ ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)) (-1) →
+      Eq.{1} (ξ ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)) 1 →
+        IsUnit.{0} (HSub.hSub.{0, 0, 0} (fibreAction W P (Manuscript.RC.LambdaCoef.lambdaChar χ ξ) v σ) 1)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.fibre_primitive_inertia_unit' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibre_moving_inertia : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (χ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ℤ))
+  (ξ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Multiplicative.{0} ℤ_[2]))
+  (v : Manuscript.RC.SelmerComplex.Places K S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑v),
+  (∀ (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ) Q) Q) →
+    Eq.{1} (χ ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)) 1 →
+      Eq.{1} (Multiplicative.toAdd.{0} (ξ ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ))) 1 →
+        ∀ (m : fibreAt W P (Manuscript.RC.LambdaCoef.lambdaChar χ ξ) v),
+          Eq.{1} (HSMul.hSMul.{0, 0, 0} σ m)
+            (HSMul.hSMul.{0, 0, 0}
+              (HAdd.hAdd.{0, 0, 0} 1
+                ((algebraMap.{0, 0} Manuscript.RC.Uniform.Lambda (Manuscript.RC.Wiring.ResAt P)) PowerSeries.X.{0}))
+              m)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.fibre_moving_inertia' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibre_moving_inertia_unit : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P] (χ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ℤ))
+  (ξ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Multiplicative.{0} ℤ_[2]))
+  (v : Manuscript.RC.SelmerComplex.Places K S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑v),
+  (∀ (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ) Q) Q) →
+    Eq.{1} (χ ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)) 1 →
+      Eq.{1} (Multiplicative.toAdd.{0} (ξ ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ))) 1 →
+        Ne.{1} P (Ideal.span.{0} (singleton.{0, 0} PowerSeries.X.{0})) →
+          IsUnit.{0} (HSub.hSub.{0, 0, 0} (fibreAction W P (Manuscript.RC.LambdaCoef.lambdaChar χ ξ) v σ) 1)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.fibre_moving_inertia_unit' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primitive_fibre_tame_relation : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : Manuscript.RC.SelmerComplex.Places K S) (φ σ : Manuscript.RC.SelmerComplex.Gloc K ↑v) (r : ℕ),
+  (∀ (m : fibreAt W P α v), Eq.{1} (HSMul.hSMul.{0, 0, 0} σ m) (Neg.neg.{0} m)) →
+    Eq.{1}
+      (HMul.hMul.{0, 0, 0}
+        (HSub.hSub.{0, 0, 0} (fibreAction W P α v φ)
+          (CloudB3RC53.PairedFunctional.normQ.{0, 0} r (fibreAction W P α v σ)))
+        (HSub.hSub.{0, 0, 0} (fibreAction W P α v σ) 1))
+      (HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} (fibreAction W P α v σ) 1)
+        (HSub.hSub.{0, 0, 0} (fibreAction W P α v φ) 1))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.primitive_fibre_tame_relation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primitiveFibreTameComplex : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : Manuscript.RC.SelmerComplex.Places K S) →
+                  Manuscript.RC.SelmerComplex.Gloc K ↑v →
+                    (σ : Manuscript.RC.SelmerComplex.Gloc K ↑v) →
+                      ℕ →
+                        (∀ (m : fibreAt W P α v), Eq.{1} (HSMul.hSMul.{0, 0, 0} σ m) (Neg.neg.{0} m)) →
+                          CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} (Manuscript.RC.Wiring.ResAt P)) ℤ
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.primitiveFibreTameComplex' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@localRoot : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        Manuscript.RC.CoefModules.KS K S →
+          (v : Manuscript.RC.SelmerComplex.Places K S) →
+            AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.localRoot' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@localRoot_square : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K},
+  Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h) →
+    ∀ (v : Manuscript.RC.SelmerComplex.Places K S),
+      Eq.{1} (HPow.hPow.{0, 0, 0} (localRoot s v) 2)
+        ((algebraMap.{0, 0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)
+            (AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)))
+          ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.localRoot_square' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@localRoot_localization : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) (v : Manuscript.RC.SelmerComplex.Places K S)
+  (σ : Manuscript.RC.SelmerComplex.Gloc K ↑v),
+  Eq.{1}
+    ((Manuscript.RC.SelmerComplex.decompLift K ↑v)
+      ↑((Manuscript.RC.CoefModules.galS K S ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)) s))
+    ((id.{1} σ) (localRoot s v))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.localRoot_localization' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@actual_quadChar_inertia_value : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (v : Manuscript.RC.SelmerComplex.Places K S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑v),
+  Eq.{1} ((id.{1} σ) (localRoot s v)) (Neg.neg.{0} (localRoot s v)) →
+    Eq.{1} ((Manuscript.RC.CoefModules.quadChar s hs hs0) ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)) (-1)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.actual_quadChar_inertia_value' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@exists_actual_primitive_inertia : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (v : Manuscript.RC.SelmerComplex.Places K S),
+  Nat.Coprime 2
+      (ringChar.{0}
+        (IsLocalRing.ResidueField.{0}
+          ↥(Valuation.integer.{0, 0}
+              (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))))) →
+    ∀ (hh0 : Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h) 0),
+      Eq.{1}
+          (Multiplicative.toAdd.{0}
+            ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+              (Units.mk0.{0} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h)
+                hh0)))
+          1 →
+        ∃ σ,
+          Membership.mem.{0, 0}
+              (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) σ ∧
+            Eq.{1} ((Manuscript.RC.CoefModules.quadChar s hs hs0) ((Manuscript.RC.SelmerComplex.locMap K S ↑v) σ)) (-1)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.exists_actual_primitive_inertia' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@urRes_inertia_one : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (v : Manuscript.RC.SelmerComplex.Places K S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑v),
+  Membership.mem.{0, 0} (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+      σ →
+    Eq.{1} ((Manuscript.RC.SelmerComplex.urRes K ↑v) σ) 1
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.urRes_inertia_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@inclTors_actual_local_action : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W] (N : ℕ) [NeZero.{0} N]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (σ : Manuscript.RC.SelmerComplex.Gloc K v) (Q : Manuscript.RC.CoefModules.TorsS K S W ↑N),
+  Eq.{1}
+    ((Manuscript.RC.CoefModules.inclTors W N) (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) σ) Q))
+    ((Multiplicative.toAdd.{0}
+        ((WeierstrassCurve.torsionGaloisAction.{0, 0} W ↑N) (id.{1} ((Manuscript.RC.SelmerComplex.decompMap K v) σ))))
+      ((Manuscript.RC.CoefModules.inclTors W N) Q))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.inclTors_actual_local_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@torsion_fixed_outside_coefficient_support : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (N : ℕ) [NeZero.{0} N],
+  Manuscript.RC.CoefModules.FullTorsion K S₀ W N →
+    ∀ v ∉ S₀,
+      ∀ (σ : Manuscript.RC.SelmerComplex.Gloc K v),
+        Membership.mem.{0, 0}
+            (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) σ →
+          ∀ (Q : Manuscript.RC.CoefModules.TorsS K S W ↑N),
+            Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) σ) Q) Q
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.torsion_fixed_outside_coefficient_support' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@tate_fixed_outside_coefficient_support : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W],
+  ∀ v ∉ S₀,
+    ∀ (σ : Manuscript.RC.SelmerComplex.Gloc K v),
+      Membership.mem.{0, 0} (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+          σ →
+        ∀ (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+          Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) σ) Q) Q
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.tate_fixed_outside_coefficient_support' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@inflated_character_inertia_one : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S) {A : Type}
+  [inst_2 : Group.{0} A] (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) A),
+  ∀ v ∉ S₀,
+    ∀ (σ : Manuscript.RC.SelmerComplex.Gloc K v),
+      Membership.mem.{0, 0} (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+          σ →
+        Eq.{1} (ξ₀ ((Manuscript.RC.SelmerComplex.inflMap K hS) ((Manuscript.RC.SelmerComplex.locMap K S v) σ))) 1
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.inflated_character_inertia_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@exists_actual_old_primitive_unit : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_4 : Ideal.IsPrime.{0} P]
+  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P] (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]))
+  (v : Manuscript.RC.SelmerComplex.Places K S),
+  ↑v ∉ S₀ →
+    Nat.Coprime 2
+        (ringChar.{0}
+          (IsLocalRing.ResidueField.{0}
+            ↥(Valuation.integer.{0, 0}
+                (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))))) →
+      ∀ (hh0 : Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h) 0),
+        Eq.{1}
+            (Multiplicative.toAdd.{0}
+              ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+                (Units.mk0.{0} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h)
+                  hh0)))
+            1 →
+          ∃ σ,
+            Membership.mem.{0, 0}
+                (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) σ ∧
+              (∀
+                  (m :
+                    fibreAt W P
+                      (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+                        (MonoidHom.comp.{0, 0, 0} ξ₀
+                          (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+                      v),
+                  Eq.{1} (HSMul.hSMul.{0, 0, 0} σ m) (Neg.neg.{0} m)) ∧
+                IsUnit.{0}
+                  (HSub.hSub.{0, 0, 0}
+                    (fibreAction W P
+                      (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+                        (MonoidHom.comp.{0, 0, 0} ξ₀
+                          (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+                      v σ)
+                    1)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.exists_actual_old_primitive_unit' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@exists_actual_old_primitive_tame_contraction : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_4 : Ideal.IsPrime.{0} P]
+  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P] (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]))
+  (v : Manuscript.RC.SelmerComplex.Places K S),
+  ↑v ∉ S₀ →
+    Nat.Coprime 2
+        (ringChar.{0}
+          (IsLocalRing.ResidueField.{0}
+            ↥(Valuation.integer.{0, 0}
+                (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))))) →
+      ∀ (hh0 : Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h) 0),
+        Eq.{1}
+            (Multiplicative.toAdd.{0}
+              ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+                (Units.mk0.{0} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h)
+                  hh0)))
+            1 →
+          ∀ (φ : Manuscript.RC.SelmerComplex.Gloc K ↑v) (r : ℕ),
+            ∃ σ,
+              Membership.mem.{0, 0}
+                  (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) σ ∧
+                ∃ (hσ :
+                  ∀
+                    (m :
+                      fibreAt W P
+                        (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+                          (MonoidHom.comp.{0, 0, 0} ξ₀
+                            (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+                        v),
+                    Eq.{1} (HSMul.hSMul.{0, 0, 0} σ m) (Neg.neg.{0} m)),
+                  Nonempty.{1}
+                    (Homotopy.{0, 1, 0}
+                      (CategoryTheory.CategoryStruct.id.{0, 1}
+                        (primitiveFibreTameComplex W P
+                          (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+                            (MonoidHom.comp.{0, 0, 0} ξ₀
+                              (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+                          v φ σ r hσ))
+                      0)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.exists_actual_old_primitive_tame_contraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@UrGroup : {K : Type} →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        Manuscript.RC.SelmerComplex.NewPlaces K S₀ S → Type
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.UrGroup' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@urGroup : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) → Group.{0} (UrGroup q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.urGroup' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@urTopology : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) → TopologicalSpace.{0} (UrGroup q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.urTopology' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@urTopologicalGroup : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S), IsTopologicalGroup.{0} (UrGroup q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.urTopologicalGroup' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@urCompact : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S), CompactSpace.{0} (UrGroup q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.urCompact' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@urT2 : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S), T2Space.{0} (UrGroup q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.urT2' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@urLocallyCompact : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S), LocallyCompactSpace.{0} (UrGroup q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.urLocallyCompact' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@actMap : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) →
+          ContinuousMonoidHom.{0, 0} (UrGroup q) (Manuscript.RC.SelmerComplex.GKS K S₀)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.actMap' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientUrRes : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) →
+          ContinuousMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.Gloc K ↑q) (UrGroup q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.quotientUrRes' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientUrRes_surjective : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S), Function.Surjective.{1, 1} ⇑(quotientUrRes q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.quotientUrRes_surjective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@Carrier : {K : Type} →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        WeierstrassCurve.{0} K →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [Ideal.IsPrime.{0} P] →
+              MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda) →
+                Manuscript.RC.SelmerComplex.NewPlaces K S₀ S → Type
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.Carrier' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@carrierAdd : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) → AddCommGroup.{0} (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.carrierAdd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@carrierModule : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) →
+                  Module.{0, 0} (Manuscript.RC.Wiring.ResAt P) (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.carrierModule' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@carrierTop : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) → TopologicalSpace.{0} (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.carrierTop' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@carrierTopAdd : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S), IsTopologicalAddGroup.{0} (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.carrierTopAdd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@carrierContinuousConstantScalar : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S),
+  ContinuousConstSMul.{0, 0} (Manuscript.RC.Wiring.ResAt P) (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.carrierContinuousConstantScalar' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@baseAction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) →
+                  DistribMulAction.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.baseAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@baseScalarComm : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S),
+  SMulCommClass.{0, 0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Manuscript.RC.Wiring.ResAt P) (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.baseScalarComm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@baseContinuous : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  [Manuscript.RC.LambdaCoef.IsContChar α₀] (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S),
+  ContinuousSMul.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.baseContinuous' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@signAction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) → Units.{0} ℤ → Carrier W P α₀ q → Carrier W P α₀ q
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.signAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@intUnits_signAction : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) (ε : Units.{0} ℤ) (m : Carrier W P α₀ q),
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} (↑ε) m) (signAction W P α₀ q ε m)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.intUnits_signAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@signAction_continuous : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S), Continuous.{0, 0} fun p => signAction W P α₀ q p.1 p.2
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.signAction_continuous' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientAction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) →
+                  DistribMulAction.{0, 0} (Prod.{0, 0} (UrGroup q) (Units.{0} ℤ)) (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.quotientAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientScalarComm : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S),
+  SMulCommClass.{0, 0, 0} (Prod.{0, 0} (UrGroup q) (Units.{0} ℤ)) (Manuscript.RC.Wiring.ResAt P) (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.quotientScalarComm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientContinuous : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  [Manuscript.RC.LambdaCoef.IsContChar α₀] (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S),
+  ContinuousSMul.{0, 0} (Prod.{0, 0} (UrGroup q) (Units.{0} ℤ)) (Carrier W P α₀ q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.quotientContinuous' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primitive_central : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) (g : Prod.{0, 0} (UrGroup q) (Units.{0} ℤ)),
+  Eq.{1} (HMul.hMul.{0, 0, 0} g (Prod.mk.{0, 0} 1 (-1))) (HMul.hMul.{0, 0, 0} (Prod.mk.{0, 0} 1 (-1)) g)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.primitive_central' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primitive_scalar : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) (m : Carrier W P α₀ q),
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} (Prod.mk.{0, 0} 1 (-1)) m) (HSMul.hSMul.{0, 0, 0} (-1) m)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.primitive_scalar' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@contraction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              [inst_3 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                (α₀ :
+                    MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                  [inst_4 : Manuscript.RC.LambdaCoef.IsContChar α₀] →
+                    (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) →
+                      Homotopy.{0, 1, 0}
+                        (CategoryTheory.CategoryStruct.id.{0, 1}
+                          (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                            (Manuscript.RC.SelmerComplex.natCx.{0}
+                              (Manuscript.RC.SelmerComplex.contCochains.{0} (Manuscript.RC.Wiring.ResAt P)
+                                (Prod.{0, 0} (UrGroup q) (Units.{0} ℤ)) (Carrier W P α₀ q)))))
+                        0
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.contraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quadraticQuotientMap : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (s : Manuscript.RC.CoefModules.KS K S) →
+          {h : K} →
+            Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h) →
+              Ne.{1} s 0 →
+                (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) →
+                  ContinuousMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.Gloc K ↑q)
+                    (Prod.{0, 0} (UrGroup q) (Units.{0} ℤ))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.quadraticQuotientMap' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quadraticQuotientMap_primitive : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑q),
+  Membership.mem.{0, 0} (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑q))
+      σ →
+    Eq.{1} ((Manuscript.RC.CoefModules.quadChar s hs hs0) ((Manuscript.RC.SelmerComplex.locMap K S ↑q) σ)) (-1) →
+      Eq.{1} ((quadraticQuotientMap s hs hs0 q) σ) (Prod.mk.{0, 0} 1 (-1))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.quadraticQuotientMap_primitive' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quadraticQuotientMap_surjective : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑q),
+  Membership.mem.{0, 0} (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑q))
+      σ →
+    Eq.{1} ((Manuscript.RC.CoefModules.quadChar s hs hs0) ((Manuscript.RC.SelmerComplex.locMap K S ↑q) σ)) (-1) →
+      Function.Surjective.{1, 1} ⇑(quadraticQuotientMap s hs hs0 q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.quadraticQuotientMap_surjective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@pullback_action : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (q : Manuscript.RC.SelmerComplex.NewPlaces K S₀ S) (σ : Manuscript.RC.SelmerComplex.Gloc K ↑q)
+  (m : Carrier W P α₀ q),
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} ((quadraticQuotientMap s hs hs0 q) σ) m)
+    (have this :=
+      HSMul.hSMul.{0, 0, 0}
+        (↑((Manuscript.RC.CoefModules.quadChar s hs hs0) ((Manuscript.RC.SelmerComplex.locMap K S ↑q) σ)))
+        (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S₀ ↑q) σ)
+          (have this := m;
+          this));
+    this)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.LocalContractions.PrimitiveQuotientModel.pullback_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]

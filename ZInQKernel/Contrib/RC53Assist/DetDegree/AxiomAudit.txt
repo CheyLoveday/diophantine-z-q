@@ -1,0 +1,152 @@
+@ZInQ.Contrib.RC53Assist.DetDegree.det_tate_eq_of_weilPairing_compatibility.{u_1} : ∀ {K : Type u_1}
+  [inst : Field.{u_1} K] [inst_1 : IsSepClosed.{u_1} K] (E : WeierstrassCurve.{u_1} K)
+  [inst_2 : WeierstrassCurve.IsElliptic.{u_1} E] (ℓ : ℕ) [inst_3 : Fact (Nat.Prime ℓ)] (hℓ : Ne.{u_1 + 1} (↑ℓ) 0)
+  (α :
+    AddMonoidHom.{u_1, u_1} (WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E))
+      (WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E)))
+  (d : ℕ),
+  (∀ (n : ℕ)
+      (S T :
+        TauCeti.TateModuleLevel.{u_1} ℓ (WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E)) n),
+      Eq.{u_1 + 1}
+        (((TauCeti.Isogeny.weilPairing.{u_1} E (HPow.hPow.{0, 0, 0} ℓ n) ⋯)
+            ((TauCeti.TateModule.levelMap.{u_1, u_1} α n) S))
+          ((TauCeti.TateModule.levelMap.{u_1, u_1} α n) T))
+        (HSMul.hSMul.{0, u_1, u_1} d (((TauCeti.Isogeny.weilPairing.{u_1} E (HPow.hPow.{0, 0, 0} ℓ n) ⋯) S) T))) →
+    Eq.{1} (LinearMap.det.{u_1, 0} (TauCeti.TateModule.mapLinearMap.{u_1, u_1} α)) ↑d
+'ZInQ.Contrib.RC53Assist.DetDegree.det_tate_eq_of_weilPairing_compatibility' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.DetDegree.detEqDegree_separable.{u_1} : ∀ {K : Type u_1} [inst : Field.{u_1} K]
+  [IsSepClosed.{u_1} K] (E : WeierstrassCurve.{u_1} K) [inst_2 : WeierstrassCurve.IsElliptic.{u_1} E] (ℓ : ℕ)
+  [inst_3 : Fact (Nat.Prime ℓ)],
+  Ne.{u_1 + 1} (↑ℓ) 0 →
+    ∀ (φ : TauCeti.Isogeny.{u_1} (WeierstrassCurve.toAffine.{u_1} E) (WeierstrassCurve.toAffine.{u_1} E))
+      [Algebra.IsSeparable.{u_1, u_1} (↥(AlgHom.fieldRange.{u_1, u_1, u_1} (TauCeti.Isogeny.fieldPullback.{u_1} φ)))
+          (WeierstrassCurve.Affine.FunctionField.{u_1} (WeierstrassCurve.toAffine.{u_1} E))]
+      (α :
+        AddMonoidHom.{u_1, u_1} (WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E))
+          (WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E))),
+      (∀ (P : WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E)),
+          Eq.{u_1 + 1} (TauCeti.Isogeny.Hom.pointMap.{u_1} (TauCeti.Isogeny.Hom.ofIsogeny.{u_1} φ) P) (α P)) →
+        Eq.{1} (LinearMap.det.{u_1, 0} (TauCeti.TateModule.mapLinearMap.{u_1, u_1} α)) ↑(TauCeti.Isogeny.degree.{u_1} φ)
+'ZInQ.Contrib.RC53Assist.DetDegree.detEqDegree_separable' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.DetDegree.detEqDegree_zero.{u_1} : ∀ {K : Type u_1} [inst : Field.{u_1} K]
+  [IsSepClosed.{u_1} K] (E : WeierstrassCurve.{u_1} K) [inst_2 : WeierstrassCurve.IsElliptic.{u_1} E] (ℓ : ℕ)
+  [inst_3 : Fact (Nat.Prime ℓ)],
+  Ne.{u_1 + 1} (↑ℓ) 0 →
+    ∀
+      (α :
+        AddMonoidHom.{u_1, u_1} (WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E))
+          (WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E))),
+      (∀ (P : WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E)),
+          Eq.{u_1 + 1} (TauCeti.Isogeny.Hom.pointMap.{u_1} 0 P) (α P)) →
+        Eq.{1} (LinearMap.det.{u_1, 0} (TauCeti.TateModule.mapLinearMap.{u_1, u_1} α))
+          ↑(TauCeti.Isogeny.Hom.degree.{u_1} 0)
+'ZInQ.Contrib.RC53Assist.DetDegree.detEqDegree_zero' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.DetDegree.detEqDegree_integer_multiplication.{u_1} : ∀ {K : Type u_1} [inst : Field.{u_1} K]
+  [IsSepClosed.{u_1} K] (E : WeierstrassCurve.{u_1} K) [inst_2 : WeierstrassCurve.IsElliptic.{u_1} E] (ℓ : ℕ)
+  [inst_3 : Fact (Nat.Prime ℓ)],
+  Ne.{u_1 + 1} (↑ℓ) 0 →
+    ∀ (k : ℤ)
+      (α :
+        AddMonoidHom.{u_1, u_1} (WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E))
+          (WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E))),
+      (∀ (P : WeierstrassCurve.Affine.Point.{u_1} (WeierstrassCurve.toAffine.{u_1} E)),
+          Eq.{u_1 + 1}
+            (TauCeti.Isogeny.Hom.pointMap.{u_1}
+              (HSMul.hSMul.{0, u_1, u_1} k (TauCeti.Isogeny.Hom.id.{u_1} (WeierstrassCurve.toAffine.{u_1} E))) P)
+            (α P)) →
+        Eq.{1} (LinearMap.det.{u_1, 0} (TauCeti.TateModule.mapLinearMap.{u_1, u_1} α))
+          ↑(TauCeti.Isogeny.Hom.degree.{u_1}
+              (HSMul.hSMul.{0, u_1, u_1} k (TauCeti.Isogeny.Hom.id.{u_1} (WeierstrassCurve.toAffine.{u_1} E))))
+'ZInQ.Contrib.RC53Assist.DetDegree.detEqDegree_integer_multiplication' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.DetDegree.frobeniusTateDetFormOne_proved : ZInQ.Contrib.CloudB3RC53.ModularWeil.FrobeniusTateDetFormOne
+'ZInQ.Contrib.RC53Assist.DetDegree.frobeniusTateDetFormOne_proved' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.DetDegree.goodReductionFrobeniusTraceDictionaryQ_of_reductionComparison : ZInQ.Contrib.CloudB3RC53.ModularWeil.TateReductionComparison →
+  ZInQ.Contrib.RC53Assist.NewformPeriodsDictionary.GoodReductionFrobeniusTraceDictionaryQ
+'ZInQ.Contrib.RC53Assist.DetDegree.goodReductionFrobeniusTraceDictionaryQ_of_reductionComparison' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.DetDegree.detEqDegree_of_inseparableWeilPairingCompatibility : ZInQ.Contrib.RC53Assist.DetDegree.InseparableWeilPairingCompatibility →
+  ZInQ.Contrib.CloudB3RC53.ModularWeil.DetEqDegree
+'ZInQ.Contrib.RC53Assist.DetDegree.detEqDegree_of_inseparableWeilPairingCompatibility' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+def ZInQ.Contrib.RC53Assist.DetDegree.InseparableWeilPairingCompatibility : Prop :=
+∀ (p : ℕ) [inst : Fact (Nat.Prime p)] (Et : WeierstrassCurve.{0} (ZMod p)) [inst_1 : WeierstrassCurve.IsElliptic.{0} Et]
+  (ℓ : ℕ) [inst_2 : Fact (Nat.Prime ℓ)],
+  Ne.{1} ℓ p →
+    ∀
+      (f :
+        TauCeti.Isogeny.Hom.{0}
+          (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p))))
+          (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p)))))
+      (hf : Ne.{1} f 0),
+      ¬Algebra.IsSeparable.{0, 0}
+            (↥(AlgHom.fieldRange.{0, 0, 0} (TauCeti.Isogeny.fieldPullback.{0} (TauCeti.Isogeny.Hom.toIsogeny.{0} hf))))
+            (WeierstrassCurve.Affine.FunctionField.{0}
+              (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p))))) →
+        ∀
+          (α :
+            AddMonoidHom.{0, 0}
+              (WeierstrassCurve.Affine.Point.{0}
+                (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p)))))
+              (WeierstrassCurve.Affine.Point.{0}
+                (WeierstrassCurve.toAffine.{0}
+                  (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p)))))),
+          (∀
+              (P :
+                WeierstrassCurve.Affine.Point.{0}
+                  (WeierstrassCurve.toAffine.{0}
+                    (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p))))),
+              Eq.{1} (TauCeti.Isogeny.Hom.pointMap.{0} f P) (α P)) →
+            ∀ (n : ℕ) (hN : Ne.{1} (↑(HPow.hPow.{0, 0, 0} ℓ n)) 0)
+              (S T :
+                TauCeti.TateModuleLevel.{0} ℓ
+                  (WeierstrassCurve.Affine.Point.{0}
+                    (WeierstrassCurve.toAffine.{0}
+                      (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p)))))
+                  n),
+              Eq.{1}
+                (((TauCeti.Isogeny.weilPairing.{0}
+                      (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p))) (HPow.hPow.{0, 0, 0} ℓ n)
+                      hN)
+                    ((TauCeti.TateModule.levelMap.{0, 0} α n) S))
+                  ((TauCeti.TateModule.levelMap.{0, 0} α n) T))
+                (HSMul.hSMul.{0, 0, 0} (TauCeti.Isogeny.Hom.degree.{0} f)
+                  (((TauCeti.Isogeny.weilPairing.{0}
+                        (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p)))
+                        (HPow.hPow.{0, 0, 0} ℓ n) hN)
+                      S)
+                    T))
+'ZInQ.Contrib.RC53Assist.DetDegree.InseparableWeilPairingCompatibility' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+def ZInQ.Contrib.CloudB3RC53.ModularWeil.DetEqDegree : Prop :=
+∀ (p : ℕ) [inst : Fact (Nat.Prime p)] (Et : WeierstrassCurve.{0} (ZMod p)) [inst_1 : WeierstrassCurve.IsElliptic.{0} Et]
+  (ℓ : ℕ) [inst_2 : Fact (Nat.Prime ℓ)],
+  Ne.{1} ℓ p →
+    ∀
+      (f :
+        TauCeti.Isogeny.Hom.{0}
+          (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p))))
+          (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p)))))
+      (α :
+        AddMonoidHom.{0, 0}
+          (WeierstrassCurve.Affine.Point.{0}
+            (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p)))))
+          (WeierstrassCurve.Affine.Point.{0}
+            (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p)))))),
+      (∀
+          (P :
+            WeierstrassCurve.Affine.Point.{0}
+              (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} Et (AlgebraicClosure.{0} (ZMod p))))),
+          Eq.{1} (TauCeti.Isogeny.Hom.pointMap.{0} f P) (α P)) →
+        Eq.{1} (LinearMap.det.{0, 0} (TauCeti.TateModule.mapLinearMap.{0, 0} α)) ↑(TauCeti.Isogeny.Hom.degree.{0} f)

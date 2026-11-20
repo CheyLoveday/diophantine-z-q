@@ -1,5 +1,10 @@
 # `NewformPeriodsRational`: initial conditional package
 
+
+## Update (2026-11-18)
+
+G1 `ParametrizationPeriodsGlue` is now proved outright, with no hypotheses and no printed input: `ZInQ.Contrib.RC53Assist.NewformPeriodsG1.parametrizationPeriodsGlue_holds` in `NewformPeriodsG1/ParametrizationPeriods.lean`. The reduction without G1 as a hypothesis is `newformPeriodsRational_of_prints_G0_G2`. The proof uses only Mathlib facts about the Weierstrass function (it takes every value off the lattice; a local period is a lattice vector), a local inverse, the identity theorem on the upper half-plane, q-expansion calculus proved there, and j built from the Eisenstein series E4 and E6. The statements below that list G1 as unproved glue are superseded by this note.
+
 This directory reduces the period statement `NewformPeriodsRational`
 (`ZInQ.Contrib.CloudB3RC53.ModularWeil.NewformPeriodsRational`, module
 `ZInQKernel.Contrib.CloudB3RC53.ModularWeil.WeakWeil`) to two printed leaves and three named

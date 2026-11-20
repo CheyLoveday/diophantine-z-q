@@ -1,0 +1,1883 @@
+Residual Selmer stage bounds: exact declaration types and axiom dependencies
+
+Source compilation: successful. Declaration verification: successful.
+New theorems: 70. Additional key definitions checked: 11.
+Every theorem depends only on a subset of propext, Classical.choice, Quot.sound.
+The arithmetic printed statements remain explicit hypotheses, not newly declared axioms.
+Source size: 128930 bytes.
+Source SHA-256: 0b47a6514cf7c576d2ac0ddfc53ea064637056a81a0bf0d0a86955b848b2bfbd.
+
+Complete types, including universe information and proof arguments, follow.
+
+@ZInQ.Contrib.RC53Assist.ResidualBounds.homology_subsingleton_of_term : ∀ {R : Type} [inst : CommRing.{0} R]
+  (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ),
+  Subsingleton.{1} ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n) →
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.homology_subsingleton_of_term' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.exists_primitive_of_subsingleton : ∀ {R : Type} [inst : CommRing.{0} R]
+  (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ),
+  Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n) →
+    ∀ (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n)),
+      Eq.{1} ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C n (HAdd.hAdd.{0, 0, 0} n 1) rfl.{1}) x) 0 →
+        ∃ y,
+          Eq.{1}
+            ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C (HSub.hSub.{0, 0, 0} n 1) n
+                (Decidable.byContradiction fun a =>
+                  ZInQ.Contrib.RC53Assist.ResidualBounds.homologySubquotEquiv._proof_1 n a))
+              y)
+            x
+'ZInQ.Contrib.RC53Assist.ResidualBounds.exists_primitive_of_subsingleton' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.homology_subsingleton_of_primitives : ∀ {R : Type} [inst : CommRing.{0} R]
+  (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ),
+  (∀ (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n)),
+      Eq.{1} ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C n (HAdd.hAdd.{0, 0, 0} n 1) rfl.{1}) x) 0 →
+        ∃ y,
+          Eq.{1}
+            ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C (HSub.hSub.{0, 0, 0} n 1) n
+                (Decidable.byContradiction fun a =>
+                  ZInQ.Contrib.RC53Assist.ResidualBounds.homologySubquotEquiv._proof_1 n a))
+              y)
+            x) →
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.homology_subsingleton_of_primitives' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.exact_subsingleton_middle : ∀ {R : Type} [inst : CommRing.{0} R]
+  {E : CategoryTheory.ShortComplex.{0, 1} (ModuleCat.{0, 0} R)},
+  CategoryTheory.ShortComplex.Exact.{0, 1} E →
+    Subsingleton.{1} ↑(CategoryTheory.ShortComplex.X₁.{0, 1} E) →
+      Subsingleton.{1} ↑(CategoryTheory.ShortComplex.X₃.{0, 1} E) →
+        Subsingleton.{1} ↑(CategoryTheory.ShortComplex.X₂.{0, 1} E)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.exact_subsingleton_middle' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.piCx_homology_subsingleton : ∀ {R : Type} [inst : CommRing.{0} R] {ι : Type}
+  (Cs : ι → ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ),
+  (∀ (v : ι),
+      Subsingleton.{1}
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Cs v)) n)) →
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (ZInQ.Manuscript.RC.SelmerComplex.piCx.{0} Cs)) n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.piCx_homology_subsingleton' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.shiftDown_homology_subsingleton : ∀ {R : Type} [inst : CommRing.{0} R]
+  (L : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ),
+  Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} L)
+          (HSub.hSub.{0, 0, 0} n 1)) →
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.SelmerDuality.shiftDown.{0} L))
+          n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.shiftDown_homology_subsingleton' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.selCx_homology_subsingleton : ∀ {R : Type} [inst : CommRing.{0} R]
+  (D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.{0} R) (n : ℤ),
+  Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D))
+          n) →
+    Subsingleton.{1}
+        ↑(HomologicalComplex.homology.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D))
+            n) →
+      Subsingleton.{1}
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.L.{0} D))
+              (HSub.hSub.{0, 0, 0} n 1)) →
+        Subsingleton.{1}
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} D))
+              n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.selCx_homology_subsingleton' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.selCx_homology_range : ∀ {R : Type} [inst : CommRing.{0} R]
+  (D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.{0} R),
+  (∀ (n : ℤ),
+      LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+        Subsingleton.{1}
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D))
+              n)) →
+    (∀ (n : ℤ),
+        LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+          Subsingleton.{1}
+            ↑(HomologicalComplex.homology.{0, 1, 0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.L.{0} D))
+                n)) →
+      (∀ (n : ℤ),
+          LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+            Subsingleton.{1}
+              ↑(HomologicalComplex.homology.{0, 1, 0}
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D))
+                  n)) →
+        ∀ (n : ℤ),
+          LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+            Subsingleton.{1}
+              ↑(HomologicalComplex.homology.{0, 1, 0}
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} D))
+                  n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.selCx_homology_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidue_surjective : ∀ (i : ℕ) [inst : NeZero.{0} i],
+  Function.Surjective.{1, 1} ⇑(ZInQ.Contrib.CloudB3RC53.GenuineInst.resEps i)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidue_surjective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv_residue : ∀ (i : ℕ) [inst : NeZero.{0} i]
+  (a : ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv i)
+      ((IsLocalRing.residue.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) a))
+    ((ZInQ.Contrib.CloudB3RC53.GenuineInst.resEps i) a)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv_residue' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueField_zero_or_one : ∀ (i : ℕ) [inst : NeZero.{0} i]
+  (c : IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)), Eq.{1} c 0 ∨ Eq.{1} c 1
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueField_zero_or_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv.map_boundaries : ∀ {R S : Type} [inst : CommRing.{0} R]
+  [inst_1 : CommRing.{0} S] {e : RingEquiv.{0, 0} R S} {C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  {D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} S}
+  (E : ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv e C D) (n : ℤ),
+  Eq.{1}
+    (Submodule.map.{0, 0, 0, 0} (↑(E.cycles n))
+      (Submodule.comap.{0, 0, 0, 0}
+        (Submodule.subtype.{0, 0}
+          (LinearMap.ker.{0, 0, 0, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C n (HAdd.hAdd.{0, 0, 0} n 1) rfl.{1})))
+        (LinearMap.range.{0, 0, 0, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C (HSub.hSub.{0, 0, 0} n 1) n
+            (Decidable.byContradiction fun a =>
+              ZInQ.Contrib.RC53Assist.ResidualBounds.homologySubquotEquiv._proof_1 n a)))))
+    (Submodule.comap.{0, 0, 0, 0}
+      (Submodule.subtype.{0, 0}
+        (LinearMap.ker.{0, 0, 0, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} D n (HAdd.hAdd.{0, 0, 0} n 1) rfl.{1})))
+      (LinearMap.range.{0, 0, 0, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} D (HSub.hSub.{0, 0, 0} n 1) n
+          (Decidable.byContradiction fun a =>
+            ZInQ.Contrib.RC53Assist.ResidualBounds.homologySubquotEquiv._proof_1 n a))))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv.map_boundaries' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv.finrank_homology : ∀ {R S : Type} [inst : CommRing.{0} R]
+  [inst_1 : CommRing.{0} S] {e : RingEquiv.{0, 0} R S} {C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  {D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} S}
+  (E : ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv e C D) (n : ℤ),
+  Eq.{1}
+    (Module.finrank.{0, 0} R
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n))
+    (Module.finrank.{0, 0} S
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} D) n))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv.finrank_homology' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv.subsingleton_homology : ∀ {R S : Type}
+  [inst : CommRing.{0} R] [inst_1 : CommRing.{0} S] {e : RingEquiv.{0, 0} R S}
+  {C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R} {D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} S}
+  (E : ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv e C D) (n : ℤ),
+  Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} D) n) →
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv.subsingleton_homology' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.natCx_term_subsingleton_neg : ∀ {R : Type} [inst : CommRing.{0} R]
+  (C : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} R) ℕ) (n : ℤ),
+  LT.lt.{0} n 0 →
+    Subsingleton.{1}
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0} C) n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.natCx_term_subsingleton_neg' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.natCx_homology_subsingleton_neg : ∀ {R : Type} [inst : CommRing.{0} R]
+  (C : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} R) ℕ) (n : ℤ),
+  LT.lt.{0} n 0 →
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0} C)) n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.natCx_homology_subsingleton_neg' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.cochainScalarEquiv_apply : ∀ {R S : Type} [inst : CommRing.{0} R]
+  [inst_1 : CommRing.{0} S] (eR : RingEquiv.{0, 0} R S) {M N : Type} [inst_2 : AddCommGroup.{0} M]
+  [inst_3 : Module.{0, 0} R M] [inst_4 : AddCommGroup.{0} N] [inst_5 : Module.{0, 0} S N]
+  (eM : LinearEquiv.{0, 0, 0, 0} (↑eR) M N) {G : Type} [inst_6 : Group.{0} G] [inst_7 : TopologicalSpace.{0} G]
+  [inst_8 : IsTopologicalGroup.{0} G] [inst_9 : DistribMulAction.{0, 0} G M] [inst_10 : SMulCommClass.{0, 0, 0} G R M]
+  [inst_11 : TopologicalSpace.{0} M] [inst_12 : DiscreteTopology.{0} M] [inst_13 : ContinuousSMul.{0, 0} G M]
+  [inst_14 : DistribMulAction.{0, 0} G N] [inst_15 : SMulCommClass.{0, 0, 0} G S N] [inst_16 : TopologicalSpace.{0} N]
+  [inst_17 : DiscreteTopology.{0} N] [inst_18 : ContinuousSMul.{0, 0} G N] (n : ℕ)
+  (f : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) n)) (x : Fin n → G),
+  Eq.{1}
+    (ZInQ.Manuscript.RC.SelmerComplex.cFun.{0} ((ZInQ.Contrib.RC53Assist.ResidualBounds.cochainScalarEquiv eR eM n) f)
+      x)
+    (eM (ZInQ.Manuscript.RC.SelmerComplex.cFun.{0} f x))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.cochainScalarEquiv_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.cochainScalarEquiv_comm : ∀ {R S : Type} [inst : CommRing.{0} R]
+  [inst_1 : CommRing.{0} S] (eR : RingEquiv.{0, 0} R S) {M N : Type} [inst_2 : AddCommGroup.{0} M]
+  [inst_3 : Module.{0, 0} R M] [inst_4 : AddCommGroup.{0} N] [inst_5 : Module.{0, 0} S N]
+  (eM : LinearEquiv.{0, 0, 0, 0} (↑eR) M N) {G : Type} [inst_6 : Group.{0} G] [inst_7 : TopologicalSpace.{0} G]
+  [inst_8 : IsTopologicalGroup.{0} G] [inst_9 : DistribMulAction.{0, 0} G M] [inst_10 : SMulCommClass.{0, 0, 0} G R M]
+  [inst_11 : TopologicalSpace.{0} M] [inst_12 : DiscreteTopology.{0} M] [inst_13 : ContinuousSMul.{0, 0} G M]
+  [inst_14 : DistribMulAction.{0, 0} G N] [inst_15 : SMulCommClass.{0, 0, 0} G S N] [inst_16 : TopologicalSpace.{0} N]
+  [inst_17 : DiscreteTopology.{0} N] [inst_18 : ContinuousSMul.{0, 0} G N],
+  (∀ (g : G) (m : M), Eq.{1} (eM (HSMul.hSMul.{0, 0, 0} g m)) (HSMul.hSMul.{0, 0, 0} g (eM m))) →
+    ∀ (n : ℕ) (f : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) n)),
+      Eq.{1}
+        ((ZInQ.Contrib.RC53Assist.ResidualBounds.cochainScalarEquiv eR eM (HAdd.hAdd.{0, 0, 0} n 1))
+          ((ModuleCat.Hom.hom.{0, 0}
+              (HomologicalComplex.d.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) n
+                (HAdd.hAdd.{0, 0, 0} n 1)))
+            f))
+        ((ModuleCat.Hom.hom.{0, 0}
+            (HomologicalComplex.d.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} S G N) n
+              (HAdd.hAdd.{0, 0, 0} n 1)))
+          ((ZInQ.Contrib.RC53Assist.ResidualBounds.cochainScalarEquiv eR eM n) f))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.cochainScalarEquiv_comm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.baseChangedCochainsScalarEquiv_tmul : ∀ (A B : Type) [inst : CommRing.{0} A]
+  [inst_1 : CommRing.{0} B] [inst_2 : Algebra.{0, 0} A B] {F : Type} [inst_3 : CommRing.{0} F]
+  (eR : RingEquiv.{0, 0} B F) (G : Type) [inst_4 : Group.{0} G] [inst_5 : TopologicalSpace.{0} G]
+  [inst_6 : IsTopologicalGroup.{0} G] [inst_7 : CompactSpace.{0} G] (M : Type) [inst_8 : AddCommGroup.{0} M]
+  [inst_9 : Module.{0, 0} A M] [inst_10 : DistribMulAction.{0, 0} G M] [inst_11 : SMulCommClass.{0, 0, 0} G A M]
+  [inst_12 : TopologicalSpace.{0} M] [inst_13 : DiscreteTopology.{0} M] [inst_14 : ContinuousSMul.{0, 0} G M] {N : Type}
+  [inst_15 : AddCommGroup.{0} N] [inst_16 : Module.{0, 0} F N] [inst_17 : DistribMulAction.{0, 0} G N]
+  [inst_18 : SMulCommClass.{0, 0, 0} G F N] [inst_19 : TopologicalSpace.{0} N] [inst_20 : DiscreteTopology.{0} N]
+  [inst_21 : ContinuousSMul.{0, 0} G N]
+  (eM : LinearEquiv.{0, 0, 0, 0} (↑eR) (ZInQ.Contrib.RC53Assist.ResidualFiniteness.BCoef A B M) N)
+  (heM :
+    ∀ (g : G) (x : ZInQ.Contrib.RC53Assist.ResidualFiniteness.BCoef A B M),
+      Eq.{1} (eM (HSMul.hSMul.{0, 0, 0} g x)) (HSMul.hSMul.{0, 0, 0} g (eM x)))
+  (n : ℕ) (b : B) (f : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} A G M) n))
+  (x : Fin n → G),
+  Eq.{1}
+    (ZInQ.Manuscript.RC.SelmerComplex.cFun.{0}
+      (((ZInQ.Contrib.RC53Assist.ResidualBounds.baseChangedCochainsScalarEquiv A B eR G M eM heM).component ↑n)
+        (TensorProduct.tmul.{0, 0, 0} A b f))
+      x)
+    (eM (ZInQ.Contrib.RC53Assist.ResidualFiniteness.bcTmul A B M b (ZInQ.Manuscript.RC.SelmerComplex.cFun.{0} f x)))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.baseChangedCochainsScalarEquiv_tmul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueTensorEquiv_tmul : ∀ (i : ℕ) [inst : NeZero.{0} i] (N : Type)
+  [inst_1 : AddCommGroup.{0} N] [inst_2 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) N]
+  (c : IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) (x : N),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueTensorEquiv i N)
+      (TensorProduct.tmul.{0, 0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) c x))
+    (TensorProduct.tmul.{0, 0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+      ((ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv i) c) x)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueTensorEquiv_tmul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageCoefResidualEquiv_smul : ∀ {K : Type} [inst : Field.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {W : WeierstrassCurve.{0} K}
+  (j : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))))
+  (hT : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)))
+  (hM : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 j))
+  (h2 : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W 2) (g : ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+  (x :
+    ZInQ.Contrib.RC53Assist.ResidualFiniteness.BCoef (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+      (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+      (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α)),
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.ResidualBounds.stageCoefResidualEquiv j α hT hM h2) (HSMul.hSMul.{0, 0, 0} g x))
+    (HSMul.hSMul.{0, 0, 0} g ((ZInQ.Contrib.RC53Assist.ResidualBounds.stageCoefResidualEquiv j α hT hM h2) x))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageCoefResidualEquiv_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageRestrictedCoefResidualEquiv_smul : ∀ {K : Type} [inst : Field.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {W : WeierstrassCurve.{0} K}
+  (j : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))))
+  (hT : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)))
+  (hM : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 j))
+  (h2 : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W 2) {H : Type} [inst_1 : Group.{0} H]
+  [inst_2 : TopologicalSpace.{0} H] (φ : ContinuousMonoidHom.{0, 0} H (ZInQ.Manuscript.RC.SelmerComplex.GKS K S))
+  (g : H)
+  (x :
+    ZInQ.Contrib.RC53Assist.ResidualFiniteness.BCoef (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+      (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+      (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} φ
+        (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α))),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.ResidualBounds.stageRestrictedCoefResidualEquiv j α hT hM h2 φ)
+      (HSMul.hSMul.{0, 0, 0} g x))
+    (HSMul.hSMul.{0, 0, 0} g
+      ((ZInQ.Contrib.RC53Assist.ResidualBounds.stageRestrictedCoefResidualEquiv j α hT hM h2 φ) x))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageRestrictedCoefResidualEquiv_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidual_localization : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} (j : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))))
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  (hT : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)))
+  (hM : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 j))
+  (h2 : ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W 2)
+  [inst_3 : Fintype.{0} (ZInQ.Manuscript.RC.SelmerComplex.Places K S)]
+  [inst_4 : DecidableEq.{1} (ZInQ.Manuscript.RC.SelmerComplex.Places K S)] (a b : ℤ) (h : Eq.{1} a b)
+  (x :
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+          (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+          (ZInQ.Manuscript.RC.SelmerComplex.globalCx.{0}
+            (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+            (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+            (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α)))
+        a)),
+  Eq.{1}
+    (((ZInQ.Contrib.RC53Assist.ResidualBounds.stageLocalSumResidualEquiv j α hT hM h2).component b)
+      ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0}
+          (ZInQ.Contrib.RC53Assist.ResidualFiniteness.ghomBaseChange
+            (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+            (ZInQ.Manuscript.RC.SelmerComplex.resS.{0}
+              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+              (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (fun v => ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+              (fun v => ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+              (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α)))
+          a b h)
+        x))
+    ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0}
+        (ZInQ.Manuscript.RC.SelmerComplex.resS.{0} (ZMod 2) (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+          (fun v => ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+          (fun v => ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+          (ZInQ.Contrib.RC53Assist.ResidualBounds.TwoTorsionResidual K S W))
+        a b h)
+      (((ZInQ.Contrib.RC53Assist.ResidualBounds.stageGlobalResidualEquiv j α hT hM h2).component a) x))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidual_localization' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.scalarChangedEquiv_smul : ∀ {R S : Type} [inst : CommRing.{0} R]
+  [inst_1 : CommRing.{0} S] (e : RingEquiv.{0, 0} R S) (M : Type) [inst_2 : AddCommGroup.{0} M]
+  [inst_3 : Module.{0, 0} R M] {G : Type} [inst_4 : Group.{0} G] [inst_5 : DistribMulAction.{0, 0} G M] (g : G) (x : M),
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.ResidualBounds.scalarChangedEquiv e M) (HSMul.hSMul.{0, 0, 0} g x))
+    (HSMul.hSMul.{0, 0, 0} g ((ZInQ.Contrib.RC53Assist.ResidualBounds.scalarChangedEquiv e M) x))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.scalarChangedEquiv_smul' depends on axioms: [propext, Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.globalBinary_homology_range : ∀ (K : Type) [inst : Field.{0} K]
+  [NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (M : Type) [inst_2 : AddCommGroup.{0} M] [inst_3 : Module.{0, 0} (ZMod 2) M]
+  [inst_4 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_5 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (ZMod 2) M]
+  [inst_6 : TopologicalSpace.{0} M] [inst_7 : DiscreteTopology.{0} M]
+  [inst_8 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] [Finite.{1} M],
+  ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+    NumberField.IsTotallyComplex.{0} K →
+      Set.Finite.{0} S →
+        (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+            Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+          ∀ (n : ℤ),
+            LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+              Subsingleton.{1}
+                ↑(HomologicalComplex.homology.{0, 1, 0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                      (ZInQ.Manuscript.RC.SelmerComplex.globalCx.{0} (ZMod 2) (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                        M))
+                    n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.globalBinary_homology_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.tensor_subsingleton_right : ∀ {A : Type} [inst : CommRing.{0} A] (B : Type)
+  [inst_1 : CommRing.{0} B] [inst_2 : Algebra.{0, 0} A B] (M : Type) [inst_3 : AddCommGroup.{0} M]
+  [inst_4 : Module.{0, 0} A M], Subsingleton.{1} M → Subsingleton.{1} (TensorProduct.{0, 0, 0} A B M)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.tensor_subsingleton_right' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.baseChange_homology_subsingleton_of_term : ∀ {A : Type} [inst : CommRing.{0} A]
+  (B : Type) [inst_1 : CommRing.{0} B] [inst_2 : Algebra.{0, 0} A B]
+  (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A) (n : ℤ),
+  Subsingleton.{1} ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n) →
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange B C))
+          n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.baseChange_homology_subsingleton_of_term' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.globalStageField_homology_range : ∀ (K : Type) [inst : Field.{0} K]
+  [NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) (i : ℕ)
+  [inst_2 : NeZero.{0} i] (M : Type) [inst_3 : AddCommGroup.{0} M]
+  [inst_4 : Module.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) M]
+  [inst_5 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_6 :
+    SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+      (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) M]
+  [inst_7 : TopologicalSpace.{0} M] [inst_8 : DiscreteTopology.{0} M]
+  [inst_9 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] [Finite.{1} M],
+  ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+    NumberField.IsTotallyComplex.{0} K →
+      Set.Finite.{0} S →
+        (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+            Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+          ∀ (n : ℤ),
+            LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+              Subsingleton.{1}
+                ↑(HomologicalComplex.homology.{0, 1, 0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                      (ZInQ.Manuscript.RC.SelmerComplex.globalCx.{0}
+                        (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                        (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M))
+                    n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.globalStageField_homology_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.stageGlobal_residual_range : ∀ (K : Type) [inst : Field.{0} K]
+  [NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) (i : ℕ)
+  [inst_2 : NeZero.{0} i] (M : Type) [inst_3 : AddCommGroup.{0} M]
+  [inst_4 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_5 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_6 :
+    SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_7 : TopologicalSpace.{0} M] [inst_8 : DiscreteTopology.{0} M]
+  [inst_9 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] [Finite.{1} M],
+  ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+    NumberField.IsTotallyComplex.{0} K →
+      Set.Finite.{0} S →
+        (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+            Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+          ∀ (n : ℤ),
+            LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+              Subsingleton.{1}
+                ↑(HomologicalComplex.homology.{0, 1, 0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                      (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+                        (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                        (ZInQ.Manuscript.RC.SelmerComplex.globalCx.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                          (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M)))
+                    n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageGlobal_residual_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.stageLocal_residual_range : ∀ (K : Type) [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (i : ℕ) [inst_2 : NeZero.{0} i] (M : Type) [inst_3 : AddCommGroup.{0} M]
+  [inst_4 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_5 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_6 :
+    SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_7 : TopologicalSpace.{0} M] [inst_8 : DiscreteTopology.{0} M]
+  [inst_9 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] [Finite.{1} M],
+  ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+    ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) (n : ℤ),
+      LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+        Subsingleton.{1}
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+                  (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                  (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M v)))
+              n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageLocal_residual_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.stageSelmer_residual_range : ∀ (K : Type) [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (i : ℕ) [inst_2 : NeZero.{0} i] (M : Type) [inst_3 : AddCommGroup.{0} M]
+  [inst_4 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_5 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_6 :
+    SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_7 : TopologicalSpace.{0} M] [inst_8 : DiscreteTopology.{0} M]
+  [inst_9 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] [Finite.{1} M],
+  ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+    ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+      NumberField.IsTotallyComplex.{0} K →
+        Set.Finite.{0} S →
+          (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+              Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+            ∀
+              (Δ :
+                ZInQ.Manuscript.RC.SelmerComplex.GaloisLocalConditions K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                  M),
+              (∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S),
+                  Eq.{2} (ZInQ.Manuscript.RC.SelmerComplex.LocalConditions.U.{0} Δ v)
+                      (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M v) ∨
+                    ∀ (n : ℤ),
+                      LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+                        Subsingleton.{1}
+                          ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                              (ZInQ.Manuscript.RC.SelmerComplex.LocalConditions.U.{0} Δ v) n)) →
+                ∀ (n : ℤ),
+                  LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+                    Eq.{1}
+                      (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                        (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                            (ZInQ.Manuscript.RC.SelmerComplex.galoisSelData K S
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M Δ))
+                          n))
+                      0
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageSelmer_residual_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.cocycleCondition_term_range : ∀ {R G M : Type} [inst : CommRing.{0} R]
+  [inst_1 : Group.{0} G] [inst_2 : TopologicalSpace.{0} G] [inst_3 : IsTopologicalGroup.{0} G]
+  [inst_4 : AddCommGroup.{0} M] [inst_5 : Module.{0, 0} R M] [inst_6 : DistribMulAction.{0, 0} G M]
+  [inst_7 : SMulCommClass.{0, 0, 0} G R M] [inst_8 : TopologicalSpace.{0} M] [inst_9 : DiscreteTopology.{0} M]
+  [inst_10 : ContinuousSMul.{0, 0} G M]
+  (Z : Submodule.{0, 0} R ↥(ZInQ.Manuscript.RC.SelmerComplex.contCochain.{0} R G M 1))
+  (hZ :
+    ∀ (z : ↥(ZInQ.Manuscript.RC.SelmerComplex.contCochain.{0} R G M 1)),
+      Membership.mem.{0, 0} Z z → Eq.{1} ((ZInQ.Manuscript.RC.CoefModules.contD.{0} R G M 1) z) 0)
+  (n : ℤ),
+  LT.lt.{0} n 0 ∨ LT.lt.{0} 1 n →
+    Subsingleton.{1}
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} (ZInQ.Manuscript.RC.CoefModules.cocycleCondition.{0} Z hZ)
+          n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.cocycleCondition_term_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageStrictSelmer_hbdd : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (i : ℕ) [inst_3 : NeZero.{0} i]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α],
+  ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+    ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+      NumberField.IsTotallyComplex.{0} K →
+        Set.Finite.{0} S →
+          (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+              Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+            ∀ (n : ℤ),
+              LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+                Eq.{1}
+                  (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                    (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                        (ZInQ.Manuscript.RC.CoefModules.actualSelData_zero W i α))
+                      n))
+                  0
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageStrictSelmer_hbdd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageRelaxedSelmer_hbdd : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (i : ℕ) [inst_3 : NeZero.{0} i]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α],
+  ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+    ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+      NumberField.IsTotallyComplex.{0} K →
+        Set.Finite.{0} S →
+          (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+              Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+            ∀ (n : ℤ),
+              LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+                Eq.{1}
+                  (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                    (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                        (ZInQ.Manuscript.RC.CoefModules.actualSelData_full W i α))
+                      n))
+                  0
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageRelaxedSelmer_hbdd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageKummerSelmer_hbdd : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (i : ℕ) [inst_3 : NeZero.{0} i]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α],
+  ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+    ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+      NumberField.IsTotallyComplex.{0} K →
+        Set.Finite.{0} S →
+          (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+              Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+            ∀
+              [inst_5 :
+                (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                  DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)]
+              (Bv :
+                (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                  WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+              [inst_6 : ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S), WeierstrassCurve.IsElliptic.{0} (Bv v)]
+              (m : ℕ) [inst_7 : NeZero.{0} m]
+              (ι :
+                (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                  AddMonoidHom.{0, 0}
+                    (ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                      (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) m)
+                    (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                      (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W i α)))
+              (hι :
+                ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                  (t :
+                    ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                      (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) m),
+                  Eq.{1} ((ι v) (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g ((ι v) t)))
+              (n : ℤ),
+              LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+                Eq.{1}
+                  (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                    (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                        (ZInQ.Manuscript.RC.SelmerComplex.galoisSelData K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                          (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W i α)
+                          (ZInQ.Manuscript.RC.CoefModules.kummerGaloisLocalConditions K S Bv m
+                            (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W i α)
+                            ι hι)))
+                      n))
+                  0
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageKummerSelmer_hbdd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.homology_finrank_le_term : ∀ {R : Type} [inst : Field.{0} R]
+  (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ)
+  [Module.Finite.{0, 0} R ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n)],
+  LE.le.{0}
+    (Module.finrank.{0, 0} R
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n))
+    (Module.finrank.{0, 0} R ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.homology_finrank_le_term' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.exact_finrank_middle_le : ∀ {R : Type} [inst : Field.{0} R]
+  {E : CategoryTheory.ShortComplex.{0, 1} (ModuleCat.{0, 0} R)},
+  CategoryTheory.ShortComplex.Exact.{0, 1} E →
+    Module.Finite.{0, 0} R ↑(CategoryTheory.ShortComplex.X₁.{0, 1} E) →
+      Module.Finite.{0, 0} R ↑(CategoryTheory.ShortComplex.X₃.{0, 1} E) →
+        LE.le.{0} (Module.finrank.{0, 0} R ↑(CategoryTheory.ShortComplex.X₂.{0, 1} E))
+          (HAdd.hAdd.{0, 0, 0} (Module.finrank.{0, 0} R ↑(CategoryTheory.ShortComplex.X₁.{0, 1} E))
+            (Module.finrank.{0, 0} R ↑(CategoryTheory.ShortComplex.X₃.{0, 1} E)))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.exact_finrank_middle_le' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.exact_moduleFinite_middle : ∀ {R : Type} [inst : Field.{0} R]
+  {E : CategoryTheory.ShortComplex.{0, 1} (ModuleCat.{0, 0} R)},
+  CategoryTheory.ShortComplex.Exact.{0, 1} E →
+    Module.Finite.{0, 0} R ↑(CategoryTheory.ShortComplex.X₁.{0, 1} E) →
+      Module.Finite.{0, 0} R ↑(CategoryTheory.ShortComplex.X₃.{0, 1} E) →
+        Module.Finite.{0, 0} R ↑(CategoryTheory.ShortComplex.X₂.{0, 1} E)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.exact_moduleFinite_middle' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.selmer_finrank_le : ∀ {R : Type} [inst : Field.{0} R]
+  (D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.{0} R) (n : ℤ)
+  [Module.Finite.{0, 0} R
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D))
+          n)]
+  [Module.Finite.{0, 0} R
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D))
+          n)]
+  [Module.Finite.{0, 0} R
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.L.{0} D))
+          (HSub.hSub.{0, 0, 0} n 1))],
+  LE.le.{0}
+    (Module.finrank.{0, 0} R
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} D))
+          n))
+    (HAdd.hAdd.{0, 0, 0}
+      (HAdd.hAdd.{0, 0, 0}
+        (Module.finrank.{0, 0} R
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D))
+              n))
+        (Module.finrank.{0, 0} R
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D))
+              n)))
+      (Module.finrank.{0, 0} R
+        ↑(HomologicalComplex.homology.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.L.{0} D))
+            (HSub.hSub.{0, 0, 0} n 1))))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.selmer_finrank_le' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.finrank_le_finiteRangeRankBound : ∀ {R : Type} [inst : Field.{0} R]
+  (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (lo hi : ℤ),
+  (∀ (n : ℤ),
+      LT.lt.{0} n lo ∨ LT.lt.{0} hi n →
+        Subsingleton.{1}
+          ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n)) →
+    ∀ (n : ℤ),
+      LE.le.{0}
+        (Module.finrank.{0, 0} R
+          ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n))
+        (ZInQ.Contrib.RC53Assist.ResidualBounds.finiteRangeRankBound C lo hi)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.finrank_le_finiteRangeRankBound' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.fixedGlobalCohomology_finite : ∀ (K : Type) [inst : Field.{0} K]
+  [NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (M : Type) [inst_2 : AddCommGroup.{0} M] [inst_3 : Module.{0, 0} (ZMod 2) M]
+  [inst_4 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_5 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (ZMod 2) M]
+  [inst_6 : TopologicalSpace.{0} M] [inst_7 : DiscreteTopology.{0} M]
+  [inst_8 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] [Finite.{1} M],
+  ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+    Set.Finite.{0} S →
+      (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+          Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+        ∀ (n : ℤ),
+          Finite.{1}
+            ↑(HomologicalComplex.homology.{0, 1, 0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                  (ZInQ.Contrib.RC53Assist.ResidualBounds.fixedGlobalCx K S M))
+                n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.fixedGlobalCohomology_finite' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.fixedLocalCohomology_finite : ∀ (K : Type) [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (M : Type) [inst_2 : AddCommGroup.{0} M] [inst_3 : Module.{0, 0} (ZMod 2) M]
+  [inst_4 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_5 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (ZMod 2) M]
+  [inst_6 : TopologicalSpace.{0} M] [inst_7 : DiscreteTopology.{0} M]
+  [inst_8 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] [Finite.{1} M],
+  ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+    Set.Finite.{0} S →
+      ∀ (n : ℤ),
+        Finite.{1}
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.RC53Assist.ResidualBounds.fixedLocalSumCx K S M))
+              n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.fixedLocalCohomology_finite' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.fixedLocalCohomology_range : ∀ (K : Type) [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (M : Type) [inst_2 : AddCommGroup.{0} M] [inst_3 : Module.{0, 0} (ZMod 2) M]
+  [inst_4 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_5 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (ZMod 2) M]
+  [inst_6 : TopologicalSpace.{0} M] [inst_7 : DiscreteTopology.{0} M]
+  [inst_8 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] [Finite.{1} M],
+  ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+    ∀ (n : ℤ),
+      LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+        Subsingleton.{1}
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.RC53Assist.ResidualBounds.fixedLocalSumCx K S M))
+              n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.fixedLocalCohomology_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.residualSelmer_finrank_le : ∀ {A : Type} [inst : CommRing.{0} A]
+  [inst_1 : IsLocalRing.{0} A] (D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.{0} A) (n : ℤ)
+  [Module.Finite.{0, 0} (IsLocalRing.ResidueField.{0} A)
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange (IsLocalRing.ResidueField.{0} A)
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D)))
+          n)]
+  [Module.Finite.{0, 0} (IsLocalRing.ResidueField.{0} A)
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange (IsLocalRing.ResidueField.{0} A)
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D)))
+          n)]
+  [Module.Finite.{0, 0} (IsLocalRing.ResidueField.{0} A)
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange (IsLocalRing.ResidueField.{0} A)
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.L.{0} D)))
+          (HSub.hSub.{0, 0, 0} n 1))],
+  LE.le.{0}
+    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} A)
+      (ZInQ.Manuscript.RC.Limits.residualCohomologyAt (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} D) n))
+    (HAdd.hAdd.{0, 0, 0}
+      (HAdd.hAdd.{0, 0, 0}
+        (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} A)
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange (IsLocalRing.ResidueField.{0} A)
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D)))
+              n))
+        (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} A)
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange (IsLocalRing.ResidueField.{0} A)
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D)))
+              n)))
+      (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} A)
+        ↑(HomologicalComplex.homology.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange (IsLocalRing.ResidueField.{0} A)
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.L.{0} D)))
+            (HSub.hSub.{0, 0, 0} n 1))))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.residualSelmer_finrank_le' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageStrictRelaxedSelmer_hB : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (j : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))))
+  [inst_3 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α],
+  ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+    ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 j) →
+      ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W 2 →
+        ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+          ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+            ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+              ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+                NumberField.IsTotallyComplex.{0} K →
+                  Set.Finite.{0} S →
+                    (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+                        Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 →
+                          Membership.mem.{0, 0} S v) →
+                      ∀ (n : ℤ),
+                        LE.le.{0}
+                            (Module.finrank.{0, 0}
+                              (IsLocalRing.ResidueField.{0}
+                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                              (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                  (ZInQ.Manuscript.RC.CoefModules.actualSelData_zero W (HAdd.hAdd.{0, 0, 0} j 1) α))
+                                n))
+                            (ZInQ.Contrib.RC53Assist.ResidualBounds.strictRelaxedRankBound K S
+                              (ZInQ.Contrib.RC53Assist.ResidualBounds.TwoTorsionResidual K S W)) ∧
+                          LE.le.{0}
+                            (Module.finrank.{0, 0}
+                              (IsLocalRing.ResidueField.{0}
+                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                              (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                  (ZInQ.Manuscript.RC.CoefModules.actualSelData_full W (HAdd.hAdd.{0, 0, 0} j 1) α))
+                                n))
+                            (ZInQ.Contrib.RC53Assist.ResidualBounds.strictRelaxedRankBound K S
+                              (ZInQ.Contrib.RC53Assist.ResidualBounds.TwoTorsionResidual K S W))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageStrictRelaxedSelmer_hB' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients_d_zero : ∀ {R S G M N : Type} [inst : CommRing.{0} R]
+  [inst_1 : CommRing.{0} S] [inst_2 : Group.{0} G] [inst_3 : TopologicalSpace.{0} G] [inst_4 : IsTopologicalGroup.{0} G]
+  [inst_5 : AddCommGroup.{0} M] [inst_6 : Module.{0, 0} R M] [inst_7 : DistribMulAction.{0, 0} G M]
+  [inst_8 : SMulCommClass.{0, 0, 0} G R M] [inst_9 : TopologicalSpace.{0} M] [inst_10 : DiscreteTopology.{0} M]
+  [inst_11 : ContinuousSMul.{0, 0} G M] [inst_12 : AddCommGroup.{0} N] [inst_13 : Module.{0, 0} S N]
+  [inst_14 : DistribMulAction.{0, 0} G N] [inst_15 : SMulCommClass.{0, 0, 0} G S N] [inst_16 : TopologicalSpace.{0} N]
+  [inst_17 : DiscreteTopology.{0} N] [inst_18 : ContinuousSMul.{0, 0} G N] (f : AddMonoidHom.{0, 0} M N),
+  (∀ (g : G) (x : M), Eq.{1} (f (HSMul.hSMul.{0, 0, 0} g x)) (HSMul.hSMul.{0, 0, 0} g (f x))) →
+    ∀ (c : ↥(ZInQ.Manuscript.RC.SelmerComplex.contCochain.{0} R G M 0)),
+      Eq.{1}
+        ((ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients f 1)
+          ((ZInQ.Manuscript.RC.CoefModules.contD.{0} R G M 0) c))
+        ((ZInQ.Manuscript.RC.CoefModules.contD.{0} S G N 0)
+          ((ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients f 0) c))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients_d_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients_mem_boundary : ∀ {R S G M N : Type}
+  [inst : CommRing.{0} R] [inst_1 : CommRing.{0} S] [inst_2 : Group.{0} G] [inst_3 : TopologicalSpace.{0} G]
+  [inst_4 : IsTopologicalGroup.{0} G] [inst_5 : AddCommGroup.{0} M] [inst_6 : Module.{0, 0} R M]
+  [inst_7 : DistribMulAction.{0, 0} G M] [inst_8 : SMulCommClass.{0, 0, 0} G R M] [inst_9 : TopologicalSpace.{0} M]
+  [inst_10 : DiscreteTopology.{0} M] [inst_11 : ContinuousSMul.{0, 0} G M] [inst_12 : AddCommGroup.{0} N]
+  [inst_13 : Module.{0, 0} S N] [inst_14 : DistribMulAction.{0, 0} G N] [inst_15 : SMulCommClass.{0, 0, 0} G S N]
+  [inst_16 : TopologicalSpace.{0} N] [inst_17 : DiscreteTopology.{0} N] [inst_18 : ContinuousSMul.{0, 0} G N]
+  (f : AddMonoidHom.{0, 0} M N),
+  (∀ (g : G) (x : M), Eq.{1} (f (HSMul.hSMul.{0, 0, 0} g x)) (HSMul.hSMul.{0, 0, 0} g (f x))) →
+    ∀ (c : ↥(ZInQ.Manuscript.RC.SelmerComplex.contCochain.{0} R G M 1)),
+      Membership.mem.{0, 0} (ZInQ.Manuscript.RC.CoefModules.contB1.{0} R G M) c →
+        Membership.mem.{0, 0} (ZInQ.Manuscript.RC.CoefModules.contB1.{0} S G N)
+          ((ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients f 1) c)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients_mem_boundary' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients_kummer : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : CharZero.{0} F] [inst_2 : DecidableEq.{1} F] (E : WeierstrassCurve.{0} F)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E] (m : ℕ) [inst_4 : NeZero.{0} m] (A : Type) [inst_5 : CommRing.{0} A]
+  (M : Type) [inst_6 : AddCommGroup.{0} M] [inst_7 : Module.{0, 0} A M]
+  [inst_8 : DistribMulAction.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  [inst_9 : SMulCommClass.{0, 0, 0} (Field.absoluteGaloisGroup.{0} F) A M] [inst_10 : TopologicalSpace.{0} M]
+  [inst_11 : DiscreteTopology.{0} M] (ι : AddMonoidHom.{0, 0} (ZInQ.Manuscript.RC.CoefModules.TorsAlg F E m) M)
+  (P : WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} E)),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients ι 1)
+      (ZInQ.Manuscript.RC.CoefModules.kummerCocycle F E m P))
+    (ZInQ.Manuscript.RC.CoefModules.kummerCocycleIn ι 1 P)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.cochainAddCoefficients_kummer' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.extendedKummerEnvelope_tmul : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : CharZero.{0} F] [inst_2 : DecidableEq.{1} F] (E : WeierstrassCurve.{0} F)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E] (m : ℕ) [inst_4 : NeZero.{0} m] (A : Type) [inst_5 : CommRing.{0} A]
+  (M : Type) [inst_6 : AddCommGroup.{0} M] [inst_7 : Module.{0, 0} A M]
+  [inst_8 : DistribMulAction.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  [inst_9 : SMulCommClass.{0, 0, 0} (Field.absoluteGaloisGroup.{0} F) A M] [inst_10 : TopologicalSpace.{0} M]
+  [inst_11 : DiscreteTopology.{0} M] [inst_12 : ContinuousSMul.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  (ι : AddMonoidHom.{0, 0} (ZInQ.Manuscript.RC.CoefModules.TorsAlg F E m) M)
+  (hι :
+    ∀ (g : Field.absoluteGaloisGroup.{0} F) (t : ZInQ.Manuscript.RC.CoefModules.TorsAlg F E m),
+      Eq.{1} (ι (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g (ι t)))
+  (a : A) (P : WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} E)),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.ResidualBounds.extendedKummerEnvelope E m A M ι hι) (TensorProduct.tmul.{0, 0, 0} ℤ a P))
+    (HSMul.hSMul.{0, 0, 0} a (ZInQ.Contrib.RC53Assist.ResidualBounds.extendedKummerPointClass E m A M ι hι P))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.extendedKummerEnvelope_tmul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.extendedKummerEnvelope_surjective : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : CharZero.{0} F] [inst_2 : DecidableEq.{1} F] (E : WeierstrassCurve.{0} F)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E] (m : ℕ) [inst_4 : NeZero.{0} m] (A : Type) [inst_5 : CommRing.{0} A]
+  (M : Type) [inst_6 : AddCommGroup.{0} M] [inst_7 : Module.{0, 0} A M]
+  [inst_8 : DistribMulAction.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  [inst_9 : SMulCommClass.{0, 0, 0} (Field.absoluteGaloisGroup.{0} F) A M] [inst_10 : TopologicalSpace.{0} M]
+  [inst_11 : DiscreteTopology.{0} M] [inst_12 : ContinuousSMul.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  (ι : AddMonoidHom.{0, 0} (ZInQ.Manuscript.RC.CoefModules.TorsAlg F E m) M)
+  (hι :
+    ∀ (g : Field.absoluteGaloisGroup.{0} F) (t : ZInQ.Manuscript.RC.CoefModules.TorsAlg F E m),
+      Eq.{1} (ι (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g (ι t))),
+  Function.Surjective.{1, 1} ⇑(ZInQ.Contrib.RC53Assist.ResidualBounds.extendedKummerEnvelope E m A M ι hι)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.extendedKummerEnvelope_surjective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.cocycleCondition_range_d_zero : ∀ {A G M : Type} [inst : CommRing.{0} A]
+  [inst_1 : Group.{0} G] [inst_2 : TopologicalSpace.{0} G] [inst_3 : IsTopologicalGroup.{0} G]
+  [inst_4 : AddCommGroup.{0} M] [inst_5 : Module.{0, 0} A M] [inst_6 : DistribMulAction.{0, 0} G M]
+  [inst_7 : SMulCommClass.{0, 0, 0} G A M] [inst_8 : TopologicalSpace.{0} M] [inst_9 : DiscreteTopology.{0} M]
+  [inst_10 : ContinuousSMul.{0, 0} G M]
+  (Z : Submodule.{0, 0} A ↥(ZInQ.Manuscript.RC.SelmerComplex.contCochain.{0} A G M 1))
+  (hZ :
+    ∀ (z : ↥(ZInQ.Manuscript.RC.SelmerComplex.contCochain.{0} A G M 1)),
+      Membership.mem.{0, 0} Z z → Eq.{1} ((ZInQ.Manuscript.RC.CoefModules.contD.{0} A G M 1) z) 0),
+  Eq.{1}
+    (LinearMap.range.{0, 0, 0, 0}
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} (ZInQ.Manuscript.RC.CoefModules.cocycleCondition.{0} Z hZ) 0
+        1 rfl.{1}))
+    (ZInQ.Manuscript.RC.CoefModules.condB1.{0} Z hZ)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.cocycleCondition_range_d_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.finite_point_tensor_of_mod_two : ∀ (P : Type) [inst : AddCommGroup.{0} P],
+  Finite.{1} (HasQuotient.Quotient.{0, 0} P (AddMonoidHom.range.{0, 0} (nsmulAddMonoidHom.{0} 2))) →
+    Finite.{1} (TensorProduct.{0, 0, 0} ℤ (ZMod 2) P)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.finite_point_tensor_of_mod_two' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.localPointTensor_finite : ∀ (K : Type) [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [inst_2 : DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)]
+  (E : WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+  [WeierstrassCurve.IsElliptic.{0} E],
+  ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+    Finite.{1}
+      (TensorProduct.{0, 0, 0} ℤ (ZMod 2) (WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} E)))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.localPointTensor_finite' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.piCx_finrank_homology_le : ∀ {R : Type} [inst : Field.{0} R] {ι : Type}
+  [inst_1 : Fintype.{0} ι] (Cs : ι → ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ),
+  (∀ (v : ι),
+      Module.Finite.{0, 0} R
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Cs v)) n)) →
+    LE.le.{0}
+      (Module.finrank.{0, 0} R
+        ↑(HomologicalComplex.homology.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (ZInQ.Manuscript.RC.SelmerComplex.piCx.{0} Cs)) n))
+      (∑ v,
+        Module.finrank.{0, 0} R
+          ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Cs v)) n))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.piCx_finrank_homology_le' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.scalar_finrank_eq : ∀ {R S M N : Type} [inst : CommRing.{0} R]
+  [inst_1 : CommRing.{0} S] [inst_2 : AddCommGroup.{0} M] [inst_3 : Module.{0, 0} R M] [inst_4 : AddCommGroup.{0} N]
+  [inst_5 : Module.{0, 0} S N] (eR : RingEquiv.{0, 0} R S) (eM : LinearEquiv.{0, 0, 0, 0} (↑eR) M N),
+  Eq.{1} (Module.finrank.{0, 0} R M) (Module.finrank.{0, 0} S N)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.scalar_finrank_eq' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageKummerLocal_finrank_one : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : CharZero.{0} F] [inst_2 : DecidableEq.{1} F] (E : WeierstrassCurve.{0} F)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E] (m : ℕ) [inst_4 : NeZero.{0} m] (i : ℕ) [inst_5 : NeZero.{0} i]
+  (M : Type) [inst_6 : AddCommGroup.{0} M] [inst_7 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_8 : DistribMulAction.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  [inst_9 : SMulCommClass.{0, 0, 0} (Field.absoluteGaloisGroup.{0} F) (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_10 : TopologicalSpace.{0} M] [inst_11 : DiscreteTopology.{0} M]
+  [inst_12 : ContinuousSMul.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  (ι : AddMonoidHom.{0, 0} (ZInQ.Manuscript.RC.CoefModules.TorsAlg F E m) M)
+  (hι :
+    ∀ (g : Field.absoluteGaloisGroup.{0} F) (t : ZInQ.Manuscript.RC.CoefModules.TorsAlg F E m),
+      Eq.{1} (ι (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g (ι t)))
+  [Finite.{1}
+      (TensorProduct.{0, 0, 0} ℤ (ZMod 2) (WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} E)))],
+  LE.le.{0}
+    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+              (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+              (ZInQ.Manuscript.RC.CoefModules.kummerConditionIn (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) ι hι)))
+          1))
+    (Module.finrank.{0, 0} (ZMod 2)
+      (TensorProduct.{0, 0, 0} ℤ (ZMod 2) (WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} E))))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageKummerLocal_finrank_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageCocycleLocal_finrank_zero : ∀ {F : Type} [inst : Field.{0} F] (i : ℕ)
+  [inst_1 : NeZero.{0} i] (M : Type) [inst_2 : AddCommGroup.{0} M]
+  [inst_3 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_4 : DistribMulAction.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  [inst_5 : SMulCommClass.{0, 0, 0} (Field.absoluteGaloisGroup.{0} F) (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_6 : TopologicalSpace.{0} M] [inst_7 : DiscreteTopology.{0} M]
+  [inst_8 : ContinuousSMul.{0, 0} (Field.absoluteGaloisGroup.{0} F) M] [Finite.{1} M]
+  (Z :
+    Submodule.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+      ↥(ZInQ.Manuscript.RC.SelmerComplex.contCochain.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+          (Field.absoluteGaloisGroup.{0} F) M 1))
+  (hZ :
+    ∀
+      (z :
+        ↥(ZInQ.Manuscript.RC.SelmerComplex.contCochain.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+            (Field.absoluteGaloisGroup.{0} F) M 1)),
+      Membership.mem.{0, 0} Z z →
+        Eq.{1}
+          ((ZInQ.Manuscript.RC.CoefModules.contD.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+              (Field.absoluteGaloisGroup.{0} F) M 1)
+            z)
+          0),
+  LE.le.{0}
+    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+              (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+              (ZInQ.Manuscript.RC.CoefModules.cocycleCondition.{0} Z hZ)))
+          0))
+    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+      (ZInQ.Contrib.RC53Assist.ResidualFiniteness.BCoef (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+        (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) M))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageCocycleLocal_finrank_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageKummerLocal_finrank_le : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : CharZero.{0} F] [inst_2 : DecidableEq.{1} F] (E : WeierstrassCurve.{0} F)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E] (m : ℕ) [inst_4 : NeZero.{0} m] (i : ℕ) [inst_5 : NeZero.{0} i]
+  (M : Type) [inst_6 : AddCommGroup.{0} M] [inst_7 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_8 : DistribMulAction.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  [inst_9 : SMulCommClass.{0, 0, 0} (Field.absoluteGaloisGroup.{0} F) (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M]
+  [inst_10 : TopologicalSpace.{0} M] [inst_11 : DiscreteTopology.{0} M]
+  [inst_12 : ContinuousSMul.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  (ι : AddMonoidHom.{0, 0} (ZInQ.Manuscript.RC.CoefModules.TorsAlg F E m) M)
+  (hι :
+    ∀ (g : Field.absoluteGaloisGroup.{0} F) (t : ZInQ.Manuscript.RC.CoefModules.TorsAlg F E m),
+      Eq.{1} (ι (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g (ι t)))
+  [Finite.{1} M]
+  [Finite.{1}
+      (TensorProduct.{0, 0, 0} ℤ (ZMod 2) (WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} E)))]
+  (n : ℤ),
+  LE.le.{0}
+    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+              (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+              (ZInQ.Manuscript.RC.CoefModules.kummerConditionIn (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) ι hι)))
+          n))
+    (HAdd.hAdd.{0, 0, 0}
+      (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+        (ZInQ.Contrib.RC53Assist.ResidualFiniteness.BCoef (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+          (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) M))
+      (Module.finrank.{0, 0} (ZMod 2)
+        (TensorProduct.{0, 0, 0} ℤ (ZMod 2) (WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} E)))))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageKummerLocal_finrank_le' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageKummerSelmer_hB : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} [WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 :
+    (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+      DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)]
+  {Bv :
+    (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+      WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)}
+  [inst_4 : ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S), WeierstrassCurve.IsElliptic.{0} (Bv v)] (j : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))))
+  [inst_5 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α],
+  ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+    ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 j) →
+      ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W 2 →
+        ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+          ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+            ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+              ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+                NumberField.IsTotallyComplex.{0} K →
+                  ∀ (hS : Set.Finite.{0} S),
+                    (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+                        Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 →
+                          Membership.mem.{0, 0} S v) →
+                      ∀ (m : ℕ) [inst_6 : NeZero.{0} m]
+                        (ι :
+                          (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                            AddMonoidHom.{0, 0}
+                              (ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                                (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) m)
+                              (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0}
+                                (ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                                (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α)))
+                        (hι :
+                          ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+                            (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                            (t :
+                              ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                                (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) m),
+                            Eq.{1} ((ι v) (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g ((ι v) t)))
+                        (n : ℤ),
+                        LE.le.{0}
+                          (Module.finrank.{0, 0}
+                            (IsLocalRing.ResidueField.{0}
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                            (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                (ZInQ.Manuscript.RC.SelmerComplex.galoisSelData K S
+                                  (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                                  (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α)
+                                  (ZInQ.Manuscript.RC.CoefModules.kummerGaloisLocalConditions K S Bv m
+                                    (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                                    (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α) ι hι)))
+                              n))
+                          (ZInQ.Contrib.RC53Assist.ResidualBounds.kummerSelmerRankBound K S W Bv hS)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageKummerSelmer_hB' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.strictRelaxed_producerBounds : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W]
+  (α :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_3 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (α i)],
+  (∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 i)) →
+    ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+      ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+        ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+          ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+            NumberField.IsTotallyComplex.{0} K →
+              Set.Finite.{0} S →
+                (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+                    Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 →
+                      Membership.mem.{0, 0} S v) →
+                  ∃ B,
+                    (∀ (i : ℕ) [inst_4 : NeZero.{0} i] (n : ℤ),
+                        LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+                          Eq.{1}
+                            (Module.finrank.{0, 0}
+                              (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                              (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                  (ZInQ.Manuscript.RC.CoefModules.actualSelData_zero W i (α i)))
+                                n))
+                            0) ∧
+                      (∀ (i : ℕ) [inst_4 : NeZero.{0} i] (n : ℤ),
+                          LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+                            Eq.{1}
+                              (Module.finrank.{0, 0}
+                                (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                    (ZInQ.Manuscript.RC.CoefModules.actualSelData_full W i (α i)))
+                                  n))
+                              0) ∧
+                        (∀ (i : ℕ) [inst_4 : NeZero.{0} i] (n : ℤ),
+                            LE.le.{0}
+                              (Module.finrank.{0, 0}
+                                (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                    (ZInQ.Manuscript.RC.CoefModules.actualSelData_zero W i (α i)))
+                                  n))
+                              B) ∧
+                          ∀ (i : ℕ) [inst_4 : NeZero.{0} i] (n : ℤ),
+                            LE.le.{0}
+                              (Module.finrank.{0, 0}
+                                (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                    (ZInQ.Manuscript.RC.CoefModules.actualSelData_full W i (α i)))
+                                  n))
+                              B
+'ZInQ.Contrib.RC53Assist.ResidualBounds.strictRelaxed_producerBounds' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.kummer_producerBounds : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W]
+  (α :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_3 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (α i)],
+  (∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 i)) →
+    ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+      ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+        ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+          ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+            NumberField.IsTotallyComplex.{0} K →
+              Set.Finite.{0} S →
+                (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+                    Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 →
+                      Membership.mem.{0, 0} S v) →
+                  ∀
+                    [inst_4 :
+                      (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                        DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)]
+                    (Bv :
+                      (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                        WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+                    [inst_5 :
+                      ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S), WeierstrassCurve.IsElliptic.{0} (Bv v)]
+                    (m : ℕ → ℕ) [inst_6 : ∀ (i : ℕ), NeZero.{0} (m i)]
+                    (ι :
+                      (i : ℕ) →
+                        (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                          AddMonoidHom.{0, 0}
+                            (ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                              (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) (m i))
+                            (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0}
+                              (ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                              (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W i (α i))))
+                    (hι :
+                      ∀ (i : ℕ) (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+                        (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                        (t :
+                          ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                            (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) (m i)),
+                        Eq.{1} ((ι i v) (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g ((ι i v) t))),
+                    ∃ B,
+                      (∀ (i : ℕ) [inst_7 : NeZero.{0} i] (n : ℤ),
+                          LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+                            Eq.{1}
+                              (Module.finrank.{0, 0}
+                                (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                    (ZInQ.Manuscript.RC.SelmerComplex.galoisSelData K S
+                                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                      (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W i (α i))
+                                      (ZInQ.Manuscript.RC.CoefModules.kummerGaloisLocalConditions K S Bv (m i)
+                                        (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                        (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W i (α i)) (ι i) (hι i))))
+                                  n))
+                              0) ∧
+                        ∀ (i : ℕ) [inst_7 : NeZero.{0} i] (n : ℤ),
+                          LE.le.{0}
+                            (Module.finrank.{0, 0}
+                              (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                              (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                  (ZInQ.Manuscript.RC.SelmerComplex.galoisSelData K S
+                                    (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                    (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W i (α i))
+                                    (ZInQ.Manuscript.RC.CoefModules.kummerGaloisLocalConditions K S Bv (m i)
+                                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                      (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W i (α i)) (ι i) (hι i))))
+                                n))
+                            B
+'ZInQ.Contrib.RC53Assist.ResidualBounds.kummer_producerBounds' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.endomorphismTwoTermCx_term_range : ∀ (i : ℕ) (V : Type)
+  [inst : AddCommGroup.{0} V] [inst_1 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) V]
+  (f : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) V V) (n : ℤ),
+  LT.lt.{0} n 0 ∨ LT.lt.{0} 1 n →
+    Subsingleton.{1}
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+          (ZInQ.Contrib.RC53Assist.ResidualBounds.endomorphismTwoTermCx i V f) n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.endomorphismTwoTermCx_term_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.endomorphismTwoTermCx_residual_rank : ∀ (i : ℕ) [inst : NeZero.{0} i] (V : Type)
+  [inst_1 : AddCommGroup.{0} V] [inst_2 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) V]
+  (f : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) V V) [Finite.{1} V] (n : ℤ),
+  LE.le.{0}
+    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+              (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+              (ZInQ.Contrib.RC53Assist.ResidualBounds.endomorphismTwoTermCx i V f)))
+          n))
+    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+      (ZInQ.Contrib.RC53Assist.ResidualFiniteness.BCoef (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+        (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) V))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.endomorphismTwoTermCx_residual_rank' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.urAt_term_range : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S) (i : ℕ)
+  [NeZero.{0} i] (M₀ : Type) [inst_3 : AddCommGroup.{0} M₀]
+  [inst_4 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M₀]
+  [inst_5 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀) M₀]
+  [inst_6 :
+    SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀) (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M₀]
+  [inst_7 : TopologicalSpace.{0} M₀] [inst_8 : DiscreteTopology.{0} M₀]
+  [inst_9 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀) M₀] [inst_10 : Finite.{1} M₀]
+  [inst_11 : TopologicalSpace.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  [inst_12 : DiscreteTopology.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) (hv : ↑v ∉ S₀) (n : ℤ),
+  LT.lt.{0} n 0 ∨ LT.lt.{0} 1 n →
+    Subsingleton.{1}
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+          (ZInQ.Manuscript.RC.CoefModules.urAt hS (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M₀ v hv).U n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.urAt_term_range' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.urAt_residual_rank : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S) (i : ℕ)
+  [inst_2 : NeZero.{0} i] (M₀ : Type) [inst_3 : AddCommGroup.{0} M₀]
+  [inst_4 : Module.{0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M₀]
+  [inst_5 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀) M₀]
+  [inst_6 :
+    SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀) (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M₀]
+  [inst_7 : TopologicalSpace.{0} M₀] [inst_8 : DiscreteTopology.{0} M₀]
+  [inst_9 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀) M₀] [inst_10 : Finite.{1} M₀]
+  [inst_11 : TopologicalSpace.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  [inst_12 : DiscreteTopology.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)]
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) (hv : ↑v ∉ S₀) (n : ℤ),
+  LE.le.{0}
+    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+              (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+              (ZInQ.Manuscript.RC.CoefModules.urAt hS (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) M₀ v hv).U))
+          n))
+    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+      (ZInQ.Contrib.RC53Assist.ResidualFiniteness.BCoef (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+        (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) M₀))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.urAt_residual_rank' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.actualStageSelmer_hbdd : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S) (i : ℕ)
+  [inst_2 : NeZero.{0} i] (W : WeierstrassCurve.{0} K) [inst_3 : WeierstrassCurve.IsElliptic.{0} W]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α],
+  ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+    ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+      NumberField.IsTotallyComplex.{0} K →
+        Set.Finite.{0} S →
+          (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+              Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v) →
+            ∀
+              (c :
+                (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                  Membership.mem.{0, 0} S₀ ↑v →
+                    ZInQ.Manuscript.RC.CoefModules.CondAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                      (ZInQ.Manuscript.RC.CoefModules.MinS hS W i α) v),
+              (∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) (hv : Membership.mem.{0, 0} S₀ ↑v),
+                  Eq.{2} (c v hv).U
+                      (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                        (ZInQ.Manuscript.RC.CoefModules.MinS hS W i α) v) ∨
+                    ∀ (n : ℤ),
+                      LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+                        Subsingleton.{1} ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} (c v hv).U n)) →
+                ∀ (n : ℤ),
+                  LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+                    Eq.{1}
+                      (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                        (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                            (ZInQ.Manuscript.RC.CoefModules.actualSelData hS W i α c))
+                          n))
+                      0
+'ZInQ.Contrib.RC53Assist.ResidualBounds.actualStageSelmer_hbdd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt_amplitude : ∀ (K : Type) [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (A : Type) [inst_2 : CommRing.{0} A] (M : Type) [inst_3 : AddCommGroup.{0} M] [inst_4 : Module.{0, 0} A M]
+  [inst_5 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  [inst_6 : SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) A M] [inst_7 : TopologicalSpace.{0} M]
+  [inst_8 : DiscreteTopology.{0} M] [inst_9 : ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+  [inst_10 : DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)] (label : ℕ)
+  (E : WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+  [inst_11 : WeierstrassCurve.IsElliptic.{0} E] (m : ℕ) [inst_12 : NeZero.{0} m]
+  (ι :
+    AddMonoidHom.{0, 0}
+      (ZInQ.Manuscript.RC.CoefModules.TorsAlg (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) E m)
+      (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v) M))
+  (hι :
+    ∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+      (t : ZInQ.Manuscript.RC.CoefModules.TorsAlg (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) E m),
+      Eq.{1} (ι (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g (ι t))),
+  Eq.{2} (ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt K S A M v label E m ι hι).U
+      (ZInQ.Manuscript.RC.CoefModules.locAt K S A M v) ∨
+    ∀ (n : ℤ),
+      LT.lt.{0} n 0 ∨ LT.lt.{0} 2 n →
+        Subsingleton.{1}
+          ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+              (ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt K S A M v label E m ι hι).U n)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt_amplitude' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt_residual_bound : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (j : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))))
+  [inst_3 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α],
+  ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+    ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 j) →
+      ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W 2 →
+        ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+          [inst_4 : DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)] (label : ℕ)
+          (E : WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+          [inst_5 : WeierstrassCurve.IsElliptic.{0} E] (m : ℕ) [inst_6 : NeZero.{0} m]
+          (ι :
+            AddMonoidHom.{0, 0}
+              (ZInQ.Manuscript.RC.CoefModules.TorsAlg (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) E
+                m)
+              (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                (ZInQ.Manuscript.RC.CoefModules.MinS hS W (HAdd.hAdd.{0, 0, 0} j 1) α)))
+          (hι :
+            ∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+              (t :
+                ZInQ.Manuscript.RC.CoefModules.TorsAlg (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) E
+                  m),
+              Eq.{1} (ι (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g (ι t))),
+          ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+            ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+              ∀ (n : ℤ),
+                Module.Finite.{0, 0}
+                    (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                    ↑(HomologicalComplex.homology.{0, 1, 0}
+                        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                          (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+                            (IsLocalRing.ResidueField.{0}
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                            (ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt K S
+                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                                (ZInQ.Manuscript.RC.CoefModules.MinS hS W (HAdd.hAdd.{0, 0, 0} j 1) α) v label E m ι
+                                hι).U))
+                        n) ∧
+                  LE.le.{0}
+                    (Module.finrank.{0, 0}
+                      (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                      ↑(HomologicalComplex.homology.{0, 1, 0}
+                          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+                              (IsLocalRing.ResidueField.{0}
+                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                              (ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt K S
+                                  (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                                  (ZInQ.Manuscript.RC.CoefModules.MinS hS W (HAdd.hAdd.{0, 0, 0} j 1) α) v label E m ι
+                                  hι).U))
+                          n))
+                    (HAdd.hAdd.{0, 0, 0}
+                      (HAdd.hAdd.{0, 0, 0} (ZInQ.Contrib.RC53Assist.ResidualBounds.oldLocalRankMaximum hS W v)
+                        (Module.finrank.{0, 0} (ZMod 2)
+                          (ZInQ.Contrib.RC53Assist.ResidualBounds.inflatedResidualModule hS W)))
+                      (Module.finrank.{0, 0} (ZMod 2)
+                        (TensorProduct.{0, 0, 0} ℤ (ZMod 2)
+                          (WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} E)))))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt_residual_bound' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.actualStandardOldSelmer_hB : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 :
+    (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+      DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)]
+  (Bv :
+    (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+      WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+  [inst_4 : ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S), WeierstrassCurve.IsElliptic.{0} (Bv v)] (j : ℕ)
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))))
+  [inst_5 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α],
+  ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+    ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 j) →
+      ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W 2 →
+        ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+          ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+            ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+              ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+                NumberField.IsTotallyComplex.{0} K →
+                  ∀ (hSfin : Set.Finite.{0} S),
+                    (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+                        Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 →
+                          Membership.mem.{0, 0} S v) →
+                      ∀ (label : ZInQ.Manuscript.RC.SelmerComplex.Places K S → ℕ) (m : ℕ) [inst_6 : NeZero.{0} m]
+                        (ι :
+                          (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                            AddMonoidHom.{0, 0}
+                              (ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                                (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) m)
+                              (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0}
+                                (ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                                (ZInQ.Manuscript.RC.CoefModules.MinS hS W (HAdd.hAdd.{0, 0, 0} j 1) α)))
+                        (hι :
+                          ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+                            (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                            (t :
+                              ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                                (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) m),
+                            Eq.{1} ((ι v) (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g ((ι v) t)))
+                        (n : ℤ),
+                        LE.le.{0}
+                          (Module.finrank.{0, 0}
+                            (IsLocalRing.ResidueField.{0}
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                            (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                (ZInQ.Manuscript.RC.CoefModules.actualSelData hS W (HAdd.hAdd.{0, 0, 0} j 1) α
+                                  fun v x =>
+                                  ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt K S
+                                    (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                                    (ZInQ.Manuscript.RC.CoefModules.MinS hS W (HAdd.hAdd.{0, 0, 0} j 1) α) v (label v)
+                                    (Bv v) m (ι v) (hι v)))
+                              n))
+                          (ZInQ.Contrib.RC53Assist.ResidualBounds.oldSelmerRankBound hS W Bv hSfin)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.actualStandardOldSelmer_hB' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.standardOld_producerBounds : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  (α :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_3 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (α i)],
+  (∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 i)) →
+    ZInQ.Contrib.CloudB3RC53.RankCounts.MilneADT_I_4_10_totallyComplex →
+      ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo →
+        ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+          ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+            NumberField.IsTotallyComplex.{0} K →
+              Set.Finite.{0} S →
+                (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+                    Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 →
+                      Membership.mem.{0, 0} S v) →
+                  ∀
+                    [inst_4 :
+                      (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                        DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)]
+                    (Bv :
+                      (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                        WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+                    [inst_5 :
+                      ∀ (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S), WeierstrassCurve.IsElliptic.{0} (Bv v)]
+                    (label : ℕ → ZInQ.Manuscript.RC.SelmerComplex.Places K S → ℕ) (m : ℕ → ℕ)
+                    [inst_6 : ∀ (i : ℕ), NeZero.{0} (m i)]
+                    (ι :
+                      (i : ℕ) →
+                        (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                          AddMonoidHom.{0, 0}
+                            (ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                              (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) (m i))
+                            (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0}
+                              (ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                              (ZInQ.Manuscript.RC.CoefModules.MinS hS W i (α i))))
+                    (hι :
+                      ∀ (i : ℕ) (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S)
+                        (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                        (t :
+                          ZInQ.Manuscript.RC.CoefModules.TorsAlg
+                            (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v) (Bv v) (m i)),
+                        Eq.{1} ((ι i v) (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g ((ι i v) t))),
+                    ∃ B,
+                      (∀ (i : ℕ) [inst_7 : NeZero.{0} i] (n : ℤ),
+                          LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n →
+                            Eq.{1}
+                              (Module.finrank.{0, 0}
+                                (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                    (ZInQ.Manuscript.RC.CoefModules.actualSelData hS W i (α i) fun v x =>
+                                      ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt K S
+                                        (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                        (ZInQ.Manuscript.RC.CoefModules.MinS hS W i (α i)) v (label i v) (Bv v) (m i)
+                                        (ι i v) (hι i v)))
+                                  n))
+                              0) ∧
+                        ∀ (i : ℕ) [inst_7 : NeZero.{0} i] (n : ℤ),
+                          LE.le.{0}
+                            (Module.finrank.{0, 0}
+                              (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                              (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                  (ZInQ.Manuscript.RC.CoefModules.actualSelData hS W i (α i) fun v x =>
+                                    ZInQ.Contrib.RC53Assist.ResidualBounds.standardOldAt K S
+                                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                      (ZInQ.Manuscript.RC.CoefModules.MinS hS W i (α i)) v (label i v) (Bv v) (m i)
+                                      (ι i v) (hι i v)))
+                                n))
+                            B
+'ZInQ.Contrib.RC53Assist.ResidualBounds.standardOld_producerBounds' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo : Prop
+'ZInQ.Contrib.RC53Assist.ResidualBounds.MilneLocalDimensionTwo' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv : (i : ℕ) →
+  [inst : NeZero.{0} i] →
+    RingEquiv.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) (ZMod 2)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageCoefResidualEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+      {W : WeierstrassCurve.{0} K} →
+        (j : ℕ) →
+          (α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))) →
+            ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+              ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 j) →
+                ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W 2 →
+                  LinearEquiv.{0, 0, 0, 0}
+                    (↑(ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv (HAdd.hAdd.{0, 0, 0} j 1)))
+                    (ZInQ.Contrib.RC53Assist.ResidualFiniteness.BCoef
+                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                      (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                      (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α))
+                    (ZInQ.Contrib.RC53Assist.ResidualBounds.TwoTorsionResidual K S W)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageCoefResidualEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageGlobalResidualEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          (j : ℕ) →
+            (α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))) →
+              ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+                ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 j) →
+                  ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W 2 →
+                    [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                      ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv
+                        (ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv (HAdd.hAdd.{0, 0, 0} j 1))
+                        (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+                          (IsLocalRing.ResidueField.{0}
+                            (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                          (ZInQ.Manuscript.RC.SelmerComplex.globalCx.{0}
+                            (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                            (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                            (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α)))
+                        (ZInQ.Manuscript.RC.SelmerComplex.globalCx.{0} (ZMod 2)
+                          (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                          (ZInQ.Contrib.RC53Assist.ResidualBounds.TwoTorsionResidual K S W))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageGlobalResidualEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageLocalResidualEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          (j : ℕ) →
+            (α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))) →
+              [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+                  ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 j) →
+                    ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W 2 →
+                      (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                        ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv
+                          (ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv (HAdd.hAdd.{0, 0, 0} j 1))
+                          (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+                            (IsLocalRing.ResidueField.{0}
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                            (ZInQ.Manuscript.RC.CoefModules.locAt K S
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                              (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α) v))
+                          (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZMod 2)
+                            (ZInQ.Contrib.RC53Assist.ResidualBounds.TwoTorsionResidual K S W) v)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageLocalResidualEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.stageLocalSumResidualEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          (j : ℕ) →
+            (α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))) →
+              [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+                  ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 j) →
+                    ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W 2 →
+                      [Fintype.{0} (ZInQ.Manuscript.RC.SelmerComplex.Places K S)] →
+                        [DecidableEq.{1} (ZInQ.Manuscript.RC.SelmerComplex.Places K S)] →
+                          ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv
+                            (ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv (HAdd.hAdd.{0, 0, 0} j 1))
+                            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+                              (IsLocalRing.ResidueField.{0}
+                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                              (ZInQ.Manuscript.RC.SelmerComplex.localSumCx.{0}
+                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                                (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                (fun v => ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                                (fun v => ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                                (ZInQ.Manuscript.RC.CoefModules.Mcoef K S W (HAdd.hAdd.{0, 0, 0} j 1) α)))
+                            (ZInQ.Manuscript.RC.SelmerComplex.localSumCx.{0} (ZMod 2)
+                              (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                              (fun v => ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                              (fun v => ZInQ.Manuscript.RC.SelmerComplex.locMap K S ↑v)
+                              (ZInQ.Contrib.RC53Assist.ResidualBounds.TwoTorsionResidual K S W))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.stageLocalSumResidualEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.inflatedGlobalResidualEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (hS : S₀ ⊆ S) →
+          (W : WeierstrassCurve.{0} K) →
+            (j : ℕ) →
+              (α :
+                  MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+                    (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))) →
+                [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                  ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+                    ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 j) →
+                      ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W 2 →
+                        ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv
+                          (ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv (HAdd.hAdd.{0, 0, 0} j 1))
+                          (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+                            (IsLocalRing.ResidueField.{0}
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                            (ZInQ.Manuscript.RC.SelmerComplex.globalCx.{0}
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                              (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                              (ZInQ.Manuscript.RC.CoefModules.MinS hS W (HAdd.hAdd.{0, 0, 0} j 1) α)))
+                          (ZInQ.Contrib.RC53Assist.ResidualBounds.fixedGlobalCx K S
+                            (ZInQ.Contrib.RC53Assist.ResidualBounds.inflatedResidualModule hS W))
+'ZInQ.Contrib.RC53Assist.ResidualBounds.inflatedGlobalResidualEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.inflatedLocalResidualEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (hS : S₀ ⊆ S) →
+          (W : WeierstrassCurve.{0} K) →
+            (j : ℕ) →
+              (α :
+                  MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+                    (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))) →
+                [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                  ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 (HAdd.hAdd.{0, 0, 0} j 1)) →
+                    ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W (HPow.hPow.{0, 0, 0} 2 j) →
+                      ZInQ.Manuscript.RC.CoefModules.FullTorsion K S₀ W 2 →
+                        (v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                          ZInQ.Contrib.RC53Assist.ResidualBounds.ComplexScalarEquiv
+                            (ZInQ.Contrib.RC53Assist.ResidualBounds.stageResidueFieldEquiv (HAdd.hAdd.{0, 0, 0} j 1))
+                            (ZInQ.Contrib.RC53Assist.InnerLimitArith.gcxBaseChange
+                              (IsLocalRing.ResidueField.{0}
+                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1)))
+                              (ZInQ.Manuscript.RC.CoefModules.locAt K S
+                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef (HAdd.hAdd.{0, 0, 0} j 1))
+                                (ZInQ.Manuscript.RC.CoefModules.MinS hS W (HAdd.hAdd.{0, 0, 0} j 1) α) v))
+                            (ZInQ.Manuscript.RC.CoefModules.locAt K S (ZMod 2)
+                              (ZInQ.Contrib.RC53Assist.ResidualBounds.inflatedResidualModule hS W) v)
+'ZInQ.Contrib.RC53Assist.ResidualBounds.inflatedLocalResidualEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.strictRelaxedRankBound : (K : Type) →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        (M : Type) →
+          [inst_2 : AddCommGroup.{0} M] →
+            [inst_3 : Module.{0, 0} (ZMod 2) M] →
+              [inst_4 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] →
+                [SMulCommClass.{0, 0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (ZMod 2) M] →
+                  [inst_6 : TopologicalSpace.{0} M] →
+                    [DiscreteTopology.{0} M] → [ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] → ℕ
+'ZInQ.Contrib.RC53Assist.ResidualBounds.strictRelaxedRankBound' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidualBounds.kummerSelmerRankBound : (K : Type) →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        WeierstrassCurve.{0} K →
+          [(v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)] →
+            ((v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) →
+              Set.Finite.{0} S → ℕ
+'ZInQ.Contrib.RC53Assist.ResidualBounds.kummerSelmerRankBound' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidualBounds.oldSelmerRankBound : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        S₀ ⊆ S →
+          WeierstrassCurve.{0} K →
+            [(v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                  DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)] →
+              ((v : ZInQ.Manuscript.RC.SelmerComplex.Places K S) →
+                  WeierstrassCurve.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) →
+                Set.Finite.{0} S → ℕ
+'ZInQ.Contrib.RC53Assist.ResidualBounds.oldSelmerRankBound' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]

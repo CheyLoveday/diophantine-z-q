@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.TauCeti.NumberTheory.ModularForms.TrivialNebentypus
 /-!
 # G0: the newform of a modular elliptic curve (named consequence glue)
 
-The peer package `RC53Assist/NewformPeriods` names the translation step G0,
+The package `RC53Assist/NewformPeriods` names the translation step G0,
 `NewformOfModularCurveGlue`: a modular `E/ℚ` (`IsModular E`: a weight-two cusp form on `Γ₀(N)`
 with the coefficients of `L(E, s)`) has, at some level `M`, a normalized full Hecke eigenform with
 trivial character whose coefficients are `aₙ = E.LFunction n`.

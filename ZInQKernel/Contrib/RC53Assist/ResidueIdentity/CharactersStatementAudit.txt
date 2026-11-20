@@ -1,0 +1,88 @@
+ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.reduceDouble_val : ∀ (n : ℕ) [NeZero.{0} n]
+  (x : ZMod (HMul.hMul.{0, 0, 0} 2 n)),
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.reduceDouble n) x) ↑x.val
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.reduceDouble_val' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.unramified_double_reduction : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : ValuativeRel.{0} F] [inst_2 : TopologicalSpace.{0} F] [inst_3 : IsNonarchimedeanLocalField.{0} F] (n : ℕ)
+  [inst_4 : NeZero.{0} n] (g : Gal(AlgebraicClosure.{0} F/F)),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.reduceDouble n)
+      (ZInQ.Contrib.RC53Assist.InnerLimitArith.urCharN F (HMul.hMul.{0, 0, 0} 2 n) g))
+    (ZInQ.Contrib.RC53Assist.InnerLimitArith.urCharN F n g)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.unramified_double_reduction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.exists_unramified_doubleLift : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : ValuativeRel.{0} F] [inst_2 : TopologicalSpace.{0} F] [inst_3 : IsNonarchimedeanLocalField.{0} F] (n : ℕ)
+  [inst_4 : NeZero.{0} n],
+  ∃ χ,
+    Continuous.{0, 0} χ ∧
+      (∀ (g h : Gal(AlgebraicClosure.{0} F/F)),
+          Eq.{1} (χ (HMul.hMul.{0, 0, 0} g h)) (HAdd.hAdd.{0, 0, 0} (χ g) (χ h))) ∧
+        ∀ (g : Gal(AlgebraicClosure.{0} F/F)), Eq.{1} (ZInQ.Contrib.RC53Assist.InnerLimitArith.urCharN F n g) ↑(χ g).val
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.exists_unramified_doubleLift' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.squareRoot_power : ∀ {F : Type} [inst : Field.{0} F] {n : ℕ} {a : F}
+  {γ : AlgebraicClosure.{0} F},
+  Eq.{1} (HPow.hPow.{0, 0, 0} γ (HMul.hMul.{0, 0, 0} 2 n)) ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) a) →
+    Eq.{1} (HPow.hPow.{0, 0, 0} (HPow.hPow.{0, 0, 0} γ 2) n) ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) a)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.squareRoot_power' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.kummerVal_square : ∀ {F : Type} [inst : Field.{0} F]
+  (γ : AlgebraicClosure.{0} F) (g : Gal(AlgebraicClosure.{0} F/F)),
+  Eq.{1} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} (HPow.hPow.{0, 0, 0} γ 2) g)
+    (HPow.hPow.{0, 0, 0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} γ g) 2)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.kummerVal_square' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.squaredKummerPrimitive : ∀ {F : Type} [inst : Field.{0} F] {n : ℕ}
+  [NeZero.{0} n] {γ : AlgebraicClosure.{0} F} {σ : Gal(AlgebraicClosure.{0} F/F)},
+  IsPrimitiveRoot.{0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} γ σ) (HMul.hMul.{0, 0, 0} 2 n) →
+    IsPrimitiveRoot.{0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} (HPow.hPow.{0, 0, 0} γ 2) σ) n
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.squaredKummerPrimitive' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.kummerLog_square_reduction : ∀ {F : Type} [inst : Field.{0} F]
+  {n : ℕ} [inst_1 : NeZero.{0} n] {a : F} {γ : AlgebraicClosure.{0} F}
+  (hγ :
+    Eq.{1} (HPow.hPow.{0, 0, 0} γ (HMul.hMul.{0, 0, 0} 2 n)) ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) a))
+  (hγ0 : Ne.{1} γ 0) {σ : Gal(AlgebraicClosure.{0} F/F)}
+  (hζ : IsPrimitiveRoot.{0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} γ σ) (HMul.hMul.{0, 0, 0} 2 n))
+  (g : Gal(AlgebraicClosure.{0} F/F)),
+  Eq.{1}
+    (ZInQ.Contrib.RC53Assist.InnerLimitArith.kummerLog
+      (ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.squareRoot_power hγ) (pow_ne_zero.{0} 2 hγ0)
+      (ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.squaredKummerPrimitive hζ) g)
+    ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.reduceDouble n)
+      (ZInQ.Contrib.RC53Assist.InnerLimitArith.kummerLog hγ hγ0 hζ g))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.kummerLog_square_reduction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.exists_kummer_doubleLift : ∀ {F : Type} [inst : Field.{0} F] {n : ℕ}
+  [inst_1 : NeZero.{0} n] {a : F} {γ : AlgebraicClosure.{0} F}
+  (hγ :
+    Eq.{1} (HPow.hPow.{0, 0, 0} γ (HMul.hMul.{0, 0, 0} 2 n)) ((Algebra.algebraMap.{0, 0} F (AlgebraicClosure.{0} F)) a))
+  (hγ0 : Ne.{1} γ 0) {σ : Gal(AlgebraicClosure.{0} F/F)}
+  (hζ : IsPrimitiveRoot.{0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} γ σ) (HMul.hMul.{0, 0, 0} 2 n)),
+  (∀ (g : Gal(AlgebraicClosure.{0} F/F)) (ζ : AlgebraicClosure.{0} F),
+      Eq.{1} (HPow.hPow.{0, 0, 0} ζ (HMul.hMul.{0, 0, 0} 2 n)) 1 → Eq.{1} (g ζ) ζ) →
+    ∃ χ,
+      Continuous.{0, 0} χ ∧
+        (∀ (g h : Gal(AlgebraicClosure.{0} F/F)),
+            Eq.{1} (χ (HMul.hMul.{0, 0, 0} g h)) (HAdd.hAdd.{0, 0, 0} (χ g) (χ h))) ∧
+          ∀ (g : Gal(AlgebraicClosure.{0} F/F)),
+            Eq.{1}
+              (ZInQ.Contrib.RC53Assist.InnerLimitArith.kummerLog
+                (ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.squareRoot_power hγ) (pow_ne_zero.{0} 2 hγ0)
+                (ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.squaredKummerPrimitive hζ) g)
+              ↑(χ g).val
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.exists_kummer_doubleLift' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.reduceDouble : (n : ℕ) →
+  RingHom.{0, 0} (ZMod (HMul.hMul.{0, 0, 0} 2 n)) (ZMod n)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Characters.reduceDouble' depends on axioms: [propext, Quot.sound.{u}]

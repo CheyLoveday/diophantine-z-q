@@ -14,7 +14,8 @@ The field-generic chain (`GenericWiring.lean`) takes the localization duality
 `GenuineNonquadStepsK`, hence of `GaloisInputsK`). This file discharges it at the fibres
 `k = k(𝔭) = ResAt 𝔭`, `M = V_𝔭` through lane RC31's consumers (`FibreSwitch.adjunction_of_prints`,
 `fibreSelmerDualityT`), modulo RC31's prints, which enter as hypotheses named after them (PRINT):
-`NekovarFibreGlobalDuality` (Nekovář 5.6.3(ii) with 6.8.1) and `NekovarFibreTraces` (the canonical
+`NekovarFibreGlobalDuality` (Nekovář 5.6.3(ii); the Selmer duality is obtained from it as in
+6.8.1/6.3.4) and `NekovarFibreTraces` (the canonical
 traces, Nekovář 5.1.3–5.4.1 with 5.6.1).
 
 Nodes:
@@ -33,7 +34,8 @@ Nodes:
   `galRelK_localizationDualityInput_of_prints` (PROVED from the PRINT `NekovarFibreGlobalDuality`);
   `galRelSwitch_exists_trace` (PROVED from the PRINT `NekovarFibreTraces`: a trace killing
   coboundaries and inducing `H³_c ≅ k(𝔭)` exists), `galRelK_localizationDualityInput_of_traces`
-  (PROVED from both PRINTs, with orthogonality and coordinates required for the canonical traces).
+  (PROVED from both PRINTs, with orthogonality and coordinates required for the canonical traces,
+  the constant `ε` depending on the trace).
 * `FibreSwitchDualityK` (hypothesis bundle at one step: truncated isotropy data, a trace, the local
   complement criterion `horth`, the switch coordinates `hsw`), `FibreSwitchDualityK.dual`,
   `FibreSwitchDualityK.toDualityFromSelmer` (PROVED from the PRINT); `FibreNonquadStepsK` (the
@@ -45,10 +47,11 @@ Nodes:
   depend on `α` as a type), `vp_smul_inv`, `betaSelf_smul` (PROVED when `ᾱ⁻¹ = ᾱ` on `k(𝔭)`, i.e.
   the residual character is quadratic), `betaSelf_bijective`, `betaSelf_flip_bijective`,
   `continuous_betaSelf` (PROVED, from RC31's `betaT_*`); `galRelK_localizationDualityInput_VP`,
-  `FibreNonquadStepsK.toGenuine_VP` (PROVED from the PRINT: every coefficient hypothesis —
-  `IsLatticeTop`, `IsTateTwistFibre`, perfectness, continuity, equivariance — discharged).
+  `FibreNonquadStepsK.toGenuine_VP` (PROVED from the PRINT: every coefficient hypothesis
+  discharged; the remaining step data cannot hold at a genuine place (open limit (3))).
 * Non-vacuity at RC31's instance (`E_1 : y² = x(x − 1)(x + 3)` over `ℚ`, `S6`, `𝔭 = (t)`):
-  `resChar_alphaLam_inv` (PROVED: the residual character is quadratic, indeed trivial),
+  `resChar_alphaLam_inv` (PROVED: the residual character is quadratic; RC28's `alphaLam` is the
+  trivial character everywhere),
   `betaSelf_E1` (PROVED under RC28's GLUE `HasFullTwoTorsion ℚ S6 curveE1`, as in RC31's
   `betaConj_E1`): all coefficient hypotheses of `galRelK_localizationDualityInput_VP` hold; and
   RC31's `exFibreSwitch` over the fibre field `k((t)) = ResAt (t)` (`example`).
@@ -66,19 +69,38 @@ against themselves (the finite side `sideOfSetK I_v`, resp. the singular side `s
 at the derivative places). Those derivative pairs are ours, and `horth` remains an explicit
 hypothesis here (a field of `FibreSwitchDualityK`). `NekovarFibreLocalDuality` is therefore not
 consumed by this file.
+The text's orthogonality (tex 4866–4873) is for the transported duality (at a split place `v`
+against the conjugate place `τv`, tex 2810–2813, with Kummer conditions at `2N`), not for an
+equivariant self-pairing place by place; for the chain's conditions `fibreConds` (unramified at
+every place of `S`, including those above 2) self-orthogonality fails at `v ∣ 2`
+(`dim H¹_ur = h⁰ < ½ dim H¹(K_v, V)`).
 
 **Open limit (2): per fixed `𝔭` only.** Everything here is at ONE height-one prime `𝔭` and one
 switch place `q`. The chain's step data also carries the switch coordinates
 `H¹(W_rel) ≅ k² × k²` (the GLUE `TameCoordinatesTrivialK`, through `eRAtK`) and the coordinate
-identity `hsw` (`FibreSwitch.SwitchCoordinates`, ELLIOT, tex L2816–2818, L5037–5039). The `2 + 2`
+identity `hsw` (`FibreSwitch.SwitchCoordinates`, ELLIOT, tex L2816–2818, L5035–5038). The `2 + 2`
 shape exists only when `q ≡ 1` in the coefficient field (`UnrCoords.two_plus_two_iff_q_eq_one`,
 `two_plus_two_iff_ell`; `GenericNonVacuity.not_tameCoordinatesTrivialK_of_tame`): at a single inert
-derivative prime `ℓ`, `q = ℓ² ≠ 1` in `k(𝔭)` of characteristic zero kills the singular part. The
-text's shape is reached only in the inner limit `ℓᵢ → −1` (tex L5033–5035). So at a fixed `𝔭` the
-discharge below is conditional on step data that cannot all hold at one genuine derivative prime;
-the switch needs the inner-limit / `Λ`-adic objects across the derivative primes. The PRINT
-`NekovarFibreComparison` (Nekovář 3.7.4(ii), 4.2.2: fibre cohomology versus the `Λ`-adic tower) is
-the bridge such a route would use; it is not consumed at a fixed `𝔭`.
+derivative prime `ℓ`, `q = ℓ² ≠ 1` (tex L3298–3300) in `k(𝔭)` of characteristic zero kills the
+singular part. The text's shape is reached only in the inner limit `ℓᵢ → −1` (tex L5030–5032). So at
+a fixed `𝔭` the discharge below is conditional on step data that cannot all hold at one genuine
+derivative prime; the switch needs the inner-limit / `Λ`-adic objects across the derivative primes.
+The PRINT `NekovarFibreComparison` (Nekovář 3.7.4(ii), 4.2.2: fibre cohomology versus the `Λ`-adic
+tower) is the bridge such a route would use; it is not consumed at a fixed `𝔭`.
+
+**Open limit (3): the self-pairing is incompatible with the tame coordinates.** A
+`TameCoordinatesTrivialK` at `q` makes `G_{K_q}` act trivially on `M`; with a perfect
+`G_{K,S}`-equivariant `β : M × M → T` and `IsTateTwistFibre K S P T` this forces `G_{K_q}` to act
+trivially on `T ≅ k(𝔭)(1)`, i.e. the cyclotomic character to be trivial on the decomposition group
+at `q`, which is false at every place of a number field. So the hypotheses of
+`galRelK_localizationDualityInput_of_prints`, `galRelK_switchDualityAdjunction_of_prints`,
+`FibreSwitchDualityK.dual`, `.toDualityFromSelmer` and `galRelK_localizationDualityInput_VP` never
+hold together for genuine objects, and `FibreNonquadStepsK` with the hypotheses of `toGenuine` holds
+only when no switch is demanded. **The `V_𝔭(α)` case is vacuous:** `hα` (quadratic residual
+character) is the quadratic case (tex 5005–5007), where `GenuineNonquadStepsK` holds trivially.
+The route meant to be non-vacuous is `InnerLimitWiring.lean`: the switch steps on the inner-limit
+objects (derivative labels with `q → 1`), with the duality from RC31's retained-data certificate,
+where no fixed-fibre self-pairing is required and the local planes are Lagrangian.
 
 **RC31's DEPARTURE.** RC31 proves the duality at `k(𝔭)` directly: Nekovář 6.8.1 with
 `R = Λ/𝔭`, `𝒮 = R ∖ {0}`, `R_𝒮 = k(𝔭)` (Print.lean), instead of the text's route (duality over
@@ -88,10 +110,12 @@ dualities are `k(𝔭)`-linear statements about `V_𝔭`-coefficients, with no s
 **Shape (self-pairing).** `FibreSwitch.adjunction_of_prints` pairs `C_str(M)` with `C_rel(M)` for
 the SAME module, through a self-pairing `M × M → T`. On `V_𝔭(α)` RC31's Weil pairing `betaT` pairs
 `V_𝔭(α)` with `V_𝔭(α⁻¹)`; it is a self-pairing exactly when the residual character is quadratic
-(`resChar 𝔭 α⁻¹ = resChar 𝔭 α`), which holds at RC31's instance (`α` trivial at `t = 0`). For the
-text's transported form `(v, w) ↦ β(v, J w)` (tex L2798–2805, RC31's `betaConj` against
-`τ^*V_𝔭(α)`, for `α ∘ c = α⁻¹`) the adjunction would pair `C_str(V_𝔭(α))` with
-`C_rel(τ^*V_𝔭(α))`; the `FibreSwitch` shape does not cover that, and it is not wired here.
+(`resChar 𝔭 α⁻¹ = resChar 𝔭 α`), which holds at RC31's instance because RC28's `alphaLam ℚ S` is the
+trivial character (`alphaLam_apply`), not the text's moving character; for the genuine character it
+holds only at `𝔭 = (t), (t+2)`. For the text's transported form `(v, w) ↦ β(v, J w)` (tex
+L2798–2805, RC31's `betaConj` against `τ^*V_𝔭(α)`, for `α ∘ c = α⁻¹`) the adjunction would pair
+`C_str(V_𝔭(α))` with `C_rel(τ^*V_𝔭(α))`; the `FibreSwitch` shape does not cover that, and it is not
+wired here.
 
 Kinds: definitions, GLUE and PROVED (from the stated PRINT and hypotheses).
 -/
@@ -130,8 +154,8 @@ open Classical in
 conditions `switchRelK q (old c)` (`[C⁰ → Z¹]` at `q`), strict conditions `switchStrK q (old c)`
 (`[Z⁰ → 0]` at `q`), the inclusions `strict → relaxed`, the quotient `W_rel = relWK`, the quotient
 map, and the coordinates `eRAtK` of the chain. Degreewise exactness of
-`0 → ∏ U_str → ∏ U_rel → W_rel → 0` is that of a quotient by a submodule. Classification: GLUE
-(PROVED). -/
+`0 → ∏ U_str → ∏ U_rel → W_rel → 0` is that of a quotient by a submodule. Classification:
+definition (degreewise exactness PROVED). -/
 def galRelSwitch : FibreSwitch K S k M where
   ΔR := galCond K S M (switchRelK k (gGvK K S) (gMvK K S M) q (C.old c))
   US v := (switchStrK k (gGvK K S) (gMvK K S M) q (C.old c) v).cx
@@ -150,10 +174,10 @@ def galRelSwitch : FibreSwitch K S k M where
 theorem galRelSwitch_toQuasi : (galRelSwitch C c q T).toQuasi = galRelK C c q T := rfl
 
 /-- **An RC31 `FibreSwitch` with Selmer duality gives the chain's `DualityFromSelmer`** (tex
-L5068–5075): the strict condition `∏ U_str → U_rel`, its degreewise exactness, the pairing data
+L5060–5071): the strict condition `∏ U_str → U_rel`, its degreewise exactness, the pairing data
 `Q` between `C_str` and `C_rel`, the trace, the 6.3.4 quasi-isomorphism `hγ` and the switch
-coordinates `hsw` are exactly the fields of `DualityFromSelmer X.toQuasi`. Classification: GLUE
-(PROVED). -/
+coordinates `hsw` are exactly the fields of `DualityFromSelmer X.toQuasi`. Classification:
+definition (repackaging). -/
 def fibreSwitchDualityFromSelmer (X : FibreSwitch K S k M) (Q : SelPairData X.Dstr X.toQuasi.D)
     (tr : (coneCx Q.resE).X 3 →ₗ[k] k) (htr : ∀ z, tr ((coneCx Q.resE).d 2 3 rfl z) = 0)
     (ε σ : k) (J : Matrix (Fin 2) (Fin 2) k) (hε : ε ≠ 0) (hσ : σ ≠ 0) (hJ2 : J * J = 1)
@@ -304,9 +328,11 @@ theorem galRelSwitch_exists_trace (hTr : NekovarFibreTraces K) (hset : NekovarFi
 
 /-- **The named duality input from both PRINTs** (tex L5062–5070): the trace is supplied by
 `NekovarFibreTraces`; the local complement criterion (open limit (1)) and the switch coordinates
-(ELLIOT) are required for every trace killing coboundaries and inducing `H³_c ≅ k(𝔭)` (they are
-statements relative to the trace). Classification: PROVED from the PRINTs
-`NekovarFibreGlobalDuality` and `NekovarFibreTraces`. -/
+(ELLIOT) are required for every trace killing coboundaries and inducing `H³_c ≅ k(𝔭)`; the
+constant `ε` depends on the trace (tex 5035–5038: `ε ∈ k^×`). The conclusion is the duality input
+for some `ε ≠ 0`. Classification: PROVED from the PRINTs `NekovarFibreGlobalDuality` and
+`NekovarFibreTraces`. (Restated: an earlier form with one `ε` for every trace contradicted
+`NekovarFibreTraces`.) -/
 theorem galRelK_localizationDualityInput_of_traces
     (hG : NekovarFibreGlobalDuality K) (hTr : NekovarFibreTraces K)
     (hset : NekovarFibreSetting K S) [Fintype (Places K S)]
@@ -315,27 +341,27 @@ theorem galRelK_localizationDualityInput_of_traces
     (hb : Function.Bijective β) (hb' : Function.Bijective β.flip)
     (I : GalTruncIsotropyData S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
       (galRelSwitch C c q Tq).ΔR)
-    (ε σ : ResAt P) (J : Matrix (Fin 2) (Fin 2) (ResAt P)) (hε : ε ≠ 0) (hσ : σ ≠ 0)
-    (hJ2 : J * J = 1)
+    (σ : ResAt P) (J : Matrix (Fin 2) (Fin 2) (ResAt P)) (hσ : σ ≠ 0) (hJ2 : J * J = 1)
     (hall : ∀ (tr : (galCompactTT S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
         (galRelSwitch C c q Tq).ΔR I).X 3 →ₗ[ResAt P] ResAt P)
       (htr : ∀ z, tr ((galCompactTT S (ResAt P) β hβ hβc (galRelSwitch C c q Tq).ΔS
         (galRelSwitch C c q Tq).ΔR I).d 2 3 rfl z) = 0), InducesIsoH3 tr →
-      FibreOrthogonalComplementsT β hβ hβc (galRelSwitch C c q Tq).ΔS
-        (galRelSwitch C c q Tq).ΔR I tr htr ∧
-      (galRelSwitch C c q Tq).SwitchCoordinates (galPairDataT S (ResAt P) β hβ hβc
-        (galRelSwitch C c q Tq).ΔS (galRelSwitch C c q Tq).ΔR I) tr ε σ J) :
-    LocalizationDualityInput ε σ J hε hσ hJ2 (galRelK C c q Tq).U := by
+      ∃ ε : ResAt P, ε ≠ 0 ∧
+        FibreOrthogonalComplementsT β hβ hβc (galRelSwitch C c q Tq).ΔS
+          (galRelSwitch C c q Tq).ΔR I tr htr ∧
+        (galRelSwitch C c q Tq).SwitchCoordinates (galPairDataT S (ResAt P) β hβ hβc
+          (galRelSwitch C c q Tq).ΔS (galRelSwitch C c q Tq).ΔR I) tr ε σ J) :
+    ∃ (ε : ResAt P) (hε : ε ≠ 0), LocalizationDualityInput ε σ J hε hσ hJ2 (galRelK C c q Tq).U := by
   obtain ⟨tr, htr, h3⟩ := galRelSwitch_exists_trace β hβ hβc C c q Tq hTr hset hTl hT I
-  obtain ⟨horth, hsw⟩ := hall tr htr h3
-  exact galRelK_localizationDualityInput_of_prints β hβ hβc C c q Tq hG hset hM hTl hT hb hb' I tr
-    htr h3 horth ε σ J hε hσ hJ2 hsw
+  obtain ⟨ε, hε, horth, hsw⟩ := hall tr htr h3
+  exact ⟨ε, hε, galRelK_localizationDualityInput_of_prints β hβ hβc C c q Tq hG hset hM hTl hT hb
+    hb' I tr htr h3 horth ε σ J hε hσ hJ2 hsw⟩
 
 /-- **The fibre duality data at one switch step** (tex L5055–5075): for the chain's relaxed
 localization `galRelK C c q Tq` (as `galRelSwitch`), truncated isotropy data for the
 (strict, relaxed) pair, a trace killing coboundaries and inducing `H³_c ≅ k(𝔭)`, the local
 complement criterion `horth` for the derivative pair (open limit (1): not discharged by RC31), the
-switch-pairing constants and the switch coordinates `hsw` (ELLIOT, tex L2816–2818, L5037–5039).
+switch-pairing constants and the switch coordinates `hsw` (ELLIOT, tex L2816–2818, L5035–5038).
 Classification: hypothesis (structure). -/
 structure FibreSwitchDualityK where
   /-- Truncated isotropy data for (strict, relaxed). -/
@@ -411,7 +437,9 @@ variable (β hβ hβc C) (c₀ : Finset (Places K S)) (t : A)
 
 /-- **The genuine nonquadratic steps at a fibre with the fibre duality data** (tex L4997–5003,
 L5055–5086): `GenuineNonquadStepsK` with the field `LocalizationDualityInput …` replaced by
-`FibreSwitchDualityK` (the inputs of RC31's consumer). Classification: GLUE (input). -/
+`FibreSwitchDualityK` (the inputs of RC31's consumer). Classification: hypothesis (ELLIOT: new
+derivative prime, `CoordStep`, rank-two detection; open inputs `TameCoordinatesTrivialK`, `horth`,
+`hsw`; unsatisfiable when demanded, open limit (3)). -/
 def FibreNonquadStepsK (stage : Finset (Places K S) → TwoTermStage ι) : Prop :=
   ∀ c : Finset (Places K S),
     Reach (galΦK C A c₀ t zAct hzAct lamAct hlamAct).next c₀ c →
@@ -493,7 +521,8 @@ def GaloisInputsK.ofFibreSteps {u : F}
 /-- **Regularity at a fibre with the duality from the PRINT** (tex L4976–5195): for a local `A`
 with residue map `ρ : A →+* k(𝔭)` killing the maximal ideal, the inputs of
 `GaloisInputsK.ofFibreSteps` give `∃ a, ι a = u`. Classification: PROVED (from the PRINT
-`NekovarFibreGlobalDuality` and the stated inputs, via `regular_of_galoisInputsK`). -/
+`NekovarFibreGlobalDuality` and the stated inputs, via `regular_of_galoisInputsK`); genuine content
+only when no switch is demanded. -/
 theorem regular_of_fibreSteps [IsLocalRing A] (hι : Function.Injective ι)
     (hρ : ∀ x ∈ IsLocalRing.maximalIdeal A, ρ x = 0) {u : F}
     (hG : NekovarFibreGlobalDuality K) (hset : NekovarFibreSetting K S)
@@ -568,7 +597,8 @@ variable [IsHeightOneOdd P] [IsContChar α] (hα : ∀ g, resChar P α⁻¹ g = 
 hypothesis discharged (`isLatticeTop_vp'`, `isLatticeTop_tate1P`, `isTateTwistFibre_tate1P`,
 perfectness, continuity and equivariance of `betaSelf`): only the PRINT, the quadratic residual
 character `hα` and the step data (isotropy data, trace, `horth` = open limit (1), `hsw` = ELLIOT)
-remain. Classification: PROVED from the PRINT `NekovarFibreGlobalDuality`. -/
+remain. Classification: PROVED from the PRINT `NekovarFibreGlobalDuality`. VACUOUS for the genuine
+objects (open limit (3)). -/
 theorem galRelK_localizationDualityInput_VP
     (hG : NekovarFibreGlobalDuality K) (hset : NekovarFibreSetting K S)
     (d : FibreSwitchDualityK (betaSelf W P α) (betaSelf_smul W P α hα) (continuous_betaSelf W P α)
@@ -581,7 +611,8 @@ theorem galRelK_localizationDualityInput_VP
 open Classical in
 /-- **The duality field of `GenuineNonquadStepsK` at `M = V_𝔭(α)`** (tex L5062–5070): from the
 PRINT and the quadratic residual character, all coefficient hypotheses discharged. Classification:
-PROVED from the PRINT `NekovarFibreGlobalDuality`. -/
+PROVED from the PRINT `NekovarFibreGlobalDuality`. VACUOUS for the genuine objects (open limit (3)).
+-/
 theorem FibreNonquadStepsK.toGenuine_VP {A F : Type} [CommRing A] [Field F] {ι : A →+* F}
     {ρ : A →+* ResAt P} {c₀ : Finset (Places K S)} {t : A}
     {zAct : (selCx (galoisSelData K S (ResAt P) (VP K S W P α)
@@ -611,8 +642,8 @@ end VP
 
 section NonVacuity
 
-/-- **The residual character of RC28's `α` at `(t)` is quadratic** (indeed trivial: `α = χ_1 Ψ_0`
-is trivial, RC31's `alphaLam_apply`), so the self-pairing hypothesis `hα` holds. Classification:
+/-- **The residual character of RC28's `α` at `(t)` is quadratic** (RC28's `alphaLam` is the trivial
+character everywhere), so the self-pairing hypothesis `hα` holds. Classification:
 PROVED. -/
 theorem resChar_alphaLam_inv (S : Set (HeightOneSpectrum (𝓞 ℚ))) (g : GKS ℚ S) :
     resChar Pt0 (alphaLam ℚ S)⁻¹ g = resChar Pt0 (alphaLam ℚ S) g := by

@@ -11,9 +11,10 @@ the characteristic-zero fibres (tex 4976–5200).
 
 Lane RC26's `GenuineSwitch` packages the switch data for DISCRETE coefficients. `FibreSwitch` is the
 same structure for arbitrary topological coefficients (the fibres `V_𝔭` of lane RC28 are not
-discrete), and its adjunction is the other group's `SwitchDualityAdjunction`, through lane RC26's
-cochain-level Nekovář 6.3.3 (`switchAdjunctionFromDuality_proof`, PROVED for any field) with the
-duality quasi-isomorphism supplied by `fibreSelmerDualityT` (Nekovář 6.8.1).
+discrete), and its adjunction is `ZInQ.Contrib.CloudB3RC53.SwitchInputs.SwitchDualityAdjunction`
+(in `CloudB3RC53/SwitchInputs/QuasiSide.lean`), through lane RC26's cochain-level Nekovář 6.3.3
+(`switchAdjunctionFromDuality_proof`, PROVED for any field) with the duality quasi-isomorphism
+supplied by `fibreSelmerDualityT` (Nekovář 6.8.1).
 
 * `FibreSwitch`, `FibreSwitch.ΔS`, `toQuasi`, `Dstr` (`Dstr_eq`), `δ`, `hex`, `SwitchCoordinates`.
 * `FibreSwitch.adjunction`, `FibreSwitch.localizationDualityInput` (PROVED from `hγ`).
@@ -116,8 +117,9 @@ theorem adjunction (Q : SelPairData X.Dstr X.toQuasi.D)
   switchAdjunctionFromDuality_proof k X.toQuasi (piCx X.US) (piMap X.φ) X.hfg X.φ_inj X.g_surj
     X.ex Q tr htr ε σ J hε hσ hJ2 hγ hsw
 
-/-- **`U = U^⊥` for the relaxed localization image** (tex 5065–5070; the other group's
-`localizationDualityInput_of_adjunction`). Kind: PROVED. -/
+/-- **`U = U^⊥` for the relaxed localization image** (tex 5065–5070;
+`ZInQ.Contrib.CloudB3RC53.SwitchInputs.localizationDualityInput_of_adjunction` in
+`CloudB3RC53/SwitchInputs/QuasiSide.lean`). Kind: PROVED. -/
 theorem localizationDualityInput (Q : SelPairData X.Dstr X.toQuasi.D)
     (tr : (coneCx Q.resE).X 3 →ₗ[k] k) (htr : ∀ z, tr ((coneCx Q.resE).d 2 3 rfl z) = 0)
     (ε σ : k) (J : Matrix (Fin 2) (Fin 2) k) (hε : ε ≠ 0) (hσ : σ ≠ 0) (hJ2 : J * J = 1)
@@ -146,8 +148,11 @@ variable {K S} {P : Ideal Lambda} [P.IsPrime] [IsHeightOneOdd P]
 6.3.3): for switch data on a fibre coefficient module `M` with Nekovář's topology, a perfect
 continuous equivariant self-pairing `β : M × M → T` with `T ≅ k(𝔭)(1)`, truncated isotropy data
 for (strict, relaxed), a trace inducing `H³_c ≅ k(𝔭)`, the orthogonality of the strict and relaxed
-conditions, and the switch coordinates, `SwitchDualityAdjunction` holds. Kind: PROVED from the
-PRINT `NekovarFibreGlobalDuality`. -/
+conditions, and the switch coordinates, `SwitchDualityAdjunction` holds.
+This is the duality of the Galois cochains of the fibre (DEPARTURE 5 of `Print.lean`); the
+text's complexes are `C ⊗_R k` (tex 4977–4990), and `horth` for the text's derivative-prime
+conditions `D⁰`, `D⁰ ⊕ (F ⊕ S)[−1]` (tex 4860–4875, 5059–5061) is not discharged here.
+Kind: PROVED from the PRINT `NekovarFibreGlobalDuality`. -/
 theorem FibreSwitch.adjunction_of_prints (X : FibreSwitch K S (ResAt P) M)
     (h : NekovarFibreGlobalDuality K) (hset : NekovarFibreSetting K S)
     (hM : IsLatticeTop (GKS K S) M) (hTl : IsLatticeTop (GKS K S) T)

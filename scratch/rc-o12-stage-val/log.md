@@ -1,0 +1,8 @@
+- Merged the approved P_M head into the assigned work branch.
+- Exact integral coefficient support and squarefree off-filter support modulo the stage precision are distinct inputs.
+- App G stage choice bounds the same phase-removed integer representatives used in the intrinsic symbol.
+- Interface issue: address-only exclusions in the skeleton cannot justify actual squarefree off-filter zero. Use the full intrinsic filter for (F.5)/(F.6), (O.7) and the divisions. App F's extracted coefficient still carries the (O.7) phase.
+- `PM.lean`: common (O.4) stage, arbitrary integral lift and least representatives, local zero, finite signed recurrence, and two-power character order. Compiled with `lake env lean -j1`; 7 permitted axiom audits.
+- `Stage.lean`: App G depth on the given integers, same-stage (O.7) adapter, `Divisions`, precision and representative independence, and intrinsic `StageValuation`. Compiled with `lake env lean -j1`; 12 permitted axiom audits.
+- `Apply.lean`: specialize App G to the indexed skeleton data, identify `Rodd`, build actual `pmDivisions`, and obtain `X.Inputs` via `inputs_at_precision`. Compiled with `lake env lean -j1`; 4 permitted axiom audits.
+- Final audits: 23 declarations, only `propext`, `Classical.choice`, `Quot.sound`; no direct or transitive `OneProof.Main` import.
