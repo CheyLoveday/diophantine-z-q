@@ -31,9 +31,10 @@ The coefficient map of the text is the composite of three identifications at fin
   `twistSign_localSqrt`: **the local quadratic character is `χ_h ∘ p_v`** (PROVED).
 * `IsLocallyQuadAt i α χ v`: `α ∘ p_v = χ ∘ p_v` on `G_{K_v}` (the character of `M_i` is `χ_h` on
   the decomposition group); `isLocallyQuadAt_alphaChar`: it holds for lane RC28's
-  `α_i = alphaChar i χ_h ξ` as soon as `ξ` is trivial on the decomposition group at `v` (the
-  text's "`Ψ_i` is trivial" at `v ∣ 2N`, tex 2729, 3431, 3500–3506, and at the places above
-  `q ∈ Q`, where `ξ_i(Fr_q) = 1` and `ξ_i` is unramified, tex 2733–2736: ELLIOT).
+  `α_i = alphaChar i χ_h ξ` as soon as `ξ` is trivial on the decomposition group at `v` (ELLIOT).
+  The text supplies this at `v ∣ 2N` (tex 2729, 3430–3432, 3503–3506). At graph primes it instead
+  prescribes additive exponent one, hence Frobenius value `1+t` (tex 2733–2736, 4275–4277); this
+  hypothesis is not supplied there.
 * **`kummerIotaBase`, `kummerIota`: the Kummer coefficient map `ι_v : B(K̄_v)[2^i] → M_i`**,
   `t ↦ 1 ⊗ j⁻¹(φ_q(t))` (`φ_q = twistTors`, `j = compTorsEquiv`), with values in `M_i`, resp. in
   `M_i` with `G_{K_v}` acting through `p_v` (`ResMod (locMap K S v)`, the format of lane RC28's
@@ -150,11 +151,10 @@ def IsLocallyQuadAt (i : ℕ) (α : GKS K S →* (Acoef i)ˣ) (χ : GKS K S →*
     (v : HeightOneSpectrum (𝓞 K)) : Prop :=
   ∀ σ : Gloc K v, α (locMap K S v σ) = intUnitsTo (Acoef i) (χ (locMap K S v σ))
 
-/-- PROVED from ELLIOT. **For `α_i = χ_h Ψ_i` (lane RC28's `alphaChar`), `α_i = χ_h` on the
-decomposition group at `v` as soon as `ξ` is trivial there.** The hypothesis `hξ` is the ELLIOT
-input: the moving character is trivial on the decomposition groups at `2N` (tex 2729, 3431, and
-Proposition `ex:arith-moving-character`, tex 3500–3506) and at the places above the family's
-primes `q ∈ Q` (unramified there with `ξ_i(Fr_q) = 1`, tex 2733–2736). -/
+/-- PROVED from ELLIOT. For `α_i = χ_h Ψ_i`, `α_i = χ_h` on the decomposition group at `v`
+when `ξ_i` is trivial there. The text supplies this at `v ∣ 2N` (tex 2729, 3430–3432,
+3503–3506). At graph primes it instead prescribes additive exponent one, hence Frobenius value
+`1+t` (tex 2733–2736, 4275–4277); this hypothesis is not supplied there. -/
 theorem isLocallyQuadAt_alphaChar (i : ℕ) (χ : GKS K S →* ℤˣ)
     (ξ : GKS K S →* Multiplicative (ZMod (2 ^ (2 * i)))) (v : HeightOneSpectrum (𝓞 K))
     (hξ : ∀ σ : Gloc K v, ξ (locMap K S v σ) = 1) :

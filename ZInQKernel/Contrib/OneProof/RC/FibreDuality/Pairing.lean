@@ -178,7 +178,11 @@ manuscript tex 4878–4897, 5065–5070): `fibreSelmerDualityT` with the genuine
 `V_𝔭(α)`, `V_𝔭(α⁻¹)` with RC28's topology (`isLatticeTop_vp'`), `T = k(𝔭)(1)` (`Tate1P`), and the
 Weil/determinant pairing `betaT`. For any local conditions with truncated isotropy data, a trace
 inducing `H³_c ≅ k(𝔭)` and the orthogonality of the local conditions, the genuine fibre Selmer
-duality map is a quasi-isomorphism. Kind: PROVED from the PRINT `NekovarFibreGlobalDuality`. -/
+duality map is a quasi-isomorphism.
+This is the duality of the Galois cochains of the fibre (DEPARTURE 5 of `Print.lean`); the
+text's complexes are `C ⊗_R k` (tex 4977–4990), and `horth` for the text's derivative-prime
+conditions `D⁰`, `D⁰ ⊕ (F ⊕ S)[−1]` (tex 4860–4875, 5059–5061) is not discharged here.
+Kind: PROVED from the PRINT `NekovarFibreGlobalDuality`. -/
 theorem fibreSelmerDuality_VP (h : NekovarFibreGlobalDuality K) (hset : NekovarFibreSetting K S)
     (ΔA : GaloisLocalConditions K S (ResAt P) (VP K S W P α))
     (ΔB : GaloisLocalConditions K S (ResAt P) (VP K S W P α⁻¹))
@@ -199,7 +203,11 @@ theorem fibreSelmerDuality_VP (h : NekovarFibreGlobalDuality K) (hset : NekovarF
     (betaT_bijective W P α) (betaT_flip_bijective W P α) ΔA ΔB I tr htr htr3 horth
 
 /-- **Fibre Selmer duality, the text's transported form**: `V_𝔭(α)` against `τ^*V_𝔭(α)` with
-`(v, w) ↦ β(v, J w)` (tex 2798–2805), for `α ∘ c = α⁻¹`. Kind: PROVED from the PRINT. -/
+`(v, w) ↦ β(v, J w)` (tex 2798–2805), for `α ∘ c = α⁻¹`.
+This is the duality of the Galois cochains of the fibre (DEPARTURE 5 of `Print.lean`); the
+text's complexes are `C ⊗_R k` (tex 4977–4990), and `horth` for the text's derivative-prime
+conditions `D⁰`, `D⁰ ⊕ (F ⊕ S)[−1]` (tex 4860–4875, 5059–5061) is not discharged here.
+Kind: PROVED from the PRINT. -/
 theorem fibreSelmerDuality_conj (hα : ∀ σ, α (C.conj σ) = (α σ)⁻¹)
     (h : NekovarFibreGlobalDuality K) (hset : NekovarFibreSetting K S)
     (ΔA : GaloisLocalConditions K S (ResAt P) (VP K S W P α))

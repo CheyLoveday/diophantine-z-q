@@ -1,0 +1,72 @@
+Retained inner-limit assembly — verification
+
+Source:
+  ZInQKernel/Contrib/RC53Assist/RetainedAssembly/Assembly.lean
+  sha256 a7406eaae3e511024fa719b7a56736536abae3487458bd43febbfc596deb7aa5
+  74306 bytes; 1381 lines
+
+Final source check:
+  PATH=$HOME/.elan/bin:$PATH LEAN_NUM_THREADS=6 taskset -c 0-15 nice -n 10 \
+    lake env lean ZInQKernel/Contrib/RC53Assist/RetainedAssembly/Assembly.lean
+  Exit code: 0.
+  No errors or warnings.
+
+The arithmetic pairing dependency and all other imported dependencies were
+already present before the source checks. No dependency build or update was
+started by this contribution.
+
+Final statement and axiom audit:
+  PATH=$HOME/.elan/bin:$PATH LEAN_NUM_THREADS=6 taskset -c 0-15 nice -n 10 \
+    lake env lean ZInQKernel/Contrib/RC53Assist/RetainedAssembly/Scratch/Audit.lean
+  Exit code: 0.
+  No errors or warnings.
+  The audited source prefix is byte-for-byte identical to Assembly.lean.
+  166 axiom reports: 77 explicit declarations, 10 structure constructors,
+  and 79 structure-field projections.
+  2 reports are axiom-free.
+  Axiom union: propext, Classical.choice, Quot.sound.
+  No report is missing and no additional axiom occurs.
+
+Principal exports:
+
+  #print axioms ZInQ.Contrib.RC53Assist.RetainedAssembly.assemble_inner_limit
+  'ZInQ.Contrib.RC53Assist.RetainedAssembly.assemble_inner_limit'
+    depends on axioms: [propext, Classical.choice, Quot.sound]
+
+  #print axioms ZInQ.Contrib.RC53Assist.RetainedAssembly.exists_certificate_actual_stages
+  'ZInQ.Contrib.RC53Assist.RetainedAssembly.exists_certificate_actual_stages'
+    depends on axioms: [propext, Classical.choice, Quot.sound]
+
+  #print axioms ZInQ.Contrib.RC53Assist.RetainedAssembly.detect_on_assembled_finite_fibre
+  'ZInQ.Contrib.RC53Assist.RetainedAssembly.detect_on_assembled_finite_fibre'
+    depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Source discipline:
+  All 77 explicit declarations and all 79 field projections have source
+  docstrings giving their kind and manuscript line locators.
+  Maximum heartbeat setting: 800000.
+  No line exceeds 100 characters.
+  No proof gaps, new axioms, prohibited evaluation or implementation directives,
+  notation declarations, macros, syntax declarations, or diagnostic commands
+  occur in Assembly.lean.
+  No wholesale Mathlib import occurs.
+  New source comments contain no private identifiers or external workspace paths.
+
+Scope:
+  New files only, within ZInQKernel/Contrib/RC53Assist/RetainedAssembly/.
+  No existing repository file was edited.
+  No version-control operation, commit, checkout, dependency update, or aggregate
+  build was run.
+  No outreach or memory update occurred.
+  Development-check diagnostics are retained separately in Scratch/.
+
+What these checks establish:
+  The conditional arithmetic assembly, direct certificate instantiation,
+  produced finite-fibre detection, all stated input types, and their dependencies
+  are checked by Lean and use only the stated standard axioms.
+
+What they do not establish:
+  The arithmetic values of the named open inputs, the concrete local-form
+  identification, detection-label/localization matching, side-to-stage
+  identifications, a complete switch step, independent review, integration,
+  or completion of Theorem 5.3.

@@ -1,0 +1,284 @@
+ZInQ.Contrib.RC53Assist.HswNondegenerate.cupTrace_left_radical {k : Type} [Field k] {A B T : GCx k} (p : GPair A B T)
+  (tr : ↑(T.X 2) →ₗ[k] k) (htr : ∀ (z : ↑(T.X (2 - 1))), tr ((T.d (2 - 1) 2 ⋯) z) = 0)
+  (hqi : QuasiIso (GHom.toCC (adjHom p 2 tr htr))) (x : ↑(A.X 1)) (hx : (A.d 1 2 ⋯) x = 0)
+  (hzero : ∀ (y : ↑(B.X 1)), (B.d 1 2 ⋯) y = 0 → tr (((p.P 1 1 2 ⋯) x) y) = 0) : ∃ a, (A.d 0 1 ⋯) a = x
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.cupTrace_left_radical' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.cupTrace_right_radical {k : Type} [Field k] {A B T : GCx k} (p : GPair A B T)
+  (tr : ↑(T.X 2) →ₗ[k] k) (htr : ∀ (z : ↑(T.X (2 - 1))), tr ((T.d (2 - 1) 2 ⋯) z) = 0)
+  (hqi : QuasiIso (GHom.toCC (adjHom p 2 tr htr))) (y : ↑(B.X 1)) (hy : (B.d 1 2 ⋯) y = 0)
+  (hzero : ∀ (x : ↑(A.X 1)), (A.d 1 2 ⋯) x = 0 → tr (((p.P 1 1 2 ⋯) x) y) = 0) : ∃ b, (B.d 0 1 ⋯) b = y
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.cupTrace_right_radical' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.resForm_eq_neg_localTrace {k : Type} [Field k] (R : QuasiRelaxedLocalization k)
+  (Ustr : GCx k) (f : GHom Ustr R.D.U) (Q : SelPairData (restrictData R.D f) R.D) (tr : ↑((coneCx Q.resE).X 3) →ₗ[k] k)
+  (t u : ↑(R.D.U.X 1)) :
+  resForm R Ustr f Q tr t u = -tr ((locT Q) (((Q.cupL.P 1 1 2 ⋯) ((R.D.ι.f 1 1 ⋯) u)) ((R.D.ι.f 1 1 ⋯) t)))
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.resForm_eq_neg_localTrace' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.hnd_of_splitResidueComparison {k : Type} [Field k]
+  (R : QuasiRelaxedLocalization k) (Ustr : GCx k) (f : GHom Ustr R.D.U) (Q : SelPairData (restrictData R.D f) R.D)
+  (tr : ↑((coneCx Q.resE).X 3) →ₗ[k] k) (B : SplitLocalPairing k)
+  (C : ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison R Ustr f Q tr B)
+  (h11 : Function.Bijective ⇑B.b11) (t : ↑(R.D.U.X 1)) (ht : (R.D.U.d 1 2 ⋯) t = 0) :
+  (∀ (u : ↑(R.D.U.X 1)), (R.D.U.d 1 2 ⋯) u = 0 → resForm R Ustr f Q tr t u = 0) → gClass R t ht = 0
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.hnd_of_splitResidueComparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.hnd_of_localResidueComparison {k : Type} [Field k]
+  (R : QuasiRelaxedLocalization k) (Ustr : GCx k) (f : GHom Ustr R.D.U) (Q : SelPairData (restrictData R.D f) R.D)
+  (tr : ↑((coneCx Q.resE).X 3) →ₗ[k] k) {A B T : GCx k} (p : GPair A B T) (tr2 : ↑(T.X 2) →ₗ[k] k)
+  (htr2 : ∀ (z : ↑(T.X (2 - 1))), tr2 ((T.d (2 - 1) 2 ⋯) z) = 0)
+  (Cmp : ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison R Ustr f Q tr p tr2)
+  (hqi : QuasiIso (GHom.toCC (adjHom p 2 tr2 htr2))) (t : ↑(R.D.U.X 1)) (ht : (R.D.U.d 1 2 ⋯) t = 0) :
+  (∀ (u : ↑(R.D.U.X 1)), (R.D.U.d 1 2 ⋯) u = 0 → resForm R Ustr f Q tr t u = 0) → gClass R t ht = 0
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.hnd_of_localResidueComparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.limit_resForm {k : Type} [Field k] {G : GCx k}
+  (res : GHom G (splitLocalComplex k)) (BG : GlobalTracePairing G) (B : SplitLocalPairing k)
+  (hrec : LimitReciprocity res BG B) (t u : ↑((limitRelaxed G res).D.U.X 1)) :
+  resForm (limitRelaxed G res) (conditionComplex ⊥) (strictLimitMap G res) (limitPair res BG B hrec) (limitTrace k) t
+      u =
+    -(B.b11 (ZInQ.Contrib.RC53Assist.HswNondegenerate.limitRead res u))
+        (ZInQ.Contrib.RC53Assist.HswNondegenerate.limitRead res t)
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.limit_resForm' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.limit_gClass {k : Type} [Field k] {G : GCx k}
+  (res : GHom G (splitLocalComplex k)) (t : ↑((limitRelaxed G res).D.U.X 1))
+  (ht : ((limitRelaxed G res).D.U.d 1 2 ⋯) t = 0) :
+  gClass (limitRelaxed G res) t ht = ZInQ.Contrib.RC53Assist.HswNondegenerate.limitRead res t
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.limit_gClass' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.b11_bijective_of_localDuality {k : Type} [Field k] {G : GCx k}
+  (res : GHom G (splitLocalComplex k)) (BG : GlobalTracePairing G) (B : SplitLocalPairing k)
+  (hrec : LimitReciprocity res BG B)
+  (hqi : QuasiIso (GHom.toCC (localDualityMap (limitPair res BG B hrec) (limitTrace k) ⋯))) : Function.Bijective ⇑B.b11
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.b11_bijective_of_localDuality' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.limit_hnd_of_b11 {k : Type} [Field k] {G : GCx k}
+  (res : GHom G (splitLocalComplex k)) (BG : GlobalTracePairing G) (B : SplitLocalPairing k)
+  (hrec : LimitReciprocity res BG B) (h11 : Function.Bijective ⇑B.b11) (t : ↑((limitRelaxed G res).D.U.X 1))
+  (ht : ((limitRelaxed G res).D.U.d 1 2 ⋯) t = 0) :
+  (∀ (u : ↑((limitRelaxed G res).D.U.X 1)),
+      ((limitRelaxed G res).D.U.d 1 2 ⋯) u = 0 →
+        resForm (limitRelaxed G res) (conditionComplex ⊥) (strictLimitMap G res) (limitPair res BG B hrec)
+            (limitTrace k) t u =
+          0) →
+    gClass (limitRelaxed G res) t ht = 0
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.limit_hnd_of_b11' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.limit_hnd_of_localDuality {k : Type} [Field k] {G : GCx k}
+  (res : GHom G (splitLocalComplex k)) (BG : GlobalTracePairing G) (B : SplitLocalPairing k)
+  (hrec : LimitReciprocity res BG B)
+  (hqi : QuasiIso (GHom.toCC (localDualityMap (limitPair res BG B hrec) (limitTrace k) ⋯)))
+  (t : ↑((limitRelaxed G res).D.U.X 1)) (ht : ((limitRelaxed G res).D.U.d 1 2 ⋯) t = 0) :
+  (∀ (u : ↑((limitRelaxed G res).D.U.X 1)),
+      ((limitRelaxed G res).D.U.d 1 2 ⋯) u = 0 →
+        resForm (limitRelaxed G res) (conditionComplex ⊥) (strictLimitMap G res) (limitPair res BG B hrec)
+            (limitTrace k) t u =
+          0) →
+    gClass (limitRelaxed G res) t ht = 0
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.limit_hnd_of_localDuality' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.fibreCup_right_radical_VP {K : Type} [Field K] [NumberField K]
+  {S : Set (HeightOneSpectrum (𝓞 K))} (W : WeierstrassCurve K) [W.IsElliptic] [HasFullTwoTorsion K S W]
+  (P : Ideal Lambda) [P.IsPrime] [IsHeightOneOdd P] (α : GKS K S →* Lambdaˣ) [IsContChar α]
+  (hL : NekovarFibreLocalDuality K) (hset : NekovarFibreSetting K S) (q : Places K S)
+  (trq :
+    ↑((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (Tate1P K S P) q).X 2) →ₗ[ResAt P]
+      ResAt P)
+  (htrq :
+    ∀ (z : ↑((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (Tate1P K S P) q).X 1)),
+      trq (((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (Tate1P K S P) q).d 1 2 ⋯) z) =
+        0)
+  (htrace : InducesIsoH2 trq)
+  (y : ↑((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (VP K S W P α⁻¹) q).X 1))
+  (hy : ((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (VP K S W P α⁻¹) q).d 1 2 ⋯) y = 0)
+  (hzero :
+    ∀ (x : ↑((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (VP K S W P α) q).X 1)),
+      ((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (VP K S W P α) q).d 1 2 ⋯) x = 0 →
+        trq ((((ZInQ.Contrib.RC53Assist.HswNondegenerate.fibreLocalPairing W P α q).P 1 1 2 ⋯) x) y) = 0) :
+  ∃ b, ((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (VP K S W P α⁻¹) q).d 0 1 ⋯) b = y
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.fibreCup_right_radical_VP' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.fibre_hnd_of_localComparison_VP {K : Type} [Field K] [NumberField K]
+  {S : Set (HeightOneSpectrum (𝓞 K))} (W : WeierstrassCurve K) [W.IsElliptic] [HasFullTwoTorsion K S W]
+  (P : Ideal Lambda) [P.IsPrime] [IsHeightOneOdd P] (α : GKS K S →* Lambdaˣ) [IsContChar α]
+  (hL : NekovarFibreLocalDuality K) (hset : NekovarFibreSetting K S) (q : Places K S)
+  (trq :
+    ↑((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (Tate1P K S P) q).X 2) →ₗ[ResAt P]
+      ResAt P)
+  (htrq :
+    ∀ (z : ↑((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (Tate1P K S P) q).X 1)),
+      trq (((localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (Tate1P K S P) q).d 1 2 ⋯) z) =
+        0)
+  (htrace : InducesIsoH2 trq) (R : QuasiRelaxedLocalization (ResAt P)) (Ustr : GCx (ResAt P)) (f : GHom Ustr R.D.U)
+  (Q : SelPairData (restrictData R.D f) R.D) (tr : ↑((coneCx Q.resE).X 3) →ₗ[ResAt P] ResAt P)
+  (Cmp :
+    ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison R Ustr f Q tr
+      (ZInQ.Contrib.RC53Assist.HswNondegenerate.fibreLocalPairing W P α q) trq)
+  (t : ↑(R.D.U.X 1)) (ht : (R.D.U.d 1 2 ⋯) t = 0) :
+  (∀ (u : ↑(R.D.U.X 1)), (R.D.U.d 1 2 ⋯) u = 0 → resForm R Ustr f Q tr t u = 0) → gClass R t ht = 0
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.fibre_hnd_of_localComparison_VP' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.fibreLimit_hnd_of_retained (U : Ultrafilter ℕ) (hU : ↑U ≤ Filter.cofinite)
+  (C : ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U) (D : RetainedLimitPairingStages U C) (P : Ideal Lambda)
+  [P.IsPrime] {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
+  (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (W : WeierstrassCurve K) (hW : W.map ↑Cn.κ = W) [W.IsElliptic]
+  [HasFullTwoTorsion K S W] [IsHeightOneOdd P] (ε₀ ε₂ ε σ : ResAt P) (hε : ε ≠ 0) (hσ : σ ≠ 0)
+  (hloc : localPairingOfMat (D.locK P) = transportedPairing ε₀ ε₂ ε σ (conjMatrix Cn W hW P))
+  (t : ↑((limitRelaxed (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P)).D.U.X 1))
+  (ht : ((limitRelaxed (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P)).D.U.d 1 2 ⋯) t = 0) :
+  (∀ (u : ↑((limitRelaxed (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P)).D.U.X 1)),
+      ((limitRelaxed (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P)).D.U.d 1 2 ⋯) u = 0 →
+        resForm (limitRelaxed (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P))
+            (conditionComplex ⊥)
+            (strictLimitMap (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P))
+            (ZInQ.Contrib.RC53Assist.HswNondegenerate.retainedPairing U hU C D P) (limitTrace (ResAt P)) t u =
+          0) →
+    gClass (limitRelaxed (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P)) t ht = 0
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.fibreLimit_hnd_of_retained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.hnd_of_comparison_to_retained (U : Ultrafilter ℕ)
+  (C : ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U) (D : RetainedLimitPairingStages U C) (P : Ideal Lambda)
+  [P.IsPrime] {K : Type} [Field K] [NumberField K] {S : Set (HeightOneSpectrum (𝓞 K))}
+  (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (W : WeierstrassCurve K) (hW : W.map ↑Cn.κ = W) [W.IsElliptic]
+  [HasFullTwoTorsion K S W] [IsHeightOneOdd P] (R : QuasiRelaxedLocalization (ResAt P)) (Ustr : GCx (ResAt P))
+  (f : GHom Ustr R.D.U) (Q : SelPairData (restrictData R.D f) R.D) (tr : ↑((coneCx Q.resE).X 3) →ₗ[ResAt P] ResAt P)
+  (Cmp : ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison R Ustr f Q tr (localPairingOfMat (D.locK P)))
+  (ε₀ ε₂ ε σ : ResAt P) (hε : ε ≠ 0) (hσ : σ ≠ 0)
+  (hloc : localPairingOfMat (D.locK P) = transportedPairing ε₀ ε₂ ε σ (conjMatrix Cn W hW P)) (t : ↑(R.D.U.X 1))
+  (ht : (R.D.U.d 1 2 ⋯) t = 0) :
+  (∀ (u : ↑(R.D.U.X 1)), (R.D.U.d 1 2 ⋯) u = 0 → resForm R Ustr f Q tr t u = 0) → gClass R t ht = 0
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.hnd_of_comparison_to_retained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.finite_charZero_module_subsingleton (k T : Type) [Field k] [CharZero k]
+  [AddCommGroup T] [Module k T] [Finite T] : Subsingleton T
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.finite_charZero_module_subsingleton' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.genuine_finiteTarget_no_hnd {K : Type} [Field K] [NumberField K]
+  {S : Set (HeightOneSpectrum (𝓞 K))} {k : Type} [Field k] [CharZero k] {M : Type} [AddCommGroup M] [Module k M]
+  [DistribMulAction (GKS K S) M] [SMulCommClass (GKS K S) k M] [TopologicalSpace M] [DiscreteTopology M]
+  [ContinuousSMul (GKS K S) M] {T : Type} [AddCommGroup T] [Module k T] [DistribMulAction (GKS K S) T]
+  [SMulCommClass (GKS K S) k T] [TopologicalSpace T] [DiscreteTopology T] [ContinuousSMul (GKS K S) T] [Finite T]
+  (X : GenuineSwitch K S k M) (β : M →ₗ[k] M →ₗ[k] T)
+  (hβ : ∀ (g : GKS K S) (x y : M), (β (g • x)) (g • y) = g • (β x) y) (I : GaloisIsotropyData K S k β hβ X.ΔS X.ΔR)
+  (tr : ↑((coneCx (galoisPairData K S k β hβ X.ΔS X.ΔR I).resE).X 3) →ₗ[k] k)
+  (hUS2 : ∀ (v : Places K S) (x : ↑((X.US v).X 2)), x = 0) :
+  ¬∀ (t : ↑(X.toQuasi.D.U.X 1)) (ht : (X.toQuasi.D.U.d 1 2 ⋯) t = 0),
+      (∀ (u : ↑(X.toQuasi.D.U.X 1)),
+          (X.toQuasi.D.U.d 1 2 ⋯) u = 0 →
+            resForm X.toQuasi (piCx X.US) (piMap X.φ) (galoisPairData K S k β hβ X.ΔS X.ΔR I) tr t u = 0) →
+        gClass X.toQuasi t ht = 0
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.genuine_finiteTarget_no_hnd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.limitRead {k : Type} [Field k] {G : GCx k} (res : GHom G (splitLocalComplex k))
+  (t : ↑((limitRelaxed G res).D.U.X 1)) : Coords k
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.limitRead' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.limitComparison {k : Type} [Field k] {G : GCx k}
+  (res : GHom G (splitLocalComplex k)) (BG : GlobalTracePairing G) (B : SplitLocalPairing k)
+  (hrec : LimitReciprocity res BG B) :
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison (limitRelaxed G res) (conditionComplex ⊥)
+    (strictLimitMap G res) (limitPair res BG B hrec) (limitTrace k) B
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.limitComparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.fibreLocalPairing {K : Type} [Field K] [NumberField K]
+  {S : Set (HeightOneSpectrum (𝓞 K))} (W : WeierstrassCurve K) [W.IsElliptic] [HasFullTwoTorsion K S W]
+  (P : Ideal Lambda) [P.IsPrime] [IsHeightOneOdd P] (α : GKS K S →* Lambdaˣ) [IsContChar α] (q : Places K S) :
+  GPair (localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (VP K S W P α) q)
+    (localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (VP K S W P α⁻¹) q)
+    (localCx (ResAt P) (GKS K S) (fun v => Gloc K ↑v) (fun v => locMap K S ↑v) (Tate1P K S P) q)
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.fibreLocalPairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.Contrib.RC53Assist.HswNondegenerate.retainedPairing (U : Ultrafilter ℕ) (hU : ↑U ≤ Filter.cofinite)
+  (C : ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U) (D : RetainedLimitPairingStages U C) (P : Ideal Lambda)
+  [P.IsPrime] :
+  SelPairData
+    (restrictData (limitRelaxed (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P)).D
+      (strictLimitMap (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P)))
+    (limitRelaxed (fibreLimitGlobal U hU P C) (RetainedLimitPairingStages.resLimit hU D P)).D
+'ZInQ.Contrib.RC53Assist.HswNondegenerate.retainedPairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+structure ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison {k : Type} [Field k]
+  (R : QuasiRelaxedLocalization k) (Ustr : GCx k) (f : GHom Ustr R.D.U) (Q : SelPairData (restrictData R.D f) R.D)
+  (tr : ↑((coneCx Q.resE).X 3) →ₗ[k] k) (B : SplitLocalPairing k) : Type
+number of parameters: 8
+fields:
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison.localMap : GHom R.D.L (splitLocalComplex k)
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison.read : GHom R.D.U (splitLocalComplex k)
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison.read_local : self.read = ghomComp R.D.ι self.localMap
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison.quotient : Coords k →ₗ[k]
+      ↑(HomologicalComplex.homology R.Wrel.toCC 1)
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison.quotient_read : ∀ (t : ↑(R.D.U.X 1))
+      (ht : (R.D.U.d 1 2 ⋯) t = 0), self.quotient ((self.read.f 1 1 ⋯) t) = (cls1 R.Wrel) ⟨(R.gR.f 1 1 ⋯) t, ⋯⟩
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison.tests : ∀ (x : Coords k),
+      ∃ u, ∃ (_ : (R.D.U.d 1 2 ⋯) u = 0), (self.read.f 1 1 ⋯) u = x
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison.trace_read : ∀ (u t : ↑(R.D.U.X 1)),
+      (R.D.U.d 1 2 ⋯) u = 0 →
+        (R.D.U.d 1 2 ⋯) t = 0 →
+          tr ((locT Q) (((Q.cupL.P 1 1 2 ⋯) ((R.D.ι.f 1 1 ⋯) u)) ((R.D.ι.f 1 1 ⋯) t))) =
+            (B.b11 ((self.read.f 1 1 ⋯) u)) ((self.read.f 1 1 ⋯) t)
+constructor:
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison.mk {k : Type} [Field k]
+    {R : QuasiRelaxedLocalization k} {Ustr : GCx k} {f : GHom Ustr R.D.U} {Q : SelPairData (restrictData R.D f) R.D}
+    {tr : ↑((coneCx Q.resE).X 3) →ₗ[k] k} {B : SplitLocalPairing k} (localMap : GHom R.D.L (splitLocalComplex k))
+    (read : GHom R.D.U (splitLocalComplex k)) (read_local : read = ghomComp R.D.ι localMap)
+    (quotient : Coords k →ₗ[k] ↑(HomologicalComplex.homology R.Wrel.toCC 1))
+    (quotient_read :
+      ∀ (t : ↑(R.D.U.X 1)) (ht : (R.D.U.d 1 2 ⋯) t = 0),
+        quotient ((read.f 1 1 ⋯) t) = (cls1 R.Wrel) ⟨(R.gR.f 1 1 ⋯) t, ⋯⟩)
+    (tests : ∀ (x : Coords k), ∃ u, ∃ (_ : (R.D.U.d 1 2 ⋯) u = 0), (read.f 1 1 ⋯) u = x)
+    (trace_read :
+      ∀ (u t : ↑(R.D.U.X 1)),
+        (R.D.U.d 1 2 ⋯) u = 0 →
+          (R.D.U.d 1 2 ⋯) t = 0 →
+            tr ((locT Q) (((Q.cupL.P 1 1 2 ⋯) ((R.D.ι.f 1 1 ⋯) u)) ((R.D.ι.f 1 1 ⋯) t))) =
+              (B.b11 ((read.f 1 1 ⋯) u)) ((read.f 1 1 ⋯) t)) :
+    ZInQ.Contrib.RC53Assist.HswNondegenerate.SplitResidueComparison R Ustr f Q tr B
+structure ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison {k : Type} [Field k]
+  (R : QuasiRelaxedLocalization k) (Ustr : GCx k) (f : GHom Ustr R.D.U) (Q : SelPairData (restrictData R.D f) R.D)
+  (tr : ↑((coneCx Q.resE).X 3) →ₗ[k] k) {A B T : GCx k} (p : GPair A B T) (tr2 : ↑(T.X 2) →ₗ[k] k) : Type
+number of parameters: 12
+fields:
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison.test : GHom R.D.L A
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison.value : GHom R.D.L B
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison.quotient : ↑(HomologicalComplex.homology B.toCC
+          1) →ₗ[k]
+      ↑(HomologicalComplex.homology R.Wrel.toCC 1)
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison.quotient_read : ∀ (t : ↑(R.D.U.X 1))
+      (ht : (R.D.U.d 1 2 ⋯) t = 0),
+      self.quotient ((cls1 B) ⟨((ghomComp R.D.ι self.value).f 1 1 ⋯) t, ⋯⟩) = (cls1 R.Wrel) ⟨(R.gR.f 1 1 ⋯) t, ⋯⟩
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison.tests : ∀ (x : ↑(A.X 1)),
+      (A.d 1 2 ⋯) x = 0 →
+        ∃ u, ∃ (_ : (R.D.U.d 1 2 ⋯) u = 0), ∃ a, ((ghomComp R.D.ι self.test).f 1 1 ⋯) u + (A.d 0 1 ⋯) a = x
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison.trace_read : ∀ (u t : ↑(R.D.U.X 1)),
+      (R.D.U.d 1 2 ⋯) u = 0 →
+        (R.D.U.d 1 2 ⋯) t = 0 →
+          tr ((locT Q) (((Q.cupL.P 1 1 2 ⋯) ((R.D.ι.f 1 1 ⋯) u)) ((R.D.ι.f 1 1 ⋯) t))) =
+            tr2 (((p.P 1 1 2 ⋯) (((ghomComp R.D.ι self.test).f 1 1 ⋯) u)) (((ghomComp R.D.ι self.value).f 1 1 ⋯) t))
+constructor:
+  ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison.mk {k : Type} [Field k]
+    {R : QuasiRelaxedLocalization k} {Ustr : GCx k} {f : GHom Ustr R.D.U} {Q : SelPairData (restrictData R.D f) R.D}
+    {tr : ↑((coneCx Q.resE).X 3) →ₗ[k] k} {A B T : GCx k} {p : GPair A B T} {tr2 : ↑(T.X 2) →ₗ[k] k}
+    (test : GHom R.D.L A) (value : GHom R.D.L B)
+    (quotient : ↑(HomologicalComplex.homology B.toCC 1) →ₗ[k] ↑(HomologicalComplex.homology R.Wrel.toCC 1))
+    (quotient_read :
+      ∀ (t : ↑(R.D.U.X 1)) (ht : (R.D.U.d 1 2 ⋯) t = 0),
+        quotient ((cls1 B) ⟨((ghomComp R.D.ι value).f 1 1 ⋯) t, ⋯⟩) = (cls1 R.Wrel) ⟨(R.gR.f 1 1 ⋯) t, ⋯⟩)
+    (tests :
+      ∀ (x : ↑(A.X 1)),
+        (A.d 1 2 ⋯) x = 0 →
+          ∃ u, ∃ (_ : (R.D.U.d 1 2 ⋯) u = 0), ∃ a, ((ghomComp R.D.ι test).f 1 1 ⋯) u + (A.d 0 1 ⋯) a = x)
+    (trace_read :
+      ∀ (u t : ↑(R.D.U.X 1)),
+        (R.D.U.d 1 2 ⋯) u = 0 →
+          (R.D.U.d 1 2 ⋯) t = 0 →
+            tr ((locT Q) (((Q.cupL.P 1 1 2 ⋯) ((R.D.ι.f 1 1 ⋯) u)) ((R.D.ι.f 1 1 ⋯) t))) =
+              tr2 (((p.P 1 1 2 ⋯) (((ghomComp R.D.ι test).f 1 1 ⋯) u)) (((ghomComp R.D.ι value).f 1 1 ⋯) t))) :
+    ZInQ.Contrib.RC53Assist.HswNondegenerate.LocalResidueComparison R Ustr f Q tr p tr2

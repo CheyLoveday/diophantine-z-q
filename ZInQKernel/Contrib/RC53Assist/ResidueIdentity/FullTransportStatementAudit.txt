@@ -1,0 +1,354 @@
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.contCup_zerotwo_eq : ∀ {R G M N : Type} [inst : CommRing.{0} R]
+  [inst_1 : Group.{0} G] [inst_2 : TopologicalSpace.{0} G] [inst_3 : IsTopologicalGroup.{0} G]
+  [inst_4 : AddCommGroup.{0} M] [inst_5 : Module.{0, 0} R M] [inst_6 : DistribMulAction.{0, 0} G M]
+  [inst_7 : SMulCommClass.{0, 0, 0} G R M] [inst_8 : TopologicalSpace.{0} M] [inst_9 : DiscreteTopology.{0} M]
+  [inst_10 : ContinuousSMul.{0, 0} G M] [inst_11 : AddCommGroup.{0} N] [inst_12 : Module.{0, 0} R N]
+  [inst_13 : DistribMulAction.{0, 0} G N] [inst_14 : SMulCommClass.{0, 0, 0} G R N] [inst_15 : TopologicalSpace.{0} N]
+  [inst_16 : DiscreteTopology.{0} N] [inst_17 : ContinuousSMul.{0, 0} G N]
+  (β : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N))
+  (w : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 0))
+  (z : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 2)),
+  Eq.{1} (((ZInQ.Manuscript.RC.SelmerComplex.contCup.{0} β continuous_of_discreteTopology.{0, 0} 0 2 2 rfl.{1}) w) z)
+    ((ZInQ.Contrib.RC53Assist.ResidueIdentity.coefficientMap
+        (β ((ZInQ.Contrib.RC53Assist.InnerLimitArith.evalZero R M) w)) 2)
+      z)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.contCup_zerotwo_eq' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.contCup_zerotwo_coordinate : ∀ {R G M N : Type} [inst : CommRing.{0} R]
+  [inst_1 : TopologicalSpace.{0} R] [DiscreteTopology.{0} R] [inst_3 : Group.{0} G] [inst_4 : TopologicalSpace.{0} G]
+  [inst_5 : IsTopologicalGroup.{0} G] [inst_6 : AddCommGroup.{0} M] [inst_7 : Module.{0, 0} R M]
+  [inst_8 : DistribMulAction.{0, 0} G M] [inst_9 : SMulCommClass.{0, 0, 0} G R M] [inst_10 : TopologicalSpace.{0} M]
+  [inst_11 : DiscreteTopology.{0} M] [inst_12 : ContinuousSMul.{0, 0} G M] [inst_13 : AddCommGroup.{0} N]
+  [inst_14 : Module.{0, 0} R N] [inst_15 : DistribMulAction.{0, 0} G N] [inst_16 : SMulCommClass.{0, 0, 0} G R N]
+  [inst_17 : TopologicalSpace.{0} N] [inst_18 : DiscreteTopology.{0} N] [inst_19 : ContinuousSMul.{0, 0} G N]
+  (β : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N))
+  (cM :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+      (↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 2)) M)
+  (cN :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+      (↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N) 2)) N),
+  ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoCoordinate cM →
+    (∀ (a : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N) 1)),
+        Eq.{1}
+          (cN
+            ((ModuleCat.Hom.hom.{0, 0}
+                (HomologicalComplex.d.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N) 1 2))
+              a))
+          0) →
+      ∀ (u κ : G → R),
+        Continuous.{0, 0} u →
+          Continuous.{0, 0} κ →
+            (∀ (g h : G), Eq.{1} (u (HMul.hMul.{0, 0, 0} g h)) (HAdd.hAdd.{0, 0, 0} (u g) (u h))) →
+              (∀ (g h : G), Eq.{1} (κ (HMul.hMul.{0, 0, 0} g h)) (HAdd.hAdd.{0, 0, 0} (κ g) (κ h))) →
+                (∀ (g : G) (m : M), Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m) →
+                  (∀ (g : G) (m : N), Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m) →
+                    ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoNormalized cM u κ →
+                      ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoNormalized cN u κ →
+                        ∀
+                          (w :
+                            ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M)
+                                0))
+                          (z :
+                            ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M)
+                                2)),
+                          Eq.{1}
+                              ((ModuleCat.Hom.hom.{0, 0}
+                                  (HomologicalComplex.d.{0, 1, 0}
+                                    (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 2 3))
+                                z)
+                              0 →
+                            Eq.{1}
+                              (cN
+                                (((ZInQ.Manuscript.RC.SelmerComplex.contCup.{0} β continuous_of_discreteTopology.{0, 0}
+                                      0 2 2 rfl.{1})
+                                    w)
+                                  z))
+                              ((β ((ZInQ.Contrib.RC53Assist.InnerLimitArith.evalZero R M) w)) (cM z))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.contCup_zerotwo_coordinate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.transport_d12 : ∀ {R : Type} [inst : CommRing.{0} R]
+  [inst_1 : TopologicalSpace.{0} R] [inst_2 : DiscreteTopology.{0} R] {n : ℕ} [inst_3 : NeZero.{0} n]
+  [inst_4 : Algebra.{0, 0} (ZMod n) R] (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData R n)
+  (a : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R X.G X.M) 1)),
+  Eq.{1}
+    ((X.transport 2)
+      ((ModuleCat.Hom.hom.{0, 0}
+          (HomologicalComplex.d.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R X.G X.M) 1 2))
+        a))
+    ((ModuleCat.Hom.hom.{0, 0}
+        (HomologicalComplex.d.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R X.G X.M) 1 2))
+      ((X.transport 1) a))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.transport_d12' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.transport_cycle_two : ∀ {R : Type} [inst : CommRing.{0} R]
+  [inst_1 : TopologicalSpace.{0} R] [inst_2 : DiscreteTopology.{0} R] {n : ℕ} [inst_3 : NeZero.{0} n]
+  [inst_4 : Algebra.{0, 0} (ZMod n) R] (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData R n)
+  (z : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R X.G X.M) 2)),
+  Eq.{1}
+      ((ModuleCat.Hom.hom.{0, 0}
+          (HomologicalComplex.d.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R X.G X.M) 2 3))
+        z)
+      0 →
+    Eq.{1}
+      ((ModuleCat.Hom.hom.{0, 0}
+          (HomologicalComplex.d.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R X.G X.M) 2 3))
+        ((X.transport 2) z))
+      0
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.transport_cycle_two' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.transport_fundamental : ∀ {R : Type}
+  [inst : CommRing.{0} R] [inst_1 : TopologicalSpace.{0} R] [inst_2 : DiscreteTopology.{0} R] {n : ℕ}
+  [inst_3 : NeZero.{0} n] [inst_4 : Algebra.{0, 0} (ZMod n) R]
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData R n) (m : X.M),
+  Eq.{1}
+    ((X.transport 2) (ZInQ.Contrib.RC53Assist.ResidueIdentity.characterProduct X.u X.κ X.continuousU X.continuousK m))
+    (ZInQ.Contrib.RC53Assist.ResidueIdentity.characterProduct X.u X.κ X.continuousU X.continuousK
+      (HSMul.hSMul.{0, 0, 0} X.tameScale (X.j m)))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.transport_fundamental' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.transport_coordinate_two : ∀ {R : Type}
+  [inst : CommRing.{0} R] [inst_1 : TopologicalSpace.{0} R] [inst_2 : DiscreteTopology.{0} R] {n : ℕ}
+  [inst_3 : NeZero.{0} n] [inst_4 : Algebra.{0, 0} (ZMod n) R]
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData R n)
+  (z : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R X.G X.M) 2)),
+  Eq.{1}
+      ((ModuleCat.Hom.hom.{0, 0}
+          (HomologicalComplex.d.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R X.G X.M) 2 3))
+        z)
+      0 →
+    Eq.{1} (X.cM ((X.transport 2) z)) (HSMul.hSMul.{0, 0, 0} X.tameScale (X.j (X.cM z)))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.transport_coordinate_two' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.cup02 : {R : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : TopologicalSpace.{0} R] →
+      [inst_2 : DiscreteTopology.{0} R] →
+        {n : ℕ} →
+          [inst_3 : NeZero.{0} n] →
+            [inst_4 : Algebra.{0, 0} (ZMod n) R] →
+              ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData R n → (Fin 2 → R) → (Fin 2 → R) → R
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.cup02' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.cup02_formula : ∀ {R : Type} [inst : CommRing.{0} R]
+  [inst_1 : TopologicalSpace.{0} R] [inst_2 : DiscreteTopology.{0} R] {n : ℕ} [inst_3 : NeZero.{0} n]
+  [inst_4 : Algebra.{0, 0} (ZMod n) R] (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData R n)
+  (x y : Fin 2 → R),
+  Eq.{1} (X.cup02 x y)
+    (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} X.tameScale X.ε)
+      ((ZInQ.Contrib.RC53Assist.ResidueIdentity.determinantForm x) (Matrix.mulVec.{0, 0, 0} X.J y)))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.cup02_formula' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidueIdentity.fullExponent_neZero : ∀ (i : ℕ), NeZero.{0} (HPow.hPow.{0, 0, 0} 2 i)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.fullExponent_neZero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidueIdentity.fullStage_topology : (i : ℕ) →
+  TopologicalSpace.{0} (ZInQ.Manuscript.RC.Limits.StageA i)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.fullStage_topology' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidueIdentity.fullStage_discrete : ∀ (i : ℕ),
+  DiscreteTopology.{0} (ZInQ.Manuscript.RC.Limits.StageA i)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.fullStage_discrete' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo : {U : Ultrafilter.{0} ℕ} →
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U} →
+    {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} →
+      ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D → Prop
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo.of_splitStages : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D)
+  (G Uc : (i : ℕ) → ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Limits.StageA i))
+  (res :
+    (i : ℕ) →
+      ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} (G i)
+        (ZInQ.Contrib.RC53Assist.InnerLimit.splitLocalComplex (ZInQ.Manuscript.RC.Limits.StageA i)))
+  (ιc :
+    (i : ℕ) →
+      ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} (Uc i)
+        (ZInQ.Contrib.RC53Assist.InnerLimit.splitLocalComplex (ZInQ.Manuscript.RC.Limits.StageA i)))
+  (Q :
+    (i : ℕ) →
+      ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelPairData.{0}
+        (ZInQ.Manuscript.RC.FibreDuality.splitSelData (G i) (res i) (Uc i) (ιc i))
+        (ZInQ.Manuscript.RC.FibreDuality.splitSelData (G i) (res i) (Uc i) (ιc i)))
+  (tr :
+    (i : ℕ) →
+      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Limits.StageA i))
+        (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelPairData.resE.{0} (Q i)))
+            3))
+        (ZInQ.Manuscript.RC.Limits.StageA i)),
+  (∀ (i : ℕ),
+      Ne.{1} i 0 →
+        ∀ (a b : ℤ),
+          Eq.{1} (Matrix.map.{0, 0, 0, 0} (D.loc a b i) ⇑(ZInQ.Manuscript.RC.Limits.stageMap i))
+            (ZInQ.Manuscript.RC.FibreDuality.stageLocMat (Q i) (tr i) a b)) →
+    (∀ (i : ℕ) [inst : NeZero.{0} i] (x y : Fin 2 → ZInQ.Manuscript.RC.Limits.StageA i),
+        Eq.{1}
+          ((tr i)
+            (Prod.mk.{0, 0} 0
+              (((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GPair.P.{0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelPairData.cupL.{0} (Q i)) 0 2 2 rfl.{1})
+                  x)
+                y)))
+          (ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.cup02 (X.stage i) x y)) →
+      ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo X
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo.of_splitStages' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.stage_matrix02 : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D),
+  ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo X →
+    ∀ (i : ℕ) [NeZero.{0} i],
+      Eq.{1} (Matrix.map.{0, 0, 0, 0} (D.loc 0 2 i) ⇑(ZInQ.Manuscript.RC.Limits.stageMap i))
+        (ZInQ.Contrib.RC53Assist.ResidueIdentity.cupMatrix20
+          ((ZInQ.Manuscript.RC.Limits.stageMap i) (HMul.hMul.{0, 0, 0} (X.s i) ↑(X.ε i)))
+          (Matrix.map.{0, 0, 0, 0} X.J ⇑(ZInQ.Manuscript.RC.Limits.stageMap i)))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.stage_matrix02' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.matrix02_limit : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D),
+  ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo X →
+    LE.le.{0} (↑U) Filter.cofinite.{0} →
+      Eq.{1} (ZInQ.Manuscript.RC.Limits.ulimMat.{0, 0, 0} U (D.loc 0 2))
+        (ZInQ.Contrib.RC53Assist.ResidueIdentity.cupMatrix20
+          (Neg.neg.{0} (ZInQ.Manuscript.RC.Limits.ulim.{0} U fun i => ↑(X.ε i))) X.J)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.matrix02_limit' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.ε₀At : {U : Ultrafilter.{0} ℕ} →
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U} →
+    {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} →
+      ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D →
+        (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+          [inst : Ideal.IsPrime.{0} P] → ZInQ.Manuscript.RC.Wiring.ResAt P
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.ε₀At' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.ε₂At : {U : Ultrafilter.{0} ℕ} →
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U} →
+    {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C} →
+      ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D →
+        (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+          [inst : Ideal.IsPrime.{0} P] → ZInQ.Manuscript.RC.Wiring.ResAt P
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.ε₂At' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.ε₀At_ne_zero : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D)
+  (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst : Ideal.IsPrime.{0} P], Ne.{1} (X.ε₀At P) 0
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.ε₀At_ne_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.ε₂At_ne_zero : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D)
+  (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst : Ideal.IsPrime.{0} P], Ne.{1} (X.ε₂At P) 0
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.ε₂At_ne_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.residue02_20 : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D),
+  ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo X →
+    LE.le.{0} (↑U) Filter.cofinite.{0} →
+      ∀ (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst : Ideal.IsPrime.{0} P],
+        Eq.{1} (ZInQ.Manuscript.RC.FibreDuality.localPairingOfMat (D.locK P)).b02
+            (ZInQ.Manuscript.RC.Uniform.crossPairing.{0} (X.ε₀At P) (X.JAt P)) ∧
+          Eq.{1} (ZInQ.Manuscript.RC.FibreDuality.localPairingOfMat (D.locK P)).b20
+            (ZInQ.Manuscript.RC.Uniform.crossPairing.{0} (X.ε₂At P) (X.JAt P))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.residue02_20' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.hloc : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D),
+  ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo X →
+    LE.le.{0} (↑U) Filter.cofinite.{0} →
+      ∀ (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst : Ideal.IsPrime.{0} P],
+        Eq.{1} (ZInQ.Manuscript.RC.FibreDuality.localPairingOfMat (D.locK P))
+          (ZInQ.Manuscript.RC.FibreDuality.transportedPairing (X.ε₀At P) (X.ε₂At P) (X.εAt P) 1 (X.JAt P))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.hloc' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.hloc_at_conj : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D),
+  ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo X →
+    LE.le.{0} (↑U) Filter.cofinite.{0} →
+      ∀ (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst : Ideal.IsPrime.{0} P] {K : Type} [inst_1 : Field.{0} K]
+        [inst_2 : NumberField.{0} K]
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+        (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (W : WeierstrassCurve.{0} K)
+        (hW : Eq.{1} (WeierstrassCurve.map.{0, 0} W ↑Cn.κ) W) [inst_3 : WeierstrassCurve.IsElliptic.{0} W]
+        [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W],
+        Eq.{1} (X.JAt P) (ZInQ.Manuscript.RC.FibreDuality.conjMatrix Cn W hW P) →
+          Eq.{1} (ZInQ.Manuscript.RC.FibreDuality.localPairingOfMat (D.locK P))
+            (ZInQ.Manuscript.RC.FibreDuality.transportedPairing (X.ε₀At P) (X.ε₂At P) (X.εAt P) 1
+              (ZInQ.Manuscript.RC.FibreDuality.conjMatrix Cn W hW P))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.hloc_at_conj' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.hloc_at_rational_curve : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D),
+  ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo X →
+    LE.le.{0} (↑U) Filter.cofinite.{0} →
+      ∀ (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst : Ideal.IsPrime.{0} P] {K : Type} [inst_1 : Field.{0} K]
+        [inst_2 : NumberField.{0} K]
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+        (B : WeierstrassCurve.{0} ℚ) [inst_3 : WeierstrassCurve.IsElliptic.{0} B]
+        [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} B K)]
+        (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S)
+        (hW :
+          Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} B K) ↑Cn.κ)
+            (WeierstrassCurve.baseChange.{0, 0} B K)),
+        Eq.{1} X.J
+            (Matrix.map.{0, 0, 0, 0} (ZInQ.Contrib.RC53Assist.InnerLimitArith.conjMatrixK B Cn)
+              ⇑(Algebra.algebraMap.{0, 0} ℤ_[2] ZInQ.Manuscript.RC.Uniform.Lambda)) →
+          Eq.{1} (ZInQ.Manuscript.RC.FibreDuality.localPairingOfMat (D.locK P))
+            (ZInQ.Manuscript.RC.FibreDuality.transportedPairing (X.ε₀At P) (X.ε₂At P) (X.εAt P) 1
+              (ZInQ.Manuscript.RC.FibreDuality.conjMatrix Cn (WeierstrassCurve.baseChange.{0, 0} B K) hW P))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic.hloc_at_rational_curve' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo.mk : ∀ {U : Ultrafilter.{0} ℕ}
+  {C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C}
+  {X : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U C D},
+  (∀ (i : ℕ) [inst : NeZero.{0} i] (a b : Fin 2),
+      Eq.{1} ((ZInQ.Manuscript.RC.Limits.stageMap i) (D.loc 0 2 i a b))
+        (ZInQ.Contrib.RC53Assist.ResidueIdentity.LocalArithmeticData.cup02 (X.stage i) (Pi.single.{0, 0} a 1)
+          (Pi.single.{0, 0} b 1))) →
+    ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo X
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedZeroTwo.mk' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]

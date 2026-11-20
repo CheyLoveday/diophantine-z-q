@@ -18,6 +18,11 @@ with a NONEMPTY set of new places:
 
 `identification3OnePlace b : Identification3 K S S' hS b 0 0 0 0` (PROVED, no hypotheses).
 
+This instance is of the place-indexed `Identification3` only. It does not instantiate the text's
+family identification: there each prime `q` of the family contributes the two conjugate places over
+it (tex 5247, 5456–5457), whereas here a single place `v₃` over `3` is added (and `3` is not
+claimed to be split, nor to be a prime of any family).
+
 CAVEAT. Zero coefficients: as in `ActualQEmpty.lean`, this witnesses the consistency of the
 interface with the genuine data (genuine groups, genuine cochains, genuine full and unramified
 conditions, a genuine unramified factorization, Nekovář's finite setting) with one new place, not

@@ -5,7 +5,7 @@ import ZInQKernel.Contrib.OneProof.RC.KummerMaps.OrthPlaces
 
 Manuscript `diophantine_zq.tex`: the support comparisons (tex 3466–3499: "at augmentation `g = 1`,
 this is the direct sum of the unramified complex `[Φ−1]` in degrees zero and one …"; "Use it only
-when the actual coefficient representation is unramified at the removed place"), and tex 3780–3782
+when the actual coefficient representation is unramified at the removed place"), and tex 3815–3818
 ("The remaining good unramified conditions use the integral unramified comparison"); the
 unramified conditions are lane RC28's `urAt` (the inflation of the `ℤ̂`-cocycles of
 `[M₀ --(Φ−1)--> M₀]`, lane RC26's `urToLocal_galois`) at the places `w ∈ S − S₀` where the
@@ -546,7 +546,7 @@ open ZInQ.Manuscript.RC.CoefModules
 
 /-- **PRINT — Nekovář, *Selmer complexes*, Astérisque 310 (2006), 7.5.6 (p. 170), the
 reformulation of Proposition 7.5.5 (p. 169), with Lemma 7.5.2 (p. 168)** (read; cited at tex
-3483–3498, 3780–3782 for "the integral unramified comparison"): for the tame case `v ∤ p` and
+3483–3498, 3815–3818 for "the integral unramified comparison"): for the tame case `v ∤ p` and
 coefficients of finite type over `R`, the unramified local conditions of `M` and of `D(M)(1)` are
 exact orthogonal complements with respect to `ev₂` and the zero homotopy,
 `Δ^ur(M) ⊥⊥_{ev₂,0} Δ^ur(D(M)(1))` — i.e. the local map `u⁻_{ev₂,0}` of 6.2.2 is a

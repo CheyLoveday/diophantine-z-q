@@ -8,21 +8,25 @@ Lemma `ex:arith-common-coordinate` (`diophantine_zq.tex`, tex 4148–4149, 4196�
 character `x` is the `η_x` that multiplies the relaxed coordinate. Over the genuine
 `𝒪 = (Λ_{(2)})^` (lane RC7's `OO`, a DVR by lane RC20) and `G = 𝔽₂^b`:
 
-| object | tex | here | kind |
-|---|---|---|---|
-| `g_q ∈ G ⊂ 𝒪[G]` | 4283–4285 | `gU` | definition |
-| `z_q = [ε(F̃r_q)](1 + t)`, `z_q⁻¹` (lift choice `c`) | 4286–4291, 4297–4299 | `zU`, `ziU`, `zU_mul_ziU` | definition, PROVED |
-| `e_q = a_q − z_q − z_q⁻¹ ∈ 𝒪[G]^×` | 4196–4206 | `eU`, `isUnit_eU` | definition, PROVED |
-| `l_q` | 4209–4213 | `lU` | definition |
-| `v_q`, `l_q/e_q² = 1 + 2v_q` | 4214–4220, 4310–4318 | `vU`, `lU_mul_eiU_sq` | definition (the text's formula), PROVED |
-| `η = ∏_{q ∈ Q} (1 + v_q(1 + g_q)) ∈ 𝒪[G]` | 4221–4224 | `etaU` | definition |
-| `x(η)` is `η_x` | 4221–4231 | `eval_etaU` | PROVED |
-| `η` is independent of the Frobenius lifts | 4297–4306 | `etaU_lift_independent` | PROVED |
+Each object: tex lines; here; kind.
+
+* `g_q ∈ G ⊂ 𝒪[G]`: tex 4283–4285; `gU`; definition.
+* `z_q = [ε(F̃r_q)](1 + t)`, `z_q⁻¹` (lift choice `c`): tex 4286–4291, 4297–4299; `zU`, `ziU`,
+  `zU_mul_ziU`; definition, PROVED.
+* `e_q = a_q − z_q − z_q⁻¹ ∈ 𝒪[G]^×`: tex 4196–4206; `eU`, `isUnit_eU`; definition, PROVED.
+* `l_q`: tex 4209–4213; `lU`; definition.
+* `v_q`, `l_q/e_q² = 1 + 2v_q`: tex 4214–4220, 4310–4318; `vU`, `lU_mul_eiU_sq`; definition (the
+  text's formula), PROVED.
+* `η = ∏_{q ∈ Q} (1 + v_q(1 + g_q)) ∈ 𝒪[G]`: tex 4221–4224; `etaU`; definition.
+* `x(η)` is `η_x`: tex 4221–4231; `eval_etaU`; PROVED.
+* `η` is independent of the Frobenius lifts: tex 4297–4306; `etaU_lift_independent`; PROVED.
 
 `eval_etaU` is the honest form of "evaluate `η` at `x`": the value `x(η) ∈ 𝒪` and the element
 `η_x ∈ F = Frac Λ` of `CommonCoordinate5Objects.lean` have the same image in `Frac 𝒪`, under
 lane RC20's embedding `ι : Frac Λ → Frac 𝒪` (`iotaO`). There is no map `𝒪 → ℚ₂[[t]]` fixing `t`
-(`t` is a unit of `𝒪`), which is why `η_x` is read in `F`, where it may have a pole at `t = 0`.
+(`t` is a unit of `𝒪`), nor is there a ring map `𝒪 → F` fixing `t` (`1 + 8t⁻¹` is a square in `𝒪`,
+not in `F`): `η_x` is the `ι`-preimage of `x(η)`, which is why `η_x` is read in `F`, where it may
+have a pole at `t = 0`.
 
 DEPARTURE (proof only): the unit property of `e_q` is checked, as in the text, modulo the maximal
 ideal `(2, I_G)` (augmentation, then reduction modulo `2`); the nonvanishing of `ē_q` is read on

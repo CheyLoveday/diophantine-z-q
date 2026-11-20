@@ -5,17 +5,19 @@ import ZInQKernel.Contrib.OneProof.RC.Wiring.ClearingComplex4NonVacuity
 /-!
 # Theorem 5.3, Lane RC0: consistency of the coordinate input of `ClearingInputsG3`
 
-The leaf `PostLeaves.clearing_model` is `ClearingInputsG3Q` (`ClearingFull.lean`): at every final
-family a full-condition identification (the triangle (5.6), tex 5234–5238, 5398–5403) with its new
-places the primes of the family (`Identification3Q`), and one coordinate identification
-`OrigCoordLink3`. The coordinate input adds no obstruction
+The leaf `PostLeaves.clearing_model` is `ClearingInputsG3Q2` (`ClearingFull.lean`): at every final
+family a full-condition identification (the triangle (5.6), tex 5234–5238, 5398–5403) with the two
+conjugate new places over each prime of the family (`Identification3Q2`), and one coordinate
+identification `OrigCoordLink3`. The coordinate input adds no obstruction
 beyond the identification itself:
 
 * `origCoordLink3_zero`: for interface data whose corrected coordinates vanish on `F`, the zero
   class and functional satisfy `OrigCoordLink3` for every `Identification3` and every `η`;
-* `clearingInputsG3_of_zero`, `clearingInputsG3Q_of_zero`: for such data, `ClearingInputsG3 D`
-  (resp. the leaf `ClearingInputsG3Q D`) follows from the existence of full-condition
-  identifications (resp. with the new places the primes of the family) alone.
+* `clearingInputsG3_of_zero`, `clearingInputsG3Q2_of_zero`: for such data, `ClearingInputsG3 D`
+  (resp. the leaf `ClearingInputsG3Q2 D`) follows from the existence of full-condition
+  identifications (resp. with the two conjugate new places over each prime of the family) alone;
+* `Identification3Q2.exists_two_over`: the leaf's place data put two distinct new places over each
+  prime of the family.
 
 The instance is degenerate (`ũ = 0`, zero class); it shows joint satisfiability of the coordinate
 input with any full-condition identification, not that it holds for the genuine coordinate. The
@@ -71,20 +73,36 @@ theorem clearingInputsG3_of_zero {ℓ : ℕ} (D : RCData ℓ) (h0 : ∀ F x, D.u
   exact ⟨S, S', hS, inferInstance, inferInstance, M, 0, 0, mulVec_zero _, zero_vecMul _, 1,
     origCoordLink3_zero D F (h0 F) M 1⟩
 
-/-- **For vanishing corrected coordinates, the leaf `ClearingInputsG3Q` is the existence of
-full-condition identifications with the new places the primes of the family** (PROVED; the
-coordinate input holds with `z = 0`, `λ = 0`, `η = 1`). -/
-theorem clearingInputsG3Q_of_zero {ℓ : ℕ} (D : RCData ℓ) (h0 : ∀ F x, D.uTilde F x = 0)
+/-- **For vanishing corrected coordinates, the leaf `ClearingInputsG3Q2` is the existence of
+full-condition identifications with the two conjugate new places over each prime of the family**
+(PROVED; the coordinate input holds with `z = 0`, `λ = 0`, `η = 1`). -/
+theorem clearingInputsG3Q2_of_zero {ℓ : ℕ} (D : RCData ℓ) (h0 : ∀ F x, D.uTilde F x = 0)
     (h : ∃ (K : Type) (_ : Field K) (_ : NumberField K) (dK hK cE tK : ℕ),
       ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F →
         ∃ (S S' : Set (HeightOneSpectrum (𝓞 K))) (hS : S ⊆ S') (_ : Fintype (NewPlaces K S S'))
           (_ : DecidableEq (NewPlaces K S S')),
-          Nonempty (Identification3Q K S S' hS F dK hK cE tK)) :
-    ClearingInputsG3Q D := by
+          Nonempty (Identification3Q2 K S S' hS F dK hK cE tK)) :
+    ClearingInputsG3Q2 D := by
   obtain ⟨K, _, _, dK, hK, cE, tK, hF⟩ := h
   refine ⟨K, inferInstance, inferInstance, dK, hK, cE, tK, fun Co Ce F hFam => ?_⟩
   obtain ⟨S, S', hS, _, _, ⟨M⟩⟩ := hF Co Ce F hFam
   exact ⟨S, S', hS, inferInstance, inferInstance, M, 0, 0, mulVec_zero _, zero_vecMul _, 1,
     origCoordLink3_zero D F (h0 F) M.toIdentification3 1⟩
+
+/-- **Two new places over one prime are compatible with the leaf's place data** (PROVED): for any
+`Identification3Q2`, the fibre of `below` over every prime of the family has two elements, so two
+distinct new places lie over each prime (unlike a one-to-one identification of the new places with
+the primes). -/
+theorem Identification3Q2.exists_two_over {K : Type} [Field K] [NumberField K]
+    {S S' : Set (HeightOneSpectrum (𝓞 K))} {hS : S ⊆ S'} [Fintype (NewPlaces K S S')]
+    [DecidableEq (NewPlaces K S S')] {F : Family} {dK hK cE tK : ℕ}
+    (M : Identification3Q2 K S S' hS F dK hK cE tK) (q : F.Q) :
+    ∃ w w' : NewPlaces K S S', w ≠ w' ∧ M.below w = q ∧ M.below w' = q := by
+  classical
+  have h2 := M.two q
+  obtain ⟨a⟩ : Nonempty {v : NewPlaces K S S' // M.below v = q} :=
+    Fintype.card_pos_iff.mp (by omega)
+  obtain ⟨b, hba⟩ := Fintype.exists_ne_of_one_lt_card (by omega) a
+  exact ⟨b.1, a.1, fun h => hba (Subtype.ext h), b.2, a.2⟩
 
 end ZInQ.Manuscript.RC.Wiring
