@@ -18,3 +18,7 @@ Build setup: reusable artifacts came from the same revision. Lake rebuilt or rep
 VERIFIED by direct Lean check: `Finite.lean` proves that only the zero fiber modulo the coefficient period survives in the finite quadratic sum, identifies every even Fourier mode after completion of the square, and proves that the odd Fourier modes vanish. It uses the divisibility by four times the square of the period and makes no assumption about the weighted transformation or the ordinary theta phase.
 
 VERIFIED by direct Lean checks: `Characters.lean` constructs the odd periodic coefficient character, proves the good-prime support is its unit support, and constructs the ordinary Jacobi factor as a character at any level divisible by `4j`. It also proves `4B²j ∣ B³j` by the level arithmetic. `Cusps.lean` proves holomorphy and uniform weight-(3/2) cusp bounds at every matrix for the periodic weighted series, before any scalar is evaluated.
+
+VERIFIED by direct Lean checks: `Shell.lean` reindexes the actual `unaryFun` without changing coefficients and identifies it with half the two-sided series. `Transform.lean` proves the positive lower-left entry formula, including the phase before the ordinary Gauss sum is evaluated.
+
+VERIFIED by direct Lean checks: `OddDenominator.lean` resums ordinary theta using an odd denominator, and `PrimeGauss.lean` derives the nondegenerate prime sum's scaling and square from Mathlib's multiplicative Gauss sums. These results use no assumptions about the shell.
