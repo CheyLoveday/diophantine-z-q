@@ -70,6 +70,9 @@ theorem hCusp {L : ℕ} (C : G.CuspInput L) {ap : ℕ → ℤ} {w : ℕ → ℤ�
     exact isOfFinAddOrder_iff_nsmul_eq_zero.mpr
       ⟨n, hn, by rw [← map_nsmul, h, map_zero]⟩
   have hg := C.kills q hq he ht
+  let : Smooth (𝟙_ (Over (Spec (.of R)))).hom := by
+    change Smooth (𝟙 (Spec (.of R)))
+    infer_instance
   have hi : (G.movedCusp hq he) ^ L = 1 := by
     apply (G.neron.2.2.2.2 _).injective
     let f := (generic R ℚ).homMonoidHom (X := 𝟙_ (Over (Spec (.of R)))) (M := G.E)

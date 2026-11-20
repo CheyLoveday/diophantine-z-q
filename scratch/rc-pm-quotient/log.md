@@ -18,3 +18,5 @@
 - Citation errors at tex 1784–1788 and 8468–8474 carried forward in `.fleet/rc-pm-quotient2-verdict.md`.
 - The first workspace build could not reach the user scope from the sandbox. It ran with escalation but started missing prerequisites in parallel; stopped that scope. The subsequent focused Lake builds use source-matched prerequisites, a private compiler lock, the load/memory gate and a 60 GB user scope.
 - `Model`: PASS after parenthesizing the integral endomorphism type and fixing the coerced Frobenius subtraction. Its five axiom prints list only `propext`, `Classical.choice`, `Quot.sound`.
+- `Operators`: PASS. The identity section is smooth; the Hecke branch sum uses a general list-to-finite-sum lemma. `specialFibre`, `specialize_eq_value`, and both operator proofs passed the axiom check.
+- `Cusps`: PASS. `hCusp` has only the standard three axioms.

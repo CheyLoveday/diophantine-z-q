@@ -20,6 +20,16 @@ namespace ZInQ.Manuscript.RC.PMQuotient.GoodRow
 open GoodReduction (generic)
 open PMGeometry (DivZero center)
 
+private theorem toAdd_ofFn_prod {A : Type} [AddCommGroup A] {n : ℕ}
+    (f : Fin n → Multiplicative A) :
+    (List.ofFn f).prod.toAdd = ∑ i, (f i).toAdd := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [List.ofFn_succ, List.prod_cons, Fin.sum_univ_succ]
+    change (f 0).toAdd + (List.ofFn fun j => f j.succ).prod.toAdd = _
+    rw [ih]
+
 variable {R : Type} [CommRing R] [Algebra R ℚ]
     {ell N : ℕ} [Fact ell.Prime] {K : Type} [Field K] [Algebra (ZMod ell) K] [DecidableEq K]
     {Ebar : WeierstrassCurve (ZMod ell)} {X : PMAdelic.CoarseFibre}
@@ -42,6 +52,9 @@ def Based : Prop :=
 
 /-- Specialize the normalization at the base cusp. -/
 theorem value_infinity (h : G.Based) : G.value G.infinity = 0 := by
+  let : Smooth (𝟙_ (Over (Spec (.of R)))).hom := by
+    change Smooth (𝟙 (Spec (.of R)))
+    infer_instance
   have hint : G.cusp ≫ G.πInt = 1 := by
     apply (G.neron.2.2.2.2 _).injective
     change (generic R ℚ).homMonoidHom (G.cusp ≫ G.πInt) =
@@ -119,16 +132,6 @@ def HeckeIdentity {q : ℕ} {x : X.Point} (T : G.HeckePacket q x) (a : ℤ) : Pr
   (List.ofFn fun j => (generic R ℚ).map (T.target j ≫ G.πInt)).prod =
     (generic R ℚ).map (T.source ≫ G.πInt) ^ a
 
-private theorem toAdd_ofFn_prod {n : ℕ}
-    (f : Fin n → Multiplicative (Ebar.baseChange K).toAffine.Point) :
-    (List.ofFn f).prod.toAdd = ∑ i, (f i).toAdd := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-    rw [List.ofFn_succ, List.prod_cons, Fin.sum_univ_succ]
-    change (f 0).toAdd + (List.ofFn fun j => f j.succ).prod.toAdd = _
-    rw [ih]
-
 /-- The Hecke relation on the degree-zero divisor follows by Néron
 uniqueness on the smooth chart and addition of its reduced branch values. -/
 theorem hecke_quotient (hb : G.Based) {q : ℕ} (hq : q.Prime) (hgood : ¬ q ∣ N * ell)
@@ -205,6 +208,7 @@ theorem specialize_eq_value {ap : ℕ → ℤ} {w : ℕ → ℤˣ} (H : G.Relati
 #print axioms toAdd_ofFn_prod
 #print axioms atkin_quotient
 #print axioms hecke_quotient
+#print axioms specialFibre
 #print axioms specialize_eq_value
 
 end ZInQ.Manuscript.RC.PMQuotient.GoodRow
