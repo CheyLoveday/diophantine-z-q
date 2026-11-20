@@ -4,3 +4,5 @@
 - `Generic`, `Model`: successful focused serial Lake build under a 60 GB user scope; audited outputs contain only `propext`, `Classical.choice`, `Quot.sound`.
 - Prerequisites: merged `AtkinRational` and `PMQuotient` artifacts reused; the needed `J0Cusps` chain through `WeightedComparison` compiled serially.
 - `MovingCusp`: focused Lake build passed; the matrix factors through a positive dilation, and the cusp limit and faithfulness identify its geometric point. Four audits clean.
+- `Operators`: focused Lake build passed; `overRelationAtScale` gives the rational affine relation and `overRelation_baseChange` gives its specialization. Six audits clean.
+- `Cusps`: focused Lake build passed; the represented Abel–Jacobi factor and the geometric cusp class give torsion of the rational translation, and its fixed multiplier annihilates its reduction. Seven audits clean.
