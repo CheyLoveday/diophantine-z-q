@@ -6,17 +6,22 @@ statement: formalized
 lean: ZInQ.Contrib.CloudB3RC53.Prints
 ---
 
-# The printed results
+# The cited results
 
-The proof of Theorem 5.3 in Lean takes four printed results as one structure:
+The proof of Theorem 5.3 in Lean takes four cited results as one structure:
 - Breuil, Conrad, Diamond and Taylor, Theorem A: every elliptic curve over $\mathbb Q$ is modular;
-- Kolyvagin, Theorem 1, for analytic rank at most one;
-- Dokchitser and Dokchitser, Theorem 1.8: the parity of the $2^\infty$-Selmer corank determines the root
-  number;
+- a consequence of Kolyvagin's Theorem 1 for analytic rank at most one: Kolyvagin assumes a weak Weil
+  parametrization, the Lean statement assumes only modularity, and the passage between the two goes
+  through Shimura's construction and Faltings' isogeny theorem, as in
+  [the cited inputs](../pole-completeness-from-5-3/cited-inputs.md);
+- Dokchitser and Dokchitser, Theorem 1.8, for curves with a rational point of order two: the parity of the
+  $2^\infty$-Selmer corank determines the root number. The Lean statement composes it with the
+  identification of the root number with the sign of the functional equation, which is not part of the
+  print;
 - Cai, Shu and Tian, Theorem 1.1, in its split case: the explicit Gross–Zagier formula.
 
-Each is stated over genuine definitions, with its locator in the print. Further printed results that the
-proof cites enter as fields of [the remaining hypotheses](remaining-hypotheses.md).
+Each is stated over genuine definitions, with its locator in the print. Further cited results that the
+proof uses enter as fields of [the remaining hypotheses](remaining-hypotheses.md).
 
 ## Depends on
 

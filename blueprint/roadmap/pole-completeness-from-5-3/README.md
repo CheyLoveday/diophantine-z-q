@@ -22,8 +22,10 @@ $E_\ell:y^2=x(x-\ell)(x+3\ell)$. The other route to the pole input is
 - The class $(\beta,1)$ then comes from a rational point on each curve, and rescaling the two points gives
   the witnesses of the pole polynomial.
 
-The derivation is formalized in `ZInQKernel/Contrib/PoleRC/` and `ZInQKernel/Contrib/OneProof/PoleS12/`,
-with the last steps in `ZInQKernel/Contrib/OneProof/Lemma54FromCasselsTate.lean` and
+The derivation is formalized in `ZInQKernel/Contrib/PoleRC/`, `ZInQKernel/Contrib/OneProof/PoleS12/` and
+`ZInQKernel/Contrib/OneProof/PoleCompletenessFromRC*.lean`, with Lemma 5.4 in
+`ZInQKernel/Contrib/OneProof/SelmerCorankFam.lean` and `ZInQKernel/Contrib/OneProof/Lemma54FromCasselsTate.lean`,
+the Kummer identification in `ZInQKernel/Contrib/OneProof/KummerSelmerMProof.lean`, and the last step in
 `ZInQKernel/Contrib/OneProof/CasselsTatePairing.lean`. It leaves four inputs: Theorem 5.3, the
 Cassels–Tate pairing on the curves $E_\ell$, the modularity theorem of Breuil, Conrad, Diamond and Taylor,
 and a consequence of Kolyvagin's Theorem 1. `ZInQ.OneProof.frozenTarget` takes these four as its

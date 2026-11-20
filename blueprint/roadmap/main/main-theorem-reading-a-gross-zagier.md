@@ -6,7 +6,7 @@ origin: bridged
 
 # The main theorem by the congruent-number route: reading A and Gross–Zagier
 
-> **The headline of the congruent-number route.** This is the main theorem by the congruent-number route to pole completeness: the target from the minimal height hypothesis, Tian–Yuan–Zhang's Theorem 3.5(2) in reading A and Gross–Zagier. The other headline is [the main theorem by Elliot's route](main-theorem.md); both prove the same target statement. This page's Lean declarations are not on this fork's main (fork issue #77); the route's Lean is kept at the tag `route-k-final` and pinned upstream in elliotglazer/diophantine-z-q.
+> **The headline of the congruent-number route.** This is the main theorem by the congruent-number route to pole completeness: the target from the minimal height hypothesis, Tian–Yuan–Zhang's Theorem 3.5(2) in reading A and Gross–Zagier. The other headline is [the main theorem by Elliot's route](main-theorem.md); both prove the same target statement. This page's Lean declarations are not on this fork's main (fork issue #77). The theorem is `ZInQ.Contrib.GaussFE.frozenTarget_of_sixContactMin_tyzThm35ReadingA_grossZagier` at the tag `route-k-final`. The route is pinned upstream in elliotglazer/diophantine-z-q, whose main has the main theorem in the form that also assumes Hecke's continuation and the functional equation.
 
 Assume Tian–Yuan–Zhang's Theorem 3.5(2) in reading A and the Gross–Zagier statement. Then the
 positive-rank class-number hypothesis CR₃^TYZ_Cl,Rk holds. If the minimal height hypothesis holds

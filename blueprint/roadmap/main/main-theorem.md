@@ -50,8 +50,8 @@ modularity theorem and a consequence of Kolyvagin's theorem
 keeps pole completeness as its hypothesis, and `ZInQ.OneProof.frozenTarget` combines the two. The proof
 of Theorem 5.3 itself (Sections 7–9 and Appendices E–G) uses Kato's Euler system, Waldspurger's formula,
 Bump–Friedberg–Hoffstein, Nekovář's Selmer complexes and Gross–Zagier–Kolyvagin. In Lean it is reduced
-to the printed results it cites and one structure of remaining hypotheses, which are not proved
-([the restricted converse](../restricted-converse/README.md)), so the single proof still takes
+to the results it cites (some in consequence form) and one structure of remaining hypotheses, which are
+not proved ([the restricted converse](../restricted-converse/README.md)), so the single proof still takes
 Theorem 5.3 as a hypothesis.
 
 **The open statements.** `ZInQ.OneProof.frozenTarget` is this theorem with the minimal height hypothesis

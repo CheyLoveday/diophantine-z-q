@@ -20,7 +20,7 @@ headlines; they are means to the same end.
 | Pole polynomial | the manuscript's, with curves $y^2=x(x-\ell)(x+3\ell)$ | a variant, with the congruent number curves $y^2=x(x-\ell)(x+\ell)$ |
 | Pole input | pole completeness (Theorem 5.2), derived from the restricted converse (Theorem 5.3) | the certified rank hypothesis, from Tian–Yuan–Zhang's Theorem 3.5(2) in reading A and Gross–Zagier |
 | Height input | the minimal height hypothesis | the minimal height hypothesis |
-| Lean | this fork's main, `ZInQ.OneProof.frozenTarget` | the tag `route-k-final`, pinned upstream in elliotglazer/diophantine-z-q; nasqret/z-in-q-lean builds on it |
+| Lean | this fork's main, `ZInQ.OneProof.frozenTarget` | the tag `route-k-final` (`ZInQ.Contrib.GaussFE.frozenTarget_of_sixContactMin_tyzThm35ReadingA_grossZagier`); pinned upstream in elliotglazer/diophantine-z-q, whose main has the form that also assumes Hecke's continuation and the functional equation; nasqret/z-in-q-lean builds on it |
 
 **The height input.** Both headlines assume the minimal form of the six-contact height estimate, the one
 instance of the manuscript's Theorem 4.1 that the proof uses. It is not a published theorem: its proof
@@ -40,8 +40,8 @@ Theorem 5.2 from Theorem 5.3, the Cassels–Tate pairing on the curves $E_\ell$,
 Breuil, Conrad, Diamond and Taylor, and a consequence of Kolyvagin's Theorem 1. The single proof
 `ZInQ.OneProof.frozenTarget` takes these four as hypotheses (`hRC`, `hCT`, `hB` and `hK`), beside the open
 statements of the height estimate. The proof of Theorem 5.3 (Sections 7–9 and Appendices E–G) is reduced
-in Lean to the printed results it cites and one structure of remaining hypotheses, which are not proved,
-so `frozenTarget` still takes Theorem 5.3 as one hypothesis.
+in Lean to the results it cites (some in consequence form) and one structure of remaining hypotheses,
+which are not proved, so `frozenTarget` still takes Theorem 5.3 as one hypothesis.
 
 **The congruent-number route.** Until fork issue #77 this fork used it in place of pole completeness: a
 variant of the pole polynomial for the congruent number curves, whose pole completeness follows from the

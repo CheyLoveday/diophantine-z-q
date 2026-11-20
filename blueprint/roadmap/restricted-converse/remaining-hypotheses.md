@@ -8,7 +8,7 @@ lean: ZInQ.Manuscript.RC.Wiring.RCLeaves
 
 # The remaining hypotheses
 
-Every hypothesis of the Lean proof of Theorem 5.3 that remains beyond [the printed results](printed-results.md)
+Every hypothesis of the Lean proof of Theorem 5.3 that remains beyond [the cited results](printed-results.md)
 is a field of one structure. Each field records the manuscript lines it covers and whether it is a printed
 result or a step between results. The fields are:
 - printed results: Hoffstein–Luo on nonvanishing twists, Shimura's 1973 theorem on conjugate eigenforms
@@ -19,6 +19,11 @@ result or a step between results. The fields are:
   Appendices E–G that do not involve the odd minimum depth, and those that do.
 
 None of the fields is proved here.
+
+The interface data are chosen by whoever discharges the structure and are constrained only by the fields.
+Several step fields are stated in a form equivalent or close to the conclusion of the manuscript step they
+cover (see the module docstring of `ZInQKernel/Contrib/OneProof/RC/Wiring/Leaves.lean`), so the reduction
+is only as strong as those fields.
 
 ## Depends on
 

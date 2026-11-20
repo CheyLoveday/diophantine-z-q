@@ -14,8 +14,8 @@ Conrad, Diamond and Taylor, and the consequence of Kolyvagin's Theorem 1 in
 [the cited inputs](cited-inputs.md). Then pole completeness holds: the manuscript's Theorem 5.2, for the
 manuscript's pole polynomial.
 
-This is the manuscript's derivation in Section 5.1. `ZInQ.OneProof.frozenTarget` applies it to its
-hypotheses `hRC`, `hCT`, `hB` and `hK` and passes the result to
+This is the manuscript's derivation in Section 5.1. `ZInQ.OneProof.frozenTarget` derives pole
+completeness through it from its hypotheses `hRC`, `hCT`, `hB` and `hK` and passes the result to
 [the main theorem by Elliot's route](../main/main-theorem.md).
 
 **Proof sketch.** Lemma 5.4 at the curves $E_\ell$ follows from the pairing. Modularity and Kolyvagin's

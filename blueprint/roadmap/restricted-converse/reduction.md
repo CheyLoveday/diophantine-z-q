@@ -4,16 +4,20 @@ declaration: theorem
 origin: bridged
 statement: formalized
 proof: formalized
-lean: ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves, ZInQ.Contrib.CloudB3RC53.restrictedConverseGenuine_of_nodes
+lean: ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves
 ---
 
-# Theorem 5.3 from the printed results and the remaining hypotheses
+# Theorem 5.3 from the cited results and the remaining hypotheses
 
-[The printed results](printed-results.md) and [the remaining hypotheses](remaining-hypotheses.md) imply
+[The cited results](printed-results.md) and [the remaining hypotheses](remaining-hypotheses.md) imply
 [Theorem 5.3](restricted-converse.md).
 
 The remaining hypotheses are not proved, so this theorem does not yet discharge Theorem 5.3:
 `ZInQ.OneProof.frozenTarget` still takes Theorem 5.3 itself as the hypothesis `hRC`.
+
+The proof goes through the top-level assembly `ZInQ.Contrib.CloudB3RC53.restrictedConverseGenuine_of_nodes`,
+which takes the cited results and two nodes. One of them, the branch package, is equivalent to Theorem 5.3
+given the cited results, so the reduction to the manuscript's steps is the theorem stated here.
 
 **Proof sketch.** Fix an admissible $\ell$ with Selmer corank one. The opening reduction gives root number
 $-1$, so $L(E_\ell,1)=0$. The proof then splits as in the manuscript. If the odd symbol is a unit at the
@@ -26,7 +30,7 @@ $L(E/K,s)=L(E,s)L(E^{(k)},s)$ the zero of $L(E_\ell,s)$ at $s=1$ is simple.
 ## Depends on
 
 - [Theorem 5.3: the restricted converse](restricted-converse.md)
-- [The printed results](printed-results.md)
+- [The cited results](printed-results.md)
 - [The remaining hypotheses](remaining-hypotheses.md)
 
 ## Proof depends on

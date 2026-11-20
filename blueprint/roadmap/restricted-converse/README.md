@@ -51,15 +51,17 @@ Cai–Shu–Tian, Cornut–Jetchev and the parity theorem of Dokchitser–Dokchi
 
 The Lean for this proof is on main, in three places:
 - `ZInQKernel/Contrib/CloudB3RC53/`, the top layer, with its dependency graph `DAG.md`. That file lists every
-  node of Sections 7–9 and Appendices E–G with its TeX lines, its inputs and its status.
+  node of Sections 7–9 and Appendices E–G with its TeX lines and inputs; its status column dates from when
+  each row was written, and the module headers are authoritative. Only the top-level nodes have pages in
+  this chapter.
 - `ZInQKernel/Contrib/OneProof/RC/`, which wires the steps together and collects what remains.
 - `ZInQKernel/Contrib/RC53Assist/`, supporting developments for individual steps.
 
-Theorem 5.3 is proved from the printed results it cites and one structure of remaining hypotheses. Those
-hypotheses are not proved, so `ZInQ.OneProof.frozenTarget` still takes Theorem 5.3 as one hypothesis,
-`hRC`.
+Theorem 5.3 is reduced in Lean to the results it cites (some in consequence form) and one structure of
+remaining hypotheses, which are not proved, so `ZInQ.OneProof.frozenTarget` still takes Theorem 5.3 as
+one hypothesis, `hRC`.
 
-- [The printed results](printed-results.md)
+- [The cited results](printed-results.md)
 - [The remaining hypotheses](remaining-hypotheses.md)
 - [The opening reduction: root number $-1$](opening-reduction.md)
-- [Theorem 5.3 from the printed results and the remaining hypotheses](reduction.md)
+- [Theorem 5.3 from the cited results and the remaining hypotheses](reduction.md)

@@ -24,8 +24,8 @@ statements besides Theorem 5.3.
   construction and Faltings' isogeny theorem, so it is a consequence of the print, not the printed
   statement.
 
-None of the three is proved here. Together with Theorem 5.3 they are the pole-side hypotheses of
-`ZInQ.OneProof.frozenTarget`.
+None of the three is proved here. `ZInQ.OneProof.frozenTarget` takes Theorem 5.3, the pairing, modularity
+and this consequence of Kolyvagin's theorem as its hypotheses `hRC`, `hCT`, `hB` and `hK`.
 
 ## Depends on
 
