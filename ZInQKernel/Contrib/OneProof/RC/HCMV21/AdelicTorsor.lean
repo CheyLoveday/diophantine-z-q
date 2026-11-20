@@ -27,7 +27,7 @@ noncomputable def torusOrbitMap (j : T →* G) (U : Subgroup G) (z : G) (s : T) 
 /-- On this adelic orbit, equality of classes is precisely equality of
 ideal classes. The hypothesis identifies the preimage of the conjugated
 right order units, without making any claim about geometric reduction. -/
-theorem torusOrbitMap_eq_iff (j : T →* G) 
+theorem torusOrbitMap_eq_iff (j : T →* G)
     (U : Subgroup G) (z : G)
     (hunit : ∀ s : T, z⁻¹ * j s * z ∈ U ↔ s ∈ integralUnits R F)
     (s t : T) :
@@ -75,7 +75,7 @@ theorem torusOrbitMap_eq_iff (j : T →* G)
 
 /-- An independently computed class-group parametrization of the adelic
 orbit (tex 9150–9169). The argument never uses the map from CM points. -/
-noncomputable def adelicOrbitEquivClassGroup (j : T →* G) 
+noncomputable def adelicOrbitEquivClassGroup (j : T →* G)
     (U : Subgroup G) (z : G)
     (hunit : ∀ s : T, z⁻¹ * j s * z ∈ U ↔ s ∈ integralUnits R F) :
     Set.range (torusOrbitMap j U z) ≃ ClassGroup R := by
@@ -93,7 +93,7 @@ noncomputable def adelicOrbitEquivClassGroup (j : T →* G)
     exact (torusOrbitMap_eq_iff j U z hunit _ _).mp (hp _)
 
 /-- In the orbit coordinates the representative `s z` has class `[s]`. -/
-theorem adelicOrbitEquivClassGroup_apply (j : T →* G) 
+theorem adelicOrbitEquivClassGroup_apply (j : T →* G)
     (U : Subgroup G) (z : G)
     (hunit : ∀ s : T, z⁻¹ * j s * z ∈ U ↔ s ∈ integralUnits R F) (s : T) :
     adelicOrbitEquivClassGroup j U z hunit ⟨torusOrbitMap j U z s, ⟨s, rfl⟩⟩ =
