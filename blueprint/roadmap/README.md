@@ -37,7 +37,8 @@ input. The manuscript derives it from its restricted converse theorem (Theorem 5
 2-descent (Section 5.1). That derivation is formalized:
 `ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing` proves
 Theorem 5.2 from Theorem 5.3, the Cassels–Tate pairing on the curves $E_\ell$, the modularity theorem of
-Breuil, Conrad, Diamond and Taylor, and a consequence of Kolyvagin's Theorem 1. The single proof
+Breuil, Conrad, Diamond and Taylor as printed, and a consequence of Kolyvagin's Theorem 1 together with
+it. The single proof
 `ZInQ.OneProof.frozenTarget` takes these four as hypotheses (`hRC`, `hCT`, `hB` and `hK`), beside the open
 statements of the height estimate. The proof of Theorem 5.3 (Sections 7–9 and Appendices E–G) is reduced
 in Lean to the results it cites (some in consequence form) and one structure of remaining hypotheses,

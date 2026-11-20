@@ -27,9 +27,10 @@ The derivation is formalized in `ZInQKernel/Contrib/PoleRC/`, `ZInQKernel/Contri
 `ZInQKernel/Contrib/OneProof/SelmerCorankFam.lean` and `ZInQKernel/Contrib/OneProof/Lemma54FromCasselsTate.lean`,
 the Kummer identification in `ZInQKernel/Contrib/OneProof/KummerSelmerMProof.lean`, and the last step in
 `ZInQKernel/Contrib/OneProof/CasselsTatePairing.lean`. It leaves four inputs: Theorem 5.3, the
-Cassels–Tate pairing on the curves $E_\ell$, the modularity theorem of Breuil, Conrad, Diamond and Taylor,
-and a consequence of Kolyvagin's Theorem 1. `ZInQ.OneProof.frozenTarget` takes these four as its
-hypotheses `hRC`, `hCT`, `hB` and `hK`. Two steps differ from the manuscript's text:
+Cassels–Tate pairing on the curves $E_\ell$, the modularity theorem of Breuil, Conrad, Diamond and Taylor
+as printed (`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`), and a consequence of Kolyvagin's Theorem 1
+together with that theorem. `ZInQ.OneProof.frozenTarget` takes these four as its hypotheses `hRC`, `hCT`,
+`hB` and `hK`. Two steps differ from the manuscript's text:
 - the manuscript leaves the construction of $n$ to its supplementary files S11 and S12; the Lean proof
   follows S12;
 - the manuscript uses the finiteness of the Tate–Shafarevich group to conclude that its 2-part vanishes;

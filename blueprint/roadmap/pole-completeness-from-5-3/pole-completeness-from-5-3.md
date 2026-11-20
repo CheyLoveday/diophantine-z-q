@@ -10,7 +10,7 @@ lean: ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_cass
 # Theorem 5.2 from Theorem 5.3
 
 Assume Theorem 5.3, the Cassels–Tate pairing on the curves $E_\ell$, the modularity theorem of Breuil,
-Conrad, Diamond and Taylor, and the consequence of Kolyvagin's Theorem 1 in
+Conrad, Diamond and Taylor as printed, and the consequence of Kolyvagin's Theorem 1 in
 [the cited inputs](cited-inputs.md). Then pole completeness holds: the manuscript's Theorem 5.2, for the
 manuscript's pole polynomial.
 
