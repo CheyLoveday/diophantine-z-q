@@ -31,29 +31,43 @@ cannot be formalized as written. Each deviation is recorded with its reason in
 [`KERNEL_PLAN.md`](KERNEL_PLAN.md#reference-text-and-deviations)
 ([#95](https://github.com/Deicyde/diophantine-z-q/issues/95)).
 
-The proof follows the manuscript's route. Its hypotheses fall into two groups. The first is the statements from
-which Lean derives the instance of the six-contact height estimate (the manuscript's Theorem 4.1) that the proof
-uses. The second is four statements from which Lean proves pole completeness (Theorem 5.2) for the manuscript's own
-pole polynomial, as the manuscript's Section 5.1 does:
-- the manuscript's restricted converse theorem (Theorem 5.3);
-- the Cassels–Tate pairing on the curves of Theorem 5.3 (Poonen–Stoll's statement of Cassels' theorem, the print
-  the manuscript cites for its Lemma 5.4; Lean proves Lemma 5.4 from it);
-- consequences of the two printed theorems behind its Lemma 5.5: the modularity theorem of Breuil, Conrad, Diamond
-  and Taylor (Theorem A), and Kolyvagin's Theorem 1.
+**Two routes.** The project has two proofs of the theorem, and they are means to the same end. Both use the
+six-contact height estimate (the manuscript's Theorem 4.1). They differ in how they obtain pole completeness
+(Theorem 5.2).
 
-Theorem 5.3 stays one hypothesis of the main theorem. Separately,
-[#110](https://github.com/Deicyde/diophantine-z-q/pull/110) reduces it, along the manuscript's Sections 7–9 and
-Appendices E–G, to step-level hypotheses (`ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves`). Some of
-those still state their step's conclusion directly and are being restated over the manuscript's objects. Proving the
-steps in Lean is [#83](https://github.com/Deicyde/diophantine-z-q/issues/83).
-Apart from these hypotheses, the main theorem departs from the manuscript in two smaller steps, both proved: route AP
+- **Elliot's route**, the proof on `main`, follows the manuscript. It uses the manuscript's own pole polynomial, with
+  curves y² = x(x − ℓ)(x + 3ℓ), and proves pole completeness from four statements, as the manuscript's Section 5.1
+  does:
+  - the manuscript's restricted converse theorem (Theorem 5.3);
+  - the Cassels–Tate pairing on the curves of Theorem 5.3 (Poonen–Stoll's statement of Cassels' theorem, the print
+    the manuscript cites for its Lemma 5.4; Lean proves Lemma 5.4 from it);
+  - consequences of the two printed theorems behind its Lemma 5.5: the modularity theorem of Breuil, Conrad,
+    Diamond and Taylor (Theorem A), and Kolyvagin's Theorem 1.
+
+  Theorem 5.3 stays one hypothesis of the main theorem. Separately,
+  [#110](https://github.com/Deicyde/diophantine-z-q/pull/110) reduces it, along the manuscript's Sections 7–9 and
+  Appendices E–G, to step-level hypotheses (`ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves`). Some
+  of those still state their step's conclusion directly and are being restated over the manuscript's objects.
+  Proving the steps in Lean is [#83](https://github.com/Deicyde/diophantine-z-q/issues/83).
+- **The congruent-number route** uses the congruent-number curves y² = x(x − ℓ)(x + ℓ) in place of the
+  manuscript's. The manuscript's soundness lemma (Lemma 5.1) holds for both families. Pole completeness for these
+  curves is proved from a narrow rank hypothesis on an explicit 2-Selmer system. The project derived that hypothesis
+  from Tian, Yuan and Zhang's theorem on congruent numbers and the Gross–Zagier formula. The two pole polynomials
+  cannot both be the kernel's at once, so this route is not in `main`'s build. Its last build on this fork is the tag
+  [`route-k-final`](https://github.com/Deicyde/diophantine-z-q/tree/route-k-final).
+  [nasqret/z-in-q-lean](https://github.com/nasqret/z-in-q-lean) builds on it, and the plan is to bring the two
+  projects together upstream ([#104](https://github.com/Deicyde/diophantine-z-q/issues/104)).
+  [`docs/research/rs-pole.md`](docs/research/rs-pole.md) explains how the route arose. Older documents call it
+  "Route K".
+
+Apart from its hypotheses, Elliot's route departs from the manuscript in two smaller steps, both proved: route AP
 replaces Proposition 6.2 by Szemerédi's theorem in the primes together with a density theorem for the good primes
 (Proposition D), and the catalogue bound is proved in the weaker form CAT₈. Deriving the height estimate from the
-literature also re-sources some steps of the manuscript's Section 4 and replaces its last step. An earlier proof,
-Route K, replaced pole completeness by an argument through Tian–Yuan–Zhang and Gross–Zagier for a different pole
-polynomial. It is retired and kept at the tag
-[`route-k-final`](https://github.com/Deicyde/diophantine-z-q/tree/route-k-final);
-[`docs/research/rs-pole.md`](docs/research/rs-pole.md) explains why it existed.
+literature also re-sources some steps of the manuscript's Section 4 and replaces its last step.
+
+nasqret/z-in-q-lean also has a weaker, qualitative theorem that replaces the height estimate by von Känel's bound,
+whose constant is not explicit. That bound is ineffective: it shows that a polynomial exists but gives none of
+Theorem 1.1's numbers, such as the count of variables. Neither route above uses it.
 
 ## Status (fork `main` at `ff165f7c`, 2026-11-20)
 

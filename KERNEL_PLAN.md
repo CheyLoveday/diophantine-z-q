@@ -1,12 +1,15 @@
 # Kernel-checked formalization plan
 
-> **Superseded on 2026-11-17.** The pole-completeness part of this plan describes Route K, the
-> route the project used until fork issues #76 and #77: a pole polynomial for the congruent
-> number curves `y² = x(x − ℓ)(x + ℓ)`, whose pole completeness was proved from the certified
-> rank hypothesis CR₃, with CR₃ derived from Tian–Yuan–Zhang and Gross–Zagier. Route K is
-> retired and kept at the tag `route-k-final`; `docs/research/rs-pole.md` records why it was
-> adopted. The main theorem now follows the manuscript, apart from route AP and the catalogue
-> bound CAT₈ described below.
+> **Two routes (2026-11-20).** The project keeps two proofs of the theorem side by side, as means
+> to the same end; they differ in how they obtain pole completeness. The pole-completeness
+> part of this plan describes **the congruent-number route** (called Route K below): a pole
+> polynomial for the congruent number curves `y² = x(x − ℓ)(x + ℓ)`, whose pole completeness is
+> proved from the certified rank hypothesis CR₃, with CR₃ derived from Tian–Yuan–Zhang and
+> Gross–Zagier. Since fork issues #76 and #77 it is not in `main`'s build, because the kernel has
+> one pole polynomial. It is kept at the tag `route-k-final`, nasqret/z-in-q-lean builds on it,
+> and fork issue #104 plans bringing the two together upstream; `docs/research/rs-pole.md`
+> records why it was adopted. `main` carries **Elliot's route**, which follows the manuscript,
+> apart from route AP and the catalogue bound CAT₈ described below.
 > `ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`
 > (`ZInQKernel/MainGreenTao.lean`) proves the target from the minimal height hypothesis
 > `SixContactMin` and pole completeness `PoleCompleteness`, the manuscript's Theorem 5.2 for its
