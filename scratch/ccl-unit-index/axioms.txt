@@ -1,0 +1,6 @@
+'CCLUnitIndexCheck.neg_four_square_mod_eight' depends on axioms: [propext, Quot.sound]
+'CCLUnitIndexCheck.square_mod_sixteen' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CCLUnitIndexCheck.exceptional_disc_of_level' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CCLUnitIndexCheck.chain_conductor_gt_one' depends on axioms: [propext]
+'CCLUnitIndexCheck.exceptional_admissible_example' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CCLUnitIndexCheck.weighted_does_not_cancel' depends on axioms: [propext]

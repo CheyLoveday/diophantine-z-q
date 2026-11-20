@@ -34,3 +34,23 @@ tex 2918. The print puts `u_m` on the trace, with `u_m = 1` for `m ≠ 1` and
 **VERIFIED (consumer search).** See [consumers.md](consumers.md) for the semantic uses,
 the available premises and the comment-only references. The build graph at the base gives
 two immediate importers of `Heegner` and 461 importers in the reverse transitive closure.
+
+**VERIFIED (Lean).** The proposed mod-8 argument excludes −3 only: `2² = −4` in
+`ZMod 8`. The Heegner form hypothesis at `4 ∣ N` gives the congruence modulo 16,
+where neither −3 nor −4 is a square. At generic level the numerical inputs to the
+split transport can hold with `(d,N,D_K,q) = (1,37,−4,5)` and Heegner form
+`[37,12,1]`. The linear algebra of transport alone does not remove a unit
+factor. The staged conductor bound follows from the prime divisor and positivity.
+
+**VERIFIED (build).** Built `Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol`
+and `Mathlib.Data.ZMod.Basic` separately with `lake build`. Then
+`lake env lean scratch/ccl-unit-index/Check.lean` passed. See
+[axioms.txt](axioms.txt) for all six declarations. No project module was changed.
+
+**Stop rule.** The generic transport exports unweighted equalities at arbitrary
+admissible `d`, with arbitrary `Anchor` in its print wrappers. Neither the level
+nor conductor discharge is available in those premises. Keeping the generic
+unweighted claims over a corrected leaf would require an extra premise, so the
+Lean leaf and all consumer statements and proofs were left unchanged. The staged
+conductor calculation alone does not settle the independent scope question of
+using `m = d` instead of the manuscript audit's `c = d, m = 1` specialization.
