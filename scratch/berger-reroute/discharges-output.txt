@@ -1,0 +1,7 @@
+DISCHARGES [bergerSurveyF] by HDec.PkgI4.PanDict.bergerSurveyF_of_basis
+  still assumes: [HDec.PkgI4.PanDict.BergerSurveyFBasis]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [bergerSurveyF] by ZInQ.Manuscript.BergerReroute.bergerSurveyF_of_thm06Print
+  still assumes: [ZInQ.Manuscript.BergerReroute.BergerThm06Print]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 1 open hypotheses, 883 theorems checked, 2 discharge one

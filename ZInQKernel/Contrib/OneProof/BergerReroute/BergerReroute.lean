@@ -25,7 +25,7 @@ and Théorème 0.7 in the later author copy. The paper's reported basis conditio
 `B_max[log [π̄]]` still needs to be connected to the Fontaine-ring basis condition below.
 
 Here `V = E^n` is viewed over `ℚ_p`. De Rham is `dim_{ℚ_p} (B_dR ⊗ V)^G = dim_{ℚ_p} V`.
-The conclusion is that over some finite `K/ℚ_p`, `B_st ⊗ V` has a basis of `G_K)-fixed
+The conclusion is that over some finite `K/ℚ_p`, `B_st ⊗ V` has a basis of `G_K`-fixed
 vectors. We use `B_st = B_cris[log [p̃]]` as an image in Mathlib's `B_dR` (`BstFOf`).
 Its coefficients are defined by the divided power series at `ξ` with coefficients tending
 to zero p-adically, then inverting `p` and `t = log [ε₀]` (`AcrisOf`, `BcrisOf`).
@@ -101,9 +101,8 @@ theorem isPstF_of_paperSt {p : ℕ} [Fact p.Prime] {ell : BdR p}
         K.fixingSubgroup ρE) :
     IsPstF p h w hw ρE := by
   obtain ⟨K, hK, hBasis⟩ := hpst
-  letI := hK
   refine ⟨K, hK, ?_⟩
   rw [bstFOf_eq_xi p h hw hgen]
-  exact hcmp ε₀ h K n E ρE hc hBasis
+  exact @hcmp ε₀ h K hK n E inferInstance ρE hc hBasis
 
 end ZInQ.Manuscript.BergerReroute
