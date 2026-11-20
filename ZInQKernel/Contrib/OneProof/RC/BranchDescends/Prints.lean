@@ -7,19 +7,22 @@ open NumberField TauCeti.GlobalNumberFields TauCeti.ClassFieldTheory
 
 namespace ZInQ.Manuscript.RC.BranchDescends
 
-/-- **Printed-form leaf, GLUE (unread).** For an oriented Heegner form in
-the scope of tex 2839–2844 and 2915–2916, every modular function in
-`ℚ(j, j_N)` finite at its CM parameter has value in the associated ring
-class field, with one complex embedding for all the values at that parameter.
-The finite-germ condition excludes poles, not vanishing denominators of
-individual presentations of the function.
+/-- **GLUE (value form of a printed point statement).** For an oriented
+Heegner form in the scope of tex 2839–2844 and 2915–2916, every modular
+function in `ℚ(j, j_N)` finite at its CM parameter has value in the
+associated ring class field, with one complex embedding for all the values
+at that parameter. The finite-germ condition excludes poles, not vanishing
+denominators of individual presentations of the function.
 
-Candidate sources: Shimura, *Introduction to the Arithmetic Theory of
-Automorphic Functions* (1971), Ch. 6, Thm. 6.31 and subsequent CM results
-(UNVERIFIED); Gross, *Heegner points on X₀(N)* (1984), §1 (UNVERIFIED).
-The conductor is explicitly prime to the level (in fact to `2N |D_K|`).
-The locators, coefficient field, and coverage of nonmaximal orders need
-a page check. No action of the class group or norm relation is assumed. -/
+Printed in point form only: Cai–Chen–Liu, *Heegner points on modular
+curves*, Trans. AMS 370 (2018), p. 3721 (the point `(ℂ/𝔞, 𝔞𝒩⁻¹/𝔞)` of
+`X₀(N)` "is defined over the ring class field `H_c`", for `(c, N) = 1` and
+any proper ideal of the non-maximal order; asserted by CM theory, citing
+Gross, *Heegner points on X₀(N)* (Durham 1983; 1984), pp. 87–105) and
+p. 3730. The manuscript's "Theorem 2.15" at tex 2914–2922 is not where it
+is printed. The value form also uses `ℚ(X₀(N)) = ℚ(j, j_N)`, which CCL does
+not state; that is a separate classical input (locator UNVERIFIED). No
+action of the class group or norm relation is assumed. -/
 def HeegnerValuesInRingClassField (N : ℕ) [NeZero N] : Prop :=
   ∀ (K : Type) [Field K] [NumberField K],
     Module.finrank ℚ K = 2 → IsTotallyComplex K →
