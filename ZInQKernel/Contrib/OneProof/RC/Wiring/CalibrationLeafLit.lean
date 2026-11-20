@@ -326,10 +326,10 @@ structure KummerCoordinateBlockLit (K : Type) [Field K] [NumberField K] (E₀ : 
     Finite (AddCommGroup.primaryComponent (centralCurve G).toAffine.Point 2)
   /-- the integral central first cohomology has rank one (`s₂(E^{(h)}/K) = 1`; at every covered
   address of either sign of `h_x` it holds by Gross–Zagier–Kolyvagin and the finiteness of `Ш`,
-  tex 4006–4021, not formalized; the in-tree discharge `centralRankOne_of_arithmetic_pos` covers
-  `h_x > 0` only, and Lean's admissible families do have `h_x < 0` (`qstar 3 = -3`) unless
-  `D.prepared` excludes them; the text's families have one real sign, `ε(c) = 1`, tex 1864–1869,
-  so `h_x > 0`) -/
+  tex 4006–4021, not formalized; the in-tree discharges are `centralRankOne_of_arithmetic_pos`
+  for `h_x > 0` and RC36's signed route `centralRankOne_of_arithmetic_ne`
+  (`SignedCalibrationLeaf.lean`) for either sign, Lean's admissible families having `h_x < 0` as
+  well (`qstar 3 = -3`); the text's families have one real sign, `ε(c) = 1`, tex 1864–1869) -/
   rank_one : Module.finrank ℤ_[2] ((compactCentralComplex G).homology 1) = 1
   /-- the degree-one disk has the length of the constructed integral disk -/
   hval₁ : x₁.valuation = (centralDiskMatrix G hfinite 1).det.valuation

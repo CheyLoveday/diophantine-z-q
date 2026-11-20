@@ -39,7 +39,12 @@ complex as matrix data, and passes it through the limit.
   case, a homotopy equivalence between models of different ranks, is NOT proved here: it is the
   statement `KmCoordComparisonUnit`.
 * (d) `RetainedMapsToCochains`: the remaining item of tex 4438–4439, 4449–4450, the maps of the
-  limit models to the original cochains over `Λ`, as one statement (not proved here).
+  limit models to the original cochains over `Λ`, as one statement (not proved here). It does NOT
+  hold as stated: nothing ties `XΛ` to the stage complexes, and it fails for `XΛ = 0`
+  (`not_retainedMapsToCochains`, `CloudB3E1Torsion/RetainedModels.lean`). No theorem uses it; a
+  correct form needs the original cochains over `Λ` whose stage reductions are the stage complexes,
+  with the stage retracts carried through the limit. The end field no longer needs it
+  (`htildeE_of_retained'`).
 
 Kinds: definitions and PROVED; `KmCoordComparisonUnit` and `RetainedMapsToCochains` are
 statements (definitions of propositions), not proved.
@@ -889,7 +894,9 @@ cochains with `Λ`-coefficients) and two finite free complexes `Y₁`, `Y₂` ov
 limit `limitHE c U` of the stage comparison data is the comparison data of actual retracts of
 `XΛ` onto `Y₁` and `Y₂` (`modelEquiv_of_retracts`). The stage retracts of the genuine stage
 complexes are not carried through the limit in this tree. Kind: definition (a statement, not
-proved). -/
+proved). It does NOT hold as stated, since `XΛ` is not tied to the stage complexes: it fails for
+`XΛ = 0` (`not_retainedMapsToCochains`). Do not use it as a hypothesis; restate it with the
+original cochains whose stage reductions are the stage complexes. -/
 def RetainedMapsToCochains {A0 A1 A2 A3 B0 B1 B2 B3 : Type} [Fintype A0] [Fintype A1]
     [Fintype A2] [Fintype A3] [Fintype B0] [Fintype B1] [Fintype B2] [Fintype B3]
     [DecidableEq A0] [DecidableEq A1] [DecidableEq A2] [DecidableEq A3] [DecidableEq B0]
