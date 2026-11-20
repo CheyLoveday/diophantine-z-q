@@ -19,3 +19,11 @@ calculation is for the explicit order already used by the detector
 covariant Hom lattice, so the generator read from a prime-to-detector
 ideal quotient is inverse to the positive ideal generator; the
 annihilator on the source uses the reverse Hom group.
+
+**VERIFIED (Lean 4.35.0):** `InverseLattice` passed direct checking after
+building the pinned `ShimuraJ` import and its dependency graph.
+The preimage of the completed reference lattice under the finite
+idele is the completion of the reference fractional ideal divided by
+the positive ideal. The fixed-idele Artin lift and the previous
+Shimura consequence now give the arithmetic formula with the same
+inverse convention, with no new reciprocity input.
