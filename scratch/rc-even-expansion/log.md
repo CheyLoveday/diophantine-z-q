@@ -28,4 +28,6 @@ VERIFIED: `Mask.lean` builds with five standard theorem audits. `evenMasked` sup
 
 VERIFIED: `Ordinary.lean` and `Unary.lean` build with six standard theorem audits. `ordinaryThetaLaw` supplies both the cusp bound and the fourth-power transformation. `unary_hasSum` gives convergence of the exact correction coefficients, and `exists_unary_parity` supplies the parity choice. The weighted unary Poisson comparison remains open.
 
+VERIFIED: `Assembly.lean` builds with nine standard theorem audits. `moving_of_step` iterates the exact single-prime law on the series of the masked form. `evenWeightTwo` computes the coefficients of the actual assembled form at every index, with the unary characters lifted from their intrinsic levels. `evenVector_eval` gives the corresponding coefficient formula for separate basis coordinates. `evenExpansion` compares the two images of the divided series and transfers the equality through the complex embedding and the integral inclusion. Only the actual-form coordinate comparison is assumed in this last transfer.
+
 Build setup: the initial Lake import build was stopped when Lake's default compiler concurrency was noticed. Subsequent Lake builds use a compiler lock; direct checks are sequential.
