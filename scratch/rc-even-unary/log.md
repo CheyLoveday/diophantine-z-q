@@ -26,3 +26,7 @@ VERIFIED by direct Lean checks: `OddDenominator.lean` resums ordinary theta usin
 VERIFIED by direct Lean checks: `Relative.lean` proves the complete weighted relative law at every matrix whose lower-left entry is divisible by `4B²j`, including upper translation and the lower unipotents. `OrdinaryPhase.lean` computes the absolute scalar `(-j/p)` when the lower-right entry is an odd prime `p`, with the ordinary theta multiplier cubed.
 
 VERIFIED by direct Lean checks: `Assembly.lean` supplies the exact `EvenUnaryStageLaw` assuming only the scalar identity for two ordinary theta ratios; its transfer lemma supplies the weight-two form and the conditional lattice coefficient equality. The ordinary scalar assumption has no weighted data, cusp estimate, membership assertion, or constituent comparison.
+
+VERIFIED by direct Lean checks: `Complete.lean` proves the ordinary comparison on the entire level group, using a right translation to a prime lower-right entry and treating triangular matrices by periodicity and negation. `evenUnaryStageLaw` proves the original proposition for every positive shell, and `evenExpansion_of_unary` removes the unary premise from the fixed even expansion. No hypothesis about the weighted law is left open.
+
+VERIFIED: the scratch audit checks 72 public and private theorems. Their only axioms are `propext`, `Classical.choice`, and `Quot.sound`.
