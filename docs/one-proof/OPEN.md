@@ -82,6 +82,7 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`cmHeight62`](#cmheight62) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) | 2026-11-19 |
 | [`t10TateDuality`](#t10tateduality) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6996190309)) | 2026-11-19 |
 | [`hRC`](#hrc) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) | 2026-11-17 |
+| [`hCT`](#hct) | @mccorvie ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) | 2026-11-20 |
 
 ## Packets
 
@@ -148,7 +149,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`fowlerProp27PrintCanonical`](#fowlerprop27printcanonical) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 1 | open |
 | [`silverbergZarhinThm35`](#silverbergzarhinthm35) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
-| [`hCT`](#hct) | frozenTarget | published | LEAF | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
+| [`hCT`](#hct) | frozenTarget | published | LEAF | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) |
 | [`hB`](#hb) | frozenTarget | published | LEAF | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
 | [`hK`](#hk) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
 
@@ -494,10 +495,10 @@ ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine
 ### hCT
 
 * Argument `hCT` of `frozenTarget`; kind **published**, strict **LEAF**; flag: AI read (docs/research/cassels-tate-pairing.md, docs/research/lem54-ct-check.md); a direct instance of a secondary print (provenance (b)): Poonen-Stoll restating Cassels' theorem, existence form, specialized to the curves E_l; Milne ADT I.6.13(a) corroborates only.
-* Source: Poonen-Stoll, The Cassels-Tate pairing on polarized abelian varieties, Ann. of Math. (2) 150 (1999), 1109-1149, Introduction, first paragraph, p. 2 (the author's version the bibliography links, math.mit.edu/~poonen/papers/sha.pdf; the cited version is the print): for an elliptic curve over a number field a pairing Sha x Sha -> Q/Z that is alternating and nondegenerate after dividing by the maximal divisible subgroup (Poonen-Stoll restating Cassels' theorem); cited at diophantine_zq.tex L1079-1081
+* Source: Poonen-Stoll, The Cassels-Tate pairing on polarized abelian varieties, Ann. of Math. (2) 150 (1999), 1109-1149, Introduction, first paragraph, p. 2 of the author's version, p. 1110 of the journal (pagination from arXiv:math/9911267v1) (the author's version the bibliography links, math.mit.edu/~poonen/papers/sha.pdf; the cited version is the print): for an elliptic curve over a number field a pairing Sha x Sha -> Q/Z that is alternating and nondegenerate after dividing by the maximal divisible subgroup (Poonen-Stoll restating Cassels' theorem); cited at diophantine_zq.tex L1079-1081
 * discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)).
 
 ```lean
 ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves
@@ -559,8 +560,8 @@ ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted
 
 ### hK
 
-* Argument `hK` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: Kolyvagin (MPI/90-69) Thm 1 p. 4 assumes a weak Weil parametrization X0(N) -> E with N the conductor (p. 3); IsModular implies it via Shimura's construction plus Faltings' isogeny theorem (BCDT's (2) => (6)); AI page read 11-17.
-* Source: Kolyvagin, On the Mordell-Weil group and the Shafarevich-Tate group of modular elliptic curves, MPIM preprint MPI/90-69 (1990), Theorem 1, the case r = 1
+* Argument `hK` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: Kolyvagin (MPI/90-69) Thm 1 p. 4 assumes a weak Weil parametrization X0(N) -> E with N the conductor (p. 3); IsModular (some level, no eigenform condition) is not that premise and is not BCDT's condition (2); the row follows from BCDT Theorem A (condition (2), level N(E)) with Shimura's construction and Faltings' isogeny theorem (BCDT's (2) => (6), trivial nebentypus), so it is a composite of two prints and its premise IsModular is idle in that derivation; from IsModular alone the bridge also needs Atkin-Lehner-Li newform theory and Carayol's theorem; the preprint states Thm 1 with a scheme of proof (Gross-Zagier, Waldspurger, Kolyvagin's own papers); AI page reads 11-17 and 11-18.
+* Source: Kolyvagin, On the Mordell-Weil group and the Shafarevich-Tate group of modular elliptic curves, MPIM preprint MPI/90-69 (1990), Theorem 1, the case r = 1, with Breuil-Conrad-Diamond-Taylor, Theorem A, for the premise
 * discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
 * Human readings recorded: none.
 * Status: open.

@@ -82,7 +82,7 @@ theorem exists_nsmul_eq_of_mem_divisiblePart {A : Type*} [AddCommGroup A] {x : A
 /-- **The Cassels–Tate pairing for an elliptic curve `E/ℚ`** (existence form): an alternating
 biadditive pairing `Sha(E/ℚ) × Sha(E/ℚ) → ℚ/ℤ` with left radical equal to the maximal divisible
 subgroup. This is Cassels' elliptic-curve theorem as stated in Poonen–Stoll, Ann. of Math. (2)
-150 (1999), 1109–1149, Introduction, first paragraph (p. 2 of the author's version; see the remarks
+150 (1999), 1109–1149, Introduction, first paragraph (p. 2 of the author's version, p. 1110 of the journal; see the remarks
 after Corollary 12 for alternation). The manuscript cites it at `diophantine_zq.tex` L1079–1081.
 Milne, *Arithmetic Duality Theorems*, 2nd ed., I.6.13(a), p. 82, gives the kernels on each primary
 component for the pairing with the dual; see p. 81 for alternation under the polarization defined
