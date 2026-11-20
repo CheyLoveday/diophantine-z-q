@@ -2,7 +2,9 @@
 
 `CMFieldOfDefinitionScoped` restricts the existing pointwise source descent to tex 2839–2844 and 2915–2916. The broad assertion implies it, and both level-one models satisfy it. **At general level this is an input, not a proved result.** No general descent, branch comparison or new print is used.
 
-**Scope finding.** The existing Heegner anchor asks for every positive conductor prime to `N · |D_K|`. Tex 2841 requires the conductor to be prime to `2N · |D_K|`. The scoped anchor versions keep the old conclusions and explicitly require `2 ∣ N`, which puts the old conductor domain in scope. The original anchor binder does not supply that parity fact. The genus and rough-companion selectors already carry the stronger local hypotheses.
+**Verification stop.** Only the scoped definition, restriction and level-one proofs, and orientation specialization compiled. Host load reached 220.01 against the 120 limit while a check was stalled on disk I/O. The five wrapper modules are preserved as an unverified [scratch patch](../../scratch/rc-cm-scope/pending-wrappers.patch). The wrappers and axiom audits still need Lean verification.
+
+**Scope finding.** The existing Heegner anchor asks for every positive conductor prime to `N · |D_K|`. Tex 2841 requires the conductor to be prime to `2N · |D_K|`. The drafted scoped anchor versions keep the old conclusions and explicitly require `2 ∣ N`, which puts the old conductor domain in scope. The original anchor binder does not supply that parity fact. The genus and rough-companion selectors already carry the stronger local hypotheses.
 
 ## Where the CM quantifiers are instantiated
 
@@ -22,9 +24,9 @@ The definition binds a fixed root β² ≡ D_K modulo 4N before the conductor, a
 
 At the level of the conductor predicates, N = 1, D_K = −7 and c = 2 give d = −28 and the primitive form [1,0,7]. The field is split at 2 and 2 is coprime to 7, but 2 is not coprime to 14. This example does not assert that the actual curve has odd level. To discharge `2 ∣ N`, the actual-curve owner needs the level parity result in Lean, or the anchor owner needs an agreed change of the predicate. The mathematical route to parity is bad reduction at 2 and identification of the minimal newform level with the conductor. For the displayed model the discriminant has 2-adic valuation 8 + 6v₂(ℓ), never a multiple of 12. Thus a change of variables cannot produce unit discriminant at 2. This route is on the spot (c) and is not formalized here.
 
-## New statements
+## Verified declarations and wrapper drafts
 
-All declarations are under `ZInQ.Manuscript.RC.CMScope`. Value statements use the original curve, scale and analytic map `phiAn`.
+All declaration names below are under `ZInQ.Manuscript.RC.CMScope`. Value statements use the original curve, scale and analytic map `phiAn`. Only the first four rows of the table have compiled.
 
 | Declaration | Statement and binder |
 | --- | --- |
@@ -93,4 +95,7 @@ The anchor quantifies over the two old Galois slots in its conclusion. It suppli
 
 ## Verification status
 
-`Field.lean` and `Orientation.lean` passed serial `lake env lean -j1` with a 60 GB systemd memory cap. The remaining wrappers and their complete axiom audits await verification. A later build reached host load above 120, so no new Lean process was started at that load.
+- `Field.lean` and `Orientation.lean` passed serial `lake env lean -j1` under `MemoryMax=60G`. No axiom or sorry was added. The script checked load and available memory before each Lean invocation.
+- `Evaluation.lean`: the first check found a missing classical instance. The corrected retry was started while resource gates passed, then stopped after stalling on disk I/O while load was above the limit. No claim is made about that retry's result. `Prepared.lean`, `Values.lean`, `Anchor.lean`, and `Selector.lean` were not checked.
+- The requested `#print axioms` commands are in [ScopeCheck.lean](../../scratch/rc-cm-scope/ScopeCheck.lean), [CoreCheck.lean](../../scratch/rc-cm-scope/CoreCheck.lean), and [ConsumersCheck.lean](../../scratch/rc-cm-scope/ConsumersCheck.lean). None of those three audit files ran; no axiom list was verified in this run.
+- Resume by checking the resources, then running the scope audit and applying the scratch patch. Build existing imports serially, and check the drafted files in the order Evaluation, Prepared, Values, Anchor, Selector, then run the core and consumer audits. `git apply --check` passed for the patch.
