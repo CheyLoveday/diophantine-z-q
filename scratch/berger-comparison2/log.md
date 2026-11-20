@@ -148,3 +148,17 @@ different issues: independence of presentation, and crystalline range.
   actual `BcrisOf` and commutes with Galois. The logarithm formula
   applies to both `t` and each Galois shift. These files compiled
   directly with `lake env lean`.
+
+## Truncated log estimate (VERIFIED)
+
+- `LogDenominators.lean`: at any prime, for `0 < n < 2 p^k`,
+  `p^k/n` is integral. Its only nonzero residue in this range is at
+  `n=p^k`, where the residue is one. Thus the scaled Witt truncation
+  of `log(1-X)` reduces to `-X^(p^k)`. Its finite coefficients
+  agree after inverting p, and `log(1-X)` evaluated at `ξ/p` is
+  `log[p̃]`.
+- The maximal localization proof also gives denominators for any
+  two `Bmax` coefficients. Clearing them in a relation with
+  `log[p̃]` gives a relation in the integral image and preserves
+  a nonzero leading coefficient.
+- These two modules compiled with `lake env lean`.

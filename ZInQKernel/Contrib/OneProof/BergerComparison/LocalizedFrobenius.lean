@@ -270,4 +270,47 @@ theorem coefficientFrobenius_galois {ε : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps 
   obtain ⟨y, rfl⟩ := maxLift_surj p h x
   exact DFunLike.congr_fun jEq y
 
+/-- An embedded maximal period has a denominator from the integral
+ring whose image is a unit in the maximal period ring. -/
+theorem exists_maximal_denominator {ε : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε) (x : Bmax p) :
+    ∃ a s : Amax p, IsUnit (maxEmbed p s) ∧ x * maxEmbed p s = maxEmbed p a := by
+  obtain ⟨z, rfl⟩ := maxLift_surj p h x
+  obtain ⟨⟨a, s⟩, hs⟩ := IsLocalization.surj (Submonoid.powers (denominator p h)) z
+  have hLift (b : Amax p) : maxLift p h (algebraMap (Amax p) (LocalizedMax p h) b) = maxEmbed p b := by
+    rw [maxLift, IsLocalization.Away.lift_eq]
+  refine ⟨a, s, ?_, ?_⟩
+  · rw [← hLift]
+    exact (IsLocalization.map_units (LocalizedMax p h) s).map (maxLift p h)
+  · simpa only [map_mul, hLift] using congrArg (maxLift p h) hs
+
+/-- A linear relation over the maximal coefficient ring can be
+cleared to an integral relation. A nonzero leading coefficient
+stays nonzero when multiplied by the common denominator. -/
+theorem clear_maximal_log_relation {ε : PreTilt 𝓞_ℂ_[p] p} (h : IsGenEps p ε)
+    {a b : Bmax p} (ha : a ≠ 0) (rel : (a : BdR p) * toBdR p (logPTilde p) = b) :
+    ∃ A B : Amax p, A ≠ 0 ∧ A.val * logPTilde p = B.val := by
+  obtain ⟨a', s, hu, hs⟩ := exists_maximal_denominator p h a
+  obtain ⟨b', t, hv, ht⟩ := exists_maximal_denominator p h b
+  let A := a' * t
+  let B := b' * s
+  have hA : maxEmbed p A = a * (maxEmbed p s * maxEmbed p t) := by
+    dsimp only [A]
+    rw [map_mul, ← hs, mul_assoc]
+  have hB : maxEmbed p B = b * (maxEmbed p s * maxEmbed p t) := by
+    dsimp only [B]
+    rw [map_mul, ← ht, mul_assoc, mul_comm (maxEmbed p t)]
+  refine ⟨A, B, ?_, ?_⟩
+  · intro he
+    apply ha
+    have hu' := hu.mul hv
+    apply hu'.mul_right_cancel
+    rw [zero_mul, ← hA, he, map_zero]
+  · have h := congrArg (fun x : Bmax p => (x : BdR p)) hA
+    have h' := congrArg (fun x : Bmax p => (x : BdR p)) hB
+    change toBdR p A.val = (a : BdR p) * ((maxEmbed p s : BdR p)*(maxEmbed p t : BdR p)) at h
+    change toBdR p B.val = (b : BdR p) * ((maxEmbed p s : BdR p)*(maxEmbed p t : BdR p)) at h'
+    apply toBdR_injective p
+    rw [map_mul, h, h', ← rel]
+    ring
+
 end ZInQ.Manuscript.BergerComparison
