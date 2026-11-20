@@ -10,3 +10,7 @@ VERIFIED by reading `EvenExpansion/Assembly.lean` and `EvenExpansion/Unary.lean`
 | Transfer (tex 9626–9632, 9647–9655) | `includeUnary_mem`, `evenWeightTwo`, `evenExpansion`; the odd `BlocksPerU.UnaryStageLaw` is still an independent input, not a supplier. | Instantiate the unary argument and retain the existing moving and constituent-coordinate inputs. |
 
 Known inherited error, VERIFIED from tex 8162–8176: the shorthand assertion about the integer multipliers omits the original reference coefficient; the following explicit formula restores it. The unary calculation uses neither formula.
+
+VERIFIED by direct Lean checks: `Lines.lean` proves the weighted offset-line sum and Poisson identity, and `Resum.lean` proves the finite Fourier expansion, rational resummation and holomorphy of a general periodic weighted series. The derivative contribution is exactly one additional inverse Jacobi parameter. The offset term cancels.
+
+Build setup: reusable artifacts came from the same revision. Lake rebuilt or replayed the low-level imports; a no-rebuild run for the full assembly dependency graph flagged stale artifacts in three upstream targets although the requested assembly object was present. Compiler invocations were locked. Two attempts to restart the setup overlapped at the Lake command level; the overlap was stopped, and direct checks thereafter are sequential.
