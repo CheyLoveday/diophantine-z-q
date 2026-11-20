@@ -18,4 +18,6 @@ VERIFIED: `Projector.dual_orthogonality` compiles and its axioms are standard. T
 
 VERIFIED: `Operators.lean` compiles with seven standard theorem audits. Its actual dilation inserts zeros; its normalized finite additive average retains the multiples, including index zero. In particular `U_(p²) V_p` has the coefficients of `U_p`, and their difference with the weighted dilation has `Top` as its convergent expansion. The multiplier comparison is separate.
 
+VERIFIED: `MaskCore.lean` passes both the Lake build and a direct Lean check. `quadraticProjection` cuts out a chosen unit label from an actual cusp form by a sum of quadratic twists at a single explicit level, retaining the lifted old character. The theorem gives the coefficients on units and nonunits at every index. Both theorem audits are standard.
+
 Build setup: the initial Lake import build was stopped when Lake's default compiler concurrency was noticed. Subsequent Lake builds use a compiler lock; direct checks are sequential.
