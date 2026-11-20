@@ -1,6 +1,6 @@
 # Cusp specialization on the normalized modular curve
 
-**Source specialization and the geometric cusp assignment proved.** On the specified normalization, the `S`-translated chart converges in the complex scheme topology to the rational point `zeroPoint N`. Every cusp orbit has an assigned point over the algebraic closure of ℚ in ℂ, characterized by the source limit for any of its integral labels. Given the based Abel–Jacobi factorization, the comparison on these cusp classes follows from the compatible target uniformization and the existing analytic limits. The specialization to the represented Jacobian is under verification. The target realization and the independent rational-map comparison remain open.
+**The source specialization, geometric cusp assignment, and based Jacobian are proved.** The `S`-translated chart converges in the complex scheme topology to the rational point `zeroPoint N`. Every cusp orbit has an assigned point over the algebraic closure of ℚ in ℂ, characterized by the source limit for any of its integral labels. The cusp classes in the represented Jacobian supply `hCuspFactor` for the Elkik reduction. The weighted identity on these actual classes follows from the compatible target realization and the existing analytic limits; the realization of the fixed elliptic target and the independent rational-map comparison remain open.
 
 The source is `Over.mk (X0Model.overQ N)`, definitionally `Over.mk (X0Branch.model N).overQ`. Its interior point has the same underlying scheme map as `(X0Branch.model N).complexPoint`. The specialization uses only the underlying scheme and chart.
 
@@ -35,6 +35,10 @@ Tendsto (fun τ : ℍ => complexLift (interior N (σ • τ))) atImInfty
 | `cuspAssignment_zero_limit` | The source chart at `S` converges to the assigned actual point at zero; this discharges the source hypothesis of the previous weighted comparison. |
 | `cusp_comparison_of_factor` | For a group morphism with `aj ≫ g = π`, compatible continuous torus evaluation, an interior comparison and the analytic limits, the induced homomorphism on geometric points sends every finite rational cusp label to its prescribed analytic limit. This supplies the specialization used in `hAJ`. |
 | `cusp_at_infinity_maps_to_unit` | For an injective additive uniformization with its continuous realization, the interior comparison and the analytic zero limit at infinity imply `X0Model.cusp N ≫ π.left = (η[A.X]).left`. This supplies the basedness equation needed by the Albanese factor. |
+| `aj0_classifies`, `isJacobian_aj0` | For any parameter point `p : B ⟶ source N`, `p ≫ aj0 N` represents the pullback of the diagonal-minus-marked-section Picard class. At a geometric cusp this is `[c] − [∞]`. The morphism has the based Jacobian universal property at the rational width-one point. Supplies the actual group `Additive ((J0 N).Pt Qbar)` for the Elkik reduction. |
+| `algebraicCuspClass_factors` | `algebraicCuspClass N r = classOfCusp N (aj0 N) (algebraicCusp N) (ElkikPrint.cuspOrbit N r)`. This is `hCuspFactor` with the actual geometric cusp classes. |
+| `modularFactor_isMonHom`, `aj0_comp_modularFactor` | A based `π : source N ⟶ A.X` factors as `aj0 N ≫ modularFactor N π hb`; the factor is a group scheme homomorphism. |
+| `cusp_comparison`, `weighted_comparison`, `weighted_comparison_from_limits` | The induced additive homomorphism `φ : Additive ((J0 N).Pt Qbar) →+ T` sends `algebraicCuspClass N r` to `lim r` for every finite rational label. The weighted form gives the equality for `r = a/m`, `a < m`, `jacobiSym (a : ℤ) m ≠ 0`. The last theorem derives the required basedness from the analytic zero limit and injectivity of the compatible additive uniformization. Supplies `φ` and the weighted identity for `hAJ`. |
 
 The local theorem statements used by these proofs are:
 
@@ -45,12 +49,16 @@ The local theorem statements used by these proofs are:
 - `qParam_one_zpow`, `qParam_at_cusp`, `dilate_S_dilate`, `dilate_contract`, `tendsto_contract`: integer powers of the width-one parameter are exponential terms; the width parameter tends through nonzero values to zero at infinity; dilation with `S` satisfies the width-`N` change of parameters, and its inverse dilation preserves the cusp filter.
 - `exists_cusp_root`, `qParam_level_pow`, `hasSum_first`, `second_form`, `coeffMap_qExpand`, `coeffMap_qTwist`, `translated_generator_expansions`: the root of unity for the triangular substitution is algebraic; the width-one parameter is the `N`-th power of the width-`N` parameter; both coordinates have the convergent triangular expansions; coefficient embeddings commute with their expansion and twist operators.
 - `evaluation_eq_sectionMap`, `complexLift_injective`, `rat_label_real`, `translated_limit_congr`, `extend_rationalAsGeometric`, `extendJacobian_class`: evaluating a section by its germ equals evaluating its restriction to the point; the complex lift is injective; modular cusp labels commute with the embedding ℚ → ℝ; equivalent labels yield the same limit; both coordinate extensions of a rational point agree; extending the coordinates of a class commutes with applying Abel–Jacobi.
+- `modelPicard_exists`: the degree-zero Picard sheaf of this particular source has a tensor-compatible representation by an abelian variety over ℚ, by the existing Jacobian package.
 
 No theorem takes a new structure or named proposition as a hypothesis. The Laurent sum hypotheses concern two scalar functions, whereas the source limit concerns points and all open neighborhoods. The common affine neighborhood condition is algebraic, whereas the conclusion is topological separation. The target hypotheses give a group morphism, its factorization on the whole curve, an evaluation on the interior, and the limits of an analytic function. They do not identify any algebraic cusp or compare a cusp class with an analytic value. These are the inputs for tex 1785–1787 and 2937–2943.
 
 ## Inputs still needed for the manuscript
 
 Use `E = Ecurve ℓ`, `N = newformLevel E`, `m = d.natAbs`, `X = Over.mk (X0Branch.model N).overQ` and `T = ℂ ⧸ Lat.lattice.toAddSubgroup`.
+
+For the exact `hAJ` of `ElkikPrint.hElkikMD_of_elkikTorsion`, take `an = ParamAtScale.torusValue Lat f.toCuspForm κ` and
+`lim r = QuotientAddGroup.mk' Lat.lattice.toAddSubgroup ((c : ℂ) * ElkikMD.cuspSymbol f.toCuspForm r)`, with `c : ℚ`, `c ≠ 0`, and `(c : ℂ) = κ`. The zero and finite-cusp limits are the ones provided by `ParamJoin.algebraicParametrizationAtScale_and_cuspLimits`. The character guard is `chiD d a = jacobiSym (a : ℤ) d.natAbs`. The pre-existing ellipticity, level, newform, lattice, and genus-partner binders of the reduction stay in force; the table lists the remaining mathematical inputs.
 
 | Input | Tex | Owner and size |
 |---|---|---|
@@ -74,13 +82,13 @@ The Albanese factorization of an already constructed `π` does not choose either
 | Tex | Verdict |
 |---|---|
 | 1779–1784 | Error at 1784, inherited: the cited proposition and remark do not by themselves provide the normalized-newform statement; see Known issues. |
-| 1785–1787 | Gap filled: the normalized model has the required rational base cusp, and its geometric cusp limits yield the comparison given the based Abel–Jacobi factorization and compatible target. The specialization of its source chart to algebraic cusps is proved in the complex scheme topology. |
+| 1785–1787 | Gap filled: the normalized model has the required rational base cusp, the represented Abel–Jacobi map has the factorization property, and its geometric cusp limits yield the comparison for a compatible target. The specialization of the source chart is in the complex scheme topology. |
 | 1785–1787 | Unverified: the independent maps to the given elliptic curve and their identification with the analytic parametrization still need the target and comparison listed above. |
 | 1825–1828 | Unverified for the independent rational-map argument: the interior formula in the at-scale lane assumes the rational scale witness. A source limit does not give the eventual identity. |
 | 2836–2838 | Gap filled for a compatible target: the limit of the original chart and the analytic zero limit give the algebraic basedness equation over ℚ. |
-| 2937–2939 | Gap filled: the cusp orbit assignment gives actual geometric points, so the resulting class map factors through that orbit set. Cusp labels alone do not specify the field of definition. |
+| 2937–2939 | Gap filled: the cusp orbit assignment gives actual geometric points; the Abel–Jacobi classifier identifies their point-minus-infinity classes, and the class map factors through the orbit set. Cusp labels alone do not specify the field of definition. |
 | 2940–2943, 11158–11160 | OK as invoked: the prior printed torsion statement remains the input. The weighted identity for these geometric classes follows upon specializing the compatible target and existing analytic cusp limits. |
 
 ## Validation
 
-The source limit, orbit assignment, basedness equation, and comparison for a given Abel–Jacobi factor passed serial `lake env lean`; their declaration audits report only `propext`, `Classical.choice`, and `Quot.sound`.
+All 15 new Lean files passed standalone serial `lake env lean -DautoImplicit=false`, after building their imports, including the represented Picard and Albanese modules. The `#print axioms` audit on 115 declarations reports only `propext`, `Classical.choice`, and `Quot.sound`. No file of the previous run was edited. The imports exclude `ZInQKernel.OneProof.Main`.
