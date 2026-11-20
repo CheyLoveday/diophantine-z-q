@@ -27,3 +27,10 @@ idele is the completion of the reference fractional ideal divided by
 the positive ideal. The fixed-idele Artin lift and the previous
 Shimura consequence now give the arithmetic formula with the same
 inverse convention, with no new reciprocity input.
+
+**VERIFIED (Lean 4.35.0):** `SplitCoset` passed direct checking
+after building `LocalWeights.LevelSupport`. For each positive
+exponent, including at two, the standard idempotent and its
+complement give the two chain exponents and the two labelled
+diagonal-torus double coset representatives. The selected root of
+the in-tree spectral projector has level image one.
