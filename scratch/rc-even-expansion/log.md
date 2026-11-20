@@ -11,3 +11,5 @@ VERIFIED: the requested old-stage merge succeeded; see `merge.txt`.
 | Weight two and transfer | `theta_product_modular`, `qExpansion_theta_product`, `commonCoeff_place` and `commonCoeff_complex`. | Small: retain separate characters at each intrinsic level, raise to a common Gamma1 space, assemble a period-one expansion, and inject through the given common place and the actual constituent coordinates. |
 
 VERIFIED (tex 7898–7910, 7929–7934, 7813–7817): the manuscript's additive projection is on every integral frequency, including indices with square factors; only the subsequent phase comparison uses the full odd squarefree filter. The manuscript already describes the additive realization of the mask.
+
+VERIFIED: `Jacobi.jacobiTheta_fourth_transform` compiles. The fourth power transforms in weight two on Gamma0(4). The proof uses Poisson inversion at the Fricke map, then centered Euclidean reduction by upper and lower unipotents. All 13 theorem audits are standard.
