@@ -1,4 +1,4 @@
-"""Replay the integer inequalities in docs/research/known-theorem-routes-20261120.md."""
+"""Replay the integer inequalities in docs/research/fixed-field-height-budget-20261120.md."""
 
 from math import factorial
 
