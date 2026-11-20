@@ -9,3 +9,13 @@
 | Primes of the level | `RC/Eichler/Local.lean` gives the standard Eichler matrix shape, and `RC/LocalWeights/LevelSupport.lean` gives the level character and the integral spectral projector. The companion split calculation diagonalizes projectors by order units. |
 | Reciprocity and normalizations | `RingClassLattice.lean` gives the idele intersection/colon formula, the lattice for an integral ideal, and passage to the Artin image. The preceding `ShimuraJ` module leaves the equality with the inverse ideal lattice explicit. The covariant Hom lattice `Hom(A₀,A)` and the annihilator right ideal at the source are different uses of right ideals. Their inverses must be tracked before comparing with the adelic action. |
 | Previous steps and consumer | The conductor-one logs record the singular-modulus integrality, Néron extension, étale torsion, and inert criterion. Tex 9245–9279 uses the sign fibre and identifies the actual reduction; tex 9279–9295 uses that pointwise identification and the separate parametrization square. `Consumer` forwards an oriented correspondence to `PMGeometry.InputsAtDatum`. |
+
+## First verified calculation tranche
+
+**VERIFIED (Lean 4.35.0):** `RamifiedCoset`, `RightIdealCoordinates`, and
+`RestrictedCosets` passed direct `lake env lean` checks. The division
+calculation is for the explicit order already used by the detector
+(`q ≡ 3 mod 4`, tex 8437). The right-ideal calculation uses the
+covariant Hom lattice, so the generator read from a prime-to-detector
+ideal quotient is inverse to the positive ideal generator; the
+annihilator on the source uses the reverse Hom group.
