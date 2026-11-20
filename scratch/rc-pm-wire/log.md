@@ -6,3 +6,4 @@
 - `MovingCusp`: focused Lake build passed; the matrix factors through a positive dilation, and the cusp limit and faithfulness identify its geometric point. Four audits clean.
 - `Operators`: focused Lake build passed; `overRelationAtScale` gives the rational affine relation and `overRelation_baseChange` gives its specialization. Six audits clean.
 - `Cusps`: focused Lake build passed; the represented Abel–Jacobi factor and the geometric cusp class give torsion of the rational translation, and its fixed multiplier annihilates its reduction. Seven audits clean.
+- `Fibre`: focused Lake build passed; the divisor interface uses the same Néron readings on actual coarse points and formal labels for the rational target translations. Thirteen audits clean.
