@@ -43,3 +43,16 @@
   conductor-one ramified line and each level-prime-to-p two-degeneracy space
   at level exponent one, with the Eisenstein good recursion on old Eisenstein
   pairs. It does not follow from the old inertia-difference argument alone.
+
+## Build checkpoint
+
+- VERIFIED (dependency scan): the requested direct base imports reach a
+  large repository dependency cone absent from the copied `.lake`; it
+  reaches neither `ZInQKernel.OneProof.Main` nor `Contrib/TYZGenus`.
+  The offline Lake build serializes Lean invocations and checks host load
+  and available memory at each invocation.
+- VERIFIED (build): Lake built all requested imports offline.
+- VERIFIED (Lean): `Operator.lean` compiles serially. On the ramified
+  coordinates the matrix comparison and scalar algebra prove both
+  equations; the split proof adds the old contribution given
+  `OldBlockCubic`.
