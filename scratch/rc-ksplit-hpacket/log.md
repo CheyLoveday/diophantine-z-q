@@ -63,3 +63,7 @@
   Frobenius trace and determinant to the chosen unramified lift, derives
   the old matrix from the two generator shifts and `GoodRec`, and proves
   `OldBlockCubic` from spanning by the resulting pairs.
+- VERIFIED (Lean): `Determinant.lean` compiles serially. It proves the
+  Eisenstein character product and the good-Frobenius density bridge,
+  then obtains both block scalars and the integer-two difference from
+  the actual character comparisons at the selected lift.
