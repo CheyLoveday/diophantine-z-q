@@ -101,3 +101,21 @@ the load/memory gate, with downloads disabled. The pre-run gate is
   This is before extending to restricted series and proving descent
   through equality of their evaluations. The actual equivariant
   semistable map has not been constructed.
+
+## Final verification and count (VERIFIED)
+
+- The three contribution modules compiled individually with
+  `lake env lean`. Their import artifacts for the scratch checks were
+  built with one `lake --old --no-cache build <Module>` at a time,
+  using the same load/memory gate.
+- `lake env lean scratch/berger-comparison/Reduction.lean` compiled
+  the conditional path through `BergerThm06Print` to the exact row.
+  This uses the ring equality and equivariant map as premises. It
+  neither imports nor edits the headline, and is not a new discharge.
+- `lake env lean scratch/berger-comparison/Axioms.lean` compiled.
+  Its 17 explicit `#print axioms` checks and the allowlist for all 48
+  theorems (including private and generated declarations) reported
+  only `propext`, `Classical.choice`, and `Quot.sound`. See
+  `scratch/berger-comparison/axioms-output.txt`.
+- No fresh journal reading or new printed theorem. No folded
+  statements, no `sorry`, and count delta 0 GLUE / 0 LEAF.
