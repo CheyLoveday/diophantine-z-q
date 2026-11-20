@@ -22,4 +22,6 @@ VERIFIED: `MaskCore.lean` passes both the Lake build and a direct Lean check. `q
 
 VERIFIED: `Permutation.lean` passes its direct check. Its `upSquare_conjugation` supplies the residue permutation, integral entries, determinant, preserved level and bottom-right residue needed for the finite sum. All three audits are standard. The equality of the two theta multipliers is a separate calculation.
 
+VERIFIED: `SeriesBounds.lean` passes its direct check. The positive square-shell series is absolutely summable for a period parameter of norm less than one when the coefficient norm is bounded by the shell parameter. The audit is standard.
+
 Build setup: the initial Lake import build was stopped when Lake's default compiler concurrency was noticed. Subsequent Lake builds use a compiler lock; direct checks are sequential.
