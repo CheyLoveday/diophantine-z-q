@@ -114,4 +114,3 @@ theorem PlacedCuspLists.fresh_coeff_mem (q r n : ℕ) (hn : n ≠ 0)
   exact hmem x
 
 end ZInQ.Manuscript.RC.EvenJoin
-
