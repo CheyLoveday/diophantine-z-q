@@ -18,15 +18,17 @@ modules.
   injective modules are injective), the singular block is K-injective and projective termwise
   (free terms), and a split quasi-isomorphism of K-injective complexes is the projection of a
   retract (`exists_retract_of_surjective_quasiIso_kInj`).
-* `GenuineCochainsInjective` (PRINT): at a stage ring, the genuine local cochain modules are
-  injective; it implies round 6's `GenuineCochainsKInjective` (`genuineCochainsKInjective_of`).
+* `GenuineCochainsInjective` (a statement, PROVED downstream: `genuineCochainsInjective_proved`,
+  by Nöbeling, Invent. Math. 6 (1968), Thm 2, with Bass–Papp): at a stage ring, the genuine local
+  cochain modules are injective; it implies round 6's `GenuineCochainsKInjective`
+  (`genuineCochainsKInjective_of`).
 * **`exists_retract_localQuotient_place_stage`**, **`exists_retract_twoPlaces_place_stage`**
   (PROVED): at the stage rings, from `TameCochainQuasiIso`, `IwasawaGenerators` and
   `GenuineCochainsInjective`, the local quotients at the conjugate places retract onto
   `twoSingCx F q z z⁻¹` over the stage ring itself, so the block `twoPlaceBlock F q z z⁻¹` holds
   in integral (stage) bases.
 
-Kinds: PRINT (one statement), PROVED.
+Kinds: definitions (one statement, PROVED downstream), PROVED.
 -/
 
 noncomputable section
@@ -136,14 +138,15 @@ end Ring
 
 section PlaceStage
 
-/-- **PRINT: the genuine local cochain modules are injective at a stage ring**
+/-- **The genuine local cochain modules are injective at a stage ring**
 (tex 3470–3480): for a Noetherian self-injective coefficient ring `k` and a finite discrete
 coefficient module `M`, free over `k`, every term `C^n_cont(G_{K_w}, M)` of the genuine local
 complex is an injective `k`-module. Literature: `C^n_cont(G^n, M)` is the module of locally
 constant maps on the profinite set `G^n`, `LC(G^n, ℤ) ⊗ M`, free over `k` since `LC(G^n, ℤ)` is a
 free abelian group (Nöbeling, Invent. Math. 6 (1968); Mathlib's `LocallyConstant.freeOfProfinite`);
 a free module over a Noetherian self-injective ring is injective (Bass–Papp: direct sums of
-injective modules over a Noetherian ring are injective). Kind: PRINT. -/
+injective modules over a Noetherian ring are injective).
+Kind: definition (a statement, PROVED downstream: `genuineCochainsInjective_proved`). -/
 def GenuineCochainsInjective : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (S : Set (HeightOneSpectrum (𝓞 K))) (k : Type)
     [CommRing k] [TopologicalSpace k] [IsNoetherianRing k] [Module.Injective k k] (M : Type)

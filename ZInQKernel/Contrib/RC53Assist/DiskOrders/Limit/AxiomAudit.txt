@@ -1,0 +1,121 @@
+Axiom audit: actual checking output, line-wrapped
+One PRINT definition and 38 proved theorems.
+Only propext, Classical.choice, and Quot.sound occur.
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.SilvermanX42TwoPowerLevelPrint'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelIncl_killed'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelDelta_ker'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelDelta_range'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelIncl_levelClass'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelKummer_injective'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelKummer_exact'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelIncl_range'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelToSha_surjective'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.silvermanX42TwoPowerLevelPrint'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.finite_twoPower_exponent'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.continuous_twoPower_exponent'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.galK_compact'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.inclK_levelToInfinite'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.infinite_class_from_level'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.infinite_class_twoPrimary'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelToInfinite_mem_selmer'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.selmer_class_from_level'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelToInfinite_next'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelIncl_next'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelNext_mem_selmer'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelNext_levelDelta'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.infinite_levelDelta_half'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.inclK_infinite_levelDelta'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.exists_nsmul_eq_of_coprime_exponent'
+  depends on axioms: [propext, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.divisible_of_twoPrimary'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.kernel_class_from_point'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.kernel_two_divisible'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.image_eq_primary_of_levels'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.kummerSequenceTwoPowerPrint_of_levels'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.kummerSequenceTwoPowerPrint'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.rational_finite_mem_iff'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.levelToInfinite_res'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.rational_selmerLevel_mem_iff'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.elliptic_example'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.finite_selmer_nonzero'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.finite_selmer_proper'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.imaginary_quadratic_nontrivial'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
+'ZInQ.Contrib.RC53Assist.DiskOrders.Limit.quadratic_level_example'
+  depends on axioms: [propext, Classical.choice, Quot.sound]
+
