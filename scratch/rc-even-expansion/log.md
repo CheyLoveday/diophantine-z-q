@@ -24,4 +24,6 @@ VERIFIED: `Permutation.lean` passes its direct check. Its `upSquare_conjugation`
 
 VERIFIED: `SeriesBounds.lean` passes its direct check. The positive square-shell series is absolutely summable for a period parameter of norm less than one when the coefficient norm is bounded by the shell parameter. The audit is standard.
 
+VERIFIED: `Mask.lean` builds with five standard theorem audits. `evenMasked` supplies the normalized App E form at `(P.phaseData.N * conductor W.S)^3`, with the original character lifted, prime support in `W.S`, and the exact mask at every index. `evenMasked_reference` gives coefficient one at `D₀`; the two bridges give its convergent expansion in the half-integral interface.
+
 Build setup: the initial Lake import build was stopped when Lake's default compiler concurrency was noticed. Subsequent Lake builds use a compiler lock; direct checks are sequential.
