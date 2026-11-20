@@ -1,4 +1,4 @@
-import ZInQKernel.Contrib.OneProof.RC.HCMV21.GeometricKernel
+import ZInQKernel.Contrib.OneProof.RC.HCMV21.PrimeToGeometry
 
 /-! For a finite étale quotient of the reference, the covariant Hom
 lattice pulled back by the isogeny has an integral description. At
@@ -8,7 +8,7 @@ completed enhanced Hom lattice with the reference order. -/
 namespace ZInQ.Manuscript.RC.HCMV21
 
 open CategoryTheory AlgebraicGeometry
-open PkgI3.AbVar ZInQ.DefFaltings
+open PkgI3.AbVar ZInQ.DefFaltings ZInQ.Contrib.MilneQuasiInverse
 open scoped CategoryTheory.MonObj
 
 variable {k : Type} [Field k] {A B : PkgI3.AbVar k}
@@ -67,5 +67,57 @@ theorem span_quotient_levelHom_eq_source_order {S M : Type*}
       exact (congrArg ((↑hm.unit⁻¹ : S) * ·) hm.unit_spec.symm).trans (Units.inv_mul hm.unit)
     change φ f ∈ L
     simpa only [smul_smul, he, one_smul] using L.smul_mem (↑hm.unit⁻¹ : S) h
+
+/-- Before dividing by `m`, a covariant enhanced Hom lattice in
+reverse-isogeny coordinates is cut out inside the reference level order
+by one condition on the geometric `m`-torsion. This is the actual
+individual kernel of the quotient, so the criterion distinguishes
+different labelled quotients of the same degree. -/
+theorem mem_postcomposeToEnd_levelHom_image_iff
+    (u : Hom A B) (v : Hom B A) (m : ℕ) (hm : (m : k) ≠ 0)
+    (hu : u.hom ≫ v.hom = ((m : ℤ) : A.End).hom)
+    (hv : v.hom ≫ u.hom = ((m : ℤ) : B.End).hom)
+    (C : Subgroup (A.Pt k)) (hC : (Nat.card C).Coprime m) (a : A.End) :
+    a ∈ postcomposeToEnd v '' (levelHom C (C.map (ptMap u)) : Set (Hom A B)) ↔
+      a ∈ levelEnd A C ∧
+        ∀ P : A.Pt (AlgebraicClosure k), P ^ m = 1 → (P ≫ a.hom) ≫ u.hom = 1 := by
+  constructor
+  · rintro ⟨g, hg, rfl⟩
+    refine ⟨postcomposeToEnd_mem_level u v m hu C g hg, ?_⟩
+    intro P hP
+    change (P ≫ (g.hom ≫ v.hom)) ≫ u.hom = 1
+    rw [← Category.assoc P, Category.assoc, hv, AvSplit.comp_natCast_hom',
+      ← MonObj.pow_comp, hP, MonObj.one_comp]
+  · rintro ⟨ha, hker⟩
+    let mult : Hom A A := ((m : ℤ) : A.End)
+    obtain ⟨hf, he, hs⟩ := finiteEtale_mul_of_ne_zero A m hm
+    let : IsFinite mult.hom.left := hf
+    let : Etale mult.hom.left := he
+    let : Surjective mult.hom.left := hs
+    have : EffectiveEpi mult.hom :=
+      Descent.GroupDescent.Construction.effectiveEpi_over_of_fpqc mult.hom
+    have ⟨g, hg, _⟩ := existsUnique_factor_of_etale_kernel mult
+      (Hom.mk' (a.hom ≫ u.hom)) (fun P hP => by
+        change P ≫ ((m : ℤ) : A.End).hom = 1 at hP
+        rw [AvSplit.comp_natCast_hom'] at hP
+        change P ≫ (a.hom ≫ u.hom) = 1
+        rw [← Category.assoc]
+        exact hker P hP)
+    have hg' : mult.hom ≫ g.hom = a.hom ≫ u.hom := hg
+    refine ⟨g, ?_, Hom.ext' ?_⟩
+    · intro P hP
+      obtain ⟨Q, hQ⟩ := (powCoprime hC).surjective ⟨P, hP⟩
+      have hQ' : (Q : A.Pt k) ^ m = P := congrArg Subtype.val hQ
+      refine ⟨(Q : A.Pt k) ≫ a.hom, ha _ Q.prop, ?_⟩
+      change ((Q : A.Pt k) ≫ a.hom) ≫ u.hom = P ≫ g.hom
+      rw [Category.assoc, ← hg', ← Category.assoc, ← hQ']
+      rw [show (Q : A.Pt k) ≫ mult.hom = (Q : A.Pt k) ^ m from
+        AvSplit.comp_natCast_hom' A _ m]
+    · change g.hom ≫ v.hom = a.hom
+      apply (cancel_epi mult.hom).mp
+      rw [← Category.assoc, hg', Category.assoc, hu, AvSplit.comp_natCast_hom']
+      have hmul : mult.hom = (𝟙 A.X : A.X ⟶ A.X) ^ m := by
+        simpa only [Category.id_comp] using AvSplit.comp_natCast_hom' A (𝟙 A.X) m
+      rw [hmul, MonObj.pow_comp, Category.id_comp]
 
 end ZInQ.Manuscript.RC.HCMV21
