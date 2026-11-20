@@ -11,3 +11,6 @@
 - `Source.lean`: `lake env lean -j1` passed; original App E phase, initial coprimality sieve, (E.11), and fixed minimum. Signed avoidance implies unsigned sieve membership. The existing reading detects nonzero coefficients attaining the minimum; some negative index attains it.
 - `Comparison.lean`: `lake env lean -j1` passed; `old_transport_inputs` proves four inputs and `C.Lstar k ≠ 0` with the common old reference and support inclusions.
 - `AxiomsComparison.lean`: all six checks report `[propext, Classical.choice, Quot.sound]`.
+- `Transport.lean`: `lake env lean -j1` passed; `transported_lower_of_companion_old_unit` applies the original transport theorem to the same `W.kfin` and `G`.
+- `Axioms.lean`: the transport theorem reports `[propext, Classical.choice, Quot.sound]`.
+- Total: four module compiles; nine axiom checks; no new prints.
