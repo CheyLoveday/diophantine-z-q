@@ -13,7 +13,7 @@ Each hypothesis is a Lean `Prop`; proving one in Lean, or reducing it to stateme
 removes it. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute and check a proof.
 
-**22 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves73`), plus four hypotheses outside the H part (`hRC`, `hCT`, `hB`, `hK`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
+**22 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves73`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
 
 * **Strict count: 4 published / 18 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
@@ -150,8 +150,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`silverbergZarhinThm35`](#silverbergzarhinthm35) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
 | [`hCT`](#hct) | frozenTarget | published | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) |
-| [`hB`](#hb) | frozenTarget | published | LEAF | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
-| [`hK`](#hk) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | open |
+| [`hRank`](#hrank) | frozenTarget | published | GLUE | pending-reading |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | open |
 
 ## The hypotheses
 
@@ -508,81 +507,22 @@ ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves
 > `E_ℓ : y² = x(x − ℓ)(x + 3ℓ)` for positive squarefree `ℓ ≡ 11 (mod 12)`, the curves of Theorem 5.3 and
 > Lemma 5.4).
 
-### hB
+### hRank
 
-* Argument `hB` of `frozenTarget`; kind **published**, strict **LEAF**; flag: BCDT Theorem A as printed, read with condition (2) of the Introduction (author manuscript pp. 1-3, page images read, AI): 'Theorem A. If E/Q is an elliptic curve, then E is modular.' (p. 1); 'It is known that the following conditions are equivalent. (1) The L-function L(E, s) of E equals the L-function L(f, s) for some eigenform f. (2) The L-function L(E, s) of E equals the L-function L(f, s) for some eigenform f of weight 2 and level N(E). [...] When these equivalent conditions are satisfied we call E modular.' (pp. 2-3), with cusp forms on Gamma1(N) (p. 1) and eigenforms for the T_p with p not dividing N (p. 2); formalized as ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted (condition (2) at some level N >= 1, implied by the print since the library has no conductor); the former hypothesis PoleS12.BCDTThmA follows by bcdtThmA_of_printed (trivial nebentypus proved); journal check (author copy vs the print): MATCH, J. Amer. Math. Soc. 14 (2001), pp. 843-845 (Jack 11-21: author copies of refereed papers keep their rating while the journal check runs).
-* Source: Breuil-Conrad-Diamond-Taylor, On the modularity of elliptic curves over Q: wild 3-adic exercises, J. Amer. Math. Soc. 14 (2001), 843-939, Theorem A (journal pp. 843-845 checked against the author manuscript: MATCH) with condition (2) of the Introduction; the author manuscript (bibitem bcdt) pp. 1-3; cited at diophantine_zq.tex L1092
-* discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
+* Argument `hRank` of `frozenTarget`; kind **published**, strict **GLUE**; flag: AI-READ of the rank-one display and its surrounding qualifications; pending a human statement check of the Hasse–Weil L-function interface..
+* Source: J. H. Silverman, The Arithmetic of Elliptic Curves, 2nd ed., Springer GTM 106 (2009), Appendix C, Evidence 16.5.5, pp. 452–453, rank-one display on p. 453; the statement uses only the Mordell–Weil rank conclusion.
+* discussion: [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127).
 * Human readings recorded: none.
 * Status: open.
 
 ```lean
-ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted
+ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne
 ```
 
-> **PRINT**, Breuil–Conrad–Diamond–Taylor, Theorem A, read with condition (2) of the
-> Introduction; J. Amer. Math. Soc. 14 (2001) 843–939; the author manuscript is the cited copy
-> (bibitem `bcdt`), pp. 1–3, page images read. This is a proposition, not an axiom.
-> 
-> Verbatim printed text. Theorem A (p. 1): "Theorem A. If `E/ℚ` is an elliptic curve, then `E`
-> is modular." Definitions (p. 1): "If `N` is a positive integer then we let `Γ₁(N)` denote the
-> subgroup of `SL₂(ℤ)` consisting of matrices that modulo `N` are of the form `(1 ∗; 0 1)`. [...]
-> Recall that a cusp form of weight `k ≥ 1` and level `N ≥ 1` is a holomorphic function `f` on the
-> upper half complex plane `𝔥` such that • for all matrices `(a b; c d) ∈ Γ₁(N)` and all `z ∈ 𝔥`,
-> we have `f((az + b)/(cz + d)) = (cz + d)^k f(z)`; • and `|f(z)|² (Im z)^k` is bounded on `𝔥`.
-> The space `S_k(N)` of cusp forms of weight `k` and level `N` is a finite dimensional complex
-> vector space. If `f ∈ S_k(N)` then it has an expansion `f(z) = ∑_{n=1}^∞ c_n(f) e^{2πinz}` and
-> we define the L-series of `f` to be `L(f, s) = ∑_{n=1}^∞ c_n(f)/n^s`." Hecke operators and
-> eigenforms (p. 2): "For each prime `p ∤ N` there is a linear operator `T_p` on `S_k(N)` defined
-> by `(f|T_p)(z) = p^{−1} ∑_{i=0}^{p−1} f((z + i)/p) + p^{k−1} (cpz + d)^{−k}
-> f((apz + b)/(cpz + d))` for any `(a b; c d) ∈ SL₂(ℤ)` with `c ≡ 0 mod N` and `d ≡ p mod N`.
-> The operators `T_p` for `p ∤ N` can be simultaneously diagonalised on the space `S_k(N)` and a
-> simultaneous eigenvector is called an eigenform. If `f` is an eigenform then the corresponding
-> eigenvalues, `a_p(f)`, are algebraic integers and we have `c_p(f) = a_p(f) c_1(f)`." Modularity
-> (pp. 2–3): "Now consider an elliptic curve `E/ℚ`. [...] Let `N(E)` denote the conductor of `E`.
-> It is known that the following conditions are equivalent. (1) The L-function `L(E, s)` of `E`
-> equals the L-function `L(f, s)` for some eigenform `f`. (2) The L-function `L(E, s)` of `E`
-> equals the L-function `L(f, s)` for some eigenform `f` of weight 2 and level `N(E)`. [...]
-> When these equivalent conditions are satisfied we call `E` modular."
-> 
-> Formalized: every elliptic curve `E/ℚ` satisfies condition (2) (`Condition2At`) at some positive
-> level. Faithfulness notes: (i) the level is not identified with the conductor `N(E)`, which the
-> library lacks, so the statement is implied by the print and is weaker only in that respect
-> (`BCDTThmAPrintedAtLevel` is the printed form at a prescribed level); (ii) `S_k(N)` is Mathlib's
-> `CuspForm` on `Γ₁(N)`, which `Dictionary.lean` identifies with the printed definition
-> (`isPrintedCuspForm_iff`); (iii) `T_p` is the vendored double-coset operator, given by the
-> printed formula (`heckeTCuspNat_apply_eq_printed`); (iv) an eigenform is exactly
-> `IsBCDTEigenform`; (v) the equality of L-functions is required on some right half-plane only,
-> which for an eigenform is equivalent to `c_n(f) = a_n(E)` for all `n ≥ 1` (`condition2At_iff`).
-> `Literal.lean` writes the same statement with the printed definitions themselves (cusp forms as
-> functions, the printed `T_p`, the printed expansion) and proves it equivalent
-> (`bcdtThmAPrintedLiteral_iff`).
-
-### hK
-
-* Argument `hK` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: Kolyvagin (MPI/90-69) Thm 1 p. 4 assumes a weak Weil parametrization X0(N) -> E with N the conductor (p. 3); IsModular (some level, no eigenform condition) is not that premise and is not BCDT's condition (2); the row follows from BCDT Theorem A (condition (2), level N(E)) with Shimura's construction and Faltings' isogeny theorem (BCDT's (2) => (6), trivial nebentypus), so it is a composite of two prints and its premise IsModular is idle in that derivation; Kolyvagin's print is an unrefereed MPIM preprint, so the row stays GLUE; from IsModular alone the bridge also needs Atkin-Lehner-Li newform theory and Carayol's theorem; the preprint states Thm 1 with a scheme of proof (Gross-Zagier, Waldspurger, Kolyvagin's own papers); AI page reads 11-17 and 11-18.
-* Source: Kolyvagin, On the Mordell-Weil group and the Shafarevich-Tate group of modular elliptic curves, MPIM preprint MPI/90-69 (1990), Theorem 1, the case r = 1, with Breuil-Conrad-Diamond-Taylor, Theorem A, for the premise
-* discussion: [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.Manuscript.PoleS12.KolyvaginThm1
-```
-
-> **Kolyvagin, Theorem 1, the case `r = 1`** (consequence of the print, not the printed statement; cited: "On the Mordell–Weil group
-> and the Shafarevich–Tate group of modular elliptic curves", MPIM preprint MPI/90-69 (1990),
-> Theorems 1–5, pp. 4–5; tex L1093, `\cite[Theorem 1, pp. 4–5]{kolyvagin}`; read (AI) on fork
-> issue #83: https://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6962416523):
-> a modular elliptic curve `E/ℚ` with `ord_{s=1} L(E, s) = 1` has `rank E(ℚ) = 1` and finite
-> `Ш(E/ℚ)`. Theorem 1 (p. 4) assumes a weak Weil parametrization `X₀(N) → E` with `N` the conductor
-> (p. 3). `IsModular` is a weaker hypothesis, so this statement is a consequence of the print: it follows
-> from Kolyvagin's weak Weil parametrization hypothesis only through Shimura's construction (an abelian
-> variety quotient of `J₀(N)` attached to the newform) and Faltings' isogeny theorem (with trivial
-> nebentypus), the step BCDT cite
-> for (2) ⇒ (6) on p. 3 of their author manuscript. `Ш` is `SelmerTwoPower.sha` (Tau Ceti's Shafarevich–Tate group, local triviality at every
-> place). The print is a preprint, not a refereed paper (Known issue, round 1); its `r = 0` case is
-> not used.
+> Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C,
+> Evidence 16.5.5, p. 453, rank-one line. The Hasse–Weil L-function is represented
+> by its analytic continuation from the half-plane of absolute convergence.
+> Kind: PRINT.
 
 ## Credits
 
