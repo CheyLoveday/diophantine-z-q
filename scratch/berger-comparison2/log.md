@@ -171,7 +171,18 @@ different issues: independence of presentation, and crystalline range.
 Clear denominators in the finite evaluation and reduce modulo p.
 Vanishing modulo `ξ^(p^k+i+1)` forces the top coefficient to be
 divisible by ξ modulo p. The scaled log has only one surviving term,
-so this makes the coefficient at `i) belong to `(p,ξ)`. The ξ
+so this makes the coefficient at `i` belong to `(p,ξ)`. The ξ
 correction may be taken with finite support, since the original
 series is restricted. In the actual image `ξ=pX`, so `p∣a`;
 iterate with `r+1` and apply p-adic separation to conclude `a=0`.
+
+## Transcendence and the Fontaine embedding (VERIFIED)
+
+The offline build of the base import `LogPTranscendenceBdR` succeeded
+with `lake --old --no-cache build +ZInQKernel.Contrib.OneProof.LogPTranscendenceBdR:olean`.
+It includes the existing proofs of de Rham invariants and the
+minimal-degree Galois argument. `LogTranscendence.lean` then compiled
+with `lake env lean`: the integral obstruction and maximal
+denominator clearing prove `logPTilde_notInFrac`, hence
+`logPTilde_transcendental` and `fontainePolynomialEmbedding`, both
+with no additional mathematical hypotheses.
