@@ -48,7 +48,7 @@ $$
 Both left factors of the non-scalar products are in
 $\mathrm{SL}_2(\mathbf Z)$; the scalar $Q$ acts trivially on the upper
 half-plane. Thus $j(A\tau)=j(Q\tau)$ and $j(NA\tau)=j(M\tau)$.
-This checks the `atkinGL` convention directly. The pole orders at
+This checks the `atkinGL` convention directly. The Laurent orders at
 infinity are $-Q$ and $-M$; the literal swap of the original series
 is the Fricke case $Q=N$.
 
