@@ -14,3 +14,8 @@ Coefficient stage:
 
 - VERIFIED (Lean): `weightedMap_single`, `weightedMap_invDeck`, `weightedMap_comp`, `specialize_familyMap`, `weightedMap_quotient` and `weightedMap_fullWeight_single` compile; see the corresponding compile and axiom outputs. The weighted map acts on group rings over both the integral and finite coefficient rings.
 - VERIFIED (build audit): Lake bypassed the serialization shim in the initial dependency build by selecting its colocated Lean binary; that build was interrupted. The one-process limit was not enforced on that attempt. Later builds explicitly select the serialized Lean entry point, with a host load and available memory check before each compiler invocation. The initial failed draft check is not an axiom result.
+
+Finite identity stage:
+
+- VERIFIED (Lake): the Kato and family imports built with the serial compiler wrapper. Compatible compiled artifacts were reused only when the source closures agreed byte for byte.
+- VERIFIED (Lean): the full-index range is exactly disjointness from `Sig`; the primitive divisor introduces exactly `unusedPrimes`; repeated two introduces no factor on the covered range. `finite_e1` gives the product formula from that norm and the two transfer laws, with `constituentWeight` retaining both conductor parts. The signed deck sum detected by the abstract reciprocity field is not killed by any nonzero natural number. All twelve finite-identity axiom checks pass.
