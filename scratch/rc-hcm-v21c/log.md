@@ -48,3 +48,14 @@ the level-one maximal-order theorem (Voight, GTM 288; Deuring 1941).
 The proposition elaborates over actual abelian varieties of dimension
 one and integer quaternion orders; it has no provider. It is the only
 new printed candidate.
+
+**VERIFIED (Lean 4.35.0):** `GeometricKernel` and `InverseOrbit`
+passed direct checks. Kernel containment descends along finite étale
+surjective maps in any characteristic, giving the integral annihilator
+and the corresponding Tate lattice; target factor maps carry the
+actual level and labels. For completed adelic coordinates at the
+reference, the prior torsor argument assembles the inverse action and
+the quadratic sum reindexes by inversion. The geometry file uses the
+kernel, descent and Tate modules directly, with the three small
+comparison proofs adapted from `GRUniformQuasiInverse`. It does not
+import the latter's unrelated height and effective isogeny dependencies.
