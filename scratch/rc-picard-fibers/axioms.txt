@@ -1,0 +1,130 @@
+'ZInQ.Manuscript.RC.PicardFibers.AdmissibleD.disc_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.AdmissibleD.disc_squarefree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.AdmissibleD.mod_eight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.actual_local_conj_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.actual_orientation_factor_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.adelicClass_classRepresentative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.adelicClass_eq_of_translate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.adelic_factor_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.cancel_right_factor' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.PicardFibers.centralizer_mul_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Realization.0.ZInQ.Manuscript.RC.PicardFibers.chosen_generator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.class_stabilizer_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.AdelicFactor.0.ZInQ.Manuscript.RC.PicardFibers.commute_factor' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.conj_value_commute' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.TorusComparison.0.ZInQ.Manuscript.RC.PicardFibers.conjugate_mem_iff' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.IdeleClass.0.ZInQ.Manuscript.RC.PicardFibers.count_idealOfIdele' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.count_ideleToIdeal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.diagonalCentralizer_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Realization.0.ZInQ.Manuscript.RC.PicardFibers.divisionBit_conj' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.OrbitQuotient.0.ZInQ.Manuscript.RC.PicardFibers.doubleCoset_mulEquiv_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.exists_frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.LocalConjugacy.0.ZInQ.Manuscript.RC.PicardFibers.exists_levelPrime' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.IdeleClass.0.ZInQ.Manuscript.RC.PicardFibers.fractionalIdeal_eq_of_counts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.frame_cancel_backward' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.frame_cancel_forward' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.PicardFibers.groupIdeles_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.ideleCentralizerEquiv_diagonal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.ideleCentralizerEquiv_integral' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.ideleCentralizerEquiv_rational' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.ideleClassMap_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.ideleExponent_cofinite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.ideleExponent_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.ideleExponent_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.TorusComparison.0.ZInQ.Manuscript.RC.PicardFibers.idelePrimeBlocks_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.ideleToIdeal_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.ideleToIdeal_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.IdeleClass.0.ZInQ.Manuscript.RC.PicardFibers.ideleVal_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.TorusComparison.0.ZInQ.Manuscript.RC.PicardFibers.idele_kernel_primeBlocks' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.IdeleClass.0.ZInQ.Manuscript.RC.PicardFibers.intValuation_eq_count' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.AdelicFactor.0.ZInQ.Manuscript.RC.PicardFibers.intertwines_factor' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.PicardFibers.ker_ideleClassMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Realization.0.ZInQ.Manuscript.RC.PicardFibers.labelAt_conj' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.OrbitQuotient.0.ZInQ.Manuscript.RC.PicardFibers.leftRel_sup_iff_doubleCoset' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Realization.0.ZInQ.Manuscript.RC.PicardFibers.levelBit_conj' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.local_mem_conj_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.mem_ker_ideleToIdeal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.mem_ker_ideleToIdeal_iff_grouped' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.orbitFromRep_eq_frame' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.orbitFromRep_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.orbitFromRep_orientation_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.orbitFromRep_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.patch_admissible_adele' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.TorusComparison.0.ZInQ.Manuscript.RC.PicardFibers.primeBelow_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.rationalCentralizer_eq_range' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.rationalPrimeUnder_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.realize_tuple' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.referenceAffine_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.PicardFibers.referenceUnit_sphere' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Assembly.0.ZInQ.Manuscript.RC.PicardFibers.reference_sq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.reframe_frame' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.LocalConjugacy.0.ZInQ.Manuscript.RC.PicardFibers.reframe_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.same_class_orbit_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.Representatives.0.ZInQ.Manuscript.RC.PicardFibers.transport_local' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.LocalConjugacy.0.ZInQ.Manuscript.RC.PicardFibers.unitConj_affine' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.LocalConjugacy.0.ZInQ.Manuscript.RC.PicardFibers.unitConj_iff_intertwines' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.LocalConjugacy.0.ZInQ.Manuscript.RC.PicardFibers.unitConj_iff_map' depends on axioms: [propext,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.LocalConjugacy.0.ZInQ.Manuscript.RC.PicardFibers.unitConj_map' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.LocalConjugacy.0.ZInQ.Manuscript.RC.PicardFibers.unitConj_symm' does not depend on any axioms
+'_private.ZInQKernel.Contrib.OneProof.RC.PicardFibers.LocalConjugacy.0.ZInQ.Manuscript.RC.PicardFibers.unitConj_trans' does not depend on any axioms
