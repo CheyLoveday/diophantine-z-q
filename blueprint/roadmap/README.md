@@ -10,17 +10,30 @@ an integer polynomial in 292,890,231,905 variables, of degree below $2\uparrow\u
 and with coefficients below $2\uparrow\uparrow 8$, whose rational zero projection to the
 first variable is exactly $\mathbb Z$.
 
-The proof has one target, a shared construction and two inputs: the six-contact height estimate and
-pole completeness. There are two routes to the pole input, and each gives a headline theorem. Both are
+The proof has one target, a construction and two inputs: the six-contact height estimate and pole
+completeness. There are two routes to the pole input, and each gives a headline theorem. Both are
 headlines; they are means to the same end.
 
-| | Elliot's route | The congruent-number route |
-| --- | --- | --- |
-| Headline | [The main theorem by Elliot's route](main/main-theorem.md) | [The main theorem by the congruent-number route](main/main-theorem-reading-a-gross-zagier.md) |
-| Pole polynomial | the manuscript's, with curves $y^2=x(x-\ell)(x+3\ell)$ | a variant, with the congruent number curves $y^2=x(x-\ell)(x+\ell)$ |
-| Pole input | pole completeness (Theorem 5.2), derived from the restricted converse (Theorem 5.3) | the certified rank hypothesis, from Tian–Yuan–Zhang's Theorem 3.5(2) in reading A and Gross–Zagier |
-| Height input | the minimal height hypothesis | the minimal height hypothesis |
-| Lean | this fork's main, `ZInQ.OneProof.frozenTarget` | the tag `route-k-final` (`ZInQ.Contrib.GaussFE.frozenTarget_of_sixContactMin_tyzThm35ReadingA_grossZagier`); pinned upstream in elliotglazer/diophantine-z-q, whose main has the form that also assumes Hecke's continuation and the functional equation; nasqret/z-in-q-lean builds on it |
+```mermaid
+flowchart TD
+  T["Theorem 1.1, the frozen target"]
+  C["The construction: proved"] --> T
+  H["Height input: the minimal height hypothesis"] --> T
+  P["Pole input"] --> T
+  HD["Elliot's route: the height decomposition"] --> H
+  PE["Elliot's route: Theorem 5.2 from Theorem 5.3"] --> P
+  PK["The congruent-number route: certified rank"] --> P
+```
+
+## Status by route
+
+| Route | Lean | Proved in Lean | Assumed |
+| --- | --- | --- | --- |
+| [Elliot's route](main/main-theorem.md) | this fork's main, `ZInQ.OneProof.frozenTarget` | the construction; Theorem 1.1 from the two inputs; the height input from the open statements of [the height decomposition](height-decomposition/README.md); pole completeness from four inputs | the open statements of the height decomposition (published theorems and consequences of them or of the manuscript's text); Theorem 5.3, the manuscript's own theorem, reduced in Lean to cited results and one structure of remaining hypotheses; the Cassels–Tate pairing on the curves $E_\ell$ and Theorem A of Breuil, Conrad, Diamond and Taylor, both as printed; a consequence of Kolyvagin's Theorem 1 together with Theorem A |
+| [The congruent-number route](main/main-theorem-reading-a-gross-zagier.md) | the tag `route-k-final` (`ZInQ.Contrib.GaussFE.frozenTarget_of_sixContactMin_tyzThm35ReadingA_grossZagier`) | the construction, for a variant of the pole polynomial; Theorem 1.1 from the minimal height hypothesis and the certified rank hypothesis; that hypothesis from the two statements on the right | the minimal height hypothesis, whole; Tian–Yuan–Zhang's Theorem 3.5(2) in reading A, which no refereed text found by the project states; the Gross–Zagier statement, a textbook theorem |
+
+[docs/one-proof/OPEN.md](https://github.com/Deicyde/diophantine-z-q/blob/main/docs/one-proof/OPEN.md)
+lists every open statement of Elliot's route with its Lean statement, source and rating.
 
 **The height input.** Both headlines assume the minimal form of the six-contact height estimate, the one
 instance of the manuscript's Theorem 4.1 that the proof uses. It is not a published theorem: its proof
@@ -31,36 +44,33 @@ of the Hauptmodul value (not a published theorem) from which the minimal form is
 project reaches an ineffective height estimate by another route
 ([a note on it](height-von-kanel-note.md)).
 
-**Elliot's route.** Pole completeness is the manuscript's Theorem 5.2: an explicit polynomial, whose
-rational zeros put two points on curves $y^2=x(x-\ell)(x+3\ell)$, has a zero for every suitably prepared
-input. The manuscript derives it from its restricted converse theorem (Theorem 5.3) by a simultaneous
-2-descent (Section 5.1). That derivation is formalized:
-`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing` proves
-Theorem 5.2 from Theorem 5.3, the Cassels–Tate pairing on the curves $E_\ell$, the modularity theorem of
-Breuil, Conrad, Diamond and Taylor as printed, and a consequence of Kolyvagin's Theorem 1 together with
-it. The single proof
-`ZInQ.OneProof.frozenTarget` takes these four as hypotheses (`hRC`, `hCT`, `hB` and `hK`), beside the open
-statements of the height estimate. The proof of Theorem 5.3 (Sections 7–9 and Appendices E–G) is reduced
-in Lean to the results it cites (some in consequence form) and one structure of remaining hypotheses,
-which are not proved, so `frozenTarget` still takes Theorem 5.3 as one hypothesis.
+**Elliot's route to the pole input.** Pole completeness is the manuscript's Theorem 5.2: an explicit
+polynomial, whose rational zeros put two points on curves $E_\ell:y^2=x(x-\ell)(x+3\ell)$, has a zero for
+every suitably prepared input. The manuscript derives it from its restricted converse theorem
+(Theorem 5.3) by a simultaneous 2-descent (Section 5.1), and so does the Lean:
+`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`.
+`ZInQ.OneProof.frozenTarget` takes the four inputs of that derivation as its hypotheses `hRC`, `hCT`,
+`hB` and `hK`.
 
-**The congruent-number route.** Until fork issue #77 this fork used it in place of pole completeness: a
-variant of the pole polynomial for the congruent number curves, whose pole completeness follows from the
-certified rank hypothesis, derived from Tian–Yuan–Zhang's Theorem 3.5(2) in reading A and from
-Gross–Zagier. Its Lean is kept at the tag `route-k-final` and pinned upstream in
-elliotglazer/diophantine-z-q, and nasqret/z-in-q-lean builds on it. Its chapters are listed under the pole
-input below.
+**The congruent-number route to the pole input.** A variant of the pole polynomial, for the congruent
+number curves $C_\ell:y^2=x(x-\ell)(x+\ell)$, has pole completeness from the certified rank hypothesis,
+which follows from Tian–Yuan–Zhang's Theorem 3.5(2) in reading A and from Gross–Zagier. Its Lean is kept
+at the tag `route-k-final` and pinned upstream in elliotglazer/diophantine-z-q, and nasqret/z-in-q-lean
+builds on it.
 
-**The shared construction.** The manuscript's other inputs are proved, multiplication from the height and
-pole inputs. The Mordell–Weil theorem for the generator curve, which the generator input uses and which
-was first stated as a hypothesis, is proved too. Two of these proofs depart from the manuscript:
-- The bound for the prime catalogue follows from an effective Dirichlet theorem, with a larger cutoff
-  than the manuscript's.
-- The manuscript's twenty-two-prime pattern is not needed. A change in the completeness proof, route
-  AP, uses long arithmetic progressions of good primes instead. These come from Szemerédi's theorem in
-  the primes, from a Lean proof of the Green–Tao theorem, and from a density theorem for those primes.
+**The construction.** [An overview](construction.md) says what the polynomial is and why its rational
+zeros project to $\mathbb Z$. Everything in it is proved, with every finite computation checked by the
+Lean kernel. Two proofs depart from the manuscript: the bound for the prime catalogue follows from an
+effective Dirichlet theorem, with a larger cutoff, and route AP replaces the manuscript's
+twenty-two-prime pattern by long arithmetic progressions of good primes (Szemerédi's theorem in the
+primes, from a Lean proof of the Green–Tao theorem, and a density theorem for those primes).
 
-Everything else is proved, with every finite computation checked by the Lean kernel.
+## How to read this book
+
+Each part below opens with an overview page. Chapters are ordered as the proof uses them; within a
+chapter, every page states one result, says what it depends on, and names its Lean declaration. A page
+marked as belonging to the congruent-number route has its Lean at the tag `route-k-final` unless it says
+otherwise. Generated chapters (the height decomposition) are rewritten from the Lean at each change.
 
 ## Chapters
 
@@ -68,8 +78,9 @@ Everything else is proved, with every finite computation checked by the Lean ker
 
 - [The main theorem and its hypotheses](main/README.md)
 
-### Shared construction
+### The construction
 
+- [Overview: the polynomial and why its zeros project to ℤ](construction.md)
 - [The finite specification of the polynomial](syntax/README.md)
 - [The elliptic model of integer indices](model/README.md)
 - [Multiplication and the finite false-triple guard](multiplication/README.md)
@@ -81,12 +92,15 @@ Everything else is proved, with every finite computation checked by the Lean ker
 - [Szemerédi's theorem in the primes (Green–Tao)](green-tao/README.md)
 - [The density of good slope primes (Proposition D)](density/README.md)
 
-### Height estimate
+### The height input
 
+- [Overview: the height input](height-input.md)
 - [The minimal height hypothesis from the literature](height-decomposition/README.md)
 - [An ineffective height estimate through von Känel's bound (nasqret/z-in-q-lean)](height-von-kanel-note.md)
 
-### Pole input
+### The pole input
+
+- [Overview: the pole input](pole-input.md)
 
 #### Elliot's route
 
