@@ -1,0 +1,208 @@
+'ZInQ.Manuscript.RC.LocalTorus.completedScalar_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_11' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_8' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_9' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.finitePlacesAbove' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_7' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.continuous_completedScalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedScalar._proof_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedScalar._proof_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedScalar_ratCast' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_5' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedScalar._proof_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedScalar._proof_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedScalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.dvd_of_local_valuation._simp_1_1' depends on axioms: [propext, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_4' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.PlacesAbove' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.dvd_of_local_valuation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.valuation_prime_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.primesEquiv_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.instFactPrimeValNat_zInQKernel' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_2' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_3' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.padicCast' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.under_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_10' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.CompletedIntegers.0.ZInQ.Manuscript.RC.LocalTorus.completionMap._proof_6' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.liesOver' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.denseRange_diagonal_integers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedQuadratic._proof_5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.generator._proof_1' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.LocalTorus.generator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.affineEval_mem_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.QuadraticCompletion.0.ZInQ.Manuscript.RC.LocalTorus.evalAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.QuadraticCompletion.0.ZInQ.Manuscript.RC.LocalTorus.localInteg_eval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.affine_relation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.QuadraticCompletion.0.ZInQ.Manuscript.RC.LocalTorus.nat_scalar' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedQuadratic._proof_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedQuadratic._proof_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedQuadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.generator_linear_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.QuadraticCompletion.0.ZInQ.Manuscript.RC.LocalTorus.evalAt._proof_1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.eval_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedQuadratic_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.affineEval_rat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedQuadratic._proof_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.completedQuadratic._proof_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.AdicProduct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.affineEval_mem_iff.match_1_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.QuadraticCompletion.0.ZInQ.Manuscript.RC.LocalTorus.choose_residue' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.integral_eval_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.QuadraticCompletion.0.ZInQ.Manuscript.RC.LocalTorus.affineEval_int' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.QuadraticCompletion.0.ZInQ.Manuscript.RC.LocalTorus.coefficients_dvd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.generator_rational_span' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.affineEval.eq_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.affineEval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.eval_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.division_ambient_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.local_centralizer_span' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.split_ambient_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.division_ambient_conj._abel_1_1' depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.split_reference._abel_1_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.split_reference' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.local_reference_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.ambientEval_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.conjAlg._proof_1' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.ambientEval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.embedProduct_diagonal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart._simp_1_10' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.ambientEval_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.ambientEval_injective._abel_1_1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart.match_1_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.conjugated_integral_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.local_order_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart._simp_1_11' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart.match_1_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart._simp_1_8' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart._simp_1_9' does not depend on any axioms
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.embedProduct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.ambientEval._simp_1' does not depend on any axioms
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.conjAlg' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart._simp_1_6' does not depend on any axioms
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart._simp_1_7' does not depend on any axioms
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.ambientEval._proof_1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.Loc' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.ambientEval_image' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.ambientEval_image._abel_1_1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Torus.0.ZInQ.Manuscript.RC.LocalTorus.ambientEval_injective._abel_1_2' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart._simp_1_12' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.LocalTorus.localTorusChart._proof_1_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.SplitRealization.0.ZInQ.Manuscript.RC.LocalTorus.levelPrime_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.eq_of_two_distinct_bits' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.LocalTorus.conj_map_equiv' depends on axioms: [propext, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.SplitRealization.0.ZInQ.Manuscript.RC.LocalTorus.split_of_model' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.Adelic.splitChart.congr_simp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.realize_split._proof_1_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.realize_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.affine_cancel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.realize_division' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.division_chart_val' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.division_order_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.division_chart_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.division_root_for_bit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.O7Orbits.disc.eq_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.transported_chart_val' depends on axioms: [propext,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.noncentral_of_nonsquare' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.division_affine_model' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.division_square_val' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.LocalTorus.Realization.0.ZInQ.Manuscript.RC.LocalTorus.division_affine_model._proof_1_1' depends on axioms: [propext,
+ Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.hasLocalRealizations' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.picardFibers' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.LocalTorus.orbitFibers' depends on axioms: [propext, Classical.choice, Quot.sound]
+Audited 97 theorems and 18 definitions.
