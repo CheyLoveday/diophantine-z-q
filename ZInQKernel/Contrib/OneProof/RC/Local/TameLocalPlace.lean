@@ -67,7 +67,9 @@ the proof of (7.5.13), p. 418. Original: K. Iwasawa, "On Galois groups of local 
 Amer. Math. Soc. 80 (1955), 448–469; verbatim, p. 448: "… and show that the group extension
 G(Ω/k)/G(Ω/V) splits." The quotations and the reading are at `IwasawaGeneratorsAt`.
 Kind: textbook PRINT (NSW 7.5.1, 7.5.3, 3.5.6; not cited by the manuscript) + GLUE (the reading as
-an Iwasawa triple at each place). -/
+an Iwasawa triple at each place).
+Links: Iwasawa 1955 https://doi.org/10.1090/S0002-9947-1955-0075239-5; Neukirch–Schmidt–Wingberg
+https://www.mathi.uni-heidelberg.de/~schmidt/NSW2e/NSW2.3.pdf. -/
 def IwasawaGenerators : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K)),
     (2 : 𝓞 K) ∉ w.asIdeal → IwasawaGeneratorsAt K w

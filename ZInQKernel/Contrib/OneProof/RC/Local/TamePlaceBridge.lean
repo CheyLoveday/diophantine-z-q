@@ -217,7 +217,9 @@ characteristic `p`; in characteristic `0` the same argument applies, since `cd_p
 reading). The Lean statement is an existence statement implied by the print.
 Kind: textbook PRINT (NSW 7.5.1, 7.5.3, 3.5.6; Iwasawa 1955, p. 448; not cited in the
 manuscript) + GLUE (the splitting reading in characteristic `0`, the reading above, and the
-identification of `Gloc K w` with `G_{K_w}`). -/
+identification of `Gloc K w` with `G_{K_w}`).
+Links: Iwasawa 1955 https://doi.org/10.1090/S0002-9947-1955-0075239-5; Neukirch–Schmidt–Wingberg
+https://www.mathi.uni-heidelberg.de/~schmidt/NSW2e/NSW2.3.pdf. -/
 def IwasawaGeneratorsAt : Prop :=
   ∃ (φ σ : Gloc K w) (P : Subgroup (Gloc K w)), IsIwasawaTriple K w φ σ P
 

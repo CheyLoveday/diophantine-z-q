@@ -56,7 +56,8 @@ exponents `n_ℓ` such that every family `(α_ℓ)_ℓ` of `ℤ_ℓ`-linear auto
 with `α_ℓ ≡ 1 (mod ℓ^{n_ℓ})` for `ℓ ∈ S` is `(ρ_ℓ(σ))_ℓ` for a single `σ ∈ G_ℚ`.
 
 Used at tex 2882 and 3600 (`\cite{serre}`), through `serre_two_adic`, `serre_scalar` and
-`serre_SL2_part`. Hypotheses match: `E_ℓ` is non-CM (`curve_hasNoCM`). -/
+`serre_SL2_part`. Hypotheses match: `E_ℓ` is non-CM (`curve_hasNoCM`).
+Links: Serre 1972 https://doi.org/10.1007/BF01405086. -/
 def SerreThm3 : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], HasNoCM E →
     ∃ (S : Finset Nat.Primes) (n : Nat.Primes → ℕ),
@@ -167,7 +168,9 @@ complex multiplication, then j(E) ∈ O_K." (the ring of integers of `k` is mean
 shows), with complex multiplication as defined on p. 124. GLUE: the complex multiplication of
 `E_ℚ̄` is defined over a number field `k`, and `O_k ∩ ℚ = ℤ`. Earlier locator: Silverman, *Advanced
 Topics in the Arithmetic of Elliptic Curves*, Theorem II.6.1 (page not checked).
-Kind: definition (PRINT + GLUE input). -/
+Kind: definition (PRINT + GLUE input).
+Links: Milne, Modular Functions and Modular Forms https://www.jmilne.org/math/CourseNotes/MF.pdf;
+Silverman, Advanced Topics https://doi.org/10.1007/978-1-4612-0851-8. -/
 def CMjInteger : Prop :=
   ∀ (E : WeierstrassCurve ℚ) [E.IsElliptic], ¬ HasNoCM E → ∃ z : ℤ, E.j = z
 

@@ -80,7 +80,8 @@ sequence of the cone:
   H^r(K_v, M)" (so the global cohomology vanishes in degrees `≥ 3` for totally imaginary `K`);
 * I, Theorem 2.8, p. 31: "Let M be a finite G-module of order m relatively prime to char(K).
   Then χ(G, M) = (R: mR)^{-1}" (the local terms, tex 4546–4549).
-Kind: definition (the statement; GLUE derived from the printed results, at the actual ranks). -/
+Kind: definition (the statement; GLUE derived from the printed results, at the actual ranks).
+Links: Milne, Arithmetic Duality Theorems https://www.jmilne.org/math/Books/ADTnot.pdf. -/
 def StageEulerZero (U : Ultrafilter ℕ) (Rk : ℕ → ℤ → ℕ) : Prop :=
   ∀ᶠ s in (U : Filter ℕ), Rk s 0 + Rk s 2 = Rk s 1 + Rk s 3
 
