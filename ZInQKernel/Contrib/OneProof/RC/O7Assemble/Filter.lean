@@ -1,3 +1,4 @@
+import ZInQKernel.Contrib.CloudB3RC53.GenusOdd.GenusLower
 import ZInQKernel.Contrib.OneProof.RC.PicardFibers.LocalConjugacy
 import ZInQKernel.Contrib.OneProof.RC.ThetaJoin.Support
 import ZInQKernel.Contrib.OneProof.RC.TorusWeights.Norm
@@ -7,6 +8,7 @@ import ZInQKernel.Contrib.OneProof.RC.TorusWeights.Norm
 namespace ZInQ.Manuscript.RC.O7Assemble
 
 open O7Actual O7Orbits PicardFibers ThetaJoin
+open ZInQ.Contrib.CloudB3RC53.GenusOdd
 
 section Filter
 
@@ -43,10 +45,30 @@ theorem levelFilter {n : ℕ} (A : AdmissibleD s (n : ℤ)) :
     exact (hs p hp hL).not_dvd hp
       (dvd_mul_of_dvd_left (Int.natCast_dvd.mpr hpn) _)
   · intro p hp h₂ hL
-    letI : Fact p.Prime := ⟨hp⟩
+    let : Fact p.Prime := ⟨hp⟩
     rw [← jacobiSym.legendreSym.to_jacobiSym]
     exact (legendreSym.eq_one_iff p (fun hz => (hs p hp hL).not_dvd hp
       ((ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp hz))).mpr ((hs p hp hL).2 h₂).2
+
+/-- The prepared filter and the moving detecting test give the entire
+admissibility record; in particular the product discriminant splits at two. -/
+theorem admissible_of_prepared {E : WeierstrassCurve ℚ}
+    (hN_eq : ZInQ.Contrib.CloudB3RC53.CST.newformLevel E = N)
+    (hprep : Prepared E (-(s.weights.m : ℤ)) D)
+    (hpartner : GenusPartner E (-(s.weights.m : ℤ)))
+    (hdetect : legendreSym s.ell D = 1) : AdmissibleD s D := by
+  obtain ⟨hp, hsq, hlocal, hcop⟩ := hprep
+  obtain ⟨hm, _, hmsq, _, hmlocal, _⟩ := hpartner
+  have hsplit (p : ℕ) (hP : p.Prime) (hd : p ∣ 2 * N) : SquareAt p (disc s D) := by
+    rw [← hN_eq] at hd
+    exact (hlocal p hP hd).mul (hmlocal p hP hd) hP
+  have htwo := hsplit 2 Nat.prime_two (dvd_mul_right 2 N)
+  refine ⟨hp, hsq, hcop, hdetect, htwo.odd, ⟨?_, Or.inl ⟨htwo.mod_four, ?_⟩⟩, ?_⟩
+  · exact ((mul_neg_of_pos_of_neg hp hm).trans (by decide : (0 : ℤ) < 1)).ne
+  · exact squarefree_mul_iff.mpr ⟨hcop.isRelPrime, hsq, hmsq⟩
+  · intro p hP hd
+    have h := hsplit p hP hd
+    exact ⟨h.2.1, fun h₂ => ⟨h.1, h.2.2 h₂⟩⟩
 
 end Filter
 
