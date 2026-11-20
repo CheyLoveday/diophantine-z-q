@@ -71,7 +71,8 @@ private theorem plusAct_phiOmega (σ : GQp p) {c : Ainf p}
   simp only [map_mul, phiOmega]
   ring
 
-private theorem maximalEval_polynomial (Q : Polynomial (Ainf p)) :
+/-- On polynomials, maximal evaluation is ordinary evaluation at ξ/p. -/
+theorem maximalEval_polynomial (Q : Polynomial (Ainf p)) :
     maximalEval p Q = Q.eval₂ (wittIntoPlus p) (ofLoc p (omegaP p)) := by
   change psEval (Ith p) (omegaP_mem p) (PowerSeries.map (loc p) ↑Q) = _
   rw [← Polynomial.polynomial_map_coe]

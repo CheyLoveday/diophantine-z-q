@@ -131,3 +131,20 @@ different issues: independence of presentation, and crystalline range.
   independence of the lift, and the product of two such factorizations
   gives the multiplication rule for `logSmallTeich`.
 - All preceding files compiled with `lake env lean`.
+
+## Localized coefficient and logarithm normalization (VERIFIED)
+
+- `CyclotomicBranch.lean` identifies the local logarithm with the
+  kernel-adic logarithm at untilt one and characterizes the cyclotomic
+  coordinate for any branch with the usual multiplicative rules on
+  nonzero elements and the two specified local values.
+- `FrobeniusTeichLog.lean`: the integral map fixes the p-adic integers
+  and carries every `log[ε]` with untilt one to `p * log[ε]`.
+  Compare finite sums on each side, use the agreement of their terms
+  under Witt Frobenius, and pass to the separated limit.
+- `LocalizedFrobenius.lean`: `Bmax` is the localization of the
+  embedded `Amax` at `p * t`; every p-adic scalar has bounded
+  p-denominator. The localized map is a ℚ_p-algebra map into the
+  actual `BcrisOf` and commutes with Galois. The logarithm formula
+  applies to both `t` and each Galois shift. These files compiled
+  directly with `lake env lean`.
