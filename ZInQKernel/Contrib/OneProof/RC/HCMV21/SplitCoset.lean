@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.RC.LocalWeights.LevelSupport
 import Mathlib.FieldTheory.Finite.GaloisField
+import Mathlib.RingTheory.ZMod.LocalRing
 
 -- The projector calculation adapts RC/O7Actual/SplitLocal.lean at 81b4f7066.
 /-! A rank-one integral projector in the split Eichler order is classified
@@ -100,6 +101,20 @@ theorem projector_forms_distinct (he : 0 < e) (u : (eichler p e)ˣ) :
   have : Fact (1 < p ^ e) := ⟨Nat.one_lt_pow he.ne' (Fact.out : p.Prime).one_lt⟩
   simp [map_mul, map_sub, hzero] at hh
 
+/-- An integral idempotent reads as zero or one on the cyclic
+quotient, since the prime-power residue ring is local. -/
+theorem level_projector_eq_zero_or_one (he : 0 < e) (P : eichler p e) (hP : P * P = P) :
+    level p e P = 0 ∨ level p e P = 1 := by
+  let : NeZero e := ⟨he.ne'⟩
+  let x := level p e P
+  have hx : x * x = x := by
+    change (level p e) P * (level p e) P = (level p e) P
+    rw [← map_mul, hP]
+  rcases IsLocalRing.isUnit_or_isUnit_one_sub_self x with hu | hu
+  · exact Or.inr (hu.mul_right_inj.mp (hx.trans (mul_one x).symm))
+  · exact Or.inl (hu.mul_left_inj.mp (show x * (1 - x) = 0 * (1 - x) by
+      rw [mul_sub, mul_one, hx, sub_self, zero_mul]))
+
 /-- Tex 9140–9146: any trace-one projector has one of the two normal forms.
 For the projectors of the split integral generator, the level premise is
 `LocalWeights.projector_level`, including at the dyadic prime. -/
@@ -169,6 +184,26 @@ theorem splitLevelLattice_coordinate (v : Fin 2 → ℤ_[p]) :
     rw [← RingHom.mem_ker, PadicInt.ker_toZModPow, Ideal.mem_span_singleton]
   simp [splitLevelLattice, hz]
 
+/-- The stabilizer ring of the standard chain inside the integral
+matrices is the Eichler order used for the detector weights. -/
+theorem mapsTo_splitLevelLattice_iff (M : Mat ℤ_[p]) :
+    Set.MapsTo M.mulVec (splitLevelLattice p 0 e) (splitLevelLattice p 0 e) ↔
+      M ∈ eichler p e := by
+  constructor
+  · intro h
+    have hv : ![1, 0] ∈ splitLevelLattice p 0 e := by
+      exact ⟨by simp, dvd_zero _⟩
+    have h₁ : (p : ℤ_[p]) ^ e ∣ (M.mulVec ![1, 0]) 1 := (h hv).2
+    change (p : ℤ_[p]) ^ e ∣ M 1 0
+    simpa [Matrix.mulVec, dotProduct, Fin.sum_univ_two] using h₁
+  · intro h v hv
+    change (p : ℤ_[p]) ^ e ∣ M 1 0 at h
+    have hv₂ : (p : ℤ_[p]) ^ e ∣ v 1 := hv.2
+    refine ⟨by simp, ?_⟩
+    change (p : ℤ_[p]) ^ e ∣ (M.mulVec v) 1
+    simpa [Matrix.mulVec, dotProduct, Fin.sum_univ_two] using
+      dvd_add (dvd_mul_of_dvd_left h (v 0)) (dvd_mul_of_dvd_right hv₂ (M 1 1))
+
 /-- The transposition of the two split summands. -/
 def splitSwap (k : Type*) [CommRing k] : (Mat k)ˣ where
   val := !![0, 1; 1, 0]
@@ -236,8 +271,7 @@ coordinate swap for level value one. -/
 theorem split_level_doubleCoset (he : 0 < e) (P : eichler p e)
     (hP : P * P = P) (htr : P.val.trace = 1)
     (g : (Mat ℚ_[p])ˣ)
-    (h : (↑g⁻¹ : Mat ℚ_[p]) * !![1, 0; 0, 0] * (g : Mat ℚ_[p]) = splitMatrixInclusion p e P)
-    (hlev : level p e P = 0 ∨ level p e P = 1) :
+    (h : (↑g⁻¹ : Mat ℚ_[p]) * !![1, 0; 0, 0] * (g : Mat ℚ_[p]) = splitMatrixInclusion p e P) :
     ∃ (a : (Mat ℚ_[p])ˣ) (u : (eichler p e)ˣ),
       (a : Mat ℚ_[p]) 0 1 = 0 ∧ (a : Mat ℚ_[p]) 1 0 = 0 ∧
       ((level p e P = 0 ∧ g = a * splitOrderUnits p e u) ∨
@@ -247,7 +281,7 @@ theorem split_level_doubleCoset (he : 0 < e) (P : eichler p e)
     ext i j
     change (PadicInt.Coe.ringHom (p := p)) ((firstProjector p e).val i j) = _
     fin_cases i <;> fin_cases j <;> simp [firstProjector]
-  obtain ⟨v, hv | hv⟩ := projector_two_normalForms he P hP htr hlev
+  obtain ⟨v, hv | hv⟩ := projector_two_normalForms he P hP htr (level_projector_eq_zero_or_one he P hP)
   · have hv' := congrArg (level p e) hv
     rw [map_mul, map_mul, hz, mul_zero, zero_mul] at hv'
     rw [hv, map_mul, map_mul, hD] at h

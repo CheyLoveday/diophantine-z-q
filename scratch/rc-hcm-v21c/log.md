@@ -34,3 +34,17 @@ exponent, including at two, the standard idempotent and its
 complement give the two chain exponents and the two labelled
 diagonal-torus double coset representatives. The selected root of
 the in-tree spectral projector has level image one.
+
+**VERIFIED (Lean 4.35.0):** `GeometricOrders` and the strengthened
+`SplitCoset` passed. Multiplication by the level lands in the geometric
+level order, whose realized span equals the full order's span when the
+level is a unit. Actual subgroup-preserving Hom groups and the source
+annihilator are defined in scheme coordinates. The split standard chain
+has exactly the Eichler matrix stabilizer, and the level projector is
+zero or one without a further premise.
+
+**STANDARD, locator UNVERIFIED:** `DeuringSupersingularEndOrder` states
+the level-one maximal-order theorem (Voight, GTM 288; Deuring 1941).
+The proposition elaborates over actual abelian varieties of dimension
+one and integer quaternion orders; it has no provider. It is the only
+new printed candidate.
