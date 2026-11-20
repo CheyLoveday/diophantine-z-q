@@ -186,563 +186,990 @@ import ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveGroupIdentities
 import ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveGroupLaw
 import ZInQKernel.Contrib.OneProof.RC.J0Cusps.ProjectiveSchemeCharts
 
-#print axioms ZInQ.Manuscript.RC.AppE32Fixed.det_rows_eq_zero_iff
-#print axioms ZInQ.Manuscript.RC.AppE32Fixed.central_zero_iff_of_wedge
-#print axioms ZInQ.Manuscript.RC.AppE32Fixed.uterWitness_of_completed_coefficients
-#print axioms ZInQ.Manuscript.RC.AppE32Fixed.appEOutputs_of_kato_fixed
-#print axioms ZInQ.Manuscript.RC.AppE32Fixed.evenScalar32_of_kato_fixed
-#print axioms ZInQ.Manuscript.RC.AtkinPin.slash_eq_signUnit_smul
-#print axioms ZInQ.Manuscript.RC.AtkinPin.hasDerivAt_eichlerPotential
-#print axioms ZInQ.Manuscript.RC.AtkinPin.scaled_eichler_transform
-#print axioms ZInQ.Manuscript.RC.AtkinPin.periodClass_transform
-#print axioms ZInQ.Manuscript.RC.AtkinPin.consumerNewform
-#print axioms ZInQ.Manuscript.RC.AtkinPin.stageLevel_eq
-#print axioms ZInQ.Manuscript.RC.AtkinPin.ddStagedOfPinnedParamValues
-#print axioms ZInQ.Manuscript.RC.AtkinPin.atkinGL_chart_congr
-#print axioms ZInQ.Manuscript.RC.AtkinPin.atkinGL_sq_chart
-#print axioms ZInQ.Manuscript.RC.AtkinPin.atkinInterior_apply
-#print axioms ZInQ.Manuscript.RC.AtkinPin.atkinInterior_involutive
-#print axioms ZInQ.Manuscript.RC.AtkinPin.phiAn_transform
-#print axioms ZInQ.Manuscript.RC.AtkinPin.projectiveValue_transform_chart
-#print axioms ZInQ.Manuscript.RC.AtkinPin.actualParametrization_transform_chart
-#print axioms ZInQ.Manuscript.RC.AtkinPin.anslatedAtkinOnPoints
-#print axioms ZInQ.Manuscript.RC.AtkinPin.anslatedAtkinAtInfinity
-#print axioms ZInQ.Manuscript.RC.AtkinPin.signUnit_cast
-#print axioms ZInQ.Manuscript.RC.AtkinPin.wNew_cast
-#print axioms ZInQ.Manuscript.RC.AtkinPin.atkin_quotient_of_specialization
-#print axioms ZInQ.Manuscript.RC.AtkinPin.pinned_atkin_quotient_of_specialization
-#print axioms ZInQ.Manuscript.RC.AtkinPin.cast_point_some
-#print axioms ZInQ.Manuscript.RC.AtkinPin.weierPt_add
-#print axioms ZInQ.Manuscript.RC.AtkinSign.actualRowFamily
-#print axioms ZInQ.Manuscript.RC.AtkinSign.ddStagedActual
-#print axioms ZInQ.Manuscript.RC.AtkinSign.SpecialFibreAtSigns
-#print axioms ZInQ.Manuscript.RC.AtkinSign.SpecialFibreAtSigns.toSpecialFibre
-#print axioms ZInQ.Manuscript.RC.AtkinSign.SpecialFibreAtSigns.atkinSign_eq
-#print axioms ZInQ.Manuscript.RC.AtkinSign.SpecialFibreAtSigns.ofSpecialFibre
-#print axioms ZInQ.Manuscript.RC.CMField2.eq_cmPoint_of_quadratic
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus_finrank_le_of_primitive_equation
-#print axioms ZInQ.Manuscript.RC.CMField2.cmFieldOfDefinition_modelOne_of
-#print axioms ZInQ.Manuscript.RC.CMField2.heegner_coordinates_mem_ringClass_of
-#print axioms ZInQ.Manuscript.RC.CMField2.branchDescends_one
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_cyclic_sublattice_of_modularPolynomial_root
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_analyticJ_eq
-#print axioms ZInQ.Manuscript.RC.CMField2.conjugate_has_cyclic_self_of_root
-#print axioms ZInQ.Manuscript.RC.CMField2.isAddCyclic_quotient_of_primitive
-#print axioms ZInQ.Manuscript.RC.CMField2.isAddCyclic_sublatticeQuotient_of_primitive
-#print axioms ZInQ.Manuscript.RC.CMField2.primitive_of_isAddCyclic_quotient
-#print axioms ZInQ.Manuscript.RC.CMField2.primitive_of_isAddCyclic_sublatticeQuotient
-#print axioms ZInQ.Manuscript.RC.CMField2.ConjugateSingularModulus
-#print axioms ZInQ.Manuscript.RC.CMField2.finrank_adjoin_le_of_conjugate_family
-#print axioms ZInQ.Manuscript.RC.CMField2.mkPic_picRepresentative
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus_finrank_le_of_conjugate
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus_finrank_over_base_le_of_conjugate
-#print axioms ZInQ.Manuscript.RC.CMField2.BranchDescends
-#print axioms ZInQ.Manuscript.RC.CMField2.affineEval_factor
-#print axioms ZInQ.Manuscript.RC.CMField2.chart_mem
-#print axioms ZInQ.Manuscript.RC.CMField2.fieldPoint_of_affineEval_range
-#print axioms ZInQ.Manuscript.RC.CMField2.fieldPoint_of_finitePointEval_range
-#print axioms ZInQ.Manuscript.RC.CMField2.fieldPoint_iff_finitePointEval_range
-#print axioms ZInQ.Manuscript.RC.CMField2.cmFieldOfDefinition_of
-#print axioms ZInQ.Manuscript.RC.CMField2.fieldPoint_of_eval_mem_adjoin_coordinates
-#print axioms ZInQ.Manuscript.RC.CMField2.fieldPoint_of_eval_rational_in_coordinates
-#print axioms ZInQ.Manuscript.RC.CMField2.eval_diagonal
-#print axioms ZInQ.Manuscript.RC.CMField2.Multiplicity_specialization_eq_of_embeddings
-#print axioms ZInQ.Manuscript.RC.CMField2.isIntegral_jLattice_of_cyclicSelf
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_nonsquare_quadratic_value
-#print axioms ZInQ.Manuscript.RC.CMField2.ExactMultiplierOrderOfDiagonalMultiplicities
-#print axioms ZInQ.Manuscript.RC.CMField2.conjugateSingularModulus_of_exactMultiplier
-#print axioms ZInQ.Manuscript.RC.CMField2.periodMultipliers_idealPeriod
-#print axioms ZInQ.Manuscript.RC.CMField2.same_normalized_order
-#print axioms ZInQ.Manuscript.RC.CMField2.exactMultiplierOrderOfDiagonalMultiplicities
-#print axioms ZInQ.Manuscript.RC.CMField2.conjugateSingularModulus
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus_finrank_le
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus_finrank_over_base_le
-#print axioms ZInQ.Manuscript.RC.CMField2.coe_cosetParameter
-#print axioms ZInQ.Manuscript.RC.CMField2.coe_slDenom_ne_zero
-#print axioms ZInQ.Manuscript.RC.CMField2.injOn_coset_j_of_transcendental
-#print axioms ZInQ.Manuscript.RC.CMField2.modularPolynomial_eq_coset_product
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_coset_of_modularPolynomial_root
-#print axioms ZInQ.Manuscript.RC.CMField2.pow_eq_of_kronecker_diagonal
-#print axioms ZInQ.Manuscript.RC.CMField2.mem_of_separating_reductions
-#print axioms ZInQ.Manuscript.RC.CMField2.coe_cmPoint_of_neg
-#print axioms ZInQ.Manuscript.RC.CMField2.heegner_middle_coprime
-#print axioms ZInQ.Manuscript.RC.CMField2.heegner_scaled_form
-#print axioms ZInQ.Manuscript.RC.CMField2.int_mem_pairLattice
-#print axioms ZInQ.Manuscript.RC.CMField2.mega_mem_pairLattice
-#print axioms ZInQ.Manuscript.RC.CMField2.heegner_pairLattice_mul
-#print axioms ZInQ.Manuscript.RC.CMField2.dilate_cmPoint_eq
-#print axioms ZInQ.Manuscript.RC.CMField2.primitive_quadratic_equation
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_noninteger
-#print axioms ZInQ.Manuscript.RC.CMField2.mul_mem_of_mem_pair
-#print axioms ZInQ.Manuscript.RC.CMField2.proper_iff_isUnit
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_singularModulus_of_exact_multiplier
-#print axioms ZInQ.Manuscript.RC.CMField2.cast_sublatticeIndex_scale
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_order_basis_one
-#print axioms ZInQ.Manuscript.RC.CMField2.derBasis_im_ne_zero
-#print axioms ZInQ.Manuscript.RC.CMField2.primitive_scale_of_order_basis
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus_isIntegral
-#print axioms ZInQ.Manuscript.RC.CMField2.cast_absNorm_span_singleton_complex
-#print axioms ZInQ.Manuscript.RC.CMField2.prime_diagonal_eq_of_order_multiplier
-#print axioms ZInQ.Manuscript.RC.CMField2.swap
-#print axioms ZInQ.Manuscript.RC.CMField2.swap_reduce
-#print axioms ZInQ.Manuscript.RC.CMField2.jqMod_eq_jqModC
-#print axioms ZInQ.Manuscript.RC.CMField2.modularPolynomial_reduced_root
-#print axioms ZInQ.Manuscript.RC.CMField2.kroneckerCongruence_of_prime
-#print axioms ZInQ.Manuscript.RC.CMField2.pow_eq_of_modularPolynomial_diagonal_root
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_ideal_basis
-#print axioms ZInQ.Manuscript.RC.CMField2.embedding_indep
-#print axioms ZInQ.Manuscript.RC.CMField2.idealPeriod
-#print axioms ZInQ.Manuscript.RC.CMField2.idealPeriod_lattice
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus
-#print axioms ZInQ.Manuscript.RC.CMField2.jLattice_eq_of_lattice_eq
-#print axioms ZInQ.Manuscript.RC.CMField2.jLattice_scale
-#print axioms ZInQ.Manuscript.RC.CMField2.lattice_scale
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus_eq_of_mkPic_eq
-#print axioms ZInQ.Manuscript.RC.CMField2.jPull_one_surjective
-#print axioms ZInQ.Manuscript.RC.CMField2.finiteEval_jPull
-#print axioms ZInQ.Manuscript.RC.CMField2.finiteEval_jPull_mem_range
-#print axioms ZInQ.Manuscript.RC.CMField2.finiteChart_finiteTest
-#print axioms ZInQ.Manuscript.RC.CMField2.finitePointEval_one_mem_range
-#print axioms ZInQ.Manuscript.RC.CMField2.modelOne_fieldPoint_of_analyticJ
-#print axioms ZInQ.Manuscript.RC.CMField2.levelTwo_heegner
-#print axioms ZInQ.Manuscript.RC.CMField2.hs
-#print axioms ZInQ.Manuscript.RC.CMField2.hplus
-#print axioms ZInQ.Manuscript.RC.CMField2.hminus
-#print axioms ZInQ.Manuscript.RC.CMField2.hshift
-#print axioms ZInQ.Manuscript.RC.CMField2.hquad
-#print axioms ZInQ.Manuscript.RC.CMField2.hprod
-#print axioms ZInQ.Manuscript.RC.CMField2.levelTwo_reflection
-#print axioms ZInQ.Manuscript.RC.CMField2.S_plus
-#print axioms ZInQ.Manuscript.RC.CMField2.S_minus
-#print axioms ZInQ.Manuscript.RC.CMField2.T_dilate
-#print axioms ZInQ.Manuscript.RC.CMField2.levelTwo_coordinates
-#print axioms ZInQ.Manuscript.RC.CMField2.middleCoefficient_mod_four
-#print axioms ZInQ.Manuscript.RC.CMField2.levelTwo_distinct
-#print axioms ZInQ.Manuscript.RC.CMField2.SingularModulusMemRingClass
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus_finrank_over_base_le_of_mem
-#print axioms ZInQ.Manuscript.RC.CMField2.periodMultipliers
-#print axioms ZInQ.Manuscript.RC.CMField2.mega_one_mem
-#print axioms ZInQ.Manuscript.RC.CMField2.secondCoord
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_int_of_secondCoord_eq_zero
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_multiplier_basis_one
-#print axioms ZInQ.Manuscript.RC.CMField2.integral_trace_norm_of_multiplier
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_normalized_multiplier
-#print axioms ZInQ.Manuscript.RC.CMField2.periodMultipliers_scale
-#print axioms ZInQ.Manuscript.RC.CMField2.periodMultipliers_eq_of_jLattice_eq
-#print axioms ZInQ.Manuscript.RC.CMField2.int_coords_eq
-#print axioms ZInQ.Manuscript.RC.CMField2.normSq_of_coords
-#print axioms ZInQ.Manuscript.RC.CMField2.scale_le_of_multiplier
-#print axioms ZInQ.Manuscript.RC.CMField2.scale_primitive_iff_gcd
-#print axioms ZInQ.Manuscript.RC.CMField2.diagonal_root_iff_ofTau
-#print axioms ZInQ.Manuscript.RC.CMField2.diagonal_root_iff_primitive_norm
-#print axioms ZInQ.Manuscript.RC.CMField2.discr_of_basis_one
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_heegner_generator
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_heegner_generator_in_embedding
-#print axioms ZInQ.Manuscript.RC.CMField2.formIdeal
-#print axioms ZInQ.Manuscript.RC.CMField2.formIdeal_coe
-#print axioms ZInQ.Manuscript.RC.CMField2.formIdeal_restrictScalars
-#print axioms ZInQ.Manuscript.RC.CMField2.formIdeal_mul_conjugate
-#print axioms ZInQ.Manuscript.RC.CMField2.formIdeal_isUnit
-#print axioms ZInQ.Manuscript.RC.CMField2.analyticJ_eq_singularModulus_of_generator
-#print axioms ZInQ.Manuscript.RC.CMField2.formIdeal_mul_scaled
-#print axioms ZInQ.Manuscript.RC.CMField2.formIdeal_scaled_eq_levelInverse_mul
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_heegner_singularModuli_in_embedding
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_heegner_singularModuli
-#print axioms ZInQ.Manuscript.RC.CMField2.ational_prime_span_ne_bot
-#print axioms ZInQ.Manuscript.RC.CMField2.absNorm_under_eq_of_pow_fixed
-#print axioms ZInQ.Manuscript.RC.CMField2.absNorm_under_eq_of_frob_fixes
-#print axioms ZInQ.Manuscript.RC.CMField2.not_mem_of_norm_lt
-#print axioms ZInQ.Manuscript.RC.CMField2.splitPrime_of_frob_fixes_ringClass
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulusMemRingClass
-#print axioms ZInQ.Manuscript.RC.CMField2.primitiveNormLevels
-#print axioms ZInQ.Manuscript.RC.CMField2.min_generic
-#print axioms ZInQ.Manuscript.RC.CMField2.generic_trace_one_gap
-#print axioms ZInQ.Manuscript.RC.CMField2.not_primitive_of_even
-#print axioms ZInQ.Manuscript.RC.CMField2.gaussian_no_three
-#print axioms ZInQ.Manuscript.RC.CMField2.gaussian_no_four
-#print axioms ZInQ.Manuscript.RC.CMField2.eisenstein_no_four
-#print axioms ZInQ.Manuscript.RC.CMField2.eisenstein_no_mod_three
-#print axioms ZInQ.Manuscript.RC.CMField2.quadraticNormParameters_eq_of_primitiveNormLevels
-#print axioms ZInQ.Manuscript.RC.CMField2.cmFieldOfDefinition
-#print axioms ZInQ.Manuscript.RC.CMField2.cmFieldOfDefinition_modelOne
-#print axioms ZInQ.Manuscript.RC.CMField2.cmFieldOfDefinition_one
-#print axioms ZInQ.Manuscript.RC.CMField2.heegner_coordinates_mem_ringClass
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_invariant_scaling
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_homothetic_of_jLattice_eq
-#print axioms ZInQ.Manuscript.RC.CMField2.exists_int_eq_of_real_multiplier
-#print axioms ZInQ.Manuscript.RC.CMField2.conjugate_has_nonreal_multiplier_of_root
-#print axioms ZInQ.Manuscript.RC.CMField2.singularModulus_reduction_pow_eq_of_split
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.centralChar_coe
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.central_tmul_smul
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.central_smul_of_torsion_fixed
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.centralSignedTateAction
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.movingInertiaAction
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.activeInertiaAction
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.signedReduced_subScalar
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.movingReduced_subScalar
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.activeSignedTate_subOne_even
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.activeReduced_apply
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.kummerFirstCoordinate
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.presentationOfSplit
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.movingBlock
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.movingOrdinary
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.activeBlock
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.movingPresentation
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.activePresentation
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.presentationAtZero
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.splitLocalModel
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.splitLocalH1
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.splitLocalH2
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.quotientOfFirstCoordinate
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.activeMiddleCoordinates
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.activeMiddleCoordinates_d0
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.activeMiddleCoordinates_d1
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.cx3Hom_isIso
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.movingTameNormalization
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.ameNorm_negId
-#print axioms ZInQ.Contrib.RC53Assist.Calibration.activeTameNormalization
-#print axioms ZInQ.Manuscript.RC.ElkikPrint.cuspClass_finiteRange_of_cuspOrbits
-#print axioms ZInQ.Manuscript.RC.ElkikPrint.maninDrinfeld_of_torsion
-#print axioms ZInQ.Manuscript.RC.ElkikPrint.hElkikMD_of_elkikTorsion
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.moving_nil
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.moving_of_step
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.weightTwoBlock
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.subscripts_dvd
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.unaryLevel_dvd
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.includeUnary_mem
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.evenWeightTwo
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.evenVector_eval
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.evenExpansion
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.lower_add
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.ansform_characterization
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.mem_thetaStabilizer
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.T_mem_stabilizer
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.neg_one_mem_stabilizer
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.jacobiTheta_fricke_fourth
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.lower_one_mem_stabilizer
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.lower_mem_stabilizer
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.iangular_mem
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.centre
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.Tmul_entries
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.lowerMul_entry
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.stabilizer_of_c
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.jacobiTheta_fourth_transform
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.hreeHalves_of_cusp
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.hasThreeHalves_of_cusp
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.evenMasked
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.evenMasked_reference
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.evenMasked_expansion
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.squareTwist_sq
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.quadraticProjection
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.up_translation
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.qParam_dilate
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.qParam_undilate
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.series_Vp
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.series_Up
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.series_Up_sq_Vp
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.movingOp_series
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.dinaryTheta_cusps
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.dinaryTheta_fourth
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.dinaryThetaLaw
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.fractionalPermutation
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.upSquare_permutation
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.upSquare_conjugation
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.dual_orthogonality
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.summable_squareShell
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.exists_unary_parity
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.unary_shell
-#print axioms ZInQ.Manuscript.RC.EvenExpansion.unary_hasSum
-#print axioms ZInQ.Manuscript.RC.GoodReduction.atkinQuotient_of_affine
-#print axioms ZInQ.Manuscript.RC.GoodReduction.atkinQuotient_of_integralRelation
-#print axioms ZInQ.Manuscript.RC.GoodReduction.existsUnique_integralMap
-#print axioms ZInQ.Manuscript.RC.GoodReduction.exists_integralPoint
-#print axioms ZInQ.Manuscript.RC.GoodReduction.integralAffine_baseChange
-#print axioms ZInQ.Manuscript.RC.GoodReduction.hpi_of_integralDiagram
-#print axioms ZInQ.Manuscript.RC.J0Cusps.maps_to_rat_unique
-#print axioms ZInQ.Manuscript.RC.J0Cusps.sectionEval
-#print axioms ZInQ.Manuscript.RC.J0Cusps.sectionMap_factor
-#print axioms ZInQ.Manuscript.RC.J0Cusps.specPoint
-#print axioms ZInQ.Manuscript.RC.J0Cusps.ensorMap
-#print axioms ZInQ.Manuscript.RC.J0Cusps.ensorProjection
-#print axioms ZInQ.Manuscript.RC.J0Cusps.ensorPoint_eq
-#print axioms ZInQ.Manuscript.RC.J0Cusps.endsto_specPoint
-#print axioms ZInQ.Manuscript.RC.J0Cusps.endsto_complexLift_of_sections
-#print axioms ZInQ.Manuscript.RC.J0Cusps.cusp_at_infinity_maps_to_unit
-#print axioms ZInQ.Manuscript.RC.J0Cusps.jGenField
-#print axioms ZInQ.Manuscript.RC.J0Cusps.jNGenField
-#print axioms ZInQ.Manuscript.RC.J0Cusps.fieldGerm_first
-#print axioms ZInQ.Manuscript.RC.J0Cusps.germ_inverse
-#print axioms ZInQ.Manuscript.RC.J0Cusps.branch_expansion
-#print axioms ZInQ.Manuscript.RC.J0Cusps.complexLift_comp
-#print axioms ZInQ.Manuscript.RC.J0Cusps.value_eq_of_chart_limit
-#print axioms ZInQ.Manuscript.RC.J0Cusps.cuspLimit_eq_zero_of_jacobi_ne_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.cuspComparison_of_zero_chart_limit
-#print axioms ZInQ.Manuscript.RC.J0Cusps.cuspIndex
-#print axioms ZInQ.Manuscript.RC.J0Cusps.bitOfSL
-#print axioms ZInQ.Manuscript.RC.J0Cusps.bitOfSL_surjective
-#print axioms ZInQ.Manuscript.RC.J0Cusps.bitOfSL_eq
-#print axioms ZInQ.Manuscript.RC.J0Cusps.at_label_real
-#print axioms ZInQ.Manuscript.RC.J0Cusps.anslated_limit_congr
-#print axioms ZInQ.Manuscript.RC.J0Cusps.algebraicCusp
-#print axioms ZInQ.Manuscript.RC.J0Cusps.extendPoint
-#print axioms ZInQ.Manuscript.RC.J0Cusps.extendPoint_injective
-#print axioms ZInQ.Manuscript.RC.J0Cusps.ationalAsGeometric
-#print axioms ZInQ.Manuscript.RC.J0Cusps.extend_rationalAsGeometric
-#print axioms ZInQ.Manuscript.RC.J0Cusps.algebraicCusp_limit
-#print axioms ZInQ.Manuscript.RC.J0Cusps.algebraicCusp_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.algebraicCusp_infinity
-#print axioms ZInQ.Manuscript.RC.J0Cusps.algebraicCusp_zero_rational
-#print axioms ZInQ.Manuscript.RC.J0Cusps.algebraicCusp_infinity_rational
-#print axioms ZInQ.Manuscript.RC.J0Cusps.cuspAssignment_zero_limit
-#print axioms ZInQ.Manuscript.RC.J0Cusps.scalarSpec
-#print axioms ZInQ.Manuscript.RC.J0Cusps.extendJacobian
-#print axioms ZInQ.Manuscript.RC.J0Cusps.extendJacobian_class
-#print axioms ZInQ.Manuscript.RC.J0Cusps.cusp_comparison_of_factor
-#print axioms ZInQ.Manuscript.RC.J0Cusps.exists_gamma0_smul_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.cuspOrbit_eq_zero_of_coprime
-#print axioms ZInQ.Manuscript.RC.J0Cusps.cuspOrbit_eq_zero_of_jacobi_ne_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.analyticJ_invariant
-#print axioms ZInQ.Manuscript.RC.J0Cusps.qParam_one_zpow
-#print axioms ZInQ.Manuscript.RC.J0Cusps.qParam_at_cusp
-#print axioms ZInQ.Manuscript.RC.J0Cusps.endsto_infinity
-#print axioms ZInQ.Manuscript.RC.J0Cusps.dilate_S_dilate
-#print axioms ZInQ.Manuscript.RC.J0Cusps.contract
-#print axioms ZInQ.Manuscript.RC.J0Cusps.dilate_contract
-#print axioms ZInQ.Manuscript.RC.J0Cusps.endsto_contract
-#print axioms ZInQ.Manuscript.RC.J0Cusps.endsto_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.factor_isMonHom
-#print axioms ZInQ.Manuscript.RC.J0Cusps.abelJacobi_comp_factor
-#print axioms ZInQ.Manuscript.RC.J0Cusps.abelJacobi_comp_isBased
-#print axioms ZInQ.Manuscript.RC.J0Cusps.usHom_pointClass
-#print axioms ZInQ.Manuscript.RC.J0Cusps.usHom_cuspClass_of_jacobi_ne_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.hElkikMD_atScale_of_projectiveGroup
-#print axioms ZInQ.Manuscript.RC.J0Cusps.argetPeriodEquiv
-#print axioms ZInQ.Manuscript.RC.J0Cusps.argetPeriodEquiv_lift
-#print axioms ZInQ.Manuscript.RC.J0Cusps.algebraicCuspClass_comparison_atScale
-#print axioms ZInQ.Manuscript.RC.J0Cusps.hElkikMD_atScale_of_geometricTorsion
-#print axioms ZInQ.Manuscript.RC.J0Cusps.equation
-#print axioms ZInQ.Manuscript.RC.J0Cusps.liftEquation
-#print axioms ZInQ.Manuscript.RC.J0Cusps.liftBranch
-#print axioms ZInQ.Manuscript.RC.J0Cusps.liftBranch_j
-#print axioms ZInQ.Manuscript.RC.J0Cusps.liftBranch_jN
-#print axioms ZInQ.Manuscript.RC.J0Cusps.firstAtCusp
-#print axioms ZInQ.Manuscript.RC.J0Cusps.firstAtCusp_j
-#print axioms ZInQ.Manuscript.RC.J0Cusps.firstAtCusp_eval
-#print axioms ZInQ.Manuscript.RC.J0Cusps.iangular_root
-#print axioms ZInQ.Manuscript.RC.J0Cusps.iangularField
-#print axioms ZInQ.Manuscript.RC.J0Cusps.iangularField_j
-#print axioms ZInQ.Manuscript.RC.J0Cusps.iangularField_jN
-#print axioms ZInQ.Manuscript.RC.J0Cusps.zero_root
-#print axioms ZInQ.Manuscript.RC.J0Cusps.zeroField
-#print axioms ZInQ.Manuscript.RC.J0Cusps.zeroField_j
-#print axioms ZInQ.Manuscript.RC.J0Cusps.zeroField_jN
-#print axioms ZInQ.Manuscript.RC.J0Cusps.formalBranch
-#print axioms ZInQ.Manuscript.RC.J0Cusps.formalBranch_generic
-#print axioms ZInQ.Manuscript.RC.J0Cusps.branchPoint
-#print axioms ZInQ.Manuscript.RC.J0Cusps.zeroPoint
-#print axioms ZInQ.Manuscript.RC.J0Cusps.zeroPoint_overQ
-#print axioms ZInQ.Manuscript.RC.J0Cusps.geometricCuspidalSubgroup_finite
-#print axioms ZInQ.Manuscript.RC.J0Cusps.hElkikMD_of_geometricTorsion
-#print axioms ZInQ.Manuscript.RC.J0Cusps.powerSeries_analytic_sum
-#print axioms ZInQ.Manuscript.RC.J0Cusps.endsto_powerSeries_eval
-#print axioms ZInQ.Manuscript.RC.J0Cusps.evaluation_eq_sectionMap
-#print axioms ZInQ.Manuscript.RC.J0Cusps.2_of_affine_pair
-#print axioms ZInQ.Manuscript.RC.J0Cusps.source_t2
-#print axioms ZInQ.Manuscript.RC.J0Cusps.complexLift_injective
-#print axioms ZInQ.Manuscript.RC.J0Cusps.source_limit_unique
-#print axioms ZInQ.Manuscript.RC.J0Cusps.infinity
-#print axioms ZInQ.Manuscript.RC.J0Cusps.modelCurve
-#print axioms ZInQ.Manuscript.RC.J0Cusps.modelPicard_exists
-#print axioms ZInQ.Manuscript.RC.J0Cusps.modelPicard
-#print axioms ZInQ.Manuscript.RC.J0Cusps.modelPicardRep
-#print axioms ZInQ.Manuscript.RC.J0Cusps.J0
-#print axioms ZInQ.Manuscript.RC.J0Cusps.aj0
-#print axioms ZInQ.Manuscript.RC.J0Cusps.aj0_classifies
-#print axioms ZInQ.Manuscript.RC.J0Cusps.isJacobian_aj0
-#print axioms ZInQ.Manuscript.RC.J0Cusps.source
-#print axioms ZInQ.Manuscript.RC.J0Cusps.model_smooth_one
-#print axioms ZInQ.Manuscript.RC.J0Cusps.ationalPoint
-#print axioms ZInQ.Manuscript.RC.J0Cusps.isCurve_of_point
-#print axioms ZInQ.Manuscript.RC.J0Cusps.pointedSourceCurve
-#print axioms ZInQ.Manuscript.RC.J0Cusps.basedJacobian
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveAbVar
-#print axioms ZInQ.Manuscript.RC.J0Cusps.evalAway_mk
-#print axioms ZInQ.Manuscript.RC.J0Cusps.chart_mem_iff
-#print axioms ZInQ.Manuscript.RC.J0Cusps.evalZero_Y
-#print axioms ZInQ.Manuscript.RC.J0Cusps.weierstrassOrigin
-#print axioms ZInQ.Manuscript.RC.J0Cusps.weierstrassOrigin_point
-#print axioms ZInQ.Manuscript.RC.J0Cusps.unique_over_origin
-#print axioms ZInQ.Manuscript.RC.J0Cusps.zOpen_ne_origin
-#print axioms ZInQ.Manuscript.RC.J0Cusps.ange_zOpen
-#print axioms ZInQ.Manuscript.RC.J0Cusps.zRingMap_toRingHom
-#print axioms ZInQ.Manuscript.RC.J0Cusps.value_ne_origin
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveValue_eq_zero_iff
-#print axioms ZInQ.Manuscript.RC.J0Cusps.pointInZ_factor
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveValue_bijective
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveGroup_origin
-#print axioms ZInQ.Manuscript.RC.J0Cusps.vectorEval_coord
-#print axioms ZInQ.Manuscript.RC.J0Cusps.evalAway_overlap
-#print axioms ZInQ.Manuscript.RC.J0Cusps.vectorOnChart_independent
-#print axioms ZInQ.Manuscript.RC.J0Cusps.exists_nonzero_coord
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveVectorPoint_left
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveValue_vector_affine
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveValue_vector_origin
-#print axioms ZInQ.Manuscript.RC.J0Cusps.endsto_projectiveVectorPoint
-#print axioms ZInQ.Manuscript.RC.J0Cusps.complexProjection_lift
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTorusValue_lift
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTorusValue_lift_of_eval
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_t2
-#print axioms ZInQ.Manuscript.RC.J0Cusps.periodQuotient_compact
-#print axioms ZInQ.Manuscript.RC.J0Cusps.pointVector_equation
-#print axioms ZInQ.Manuscript.RC.J0Cusps.pointVector_ne_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.pointVector_evaluates
-#print axioms ZInQ.Manuscript.RC.J0Cusps.complexProjectiveValues_vector
-#print axioms ZInQ.Manuscript.RC.J0Cusps.weierPt_at_lattice
-#print axioms ZInQ.Manuscript.RC.J0Cusps.weierPt_off_lattice
-#print axioms ZInQ.Manuscript.RC.J0Cusps.periodToProjective_continuous
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectivePeriodHomeomorph
-#print axioms ZInQ.Manuscript.RC.J0Cusps.continuous_projectiveTorusValue
-#print axioms ZInQ.Manuscript.RC.J0Cusps.interior
-#print axioms ZInQ.Manuscript.RC.J0Cusps.branchComplex
-#print axioms ZInQ.Manuscript.RC.J0Cusps.preimage_top_comp
-#print axioms ZInQ.Manuscript.RC.J0Cusps.sectionField
-#print axioms ZInQ.Manuscript.RC.J0Cusps.interiorSection
-#print axioms ZInQ.Manuscript.RC.J0Cusps.egular_interiorSection
-#print axioms ZInQ.Manuscript.RC.J0Cusps.chart_mem_of_regular
-#print axioms ZInQ.Manuscript.RC.J0Cusps.eventually_chart_mem
-#print axioms ZInQ.Manuscript.RC.J0Cusps.generic_hits_open
-#print axioms ZInQ.Manuscript.RC.J0Cusps.chart_section_value
-#print axioms ZInQ.Manuscript.RC.J0Cusps.sectionValue_comp
-#print axioms ZInQ.Manuscript.RC.J0Cusps.sourceLimit_of_generator_expansions
-#print axioms ZInQ.Manuscript.RC.J0Cusps.Qbar
-#print axioms ZInQ.Manuscript.RC.J0Cusps.qbarToComplex
-#print axioms ZInQ.Manuscript.RC.J0Cusps.exists_cusp_root
-#print axioms ZInQ.Manuscript.RC.J0Cusps.qParam_level_pow
-#print axioms ZInQ.Manuscript.RC.J0Cusps.hasSum_first
-#print axioms ZInQ.Manuscript.RC.J0Cusps.second_form
-#print axioms ZInQ.Manuscript.RC.J0Cusps.coeffMap_qExpand
-#print axioms ZInQ.Manuscript.RC.J0Cusps.coeffMap_qTwist
-#print axioms ZInQ.Manuscript.RC.J0Cusps.anslated_generator_expansions
-#print axioms ZInQ.Manuscript.RC.J0Cusps.exists_algebraic_cusp_limit
-#print axioms ZInQ.Manuscript.RC.J0Cusps.exists_primitive_triangular
-#print axioms ZInQ.Manuscript.RC.J0Cusps.shortChange_eq
-#print axioms ZInQ.Manuscript.RC.J0Cusps.lattice_discriminant
-#print axioms ZInQ.Manuscript.RC.J0Cusps.weierstrassCoordinates_nonsingular
-#print axioms ZInQ.Manuscript.RC.J0Cusps.shortPointEquiv_toPoint
-#print axioms ZInQ.Manuscript.RC.J0Cusps.weierstrassPeriodEquiv
-#print axioms ZInQ.Manuscript.RC.J0Cusps.weierstrassPeriodEquiv_mk
-#print axioms ZInQ.Manuscript.RC.J0Cusps.algebraicCuspClass
-#print axioms ZInQ.Manuscript.RC.J0Cusps.algebraicCuspClass_factors
-#print axioms ZInQ.Manuscript.RC.J0Cusps.modularFactor
-#print axioms ZInQ.Manuscript.RC.J0Cusps.modularFactor_isMonHom
-#print axioms ZInQ.Manuscript.RC.J0Cusps.aj0_comp_modularFactor
-#print axioms ZInQ.Manuscript.RC.J0Cusps.cusp_comparison
-#print axioms ZInQ.Manuscript.RC.J0Cusps.weighted_comparison
-#print axioms ZInQ.Manuscript.RC.J0Cusps.weighted_comparison_from_limits
-#print axioms ZInQ.Manuscript.RC.TorusWeights.NormFactors.rightProduct
-#print axioms ZInQ.Manuscript.RC.TorusWeights.SchwartzFactors.eval_order
-#print axioms ZInQ.Manuscript.RC.TorusWeights.sign_square
-#print axioms ZInQ.Manuscript.RC.TorusWeights.frame_transport
-#print axioms ZInQ.Manuscript.RC.TorusWeights.us_character
-#print axioms ZInQ.Manuscript.RC.TorusWeights.bit_transport
-#print axioms ZInQ.Manuscript.RC.TorusWeights.actualWeights
-#print axioms ZInQ.Manuscript.RC.TorusWeights.datumWeights
-#print axioms ZInQ.Manuscript.RC.TorusWeights.localNrd
-#print axioms ZInQ.Manuscript.RC.TorusWeights.NormFactors.onIntegralNorm
-#print axioms ZInQ.Manuscript.RC.TorusWeights.descent_of_filter
-#print axioms ZInQ.Manuscript.RC.X0Model3.affineEval
-#print axioms ZInQ.Manuscript.RC.X0Model3.affineEval_factor
-#print axioms ZInQ.Manuscript.RC.X0Model3.affineEval_congr
-#print axioms ZInQ.Manuscript.RC.X0Model3.affineEval_injective
-#print axioms ZInQ.Manuscript.RC.X0Model3.mem_basicOpen_iff_eval_ne_zero
-#print axioms ZInQ.Manuscript.RC.X0Model3.finiteChart
-#print axioms ZInQ.Manuscript.RC.X0Model3.finiteChart_affine
-#print axioms ZInQ.Manuscript.RC.X0Model3.chart_mem_finiteChart
-#print axioms ZInQ.Manuscript.RC.X0Model3.eventually_chart_mem
-#print axioms ZInQ.Manuscript.RC.X0Model3.chartEval
-#print axioms ZInQ.Manuscript.RC.X0Model3.chartEval_center
-#print axioms ZInQ.Manuscript.RC.X0Model3.chartEval_at_mem
-#print axioms ZInQ.Manuscript.RC.X0Model3.chartEval_local
-#print axioms ZInQ.Manuscript.RC.X0Model3.chartEval_analyticAt
-#print axioms ZInQ.Manuscript.RC.X0Model3.finitePointEval
-#print axioms ZInQ.Manuscript.RC.X0Model3.finitePointEval_eq
-#print axioms ZInQ.Manuscript.RC.X0Model3.exists_analyticJN_ratio
-#print axioms ZInQ.Manuscript.RC.X0Model3.exists_stabilizer_germ_match
-#print axioms ZInQ.Manuscript.RC.X0Model3.complexPoint_eq_iff
-#print axioms ZInQ.Manuscript.RC.X0Model3.model
-#print axioms ZInQ.Manuscript.RC.X0Model3.smooth_one
-#print axioms ZInQ.Manuscript.RC.X0Model3.exists_etale_affine
-#print axioms ZInQ.Manuscript.RC.X0Model3.etaleCoordinate_agree
-#print axioms ZInQ.Manuscript.RC.X0Model3.j_not_eventually_constant
-#print axioms ZInQ.Manuscript.RC.X0Model3.holomorphic_match
-#print axioms ZInQ.Manuscript.RC.X0Model3.eventually_overlap_of_complexPoint_eq
-#print axioms ZInQ.Manuscript.RC.X0Model3.projectiveValue_eq_of_complexPoint
-#print axioms ZInQ.Manuscript.RC.X0Model3.datumReduction_projectiveValue
-#print axioms ZInQ.Manuscript.RC.X0Model3.hpi_iff_specialize_projectiveValue
-#print axioms ZInQ.Manuscript.RC.X0Model3.specialize_of_integral_extension
-#print axioms ZInQ.Manuscript.RC.X0Model3.pairEval
-#print axioms ZInQ.Manuscript.RC.X0Model3.pairEval_tmul
-#print axioms ZInQ.Manuscript.RC.X0Model3.pairEval_self
-#print axioms ZInQ.Manuscript.RC.X0Model3.continuousPairTest
-#print axioms ZInQ.Manuscript.RC.X0Model3.eventually_eq_of_unramified
-#print axioms ZInQ.Manuscript.RC.J0Cusps.hElkikMD_atScale
-#print axioms ZInQ.Manuscript.RC.J0Cusps.additionShortChange_short
-#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_map
-#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_smul
-#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_equiv
-#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_ne_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_equation
-#print axioms ZInQ.Manuscript.RC.J0Cusps.nonsingular_of_equation_ne_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.linearCoordinates_toAffine
-#print axioms ZInQ.Manuscript.RC.J0Cusps.additionCoordinates_fields
-#print axioms ZInQ.Manuscript.RC.J0Cusps.additionCoordinates_map
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_map
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_smul
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_comm
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_atInfinity
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_secant
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_opposite
-#print axioms ZInQ.Manuscript.RC.J0Cusps.short_eqn_affine
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_dbl_affine
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_affine
-#print axioms ZInQ.Manuscript.RC.J0Cusps.vector_atInfinity
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_eq_smul_add
-#print axioms ZInQ.Manuscript.RC.J0Cusps.symmetricAddition_diagonal
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveNonsingular_ne_zero
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveAddition_cover
-#print axioms ZInQ.Manuscript.RC.J0Cusps.schemeMapsToRat_unique
-#print axioms ZInQ.Manuscript.RC.J0Cusps.overlapEq
-#print axioms ZInQ.Manuscript.RC.J0Cusps.fieldPoint_lifts
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveMorphism_of_local
-#print axioms ZInQ.Manuscript.RC.J0Cusps.equation_of_field_evaluations
-#print axioms ZInQ.Manuscript.RC.J0Cusps.openLift_ring_map
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChart_covers
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveMorphism_of_formulas
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveUnit_value
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveHom_ext
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveHom_ext_value
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_reduced
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_product_reduced
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_square_reduced
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_unit_product_reduced
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveTarget_product_unit_reduced
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveGroupOfOperations
-#print axioms ZInQ.Manuscript.RC.J0Cusps.exists_projectiveMultiplication
-#print axioms ZInQ.Manuscript.RC.J0Cusps.exists_projectiveInversion
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveGroup_exists
-#print axioms ZInQ.Manuscript.RC.J0Cusps.denominatorUnit_val
-#print axioms ZInQ.Manuscript.RC.J0Cusps.chartFraction_val
-#print axioms ZInQ.Manuscript.RC.J0Cusps.chartRatio_val
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChartRatio_self
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChart_dehomogenize
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChart_equation
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChart_ringHom_ext
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChartEval_ratio
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChartMorphism_map
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveEvalAway_fraction
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveEvalAway_overlap
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveChartMorphism_independent
-#print axioms ZInQ.Manuscript.RC.J0Cusps.zChartInclusion_point_ne_origin
-#print axioms ZInQ.Manuscript.RC.J0Cusps.chartCoord_mem_iff
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveValue_chartMorphism
-#print axioms ZInQ.Manuscript.RC.J0Cusps.projectiveValue_fromChart
+namespace ZInQ.Manuscript.RC.AppE32Fixed
+section
+#print axioms central_zero_iff_of_wedge
+end
+end ZInQ.Manuscript.RC.AppE32Fixed
+namespace ZInQ.Manuscript.RC.AppE32Fixed
+section
+open ZInQ.Manuscript.RC.Even ZInQ.Manuscript.RC.Uniform ZInQ.Manuscript.RC.Determinant
+#print axioms outerWitness_of_completed_coefficients
+end
+end ZInQ.Manuscript.RC.AppE32Fixed
+namespace ZInQ.Manuscript.RC.AppE32Fixed
+section
+open ZInQ.Manuscript ZInQ.Contrib.CloudB3RC53
+open EvenUpperText PrintsArith Wiring
+#print axioms appEOutputs_of_kato_fixed
+#print axioms evenScalar32_of_kato_fixed
+end
+end ZInQ.Manuscript.RC.AppE32Fixed
+namespace ZInQ.Manuscript.RC.AtkinPin
+section
+open scoped MatrixGroups ModularForm Manifold TauCeti.ExactDivisor
+open Complex UpperHalfPlane CongruenceSubgroup Matrix.SpecialLinearGroup
+open ZInQ.Contrib.CloudB3RC53.CST
+#print axioms slash_eq_signUnit_smul
+#print axioms scaled_eichler_transform
+#print axioms periodClass_transform
+end
+end ZInQ.Manuscript.RC.AtkinPin
+namespace ZInQ.Manuscript.RC.AtkinPin
+section
+open scoped NumberField WeierstrassCurve Classical
+open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CST ZInQ.Contrib.CloudB3RC53.GenusOdd
+open ZInQ.Manuscript.RC.Wiring ZInQ.Manuscript.RC.Stages ZInQ.Manuscript.RC.Visibility
+open ZInQ.Manuscript.SelmerTwoPower
+open O7Actual O7Assemble O7Orbits O7Residual PMGeometry ThetaClose SelectorTotal
+#print axioms consumerNewform
+#print axioms stageLevel_eq
+#print axioms oddStagedOfPinnedParamValues
+end
+end ZInQ.Manuscript.RC.AtkinPin
+namespace ZInQ.Manuscript.RC.AtkinPin
+section
+open scoped Classical MatrixGroups TauCeti.ExactDivisor
+open Matrix.SpecialLinearGroup UpperHalfPlane CongruenceSubgroup
+open AlgebraicGeometry CategoryTheory WeierstrassCurve
+open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CST
+open PreparedParam
+#print axioms atkinInterior_apply
+#print axioms atkinInterior_involutive
+#print axioms phiAn_transform
+#print axioms projectiveValue_transform_chart
+#print axioms actualParametrization_transform_chart
+#print axioms translatedAtkinOnPoints
+#print axioms translatedAtkinAtInfinity
+end
+end ZInQ.Manuscript.RC.AtkinPin
+namespace ZInQ.Manuscript.RC.AtkinPin
+section
+open scoped TauCeti.ExactDivisor
+#print axioms signUnit_cast
+#print axioms wNew_cast
+end
+end ZInQ.Manuscript.RC.AtkinPin
+namespace ZInQ.Manuscript.RC.AtkinPin
+section
+open scoped Classical TauCeti.ExactDivisor
+open AlgebraicGeometry CategoryTheory WeierstrassCurve
+open FreeAbelianGroup (of)
+open PreparedParam
+open PMGeometry (DivZero center)
+#print axioms atkin_quotient_of_specialization
+#print axioms pinned_atkin_quotient_of_specialization
+end
+end ZInQ.Manuscript.RC.AtkinPin
+namespace ZInQ.Manuscript.RC.AtkinPin
+section
+open WeierstrassCurve ZInQ.Contrib.CloudB3RC53.CST
+#print axioms weierPt_add
+end
+end ZInQ.Manuscript.RC.AtkinPin
+namespace ZInQ.Manuscript.RC.AtkinSign
+section
+open scoped NumberField WeierstrassCurve Classical
+open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.GenusOdd
+open ZInQ.Manuscript.RC.Wiring ZInQ.Manuscript.RC.Stages ZInQ.Manuscript.RC.Visibility
+open O7Actual O7Assemble O7Orbits O7Residual PMGeometry ThetaClose
+#print axioms actualRowFamily
+#print axioms oddStagedActual
+end
+end ZInQ.Manuscript.RC.AtkinSign
+namespace ZInQ.Manuscript.RC.AtkinSign
+section
+open FreeAbelianGroup (of)
+open PMGeometry (DivZero center)
+open Stages
+#print axioms SpecialFibreAtSigns
+#print axioms SpecialFibreAtSigns.toSpecialFibre
+#print axioms SpecialFibreAtSigns.atkinSign_eq
+#print axioms SpecialFibreAtSigns.ofSpecialFibre
+end
+end ZInQ.Manuscript.RC.AtkinSign
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField TauCeti.GlobalNumberFields ZInQ.Contrib.CloudB3RC53.CST
+open scoped UpperHalfPlane
+#print axioms eq_cmPoint_of_quadratic
+#print axioms singularModulus_finrank_le_of_primitive_equation
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open AlgebraicGeometry NumberField TauCeti.ClassFieldTheory TauCeti.GlobalNumberFields
+open ZInQ.Contrib.CloudB3RC53.CST
+open ZInQ.Manuscript.RC.PreparedParam
+#print axioms cmFieldOfDefinition_modelOne_of
+#print axioms heegner_coordinates_mem_ringClass_of
+#print axioms branchDescends_one
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open UpperHalfPlane Polynomial ModularCurve Module Matrix
+#print axioms exists_cyclic_sublattice_of_modularPolynomial_root
+#print axioms exists_analyticJ_eq
+#print axioms conjugate_has_cyclic_self_of_root
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open Module
+#print axioms isAddCyclic_quotient_of_primitive
+#print axioms isAddCyclic_sublatticeQuotient_of_primitive
+#print axioms primitive_of_isAddCyclic_quotient
+#print axioms primitive_of_isAddCyclic_sublatticeQuotient
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module IntermediateField TauCeti.GlobalNumberFields
+#print axioms ConjugateSingularModulus
+#print axioms finrank_adjoin_le_of_conjugate_family
+#print axioms singularModulus_finrank_le_of_conjugate
+#print axioms singularModulus_finrank_over_base_le_of_conjugate
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open AlgebraicGeometry CategoryTheory NumberField TauCeti.ClassFieldTheory
+open ZInQ.Contrib.CloudW07JacobiansCurves
+open PreparedParam
+#print axioms BranchDescends
+#print axioms affineEval_factor
+#print axioms chart_mem
+#print axioms fieldPoint_of_affineEval_range
+#print axioms fieldPoint_of_finitePointEval_range
+#print axioms fieldPoint_iff_finitePointEval_range
+#print axioms cmFieldOfDefinition_of
+#print axioms fieldPoint_of_eval_mem_adjoin_coordinates
+#print axioms fieldPoint_of_eval_rational_in_coordinates
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open Polynomial ModularCurve
+#print axioms eval_diagonal
+#print axioms rootMultiplicity_specialization_eq_of_embeddings
+#print axioms isIntegral_jLattice_of_cyclicSelf
+#print axioms exists_nonsquare_quadratic_value
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module ModularCurve Polynomial TauCeti.GlobalNumberFields
+#print axioms ExactMultiplierOrderOfDiagonalMultiplicities
+#print axioms conjugateSingularModulus_of_exactMultiplier
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module ModularCurve Polynomial IntermediateField TauCeti.GlobalNumberFields
+#print axioms periodMultipliers_idealPeriod
+#print axioms exactMultiplierOrderOfDiagonalMultiplicities
+#print axioms conjugateSingularModulus
+#print axioms singularModulus_finrank_le
+#print axioms singularModulus_finrank_over_base_le
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open Polynomial UpperHalfPlane ModularCurve Matrix
+open scoped MatrixGroups
+#print axioms coe_cosetParameter
+#print axioms injOn_coset_j_of_transcendental
+#print axioms modularPolynomial_eq_coset_product
+#print axioms exists_coset_of_modularPolynomial_root
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+#print axioms pow_eq_of_kronecker_diagonal
+#print axioms mem_of_separating_reductions
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open ZInQ.Contrib.CloudB3RC53.CST UpperHalfPlane Complex
+open scoped Pointwise
+#print axioms coe_cmPoint_of_neg
+#print axioms heegner_middle_coprime
+#print axioms heegner_scaled_form
+#print axioms heegner_pairLattice_mul
+#print axioms dilate_cmPoint_eq
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module TauCeti.GlobalNumberFields FractionalIdeal
+open scoped nonZeroDivisors
+#print axioms proper_iff_isUnit
+#print axioms exists_singularModulus_of_exact_multiplier
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module TauCeti.GlobalNumberFields Matrix Polynomial
+open scoped nonZeroDivisors
+#print axioms cast_sublatticeIndex_scale
+#print axioms exists_order_basis_one
+#print axioms orderBasis_im_ne_zero
+#print axioms singularModulus_isIntegral
+#print axioms cast_absNorm_span_singleton_complex
+#print axioms prime_diagonal_eq_of_order_multiplier
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open Polynomial ModularCurve
+#print axioms modularPolynomial_reduced_root
+#print axioms kroneckerCongruence_of_prime
+#print axioms pow_eq_of_modularPolynomial_diagonal_root
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module TauCeti.GlobalNumberFields FractionalIdeal
+open scoped nonZeroDivisors
+#print axioms exists_ideal_basis
+#print axioms idealPeriod
+#print axioms idealPeriod_lattice
+#print axioms singularModulus
+#print axioms jLattice_eq_of_lattice_eq
+#print axioms jLattice_scale
+#print axioms lattice_scale
+#print axioms singularModulus_eq_of_mkPic_eq
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open AlgebraicGeometry CategoryTheory ModularCurve NumberField
+open ZInQ.Contrib.CloudW07JacobiansCurves
+open ZInQ.Contrib.CloudB3RC53.CST
+open ZInQ.Manuscript.RC.PreparedParam
+#print axioms finiteChart_finiteTest
+#print axioms finitePointEval_one_mem_range
+#print axioms modelOne_fieldPoint_of_analyticJ
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open UpperHalfPlane Complex Matrix
+open scoped MatrixGroups
+open ZInQ.Contrib.CloudB3RC53.CST
+#print axioms levelTwo_heegner
+#print axioms levelTwo_reflection
+#print axioms levelTwo_coordinates
+#print axioms middleCoefficient_mod_four
+#print axioms levelTwo_distinct
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField TauCeti.ClassFieldTheory TauCeti.GlobalNumberFields
+#print axioms SingularModulusMemRingClass
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module IntermediateField TauCeti.ClassFieldTheory TauCeti.GlobalNumberFields
+#print axioms singularModulus_finrank_over_base_le_of_mem
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open Module
+#print axioms periodMultipliers
+#print axioms exists_multiplier_basis_one
+#print axioms exists_normalized_multiplier
+#print axioms periodMultipliers_scale
+#print axioms periodMultipliers_eq_of_jLattice_eq
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open ModularCurve Polynomial UpperHalfPlane
+#print axioms diagonal_root_iff_primitive_norm
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module TauCeti.GlobalNumberFields Complex
+open scoped nonZeroDivisors
+#print axioms discr_of_basis_one
+#print axioms exists_heegner_generator
+#print axioms exists_heegner_generator_in_embedding
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module TauCeti.GlobalNumberFields FractionalIdeal
+open ZInQ.Contrib.CloudB3RC53.CST
+open scoped nonZeroDivisors Pointwise
+#print axioms formIdeal
+#print axioms formIdeal_coe
+#print axioms formIdeal_restrictScalars
+#print axioms formIdeal_mul_conjugate
+#print axioms formIdeal_isUnit
+#print axioms analyticJ_eq_singularModulus_of_generator
+#print axioms formIdeal_mul_scaled
+#print axioms formIdeal_scaled_eq_levelInverse_mul
+#print axioms exists_heegner_singularModuli_in_embedding
+#print axioms exists_heegner_singularModuli
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Ideal Polynomial Module IntermediateField TauCeti.ClassFieldTheory TauCeti.GlobalNumberFields
+#print axioms splitPrime_of_frob_fixes_ringClass
+#print axioms singularModulusMemRingClass
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+#print axioms primitiveNormLevels
+#print axioms quadraticNormParameters_eq_of_primitiveNormLevels
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open AlgebraicGeometry NumberField TauCeti.ClassFieldTheory TauCeti.GlobalNumberFields
+open ZInQ.Contrib.CloudB3RC53.CST
+open ZInQ.Manuscript.RC.PreparedParam
+#print axioms cmFieldOfDefinition
+#print axioms cmFieldOfDefinition_modelOne
+#print axioms cmFieldOfDefinition_one
+#print axioms heegner_coordinates_mem_ringClass
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open Polynomial ModularCurve
+#print axioms exists_homothetic_of_jLattice_eq
+#print axioms exists_int_eq_of_real_multiplier
+#print axioms conjugate_has_nonreal_multiplier_of_root
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Manuscript.RC.CMField2
+section
+open NumberField Module TauCeti.GlobalNumberFields TauCeti.ClassFieldTheory
+open Polynomial ModularCurve
+#print axioms singularModulus_reduction_pow_eq_of_split
+end
+end ZInQ.Manuscript.RC.CMField2
+namespace ZInQ.Contrib.RC53Assist.Calibration
+section
+open NumberField IsDedekindDomain CategoryTheory Matrix TensorProduct
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules ZInQ.Manuscript.RC.KummerMaps
+open ZInQ.Manuscript.RC.HeegnerAlgebra (Acoef)
+open ZInQ.Contrib.CloudB3RC53.UnramifiedComplex
+open ZInQ.Contrib.CloudB3RC53.RankCounts (resAbs_apply_coe)
+#print axioms centralSignedTateAction
+#print axioms movingInertiaAction
+#print axioms activeInertiaAction
+#print axioms signedReduced_subScalar
+#print axioms movingReduced_subScalar
+#print axioms activeSignedTate_subOne_even
+#print axioms activeReduced_apply
+end
+end ZInQ.Contrib.RC53Assist.Calibration
+namespace ZInQ.Contrib.RC53Assist.Calibration
+section
+open CategoryTheory NumberField IsDedekindDomain Matrix
+open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules ZInQ.Manuscript.RC.KummerMaps
+open ZInQ.Manuscript.RC.HeegnerAlgebra (Acoef)
+open ZInQ.Contrib.CloudB3RC53.PairedFunctional
+open ZInQ.Contrib.CloudB3RC53.SelmerDuality
+#print axioms kummerFirstCoordinate
+#print axioms presentationOfSplit
+#print axioms movingBlock
+#print axioms movingOrdinary
+#print axioms activeBlock
+#print axioms movingPresentation
+#print axioms activePresentation
+#print axioms presentationAtZero
+end
+end ZInQ.Contrib.RC53Assist.Calibration
+namespace ZInQ.Contrib.RC53Assist.Calibration
+section
+open CategoryTheory
+open ZInQ.Manuscript.RC.Local
+open ZInQ.Contrib.CloudB3RC53.PairedFunctional
+open ZInQ.Contrib.CloudB3RC53.SelmerDuality
+#print axioms splitLocalModel
+#print axioms splitLocalH1
+#print axioms splitLocalH2
+#print axioms quotientOfFirstCoordinate
+#print axioms activeMiddleCoordinates
+#print axioms activeMiddleCoordinates_d0
+#print axioms activeMiddleCoordinates_d1
+#print axioms movingTameNormalization
+#print axioms tameNorm_negId
+#print axioms activeTameNormalization
+end
+end ZInQ.Contrib.RC53Assist.Calibration
+namespace ZInQ.Manuscript.RC.ElkikPrint
+section
+open scoped MatrixGroups
+#print axioms cuspClass_finiteRange_of_cuspOrbits
+#print axioms maninDrinfeld_of_torsion
+end
+end ZInQ.Manuscript.RC.ElkikPrint
+namespace ZInQ.Manuscript.RC.ElkikPrint
+section
+open scoped MatrixGroups
+open HeckeRing.GL2
+open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CST
+#print axioms hElkikMD_of_elkikTorsion
+end
+end ZInQ.Manuscript.RC.ElkikPrint
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+open AddressGenuine AuxInputs BlocksPerU CongruenceSubgroup EvenBudget Matrix.SpecialLinearGroup
+open ModularForm O12 PrintsAnalytic ThetaCoeff UpperHalfPlane Wiring
+open ZInQ.Manuscript.RC.Even ZInQ.Manuscript.RC.Odd
+open ZInQ.Contrib.CloudB3RC53
+open scoped BigOperators MatrixGroups ModularForm
+#print axioms moving_nil
+#print axioms moving_of_step
+#print axioms weightTwoBlock
+#print axioms unaryLevel_dvd
+#print axioms includeUnary_mem
+#print axioms evenWeightTwo
+#print axioms evenVector_eval
+#print axioms evenExpansion
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+open Complex CongruenceSubgroup Matrix Matrix.SpecialLinearGroup ModularForm
+open UpperHalfPlane hiding I
+open scoped MatrixGroups
+#print axioms jacobiTheta_fourth_transform
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+open AddressGenuine AppE AuxInputs EvenBudget HalfIntegral PrintsAnalytic Wiring
+open ZInQ.Manuscript.RC.Even
+open BlocksPerU CongruenceSubgroup UpperHalfPlane Filter
+open ZInQ.Contrib.CloudB3RC53
+open scoped BigOperators Manifold MatrixGroups
+#print axioms threeHalves_of_cusp
+#print axioms hasThreeHalves_of_cusp
+#print axioms evenMasked
+#print axioms evenMasked_reference
+#print axioms evenMasked_expansion
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+open AppE HalfIntegral PrintsAnalytic UpperHalfPlane
+open scoped BigOperators Classical
+#print axioms quadraticProjection
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+open UpperHalfPlane HalfIntegral Function Odd
+open scoped BigOperators ZMod
+#print axioms series_Vp
+#print axioms series_Up
+#print axioms series_Up_sq_Vp
+#print axioms movingOp_series
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+open BlocksPerU Complex CongruenceSubgroup Matrix Matrix.SpecialLinearGroup ModularForm
+open OldStageLaw PrintsAnalytic
+open UpperHalfPlane hiding I
+open scoped BigOperators MatrixGroups
+#print axioms ordinaryTheta_cusps
+#print axioms ordinaryTheta_fourth
+#print axioms ordinaryThetaLaw
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+#print axioms upSquare_permutation
+#print axioms upSquare_conjugation
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+open scoped BigOperators Classical
+#print axioms dual_orthogonality
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+#print axioms summable_squareShell
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.EvenExpansion
+section
+open EvenBudget UpperHalfPlane
+open scoped BigOperators Classical
+#print axioms exists_unary_parity
+#print axioms unary_hasSum
+end
+end ZInQ.Manuscript.RC.EvenExpansion
+namespace ZInQ.Manuscript.RC.GoodReduction
+section
+open AlgebraicGeometry CategoryTheory Limits CartesianMonoidalCategory
+open scoped MonoidalCategory CategoryTheory.Obj CategoryTheory.MonObj
+open FreeAbelianGroup (of)
+open PMGeometry (DivZero center)
+#print axioms atkinQuotient_of_affine
+#print axioms atkinQuotient_of_integralRelation
+end
+end ZInQ.Manuscript.RC.GoodReduction
+namespace ZInQ.Manuscript.RC.GoodReduction
+section
+open AlgebraicGeometry CategoryTheory Limits
+open scoped MonoidalCategory CategoryTheory.Obj CategoryTheory.MonObj
+#print axioms existsUnique_integralMap
+#print axioms exists_integralPoint
+#print axioms integralAffine_baseChange
+end
+end ZInQ.Manuscript.RC.GoodReduction
+namespace ZInQ.Manuscript.RC.GoodReduction
+section
+open AlgebraicGeometry CategoryTheory WeierstrassCurve
+open ZInQ.Contrib.CloudB3RC53.CST ZInQ.Contrib.CloudB3RC53.GenusOdd
+open ZInQ.Contrib.ChebFD.C10 (GQ)
+open scoped WeierstrassCurve Classical
+open PreparedParam PMGeometry WitnessSpec
+#print axioms hpi_of_integralDiagram
+end
+end ZInQ.Manuscript.RC.GoodReduction
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Filter PkgI3
+open scoped TensorProduct Topology
+#print axioms maps_to_rat_unique
+#print axioms sectionEval
+#print axioms sectionMap_factor
+#print axioms tendsto_specPoint
+#print axioms tendsto_complexLift_of_sections
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Filter ModularCurve MonObj MonoidalCategory PkgI3 UpperHalfPlane
+open scoped Topology
+#print axioms cusp_at_infinity_maps_to_unit
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open Filter ModularCurve ShimuraPointDict
+open scoped Topology
+#print axioms branch_expansion
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Limits MonObj PkgI3 Filter UpperHalfPlane
+open Matrix.SpecialLinearGroup
+open scoped MatrixGroups Topology
+#print axioms complexLift_comp
+#print axioms value_eq_of_chart_limit
+#print axioms cuspLimit_eq_zero_of_jacobi_ne_zero
+#print axioms cuspComparison_of_zero_chart_limit
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Filter ModularCurve PkgI3 UpperHalfPlane
+open Matrix.SpecialLinearGroup
+open scoped MatrixGroups Topology
+#print axioms cuspIndex
+#print axioms orbitOfSL
+#print axioms orbitOfSL_surjective
+#print axioms orbitOfSL_eq
+#print axioms algebraicCusp
+#print axioms extendPoint
+#print axioms extendPoint_injective
+#print axioms rationalAsGeometric
+#print axioms algebraicCusp_limit
+#print axioms algebraicCusp_zero
+#print axioms algebraicCusp_infinity
+#print axioms algebraicCusp_zero_rational
+#print axioms algebraicCusp_infinity_rational
+#print axioms cuspAssignment_zero_limit
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Filter MonObj PkgI3 UpperHalfPlane
+open Matrix.SpecialLinearGroup
+open scoped MatrixGroups Topology
+#print axioms extendJacobian
+#print axioms cusp_comparison_of_factor
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open Matrix Matrix.SpecialLinearGroup
+open scoped MatrixGroups
+#print axioms exists_gamma0_smul_zero
+#print axioms cuspOrbit_eq_zero_of_coprime
+#print axioms cuspOrbit_eq_zero_of_jacobi_ne_zero
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Filter Function ModularCurve PkgI3 UpperHalfPlane
+open scoped MatrixGroups Topology
+#print axioms analyticJ_invariant
+#print axioms tendsto_infinity
+#print axioms tendsto_zero
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory MonoidalCategory MonObj PkgI3
+open scoped MatrixGroups
+#print axioms factor_isMonHom
+#print axioms abelJacobi_comp_factor
+#print axioms abelJacobi_comp_isBased
+#print axioms torusHom_pointClass
+#print axioms torusHom_cuspClass_of_jacobi_ne_zero
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open HeckeRing.GL2
+open AlgebraicGeometry CategoryTheory Limits Filter MonObj PkgI3 UpperHalfPlane WeierstrassCurve
+open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CST
+open scoped Topology
+open PreparedParam
+#print axioms hElkikMD_atScale_of_projectiveGroup
+#print axioms targetPeriodEquiv
+#print axioms targetPeriodEquiv_lift
+#print axioms algebraicCuspClass_comparison_atScale
+#print axioms hElkikMD_atScale_of_geometricTorsion
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory ModularCurve Polynomial IntermediateField
+#print axioms triangularField
+#print axioms triangularField_j
+#print axioms triangularField_jN
+#print axioms zeroField
+#print axioms zeroField_j
+#print axioms zeroField_jN
+#print axioms formalBranch
+#print axioms formalBranch_generic
+#print axioms branchPoint
+#print axioms zeroPoint
+#print axioms zeroPoint_overQ
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open CategoryTheory MonObj PkgI3 HeckeRing.GL2
+open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CST
+#print axioms geometricCuspidalSubgroup_finite
+#print axioms hElkikMD_of_geometricTorsion
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open Filter
+open scoped Topology
+#print axioms powerSeries_analytic_sum
+#print axioms tendsto_powerSeries_eval
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Limits PkgI3
+#print axioms t2_of_affine_pair
+#print axioms source_t2
+#print axioms source_limit_unique
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory MonoidalCategory MonObj PkgI3
+#print axioms infinity
+#print axioms modelCurve
+#print axioms modelPicardRep
+#print axioms J0
+#print axioms aj0
+#print axioms aj0_classifies
+#print axioms isJacobian_aj0
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory ModularCurve
+open ZInQ.Contrib.CloudW07JacobiansCurves ZInQ.Contrib.CurvesG
+#print axioms source
+#print axioms model_smooth_one
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open CategoryTheory MonoidalCategory AlgebraicGeometry
+#print axioms rationalPoint
+#print axioms isCurve_of_point
+#print axioms pointedSourceCurve
+#print axioms basedJacobian
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory MonoidalCategory MonObj PkgI3 WeierstrassCurve
+open ZInQ.Contrib.RC53Assist.IsogenyScheme
+#print axioms projectiveAbVar
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory MonoidalCategory MonObj WeierstrassCurve HomogeneousLocalization Filter PkgI3
+open scoped Topology
+open ZInQ.Contrib.RC53Assist.IsogenyScheme
+open PreparedParam
+#print axioms weierstrassOrigin
+#print axioms weierstrassOrigin_point
+#print axioms projectiveValue_eq_zero_iff
+#print axioms projectiveValue_bijective
+#print axioms projectiveGroup_origin
+#print axioms projectiveValue_vector_affine
+#print axioms projectiveValue_vector_origin
+#print axioms tendsto_projectiveVectorPoint
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Filter Limits PkgI3 WeierstrassCurve
+open ZInQ.Contrib.CloudB3RC53.CST ZInQ.Contrib.RC53Assist.IsogenyScheme
+open scoped Topology PeriodPair
+open PreparedParam
+#print axioms projectiveTorusValue_lift
+#print axioms projectiveTorusValue_lift_of_eval
+#print axioms projectivePeriodHomeomorph
+#print axioms continuous_projectiveTorusValue
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Filter ModularCurve ShimuraPointDict PkgI3
+open scoped Topology
+#print axioms interior
+#print axioms branchComplex
+#print axioms sourceLimit_of_generator_expansions
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Filter Function Matrix ModularCurve PkgI3 UpperHalfPlane
+open scoped MatrixGroups Topology
+#print axioms Qbar
+#print axioms qbarToComplex
+#print axioms exists_algebraic_cusp_limit
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open Matrix
+open scoped MatrixGroups
+#print axioms exists_primitive_triangular
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open WeierstrassCurve ZInQ.Contrib.CloudB3RC53.CST
+#print axioms weierstrassCoordinates_nonsingular
+#print axioms weierstrassPeriodEquiv
+#print axioms weierstrassPeriodEquiv_mk
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Filter MonObj PkgI3 UpperHalfPlane
+open Matrix.SpecialLinearGroup
+open scoped MatrixGroups Topology
+#print axioms algebraicCuspClass
+#print axioms algebraicCuspClass_factors
+#print axioms modularFactor
+#print axioms modularFactor_isMonHom
+#print axioms aj0_comp_modularFactor
+#print axioms cusp_comparison
+#print axioms weighted_comparison
+#print axioms weighted_comparison_from_limits
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.TorusWeights
+section
+open scoped Quaternion NumberField nonZeroDivisors
+open NumberField IsDedekindDomain IsDedekindDomain.FiniteAdeleRing
+open TauCeti.GlobalNumberFields TauCeti.GlobalNumberFields.NumberFieldOrder TauCeti.ClassFieldTheory
+open ZInQ.Contrib.CloudB3RC53.CST ZInQ.Contrib.CloudB3RC53.GenusOdd
+open Eichler Visibility Visibility.ThetaStage O7Actual
+#print axioms NormFactors.rightProduct
+#print axioms SchwartzFactors.eval_order
+#print axioms sign_square
+#print axioms frame_transport
+#print axioms torus_character
+#print axioms orbit_transport
+#print axioms actualWeights
+#print axioms datumWeights
+end
+end ZInQ.Manuscript.RC.TorusWeights
+namespace ZInQ.Manuscript.RC.TorusWeights
+section
+open scoped Quaternion NumberField
+open NumberField IsDedekindDomain
+open TauCeti.GlobalNumberFields TauCeti.GlobalNumberFields.NumberFieldOrder TauCeti.ClassFieldTheory
+open ZInQ.Contrib.CloudB3RC53.CST ZInQ.Contrib.CloudB3RC53.GenusOdd
+open Eichler O7Actual
+#print axioms localNrd
+#print axioms NormFactors.onIntegralNorm
+#print axioms descent_of_filter
+end
+end ZInQ.Manuscript.RC.TorusWeights
+namespace ZInQ.Manuscript.RC.X0Model3
+section
+open AlgebraicGeometry CategoryTheory Filter ModularCurve ShimuraPointDict
+open ZInQ.Contrib.CloudW07JacobiansCurves
+open scoped Topology
+#print axioms affineEval
+#print axioms affineEval_congr
+#print axioms affineEval_injective
+#print axioms finiteChart
+#print axioms eventually_chart_mem
+#print axioms chartEval
+#print axioms chartEval_center
+#print axioms chartEval_at_mem
+#print axioms chartEval_analyticAt
+#print axioms finitePointEval
+#print axioms finitePointEval_eq
+#print axioms exists_analyticJN_ratio
+end
+end ZInQ.Manuscript.RC.X0Model3
+namespace ZInQ.Manuscript.RC.X0Model3
+section
+open AlgebraicGeometry Filter ModularCurve
+open scoped Topology MatrixGroups
+open X0Model2
+#print axioms exists_stabilizer_germ_match
+#print axioms complexPoint_eq_iff
+#print axioms model
+end
+end ZInQ.Manuscript.RC.X0Model3
+namespace ZInQ.Manuscript.RC.X0Model3
+section
+open AlgebraicGeometry CategoryTheory Filter ModularCurve
+open ZInQ.Contrib.CloudW07JacobiansCurves ZInQ.Contrib.CurvesG
+open scoped Topology MatrixGroups
+#print axioms eventually_overlap_of_complexPoint_eq
+end
+end ZInQ.Manuscript.RC.X0Model3
+namespace ZInQ.Manuscript.RC.X0Model3
+section
+open AlgebraicGeometry CategoryTheory WeierstrassCurve
+open ZInQ.Contrib.CloudB3RC53.CST ZInQ.Contrib.CloudB3RC53.GenusOdd
+open ZInQ.Contrib.ChebFD.C10 (GQ)
+open scoped WeierstrassCurve Classical
+open PreparedParam PMGeometry WitnessSpec
+#print axioms projectiveValue_eq_of_complexPoint
+#print axioms datumReduction_projectiveValue
+#print axioms hpi_iff_specialize_projectiveValue
+#print axioms specialize_of_integral_extension
+end
+end ZInQ.Manuscript.RC.X0Model3
+namespace ZInQ.Manuscript.RC.X0Model3
+section
+open Algebra Filter Topology
+open scoped TensorProduct
+#print axioms eventually_eq_of_unramified
+end
+end ZInQ.Manuscript.RC.X0Model3
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open scoped Classical
+open HeckeRing.GL2
+open AlgebraicGeometry CategoryTheory MonObj PkgI3 WeierstrassCurve
+open ZInQ.Contrib.CloudB3RC53 ZInQ.Contrib.CloudB3RC53.CST ZInQ.Contrib.CloudB3RC53.GenusOdd
+#print axioms hElkikMD_atScale
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open scoped Classical
+open WeierstrassCurve
+open scoped WeierstrassCurve.Projective
+#print axioms nonsingular_of_equation_ne_zero
+#print axioms additionCoordinates_fields
+#print axioms additionCoordinates_map
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open WeierstrassCurve
+open scoped WeierstrassCurve.Projective
+#print axioms symmetricAddition_map
+#print axioms symmetricAddition_smul
+#print axioms symmetricAddition_eq_smul_add
+#print axioms projectiveNonsingular_ne_zero
+#print axioms projectiveAddition_cover
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory Limits WeierstrassCurve
+open ZInQ.Contrib.RC53Assist.IsogenyScheme
+open PreparedParam
+#print axioms schemeMapsToRat_unique
+#print axioms projectiveMorphism_of_local
+#print axioms projectiveMorphism_of_formulas
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open scoped Classical
+open AlgebraicGeometry CategoryTheory MonoidalCategory CartesianMonoidalCategory PkgI3
+open WeierstrassCurve
+open ZInQ.Contrib.RC53Assist.IsogenyScheme
+open PreparedParam
+#print axioms projectiveUnit_value
+#print axioms projectiveHom_ext
+#print axioms projectiveTarget_square_reduced
+#print axioms projectiveGroupOfOperations
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open scoped Classical
+open AlgebraicGeometry CategoryTheory MonoidalCategory CartesianMonoidalCategory MonObj PkgI3
+open WeierstrassCurve
+open ZInQ.Contrib.RC53Assist.IsogenyScheme
+open PreparedParam
+#print axioms exists_projectiveMultiplication
+#print axioms exists_projectiveInversion
+#print axioms projectiveGroup_exists
+end
+end ZInQ.Manuscript.RC.J0Cusps
+namespace ZInQ.Manuscript.RC.J0Cusps
+section
+open AlgebraicGeometry CategoryTheory HomogeneousLocalization MvPolynomial WeierstrassCurve
+open ZInQ.Contrib.RC53Assist.IsogenyScheme
+#print axioms projectiveChartRatio_self
+#print axioms projectiveChart_dehomogenize
+#print axioms projectiveChart_equation
+#print axioms projectiveChart_ringHom_ext
+#print axioms projectiveChartEval_ratio
+#print axioms projectiveChartMorphism_map
+#print axioms projectiveChartMorphism_independent
+#print axioms projectiveValue_chartMorphism
+#print axioms projectiveValue_fromChart
+end
+end ZInQ.Manuscript.RC.J0Cusps
