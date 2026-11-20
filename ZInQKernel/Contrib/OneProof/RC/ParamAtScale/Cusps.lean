@@ -109,9 +109,5 @@ theorem rational_cusp_comparison {N : ℕ} [NeZero N]
   obtain ⟨σ, hσ⟩ := (r : OnePoint ℚ).exists_mem_SL2 ℤ
   exact ⟨σ, hσ, torusValue_tendsto_cusp f Lat κ r σ hσ⟩
 
-#print axioms torusValue_smul
-#print axioms torusValue_tendsto_infty
-#print axioms torusValue_tendsto_cusp
-#print axioms rational_cusp_comparison
 
 end ZInQ.Manuscript.RC.ParamAtScale

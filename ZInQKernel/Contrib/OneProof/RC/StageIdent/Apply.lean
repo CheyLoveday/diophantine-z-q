@@ -149,10 +149,5 @@ theorem inputs_of_selected
     F A C depth (reading_budget budget).2 (reading_budget budget).1
     (bad_mem_support Q q i hS) hcover sieve off hm htyp hexp ops DF hDF hhecke localData
 
-#print axioms level_eq
-#print axioms detectorAt_lam
-#print axioms pmStage_parameters
-#print axioms pmStage_weight
-#print axioms inputs_of_selected
 
 end ZInQ.Manuscript.RC.StageIdent

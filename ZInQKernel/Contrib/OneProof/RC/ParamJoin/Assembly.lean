@@ -60,7 +60,5 @@ theorem gz34CompAt {ℓ : ℕ} {W : WData ℓ} (P : Prints) (hℓ : 0 < ℓ)
     hlevel0 hS hprepared hstarS hpreparedLoc (genus_values P hℓ hf hLat hκ hr hCM hpartner hlevel0)
     (ring_values P hℓ hf hLat hκ hr hCM (s := W.hstar)) hjg hjr hArtin hRN
 
-#print axioms genus_values
-#print axioms gz34CompAt
 
 end ZInQ.Manuscript.RC.ParamJoin

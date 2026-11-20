@@ -125,8 +125,5 @@ theorem two_trace_mem (B : ℕ) (F : Finset ℕ → Λ)
   rw [hd]
   exact m.mul_mem_right d hm2
 
-#print axioms dense_testPairs
-#print axioms continuous_doubleTrace
-#print axioms two_trace_mem
 
 end ZInQ.Manuscript.RC.EvenBudget

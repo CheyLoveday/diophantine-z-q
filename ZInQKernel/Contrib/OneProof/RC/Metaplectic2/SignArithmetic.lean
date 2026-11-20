@@ -230,32 +230,5 @@ theorem finiteExponent_neg (p : Place) (x : ℚ_[p.val]ˣ) :
       oddExponent_table, parity_mul, parity_neg_one, zero_add, oddBit_mul, oddBit_neg_one p hp]
     exact oddTable_neg _ _ _
 
-#print axioms bitExp_add
-#print axioms bitExp_double
-#print axioms characterBit_mul
-#print axioms parity_mul
-#print axioms parity_zero_iff
-#print axioms valAt_neg_one
-#print axioms parity_neg_one
-#print axioms unitAt_one
-#print axioms unitAt_neg_one
-#print axioms oddBit_mul
-#print axioms oddBit_neg_one
-#print axioms oddTable_defect
-#print axioms oddTable_neg
-#print axioms oddExponent_table
-#print axioms dyadicFour_mul
-#print axioms dyadicEight_mul
-#print axioms dyadicTable_defect
-#print axioms dyadicTable_neg
-#print axioms dyadic_residue_odd
-#print axioms dyadicExponent_table
-#print axioms hilbertExponent_dyadic
-#print axioms hilbertSign_cases
-#print axioms hilbertExponent_double
-#print axioms hilbertExponent_mul_left
-#print axioms finiteExponent_defect
-#print axioms hilbertExponent_comm
-#print axioms finiteExponent_neg
 
 end ZInQ.Manuscript.RC.Metaplectic2

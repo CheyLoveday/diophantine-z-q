@@ -236,16 +236,5 @@ theorem complexCuspClassification (N : ℕ) [NeZero N] : ComplexCuspClassificati
   rw [modularFunctionFieldC, ← IntermediateField.adjoin_simple_adjoin_simple]
   exact hS
 
-#print axioms dilate_smul_level
-#print axioms jNFunction_invariant
-#print axioms jN_translate_analytic
-#print axioms cuspGrowth_add_one
-#print axioms j_polynomial_growth
-#print axioms cuspGrowth_root_of_monic
-#print axioms jN_translate_growth
-#print axioms qParam_width_one_zpow
-#print axioms realizes_jN
-#print axioms complex_jN_minpoly_degree
-#print axioms complexCuspClassification
 
 end ZInQ.Manuscript.RC.ModFnClassify

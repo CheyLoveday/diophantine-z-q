@@ -182,25 +182,5 @@ theorem unitAt_of_int_times_pow (p : Place) (a : ℚ_[p.val]ˣ) (b : ℤ) (k : �
   rw [mul_assoc, ← zpow_natCast, ← zpow_add₀ (place_cast_ne_zero p), add_neg_cancel, zpow_zero,
     mul_one]
 
-#print axioms unitAt_of_int_times_pow
-#print axioms eighth_pow
-#print axioms exponentRoot_add
-#print axioms exponentRoot_zero
-#print axioms exponentRoot_one
-#print axioms exponentRoot_neg
-#print axioms place_cast_ne_zero
-#print axioms unitField_norm
-#print axioms unitInteger_isUnit
-#print axioms unitAt_coe
-#print axioms valAt_mul
-#print axioms unitAt_mul
-#print axioms dyadicUnitResidue_mul
-#print axioms oddUnitResidue_mul
-#print axioms finiteExponent_dyadic
-#print axioms finiteExponent_odd
-#print axioms finiteGamma_even_odd_place
-#print axioms zmod8_unit_sq
-#print axioms finiteExponent_mul_sq
-#print axioms finiteGamma_mul_sq
 
 end ZInQ.Manuscript.RC.WeilIndex

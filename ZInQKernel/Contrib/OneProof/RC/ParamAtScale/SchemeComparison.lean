@@ -77,10 +77,5 @@ theorem germToFunctionField_pullback {X Y : Scheme.{0}} [IsIntegral X] [IsIntegr
   rw [ht, sectionMap_fromSpecFunctionField] at hh
   exact congrArg (fun m : Γ(Y, V) ⟶ X.functionField => m r) hh
 
-#print axioms evalSection_comp
-#print axioms sectionMap_stalk
-#print axioms sectionMap_fromSpecFunctionField
-#print axioms top_preimage_generic
-#print axioms germToFunctionField_pullback
 
 end ZInQ.Manuscript.RC.ParamAtScale

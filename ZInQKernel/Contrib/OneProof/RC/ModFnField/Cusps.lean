@@ -85,7 +85,5 @@ theorem coordinates_cusp_meromorphic (E : WeierstrassCurve ℚ) {N : ℕ} [NeZer
     ((MeromorphicAt.const _ _).mul hx)).sub (MeromorphicAt.const _ _) |>.div (MeromorphicAt.const _ _)
   exact ⟨hh, x, y, hx, hy, fun τ => by simp only [x, y, hval τ, xCoordinate, yCoordinate, and_self]⟩
 
-#print axioms scaledPrimitive_cusp
-#print axioms coordinates_cusp_meromorphic
 
 end ZInQ.Manuscript.RC.ModFnField

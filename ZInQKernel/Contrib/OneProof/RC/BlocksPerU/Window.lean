@@ -172,13 +172,5 @@ theorem realize (Dₗ : LevelSetup P avoid N) (D : Divisions E δ W R adm)
       left_dvd := Eχ.left_dvd.trans (dvd_mul_right _ _)
       right_dvd := Eχ.right_dvd.trans (dvd_mul_right _ _) }, hEχ⟩
 
-#print axioms LevelSetup.common_four
-#print axioms LevelSetup.test_coprime
-#print axioms LevelSetup.b_dvd
-#print axioms LevelSetup.unary_dvd
-#print axioms raw_zero
-#print axioms fourierB_zero
-#print axioms fourierUnary_zero
-#print axioms realize
 
 end ZInQ.Manuscript.RC.BlocksPerU

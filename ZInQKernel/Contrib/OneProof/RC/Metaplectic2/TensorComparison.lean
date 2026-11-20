@@ -102,10 +102,5 @@ theorem restricted_generatorTensorAction :
     rw [gridTensor_delta, forget_operatorStep]
     exact restricted_weyl r y
 
-#print axioms forget_operatorStep
-#print axioms gridTensor_delta
-#print axioms evaluate_gridTensor
-#print axioms gridTensor_injective
-#print axioms restricted_generatorTensorAction
 
 end ZInQ.Manuscript.RC.Metaplectic2

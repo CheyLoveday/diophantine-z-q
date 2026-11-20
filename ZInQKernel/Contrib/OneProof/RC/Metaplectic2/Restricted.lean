@@ -250,19 +250,5 @@ theorem restricted_weyl (r : Grid a) (y : FiniteVectors) :
   rw [evaluate_act]
   exact finprod_congr (fun p => weyl_elementary a p _ _)
 
-#print axioms pure_add
-#print axioms pure_smul
-#print axioms tensorLift_pure
-#print axioms tensor_ext
-#print axioms actFamily_replace
-#print axioms act_pure
-#print axioms integral_tail
-#print axioms evaluation_finite
-#print axioms evaluate_replace
-#print axioms evaluate_pure
-#print axioms evaluate_act
-#print axioms elementary_grid
-#print axioms restricted_upper
-#print axioms restricted_weyl
 
 end ZInQ.Manuscript.RC.Metaplectic2

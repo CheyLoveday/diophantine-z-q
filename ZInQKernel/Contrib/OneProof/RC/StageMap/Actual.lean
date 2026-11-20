@@ -256,13 +256,5 @@ theorem actualEvaluationsOn_spec (d : DivisionTower (qtwist E (Dw : ℚ)) Q)
 
 end Transport
 
-#print axioms anchoredEmbeddings_witness
-#print axioms Evaluations.ev_of_support
-#print axioms Evaluations.lamOf_eq
-#print axioms stage_disc_of_test
-#print axioms ringClassRed_agrees
-#print axioms actualEvaluations_at_witness
-#print axioms actualEvaluationsOn_at_witness
-#print axioms actualEvaluationsOn_spec
 
 end ZInQ.Manuscript.RC.StageMap

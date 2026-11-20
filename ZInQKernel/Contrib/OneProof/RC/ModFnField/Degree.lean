@@ -59,7 +59,5 @@ theorem intermediateField_eq_top_of_degree_bound
   rw [heq]
   exact (le_sup_right : S ≤ M) (IntermediateField.mem_adjoin_simple_self F x)
 
-#print axioms integral_degree_of_orbit_product
-#print axioms intermediateField_eq_top_of_degree_bound
 
 end ZInQ.Manuscript.RC.ModFnField

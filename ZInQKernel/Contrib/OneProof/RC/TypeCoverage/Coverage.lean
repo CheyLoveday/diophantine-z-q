@@ -220,25 +220,5 @@ theorem two_mem_type_support :
   rw [coveredType_primeFactors]
   exact Finset.mem_union_right _ (by simp [coefficientSupport])
 
-#print axioms coveredType
-#print axioms coveredChar
-#print axioms mem_coefficientSupport
-#print axioms prime_of_mem_coefficientSupport
-#print axioms dvd_fixedModulus
-#print axioms fixedModulus_pos
-#print axioms moving_coprime
-#print axioms coveredType_primeFactors
-#print axioms good_not_mem_support
-#print axioms good_iff_old_good_and_outside
-#print axioms stage_good
-#print axioms project_type_of_good
-#print axioms project_sign
-#print axioms project_realization
-#print axioms isTypeChar_covered
-#print axioms project_coveredChar
-#print axioms openTypeKernel_covered
-#print axioms detects_radicals_covered
-#print axioms exists_good_of_type
-#print axioms two_mem_type_support
 
 end ZInQ.Manuscript.RC.TypeCoverage

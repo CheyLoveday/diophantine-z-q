@@ -152,11 +152,5 @@ theorem section_meromorphic_germ {N : ℕ} [NeZero N] (X : X0Model N)
     filter_upwards [htopτ] with z hz using sub_eq_zero.mp hz
   exact ⟨G, (hval τ hτ).1, (hval τ hτ).2, heq⟩
 
-#print axioms scaledPrimitive_analytic
-#print axioms rational_primitive_hasSum
-#print axioms coordinates_meromorphic
-#print axioms coordinates_equation
-#print axioms coordinates_smul
-#print axioms section_meromorphic_germ
 
 end ZInQ.Manuscript.RC.ParamAtScale

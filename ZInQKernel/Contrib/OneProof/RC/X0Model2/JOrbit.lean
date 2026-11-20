@@ -139,10 +139,5 @@ theorem analyticJ_eq_iff (τ σ : UpperHalfPlane) :
   · rintro ⟨γ, rfl⟩
     exact (analyticJ_smul γ τ).symm
 
-#print axioms analyticJ_smul
-#print axioms exists_invariant_scaling
-#print axioms exists_homothetic_of_jLattice_eq
-#print axioms exists_smul_of_lattice_eq
-#print axioms analyticJ_eq_iff
 
 end ZInQ.Manuscript.RC.X0Model2

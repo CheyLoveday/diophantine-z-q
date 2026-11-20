@@ -88,7 +88,5 @@ theorem xCoordinate_no_analytic_germ_at_lattice (E : WeierstrassCurve ℚ)
   have h := ((ContinuousAt.eventuallyEq_nhds_iff_eventuallyEq_nhdsNE h₁ h₂).mp hEq).eq_of_nhds
   exact zero_ne_one (by simpa only [hu0, zero_pow (by norm_num : (2 : ℕ) ≠ 0), zero_mul, add_zero] using h)
 
-#print axioms scaledPrimitive_not_constant
-#print axioms xCoordinate_no_analytic_germ_at_lattice
 
 end ZInQ.Manuscript.RC.ModFnClassify

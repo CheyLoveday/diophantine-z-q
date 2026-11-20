@@ -120,7 +120,5 @@ theorem representation_of_relations (R : Relations U M W) :
   exact ⟨{ toFun := F, map_one' := h1, map_mul' := hmul }, fun z => by simpa [h1] using hU 1 z,
     fun t => by simpa [h1] using hM 1 t, by simpa [h1] using hW 1⟩
 
-#print axioms matrix_relations
-#print axioms representation_of_relations
 
 end ZInQ.Manuscript.RC.Metaplectic2.NormalForm

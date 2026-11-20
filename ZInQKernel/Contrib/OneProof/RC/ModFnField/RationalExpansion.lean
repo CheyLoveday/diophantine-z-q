@@ -73,7 +73,5 @@ theorem coordinates_rationalLaurent (E : WeierstrassCurve ℚ) {N : ℕ} [NeZero
   exact ⟨x, y, max Sx Sy, hx, hy, hx0.trans hX0, fun τ hτ =>
     ⟨hxs τ ((le_max_left _ _).trans_lt hτ), hys τ ((le_max_right _ _).trans_lt hτ)⟩⟩
 
-#print axioms rationalLaurent_of_cleared
-#print axioms coordinates_rationalLaurent
 
 end ZInQ.Manuscript.RC.ModFnField

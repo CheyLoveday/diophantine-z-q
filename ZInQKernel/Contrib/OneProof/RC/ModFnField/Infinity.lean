@@ -161,7 +161,5 @@ theorem coordinates_rationalTaylor (E : WeierstrassCurve ℚ) {N : ℕ} [NeZero 
   field_simp [hq, hqu.2]
   <;> ring
 
-#print axioms primitive_rationalTaylor
-#print axioms coordinates_rationalTaylor
 
 end ZInQ.Manuscript.RC.ModFnField

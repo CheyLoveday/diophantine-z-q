@@ -191,10 +191,5 @@ theorem levelOne_rational_in_j {g : ℂ → ℂ} (hg : MeromorphicOn g upperDoma
   filter_upwards [nhdsWithin_le_nhds (isOpen_upperHalfPlaneSet.mem_nhds hz)] with w hw
   exact hP ⟨w, hw⟩
 
-#print axioms cuspGerm_analytic_tail
-#print axioms levelOne_const
-#print axioms j_cusp_unit
-#print axioms levelOne_polynomial_of_cleared_cusp
-#print axioms levelOne_rational_in_j
 
 end ZInQ.Manuscript.RC.ModFnClassify

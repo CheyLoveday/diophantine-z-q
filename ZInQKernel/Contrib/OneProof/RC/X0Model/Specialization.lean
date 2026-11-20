@@ -112,17 +112,5 @@ def cusp (N : ℕ) [NeZero N] : Spec (.of ℚ) ⟶ curve N :=
 theorem cusp_overQ (N : ℕ) [NeZero N] : cusp N ≫ overQ N = 𝟙 _ :=
   eq_over_rat _ _
 
-#print axioms eq_over_rat
-#print axioms genericMap
-#print axioms specializationSquare
-#print axioms existsUnique_specialization
-#print axioms sectionMap
-#print axioms sectionMap_comp
-#print axioms sectionMap_stalk
-#print axioms sectionMap_generic
-#print axioms formalQArc
-#print axioms formalQArc_generic
-#print axioms cusp
-#print axioms cusp_overQ
 
 end ZInQ.Manuscript.RC.X0Model

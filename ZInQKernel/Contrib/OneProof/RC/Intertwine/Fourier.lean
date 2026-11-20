@@ -143,11 +143,5 @@ theorem J_fourier (hL : MeasurableSet (lattice I₀ : Set (Fin 3 → A)))
     intro r _
     ring
 
-#print axioms polar_add
-#print axioms lattice_integral
-#print axioms integrable_coset
-#print axioms integrate_coset
-#print axioms J_mul_character
-#print axioms J_fourier
 
 end ZInQ.Manuscript.RC.Intertwine

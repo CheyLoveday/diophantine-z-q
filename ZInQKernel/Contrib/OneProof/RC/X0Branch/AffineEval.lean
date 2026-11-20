@@ -200,22 +200,5 @@ theorem exists_analyticJN_ratio (N : ℕ) [NeZero N] :
   rw [hh] at hz hzb
   exact ⟨hz, hzb⟩
 
-#print axioms affineEval
-#print axioms affineEval_factor
-#print axioms affineEval_congr
-#print axioms affineEval_injective
-#print axioms mem_basicOpen_iff_eval_ne_zero
-#print axioms finiteChart
-#print axioms finiteChart_affine
-#print axioms chart_mem_finiteChart
-#print axioms eventually_chart_mem
-#print axioms chartEval
-#print axioms chartEval_center
-#print axioms chartEval_at_mem
-#print axioms chartEval_local
-#print axioms chartEval_analyticAt
-#print axioms finitePointEval
-#print axioms finitePointEval_eq
-#print axioms exists_analyticJN_ratio
 
 end ZInQ.Manuscript.RC.X0Branch

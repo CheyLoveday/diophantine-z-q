@@ -132,13 +132,5 @@ theorem selectRing_isSome
 
 end Select
 
-#print axioms companion_nonsquare
-#print axioms conductor_ne_zero
-#print axioms conductor_coprime_disc
-#print axioms datumOfCompanion
-#print axioms selectGenus
-#print axioms selectRing
-#print axioms selectGenus_isSome
-#print axioms selectRing_isSome
 
 end ZInQ.Manuscript.RC.Gz34Instance

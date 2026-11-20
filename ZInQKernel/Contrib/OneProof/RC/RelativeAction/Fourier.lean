@@ -89,11 +89,5 @@ theorem finiteFourier_four (w : Grid a → ℂ) :
   funext r
   rw [congrFun (finiteFourier_sq w) (-r), neg_neg]
 
-#print axioms pairing_symm
-#print axioms pairingChar_eq_zero
-#print axioms sum_pairing
-#print axioms normalization_sq
-#print axioms finiteFourier_sq
-#print axioms finiteFourier_four
 
 end ZInQ.Manuscript.RC.RelativeAction

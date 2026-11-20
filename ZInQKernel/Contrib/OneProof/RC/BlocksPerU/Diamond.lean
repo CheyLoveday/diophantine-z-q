@@ -107,11 +107,5 @@ theorem unaryCharacter_value (C : DiamondCharacters O G ηsource) (i : Fin 2) (j
     (unaryCharacter (K := K) C i j u : K) = algebraMap O K (C.unaryChar i j u) := by
   simp [unaryCharacter, DiamondCharacters.unaryChar]
 
-#print axioms representative_modEq
-#print axioms representative_odd
-#print axioms jacobi_isUnit
-#print axioms diamondCharacters
-#print axioms bCharacter_value
-#print axioms unaryCharacter_value
 
 end ZInQ.Manuscript.RC.BlocksPerU

@@ -66,7 +66,5 @@ theorem spansAt_of_complex (X : Inventory I J K T N) (κ : K →+* ℂ)
   rw [hset']
   exact h m hm χ a ha hf
 
-#print axioms span_descends
-#print axioms spansAt_of_complex
 
 end ZInQ.Manuscript.RC.BlocksPerU

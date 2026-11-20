@@ -226,13 +226,5 @@ theorem evaluate_injective : Function.Injective evaluate := by
   by_contra h
   exact hp (Finset.mem_biUnion.mpr ⟨f, hf, (Set.Finite.mem_toFinset _).mpr h⟩)
 
-#print axioms spherical_zero_value
-#print axioms replace_self
-#print axioms onlyAt_pure
-#print axioms insert_sum_zero
-#print axioms evaluation_support
-#print axioms slice_formula
-#print axioms sum_zero_of_eval
-#print axioms evaluate_injective
 
 end ZInQ.Manuscript.RC.Metaplectic2

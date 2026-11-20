@@ -179,14 +179,5 @@ theorem eval_squarePolynomial_eq_of_sq (p m : ℕ) [Fact p.Prime] (hm : 2 * m + 
         (Nat.le_of_dvd (by decide) ((ZMod.natCast_eq_zero_iff 2 p).mp h0))
     exact hn (by linear_combination -he)
 
-#print axioms sum_eval_monic
-#print axioms factorial_mul_choose_eq
-#print axioms square_coeff
-#print axioms coeff_product_of_X_dvd
-#print axioms twice_odd_factorial
-#print axioms product_coeff
-#print axioms shifted_cyclotomic
-#print axioms shifted_coeff_eq_zero
-#print axioms eval_squarePolynomial_eq_of_sq
 
 end ZInQ.Manuscript.RC.GaussSign

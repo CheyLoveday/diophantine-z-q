@@ -156,11 +156,5 @@ theorem gaussianCutoff_eventually (b : ℚ_[p.val]ˣ) :
   congr 1
   simp only [quad, Finset.mul_sum, ← mul_assoc, phase_sum]
 
-#print axioms mem_vectorCutoff
-#print axioms cutoff_mono
-#print axioms eventually_vectorCutoff
-#print axioms phase_sum
-#print axioms cutoff_product
-#print axioms gaussianCutoff_eventually
 
 end ZInQ.Manuscript.RC.Metaplectic2

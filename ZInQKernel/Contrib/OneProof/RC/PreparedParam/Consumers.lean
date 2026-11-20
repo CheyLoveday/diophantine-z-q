@@ -76,8 +76,5 @@ theorem gz34CompAt_of_scaledParametrization {ℓ : ℕ} {W : WData ℓ} (P : Pri
     hlevel0 hS hprepared hstarS hpreparedLoc (genusParamValues P hℓ hCM hπ hpartner hlevel0)
     halgR hjg hjr hArtin hRN
 
-#print axioms genusParamValues
-#print axioms missingParamValues
-#print axioms gz34CompAt_of_scaledParametrization
 
 end ZInQ.Manuscript.RC.PreparedParam

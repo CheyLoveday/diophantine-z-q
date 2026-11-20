@@ -316,16 +316,5 @@ theorem projective_value_of_expansions (E : WeierstrassCurve ℚ) [E.IsElliptic]
     (xCoordinate E f L κ τ) (yCoordinate E f L κ τ) then .some _ _ hh else 0)
   rw [dite_eq_left hs]
 
-#print axioms qParam_one_zpow
-#print axioms eq_germ_of_eq_tail
-#print axioms evalSection_eq_stalk
-#print axioms evalSection_ZOverY_at_identity
-#print axioms pullback_expansion
-#print axioms same_series_same_germ
-#print axioms projective_identity_iff_lattice
-#print axioms appLE_of_lift
-#print axioms evalSection_on_zChart
-#print axioms projectiveValue_on_affine
-#print axioms projective_value_of_expansions
 
 end ZInQ.Manuscript.RC.ModFnClassify

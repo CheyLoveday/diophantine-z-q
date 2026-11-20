@@ -192,13 +192,5 @@ theorem sectionMeromorphicContinuation (N : ℕ) [NeZero N]
     (Germ.coe_eq.mp ((he τ).trans he'.symm))
   exact ⟨(analyticAt_congr hfg).mpr hf, hv.trans hfg.eq_of_nhds.symm⟩
 
-#print axioms top_le_preimage_comp
-#print axioms analyticArc_closedPoint
-#print axioms sectionGerm
-#print axioms sectionAnalyticAt
-#print axioms meromorphicIncl_inv
-#print axioms exists_meromorphicRepresentative
-#print axioms exists_meromorphicContinuation
-#print axioms sectionMeromorphicContinuation
 
 end ZInQ.Manuscript.RC.X0Model

@@ -187,18 +187,5 @@ theorem oldCharacter_comp_eq_iff {m N M : ℕ} [NeZero m] [NeZero M]
     ext u
     exact (he u).trans (h u).symm
 
-#print axioms jacobi_prod_right
-#print axioms oddFactors_eq_jacobi
-#print axioms dyadic_sign
-#print axioms oldCharacter_comp_eq_iff
-#print axioms jacobi_congr
-#print axioms jacobiOn_intCast
-#print axioms jacobiOn_unit
-#print axioms unitsMap_intCast
-#print axioms determinantCharacter_intCast
-#print axioms determinant_reciprocity
-#print axioms determinantCharacter_natCast
-#print axioms determinantCharacter_neg_one
-#print axioms oldCharacter_natCast
 
 end ZInQ.Manuscript.RC.WeilIndex

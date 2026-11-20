@@ -120,8 +120,5 @@ theorem dominant_morphism_of_classification (E : WeierstrassCurve ℚ) [E.IsElli
   obtain ⟨π, hπ, hdom, hgen⟩ := morphism_of_functionField X ι
   exact ⟨ι, π, hπ, hdom, hgen, hx, hy⟩
 
-#print axioms fieldHom_of_transcendental_point
-#print axioms functionField_coordinates
-#print axioms dominant_morphism_of_classification
 
 end ZInQ.Manuscript.RC.ModFnField

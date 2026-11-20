@@ -118,15 +118,5 @@ theorem commonSection_weyl :
   apply Subtype.ext
   exact Prod.ext (map_weylMatrix _) (integralOperatorPair_generators a b p h).2.2
 
-#print axioms map_upperMatrix
-#print axioms map_diagonalMatrix
-#print axioms map_weylMatrix
-#print axioms eventually_good
-#print axioms integralOperatorPair_generators
-#print axioms pairIntegral_agree
-#print axioms commonSection_first
-#print axioms commonSection_second
-#print axioms commonSection_upper
-#print axioms commonSection_weyl
 
 end ZInQ.Manuscript.RC.Metaplectic2

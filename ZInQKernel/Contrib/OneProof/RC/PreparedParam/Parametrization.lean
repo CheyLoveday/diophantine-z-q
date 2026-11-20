@@ -118,9 +118,5 @@ def AlgebraicParametrizationAtScale (E : WeierstrassCurve ℚ) [E.IsElliptic]
     IsDominant π ∧ ∀ τ : UpperHalfPlane,
       projectiveValue ((X.complexPoint τ).comp π hπ).val = phiAn E f Lat κ τ
 
-#print axioms mem_affineOpen_of_ne_pointO
-#print axioms range_le_affineOpen
-#print axioms specToAlgHom_map
-#print axioms projectiveValue_map
 
 end ZInQ.Manuscript.RC.PreparedParam

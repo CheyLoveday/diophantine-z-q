@@ -26,6 +26,5 @@ theorem filterInputs_of_stageSupport {ℓ : ℕ} {W : WData ℓ} (hℓ : 0 < ℓ
     have hu := hh.1.2.2 p (hbase (hlevel0 p hp hpd))
     exact squareAt_of_padic hp hu.1 hu.2
 
-#print axioms filterInputs_of_stageSupport
 
 end ZInQ.Manuscript.RC.Gz34Instance

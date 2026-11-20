@@ -85,10 +85,5 @@ theorem hasSum_jN (N : ℕ) [NeZero N] (τ : UpperHalfPlane) :
         Function.Periodic.qParam 1 (τ : ℂ) ^ ((N : ℤ) * n)) _
     simpa only [analyticJN, analyticJ, qExpand_coeff_mul, zpow_mul, zpow_natCast] using h
 
-#print axioms qParam_zpow_eq
-#print axioms analyticOn_j
-#print axioms analyticOn_jN
-#print axioms hasSum_j
-#print axioms hasSum_jN
 
 end ZInQ.Manuscript.RC.X0Model

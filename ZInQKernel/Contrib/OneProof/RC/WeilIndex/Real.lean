@@ -117,13 +117,5 @@ theorem real_normalized_gauss_limit (a : ℝˣ) :
     rw [gaussianParameter_re]; exact hε
   rw [integral_gaussian_complex hε']
 
-#print axioms zetaEight_sq_complex
-#print axioms zetaEight_re
-#print axioms gaussianParameter_re
-#print axioms gaussianParameter_zero
-#print axioms pi_div_parameter
-#print axioms real_gamma_sq
-#print axioms pi_div_parameter_sqrt
-#print axioms real_normalized_gauss_limit
 
 end ZInQ.Manuscript.RC.WeilIndex

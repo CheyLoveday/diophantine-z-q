@@ -205,13 +205,6 @@ theorem eval_appendWeyl (n : NormalForm k) :
 
 end Eval
 
-#print axioms upper_entries
-#print axioms open_entries
-#print axioms matrix_injective
-#print axioms matrix_surjective
-#print axioms eval_appendUpper
-#print axioms eval_appendDiagonal
-#print axioms eval_appendWeyl
 
 end NormalForm
 

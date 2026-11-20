@@ -60,7 +60,5 @@ theorem depths_of_prepared_stages {A : ℕ} {CE CR Cper Cnative : ℤ}
   exact depths_on_filter V V.admissible h33 h34 h35 hvis (fun _ _ hn => hn.1)
     lam ωN hO7 hO2 hM
 
-#print axioms preparedSpec_of_intrinsic
-#print axioms depths_of_prepared_stages
 
 end ZInQ.Manuscript.RC.AppGCoarse

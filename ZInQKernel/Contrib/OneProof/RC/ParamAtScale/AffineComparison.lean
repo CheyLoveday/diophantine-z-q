@@ -103,8 +103,5 @@ theorem affine_germ_agreement_of_expansions {E : WeierstrassCurve ℚ} [E.IsElli
       exact hY σ hσ)
   exact ⟨Gx, Gy, hax, hay, hvalx, hvaly, hex, hey⟩
 
-#print axioms projFunctionFieldEquiv_sectionYOverZ
-#print axioms coordinate_germ
-#print axioms affine_germ_agreement_of_expansions
 
 end ZInQ.Manuscript.RC.ParamAtScale

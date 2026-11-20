@@ -136,9 +136,5 @@ theorem jacobiCharacter_fourier {M : ℕ} [NeZero M] (hM : M % 4 = 3) (hsq : Squ
   · exact ⟨1, Or.inl rfl, by simpa only [Int.cast_one, one_mul, h] using hDFT⟩
   · exact ⟨-1, Or.inr rfl, by simpa only [Int.cast_neg, Int.cast_one, neg_one_mul, neg_mul, one_mul, h] using hDFT⟩
 
-#print axioms jacobi_congr
-#print axioms jacobiCharacter_intCast
-#print axioms jacobiCharacter_isPrimitive
-#print axioms jacobiCharacter_fourier
 
 end ZInQ.Manuscript.RC.ElkikMD

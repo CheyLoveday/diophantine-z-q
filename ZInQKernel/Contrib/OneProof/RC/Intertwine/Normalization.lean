@@ -69,8 +69,5 @@ theorem finiteVolume_eq {a : Fin 3 → ℕ} [∀ i, NeZero (2 * a i)] :
   rw [Complex.ofReal_inv, Complex.ofReal_cpow (Nat.cast_nonneg _)]
   push_cast <;> norm_num [one_div]
 
-#print axioms product_localNorm
-#print axioms localNorm_good
-#print axioms finiteVolume_eq
 
 end ZInQ.Manuscript.RC.Intertwine

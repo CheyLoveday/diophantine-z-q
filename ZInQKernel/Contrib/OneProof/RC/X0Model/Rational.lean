@@ -108,21 +108,5 @@ theorem smooth (N : ℕ) [NeZero N] : Smooth (overQ N) := by
 def functionField (N : ℕ) [NeZero N] : (curve N).functionField ≃+* modularFunctionField N :=
   NormalModel.functionFieldEquiv (modularFunctionField N)
 
-#print axioms ratFuncEquiv
-#print axioms ratFuncEquiv_X
-#print axioms jCoordinate
-#print axioms jCoordinate_X
-#print axioms extendScalars_pair
-#print axioms finite_pair_over_first
-#print axioms secondCoordinate
-#print axioms integral_jN
-#print axioms jAlgebra
-#print axioms finite_jAlgebra
-#print axioms curve
-#print axioms overQ
-#print axioms integral
-#print axioms proper
-#print axioms smooth
-#print axioms functionField
 
 end ZInQ.Manuscript.RC.X0Model

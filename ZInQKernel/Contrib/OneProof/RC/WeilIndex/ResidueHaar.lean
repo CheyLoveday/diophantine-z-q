@@ -371,21 +371,5 @@ theorem eventually_cutoffGaussian_gaussGamma (p : Place) (a : ℚ_[p.val]ˣ) (v 
   filter_upwards [eventually_cutoffGaussian p a v, h0] with N hN hz
   rw [hN, hz]
 
-#print axioms quadraticSum_cast
-#print axioms toZModPow_one
-#print axioms depth_two_odd
-#print axioms eventually_odd_evenGauss
-#print axioms eventually_odd_oddGauss
-#print axioms eventually_dyadic_Gauss
-#print axioms eventually_cutoffGaussian_gaussGamma
-#print axioms eventually_cutoffGaussian_eq_quadraticSum
-#print axioms scaledLattice_one
-#print axioms lineHaar_scaledLattice_zpow
-#print axioms scaledLattice_eq_of_valuation
-#print axioms residueFiber_eq
-#print axioms iUnion_residueFiber
-#print axioms residueFiber_disjoint
-#print axioms integral_scaledLattice_residue
-#print axioms lineHaar_scaledLattice_div
 
 end ZInQ.Manuscript.RC.WeilIndex

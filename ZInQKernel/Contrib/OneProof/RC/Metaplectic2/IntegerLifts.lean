@@ -149,18 +149,5 @@ theorem common_second_generatorTensorAction :
   exact ⟨fun n r x => by rw [integerLiftStep_second]; exact h.1 n r x,
     fun r y => by rw [integerLiftStep_second]; exact h.2 r y⟩
 
-#print axioms int_in_range
-#print axioms step_inverse_trans
-#print axioms step_inverse_weyl
-#print axioms integerProjection_surjective
-#print axioms integerSign_central
-#print axioms integerProjection_kernel
-#print axioms integerSign_actions
-#print axioms restrictedLiftStep_projection
-#print axioms integerLiftStep_projection
-#print axioms integerLiftStep_first
-#print axioms integerLiftStep_second
-#print axioms common_first_generatorTensorAction
-#print axioms common_second_generatorTensorAction
 
 end ZInQ.Manuscript.RC.Metaplectic2

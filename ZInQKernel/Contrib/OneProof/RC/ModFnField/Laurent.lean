@@ -86,8 +86,5 @@ theorem coordinates_cusp_hasSum (E : WeierstrassCurve ℚ) {N : ℕ} [NeZero N]
   have hn : Q τ ≠ 0 := Function.Periodic.qParam_ne_zero _
   exact ⟨(hxy τ).1 ▸ hsx _ hn hm.1, (hxy τ).2 ▸ hsy _ hn hm.2⟩
 
-#print axioms hasSum_laurent_shift
-#print axioms meromorphicAt_hasSum_laurent
-#print axioms coordinates_cusp_hasSum
 
 end ZInQ.Manuscript.RC.ModFnField

@@ -216,14 +216,5 @@ theorem orbitCoefficient_rational_in_j {N : ℕ} [NeZero N] {g : ℂ → ℂ}
   obtain ⟨hm, hi', hc'⟩ := orbitCoefficient_cusp hg hi h hh hc n
   exact levelOne_rational_in_j hm hi' hc'
 
-#print axioms orbitValue_permute
-#print axioms orbitPoly_invariant
-#print axioms orbitPoly_root
-#print axioms orbitPoly_monic_degree
-#print axioms coeff_orbitProduct_closed
-#print axioms orbitCoefficient_cusp_of_growth
-#print axioms cuspGerm_translates_analytic_growth
-#print axioms orbitCoefficient_cusp
-#print axioms orbitCoefficient_rational_in_j
 
 end ZInQ.Manuscript.RC.ModFnClassify

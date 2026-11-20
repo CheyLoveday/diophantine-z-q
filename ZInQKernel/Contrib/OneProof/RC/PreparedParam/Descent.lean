@@ -79,9 +79,5 @@ theorem preparedParamValues {E : WeierstrassCurve ℚ} [E.IsElliptic]
   exact value_of_cmFieldOfDefinition hCM hπ Qsqrt.finrank (Qsqrt.isTotallyComplex hd)
     (conductorOrder K 1) hO hd (coprime_level hloc) (StageSelector.formAtLevel hN hgp hp).property
 
-#print axioms value_of_cmFieldOfDefinition
-#print axioms discr_conductorOne
-#print axioms coprime_level
-#print axioms preparedParamValues
 
 end ZInQ.Manuscript.RC.PreparedParam

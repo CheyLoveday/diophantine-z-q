@@ -93,6 +93,5 @@ theorem integral_spherical_section (a : Fin 3 → ℕ) [∀ i, NeZero (2 * a i)]
   have h := hinj (show q (⟨g, hf⟩ : H) = q (e.symm k) from hg.trans (e.apply_symm_apply k).symm)
   exact congrArg Subtype.val h
 
-#print axioms integral_spherical_section
 
 end ZInQ.Manuscript.RC.Metaplectic2

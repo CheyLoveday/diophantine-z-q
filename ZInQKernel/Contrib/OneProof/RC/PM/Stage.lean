@@ -161,14 +161,5 @@ theorem P_uniformizer (z : ClassSet R) : P G d L (G.uniformizer z) = P G d L z :
     lam d (L • G.specialize (G.classes z))
   rw [G.uniformizer_spec, G.specialize_frob, ← map_nsmul, lam_frob]
 
-#print axioms Geometry.pi_eq_of_rel
-#print axioms lam_frob
-#print axioms scaled
-#print axioms P
-#print axioms P_eq_of_rel
-#print axioms P_hecke_at
-#print axioms P_hecke
-#print axioms P_atkin
-#print axioms P_uniformizer
 
 end ZInQ.Manuscript.RC.PM

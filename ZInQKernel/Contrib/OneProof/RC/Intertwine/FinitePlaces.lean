@@ -166,15 +166,5 @@ theorem finitePhase_local_product (x : RationalFiniteAdeles) (S : Finset Place)
     finitePhase rationalFiniteModel x = ∏ p ∈ S, rationalPhase (localFraction p (x p)) :=
   finitePhase_eq_product rationalFiniteModel S _ (sum_localFraction_spec x S hS)
 
-#print axioms rat_mem_at
-#print axioms diagonal_apply
-#print axioms rational_integral
-#print axioms exists_local_fraction
-#print axioms prime_fraction_integral_elsewhere
-#print axioms localFraction_spec
-#print axioms localFraction_elsewhere
-#print axioms sum_localFraction_spec
-#print axioms rationalFiniteModel
-#print axioms finitePhase_local_product
 
 end ZInQ.Manuscript.RC.Intertwine

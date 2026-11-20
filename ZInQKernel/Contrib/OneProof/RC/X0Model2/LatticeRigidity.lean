@@ -175,9 +175,5 @@ theorem lattice_eq_of_weierstrass_invariants (L M : PeriodPair)
     rw [hp] at this
     exact (show ¬ (0 : WithTop ℤ) ≤ -2 by decide) this
 
-#print axioms weierstrassP_principal
-#print axioms weierstrassP_deriv_principal
-#print axioms weierstrassP_germ_eq
-#print axioms lattice_eq_of_weierstrass_invariants
 
 end ZInQ.Manuscript.RC.X0Model2

@@ -131,12 +131,5 @@ theorem ringCharacter_primitive {h : ℤ} [NeZero h.natAbs]
   obtain ⟨σ, hfix, hmove⟩ := exists_moves_of_not_mem (A := H) (B := H') hm
   exact ⟨σ, hfix, ringCharacter_ne_one_of_moves h4 hχ hs σ hmove⟩
 
-#print axioms omitted_prime
-#print axioms ringClass_unramified_at
-#print axioms no_square_root_at_omitted_prime
-#print axioms not_mem_of_no_root
-#print axioms exists_moves_of_not_mem
-#print axioms ringCharacter_ne_one_of_moves
-#print axioms ringCharacter_primitive
 
 end ZInQ.Manuscript.RC.Gz34Instance

@@ -133,11 +133,5 @@ theorem commonSecond_sign :
   rw [secondTensorAction_center, centralProduct_singleSign]
   exact neg_one_smul _ _
 
-#print axioms pure_of_finite_scaling
-#print axioms restrictedAction_scalar
-#print axioms firstTensorAction_center
-#print axioms secondTensorAction_center
-#print axioms commonFirst_sign
-#print axioms commonSecond_sign
 
 end ZInQ.Manuscript.RC.Metaplectic2

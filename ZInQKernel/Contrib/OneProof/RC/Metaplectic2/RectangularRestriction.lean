@@ -184,13 +184,5 @@ theorem restricted_grid_tests (lift : Step → G) (γ : Place → ℂˣ)
     GeneratorTensorAction (gridEmbedding a) (gridEvaluation a) (restrictGridAction a R hi) lift γ :=
   h
 
-#print axioms gridEmbedding_surjective
-#print axioms gridEvaluation_injective
-#print axioms gridEvaluation_embedding
-#print axioms grid_linear_ext
-#print axioms grid_generator_preserves
-#print axioms action_inv_apply
-#print axioms grid_invariant
-#print axioms restricted_grid_tests
 
 end ZInQ.Manuscript.RC.Metaplectic2

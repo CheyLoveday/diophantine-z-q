@@ -199,17 +199,6 @@ theorem algebraicCoeff_complex (P : EvenSource W L τ) (hS : SupportSpec W) (n :
     (algebraicCoeff P hS n : ℂ) = P.sievedCoeff n :=
   rfl
 
-#print axioms even_level_ne_zero
-#print axioms sieved_mem_Qbar
-#print axioms algebraicCoeff_complex
 
-#print axioms good_iff
-#print axioms fixed_support
-#print axioms fresh_domains
-#print axioms stationary_radicals
-#print axioms keep_mul_sq
-#print axioms squarefree_phase
-#print axioms sieved_off_squarefree
-#print axioms sieved_recurrence
 
 end ZInQ.Manuscript.RC.EvenBudget

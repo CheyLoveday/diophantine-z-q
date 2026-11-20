@@ -241,17 +241,5 @@ def stageValuation {S : AppF.ThetaStage (StageRing X.O M)}
   offFilter V hV _ hf :=
     D.stage.2.support_adm _ (prime_index (fun p hp => (hV p hp).1)).1 hf
 
-#print axioms integerDepth_of_min
-#print axioms integerDepth_of_witness
-#print axioms o7Comparison_of_core
-#print axioms divisions
-#print axioms prime_index
-#print axioms intrinsic
-#print axioms intrinsic_read
-#print axioms threshold_congr
-#print axioms tested_depth
-#print axioms good_of_support
-#print axioms admissible_of_good
-#print axioms stageValuation
 
 end ZInQ.Manuscript.RC.O12StageVal

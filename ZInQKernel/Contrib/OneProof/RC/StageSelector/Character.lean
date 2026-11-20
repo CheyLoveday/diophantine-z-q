@@ -297,13 +297,5 @@ theorem exists_genusCharacter {K : Type} [Field K] [NumberField K]
         rfl
       rw [he, mul_div_cancel_right₀ _ hs0, map_intCast]
 
-#print axioms admissible_one_of_unramified
-#print axioms halfRoot_integral
-#print axioms fixes_root_of_congruent_half
-#print axioms conductorOrder_maximal
-#print axioms ringClassField_one
-#print axioms sqrt_mem_conductorOne
-#print axioms frob_fixes_root_at_two
-#print axioms exists_genusCharacter
 
 end ZInQ.Manuscript.RC.StageSelector

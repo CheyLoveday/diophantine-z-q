@@ -191,17 +191,5 @@ theorem eventually_hasSum_laurent_inv {A : LaurentSeries ℂ} {q t : ℂ} (hA0 :
   rw [hAi, zpow_neg] at hs
   simpa only [mul_inv] using hs
 
-#print axioms scalarSeries
-#print axioms scalarSeries_exists
-#print axioms scalarSeries_injective
-#print axioms scalarSeries_hasFPowerSeriesAt
-#print axioms scalarSeries_scalar
-#print axioms scalarSeries_mul
-#print axioms scalarSeries_inv
-#print axioms scalarSeries_radius_pos
-#print axioms hasSum_shift
-#print axioms laurentAnalyticPart
-#print axioms eventually_hasSum_laurent_mul
-#print axioms eventually_hasSum_laurent_inv
 
 end ZInQ.Manuscript.RC.X0Model2

@@ -67,8 +67,5 @@ theorem oddGauss_one (p : Place) (hp : p.val ≠ 2) :
         ite_eq_right (show p.val % 4 ≠ 1 by omega)]
     rw [h, pow_one, oddBase, hχ, ite_eq_left rfl, exponentRoot_six]
 
-#print axioms negativeChar_eq_pow
-#print axioms exponentRoot_six
-#print axioms oddGauss_one
 
 end ZInQ.Manuscript.RC.GaussSign

@@ -213,17 +213,5 @@ theorem sectionExpansion (N : ℕ) [NeZero N] (U : (X0Model.curve N).Opens) [Non
   obtain ⟨T, hT⟩ := hasSum_meromorphicContinuation N _ g hg he
   exact ⟨g, T, hg.meromorphicOn, hT, hreg⟩
 
-#print axioms cuspQ
-#print axioms cuspQ_zpow
-#print axioms cuspQ_tendsto
-#print axioms germ_inverse
-#print axioms cuspEmbedding
-#print axioms cuspSum
-#print axioms cuspSum_exp
-#print axioms cuspSum_ratCast
-#print axioms exists_cuspRepresentative
-#print axioms hasSum_meromorphicContinuation
-#print axioms exists_hasSum_meromorphicContinuation
-#print axioms sectionExpansion
 
 end ZInQ.Manuscript.RC.X0Model2

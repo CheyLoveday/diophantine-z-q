@@ -76,13 +76,5 @@ theorem weyl_upper_defect_sign (b : ℚ_[p.val]ˣ) :
   rw [(finiteWeilIndexAxioms p).gammaDiag_scaleForm_neg, div_eq_mul_inv, inv_inv, mul_assoc, ← pow_two]
   exact scalar_WUW (finiteWeilIndexAxioms p) (localDiagonal_length a p) b
 
-#print axioms finiteWeilIndexAxioms
-#print axioms localDiagonal_length
-#print axioms scaledIndex_eq_gammaDiag
-#print axioms gaussIndex_eq_gammaDiag
-#print axioms diagonalRatio_eq_rQ
-#print axioms diagonal_defect_sign
-#print axioms weyl_square_defect_sign
-#print axioms weyl_upper_defect_sign
 
 end ZInQ.Manuscript.RC.Metaplectic2

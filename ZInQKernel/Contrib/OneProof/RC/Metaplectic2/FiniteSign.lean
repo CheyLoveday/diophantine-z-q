@@ -163,15 +163,5 @@ theorem commonProjection_kernel :
       · rw [h]
         exact (singleSign a b).property
 
-#print axioms finiteCenter_cases
-#print axioms finiteCenter_central
-#print axioms centralScalar_finite
-#print axioms centralScalar_mul
-#print axioms centralProduct_cases
-#print axioms centralProduct_singleSign
-#print axioms neutralSigns_le_kernel
-#print axioms commonProjection_surjective
-#print axioms finiteSign_central
-#print axioms commonProjection_kernel
 
 end ZInQ.Manuscript.RC.Metaplectic2

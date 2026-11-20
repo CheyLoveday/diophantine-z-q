@@ -119,7 +119,5 @@ theorem genuineHeegnerAnchor {ℓ : ℕ} [(Ecurve ℓ).IsElliptic] [NeZero (newf
   · rw [hy']
     exact (hy d hd hcop).choose_spec.choose_spec
 
-#print axioms cmPointsAtScale
-#print axioms genuineHeegnerAnchor
 
 end ZInQ.Manuscript.RC.HeegnerAnchor

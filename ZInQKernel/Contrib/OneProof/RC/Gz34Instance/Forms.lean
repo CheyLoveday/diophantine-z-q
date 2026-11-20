@@ -60,8 +60,5 @@ theorem exists_companion_form {E : WeierstrassCurve ℚ} {Lat : PeriodPair} {s h
   exists_ringHeegnerForm hN hk.2.2.1 (companion_formConditions hp hk).2
     (companion_formConditions hp hk).1
 
-#print axioms exists_ringHeegnerForm
-#print axioms companion_formConditions
-#print axioms exists_companion_form
 
 end ZInQ.Manuscript.RC.Gz34Instance

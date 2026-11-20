@@ -59,7 +59,5 @@ theorem oriented_cm_values_at_scale {E : WeierstrassCurve ℚ} [E.IsElliptic]
     _ = _ := (congrArg (fun v : FieldPoint X.overQ ℂ =>
       projectiveValue (v.comp π hQ).val) (hx m)).trans (hcompat _)
 
-#print axioms prepared_and_missing_at_scale
-#print axioms oriented_cm_values_at_scale
 
 end ZInQ.Manuscript.RC.ParamAtScale

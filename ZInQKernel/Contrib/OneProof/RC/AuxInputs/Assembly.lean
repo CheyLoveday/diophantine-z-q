@@ -182,17 +182,5 @@ theorem f3Target_of_realizations (P : SourceFamily W L) (hS : SupportSpec W)
   obtain ⟨A₀, hAux⟩ := auxFactor_of_realizations P hS hL hReal
   exact f3Target_of _ prints hKum hHL hTS hRN hℓ hL hS hPrep hAux hUpper
 
-#print axioms evenAp
-#print axioms EvenSource.rules_and_seed
-#print axioms sourceFamily_of_prints
-#print axioms lstar_zero_of_noReference
-#print axioms symbolFamily_rules
-#print axioms symbolFamily_off
-#print axioms symbolFamily_seed
-#print axioms withPartitionCertificate_eq
-#print axioms auxFactorInputs_of_realizations
-#print axioms auxFactorInputs_of_compatible_partition
-#print axioms auxFactor_of_realizations
-#print axioms f3Target_of_realizations
 
 end ZInQ.Manuscript.RC.AuxInputs

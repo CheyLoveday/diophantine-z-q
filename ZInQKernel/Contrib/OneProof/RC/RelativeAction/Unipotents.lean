@@ -194,19 +194,5 @@ theorem PairedActionAt.append {N : ℕ} {ξ : (ZMod N)ˣ →* ℂˣ} {w : Grid a
     congr 1
     ring
 
-#print axioms reference_energy
-#print axioms twist_finiteFourier_reference
-#print axioms lowerWord_matrix
-#print axioms lowerWord_fixes
-#print axioms lowerWord_fixes_iff
-#print axioms lowerWord_reference
-#print axioms twist_reference
-#print axioms paired_upper
-#print axioms paired_lower
-#print axioms paired_neg_one
-#print axioms matrix_append
-#print axioms action_append
-#print axioms action_smul
-#print axioms PairedActionAt.append
 
 end ZInQ.Manuscript.RC.RelativeAction

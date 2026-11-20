@@ -43,8 +43,5 @@ theorem missing_values {ℓ : ℕ} {W : WData ℓ} {I : GenusOddInstance W}
   let _ : NeZero (newformLevel (Ecurve ℓ)) := ⟨(StageKummer.positiveLevel s).ne'⟩
   exact ModFnClassify.missing_values s hr hCM
 
-#print axioms algebraicParametrizationAtScale
-#print axioms prepared_values
-#print axioms missing_values
 
 end ZInQ.Manuscript.RC.ParamJoin

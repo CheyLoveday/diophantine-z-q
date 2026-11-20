@@ -90,10 +90,5 @@ theorem cover_of_relations {k : Type*} [Field k]
   exact ⟨f, fun b => coverLift N f _ _ (hu b), fun t => coverLift N f _ _ (hm t),
     coverLift N f _ _ hw, fun _ => ⟨rfl, rfl⟩, fun _ => ⟨rfl, rfl⟩, rfl, rfl⟩
 
-#print axioms coverProjection_surjective
-#print axioms cover_kernel
-#print axioms cover_kernel_pair
-#print axioms cover_kernel_central
-#print axioms cover_of_relations
 
 end ZInQ.Manuscript.RC.Metaplectic2

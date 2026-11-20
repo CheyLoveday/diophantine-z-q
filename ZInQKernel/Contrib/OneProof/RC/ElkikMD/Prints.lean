@@ -40,6 +40,5 @@ theorem cuspidalImage_annihilator {N : ℕ} [NeZero N] {J A : Type*}
   simpa only [map_nsmul, map_zero, AddMonoidHom.comp_apply] using
     congrArg (φ.comp C.subtype) (card_nsmul_eq_zero' (x := x))
 
-#print axioms cuspidalImage_annihilator
 
 end ZInQ.Manuscript.RC.ElkikMD

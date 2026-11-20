@@ -151,11 +151,5 @@ theorem eventually_overlap_of_complexPoint_eq (N : ℕ) [NeZero N] (τ σ : Uppe
   obtain ⟨w, ⟨⟨hwV, hwT⟩, hwU⟩, hwσ, hzw⟩ := hz
   exact ⟨w, hwV, hwσ, hl z w hzS hwT hzU hwU hzw⟩
 
-#print axioms smooth_one
-#print axioms exists_etale_affine
-#print axioms etaleCoordinate_agree
-#print axioms j_not_eventually_constant
-#print axioms holomorphic_match
-#print axioms eventually_overlap_of_complexPoint_eq
 
 end ZInQ.Manuscript.RC.X0Branch

@@ -105,12 +105,5 @@ theorem coordinates_laurent_equation (E : WeierstrassCurve ℚ) {N : ℕ} [NeZer
   simp only [hc]
   exact heq
 
-#print axioms Realizes.const
-#print axioms Realizes.add
-#print axioms Realizes.mul
-#print axioms Realizes.pow
-#print axioms Realizes.eq_of_eventuallyEq
-#print axioms scaledPrimitive_off_lattice_on_tail
-#print axioms coordinates_laurent_equation
 
 end ZInQ.Manuscript.RC.ModFnField

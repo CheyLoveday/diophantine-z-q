@@ -94,9 +94,5 @@ theorem phase_rational_dvd (inj : Function.Injective (algebraMap O K))
   rw [mul_left_comm ((2 : K) ^ s), ← mul_assoc ((2 : K) ^ s), ← zpow_natCast,
     ← zpow_add₀ (by norm_num : (2 : K) ≠ 0), hz, mul_assoc]
 
-#print axioms padic_two_valuation
-#print axioms integral_normalized
-#print axioms phase_rational_residue
-#print axioms phase_rational_dvd
 
 end ZInQ.Manuscript.RC.EvenBudget

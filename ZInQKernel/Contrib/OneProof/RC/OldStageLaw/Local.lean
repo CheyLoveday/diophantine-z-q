@@ -95,11 +95,5 @@ theorem extracted_reciprocity (m d : ℕ) (hm : m % 4 = 3) (hd : Odd d) :
   · rw [ZMod.χ₄_nat_three_mod_four h, neg_one_mul]
     exact jacobiSym.quadratic_reciprocity_three_mod_four hm h
 
-#print axioms pairing_add_left
-#print axioms finiteFourier_zero_of_translate
-#print axioms twist_finiteFourier_eq
-#print axioms extracted_unit_action
-#print axioms diagonal_factorization
-#print axioms extracted_reciprocity
 
 end ZInQ.Manuscript.RC.OldStageLaw

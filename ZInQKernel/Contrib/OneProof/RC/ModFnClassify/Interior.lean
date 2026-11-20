@@ -221,11 +221,5 @@ theorem clear_interior_poles {g : ℂ → ℂ} (hg : MeromorphicOn g upperDomain
       (((hHa (F τ) hzF).continuousAt.comp hF.continuousAt).continuousWithinAt.tendsto)
       ((hHa (τ : ℂ) τ.im_pos).continuousAt.continuousWithinAt.tendsto.congr' hs.symm)
 
-#print axioms isCompact_truncatedFundamentalDomain
-#print axioms finite_bad_in_fd
-#print axioms jFunction_invariant
-#print axioms invariant_order
-#print axioms pole_killing_power
-#print axioms clear_interior_poles
 
 end ZInQ.Manuscript.RC.ModFnClassify

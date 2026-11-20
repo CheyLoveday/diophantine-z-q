@@ -183,11 +183,5 @@ theorem regularPart_derivatives_rational (E : WeierstrassCurve ℚ) {L : PeriodP
     exact K.div_mem (K.mul_mem (K.mul_mem (natCast_mem K _) (natCast_mem K _)) hJmem)
       (K.sub_mem (K.mul_mem (natCast_mem K _) (natCast_mem K _)) (natCast_mem K 12))
 
-#print axioms weierstrassP_split
-#print axioms derivWeierstrassP_split
-#print axioms deriv_weierstrass_second
-#print axioms regularPart_ode
-#print axioms iteratedDeriv_mul_sq
-#print axioms regularPart_derivatives_rational
 
 end ZInQ.Manuscript.RC.ModFnField

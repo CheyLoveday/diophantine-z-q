@@ -149,16 +149,5 @@ theorem frobenius_ss (x : X.Point) (hx : x ∈ X.ss) : X.frobenius x ∈ X.ss :=
 end JetchevKane
 end Level
 
-#print axioms CoarseFibre
-#print axioms adelic
-#print axioms neighbourMultiset_eq
-#print axioms atkinOnDoubleCosets
-#print axioms uniformizerOnDoubleCosets
-#print axioms JetchevKane
-#print axioms JetchevKane.idealClasses
-#print axioms JetchevKane.hecke_compare
-#print axioms JetchevKane.atkin_compare
-#print axioms JetchevKane.frobenius_compare
-#print axioms JetchevKane.frobenius_ss
 
 end ZInQ.Manuscript.RC.PMAdelic

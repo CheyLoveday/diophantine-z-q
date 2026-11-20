@@ -110,9 +110,5 @@ theorem blockModularity_of_stage (κ : K →+* ℂ) (Dₗ : LevelSetup P avoid N
     simpa [Lift.raw, Odd.TL] using atOld _ (Dₗ.b_dvd hU) (by simp)
   · exact hSieve hOld U hU hn
 
-#print axioms rescale_threeHalves
-#print axioms normalize_B
-#print axioms LevelSetup.old_dvd
-#print axioms blockModularity_of_stage
 
 end ZInQ.Manuscript.RC.BlocksPerU

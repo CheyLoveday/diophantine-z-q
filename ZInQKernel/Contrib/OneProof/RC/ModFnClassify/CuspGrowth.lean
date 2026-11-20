@@ -124,12 +124,5 @@ theorem cuspGerm_of_periodic_growth {h : ℝ} (hh : 0 < h) {f : ℍ → ℂ}
   simp only [G, Periodic.eq_cuspFunction hh.ne' hFp, F, ofComplex_apply]
   exact mul_div_cancel_left₀ _ (pow_ne_zero d (Periodic.qParam_ne_zero (τ : ℂ)))
 
-#print axioms cuspGerm_growth
-#print axioms cuspGrowth_changeWidth
-#print axioms cuspGrowth_const
-#print axioms cuspGrowth_mul
-#print axioms cuspGrowth_sub
-#print axioms qParam_add_period
-#print axioms cuspGerm_of_periodic_growth
 
 end ZInQ.Manuscript.RC.ModFnClassify

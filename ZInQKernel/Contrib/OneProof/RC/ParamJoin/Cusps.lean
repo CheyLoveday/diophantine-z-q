@@ -36,6 +36,5 @@ theorem algebraicParametrizationAtScale_and_cuspLimits {ℓ : ℕ} [(Ecurve ℓ)
   exact ⟨c, fun hc => hκ.1 (by simp [hc]), rfl, torusValue_tendsto_infty f Lat c,
     fun r σ hσ => torusValue_tendsto_cusp f Lat c r σ hσ⟩
 
-#print axioms algebraicParametrizationAtScale_and_cuspLimits
 
 end ZInQ.Manuscript.RC.ParamJoin

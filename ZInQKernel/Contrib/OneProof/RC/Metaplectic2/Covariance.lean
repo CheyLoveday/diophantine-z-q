@@ -120,11 +120,5 @@ theorem weyl_diagonal (t : ℚ_[p.val]ˣ) :
   simp only [Metaplectic.weyl, diagonal, hr, smul_mul_assoc, mul_smul_comm, fourier_dilation, smul_smul]
   rw [mul_comm (gaussIndex a p : ℂ)]
 
-#print axioms localHaar_isHaar
-#print axioms haar_map_dilate
-#print axioms polar_scale_right_left
-#print axioms dilationFactor_jacobian
-#print axioms fourier_dilation
-#print axioms weyl_diagonal
 
 end ZInQ.Manuscript.RC.Metaplectic2

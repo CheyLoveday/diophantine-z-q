@@ -92,9 +92,5 @@ theorem witnessValuation_actualForStages
     (actualEvaluationsOn_spec (EcurveZ ℓ) (EcurveZ_baseChange ℓ) rfl rfl dat w hQw q hσ emb b
       (congrArg (fun V : WData ℓ => V.Mθ) hstages.symm) d hQ)
 
-#print axioms actualForStages_at_witness
-#print axioms admissible_stageTest
-#print axioms lamOf_admissible
-#print axioms witnessValuation_actualForStages
 
 end ZInQ.Manuscript.RC.StageMap

@@ -200,17 +200,5 @@ def evaluationOfStage (b : TateMod (C⁄ℚ) 2 →ₗ[ℤ_[2]] ℤ_[2])
 
 end SelectedStage
 
-#print axioms rowOnOriginal
-#print axioms rowOnOriginal_fixed
-#print axioms reducedEquation_elliptic
-#print axioms goodIntegralEquation
-#print axioms torsionSpecialization
-#print axioms torsionSpecialization_frob
-#print axioms proj_onto
-#print axioms finiteRow_fixed
-#print axioms square_trivial_at
-#print axioms evaluationAt
-#print axioms stageMap_eq_lam_comp
-#print axioms evaluationOfStage
 
 end ZInQ.Manuscript.RC.PMGeometry

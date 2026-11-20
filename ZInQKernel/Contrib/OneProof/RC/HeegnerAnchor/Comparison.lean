@@ -75,8 +75,5 @@ theorem cmPointValue {E : WeierstrassCurve ℚ} [E.IsElliptic] [NeZero (newformL
       simp only [FieldPoint.comp, FieldPoint.map, Category.assoc]
     _ = _ := by rw [hx']; exact hπ _
 
-#print axioms factor_embedding
-#print axioms fieldPoint_map_map
-#print axioms cmPointValue
 
 end ZInQ.Manuscript.RC.HeegnerAnchor

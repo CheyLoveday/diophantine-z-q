@@ -146,11 +146,5 @@ theorem quadraticCuspSum_eq_twisted_value {E : WeierstrassCurve ℚ} {d : ℤ}
     · intros; rfl
   rw [← hreindex, ← hsum, ← l_one_eq_symbol, ← hFg, ← Lval_eq hF]
 
-#print axioms translation_det
-#print axioms translation_slash
-#print axioms cuspSymbol_eq_integral
-#print axioms integrable_translate
-#print axioms l_one_eq_symbol
-#print axioms quadraticCuspSum_eq_twisted_value
 
 end ZInQ.Manuscript.RC.ElkikMD

@@ -54,7 +54,5 @@ theorem window_good_hecke [IsLocalRing O] :
   obtain ⟨diamondF, _, _, hF⟩ := seed_fourier H hinj hm h2 Y.1.stable_t Y.1.stable_d hq hqU (hfrob q hq)
   exact ⟨diamondF, hF⟩
 
-#print axioms windowModelOfLevels
-#print axioms window_good_hecke
 
 end ZInQ.Manuscript.RC.O12Formwise

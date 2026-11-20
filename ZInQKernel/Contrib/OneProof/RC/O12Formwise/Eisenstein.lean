@@ -102,11 +102,5 @@ theorem EisensteinCharacters.inertia_values {q : ℕ} (hq : q.Prime) (h2 : q ≠
     rw [cycChar_eq_one_of_mem_inertia hq (hc.of_dvd_right E.right_dvd) hQ hqQ hσ,
       Units.val_one, map_one, twist_inertia E.coeffMap hq h2 hQ hqQ hσ, mul_one]
 
-#print axioms weight_mod
-#print axioms odd_coprime_pow_two
-#print axioms twist_frob
-#print axioms twist_inertia
-#print axioms EisensteinCharacters.frob_values
-#print axioms EisensteinCharacters.inertia_values
 
 end ZInQ.Manuscript.RC.O12Formwise

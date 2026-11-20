@@ -92,7 +92,5 @@ theorem ring_values {ℓ : ℕ} (P : Prints) (hℓ : 0 < ℓ)
     hO (mul_neg_of_neg_of_pos hk.1 (pow_pos (by exact_mod_cast NeZero.pos h.natAbs) 2)) hcop
     (Gz34Instance.companionForm hN hp hk).property
 
-#print axioms conductorOrder_discr
-#print axioms ring_values
 
 end ZInQ.Manuscript.RC.ParamJoin

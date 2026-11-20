@@ -105,13 +105,6 @@ theorem unary_timesTheta_mem {O : Type} [CommRing O] (m : Ideal O) (h2 : (2 : O)
   rw [hx]
   exact m.mul_mem_right x h2
 
-#print axioms unary_timesTheta_mem
 
-#print axioms map_TL_scaled
-#print axioms map_unary
-#print axioms map_rawNumerator_scaled
-#print axioms map_timesTheta
-#print axioms commonCoeff_complex
-#print axioms commonCoeff_place
 
 end ZInQ.Manuscript.RC.EvenBudget

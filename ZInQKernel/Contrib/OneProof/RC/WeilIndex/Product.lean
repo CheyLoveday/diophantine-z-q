@@ -307,19 +307,5 @@ theorem finiteGamma_productFormula : WeilIndexProductFormula finiteGamma := by
       ((∏ᶠ p, finiteGamma p (atPrime p a)) * finiteIndex finiteGamma q) = 1
     rw [mul_mul_mul_comm, ha.2, ih.2, one_mul]
 
-#print axioms signedCoefficient_ne_zero
-#print axioms atPrime_rationalUnit
-#print axioms atReal_rationalUnit
-#print axioms not_dvd_signedCoefficient
-#print axioms dyadic_signed
-#print axioms odd_signed
-#print axioms odd_outside
-#print axioms atReal_signed
-#print axioms exponentRoot_sum
-#print axioms signed_product
-#print axioms rational_squarefree
-#print axioms gammaReal_sq
-#print axioms rational_weil_product
-#print axioms finiteGamma_productFormula
 
 end ZInQ.Manuscript.RC.WeilIndex

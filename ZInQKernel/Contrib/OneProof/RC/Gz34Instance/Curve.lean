@@ -139,15 +139,5 @@ theorem companion_of_rough {ℓ : ℕ} {W : WData ℓ} {Lat : PeriodPair}
   · exact Lstar_ne_zero_of hΩ (mul_neg_of_pos_of_neg hp.1 hneg).ne
       (Lval_ne_zero_of_analyticRank_zero hL)
 
-#print axioms curve_elliptic
-#print axioms curve_form
-#print axioms curve_level_support
-#print axioms curve_lattice
-#print axioms curve_scale
-#print axioms squareAt_of_padic
-#print axioms coprime_of_avoids
-#print axioms genusPartner_of_support
-#print axioms prepared_of_support
-#print axioms companion_of_rough
 
 end ZInQ.Manuscript.RC.Gz34Instance

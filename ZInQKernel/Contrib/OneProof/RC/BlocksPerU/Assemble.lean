@@ -39,6 +39,5 @@ theorem realize_of_stage (Dₗ : LevelSetup P avoid N) (D : Divisions E δ W R a
   realize Dₗ D η η_eval η_order hodd κ X (spansAt_of_complex X κ hspan)
     (blockModularity_of_stage κ Dₗ D _ hOld hSieve hθ hUnary) H hfrob
 
-#print axioms realize_of_stage
 
 end ZInQ.Manuscript.RC.BlocksPerU

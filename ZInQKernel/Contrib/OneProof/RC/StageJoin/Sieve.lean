@@ -216,15 +216,5 @@ abbrev SievedSource.stage (C : SievedSource S) : AppF.ThetaStage (StageRing O M)
 abbrev SievedSource.lift (C : SievedSource S) : Lift C.stage :=
   sieveLift C.late C.before
 
-#print axioms keepNorm_extract
-#print axioms keepNorm_mul_sq
-#print axioms sieveFrame_theta
-#print axioms sieveFrame_nbrSum
-#print axioms sieveStage_aθ
-#print axioms sieveWeight_at
-#print axioms sieveWeight_sum
-#print axioms sieveLift_aθ
-#print axioms sieveStage
-#print axioms sieveLift
 
 end ZInQ.Manuscript.RC.StageJoin

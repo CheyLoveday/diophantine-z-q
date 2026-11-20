@@ -282,14 +282,5 @@ theorem RepInput.split [CharZero X.K] [TopologicalSpace X.K] [IsTopologicalRing 
     ρ.semisimple (normalizedRep_semisimple E j hp₂ P) (congrFun htr)
   exact ⟨b, fun g => by rw [← hb g, normalizedRep_matrix]⟩
 
-#print axioms divisorCoeff_prime
-#print axioms dirichlet_at_frob
-#print axioms weightTwist_at_frob
-#print axioms normalizedRep_matrix
-#print axioms normalizedRep_good
-#print axioms normalizedRep_semisimple
-#print axioms continuous_dirichlet
-#print axioms continuous_normalizedTrace
-#print axioms RepInput.split
 
 end ZInQ.Manuscript.RC.O12EisConst

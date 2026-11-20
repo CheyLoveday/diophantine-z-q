@@ -67,6 +67,5 @@ theorem mem_adjoin_of_linear_degree_bound
   rw [heq]
   exact IntermediateField.mem_adjoin_pair_right F x y
 
-#print axioms mem_adjoin_of_linear_degree_bound
 
 end ZInQ.Manuscript.RC.ModFnClassify

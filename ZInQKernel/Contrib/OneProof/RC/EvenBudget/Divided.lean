@@ -245,19 +245,6 @@ theorem dividedCoeff_spec (H : ∀ t, SourceHyp t δ η good adm ap a)
       rw [map_mul, map_pow, map_ofNat] at hh
       exact congrArg ((2 : K) ^ (-e) * ·) hh.symm
 
-#print axioms unary_shell
-#print axioms unaryWeight_odd
-#print axioms raw_zero
-#print axioms raw_support
-#print axioms rawNumerator_off
-#print axioms rawNumerator_dvd
-#print axioms dividedCoeff_spec
 
-#print axioms raw_bound
-#print axioms raw_shell_bound
-#print axioms scaled_witness
-#print axioms normalized_double
-#print axioms two_fresh_weight
-#print axioms timesTheta_congr
 
 end ZInQ.Manuscript.RC.EvenBudget

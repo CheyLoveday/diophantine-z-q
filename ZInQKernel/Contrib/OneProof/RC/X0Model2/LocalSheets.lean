@@ -89,13 +89,5 @@ theorem exists_nhds_germ_match_of_overlap (N : ℕ) [NeZero N] (τ : UpperHalfPl
   exact ⟨s, hs, ((analyticAt_sheet N γ₁ τ).frequently_eq_iff_eventually_eq
     (analyticAt_sheet N (γ₂ * s) τ) |>.mp he).filter_mono nhdsWithin_le_nhds⟩
 
-#print axioms modularRange
-#print axioms modularRange_smul
-#print axioms modularRange_injective
-#print axioms finite_sl_stabilizer
-#print axioms exists_nhds_local_j_orbit
-#print axioms sheet
-#print axioms analyticAt_sheet
-#print axioms exists_nhds_germ_match_of_overlap
 
 end ZInQ.Manuscript.RC.X0Model2

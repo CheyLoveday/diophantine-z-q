@@ -183,22 +183,5 @@ theorem weyl_tensor (γ : Place → ℂˣ) (hγ : γ.HasFiniteMulSupport) (r : G
     (Units.coeHom ℂ).map_finprod hγ
   rw [fourier_tensor, hmap, ← finprod_mul_distrib hc (fourier_finite r y)]
 
-#print axioms atPlace_quad
-#print axioms atPlace_polar
-#print axioms eventually_localLattice
-#print axioms phase_finite
-#print axioms finprod_indicator
-#print axioms coset_finSupport
-#print axioms cosetIndicator_tensor
-#print axioms upper_description
-#print axioms weyl_description
-#print axioms upper_tensor
-#print axioms volume_good
-#print axioms volume_support
-#print axioms volume_finprod
-#print axioms fourier_finite
-#print axioms dual_iff_local
-#print axioms fourier_tensor
-#print axioms weyl_tensor
 
 end ZInQ.Manuscript.RC.Intertwine2

@@ -172,16 +172,5 @@ theorem preparedGlue_of_withStages {ℓ : ℕ} {W : WData ℓ} {At : ℕ → ℕ
   exact (show W.prepared D ∧ stageTest q θ D from
     (congrArg (fun V : WData ℓ => V.admissible θ D) hs).mpr h).1
 
-#print axioms datumOfPrepared
-#print axioms extendSelG
-#print axioms not_isSquare_prepared
-#print axioms level_pos_of_witness
-#print axioms preparedAt
-#print axioms extendSelG_eq_some
-#print axioms extendSelG_witness
-#print axioms extendSelG_isSome_of_admissible
-#print axioms exists_selected_of_admissible
-#print axioms jgen_extendSelG_at_simpleZero
-#print axioms preparedGlue_of_withStages
 
 end ZInQ.Manuscript.RC.StageSelector

@@ -168,12 +168,6 @@ theorem eta_phase_of_character
   refine ⟨e, inj ?_⟩
   rw [map_pow, C.integral_eta, ← map_pow, hk, map_one, map_one]
 
-#print axioms eta_phase_of_character
 
-#print axioms source_at_place_phase
-#print axioms place_zero
-#print axioms source_at_place_recur
-#print axioms ap_mod_four
-#print axioms source_at_place
 
 end ZInQ.Manuscript.RC.EvenBudget

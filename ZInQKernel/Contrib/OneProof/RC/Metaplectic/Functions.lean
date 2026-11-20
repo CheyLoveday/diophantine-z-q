@@ -197,18 +197,5 @@ theorem mem_span_rectangles (p : Place) {f : LocalVectors p → ℂ} (hf : f ∈
   exact Submodule.sum_mem _ fun r _ =>
     Submodule.smul_mem _ _ (Submodule.subset_span ⟨s, rep r, rfl⟩)
 
-#print axioms isLocallyConstant_phase
-#print axioms continuous_quad
-#print axioms continuous_polar
-#print axioms mem_rectangle
-#print axioms rectangle_open
-#print axioms rectangle_compact
-#print axioms rectangleCoset_open
-#print axioms rectangleCoset_compact
-#print axioms rectangleIndicator_mem
-#print axioms rectangleIndicator_one
-#print axioms rect_basis
-#print axioms uniform_translation
-#print axioms mem_span_rectangles
 
 end ZInQ.Manuscript.RC.Metaplectic

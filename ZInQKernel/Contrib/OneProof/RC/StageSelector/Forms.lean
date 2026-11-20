@@ -88,8 +88,5 @@ theorem exists_heegnerForm {N : ℕ} {d : ℤ} (hN : 0 < N) (hsq : Squarefree d)
     exact dvd_sub (mul_dvd_mul hgB hgB) (dvd_mul_of_dvd_right (mul_dvd_mul hgN hgC) 4)
   exact Nat.isUnit_iff.mp (by exact_mod_cast hsq _ hgd)
 
-#print axioms prepared_discriminant
-#print axioms qsqrt_discr
-#print axioms exists_heegnerForm
 
 end ZInQ.Manuscript.RC.StageSelector

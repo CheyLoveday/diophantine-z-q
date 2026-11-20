@@ -70,8 +70,5 @@ theorem weighted_table_of_common_comparison {N : ℕ} (ξ : (ZMod N)ˣ →* ℂ�
     PairedActionAt ξ w l :=
   paired_of_lifted_eigen ξ w E E₀ h.1 h₀.1 R R₀ lift _ h.2 h₀.2 l hl lam he₀ he
 
-#print axioms common_weyl_scalar
-#print axioms comparison
-#print axioms weighted_table_of_common_comparison
 
 end ZInQ.Manuscript.RC.Intertwine

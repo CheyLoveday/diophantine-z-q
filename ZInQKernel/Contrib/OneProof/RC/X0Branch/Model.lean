@@ -97,8 +97,5 @@ def model (N : ℕ) [NeZero N] : PreparedParam.X0Model N where
     exact complexPoint_eq_iff N τ σ
   sectionExpansion U _ r := X0Model2.sectionExpansion N U r
 
-#print axioms exists_stabilizer_germ_match
-#print axioms complexPoint_eq_iff
-#print axioms model
 
 end ZInQ.Manuscript.RC.X0Branch

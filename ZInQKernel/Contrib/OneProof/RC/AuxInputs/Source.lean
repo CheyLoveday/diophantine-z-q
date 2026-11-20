@@ -174,12 +174,5 @@ theorem EvenSource.unitSeed
     omega
   simp [coeffSymbol, hD, hnz, hv]
 
-#print axioms lstarTarget_of_normalization
-#print axioms prepared_hasReference
-#print axioms evenSource_of_phase
-#print axioms evenSource_of_prints
-#print axioms EvenSource.symbol_off
-#print axioms EvenSource.symbol_primeFactors
-#print axioms EvenSource.unitSeed
 
 end ZInQ.Manuscript.RC.AuxInputs

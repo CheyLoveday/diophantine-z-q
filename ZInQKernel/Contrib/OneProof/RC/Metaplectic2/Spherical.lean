@@ -136,20 +136,5 @@ theorem diagonal_spherical (hp₂ : p ≠ dyadicPlace) (hp : p ∉ badPlaces (de
   rw [dilation_apply, spherical_apply, spherical_apply, hm]
   simp [dilationFactor, ht]
 
-#print axioms spherical_apply
-#print axioms spherical_ne_zero
-#print axioms mem_lattice
-#print axioms upper_spherical
-#print axioms determinant_ne_zero
-#print axioms not_dvd_determinant
-#print axioms gram_norm_one
-#print axioms coefficient_norm_one
-#print axioms val_zero_of_norm_one
-#print axioms self_dual_lattice
-#print axioms scaledIndex_spherical
-#print axioms index_spherical
-#print axioms fourier_spherical
-#print axioms weyl_spherical
-#print axioms diagonal_spherical
 
 end ZInQ.Manuscript.RC.Metaplectic2

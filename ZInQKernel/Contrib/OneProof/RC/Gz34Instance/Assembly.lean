@@ -131,10 +131,5 @@ theorem gz34Target_of_paramValues (hArtin : ArtinFactorization)
 
 end Assembly
 
-#print axioms level_mem_support
-#print axioms omegaMinus_ne_zero_of_partner
-#print axioms instanceOfParamValues
-#print axioms gz34CompAt_of_paramValues
-#print axioms gz34Target_of_paramValues
 
 end ZInQ.Manuscript.RC.Gz34Instance

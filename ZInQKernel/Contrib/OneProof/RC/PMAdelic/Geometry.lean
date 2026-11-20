@@ -90,8 +90,5 @@ def geometry (C : JetchevKane ell h N hN hcop X) (S : SpecialFibre ell N K Ebar 
     PM.Geometry K (levelOrder ell h N hN) N Ebar ap :=
   (geometricInput C S).geometry
 
-#print axioms SpecialFibre
-#print axioms geometricInput
-#print axioms geometry
 
 end ZInQ.Manuscript.RC.PMAdelic

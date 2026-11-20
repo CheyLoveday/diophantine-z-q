@@ -141,10 +141,5 @@ theorem rightOrbit_of_eventuallyEq_analyticJN (N : ℕ) [NeZero N]
   · exact inv_smul_eq_iff.mpr hs.symm
   · simp [mul_assoc]
 
-#print axioms scaled_moebius_lowerLeft
-#print axioms gamma0_of_analyticJN_eq_at_transcendental
-#print axioms frequently_transcendental
-#print axioms gamma0_of_eventuallyEq_analyticJN
-#print axioms rightOrbit_of_eventuallyEq_analyticJN
 
 end ZInQ.Manuscript.RC.X0Model2

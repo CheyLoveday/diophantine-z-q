@@ -140,12 +140,5 @@ theorem PMLocal.eta_order {p : ℕ} (hp : p.Prime) (hs : p ∉ F.support) :
   rw [F.ηGood p hp hs, mul_pow, pow_succ (2 : ℕ), pow_mul, hk, one_pow,
     mul_comm (2 ^ k) 2, pow_mul, hsq, one_pow, one_mul]
 
-#print axioms inner
-#print axioms pmStage
-#print axioms pmLift
-#print axioms pmValLift
-#print axioms pmLift_zero
-#print axioms pmLift_recur
-#print axioms PMLocal.eta_order
 
 end ZInQ.Manuscript.RC.O12StageVal

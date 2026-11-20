@@ -144,13 +144,5 @@ theorem local_projective_representation :
       ρ weylMatrix = project p (weylUnit p a) :=
   NormalForm.representation_of_relations (operator_relations p a)
 
-#print axioms fourier_fourth
-#print axioms coe_upperUnit
-#print axioms coe_diagonalUnit
-#print axioms coe_weylUnit
-#print axioms project_scalar
-#print axioms project_eq
-#print axioms operator_relations
-#print axioms local_projective_representation
 
 end ZInQ.Manuscript.RC.Metaplectic2

@@ -246,21 +246,5 @@ theorem fourier_sq (f : SchwartzBruhat p) (y : LocalVectors p) :
     (fourier a p (fourier a p f) : LocalVectors p → ℂ) y = f.1 (-y) :=
   (fourier_mem_and_sq a p f.2).2 y
 
-#print axioms phase_polar
-#print axioms integrable_kernel
-#print axioms fourier_add
-#print axioms fourier_smul
-#print axioms padicHaar_scaled_real
-#print axioms rectangle_volume
-#print axioms dualScale_dualScale
-#print axioms rectangle_annihilator
-#print axioms rectangle_volume_mul_dual
-#print axioms polar_comm
-#print axioms fourier_rectangle
-#print axioms fourier_modulate
-#print axioms fourier_rectangle_sq
-#print axioms fourier_mem_and_sq
-#print axioms fourier_apply
-#print axioms fourier_sq
 
 end ZInQ.Manuscript.RC.Metaplectic

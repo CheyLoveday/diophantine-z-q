@@ -137,10 +137,5 @@ theorem hElkikMD_of_assemblyForm {ℓ : ℕ} [(Ecurve ℓ).IsElliptic] {d : ℤ}
   obtain ⟨g, hg, heq⟩ := curveNewform_eq_assemblyForm hM f hf
   exact hElkikMD_of_maninDrinfeld hMD hg hgp Lat hκ φ (heq ▸ hAJ)
 
-#print axioms chiD_eq_kronecker_pos
-#print axioms genusPartner_twisted_coeff
-#print axioms hElkikMD_of_maninDrinfeld
-#print axioms curveNewform_eq_assemblyForm
-#print axioms hElkikMD_of_assemblyForm
 
 end ZInQ.Manuscript.RC.ElkikMD

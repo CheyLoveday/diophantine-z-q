@@ -101,10 +101,5 @@ theorem eventually_eq_of_unramified {R A P Q : Type} [CommRing R] [CommRing A]
   rw [map_mul, he0, zero_mul] at hzero
   exact (sub_eq_zero.mp (by simpa [k] using hzero)).symm
 
-#print axioms pairEval
-#print axioms pairEval_tmul
-#print axioms pairEval_self
-#print axioms continuousPairTest
-#print axioms eventually_eq_of_unramified
 
 end ZInQ.Manuscript.RC.X0Branch

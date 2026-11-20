@@ -202,12 +202,5 @@ theorem budgetRealization_of_blocks
     O12Local.localInput A localBlocks, ?_⟩
   exact ⟨C.K₀, inferInstance, C.eC, C.eK, C.c, C.k, rfl, rfl, C.complex_coeff, C.integral_coeff⟩
 
-#print axioms TL_perm_primes
-#print axioms evenH_off
-#print axioms evenH_two_fresh
-#print axioms even_two_hecke
-#print axioms even_source_symbol
-#print axioms thetaDataOfEven
-#print axioms budgetRealization_of_blocks
 
 end ZInQ.Manuscript.RC.EvenBudget

@@ -79,10 +79,5 @@ theorem oriented_cm_values {ℓ : ℕ} {W : WData ℓ} (I : GenusOddInstance W)
   let := I.hE
   exact oriented_cm_values_at_scale (curve_algebraicParametrizationAtScale I X hr) O ι x A B hx
 
-#print axioms algebraicParametrizationAtScale
-#print axioms curve_algebraicParametrizationAtScale
-#print axioms prepared_values
-#print axioms missing_values
-#print axioms oriented_cm_values
 
 end ZInQ.Manuscript.RC.ModFnClassify

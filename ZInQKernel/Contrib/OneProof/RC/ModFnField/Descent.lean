@@ -143,13 +143,5 @@ theorem modularFunctionField_descent (N : ℕ) [NeZero N] (s : LaurentSeries ℚ
   apply mem_rat_adjoin_of_complexify_mem
   simpa only [Set.image_insert_eq, Set.image_singleton, hj, hjN, modularFunctionFieldC] using hs
 
-#print axioms complexify_coeff
-#print axioms project_zero
-#print axioms project_add
-#print axioms project_scalar
-#print axioms project_mul
-#print axioms project_mem
-#print axioms mem_rat_adjoin_of_complexify_mem
-#print axioms modularFunctionField_descent
 
 end ZInQ.Manuscript.RC.ModFnField

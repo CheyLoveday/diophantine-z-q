@@ -43,8 +43,5 @@ def modelOne : PreparedParam.X0Model 1 where
     exact complexPoint_one_eq_iff τ σ
   sectionExpansion U _ r := sectionExpansion 1 U r
 
-#print axioms sl_orbit_of_complexPoint_eq
-#print axioms complexPoint_one_eq_iff
-#print axioms modelOne
 
 end ZInQ.Manuscript.RC.X0Model2

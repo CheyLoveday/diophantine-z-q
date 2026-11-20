@@ -78,7 +78,5 @@ theorem card_levelCosets_le (N : ℕ) [NeZero N] :
   rw [← card_projectiveLine_zmod N (NeZero.ne N)]
   exact Nat.card_le_card_of_injective _ (cosetsToProjectiveLine N).injective
 
-#print axioms lowerRow_rel_iff
-#print axioms card_levelCosets_le
 
 end ZInQ.Manuscript.RC.ModFnClassify

@@ -69,10 +69,5 @@ theorem kernel_nat (z : ℍ) (n : ℕ) :
   simp
   ring
 
-#print axioms hasSum_three
-#print axioms hasSum_finite_outer
-#print axioms kernel_add
-#print axioms gridTheta_hasSum
-#print axioms kernel_nat
 
 end ZInQ.Manuscript.RC.OldStageLaw

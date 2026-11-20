@@ -151,20 +151,5 @@ theorem scaledIndex_inv (t : ℚ_[p.val]ˣ) : scaledIndex a p t⁻¹ = scaledInd
         _ = _ := by simp,
     finiteGamma_mul_sq]
 
-#print axioms upper_mul
-#print axioms upper_zero
-#print axioms dilation_apply
-#print axioms dilationFactor_mul
-#print axioms dilation_one
-#print axioms dilation_mul
-#print axioms dilation_neg_one
-#print axioms quad_scale
-#print axioms localCoefficient_val
-#print axioms scaledIndex_one
-#print axioms dilation_upper
-#print axioms diagonal_upper
-#print axioms diagonal_one
-#print axioms diagonal_mul
-#print axioms scaledIndex_inv
 
 end ZInQ.Manuscript.RC.Metaplectic2

@@ -122,15 +122,5 @@ theorem factor_at_zero {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hF : Rationa
 
 end RationalTaylor
 
-#print axioms RationalTaylor.const
-#print axioms RationalTaylor.id_zero
-#print axioms RationalTaylor.add
-#print axioms RationalTaylor.sub
-#print axioms RationalTaylor.mul
-#print axioms RationalTaylor.pow
-#print axioms RationalTaylor.comp
-#print axioms RationalTaylor.inv
-#print axioms RationalTaylor.deriv
-#print axioms RationalTaylor.factor_at_zero
 
 end ZInQ.Manuscript.RC.ModFnField

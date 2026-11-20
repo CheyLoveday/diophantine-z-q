@@ -115,8 +115,5 @@ theorem conductorForm {K : Type} [Field K] [NumberField K]
   exact ⟨hD.mul_left hd.pow_left,
     Gz34Instance.exists_ringHeegnerForm hN (squarefree_discr_of_odd hK hodd) hlocal hdN.symm⟩
 
-#print axioms conductorOrder_discr
-#print axioms splitPrime
-#print axioms conductorForm
 
 end ZInQ.Manuscript.RC.HeegnerAnchor

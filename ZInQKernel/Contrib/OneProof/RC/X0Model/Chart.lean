@@ -146,20 +146,5 @@ theorem complexPoint_overQ (N : ℕ) [NeZero N] (τ : UpperHalfPlane) :
   apply Spec.homEquiv.injective
   exact CommRingCat.hom_ext (Subsingleton.elim _ _)
 
-#print axioms jPolynomial_regular
-#print axioms jMap
-#print axioms jMap_jGen
-#print axioms jNGerm
-#print axioms germ_eval₂
-#print axioms modularPolynomial_germ_zero
-#print axioms minpoly_germ_zero
-#print axioms fieldGerm
-#print axioms fieldGerm_j
-#print axioms fieldGerm_jN
-#print axioms valuationRat
-#print axioms analyticArc
-#print axioms analyticArc_generic
-#print axioms complexPoint
-#print axioms complexPoint_overQ
 
 end ZInQ.Manuscript.RC.X0Model

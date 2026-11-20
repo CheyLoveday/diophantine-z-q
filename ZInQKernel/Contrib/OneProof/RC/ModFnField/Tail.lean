@@ -105,12 +105,5 @@ theorem hasSum_mul_of_tail {a b : LaurentSeries ℂ} {g k : ℍ → ℂ} {T : �
     | exact ha _ ((le_max_left _ _).trans_lt (lt_im_raise U hU ζ))
     | exact hb _ ((le_max_left _ _).trans_lt (lt_im_raise U hU ζ))
 
-#print axioms support_rescale
-#print axioms rescale_mul
-#print axioms lt_im_raise
-#print axioms qParam_raise
-#print axioms hasSum_rescale
-#print axioms laurent_unique_of_tail
-#print axioms hasSum_mul_of_tail
 
 end ZInQ.Manuscript.RC.ModFnField

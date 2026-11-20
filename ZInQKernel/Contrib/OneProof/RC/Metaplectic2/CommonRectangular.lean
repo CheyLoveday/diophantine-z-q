@@ -90,11 +90,5 @@ theorem common_rectangular_comparison :
     (integerLiftStep_projection a referenceForm) gaussGamma gaussGamma_productFormula
     (rectangular_first_tests a referenceForm) (rectangular_second_tests a referenceForm)
 
-#print axioms first_invariant
-#print axioms second_invariant
-#print axioms rectangular_first_tests
-#print axioms rectangular_second_tests
-#print axioms rectangular_sign_actions
-#print axioms common_rectangular_comparison
 
 end ZInQ.Manuscript.RC.Metaplectic2

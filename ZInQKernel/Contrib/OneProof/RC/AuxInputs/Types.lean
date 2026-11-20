@@ -150,14 +150,5 @@ theorem s0Filter_iff_type {S : Finset ℕ} (hS : ∀ p ∈ S, p.Prime) (h2 : 2 �
         ZMod.castHom ((conductor_support hS h2 (hS p hp)).2 hp) _
       simpa only [map_natCast] using h.map f
 
-#print axioms conductor_pos
-#print axioms eight_dvd_conductor
-#print axioms conductor_support
-#print axioms evenTypes_sign
-#print axioms quadratic_character_factors
-#print axioms coprime_conductor
-#print axioms total_of_good_primes
-#print axioms good_primeFactors
-#print axioms s0Filter_iff_type
 
 end ZInQ.Manuscript.RC.AuxInputs

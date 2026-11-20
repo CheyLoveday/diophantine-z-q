@@ -199,14 +199,6 @@ def geometry : PM.Geometry K R N Ebar ap where
   uniformizer_spec := G.uniformizer_spec
   specialize_frob := G.specialize_frob
 
-#print axioms center
-#print axioms specialize_infinity
-#print axioms frobSS_involutive
-#print axioms hecke
-#print axioms atkin_affine
-#print axioms specialize_frob
-#print axioms uniformizer_spec
-#print axioms geometry
 
 end GeometricInput
 end ZInQ.Manuscript.RC.PMGeometry

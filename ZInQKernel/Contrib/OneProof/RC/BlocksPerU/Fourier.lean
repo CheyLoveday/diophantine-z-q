@@ -171,11 +171,5 @@ theorem blockModularity_of_halfIntegral (κ : K →+* ℂ) (Dₗ : LevelSetup P 
     exact weightTwoExpansion_of_halfIntegral κ _ _ ξ hξ
       (Dₗ.four_dvd.trans (dvd_mul_right _ _)) hθ h
 
-#print axioms theta_hasSum
-#print axioms cusp_analytic_of_sum
-#print axioms theta_convolution
-#print axioms qExpansion_theta_product
-#print axioms weightTwoExpansion_of_halfIntegral
-#print axioms blockModularity_of_halfIntegral
 
 end ZInQ.Manuscript.RC.BlocksPerU

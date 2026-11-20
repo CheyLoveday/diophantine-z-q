@@ -98,8 +98,5 @@ theorem morphism_of_functionField {E : WeierstrassCurve ℚ} [E.IsElliptic]
   rw [← genericPoint_spec Y]
   exact closure_mono (Set.singleton_subset_iff.mpr ⟨genericPoint X.X, hη⟩)
 
-#print axioms model_dimension
-#print axioms spec_over_rat
-#print axioms morphism_of_functionField
 
 end ZInQ.Manuscript.RC.ParamAtScale

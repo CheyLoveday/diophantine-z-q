@@ -159,13 +159,5 @@ theorem complexCusp_degree_bound {N : ℕ} [NeZero N] {s : LaurentSeries ℂ} {g
         (Matrix.SpecialLinearGroup.mapGL ℚ σ)⁻¹
   exact Γ'.strictWidthInfty_pos
 
-#print axioms cuspGerm_realizes
-#print axioms realizes_j
-#print axioms realizes_finsetSum
-#print axioms realizes_complexPolynomial
-#print axioms realizes_mem_complexJField
-#print axioms formal_degree_bound_of_growth
-#print axioms formal_degree_bound
-#print axioms complexCusp_degree_bound
 
 end ZInQ.Manuscript.RC.ModFnClassify

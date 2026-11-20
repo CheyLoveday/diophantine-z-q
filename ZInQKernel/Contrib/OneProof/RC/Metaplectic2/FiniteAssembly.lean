@@ -94,8 +94,5 @@ def firstTensorAction : FiniteLocalCover a b →* Module.End ℂ RestrictedTenso
 def secondTensorAction : FiniteLocalCover a b →* Module.End ℂ RestrictedTensor :=
   restrictedAction.comp (forgetUnits.comp (secondTuple a b))
 
-#print axioms sectionSubgroup_projection
-#print axioms sectionSubgroup_fixes
-#print axioms finiteProjection_surjective
 
 end ZInQ.Manuscript.RC.Metaplectic2

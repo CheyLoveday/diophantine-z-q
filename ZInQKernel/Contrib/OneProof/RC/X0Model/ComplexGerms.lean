@@ -124,12 +124,5 @@ theorem jPolynomial_injective (τ : UpperHalfPlane) : Function.Injective (jPolyn
   simpa only [f, Function.comp_apply, UpperHalfPlane.ofComplex_apply] using
     heq
 
-#print axioms meromorphic_isField
-#print axioms meromorphicValuation
-#print axioms valueOfGerm
-#print axioms valueOfGerm_isLocalHom
-#print axioms analyticJ_nonconstant
-#print axioms jPolynomial
-#print axioms jPolynomial_injective
 
 end ZInQ.Manuscript.RC.X0Model

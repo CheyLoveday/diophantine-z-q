@@ -124,9 +124,5 @@ theorem local_integral_action (a : Fin 3 → ℕ) [∀ i, NeZero (2 * a i)]
     rw [← hw]
     rfl
 
-#print axioms include_upper
-#print axioms include_diagonal
-#print axioms include_weyl
-#print axioms local_integral_action
 
 end ZInQ.Manuscript.RC.Metaplectic2

@@ -99,10 +99,5 @@ theorem restricted_minimum_iff (restricted : ℕ → ℤ → Prop)
   obtain ⟨B, ns, hev⟩ := hr
   exact hδ.2 ⟨B, ns, hev.mono fun i hi => ⟨hsub i (ns i) hi.1, hi.2⟩⟩
 
-#print axioms coarse_on_filter
-#print axioms fixed_witness_on_filter
-#print axioms minimum_on_filter
-#print axioms depths_on_filter
-#print axioms restricted_minimum_iff
 
 end ZInQ.Manuscript.RC.AppGCoarse

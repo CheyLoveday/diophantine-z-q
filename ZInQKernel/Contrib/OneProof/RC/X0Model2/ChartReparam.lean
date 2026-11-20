@@ -254,22 +254,5 @@ theorem complexPoint_eq_of_rightOrbit (N : ℕ) [NeZero N] (τ : UpperHalfPlane)
   obtain ⟨δ, s, hδ, hs, rfl⟩ := h
   rw [mul_smul, hs, mul_smul, complexPoint_smul N δ hδ]
 
-#print axioms puncturedPrecomp
-#print axioms precomp_hasValue
-#print axioms meromorphicPrecomp
-#print axioms finitePrecomp
-#print axioms valueOfGerm_precomp
-#print axioms fieldGerm_first
-#print axioms fieldGerm_reparam
-#print axioms maps_to_rat_unique
-#print axioms complexPoint_eq_of_reparam
-#print axioms slMoebius
-#print axioms coe_sl_smul
-#print axioms slMoebius_analyticAt
-#print axioms slMoebius_tendsto
-#print axioms dilate_smul
-#print axioms complexPoint_smul
-#print axioms complexPoint_eq_of_gamma0_orbit
-#print axioms complexPoint_eq_of_rightOrbit
 
 end ZInQ.Manuscript.RC.X0Model2

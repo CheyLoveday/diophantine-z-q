@@ -93,10 +93,5 @@ theorem gaussGamma_dyadic_unit_defect (u a : ℚ_[dyadicPlace.val]ˣ)
   simp only [gaussGamma, ne_eq, not_true_eq_false, false_and, dite_false]
   rw [← determinantExponent_value, dyadic_unit_determinantExponent u a hu ha]
 
-#print axioms gaussGamma_of_even
-#print axioms gaussGamma_rational_finite
-#print axioms gaussGamma_indexAt_finite
-#print axioms gaussGamma_odd_unit_defect
-#print axioms gaussGamma_dyadic_unit_defect
 
 end ZInQ.Manuscript.RC.WeilIndex

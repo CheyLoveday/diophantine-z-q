@@ -61,9 +61,5 @@ theorem weyl_sq (f : SchwartzBruhat p) (x : LocalVectors p) :
     (fourier a p (fourier a p f) : LocalVectors p → ℂ) x) = _
   rw [fourier_sq, pow_two, mul_assoc]
 
-#print axioms upper_elementary
-#print axioms weyl_elementary
-#print axioms weyl_elementary_value
-#print axioms weyl_sq
 
 end ZInQ.Manuscript.RC.Metaplectic

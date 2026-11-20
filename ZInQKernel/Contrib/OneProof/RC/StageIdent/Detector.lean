@@ -169,13 +169,5 @@ theorem selectedEvaluationOn_lam :
 
 end Transport
 
-#print axioms reducedEquation_elliptic
-#print axioms finiteRow_fixed_of_agree
-#print axioms selectedCurve_elliptic
-#print axioms selectedEvaluation
-#print axioms selectedEvaluation_lam
-#print axioms selectedCurveOn_elliptic
-#print axioms selectedEvaluationOn
-#print axioms selectedEvaluationOn_lam
 
 end ZInQ.Manuscript.RC.StageIdent

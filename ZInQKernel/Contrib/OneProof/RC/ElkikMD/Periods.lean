@@ -198,9 +198,5 @@ theorem hElkikMD_of_cuspidalSubgroup {ℓ : ℕ} {d : ℤ} (hgp : GenusPartner (
   apply (div_eq_div_iff (mul_ne_zero hmC hκC) hΩC).mpr
   linear_combination -hnC
 
-#print axioms cuspSymbols_clear_denominator
-#print axioms lval_eq_ofReal_re
-#print axioms imaginaryLattice_generator
-#print axioms hElkikMD_of_cuspidalSubgroup
 
 end ZInQ.Manuscript.RC.ElkikMD

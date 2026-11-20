@@ -118,8 +118,5 @@ theorem exists_ringCharacter (hK : Module.finrank ℚ K = 2) (hTC : IsTotallyCom
     rw [hχ ⟨v.asIdeal, hv⟩]
     simp [ψ, chiD, hd]
 
-#print axioms norm_coprime_conductor
-#print axioms norm_character_trivial_on_principal
-#print axioms exists_ringCharacter
 
 end ZInQ.Manuscript.RC.Gz34Instance

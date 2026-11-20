@@ -243,23 +243,5 @@ theorem analyticJ_eq_of_complexPoint_eq (N : ℕ) [NeZero N] (τ σ : UpperHalfP
   apply jLinePoint_injective
   rw [← complexPoint_jProjection N τ, ← complexPoint_jProjection N σ, h]
 
-#print axioms jProjection
-#print axioms jAffineChart
-#print axioms jCoordinateSection
-#print axioms jAffine_ne
-#print axioms functionField_jPull
-#print axioms functionField_jCoordinate
-#print axioms jEval
-#print axioms jLinePoint
-#print axioms jLinePoint_comp
-#print axioms jLinePoint_injective
-#print axioms affine_factor
-#print axioms jGeneric
-#print axioms hasValue_jGerm
-#print axioms finiteJ
-#print axioms valueOf_finiteJ
-#print axioms finiteRat
-#print axioms complexPoint_jProjection
-#print axioms analyticJ_eq_of_complexPoint_eq
 
 end ZInQ.Manuscript.RC.X0Model2

@@ -138,10 +138,5 @@ def StageTernaryTransformation {O : Type} [CommRing O] {M : ℕ}
     (m : ℕ) (ξ : (ZMod m)ˣ →* ℂˣ) : Prop :=
   HasThreeHalvesExpansion ι m ξ E.aθ
 
-#print axioms thetaFun_holo
-#print axioms thetaFun_ne_zero
-#print axioms theta_product_slash
-#print axioms theta_product_cusp
-#print axioms theta_product_modular
 
 end ZInQ.Manuscript.RC.BlocksPerU

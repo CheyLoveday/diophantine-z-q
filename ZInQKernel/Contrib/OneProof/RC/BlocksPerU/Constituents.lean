@@ -142,12 +142,5 @@ theorem diamond_of_coordinates {v : I → K} {χ : (ZMod N)ˣ →* Kˣ}
   · rw [hi, mul_zero, mul_zero]
   · rw [h i hi]
 
-#print axioms restrictSource_a
-#print axioms restrictSource_χ
-#print axioms Inventory.baseAt_a
-#print axioms Inventory.baseAt_χ
-#print axioms Inventory.toBasis
-#print axioms coordinates_of_span
-#print axioms diamond_of_coordinates
 
 end ZInQ.Manuscript.RC.BlocksPerU

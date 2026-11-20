@@ -206,18 +206,5 @@ theorem localProjection_kernel :
 theorem localProjection_surjective : Function.Surjective (localProjection p a b) :=
   coverProjection_surjective _ _
 
-#print axioms diagonalScalar_central
-#print axioms negativeOperator_apply
-#print axioms negativeOperator_not_fixed
-#print axioms negativeOperator_ne_one
-#print axioms diagonalSign_square
-#print axioms diagonalSign_central
-#print axioms pairProject_eq
-#print axioms pairRelations
-#print axioms pairProjective_generators
-#print axioms localSign_central
-#print axioms localSign_square
-#print axioms localProjection_kernel
-#print axioms localProjection_surjective
 
 end ZInQ.Manuscript.RC.Metaplectic2

@@ -187,19 +187,5 @@ theorem weyl_upper_cube_at_two :
   change (-1 : ℂ) • f = -f
   exact neg_one_smul ℂ f
 
-#print axioms fourier_square
-#print axioms factor_reciprocal
-#print axioms fourier_sandwich
-#print axioms root_pow_eight
-#print axioms scaledIndex_eighth
-#print axioms weyl_upper_cube
-#print axioms weyl_cube_scalar_is_sign
-#print axioms weyl_square_scalar
-#print axioms weyl_upper_bruhat
-#print axioms root_nsmul
-#print axioms dyadic_mul_four
-#print axioms gaussGamma_pow_four
-#print axioms scaledIndex_fourth
-#print axioms weyl_upper_cube_at_two
 
 end ZInQ.Manuscript.RC.Metaplectic2

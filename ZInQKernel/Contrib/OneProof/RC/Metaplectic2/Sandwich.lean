@@ -151,9 +151,5 @@ theorem fourier_upper_sandwich (b : ℚ_[p.val]ˣ) (f : SchwartzBruhat p) (x : L
   rw [factored_phase a p, localPhase_add, localPhase_add]
   ring
 
-#print axioms polar_merge
-#print axioms fourier_upper_kernel
-#print axioms factored_phase
-#print axioms fourier_upper_sandwich
 
 end ZInQ.Manuscript.RC.Metaplectic2

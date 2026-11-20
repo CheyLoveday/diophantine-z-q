@@ -89,8 +89,5 @@ theorem integral_generators [IsLocalRing A] (H : Subgroup (SL(2, A)))
       simpa [weylMatrix] using hc
     simpa using H.mul_mem (H.inv_mem hw) (hpivot (weylMatrix * g) hwp)
 
-#print axioms lower_eq
-#print axioms of_unit_pivot
-#print axioms integral_generators
 
 end ZInQ.Manuscript.RC.Metaplectic2

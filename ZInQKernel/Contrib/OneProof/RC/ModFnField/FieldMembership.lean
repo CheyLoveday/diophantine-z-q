@@ -93,8 +93,5 @@ theorem coordinates_in_modularFunctionField (E : WeierstrassCurve ℚ) {N : ℕ}
   exact ⟨x, y, T, fun τ hτ => by
     simpa only [Set.mem_ofPred_eq, complexify_coeff, qParam_zpow_widthOne] using hT τ hτ.le⟩
 
-#print axioms qParam_zpow_widthOne
-#print axioms coordinates_in_modularFunctionField_with_equation
-#print axioms coordinates_in_modularFunctionField
 
 end ZInQ.Manuscript.RC.ModFnField
