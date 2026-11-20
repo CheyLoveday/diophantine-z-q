@@ -162,3 +162,16 @@ different issues: independence of presentation, and crystalline range.
   `log[p̃]` gives a relation in the integral image and preserves
   a nonzero leading coefficient.
 - These two modules compiled with `lake env lean`.
+
+## Integral fraction-field obstruction (VERIFIED)
+
+`LogarithmRelations.lean` compiled with `lake env lean`. For
+`p^r a log[p̃]=b`, fix a coefficient index `i` of a restricted lift of
+`a` and truncate at `p^k+i<2p^k` for sufficiently large `k>r`.
+Clear denominators in the finite evaluation and reduce modulo p.
+Vanishing modulo `ξ^(p^k+i+1)` forces the top coefficient to be
+divisible by ξ modulo p. The scaled log has only one surviving term,
+so this makes the coefficient at `i) belong to `(p,ξ)`. The ξ
+correction may be taken with finite support, since the original
+series is restricted. In the actual image `ξ=pX`, so `p∣a`;
+iterate with `r+1` and apply p-adic separation to conclude `a=0`.
