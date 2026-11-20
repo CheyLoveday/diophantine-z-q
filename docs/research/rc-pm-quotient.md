@@ -1,24 +1,16 @@
 # The special-fibre quotient in (O.7)
 
 The two inherited citation errors are recorded in
-[the verdict](../../.fleet/rc-pm-quotient-verdict.md): Milne's stated
+[the verdict](../../.fleet/rc-pm-quotient2-verdict.md): Milne's stated
 locators do not supply the normalized-newform and good-Hecke claims
 (tex 1784–1788), and the cited Jetchev–Kane comparison does not cover
 level one (tex 8468–8474).
 
-**Scoped stop: Lean verification is blocked.** The new Lean sources
-are staged as an unchecked implementation. The first Model build found
-elaboration errors. After source edits, a retry was rejected by automatic
-review while another Lean job was active; the guarded retries did not
-start. There is no passing build or axiom audit for the revised sources.
-
-The proposed replacement for the free quotient is evaluation of the
-Néron extension of the fixed rational parametrization. One family of
-such extensions, at the detector's places, supplies the special-fibre
-operator equations, the pointwise specialization of the selected
-datum, and the cusp translation in the odd staged constructor. No
-existence theorem for the integral modular model is asserted. See
-Verification below for the status of the Lean checks.
+The quotient is defined by residue evaluation of the Néron extension of
+the fixed rational parametrization. One diagram per detector stage supplies
+the special-fibre operator equations, the pointwise specialization `hπ`
+of each selected datum, and the cusp annihilation in the odd staged
+constructor. No existence theorem for the integral modular model is asserted.
 
 The target of the existing interface is the quadratic fixed subgroup
 inside the geometric points of the reduced Weierstrass curve. First
@@ -44,6 +36,7 @@ operator methods in its `GoodRow` namespace).
 | `readAt`, `Based`, `value_infinity` | Base change followed by section evaluation is a group homomorphism. `Based` says the generic image of the integral infinity section is the group identity; uniqueness of extension gives zero at its reduction. |
 | `movedCusp`, `AtkinIdentity`, `atkin_quotient` | The integral section obtained by applying the integral level operator to infinity and then the extension. `AtkinIdentity` is the generic morphism equation with this translation and the prescribed sign. `atkin_quotient` specializes it through `GoodReduction.atkinQuotient_of_integralRelation`, subtracting the values at the two moved points. |
 | `HeckePacket`, `HeckeIdentity`, `hecke_quotient` | At one coarse supersingular point, a smooth integral chart of the correspondence with a section and all \(q+1\) branches. The generic identity is the equality of the sum of the branch values with \([a_q]\pi\) evaluated on the source (written as an ordered product in the group of maps). Néron uniqueness identifies the maps integrally; section evaluation reads precisely the corresponding sum with multiplicities. |
+| `toAdd_ofFn_prod` (private) | Converts the ordered product of a finite list in a multiplicatively written additive group to the indexed sum of its values. |
 | `Relations`, `specialFibre`, `specialize_eq_value` | Package generic normalization and signed and Hecke relations, and the integral good-Hecke chart. The resulting `SpecialFibreAtSigns` has a fixed divisor group, divisor map and quotient. Its PM point evaluation is the original residue value by `quotient_center` and normalization. |
 | `genericInclusion`, `genericInclusion_comp` | Forget the generic identifications to maps of total spaces; their commuting square is the one used by the previous integral-diagram lemma. |
 | `geometricResidue`, `rawSection`, `rawSection_over`, `rawSection_map`, `sectionOf`, `sectionOf_rawSection` | Convert residue sections over the prime field to geometric maps into the integral models, and recover the section by pullback. These operations are natural in a map of integral models. |
@@ -67,14 +60,35 @@ points still have their separate indices. At infinity the separate
 known divisor formula suffices, so the packet need not split there.
 No finite étaleness of the correspondence on coarse schemes is used.
 
+For the signed identity, the Néron mapping property and base change
+carry the given rational equation to the geometric sections. The
+constant cancels on the difference of the two moved points. For good
+Hecke, uniqueness carries the generic sum of branch maps to the
+smooth chart, and evaluation there preserves the sum. For Frobenius,
+precomposition on the geometric residue spectrum commutes with the
+base changed map, and the coordinate reading identifies that action
+with arithmetic Frobenius. Its square fixes the coarse labels, so the
+readings land in the detector's quadratic subgroup.
+
+For the CM square, both lifts are taken over the valuation ring
+contracted from the detector's place. The square compares the residue
+reading with the separately specified Weierstrass coordinate
+reduction. The old `hPM` premise is supplied by
+`specialize_eq_value` and `readRaw_value`; the coincident readings
+are of the same morphism because the generic square commutes and the
+target is separated. For the cusp, a homomorphism carries torsion in
+the rational Jacobian to torsion in the rational elliptic group. The
+stipulated rational annihilation holds integrally by uniqueness and
+on the residue fibre by the group law. These are ON THE SPOT (c).
+
 ## Remaining (O.7) inputs
 
 | Input | Refereed source or reason it remains |
 | --- | --- |
-| `a`: fixed curve form, rational scale, lattice, normalized partner value, genus and ring class selector values, admissible indices and local support | Breuil–Conrad–Diamond–Taylor, *On the modularity of elliptic curves over ℚ: wild 3-adic exercises* (2001), Theorem A; Shimura, *On the factors of the jacobian variety of a modular function field* (1973), Theorem 1 **UNVERIFIED**. The fixed-scale and selector joins are in the tree; they still need the chosen rational scale, CM field of definition and the specified companion arithmetic. The normalization of an independently supplied scale or index is a model comparison. |
+| `ℓ,W₀,a`: fixed curve and stage data, form, rational scale, lattice, normalized partner value, genus and ring class selector values, admissible indices and local support | Breuil–Conrad–Diamond–Taylor, *On the modularity of elliptic curves over ℚ: wild 3-adic exercises* (2001), Theorem A; Shimura, *On the factors of the jacobian variety of a modular function field* (1973), Theorem 1 **UNVERIFIED**. The fixed scale and selector joins are in the tree; they still need the chosen rational scale, CM field of definition and the specified companion arithmetic. The normalization of an independently supplied scale or index is a model comparison. |
 | `π,hQ,han`, `F`, and the level and ellipticity instances | The fixed parametrization on the normalized rational chart, with the exact analytic identity on interior points, and the same normalized newform from modularity. The generic-map input is shared by every stage. An independently chosen algebraization of the wrong scalar would not suffice. Stage level transport is `AtkinPin.stageLevel_eq`; the rational equation is transported by `EcurveZ_baseChange`. |
 | `s,L,m,hN,hcop,H,hm` | Actual witness and stage sequence, determinant and coprimality conditions, partner discriminant, precision and fixed multiplier. Serre, *Propriétés galoisiennes des points d'ordre fini des courbes elliptiques* (1972), open image theorem, number **UNVERIFIED**, and Chebotarev for the stage sequence; the existing detector and stage proofs are used. These hypotheses include choices of data, for which no theorem identifies an arbitrary family with the prescribed one. |
-| `R,G`: one good model diagram per detector prime | Deligne–Rapoport, *Les schémas de modules de courbes elliptiques*, LNM 349 (1973), VI.6 **UNVERIFIED**; Igusa (1959), fibre systems of elliptic curves, title/locator **UNVERIFIED**. For the good elliptic model: good Weierstrass equation and Bosch–Lütkebohmert–Raynaud, *Néron Models* (1990), §1.2 **UNVERIFIED** (mapping property for a good group model proved in tree). The remaining work is substantial: construct the compactified integral coarse modular curve, identify its generic chart and the integral elliptic group model with the actual equations, and identify its reduced coordinates and operators. `GoodRow` is the named scope of that input; its existence is not a new printed leaf. |
+| `R,G`: one good model diagram per detector prime, on the local base with fraction field ℚ and its map to the prime residue field | Deligne–Rapoport, *Les schémas de modules de courbes elliptiques*, LNM 349 (1973), VI.6 **UNVERIFIED**; Igusa, *Kroneckerian model of fields of elliptic modular functions* (1959), title and locator **UNVERIFIED**. For the good elliptic model: the good Weierstrass equation and Bosch–Lütkebohmert–Raynaud, *Néron Models* (1990), §1.2 **UNVERIFIED** (mapping property for a good group model proved in tree). The remaining work is substantial: construct the compactified integral coarse modular curve over ℤ localized at the detector prime, identify its generic chart and the integral elliptic group model with the fixed source and target, and compare its reduced coordinates and operators. `GoodRow` names the exact interface needed; its existence is not a new printed leaf. |
 | `ap,X,J`: good eigenvalues, coarse fibre, class-set/operator dictionary | Ribet, *On modular representations of Gal(ℚ̄/ℚ) arising from modular forms*, Invent. Math. 100 (1990), Prop. 3.3, Prop. 3.6 and Rem. 3.5(a)(b), **UNVERIFIED**, via the reviewer's Version 21 route, including level one. Voight, *Quaternion Algebras* (2021), Main Thm. 14.6.1 (manuscript locator, **UNVERIFIED**), for the ramified quaternion algebra. The name `PMAdelic.JetchevKane` denotes the existing signature, not a new application of its old citation at level one. Compatibility at the actual residue field and uniformizer is separate model glue. |
 | `relations.based`, `relations.atkin` | Tex 1785–1787, 2943–2946. Atkin–Lehner, *Hecke operators on Γ₀(m)* (1970), eigenrelation locator **UNVERIFIED**. The existing chart identity is known; identify the integral involution on the generic fibre with the rational one and carry `BasedAtkinOnPoints` / `translatedAtkinAtInfinity` to equality of morphisms using faithful evaluation on the generic point (or density and separatedness). This remaining comparison must also identify the integral and normalized rational infinity. The hypothesis is the generic equation on the fixed map, before any reduction. |
 | `relations.hecke`, `relations.eigen` | Deligne–Rapoport VI.6 **UNVERIFIED** and finite étaleness of prime-to-residue-characteristic torsion give the integral cyclic subgroups; the chart and multiplicity identification is (c). Shimura (1973), paper above, Thm. 1 **UNVERIFIED**, is the intended classical Hecke quotient route in place of the insufficient Milne locators. After the fixed Jacobian map is identified, apply its generic Hecke identity to the based class and use the generic cusp formula. |
@@ -110,33 +124,36 @@ No finite étaleness of the correspondence on coarse schemes is used.
 | 1779–1783: modularity and a fixed normalized form | OK |
 | 1784–1788: cited Milne statements for the newform and equivariance | error |
 | 1785–1787: use the based modular parametrization | unverified |
-| 2932–2936: good Hecke action and base cusp divisor | unverified |
+| 2933–2936: good Hecke action and base cusp divisor | unverified |
 | 2937–2942: Manin–Drinfeld and a fixed cuspidal multiplier | OK |
 | 2943–2946: signed generic translation with the moved cusp | unverified |
 | 8282–8297: include the rational cusp annihilator in the multiplier | OK |
 | 8462–8467: ramified quaternion algebra and Eichler level | OK |
 | 8468–8474: cited supersingular description includes every level | error |
-| 8476–8479: specialize the fixed map over the local base | unverified — draft conditional on the good models |
-| 8480–8487: specialize the generic Hecke relation on the good correspondence | unverified — draft conditional on the integral chart and generic equation |
-| 8487–8489: specialize the signed relation and kill the residue translation | unverified — draft conditional on the generic identity and cusp inputs |
-| 8489–8492: Frobenius action on the same specialization | unverified — draft conditional on the operator/readout dictionary |
+| 8476–8479: specialize the fixed map over the local base | gap filled — the extension and its evaluation are defined given the good models |
+| 8480–8487: specialize the generic Hecke relation on the good correspondence | gap filled — conditional on the integral chart and generic equation |
+| 8487–8489: specialize the signed relation and kill the residue translation | gap filled — conditional on the generic identity and cusp inputs |
+| 8489–8492: Frobenius action on the same specialization | gap filled — conditional on the operator and coordinate dictionary |
 | 8505–8507: keep the same newform sign in the theta construction | OK |
-| 9101–9113: unaveraged weighted coefficient of the actual row | unverified — draft fills the specialization interface only |
+| 9101–9113: unaveraged weighted coefficient of the actual row | unverified — the specialization input is filled; the fixed coefficient and other arithmetic inputs remain |
 | 9265–9279: use the actual reduced reference CM orbit at the chosen place | unverified |
-| 9283–9291: reduce the selected conjugates under the fixed map, then add | unverified — draft conditional on the CM diagrams |
-| 9330–9341: apply the same signed translation in the orientation change | unverified — draft conditional on the operator and cusp data |
-| 9343–9358: the uniformizer comparison and arithmetic Frobenius | unverified |
+| 9283–9291: reduce the selected conjugates under the fixed map, then add | gap filled — conditional on the CM diagrams, with the existing additive comparison |
+| 9330–9341: apply the same signed translation in the orientation change | gap filled — the sign and cusp equations now refer to the same specialized map |
+| 9343–9358: the uniformizer comparison and arithmetic Frobenius | unverified — the Frobenius equation for the parametrization is proved, but the uniformizer identification is separate |
 | 9372–9398: retain the precision and read the fixed stage coefficient | unverified |
 
 ## Verification
 
-The [results log](../../scratch/rc-pm-quotient/log.md) separates the
-initial failed elaboration, later resource gate, and static checks.
-When the resource gate permits, build the five modules serially,
-starting with `ZInQKernel.Contrib.OneProof.RC.PMQuotient.Model` and
-ending with `ZInQKernel.Contrib.OneProof.RC.PMQuotient.Assembly`. Check
-each module's `#print axioms` output, then run the focused
-`scratch/rc-pm-quotient/Discharges.lean` audit. The audit is written to
-compare the constructor's conclusion directly with the dependent
-`Wiring.PreLeaves.odd_staged` projection and print its entire telescope.
-It does not attempt to discharge `hRC` itself.
+`Model`, `Operators`, `Cusps`, `CM` and `Assembly` passed individual
+`lake build` checks with source-matched prerequisites and a serial
+compiler in a 60 GB user scope. The 25 axiom prints cover all 21 new
+theorems and four definitions used in the construction. They list only
+`propext`, `Classical.choice` and `Quot.sound`.
+
+The focused [discharge audit](../../scratch/rc-pm-quotient/Discharges.lean)
+passed against the actual `Wiring.PreLeaves.odd_staged` projection at
+`SelectorTotal.withParamIndices a`. It prints all 30 binders with their
+types; there is no independent special fibre, quotient, `hπ`, or
+`hCusp` binder. It checks this field of the restricted converse, not
+`hRC` as a whole. The [results log](../../scratch/rc-pm-quotient/log.md)
+records the build outcomes and the complete binder list.

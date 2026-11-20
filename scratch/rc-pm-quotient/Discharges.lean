@@ -1,4 +1,6 @@
+import Lean
 import ZInQKernel.Contrib.OneProof.RC.PMQuotient.Assembly
+import ZInQKernel.Contrib.OneProof.RC.Wiring.Leaves
 
 /-! Focused variant of the discharge audit: check the dependent
 `PreLeaves.odd_staged` field at the constructor's very same `W`.
@@ -22,6 +24,10 @@ elab "#discharges" : command => liftTermElabM do
     for x in xs do
       let d ← x.fvarId!.getDecl
       logInfo m!"  {d.userName} : {d.type}"
-    logInfo m!"  axioms: {(← collectAxioms c.name).toList}"
+    let axioms := (← collectAxioms c.name).toList
+    for a in axioms do
+      unless a == ``propext || a == ``Classical.choice || a == ``Quot.sound do
+        throwError "unexpected axiom: {a}"
+    logInfo m!"  axioms: {axioms}"
 
 #discharges
