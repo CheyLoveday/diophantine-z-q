@@ -37,3 +37,7 @@ Base `60b162a0d`; merged `cb118b8c28` as `33937701f`. Sizing recorded before run
   degree gives a monic integral equation, and every quadratic norm
   polynomial of negative discriminant has a value between consecutive
   positive integer squares.
+# Lattices and cyclic quotients
+
+VERIFIED with the guarded local Lean check: `Lattices.lean` constructs period pairs from invertible fractional ideals, proves scale invariance, and shows that the singular modulus depends only on the Picard class. `Cyclic.lean` proves the rank-two primitive sublattice quotient criterion by Smith normal form. Each new theorem uses only `propext`, `Classical.choice`, and `Quot.sound`.
+
