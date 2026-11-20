@@ -6,7 +6,7 @@ coefficients such that a rational number q is an integer exactly when P(q, w) = 
 numbers. This project checks that proof in the Lean 4 proof assistant, with the Mathlib library.
 
 - Development fork: https://github.com/Deicyde/diophantine-z-q. This file describes the Lean state of fork main
-  637536f3 (2026-11-20), where a single Lean theorem, `ZInQ.OneProof.frozenTarget`, proves the manuscript's Theorem 1.1
+  116d1d01 (2026-11-20), where a single Lean theorem, `ZInQ.OneProof.frozenTarget`, proves the manuscript's Theorem 1.1
   from exactly the statements that are still open.
 - Upstream: https://github.com/elliotglazer/diophantine-z-q. Its pull request #139 holds this fork as of c1e4ed1b,
   before the switch away from Route K (below).
@@ -34,8 +34,9 @@ in the Glossary at the end):
   (Theorem 5.2) for the manuscript's own pole polynomial. Lean also proves pole completeness the way the manuscript
   does, from its restricted converse theorem (Theorem 5.3), the Cassels–Tate pairing on its curves (Poonen–Stoll; Lean
   proves the manuscript's Lemma 5.4 from it), the modularity of elliptic curves over Q as printed
-  (Breuil–Conrad–Diamond–Taylor, Theorem A) and a consequence of Kolyvagin's Theorem 1. This is the manuscript's route. Lean proves
-  everything else, including every finite computation about the polynomial.
+  (Breuil–Conrad–Diamond–Taylor, Theorem A, stated in Lean at some level) and a consequence of Kolyvagin's Theorem 1.
+  This is the manuscript's route. Lean proves everything else, including every finite computation about the
+  polynomial.
 - **Reduced in Lean:** H follows from 22 statements that are still open, and Lean proves every step from them to H
   (`HDec.HSyn.sixContactMin_of_open92`, the H part of `ZInQ.OneProof.frozenTarget`). By the project's ratings, 9 of
   them are published theorems (some specialized or weakened) and 13 are consequences of published theorems or of the
@@ -46,7 +47,7 @@ in the Glossary at the end):
 
 These 26 statements are exactly the hypotheses of `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`).
 Folding in a proof of one removes it from that theorem. The count block above is regenerated at every landing; the
-numbers in the prose describe fork main 637536f3.
+numbers in the prose describe fork main 116d1d01.
 
 ## How far to trust each part
 
@@ -103,7 +104,7 @@ docs/one-proof/OPEN.md gives each statement's Lean form, source, rating and hold
   Theorem 3.5 and the existence of Néron models (all below);
 - Néron models and semistable reduction: Raynaud's criterion in the form of Silverberg–Zarhin, Theorem 3.5, and their
   inertia criterion for semistable reduction (Theorem 3.3); Lean proves the existence of Néron models over a Dedekind
-  base and Faltings' extension lemma for semiabelian schemes (1983, Lemma 1);
+  base and Faltings' extension lemma for semiabelian schemes (1983, Lemma 1) over a discrete valuation ring;
 - Faltings heights: Gaudron–Rémond's Theorem 1.4 and the lower bound recorded in their Section 9, Javanpeykar's
   Theorem 1.1.1, and Pazuki's Corollary 1.3;
 - p-adic Hodge theory: Berger's p-adic monodromy theorem, Scholze's comparison theorem for the first cohomology of
@@ -113,7 +114,7 @@ docs/one-proof/OPEN.md gives each statement's Lean form, source, rating and hold
   in the form of Darmon–Diamond–Taylor, Pan's theorem on the Fontaine–Mazur conjecture, and the Hodge–Tate weights of
   the Galois representations of modular forms.
 
-Several of them are steps of the manuscript itself rather than citations: the Hodge numbers in its de Rham descent
+Two of them are steps of the manuscript itself rather than citations: the Hodge numbers in its de Rham descent
 lemma (part of `scholzeH1AbVar`) are uncited there, and the integral model of the
 level-three curve is the manuscript's own argument from cited papers. Each entry's Source line in
 docs/one-proof/OPEN.md says which.
@@ -190,10 +191,10 @@ main that changes Lean files or the Lake configuration, in the main build cache 
 included, fails it. The first such build finished on 2026-11-18 (run 44219370755, at be73b91c). The last build of main
 that finished and passed the axiom check was at 3078ae6a (run 44513481236, 2026-11-19), where `frozenTarget` took 32 open
 hypotheses. The builds of later commits of main were cancelled by the next landing or stopped before the build
-finished. The last of them, at 4343ef88 (run 44706955358), stopped early at the workflow's disk-space guard (only 14 GB
+finished. The last of them, at 116d1d01 (run 44720294467), stopped early at the workflow's disk-space guard (only 14 GB
 free), as the run started by hand at ff165f7c (run 44681096024) had, because the saved progress now nearly fills the
-runner; the workflow needs a step that frees disk space before another run can finish. A cold build takes more than one job, so each run saves its
-progress and the next one resumes from it.
+runner; the workflow needs to free more disk space (for example by a smaller swap file on /) before another run can
+finish. A cold build takes more than one job, so each run saves its progress and the next one resumes from it.
 
 When the headline from H and pole completeness landed (lane74, fork main d435851d; docs/research/lane74b.md, section
 6), all 463 declarations of `scripts/print_axioms.lean` depended only on the three standard axioms, with no `sorry`,
