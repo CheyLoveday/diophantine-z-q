@@ -1,0 +1,4 @@
+- Setup: both prescribed merges clean, HEAD c2c438ef8.
+- Scope finding: the old anchor asks for every c > 0 coprime to N |D_K|; the manuscript needs c coprime to 2N |D_K|. Both anchor conclusions carry the old range.
+- Field.lean: serial `lake env lean -j1` under MemoryMax=60G passed. Compatible cached imports recovered from local worktrees with byte-identical source closures.
+- Statements: CMFieldOfDefinitionScoped X; cmFieldOfDefinitionScoped_of_broad; cmFieldOfDefinitionScoped_modelOne; cmFieldOfDefinitionScoped_one.
