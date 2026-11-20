@@ -137,7 +137,34 @@ theorem exists_heegner_generator (O : NumberFieldOrder K)
       simp [mul_im]
       linarith
 
+/-- The oriented generator can be chosen in any prescribed complex embedding. -/
+theorem exists_heegner_generator_in_embedding (O : NumberFieldOrder K)
+    (hk : finrank ℚ K = 2) (hc : IsTotallyComplex K) (κ : K →+* ℂ)
+    {A B C d : ℤ} (hD : O.discr = d) (hd : d < 0) (hform : B ^ 2 - 4 * A * C = d) :
+    ∃ ω : K, ω ∈ O.toSubalgebra ∧
+      (∀ x : O.toSubalgebra, ∃ u v : ℤ, (x : K) = (u : K) + (v : K) * ω) ∧
+      (ω ^ 2 + (B : K) * ω + (A : K) * (C : K) = 0) ∧
+      κ ω = (-(B : ℂ) + I * (Real.sqrt (-(d : ℝ)) : ℂ)) / 2 := by
+  obtain ⟨ι, ω, hω, hgen, hp, he⟩ := exists_heegner_generator O hk hc hD hd hform
+  have eval (e : K →+* ℂ) : (e ω) ^ 2 + (B : ℂ) * e ω + (A : ℂ) * (C : ℂ) = 0 := by
+    simpa only [map_pow, map_add, map_mul, map_intCast, map_zero] using congrArg e hp
+  have hdif : (κ ω - ι ω) * (κ ω + ι ω + (B : ℂ)) = 0 := by
+    linear_combination eval κ - eval ι
+  rcases mul_eq_zero.mp hdif with hz | hz
+  · exact ⟨ω, hω, hgen, hp, (sub_eq_zero.mp hz).trans he⟩
+  · let v := -(B : K) - ω
+    refine ⟨v, O.toSubalgebra.sub_mem (by simp) hω,
+      fun x => ?_, ?_, ?_⟩
+    · obtain ⟨a, b, hab⟩ := hgen x
+      exact ⟨a - b * B, -b, by rw [hab]; push_cast [v]; ring⟩
+    · dsimp [v]
+      linear_combination hp
+    · dsimp only [v]
+      rw [map_sub, map_neg, map_intCast, ← he]
+      linear_combination -hz
+
 #print axioms discr_of_basis_one
 #print axioms exists_heegner_generator
+#print axioms exists_heegner_generator_in_embedding
 
 end ZInQ.Manuscript.RC.CMField2
