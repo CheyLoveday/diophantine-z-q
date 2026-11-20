@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ98
+import ZInQKernel.OneProof.H.TailZ99
 import ZInQKernel.MainGreenTao
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRCGenuineFinal
@@ -220,6 +220,14 @@ Math. Proc. Cambridge Philos. Soc. 180 (2026) section 2·1, p. 613; leaf, rated 
 `HDec.CMBranch.CMjBridges.cmjDegree_of_print_closed` from the leaf, with j-descent4's `abVarFunctionFieldGenusOne`
 (proved unconditionally) and Lean proving that the order of discriminant Δ and its proper class number are determined
 by Δ. `OpenResearchLeaves72` (`TailZ98`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open91` the new top.
+Five outside discharges (fork PRs #152, #156, #153, #155, #157) proved `neronSchemeExtensionDedekind`
+(`NeronDVR.neronSchemeExtensionDedekind_proof`) and `faltingsLemma1DVRPrint`
+(`ZInQ.FaltingsRestate.faltingsLemma1DVRPrint_proof`) outright, `r9a` and `r9b` from `gaudronRemondThm14AnSS`,
+`silverbergZarhinThm35` and the proved `neronSchemeExtensionDedekind`
+(`ZInQ.Contrib.TateFiniteApproximation.faltingsSemisimple_of_existing_leaves`, `faltingsTate_of_existing_leaves`), and
+`y3ToP1j` from `y3FullThreeRepZ30` and `deligneCanonicalModelY3EveryPrint` (`Y3P1j.y3ToP1j_of_printed_moduli`); no
+new leaf. `OpenResearchLeaves73` (`TailZ99`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open92`
+the new top.
 
 bcdt-print replaced the frozen `ZInQ.Manuscript.PoleS12.BCDTThmA` by BCDT Theorem A as printed
 (`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`: condition (2) of Breuil–Conrad–Diamond–Taylor,
@@ -240,14 +248,14 @@ leaf BCDT Theorem A and a consequence of Kolyvagin's Theorem 1 (through Shimura'
 completeness PC (the manuscript's Theorem 5.2) is proved from the last four, with Lemma 5.4 proved from the pairing
 (`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`). -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves72) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves28)
+    (r : HDec.HSyn.OpenResearchLeaves73) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves28)
     (hRC : ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine)
     (hCT : ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves)
     (hB : ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted)
     (hK : ZInQ.Manuscript.PoleS12.KolyvaginThm1) :
     ZInQ.FrozenTarget :=
   ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness
-    (HDec.HSyn.sixContactMin_of_open91 r t l)
+    (HDec.HSyn.sixContactMin_of_open92 r t l)
     (ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing hRC hCT
       (ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed hB) hK)
 

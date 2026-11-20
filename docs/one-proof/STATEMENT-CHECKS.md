@@ -183,12 +183,26 @@ changes.
 
 Readings produced by AI tools, the project's included, are recorded as AI-READ evidence. An AI-READ reading clears
 exactly one flag, `unread`, and only when the row's log records a page read of the cited print; for a source the
-manuscript cites, the arXiv version it cites counts as the print. It never counts as a human reading, and it clears
-no other flag: reading risks and statement checks stay the reviewer's call.
+manuscript cites, the arXiv version it cites counts as the print for this flag (the next section says what else it
+needs). It never counts as a human reading, and it clears no other flag: reading risks and statement checks stay
+the reviewer's call.
 
 Each reviews.tsv row has an evidence column: HUMAN-READ when a person read the print and the row meets the rule
 above (AI use stated, a short verbatim quote, edition and page), AI-READ otherwise. AI-READ never counts as a human
 reading: OPEN.md's count of human readings counts only distinct readers with evidence HUMAN-READ.
+
+## Preprints and author copies
+
+Published means refereed (ruling 2026-11-20):
+
+* **Unrefereed sources.** A statement whose only source has not been refereed (an arXiv-only paper, a preprint
+  series such as an MPIM preprint, lecture notes) is never published and never LEAF, whatever a reading finds. It
+  counts as glue until it is proved in Lean or reduced to refereed sources, for example a refereed paper or book
+  that states it.
+* **Refereed papers read from an author copy.** When the reading used an author copy or an arXiv version of a
+  refereed paper (the version the manuscript cites included), the quoted statement is checked against the
+  journal text. The row keeps its rating while that check is pending. If the journal statement differs in a way
+  that matters, the row becomes glue until it is repaired.
 
 ## What happens to a report
 

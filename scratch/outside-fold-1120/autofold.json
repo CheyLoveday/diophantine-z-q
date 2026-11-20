@@ -1,0 +1,12 @@
+{"name": "outside-fold-1120",
+ "imports": ["ZInQKernel.Contrib.OneProof.NeronDVR.RelativeSquare",
+             "ZInQKernel.Contrib.OneProof.FaltingsDVR.FaltingsDVRProof",
+             "ZInQKernel.Contrib.OneProof.FaltingsFromPrintedInputs",
+             "ZInQKernel.Contrib.OneProof.FaltingsTateFromPrintedInputs",
+             "ZInQKernel.Contrib.OneProof.Y3FromModuli"],
+ "discharges": [
+   {"field": "neronSchemeExtensionDedekind", "proof": "_root_.NeronDVR.neronSchemeExtensionDedekind_proof"},
+   {"field": "faltingsLemma1DVRPrint", "proof": "_root_.ZInQ.FaltingsRestate.faltingsLemma1DVRPrint_proof"},
+   {"field": "r9a", "proof": "_root_.ZInQ.Contrib.TateFiniteApproximation.faltingsSemisimple_of_existing_leaves {n}.gaudronRemondThm14AnSS _root_.NeronDVR.neronSchemeExtensionDedekind_proof {n}.silverbergZarhinThm35"},
+   {"field": "r9b", "proof": "_root_.ZInQ.Contrib.TateFiniteApproximation.faltingsTate_of_existing_leaves {n}.gaudronRemondThm14AnSS _root_.NeronDVR.neronSchemeExtensionDedekind_proof {n}.silverbergZarhinThm35"},
+   {"field": "y3ToP1j", "proof": "_root_.Y3P1j.y3ToP1j_of_printed_moduli {n}.y3FullThreeRepZ30 {n}.deligneCanonicalModelY3EveryPrint"}]}
