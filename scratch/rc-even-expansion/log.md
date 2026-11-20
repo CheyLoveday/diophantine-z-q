@@ -20,4 +20,6 @@ VERIFIED: `Operators.lean` compiles with seven standard theorem audits. Its actu
 
 VERIFIED: `MaskCore.lean` passes both the Lake build and a direct Lean check. `quadraticProjection` cuts out a chosen unit label from an actual cusp form by a sum of quadratic twists at a single explicit level, retaining the lifted old character. The theorem gives the coefficients on units and nonunits at every index. Both theorem audits are standard.
 
+VERIFIED: `Permutation.lean` passes its direct check. Its `upSquare_conjugation` supplies the residue permutation, integral entries, determinant, preserved level and bottom-right residue needed for the finite sum. All three audits are standard. The equality of the two theta multipliers is a separate calculation.
+
 Build setup: the initial Lake import build was stopped when Lake's default compiler concurrency was noticed. Subsequent Lake builds use a compiler lock; direct checks are sequential.
