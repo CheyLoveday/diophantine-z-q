@@ -41,6 +41,12 @@ field name exactly as OPEN.md shows it and the commit you start from, or open a 
    the published theorem or a consequence of it, never stronger, and never over a structure invented for the
    purpose.
 
+   Published means refereed. An unrefereed source (an arXiv-only paper, a preprint series such as an MPIM
+   preprint, or lecture notes) is never a published leaf: a statement taken from one counts as glue until it is
+   proved in Lean or reduced to refereed sources (ruling 2026-11-20). If you read a refereed paper in an author
+   copy or an arXiv version, say so in the docstring; its statement is checked against the journal text
+   ([STATEMENT-CHECKS.md](STATEMENT-CHECKS.md#preprints-and-author-copies)).
+
 Never change a hypothesis's statement. If you find one false, vacuous, or stronger than its source, report it
 (with a corrected statement) on the issue: that is a valid and useful result.
 
