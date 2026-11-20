@@ -11,3 +11,23 @@ Base `60b162a0d`; merged `cb118b8c28` as `33937701f`. Sizing recorded before run
 | 2: Heegner coordinates | The paper calculation uses `(A,B,C) ↦ (A/N,B,NC)` with the same primitive discriminant, and the product of the two-generated ideals. Need the bridge from these embedded lattices to invertible ideals in the given abstract order. |
 | 3: branch | `finitePointEval` and affine chart injectivity support descent of the evaluation map by range restriction. Level one has just the j-coordinate (need compare its normal model to the j-line). The denominator in `exists_analyticJN_ratio` represents j_N by chart sections, i.e. in the opposite direction from expressing all chart sections in the two coordinates. Its nonvanishing alone is not a descent criterion; a local presentation of the normalization over the plane pair would suffice. Level two provides a diagnostic collision. |
 | Integration | `CMFieldOfDefinition` does not appear in `docs/one-proof/kinds.tsv` or `docs/one-proof/OPEN.md` at the merge. No discharge count, spec, or autofold dry run applies. |
+
+- VERIFIED (source): Tau Ceti supplies the split-prime criterion
+  `ncard_primesOver_ringClassField_eq_finrank_iff`. For inclusion only, it suffices
+  to compare Frobenius at rational primes that split in the quadratic field and
+  whose primes there split completely in the ring class field. This asks for the
+  diagonal Kronecker congruence and excludes a finite set of primes separating
+  conjugates. No selection of an oriented congruence factor is needed.
+- SPECULATIVE (formal roadmap): count cyclic self-isogenies at the least nontrivial
+  cyclic degree to recover the trace parity of the multiplier order. This uses
+  the analytic product with multiplicities, the inverse index-to-lattice
+  dictionary, and a separate argument for the two orders with extra units.
+- VERIFIED (build): the first serialized import build reached the normalized
+  curve's affine and overlap modules. Several queued imports were stopped by
+  the load guard (exit 77); the run was held while the one-minute load was
+  above 150. Previously built objects remain available for the resumption.
+- VERIFIED (Lean): `Frobenius.lean` compiled using `lake env lean`. In a
+  field the diagonal Kronecker factors force `x ^ p = x`; separating
+  reductions for each automorphism of the overfield fixing the proposed
+  subfield imply membership by Galois correspondence. Both theorems use
+  only `propext`, `Classical.choice` and `Quot.sound`.
