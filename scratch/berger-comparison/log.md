@@ -88,3 +88,16 @@ the load/memory gate, with downloads disabled. The pre-run gate is
   the candidate built from a small powered unit. The paper's actual
   cyclotomic unit normalization and branch compatibility (including
   change of lift) have not been proved.
+
+## Frobenius on the finite expressions (VERIFIED)
+
+- `BergerComparison/FrobeniusGenerator.lean` compiled with
+  `lake env lean`.
+- In the Witt ring, `p ∣ φ(ξ) + (-ξ)^p`. The divided-power monomial
+  with coefficient `(p−1)!` at index `p` realizes `ξ^p/p` in
+  `AcrisOf`. Thus the generator image `φ(ξ)/p` is crystalline.
+- The same range estimate is proved for the evaluation of every
+  finite polynomial with Witt Frobenius applied to the coefficients.
+  This is before extending to restricted series and proving descent
+  through equality of their evaluations. The actual equivariant
+  semistable map has not been constructed.
