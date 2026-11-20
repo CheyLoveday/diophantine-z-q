@@ -1,0 +1,4 @@
+- Bases: `1171720c3a809ff7c790223517be48c77a90189a` then `9b775780330d05957a01cff3400c66d9c6c9183d`; merge clean.
+- Consumers: neither index is needed to establish admissibility or preparation. Visibility interfaces state a genus index reading on all admissible rows; the rank-one bound uses it only on the rank-one branch. The final-family and calibration interfaces also expose index expressions on their family data.
+- Manuscript: tex 1785–1787 selects the based map via the rational isogeny; 1825–1828 keeps that choice. Tex 8209–8217 selects on the full filter; 9439–9443 includes torsion rows without a rank-one index.
+- Data and totality: `withParamIndices`, `genusInstance`, `selG_isSome_of_admissible`, `exists_selected_of_admissible` passed serial `lake env lean -j1 -DautoImplicit=false` after compiling the two uncached ParamJoin imports.
