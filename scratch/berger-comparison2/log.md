@@ -66,3 +66,23 @@ dividing out the constant term of a series evaluating to zero. Separately
 substitute `φ(ξ)/p` in the ring of restricted divided-power series, by
 taking coefficientwise p-adic sums before evaluation. These steps address
 different issues: independence of presentation, and crystalline range.
+
+## Restricted substitution and cyclotomic unit (VERIFIED)
+
+- Offline Lake built the three base comparison imports. The previous
+  worktree had the same commit; reusing the matching Lean and C artifacts
+  let Lake replay existing targets. The first invocation that lacked
+  the C artifacts was interrupted before the serial replay. The compiler
+  wrapper locks each compiler invocation and checks load and memory;
+  direct checks use the same load/memory gate and run in sequence.
+- `RestrictedEvaluation.lean` compiled with `lake env lean`, and its
+  import artifact built with `lake --old --no-cache build`. Modulo each
+  `p^k` the reduced coefficient series is a polynomial. Evaluation and
+  passage to the compatible limit give a ring homomorphism into a
+  complete target. It agrees with ordinary evaluation on polynomials.
+- The cyclotomic calculation in `CyclotomicUnit.lean` compiled with
+  `lake env lean`. It gives a tilt correction `u` with
+  `(ε - 1)^(p - 1) = pFlat^p * u^p` and `‖u.untilt + 1‖ < 1`.
+  Working at the second cyclotomic root gives the needed strict norm
+  bound also for `p = 2`. A positive even power of `u` has untilt one
+  modulo `p`. This check does not identify Berger's logarithm.
