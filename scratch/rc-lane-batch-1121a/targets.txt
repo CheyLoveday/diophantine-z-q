@@ -77,3 +77,6 @@ ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner
 ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19E2
 ZInQKernel.OneProof.Main
 ZInQKernel.OneProof.Discharges
+ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedRamifiedNewvector
+ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedWhittakerEvaluation
+ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation

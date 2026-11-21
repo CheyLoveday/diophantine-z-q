@@ -22,7 +22,7 @@ variable {D : Type} [Fintype D] {N : ℕ} [NeZero N] {m : D → ℕ} {a : D → 
 variable {A : ∀ b, CuspBlockExpansion (m b) (a b)} {hm : ∀ b, m b ∣ N}
 variable {F : IntermediateField ℚ ℂ} [NumberField F] {v : HeightOneSpectrum (𝓞 F)}
 variable (R : PlacedCuspLists A hm v) {L : Type} [AddCommGroup L] {ε : L →+ ZMod 2}
-variable (T : TypeData L ε) (hIndependent : Li1975OldNewIndependenceWeightTwo)
+variable (T : TypeData L ε) (hIndependent : OldNewIndependenceWeightTwo)
 variable {p : ℕ} (hp : p.Prime)
 
 /-- Evaluate each actual column, including away dilations, in the
@@ -48,7 +48,7 @@ variable {A : ∀ b : EvenBlock U, CuspBlockExpansion (evenBlockLevel P b)
   (evenBlockSeries P hS i b)}
 variable [NeZero (movingLevel P U)] [NeZero (conductor W.S)]
 variable (D : PlacedCuspLists A (evenBlockLevel_dvd (P := P)) v)
-variable (hIndependent : Li1975OldNewIndependenceWeightTwo)
+variable (hIndependent : OldNewIndependenceWeightTwo)
 
 omit [NeZero (conductor W.S)] in
 /-- Supply the finite evaluation premise for the placed row. -/

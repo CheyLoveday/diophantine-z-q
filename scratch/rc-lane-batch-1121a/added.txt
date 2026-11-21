@@ -70,3 +70,6 @@ ZInQKernel/Contrib/OneProof/RC/HCMV21/SplitCoset.lean
 ZInQKernel/Contrib/OneProof/RC/HCMV21/TangentCharacter.lean
 ZInQKernel/Contrib/OneProof/RC/HCMV21/TateHomLattice.lean
 ZInQKernel/Contrib/OneProof/RC/HCMV21/TateIdealRead.lean
+ZInQKernel/Contrib/OneProof/RC/EvenJoin/PlacedRamifiedNewvector.lean
+ZInQKernel/Contrib/OneProof/RC/EvenJoin/PlacedWhittakerEvaluation.lean
+ZInQKernel/Contrib/OneProof/RC/EvenJoin/WhittakerEvaluation.lean
