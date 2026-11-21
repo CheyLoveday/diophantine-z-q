@@ -5,3 +5,4 @@
 - `WeightedPresentation` first elaboration identified grading helper namespace, component coercion and transparency fixes.
 - `LaurentWeights` passes targeted Lake build. Its Laurent substitution reads each weighted homogeneous component coefficientwise and proves the kernel criterion from realizable field scalings. Four axiom checks, all within the allowed set.
 - `WeightedPresentation` passes targeted Lake build. Weighted images give the components. A homogeneous kernel makes the direct sum internal by surjectivity of the component map and the kernel test. Nine axiom checks, all within the allowed set.
+- `ExactOrderPresentation` passes targeted Lake build. The two torsion roots and three short-locus coordinates generate the exact-order algebra. Level two uses the branch root and zero ordinate, and higher levels use the pinned quadratic factor. Seven axiom checks, all within the allowed set.
