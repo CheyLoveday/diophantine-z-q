@@ -8,3 +8,4 @@
 - `ExactOrderPresentation` passes targeted Lake build. The two torsion roots and three short-locus coordinates generate the exact-order algebra. Level two uses the branch root and zero ordinate, and higher levels use the pinned quadratic factor. Seven axiom checks, all within the allowed set.
 - `ExactOrderScaling` passes targeted Lake build. Whole-locus field points split into the coefficient map and an exact generator. The point obtained by short rescaling acts on all five named coordinates with weights 4, 6, 2, 3 and -12. Twelve axiom checks, all within the allowed set.
 - `ExactOrderGrading`: named short exact-order grading, weights of the coordinates and discriminant, scaling of all homogeneous elements, field-test converse. Targeted Lake build passed with the recorded axiom checks.
+- `ShortLevelAction`: the actual level automorphism commutes with scaling on field points and preserves every summand. Targeted Lake build passed with seven axiom checks.
