@@ -1,0 +1,24 @@
+ZInQKernel.Contrib.OneProof.SelmerTwoPower 380 project modules including root
+   no intersection
+ZInQKernel.OneProof.Main 10444 project modules including root
+   no intersection
+ZInQKernel 612 project modules including root
+   no intersection
+ZInQKernel.Contrib.OneProof.RC.Wiring.Leaves 2446 project modules including root
+   ZInQKernel.Contrib.OneProof.RC.PrintsArith.Bundle
+   ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner
+ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Leaf 2409 project modules including root
+   ZInQKernel.Contrib.CloudB3E2Norm.H20Anchor
+   ZInQKernel.Contrib.CloudB3E2Norm.H20DictFields
+   ZInQKernel.Contrib.CloudB3E2Norm.H20Dictionary
+   ZInQKernel.Contrib.CloudB3E2Norm.H20HeegnerNorm
+   ZInQKernel.Contrib.CloudB3E2Norm.H20PresClass
+   ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassMatch
+   ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassOf
+   ZInQKernel.Contrib.CloudB3E2Norm.H20Transport
+   ZInQKernel.Contrib.OneProof.RC.PrintsArith.Bundle
+   ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner
+   ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate18E2
+Direct importers of Heegner:
+   ZInQKernel.Contrib.CloudB3E2Norm.H20HeegnerNorm
+   ZInQKernel.Contrib.OneProof.RC.PrintsArith.Bundle
