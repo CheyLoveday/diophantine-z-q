@@ -8,3 +8,4 @@
 - `ShortRepresentatives` passed targeted Lake build. Every pair class has a short-equation representative and a generator, over each field in which 2 and 3 are nonzero. The axiom print uses only the permitted axioms.
 - `QuadraticFactor` passed targeted Lake build. For levels greater than two the branch chart is killed by the exact-order idempotent. The remaining chart maps to the exact-order cover by its first component. The axiom prints use only the permitted axioms.
 - `CoordinateEvaluation` passed targeted Lake build. `generatorX` and `generatorY` evaluate to the affine coordinates of the point read by `exactOrderFibrePoints` at levels at least three. The axiom prints use only the permitted axioms.
+- `ShortWeights` passed targeted Lake build. The short discriminant and short Weierstrass equation are homogeneous in the polynomial presentation with degrees 12 and 6. The five generator weights are 4, 6, 2, 3, and −12. The axiom prints use only the permitted axioms.
