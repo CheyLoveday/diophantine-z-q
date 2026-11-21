@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.RC.ModelLevels2.CoordinateLifting
+import ZInQKernel.Contrib.OneProof.RC.ModelLevels2.CoverTransition
 import ZInQKernel.Contrib.OneProof.RC.ModelLevels.GeneratorOrbits
 import ZInQKernel.Contrib.OneProof.RC.ModelLevels.MultiplicationCoordinates
 
@@ -197,5 +198,95 @@ theorem exactOrderUnitAut_point [IsDomain A] {k : Type*} [Field k] [Algebra A k]
 #print axioms exactOrderUnitHom_mul
 #print axioms exactOrderUnitAut
 #print axioms exactOrderUnitAut_point
+
+section Transition
+
+open scoped TensorProduct
+
+variable {B : Type*} [CommRing B] [Algebra A B]
+
+private theorem exactOrderTransition_evaluate (p : A[X][Y]) :
+    exactOrderTransition (B := B) W hN (evaluateOnGenerator W hN p) =
+      evaluateOnGenerator (W.map (algebraMap A B))
+        (show IsUnit ((n + 3 : ℕ) : B) by simpa only [map_natCast] using hN.map (algebraMap A B))
+        (p.map (mapRingHom (algebraMap A B))) := by
+  let V := W.map (algebraMap A B)
+  let hB : IsUnit ((n + 3 : ℕ) : B) := by
+    simpa only [map_natCast] using hN.map (algebraMap A B)
+  let e := exactOrderBaseChange (B := B) W hN
+  let f := exactOrderTransition (B := B) W hN
+  have hc : f.comp (algebraMap A (ExactOrderAlgebra W hN)) =
+      (algebraMap B (ExactOrderAlgebra V hB)).comp (algebraMap A B) := by
+    ext a
+    change e (1 ⊗ₜ[A] algebraMap A (ExactOrderAlgebra W hN) a) =
+      algebraMap B (ExactOrderAlgebra V hB) (algebraMap A B a)
+    rw [← Algebra.TensorProduct.tmul_one_eq_one_tmul]
+    exact e.commutes _
+  unfold evaluateOnGenerator
+  rw [← map_mapRingHom_evalEval, Polynomial.map_map, mapRingHom_comp,
+    exactOrderTransition_x, exactOrderTransition_y, Polynomial.map_map, mapRingHom_comp, hc]
+
+private theorem exactOrderTransition_denominator (a : (ZMod (n + 3))ˣ) :
+    exactOrderTransition (B := B) W hN (multipleDenominator W hN a) =
+      multipleDenominator (W.map (algebraMap A B))
+        (show IsUnit ((n + 3 : ℕ) : B) by simpa only [map_natCast] using hN.map (algebraMap A B))
+        a := by
+  unfold multipleDenominator
+  rw [exactOrderTransition_evaluate, ← W.map_ψ]
+
+private theorem exactOrderTransition_inverse (a : (ZMod (n + 3))ˣ) :
+    exactOrderTransition (B := B) W hN (inverseDenominator W hN a) =
+      inverseDenominator (W.map (algebraMap A B))
+        (show IsUnit ((n + 3 : ℕ) : B) by simpa only [map_natCast] using hN.map (algebraMap A B))
+        a := by
+  let V := W.map (algebraMap A B)
+  let hB : IsUnit ((n + 3 : ℕ) : B) := by
+    simpa only [map_natCast] using hN.map (algebraMap A B)
+  let f := exactOrderTransition (B := B) W hN
+  let u := (multipleDenominator_isUnit W hN a).unit
+  let u' := (multipleDenominator_isUnit V hB a).unit
+  have h : Units.map f.toMonoidHom u = u' := by
+    apply Units.ext
+    change f ↑u = ↑u'
+    rw [(multipleDenominator_isUnit W hN a).unit_spec,
+      (multipleDenominator_isUnit V hB a).unit_spec]
+    exact exactOrderTransition_denominator W hN a
+  change f.toMonoidHom (↑u⁻¹) = ↑u'⁻¹
+  rw [← Units.coe_map_inv, h]
+
+/-- The Jacobian unit formulas commute with the transition between two
+coefficient domains. Equality can be checked on the two named roots.
+For a nonreduced target the action is defined by scalar extension. -/
+theorem exactOrderUnitHom_transition_coordinates [IsDomain A] [IsDomain B] (a : (ZMod (n + 3))ˣ) :
+    let V := W.map (algebraMap A B)
+    let hB : IsUnit ((n + 3 : ℕ) : B) := by
+      simpa only [map_natCast] using hN.map (algebraMap A B)
+    let f := exactOrderTransition (B := B) W hN
+    f (exactOrderUnitHom W hN a (generatorX W hN)) =
+        exactOrderUnitHom V hB a (f (generatorX W hN)) ∧
+      f (exactOrderUnitHom W hN a (generatorY W hN)) =
+        exactOrderUnitHom V hB a (f (generatorY W hN)) := by
+  intro V hB f
+  have hx := (multiple_coordinate_lift W hN a).choose_spec.1
+  have hy := (multiple_coordinate_lift W hN a).choose_spec.2
+  have hX := (multiple_coordinate_lift V hB a).choose_spec.1
+  have hY := (multiple_coordinate_lift V hB a).choose_spec.2
+  change exactOrderUnitHom W hN a (generatorX W hN) = _ at hx
+  change exactOrderUnitHom W hN a (generatorY W hN) = _ at hy
+  change exactOrderUnitHom V hB a (generatorX V hB) = _ at hX
+  change exactOrderUnitHom V hB a (generatorY V hB) = _ at hY
+  dsimp only [f]
+  constructor
+  · rw [hx, exactOrderTransition_x, hX, multipleX, multipleX, map_mul, map_pow,
+      exactOrderTransition_evaluate, exactOrderTransition_inverse, ← W.map_φ]
+  · rw [hy, exactOrderTransition_y, hY, multipleY, multipleY, map_mul, map_pow,
+      exactOrderTransition_evaluate, exactOrderTransition_inverse, ← W.map_ωe]
+
+#print axioms exactOrderTransition_evaluate
+#print axioms exactOrderTransition_denominator
+#print axioms exactOrderTransition_inverse
+#print axioms exactOrderUnitHom_transition_coordinates
+
+end Transition
 
 end WeierstrassCurve.ModelLevels
