@@ -1,0 +1,232 @@
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CotangentProduct.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.evaluation_eq_zero_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CotangentProduct.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.deviation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CotangentProduct.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.jetAlgebra' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CotangentProduct.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.jetAlgebra_natural' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CotangentProduct.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.jetAlgebra_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CotangentProduct.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.infinitesimalBase' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CotangentProduct.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.infinitesimalPoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CotangentProduct.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.infinitesimalPoint_natural' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CotangentProduct.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.infinitesimalPoint_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.cotangent_ranges_sup_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detector_referenceCoordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.orientedCorrespondence_of_framedReferenceReads' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.matrixFrame_inner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.splitReference_conjugate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.restrictSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.ParametrizationFibresAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.parametrization_commutes_of_fibres' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.point_reduction_of_integral_parametrization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.localRing' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.cotangent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.evaluation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.over_of_section' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.evaluation_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.stalkMapAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.stalkMapAt_canonical' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.stalkMapAt_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.stalkMapAt_comp' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.stalkMapAt_id' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.stalkMapAt_germ_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.map_point' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullStalk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullStalk_id' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullStalk_comp' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.PointedCotangent.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.mem_maximalIdeal_pullStalk' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.evaluation_pullStalk' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.specMap_pullStalk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullCotangent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullCotangent_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullCotangent_mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullCotangent_id' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullCotangent_comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.ofAbVar' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullCotangent_eq_geometric' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.referenceAnalyticClass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.ReferenceOrderCoordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_referenceCoordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.reference_leftRing_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mem_localRight_mul_reference' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.relativeReferenceRead' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.relativeReferenceRead_base' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.relativeReferenceRead_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.multiplyReference' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.multiplyReference_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localRight_mul_reference_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.geometricReferenceRead' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.geometricReferenceRead_base' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.geometricReferenceRead_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.reference_hunit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.ringOfIntegersRationalization' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.ringOfIntegersRationalization_one_tmul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.referenceCMEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.referenceCMEmbedding_on_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localCMEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localCMEmbedding_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localCMEmbedding_tmul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localCMEmbedding_integral_tensors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.geometricPointSourceIso' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.levelPointsToClosure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.levelPointsToClosure_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.levelEnd_iff_levelHom_closure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.QuaternionRamificationUniqueness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.transportOrder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_referenceEndOrder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceOrder.0.ZInQ.Manuscript.RC.HCMV21.localBasis_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.quaternionBaseChange' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.quaternionBaseChange_tmul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localQuaternionEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localQuaternionEquiv_toLocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.referenceDivisionChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceOrder.0.ZInQ.Manuscript.RC.HCMV21.orderToCompletion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.completedReferenceEnd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.completedReferenceEnd_one_tmul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.referenceCompletion_map_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.reference_levelCompletion_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.completedReferenceDivision' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.completedReferenceDivision_one_tmul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.quotientReferenceRead_away' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.identity_quotientRightIdeal_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceSemilocal.0.ZInQ.Manuscript.RC.HCMV21.basePlace' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceSemilocal.0.ZInQ.Manuscript.RC.HCMV21.padicSemilocal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.referenceCMComponents' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceSemilocal.0.ZInQ.Manuscript.RC.HCMV21.padicSemilocal_tmul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceSemilocal.0.ZInQ.Manuscript.RC.HCMV21.integral_of_adic_coordinates' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceSemilocal.0.ZInQ.Manuscript.RC.HCMV21.localOrder_contains_CM_coordinates' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceSemilocal.0.ZInQ.Manuscript.RC.HCMV21.adic_coordinates_of_localOrder' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.reference_localCM_mem_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.referenceCMAdeles' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.referenceCMAdeles_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.reference_geometry_hunit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.specialized_cotangentCharacter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detector_reference_supersingular' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_detectorEndOrder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detector_reference_cotangent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.reference_divisionCharacter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceTateLevel.0.ZInQ.Manuscript.RC.HCMV21.span_reference_primary' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceTateLevel.0.ZInQ.Manuscript.RC.HCMV21.cyclic_primary' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.splitProfile_of_cyclicReference' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detector_referenceCoordinates_of_cyclic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceTateProfile.0.ZInQ.Manuscript.RC.HCMV21.tateMatrix_baseChange' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.ReferenceTateProfile.0.ZInQ.Manuscript.RC.HCMV21.tateMatrix_mulVec' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.splitProfile_of_referenceTateChain' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TangentCharacter.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.basePoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TangentCharacter.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.baseCotangent_subsingleton' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TangentCharacter.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.pullCotangent_const' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TangentCharacter.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.squarePoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TangentCharacter.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.square_fst' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TangentCharacter.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.square_snd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TangentCharacter.0.ZInQ.Manuscript.RC.HCMV21.PointedScheme.square_cotangent_span' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TangentCharacter.0.ZInQ.Manuscript.RC.HCMV21.pullCotangent_add' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.cotangentEndMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.cotangentEndMap_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.cotangentEndMap_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TangentCharacter.0.ZInQ.Manuscript.RC.HCMV21.onLine_eq_smul' depends on axioms: [propext,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.cotangentCharacter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.cotangentMap_eq_character_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.tangentMap_eq_character_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.residueAtSection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.cotangent_finrank_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.cotangentLine' depends on axioms: [propext, Classical.choice, Quot.sound]

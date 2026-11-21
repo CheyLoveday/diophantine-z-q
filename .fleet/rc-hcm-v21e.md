@@ -1,0 +1,9 @@
+# Geometric reference and specialization of the parametrization
+
+**Scoped stop.** The level-one Deuring order transports to the detector’s fixed rational algebra given uniqueness by ramification. Its completion at the detector prime is the explicit division valuation order. The genuine cotangent pullback gives the scalar on the dual tangent. This scalar factors uniquely through the division residue field, and a calculation on one integral differential identifies its restriction to the specialized CM action with the fixed-place residue character. The split-prime calculation reads the actual cyclic level in the reference Tate frame, including at 2.
+
+The completed-reads assembly now uses the finite-idele map of the geometric reference and its proved stabilizer. The identity quotient gives the reference read, and the reference fractional lattice gives the source class under the inverse ideal action. The existing Voight proposition covers existence. Its uniqueness clause is still needed. The same-place CM model must supply the actual reference and its specialized action and differential, the labelled local kernel comparisons for the other classes, and the original class attachment and forgetful map.
+
+For the parametrization square, `ParametrizationFibresAt` records one integral morphism with the generic Heegner and special Abel–Jacobi evaluations. The consumer follows by restricting the composite section, using the target point-reduction comparison and the same-place special CM sections. The common integral morphism and its two evaluations remain open.
+
+All 16 new modules checked on Lean 4.35.0. The audit covers 131 declarations and found only `propext`, `Classical.choice`, and `Quot.sound`. Zero new printed candidates. No manuscript or source error was verified. [Research report](../docs/research/rc-hcm-v21e.md) · [Axiom audit](../scratch/rc-hcm-v21e/axioms.txt)

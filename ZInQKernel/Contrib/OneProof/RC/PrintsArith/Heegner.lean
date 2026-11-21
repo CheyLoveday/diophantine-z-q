@@ -9,7 +9,7 @@ comparison (App. F, `ex:app-theta-comparison`, tex 9103–9405) cite three print
 curves and CM points:
 
 * **Cai–Chen–Liu**, *Heegner points on modular curves*, Trans. AMS 370 (2018), 3721–3743,
-  **Theorem 2.15**, p. 3730 (read for this lane: the author's offprint). Use: tex 2914–2936, the
+  **Theorem 2.15**, p. 3730 (read: AI reading of the journal page). Use: tex 2914–2936, the
   norm relations (4.1) for `y_d = π(x_d)`.
 * **Elkik**, *Le théorème de Manin–Drinfeld*, Astérisque 183 (1990), 59–67, **Théorème, p. 59**
   (read: Numdam scan). Use: tex 2937–2946, finiteness of the cuspidal subgroup `𝒞_N` of `J₀(N)`.
@@ -34,8 +34,8 @@ not exist in Mathlib. `HeegnerPointData` and `CJReductionData` carry exactly the
 properties the proof uses; `CJReductionData.PrintRealization` records how the latter sits inside the
 print's objects at the manuscript's specialization (non-vacuity: `cjToyRealization`). **Vacuity:** the norm relations alone are satisfied by the zero system
 (`HeegnerPointData.zero_normRelations`); in the proof the anchor is Cai–Shu–Tian's height formula
-(stated by the shared top layer, `CST.CSTThm11Split`), so `CCLThm2_15Applied` is parametric in an
-anchor predicate. **Sizing a genuine definition:** `X₀(N)` over `ℚ` (or its analytic uniformization
+(stated by the shared top layer, `CST.CSTThm11Split`), so `CCLThm2_15AppliedWithUnits` is parametric
+in an anchor predicate. **Sizing a genuine definition:** `X₀(N)` over `ℚ` (or its analytic uniformization
 plus `ℂ/Λ_E ≅ E(ℂ)`), ring class fields (class field theory for imaginary quadratic orders), CM
 theory (Shimura reciprocity, to place `x_d` in `X₀(N)(H_d)`), Hecke correspondences, `J₀(N)` and
 the parametrization `φ`; for Cornut–Jetchev also adelic quaternion algebras, Eichler orders and the
@@ -139,8 +139,8 @@ def HeegnerPointData.Admissible {E : WeierstrassCurve ℚ} (D : HeegnerPointData
     Prop :=
   0 < d ∧ Nat.Coprime d (2 * D.N * D.DK.natAbs) ∧ ℓ.Prime ∧ ¬ ℓ ∣ 6 * d * D.N * D.DK.natAbs
 
-/-- **The norm relations (4.1)** (tex 2924–2929), the image under `φ` of Cai–Chen–Liu's
-Theorem 2.15: `Tr_{H_{dℓ}/H_d} y_{dℓ} = a_ℓ y_d` at an inert `ℓ` (`(D_K/ℓ) = -1`), and
+/-- **The unweighted norm relations (4.1)** (tex 2924–2929), after the check that the unit factor
+is one: `Tr_{H_{dℓ}/H_d} y_{dℓ} = a_ℓ y_d` at an inert `ℓ` (`(D_K/ℓ) = -1`), and
 `Tr_{H_{dq}/H_d} y_{dq} = (a_q - σ_q - σ_q⁻¹) y_d` at a split `q` (`(D_K/q) = 1`). -/
 def HeegnerPointData.NormRelations {E : WeierstrassCurve ℚ} (D : HeegnerPointData E) : Prop :=
   (∀ d ℓ : ℕ, D.Admissible d ℓ → jacobiSym D.DK ℓ = -1 →
@@ -158,23 +158,56 @@ theorem HeegnerPointData.zero_normRelations {E : WeierstrassCurve ℚ} (DK : ℤ
     (HeegnerPointData.mk (E := E) DK N H (fun _ => 0) relGal frob).NormRelations := by
   refine ⟨fun d ℓ _ _ => ?_, fun d q _ _ => ?_⟩ <;> simp [zsmul_zero]
 
-/-- **Cai–Chen–Liu, Trans. AMS 370 (2018), Theorem 2.15, p. 3730, applied through `φ`** (PRINT over
-the interface `HeegnerPointData`, parametric in the anchor). The print: *`[H_{mℓ} : H_m] = (ℓ+1)/u_m`
-if `ℓ` is inert in `K` and `(ℓ-1)/u_m` if `ℓ` is split, and
-`u_m ∑_{σ ∈ Gal(H_{mℓ}/H_m)} P_{mℓ}^σ = T_ℓ P_m` (inert), `(T_ℓ - ∑_{w|ℓ} Frob_w) P_m` (split),
-with `u_m = 1` for `m ≠ 1` and `u_1 = [𝒪_K^× : ℤ^×]`*, for Heegner points `P_m` of conductor `cm` on
-`X_K(N)` and `ℓ, m ∈ ℕ_S`, `S ⊇ prime(6cND_K)` (§2.3), under condition (∗) (p. 3722).
-
-Hypothesis match (tex 2917–2922): with every prime of `N` split in `K`, `N₁ = 1`, `X_K(N) = X₀(N)`
-and (∗) is `(d, N) = 1`; `u_m = 1` since `𝒪_K^× = {±1}` (`K ≠ ℚ(i), ℚ(√-3)`). Applying `φ`, with
-`φ T_ℓ = [a_ℓ] φ` on degree-zero divisors and `T_ℓ[∞] = (ℓ+1)[∞]` (tex 2933–2936, GLUE), gives
-(4.1). The use matches.
-
-The statement is `∃ D, D.NormRelations ∧ Anchor D`: it is the print only for the anchor that pins
-`y` to the genuine Heegner points (in the proof, Cai–Shu–Tian at conductor one, stated by the shared
-top layer); with `Anchor = fun _ => True` it is vacuous (`zero_normRelations`). -/
+/-- The unweighted witness used by the older transport chain. In the manuscript this is the
+specialization after checking that the unit factor is one (tex 2921–2922).
+The staged application uses `CCLThm2_15AppliedWithUnits`. -/
 def CCLThm2_15Applied (E : WeierstrassCurve ℚ) (Anchor : HeegnerPointData E → Prop) : Prop :=
   ∃ D : HeegnerPointData E, D.NormRelations ∧ Anchor D
+
+open scoped NumberField in
+/-- The printed factor `uₘ`. At `m = 1` this is the index of the image of the integral
+units in the units of the maximal order. -/
+def cclUnitFactor (K : Type*) [Field K] [NumberField K] (m : ℕ) : ℕ :=
+  if m = 1 then (Units.map (algebraMap ℤ (𝓞 K)).toMonoidHom).range.index else 1
+
+/-- The inert and split norm relations through the elliptic quotient, with the printed
+factor. The full old conductor `d` is the print's `c`, so both relations use `u₁`. -/
+def HeegnerPointData.NormRelationsWithUnits {E : WeierstrassCurve ℚ} (D : HeegnerPointData E)
+    (K : Type*) [Field K] [NumberField K] : Prop :=
+  (∀ d ℓ : ℕ, D.Admissible d ℓ → jacobiSym D.DK ℓ = -1 →
+    cclUnitFactor K 1 •
+      (∑ τ ∈ D.relGal d ℓ, WeierstrassCurve.Affine.Point.map τ.toAlgHom (D.y (d * ℓ))) =
+      (E.LFunction ℓ : ℤ) • D.y d) ∧
+  (∀ d q : ℕ, D.Admissible d q → jacobiSym D.DK q = 1 →
+    cclUnitFactor K 1 •
+      (∑ τ ∈ D.relGal d q, WeierstrassCurve.Affine.Point.map τ.toAlgHom (D.y (d * q))) =
+      (E.LFunction q : ℤ) • D.y d -
+        WeierstrassCurve.Affine.Point.map (D.frob d q).toAlgHom (D.y d) -
+        WeierstrassCurve.Affine.Point.map (D.frob d q)⁻¹.toAlgHom (D.y d))
+
+/-- Cai–Chen–Liu, Trans. Amer. Math. Soc. 370 (2018), Thm 2.15, p. 3730
+(read: AI reading of the journal page), through the elliptic quotient (tex 2914–2936).
+The theorem weights the relative point trace by `uₘ`, with `uₘ = 1` for `m ≠ 1` and
+`u₁ = [𝒪_K^× : ℤ^×]`. At split level `X_K(N) = X₀(N)` and the condition (∗) is `(d, N) = 1`.
+
+The application uses six GLUE identifications.
+* With `c = d` and `m = 1`, the print's `H_m` has conductor `cm`, and the new prime is
+  outside `6dND_K`.
+* The decomposition law identifies the Jacobi symbol with inertness or splitting.
+* At a split prime, the Artin symbol of the rational principal ideal is trivial, so
+  Frobenius at the conjugate prime is `σ_q⁻¹` (tex 2931–2932).
+* The CM points come from one global compatible family of proper ideal lattices with the
+  fixed orientations at level `N` (tex 2915–2917).
+* The CM ring class fields agree with the vendored class-field-theory ring class fields.
+* The analytic map `phiAn` represents the algebraic parametrization over `ℚ` sending
+  `∞` to zero. Hecke equivariance and the degree of `T_q[∞]` give the relation without a
+  cusp term (tex 2836–2838, 2933–2936).
+
+The anchor supplies the realization of the points and the field and Galois dictionary.
+This replaces the unweighted applied witness on the staged chain. -/
+def CCLThm2_15AppliedWithUnits (E : WeierstrassCurve ℚ) (K : Type*) [Field K] [NumberField K]
+    (Anchor : HeegnerPointData E → Prop) : Prop :=
+  ∃ D : HeegnerPointData E, D.NormRelationsWithUnits K ∧ Anchor D
 
 /-! ### Cornut–Jetchev: the reduction bijection and the hypothesis checks of App. F -/
 

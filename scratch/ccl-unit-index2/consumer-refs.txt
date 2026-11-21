@@ -1,0 +1,86 @@
+HEAD:ZInQKernel/Contrib/CloudB3E1RingClass/SupportReq.lean:53:open ZInQ.Manuscript.RC.PrintsArith (Qbar CCLThm2_15Applied)
+HEAD:ZInQKernel/Contrib/CloudB3E1RingClass/SupportReq.lean:127:    (print : CCLThm2_15Applied (Ecurve ℓ) (FullAnchor (Ecurve ℓ) C.K cp emb κ))
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/CentralSpec.lean:31:* **`central45_global`** (PROVED from the named comparison, `gx_step_heegner_at` and (C4)): the
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/CentralSpec.lean:345:`g_R = pointFactor a z z⁻¹ · g_T + d b_G` (`gx_step_heegner_at`, `z = α(σ)`), and a global tower
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/CentralSpecC1.lean:209:`g_R = pointFactor a z z⁻¹ · g_T + d b_G` (`gx_step_heegner_at`, `z = α(σ)`), and a global tower
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/CochainNorm.lean:60:   actual classes with the classes of the Heegner points `y_T` (the anchor of `CCLThm2_15Applied`).
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/CochainNorm.lean:63:`HeegnerPointData.NormRelations`, a PRINT of Cai–Chen–Liu Theorem 2.15 through `φ`).
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/E2ChainActual.lean:37:open ZInQ.Manuscript.RC.PrintsArith (Qbar CCLThm2_15Applied)
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/E2ChainActual.lean:137:    (print : CCLThm2_15Applied (Ecurve ℓ) (FullAnchor (Ecurve ℓ) C.K cp emb κ))
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/E2ChainGood.lean:31:open ZInQ.Manuscript.RC.PrintsArith (Qbar CCLThm2_15Applied)
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/E2ChainGood.lean:116:    (print : CCLThm2_15Applied (Ecurve ℓ) (FullAnchor (Ecurve ℓ) C.K cp emb κ))
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/GlobalCochain.lean:48:(`CCLThm2_15Applied`'s anchor); (5) the local components `hU`, `hL` (item 3 of the
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:12:`RC/PrintsArith/Heegner.lean` states the print as `CCLThm2_15Applied E Anchor :=
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:13:∃ D : HeegnerPointData E, D.NormRelations ∧ Anchor D`; it is the print only for an anchor that pins
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:27:* `CCLGenuine E K p ι := CCLThm2_15Applied E (GenuineHeegnerAnchor …)` (definition): the
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:36:* **`hnorm_of_genuine_print`** (PROVED): from `CCLGenuine` and the remaining field-level dictionary
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:40:Kinds: definitions and PROVED from the PRINT `CCLThm2_15Applied` with the anchor; the analytic
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:95:def CCLGenuine (p : CSTParam E) (ι : Qbar →ₐ[ℚ] ℂ) : Prop :=
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:96:  CCLThm2_15Applied E (GenuineHeegnerAnchor E K p ι)
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:131:`CCLGenuine`): there is an anchored datum `D` (its points are the images of CM points, `D.N = N_E`,
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:137:    (hprint : CCLGenuine E K p ι) :
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Anchor.lean:138:    ∃ D : HeegnerPointData E, GenuineHeegnerAnchor E K p ι D ∧ D.NormRelations ∧
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20DictFields.lean:11:The print `CCLThm2_15Applied` is existential in the datum, so these descriptions must be part of the
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20DictFields.lean:34:  Heegner points from the anchored print `CCLThm2_15Applied E (FullAnchor …)` alone, given the
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20DictFields.lean:444:(PROVED from the PRINT `CCLThm2_15Applied E (FullAnchor …)`): there is an anchored datum `D` with
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20DictFields.lean:452:    (hprint : CCLThm2_15Applied E (FullAnchor E K p ι κ)) :
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20DictFields.lean:453:    ∃ D : HeegnerPointData E, FullAnchor E K p ι κ D ∧ D.NormRelations ∧
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Dictionary.lean:272:(PROVED from the PRINT `CCLThm2_15Applied` and the field-level dictionary (i)–(iv), tex 2914–2936):
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Dictionary.lean:276:theorem hnorm_of_fields (D : HeegnerPointData E) (hD : D.NormRelations) {d q : ℕ}
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20HeegnerNorm.lean:16:`t` a transversal). The tree's print is `CCLThm2_15Applied E Anchor` (`PrintsArith/Heegner.lean`):
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20HeegnerNorm.lean:17:some `HeegnerPointData D` satisfying `D.NormRelations` and the anchor; the split clause of
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20HeegnerNorm.lean:25:* **`hnorm_of_normRelations`** (PROVED): `D.NormRelations`, admissibility, `q` split in `K` and
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20HeegnerNorm.lean:27:* **`hnorm_of_print`** (PROVED): from the print `CCLThm2_15Applied E Anchor`, if every anchored
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20HeegnerNorm.lean:33:Kinds: definitions and PROVED from the PRINT `CCLThm2_15Applied` and the GLUE `HeegnerTransportAt`.
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20HeegnerNorm.lean:60:clause of `D.NormRelations` at an admissible `(d, q)` with `q` split in `K`, transported by
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20HeegnerNorm.lean:62:theorem hnorm_of_normRelations (D : HeegnerPointData E) (hD : D.NormRelations) {d q : ℕ}
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20HeegnerNorm.lean:75:/-- **`hnorm` from the print** (PROVED from the PRINT `CCLThm2_15Applied`): if every anchored
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20HeegnerNorm.lean:78:theorem hnorm_of_print {Anchor : HeegnerPointData E → Prop} (hprint : CCLThm2_15Applied E Anchor)
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PairedLift.lean:19:  Heegner points: `gx_step_heegner_at` at `π⁻¹`). CAVEAT: at a finite stage ring with `ι ≠ ∅` and a
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClass.lean:44:* **`gx_step_anchored`** (PROVED from the PRINT `CCLThm2_15Applied E (FullAnchor …)`): for the
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClass.lean:473:`CCLThm2_15Applied E (FullAnchor …)`; tex 2914–2936, 3915, 4157–4172): there is an anchored datum
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClass.lean:484:    {κ : Qbar ≃ₐ[ℚ] AlgebraicClosure K} (hprint : CCLThm2_15Applied E (FullAnchor E K cp emb κ)) :
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClass.lean:485:    ∃ D : HeegnerPointData E, FullAnchor E K cp emb κ D ∧ D.NormRelations ∧
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClassMatch.lean:16:`anticyclotomicAt_of_conj`). **`gx_step_heegner_at`** (PROVED): the step identity holds with the
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClassMatch.lean:156:(PROVED from the PRINT `CCLThm2_15Applied E (FullAnchor …)` and the ELLIOT `ThetaOfDelta f`;
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClassMatch.lean:161:theorem gx_step_heegner_at {cp : CSTParam E} {emb : Qbar →ₐ[ℚ] ℂ}
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClassMatch.lean:162:    {κ : Qbar ≃ₐ[ℚ] AlgebraicClosure K} (hprint : CCLThm2_15Applied E (FullAnchor E K cp emb κ)) :
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClassMatch.lean:163:    ∃ D : HeegnerPointData E, ∃ hA : FullAnchor E K cp emb κ D, D.NormRelations ∧
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClassOf.lean:35:* **`gx_step_heegner`** (PROVED from the PRINT `CCLThm2_15Applied E (FullAnchor …)`): the step
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClassOf.lean:534:`CCLThm2_15Applied E (FullAnchor …)`; tex 2914–2936, 3080–3084, 3915, 4157–4172): there is an
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClassOf.lean:543:    {κ : Qbar ≃ₐ[ℚ] AlgebraicClosure K} (hprint : CCLThm2_15Applied E (FullAnchor E K cp emb κ)) :
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20PresClassOf.lean:544:    ∃ D : HeegnerPointData E, ∃ hA : FullAnchor E K cp emb κ D, D.NormRelations ∧
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Transport.lean:10:`H20HeegnerNorm.lean` takes the norm relation `hnorm` from the print `CCLThm2_15Applied` through the
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Transport.lean:21:  `D.NormRelations` (resp. the print) and `HeegnerTransportOn`, as in `H20HeegnerNorm.lean`.
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Transport.lean:39:Kinds: definitions and PROVED from the PRINT `CCLThm2_15Applied`; the dictionary is the GLUE.
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Transport.lean:78:theorem hnorm_of_normRelations_on (D : HeegnerPointData E) (hD : D.NormRelations) {d q : ℕ}
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Transport.lean:106:`CCLThm2_15Applied`). -/
+HEAD:ZInQKernel/Contrib/CloudB3E2Norm/H20Transport.lean:108:    (hprint : CCLThm2_15Applied E Anchor) {d q : ℕ} (σ : G) (yR yP : HeegnerPointData E → Dm)
+HEAD:ZInQKernel/Contrib/OneProof/RC/BaseZeroAssembly/Boundary45.lean:82:  `HeegnerPointData.NormRelations`, split clause; not a constraint inside `Boundary45Base`: the
+HEAD:ZInQKernel/Contrib/OneProof/RC/PrintsArith/Bundle.lean:14:statements (`KatoZetaLeaf`, `CCLThm2_15Applied`, `CJReductionData.Thm3_1KappaOne`) are not bundled:
+HEAD:ZInQKernel/Contrib/OneProof/RC/PrintsArith/Heegner.lean:37:(stated by the shared top layer, `CST.CSTThm11Split`), so `CCLThm2_15Applied` is parametric in an
+HEAD:ZInQKernel/Contrib/OneProof/RC/PrintsArith/Heegner.lean:145:def HeegnerPointData.NormRelations {E : WeierstrassCurve ℚ} (D : HeegnerPointData E) : Prop :=
+HEAD:ZInQKernel/Contrib/OneProof/RC/PrintsArith/Heegner.lean:158:    (HeegnerPointData.mk (E := E) DK N H (fun _ => 0) relGal frob).NormRelations := by
+HEAD:ZInQKernel/Contrib/OneProof/RC/PrintsArith/Heegner.lean:173:The statement is `∃ D, D.NormRelations ∧ Anchor D`: it is the print only for the anchor that pins
+HEAD:ZInQKernel/Contrib/OneProof/RC/PrintsArith/Heegner.lean:176:def CCLThm2_15Applied (E : WeierstrassCurve ℚ) (Anchor : HeegnerPointData E → Prop) : Prop :=
+HEAD:ZInQKernel/Contrib/OneProof/RC/PrintsArith/Heegner.lean:177:  ∃ D : HeegnerPointData E, D.NormRelations ∧ Anchor D
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:26:  (`hadmD`, `hsplitD`), and at every step the hypotheses of lane E2's `gx_step_heegner_at`:
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:33:  leaf's values at the stage, from `gx_step_heegner_at` and the junction `stepFactor_eq`
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:54:open ZInQ.Manuscript.RC.PrintsArith (Qbar HeegnerPointData CCLThm2_15Applied)
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:56:  gx_step_heegner_at exists_ux stageIsoA eK alphaStage alphaShap hα_of_theta groupRingTop)
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:118:  print : CCLThm2_15Applied (Ecurve ℓ) (FullAnchor (Ecurve ℓ) C.K cp emb κ)
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:261:`D` of `gx_step_heegner_at` for the actual presentation at the stage `t + 1`.
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:265:  Classical.choose (gx_step_heegner_at (Ecurve ℓ) A.hS A.hS (Set.Subset.refl A.S) (t + 1) A.sh
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:272:  (Classical.choose_spec (gx_step_heegner_at (Ecurve ℓ) A.hS A.hS (Set.Subset.refl A.S) (t + 1)
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:397:stage, from `gx_step_heegner_at` at the two places of the step (`habove` from `A.places`,
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:409:  obtain ⟨hA, -, hall⟩ := Classical.choose_spec (gx_step_heegner_at (Ecurve ℓ) A.hS A.hS
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18E2.lean:457:`gx_step_heegner_at` at the leaf's values and the local lifts from `exists_ux`.
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18LeafE2.lean:16:`gx_step_heegner_at`):
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate18LeafE2.lean:29:Kummer classes of the actual points (`gx_step_heegner_at`, from the PRINT `CCLThm2_15Applied`
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate19E2.lean:55:open ZInQ.Manuscript.RC.PrintsArith (Qbar HeegnerPointData CCLThm2_15Applied)
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate19E2.lean:57:  gx_step_heegner_at exists_ux stageIsoA eK alphaStage alphaShap hα_of_theta groupRingTop
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate19E2.lean:225:  print : CCLThm2_15Applied (Ecurve ℓ) (FullAnchor (Ecurve ℓ) C.K cp emb κ)
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate19E2.lean:386:  Classical.choose (gx_step_heegner_at (Δ := (Acoef (t + 1))ˣ) (Ecurve ℓ) (P.hS (t + 1))
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate19E2.lean:396:  have h := (Classical.choose_spec (gx_step_heegner_at (Δ := (Acoef (t + 1))ˣ) (Ecurve ℓ)
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate19E2.lean:558:stage, from `gx_step_heegner_at` at the two places of the step (`P.places`, `hanti`, `hwd`) and
+HEAD:ZInQKernel/Contrib/OneProof/RC/Wiring/CommonCoordinate19E2.lean:571:  obtain ⟨hA, -, hall⟩ := Classical.choose_spec (gx_step_heegner_at (Δ := (Acoef (t + 1))ˣ)

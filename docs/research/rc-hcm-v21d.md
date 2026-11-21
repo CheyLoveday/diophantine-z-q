@@ -1,0 +1,73 @@
+# Completed Hom lattices at the detector
+
+**Scoped stop.** The level-N integral condition is the intersection of the two endomorphism conditions through the actual cyclic quotient. At primes away from the detector, the completed enhanced Hom lattice is computed by the two integral Tate lattices. The cyclic chain calculation includes 2. For a coprime quotient the completion away from the quotient degree is the reference level order, and at primes dividing the degree the torsion kernel determines the reverse local factor. These calculations give an oriented correspondence for compatible completed reads. The pinned detector still lacks the comparison that attaches those reads to its actual supersingular points. There is no `OrientedCorrespondence` for the actual same-place reduction map.
+
+## The calculation
+
+Fix an actual reference pair at the detector. An endomorphism preserves its cyclic level subgroup exactly when it descends to an integral endomorphism of the level quotient. The same holds for Hom between two level isogenies, by finite étale kernel descent. Applied to the two level-one maximal orders, this gives the integral intersection through the specified level isogeny.
+
+For p away from q, the level-one maximal-order candidate gives geometric endomorphism rank four. Two geometric epimorphisms give rank four for the Hom group. Integral Tate rank two is an existing theorem of the tree. The geometric divisibility criterion makes the Hom action saturated modulo p, so the Hom group spans all integral Tate maps. The finite torsion coordinate then gives the completed enhanced Hom as the integral maps preserving the two chains. A generator of the actual cyclic p-primary level lifts to a primitive vector. In a basis containing that vector the chain has exponents (0,e), with (e,0) after exchanging the basis vectors. The existing split idempotents distinguish the summand with exponent e when recording a CM level label.
+
+For a coprime finite étale quotient u with reverse v and scalar composites [m], the map f ↦ vf places covariant enhanced Hom in the reference order. This is the integral representative of the rational lattice f ↦ vf/m. It lies between mR₀ and R₀ and is stable under right multiplication. At a prime supporting m write m = pⁿc with c a unit. If the labelled local forward factor α has the kernel of u on pⁿ-torsion, the range of Tₚ(v) equals the range of the integral reverse factor m/α. The denominator-cleared Hom lattice is generated on the left by m/α. Division by the central scalar m gives the inverse factor α⁻¹ in rational coordinates.
+
+At q away from the level and the quotient exponent, the order and Hom lattice reduce to the completed level-one reference order. Global maximality implies local maximality by patching a proposed larger order at one prime. The explicit division algebra applies at the detector, where q ≡ 3 mod 4 by tex 8437. Finite nonzero right lattices in it are principal, their left order is the valuation order, and an endomorphism scalar character, once transported there, factors uniquely through its residue field.
+
+## Lean declarations
+
+**VERIFIED (Lean 4.35.0).** All 14 new modules checked. The 57 audited declarations, including definitions and private helpers, use only `propext`, `Classical.choice`, and `Quot.sound`. All are in `ZInQ.Manuscript.RC.HCMV21`. [Sizing log](../../scratch/rc-hcm-v21d/log.md) · [Axiom audit](../../scratch/rc-hcm-v21d/axioms.txt)
+
+| Module | What the declarations discharge |
+|---|---|
+| `LevelIntersection` | `mem_levelHom_iff_exists_levelQuotientMap` proves unique integral descent through the actual level curve. `levelEnd_eq_intersection_of_levelQuotient` applies it to endomorphisms. Tex 8462–8476, 9136–9148. |
+| `DeuringHomRank` | `hom_basis_of_epi_both_ways` and `end_basis_of_deuring` derive the rank-four integral bases. `exists_reverse_of_etale_quotient` constructs the reverse map and its scalar composites by kernel descent. The helpers `precomposeHom` and `precomposeHom_injective` use composition with the epimorphism. Tex 8462–8476, 9273–9279. |
+| `QuotientHomLattice` | `postcomposeToEnd` and `postcomposeToEnd_mem_level` place the denominator-cleared Hom group in the source level order. `mem_postcomposeToEnd_levelHom_image_iff` gives the exact cut by the individual torsion kernel. `span_quotient_levelHom_eq_source_order` computes its completion wherever m is a unit. Tex 9265–9279. |
+| `TateHomLattice` | `span_homT_eq_top_of_basis` proves full span via divisibility. `exists_add_pow_smul_of_mem_span` and `padic_exists_nat_add_pow_mul` give approximation by an integral Hom modulo pⁿ. `span_levelHom_eq_tateLevelMaps` identifies the completed enhanced Hom lattice, using `tateLevelSubmodule` and `tateLevelSubmodule_mem_pow_smul` for the target chain. Tex 9136–9148, 9273–9279. |
+| `GeometricTateChain` | `span_homT_eq_top_of_deuring` combines the level-one and Tate rank inputs, using `nonempty_tate_basis_two`. `span_levelHom_eq_tate_quotient_chain` uses the actual reverse isogenies to construct the chains. `mem_tateRange_reverse_iff` reads the range of a reverse map for any factored exponent, using `homT_reverse_comp_eq`. `span_levelHom_eq_tate_composite_quotient_chain` and `span_levelHom_eq_span_primary` extract the primary chain directly from a composite level isogeny. Tex 9136–9148. |
+| `CyclicTateChain` | `tateLevelPreimage_of_cyclic_generator` and `exists_tateLevelPreimage_standard` put the actual cyclic level in standard split coordinates. `exists_linearEquiv_of_primitive` constructs the integral basis change. Tex 9140–9146. |
+| `ChainIdeal` | `latticeChainMaps`, `latticeChainMaps_translate` and `latticeChainMaps_eq_principal` compute the right ideal from a simultaneous basis change of both lattices. `mapsTo_latticeChainMaps_iff` identifies its left order with the stabilizer of the target chain. Tex 8462–8476, 9136–9148. |
+| `DetectorIdeal` | `completeScalarCharacter`, `completeScalarCharacter_one_tmul` and `completeScalarCharacter_factors` extend a scalar character and identify its residue embedding. `detector_order_eq_of_maximal`, `detector_rightLattice_principal` and `detector_leftOrder_eq` compute the orders and ideals in the explicit division algebra. Tex 9146–9148, 9245–9263. |
+| `CompletedMaximalOrder` | `completion_maximal_of_order_maximal` proves the local maximality of the level-one order by patching. Tex 8462–8468, 9146–9148. |
+| `GeometricRightIdeal` | `levelOrderOfEndOrder` constructs the level order in level-one coordinates and `levelOrderOfEndOrder_completion_eq` computes it where the level is a unit. `quotientRightIdeal` constructs the integral right ideal from Hom. `localLattice_quotientRightIdeal_eq_span` identifies its completion with the span of geometric maps and `localLattice_quotientRightIdeal_eq_completion` evaluates it away from the degree. Tex 8462–8476, 9273–9279. |
+| `TateIdealRead` | `mem_span_postcompose_levelHom_iff_range` computes the Hom lattice from the range of the reverse Tate map. `span_levelHom_eq_span_hom_away_level` removes the level condition where the level is a unit. `tateRange_reverse_eq_range_of_torsion_kernel` and `mem_span_postcompose_levelHom_iff_local_factor` give the principal factor from the kernel of the labelled forward map. Tex 9265–9279. |
+| `RationalTateCoordinates` | `exists_rationalTate_coordinates_of_endOrder` and `exists_rationalTate_coordinates_of_deuring` construct a split chart compatible with every endomorphism of the reference. `algHom_liftEquiv_surjective` and `baseChangeEnd_span` are the scalar-extension steps. Tex 9136–9148. |
+| `QuaternionTateRead` | `localLattice_quotientRightIdeal_eq_localRight` transports the Tate computation to quaternion coordinates through the action on reference endomorphisms, using `image_span` to transport the integral spans. The torsion kernel test supplies the input at primes supporting the quotient. `exists_adelic_quotientRightIdeal_of_localFactors` uses those primes to realize the geometric Hom ideal adelically. Tex 9273–9279. |
+| `CompletionComparison` | `rightIdeal_eq_fromAdelic_of_completions` recovers the rational ideal from its completions. `torusOrbitMap_eq_of_scaledLocalRight` identifies the labelled adelic classes even after clearing the denominator by a single rational torus element. `orientedCorrespondence_of_completedReferenceReads` handles coprime representatives and gives the conditional oriented reduction map into the inverse orbit. Tex 9150–9169, 9273–9295. |
+
+The hypotheses on these calculations are ranks, actual finite étale quotients with known kernels or scalar composites, or compatibility of linear actions on a specified torsion coordinate. The quaternion calculation uses one rational ring map for the reference. Its local chart relates two actions of that ring. The final assembly uses equality of the individual completed lattices for coprime representatives and the stabilizer at the reference. None of these checks requires surjectivity or injectivity of reduction.
+
+For the existing consumer, the required coarse equality is that `model.classes` applied to the Hom-derived right-ideal class is the point of the reduced scheme pair. It suffices to give that attachment for the base pair and its chosen coprime quotients, with the CM action tested on their torsion kernels and on the tangent line at the same place. With those data the completed reads give the oriented map for `Consumer.point_reduction_of_orientedCorrespondence`. The parametrization input to that theorem is independent of the class calculation.
+
+## Remaining inputs
+
+| Input | Owner and smallest remaining step |
+|---|---|
+| Level-one maximal order | Reading desk. The existing candidate `DeuringSupersingularEndOrder` is the per-curve endomorphism order theorem. Voight, *Quaternion Algebras*, GTM 288, Ch. 42 and the earlier Thm. 42.3.x locator **UNVERIFIED**. Deuring 1941 locator **UNVERIFIED**. The candidate gives some rational quaternion presentation for each curve. Identifying that presentation with the detector's fixed rational algebra is still required. The tree's `VoightMainThm1461` states existence at the chosen ramification set. Tex 8462–8476. |
+| Level-one geometric attachment at the reference | The lead. Supply the geometric reference and the compatible rational endomorphism frame in the detector's class model. At q, identify its completed level-one order and its actual tangent representation with the division order and scalar character used by the detector. The genuine cotangent map exists for individual endomorphisms in `ZInQKernel/Contrib/AbVarBC/Mul.lean`. The scalar representation of the chosen line and its compatibility with the actual specialized action are still required. A level-N printed dictionary would also need this attachment. The integral level condition and split chain calculations follow without a second dictionary. Tex 8462–8476, 9146–9169, 9245–9263. |
+| Same-place reduced quotients and their pointwise class | The lead. Bind the finite CM family to one good diagram with actual specialized subgroup kernels and verify the local CM generator on those kernels. Attach its Hom-derived class to the point of the chosen `PMGeometry.GeometricInput.classes`. That equivalence has an abstract `Point` type and comparisons for Hecke divisors. It gives no attachment to an individual scheme-theoretic subgroup. The earlier integral-j candidate is for the reading desk, Silverman, *The Arithmetic of Elliptic Curves*, VII.5.5, **UNVERIFIED** locator. Tex 595–598, 8209–8220, 9265–9279. |
+| Parametrization square | The lead. The existing `Consumer.point_reduction_of_orientedCorrespondence` uses the forgetful coarse class equality followed by specialization of the parametrization. Tex 8470–8479, 9279–9295. |
+
+**Count delta.** Zero new printed candidates and zero registered providers. The two candidates from the earlier work remain unverified. All new results are GLUE. The prior analytic and adelic torsors and pointwise consumer are retained.
+
+## Known issues
+
+No manuscript or source error was verified. The pointwise covariant right-ideal calculation uses the inverse convention. The quadratic sum in tex 9279–9295 permits the corresponding reindexing by the previous sum_mul_inv_eq_of_invariant. At the detector the two residue embeddings are distinguished by Frobenius. For a fixed place and CM type the argument uses the character of that one specialization.
+
+## Manuscript check
+
+| Tex lines | Step | Verdict |
+|---|---|---|
+| 595–598 | Pass from integral singular moduli to potential good reduction. | unverified (earlier candidate with unchecked locator) |
+| 2522–2536 | Use the Appendix F comparison in the odd lane. | OK |
+| 2915–2922, 8209–8220 | Use the conductor-one CM lattices and the chosen level. | gap filled (earlier analytic and ideal calculations, with the actual good diagram still to be attached) |
+| 2948–2967 | Inert specialization is supersingular. | gap filled (earlier calculation from the specialized action) |
+| 8437 | The detector prime is 3 modulo 4. | OK |
+| 8462–8476 | Realize the supersingular locus by the classes of the Eichler order. | unverified (the coarse equivalence has no attachment of the actual enhanced reference and its Hom-derived classes) |
+| 8470–8479 | Specialize the parametrization. | unverified (independent square) |
+| 9136–9146 | Use the cyclic integral chain at level primes, including 2. | gap filled (actual finite torsion preimages and chain stabilizers) |
+| 9146–9148 | Read the tangent orientation in the division order. | gap filled (unique residue factorization given the level-one order and character, pending attachment to the tangent line) |
+| 9150–9169 | Identify the selected tuple with the torus orbit. | gap filled (the previous stabilizer quotient and local patching, pending attachment of the geometric point) |
+| 9183–9194 | Normalize coprime ideal representatives. | gap filled (previous ideal CRT and inverse-lattice normalization) |
+| 9245–9263 | Use one residue sign. | gap filled (previous uniformizer parity and the residue factorization) |
+| 9265–9272 | Specialize the enhanced curves at the detector's actual place. | unverified (the common finite family of good models and its specialized CM action remain) |
+| 9273–9279 | Read the class of each actual reference quotient. | unverified (the Hom ideal and its local computation are available, pending attachment to the detector's point) |
+| 9279–9295 | Pass from the pointwise comparison to the weighted sum. | gap filled (conditional assembly and quadratic reindexing, with separate parametrization square) |
