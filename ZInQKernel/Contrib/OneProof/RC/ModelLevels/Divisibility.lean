@@ -27,6 +27,27 @@ theorem xPolynomial_dvd_over_algClosed {k : Type*} [Field k] [IsAlgClosed k]
   obtain ⟨m, rfl⟩ := hdN
   rw [mul_nsmul, ht, nsmul_zero]
 
+/-- Divisibility by a polynomial with unit leading coefficient descends along
+an injective coefficient map by the monic division algorithm. -/
+theorem dvd_of_map_dvd {A B : Type*} [CommRing A] [CommRing B]
+    (f : A →+* B) (hf : Function.Injective f) {p r : A[X]}
+    (hu : IsUnit p.leadingCoeff) (h : p.map f ∣ r.map f) : p ∣ r := by
+  let q : A[X] := hu.unit⁻¹ • p
+  have hq : q.Monic := monic_of_isUnit_leadingCoeff_inv_smul hu
+  have heq : q = C (↑(hu.unit⁻¹) : A) * p := by
+    change hu.unit⁻¹ • p = _
+    rw [Units.smul_def, C_mul']
+  have hunit : IsUnit (C (↑(hu.unit⁻¹) : A)) :=
+    ((hu.unit⁻¹).isUnit).map C
+  have hk' : q.map f ∣ r.map f := by
+    rw [heq, Polynomial.map_mul]
+    have hu' : IsUnit ((C (↑(hu.unit⁻¹) : A)).map f) :=
+      hunit.map (Polynomial.mapRingHom f)
+    exact hu'.mul_left_dvd.mpr h
+  have ha := (map_dvd_map f hf hq).mp hk'
+  rw [heq] at ha
+  exact hunit.mul_left_dvd.mp ha
+
 /-- Over a domain, test divisibility over an algebraic closure of its fraction
 field and descend by division with a monic normalization of the divisor.
 This applies in particular on the universal short locus at invertible level. -/
@@ -39,27 +60,12 @@ theorem xPolynomial_dvd {A : Type*} [CommRing A] [IsDomain A]
     (algebraMap (FractionRing A) k).injective.comp
       (IsFractionRing.injective A (FractionRing A))
   have hd : IsUnit (d : A) := isUnit_of_dvd_unit (Nat.cast_dvd_cast hdN) hN
-  have hu := isUnit_leadingCoeff_xPolynomial W hd
-  let q : A[X] := hu.unit⁻¹ • xPolynomial W d
-  have hq : q.Monic := monic_of_isUnit_leadingCoeff_inv_smul hu
-  have heq : q = C (↑(hu.unit⁻¹) : A) * xPolynomial W d := by
-    change hu.unit⁻¹ • xPolynomial W d = _
-    rw [Units.smul_def, C_mul']
-  have hunit : IsUnit (C (↑(hu.unit⁻¹) : A)) :=
-    ((hu.unit⁻¹).isUnit).map C
-  have hk : xPolynomial (W.map f) d ∣ xPolynomial (W.map f) N :=
-    xPolynomial_dvd_over_algClosed (W.map f) (by simpa using hN.map f) hdN
-  have hk' : q.map f ∣ (xPolynomial W N).map f := by
-    rw [heq, Polynomial.map_mul]
-    have hu' : IsUnit ((C (↑(hu.unit⁻¹) : A)).map f) :=
-      hunit.map (Polynomial.mapRingHom f)
-    apply hu'.mul_left_dvd.mpr
-    simpa only [map_xPolynomial] using hk
-  have ha := (map_dvd_map f hf hq).mp hk'
-  rw [heq] at ha
-  exact hunit.mul_left_dvd.mp ha
+  refine dvd_of_map_dvd f hf (isUnit_leadingCoeff_xPolynomial W hd) ?_
+  rw [← map_xPolynomial, ← map_xPolynomial]
+  exact xPolynomial_dvd_over_algClosed (W.map f) (by simpa using hN.map f) hdN
 
 #print axioms xPolynomial_dvd_over_algClosed
+#print axioms dvd_of_map_dvd
 #print axioms xPolynomial_dvd
 
 end WeierstrassCurve.ModelLevels
