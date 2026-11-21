@@ -136,7 +136,7 @@ theorem PlacedCuspLists.two_mem_receiving (h2 : (2 : 𝓞 F) ∈ v.asIdeal) :
 
 /-- Attach one representation per distinct source. All its old degrees
 refer to that same representation via the inventory's source index. -/
-def PlacedCuspLists.attachmentsOfCarayol (hLi : Li1975OldNewIndependenceWeightTwo)
+def PlacedCuspLists.attachmentsOfCarayol (hLi : OldNewIndependenceWeightTwo)
     (h2 : (2 : 𝓞 F) ∈ v.asIdeal) (hCarayol : CarayolRefold.CarayolThmAFrob) :
     ∀ s, SourceAttachment ((P.inventory T hLi).sourceLevel s) (chooseFrob frobeniusExists)
       ((P.inventory T hLi).source s) := by
