@@ -182,6 +182,46 @@ noncomputable def exactOrderBaseChange (W : WeierstrassCurve A) [W.IsElliptic]
     B ⊗[A] ExactOrderAlgebra W hN ≃ₐ[B] ExactOrderAlgebra (W.map (algebraMap A B)) hNB :=
   exactOrderBaseChangeOfRestriction W hN fun _ hd _ => restrictAffineTorsion_baseChange W hN hd
 
+/-- The abscissa root on both torsion charts. -/
+noncomputable def torsionChartX (W : WeierstrassCurve A) (n : ℕ) :
+    AffineTorsionAlgebra W n :=
+  (AdjoinRoot.of _ (AdjoinRoot.root (W.preΨ' n)), AdjoinRoot.root (branchPolynomial W n))
+
+/-- The ordinate root on the quadratic chart, extended by zero on the
+two-torsion branch. Only the quadratic component is used for exact orders
+greater than two. -/
+noncomputable def torsionChartY (W : WeierstrassCurve A) (n : ℕ) :
+    AffineTorsionAlgebra W n := (AdjoinRoot.root (unramifiedOrdinate W n), 0)
+
+theorem affineTorsionBaseChange_x (W : WeierstrassCurve A) (n : ℕ) :
+    affineTorsionAlgebraBaseChange (B := B) W n (1 ⊗ₜ[A] torsionChartX W n) =
+      torsionChartX (W.map (algebraMap A B)) n := by
+  rw [affineTorsionBaseChange_includeRight]
+  apply Prod.ext
+  · change AdjoinRoot.map (specializeAbscissa (B := B) W n).toRingHom _ _
+        (dvd_of_eq (specializeOrdinate_eq W n).symm) (AdjoinRoot.of _ (AdjoinRoot.root (W.preΨ' n))) =
+      AdjoinRoot.of _ (AdjoinRoot.root ((W.map (algebraMap A B)).preΨ' n))
+    rw [AdjoinRoot.map_of]
+    exact congrArg (AdjoinRoot.of _) (specializeAbscissa_root W n)
+  · change AdjoinRoot.map (algebraMap A B) _ _ (dvd_of_eq (specializeBranch_eq W n).symm)
+        (AdjoinRoot.root (branchPolynomial W n)) = _
+    exact AdjoinRoot.map_root _ _ _ _
+
+theorem affineTorsionBaseChange_y (W : WeierstrassCurve A) (n : ℕ) :
+    affineTorsionAlgebraBaseChange (B := B) W n (1 ⊗ₜ[A] torsionChartY W n) =
+      torsionChartY (W.map (algebraMap A B)) n := by
+  rw [affineTorsionBaseChange_includeRight]
+  apply Prod.ext
+  · change AdjoinRoot.map (specializeAbscissa (B := B) W n).toRingHom _ _
+        (dvd_of_eq (specializeOrdinate_eq W n).symm) (AdjoinRoot.root (unramifiedOrdinate W n)) = _
+    exact AdjoinRoot.map_root _ _ _ _
+  · exact map_zero (AdjoinRoot.mapAlgHom (Algebra.ofId A B) _ _
+      (dvd_of_eq (specializeBranch_eq W n).symm))
+
+#print axioms torsionChartX
+#print axioms torsionChartY
+#print axioms affineTorsionBaseChange_x
+#print axioms affineTorsionBaseChange_y
 #print axioms specializeAbscissa_root
 #print axioms specializeOrdinate_eq
 #print axioms specializeBranch_eq
