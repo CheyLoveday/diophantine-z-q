@@ -10,7 +10,7 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the twenty-two statements of the chapter in the
+The minimal height hypothesis is proved from the twenty-one statements of the chapter in the
 project's assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof
 is the project-authored note `docs/research/h-trust.md`.
 
@@ -148,15 +148,6 @@ Silverman, Proposition 1.1 (not read).
 G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.
 Proc. Cambridge Philos. Soc. 180 (2026), 607–641, Proposition 2.7, p. 615, with the class number
 defined on p. 613; the manuscript's citation (`diophantine_zq.tex`, lines 588–593).
-
-## Inertia criterion
-
-A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of abelian varieties*,
-Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.3, p. 405, with semistable reduction as defined in
-§3, p. 405; the proofs of Lemma 5.5 (p. 411) and Proposition 6.1 (pp. 412–413) apply it at the
-separable closure. Read by an AI model (2026-11-17). The manuscript cites the paper at
-`diophantine_zq.tex` line 816 and in its bibliography (lines 11077–11080); the uncited sentence is
-at lines 817–818.
 
 ## Degree of singular moduli
 

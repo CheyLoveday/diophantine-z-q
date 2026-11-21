@@ -1,9 +1,10 @@
-import ZInQKernel.OneProof.H.TailZ99
+import ZInQKernel.OneProof.H.TailZ100
 import ZInQKernel.MainGreenTao
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRCGenuineFinal
 import ZInQKernel.Contrib.OneProof.CasselsTatePairing
 import ZInQKernel.Contrib.RC53Assist.BCDTPrint.Descent
+import ZInQKernel.Contrib.OneProof.SilvermanRankOne
 
 /-!
 # The whole proof in one theorem
@@ -13,15 +14,13 @@ the development fork, and from nothing else: the open bundles of the H chain, th
 converse, `ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine`, `diophantine_zq.tex` lines 1005–1011, over the genuine
 `Sel_{2^∞}(E_ℓ/ℚ)`), the Cassels–Tate pairing on the curves `E_ℓ` of Theorem 5.3
 (`ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves`, the printed input the manuscript cites for its Lemma 5.4 at
-`diophantine_zq.tex` L1079–1081; Lemma 5.4 itself is proved from it), BCDT Theorem A as printed
-(`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`, which implies the project's
-`ZInQ.Manuscript.PoleS12.BCDTThmA` by `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed`) and a consequence of BCDT Theorem A and
-Kolyvagin's Theorem 1 together (`ZInQ.Manuscript.PoleS12.KolyvaginThm1`, through Shimura's construction and Faltings' isogeny theorem).
+`diophantine_zq.tex` L1079–1081; Lemma 5.4 itself is proved from it), and the forward rank-one implication from
+Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Appendix C, Evidence 16.5.5, pp. 452–453.
 Pole completeness PC (`ZInQ.PoleCompleteness`, Theorem 5.2, lines 1001–1004, for the manuscript's pole polynomial) is
 proved from these by the manuscript's descent (lines 1019–1121):
-`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`
-(`Contrib/OneProof/CasselsTatePairing.lean`, over `Contrib/OneProof/PoleCompletenessFromRCGenuineFinal.lean`; fork
-issue #83), with Lemma 5.4 (`Contrib/OneProof/SelmerCorankFam.lean`, `Contrib/OneProof/Lemma54FromCasselsTate.lean`),
+`ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne`
+(`Contrib/OneProof/SilvermanRankOne.lean`, fork issue #83), with Lemma 5.4
+(`Contrib/OneProof/SelmerCorankFam.lean`, `Contrib/OneProof/Lemma54FromCasselsTate.lean`),
 the matrix construction, the local images, the 2-descent, Mordell–Weil for `E_ℓ` and the Kummer identification
 `#Sel₂(E_ℓ/ℚ) = #SelM ℓ` proved.
 It composes the compiled H chain with the headline
@@ -228,6 +227,11 @@ Five outside discharges (fork PRs #152, #156, #153, #155, #157) proved `neronSch
 `y3ToP1j` from `y3FullThreeRepZ30` and `deligneCanonicalModelY3EveryPrint` (`Y3P1j.y3ToP1j_of_printed_moduli`); no
 new leaf. `OpenResearchLeaves73` (`TailZ99`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open92`
 the new top.
+An outside discharge (fork PR #177) proved Silverberg–Zarhin's Theorem 3.3 outright
+(`SZRaynaud.silverbergZarhinThm33_proof`, `Contrib/OneProof/SZThm33/`); no new leaf. `OpenResearchLeaves74`
+(`TailZ100`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open93` the new top (25 → 24 assumptions).
+The same PR derives Theorem 3.5 from the semistable reduction theorem (`SZRaynaud.silverbergZarhinThm35_of_sz34`);
+that swap is not folded, pending a reading of SZ Thm. 3.4 / SGA 7 IX 3.6, so `silverbergZarhinThm35` stays a leaf.
 
 bcdt-print replaced the frozen `ZInQ.Manuscript.PoleS12.BCDTThmA` by BCDT Theorem A as printed
 (`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`: condition (2) of Breuil–Conrad–Diamond–Taylor,
@@ -236,28 +240,30 @@ leaf, rated LEAF): the hypothesis is `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA
 leaf, Lean proving the trivial nebentypus (the Hecke relation against the recurrence of the curve's
 coefficients at good primes, Dirichlet's theorem for the diamond operators, then `Γ₀(N)`).
 
+The forward-rank fold replaces the two root arguments `hB` and `hK` with `hRank`, the rank-one line of
+Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C, Evidence 16.5.5, p. 453.
+Only Mordell–Weil rank one is used here; the pole proof does not use the finite-Sha conclusion.
+Theorem 5.3, the Cassels–Tate pairing, and the H bundles are unchanged (26 → 25 assumptions).
+
 The hypotheses of `frozenTarget` are therefore exactly the open statements. Discharging one means replacing a field or
 hypothesis by its proof; the theorem's statement then loses that hypothesis.
 -/
 
 namespace ZInQ.OneProof
 
-/-- **Theorem 1.1, from every statement still open:** the open H bundles, the manuscript's Theorem 5.3 (the restricted
-converse, the manuscript's own theorem (not a printed leaf)), the Cassels–Tate pairing on the curves `E_ℓ`, the printed
-leaf BCDT Theorem A, and a consequence of it and Kolyvagin's Theorem 1 together (through Shimura's construction and Faltings' isogeny theorem). Pole
-completeness PC (the manuscript's Theorem 5.2) is proved from the last four, with Lemma 5.4 proved from the pairing
-(`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`). -/
+/-- **Theorem 1.1, from every statement still open:** the open H bundles, the manuscript's Theorem 5.3 over
+its genuine Selmer condition, the Cassels–Tate pairing on the curves `E_ℓ`, and Silverman's rank-one forward
+implication (Appendix C, Evidence 16.5.5). Pole completeness (Theorem 5.2) uses only these last three inputs. -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves73) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves28)
+    (r : HDec.HSyn.OpenResearchLeaves74) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves28)
     (hRC : ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine)
     (hCT : ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves)
-    (hB : ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted)
-    (hK : ZInQ.Manuscript.PoleS12.KolyvaginThm1) :
+    (hRank : ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne) :
     ZInQ.FrozenTarget :=
   ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness
-    (HDec.HSyn.sixContactMin_of_open92 r t l)
-    (ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing hRC hCT
-      (ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed hB) hK)
+    (HDec.HSyn.sixContactMin_of_open93 r t l)
+    (ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne hRC hCT
+      (ZInQ.Manuscript.PoleS12.SilvermanRank.rankOne_of_aec hRank))
 
 end ZInQ.OneProof
 
