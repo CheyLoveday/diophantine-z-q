@@ -1,0 +1,52 @@
+Serial Lake builds at a59ea33fe90ba2b0aa39f896137097180aad5f6e with the retirement applied in two steps.
+Each target ran separately under MemoryMax 60G. Lake validated reused build artifacts.
+
+The first standalone ChainCond build reported missing OfNat and Dvd instances for ℕ.
+The standalone module uses Lean's Nat spelling and passed on retry.
+
+PASS ZInQKernel.Contrib.OneProof.RC.PrintsArith.Basic
+PASS ZInQKernel.Contrib.OneProof.RC.PrintsArith.CornutJetchev
+FAIL ZInQKernel.Contrib.OneProof.RC.Wiring.ChainCond
+PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Pin
+PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Theta
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassMatch
+PASS ZInQKernel.Contrib.CloudB3E1RingClass.GenuineMovingData
+PASS ZInQKernel.Contrib.OneProof.RC.CCLUnitIndex.Units
+PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19E2
+PASS ZInQKernel.Contrib.OneProof.RC.Wiring.ChainCond
+PASS ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Twist
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Transport
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Dictionary
+PASS ZInQKernel.Contrib.CloudB3RC53.Prints.CST
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Anchor
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20DictFields
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20AmbTors
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Frob
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Assembly
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20FrobArtin
+PASS ZInQKernel.Contrib.CloudB3E2Norm.RingClassMono
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20PresClass
+PASS ZInQKernel.Contrib.CloudB3E2Norm.DivisionPointsF
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassOf
+PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate16Frob
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassMatch
+PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Pin
+PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Theta
+PASS ZInQKernel.Contrib.CloudB3E1RingClass.GenuineMovingData
+PASS ZInQKernel.Contrib.OneProof.RC.CCLUnitIndex.Units
+PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19E2
+PASS ZInQKernel.Contrib.CloudB3E2Norm.CentralSpec
+PASS ZInQKernel.Contrib.CloudB3E2Norm.E2ChainActual
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20AmbientS
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20PairedLift
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20ThetaMono
+PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Untwisted
+PASS ZInQKernel.Contrib.CloudB3E2Norm.HeegnerRCBridge
+PASS ZInQKernel.Contrib.OneProof.RC.HeegnerAnchor.Comparison
+PASS ZInQKernel.Contrib.OneProof.RC.O7Actual.Reduction
+PASS ZInQKernel.Contrib.OneProof.RC.PrintsArith.Bundle
+PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Leaf
+PASS ZInQKernel.Contrib.CloudB3E1RingClass.SupportReq
+
+PASS staged axiom checks, 20 declarations
