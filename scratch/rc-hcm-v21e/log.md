@@ -1,0 +1,8 @@
+# Reference attachment and parametrization
+
+**VERIFIED (inventory).** The predecessor supplies geometric Hom lattices, the level intersection, maximality of the completed order, scalar factorization through the residue of the explicit local division order, and conditional oriented correspondence. Work here concerns the single reference and the independent parametrization square.
+
+- `AppF/Prints.lean` defines norm-form ramification and `VoightMainThm1461`. Its Lean type asserts existence only. The header describes the printed classification as existence and uniqueness. Neither the project search nor the Mathlib search located a proof of uniqueness by quaternion ramification or of Hasse–Minkowski.
+- `HCMV21/GeometricOrders.lean` supplies the existing level-one Deuring candidate. Its quaternion presentation is existential. `PMGeometry/Geometry.lean` supplies ramification for the detector's pinned presentation, but its class equivalence is on coarse point sets with Hecke-divisor comparisons.
+- `AbVarBC/Mul.lean` provides the actual integral-linear cotangent map on the local ring at the origin. It records the sum law on cotangent spaces as part of the explanation of `CotangentMulN`, without a provider for the sum law there.
+- Tex 8462–8479 uses the rational quaternion algebra and the good special-fibre parametrization. Tex 9136–9169 uses local orientations and the integral-unit stabilizer. Tex 9265–9295 first identifies individual reduced enhanced curves, then evaluates the parametrization at the same place.
