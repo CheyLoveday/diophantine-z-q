@@ -2,6 +2,7 @@ module
 
 public import ZInQKernel.Contrib.OneProof.RC.ModelInvariants.Grading
 public import ZInQKernel.Contrib.OneProof.RC.ModelInvariants.IntegralPoints
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
 public import Mathlib.Tactic.Ring
 
 /-! # Geometric points in the presence of a homogeneous unit -/
@@ -160,6 +161,146 @@ theorem degreeZero_restrict_surjective {d : ℤ} {δ : Sˣ} (hd : d ≠ 0)
   obtain ⟨F, hF⟩ := liftIntegralPoint hinj f
   exact ⟨F.comp q, hF⟩
 
+private theorem units_zpow_surjective (n : ℤ) (hn : n ≠ 0) (w : kˣ) :
+    ∃ u : kˣ, u ^ n = w := by
+  obtain ⟨t, ht⟩ := IsAlgClosed.exists_pow_nat_eq (w : k) (n := n.natAbs) (by omega)
+  have ht0 : t ≠ 0 := by
+    intro hzero
+    rw [hzero, zero_pow (by omega)] at ht
+    exact w.ne_zero ht.symm
+  let u := Units.mk0 t ht0
+  have hu : u ^ n.natAbs = w := Units.ext ht
+  by_cases h : 0 ≤ n
+  · exact ⟨u, by
+      have hi : (n.natAbs : ℤ) = n := by omega
+      rw [← hi, zpow_natCast]
+      exact hu⟩
+  · exact ⟨u⁻¹, by
+      have hi : -(n.natAbs : ℤ) = n := by omega
+      rw [← hi, zpow_neg, inv_zpow, inv_inv, zpow_natCast]
+      exact hu⟩
+
+/-- Two geometric points are in the same fibre of the degree-zero quotient exactly when
+their values on homogeneous elements differ by a single multiplicative scaling. -/
+theorem degreeZero_restrict_eq_iff {d : ℤ} {δ : Sˣ} (hd : d ≠ 0)
+    (hδ : (δ : S) ∈ grading d) (f g : S →ₐ[R] k) :
+    f.comp (degreeZero grading).val = g.comp (degreeZero grading).val ↔
+      ∃ u : kˣ, ∀ (i : ℤ) (x : S), x ∈ grading i → g x = (↑(u ^ i) : k) * f x := by
+  classical
+  constructor
+  · intro he
+    have hagree {x : S} (hx : x ∈ grading 0) : f x = g x :=
+      AlgHom.congr_fun he ⟨x, hx⟩
+    obtain ⟨m, ε, hm, hε⟩ := positive_homogeneousUnit grading hd hδ
+    have unit_nonzero (F : S →ₐ[R] k) (v : Sˣ) : F (v : S) ≠ 0 :=
+      (Units.map F.toMonoidHom v).ne_zero
+    have zeros_agree {i : ℤ} {x : S} (hx : x ∈ grading i) : f x = 0 ↔ g x = 0 := by
+      have hweight : x ^ m * (↑(ε ^ (-i)) : S) ∈ grading 0 := by
+        have he : m • i + (-i) * (m : ℤ) = 0 := by
+          rw [nsmul_eq_mul]
+          ring
+        exact he ▸ SetLike.mul_mem_graded (SetLike.pow_mem_graded m hx)
+          (homogeneousUnit_zpow_mem grading hε (-i))
+      have hc := hagree hweight
+      simp only [map_mul, map_pow] at hc
+      have hz (F : S →ₐ[R] k) :
+          F x ^ m * F (↑(ε ^ (-i)) : S) = 0 ↔ F x = 0 := by
+        rw [mul_eq_zero, or_iff_left (unit_nonzero F _), pow_eq_zero_iff (Nat.ne_of_gt hm)]
+      rw [← hz f, ← hz g, hc]
+    have opposite {i : ℤ} {x : S} (hx : x ∈ grading i) (hn : f x ≠ 0) :
+        ∃ y : S, y ∈ grading (-i) ∧ f y ≠ 0 := by
+      refine ⟨x ^ (m - 1) * (↑(ε ^ (-i)) : S), ?_, ?_⟩
+      · have he : (m - 1) • i + (-i) * (m : ℤ) = -i := by
+          rw [nsmul_eq_mul, Nat.cast_sub (by omega : 1 ≤ m), Nat.cast_one]
+          ring
+        have hh := SetLike.mul_mem_graded (SetLike.pow_mem_graded (m - 1) hx)
+          (homogeneousUnit_zpow_mem grading hε (-i))
+        rwa [he] at hh
+      · rw [map_mul, map_pow]
+        exact mul_ne_zero (pow_ne_zero _ hn) (unit_nonzero f _)
+    have ratios_same {i : ℤ} {x z : S} (hx : x ∈ grading i) (hz : z ∈ grading i)
+        (hfx : f x ≠ 0) (hfz : f z ≠ 0) : g x / f x = g z / f z := by
+      obtain ⟨y, hy, hfy⟩ := opposite hx hfx
+      have hgy := mt (zeros_agree hy).2 hfy
+      have prod_eq (x : S) (hx : x ∈ grading i) : f x * f y = g x * g y := by
+        have hh := SetLike.mul_mem_graded hx hy
+        rw [add_neg_cancel] at hh
+        simpa only [map_mul] using hagree hh
+      apply (div_eq_div_iff hfx hfz).2
+      apply mul_right_cancel₀ hgy
+      calc
+        (g x * f z) * g y = (g x * g y) * f z := by ring
+        _ = (f x * f y) * f z := by rw [← prod_eq x hx]
+        _ = (f z * f y) * f x := by ring
+        _ = (g z * g y) * f x := by rw [prod_eq z hz]
+        _ = (g z * f x) * g y := by ring
+    let degrees : AddSubgroup ℤ :=
+      { carrier := {i | ∃ x : S, x ∈ grading i ∧ f x ≠ 0}
+        zero_mem' := ⟨1, SetLike.one_mem_graded grading, by simp⟩
+        add_mem' := by
+          rintro a b ⟨x, hx, hfx⟩ ⟨y, hy, hfy⟩
+          exact ⟨x * y, SetLike.mul_mem_graded hx hy, by
+            rw [map_mul]; exact mul_ne_zero hfx hfy⟩
+        neg_mem' := by
+          rintro i ⟨x, hx, hfx⟩
+          exact opposite hx hfx }
+    let witness (i : degrees) : S :=
+      (show ∃ x : S, x ∈ grading i.val ∧ f x ≠ 0 from i.property).choose
+    have hw (i : degrees) : witness i ∈ grading i.val ∧ f (witness i) ≠ 0 :=
+      (show ∃ x : S, x ∈ grading i.val ∧ f x ≠ 0 from i.property).choose_spec
+    let ratio (i : degrees) : kˣ :=
+      Units.mk0 (g (witness i) / f (witness i))
+        (div_ne_zero (mt (zeros_agree (hw i).1).2 (hw i).2) (hw i).2)
+    have hratio (i : degrees) {x : S} (hx : x ∈ grading i.val) (hfx : f x ≠ 0) :
+        (ratio i : k) = g x / f x :=
+      ratios_same (hw i).1 hx (hw i).2 hfx
+    let χ : degrees →+ Additive kˣ :=
+      { toFun := fun i => Additive.ofMul (ratio i)
+        map_zero' := by
+          change ratio 0 = 1
+          apply Units.ext
+          rw [hratio 0 (SetLike.one_mem_graded grading) (x := 1) (by simp)]
+          simp
+        map_add' := fun a b => by
+          change ratio (a + b) = ratio a * ratio b
+          apply Units.ext
+          change (ratio (a + b) : k) = (ratio a : k) * (ratio b : k)
+          rw [hratio (a + b) (SetLike.mul_mem_graded (hw a).1 (hw b).1)
+            (x := witness a * witness b) (by rw [map_mul]; exact mul_ne_zero (hw a).2 (hw b).2),
+            map_mul, map_mul, mul_div_mul_comm]
+          rfl }
+    let : IsAddCyclic degrees := degrees.isAddCyclic
+    obtain ⟨e, hegen⟩ := IsAddCyclic.exists_generator (α := degrees)
+    have hene : e.val ≠ 0 := by
+      intro hzero
+      have he0 : e = 0 := Subtype.ext hzero
+      let v : degrees := ⟨d, ⟨δ, hδ, unit_nonzero f δ⟩⟩
+      obtain ⟨j, hj⟩ := AddSubgroup.mem_zmultiples_iff.mp (hegen v)
+      rw [he0, smul_zero] at hj
+      exact hd (congrArg Subtype.val hj.symm)
+    obtain ⟨u, hu⟩ := units_zpow_surjective e.val hene (ratio e)
+    have hscale (a : degrees) : ratio a = u ^ a.val := by
+      obtain ⟨j, hj⟩ := AddSubgroup.mem_zmultiples_iff.mp (hegen a)
+      have hj' : a.val = j * e.val := by
+        rw [← hj]
+        rfl
+      rw [hj', mul_comm, zpow_mul, hu]
+      have hχ := map_zsmul χ j e
+      rw [hj] at hχ
+      exact congrArg Additive.toMul hχ
+    refine ⟨u, fun i x hx => ?_⟩
+    by_cases hfx : f x = 0
+    · rw [(zeros_agree hx).1 hfx, hfx, mul_zero]
+    · let a : degrees := ⟨i, ⟨x, hx, hfx⟩⟩
+      have hh := hratio a hx hfx
+      rw [hscale] at hh
+      exact ((eq_div_iff hfx).1 hh).symm
+  · rintro ⟨u, hu⟩
+    exact AlgHom.ext fun x => by
+      change f x = g x
+      rw [hu 0 (x : S) x.property, zpow_zero]
+      simp
+
 end Points
 
 #print axioms homogeneousUnit_inv_mem
@@ -167,5 +308,7 @@ end Points
 #print axioms positive_homogeneousUnit
 #print axioms degreeZero_not_in_span
 #print axioms degreeZero_restrict_surjective
+#print axioms units_zpow_surjective
+#print axioms degreeZero_restrict_eq_iff
 
 end RC.ModelInvariants
