@@ -73,3 +73,7 @@ ZInQKernel/Contrib/OneProof/RC/HCMV21/TateIdealRead.lean
 ZInQKernel/Contrib/OneProof/RC/EvenJoin/PlacedRamifiedNewvector.lean
 ZInQKernel/Contrib/OneProof/RC/EvenJoin/PlacedWhittakerEvaluation.lean
 ZInQKernel/Contrib/OneProof/RC/EvenJoin/WhittakerEvaluation.lean
+ZInQKernel/Contrib/OneProof/RC/EvenJoin/LocalReciprocitySign.lean
+ZInQKernel/Contrib/OneProof/RC/EvenJoin/LocalWeilReciprocity.lean
+ZInQKernel/Contrib/OneProof/RC/EvenJoin/PlacedLocalCharacter.lean
+ZInQKernel/Contrib/OneProof/RC/EvenJoin/PlacedRamifiedFactor.lean

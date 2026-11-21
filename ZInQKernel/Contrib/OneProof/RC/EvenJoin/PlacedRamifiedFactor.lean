@@ -229,7 +229,7 @@ variable {A : ∀ b : EvenBlock U, CuspBlockExpansion (evenBlockLevel P b)
   (evenBlockSeries P hS i b)}
 variable [NeZero (movingLevel P U)]
 variable (D : PlacedCuspLists A (evenBlockLevel_dvd (P := P)) v)
-variable (hIndependent : Li1975OldNewIndependenceWeightTwo)
+variable (hIndependent : OldNewIndependenceWeightTwo)
 variable (H : D.sourceAttachments (hS := hS) hIndependent)
 variable {p : ℕ} [Fact p.Prime] {Q : LocalPair p}
 

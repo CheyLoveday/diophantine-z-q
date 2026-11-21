@@ -80,3 +80,7 @@ ZInQKernel.OneProof.Discharges
 ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedRamifiedNewvector
 ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedWhittakerEvaluation
 ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation
+ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalReciprocitySign
+ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity
+ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocalCharacter
+ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedRamifiedFactor
