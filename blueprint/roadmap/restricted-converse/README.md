@@ -65,3 +65,11 @@ one hypothesis, `hRC`.
 - [The remaining hypotheses](remaining-hypotheses.md)
 - [The opening reduction: root number $-1$](opening-reduction.md)
 - [Theorem 5.3 from the cited results and the remaining hypotheses](reduction.md)
+
+## The proof, section by section
+
+One page per numbered statement of the manuscript that a Lean declaration states. Each page says what
+it assumes, how the Lean statement differs from the manuscript's, and whether the reduction of
+Theorem 5.3 takes the statement from that page's theorem or from a field of the remaining hypotheses.
+
+- [Section 7: the even and odd frameworks](section-7/README.md)
