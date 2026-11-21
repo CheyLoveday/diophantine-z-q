@@ -92,8 +92,9 @@ cuspidal newforms with `d * level(f) ∣ N` are linearly independent in
 Theorem 5, p. 151 (their `k` is classical weight `2k`). W.-C. Li, Math.
 Ann. 212 (1975), uses this independence (pp. 302, 309) without proving it;
 Li's Theorem 5 (p. 298) is strong multiplicity one, not this statement.
-The Diamond–Shurman and Atkin–Lehner prints have not been read against the
-page. The one statement read is W. Stein, *Modular Forms: A Computational
+Atkin–Lehner Theorem 5 (p. 151, proof pp. 151–152) was read on the page and
+covers trivial character; Diamond–Shurman has not been read. For general
+character the one statement read is W. Stein, *Modular Forms: A Computational
 Approach* (AMS GSM 79, 2007), Theorem 9.4, §9.2 (author's copy, numbering
 not checked against the print): `S_k(Γ₁(N))` is the direct sum over
 `M ∣ N` and `d ∣ N/M` of `α_d(S_k(Γ₁(M))^new)`; the basis follows by choosing
