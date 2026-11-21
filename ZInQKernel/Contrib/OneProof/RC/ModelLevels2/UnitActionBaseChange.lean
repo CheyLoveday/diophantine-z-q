@@ -45,8 +45,35 @@ theorem exactOrderUnitAutBaseChange_tmul [IsDomain A] (a : (ZMod (n + 3))ˣ)
       exactOrderBaseChange (B := B) W hN (b ⊗ₜ[A] (exactOrderUnitAut W hN a) x) := by
   simp [exactOrderUnitAutBaseChange, AlgEquiv.autCongr_apply, AlgEquiv.trans_apply]
 
+set_option maxRecDepth 2048 in
+set_option backward.isDefEq.respectTransparency false in
+/-- Over a coefficient domain the transported action agrees with the
+Jacobian-formula action defined directly on the specialized cover. -/
+theorem exactOrderUnitAutBaseChange_eq [IsDomain A] [IsDomain B] (a : (ZMod (n + 3))ˣ) :
+    let V := W.map (algebraMap A B)
+    let hB : IsUnit ((n + 3 : ℕ) : B) := by
+      simpa only [map_natCast] using hN.map (algebraMap A B)
+    exactOrderUnitAutBaseChange (B := B) W hN a = exactOrderUnitAut V hB a := by
+  intro V hB
+  have h := exactOrderUnitHom_transition_coordinates (B := B) W hN a
+  apply AlgEquiv.coe_toAlgHom_injective
+  apply exactOrder_algHom_ext
+  · rw [← exactOrderTransition_x (B := B) W hN]
+    change exactOrderUnitAutBaseChange (B := B) W hN a
+        (exactOrderTransition (B := B) W hN (generatorX W hN)) =
+      exactOrderUnitHom V hB a (exactOrderTransition (B := B) W hN (generatorX W hN))
+    refine Eq.trans ?_ h.1
+    exact exactOrderUnitAutBaseChange_tmul W hN a (1 : B) (generatorX W hN)
+  · rw [← exactOrderTransition_y (B := B) W hN]
+    change exactOrderUnitAutBaseChange (B := B) W hN a
+        (exactOrderTransition (B := B) W hN (generatorY W hN)) =
+      exactOrderUnitHom V hB a (exactOrderTransition (B := B) W hN (generatorY W hN))
+    refine Eq.trans ?_ h.2
+    exact exactOrderUnitAutBaseChange_tmul W hN a (1 : B) (generatorY W hN)
+
 #print axioms exactOrderUnitAutBaseChange
 #print axioms exactOrderUnitAutBaseChange_tmul
+#print axioms exactOrderUnitAutBaseChange_eq
 
 end ScalarExtension
 
