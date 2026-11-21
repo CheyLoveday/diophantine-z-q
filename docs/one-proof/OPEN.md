@@ -149,7 +149,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`silverbergZarhinThm35`](#silverbergzarhinthm35) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
 | [`hCT`](#hct) | frozenTarget | published | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) |
-| [`hRank`](#hrank) | frozenTarget | published | GLUE | pending-reading |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | open |
+| [`hRank`](#hrank) | frozenTarget | consequence | GLUE | pending-reading |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | open |
 
 ## The hypotheses
 
@@ -494,8 +494,8 @@ ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves
 
 ### hRank
 
-* Argument `hRank` of `frozenTarget`; kind **published**, strict **GLUE**; flag: AI-READ of the rank-one display and its surrounding qualifications; pending a human statement check of the Hasse–Weil L-function interface..
-* Source: J. H. Silverman, The Arithmetic of Elliptic Curves, 2nd ed., Springer GTM 106 (2009), Appendix C, Evidence 16.5.5, pp. 452–453, rank-one display on p. 453; the statement uses only the Mordell–Weil rank conclusion.
+* Argument `hRank` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: pending reading: the statement stays Silverman's rank-one line, proved from Miller Thm 4.4 by ForwardRankLiterature.silvermanRankOne_of_miller; the docs desk's reading of Miller is pending.
+* Source: Miller, LMS J. Comput. Math. 14 (2011), Thm 4.4, pp. 336-337, via ForwardRankLiterature.silvermanRankOne_of_miller (MillerForwardRank.lean); Silverman AEC App. C 16.5.5 reports it
 * discussion: [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127).
 * Human readings recorded: none.
 * Status: open.

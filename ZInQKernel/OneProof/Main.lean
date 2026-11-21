@@ -244,6 +244,8 @@ The forward-rank fold replaces the two root arguments `hB` and `hK` with `hRank`
 Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C, Evidence 16.5.5, p. 453.
 Only Mordell–Weil rank one is used here; the pole proof does not use the finite-Sha conclusion.
 Theorem 5.3, the Cassels–Tate pairing, and the H bundles are unchanged (26 → 25 assumptions).
+Its record cites Miller's Theorem 4.4, from which
+`ZInQ.Manuscript.ForwardRankLiterature.silvermanRankOne_of_miller` proves it.
 
 The hypotheses of `frozenTarget` are therefore exactly the open statements. Discharging one means replacing a field or
 hypothesis by its proof; the theorem's statement then loses that hypothesis.
