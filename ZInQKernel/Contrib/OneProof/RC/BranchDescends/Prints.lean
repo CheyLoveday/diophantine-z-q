@@ -19,8 +19,10 @@ curves*, Trans. AMS 370 (2018), p. 3721 (the point `(ℂ/𝔞, 𝔞𝒩⁻¹/�
 `X₀(N)` "is defined over the ring class field `H_c`", for `(c, N) = 1` and
 any proper ideal of the non-maximal order; asserted by CM theory, citing
 Gross, *Heegner points on X₀(N)* (Durham 1983; 1984), pp. 87–105) and
-p. 3730. The manuscript's "Theorem 2.15" at tex 2914–2922 is not where it
-is printed. The value form also uses `ℚ(X₀(N)) = ℚ(j, j_N)`, which CCL does
+p. 3730. The manuscript states the rationality at tex 2915–2916 without a
+citation; its citation of Cai–Chen–Liu, Theorem 2.15 (tex 2917–2918) is for
+identifying `X_K(N)` with `X₀(N)` and the point relations, not for this
+statement, which should cite CCL p. 3721 or Gross 1984. The value form also uses `ℚ(X₀(N)) = ℚ(j, j_N)`, which CCL does
 not state; that is a separate classical input (locator UNVERIFIED). No
 action of the class group or norm relation is assumed. -/
 def HeegnerValuesInRingClassField (N : ℕ) [NeZero N] : Prop :=
