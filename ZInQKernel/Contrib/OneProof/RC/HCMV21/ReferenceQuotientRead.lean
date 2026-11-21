@@ -38,4 +38,23 @@ theorem quotientReferenceRead_away {z : Adelic.FiniteUnits R}
     _ ↔ w⁻¹ * 1 ∈ Adelic.localUnits S p := localRight_eq_iff p w 1
     _ ↔ _ := by simp only [mul_one, Subgroup.inv_mem_iff]
 
+/-- The identity quotient yields the reference right lattice in the
+relative frame. -/
+theorem identity_quotientRightIdeal_eq (S : Order a b) (embed : A.End →+* Eichler.B a b)
+    (C : Subgroup (A.Pt k))
+    (hS : embed '' (levelEnd A C : Set A.End) = (S.ring : Set (Eichler.B a b))) :
+    quotientRightIdeal S embed 1 1 1 (by simp) (by simp only [Nat.cast_one, Int.cast_one]; exact Category.id_comp (𝟙 A.X))
+      (by simp only [Nat.cast_one, Int.cast_one]; exact Category.id_comp (𝟙 A.X)) C (Nat.coprime_one_right _) hS =
+      (fromAdelic (1 : Adelic.FiniteUnits S)).val := by
+  apply rightIdeal_eq_fromAdelic_of_completions
+  intro p
+  have hC : (Nat.card C).Coprime 1 := Nat.coprime_one_right _
+  have h : (1 : A.End).hom ≫ (1 : A.End).hom = ((1 : ℤ) : A.End).hom := by
+    simp only [Int.cast_one]
+    exact Category.id_comp (𝟙 A.X)
+  have hm : IsUnit ((1 : ℕ) : ℤ_[p.val]) := by simp
+  refine (localLattice_quotientRightIdeal_eq_completion S embed 1 1 1
+    (by simp) h h C hC hS p.val hm).trans ?_
+  exact (S.completion_toSubmodule p.val).trans (localRight_one (R := S) p).symm
+
 end ZInQ.Manuscript.RC.HCMV21
