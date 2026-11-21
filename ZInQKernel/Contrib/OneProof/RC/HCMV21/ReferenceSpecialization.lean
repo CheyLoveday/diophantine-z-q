@@ -46,8 +46,32 @@ variable {q : ℕ} [Fact q.Prime] [Fact (q % 4 = 3)] {a b : ℚ}
   (place : WitnessSpec.FrobeniusPlace g q) (typeMap : F →ₐ[ℚ] Qbar)
 
 include typeMap in
-/-- Apply the forward inert criterion to the reduction of the reference
-equation and then put its geometric endomorphisms in the pinned algebra. -/
+omit [Fact (q % 4 = 3)] in
+/-- The forward inert criterion for the reference at the selected place.
+The point equivalence compares the reduced equation with its abelian
+variety model. -/
+theorem detector_reference_supersingular
+    (A : PkgI3.AbVar (ResidueAt place)) [DecidableEq (ResidueAt place)]
+    (W : WeierstrassCurve.Affine (ResidueAt place)) [W.IsElliptic]
+    [Module (𝓞 F) W.Point]
+    (hp : Multiplicative W.Point ≃* A.Pt (ResidueAt place))
+    (hF : Module.finrank ℚ F = 2) (hInert : legendreSym q (NumberField.discr F) = -1) :
+    ∀ P : A.Pt (ResidueAt place), P ^ q = 1 → P = 1 := by
+  let : CharP (ResidueAt place) q := place.valuationResidue_charP
+  obtain ⟨hprime, hcard⟩ := detector_inert_prime place typeMap hF hInert
+  let : (Ideal.span {(q : 𝓞 F)}).IsMaximal := hprime ▸ place.restrictPrime_isMaximal typeMap
+  have hcard' : Nat.card (𝓞 F ⧸ Ideal.span {(q : 𝓞 F)}) = q ^ 2 := hprime ▸ hcard
+  intro P hP
+  apply hp.symm.injective
+  have hq : hp.symm P ^ q = 1 := by
+    rw [← map_pow, hP, map_one]
+  rw [map_one]
+  exact supersingular_of_inert_action q W hcard' (Multiplicative.toAdd (hp.symm P))
+    (congrArg Multiplicative.toAdd hq)
+
+include typeMap in
+/-- Put the endomorphism ring of the inert reference in the pinned
+rational quaternion algebra. -/
 theorem exists_detectorEndOrder (hD : DeuringSupersingularEndOrder)
     (hV : QuaternionRamificationUniqueness)
     (A : PkgI3.AbVar (ResidueAt place)) (hdim : A.dim = 1)
@@ -59,18 +83,9 @@ theorem exists_detectorEndOrder (hD : DeuringSupersingularEndOrder)
     ∃ S : Order (-1) (-(q : ℚ)), Nonempty (A.End ≃+* S.ring) ∧
       ∀ T : Order (-1) (-(q : ℚ)), S.ring ≤ T.ring → T.ring ≤ S.ring := by
   let : CharP (ResidueAt place) q := place.valuationResidue_charP
-  obtain ⟨hprime, hcard⟩ := detector_inert_prime place typeMap hF hInert
-  let : (Ideal.span {(q : 𝓞 F)}).IsMaximal := hprime ▸ place.restrictPrime_isMaximal typeMap
-  have hcard' : Nat.card (𝓞 F ⧸ Ideal.span {(q : 𝓞 F)}) = q ^ 2 := hprime ▸ hcard
-  apply exists_referenceEndOrder hD hV q
+  exact exists_referenceEndOrder hD hV q
     (ExplicitSplit.explicit_ramifiedExactlyAtEll0Infty Fact.out Fact.out) hdim
-  intro P hP
-  apply hp.symm.injective
-  have hq : hp.symm P ^ q = 1 := by
-    rw [← map_pow, hP, map_one]
-  rw [map_one]
-  exact supersingular_of_inert_action q W hcard' (Multiplicative.toAdd (hp.symm P))
-    (congrArg Multiplicative.toAdd hq)
+    (detector_reference_supersingular place typeMap A W hp hF hInert)
 
 omit [Fact (q % 4 = 3)] in
 /-- The scalar test on the chosen reference at the actual detector place.

@@ -202,6 +202,22 @@ def referenceCMAdeles (R S : Order a b) (j : A.End ≃+* S.ring)
       map_one' := Subtype.ext (funext fun p => map_one (f p))
       map_mul' s t := Subtype.ext (funext fun p => map_mul (f p) s t) }
 
+/-- A rational torus multiplier is diagonal in the same frame at every
+prime. In particular a single degree clears all local denominators. -/
+theorem referenceCMAdeles_diagonal (R S : Order a b) (j : A.End ≃+* S.ring)
+    (action : 𝓞 F →+* A.End) (C : Subgroup (A.Pt k)) (N : ℕ) (hN : N ≠ 0)
+    (hC : ∀ P ∈ C, P ^ N = 1) (hact : ∀ x : 𝓞 F, action x ∈ levelEnd A C)
+    (t : Fˣ) (p : Prime) :
+    ((referenceCMAdeles R S j action C N hN hC hact (unitEmbedding (𝓞 F) F t)).val p :
+       Bp p.val a b) = toLocal p.val (referenceCMEmbedding S j action (t : F)) := by
+  change localCMEmbedding p (referenceCMEmbedding S j action)
+      (padicSemilocal p ((finiteIdeleSemilocalHom F (basePlace p) (unitEmbedding (𝓞 F) F t)) :
+        (basePlace p).adicCompletion ℚ ⊗[ℚ] F)) = _
+  rw [coe_finiteIdeleSemilocalHom, unitEmbedding_apply, finiteAdeleSemilocalHom_algebraMap]
+  rw [padicSemilocal, Algebra.TensorProduct.congr_apply, Algebra.TensorProduct.map_tmul,
+    map_one, localCMEmbedding_tmul, one_smul]
+  rfl
+
 /-- The stabilizer test of the original assembly, for the CM action of
 a single framed geometric reference. -/
 theorem reference_geometry_hunit {R S : Order a b} (j : A.End ≃+* S.ring)
