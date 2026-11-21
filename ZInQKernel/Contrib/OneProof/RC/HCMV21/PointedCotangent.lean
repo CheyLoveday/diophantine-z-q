@@ -177,6 +177,12 @@ def pullCotangent (f : P.X ⟶ Q.X) (hf : P.sectionMap ≫ f = Q.sectionMap) :
     Q.cotangent →ₗ[k] P.cotangent :=
   Ideal.mapCotangent _ _ (pullStalk f hf) fun _ hx => mem_maximalIdeal_pullStalk f hf hx
 
+theorem pullCotangent_congr {f g : P.X ⟶ Q.X} (h : f = g)
+    (hf : P.sectionMap ≫ f = Q.sectionMap) (hg : P.sectionMap ≫ g = Q.sectionMap) :
+    pullCotangent f hf = pullCotangent g hg := by
+  subst g
+  rfl
+
 @[simp] theorem pullCotangent_mk (f : P.X ⟶ Q.X) (hf : P.sectionMap ≫ f = Q.sectionMap)
     (x : maximalIdeal Q.localRing) :
     pullCotangent f hf ((maximalIdeal Q.localRing).toCotangent x) =
