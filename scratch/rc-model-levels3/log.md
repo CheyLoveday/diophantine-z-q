@@ -12,3 +12,4 @@
 - `QuotientPointLifts`: restriction through the commuting quotient operations is surjective and its fibres are finite-group translates followed by homogeneous scaling. Targeted Lake build passed with four axiom checks.
 - `ExactOrderIdempotents`: the discriminant is a named homogeneous unit. The images of every proper-divisor complement idempotent are one on the exact-order cover and have degree zero. Targeted Lake build passed with five axiom checks.
 - `PairIsomorphisms`: geometric point transport composes, has the identity and inverses, and equality in `PairClasses` is equivalent to a single subgroup-carrying change of variables. Targeted Lake build passed with eight axiom checks.
+- `Y0Level`: pinned detector grading and geometric action, affine scheme over detector local integers, arbitrary base change, and flatness. Targeted Lake build passed with eleven axiom checks.
