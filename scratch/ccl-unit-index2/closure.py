@@ -8,7 +8,7 @@ import sys
 BASE = "c4d9b28eaf47ca591f1428fe97ca0a2d1ea5100f"
 RC = "ZInQKernel.Contrib.OneProof.RC"
 H20 = "ZInQKernel.Contrib.CloudB3E2Norm"
-IMPORT = re.compile(r"^(?:public |private )?(?:meta )?import\s+([\w.]+)", re.ASCII)
+IMPORT = re.compile(r"^(?:(?:public|private|meta)\s+)*import\s+(?:all\s+)?([\w.]+)", re.ASCII)
 
 
 def git(*args):
@@ -40,8 +40,19 @@ def closure(graph, root):
 
 
 def main():
-    graph = imports("" if len(sys.argv) > 1 else BASE)
+    build_targets = "--build-targets" in sys.argv
+    graph = imports("" if build_targets else BASE)
     leaf = f"{RC}.PrintsArith.Heegner"
+    dependents = collections.defaultdict(set)
+    for module, dependencies in graph.items():
+        for dependency in dependencies:
+            dependents[dependency].add(module)
+    impacted = closure(dependents, leaf)
+    terminals = sorted(module for module in impacted if not dependents[module])
+    if build_targets:
+        for module in terminals:
+            print(module)
+        return
     older = {leaf, f"{RC}.PrintsArith.Bundle"}
     older.update(f"{H20}.H20{name}" for name in (
         "HeegnerNorm", "Transport", "Dictionary", "Anchor", "DictFields",
@@ -52,6 +63,8 @@ def main():
         "ZInQKernel.Contrib.OneProof.SelmerTwoPower",
         "ZInQKernel.OneProof.Main",
         "ZInQKernel",
+        "ZInQKernel.Contrib.CloudB3RC53.Assembly",
+        f"{RC}.Assembly",
         f"{RC}.Wiring.Leaves",
         f"{RC}.Wiring.CommonCoordinate19Leaf",
     ):
@@ -62,8 +75,9 @@ def main():
         if not older & modules:
             print("   no intersection")
     print("Direct importers of Heegner:")
-    for name in sorted(name for name in graph if leaf in graph[name]):
+    for name in sorted(dependents[leaf]):
         print("  ", name)
+    print(f"Reverse closure of Heegner: {len(impacted) - 1} importers, {len(terminals)} terminal targets")
 
 
 if __name__ == "__main__":

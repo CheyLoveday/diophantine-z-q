@@ -4,6 +4,10 @@ ZInQKernel.OneProof.Main 10444 project modules including root
    no intersection
 ZInQKernel 612 project modules including root
    no intersection
+ZInQKernel.Contrib.CloudB3RC53.Assembly 1311 project modules including root
+   no intersection
+ZInQKernel.Contrib.OneProof.RC.Assembly 1323 project modules including root
+   no intersection
 ZInQKernel.Contrib.OneProof.RC.Wiring.Leaves 2446 project modules including root
    ZInQKernel.Contrib.OneProof.RC.PrintsArith.Bundle
    ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner
@@ -22,3 +26,4 @@ ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Leaf 2409 project module
 Direct importers of Heegner:
    ZInQKernel.Contrib.CloudB3E2Norm.H20HeegnerNorm
    ZInQKernel.Contrib.OneProof.RC.PrintsArith.Bundle
+Reverse closure of Heegner: 461 importers, 60 terminal targets

@@ -16,7 +16,10 @@ unnecessary. [closure.py](closure.py) uses `git grep` on the base and
 root and the separate RC proof candidate `Wiring.Leaves`. The latter imports
 `PrintsArith.Bundle` and `PrintsArith.Heegner` but none of the older transport
 modules. The bundle uses other declarations in `Heegner.lean`; its reference
-to the CCL declaration is a comment. The staged comparison enters the shared
+to the CCL declaration is a comment. The path is
+`Wiring.Leaves → Wiring.CommonCoordinate6 → Wiring.CommonCoordinate6Frobenius
+→ GlueSweep.TatePrecision → GlueSweep.TateOdd → GlueSweep.TatePrintsArith
+→ PrintsArith.Bundle → PrintsArith.Heegner`. The staged comparison enters the shared
 transport via `CommonCoordinate19E2.lean` importing `CommonCoordinate18E2.lean`.
 **Decision: step 2a.**
 
@@ -40,3 +43,29 @@ The previous modulo-16 proof and conductor bound are verified in
 `scratch/ccl-unit-index/Check.lean`. The congruence at level divisible by four
 reduces modulo 16 since `B² − D = 4AC` and `4 ∣ A`. Modulo 8,
 `2² ≡ −4`.
+
+## Step 2a — staged correction
+
+**VERIFIED (source and code).** The manuscript excludes the exceptional
+fields at tex 2349–2352, 2595–2603 and 2839–2840 and uses this at tex
+2921–2922. The recorded print specialization takes `c = d, m = 1`, so the
+prior conductor bound `1 < d` cannot discharge the factor on its own.
+`St.companion hodd` supplies `D.kfin ≠ -3`. Negativity and the mod-4
+condition already stored by the staged input force `D.kfin < -4`.
+The full weighted equations are in `HeegnerPointData.NormRelationsWithUnits`,
+and the literal unit index is `cclUnitFactor K 1`.
+
+**VERIFIED (Lean).** Built `PrintsArith.Heegner` and `CCLUnitIndex.Units`.
+The helper proves the literal index is one for quadratic fields of
+discriminant below −4, proves the alternative level argument modulo 16,
+and specializes both weighted equations to (4.1). Lake validates build
+traces against this worktree after seeding cached artifacts. Elaborations
+run serially, with `LEAN_NUM_THREADS=4`.
+
+**VERIFIED (Lean).** `CommonCoordinate19E2`, `SupportReq` and
+`CommonCoordinate19Leaf` built as separate Lake targets. The support
+target also builds `E2ChainActual` and `E2ChainGood`. The staged provider
+uses the normalized point equations in `datum`, `anchor` and `hG`.
+`lake env lean scratch/ccl-unit-index2/Check.lean` printed dependencies of
+20 declarations, all limited to `propext`, `Classical.choice` and
+`Quot.sound`. See [axioms.txt](axioms.txt).
