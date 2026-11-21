@@ -14,3 +14,4 @@
 - `PairIsomorphisms`: geometric point transport composes, has the identity and inverses, and equality in `PairClasses` is equivalent to a single subgroup-carrying change of variables. Targeted Lake build passed with eight axiom checks.
 - `Y0Level`: pinned detector grading and geometric action, affine scheme over detector local integers, arbitrary base change, and flatness. Targeted Lake build passed with eleven axiom checks.
 - `CoverPairs`: the whole short cover reads every cyclic pair class. Equality of the readings is exactly short scaling and pinned unit multiplication of a generator. Targeted Lake build passed with twelve axiom checks.
+- `Y0LevelPoints`: the pinned degree-zero quotient has geometric points `PairClasses k N` over every algebraically closed detector field, including the algebraic closure of the residue field. Targeted Lake build passed with two axiom checks.
