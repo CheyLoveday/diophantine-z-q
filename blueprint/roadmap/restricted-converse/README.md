@@ -72,4 +72,4 @@ One page per numbered statement of the manuscript that a Lean declaration states
 it assumes, how the Lean statement differs from the manuscript's, and whether the reduction of
 Theorem 5.3 takes the statement from that page's theorem or from a field of the remaining hypotheses.
 
-- [Section 7: the even and odd frameworks](section-7/README.md)
+- [Section 7: the restricted converse and its dependency order](section-7/README.md)
