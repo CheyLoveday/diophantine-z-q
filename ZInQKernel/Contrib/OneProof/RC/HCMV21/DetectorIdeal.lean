@@ -48,6 +48,27 @@ theorem completeScalarCharacter_factors {R k : Type*} [Ring R] [Field k] [CharP 
 
 variable [Fact (q % 4 = 3)]
 
+/-- In the explicit division algebra, any maximal finite order is the
+valuation order. Each element of a finite subalgebra is integral. -/
+theorem detector_order_eq_of_maximal (S : Subalgebra ℤ_[q] (D q))
+    (hS : Module.Finite ℤ_[q] S)
+    (hmax : ∀ T : Subalgebra ℤ_[q] (D q), Module.Finite ℤ_[q] T → S ≤ T → T ≤ S) :
+    S = order q := by
+  have h : S ≤ order q := fun x hx => integral_mem_order
+    ((isIntegral_algHom_iff S.val Subtype.val_injective).mpr (IsIntegral.of_finite ℤ_[q] (⟨x, hx⟩ : S)))
+  exact le_antisymm h (hmax _ finite_order h)
+
+/-- The left order of a principal detector ideal is again the valuation
+order, since conjugation preserves reduced norm. -/
+theorem detector_leftOrder_eq (g : (D q)ˣ) (x : D q) :
+    Set.MapsTo (fun y : D q => x * y)
+      ((fun r : D q => (g : D q) * r) '' (order q : Set (D q)))
+      ((fun r : D q => (g : D q) * r) '' (order q : Set (D q))) ↔ x ∈ order q := by
+  rw [show (order q : Set (D q)) = (order q).toSubring from rfl,
+    preserves_principalRightIdeal_iff]
+  change (↑g⁻¹ : D q) * x * (g : D q) ∈ order q ↔ x ∈ order q
+  rw [mem_order_iff_nrd, mem_order_iff_nrd, nrd_conj]
+
 /-- Every nonzero finite right lattice over the detector order is
 principal. Choose a generator of largest reduced-norm absolute value
 among a finite set of integral generators. -/

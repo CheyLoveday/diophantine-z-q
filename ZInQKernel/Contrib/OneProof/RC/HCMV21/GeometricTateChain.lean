@@ -110,4 +110,78 @@ theorem mem_tateRange_reverse_iff
     have hz := hcancel _ _ h
     exact ⟨(↑c⁻¹ : ℤ_[p]) • y, by rw [map_smul, hz, smul_smul, Units.inv_mul, one_smul]⟩
 
+private theorem span_levelHom_eq_span_primary (p n r : ℕ) [Fact p.Prime]
+    (hr : IsUnit (r : ℤ_[p]))
+    (C : Subgroup (A.Pt (AlgebraicClosure k))) (D : Subgroup (B.Pt (AlgebraicClosure k)))
+    (hC : ∀ P ∈ C, P ^ (r * p ^ n) = 1) :
+    Submodule.span ℤ_[p] (tateHom p A B '' (levelHom C D : Set (Hom A B))) =
+      Submodule.span ℤ_[p] (tateHom p A B '' (levelHom (C ⊓ (powMonoidHom (p ^ n)).ker)
+        (D ⊓ (powMonoidHom (p ^ n)).ker) : Set (Hom A B))) := by
+  apply le_antisymm
+  · apply Submodule.span_mono
+    rintro _ ⟨f, hf, rfl⟩
+    refine ⟨f, fun P hP => ⟨hf P hP.1, ?_⟩, rfl⟩
+    change (P ≫ f.hom) ^ (p ^ n) = 1
+    have hh : P ^ (p ^ n) = 1 := hP.2
+    rw [← MonObj.pow_comp, hh, MonObj.one_comp]
+  · apply Submodule.span_le.mpr
+    rintro _ ⟨f, hf, rfl⟩
+    have hf' : r • f ∈ levelHom C D := by
+      intro P hP
+      have hp : P ^ r ∈ C ⊓ (powMonoidHom (p ^ n)).ker :=
+        ⟨C.pow_mem hP r, by change (P ^ r) ^ (p ^ n) = 1; rw [← pow_mul]; exact hC P hP⟩
+      change P ≫ f.hom ^ r ∈ D
+      rw [MonObj.comp_pow, ← MonObj.pow_comp]
+      exact (hf (P ^ r) hp).1
+    let L := Submodule.span ℤ_[p] (tateHom p A B '' (levelHom C D : Set (Hom A B)))
+    have h : tateHom p A B (r • f) ∈ L := Submodule.subset_span ⟨_, hf', rfl⟩
+    rw [map_nsmul, ← Nat.cast_smul_eq_nsmul ℤ_[p]] at h
+    have hinv : (↑hr.unit⁻¹ : ℤ_[p]) * (r : ℤ_[p]) = 1 :=
+      (congrArg ((↑hr.unit⁻¹ : ℤ_[p]) * ·) hr.unit_spec.symm).trans (Units.inv_mul hr.unit)
+    change tateHom p A B f ∈ L
+    simpa only [smul_smul, hinv, one_smul] using L.smul_mem (↑hr.unit⁻¹ : ℤ_[p]) h
+
+/-- For a composite cyclic level, the `p`-primary calculation applies
+directly to both full level isogenies. No separate geometric quotient
+by the `p`-primary part is required. -/
+theorem span_levelHom_eq_tate_composite_quotient_chain
+    (u : Hom A A') (u' : Hom A' A) (v : Hom B B') (v' : Hom B' B)
+    (N p n r : ℕ) [Fact p.Prime] (hp : (p : k) ≠ 0)
+    (hN : N = r * p ^ n) (hr : IsUnit (r : ℤ_[p]))
+    (hu : u.hom ≫ u'.hom = ((N : ℤ) : A.End).hom)
+    (hu' : u'.hom ≫ u.hom = ((N : ℤ) : A'.End).hom)
+    (hv : v.hom ≫ v'.hom = ((N : ℤ) : B.End).hom)
+    (hv' : v'.hom ≫ v.hom = ((N : ℤ) : B'.End).hom)
+    (hfull : Submodule.span ℤ_[p] (Set.range (tateHom p A B)) = ⊤) :
+    (Submodule.span ℤ_[p] (tateHom p A B '' (levelHom
+      (geometricKernel (L := AlgebraicClosure k) u)
+      (geometricKernel (L := AlgebraicClosure k) v) : Set (Hom A B))) :
+        Set (A.T p →ₗ[ℤ_[p]] B.T p)) =
+      {φ : A.T p →ₗ[ℤ_[p]] B.T p | Set.MapsTo (⇑φ)
+        (LinearMap.range (homT (ℓ := p) u')) (LinearMap.range (homT (ℓ := p) v'))} := by
+  let C := geometricKernel (L := AlgebraicClosure k) u
+  let D := geometricKernel (L := AlgebraicClosure k) v
+  have hC : ∀ P ∈ C, P ^ (r * p ^ n) = 1 := by
+    intro P hP
+    change P ≫ u.hom = 1 at hP
+    rw [← hN, ← AvSplit.comp_natCast_hom' A P N, ← hu, ← Category.assoc, hP, MonObj.one_comp]
+  have hN' : (N : ℤ_[p]) = (p : ℤ_[p]) ^ n * (hr.unit : ℤ_[p]) := by
+    rw [hN, Nat.cast_mul, Nat.cast_pow, hr.unit_spec, mul_comm]
+  have hrange {X Y : PkgI3.AbVar k} (f : Hom X Y) (g : Hom Y X)
+      (h : f.hom ≫ g.hom = ((N : ℤ) : X.End).hom)
+      (h' : g.hom ≫ f.hom = ((N : ℤ) : Y.End).hom) :
+      (LinearMap.range (homT (ℓ := p) g) : Set (X.T p)) =
+        tateLevelPreimage X p n (geometricKernel (L := AlgebraicClosure k) f ⊓
+          (powMonoidHom (p ^ n)).ker) := by
+    ext x
+    rw [SetLike.mem_coe, mem_tateRange_reverse_iff f g p N n hr.unit hN' h h' x]
+    change Additive.toMul (x.1 n) ∈ geometricKernel (L := AlgebraicClosure k) f ↔
+      Additive.toMul (x.1 n) ∈ geometricKernel (L := AlgebraicClosure k) f ⊓ (powMonoidHom (p ^ n)).ker
+    exact ⟨fun hx => ⟨hx, congrArg Additive.toMul (PkgI3.Tate.pow_smul_eq_zero x.2 n)⟩,
+      fun hx => hx.1⟩
+  change (Submodule.span ℤ_[p] (tateHom p A B '' (levelHom C D : Set (Hom A B))) :
+    Set (A.T p →ₗ[ℤ_[p]] B.T p)) = _
+  rw [span_levelHom_eq_span_primary p n r hr C D hC, hrange u u' hu hu', hrange v v' hv hv']
+  exact span_levelHom_eq_tateLevelMaps p n hp _ _ (fun _ hP => hP.2) hfull
+
 end ZInQ.Manuscript.RC.HCMV21
