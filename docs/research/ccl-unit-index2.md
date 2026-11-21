@@ -78,11 +78,14 @@ CCL witness. None of these proofs takes a unit hypothesis.
 
 ## Verification
 
-**VERIFIED.** Lake built the changed modules and the staged downstream
-package. The axiom check covers 20 declarations, including the inert and
+**VERIFIED.** Lake built the changed modules and all 60 terminal targets
+in the reverse import graph of `Heegner.lean`, one target at a time. Their
+import closures cover all 462 direct and transitive importers. The axiom
+check covers 20 declarations, including the inert and
 split specialization, the modulo-16 argument, the provider's global
 identity, and both constructor wrappers. It finds only `propext`,
 `Classical.choice` and `Quot.sound`.
+[Build results](../../scratch/ccl-unit-index2/builds.txt) ·
 [Axiom check](../../scratch/ccl-unit-index2/Check.lean) ·
 [Axiom output](../../scratch/ccl-unit-index2/axioms.txt)
 

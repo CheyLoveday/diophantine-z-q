@@ -69,3 +69,9 @@ uses the normalized point equations in `datum`, `anchor` and `hG`.
 `lake env lean scratch/ccl-unit-index2/Check.lean` printed dependencies of
 20 declarations, all limited to `propext`, `Classical.choice` and
 `Quot.sound`. See [axioms.txt](axioms.txt).
+
+**VERIFIED (Lean and import graph).** All 60 terminal targets from
+`closure.py --build-targets` built successfully, with one Lake target at
+a time. The recorded targets match the computed list exactly. Their
+forward import closures cover `Heegner.lean` and all 462 direct and
+transitive project importers. See [builds.txt](builds.txt).
