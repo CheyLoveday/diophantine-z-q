@@ -10,3 +10,4 @@
 - `ExactOrderGrading`: named short exact-order grading, weights of the coordinates and discriminant, scaling of all homogeneous elements, field-test converse. Targeted Lake build passed with the recorded axiom checks.
 - `ShortLevelAction`: the actual level automorphism commutes with scaling on field points and preserves every summand. Targeted Lake build passed with seven axiom checks.
 - `QuotientPointLifts`: restriction through the commuting quotient operations is surjective and its fibres are finite-group translates followed by homogeneous scaling. Targeted Lake build passed with four axiom checks.
+- `ExactOrderIdempotents`: the discriminant is a named homogeneous unit. The images of every proper-divisor complement idempotent are one on the exact-order cover and have degree zero. Targeted Lake build passed with five axiom checks.
