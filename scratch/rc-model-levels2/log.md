@@ -10,3 +10,4 @@
 - `CoordinateEvaluation` passed targeted Lake build. `generatorX` and `generatorY` evaluate to the affine coordinates of the point read by `exactOrderFibrePoints` at levels at least three. The axiom prints use only the permitted axioms.
 - `ShortWeights` passed targeted Lake build. The short discriminant and short Weierstrass equation are homogeneous in the polynomial presentation with degrees 12 and 6. The five generator weights are 4, 6, 2, 3, and −12. The axiom prints use only the permitted axioms.
 - `SmallLevels` passed targeted Lake build. The identity automorphism induces the geometric unit action at levels one and two. The axiom prints use only the permitted axioms.
+- `GeneratorFibre` passed targeted Lake build. The field-valued generator action is the transported exact-order point action. Its orbits over a chosen coefficient point are in bijection with cyclic subgroups on that specialized curve. The axiom prints use only the permitted axioms.
