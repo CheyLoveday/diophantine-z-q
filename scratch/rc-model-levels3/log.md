@@ -16,3 +16,4 @@
 - `CoverPairs`: the whole short cover reads every cyclic pair class. Equality of the readings is exactly short scaling and pinned unit multiplication of a generator. Targeted Lake build passed with twelve axiom checks.
 - `Y0LevelPoints`: the pinned degree-zero quotient has geometric points `PairClasses k N` over every algebraically closed detector field, including the algebraic closure of the residue field. Targeted Lake build passed with two axiom checks.
 - `ShortSliceFinite`: on the discriminant-one slice the powers of the two weighted monomials reduce to polynomials in the actual short-family `j`. The slice is finite over that polynomial algebra. Targeted Lake build passed with two axiom checks.
+- `Y0LevelReducedFibres`: the detector exact-order cover is smooth over the detector ring and regular after extension to any detector field. The pinned quotient is reduced over each such field. Targeted Lake build passed with three axiom checks.
