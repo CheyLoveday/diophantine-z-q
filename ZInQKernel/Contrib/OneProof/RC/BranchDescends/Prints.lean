@@ -22,10 +22,10 @@ Gross, *Heegner points on X₀(N)* (Durham 1983; 1984), pp. 87–105) and
 p. 3730. The manuscript states the rationality at tex 2915–2916 without a
 citation; its citation of Cai–Chen–Liu, Theorem 2.15 (tex 2917–2918) is for
 identifying `X_K(N)` with `X₀(N)` and the point relations, not for this
-statement, which should cite CCL p. 3721 or Gross 1984. The value form also uses `ℚ(X₀(N)) = ℚ(j, j_N)`, which CCL does
-not state; that is a separate classical input (candidate locator
-Diamond–Shurman §7.5, not read against the page). No
-action of the class group or norm relation is assumed. -/
+statement, which should cite CCL p. 3721 or Gross 1984. The value form also
+uses `ℚ(X₀(N)) = ℚ(j, j_N)`, which CCL does not state; that is a separate
+classical input (candidate locator Diamond–Shurman §7.5, not read against the
+page). No action of the class group or norm relation is assumed. -/
 def HeegnerValuesInRingClassField (N : ℕ) [NeZero N] : Prop :=
   ∀ (K : Type) [Field K] [NumberField K],
     Module.finrank ℚ K = 2 → IsTotallyComplex K →
