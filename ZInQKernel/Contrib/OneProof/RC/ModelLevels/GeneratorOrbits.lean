@@ -89,6 +89,8 @@ theorem subgroupOfGenerator_surjective :
     exact C.2.2
   exact ⟨⟨P, ho⟩, Subtype.ext h⟩
 
+#print axioms zmultiples_nsmul_eq_iff
+#print axioms nsmul_val_natCast
 #print axioms generatorAction
 #print axioms generatorAction_apply
 #print axioms generatorOrbit_iff
