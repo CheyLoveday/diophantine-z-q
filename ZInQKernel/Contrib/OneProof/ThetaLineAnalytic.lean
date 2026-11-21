@@ -149,7 +149,8 @@ theorem bundleThetaSection_eq_quotient (p : Torus (lattice Ω h)) :
     (fibreAtLift Ω h (liftChart Ω h p p) (bundleThetaSection Ω h p)).val =
       thetaSection Ω h p := by
   change thetaSection Ω h (proj (lattice Ω h) (liftChart Ω h p p)) = thetaSection Ω h p
-  rw [proj_chartOf (lattice Ω h) (x := p.out) (mem_chart_source (Fin g → ℂ) p)]
+  exact congrArg (thetaSection Ω h)
+    (proj_chartOf (lattice Ω h) (x := p.out) (mem_chart_source (Fin g → ℂ) p))
 
 /-- In every chart, the local expression of the section is the theta series at the chosen lift. -/
 theorem localTriv_bundleThetaSection {i p : Torus (lattice Ω h)}
@@ -173,8 +174,9 @@ theorem contMDiff_bundleThetaSection (hθ : ContDiff ℂ ω (riemannTheta Ω)) :
       (fun p => Bundle.TotalSpace.mk' ℂ p (bundleThetaSection Ω h p)) := by
   intro p
   let e := (bundleCore Ω h).localTriv p
+  letI : MemTrivializationAtlas e := ⟨⟨p, rfl⟩⟩
   have hp : p ∈ e.baseSet := mem_chart_source (Fin g → ℂ) p
-  refine (e.contMDiffAt_section_iff hp).mpr ?_
+  refine (e.contMDiffAt_section_iff (s := bundleThetaSection Ω h) hp).mpr ?_
   have hc : ContMDiffAt 𝓘(ℂ, Fin g → ℂ) 𝓘(ℂ, Fin g → ℂ) ω (liftChart Ω h p) p :=
     contMDiffOn_chart.contMDiffAt (e.open_baseSet.mem_nhds hp)
   have heq : (fun q => (e ⟨q, bundleThetaSection Ω h q⟩).2) =ᶠ[𝓝 p]
