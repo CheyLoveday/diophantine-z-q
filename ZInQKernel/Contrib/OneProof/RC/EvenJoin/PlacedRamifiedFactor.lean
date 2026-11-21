@@ -264,7 +264,15 @@ attribute [instance] LocalPrincipalAction.addV LocalPrincipalAction.modV
 /-- GLUE (tex 9773–9811, 9825–9827, 9841–9861). Realize the local
 action of the classical source. Compare the exact attached homomorphism
 to its chosen principal-series pair, and read the Whittaker functional
-on the newvector when its degree-one column is retained. -/
+on the newvector when its degree-one column is retained.
+
+The manuscript cites Carayol, Ann. Sci. ENS 19 (1986), §§0.3–0.7,
+Théorème A, pp. 409–411, and Casselman, Math. Ann. 201 (1973),
+Theorem 1, pp. 302–306, the Corollary on p. 306 and Theorem 4, p. 313
+(locators as the manuscript gives them, not checked against the page).
+It stays GLUE rather than a printed-form leaf because `LocalPrincipalAction`
+is a project interface: the tree has no genuine local representation of
+a newform for those statements to be about. -/
 def PlacedCuspLists.RamifiedPrincipalInputsAt (C : ReciprocityAt Q)
     (half : LocalCharacter p K) : Prop :=
   ∀ s : Sources, p ∣ (Y).sourceLevel s →
