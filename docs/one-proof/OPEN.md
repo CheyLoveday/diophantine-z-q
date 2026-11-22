@@ -148,7 +148,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`silverbergZarhinThm35`](#silverbergzarhinthm35) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
 | [`hCT`](#hct) | frozenTarget | published | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) |
-| [`hRank`](#hrank) | frozenTarget | consequence | GLUE | pending-reading |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | open |
+| [`hRank`](#hrank) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | open |
 
 ## The hypotheses
 
@@ -494,7 +494,7 @@ ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves
 
 ### hRank
 
-* Argument `hRank` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: pending reading: the statement stays Silverman's rank-one line, proved from Miller Thm 4.4 by ForwardRankLiterature.silvermanRankOne_of_miller; the docs desk's reading of Miller is pending.
+* Argument `hRank` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: glue (rated): Miller Thm 4.4 (p. 336, journal version) read, FAITHFUL; ForwardRankAtMostOne takes two of the printed conclusions and adds no hypothesis, and ForwardRankLiterature.silvermanRankOne_of_miller gives the statement. It stays GLUE because the printed proof (pp. 336-337) cites every deep step: Gross-Zagier 1986, Zhang 2004 Thm 4.1, Kolyvagin, Euler systems (Grothendieck Festschrift II, 1990) Thm A, Waldspurger 1985 or Bump-Friedberg-Hoffstein 1990 / Murty-Murty 1991, and Darmon CBMS 101 Prop. 3.11.
 * Source: Miller, LMS J. Comput. Math. 14 (2011), Thm 4.4, pp. 336-337, via ForwardRankLiterature.silvermanRankOne_of_miller (MillerForwardRank.lean); Silverman AEC App. C 16.5.5 reports it
 * discussion: [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127).
 * Human readings recorded: none.
