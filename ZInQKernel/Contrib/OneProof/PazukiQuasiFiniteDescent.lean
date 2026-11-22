@@ -25,7 +25,7 @@ theorem locallyQuasiFinite_of_surjective_baseChange
   haveI : LocallyQuasiFinite (pullback.snd (u ≫ p) g) := by
     rw [← pullbackRightPullbackFstIso_inv_snd_snd p g u]
     infer_instance
-  exact FS1Descend.locallyQuasiFinite_of_isPullback (IsPullback.of_hasPullback (u ≫ p) g).flip
+  exact HDec.FS1Descend.locallyQuasiFinite_of_isPullback (IsPullback.of_hasPullback (u ≫ p) g).flip
 
 /-- Apply descent directly to the scheme equalizer used for the theta point.
 Only local finite type of the ambient parameter scheme is needed downstairs.
@@ -40,7 +40,7 @@ theorem fixedLocus_quasiFiniteAt_of_field_extension
     (equalizer.ι a (𝟙 P) ≫ p).QuasiFiniteAt x := by
   let g := Spec.map (CommRingCat.ofHom (algebraMap K F))
   let f := equalizer.ι a (𝟙 P) ≫ p
-  haveI : Surjective g := (FS1Descend.specMap_flat_surjective K F).2
+  haveI : Surjective g := (HDec.FS1Descend.specMap_flat_surjective K F).2
   haveI : LocallyQuasiFinite (pullback.snd f g) := geom
   haveI : LocallyOfFiniteType f := inferInstanceAs (LocallyOfFiniteType (equalizer.ι a (𝟙 P) ≫ p))
   haveI : LocallyQuasiFinite f := locallyQuasiFinite_of_surjective_baseChange f g

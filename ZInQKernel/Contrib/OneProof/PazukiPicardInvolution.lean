@@ -35,7 +35,9 @@ theorem dualP_isMonHom {A : AbVar K} {P : Over (Spec (CommRingCat.of K))}
     (targetFunctor := picardFunctorGrp A.X.hom) rep rep s
   have hg : g.hom.hom = dualP rep f := by
     apply rep.homEquiv.injective
-    have h := GrpObj.homEquiv_mapOfRepresentableBy rep rep s (𝟙 P)
+    have h := GrpObj.homEquiv_mapOfRepresentableBy
+      (sourceFunctor := picardFunctorGrp A.X.hom)
+      (targetFunctor := picardFunctorGrp A.X.hom) rep rep s (𝟙 P)
     rw [Category.id_comp] at h
     exact h.trans (rep.homEquiv.apply_symm_apply _).symm
   rw [← hg]
@@ -64,10 +66,8 @@ theorem inv_pullback_of_isTI [IsAlgClosed K] [CharZero K]
 -- DZQ's pullback on families restricts on the geometric fiber to its own group inversion.
 private theorem famMap_inv (A : AbVar K) :
     famMap ι[A.X] (ptK K) = ι[(AKbar A).X].left := by
-  change famMap ι[A.X] (ptK K) =
-    ((Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap K (AlgebraicClosure K))))).map
-      ι[A.X]).left
-  apply pullback.hom_ext <;> simp [famMap, Over.pullback_map_left]
+  change famMap ι[A.X] (ptK K) = ((Over.pullback (ptK K).hom).map ι[A.X]).left
+  simp only [famMap, pullback.map, Over.pullback_map_left, Category.comp_id]
 
 /-- The restriction of pullback by inversion to the actual open Picard identity
 component is group inversion. The equality is one of scheme morphisms over K. -/

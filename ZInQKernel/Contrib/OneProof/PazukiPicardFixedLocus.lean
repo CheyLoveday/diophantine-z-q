@@ -39,7 +39,7 @@ theorem locallyQuasiFinite_fixedPicard
     rw [hD]
     exact hgeom
   haveI : LocallyOfFiniteType P.hom := PicLFT.picLocFinType_proof K A P rep
-  haveI : Surjective g := (FS1Descend.specMap_flat_surjective K (AlgebraicClosure K)).2
+  haveI : Surjective g := (HDec.FS1Descend.specMap_flat_surjective K (AlgebraicClosure K)).2
   haveI : LocallyQuasiFinite (pullback.snd (equalizer.ι D.left (𝟙 P.left) ≫ P.hom) g) :=
     PazukiFixedEqualizerBaseChange.locallyQuasiFinite_fixed_pullback D g hfixed
   exact PazukiQuasiFiniteDescent.locallyQuasiFinite_of_surjective_baseChange

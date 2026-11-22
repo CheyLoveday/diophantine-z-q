@@ -73,9 +73,17 @@ theorem dualSheafMap_baseChange (u : A.X ⟶ A.X) (v : B.X ⟶ B.X)
   have hmaps : (pullbackIsoOfIsPullback sq T).hom ≫ famMap u ((Over.map b).obj T) =
       famMap v T ≫ (pullbackIsoOfIsPullback sq T).hom := by
     apply pullback.hom_ext <;> simp [famMap, Category.assoc, hu]
-  rw [← hc, dualSheafMap_on_class, picardFunctorIsoOfIsPullback_hom_app_toPicardFunctor,
-    picardFunctorIsoOfIsPullback_hom_app_toPicardFunctor, dualSheafMap_on_class,
-    ← Scheme.Pic.map_comp, ← Scheme.Pic.map_comp, hmaps]
+  have hbc (z : (pullback A.X.hom ((Over.map b).obj T).hom).Pic) :
+      (picardFunctorIsoOfIsPullback sq).hom.app (op T)
+          ((toPicardFunctor A.X.hom).app (op ((Over.map b).obj T)) z) =
+        (toPicardFunctor B.X.hom).app (op T) (Scheme.Pic.map (pullbackIsoOfIsPullback sq T).hom z) := by
+    simpa only [Functor.op_obj] using picardFunctorIsoOfIsPullback_hom_app_toPicardFunctor sq (op T) z
+  rw [← hc, dualSheafMap_on_class u ((Over.map b).obj T) c.1,
+    hbc (Scheme.Pic.map (famMap u ((Over.map b).obj T)) c.1), hbc c.1,
+    dualSheafMap_on_class v T (Scheme.Pic.map (pullbackIsoOfIsPullback sq T).hom c.1)]
+  apply congrArg (fun z => (toPicardFunctor B.X.hom).app (op T) z)
+  exact (Scheme.Pic.map_comp _ _ _).symm.trans
+    ((congrArg (fun f => Scheme.Pic.map f c.1) hmaps).trans (Scheme.Pic.map_comp _ _ _))
 
 /-- Base change commutes with the represented DZQ morphism for a compatible
 pair of endomorphisms of abelian varieties. -/
@@ -112,7 +120,7 @@ theorem dualP_inv_baseChange [Algebra K L] (A : AbVar K)
   let β := Spec.map (CommRingCat.ofHom (algebraMap K L))
   apply dualP_baseChange (IsPullback.of_hasPullback A.X.hom β) r
   change ((Over.pullback β).map ι[A.X]).left ≫ pullback.fst A.X.hom β = _
-  simp [Over.pullback_map_left]
+  simp [β, Over.pullback_map_left] <;> rfl
 
 end AbelianVariety
 

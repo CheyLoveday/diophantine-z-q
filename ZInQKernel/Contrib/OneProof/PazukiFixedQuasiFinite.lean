@@ -22,7 +22,7 @@ private theorem quasiFiniteAt_of_doubling_chart {P : Over (Spec (.of k))}
     (h : ∀ {T : Scheme} (b : T ⟶ B.X.left),
       b ≫ u.left ≫ D.left = b ≫ u.left ↔
         b ≫ (((2 : ℤ) : PkgI3.AbVar.End B).hom).left = (b ≫ B.X.hom) ≫ η[B.X].left)
-    (x : equalizer D.left (𝟙 P.left))
+    (x : ↑(equalizer D.left (𝟙 P.left)))
     (hx : equalizer.ι D.left (𝟙 P.left) x ∈ Set.range u.left) :
     (equalizer.ι D.left (𝟙 P.left) ≫ P.hom).QuasiFiniteAt x := by
   let d := (((2 : ℤ) : PkgI3.AbVar.End B).hom).left
@@ -31,7 +31,7 @@ private theorem quasiFiniteAt_of_doubling_chart {P : Over (Spec (.of k))}
   let n : pullback d zero ⟶ Spec (.of k) := pullback.snd d zero
   let v := equalizer.ι D.left (𝟙 P.left)
   have hd : d ≫ B.X.hom = B.X.hom := Over.w _
-  have hz : zero ≫ B.X.hom = 𝟙 _ := Over.w _
+  have hz : zero ≫ B.X.hom = 𝟙 (Spec (.of k)) := Over.w (η[B.X])
   have hm : m ≫ d = n ≫ zero := pullback.condition
   have hbase : m ≫ B.X.hom = n := by
     simpa only [Category.assoc, hd, hz, Category.comp_id] using
@@ -106,7 +106,7 @@ theorem picard_fixed_quasiFiniteAt_section
     (s : 𝟙_ (Over (Spec (.of k))) ⟶ P)
     (hs : s ≫ T09Pic.dualP rep (GrpObj.inv (X := A.X)) = s) :
     let D := T09Pic.dualP rep (GrpObj.inv (X := A.X))
-    ∀ x : equalizer D.left (𝟙 P.left),
+    ∀ x : ↑(equalizer D.left (𝟙 P.left)),
       equalizer.ι D.left (𝟙 P.left) x = s.left (IsLocalRing.closedPoint k) →
       (equalizer.ι D.left (𝟙 P.left) ≫ P.hom).QuasiFiniteAt x := by
   letI := picardFunctorCommGrpObj A.X.hom rep
@@ -123,7 +123,8 @@ theorem picard_fixed_quasiFiniteAt_section
     infer_instance
   have hucomp {T : Over (Spec (.of k))} (f : T ⟶ B.X) :
       f ≫ u = (f ≫ j) * (toUnit T ≫ s) := by
-    rw [u, ← Category.assoc, comp_translate]
+    change f ≫ (j ≫ translate s) = _
+    rw [← Category.assoc, comp_translate]
   have criterion {T : Over (Spec (.of k))} (f : T ⟶ B.X) :
       (f ≫ u) ≫ D = f ≫ u ↔ f ≫ ((2 : ℤ) : PkgI3.AbVar.End B).hom = 1 := by
     have hr : (f ≫ j) ≫ D = f⁻¹ ≫ j := by
@@ -149,7 +150,7 @@ theorem picard_fixed_quasiFiniteAt_section
       have he : f ≫ ((2 : ℤ) : PkgI3.AbVar.End B).hom = 1 := Over.OverMorphism.ext hf
       rw [← Category.assoc]
       exact congrArg (fun (g : T' ⟶ P) => g.left) ((criterion f).2 he)
-  change ∀ x : equalizer D.left (𝟙 P.left),
+  change ∀ x : ↑(equalizer D.left (𝟙 P.left)),
     equalizer.ι D.left (𝟙 P.left) x = s.left (IsLocalRing.closedPoint k) →
       (equalizer.ι D.left (𝟙 P.left) ≫ P.hom).QuasiFiniteAt x
   intro x hx
@@ -160,7 +161,8 @@ theorem picard_fixed_quasiFiniteAt_section
   have hu0 : η[B.X] ≫ u = s := by
     rw [hucomp, IsMonHom.one_hom j, hη, one_mul, ht, Category.id_comp]
   refine ⟨η[B.X].left (IsLocalRing.closedPoint k), ?_⟩
-  rw [hx, ← Scheme.Hom.comp_apply]
+  rw [hx]
+  change (η[B.X] ≫ u).left (IsLocalRing.closedPoint k) = _
   exact congrArg (fun (g : 𝟙_ (Over (Spec (.of k))) ⟶ P) =>
     g.left (IsLocalRing.closedPoint k)) hu0
 
