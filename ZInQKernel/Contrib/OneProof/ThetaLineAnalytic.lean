@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.ThetaLineBundle
+import ZInQKernel.Contrib.OneProof.ThetaSeriesConvergence
 
 /-!
 # Holomorphic gluing for the theta line
@@ -168,8 +169,8 @@ theorem localTriv_bundleThetaSection {i p : Torus (lattice Ω h)}
   rw [← hv]
   exact (riemannTheta_add_period Ω h.1 u a.1 a.2).symm
 
-/-- Holomorphicity of the theta series on the cover gives holomorphicity of the section. -/
-theorem contMDiff_bundleThetaSection (hθ : ContDiff ℂ ω (riemannTheta Ω)) :
+/-- The theta section of the line bundle is holomorphic. -/
+theorem contMDiff_bundleThetaSection :
     ContMDiff 𝓘(ℂ, Fin g → ℂ) (𝓘(ℂ, Fin g → ℂ).prod 𝓘(ℂ, ℂ)) ω
       (fun p => Bundle.TotalSpace.mk' ℂ p (bundleThetaSection Ω h p)) := by
   intro p
@@ -184,7 +185,7 @@ theorem contMDiff_bundleThetaSection (hθ : ContDiff ℂ ω (riemannTheta Ω)) :
     filter_upwards [e.open_baseSet.mem_nhds hp] with q hq
     exact localTriv_bundleThetaSection Ω h hq
   have ht : ContMDiff 𝓘(ℂ, Fin g → ℂ) 𝓘(ℂ, ℂ) ω (riemannTheta Ω) :=
-    contMDiff_iff_contDiff.mpr hθ
+    contMDiff_iff_contDiff.mpr (contDiff_riemannTheta Ω h)
   exact ((ht (liftChart Ω h p p)).comp p hc).congr_of_eventuallyEq heq
 
 end BPAnalytic.ThetaLine
