@@ -1,5 +1,5 @@
-import ZInQKernel.Contrib.RC53Assist.PlaceAboveTwo.TraceOne
-import ZInQKernel.Contrib.RC53Assist.PlaceAboveTwo.SignLine
+import ZInQKernel.Contrib.OneProof.PlaceAboveTwo.TraceOne
+import ZInQKernel.Contrib.OneProof.PlaceAboveTwo.SignLine
 
 /-!
 # Compatibility between the integral trace and the first sign-line reduction
