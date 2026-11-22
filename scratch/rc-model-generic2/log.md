@@ -11,3 +11,4 @@
 - `PairQuotientValue`: the iterated prime-kernel Vélu quotient invariant is well defined on pair classes. Lake build passed, 2 standard-axiom checks.
 - `FiniteDescent`: evaluations separate elements of a finite reduced algebra. An equivariant tuple descends uniquely by the Artinian product decomposition and fixed fields. Lake build passed, 4 standard-axiom checks.
 - `QuotientInvariant`: the iterated Vélu values on the pinned generic pairs descend to `Y0RationalGenericQuotientJ`, with evaluation at every geometric point. Lake build passed, 6 standard-axiom checks.
+- `QuotientValue`: the vendored cyclic-quotient root bijection and transitivity apply to the pinned generic fibre. Its field has degree ψ(N), and the actual quotient invariant generates it with the specialized modular polynomial as its minimal polynomial. Lake build passed (10083 jobs), 12 standard-axiom checks.
