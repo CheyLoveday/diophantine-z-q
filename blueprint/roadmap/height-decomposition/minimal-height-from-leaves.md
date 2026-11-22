@@ -4,7 +4,7 @@ declaration: theorem
 origin: bridged
 statement: formalized
 proof: formalized
-lean: HDec.HSyn.sixContactMin_of_open93
+lean: HDec.HSyn.sixContactMin_of_open94
 ---
 
 # The minimal height hypothesis from twenty-one statements
