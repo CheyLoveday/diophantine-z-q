@@ -12,7 +12,7 @@ open Polynomial (X C)
 open scoped NumberField
 
 /-- Diamond–Shurman, *A First Course in Modular Forms*, Springer GTM 228 (2005),
-Thm. 9.6.5, p. 393 (2016 corrected fourth printing, p. 404), omitting the unused
+Thm. 9.6.5, p. 404 of the corrected fourth printing (2016), omitting the unused
 irreducibility conclusion. The hypothesis `2 ≤ k` is this project's restriction, not a
 hypothesis of the print, which has no weight bound.
 Normalized eigenforms are as in Def. 5.8.1. The unramified and arithmetic
