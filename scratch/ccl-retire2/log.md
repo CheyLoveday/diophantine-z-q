@@ -143,3 +143,70 @@ The short `ps_getD_pos` and `ps_getD_prime` references resolve to
 references use the moved definitions. The other surviving exact-name
 matches are comments. No Lean source on the merge imports a retired
 module. No deletion needed to be restored during the consumer audit.
+
+## Import closure and count
+
+The same import parser and graph traversal as
+`scratch/ccl-unit-index2/closure.py` ran against pinned main and the
+merge. The exclusion set is the Lean module paths from
+`git diff --name-only 2ba691fde 522249258 -- ZInQKernel`, which
+includes every old declaration owner, all four premise owners, and
+the new conductor module. The roots for `frozenTarget` and `hRC`
+are `ZInQKernel.OneProof.Main` and
+`ZInQKernel.Contrib.OneProof.SelmerTwoPower`, respectively.
+
+```text
+2ba691fde6bfb9e514a429414ba92a6c6893a63f
+  ZInQKernel.OneProof.Main (10580 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.Contrib.OneProof.SelmerTwoPower (380 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.OneProof.Discharges (10581 project modules including root)
+    changed or retired modules: none
+  ZInQKernel (612 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.Contrib.CloudB3RC53.Assembly (1311 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.Contrib.OneProof.RC.Assembly (1323 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.Contrib.OneProof.RC.Wiring.Leaves (2505 project modules including root)
+    changed or retired modules: ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner
+  ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Leaf (2410 project modules including root)
+    changed or retired modules: ZInQKernel.Contrib.CloudB3E2Norm.H20Anchor, ZInQKernel.Contrib.CloudB3E2Norm.H20DictFields, ZInQKernel.Contrib.CloudB3E2Norm.H20HeegnerNorm, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClass, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassMatch, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassOf, ZInQKernel.Contrib.CloudB3E2Norm.H20Transport, ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner, ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate18E2, ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19E2
+  Reverse closure of changed modules: 640 importers
+  Terminal affected targets: 85
+5222492581202af090762d7ac62d6b042de53865
+  ZInQKernel.OneProof.Main (10580 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.Contrib.OneProof.SelmerTwoPower (380 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.OneProof.Discharges (10581 project modules including root)
+    changed or retired modules: none
+  ZInQKernel (612 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.Contrib.CloudB3RC53.Assembly (1311 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.Contrib.OneProof.RC.Assembly (1323 project modules including root)
+    changed or retired modules: none
+  ZInQKernel.Contrib.OneProof.RC.Wiring.Leaves (2505 project modules including root)
+    changed or retired modules: ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner
+  ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Leaf (2408 project modules including root)
+    changed or retired modules: ZInQKernel.Contrib.CloudB3E2Norm.H20Anchor, ZInQKernel.Contrib.CloudB3E2Norm.H20DictFields, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClass, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassMatch, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassOf, ZInQKernel.Contrib.CloudB3E2Norm.H20Transport, ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner, ZInQKernel.Contrib.OneProof.RC.Wiring.ChainCond, ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19E2
+  Reverse closure of changed modules: 640 importers
+  Terminal affected targets: 86
+```
+
+There is no intersection for either theorem root even on pinned main,
+where the old declarations still existed. The import path from the
+separate `Wiring.Leaves` candidate to the changed `Heegner` module goes
+through `PrintsArith.Bundle`. Its mention of the unweighted witness is
+in a comment. The staged common-coordinate package uses the
+weighted interface.
+
+**Count lowered: none.** On pinned main, `hRC` is the argument at
+`ZInQKernel/OneProof/Main.lean:265`, with its type defined at
+`ZInQKernel/Contrib/OneProof/SelmerTwoPower.lean:217`. It is GLUE at
+`docs/one-proof/kinds.tsv:23` and `docs/one-proof/OPEN.md:149` and
+`docs/one-proof/OPEN.md:462`. The H total and strict breakdown are
+at `docs/one-proof/OPEN.md:16` and `docs/one-proof/OPEN.md:18`.
+No count or row changes under this retirement.
