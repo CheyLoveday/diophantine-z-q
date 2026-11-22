@@ -28,7 +28,7 @@ namespace ZInQ.Contrib.CloudB3E2.ChainActual
 
 open NumberField IsDedekindDomain
 open ZInQ.Manuscript ZInQ.Manuscript.RC ZInQ.Manuscript.RC.Wiring
-open ZInQ.Manuscript.RC.PrintsArith (Qbar CCLThm2_15Applied)
+open ZInQ.Manuscript.RC.PrintsArith (Qbar CCLThm2_15AppliedWithUnits)
 open ZInQ.Contrib.CloudB3E2.NormCochain (CSTParam FullAnchor)
 open ZInQ.Contrib.CloudB3RC53 (Ecurve)
 open ZInQ.Manuscript.RC.CoefModules (acoefTop acoefTop_discrete)
@@ -113,7 +113,7 @@ theorem hgood_of_support (P : StagedPresentation C D Fam x G.toFamily) (t : ℕ)
 (`hgood_of_support`). Kind: definition. -/
 def e2ChainInputsS_of_actual' (P : StagedPresentation C D Fam x G.toFamily) (t : ℕ)
     (cp : CSTParam (Ecurve ℓ)) (emb : Qbar →ₐ[ℚ] ℂ) (κ : Qbar ≃ₐ[ℚ] AlgebraicClosure C.K)
-    (print : CCLThm2_15Applied (Ecurve ℓ) (FullAnchor (Ecurve ℓ) C.K cp emb κ))
+    (print : CCLThm2_15AppliedWithUnits (Ecurve ℓ) C.K (FullAnchor (Ecurve ℓ) C.K cp emb κ))
     (St : RCSteps D) (hodd : ¬ D.OddEmptyUnit) (hAdm : Fam.Admissible D.S D.kfin)
     (hS2N : ∀ p : ℕ, p.Prime → p ∣ 2 * newformLevel (Ecurve ℓ) → p ∈ D.S)
     (hrk : ¬ ((G.r (t + 1) : ℕ) : ℤ) ∣ D.kfin)

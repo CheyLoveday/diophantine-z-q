@@ -1,0 +1,90 @@
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.whittakerSlash' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.whittakerSlash_hasSum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.whittakerSlash_periodic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.whittakerSlash_holo' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.whittakerSlash_bounded' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.whittakerIntegral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.whittakerIntegral_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.whittakerOffset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.whittakerOffset_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.whittakerOffset_add' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.upper_level_of_norm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.whittakerLocalReduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.rationalDiagonal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.translatedDiagonal' depends on axioms: [propext,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.isWhittakerTest' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.isWhittakerTest_index' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.isWhittakerTest_away' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.whittakerIntegral_lifts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.finiteWhittaker' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.finiteWhittaker_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerEvaluation.0.ZInQ.Manuscript.RC.EvenJoin.finiteWhittaker_away' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.whittakerColumnsOfForms' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.whittakerColumnValues' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.dilationWhittakerAt_of_forms' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.placedGaloisInput_of_carayol_of_ramified' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.exists_with_local_square_roots' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.halfModulusOfRoot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.halfModulusOfRoot_units' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.halfModulusOfRoot_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.ramified_scalar_complex_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.NormalizedCuspSource.LocalWhittakerTest' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.whittaker_translate_sum_eq_classical' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.ramified_scalar_complex_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.RamifiedLocalModelAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.ramifiedNewvectorAt_of_whittakerTests' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.old_degree_endpoint_coefficients' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.placedGaloisInput_of_carayol_of_localModels' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
