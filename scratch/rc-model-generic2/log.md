@@ -5,3 +5,4 @@
 - `PairJ`: the source invariant descends to pair classes. Each class over the j-invariant of a given equation has a representative on that equation. Lake build passed, 4 standard-axiom checks.
 - `RationalPoints`: the rational degree-zero quotient has the actual cyclic-pair reading, computed on any marked lift. The first j-coordinate evaluates to the source invariant. Lake build passed, 3 standard-axiom checks.
 - `ShortSubgroups`: on an elliptic equation with nonexceptional j, equal pair classes on that equation have equal subgroups. Lake build passed, 3 standard-axiom checks.
+- `GenericPoints`: the pinned generic j-fibre points biject with the cyclic subgroups on the actual `EjBar`, with the specified first coordinate and pair class. Lake build passed, 6 standard-axiom checks.
