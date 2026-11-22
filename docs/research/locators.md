@@ -4,7 +4,7 @@
 
 | Row | Published source and location | Statement check |
 | --- | --- | --- |
-| `hRank` | J. H. Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Springer GTM 106 (2009), Appendix C, Evidence 16.5.5, pp. 452–453; the rank-one line is on p. 453 ([scan](https://www.math.ens.psl.eu/~benoist/refs/Silverman.pdf), PDF page 464). | AI-READ: for elliptic curves over Q, L_E(1) = 0 and L′_E(1) ≠ 0 imply rank E(Q) = 1. The surrounding text removes the historical modularity hypothesis. The Lean statement uses the continuation of the Hasse–Weil L-function and only the rank conclusion. Human statement check pending. |
+| `hRank` | J. H. Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Springer GTM 106 (2009), Appendix C, Evidence 16.5.5, pp. 452–453; the rank-one line is on p. 453. | AI-READ: for elliptic curves over Q, L_E(1) = 0 and L′_E(1) ≠ 0 imply rank E(Q) = 1. The surrounding text removes the historical modularity hypothesis. The Lean statement uses the continuation of the Hasse–Weil L-function and only the rank conclusion. Human statement check pending. |
 
 ## Later locator: weight-at-least-two representations (2026-11-21)
 
