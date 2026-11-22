@@ -1,0 +1,581 @@
+{
+  "base_commit": "fa21b10759ad132c985aca8c6ba456cb42e66f7f",
+  "lean": "4.35.0",
+  "mathlib_commit": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+  "execution": "odProof on Modal",
+  "stages": {
+    "pazuki-build": {
+      "input": "ZInQKernel/Contrib/OneProof/PazukiSymmetricDescent.lean",
+      "input_sha256": "7ef7363e2a6285e7d2b784f27682c9c98f4b620f063c335520e59cbc50666cd4",
+      "exit": 0,
+      "elapsed_seconds": 127.240356406,
+      "stdout_sha256": "8bfbfc3907c33a3f96bc0f4030596f2dd9f9a7e455296dd1a7a16e77ab7981c0",
+      "lake_command": [
+        "lake",
+        "--offline",
+        "--no-cache",
+        "--fail-fast",
+        "build",
+        "+ZInQKernel.Contrib.OneProof.PazukiSymmetricDescent"
+      ],
+      "hosted_stage_receipt_sha256": "038d8e1f1b1aa4af24278c901e1bf69538981260bece48796c108e22bdbe4dea"
+    },
+    "pazuki-check": {
+      "input": "scratch/height-cm-review/CheckPazuki.lean",
+      "input_sha256": "6b150966626f8c7b379a91cd2246a97bc8ef994b2aad0537c6cdd8e9bf6a8d69",
+      "exit": 0,
+      "elapsed_seconds": 2.5505586449999953,
+      "stdout_sha256": "5a39a9bb0b8109c8deae5e975f63a3464540fdcfeb6a0f8835f86b4455ea2a80",
+      "axioms": {
+        "ZInQ.PazukiSymmetricDescent.symmetric_tensor_iff_sq_eq_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "ZInQ.PazukiSymmetricDescent.symmetric_twist_iff_sq_eq_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "ZInQ.PazukiSymmetricDescent.numberField_factor_of_quasiFiniteAt": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "ZInQ.PazukiSymmetricDescent.fixedPoint_numberField_factor": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      "lake_command": [
+        "lake",
+        "--offline",
+        "--no-cache",
+        "env",
+        "lean",
+        "CheckPazuki.lean"
+      ],
+      "hosted_stage_receipt_sha256": "6e880170b2f3f931531a5ab6e166c681aec0afa1bba04f73528f829b39b65d64"
+    },
+    "cm-build": {
+      "input": "ZInQKernel/Contrib/OneProof/CMjDegreeFromRingClass.lean",
+      "input_sha256": "0310864b2d2772103a019038fe4ec90bff036f359f56a6e7b7c0e00224d87445",
+      "exit": 0,
+      "elapsed_seconds": 547.406978093,
+      "stdout_sha256": "84aadcc93b09538d619e4ad76603eff8b1c197f83adb2194a46057aa046dfdf9",
+      "lake_command": [
+        "lake",
+        "--offline",
+        "--no-cache",
+        "--fail-fast",
+        "build",
+        "+ZInQKernel.Contrib.OneProof.CMjDegreeFromRingClass"
+      ],
+      "hosted_stage_receipt_sha256": "d2d72ff544107b6d091437ce7a710e74efe28de2ce090b8bcea05d709129148d"
+    },
+    "cm-check": {
+      "input": "scratch/height-cm-review/CheckCM.lean",
+      "input_sha256": "17b62a86e1cf12ae703047b07c3066229ff6f7fb06198aead02f4fb1219454b8",
+      "exit": 0,
+      "elapsed_seconds": 4.610800456999982,
+      "stdout_sha256": "7b09f64cb42b9785eec8d12060edc41cd28d1c292e530c84e7525b2d6b79d50c",
+      "axioms": {
+        "HDec.CMBranch.CMjBridges.finrank_adjoin_le_rat": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "HDec.CMBranch.CMjBridges.finrank_adjoin_rat_bounds": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "HDec.CMBranch.CMjBridges.properClassNumber_le_rat_degree_of_embedding": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "HDec.CMBranch.CMjBridges.card_pic_le_of_ringClass_embedding": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "HDec.CMBranch.CMjBridges.cmjDegreePrint_of_ringClass_and_polynomial": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      "lake_command": [
+        "lake",
+        "--offline",
+        "--no-cache",
+        "env",
+        "lean",
+        "CheckCM.lean"
+      ],
+      "hosted_stage_receipt_sha256": "bd125555d040cd96f1c448f7c53d6c40d1e5d1b3f3150112b0d619cc3278b421"
+    }
+  },
+  "project_reporter": {
+    "base_tree": "32ec8e1a9af21cda837a89c08ed015ff8881ae43",
+    "stages": {
+      "reporter-build": {
+        "exit": 0,
+        "elapsed_seconds": 12671.502,
+        "stdout_sha256": "a67299114072639df027b8254142b3e7c7c4dbdd11077f5243c039a603298592",
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "--fail-fast",
+          "build",
+          "+ZInQKernel.OneProof.Main",
+          "+ZInQKernel.OneProof.Discharges"
+        ],
+        "hosted_stage_receipt_sha256": "c4fc06ebe00d9d2260d864e29cf3b6c4c876c15bd81352fa0fa8e661210069f6"
+      },
+      "reporter-check": {
+        "exit": 0,
+        "elapsed_seconds": 10.215,
+        "stdout_sha256": "37167af9c4d96e9759060a20fcbbca1a5227ac82a9bb85c5a6da8728e0094059",
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "Discharges.lean"
+        ],
+        "hosted_stage_receipt_sha256": "b4d5b36c9ef1974bd9be98d4d2f7a9ae4b83e22bd14b815cd27dc648f02d7c0a"
+      }
+    },
+    "candidate_input_sha256": {
+      "ZInQKernel/Contrib/OneProof/PazukiSymmetricDescent.lean": "7ef7363e2a6285e7d2b784f27682c9c98f4b620f063c335520e59cbc50666cd4",
+      "scratch/height-cm-review/CheckPazuki.lean": "6b150966626f8c7b379a91cd2246a97bc8ef994b2aad0537c6cdd8e9bf6a8d69",
+      "ZInQKernel/Contrib/OneProof/CMjDegreeFromRingClass.lean": "0310864b2d2772103a019038fe4ec90bff036f359f56a6e7b7c0e00224d87445",
+      "scratch/height-cm-review/CheckCM.lean": "17b62a86e1cf12ae703047b07c3066229ff6f7fb06198aead02f4fb1219454b8",
+      "scratch/height-cm-review/Discharges.lean": "abfbc544ee23aba81ae6c56077dabbcaf2a1f0e7c00badc2575abf0d297c238b",
+      "lean-toolchain": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c",
+      "lake-manifest.json": "f7ce830d517bfbcb4cdcc90bef299da854c9b28653b9accc2b13df2822233779",
+      "lakefile.toml": "9741c90099fcc223aac48f70342807e37d7f413901e57fe8e4be0c51607826fe"
+    },
+    "summary_including_base_project": {
+      "open_hypotheses": 24,
+      "theorems_checked": 18458,
+      "theorems_matching_a_field": 142
+    },
+    "candidate_matches": [
+      {
+        "field": "OpenResearchLeaves75.cmjDegreePrint",
+        "theorem": "HDec.CMBranch.CMjBridges.cmjDegreePrint_of_ringClass_and_polynomial",
+        "remaining_premise_as_printed": "[∀ (τ : UpperHalfPlane) (Δ : ℤ),\n   HDec.CMBranch.CMjBridges.PeriodDiscriminant τ Δ →\n     ∀ (k : Type) [inst : Field k] [inst_1 : NumberField k] [NumberField.IsTotallyComplex k],\n       Module.finrank ℚ k = 2 →\n         ∀ (O : TauCeti.GlobalNumberFields.NumberFieldOrder k),\n           O.discr = Δ →\n             ∃ σ P,\n               P ≠ 0 ∧\n                 (Polynomial.aeval (HDec.CMBranch.CMjBridges.modularJ τ)) P = 0 ∧\n                   P.natDegree ≤ HDec.CMBranch.FowlerBridges.properClassNumber O ∧\n                     Nonempty\n                       (↥(TauCeti.ClassFieldTheory.ringClassField O) →ₐ[k] ↥k⟮HDec.CMBranch.CMjBridges.modularJ τ⟯)]",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    ]
+  },
+  "pazuki_fixed_locus": {
+    "exact_hosted_receipt_sha256": "20fc8cee151a78adfbf3410c742e6f5fab4b0ea32bba5233560702781b3c5b0a",
+    "source_patch_sha256": "41e03d32001d1a26a02c611a4df1d5cf88421cece63f107a5629a9a228751ec1",
+    "candidate_input_sha256": {
+      "scratch/height-cm-review/CheckFixedGeometry.lean": "711eaf164158eca0258cfbb01bab7af525bf46eba396afc5a08210f1dedc4473",
+      "scratch/height-cm-review/CheckFixedLocus.lean": "952759a47654a2ec30d07348f8c4a2f984dac5bea8fedb7961011036649ef823",
+      "ZInQKernel/Contrib/OneProof/PazukiFixedEqualizerBaseChange.lean": "d134d91bc36378a8f83cc94b22be19b9553b123d9a5f8d5a37ae289a7bf024b6",
+      "ZInQKernel/Contrib/OneProof/PazukiFixedLocusCover.lean": "f28ddfd164f16a779408c583eecf4acc8508b805b653e0d8dddbbf343379c2ff",
+      "ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean": "82734c95c7d3625b4ac10e347a3bcbe681897a1b8e26baaa33c452f48b5a20fe",
+      "ZInQKernel/Contrib/OneProof/PazukiPicardBaseChange.lean": "e49083948dc4cdd731400fea4e85b2c348bd830df5c341f6e5f90a3fb2af6dd4",
+      "ZInQKernel/Contrib/OneProof/PazukiPicardFixedLocus.lean": "a5164a9be06696225354d09605933472432bb2fe380eb385baaffdca9aa3c505",
+      "ZInQKernel/Contrib/OneProof/PazukiPicardInvolution.lean": "dd544e6fa049bc80635c46bef340fd182c55c3bc998284269ddb23aab5d704e6",
+      "ZInQKernel/Contrib/OneProof/PazukiQuasiFiniteDescent.lean": "7c2cf851044f42cfc1ea8dd829c89719352f1200ac8981effa4db93017f2b4d5"
+    },
+    "generated_audit_sha256": {
+      "AuditPazukiFixedEqualizerBaseChange.lean": "fc0b313ceeef44afd09a1c54188e21f6c4c1dd60b5db97bfc42edf09d913bcaa",
+      "AuditPazukiFixedLocusCover.lean": "7d1a61c213d0388443c6c6cd8d8ea5f32ce877817fd7aadf86c208b01496666b",
+      "AuditPazukiFixedQuasiFinite.lean": "eb3134e01fb09da2b2bbb669b72ad6bc2db8fac82d771057bf6a4b8d9793734a",
+      "AuditPazukiPicardBaseChange.lean": "e46346df7ce6ec785d00a6f9c7ebe91b6e9e74242a59a0bc502a89391bae9fcc",
+      "AuditPazukiPicardFixedLocus.lean": "9b46a273b1793bac4c19dd18f9a34e43d8210bfa6dc703475371c4b2df0b2f4c",
+      "AuditPazukiPicardInvolution.lean": "8b4e6d4a46dec41b73a207a3af762ccd36bc0f5323af44d7ede4f5f6437b7157",
+      "AuditPazukiQuasiFiniteDescent.lean": "5d7b2ef41b87006841f1acbdb302f5c259ca149f87f63746fc70ee7d2929fc4b"
+    },
+    "stages": {
+      "module-1-build": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "--fail-fast",
+          "build",
+          "+ZInQKernel.Contrib.OneProof.PazukiPicardInvolution"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 7.648,
+        "stdout_sha256": "f2293abd3bfa0f377cdd9be126dbef373b9e24e1fddb744a4a428805a1161b2d",
+        "hosted_stage_receipt_sha256": "b18eae24b7761f08d57c92236128c5691f24c47fdf1183a82b7d96b5922bbd4c"
+      },
+      "module-1-check": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "AuditPazukiPicardInvolution.lean"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 4.826,
+        "stdout_sha256": "1942dbc1210ea8897a9bd1dd6090c5f26f148bb2df03611861054a12f51a1857",
+        "hosted_stage_receipt_sha256": "80333ac4bce4331620e39f520e97af79213d795721e8858c3f659828a8070c8c"
+      },
+      "module-2-build": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "--fail-fast",
+          "build",
+          "+ZInQKernel.Contrib.OneProof.PazukiFixedQuasiFinite"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 3.89,
+        "stdout_sha256": "c1a96cf33914fa218446d65f51d00b320a865c5dcfbe226d70fd5ee9e50f843f",
+        "hosted_stage_receipt_sha256": "7d49d5a4d56e08a887f6a4105dd324040acb8aa6580acdc8e70b8edbe2948a19"
+      },
+      "module-2-check": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "AuditPazukiFixedQuasiFinite.lean"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 5.029,
+        "stdout_sha256": "91646844bf8fe5623c9c54d9e2fe8cead5f8687f668663fd54c68b19e6fc3b01",
+        "hosted_stage_receipt_sha256": "04c9ad69de8282abc446cb0dd841630d5d7b5f5404f13ae2dd9422f3fea09282"
+      },
+      "module-3-build": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "--fail-fast",
+          "build",
+          "+ZInQKernel.Contrib.OneProof.PazukiFixedLocusCover"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 7.543,
+        "stdout_sha256": "6121b5ee1324d316e0b4da3f5a470fb91e49821cd57f8d7cd7ee4d33227a3b87",
+        "hosted_stage_receipt_sha256": "512cebf5d1577d8ac0d8317bdf3363752e8e21b23ea9f0bd85a434e67db938ec"
+      },
+      "module-3-check": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "AuditPazukiFixedLocusCover.lean"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 4.891,
+        "stdout_sha256": "43d6b3d5091beb814d693bc7640d9034483442bcf43710f288f30e594b2c9c4a",
+        "hosted_stage_receipt_sha256": "c814251939fded52b638a72acfb117aee4e65b0b837ee2af405a9cfb19da068a"
+      },
+      "module-4-build": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "--fail-fast",
+          "build",
+          "+ZInQKernel.Contrib.OneProof.PazukiPicardBaseChange"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 4.074,
+        "stdout_sha256": "8637c230459f58c3a4bfa4efde6076a7a7b3dcd8b56dba5df9274fe09835bf33",
+        "hosted_stage_receipt_sha256": "4d13a9612e28551e784e3842c9f7f52501fe25f032c18d3c349c242ab6a1ddc2"
+      },
+      "module-4-check": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "AuditPazukiPicardBaseChange.lean"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 4.874,
+        "stdout_sha256": "3104917f17768d3f33dd4bbd0022844a0b42287ee5268e64f5631d370d4432f8",
+        "hosted_stage_receipt_sha256": "24189d37978ca5a678315ef841f13b11a269cf28eb8fbbbe215da12094b76acf"
+      },
+      "module-5-build": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "--fail-fast",
+          "build",
+          "+ZInQKernel.Contrib.OneProof.PazukiFixedEqualizerBaseChange"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 1.582,
+        "stdout_sha256": "2cb345e48a63af065a0b16441b1d1a9a3126e2f59976906458f3911b90a35354",
+        "hosted_stage_receipt_sha256": "b938826e3e78bb7c8e1eb77805cb51f53f55baaca7a5dd58f8aabaad84cb2788"
+      },
+      "module-5-check": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "AuditPazukiFixedEqualizerBaseChange.lean"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 2.362,
+        "stdout_sha256": "36a63b8a287e13b2c18328cb62fe3baac232b5979d1104afbffc3a82ecdeed5e",
+        "hosted_stage_receipt_sha256": "fdb47a8fd559d0c516b3387136a35e04ddfefaaafc6e86c51410b605d14a0378"
+      },
+      "module-6-build": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "--fail-fast",
+          "build",
+          "+ZInQKernel.Contrib.OneProof.PazukiQuasiFiniteDescent"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 3.669,
+        "stdout_sha256": "2f218975d310cf72133b6368b42d9b2ef99147ae7b1d6164cc977e7b8b817591",
+        "hosted_stage_receipt_sha256": "db8bb2a38b3dd0f4b25cbe076aaca5f69b3a2a01ff092c3c0fb47b9aadd40ec9"
+      },
+      "module-6-check": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "AuditPazukiQuasiFiniteDescent.lean"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 4.317,
+        "stdout_sha256": "3a61481c73152b760ed41fd1db53e73636a0c7bdcfe6eddcbdbc422dbf798815",
+        "hosted_stage_receipt_sha256": "c1b61c3824d5239cf7785c3e73fcdbf5b8adf6c34db0ae39b050440094aa6a2d"
+      },
+      "module-7-build": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "--fail-fast",
+          "build",
+          "+ZInQKernel.Contrib.OneProof.PazukiPicardFixedLocus"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 7.55,
+        "stdout_sha256": "afc2f092d31177b1d104fbca84391b9cda4274f9bbf9c3ed42915dd4696b7188",
+        "hosted_stage_receipt_sha256": "32c26b3d19e6d2f18de5e9885215359298a07444c85a0dacb02dcd5dd1591e70"
+      },
+      "module-7-check": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "AuditPazukiPicardFixedLocus.lean"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 4.918,
+        "stdout_sha256": "ba25c53f663586d6d7057c6f8e5ad4210bc96ff094bcfae105e8f1d3b3fcc48e",
+        "hosted_stage_receipt_sha256": "6737222b735d42777af5a5167760bc8722b1df1587393aaa2bce286e0fafcbbb"
+      },
+      "checkfixedgeometry-check": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "CheckFixedGeometry.lean"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 5.064,
+        "stdout_sha256": "3b35481c20ee01fab2eff381b8c400da37ffa123a35b7083b2a14b77632f54d6",
+        "hosted_stage_receipt_sha256": "f065a416c0b5d06d19364a25d436a730bf0bb02c62533336927171808c8f1357"
+      },
+      "checkfixedlocus-check": {
+        "lake_command": [
+          "lake",
+          "--offline",
+          "--no-cache",
+          "env",
+          "lean",
+          "CheckFixedLocus.lean"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 4.907,
+        "stdout_sha256": "ba25c53f663586d6d7057c6f8e5ad4210bc96ff094bcfae105e8f1d3b3fcc48e",
+        "hosted_stage_receipt_sha256": "e900d61544ac38f470df552ac64e95a61c01a20e263539b42d12a501bc6b59e6"
+      }
+    },
+    "typed_examples": {
+      "CheckFixedGeometry.lean": 1,
+      "CheckFixedLocus.lean": 2
+    },
+    "axioms": {
+      "ZInQ.PazukiPicardInvolution.dualP_isMonHom": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiPicardInvolution.inv_pullback_of_isTI": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiPicardInvolution.dualP_inv_on_picZero": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiFixedQuasiFinite.picard_fixed_quasiFiniteAt_section": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiFixedLocusCover.locallyQuasiFinite_of_sections": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiFixedLocusCover.picard_fixed_locallyQuasiFinite": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiPicardBaseChange.fullPicardRepresentation_apply": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiPicardBaseChange.dualSheafMap_baseChange": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiPicardBaseChange.dualP_baseChange": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiPicardBaseChange.dualP_inv_baseChange": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiFixedEqualizerBaseChange.locallyQuasiFinite_fixed_pullback": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiQuasiFiniteDescent.locallyQuasiFinite_of_surjective_baseChange": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiQuasiFiniteDescent.fixedLocus_quasiFiniteAt_of_field_extension": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiPicardFixedLocus.locallyQuasiFinite_fixedPicard": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "ZInQ.PazukiPicardFixedLocus.fixedPicard_point_definedOver": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "audit_roots_by_module": {
+      "PazukiFixedEqualizerBaseChange": [
+        "ZInQ.PazukiFixedEqualizerBaseChange.locallyQuasiFinite_fixed_pullback"
+      ],
+      "PazukiFixedLocusCover": [
+        "ZInQ.PazukiFixedLocusCover.locallyQuasiFinite_of_sections",
+        "ZInQ.PazukiFixedLocusCover.picard_fixed_locallyQuasiFinite"
+      ],
+      "PazukiFixedQuasiFinite": [
+        "ZInQ.PazukiFixedQuasiFinite.picard_fixed_quasiFiniteAt_section"
+      ],
+      "PazukiPicardBaseChange": [
+        "ZInQ.PazukiPicardBaseChange.fullPicardRepresentation_apply",
+        "ZInQ.PazukiPicardBaseChange.dualSheafMap_baseChange",
+        "ZInQ.PazukiPicardBaseChange.dualP_baseChange",
+        "ZInQ.PazukiPicardBaseChange.dualP_inv_baseChange"
+      ],
+      "PazukiPicardFixedLocus": [
+        "ZInQ.PazukiPicardFixedLocus.locallyQuasiFinite_fixedPicard",
+        "ZInQ.PazukiPicardFixedLocus.fixedPicard_point_definedOver"
+      ],
+      "PazukiPicardInvolution": [
+        "ZInQ.PazukiPicardInvolution.dualP_isMonHom",
+        "ZInQ.PazukiPicardInvolution.inv_pullback_of_isTI",
+        "ZInQ.PazukiPicardInvolution.dualP_inv_on_picZero"
+      ],
+      "PazukiQuasiFiniteDescent": [
+        "ZInQ.PazukiQuasiFiniteDescent.locallyQuasiFinite_of_surjective_baseChange",
+        "ZInQ.PazukiQuasiFiniteDescent.fixedLocus_quasiFiniteAt_of_field_extension"
+      ]
+    },
+    "supplement_module_warnings": [
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedEqualizerBaseChange.lean: imports `Mathlib.AlgebraicGeometry.Limits` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedEqualizerBaseChange.lean: imports `Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedEqualizerBaseChange.lean:89:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedEqualizerBaseChange.lean:92:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedLocusCover.lean: imports `Mathlib.AlgebraicGeometry.Morphisms.Immersion` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedLocusCover.lean:23:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedLocusCover.lean:45:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedLocusCover.lean:61:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedLocusCover.lean:62:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean: imports `Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:112:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:114:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:115:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:116:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:117:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:119:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:63:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:65:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:66:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:69:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiFixedQuasiFinite.lean:81:8: automatically included section variable(s) unused in theorem `_private.ZInQKernel.Contrib.OneProof.PazukiFixedQuasiFinite.0.ZInQ.PazukiFixedQuasiFinite.comp_translate`:",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiPicardBaseChange.lean:123:35: Unused tactic linter: `<;>` should be replaced with `;` or be removed.",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiPicardBaseChange.lean:123:35: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiPicardFixedLocus.lean:41:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiPicardFixedLocus.lean:42:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiPicardFixedLocus.lean:43:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiPicardFixedLocus.lean:66:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiPicardInvolution.lean:31:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiQuasiFiniteDescent.lean:23:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiQuasiFiniteDescent.lean:24:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiQuasiFiniteDescent.lean:25:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiQuasiFiniteDescent.lean:43:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiQuasiFiniteDescent.lean:44:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiQuasiFiniteDescent.lean:45:2: Try this: ",
+      "warning: ZInQKernel/Contrib/OneProof/PazukiQuasiFiniteDescent.lean:46:2: Try this: "
+    ]
+  }
+}
