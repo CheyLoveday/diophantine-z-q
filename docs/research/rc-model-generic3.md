@@ -1,8 +1,8 @@
 # Generic comparison on the pinned rational open
 
-Scoped stop. The actual regular Vélu coordinate is the Laurent generator `jqN N` on the fixed normalization and evaluates to `j(Nτ)` on every normalized analytic branch, including coordinate collisions. Its specialization as the invariant of the actual quotient pair reduces to one identity on the marked cover. The genuine period-lattice pair, the composite Vélu map on points, and the two modular equations for the intermediate Atkin–Lehner quotient are checked. The comparison of the cyclic-pair readings on the whole complex chart, the exact-divisor moduli comparison, and the fixed good-Hecke multiset remain required for `GenericFibreComparison`.
+Scoped stop. The actual regular Vélu coordinate is the Laurent generator `jqN N` on the fixed normalization and evaluates to `j(Nτ)` on every normalized analytic branch, including coordinate collisions. Its specialization as the invariant of the actual quotient pair reduces to one identity on the marked cover. The genuine period-lattice pair, the composite Vélu map on points, and the two modular equations for the intermediate Atkin–Lehner quotient are checked. On each full normalized analytic point, `rationalAtkin` gives the matrix translate and evaluates to the ordered coordinates `j(Qτ)` and `j((N/Q)τ)`. The comparison of the cyclic-pair readings on the whole complex chart, the exact-divisor moduli comparison, and the fixed good-Hecke multiset remain required for `GenericFibreComparison`.
 
-The existing identification of the detector generic fibre with the finite chart of the fixed rational curve applies for every prime detector `5 ≤ ell` with `¬ ell ∣ N * N.totient`, at `2 ≤ N`. Each identification uses the same rational degree-zero quotient. The j-projection and the restriction of the supplied fixed parametrization are already checked by `rationalOpen_pairJ` and `restrictParametrization_point`.
+The existing identification of the detector generic fibre with the finite chart of the fixed rational curve applies for every prime detector `5 ≤ ell` with `¬ ell ∣ N * N.totient`, at `2 ≤ N`. Each identification uses the same rational degree-zero quotient over ℚ, via `levelQuotientBaseChange`. The j-projection and the restriction of the supplied fixed parametrization are already checked by `rationalOpen_pairJ` and `restrictParametrization_point`.
 
 The rational second coordinate is the lift of the Galois descent of the **actual** iterated Vélu quotient of the cyclic subgroup on the moduli equation. At each prime step the quotient coefficients and the images of the remaining subgroup are computed in the vendor iteration. The invariant is the cube of the last equation's c₄ divided by its discriminant. The field isomorphism takes this descended invariant to `jqN N`. The finite chart is the integral closure of ℚ[j] in the prescribed subfield of rational Laurent series. Its complement in the compact curve consists of the cusps, namely the poles of j. The vendor supplies the generic bijection, transitivity, degree ψ(N), and the minimal polynomial of the chosen Laurent root.
 
@@ -24,8 +24,10 @@ The rational second coordinate is the lift of the Galois descent of the **actual
 | `branchQuotientCoordinate_field`, `branchQuotientCoordinate_complexPoint` | The regular section has field value `jqN N` and takes value `X0Model.analyticJN N τ` at every normalized analytic parameter. Apply the generic Vélu comparison, identify the analytic germ, and use uniqueness of its limit at τ. **ON THE SPOT (c)**. |
 | `rationalPointAtParameter`, `rationalPointAtParameter_openImmersion` | Evaluate the pinned rational algebra through the inverse section isomorphism and the actual normalized point at τ. The resulting point maps to `X0Model.complexPoint N τ` under the pinned open immersion by affine evaluation. **ON THE SPOT (c)**. |
 | `rationalPointAtParameter_pairJ`, `rationalPointAtParameter_quotientCoordinate` | The pinned pair at this inverse image has source invariant `j(τ)`. Evaluation of the regular quotient coordinate at the same point is `j(Nτ)`. Use compatibility with projection on the first coordinate and the germ calculation on the second. **ON THE SPOT (c)**. |
+| `rationalAtkin_rationalPointAtParameter` | For an exact divisor Q, the fixed `rationalAtkin hQ` sends the image of the pinned point at τ to the image of the pinned point at the matrix translate of τ. Use the full normalized chart equality for `rationalAtkin` and the inverse evaluation theorem. **ON THE SPOT (c)**. |
+| `rationalAtkin_complexPoint_coordinates` | At the same parameters, the translated point lies in the finite chart and its two coordinate readings are `j(Qτ)` and `j((N/Q)τ)`. Use the matrix-coordinate identities with the checked evaluation on the translated normalized branch. **ON THE SPOT (c)**. |
 
-The five modules above passed the serialized Lake checks. The 21 `#print axioms` results contain only `propext`, `Classical.choice`, and `Quot.sound`.
+All six modules passed their serialized Lake builds. `AtkinCoordinates` used Lake’s unchanged-module mode with the dependency cache from the exact pinned revision after the source comparison. The 23 `#print axioms` results contain only `propext`, `Classical.choice`, and `Quot.sound`.
 
 ## Remaining comparison
 
@@ -73,6 +75,7 @@ None until the Néron extension of the parametrization lands. The generic geomet
 | TeX lines | Verdict | Step |
 | --- | --- | --- |
 | 1784–1788 | unverified | Inherited citation scope for the normalized newform and Hecke action. |
+| 2943–2944 | gap filled | The map used for the generic involution is the fixed rational matrix action on full normalized analytic points. |
 | 8366–8368 | OK | The finite exclusions allow the admissible detector hypotheses. |
 | 8468–8474 | gap filled | The imported integral model supplies the coarse pair reading. |
 | 8473–8474 | unverified | Identification with the actual adelic labels is downstream. |
