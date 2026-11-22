@@ -18,6 +18,10 @@ The archived consumer asks for the actual class over the finite field extension.
 
 [CM degree comparison](../../ZInQKernel/Contrib/OneProof/CMjDegreeFromRingClass.lean) uses an embedding of the ring class field of the supplied order into the quadratic field with the actual modular value adjoined. That direction supplies the Picard-cardinality lower bound. For the full equality the same value also needs a nonzero rational annihilating polynomial of degree at most the class number. Both arithmetic inputs remain explicit. [Downstream consumer](https://github.com/Deicyde/diophantine-z-q/blob/fa21b10759ad132c985aca8c6ba456cb42e66f7f/ZInQKernel/Contrib/OneProof/CMjBridgesArithmetic.lean#L36-L47)
 
+## Preparing a contribution to Jack’s fork
+
+This draft is the review packet for two separate lines of work. A contribution into Jack’s `main` should first agree one named field or a narrower subtask through the claims process. Keep its proof diff to the new OneProof modules for that line. Keep this scratch directory and the evidence on the review branch and link them in the contribution description. Use the exact endpoint and list the premises the proof actually carries. The two endpoints above leave the height and printed CM fields open. [Claims issue](https://github.com/Deicyde/diophantine-z-q/issues/14) · [One-proof contribution guide](https://github.com/Deicyde/diophantine-z-q/blob/main/docs/one-proof/CONTRIBUTING.md)
+
 ## Formal checking
 
 The base is Jack’s revision `fa21b10759ad132c985aca8c6ba456cb42e66f7f` with Lean 4.35.0 and mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`. odProof runs the pinned project on Modal. The focused checks apply declarations to explicit typed targets and query transitive axioms. A separate project reporter searches for matches against the bundled open hypotheses. A match with premises leaves those premises open.
@@ -25,3 +29,17 @@ The base is Jack’s revision `fa21b10759ad132c985aca8c6ba456cb42e66f7f` with Le
 **Both original focused gates passed on Modal.** The two module builds and both scratch executions exited successfully, checking four typed uses. Each of the nine axiom readbacks listed exactly `propext`, `Classical.choice` and `Quot.sound`. The source and scratch digests in the receipt match this checkout. The CM gate establishes the conditional reductions above. The canonical project reporter and the seven newer fixed-locus modules have separate results pending. [Modal receipt with per-root axioms](modal-results.json) · [Pazuki scratch](CheckPazuki.lean) · [CM scratch](CheckCM.lean) · [Project reporter](Discharges.lean)
 
 The fixed-locus checks apply the result at a rational complex point, require local quasi-finiteness of the entire actual equalizer over a number field, and recover the same complex point over a finite extension. [Geometric chart check](CheckFixedGeometry.lean) · [Ground-field and point checks](CheckFixedLocus.lean)
+
+For a hosted checkout of this draft, the two original focused gates and the separate new endpoint gate can be reproduced from the repository root.
+
+```sh
+lake build +ZInQKernel.Contrib.OneProof.PazukiSymmetricDescent
+lake env lean scratch/height-cm-review/CheckPazuki.lean
+lake build +ZInQKernel.Contrib.OneProof.CMjDegreeFromRingClass
+lake env lean scratch/height-cm-review/CheckCM.lean
+lake build +ZInQKernel.Contrib.OneProof.PazukiPicardFixedLocus
+lake env lean scratch/height-cm-review/CheckFixedGeometry.lean
+lake env lean scratch/height-cm-review/CheckFixedLocus.lean
+```
+
+The original project reporter uses `lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges` followed by `lake env lean scratch/height-cm-review/Discharges.lean`. Its scratch imports the original two candidate modules.
