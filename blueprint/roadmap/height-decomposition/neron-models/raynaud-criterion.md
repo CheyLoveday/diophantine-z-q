@@ -3,7 +3,7 @@ article_id: af_025382b51005b64f6e96d27c
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenResearchLeaves74.silverbergZarhinThm35
+lean: HDec.HSyn.OpenResearchLeaves75.silverbergZarhinThm35
 ---
 
 # Raynaud's criterion for semistable reduction
