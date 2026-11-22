@@ -1,0 +1,5 @@
+# Rational open comparison results
+
+- Base `85505928a07a41a30e0dd9cd22e17faf54a76b06`. Approved Atkin–Lehner merge `66b8d103be2f9e6d7193df3f6c4995bccf4e8d5b` succeeded.
+- Bridge documentation correction `aee7b1aee8a82005b7003fe9c6ed895b217a7e2b` points to the proved vendored bijection and transitivity.
+- `PairJ`: the source invariant descends to pair classes. Each class over the j-invariant of a given equation has a representative on that equation. Lake build passed, 4 standard-axiom checks.
