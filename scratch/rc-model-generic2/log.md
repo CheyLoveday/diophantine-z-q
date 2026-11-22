@@ -10,3 +10,4 @@
 - `GenericGalois`: the actual generic j-point bijection to subgroups of `EjBar` commutes with every `Qj`-automorphism of `Kbar`. Lake build passed, 2 standard-axiom checks.
 - `PairQuotientValue`: the iterated prime-kernel Vélu quotient invariant is well defined on pair classes. Lake build passed, 2 standard-axiom checks.
 - `FiniteDescent`: evaluations separate elements of a finite reduced algebra. An equivariant tuple descends uniquely by the Artinian product decomposition and fixed fields. Lake build passed, 4 standard-axiom checks.
+- `QuotientInvariant`: the iterated Vélu values on the pinned generic pairs descend to `Y0RationalGenericQuotientJ`, with evaluation at every geometric point. Lake build passed, 6 standard-axiom checks.
