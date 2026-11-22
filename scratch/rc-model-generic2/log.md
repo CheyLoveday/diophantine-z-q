@@ -6,3 +6,4 @@
 - `RationalPoints`: the rational degree-zero quotient has the actual cyclic-pair reading, computed on any marked lift. The first j-coordinate evaluates to the source invariant. Lake build passed, 3 standard-axiom checks.
 - `ShortSubgroups`: on an elliptic equation with nonexceptional j, equal pair classes on that equation have equal subgroups. Lake build passed, 3 standard-axiom checks.
 - `GenericPoints`: the pinned generic j-fibre points biject with the cyclic subgroups on the actual `EjBar`, with the specified first coordinate and pair class. Lake build passed, 6 standard-axiom checks.
+- `MarkedGalois`: the coefficient map of a short equation over `Qj` is fixed by every Galois automorphism, and the marked short cover lift commutes with the action on its two point coordinates. Lake build passed, 3 standard-axiom checks.
