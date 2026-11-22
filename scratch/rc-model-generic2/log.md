@@ -8,3 +8,4 @@
 - `GenericPoints`: the pinned generic j-fibre points biject with the cyclic subgroups on the actual `EjBar`, with the specified first coordinate and pair class. Lake build passed, 6 standard-axiom checks.
 - `MarkedGalois`: the coefficient map of a short equation over `Qj` is fixed by every Galois automorphism, and the marked short cover lift commutes with the action on its two point coordinates. Lake build passed, 3 standard-axiom checks.
 - `GenericGalois`: the actual generic j-point bijection to subgroups of `EjBar` commutes with every `Qj`-automorphism of `Kbar`. Lake build passed, 2 standard-axiom checks.
+- `PairQuotientValue`: the iterated prime-kernel Vélu quotient invariant is well defined on pair classes. Lake build passed, 2 standard-axiom checks.
