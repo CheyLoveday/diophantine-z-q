@@ -4,3 +4,4 @@
 - Bridge documentation correction `aee7b1aee8a82005b7003fe9c6ed895b217a7e2b` points to the proved vendored bijection and transitivity.
 - `PairJ`: the source invariant descends to pair classes. Each class over the j-invariant of a given equation has a representative on that equation. Lake build passed, 4 standard-axiom checks.
 - `RationalPoints`: the rational degree-zero quotient has the actual cyclic-pair reading, computed on any marked lift. The first j-coordinate evaluates to the source invariant. Lake build passed, 3 standard-axiom checks.
+- `ShortSubgroups`: on an elliptic equation with nonexceptional j, equal pair classes on that equation have equal subgroups. Lake build passed, 3 standard-axiom checks.
