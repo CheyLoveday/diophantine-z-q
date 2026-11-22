@@ -12,8 +12,9 @@ open Polynomial (X C)
 open scoped NumberField
 
 /-- Diamond–Shurman, *A First Course in Modular Forms*, Springer GTM 228 (2005),
-Thm. 9.6.5, p. 393 (2016 corrected fourth printing, p. 404), restricted to
-weights at least two and omitting the unused irreducibility conclusion.
+Thm. 9.6.5, p. 393 (2016 corrected fourth printing, p. 404), omitting the unused
+irreducibility conclusion. The hypothesis `2 ≤ k` is this project's restriction, not a
+hypothesis of the print, which has no weight bound.
 Normalized eigenforms are as in Def. 5.8.1. The unramified and arithmetic
 Frobenius clauses use reduction at primes of the algebraic integers as in
 §9.3. We write the polynomial with a coefficient `b` equal to `χ(p) p^(k-1)`
