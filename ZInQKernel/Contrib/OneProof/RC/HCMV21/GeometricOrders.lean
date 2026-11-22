@@ -142,9 +142,8 @@ theorem levelEnd_map_of_intertwines {A B : PkgI3.AbVar k} (u : Hom A B)
 
 /-- **Printed candidate, locator UNVERIFIED.** Deuring's maximal-order
 theorem for a supersingular elliptic curve over an algebraically closed
-field, Voight, *Quaternion Algebras*, GTM 288, chapter on supersingular
-elliptic curves and the Deuring correspondence. The hypothesis of
-supersingularity is the absence of nonidentity geometric `q`-torsion
+field. Voight GTM 288 Ch. 42, theorem number to be confirmed by the reading desk.
+The hypothesis of supersingularity is the absence of nonidentity geometric `q`-torsion
 on the one-dimensional abelian variety. This candidate states only
 the level-one endomorphism theorem. -/
 def DeuringSupersingularEndOrder : Prop :=
