@@ -146,9 +146,11 @@ module. No deletion needed to be restored during the consumer audit.
 
 ## Import closure and count
 
-The same import parser and graph traversal as
-`scratch/ccl-unit-index2/closure.py` ran against pinned main and the
-merge. The exclusion set is the Lean module paths from
+The import closure was rerun against pinned main and the merge using
+`scratch/ccl-unit-index2/closure.py`. A second pass restricted the
+graph to Lean import headers, excluding the example imports in the
+`Discharges` doc comment. The output below counts modules under
+`ZInQKernel` and `CMSerreTateSupport`. The exclusion set is the Lean module paths from
 `git diff --name-only 2ba691fde 522249258 -- ZInQKernel`, which
 includes every old declaration owner, all four premise owners, and
 the new conductor module. The roots for `frozenTarget` and `hRC`
@@ -161,9 +163,9 @@ are `ZInQKernel.OneProof.Main` and
     changed or retired modules: none
   ZInQKernel.Contrib.OneProof.SelmerTwoPower (380 project modules including root)
     changed or retired modules: none
-  ZInQKernel.OneProof.Discharges (10581 project modules including root)
+  ZInQKernel.OneProof.Discharges (1 project modules including root)
     changed or retired modules: none
-  ZInQKernel (612 project modules including root)
+  ZInQKernel (613 project modules including root)
     changed or retired modules: none
   ZInQKernel.Contrib.CloudB3RC53.Assembly (1311 project modules including root)
     changed or retired modules: none
@@ -174,15 +176,15 @@ are `ZInQKernel.OneProof.Main` and
   ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Leaf (2410 project modules including root)
     changed or retired modules: ZInQKernel.Contrib.CloudB3E2Norm.H20Anchor, ZInQKernel.Contrib.CloudB3E2Norm.H20DictFields, ZInQKernel.Contrib.CloudB3E2Norm.H20HeegnerNorm, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClass, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassMatch, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassOf, ZInQKernel.Contrib.CloudB3E2Norm.H20Transport, ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner, ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate18E2, ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19E2
   Reverse closure of changed modules: 640 importers
-  Terminal affected targets: 85
+  Terminal affected targets: 86
 5222492581202af090762d7ac62d6b042de53865
   ZInQKernel.OneProof.Main (10580 project modules including root)
     changed or retired modules: none
   ZInQKernel.Contrib.OneProof.SelmerTwoPower (380 project modules including root)
     changed or retired modules: none
-  ZInQKernel.OneProof.Discharges (10581 project modules including root)
+  ZInQKernel.OneProof.Discharges (1 project modules including root)
     changed or retired modules: none
-  ZInQKernel (612 project modules including root)
+  ZInQKernel (613 project modules including root)
     changed or retired modules: none
   ZInQKernel.Contrib.CloudB3RC53.Assembly (1311 project modules including root)
     changed or retired modules: none
@@ -190,7 +192,7 @@ are `ZInQKernel.OneProof.Main` and
     changed or retired modules: none
   ZInQKernel.Contrib.OneProof.RC.Wiring.Leaves (2505 project modules including root)
     changed or retired modules: ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner
-  ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Leaf (2408 project modules including root)
+  ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Leaf (2409 project modules including root)
     changed or retired modules: ZInQKernel.Contrib.CloudB3E2Norm.H20Anchor, ZInQKernel.Contrib.CloudB3E2Norm.H20DictFields, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClass, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassMatch, ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassOf, ZInQKernel.Contrib.CloudB3E2Norm.H20Transport, ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner, ZInQKernel.Contrib.OneProof.RC.Wiring.ChainCond, ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19E2
   Reverse closure of changed modules: 640 importers
   Terminal affected targets: 86
