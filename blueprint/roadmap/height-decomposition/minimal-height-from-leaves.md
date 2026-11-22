@@ -4,24 +4,24 @@ declaration: theorem
 origin: bridged
 statement: formalized
 proof: formalized
-lean: HDec.HSyn.sixContactMin_of_open92
+lean: HDec.HSyn.sixContactMin_of_open93
 ---
 
-# The minimal height hypothesis from twenty-two statements
+# The minimal height hypothesis from twenty-one statements
 
-The [minimal height hypothesis](../main/six-contact-min.md) follows from the twenty-two statements
+The [minimal height hypothesis](../main/six-contact-min.md) follows from the twenty-one statements
 of this chapter taken together: theorems from the literature, grouped by the theory they come from
 ([Shimura curves of discriminant 6](shimura-curves/README.md),
 [complex multiplication](cm-fibres/README.md), [abelian varieties](abelian-varieties/README.md),
 [Néron models, semistable reduction and monodromy](neron-models/README.md),
 [Faltings 1983 and Faltings heights](heights/README.md),
 [p-adic Hodge theory](p-adic-hodge/README.md),
-[Galois representations of modular forms](modular-galois/README.md)). Of the twenty-two statements
-from the literature, nine are published statements, some of them specialized or weakened; and
+[Galois representations of modular forms](modular-galois/README.md)). Of the twenty-one statements
+from the literature, eight are published statements, some of them specialized or weakened; and
 thirteen are consequences of published theorems, which take further theorems to reach from the
 print. The project's strict convention, which counts a published statement only once its reading
 against the print and its review are complete and find it in its printed form, counts four of the
-twenty-two as published. None of the twenty-two is proved here.
+twenty-one as published. None of the twenty-one is proved here.
 
 The proof follows the manuscript's proof of its Theorem 4.1 at the one instance the main theorem
 uses, which the project has split into named steps, each proved from these statements and the steps
@@ -56,7 +56,6 @@ height hypothesis.
 - [Shimura's abelian variety attached to a newform](modular-galois/shimura-abelian-varieties.md)
 - [The discriminant formula for the Faltings height of an elliptic curve](cm-fibres/elliptic-height-discriminant-formula.md)
 - [Fowler's bound for discriminants of bounded class number](cm-fibres/fowler-class-number-bound.md)
-- [Silverberg and Zarhin's inertia criterion for semistable reduction](neron-models/inertia-criterion.md)
 - [The degree of a singular modulus](cm-fibres/cm-field-degree.md)
 - [Local algebraicity of Hodge–Tate characters](p-adic-hodge/conrad-local-algebraicity.md)
 - [Scholze's comparison theorem for H¹ of an abelian variety](p-adic-hodge/scholze-de-rham-comparison.md)

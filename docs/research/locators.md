@@ -1,5 +1,19 @@
 # Primary-source locator audit for the Z-in-Q proof
 
+## Later locator: the pole argument's rank-one input (2026-11-20)
+
+| Row | Published source and location | Statement check |
+| --- | --- | --- |
+| `hRank` | J. H. Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Springer GTM 106 (2009), Appendix C, Evidence 16.5.5, pp. 452–453; the rank-one line is on p. 453 ([scan](https://www.math.ens.psl.eu/~benoist/refs/Silverman.pdf), PDF page 464). | AI-READ: for elliptic curves over Q, L_E(1) = 0 and L′_E(1) ≠ 0 imply rank E(Q) = 1. The surrounding text removes the historical modularity hypothesis. The Lean statement uses the continuation of the Hasse–Weil L-function and only the rank conclusion. Human statement check pending. |
+
+## Later locator: weight-at-least-two representations (2026-11-21)
+
+| Row | Published source and location | Statement check |
+| --- | --- | --- |
+| `dsThm965AtPrimes` | Diamond–Shurman, *A First Course in Modular Forms*, Springer GTM 228 (2005), Theorem 9.6.5, p. 393 (corrected fourth printing, 2016, p. 404); Definition 5.8.1 and §§9.1–9.3. | AI-READ of both printings. The weight-at-least-two restriction uses full normalized eigenforms, the actual coefficient completion and arithmetic Frobenius at primes of the algebraic integers. Lean proves the valuation-subring comparison. |
+
+The original audit follows.
+
 Provenance: a primary-source audit run by AI agents with web access at the owner's request (2026-11-12), against branch `wip/w17-base` (48b5f075). It is committed here unchanged below this line; the corrections it asks for are applied in later commits, not in this file.
 
 ## Scope and reading standard
