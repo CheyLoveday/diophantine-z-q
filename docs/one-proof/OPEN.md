@@ -107,7 +107,7 @@ Heights. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/is
 
 p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/issues/14).
 
-* [`dsThm965AtPrimes`](#dsthm965atprimes) (GLUE; pending-reading): Diamond–Shurman, A First Course in Modular Forms, Springer GTM 228 (2005), Theorem 9.6.5, p. 393 (corrected fourth printing, 2016, p. 404), weight at least two; Def. 5.8.1 and §§9.1–9.3. The book’s prime-ideal inertia and arithmetic Frobenius conventions are connected to the live valuation-subring formulation by DS965Places.dsThm965Printed_of_atPrimes.
+* [`dsThm965AtPrimes`](#dsthm965atprimes) (GLUE; pending-reading): Diamond–Shurman, A First Course in Modular Forms, Springer GTM 228, corrected fourth printing (2016), Theorem 9.6.5, p. 404; the weight bound k >= 2 is the project's restriction; Def. 5.8.1 and §§9.1–9.3. The book’s prime-ideal inertia and arithmetic Frobenius conventions are connected to the live valuation-subring formulation by DS965Places.dsThm965Printed_of_atPrimes.
 * [`dsThm966Printed`](#dsthm966printed) (LEAF): Deligne-Serre, Thm 4.1 with (4.1.1), pp. 513-514: f != 0 of type (1, eps), eigenvector of T_p (p not dividing N) with eigenvalues a_p => rho : G_Q -> GL_2(C), unramified outside N, Tr rho(Frob_p) = a_p, det rho(Frob_p) = eps(p)
 * [`panPrintedF`](#panprintedf) (GLUE): Pan, The Fontaine-Mazur conjecture in the residually reducible case, arXiv:1901.07166v2 (the version the manuscript cites), Thm 1.0.4 with Conj. 1.0.1 (published J. Amer. Math. Soc. 35 (2022), 1031-1169); 'potentially semi-stable in the sense of Fontaine' in Brinon-Conrad's dimension form (CMI notes, preliminary version June 24, 2009, 5.2 pp. 67-68, Thm 9.3.5 p. 148) over the image in B_dR of Brinon-Conrad's B_st (Def. 9.2.3 p. 138, abstract; embedded pp. 140-142 with log p = 0; injective by Thm 9.2.10 p. 143), B_cris Def. 9.1.4 p. 131, A_cris p. 128 (abstract) with its image in B_dR^+ p. 129 (p-adic topology), on a model V = E^n (model-independent: PstModel.localIsPstF_iff_forall); LocalIsPstF over BstFOf in Contrib/OneProof/PanBergerFontaine.lean
 * [`modularHTCoeff`](#modularhtcoeff) (GLUE; pending-review, unverified-locator): Content: Deligne, Sem. Bourbaki 355 (1969/1971); Faltings, Math. Ann. 278 (1987); Saito, Invent. Math. 129 (1997); Kato, Asterisque 295 (2004) sections 9.2-9.4, (9.2.2), pp. 187-188 (V_{F_lambda}(f) over F_lambda; read by the locator audit, row R13) and 11.3 (UNVERIFIED). Existence form printed in Taylor, Galois representations, Ann. Fac. Sci. Toulouse Math. (6) 13 (2004); Gee, Modularity lifting theorems, Essent. Number Theory 1 (2022) section 2 (numbers UNVERIFIED)
@@ -148,7 +148,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`silverbergZarhinThm34`](#silverbergzarhinthm34) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
 | [`hCT`](#hct) | frozenTarget | published | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) |
-| [`hRank`](#hrank) | frozenTarget | consequence | GLUE | pending-reading |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | open |
+| [`hRank`](#hrank) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | open |
 
 ## The hypotheses
 
@@ -267,7 +267,7 @@ Y3Hodge.DeligneCanonicalModelY3EveryPrint
 ### dsThm965AtPrimes
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves76.dsThm965AtPrimes`; kind **published**, strict **GLUE**; flag: AI-READ of the published statement; human statement review pending..
-* Source: Diamond–Shurman, A First Course in Modular Forms, Springer GTM 228 (2005), Theorem 9.6.5, p. 393 (corrected fourth printing, 2016, p. 404), weight at least two; Def. 5.8.1 and §§9.1–9.3. The book’s prime-ideal inertia and arithmetic Frobenius conventions are connected to the live valuation-subring formulation by DS965Places.dsThm965Printed_of_atPrimes.
+* Source: Diamond–Shurman, A First Course in Modular Forms, Springer GTM 228, corrected fourth printing (2016), Theorem 9.6.5, p. 404; the weight bound k >= 2 is the project's restriction; Def. 5.8.1 and §§9.1–9.3. The book’s prime-ideal inertia and arithmetic Frobenius conventions are connected to the live valuation-subring formulation by DS965Places.dsThm965Printed_of_atPrimes.
 * packet [R7](#packet-r7); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * Human readings recorded: none.
 * Status: open.
@@ -494,7 +494,7 @@ ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves
 
 ### hRank
 
-* Argument `hRank` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: pending reading: the statement stays Silverman's rank-one line, proved from Miller Thm 4.4 by ForwardRankLiterature.silvermanRankOne_of_miller; the docs desk's reading of Miller is pending.
+* Argument `hRank` of `frozenTarget`; kind **consequence**, strict **GLUE**; flag: glue (rated): Miller Thm 4.4 (p. 336, journal version) read, FAITHFUL; ForwardRankAtMostOne takes two of the printed conclusions and adds no hypothesis, and ForwardRankLiterature.silvermanRankOne_of_miller gives the statement. It stays GLUE because the printed proof (pp. 336-337) cites every deep step: Gross-Zagier 1986, Zhang 2004 Thm 4.1, Kolyvagin, Euler systems (Grothendieck Festschrift II, 1990) Thm A, Waldspurger 1985 or Bump-Friedberg-Hoffstein 1990 / Murty-Murty 1991, and Darmon CBMS 101 Prop. 3.11.
 * Source: Miller, LMS J. Comput. Math. 14 (2011), Thm 4.4, pp. 336-337, via ForwardRankLiterature.silvermanRankOne_of_miller (MillerForwardRank.lean); Silverman AEC App. C 16.5.5 reports it
 * discussion: [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127).
 * Human readings recorded: none.

@@ -21,10 +21,10 @@ read by the locator audit. The level-$2$ coordinates are a risk (project note he
 
 ## Deligne representations
 
-F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228 (2005), Theorem 9.6.5, p. 393
-(fourth printing, 2016: p. 404; AI-read), stated over $K_{f,\lambda}$, with their Definition 5.8.1
-of normalized eigenforms; P. Deligne, Sém. Bourbaki 355 (1969); G. Shimura 1971, Theorem 7.14, for
-$k=2$. The numbers of Definition 5.8.1 and of Shimura's theorem are unverified.
+F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228, corrected fourth printing
+(2016), Theorem 9.6.5, p. 404, with Definitions 5.8.1 (p. 196), 6.5.3 (p. 238), 9.3.2 (p. 386) and
+9.3.3 (p. 387), and absolute Frobenius and inertia, pp. 384–385; P. Deligne, Sém. Bourbaki 355
+(1969); G. Shimura 1971, Theorem 7.14, for $k=2$. The number of Shimura's theorem is unverified.
 
 ## Deligne-Serre
 
