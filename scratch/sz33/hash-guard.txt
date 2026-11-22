@@ -1,0 +1,56 @@
+before 25103  after 25129  only before 0  only after 26  changed 1
+  HDec.HSyn.OpenResearchLeaves74 None | ZInQKernel.OneProof.H.TailZ100 [] 3944470172 0
+
+  HDec.HSyn.OpenResearchLeaves74.afCharpolyDS965 None | ZInQKernel.OneProof.H.TailZ100 [] 691089114 1948903201
+
+  HDec.HSyn.OpenResearchLeaves74.bergerSurveyF None | ZInQKernel.OneProof.H.TailZ100 [] 4096156883 2460568704
+
+  HDec.HSyn.OpenResearchLeaves74.carayolThmAFrob None | ZInQKernel.OneProof.H.TailZ100 [] 809464063 1681887302
+
+  HDec.HSyn.OpenResearchLeaves74.casesOn None | ZInQKernel.OneProof.H.TailZ100 [u] 679005722 4185627754
+
+  HDec.HSyn.OpenResearchLeaves74.cmHeight62 None | ZInQKernel.OneProof.H.TailZ100 [] 2965753805 74579419
+
+  HDec.HSyn.OpenResearchLeaves74.cmjDegreePrint None | ZInQKernel.OneProof.H.TailZ100 [] 958652397 3604959521
+
+  HDec.HSyn.OpenResearchLeaves74.deligneCanonicalModelY3EveryPrint None | ZInQKernel.OneProof.H.TailZ100 [] 2859448052 2444977174
+
+  HDec.HSyn.OpenResearchLeaves74.dsThm965Printed None | ZInQKernel.OneProof.H.TailZ100 [] 928154882 2287546545
+
+  HDec.HSyn.OpenResearchLeaves74.dsThm966Printed None | ZInQKernel.OneProof.H.TailZ100 [] 22721444 200445925
+
+  HDec.HSyn.OpenResearchLeaves74.fowlerProp27PrintCanonical None | ZInQKernel.OneProof.H.TailZ100 [] 2451147211 1270283705
+
+  HDec.HSyn.OpenResearchLeaves74.gaudronRemondSec9LowerAnSS None | ZInQKernel.OneProof.H.TailZ100 [] 1099218329 2997548447
+
+  HDec.HSyn.OpenResearchLeaves74.gaudronRemondThm14AnSS None | ZInQKernel.OneProof.H.TailZ100 [] 977267138 3670787677
+
+  HDec.HSyn.OpenResearchLeaves74.javanpeykarThm111An None | ZInQKernel.OneProof.H.TailZ100 [] 2332794923 3036727111
+
+  HDec.HSyn.OpenResearchLeaves74.mk None | ZInQKernel.OneProof.H.TailZ100 [] 143835439 0
+
+  HDec.HSyn.OpenResearchLeaves74.mk._flat_ctor None | ZInQKernel.OneProof.H.TailZ100 [] 143835439 3537966513
+
+  HDec.HSyn.OpenResearchLeaves74.modularHTCoeff None | ZInQKernel.OneProof.H.TailZ100 [] 3757369193 2887106870
+
+  HDec.HSyn.OpenResearchLeaves74.panPrintedF None | ZInQKernel.OneProof.H.TailZ100 [] 142924318 141708175
+
+  HDec.HSyn.OpenResearchLeaves74.pazukiCor13Upper None | ZInQKernel.OneProof.H.TailZ100 [] 2802033058 2894635
+
+  HDec.HSyn.OpenResearchLeaves74.rec None | ZInQKernel.OneProof.H.TailZ100 [u] 2558560563 0
+
+  HDec.HSyn.OpenResearchLeaves74.recOn None | ZInQKernel.OneProof.H.TailZ100 [u] 679005722 3393758567
+
+  HDec.HSyn.OpenResearchLeaves74.shimuraThm1Af None | ZInQKernel.OneProof.H.TailZ100 [] 2819488900 3741639693
+
+  HDec.HSyn.OpenResearchLeaves74.silverbergZarhinThm35 None | ZInQKernel.OneProof.H.TailZ100 [] 3137596005 3282921956
+
+  HDec.HSyn.OpenResearchLeaves74.y3FullThreeRepZ30 None | ZInQKernel.OneProof.H.TailZ100 [] 2335819240 654004123
+
+  HDec.HSyn.openResearchLeaves73_of_OpenResearchLeaves74 None | ZInQKernel.OneProof.H.TailZ100 [] 4245292273 1529847504
+
+  HDec.HSyn.sixContactMin_of_open93 None | ZInQKernel.OneProof.H.TailZ100 [] 1674284981 9589158
+
+  ZInQ.OneProof.frozenTarget ZInQKernel.OneProof.Main [] 3493118431 2143653951
+ | ZInQKernel.OneProof.Main [] 2130595990 1225065553
+

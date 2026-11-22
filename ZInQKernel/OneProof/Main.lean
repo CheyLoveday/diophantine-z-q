@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ99
+import ZInQKernel.OneProof.H.TailZ101
 import ZInQKernel.MainGreenTao
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRCGenuineFinal
@@ -227,6 +227,11 @@ Five outside discharges (fork PRs #152, #156, #153, #155, #157) proved `neronSch
 `y3ToP1j` from `y3FullThreeRepZ30` and `deligneCanonicalModelY3EveryPrint` (`Y3P1j.y3ToP1j_of_printed_moduli`); no
 new leaf. `OpenResearchLeaves73` (`TailZ99`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open92`
 the new top.
+An outside discharge (fork PR #177) proved Silverberg–Zarhin's Theorem 3.3 outright
+(`SZRaynaud.silverbergZarhinThm33_proof`, `Contrib/OneProof/SZThm33/`); no new leaf. `OpenResearchLeaves74`
+(`TailZ100`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open93` the new top (25 → 24 assumptions).
+The same PR derives Theorem 3.5 from the semistable reduction theorem (`SZRaynaud.silverbergZarhinThm35_of_sz34`);
+that swap is not folded, pending a reading of SZ Thm. 3.4 / SGA 7 IX 3.6, so `silverbergZarhinThm35` stays a leaf.
 
 bcdt-print replaced the frozen `ZInQ.Manuscript.PoleS12.BCDTThmA` by BCDT Theorem A as printed
 (`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`: condition (2) of Breuil–Conrad–Diamond–Taylor,
@@ -239,6 +244,12 @@ The forward-rank fold replaces the two root arguments `hB` and `hK` with `hRank`
 Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C, Evidence 16.5.5, p. 453.
 Only Mordell–Weil rank one is used here; the pole proof does not use the finite-Sha conclusion.
 Theorem 5.3, the Cassels–Tate pairing, and the H bundles are unchanged (26 → 25 assumptions).
+Its record cites Miller's Theorem 4.4, from which
+`ZInQ.Manuscript.ForwardRankLiterature.silvermanRankOne_of_miller` proves it.
+
+Diamond–Shurman, Theorem 9.6.5, p. 393 (2005), supplies the weight-at-least-two representation in its
+prime-ideal convention. Lean proves the comparison with the existing inertia and arithmetic Frobenius
+interfaces. This changes one premise without adding to the count.
 
 The hypotheses of `frozenTarget` are therefore exactly the open statements. Discharging one means replacing a field or
 hypothesis by its proof; the theorem's statement then loses that hypothesis.
@@ -250,13 +261,13 @@ namespace ZInQ.OneProof
 its genuine Selmer condition, the Cassels–Tate pairing on the curves `E_ℓ`, and Silverman's rank-one forward
 implication (Appendix C, Evidence 16.5.5). Pole completeness (Theorem 5.2) uses only these last three inputs. -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves73) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves28)
+    (r : HDec.HSyn.OpenResearchLeaves75) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves28)
     (hRC : ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine)
     (hCT : ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves)
     (hRank : ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne) :
     ZInQ.FrozenTarget :=
   ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness
-    (HDec.HSyn.sixContactMin_of_open92 r t l)
+    (HDec.HSyn.sixContactMin_of_open94 r t l)
     (ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne hRC hCT
       (ZInQ.Manuscript.PoleS12.SilvermanRank.rankOne_of_aec hRank))
 
