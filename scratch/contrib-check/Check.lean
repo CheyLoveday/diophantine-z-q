@@ -29,6 +29,7 @@ import ZInQKernel.Contrib.CloudW01Spread.FinitePresentation
 import ZInQKernel.Contrib.CloudW03NeronSurj.Main
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.JacobianExists
 import ZInQKernel.Contrib.CloudW07JacobiansCurves.NormalModel
+import ZInQKernel.Contrib.OneProof.MillerForwardRank
 
 /-! The two closed providers (lane74: the literature headline they fed was removed with Route K). -/
 
@@ -151,3 +152,5 @@ import ZInQKernel.Contrib.CloudW07JacobiansCurves.NormalModel
 -- cloud worker W07 (w59)
 #print axioms ZInQ.Contrib.CloudW07JacobiansCurves.JacobianExists_proof
 #print axioms ZInQ.Contrib.CloudW07JacobiansCurves.NormalModelOfFunctionFieldQ_proof
+-- hRank's kinds row cites this bridge (Miller Thm 4.4 to Silverman's rank-one line)
+#print axioms ZInQ.Manuscript.ForwardRankLiterature.silvermanRankOne_of_miller
