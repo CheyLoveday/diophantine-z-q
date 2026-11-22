@@ -81,8 +81,8 @@ private theorem summable_fin_product {u : ℤ → ℝ} (hu : Summable u) (hu₀ 
     Summable (fun n : Fin d → ℤ => ∏ j, u (n j)) := by
   induction d with
   | zero =>
-    letI : Subsingleton (Fin 0 → ℤ) := ⟨fun _ _ => funext (fun j => Fin.elim0 j)⟩
-    letI : Fintype (Fin 0 → ℤ) := Fintype.ofSubsingleton 0
+    let _ : Subsingleton (Fin 0 → ℤ) := ⟨fun _ _ => funext (fun j => Fin.elim0 j)⟩
+    let _ : Fintype (Fin 0 → ℤ) := Fintype.ofSubsingleton 0
     exact (hasSum_fintype _).summable
   | succ d ih =>
     have hp : Summable (fun p : (Fin d → ℤ) × ℤ => (∏ j, u (p.1 j)) * u p.2) :=
@@ -90,7 +90,10 @@ private theorem summable_fin_product {u : ℤ → ℝ} (hu : Summable u) (hu₀ 
     have h := (Fin.succFunEquiv ℤ d).summable_iff.mpr hp
     change Summable (fun n : Fin (d + 1) → ℤ =>
       (∏ j : Fin d, u (n j.castSucc)) * u (n (Fin.last d))) at h
-    simpa only [← Fin.prod_univ_castSucc] using h
+    have hprod (n : Fin (d + 1) → ℤ) :
+        (∏ j, u (n j)) = (∏ j : Fin d, u (n j.castSucc)) * u (n (Fin.last d)) :=
+      Fin.prod_univ_castSucc (fun j => u (n j))
+    simpa only [hprod] using h
 
 private theorem im_intVec_dotProduct (n : Fin g → ℤ) (z : Fin g → ℂ) :
     (intVec n ⬝ᵥ z).im = ∑ j, (n j : ℝ) * (z j).im := by
@@ -128,7 +131,8 @@ private theorem exists_summable_weighted_bound (Ω : Matrix (Fin g) (Fin g) ℂ)
   obtain ⟨a, ha, hquad⟩ := quadratic_lower_bound hΩ.2
   let u : ℤ → ℝ := fun k => Real.exp (-Real.pi * (a * (k : ℝ) ^ 2 - 2 * (R + r) * |(k : ℝ)|))
   have hu : Summable u := by
-    simpa only [u, pow_zero, one_mul] using summable_pow_mul_jacobiTheta₂_term_bound (R + r) ha 0
+    simpa only [u, pow_zero, one_mul, Int.cast_abs] using
+      summable_pow_mul_jacobiTheta₂_term_bound (R + r) ha 0
   refine ⟨fun n => ∏ j, u (n j), summable_fin_product hu (fun _ => (Real.exp_pos _).le) g, ?_⟩
   intro n z hz
   have hlin : -(R * ∑ j, |(n j : ℝ)|) ≤ ∑ j, (n j : ℝ) * (z j).im := by
@@ -181,7 +185,7 @@ private def thetaLinearForm (n : Fin g → ℤ) : (Fin g → ℂ) →L[ℂ] ℂ 
 
 private theorem thetaLinearForm_apply (n : Fin g → ℤ) (y : Fin g → ℂ) :
     thetaLinearForm n y = 2 * Real.pi * I * (intVec n ⬝ᵥ y) := by
-  simp [thetaLinearForm, dotProduct, sum_apply, smul_eq_mul]
+  simp [thetaLinearForm, dotProduct, _root_.sum_apply, smul_eq_mul]
 
 private theorem norm_thetaLinearForm_le (n : Fin g → ℤ) :
     ‖thetaLinearForm n‖ ≤ 2 * Real.pi * (∑ j, |(n j : ℝ)|) := by
@@ -248,12 +252,14 @@ private theorem tsum_thetaTaylorCoefficient (Ω : Matrix (Fin g) (Fin g) ℂ)
   calc
     _ = riemannThetaSummand Ω n z * Complex.exp (thetaLinearForm n y) := by
       rw [Complex.exp_eq_exp_ℂ, ← (NormedSpace.expSeries_hasSum_exp (𝕂 := ℂ)
-        (thetaLinearForm n y)).tsum_eq, ← tsum_mul_left] <;> rfl
+        (thetaLinearForm n y)).tsum_eq, ← tsum_mul_left]
+      rfl
     _ = _ := by
       simp only [riemannThetaSummand, thetaLinearForm_apply, ← Complex.exp_add, dotProduct_add]
       congr 1
       ring
 
+set_option maxHeartbeats 1000000 in
 /-- The Riemann theta function of a Siegel matrix is entire in its argument. -/
 theorem analyticAt_riemannTheta (Ω : Matrix (Fin g) (Fin g) ℂ) (hΩ : Ω ∈ SiegelSpace g)
     (z : Fin g → ℂ) : AnalyticAt ℂ (riemannTheta Ω) z := by
@@ -279,7 +285,8 @@ theorem analyticAt_riemannTheta (Ω : Matrix (Fin g) (Fin g) ℂ) (hΩ : Ω ∈ 
     simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     exact mul_le_of_le_one_right (norm_nonneg _) (pow_le_one₀ (norm_nonneg _) hy₁)
   have heval (k : ℕ) : p k (fun _ => y) = ∑' n, f k n :=
-    (ContinuousMultilinearMap.apply (fun _ : Fin k => y)).map_tsum (hc.prod_factor k).of_norm
+    (ContinuousMultilinearMap.apply ℂ (fun _ : Fin k => Fin g → ℂ) ℂ
+      (fun _ => y)).map_tsum (hc.prod_factor k).of_norm
   have hsum : (∑' k, ∑' n, f k n) = riemannTheta Ω (z + y) := calc
     _ = ∑' n, ∑' k, f k n := hf.tsum_comm.symm
     _ = ∑' n, riemannThetaSummand Ω n (z + y) :=
