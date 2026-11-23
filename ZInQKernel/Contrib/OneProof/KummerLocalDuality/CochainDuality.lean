@@ -54,9 +54,9 @@ theorem quasiIsoAt_adjHom_of_cupPerfect [Module.Injective R R]
       intro z
       have he := congrArg (fun f => asDual f z) hφ
       rw [dualCx_d_apply] at he
+      change (-(sgn n)) • asDual φ (D.d (2 - (n + 1)) (2 - n) (by omega) z) = (0 : R) at he
       have hsign := congrArg (fun a : R => (-(sgn n)) • a) he
-      simpa only [asDual, LinearMap.zero_apply, smul_zero, smul_smul, neg_mul_neg,
-        sgn_mul_self, one_smul] using hsign
+      simpa only [smul_smul, neg_mul_neg, sgn_mul_self, one_smul, smul_zero] using hsign
     obtain ⟨x, hx, hpair⟩ := h.2 (asDual φ) hkill
     let δ : D.X (2 - n) →ₗ[R] R := tr.comp (cup.P n (2 - n) 2 (by omega) x) - asDual φ
     obtain ⟨ψ, hψ⟩ := orthLD_extend (D.d (2 - n) (2 - (n - 1)) (by omega)) δ (by
@@ -64,10 +64,9 @@ theorem quasiIsoAt_adjHom_of_cupPerfect [Module.Injective R R]
       change tr (cup.P n (2 - n) 2 (by omega) x y) - asDual φ y = 0
       exact sub_eq_zero.mpr (hpair y hy))
     refine ⟨x, hx, (-(sgn (n - 1))) • ψ, dualCx_ext fun y => ?_⟩
-    rw [dualCx_d_apply]
     change δ y = (-(sgn (n - 1))) •
-      (((-(sgn (n - 1))) • ψ) (D.d (2 - n) (2 - (n - 1)) (by omega) y))
-    rw [LinearMap.smul_apply, smul_smul, neg_mul_neg, sgn_mul_self, one_smul, hψ]
+      ((-(sgn (n - 1))) • ψ (D.d (2 - n) (2 - (n - 1)) (by omega) y))
+    rw [smul_smul, neg_mul_neg, sgn_mul_self, one_smul, hψ]
 
 /-- If both complementary cohomology groups vanish, perfectness holds in
 that degree. -/
