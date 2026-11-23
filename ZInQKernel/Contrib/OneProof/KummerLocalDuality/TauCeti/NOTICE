@@ -1,0 +1,19 @@
+Tau Ceti local duality and cohomological dimension
+==================================================
+
+Copyright 2026 The Tau Ceti contributors
+
+Licensed under the Apache License, Version 2.0. The LICENSE file is copied
+from the Tau Ceti source repository. Original file headers are retained.
+
+Source: https://github.com/TauCetiProject/TauCeti/tree/5a01f5fe3621126cccf9ba22e700493cbc7b7156
+
+This snapshot contains the modules missing from the Z-in-Q kernel's existing
+vendor tree that are needed by the following two source modules:
+
+- TauCeti.NumberTheory.ClassFieldTheory.Local.Duality.FiniteModule
+- TauCeti.NumberTheory.ClassFieldTheory.Local.CohomologicalDimension.AbsoluteGaloisGroup
+
+Imports point to the existing vendor tree or its existing LinearAlgebra.Exact
+backport when available. Imports of the remaining modules point to this
+directory. A provenance line was added to each copied file.
