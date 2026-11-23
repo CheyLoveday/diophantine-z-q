@@ -1,12 +1,12 @@
 # Cai–Chen–Liu retirement
 
-The retirement applies cleanly to pinned main
-`2ba691fde6bfb9e514a429414ba92a6c6893a63f`. The consumer audit found
-no new Lean dependency on a deleted declaration. All 25 Lake targets
-passed, and the 21-declaration axiom check passed. The count lowered
-is **none**. The staged chain supplies the full-anchor witness after
-proving the unit factor is one. [Retirement plan](ccl-unit-index2.md#retirement-at-fold) ·
-[Consumer audit](../../scratch/ccl-retire2/log.md)
+The retirement was checked at `f5299bb9d6f9ada2fcd170099f784f0e0945bf79`,
+which merges main `29bfbc3f6793d98b7c1ac637f9728fe51e701e5b` and includes
+the two review docstring fixes. The staged chain supplies the full-anchor
+witness after proving the unit factor is one.
+[Retirement plan](ccl-unit-index2.md#retirement-at-fold) ·
+[Prior consumer audit](../../scratch/ccl-retire2/log.md) ·
+[Verification log](../../scratch/ccl-retire4/log.md)
 
 ## Deleted declarations and files
 
@@ -60,61 +60,38 @@ Each premise unfolds the retired abbreviation at the same full anchor.
 
 ## Builds and axioms
 
-Each module ran in a separate Lake invocation under the 60 GiB memory
-cap. The targets cover the proof and discharge roots, the default kernel
-root, the direct importers from the consumer audit, and the imports of
-the axiom check. The three retired module paths have no surviving
-imports.
+All 47 Lake targets passed in separate invocations under a 60 GiB
+memory cap. They cover the proof and discharge roots, the new conductor
+module, the previous build targets, every changed project module still
+present, and the nine downstream modules that lost `H20HeegnerNorm`
+from their import closure. The three retired module paths have no
+surviving imports. [Build results](../../scratch/ccl-retire4/builds.txt)
 
-```text
-PASS ZInQKernel.OneProof.Main
-PASS ZInQKernel.OneProof.Discharges
-PASS ZInQKernel.Contrib.OneProof.RC.Wiring.ChainCond
-PASS ZInQKernel.Contrib.CloudB3E2Norm.CentralSpec
-PASS ZInQKernel.Contrib.CloudB3E2Norm.E2ChainActual
-PASS ZInQKernel.Contrib.CloudB3E2Norm.H20AmbientS
-PASS ZInQKernel.Contrib.CloudB3E2Norm.H20DictFields
-PASS ZInQKernel.Contrib.CloudB3E2Norm.H20PairedLift
-PASS ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassMatch
-PASS ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassOf
-PASS ZInQKernel.Contrib.CloudB3E2Norm.H20ThetaMono
-PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Transport
-PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Untwisted
-PASS ZInQKernel.Contrib.CloudB3E2Norm.HeegnerRCBridge
-PASS ZInQKernel.Contrib.CloudB3E2Norm.RingClassMono
-PASS ZInQKernel.Contrib.OneProof.RC.CCLUnitIndex.Units
-PASS ZInQKernel.Contrib.OneProof.RC.HeegnerAnchor.Comparison
-PASS ZInQKernel.Contrib.OneProof.RC.O7Actual.Reduction
-PASS ZInQKernel.Contrib.OneProof.RC.PrintsArith.Bundle
-PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19E2
-PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Leaf
-PASS ZInQKernel
-PASS ZInQKernel.Contrib.CloudB3E2Norm.H20Anchor
-PASS ZInQKernel.Contrib.OneProof.RC.PrintsArith.Heegner
-PASS ZInQKernel.Contrib.CloudB3E1RingClass.SupportReq
-```
-
-`scratch/ccl-retire/Check.lean` already included
-`#print axioms ZInQ.OneProof.frozenTarget`. All 21 declarations
-in the rerun use only `propext`, `Classical.choice`, and `Quot.sound`.
-[Build log](../../scratch/ccl-retire2/builds.txt) ·
-[Axiom output](../../scratch/ccl-retire2/axioms.txt)
+The rerun of `scratch/ccl-retire/Check.lean` checked 21 declarations,
+including `ZInQ.OneProof.frozenTarget`. The only axioms reported were
+`propext`, `Classical.choice`, and `Quot.sound`.
+[Axiom output](../../scratch/ccl-retire4/axioms.txt)
 
 ## Count
 
-**None.** The import closure on the pinned base (main 2ba691fde)
-contains 10,580 project modules for `frozenTarget` and 380 for the type of `hRC`. Each excludes
-every module that owned a deleted declaration. The merge gives the
-same result. `hRC` remains an explicit hypothesis of
-`ZInQKernel/OneProof/Main.lean` (line 265 on the pinned base, line 269
-on main 29bfbc3f6). Its type is
-`ZInQKernel/Contrib/OneProof/SelmerTwoPower.lean:217` and its GLUE
-entry is at `docs/one-proof/kinds.tsv:23` and
-`docs/one-proof/OPEN.md:149`. The retirement removes zero
-`frozenTarget` fields and zero GLUE or LEAF rows. The H part
-has 21 hypotheses, 4 published and 17 GLUE under the strict reading
-at `docs/one-proof/OPEN.md:16` and `docs/one-proof/OPEN.md:18`.
-[Closure evidence](../../scratch/ccl-retire2/log.md#import-closure-and-count)
+**Count lowered: none.** At `f5299bb9d6f9ada2fcd170099f784f0e0945bf79`,
+the import closures contain 10,587 project modules for
+`ZInQKernel.OneProof.Main` and 380 for the type of `hRC`, including
+their respective roots. Both module sets match pinned main and
+exclude every changed or deleted module.
+[Closure evidence](../../scratch/ccl-retire4/log.md#import-closure-and-count)
+
+`hRC` is an explicit hypothesis of `ZInQ.OneProof.frozenTarget` at
+`ZInQKernel/OneProof/Main.lean:269`. Its type is defined at
+`ZInQKernel/Contrib/OneProof/SelmerTwoPower.lean:217`, and its GLUE
+entry is at `docs/one-proof/kinds.tsv:23` and `docs/one-proof/OPEN.md:149`.
+The retirement removes zero `frozenTarget` fields and zero GLUE or LEAF
+rows. The H part has 21 hypotheses, with 4 published and 17 GLUE under
+the strict reading at `docs/one-proof/OPEN.md:16` and
+`docs/one-proof/OPEN.md:18`.
+[Main](../../ZInQKernel/OneProof/Main.lean#L269) ·
+[Type of hRC](../../ZInQKernel/Contrib/OneProof/SelmerTwoPower.lean#L217) ·
+[GLUE entry](../one-proof/OPEN.md#hrc)
 
 ## Known issues
 
@@ -142,4 +119,4 @@ at `docs/one-proof/OPEN.md:16` and `docs/one-proof/OPEN.md:18`.
   (in the CCL, Wiring, BaseZero, HeegnerAlgebra and GlueSweep files) now
   say it is the print only once the unit index is one (`D_K < -4`). The
   Kinds lines of `H20Transport`, `H20Anchor` and `H20DictFields` are
-  restored without the retired name. [Comment references](../../scratch/ccl-retire2/log.md#exact-name-matches-on-the-merged-base)
+  restored without the retired name. [Retired-name check](../../scratch/ccl-retire4/log.md#retired-names)
