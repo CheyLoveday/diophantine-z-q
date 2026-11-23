@@ -16,14 +16,15 @@ and `E[2^∞] ⊂ E(K_S)`: (i) locally trivial cocycles of `G_{K,S}` inflate int
 * `decomp_subsingleton`, `locK_real_eq_zero` (PROVED): for `k < 0` the decomposition group at a
   real embedding of `ℚˢ` is trivial, so the real places impose nothing;
 * `KcSelOfLocFinite` (definition; the named finite-place input of (i), PRINT + GLUE: Milne,
-  *Arithmetic Duality Theorems*, I, Proposition 6.5 (p. 75, proof p. 76, using I.3.8) at the places
-  outside `S`; the comparison of the two local models at the places of `S`), and
+  *Arithmetic Duality Theorems*, I.3.8, at the places outside `S`, with I, Proposition 6.5 as a
+  reading for the global form; the comparison of the two local models at the places of `S`), and
   `kcSelOfLoc_of_finite` (PROVED): (i) from it;
 * `kcArithSelmerLevel_of` (PROVED): `KcArithSelmerLevel` from `KcSelOfLocFinite` and (ii).
 
-Kinds: definitions and PROVED; the named inputs `KcSelOfLocFinite` and `KcLocOfSel` are
-PRINT + GLUE. Milne's displayed sequences in I.6.5 (p. 75) concern primary-limit groups;
-the fixed-level argument uses a torsion representative in the proof (p. 76). Corollary 6.6
+Kinds: definitions and PROVED; the named inputs `KcSelOfLocFinite` (PRINT + GLUE, on I.3.8) and
+`KcLocOfSel` (GLUE; Milne I.6.5 is a reading, with no recorded page read). Milne's displayed
+sequences in I.6.5 (p. 75) concern primary-limit groups; the fixed-level argument uses a
+torsion representative in the proof (p. 76). Corollary 6.6
 (p. 76; proof p. 77) gives primary-limit Selmer comparison, not the fixed-level statement.
 For good reduction use Silverman AEC, 2nd ed., VII, Theorem 7.1(c) ⇒ (a), p. 201. The
 comparisons with the local models and the inflation used here are GLUE.
@@ -121,7 +122,7 @@ def KcSelOfLoc : Prop :=
           selmerLevelK (sqrtK k) E m
 
 /-- **Field (ii) of `KcArithSelmerLevel`**: every class of `Sel_{2^m}(E/K)` is such an inflation.
-Literature: Milne, *Arithmetic Duality Theorems*, 2nd ed., Ch. I, Proposition 6.5, pp. 75–76.
+Reading, not a print (GLUE): Milne, *Arithmetic Duality Theorems*, 2nd ed., Ch. I, Prop. 6.5.
 The first displayed sequence is for `A(m)`, the primary-limit coefficient group. Its proof
 starts with a representative at finite level `A_m` and uses the unramified division fibres
 of Lemma 6.1, p. 73. The finite `S`-Selmer group is defined just before 6.4 on p. 75;
