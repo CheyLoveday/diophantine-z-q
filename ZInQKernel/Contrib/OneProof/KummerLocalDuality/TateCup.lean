@@ -228,67 +228,91 @@ theorem actualFiniteCupPerfect
   have hm : IsUnit ((2 ^ i : ℕ) : F) := isUnit_iff_ne_zero.mpr
     (Nat.cast_ne_zero.mpr (pow_ne_zero _ (by decide)))
   have hM : ∀ x : Msep, (2 ^ i : ℕ) • x = 0 := two_pow_smul_mcoef W i α
+  let readRoot (w : finiteLocalTateTarget hS i v hμ) :=
+    (compMu F (2 ^ i)).symm (localRootCharacter hS i v hμ w)
   interval_cases n
   · let l := movedH0 g eL hL
     let r := movedH2 g eN hN
-    refine cupPerfectAt_of_class_pairing cup tr 0 χ hgen
-      (l.toAddMonoidHom.comp kerToH0) (r.toAddMonoidHom.comp kerToH2)
-      (l.surjective.comp kerToH0_surjective) (r.surjective.comp kerToH2_surjective)
+    let qL := l.toAddMonoidHom.comp (kerToH0 (k := Acoef i) (G := Gloc K v.1) (M := M))
+    let qR := r.toAddMonoidHom.comp (kerToH2 (k := Acoef i) (G := Gloc K v.1) (M := N))
+    refine cupPerfectAt_of_class_pairing (L := H0 Gsep Msep) (H := H2 Gsep Nsep) cup tr 0 χ hgen qL qR
+      (l.surjective.comp (kerToH0_surjective (k := Acoef i) (G := Gloc K v.1) (M := M)))
+      (r.surjective.comp (kerToH2_surjective (k := Acoef i) (G := Gloc K v.1) (M := N)))
       (fun x hx => boundary_of_kerToH0 (l.injective (hx.trans (map_zero l).symm)))
       (fun y hy => (kerToH2_eq_zero_iff y).mp (r.injective (hy.trans (map_zero r).symm)))
       (dualityMap0 Gsep Msep roots) (dualityMap0_kummerCoeff_bijective hm Msep hM) ?_
     intro x y
-    change χ (tr (cupCycle cup 0 x y).1) =
-      dualityMap0 Gsep Msep roots (l (kerToH0 x)) (movedH2 g eN hN (kerToH2 y))
-    rw [hχ, movedRootClass, movedH2_class, dualityMap0_mk]
+    let x₀ : LinearMap.ker (contD (Acoef i) (Gloc K v.1) M 0) := x
+    let y₀ : LinearMap.ker (contD (Acoef i) (Gloc K v.1) N 2) := y
+    let z : LinearMap.ker (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 2) :=
+      cupCycle cup 0 x y
+    refine (hχ z).trans ((movedRootClass (hS := hS) (i := i) (hμ := hμ) (v := v) z).trans ?_)
+    refine Eq.trans ?_ (congrArg (dualityMap0 Gsep Msep roots (l (kerToH0 x₀)))
+      (movedH2_class (R := Acoef i) g eN hN y₀)).symm
+    refine Eq.trans ?_ (dualityMap0_mk Gsep Msep roots (l (kerToH0 x₀)) (movedZ2 g eN hN y₀)).symm
     apply congrArg (H2pi Gsep roots)
     apply Subtype.ext
     funext p
     obtain ⟨σ, τ⟩ := p
-    change (compMu F (2 ^ i)).symm
-        (localRootCharacter hS i v hμ (contFun (cup.P 0 2 2 rfl x.1 y.1) ![g σ, g τ])) =
-      (eN (contFun y.1 ![g σ, g τ])).toAddMonoidHom (contFun x.1 Fin.elim0)
-    rw [cup_zero_two, tateRight_apply]
+    refine (congrArg readRoot (cup_zero_two hS W i α hμ v x₀.1 y₀.1 (g σ) (g τ))).trans ?_
+    exact (tateRight_apply hS W i α hμ hFull v (contFun x₀.1 Fin.elim0) (contFun y₀.1 ![g σ, g τ])).symm
   · let l := movedH1 g eL hL
     let r := movedH1 g eN hN
-    refine cupPerfectAt_of_class_pairing cup tr 1 χ hgen
-      (l.toAddMonoidHom.comp kerToH1) (r.toAddMonoidHom.comp kerToH1)
-      (l.surjective.comp kerToH1_surjective) (r.surjective.comp kerToH1_surjective)
+    let qL := l.toAddMonoidHom.comp (kerToH1 (k := Acoef i) (G := Gloc K v.1) (M := M))
+    let qR := r.toAddMonoidHom.comp (kerToH1 (k := Acoef i) (G := Gloc K v.1) (M := N))
+    refine cupPerfectAt_of_class_pairing (L := H1 Gsep Msep) (H := H1 Gsep Nsep) cup tr 1 χ hgen qL qR
+      (l.surjective.comp (kerToH1_surjective (k := Acoef i) (G := Gloc K v.1) (M := M)))
+      (r.surjective.comp (kerToH1_surjective (k := Acoef i) (G := Gloc K v.1) (M := N)))
       (fun x hx => (kerToH1_eq_zero_iff x).mp (l.injective (hx.trans (map_zero l).symm)))
       (fun y hy => (kerToH1_eq_zero_iff y).mp (r.injective (hy.trans (map_zero r).symm)))
       (dualityMap1 Gsep Msep roots) (dualityMap1_kummerCoeff_bijective hm Msep hM) ?_
     intro x y
-    change χ (tr (cupCycle cup 1 x y).1) =
-      dualityMap1 Gsep Msep roots (movedH1 g eL hL (kerToH1 x)) (movedH1 g eN hN (kerToH1 y))
-    rw [hχ, movedRootClass, movedH1_class, movedH1_class, dualityMap1_mk]
+    let x₀ : LinearMap.ker (contD (Acoef i) (Gloc K v.1) M 1) := x
+    let y₀ : LinearMap.ker (contD (Acoef i) (Gloc K v.1) N 1) := y
+    let z : LinearMap.ker (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 2) :=
+      cupCycle cup 1 x y
+    refine (hχ z).trans ((movedRootClass (hS := hS) (i := i) (hμ := hμ) (v := v) z).trans ?_)
+    refine Eq.trans ?_ (congrArg₂ (fun a b => dualityMap1 Gsep Msep roots a b)
+      (movedH1_class (R := Acoef i) g eL hL x₀) (movedH1_class (R := Acoef i) g eN hN y₀)).symm
+    refine Eq.trans ?_ (dualityMap1_mk Gsep Msep roots (movedZ1 g eL hL x₀) (movedZ1 g eN hN y₀)).symm
     apply congrArg (H2pi Gsep roots)
     apply Subtype.ext
     funext p
     obtain ⟨σ, τ⟩ := p
-    change (compMu F (2 ^ i)).symm
-        (localRootCharacter hS i v hμ (contFun (cup.P 1 1 2 rfl x.1 y.1) ![g σ, g τ])) =
-      (σ • eN (contFun y.1 (fun _ => g τ))).toAddMonoidHom (contFun x.1 (fun _ => g σ))
-    rw [cup_one_one, ← hN, tateRight_apply]
+    refine (congrArg readRoot (cup_one_one hS W i α hμ v x₀.1 y₀.1 (g σ) (g τ))).trans ?_
+    let a : M := contFun x₀.1 (fun _ => g σ)
+    let b : N := contFun y₀.1 (fun _ => g τ)
+    refine (tateRight_apply hS W i α hμ hFull v a (g σ • b)).symm.trans ?_
+    exact congrArg (fun f : Nsep => f.toAddMonoidHom a) (hN σ b)
   · let l := movedH2 g eL hL
     let r := movedH0 g eN hN
-    refine cupPerfectAt_of_class_pairing cup tr 2 χ hgen
-      (l.toAddMonoidHom.comp kerToH2) (r.toAddMonoidHom.comp kerToH0)
-      (l.surjective.comp kerToH2_surjective) (r.surjective.comp kerToH0_surjective)
+    let qL := l.toAddMonoidHom.comp (kerToH2 (k := Acoef i) (G := Gloc K v.1) (M := M))
+    let qR := r.toAddMonoidHom.comp (kerToH0 (k := Acoef i) (G := Gloc K v.1) (M := N))
+    refine cupPerfectAt_of_class_pairing (L := H2 Gsep Msep) (H := H0 Gsep Nsep) cup tr 2 χ hgen qL qR
+      (l.surjective.comp (kerToH2_surjective (k := Acoef i) (G := Gloc K v.1) (M := M)))
+      (r.surjective.comp (kerToH0_surjective (k := Acoef i) (G := Gloc K v.1) (M := N)))
       (fun x hx => (kerToH2_eq_zero_iff x).mp (l.injective (hx.trans (map_zero l).symm)))
       (fun y hy => boundary_of_kerToH0 (r.injective (hy.trans (map_zero r).symm)))
       (dualityMap2 Gsep Msep roots) (dualityMap2_kummerCoeff_bijective hm Msep hM) ?_
     intro x y
-    change χ (tr (cupCycle cup 2 x y).1) =
-      dualityMap2 Gsep Msep roots (movedH2 g eL hL (kerToH2 x)) (r (kerToH0 y))
-    rw [hχ, movedRootClass, movedH2_class, dualityMap2_mk]
+    let x₀ : LinearMap.ker (contD (Acoef i) (Gloc K v.1) M 2) := x
+    let y₀ : LinearMap.ker (contD (Acoef i) (Gloc K v.1) N 0) := y
+    let z : LinearMap.ker (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 2) :=
+      cupCycle cup 2 x y
+    refine (hχ z).trans ((movedRootClass (hS := hS) (i := i) (hμ := hμ) (v := v) z).trans ?_)
+    refine Eq.trans ?_ (congrArg (fun a => dualityMap2 Gsep Msep roots a (r (kerToH0 y₀)))
+      (movedH2_class (R := Acoef i) g eL hL x₀)).symm
+    refine Eq.trans ?_ (dualityMap2_mk Gsep Msep roots (movedZ2 g eL hL x₀) (r (kerToH0 y₀))).symm
     apply congrArg (H2pi Gsep roots)
     apply Subtype.ext
     funext p
     obtain ⟨σ, τ⟩ := p
-    change (compMu F (2 ^ i)).symm
-        (localRootCharacter hS i v hμ (contFun (cup.P 2 0 2 rfl x.1 y.1) ![g σ, g τ])) =
-      ((σ * τ) • eN (contFun y.1 Fin.elim0)).toAddMonoidHom (contFun x.1 ![g σ, g τ])
-    rw [cup_two_zero, ← hN, tateRight_apply, map_mul]
+    refine (congrArg readRoot (cup_two_zero hS W i α hμ v x₀.1 y₀.1 (g σ) (g τ))).trans ?_
+    let a : M := contFun x₀.1 ![g σ, g τ]
+    let b : N := contFun y₀.1 Fin.elim0
+    refine (tateRight_apply hS W i α hμ hFull v a ((g σ * g τ) • b)).symm.trans ?_
+    have hg := congrArg (fun t : Gloc K v.1 => eN (t • b)) (g.map_mul σ τ).symm
+    exact congrArg (fun f : Nsep => f.toAddMonoidHom a) (hg.trans (hN (σ * τ) b))
 
 end Actual
 
