@@ -31,11 +31,14 @@ From these the field-level dictionary of `H20Dictionary` is **proved**:
   element of `𝔮` (for the text: a Frobenius at `𝔮`; with lane E1's local Frobenius lift once it is
   on the integration branch), `κ ∘ frob = σ ∘ κ` on `D.H d`, and `D.H d` is stable under `frob⁻¹`.
 * **`hnorm_of_full_anchor`** (PROVED): the input `hnorm` of `h1_shapiro` for the realized genuine
-  Heegner points from the anchored norm relations, given the transfer data `HP = G_{H_d}`, `HR = G_{H_{dq}}` and a `σ` with the Artin restriction.
+  Heegner points from the anchored norm relations, given the transfer data `HP = G_{H_d}`,
+  `HR = G_{H_{dq}}` and a `σ` with the Artin restriction.
 
 No monotonicity `H_d ⊆ H_{dq}` of ring class fields is needed. Here `S₀` is the support of the
 ambient points; for the relaxed points take it to be the larger support `S₁` of `H20AmbientS`
 (containing the primes dividing `dq`).
+
+Kinds: definitions and PROVED.
 -/
 
 noncomputable section

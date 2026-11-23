@@ -102,11 +102,12 @@ in the rerun use only `propext`, `Classical.choice`, and `Quot.sound`.
 
 ## Count
 
-**None.** The import closure on pinned main contains 10,580 project
-modules for `frozenTarget` and 380 for the type of `hRC`. Each excludes
+**None.** The import closure on the pinned base (main 2ba691fde)
+contains 10,580 project modules for `frozenTarget` and 380 for the type of `hRC`. Each excludes
 every module that owned a deleted declaration. The merge gives the
-same result. `hRC` remains an explicit hypothesis in
-`ZInQKernel/OneProof/Main.lean:265`. Its type is
+same result. `hRC` remains an explicit hypothesis of
+`ZInQKernel/OneProof/Main.lean` (line 265 on the pinned base, line 269
+on main 29bfbc3f6). Its type is
 `ZInQKernel/Contrib/OneProof/SelmerTwoPower.lean:217` and its GLUE
 entry is at `docs/one-proof/kinds.tsv:23` and
 `docs/one-proof/OPEN.md:149`. The retirement removes zero
@@ -134,5 +135,10 @@ at `docs/one-proof/OPEN.md:16` and `docs/one-proof/OPEN.md:18`.
   reread. Global compatibility of the point family and the
   analytic-to-algebraic parametrization comparison remain inputs.
   [Prior source and manuscript audit](ccl-unit-index2.md#manuscript-check)
-- A few Lean comments still name the retired witness or wiring. The
-  exact references are in the audit. [Comment references](../../scratch/ccl-retire2/log.md#exact-name-matches-on-the-merged-base)
+- The Lean comments that named the retired witness or wiring now point
+  at `CCLThm2_15AppliedWithUnits`, `E2ChainInputsS`,
+  `CommonCoordinateInputsGenuineS` and `hnorm_of_normRelations_on`. The
+  comments that labelled the unweighted relation (4.1) as the print now
+  say it is the print only once the unit index is one (`D_K < -4`). The
+  Kinds lines of `H20Transport`, `H20Anchor` and `H20DictFields` are
+  restored without the retired name. [Comment references](../../scratch/ccl-retire2/log.md#exact-name-matches-on-the-merged-base)

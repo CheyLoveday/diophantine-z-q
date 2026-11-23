@@ -26,8 +26,8 @@ parametrization. It uses the newform level `newformLevel`, the analytic parametr
   parametrization `φ` vanishes at the CM point (the zero system of `zero_normRelations` is anchored
   only where the genuine Heegner points vanish).
 
-The file defines the anchor and proves its coordinate and non-degeneracy lemmas. The analytic parametrization and CM point
-comparisons use the CST dictionaries.
+Kinds: definitions and PROVED; the analytic model of the parametrization and the CM points are
+the CST dictionaries (CONSEQUENCE GLUE).
 -/
 
 noncomputable section

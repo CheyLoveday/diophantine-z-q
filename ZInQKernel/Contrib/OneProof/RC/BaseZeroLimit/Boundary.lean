@@ -77,8 +77,9 @@ theorem toQVec_eq {N : ℕ} (x : Fin N → ℤ_[2]) : toQVec x = PadicInt.Coe.ri
 * `U`, `hU`: the one fixed nonprincipal ultrafilter on the coefficient stages (tex 4403–4404,
   4444; definition);
 * `stage i`: the data of the `i`-th finite stage at the base (lane RC25's `SplitNormStage`: (4.1)
-  at `(1, r_i)`, PRINT, Cai–Chen–Liu, Trans. AMS 370 (2018), Theorem 2.15, p. 3730, through `φ`;
-  the ring-class data, definition; tex 2915–2932, 3904);
+  at `(1, r_i)`, PRINT, Cai–Chen–Liu, Trans. AMS 370 (2018), Theorem 2.15, p. 3730, through `φ`,
+  unweighted, so the print once `u_1 = [𝒪_K^× : ℤ^×]` is one, `D_K < -4`; the ring-class data,
+  definition; tex 2915–2932, 3904);
 * `L`, `hL`: the fixed multiplier of Proposition `ex:arith-finite-heegner` ("with the same fixed
   `L`", tex 2860, 3897; definition);
 * `N`, `M0`: the ranks, in degrees one and zero, of the retained finite free model of the stage

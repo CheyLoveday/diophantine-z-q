@@ -161,7 +161,8 @@ G_{H_{f n_I}}` acts on `V = E(ℚ̄)`; `Hup = G_{H_{f n_I ℓ}}`; `σ` a local i
 generator `σ_ℓ`; `red` the reduction at a place above `ℓ` with Frobenius `F`; `J = ρ_T(τ)`.
 Kinds: `cocycle`, `tors`, `kummer_upper` are the choice of the adjusted representative of
 `b_{I∪ℓ,a}` (`ELLIOT`, tex 3122–3128); `hZ`, `hQ` define the division points; `hY`, `hTr` are
-(4.1) with `d = f n_I` (`PRINT`, CCL 2.15); `hXfix`, `hYfix` say `X, Y` are points of the
+(4.1) with `d = f n_I` (`PRINT`, CCL 2.15, unweighted: the print once the unit index
+`u_1 = [𝒪_K^× : ℤ^×]` is one, `D_K < -4`); `hXfix`, `hYfix` say `X, Y` are points of the
 indicated fields; `hH2` is (H2) for the upper field (`H2_assembled`); `hu'`, `hv'` come from
 (H12) (`H12_divisibility`); `hinert` (inertia acts trivially on reductions), `hYX` ((H4), the CM
 congruence, `ELLIOT` tex 2948–2967), `hXF` (`(ℓ)` splits completely in `H_{f n_I}`),

@@ -30,6 +30,8 @@ The additive comparison is defined on a subgroup of `E(ℚ̄)` whose points are 
   3. `κ(frob y_d) = σ · P_P`, `κ(frob⁻¹ y_d) = σ⁻¹ · P_P` (the Frobenius matches `σ`);
   4. `χ_h(t_τ) = χ_h(σ) = 1` (the character of the twist is trivial on these elements, e.g. when
      `√h ∈ H_d`).
+
+Kinds: definitions and PROVED; the dictionary is the GLUE.
 -/
 
 noncomputable section
