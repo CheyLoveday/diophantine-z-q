@@ -106,7 +106,9 @@ theorem LocalDescentInput.kummer {Pt Pt' HV HV' HB HB' Hinf : Type*} [AddCommGro
     D.hH10 m0 v hv
 
 /-- `PRINT` (Cai–Chen–Liu, Trans. AMS 370, Theorem 2.15, p. 3730, read and stated by lane RC9),
-the inert norm relations (4.1), tex 2914–2936, together with the Artin identification (H5)
+the inert norm relations (4.1) (unweighted: the print once the unit index
+`u_1 = [𝒪_K^× : ℤ^×]` is one, `D_K < -4`), tex 2914–2936, together with the Artin
+identification (H5)
 (`GLUE`, tex 2969–2985), in the form used by (H7): the points `y J = y_{f n_J}` (`J ⊆ I`) live in
 the module `P = E(M_I)` over the commutative group ring `𝒜 = ℤ[Gal(M_I/H_f)]`; `σ i`, `D i`,
 `Tr i ∈ 𝒜` are the generator, the derivative and the trace of the `i`-factor `C_{ℓ_i+1}` of (H5);

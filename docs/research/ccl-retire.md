@@ -138,7 +138,8 @@ at `docs/one-proof/OPEN.md:16` and `docs/one-proof/OPEN.md:18`.
 - The Lean comments that named the retired witness or wiring now point
   at `CCLThm2_15AppliedWithUnits`, `E2ChainInputsS`,
   `CommonCoordinateInputsGenuineS` and `hnorm_of_normRelations_on`. The
-  comments that labelled the unweighted relation (4.1) as the print now
+  comments that labelled the unweighted relation (4.1) as the print
+  (in the CCL, Wiring, BaseZero, HeegnerAlgebra and GlueSweep files) now
   say it is the print only once the unit index is one (`D_K < -4`). The
   Kinds lines of `H20Transport`, `H20Anchor` and `H20DictFields` are
   restored without the retired name. [Comment references](../../scratch/ccl-retire2/log.md#exact-name-matches-on-the-merged-base)

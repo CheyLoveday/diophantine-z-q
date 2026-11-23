@@ -373,7 +373,8 @@ theorem localDet_survives {k : ℕ} {U : Ultrafilter ℕ} (hU : (U : Filter ℕ)
 finite free models of Lemma `ex:limits-inner-limit`, tex 4391–4399, 4428–4442). Fields, with
 kinds:
 
-* `S`: the stage data (lane RC25's `SplitNormStage`; PRINT (4.1) + definitions);
+* `S`: the stage data (lane RC25's `SplitNormStage`; PRINT (4.1), unweighted, so the print once
+  `u_1 = [𝒪_K^× : ℤ^×]` is one, `D_K < -4`; + definitions);
 * the Selmer cone of the stage in the fibre `t = 0` (coefficients `ℤ/2^i`), exactly as in lane
   RC25's `boundary45_finite`: global cochains `G0 → G1 → G2`, local-condition cochains
   `U0 → U1 → U2`, local cochains `L0 → L1`, the maps `loc`, `ι` (chain maps: `hloc`, `hι`), the

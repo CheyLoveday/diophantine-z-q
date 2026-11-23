@@ -321,7 +321,8 @@ theorem exists_smul_of_tendsto {n : ℕ} {c : ℕ → ℚ_[2]} {v zbar : Fin n �
 4345–4348). For the specified point `P` and the central specialization `z̄ ∈ ℚ₂ⁿ` of the actual
 cycle (in the model's central degree-one coordinates), with kinds:
 
-* `stage i`: the data of the `i`-th finite stage (`SplitNormStage`; PRINT (4.1) + definitions);
+* `stage i`: the data of the `i`-th finite stage (`SplitNormStage`; PRINT (4.1), unweighted, so the
+  print once `u_1 = [𝒪_K^× : ℤ^×]` is one, `D_K < -4`; + definitions);
 * `L`, `hL`: the fixed multiplier of Proposition `ex:arith-finite-heegner` (`L > 0` there;
   definition);
 * `kappa`: the central Kummer comparison `i ∘ κ_K : E(K) → ℚ₂ⁿ` (the rational Kummer map of
