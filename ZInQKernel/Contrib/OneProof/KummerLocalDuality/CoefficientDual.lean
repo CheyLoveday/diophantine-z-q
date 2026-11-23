@@ -127,13 +127,15 @@ theorem localCoefficientTateDual_smul (g : Gloc K v.1) (y : kummerLocalCoeff hS 
   apply InternalHom.ext
   apply AddMonoidHom.ext
   intro x
-  rw [localCoefficientTateDual_apply, InternalHom.toAddMonoidHom_smul, TauCeti.homAction]
-  change localRootCharacter hS i v hμ (kannBeta hS W i v hμ α x (g • y)) =
-    g • (localCoefficientTateDual hS i v hμ W α hFull y).toAddMonoidHom (g⁻¹ • x)
-  rw [localCoefficientTateDual_apply, ← localRootCharacter_smul]
-  change localRootCharacter hS i v hμ (kannBeta hS W i v hμ α x (g • y)) =
-    localRootCharacter hS i v hμ (g • kannBeta hS W i v hμ α (g⁻¹ • x) y)
-  rw [← kannBeta_smul, smul_inv_smul]
+  let β := kannBeta hS W i v hμ α
+  let χ : ResMod (locMap K S v.1) (InflMod hS (Tate1 (Acoef i) hμ)) →+
+      MuAlg (v.1.adicCompletion K) (2 ^ i) := localRootCharacter hS i v hμ
+  have hχ (z : ResMod (locMap K S v.1) (InflMod hS (Tate1 (Acoef i) hμ))) :
+      χ (g • z) = g • χ z := localRootCharacter_smul hS i v hμ g z
+  have hβ := kannBeta_smul hS W i v hμ α g (g⁻¹ • x) y
+  rw [smul_inv_smul] at hβ
+  change χ (β x (g • y)) = g • χ (β (g⁻¹ • x) y)
+  exact (congrArg χ hβ).trans (hχ (β (g⁻¹ • x) y))
 
 end Kummer
 
