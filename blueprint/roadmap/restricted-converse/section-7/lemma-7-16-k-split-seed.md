@@ -14,7 +14,7 @@ $q_0\mid k$, $q_0\nmid2\ell$, and let $K=\mathbb Q(\sqrt k)$. Let $A$ be a symbo
 $S$ a finite set of primes. Assume that if $A$ had no nonempty unit seed, then
 $$a_p(E_\ell^{(k)})\equiv p+1\pmod 8$$
 at every prime $p\notin S$ with $p\nmid6k\ell$ and $(k/p)=1$ (Elliot's coefficient calculation in
-Appendix G, a named input, not proved). Then $A$ has a nonempty unit seed.
+Appendix G, ELLIOT, a named input, not proved). Then $A$ has a nonempty unit seed.
 
 In Lean the symbol $A$ is arbitrary: everything that ties it to the positive even source of $E^{(k)}$,
 normalized at index one and read on $K$-split primes, is carried by the hypothesis, and "consisting of

@@ -9,7 +9,7 @@ lean: ZInQ.Contrib.CloudB3RC53.EvenUpper.h33a_of_F1, ZInQ.Contrib.CloudB3RC53.Ev
 
 # (3.3a): the bound at a unit of the even symbol
 
-Assume two outputs of Appendix E for the coefficients $a(D)$ of the even source (named inputs, not
+Assume two outputs of Appendix E for the coefficients $a(D)$ of the even source (ELLIOT, named inputs, not
 proved): $L_*(D)\ne0$ exactly when $a(D)\ne0$, and then $v_2L_*(D)=2v_2a(D)+\kappa$; and
 $v_2a(D)-\omega(D)\ge c$ at every $D$ with $a(D)\ne0$, some such $D$ existing and none of them zero.
 Call $p$ a *unit of the normalized even symbol* if $a(p)\ne0$ and $v_2a(p)-\omega(p)$ is the minimum of

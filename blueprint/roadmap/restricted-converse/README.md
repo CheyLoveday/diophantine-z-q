@@ -73,3 +73,8 @@ it assumes, how the Lean statement differs from the manuscript's, and whether th
 Theorem 5.3 takes the statement from that page's theorem or from a field of the remaining hypotheses.
 
 - [Section 7: the restricted converse and its dependency order](section-7/README.md)
+- [Section 8: actual classes, local conditions and central comparison](section-8/README.md)
+- [Section 9: the two limits and determinant transfer](section-9/README.md)
+- [Appendix E: the even coefficient source](appendix-e/README.md)
+- [Appendix F: the odd theta forms and their operators](appendix-f/README.md)
+- [Appendix G: nonvanishing, normalization and the final family](appendix-g/README.md)
