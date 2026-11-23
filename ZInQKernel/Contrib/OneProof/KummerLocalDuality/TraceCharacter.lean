@@ -147,6 +147,7 @@ private theorem localRootCycleClass_boundary
   exact kannPost_mem_range_two (k := Acoef i) (k' := ℤ) (G := Gloc K v.1)
     (restrictedRootCharacter hS i v hμ) (localRootCharacter_smul hS i v hμ) hz
 
+set_option maxHeartbeats 1600000 in
 private theorem localRootCycleClass_detects
     (z : LinearMap.ker (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 2))
     (hz : ∀ r : Acoef i, localRootCycleClass hS i v hμ (r • z) = 0) :
