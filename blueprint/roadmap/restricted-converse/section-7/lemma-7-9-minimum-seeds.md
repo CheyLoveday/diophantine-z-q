@@ -22,7 +22,9 @@ Assume that $A$ satisfies [the coefficient rules](lemma-7-6-coefficient-rules.md
    is partitionable.
 
 In Lean a contraction certificate is a forest on the vertices of $\Gamma$ whose contraction has symbol
-one; its trees are the contraction trees of the clusters.
+one; its trees are the contraction trees of the clusters. The reduction of Theorem 5.3 uses
+`partitionable_of_anchors`, which applies `minSeed_bits_irrelevant`, through `auxFactor_of_inputs`; in
+the remaining branch it uses all three parts through `final_family_graphs`.
 
 **Proof sketch.** If $r\ge2$, a nonzero derivative in an internal bit would, by the contraction rule,
 give a unit seed on $r-1$ nonempty vertices, contradicting minimality; if $r=1$ there is no internal

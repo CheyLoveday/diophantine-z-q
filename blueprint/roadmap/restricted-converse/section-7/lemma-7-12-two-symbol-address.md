@@ -25,7 +25,8 @@ The two symbols read the same alphabet in Lean; symbols reading projections of a
 in the manuscript, are composed with the projections, which preserves the rules
 (`coefficientRules_comp`). One symbol is the case $A_1=A_2$. The manuscript's hypotheses that each
 $\Gamma_x$ is nonempty and in every filter are implied, and its clause on prime representatives is not
-part of the statement.
+part of the statement. The reduction of Theorem 5.3 uses this theorem in the remaining branch, through
+`final_family_graphs` inside `addressInput_of_address_zeroTotal`.
 
 **Proof sketch.** As in the manuscript, by the network construction of Appendix G. The anchors give
 the row-sum identity on every active restriction. A degree count on the product of the two top forms,

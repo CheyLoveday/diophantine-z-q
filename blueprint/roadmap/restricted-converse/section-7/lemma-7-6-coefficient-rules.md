@@ -23,7 +23,9 @@ coordinate $(p-1)/2\bmod2$), a reading $R$ of finite sets of good primes, and th
 Appendix F on prime sets: the reading of a new prime depends only on its type and its residue bits with
 the others (`FixedUFactorization`), (O.12) at coefficient one with the product-label rule
 (`O12Reading`), a fresh vertex of trivial type and bits reads zero (`PrimaryReading`), and $a_p$ is even
-at every good prime (`ApEven`). These are named inputs, not proved.
+at every good prime (`ApEven`). The three readings are named inputs, not proved. `ApEven` is proved for
+the curves of the proof, $E_\ell$ and its twists, through $a_p\equiv p+1\pmod4$
+(`apModFour_curve_typeData`, `apEven_of_apModFour`).
 
 - If the readings hold at every budget, the symbol $\operatorname{symb}(T,R)$ (the reading of any prime
   realization of a typed graph) satisfies the coefficient rules.
@@ -43,8 +45,11 @@ even, so the contraction coefficient is one. Primary isolation is the correspond
 symbol inherits each rule, since each instance involves finitely many configurations.
 
 In the Lean proof of Theorem 5.3 the rules for the even sources are a clause of the field
-`PreLeaves.aux_factor` of [the remaining hypotheses](../remaining-hypotheses.md), and the odd readings
-enter through `PostLeaves.address`.
+`PreLeaves.aux_factor` of [the remaining hypotheses](../remaining-hypotheses.md). In the remaining branch
+the reduction applies all three theorems, with their readings taken from `PostLeaves.address`:
+`coefficientRules_symb` to the transported even source, `rulesUpTo_symb` to each odd stage (through
+`rulesUpTo_stageSymbol`), and `limSymbol_rules` to the stabilized odd symbol (through
+`odd_stabilization`).
 
 ## Depends on
 

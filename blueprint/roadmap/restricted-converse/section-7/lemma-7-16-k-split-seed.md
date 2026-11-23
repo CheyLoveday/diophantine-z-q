@@ -19,7 +19,8 @@ Appendix G, a named input, not proved). Then $A$ has a nonempty unit seed.
 In Lean the symbol $A$ is arbitrary: everything that ties it to the positive even source of $E^{(k)}$,
 normalized at index one and read on $K$-split primes, is carried by the hypothesis, and "consisting of
 $K$-split primes" is not part of the conclusion. The unconditional content is that the congruence fails
-(`not_appGCongruence`). In the Lean proof of Theorem 5.3 the lemma enters in an equivalent form, as the
+(`not_appGCongruence`). Given that, the hypothesis is equivalent to the conclusion. In the Lean proof of
+Theorem 5.3 the reduction applies this theorem in the remaining branch, and its hypothesis is the
 $K$-split seed clause of the field `PostLeaves.address` of [the remaining
 hypotheses](../remaining-hypotheses.md).
 

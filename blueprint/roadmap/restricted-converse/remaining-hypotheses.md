@@ -11,8 +11,9 @@ lean: ZInQ.Manuscript.RC.Wiring.RCLeaves
 Every hypothesis of the Lean proof of Theorem 5.3 that remains beyond [the cited results](printed-results.md)
 is a field of one structure. Each field records the manuscript lines it covers and whether it is a printed
 result or a step between results. The fields are:
-- printed results: Hoffstein–Luo on nonvanishing twists, Shimura's 1973 theorem on conjugate eigenforms
-  and Li's 1975 strong multiplicity one in weight two;
+- printed results: Hoffstein–Luo on nonvanishing twists, and the clause of Shimura's 1973 theorem that
+  each embedding of the coefficient field of a weight-two newform gives an eigenform (the finiteness of
+  that field and Li's 1975 strong multiplicity one in weight two are proved);
 - two readings of the literature: the elliptic curve of a rational newform and its Euler factors (Shimura
   with Carayol), and Faltings' 1983 isogeny theorem in its local-factor form;
 - the coefficient data of the proof, chosen for each genus partner, with the steps of Sections 7–9 and

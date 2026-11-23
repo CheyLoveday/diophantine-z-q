@@ -24,6 +24,9 @@ The Lean statement records only the valuation bound, not $L_*(d)\ne0$. The funct
 predicate "partitionable" are interface data of the remaining hypotheses, constrained only by their
 fields. The cubes of units, which the manuscript builds with [Lemma 7.9](lemma-7-9-minimum-seeds.md)
 and [Lemma 7.11](lemma-7-11-one-symbol-address.md), are part of the leaf field rather than derived.
+The level $N_0$ of the leaf's binary families is existential, while the manuscript's is the conductor
+of $E$. With $N_0=0$ the families are constant, so the cube clause then holds only at bases that are
+already units. The reduction of Theorem 5.3 uses this theorem.
 
 **Proof sketch.** Fix a partitionable $d$ of corank zero and take one cube of units based at $d$, of
 dimension larger than the bounded Boolean bit degrees of the scalar's sign-evaluation coefficient.

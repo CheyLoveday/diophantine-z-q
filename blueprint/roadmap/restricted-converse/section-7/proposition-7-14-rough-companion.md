@@ -31,7 +31,11 @@ $$\omega(k')\le A,\qquad v_2L_*(hk')\le2\omega(h)+2\omega(k')+s(hk')+C_E.\tag{3.
 
 The Lean constants are $A=A_0+5$ and $C_E=C_1$. The theorem takes the dummy supply as a hypothesis;
 in the reduction of Theorem 5.3 it is derived from the field `PreLeaves.aux_factor`, and the
-proposition is used in the form `F3Target` over the interface data, through `f3Target_of`. That field
+proposition is used in the form `F3Target` over the interface data, through `f3Target_of`, whose
+further hypotheses are the Kummer sequence in rank zero (`KummerCorankZero`), the existence of root
+numbers (`RootNumberExists`), the normalization of $L_*$ (`LstarTarget`), the support and
+prepared-filter specifications (`SupportSpec`, `PreparedSpec`), the auxiliary factor (`AuxFactor`)
+and (3.3b) (`EvenUpper33b`). The field `PreLeaves.aux_factor`
 asks for unit seeds only at the prepared total types: the manuscript prepares a seed for every total
 type, which the field's docstring notes is false at negative types of root number $-1$. The condition
 $k'\equiv1\pmod8$ excludes the fields with extra units.

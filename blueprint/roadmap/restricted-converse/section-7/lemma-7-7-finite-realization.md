@@ -20,6 +20,10 @@ A type is represented by a reduced residue class modulo $m$, as in the manuscrip
 bits are not part of the statement; they follow by quadratic reciprocity. The clause about replacing a
 product template by a fresh prime is not part of this theorem.
 
+The reduction does not use this theorem as stated, but it uses its form indexed by the natural numbers,
+`finite_realization_nat`, for the prime realizations of the address package in the remaining branch
+and of the auxiliary factor.
+
 **Proof sketch.** Choose the new primes one at a time. A prescribed bit at an earlier prime is a
 nonzero residue class modulo that prime. The Chinese remainder theorem combines these classes with the
 class modulo $m$, and Dirichlet's theorem gives infinitely many primes in the resulting reduced class,

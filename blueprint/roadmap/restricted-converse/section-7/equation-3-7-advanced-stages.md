@@ -26,7 +26,8 @@ The detector value $2^{a+1}$ is $2^{c_w}$ with $c_w=a+1<M$. The last clause of t
 $v_2\lambda_{M}(\bar Q)=c_w$ for the finite-field Kummer map at $\ell_0$, is Appendix F's (O.2) and is
 not part of this theorem; the Lean proof of Theorem 5.3 derives it from the detector outputs, which are
 fields of `PreLeaves.odd_staged` in [the remaining hypotheses](../remaining-hypotheses.md). The
-manuscript applies the theorem to $Q=LP^{\rm gen}_{D_w}$.
+manuscript applies the theorem to $Q=LP^{\rm gen}_{D_w}$. The deduction of Theorem 5.3 does not use
+`exists_detector_stages`; it shows only that the detector fields can be met.
 
 **Proof sketch.** Serre's theorem and the absence of complex multiplication make the Kummer translation
 image of $Q$ a full lattice. This gives an element $h$, trivial on $F_0$ and on $T_2A$, whose translation

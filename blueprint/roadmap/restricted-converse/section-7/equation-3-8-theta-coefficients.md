@@ -17,8 +17,9 @@ tuples, the parametrization of the orbits by the tuples and the class group of
 $\mathbb Q(\sqrt{Dh_*})$, the weights along it, the reduction identity at the reference tuple (from
 Theorem 3.1 of Cornut and Jetchev), the orientation changes, stabilizers $\{\pm1\}$, a unit phase at
 the reference tuple, and an integer representative $a_\theta(D)$ of the phase-removed coefficient
-modulo $2^{M_\theta}$. Let $\lambda_\theta(D)$ be the integer of the reduction identity, a lift of
-$\lambda_{M_\theta}(\overline{LP^{\rm gen}_D})$. Then for every stage $\theta$ and admissible $D$ there
+modulo $2^{M_\theta}$. Let $\lambda_\theta(D)$ be the integer of the reduction identity. In the
+manuscript it is a lift of $\lambda_{M_\theta}(\overline{LP^{\rm gen}_D})$; in Lean it is an arbitrary
+input, constrained only by the reduction identity. Then for every stage $\theta$ and admissible $D$ there
 is an odd integer $\zeta$ with
 $$a_\theta(D)\equiv c_0\,2^{\omega(N)}\,\zeta\,\lambda_\theta(D)\pmod{2^{M_\theta}},\qquad
 c_0=|\mathrm{GL}_4(\mathbb F_3)|=24261120.\tag{3.8}$$
@@ -38,7 +39,8 @@ $c_0\,2^{\omega(N)}$. No class number is divided out.
 
 In the Lean proof of Theorem 5.3 the theta side and the comparison argument are fields of
 `PreLeaves.odd_staged` in [the remaining hypotheses](../remaining-hypotheses.md); together they amount to
-(3.8) itself.
+(3.8) itself. The same field pins the point side: there $\lambda_\theta(D)$ is the genuine reading of
+the Heegner point.
 
 ## Depends on
 

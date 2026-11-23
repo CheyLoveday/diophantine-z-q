@@ -11,8 +11,9 @@ reduction](../opening-reduction.md) (root number $-1$), and then lays out the pr
 order:
 
 1. **The even coefficient bound.** One fixed-form scalar built from Kato's Euler system controls
-   $v_2L_*(h)$ on binary families of twists (Proposition 7.2). Every signed unit filter contains a
-   nonvanishing twist (Proposition 7.3). A missing-address argument on cubes of unit symbols then bounds
+   $v_2L_*(h)$ on binary families of twists (Proposition 7.2). An even signed unit filter contains a
+   nonvanishing twist with at most five primes, and an odd one contains a twist with a simple zero
+   (Proposition 7.3). A missing-address argument on cubes of unit symbols then bounds
    $v_2L_*$ above at partitionable parameters (Proposition 7.13), hence at a bounded companion of each
    prepared parameter (Proposition 7.14).
 2. **The finite combinatorics.** Coefficient symbols on typed graphs, the rules they obey, prime
@@ -108,8 +109,9 @@ Propositions 7.2, 7.13, 7.14 and 7.17 and share their pages; (3.1) is on the pag
 
 ## Items with no Lean statement
 
-None. Every numbered item of Section 7 is stated by a declaration on main, though the last clause of
-(3.7) only through Appendix F's (O.2); see that page.
+None in full. Two items are stated only in part: (3.1) only at the centre (`unusedFactor_central`),
+and Proposition 7.15 by no single declaration, only display by display. The last clause of (3.7) is
+stated only through Appendix F's (O.2); see that page.
 
 ## Remaining hypotheses that cover Section 7
 
@@ -117,8 +119,8 @@ These fields of [the remaining hypotheses](../remaining-hypotheses.md) cite line
 docstrings, with the kind each docstring gives:
 
 - `PreLeaves.stage_support` (definitions): the fixed support and the prepared filter.
-- `PreLeaves.aux_factor` (definition and ELLIOT): the type data, the even sources for each prepared
-  total type with the coefficient rules, a unit seed at each prepared type, and the meaning of
+- `PreLeaves.aux_factor` (definition and ELLIOT): the type data, an even source for every total type
+  with the coefficient rules, a unit seed at each prepared total type, and the meaning of
   partitionability; Definitions 7.4–7.8 and Propositions 7.13–7.14. The seeds are asked only at the
   prepared types, not at every total type as in the manuscript.
 - `PreLeaves.even_upper` (ELLIOT): (3.3a) at the units of the even symbol, (3.2), and the cubes of units
@@ -130,10 +132,16 @@ docstrings, with the kind each docstring gives:
 - `PostLeaves.companion` (derived from printed results, and a definition): the final companion $k$.
 - `PostLeaves.address` (ELLIOT and GLUE): the inputs of the address construction in the remaining
   branch, including the $K$-split seed of Lemma 7.16.
+- `PostLeaves.prim_regular` (ELLIOT and GLUE): the regularity of the primitive coordinates, proved in
+  Section 9; its base clause is asserted at every final family, and holds for the chosen $k$ by the
+  corank one of $E$ over $K$.
+- `PostLeaves.base_zero` (ELLIOT, PRINT, GLUE and definitions): the base-zero lemma of Section 8, with
+  $K=\mathbb Q(\sqrt k)$ split at $2$ as in the choice of $k$.
 - `RCLeaves.hlPrint` (PRINT): Hoffstein–Luo, used in Proposition 7.3.
-- `RCLeaves.shimuraConjugates` and `RCLeaves.liMultiplicityOne` (PRINT), `RCLeaves.carayolEulerFactors`
-  and `RCLeaves.faltingsRigidity` (GLUE): with Theorem A of Breuil–Conrad–Diamond–Taylor they give the
-  newform of $E$, the modular realization at the start of the section.
+- `RCLeaves.shimuraEmbeddings` (the embedding clause of Shimura's 1973 Theorem 1, a printed theorem),
+  `RCLeaves.carayolEulerFactors` and `RCLeaves.faltingsRigidity` (GLUE): with Theorem A of
+  Breuil–Conrad–Diamond–Taylor and the proved finiteness of the coefficient field and strong
+  multiplicity one, they give the newform of $E$, the modular realization at the start of the section.
 
 ## Sources
 

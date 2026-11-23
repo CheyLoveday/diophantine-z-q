@@ -23,7 +23,8 @@ The Lean statement is about abstract typed graphs. It has no filter hypothesis: 
 off its filter has a nonzero terminal polynomial only on the filter. The manuscript's clauses on prime
 representatives and on choosing the theta stage before them are not part of the statement; primes are
 chosen afterwards, by [finite realization](lemma-7-7-finite-realization.md). Extra splitting conditions
-are part of the types.
+are part of the types. The reduction of Theorem 5.3 does not use this theorem: the cubes of units are
+a clause of the field `PreLeaves.even_upper` of [the remaining hypotheses](../remaining-hypotheses.md).
 
 **Proof sketch.** As in the manuscript, this is the one-symbol case of the network construction of
 Appendix G. A degree count on the top form of the terminal polynomial, taken in the ordinary

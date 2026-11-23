@@ -30,6 +30,10 @@ does not depend on $h$.
 **Proof sketch.** Combine (3.3), (3.4) and (3.5) at the companion $k'$ given by (3.3): the term
 $s(hk')$ cancels, and $|\epsilon|\le2$ gives the constant.
 
+The reduction of Theorem 5.3 uses `genusLowerF4_proof` twice: through `exists_oddMinimum`, which
+attains the odd minimum, and through `finalFamilyField_proof`, behind
+[Proposition 7.17](proposition-7-17-final-family.md).
+
 ## Depends on
 
 - [Proposition 7.14: a bounded companion (3.3)](proposition-7-14-rough-companion.md)

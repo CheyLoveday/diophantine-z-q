@@ -10,7 +10,7 @@ lean: ZInQ.Contrib.CloudB3RC53.GenusOdd.genusLower34_of_artin, ZInQ.Contrib.Clou
 # (3.4): the height comparison
 
 Assume [the cited results](../printed-results.md) and the Artin factorization of ring-class
-$L$-functions (`ArtinFactorization`, which follows from the cited results and four fields of [the
+$L$-functions (`ArtinFactorization`, which follows from the cited results and three fields of [the
 remaining hypotheses](../remaining-hypotheses.md), `RCLeaves.artin`).
 
 Let $E/\mathbb Q$ be an elliptic curve with $a_1=a_3=0$, $f$ its newform, a period lattice of $E$
@@ -18,8 +18,10 @@ without complex multiplication, and a scale $\kappa$ of the parametrization. Let
 partner: a negative odd fundamental discriminant with $|h_*|>4$, in the squareclasses of $1$ at every
 $p\mid2N$, with $L(E^{(h_*)},1)\ne0$ and $L_*(h_*)\in\mathbb Q$. Let $h$ be prepared (positive,
 squarefree, a unit square at every $p\mid2N$, prime to $h_*$) with
-$\operatorname{ord}_{s=1}L(E^{(h)},s)=1$, and let $k'$ be a companion of $h$ as in [Proposition
-7.14](proposition-7-14-rough-companion.md), prime to $h_*$, with $L_*(hk')\ne0$. Then for every
+$\operatorname{ord}_{s=1}L(E^{(h)},s)=1$, and let $k'$ be a companion of $h$: negative, $\equiv1\pmod4$,
+squarefree, a unit square at every $p\mid2Nh$, prime to $h_*$, with $L_*(hk')\ne0$. Unlike the
+companions of [Proposition 7.14](proposition-7-14-rough-companion.md), no bound on $\omega(k')$, no
+partitionability and no (3.3) is asked. Then for every
 genus Heegner datum (discriminant $hh_*$, conductor $1$) and every ring-class Heegner datum
 (discriminant $k'$, conductor $|h|$, character $\chi_h$), both index valuations $j_{\rm gen}(h)$ and
 $j_{\rm rc}(h,k')$ are finite and
