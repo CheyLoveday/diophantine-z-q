@@ -24,28 +24,28 @@ section AdditiveDual
 variable {R G M N T A : Type} [CommRing R] [AddCommGroup M] [Module R M]
   [AddCommGroup N] [Module R N] [AddCommGroup T] [Module R T] [AddCommGroup A]
 
-private def scalarizedDual (β : M →ₗ[R] N →ₗ[R] T) (λ : T →+ A) : N →+ InternalHom G M A where
-  toFun y := InternalHom.of G (λ.comp (β.flip y).toAddMonoidHom)
+private def scalarizedDual (β : M →ₗ[R] N →ₗ[R] T) (character : T →+ A) : N →+ InternalHom G M A where
+  toFun y := InternalHom.of G (character.comp (β.flip y).toAddMonoidHom)
   map_zero' := by
     apply InternalHom.ext
     ext x
-    change λ (β x 0) = 0
+    change character (β x 0) = 0
     rw [map_zero, map_zero]
   map_add' y y' := by
     apply InternalHom.ext
     ext x
-    change λ (β x (y + y')) = λ (β x y) + λ (β x y')
+    change character (β x (y + y')) = character (β x y) + character (β x y')
     rw [map_add, map_add]
 
-private theorem scalarizedDual_injective (β : M →ₗ[R] N →ₗ[R] T) (λ : T →+ A)
-    (hβ : Function.Injective β.flip) (hλ : ∀ t, (∀ r : R, λ (r • t) = 0) → t = 0) :
-    Function.Injective (scalarizedDual (G := G) β λ) := by
+private theorem scalarizedDual_injective (β : M →ₗ[R] N →ₗ[R] T) (character : T →+ A)
+    (hβ : Function.Injective β.flip) (hgen : ∀ t, (∀ r : R, character (r • t) = 0) → t = 0) :
+    Function.Injective (scalarizedDual (G := G) β character) := by
   rw [injective_iff_map_eq_zero]
   intro y hy
   apply (injective_iff_map_eq_zero _).mp hβ y
   ext x
   change β x y = 0
-  apply hλ
+  apply hgen
   intro r
   rw [← LinearMap.map_smul₂]
   exact congrArg (fun f : InternalHom G M A => f.toAddMonoidHom (r • x)) hy
@@ -101,17 +101,17 @@ Weil pairing at this place. -/
 def localCoefficientTateDual : kummerLocalCoeff hS i v W (charInv α) ≃+
     InternalHom (Gloc K v.1) (kummerLocalCoeff hS i v W α) (MuAlg (v.1.adicCompletion K) (2 ^ i)) := by
   let β := kannBeta hS W i v hμ α
-  let λ := localRootCharacter hS i v hμ
+  let character := localRootCharacter hS i v hμ
   have hgen := localRootCharacter_generating hS i v hμ
-  have hf := scalarizedDual_injective (G := Gloc K v.1) β λ
+  have hf := scalarizedDual_injective (G := Gloc K v.1) β character
     (weilPairingM_flip_bijective (S := S₀) W hμ (Acoef i) α hFull).injective hgen
-  have hg := scalarizedDual_injective (G := Gloc K v.1) β.flip λ
+  have hg := scalarizedDual_injective (G := Gloc K v.1) β.flip character
     (weilPairingM_bijective (S := S₀) W hμ (Acoef i) α hFull).injective hgen
   letI : Finite (kummerLocalCoeff hS i v W α) := inferInstanceAs (Finite (Mcoef K S₀ W i α))
   letI : Finite (kummerLocalCoeff hS i v W (charInv α)) := inferInstanceAs (Finite (Mcoef K S₀ W i (charInv α)))
   have hcard := (localRootDual_card_le i v (kummerLocalCoeff hS i v W α)).trans
     ((Nat.card_le_card_of_injective _ hg).trans (localRootDual_card_le i v (kummerLocalCoeff hS i v W (charInv α))))
-  exact AddEquiv.ofBijective (scalarizedDual β λ) (hf.bijective_of_nat_card_le hcard)
+  exact AddEquiv.ofBijective (scalarizedDual β character) (hf.bijective_of_nat_card_le hcard)
 
 /-- Evaluation of the additive dual is the original Weil form followed by the
 same generating character. -/

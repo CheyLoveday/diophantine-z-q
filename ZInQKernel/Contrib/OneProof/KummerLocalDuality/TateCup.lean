@@ -185,6 +185,7 @@ private theorem movedRootClass
           (KummerCoeff (v.1.adicCompletion K) (2 ^ i))) :=
   movedH2_class _ _ _ _
 
+include hFull in
 /-- The cohomological trace cups of the actual finite modules are perfect
 in the three complementary degree pairs. The statement uses the given
 finite trace on the original target cochains. -/

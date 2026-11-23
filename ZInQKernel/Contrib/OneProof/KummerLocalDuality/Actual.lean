@@ -5,10 +5,10 @@ import ZInQKernel.Contrib.RC53Assist.ResidualBounds.StageBounds
 /-!
 # The finite local perfectness input of `actLPerf`
 
-At a Kummer place the exact local cup is perfect by finite local Tate
-duality and the comparison with the supplied finite trace. The Kummer
-comparison and annihilator are the established ones. The other two place
-cases use the same proofs as `actLPerf`.
+The Kummer case uses finite local Tate duality for the actual cup pairing.
+The finite trace on `localCx` and its degree-two isomorphism are supplied
+separately. The Kummer annihilator, full/zero and unramified cases use the
+same results as `actLPerf`.
 -/
 
 noncomputable section
@@ -31,8 +31,11 @@ variable {K : Type} [Field K] [NumberField K] {S S₀ : Set (HeightOneSpectrum (
   [NeZero i] [TopologicalSpace (Acoef i)] [DiscreteTopology (Acoef i)]
   (α : GKS K S₀ →* (Acoef i)ˣ) [IsOpenKer α] (hμ₀ : HasRootsOfUnity K S₀ (2 ^ i))
   (hα : ∀ v ∈ P, IsLocallyQuadAt (S := S₀) i α (quadChar s hs hs0) v)
-  (trv : ∀ v : Places K S, (locAt K S (Acoef i) (InflMod hS (Tate1 (Acoef i) hμ₀)) v).X 2 →ₗ[Acoef i] Acoef i)
-  (htrv : ∀ v z, trv v ((locAt K S (Acoef i) (InflMod hS (Tate1 (Acoef i) hμ₀)) v).d 1 2 rfl z) = 0)
+
+variable (trv : ∀ v : Places K S, (localCx (Acoef i) (GKS K S) (fun v : Places K S => Gloc K v.1)
+    (fun v => locMap K S v.1) (InflMod hS (Tate1 (Acoef i) hμ₀)) v).X 2 →ₗ[Acoef i] Acoef i)
+  (htrv : ∀ v z, trv v ((localCx (Acoef i) (GKS K S) (fun v : Places K S => Gloc K v.1)
+    (fun v => locMap K S v.1) (InflMod hS (Tate1 (Acoef i) hμ₀)) v).d 1 2 rfl z) = 0)
 
 private theorem acoefLocalHomology_range (v : Places K S)
     (α' : GKS K S₀ →* (Acoef i)ˣ) [IsOpenKer α'] (n : ℤ) (hn : n < 0 ∨ 2 < n) :
@@ -66,13 +69,28 @@ private theorem acoefLocalHomology_range (v : Places K S)
           (contCohomologyLinearEquiv (Acoef i) (Gloc K v.1) M (n + 1)).symm.injective.subsingleton
         exact (natPositiveHomologyIso (contCochains (Acoef i) (Gloc K v.1) M) n).toLinearEquiv.injective.subsingleton
 
+include hFull in
+/-- The local cup adjoint on full cochains for the actual finite modules.
+This is the `hLD` argument of `orthPerPlace_of_localDuality` at a Kummer place. -/
+theorem actualLocalCupAdjoint_quasiIso (v : Places K S)
+    (tr : (locAt K S (Acoef i) (InflMod hS (Tate1 (Acoef i) hμ₀)) v).X 2 →ₗ[Acoef i] Acoef i)
+    (htr : ∀ z, tr ((locAt K S (Acoef i) (InflMod hS (Tate1 (Acoef i) hμ₀)) v).d 1 2 rfl z) = 0)
+    (h2 : InducesIsoH2 tr) :
+    QuasiIso (GHom.toCC (adjHom
+      (orthGaloisPair K (actLBeta hS W i α hμ₀) (actLBeta_smul hS W i α hμ₀) v) 2 tr htr)) := by
+  letI := acoef_selfInjective i
+  exact quasiIso_adjHom_of_cupPerfect_zero_two
+    (orthGaloisPair K (actLBeta hS W i α hμ₀) (actLBeta_smul hS W i α hμ₀) v)
+    tr htr (acoefLocalHomology_range hS W i v α) (acoefLocalHomology_range hS W i v (charInv α))
+    (actualFiniteCupPerfect hS W i α hμ₀ hFull v tr htr h2)
+
 open scoped Classical in
 /-- The conclusion of `actLPerf` from finite Tate duality at the Kummer
 places, the existing Kummer annihilator and unramified duality inputs,
 and the supplied finite trace. -/
 theorem actLPerf_of_finiteTate (hM : MilneLocalTateDualityKummerCharZero)
     (h756 : NekovarProp756 K) (hK : IsTotallyComplex K)
-    (_hSfin : S.Finite) (hS₀fin : S₀.Finite)
+    (hSfin : S.Finite) (hS₀fin : S₀.Finite)
     (h2₀ : ∀ v : HeightOneSpectrum (𝓞 K), (2 : 𝓞 K) ∈ v.asIdeal → v ∈ S₀)
     (htrv2 : ∀ v : Places K S, InducesIsoH2 (trv v))
     (v : Places K S)
@@ -83,21 +101,19 @@ theorem actLPerf_of_finiteTate (hM : MilneLocalTateDualityKummerCharZero)
       (actLCondB hS W i s hs hs0 hFull P α hα v).i
       (orthGaloisPair K (actLBeta hS W i α hμ₀) (actLBeta_smul hS W i α hμ₀) v) J (trv v)
       (htrv v))) := by
+  clear hSfin
   by_cases hv : v.1 ∈ S₀
   · by_cases hP : v.1 ∈ P
     · letI := acoef_selfInjective i
       haveI := isElliptic_localTwist W (ne_zero_of_sqrt s hs hs0) v.1
-      have hlocal := quasiIso_adjHom_of_cupPerfect_zero_two
-        (orthGaloisPair K (actLBeta hS W i α hμ₀) (actLBeta_smul hS W i α hμ₀) v)
-        (trv v) (htrv v) (acoefLocalHomology_range hS W i v α)
-        (acoefLocalHomology_range hS W i v (charInv α))
-        (actualFiniteCupPerfect hS W i α hμ₀ hFull v (trv v) (htrv v) (htrv2 v))
       refine actLPerf_congr _ _ (actLCondA_of_P hS W i s hs hs0 hFull P α hα hv hP)
         (actLCondB_of_P hS W i s hs hs0 hFull P α hα hv hP) (trv v) (htrv v) (fun J₀ => ?_) J
       exact orthPerPlace_of_localDuality _ _
         (actualKummerAtS hS W i s hs hs0 α hFull v (hα v.1 hP))
         (actualKummerAtS hS W i s hs hs0 (charInv α) hFull v (isLocallyQuadAt_charInv (hα v.1 hP)))
-        J₀ (trv v) (htrv v) hlocal
+        J₀ (trv v) (htrv v)
+        (actualLocalCupAdjoint_quasiIso (hS := hS) (W := W) (i := i) (hFull := hFull)
+          (α := α) (hμ₀ := hμ₀) v (trv v) (htrv v) (htrv2 v))
         (orth_kummerAt_concentrated v (localTwist W h v.1) (2 ^ i)
           (kummerIotaS hS W i s hs hs0 α hFull v) (kummerIotaS_smul hS W i s hs hs0 α hFull v (hα v.1 hP)))
         (orth_kummerAt_concentrated v (localTwist W h v.1) (2 ^ i)

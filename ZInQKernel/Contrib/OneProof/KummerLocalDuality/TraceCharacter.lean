@@ -41,8 +41,10 @@ private theorem post_contD_two (f : M →+ N) (hf : ∀ (g : G) (x : M), f (g �
   conv_rhs => rw [hv]
   change f (contFun (contD k G M 2 c) ![v 0, v 1, v 2]) =
     contFun (contD k' G N 2 (kannPost f c)) ![v 0, v 1, v 2]
+  have heval (u : Fin 2 → G) :
+      contFun (kannPost (k' := k') f c) u = f (contFun c u) := rfl
   rw [contFun_d23, contFun_d23]
-  simp only [map_sub, map_add, hf, cfun_kannPost]
+  simp only [map_sub, map_add, hf, heval]
 
 /-- The map on degree-two cycles from a discrete equivariant coefficient map,
 allowing the source and target to have different scalar rings. -/
@@ -136,11 +138,16 @@ private theorem localRootCycleClass_detects
     exact top_mul_recovers_coordinate hS i v hμ k _
   choose c hc using hc
   refine ⟨∑ k, (kannPB i).basis k • kannPost (k' := Acoef i) (kannJ hS i v hμ) (c k), ?_⟩
+  apply Subtype.ext
+  funext g
+  change cfun (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 1
+    (∑ k, (kannPB i).basis k • kannPost (kannJ hS i v hμ) (c k))) g = cfun z.1 g
   rw [map_sum]
-  simp only [map_smul, ← kannPost_contD_one _ (kannJ_smul hS i v hμ), hc]
-  refine contCochains_ext fun g => ?_
-  rw [kann_cfun_sum_smul]
-  exact kannTau_recon hS i v hμ (contFun z.1 g)
+  simp only [map_smul]
+  rw [kann_cfun_sum_smul, ← kannTau_recon hS i v hμ (cfun z.1 g)]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [← kannPost_contD_one (kannJ hS i v hμ) (kannJ_smul hS i v hμ) (c k), hc k]
+  rfl
 
 /-- Evaluate any normalized finite trace by a generating additive character
 to obtain exactly the roots-of-unity class. This concerns the supplied trace
