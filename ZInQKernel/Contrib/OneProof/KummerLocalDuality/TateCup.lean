@@ -97,9 +97,11 @@ private theorem compInternalHom_smul [DistribMulAction (Field.absoluteGaloisGrou
   apply InternalHom.ext
   apply AddMonoidHom.ext
   intro x
-  change (compMu F m).symm ((compGal F).symm g • q.toAddMonoidHom (((compGal F).symm g)⁻¹ • x)) =
-    g • (compMu F m).symm (q.toAddMonoidHom ((compGal F).symm (g⁻¹) • x))
-  rw [map_inv, compMu_symm_smul]
+  let x₀ : M := x
+  change (compMu F m).symm ((compGal F).symm g • q.toAddMonoidHom (((compGal F).symm g)⁻¹ • x₀)) =
+    g • (compMu F m).symm (q.toAddMonoidHom ((compGal F).symm (g⁻¹) • x₀))
+  rw [map_inv]
+  exact compMu_symm_smul F m g _
 
 end CoefficientTransport
 
@@ -174,17 +176,21 @@ private theorem cup_two_zero
   funext j
   fin_cases j <;> rfl
 
+set_option maxHeartbeats 1600000 in
 private theorem movedRootClass
     (z : LinearMap.ker (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 2)) :
     movedH2 (compGal (v.1.adicCompletion K)).symm (compMu (v.1.adicCompletion K) (2 ^ i)).symm
       (compMu_symm_smul (v.1.adicCompletion K) (2 ^ i)) (localRootCycleClass hS i v hμ z) =
     (movedZ2 (compGal (v.1.adicCompletion K)).symm (compMu (v.1.adicCompletion K) (2 ^ i)).symm
       (compMu_symm_smul (v.1.adicCompletion K) (2 ^ i))
-      (postCycle2 (k := Acoef i) (k' := ℤ) (localRootCharacter hS i v hμ)
+      (postCycle2 (k := Acoef i) (k' := ℤ) (G := Gloc K v.1) (M := finiteLocalTateTarget hS i v hμ)
+        (localRootCharacter hS i v hμ)
         (localRootCharacter_smul hS i v hμ) z) : H2 (AbsoluteGaloisGroup (v.1.adicCompletion K))
           (KummerCoeff (v.1.adicCompletion K) (2 ^ i))) :=
-  movedH2_class _ _ _ _
+  movedH2_class (R := ℤ) _ _ _ _
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 160000 in
 include hFull in
 /-- The cohomological trace cups of the actual finite modules are perfect
 in the three complementary degree pairs. The statement uses the given
@@ -197,15 +203,17 @@ theorem actualFiniteCupPerfect
   let F := v.1.adicCompletion K
   let Gsep := AbsoluteGaloisGroup F
   let M := kummerLocalCoeff hS i v W α
+  let N := kummerLocalCoeff hS i v W (charInv α)
   let Msep := localSeparableCoeff hS W i α v
   let roots := KummerCoeff F (2 ^ i)
+  let Nsep := InternalHom Gsep Msep roots
   let cup := actualFiniteCup hS W i α hμ v
   letI : Finite Msep := inferInstanceAs (Finite (Mcoef K S₀ W i α))
   letI : Finite (NumberField.RingOfIntegers K ⧸ v.1.asIdeal) :=
     Ring.HasFiniteQuotients.finiteQuotient v.1.ne_bot
   let g := (compGal F).symm
   let eL : M ≃+ Msep := AddEquiv.refl M
-  let eN := tateRight hS W i α hμ hFull v
+  let eN : N ≃+ Nsep := tateRight hS W i α hμ hFull v
   have hL : ∀ σ x, eL (g σ • x) = σ • eL x := fun _ _ => rfl
   have hN : ∀ σ y, eN (g σ • y) = σ • eN y := tateRight_smul hS W i α hμ hFull v
   let eU := movedH2 g (compMu F (2 ^ i)).symm (compMu_symm_smul F (2 ^ i))
