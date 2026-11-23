@@ -43,7 +43,9 @@ private theorem post_contD_two (f : M →+ N) (hf : ∀ (g : G) (x : M), f (g �
     contFun (contD k' G N 2 (kannPost f c)) ![v 0, v 1, v 2]
   have heval (u : Fin 2 → G) :
       contFun (kannPost (k' := k') f c) u = f (contFun c u) := rfl
-  rw [contFun_d23, contFun_d23]
+  refine (congrArg f (contFun_d23 (k := k) (G := G) (M := M) c (v 0) (v 1) (v 2))).trans ?_
+  refine Eq.trans ?_ (contFun_d23 (k := k') (G := G) (M := N)
+    (kannPost (k' := k') f c) (v 0) (v 1) (v 2)).symm
   simp only [map_sub, map_add, hf, heval]
 
 /-- The map on degree-two cycles from a discrete equivariant coefficient map,
@@ -56,6 +58,26 @@ def postCycle2 (f : M →+ N) (hf : ∀ (g : G) (x : M), f (g • x) = g • f x
     exact contCochains_ext fun g => map_zero f⟩
   map_zero' := Subtype.ext (contCochains_ext fun g => map_zero f)
   map_add' x y := Subtype.ext (contCochains_ext fun g => map_add f _ _)
+
+/-- Reassemble a primitive when every coordinate of a two-cochain is a boundary. -/
+private theorem boundary_of_coordinate_boundaries {ι : Type} [Fintype ι]
+    (b : ι → k) (j : N →+ M) (hj : ∀ (g : G) (x : N), j (g • x) = g • j x)
+    (τ : ι → M →+ N) (hrec : ∀ x : M, ∑ a, b a • j (τ a x) = x)
+    (w : contCochain k G M 2)
+    (hk : ∀ a, ∃ e : contCochain k' G N 1, contD k' G N 1 e = kannPost (τ a) w) :
+    ∃ e, contD k G M 1 e = w := by
+  classical
+  choose e he using hk
+  refine ⟨∑ a, b a • kannPost (k' := k) j (e a), ?_⟩
+  apply Subtype.ext
+  funext g
+  change cfun (contD k G M 1 (∑ a, b a • kannPost j (e a))) g = cfun w g
+  rw [map_sum]
+  simp only [map_smul]
+  rw [kann_cfun_sum_smul, ← hrec (cfun w g)]
+  refine Finset.sum_congr rfl fun a _ => ?_
+  rw [← kannPost_contD_one j hj (e a), he a]
+  rfl
 
 end Post
 
@@ -90,11 +112,15 @@ private theorem top_mul_recovers_coordinate (k : Fin (kannPB i).dim)
     unfold topCoord
     rw [Module.Basis.coord_apply]
     change ((AdjoinRoot.modByMonicHom (Polynomial.monic_X_pow i)) a).coeff (i - 1) =
-      (AdjoinRoot.powerBasisAux' (Polynomial.monic_X_pow i)).repr a
-        ⟨pb.dim - 1, by omega⟩
-    rw [AdjoinRoot.powerBasisAux'_repr_apply_to_fun, hdim]
-  change urMTop i (pb.gen ^ (pb.dim - 1 - k.val) * (show Acoef i from z)) = pb.basis.coord k z
-  rw [htop, mul_comm, topCoord_mul_gen_pow pb hpos hnil, Module.Basis.coord_apply]
+      ((AdjoinRoot.modByMonicHom (Polynomial.monic_X_pow i)) a).coeff (pb.dim - 1)
+    rw [hdim]
+  let a : Acoef i := z
+  change urMTop i (pb.gen ^ (pb.dim - 1 - k.val) * a) = pb.basis.repr a k
+  rw [htop, mul_comm, topCoord_mul_gen_pow pb hpos hnil]
+
+private abbrev restrictedRootCharacter :
+    finiteLocalTateTarget hS i v hμ →+ MuAlg (v.1.adicCompletion K) (2 ^ i) :=
+  localRootCharacter hS i v hμ
 
 /-- The degree-two class after applying the same character that gives the
 coefficient pairing with roots of unity. -/
@@ -102,52 +128,48 @@ def localRootCycleClass :
     LinearMap.ker (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 2) →+
       H2 (Gloc K v.1) (MuAlg (v.1.adicCompletion K) (2 ^ i)) :=
   (kerToH2 (k := ℤ) (G := Gloc K v.1) (M := MuAlg (v.1.adicCompletion K) (2 ^ i))).comp
-    (postCycle2 (localRootCharacter hS i v hμ) (localRootCharacter_smul hS i v hμ))
+    (postCycle2 (restrictedRootCharacter hS i v hμ) (localRootCharacter_smul hS i v hμ))
+
+private theorem localRootCycleClass_eq_zero_iff
+    (z : LinearMap.ker (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 2)) :
+    localRootCycleClass hS i v hμ z = 0 ↔
+      kannPost (k := Acoef i) (k' := ℤ) (restrictedRootCharacter hS i v hμ) z.1 ∈
+        LinearMap.range (contD ℤ (Gloc K v.1) (MuAlg (v.1.adicCompletion K) (2 ^ i)) 1) :=
+  kerToH2_eq_zero_iff (k := ℤ) (G := Gloc K v.1) (M := MuAlg (v.1.adicCompletion K) (2 ^ i))
+    (postCycle2 (k := Acoef i) (k' := ℤ) (restrictedRootCharacter hS i v hμ)
+      (localRootCharacter_smul hS i v hμ) z)
 
 private theorem localRootCycleClass_boundary
     (z : LinearMap.ker (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 2))
     (hz : ∃ t, contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 1 t = z.1) :
     localRootCycleClass hS i v hμ z = 0 := by
-  obtain ⟨t, ht⟩ := hz
-  apply (kerToH2_eq_zero_iff _).2
-  refine ⟨kannPost (k' := ℤ) (localRootCharacter hS i v hμ) t, ?_⟩
-  change _ = kannPost (localRootCharacter hS i v hμ) z.1
-  rw [← kannPost_contD_one _ (localRootCharacter_smul hS i v hμ), ht]
+  apply (localRootCycleClass_eq_zero_iff hS i v hμ z).2
+  exact kannPost_mem_range_two (k := Acoef i) (k' := ℤ) (G := Gloc K v.1)
+    (restrictedRootCharacter hS i v hμ) (localRootCharacter_smul hS i v hμ) hz
 
 private theorem localRootCycleClass_detects
     (z : LinearMap.ker (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 2))
     (hz : ∀ r : Acoef i, localRootCycleClass hS i v hμ (r • z) = 0) :
     ∃ t, contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 1 t = z.1 := by
-  classical
-  have hc (k : Fin (kannPB i).dim) : ∃ c : contCochain ℤ (Gloc K v.1) (finiteLocalTateBase hS i v hμ) 1,
-      contD ℤ (Gloc K v.1) (finiteLocalTateBase hS i v hμ) 1 c = kannPost (kannTau hS i v hμ k) z.1 := by
-    let r := (kannPB i).gen ^ ((kannPB i).dim - 1 - k.val)
-    obtain ⟨b, hb⟩ := (kerToH2_eq_zero_iff
-      (postCycle2 (k := Acoef i) (k' := ℤ) (localRootCharacter hS i v hμ)
-        (localRootCharacter_smul hS i v hμ) (r • z))).1 (hz r)
-    change contD ℤ (Gloc K v.1) (MuAlg (v.1.adicCompletion K) (2 ^ i)) 1 b =
-      kannPost (localRootCharacter hS i v hμ) (r • z.1) at hb
-    refine ⟨kannPost (kmilneF hS i v hμ).toAddMonoidHom b, ?_⟩
-    rw [← kannPost_contD_one _ (kmilneF_smul hS i v hμ), hb]
-    refine contCochains_ext fun g => ?_
-    change kmilneF hS i v hμ (localRootCharacter hS i v hμ (r • contFun z.1 g)) =
-      kannTau hS i v hμ k (contFun z.1 g)
-    rw [show localRootCharacter hS i v hμ (r • contFun z.1 g) =
-        (kmilneF hS i v hμ).symm (urMTopTate hS i hμ v (r • contFun z.1 g)) from rfl,
-      AddEquiv.apply_symm_apply]
-    exact top_mul_recovers_coordinate hS i v hμ k _
-  choose c hc using hc
-  refine ⟨∑ k, (kannPB i).basis k • kannPost (k' := Acoef i) (kannJ hS i v hμ) (c k), ?_⟩
+  refine boundary_of_coordinate_boundaries (k := Acoef i) (k' := ℤ) (G := Gloc K v.1)
+    (M := finiteLocalTateTarget hS i v hμ) (N := finiteLocalTateBase hS i v hμ)
+    (fun k => (kannPB i).basis k) (kannJ hS i v hμ) (kannJ_smul hS i v hμ)
+    (kannTau hS i v hμ) (kannTau_recon hS i v hμ) z.1 ?_
+  intro k
+  let r : Acoef i := (kannPB i).gen ^ ((kannPB i).dim - 1 - k.val)
+  obtain ⟨b, hb⟩ := (localRootCycleClass_eq_zero_iff hS i v hμ (r • z)).1 (hz r)
+  let e := (kmilneF hS i v hμ).toAddMonoidHom
+  refine ⟨kannPost (k := ℤ) (k' := ℤ) e b, ?_⟩
+  refine (kannPost_contD_one (k := ℤ) (k' := ℤ) (G := Gloc K v.1)
+    e (kmilneF_smul hS i v hμ) b).symm.trans ?_
+  refine (congrArg (fun w : contCochain ℤ (Gloc K v.1) (MuAlg (v.1.adicCompletion K) (2 ^ i)) 2 =>
+    kannPost (k' := ℤ) e w) hb).trans ?_
   apply Subtype.ext
   funext g
-  change cfun (contD (Acoef i) (Gloc K v.1) (finiteLocalTateTarget hS i v hμ) 1
-    (∑ k, (kannPB i).basis k • kannPost (kannJ hS i v hμ) (c k))) g = cfun z.1 g
-  rw [map_sum]
-  simp only [map_smul]
-  rw [kann_cfun_sum_smul, ← kannTau_recon hS i v hμ (cfun z.1 g)]
-  refine Finset.sum_congr rfl fun k _ => ?_
-  rw [← kannPost_contD_one (kannJ hS i v hμ) (kannJ_smul hS i v hμ) (c k), hc k]
-  rfl
+  change (kmilneF hS i v hμ) ((kmilneF hS i v hμ).symm
+    (urMTopTate hS i hμ v (r • cfun z.1 g))) = kannTau hS i v hμ k (cfun z.1 g)
+  exact ((kmilneF hS i v hμ).apply_symm_apply _).trans
+    (top_mul_recovers_coordinate hS i v hμ k (cfun z.1 g))
 
 /-- Evaluate any normalized finite trace by a generating additive character
 to obtain exactly the roots-of-unity class. This concerns the supplied trace
