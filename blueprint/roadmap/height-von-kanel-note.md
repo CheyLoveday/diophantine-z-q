@@ -6,7 +6,9 @@ article_id: af_d38993d579aa24520aa860cc
 
 [nasqret/z-in-q-lean](https://github.com/nasqret/z-in-q-lean) is a separate Lean project on the same theorem,
 described in fork issue #104. It builds on the congruent-number route: it pins a commit of
-elliotglazer/diophantine-z-q that contains that route's Lean.
+elliotglazer/diophantine-z-q that contains that route's Lean. This note describes its `main` branch at
+commit `de33a32dc` (2026-11-18), whose twelve hypotheses are two on elliptic curves and rank and ten for
+the height estimate below.
 
 Besides a theorem that assumes the minimal height hypothesis with its exact constants (as fork issue #104
 records), it proves a qualitative theorem: some integer polynomial has rational zero projection to its first
