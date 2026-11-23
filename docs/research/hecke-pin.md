@@ -33,7 +33,7 @@ and `Discharges-output.txt`).
 
 **The reading** (§5): DS's identification of the §9.5 representation with 9.6.5's `ρ_{f,λ}` at `k = 2` is
 *asserted*, not presupposed. It is not in the sentence right after Thm 9.6.5, which is about the determinant. It is in
-the paragraph after that, on the same page: 2005 printing p. 393, 2016 printing p. 404.
+the paragraph after that, on the same page: p. 404 of the corrected fourth printing (2016).
 
 **A side result.** The proved `EichlerHecke` fixes the orientation of `IsHeckeT`'s double-coset formula: the
 operator it defines has eigenvalue `a_p(f)` on the `f`-part, through `Ψ` (Claim B). It is not, for example, the
@@ -131,13 +131,15 @@ Consequences, proved from it:
   `K_f ⊆ ℂ`. So `θ` and `θ'` agree on the `a_p` and the `χ(d)`. Their equalizer is an intermediate field (inverses
   are unique in `End⁰`), so it contains `coeffField f = ℚ(a_n)`.
 
-## 5. Reading: Diamond–Shurman p. 393 (2005) / p. 404 (2016)
+## 5. Reading: Diamond–Shurman p. 404 (corrected fourth printing, 2016)
 
-VERIFIED by pdftotext of both local printings. Thm 9.6.5 is on p. 393 of the 2005 printing and p. 404 of the 2016
-fourth printing.
+Thm 9.6.5 is on p. 404 of the corrected fourth printing (2016): VERIFIED by a human reader's print copy (issue #14
+comment 7000317188, made for the earlier `dsThm965Printed` row). That report also says the text right after the
+theorem states that §9.5 built `ρ_{f,λ}` for `k = 2`; the wording quoted below has not been checked by a human against
+the print.
 
 * The sentence right after the theorem derives `det ρ_{f,λ}` from the characteristic equation.
-* The relevant sentence is two paragraphs later, on the same page in both printings. It begins "Section 9.5
+* The relevant sentence is two paragraphs later, on the same page. It begins "Section 9.5
   constructed ρf,λ when k = 2 but didn't prove that ρf,λ is irreducible or that the equation is the
   characteristic equation."
 * It **asserts** the identification: it names the §9.5 construction as the `k = 2` instance of the theorem's

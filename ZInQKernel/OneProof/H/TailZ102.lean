@@ -14,8 +14,9 @@ namespace HSyn
 structure OpenResearchLeaves76 : Prop where
   /-- height-split, H-18: the upper half of Pazuki 2012 Cor. 1.3(2), replaces `r22`. -/
   pazukiCor13Upper : _root_.ZInQ.HeightSplit.PazukiCor13Upper
-  /-- Diamond–Shurman, GTM 228 (2005), Theorem 9.6.5, p. 393: weight at least two, in the
-  prime-ideal convention. The inertia and arithmetic Frobenius comparison is proved. -/
+  /-- Diamond–Shurman, GTM 228, corrected fourth printing (2016), Theorem 9.6.5, p. 404, restricted
+  to weight at least two (the project's bound; the print has none), in the prime-ideal convention.
+  The inertia and arithmetic Frobenius comparison is proved. -/
   dsThm965AtPrimes : _root_.DS965Places.DiamondShurman965AtPrimes
   /-- Deligne-Serre, Formes modulaires de poids 1, Ann. Sci. ENS (4) 7 (1974), Thm 4.1 with (4.1.1), pp. 513-514, as printed: for f != 0 a (cusp) form of type (1, eps) with eps(-1) = -1 that is an eigenvector of the T_p, p not dividing N, with eigenvalues a_p (Tau Ceti EigenformAwayFromLevel N 1, no normalization a_1 = 1), a continuous rho : G_Q -> GL_2(C) with finite image, unramified outside N, with tr rho(Frob_p) = a_p (the T_p-eigenvalue F.eigenvalue p) and det rho(Frob_p) = eps(p). The coefficient form a_p = coeff g p (from a_1 = 1) and eps(-1) = -1 (parity lemma, TauCeti Parity.lean:113) are glue in DSThm966EV.dsThm966_of_printed (coeff-fix). -/
   dsThm966Printed : _root_.DSThm966EV.DSThm966Printed
@@ -41,7 +42,8 @@ structure OpenResearchLeaves76 : Prop where
   carayolThmAFrob : _root_.CarayolRefold.CarayolThmAFrob
   /-- r16-thm1b: Shimura 1973 Thm 1 as printed, one row. For a newform f in S_2(Gamma_1(N)) with nebentypus chi, the kernel's model X of X_1(N), Jacobian J, Hecke operators T_p = xi_p, <d>: K_f finite over Q, and there is a triple (A, nu, theta) with Shimura's clauses (i) nu surjective with connected kernel, (ii) nu o xi_n = theta(a_n) o nu at n = p and n = p^2 (xi_{p^2} = T_p^2 - p<p>), (iii) dim A = [K_f : Q], and IsAfQuotient (ker nu = I_f J: nu kills I_f J and is universal for that), unique up to a nu-compatible isomorphism over Q among triples with (i)-(iii). Printed (AI page read): C = Ker(nu) (p. 525), C from the ideal annihilating f intersected with End(J) (p. 526), uniqueness up to isomorphisms over Q (p. 526), dimension and tangent space from m = 1 via q-expansions (p. 527). ON THE SPOT steps: C = I_f J (the ideal is ker rho, saturation, Hecke relations in both directions); (ii) for all n from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible isomorphisms. Euler clause and (iv) not in this row. -/
   shimuraThm1Af : _root_.R16Thm1b.ShimuraThm1Af
-  /-- cm-branch (leaf, consequence form, pending review): Barquero-Sanchez et al., Res. Number Theory 3 (2017), Eq. (6.2) (L600-605). -/
+  /-- cm-branch (leaf, consequence form; GLUE: rating refuted 11-17, reported formula):
+  Barquero-Sanchez et al., Res. Number Theory 3 (2017), Eq. (6.2) (L600-605). -/
   cmHeight62 : _root_.HDec.CMBranch.CMHeight62
   /-- Fowler, Proposition 2·7: for an imaginary quadratic order discriminant Δ < 0 congruent to 0 or 1 modulo 4 and positive n, h(Δ) ≤ n implies √|Δ| ≤ 2n² exp(21000n²), with h(Δ) the proper ideal class number of the unique order of discriminant Δ. -/
   fowlerProp27PrintCanonical : HDec.CMBranch.FowlerBridges.FowlerProp27PrintCanonical

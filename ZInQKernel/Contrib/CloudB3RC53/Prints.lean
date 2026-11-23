@@ -29,7 +29,7 @@ namespace ZInQ.Contrib.CloudB3RC53
 
 open ZInQ.Manuscript ZInQ.Manuscript.SelmerTwoPower ZInQ.Manuscript.PoleS12
 
-/-- **Kolyvagin, Theorem 1, as the manuscript cites it** (printed leaf; tex L1093
+/-- **Kolyvagin, Theorem 1, as the manuscript cites it** (GLUE, not a leaf; tex L1093
 `\cite[Theorem 1, pp. 4–5]{kolyvagin}`, "whose statement includes both `r = 0` and `r = 1`";
 bibitem: V. A. Kolyvagin, "On the Mordell–Weil group and the Shafarevich–Tate group of modular
 elliptic curves", MPIM preprint MPI/90-69 (1990)). A modular elliptic curve `E/ℚ` with
@@ -40,7 +40,10 @@ L4052, L5264–5266, L7625–7627, L7780–7781, L8267, L10140, L10279).
 Form: consequence form. Theorem 1 of the print (p. 4) assumes a weak Weil parametrization
 X₀(N) → E with N the conductor (p. 3); `IsModular` is weaker. This leaf follows from
 `KolyvaginThm1WeilParam` and the GLUE `ModularToWeakWeil` (`kolyvaginThm1Printed_of_weilParam`,
-`Prints/Kolyvagin.lean`); those files are not on the Theorem 5.3 headline's route. -/
+`Prints/Kolyvagin.lean`); those files are not on the Theorem 5.3 headline's route.
+
+Rating: GLUE. The cited source is an unrefereed preprint, which never counts as a leaf, and the
+weaker `IsModular` premise makes this form stronger than the print. -/
 def KolyvaginThm1Printed : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → IsModular E → ∀ r : ℕ, r ≤ 1 → AnalyticRank E r →
     Module.rank ℤ E.toAffine.Point = r ∧ Finite (sha E)
