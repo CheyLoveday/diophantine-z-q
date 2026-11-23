@@ -24,6 +24,10 @@ open ZInQ.Contrib.CloudB3RC53.PairedFunctional
 
 section ClassTransport
 
+private def transportedClassMap {X A B : Type} [AddCommGroup X] [AddCommGroup A] [AddCommGroup B]
+    (e : A ≃+ B) (q : X →+ A) : X →+ B :=
+  e.toAddMonoidHom.comp q
+
 variable {R G H M N : Type} [CommRing R] [Group G] [Group H]
   [TopologicalSpace G] [TopologicalSpace H] [IsTopologicalGroup G] [IsTopologicalGroup H]
   [AddCommGroup M] [Module R M] [DistribMulAction G M] [SMulCommClass G R M]
@@ -234,7 +238,8 @@ theorem actualFiniteCupPerfect
   · let l := movedH0 g eL hL
     let r := movedH2 g eN hN
     let qL := l.toAddMonoidHom.comp (kerToH0 (k := Acoef i) (G := Gloc K v.1) (M := M))
-    let qR := r.toAddMonoidHom.comp (kerToH2 (k := Acoef i) (G := Gloc K v.1) (M := N))
+    let qR := transportedClassMap (A := H2 (Gloc K v.1) N) (B := H2 Gsep Nsep) r
+      (kerToH2 (k := Acoef i) (G := Gloc K v.1) (M := N))
     refine cupPerfectAt_of_class_pairing (L := H0 Gsep Msep) (H := H2 Gsep Nsep) cup tr 0 χ hgen qL qR
       (l.surjective.comp (kerToH0_surjective (k := Acoef i) (G := Gloc K v.1) (M := M)))
       (r.surjective.comp (kerToH2_surjective (k := Acoef i) (G := Gloc K v.1) (M := N)))
@@ -259,7 +264,8 @@ theorem actualFiniteCupPerfect
   · let l := movedH1 g eL hL
     let r := movedH1 g eN hN
     let qL := l.toAddMonoidHom.comp (kerToH1 (k := Acoef i) (G := Gloc K v.1) (M := M))
-    let qR := r.toAddMonoidHom.comp (kerToH1 (k := Acoef i) (G := Gloc K v.1) (M := N))
+    let qR := transportedClassMap (A := H1 (Gloc K v.1) N) (B := H1 Gsep Nsep) r
+      (kerToH1 (k := Acoef i) (G := Gloc K v.1) (M := N))
     refine cupPerfectAt_of_class_pairing (L := H1 Gsep Msep) (H := H1 Gsep Nsep) cup tr 1 χ hgen qL qR
       (l.surjective.comp (kerToH1_surjective (k := Acoef i) (G := Gloc K v.1) (M := M)))
       (r.surjective.comp (kerToH1_surjective (k := Acoef i) (G := Gloc K v.1) (M := N)))
