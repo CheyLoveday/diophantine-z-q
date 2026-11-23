@@ -50,3 +50,4 @@ PASS ZInQKernel.Contrib.OneProof.RC.CMScope.Anchor
 PASS ZInQKernel.Contrib.OneProof.RC.HeegnerAnchor.AtScale
 PASS ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19DualS
 PASS ZInQKernel.Contrib.RC53Assist.CentralStageReduction.ReductionV3
+PASS scratch/ccl-retire/Check.lean (21 declarations, 3 standard axioms)
