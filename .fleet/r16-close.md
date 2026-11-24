@@ -2,8 +2,8 @@
 
 **Verdict.** `r16CoreY` is discharged, but the GLUE count is unchanged: 11/18 on 29 → 15/18 on 33 (LEAF/GLUE),
 not the hoped-for −1 GLUE. The reason is a statement check: Diamond–Shurman Thm 9.5.4 prints that
-`ρ_{f,λ}(Frob_𝔭)` *satisfies* `x² − a_p x + χ(p)p = 0`. It does not say "characteristic polynomial" (read in the
-2005 printing, pp. 390–391, and the 2016 printing, pp. 401–402; the W24 report-ds954 agrees). So aftate-fix2's
+`ρ_{f,λ}(Frob_𝔭)` *satisfies* `x² − a_p x + χ(p)p = 0`. It does not say "characteristic polynomial" (Thm 9.5.4,
+2016 corrected fourth printing, pp. 401–402; human read, issue #14 comment 7121091136). So aftate-fix2's
 `AfTateDSLambda` is stronger than its print. The fold uses aftate-fix2's fallback pair instead:
 - `AfTateDSLambdaSat` (DS Lemma 9.5.3 + Thm 9.5.4 as printed): LEAF.
 - `AfDetLambda` (`det ρ_{f,λ}(Frob_p) = χ(p)p`): GLUE, no print found. Candidates Shimura 1971 Thm 7.14 and Ribet

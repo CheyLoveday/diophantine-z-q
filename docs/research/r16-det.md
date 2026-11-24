@@ -16,8 +16,6 @@ reference. **SPECULATIVE** = a judgement. **UNVERIFIED** = recalled without a so
    - Thm 9.6.5 covers a normalized eigenform `f ∈ S_k(N, χ)` and `λ ∣ ℓ`. It gives a 2-dimensional
      `ρ_{f,λ} : G_ℚ → GL₂(K_{f,λ})`, unramified at `p ∤ ℓN`, and prints that "the characteristic equation" of
      `ρ_{f,λ}(Frob_𝔭)` is `x² − a_p(f)x + χ(p)p^{k−1} = 0`.
-   - On the same page DS display `det ρ_{f,λ} = χχ_ℓ^{k−1}` (derived from the characteristic equation,
-     Exercise 9.6.3(a)).
    - **The identification.** In the paragraph after the theorem, DS say that Section 9.5 constructed
      `ρ_{f,λ}` for `k = 2` but did not prove that it is irreducible or that the equation is the characteristic
      equation (paraphrase; one line of print is the most we may quote). So at `k = 2` the theorem is DS's
@@ -59,7 +57,7 @@ reference. **SPECULATIVE** = a judgement. **UNVERIFIED** = recalled without a so
 | candidate | read? | what it prints | usable? |
 |---|---|---|---|
 | DS Thm 9.5.4 (2016 pp. 401–402) | read (human: issue #14 comment 7121091136) | `ρ_{f,λ}(Frob_𝔭)` "satisfies" `x² − a_p x + χ(p)p = 0` | gives `AfTateDSLambdaSat` only |
-| DS Thm 9.6.5 + the paragraph after it (2016 printing p. 404) | **read** (human, issue #14 comments 7000317188, 7121091136: the theorem and the paragraph after it; the det display is not in the human reads) | "the characteristic equation" `x² − a_p x + χ(p)p^{k−1}`; `det ρ_{f,λ} = χχ_ℓ^{k−1}` displayed; for `k = 2` the representation is the §9.5 construction | **yes**: `AfCharpolyDS965`, which implies `AfDetLambda` |
+| DS Thm 9.6.5 + the paragraph after it (2016 printing p. 404) | **read** (human, issue #14 comments 7000317188, 7121091136: the theorem and the paragraph after it) | "the characteristic equation" `x² − a_p x + χ(p)p^{k−1}`; for `k = 2` the representation is the §9.5 construction | **yes**: `AfCharpolyDS965`, which implies `AfDetLambda` |
 | DS Exercise 9.6.3 | read (AI; no page recorded) | (a) derive det from the characteristic equation of 9.6.5's `ρ`; (b) the converse | supporting only |
 | Shimura 1971, Thm 7.14 | not available on this host | (UNVERIFIED: recalled as the characteristic polynomial of Frobenius on `V_ℓ` of the Shimura quotient) | unread |
 | Ribet, LNM 601 (1977) §§1–2 | not available on this host | (UNVERIFIED) | unread |

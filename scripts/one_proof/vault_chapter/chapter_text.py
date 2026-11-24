@@ -280,12 +280,11 @@ original normalization, as here. That corollary states $h(A)\ge-\frac g2\log(2\p
 $h=h_F+\frac g2\log\pi$, which gives the stronger $h_F(A)\ge-\frac g2\log(2\pi^2)$.
 """,
         src=r"""
-É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014), 2057–2108, §9,
-proof of Lemme 9.1, p. 2098, with the normalization of $h_F$ on p. 2058; the manuscript's citation.
 É. Gaudron and G. Rémond, *Théorème des périodes et degrés minimaux d'isogénies*, Comment. Math.
-Helv. 89 (2014), 343–403, Corollaire 8.4 and §2.3, as numbered in arXiv 1105.1230v1 (pp. 37 and 6–7),
-which was read; the numbering of the published version is unverified. J.-B. Bost, Sém. Bourbaki 795,
-Astérisque 237 (1996) (unread).
+Helv. 89 (2014), 343–403, Corollaire 8.4, p. 400, attributed there to Bost, with the normalization
+of §2.3, p. 352. É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014),
+2057–2108, §9, proof of Lemme 9.1, p. 2098, with the normalization of $h_F$ on p. 2058; the
+manuscript's citation, a citation only of Corollaire 8.4.
 """,
     ),
     'gaudronRemondThm14AnSS': dict(
