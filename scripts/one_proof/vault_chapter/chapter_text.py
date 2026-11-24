@@ -230,26 +230,29 @@ Milne prints the isomorphism for an abelian variety over a separably closed fiel
 J. S. Milne, *Abelian varieties*, course notes, version 2.0 (March 16, 2008), Part I, Theorem 12.1(a), p. 55, and Remark 12.5, p. 56, read in the author's PDF; this is the version the manuscript cites (`diophantine_zq.tex`, lines 10966–10970). The 1986 chapter *Abelian varieties* in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Theorem 15.1(a), is not read. Pro-étale cohomology and its comparison with étale cohomology: B. Bhatt and P. Scholze, *The pro-étale topology for schemes*, Astérisque 369 (2015), Definition 6.8.1 and §5.6; these two numbers are unverified.
 """,
     ),
-    'silverbergZarhinThm35': dict(
-        group='neron-models', slug='raynaud-criterion',
-        title="Raynaud's criterion for semistable reduction",
-        anchor='Raynaud criterion',
+    'silverbergZarhinThm34': dict(
+        group='neron-models', slug='semistable-reduction-theorem',
+        title="Grothendieck's semistable reduction theorem",
+        anchor='Semistable reduction theorem',
         statement=r"""
-The *Raynaud statement* is the following assertion. Let $K$ be a field with a discrete valuation,
-$n\ge3$ an integer not divisible by the residue characteristic, and $A$ an abelian variety over $K$
-all of whose points of order dividing $n$ are defined over $K$. Then $A$ has semistable reduction:
-for every Néron model of $A$, the identity component of its special fibre over the residue field is
-an extension of an abelian variety by a torus, not necessarily split.
+The *semistable reduction statement* is the following assertion. Let $K$ be a field, $\mathcal O$ a
+valuation ring of $K$ that is a discrete valuation ring, and $A$ an abelian variety over $K$. Then
+there is a finite Galois extension $E$ of $K$ inside an algebraic closure of $K$ such that for every
+valuation ring $V$ of $E$ with $V\cap K=\mathcal O$, the base change $A_E$ has semistable reduction
+at $V$: some Néron model of $A_E$ over $V$ has a special fibre over the residue field whose identity
+component is an extension of an abelian variety by a torus, not necessarily split.
 """,
         caveat=r"""
-It is Theorem 3.5 of Silverberg and Zarhin, Raynaud's criterion, with the $n$-torsion defined over
-$K$ where the print allows an extension unramified over the valuation. A reading of the page image
-found the hypothesis $n\ge3$ (the text layer of the scan shows $n>3$).
+It is Theorem 3.4 of Silverberg and Zarhin, Grothendieck's semistable reduction theorem, which they
+prove by citing SGA 7 IX, Théorème 3.6. As stated here it also asserts that $A_E$ has a Néron model
+at each such $V$, which their notion of semistable reduction presupposes. That the valuation rings of
+$E$ over $\mathcal O$ are the localizations of the integral closure of $\mathcal O$ in $E$ at its
+maximal ideals is standard and not printed.
 """,
         src=r"""
 A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of abelian varieties*,
-Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.5, p. 406 (proof: SGA 7 I, IX, Proposition 4.7),
-with semistable reduction as defined in §3, p. 405.
+Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.4, pp. 405–406 (proof: SGA 7 I, Exposé IX,
+Théorème 3.6, p. 351), with semistable reduction as defined in §3, p. 405.
 """,
     ),
     'gaudronRemondSec9LowerAnSS': dict(
@@ -471,7 +474,7 @@ conductor only for newforms with rational coefficients on $\Gamma_0(N)$.
 H. Darmon, F. Diamond and R. Taylor, *Fermat's Last Theorem*, Current Developments in Mathematics 1995 (1997), Theorem 3.1 (a)–(d), pp. 85–86, and the conductor in §2, p. 54 (read in Darmon's copy); H. Carayol, Ann. Sci. ÉNS (4) 19 (1986), 409–468, Théorème (A), pp. 409–411, the manuscript's citation, with §0.8, p. 411 (read in the numdam copy); W. Casselman, Math. Ann. 201 (1973), Theorem 1; K. Ribet, LNM 601 (1977), Theorem 2.3. The numbers of Casselman's and Ribet's theorems are unverified.
 """,
     ),
-    'dsThm965Printed': dict(
+    'dsThm965AtPrimes': dict(
         group='modular-galois', slug='deligne-representations',
         title="Deligne's Galois representations of eigenforms",
         anchor='Deligne representations',
@@ -479,16 +482,25 @@ H. Darmon, F. Diamond and R. Taylor, *Fermat's Last Theorem*, Current Developmen
 The *Deligne statement* is the following assertion. Let $f\in S_k(N,\chi)$ be a normalized eigenform of
 weight $k\ge2$ whose coefficient field $K_f$ is a number field, and $\lambda$ a prime of $K_f$ above a
 prime $\ell$, with completion $K_{f,\lambda}$. Then there is a continuous representation
-$\rho:G_{\mathbb Q}\to\mathrm{GL}_2(K_{f,\lambda})$ such that for every prime $p\nmid N\ell$: $\rho$ is
-unramified at $p$, and for every arithmetic Frobenius $\sigma$ at $p$ either the characteristic
-polynomial of $\rho(\sigma)$ is $x^2-a_p(f)x+\chi(p)p^{k-1}$ or $\rho(\sigma)$ satisfies this
-polynomial.
+$\rho:G_{\mathbb Q}\to\mathrm{GL}_2(K_{f,\lambda})$ with the following property for every prime
+$p\nmid N\ell$ and every maximal ideal $\mathfrak p$ of the ring $\overline{\mathbb Z}$ of algebraic
+integers lying over $p$. Every $\sigma\in G_{\mathbb Q}$ that maps $\mathfrak p$ to itself and acts
+trivially on $\overline{\mathbb Z}/\mathfrak p$ has $\rho(\sigma)=1$; and every $\sigma$ that maps
+$\mathfrak p$ to itself and acts on $\overline{\mathbb Z}/\mathfrak p$ as $x\mapsto x^p$ has
+characteristic polynomial $x^2-a_p(f)x+\chi(p)p^{k-1}$ for $\rho(\sigma)$.
 """,
         caveat=r"""
-Diamond and Shurman's theorem prints the characteristic polynomial ("the characteristic equation", in an AI reading of the 2005 and 2016 printings), which gives the statement directly; the alternative "satisfies" only weakens it. The statement drops the irreducibility of $\rho$, which the theorem also asserts, and assumes that $K_f$ is a number field, which the theorem presupposes.
+Diamond and Shurman's theorem prints the characteristic equation of $\rho(\mathrm{Frob}_{\mathfrak p})$
+for every maximal ideal $\mathfrak p$ over $p$, with inertia and Frobenius as in their §9.3. The statement
+drops the irreducibility of $\rho$, which the theorem also asserts, and assumes that $K_f$ is a number
+field, which the theorem presupposes. The bound $k\ge2$ is this project's restriction, not a hypothesis of
+the print.
 """,
         src=r"""
-F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228 (2005), Theorem 9.6.5, p. 393 (fourth printing, 2016: p. 404; AI-read), stated over $K_{f,\lambda}$, with their Definition 5.8.1 of normalized eigenforms; P. Deligne, Sém. Bourbaki 355 (1969); G. Shimura 1971, Theorem 7.14, for $k=2$. The numbers of Definition 5.8.1 and of Shimura's theorem are unverified.
+F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228, corrected fourth printing (2016),
+Theorem 9.6.5, p. 404, with Definitions 5.8.1 (p. 196), 6.5.3 (p. 238), 9.3.2 (p. 386) and 9.3.3
+(p. 387), and absolute Frobenius and inertia, pp. 384–385; P. Deligne, Sém. Bourbaki 355 (1969);
+G. Shimura 1971, Theorem 7.14, for $k=2$. The number of Shimura's theorem is unverified.
 """,
     ),
     'dsThm966Printed': dict(

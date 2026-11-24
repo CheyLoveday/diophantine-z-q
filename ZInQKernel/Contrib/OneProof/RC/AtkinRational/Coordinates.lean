@@ -71,7 +71,5 @@ theorem jqN_mem_of_dvd {m : ℕ} [NeZero m] (hm : m ∣ N) : jqN m ∈ modularFu
   exact (formal_degree_bound_of_growth hv hi hdiff hg
     ((realizes_jN N).add ((Realizes.const t).mul (realizes_jN m)))).2
 
-#print axioms levelInvariant_of_dvd
-#print axioms jqN_mem_of_dvd
 
 end ZInQ.Manuscript.RC.AtkinRational

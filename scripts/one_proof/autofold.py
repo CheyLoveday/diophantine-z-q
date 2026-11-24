@@ -46,7 +46,7 @@ Then build and check (the same checks as every fold): `lake build +ZInQKernel.On
 base (no existing constant changed except `frozenTarget`); `lake env lean scripts/one_proof/OpenStatements.lean`;
 `python3 scripts/one_proof/render_open.py`, then `render_open.py --check`.
 """
-import csv, glob, json, os, re, sys
+import csv, glob, io, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import render_open  # noqa: E402  (its row checks)
@@ -120,9 +120,58 @@ def bump(name):
     return f'{m.group(1)}{int(m.group(2)) + 1}'
 
 
+def read_tsv_raw(path, quoting=csv.QUOTE_MINIMAL):
+    """(header text, columns, rows, raw) of a tab-separated table: `raw[i]` is the exact text of row i (its lines as
+    they are in the file), so a row that a fold keeps is written back byte for byte (write_tsv_raw) instead of being
+    re-serialized: a cell with a double quote in its middle, as hCT's flag, would otherwise come back csv-quoted."""
+    lines = open(path, newline='').read().splitlines(keepends=True)
+    buf = []
+
+    def feed():
+        for line in lines:
+            buf.append(line)
+            yield line
+    rd = csv.reader(feed(), delimiter='\t', quoting=quoting)
+    cols = next(rd)
+    head = ''.join(buf)
+    buf.clear()
+    rows, raw = [], []
+    for cells in rd:
+        rows.append(dict(zip(cols, cells)))
+        raw.append(''.join(buf))
+        buf.clear()
+    return head, cols, rows, raw
+
+
+def write_tsv_raw(path, head, cols, rows, raw_of, quoting=csv.QUOTE_MINIMAL):
+    """Write `rows` under the header text `head`: a row in `raw_of` (by identity) as its original text, a new row
+    serialized with `quoting` (the quoting its readers use)."""
+    out = io.StringIO()
+    w = csv.DictWriter(out, fieldnames=cols, delimiter='\t', lineterminator='\n', extrasaction='ignore',
+                       quoting=quoting, **({'escapechar': '\\'} if quoting == csv.QUOTE_NONE else {}))
+    parts = [head]
+    for r in rows:
+        if id(r) in raw_of:
+            parts.append(raw_of[id(r)])
+        else:
+            out.seek(0)
+            out.truncate()
+            w.writerow(r)
+            parts.append(out.getvalue())
+    with open(path, 'w', newline='') as fh:
+        fh.write(''.join(parts))
+
+
+KINDS_RAW = {}  # id(row) -> its text in kinds.tsv, for the rows load_kinds read
+KINDS_HEAD = ['']  # kinds.tsv's header line as read
+
+
 def load_kinds():
-    rows = list(csv.DictReader(open(KINDS), delimiter='\t'))
-    return rows, list(rows[0].keys())
+    head, cols, rows, raw = read_tsv_raw(KINDS)
+    KINDS_RAW.clear()
+    KINDS_RAW.update({id(r): t for r, t in zip(rows, raw)})
+    KINDS_HEAD[0] = head
+    return rows, cols
 
 
 NEW_LEAF_FLAG = 'unread: new printed leaf, no reading recorded'
@@ -212,7 +261,8 @@ def main():
     kept += new_rows
     open_after = {r['field'] for r in kept}
     with open(CLAIMS, newline='') as fh:
-        held = {r['field'] for r in csv.DictReader(fh, delimiter='\t') if r.get('hold') == 'held'}
+        held = {r['field'] for r in csv.DictReader(fh, delimiter='\t', quoting=csv.QUOTE_NONE)
+                if r.get('hold') == 'held'}
     problems = [p for r in new_rows for p in render_open.kinds_row_problems(r, open_after, held)]
     if problems:
         die('the new kinds.tsv rows would fail render_open.py --check:\n  ' + '\n  '.join(problems))
@@ -303,17 +353,12 @@ def main():
     order = {'research': 0, 'textbook': 1, 'added': 2, 'glue': 3}
     pos = {r['field']: i for i, r in enumerate(rows)}  # other rows (frozenTarget's) keep their order
     kept.sort(key=lambda r: (order.get(r['bundle'], 9), r['field'].lower() if r['bundle'] in order else pos[r['field']]))
-    with open(KINDS, 'w', newline='') as fh:
-        w = csv.DictWriter(fh, fieldnames=cols, delimiter='\t', lineterminator='\n', extrasaction='ignore')
-        w.writeheader()
-        w.writerows(kept)
-    with open(CLAIMS, newline='') as fh:
-        rd = csv.DictReader(fh, delimiter='\t')
-        crows, ccols = list(rd), rd.fieldnames
-    with open(CLAIMS, 'w', newline='') as fh:
-        w = csv.DictWriter(fh, fieldnames=ccols, delimiter='\t', lineterminator='\n')
-        w.writeheader()
-        w.writerows(r for r in crows if r['field'] not in by_field)
+    # kept rows keep their bytes; only new leaf rows are serialized (kinds.tsv is read with csv quoting,
+    # render_open.load; claims.tsv as raw text, render_open.read_tsv and sync_claims.py)
+    write_tsv_raw(KINDS, KINDS_HEAD[0], cols, kept, KINDS_RAW)
+    chead, ccols, crows, craw = read_tsv_raw(CLAIMS, quoting=csv.QUOTE_NONE)
+    write_tsv_raw(CLAIMS, chead, ccols, [r for r in crows if r['field'] not in by_field],
+                  {id(r): t for r, t in zip(crows, craw)}, quoting=csv.QUOTE_NONE)
     print(f'wrote {H}{new_mod}.lean, switched {MAIN} to sixContactMin_of_open{N + 1}, updated {KINDS} and {CLAIMS}')
     print('next: lake build +ZInQKernel.OneProof.Main, the hash guard, OpenStatements.lean, render_open.py, '
           'render_open.py --check')
