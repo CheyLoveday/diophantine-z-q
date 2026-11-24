@@ -21,3 +21,10 @@
 - localReadComplex T, localReadComplex_eq T (rfl), localReadComplex_fits
 - Build OK (14381 jobs, no warnings in module), axioms standard.
 - Note: LocalTarget.groupE is an arbitrary field; the GoodRow supply uses groupE := neronLaw T, not T.groupE.
+
+## Item 1 (smoothness), chart algebra
+- ChartRing.lean: Chart W i := Away grading (coord i); chartConst, ratio, ratio_self, dehomogenize,
+  chart_equation, chart_ringHom_ext, chartLift (+_mk/_ratio/_const), chartEquiv. Build OK, std axioms.
+- ChartPresentation.lean: presLift/presDehom/presEquiv (AdjoinRoot q ≃+* Chart W i);
+  zyEquiv : W.toAffine.CoordinateRing ≃+* Chart W 2; zxEquiv : AdjoinRoot (zxPoly W) ≃+* Chart W 2 (monic in x);
+  yEquiv hw : AdjoinRoot (yPoly W c w) ≃+* Chart W 1 (shear x = x'+cz; hw : w*(c³+a₂c²+a₄c+a₆) = -1). Build OK, std axioms.
