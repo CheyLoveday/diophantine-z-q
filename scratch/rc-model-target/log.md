@@ -50,3 +50,7 @@
 - FormulaMorphism.lean: nonsingular_of_unit_coord, equation_map, morphism_of_formulas (relative J0Cusps formula gluing). OK.
 - GroupLaw.lean: cubic W := Over.mk (projStructure W); fieldPt g; val; cubicHom_ext; cubicOne (0:1:0), val_one;
   cubicInv (neg formula), val_inv; addLaws (addXYZ / Tau Ceti dblAddXYZ), cubicMul, val_mul. Build OK, std axioms.
+- GroupObj.lean: isReduced_of_smooth_hom (vendored FLT solution: smooth over reduced noetherian ⇒ reduced);
+  cubicGrp W hs : GrpObj (cubic W) [noetherian domain, IsElliptic, Smooth]; **weierstrassModelGrp h₅ W₀ hΔ :
+  GrpObj (weierstrassModel ell (W₀.map …))**; **weierstrassModel_isNeron h₅ W₀ hΔ : IsNeronModelOver (LocalIntegers ell) ℚ (cubic)**.
+  Build OK, std axioms.
