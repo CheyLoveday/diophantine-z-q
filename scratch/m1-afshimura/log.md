@@ -1,0 +1,6 @@
+# AfShimura proof log
+
+- Verified the branch base at `29bfbc3f6793d98b7c1ac637f9728fe51e701e5b` and the locally available quotient revision at `64f6912cfd365add865dc13c540f6191ecadee86`. The configured HTTPS proxy denied the fetch with HTTP 403. The direct retry could not resolve GitHub.
+- Imported the six requested quotient modules in commit `2951ee765`.
+- Restarted the first Lake build after seeding the local build directory with prebuilt artifacts from the same Lean toolchain and package manifest. Lake checks those artifacts against the pinned sources. The Lake invocations are serial, the compiler launches are serialized with a lock, and the systemd limit is `MemoryMax=60G`.
+- Traced the direct import headers from `ZInQKernel/OneProof/Main.lean`. The four bundle assignment modules are in the import closure. The H proof enters the NOS copy at `ZInQKernel/OneProof/H/TailZ91.lean:106`.
