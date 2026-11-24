@@ -12,3 +12,12 @@
 - readComplex E jE g hg (hj : IsMonHom jE.hom) := targetReading ∘ IsMonHom.monoidHom jE.hom
 - readComplex_eq : (readComplex .. a).toAdd = projectiveValue (a.left ≫ jE.hom.left) (rfl)
 - Build OK (13472 jobs), axioms: propext, Classical.choice, Quot.sound.
+
+## Item 4 (local instance): RC/ModelTarget/LocalReading.lean
+- neronDVRLocal : NeronExt.NeronDVRLocal := dvrLocal_of_extension (neronSchemeExtensionExists_of_dedekind neronSchemeExtensionDedekind_proof)
+- detectorTarget ell E₀ := ModelNeron.localTarget neronDVRLocal
+- neronLaw T : GrpObj T.E := grpObjOfNeron … (complexLaw E₀) T.jE (Néron transport)
+- neronLaw_isMonHom T : IsMonHom T.jE.hom (isMonHom_of_neron)
+- localReadComplex T, localReadComplex_eq T (rfl), localReadComplex_fits
+- Build OK (14381 jobs, no warnings in module), axioms standard.
+- Note: LocalTarget.groupE is an arbitrary field; the GoodRow supply uses groupE := neronLaw T, not T.groupE.
