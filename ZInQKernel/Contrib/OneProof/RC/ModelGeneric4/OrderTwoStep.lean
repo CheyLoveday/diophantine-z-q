@@ -3,6 +3,7 @@ import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.P2M.Sol.S_Weie
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_WeierstrassCurve_veluQuotient2_Delta_ne_zero
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_WeierstrassCurve_exists_addMonoidHom_coe_eq_veluPointMap2
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_WeierstrassCurve_stepCurve_stepSubgroup_two_eq
+import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_WeierstrassCurve_veluGx_ne_zero_of_two_torsion
 
 /-! # The order-two Vélu step as a map of function fields
 
@@ -15,6 +16,7 @@ namespace WeierstrassCurve.ModelLevels.ModelGeneric4
 
 open AlgebraicCurve Polynomial
 open P2MW.S_WeierstrassCurve_exists_veluFunctionFieldHom_restrictAlong_placeOfPoint_eq_of_isAlgClosed.WeierstrassCurve.Affine
+open P2MW.S_WeierstrassCurve_exists_veluFunctionFieldHom_restrictAlong_placeOfPoint_eq_of_isAlgClosed.AlgebraicCurve.Place
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 2000000
@@ -325,5 +327,226 @@ theorem twoFFHom_isIntegral : (twoFFHom h2 hQ hgy).toRingHom.IsIntegral := by
   haveI : Module.Finite (W.veluQuotient2 x₀ y₀).toAffine.FunctionField W.toAffine.FunctionField :=
     twoFFHom_finiteAlong h2 hQ hgy
   exact fun z => (Algebra.IsIntegral.of_finite _ _).isIntegral z
+
+section Ord
+
+variable {K L : Type} [Field K] [Field L] [Algebra K L]
+
+private theorem ord_pos_of_eq_mul (v : Place K L) {f a w : L} (hf : f = a * w) (hf0 : f ≠ 0)
+    (ha : 0 < v.ord a) (hw : w ∈ v.toValuationSubring) : 0 < v.ord f := by
+  have ha0 : a ≠ 0 := by rintro rfl; rw [zero_mul] at hf; exact hf0 hf
+  have hw0 : w ≠ 0 := by rintro rfl; rw [mul_zero] at hf; exact hf0 hf
+  rw [hf, v.ord_mul ha0 hw0]
+  have := ord_nonneg_of_mem v hw
+  omega
+
+private theorem ord_pos_of_eq_add_mul (v : Place K L) {f a b A B : L}
+    (hf : f = a * A + b * B) (hf0 : f ≠ 0) (ha : 0 < v.ord a) (hb : 0 < v.ord b)
+    (hA : A ∈ v.toValuationSubring) (hB : B ∈ v.toValuationSubring) : 0 < v.ord f := by
+  by_cases h1 : a * A = 0
+  · rw [h1, zero_add] at hf
+    exact ord_pos_of_eq_mul v hf hf0 hb hB
+  by_cases h2 : b * B = 0
+  · rw [h2, add_zero] at hf
+    exact ord_pos_of_eq_mul v hf hf0 ha hA
+  have hmin := min_ord_le_ord_add v (hf ▸ hf0)
+  have p1 := ord_pos_of_eq_mul v rfl h1 ha hA
+  have p2 := ord_pos_of_eq_mul v rfl h2 hb hB
+  rw [hf]
+  omega
+
+private theorem inv_mem_of_ord_eq_zero (v : Place K L) {f : L} (hf : f ≠ 0) (h : v.ord f = 0) :
+    f⁻¹ ∈ v.toValuationSubring :=
+  mem_of_ord_nonneg v (inv_ne_zero hf) (by rw [v.ord_inv, h, neg_zero])
+
+end Ord
+
+section Seam
+
+variable [IsAlgClosed F]
+
+omit [DecidableEq F] [IsAlgClosed F] in
+private theorem algebraMap_XClass (V : WeierstrassCurve F) (c : F) :
+    algebraMap V.toAffine.CoordinateRing V.toAffine.FunctionField
+        (WeierstrassCurve.Affine.CoordinateRing.XClass V.toAffine c) =
+      polyToFunctionField V.toAffine X - algebraMap F V.toAffine.FunctionField c := by
+  rw [← polyToFunctionField_C, ← map_sub]; rfl
+
+omit [DecidableEq F] [IsAlgClosed F] in
+private theorem algebraMap_YClass (V : WeierstrassCurve F) (c : F) :
+    algebraMap V.toAffine.CoordinateRing V.toAffine.FunctionField
+        (WeierstrassCurve.Affine.CoordinateRing.YClass V.toAffine (C c)) =
+      yGen V.toAffine - algebraMap F V.toAffine.FunctionField c := by
+  rw [WeierstrassCurve.Affine.CoordinateRing.YClass, map_sub, map_sub, yGen]
+  congr 1
+
+omit [DecidableEq F] [IsAlgClosed F] in
+theorem twoFFHom_XClass (c : F) :
+    twoFFHom h2 hQ hgy (algebraMap _ _
+        (WeierstrassCurve.Affine.CoordinateRing.XClass (W.veluQuotient2 x₀ y₀).toAffine c)) =
+      twoXFun W x₀ y₀ - algebraMap F W.toAffine.FunctionField c := by
+  rw [algebraMap_XClass, map_sub, twoFFHom_X, AlgHom.commutes]
+
+omit [DecidableEq F] [IsAlgClosed F] in
+theorem twoFFHom_YClass (c : F) :
+    twoFFHom h2 hQ hgy (algebraMap _ _
+        (WeierstrassCurve.Affine.CoordinateRing.YClass (W.veluQuotient2 x₀ y₀).toAffine (C c))) =
+      twoYFun W x₀ y₀ - algebraMap F W.toAffine.FunctionField c := by
+  rw [algebraMap_YClass, map_sub, twoFFHom_Y, AlgHom.commutes]
+
+omit [DecidableEq F] [IsAlgClosed F] in
+include h2 hQ hgy in
+theorem twoYFun_ne_algebraMap (c : F) : twoYFun W x₀ y₀ ≠ algebraMap F W.toAffine.FunctionField c := by
+  intro h
+  have hY : algebraMap _ (W.veluQuotient2 x₀ y₀).toAffine.FunctionField
+      (WeierstrassCurve.Affine.CoordinateRing.YClass (W.veluQuotient2 x₀ y₀).toAffine (C c)) ≠ 0 :=
+    (map_ne_zero_iff _ (IsFractionRing.injective _ _)).mpr
+      (WeierstrassCurve.Affine.CoordinateRing.YClass_ne_zero _)
+  apply hY
+  apply (twoFFHom h2 hQ hgy).toRingHom.injective
+  change twoFFHom h2 hQ hgy _ = twoFFHom h2 hQ hgy 0
+  rw [twoFFHom_YClass, h, sub_self, map_zero]
+
+omit [DecidableEq F] [IsAlgClosed F] in
+/-- At a place that is not finite, the first coordinate has a pole. -/
+theorem twoXFun_notMem_of_not_isFinitePlace {v : Place F W.toAffine.FunctionField}
+    (hv : ¬ IsFinitePlace v) : twoXFun W x₀ y₀ ∉ v.toValuationSubring := by
+  intro h
+  apply hv
+  apply isFinitePlace_of_mem v
+  have hδ := inv_X_sub_algebraMap_mem_of_not_isFinitePlace v hv x₀
+  have hx : polyToFunctionField W.toAffine X = twoXFun W x₀ y₀ -
+      algebraMap F _ (W.veluGx x₀ y₀) *
+        (polyToFunctionField W.toAffine X - algebraMap F _ x₀)⁻¹ := by
+    rw [twoXFun, div_eq_mul_inv]; ring
+  rw [hx]
+  exact sub_mem h (mul_mem (v.algebraMap_mem' _) hδ)
+
+variable [W.IsElliptic]
+
+omit [DecidableEq F] [IsAlgClosed F] [W.IsElliptic] in
+/-- At a point with abscissa `x₀`, the first coordinate has a pole. -/
+theorem twoXFun_notMem_placeOfEquation_of_eq [IsDedekindDomain W.toAffine.CoordinateRing]
+    {r s : F} (hrs : W.toAffine.Equation r s) (hr : r = x₀) (hG : W.veluGx x₀ y₀ ≠ 0) :
+    twoXFun W x₀ y₀ ∉ (placeOfEquation hrs).toValuationSubring := by
+  intro h
+  have hx := polyToFunctionField_X_mem_placeOfEquation hrs
+  have hd : polyToFunctionField W.toAffine X - algebraMap F W.toAffine.FunctionField x₀ ≠ 0 :=
+    sub_ne_zero.mpr (polyToFunctionField_X_ne_algebraMap x₀)
+  have hG' : algebraMap F W.toAffine.FunctionField (W.veluGx x₀ y₀) ≠ 0 :=
+    (_root_.map_ne_zero _).mpr hG
+  have hinv : (polyToFunctionField W.toAffine X - algebraMap F W.toAffine.FunctionField x₀)⁻¹ ∈
+      (placeOfEquation hrs).toValuationSubring := by
+    have hmem : algebraMap F _ (W.veluGx x₀ y₀) *
+        (polyToFunctionField W.toAffine X - algebraMap F _ x₀)⁻¹ ∈
+          (placeOfEquation hrs).toValuationSubring := by
+      have : algebraMap F _ (W.veluGx x₀ y₀) *
+          (polyToFunctionField W.toAffine X - algebraMap F _ x₀)⁻¹ =
+          twoXFun W x₀ y₀ - polyToFunctionField W.toAffine X := by
+        rw [twoXFun, div_eq_mul_inv]; ring
+      rw [this]
+      exact sub_mem h hx
+    have : (polyToFunctionField W.toAffine X - algebraMap F _ x₀)⁻¹ =
+        (algebraMap F _ (W.veluGx x₀ y₀))⁻¹ * (algebraMap F _ (W.veluGx x₀ y₀) *
+          (polyToFunctionField W.toAffine X - algebraMap F _ x₀)⁻¹) := by
+      field_simp
+    rw [this, ← map_inv₀]
+    exact mul_mem ((placeOfEquation hrs).algebraMap_mem' _) hmem
+  have hpos : 0 < (placeOfEquation hrs).ord
+      (polyToFunctionField W.toAffine X - algebraMap F W.toAffine.FunctionField x₀) := by
+    have := (ord_polyToFunctionField_pos_iff hrs (X_sub_C_ne_zero x₀)).mpr (by simp [hr])
+    rwa [map_sub, polyToFunctionField_C] at this
+  have hnn := ord_nonneg_of_mem _ hinv
+  rw [(placeOfEquation hrs).ord_inv] at hnn
+  omega
+
+omit [DecidableEq F] [W.IsElliptic] in
+/-- Away from the abscissa `x₀`, the place of a point restricts to the place of its Vélu image. -/
+theorem twoFFHom_restrict_placeOfEquation_of_ne [IsDedekindDomain W.toAffine.CoordinateRing]
+    [IsDedekindDomain (W.veluQuotient2 x₀ y₀).toAffine.CoordinateRing]
+    {r s : F} (hrs : W.toAffine.Equation r s) (hr : r ≠ x₀)
+    (h' : (W.veluQuotient2 x₀ y₀).toAffine.Equation (W.velu2X x₀ y₀ r) (W.velu2Y x₀ y₀ r s)) :
+    (placeOfEquation hrs).restrictAlong (twoFFHom h2 hQ hgy) (twoFFHom_isIntegral h2 hQ hgy) =
+      placeOfEquation h' := by
+  let v := placeOfEquation hrs
+  have hδne : polyToFunctionField W.toAffine X - (algebraMap F W.toAffine.FunctionField) x₀ ≠ 0 :=
+    sub_ne_zero.mpr (polyToFunctionField_X_ne_algebraMap x₀)
+  have hδ0 : (algebraMap F W.toAffine.FunctionField) r - (algebraMap F W.toAffine.FunctionField) x₀ ≠ 0 := by
+    rw [← map_sub]; exact (_root_.map_ne_zero _).mpr (sub_ne_zero.mpr hr)
+  have hδinv : (polyToFunctionField W.toAffine X - (algebraMap F W.toAffine.FunctionField) x₀)⁻¹ ∈ v.toValuationSubring :=
+    inv_mem_of_ord_eq_zero v hδne (ord_X_sub_const_placeOfEquation_of_ne hrs hr)
+  have hδ0inv : ((algebraMap F W.toAffine.FunctionField) r - (algebraMap F W.toAffine.FunctionField) x₀)⁻¹ ∈ v.toValuationSubring := by
+    rw [← map_sub, ← map_inv₀]; exact v.algebraMap_mem' _
+  have hx := polyToFunctionField_X_mem_placeOfEquation hrs
+  have hy := yGen_mem_placeOfEquation hrs
+  have hc : ∀ c : F, (algebraMap F W.toAffine.FunctionField) c ∈ v.toValuationSubring := v.algebraMap_mem'
+  have hXmem : twoXFun W x₀ y₀ ∈ v.toValuationSubring := by
+    rw [twoXFun, div_eq_mul_inv]
+    exact add_mem hx (mul_mem (hc _) hδinv)
+  have hfin : IsFinitePlace (v.restrictAlong (twoFFHom h2 hQ hgy) (twoFFHom_isIntegral h2 hQ hgy)) :=
+    isFinitePlace_of_mem _ (by rw [mem_restrictAlong_iff, twoFFHom_X]; exact hXmem)
+  have hxpos : 0 < v.ord (polyToFunctionField W.toAffine X - (algebraMap F W.toAffine.FunctionField) r) := by
+    have := (ord_polyToFunctionField_pos_iff hrs (X_sub_C_ne_zero r)).mpr (by simp)
+    rwa [map_sub, polyToFunctionField_C] at this
+  have hypos : 0 < v.ord (yGen W.toAffine - (algebraMap F W.toAffine.FunctionField) s) := by
+    have := (ord_placeOfEquation_pos_iff hrs
+      (WeierstrassCurve.Affine.CoordinateRing.YClass_ne_zero (W' := W.toAffine) (C s))).mpr
+      (Ideal.subset_span (Set.mem_insert_of_mem _ rfl))
+    rwa [algebraMap_YClass] at this
+  refine eq_placeOfEquation_of_le_centre hfin h' ?_
+  rw [WeierstrassCurve.Affine.CoordinateRing.XYIdeal, Ideal.span_le]
+  intro g hg
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hg
+  rcases hg with rfl | rfl
+  · rw [SetLike.mem_coe, hfin.mem_centre_iff_ord_ne_zero
+      (WeierstrassCurve.Affine.CoordinateRing.XClass_ne_zero _),
+      ord_restrictAlong_ne_zero_iff, twoFFHom_XClass]
+    refine ne_of_gt (ord_pos_of_eq_mul v (a := polyToFunctionField W.toAffine X - (algebraMap F W.toAffine.FunctionField) r)
+      (w := 1 - (algebraMap F W.toAffine.FunctionField) (W.veluGx x₀ y₀) * ((polyToFunctionField W.toAffine X - (algebraMap F W.toAffine.FunctionField) x₀)⁻¹ *
+        ((algebraMap F W.toAffine.FunctionField) r - (algebraMap F W.toAffine.FunctionField) x₀)⁻¹)) ?_ ?_ hxpos ?_)
+    · simp only [twoXFun, velu2X, map_add, map_div₀, map_sub]
+      field_simp
+      ring
+    · exact sub_ne_zero.mpr fun h =>
+        transcendental_twoXFun W x₀ y₀ (h ▸ isAlgebraic_algebraMap _)
+    · exact sub_mem (one_mem _) (mul_mem (hc _) (mul_mem hδinv hδ0inv))
+  · rw [SetLike.mem_coe, hfin.mem_centre_iff_ord_ne_zero
+      (WeierstrassCurve.Affine.CoordinateRing.YClass_ne_zero _),
+      ord_restrictAlong_ne_zero_iff, twoFFHom_YClass]
+    refine ne_of_gt (ord_pos_of_eq_add_mul v (a := yGen W.toAffine - (algebraMap F W.toAffine.FunctionField) s)
+      (b := polyToFunctionField W.toAffine X - (algebraMap F W.toAffine.FunctionField) r)
+      (A := 1 - (algebraMap F W.toAffine.FunctionField) (W.veluGx x₀ y₀) * (polyToFunctionField W.toAffine X - (algebraMap F W.toAffine.FunctionField) x₀)⁻¹ ^ 2)
+      (B := -(algebraMap F W.toAffine.FunctionField) (W.veluGx x₀ y₀) * ((algebraMap F W.toAffine.FunctionField) W.a₁ * ((algebraMap F W.toAffine.FunctionField) r - (algebraMap F W.toAffine.FunctionField) x₀) ^ 2 -
+        ((algebraMap F W.toAffine.FunctionField) W.a₁ * ((algebraMap F W.toAffine.FunctionField) r - (algebraMap F W.toAffine.FunctionField) x₀) + (algebraMap F W.toAffine.FunctionField) s - (algebraMap F W.toAffine.FunctionField) y₀) * ((polyToFunctionField W.toAffine X - (algebraMap F W.toAffine.FunctionField) x₀) +
+          ((algebraMap F W.toAffine.FunctionField) r - (algebraMap F W.toAffine.FunctionField) x₀))) * ((polyToFunctionField W.toAffine X - (algebraMap F W.toAffine.FunctionField) x₀)⁻¹ ^ 2 *
+            ((algebraMap F W.toAffine.FunctionField) r - (algebraMap F W.toAffine.FunctionField) x₀)⁻¹ ^ 2)) ?_ ?_ hypos hxpos ?_ ?_)
+    · simp only [twoYFun, velu2Y, map_add, map_div₀, map_sub, map_mul, map_pow]
+      field_simp
+      ring
+    · exact sub_ne_zero.mpr (twoYFun_ne_algebraMap h2 hQ hgy _)
+    · exact sub_mem (one_mem _) (mul_mem (hc _) (pow_mem hδinv 2))
+    · refine mul_mem (mul_mem (neg_mem (hc _)) (sub_mem (mul_mem (hc _)
+        (pow_mem (sub_mem (hc _) (hc _)) 2)) (mul_mem (sub_mem (add_mem (mul_mem (hc _)
+          (sub_mem (hc _) (hc _))) (hc _)) (hc _)) (add_mem (sub_mem hx (hc _))
+            (sub_mem (hc _) (hc _)))))) (mul_mem (pow_mem hδinv 2) (pow_mem hδ0inv 2))
+
+omit [DecidableEq F] [IsAlgClosed F] [W.IsElliptic] in
+theorem twoFFHom_restrict_infinite [W.IsElliptic] [GenusOnePlaceGate W.toAffine]
+    [GenusOnePlaceGate.IsCentred W.toAffine]
+    [(W.veluQuotient2 x₀ y₀).IsElliptic] [GenusOnePlaceGate (W.veluQuotient2 x₀ y₀).toAffine]
+    [GenusOnePlaceGate.IsCentred (W.veluQuotient2 x₀ y₀).toAffine] [IsAlgClosed F]
+    [DecidableEq F] :
+    (InfinitePlace.place : Place F W.toAffine.FunctionField).restrictAlong (twoFFHom h2 hQ hgy)
+        (twoFFHom_isIntegral h2 hQ hgy) =
+      (InfinitePlace.place : Place F (W.veluQuotient2 x₀ y₀).toAffine.FunctionField) := by
+  haveI := WeierstrassCurve.Affine.CoordinateRing.isDedekindDomain (W.veluQuotient2 x₀ y₀)
+  refine InfinitePlace.eq_of_not_isFinitePlace _ ?_
+  intro hfin
+  refine twoXFun_notMem_of_not_isFinitePlace (W := W) (x₀ := x₀) (y₀ := y₀)
+    InfinitePlace.not_isFinitePlace ?_
+  rw [← twoFFHom_X h2 hQ hgy, ← mem_restrictAlong_iff, polyToFunctionField_apply]
+  exact hfin _
+
+end Seam
 
 end WeierstrassCurve.ModelLevels.ModelGeneric4
