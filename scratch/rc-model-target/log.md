@@ -38,3 +38,8 @@
   exists_shear (ℓ ≥ 5: third finite difference 6); **weierstrassModel_smooth h₅ W₀ hΔ :
   Smooth (ModelNeron.weierstrassModel ell (W₀.map (algebraMap ℤ (LocalIntegers ell)))).hom**. Build OK, std axioms.
   Note: Mathlib instance IsZariskiLocalAtSource @Smooth needs `backward.isDefEq.respectTransparency false` outside Mathlib.
+
+## Item 2 (group law), relative chart calculus
+- ChartMorphism.lean: evalAway(+_fraction/_algebraMap), chartEval g v hv i hi (+_ratio/_const/_eq_of), chartMorphism,
+  chartι_structure, chartMorphism_structure, chartMorphism_smul, chartMorphism_map, chartMorphism_independent,
+  eq_chartMorphism (any base-scheme map Spec A → chart is a chart morphism). Build OK, std axioms.
