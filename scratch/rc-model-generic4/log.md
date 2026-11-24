@@ -8,3 +8,12 @@ Base: wip/rc-model-neron 64a338f4 merged with main 29bfbc3f (merge commit 5e0219
 - Vendor lift to ℂ: `PeriodPair.exists_differentiable_toPoint_comp_eq_pointMapOfPushforward_toPoint`.
 - No vendored function-field hom for the order-two Vélu step (`veluQuotient2`): only the point map
   `exists_addMonoidHom_coe_eq_veluPointMap2`.
+
+## Compiled (QuotientFunctionField, LatticeQuotient)
+- `exists_oddStep`: odd prime Vélu step of the vendored iteration induced by a function-field map whose
+  place restriction is the actual Vélu point map (fixed centred gates `gate`).
+- `exists_quotientSeam_of_steps`, `exists_quotientSeam_odd`: composite over the iteration; kernel = H.
+- `j_eq_analyticJN_of_seam`: any such function-field map onto the period curve of ℤτ+ℤ with kernel
+  ⟨u(1/N)⟩ has target j = j(Nτ) (lift z ↦ αz + c, preimage ℤτ + ℤ/N, homothety to ℤNτ + ℤ).
+- `pairQuotientJ_analyticCyclicPair_of_odd`: (b1) for odd N. Axioms: propext, Classical.choice, Quot.sound.
+- Missing for even N: the order-two step function-field map (`veluQuotient2`) with place seam.
