@@ -24,3 +24,11 @@ Base: wip/rc-model-neron 64a338f4 merged with main 29bfbc3f (merge commit 5e0219
 - `stepSeam_two`, `exists_quotientSeam` (all n ≥ 1).
 - `pairQuotientJ_analyticCyclicPair : pairQuotientJ (analyticCyclicPair τ) = X0Model.analyticJN N τ`
   for every τ ∈ ℍ, N ≥ 1. Axioms: propext, Classical.choice, Quot.sound. No sorry.
+
+## (b2), (b3) compiled (GenericSpecialization, Density)
+- `dense_transcendental_analyticJ : Dense {τ : ℍ | Transcendental ℚ (X0Model.analyticJ τ)}`.
+- `pairQuotientJ_rationalPoints_comp`: pairQuotientJ ∘ rationalPoints commutes with σ : K₁ →ₐ[ℚ] K₂
+  (alg. closed, char 0), via the vendored base-change lemma on the short cover.
+- `pairQuotientJ_rationalPoints_of_transcendental`: x(rationalQuotientCoordinate) = pairQuotientJ(rationalPoints x)
+  when x(J) is transcendental (x factors through Kbar via ι : ℚ(j) → ℂ, j ↦ x(J)).
+- `rationalPoints_rationalPointAtParameter_of_transcendental`: item 1 at every τ with j(τ) transcendental.

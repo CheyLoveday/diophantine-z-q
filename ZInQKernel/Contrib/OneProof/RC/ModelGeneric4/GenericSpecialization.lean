@@ -22,6 +22,7 @@ open private rationalLevel_isUnit from ZInQKernel.Contrib.OneProof.RC.ModelGener
 
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 1000000
+set_option synthInstance.maxHeartbeats 400000
 set_option linter.style.haveILetI false
 
 section Naturality
@@ -80,5 +81,103 @@ theorem pairQuotientJ_rationalPoints_comp {N : ℕ} [NeZero N] (h₂ : 2 ≤ N) 
   exact shortQuotientJ_comp (shortExactOrderPoints hn f).1 σ hf hg (n + 2)
 
 end Naturality
+
+open Polynomial in
+/-- **Specialization at a transcendental j-value.** At a complex point of the pinned rational
+quotient whose j-value is transcendental, the actual quotient invariant of the pinned pair equals
+the value of the regular Vélu coordinate. The point factors through the generic j-fibre by an
+embedding of the algebraic closure of `ℚ(j)` sending `j` to that value. -/
+theorem pairQuotientJ_rationalPoints_of_transcendental {N : ℕ} [NeZero N] (h₂ : 2 ≤ N)
+    (x : Y0RationalAlgebra h₂ →ₐ[ℚ] ℂ) (ht : Transcendental ℚ (x (Y0RationalJ h₂))) :
+    pairQuotientJ (rationalPoints h₂ x) = x (rationalQuotientCoordinate h₂).val := by
+  let t := x (Y0RationalJ h₂)
+  have hinj : Function.Injective (Polynomial.aeval (R := ℚ) t) := transcendental_iff_injective.mp ht
+  let ι : Qj →+* ℂ := IsFractionRing.lift (A := Polynomial ℚ) (K := Qj)
+    (g := (Polynomial.aeval (R := ℚ) t).toRingHom) hinj
+  letI : Algebra Qj ℂ := ι.toAlgebra
+  haveI : Module.IsTorsionFree Qj ℂ :=
+    Module.isTorsionFree_iff_algebraMap_injective.mpr ι.injective
+  haveI : Module.IsTorsionFree Qj Kbar :=
+    Module.isTorsionFree_iff_algebraMap_injective.mpr (algebraMap Qj Kbar).injective
+  let σ : Kbar →ₐ[Qj] ℂ := IsAlgClosed.lift
+  let P := Polynomial ℚ
+  let B := Y0RationalAlgebra h₂
+  letI : Algebra P B := (Y0RationalJMap h₂).toRingHom.toAlgebra
+  letI : Algebra P ℂ := (ι.comp (algebraMap P Qj)).toAlgebra
+  haveI : IsScalarTower P Qj ℂ := IsScalarTower.of_algebraMap_eq fun _ => rfl
+  have hιP : ∀ p : P, ι (algebraMap P Qj p) = Polynomial.aeval t p := fun p =>
+    IsFractionRing.lift_algebraMap hinj p
+  let xP : B →ₐ[P] ℂ :=
+    { x.toRingHom with
+      commutes' := fun p => by
+        change x (Polynomial.aeval (Y0RationalJ h₂) p) = ι (algebraMap P Qj p)
+        rw [hιP, Polynomial.aeval_algHom_apply] }
+  let x' : Y0RationalGenericJ h₂ →ₐ[Qj] ℂ := AlgHom.liftEquiv P Qj B ℂ xP
+  have hx' : ∀ b, x' (Y0RationalGenericJInclusion h₂ b) = x b := fun b => by
+    change (AlgHom.liftEquiv P Qj B ℂ xP) (1 ⊗ₜ b) = x b
+    rw [AlgHom.liftEquiv_tmul, one_smul]
+    rfl
+  have hfac : ∀ z : Y0RationalGenericJ h₂, x' z ∈ σ.range := by
+    intro z
+    haveI := Y0RationalGenericJ_finite h₂
+    have hint : _root_.IsIntegral Qj z :=
+      (Algebra.IsIntegral.of_finite Qj (Y0RationalGenericJ h₂)).isIntegral z
+    let p := minpoly Qj z
+    have hp0 : p ≠ 0 := minpoly.ne_zero hint
+    have hroot : (p.map ι).IsRoot (x' z) := by
+      rw [IsRoot, eval_map]
+      change aeval (x' z) p = 0
+      rw [Polynomial.aeval_algHom_apply, minpoly.aeval, map_zero]
+    let q := p.map (algebraMap Qj Kbar)
+    have hcard : q.roots.card = q.natDegree := IsAlgClosed.card_roots_eq_natDegree
+    have hmap := Polynomial.roots_map_of_injective_of_card_eq_natDegree
+      (f := σ.toRingHom) σ.toRingHom.injective hcard
+    have hq : q.map σ.toRingHom = p.map ι := by
+      rw [Polynomial.map_map]
+      congr 1
+      exact RingHom.ext fun c => σ.commutes c
+    have hmem : x' z ∈ (p.map ι).roots :=
+      (mem_roots ((Polynomial.map_ne_zero_iff ι.injective).mpr hp0)).mpr hroot
+    rw [← hq, ← hmap, Multiset.mem_map] at hmem
+    obtain ⟨r, -, hr⟩ := hmem
+    exact ⟨r, hr⟩
+  let e := AlgEquiv.ofInjective σ σ.toRingHom.injective
+  let x'' : Y0RationalGenericJ h₂ →ₐ[Qj] Kbar := e.symm.toAlgHom.comp (x'.codRestrict σ.range hfac)
+  have hσx'' : ∀ z, σ (x'' z) = x' z := fun z => by
+    have h := congrArg Subtype.val (e.apply_symm_apply (x'.codRestrict σ.range hfac z))
+    rw [AlgEquiv.ofInjective_apply] at h
+    exact h
+  let σℚ : Kbar →ₐ[ℚ] ℂ :=
+    { σ.toRingHom with
+      commutes' := fun q => RingHom.congr_fun
+        (Subsingleton.elim (σ.toRingHom.comp (algebraMap ℚ Kbar)) (algebraMap ℚ ℂ)) q }
+  let y := (genericJPointsOnRational h₂ x'').val
+  have hy : σℚ.comp y = x := by
+    ext b
+    change σ ((genericJPointsOnRational h₂ x'').val b) = x b
+    rw [genericJPointsOnRational_apply, hσx'', hx']
+  rw [← hy, pairQuotientJ_rationalPoints_comp h₂ σℚ y, ← genericQuotientValue_pairClass,
+    ← Y0RationalGenericQuotientJ_eval]
+  change σ (x'' (Y0RationalGenericQuotientJ h₂)) = σ (y (rationalQuotientCoordinate h₂).val)
+  rw [show y (rationalQuotientCoordinate h₂).val =
+      x'' (Y0RationalGenericJInclusion h₂ (rationalQuotientCoordinate h₂).val) from
+    genericJPointsOnRational_apply h₂ x'' _, (rationalQuotientCoordinate h₂).property]
+
+/-- **The pair class at a parameter with transcendental j-value.** -/
+theorem rationalPoints_rationalPointAtParameter_of_transcendental {N : ℕ} [NeZero N]
+    (h₂ : 2 ≤ N) (τ : ℍ) (ht : Transcendental ℚ (X0Model.analyticJ τ)) :
+    rationalPoints h₂ (ModelGeneric3.rationalPointAtParameter h₂ τ) =
+      ModelGeneric3.analyticCyclicPair (N := N) τ := by
+  have hj : ModelGeneric3.rationalPointAtParameter h₂ τ (Y0RationalJ h₂) = X0Model.analyticJ τ := by
+    rw [← rationalPoints_j, ModelGeneric3.rationalPointAtParameter_pairJ]
+  apply ModelGeneric3.complexPairClass_eq_of_transcendental_coordinates
+  · rw [ModelGeneric3.rationalPointAtParameter_pairJ]; exact ht
+  · rw [ModelGeneric3.rationalPointAtParameter_pairJ, ModelGeneric3.analyticCyclicPair_j]
+  · rw [pairQuotientJ_rationalPoints_of_transcendental h₂ _ (hj ▸ ht),
+      ModelGeneric3.rationalPointAtParameter_quotientCoordinate, pairQuotientJ_analyticCyclicPair]
+
+#print axioms pairQuotientJ_rationalPoints_comp
+#print axioms pairQuotientJ_rationalPoints_of_transcendental
+#print axioms rationalPoints_rationalPointAtParameter_of_transcendental
 
 end WeierstrassCurve.ModelLevels.ModelGeneric4
