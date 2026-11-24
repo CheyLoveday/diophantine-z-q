@@ -145,9 +145,11 @@ A cold build is long. The default `lake build` does not build this theorem, so n
 12-core, 18 GB machine, 694 of the 5,225 project modules built in 41 minutes. On GitHub's hosted runners the first
 cold build, of this target and the discharges target, took about seven and a half hours of build time over two
 runs (16,331 Lake jobs); a run that starts from the previous build of `main` takes 10 to 14 minutes when a push
-changes few files. Allow about 50 GB of disk: the finished hosted build is 37 GiB for this repository and 6.7 GiB
-for Mathlib. Use a short checkout path, because Lake writes a file of several megabytes per module that embeds
-absolute paths. Clone with `git clone --depth 1 --single-branch`: the fork has several hundred branches.
+changes few files. Allow about 60 GB of disk: a finished build is about 53 GB for this repository, plus 6.7 GiB for
+Mathlib. Of the 53 GB, 48 GB are Lake's per-module setup files, a file of several megabytes per module; the hosted
+workflow deletes them from its restored build, which leaves about 8 GB
+([#171](https://github.com/Deicyde/diophantine-z-q/pull/171)). Use a short checkout path, because the setup files
+embed absolute paths. Clone with `git clone --depth 1 --single-branch`: the fork has several hundred branches.
 
 ## More
 
