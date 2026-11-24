@@ -58,7 +58,7 @@ Folding in a proof can remove a hypothesis from that theorem. The count block ab
 | Pole completeness, the manuscript's Theorem 5.2 | proved in Lean from three hypotheses, with the manuscript's Lemma 5.4 proved from the Cassels–Tate pairing (`ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne`) |
 | Theorem 5.3 (restricted converse) of the manuscript | unrefereed; assumed |
 | The Cassels–Tate pairing on the curves of Theorem 5.3 | Poonen and Stoll's restatement of Cassels' theorem, specialized to these curves; assumed; classified as glue pending a check against a source that proves it |
-| Silverman, Appendix C, Evidence 16.5.5, p. 453 | the analytic-rank-one to Mordell–Weil-rank-one implication, without the finite-Sha conclusion; assumed; recorded as a consequence of Miller's Theorem 4.4, from which Lean proves it, and classified as glue because Miller's proof cites its deep steps; AI-read only, no human statement check |
+| Silverman, Appendix C, Evidence 16.5.5, p. 453 | the analytic-rank-one to Mordell–Weil-rank-one implication, without the finite-Sha conclusion; assumed; recorded as a consequence of Miller's Theorem 4.4, from which Lean proves it; rated by Miller's Theorem 4.4; AI-read only, no human statement check |
 | Theorem 1.1 from exactly the statements that are still open | proved in Lean (`ZInQ.OneProof.frozenTarget`) |
 
 "Proved in Lean" means the Lean kernel checked it, with no `sorry` (unproved step), no `native_decide` (trusted
@@ -137,8 +137,8 @@ group; `hCT`, the Cassels–Tate pairing on the same curves in Poonen and Stoll'
 implication (2nd ed., Appendix C, Evidence 16.5.5, p. 453). The last replaces `hB` and `hK` at this root, without
 changing the pole construction or using the finiteness of Sha. Its record cites Miller's Theorem 4.4 (LMS J. Comput.
 Math. 14 (2011)), from which Lean proves it (`ZInQ.Manuscript.ForwardRankLiterature.silvermanRankOne_of_miller`);
-an AI reading found the Lean form of Miller's theorem faithful to the print, and `hRank` stays glue because Miller's
-proof cites its deep steps.
+an AI reading found the Lean form of Miller's theorem faithful to the print. `hRank` is rated by Miller's Theorem 4.4;
+AI-read only, no human statement check.
 Fork PR #110 reduces Theorem 5.3 in Lean to step-level hypotheses along the manuscript's
 Sections 7–9 and Appendices E–G (`ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves`); `frozenTarget`
 still takes it as one hypothesis, because some of those steps still state their conclusions directly.
