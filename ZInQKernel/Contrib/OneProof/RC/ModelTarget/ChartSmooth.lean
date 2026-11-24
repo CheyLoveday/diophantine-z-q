@@ -106,7 +106,7 @@ theorem span_partials_zChart :
       zxEquiv W (AdjoinRoot.mk _ (zxDeriv W))} = ⊤ := by
   by_contra hne
   obtain ⟨m, hm, hle⟩ := Ideal.exists_le_maximal _ hne
-  letI := Ideal.Quotient.field m
+  let _ := Ideal.Quotient.field m
   let π := Ideal.Quotient.mk m
   let g : R →+* Chart W 2 ⧸ m := π.comp (chartConst W 2)
   let x := π (ratio W 2 0)
