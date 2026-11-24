@@ -43,3 +43,6 @@
 - ChartMorphism.lean: evalAway(+_fraction/_algebraMap), chartEval g v hv i hi (+_ratio/_const/_eq_of), chartMorphism,
   chartι_structure, chartMorphism_structure, chartMorphism_smul, chartMorphism_map, chartMorphism_independent,
   eq_chartMorphism (any base-scheme map Spec A → chart is a chart morphism). Build OK, std axioms.
+- FieldValue.lean: coord_mem_iff_chart, equiv_of_chartMorphism_eq (same morphism from Spec F ⇒ proportional vectors),
+  chartMorphism_eq_of_equiv, exists_chartMorphism, fieldValue (affine point on W.map g), fieldValue_eq,
+  fieldValue_chartMorphism, equiv_of_toAffine_eq, fieldValue_injective [W.IsElliptic]. Build OK, std axioms.
