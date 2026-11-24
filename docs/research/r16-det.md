@@ -23,6 +23,7 @@ reference. **SPECULATIVE** = a judgement. **UNVERIFIED** = recalled without a so
      equation (paraphrase; one line of print is the most we may quote). So at `k = 2` the theorem is DS's
      statement about **the Section 9.5 representation**, the `λ`-component `e_λ V_ℓ(A_f)` of Exercise
      9.5.2(a). That is exactly aftate-fix2's `V_λ = K_{f,λ} ⊗_{ℚ_ℓ ⊗ K_f} V_ℓ(A_f)`.
+     The placement on p. 404 and the wording: HUMAN-READ, zachbaugher, issue #14 comment 7121091136.
 
    So r16-close's statement check needs one amendment. Thm 9.5.4 prints only "satisfies", but DS print the
    characteristic equation for the same representation two pages later. r16-close's objection that 9.6.5's
@@ -57,9 +58,9 @@ reference. **SPECULATIVE** = a judgement. **UNVERIFIED** = recalled without a so
 
 | candidate | read? | what it prints | usable? |
 |---|---|---|---|
-| DS Thm 9.5.4 (2005 pp. 390–391; 2016 pp. 401–402) | read (r16-close, r16-det) | `ρ_{f,λ}(Frob_𝔭)` "satisfies" `x² − a_p x + χ(p)p = 0` | gives `AfTateDSLambdaSat` only |
-| DS Thm 9.6.5 + the paragraph after it (2016 printing p. 404) | **read** | "the characteristic equation" `x² − a_p x + χ(p)p^{k−1}`; `det ρ_{f,λ} = χχ_ℓ^{k−1}` displayed; for `k = 2` the representation is the §9.5 construction | **yes**: `AfCharpolyDS965`, which implies `AfDetLambda` |
-| DS Exercise 9.6.3 (2005 p. 397; 2016 p. 409) | read | (a) derive det from the characteristic equation of 9.6.5's `ρ`; (b) the converse | supporting only |
+| DS Thm 9.5.4 (2016 pp. 401–402) | read (human: issue #14 comment 7121091136) | `ρ_{f,λ}(Frob_𝔭)` "satisfies" `x² − a_p x + χ(p)p = 0` | gives `AfTateDSLambdaSat` only |
+| DS Thm 9.6.5 + the paragraph after it (2016 printing p. 404) | **read** (human, issue #14 comments 7000317188, 7121091136: the theorem and the paragraph after it; the det display is not in the human reads) | "the characteristic equation" `x² − a_p x + χ(p)p^{k−1}`; `det ρ_{f,λ} = χχ_ℓ^{k−1}` displayed; for `k = 2` the representation is the §9.5 construction | **yes**: `AfCharpolyDS965`, which implies `AfDetLambda` |
+| DS Exercise 9.6.3 | read (AI; no page recorded) | (a) derive det from the characteristic equation of 9.6.5's `ρ`; (b) the converse | supporting only |
 | Shimura 1971, Thm 7.14 | not available on this host | (UNVERIFIED: recalled as the characteristic polynomial of Frobenius on `V_ℓ` of the Shimura quotient) | unread |
 | Ribet, LNM 601 (1977) §§1–2 | not available on this host | (UNVERIFIED) | unread |
 | Weil pairing route (`weilPairingMumford`, main) | tree checked | main has `T09Pic.WeilPairingMumford0` on abelian varieties and duals | not pursued: the print makes it unnecessary. It would also need the canonical polarization of `J₁(N)`, the adjointness `T_p* = ⟨p⟩⁻¹T_p` and glue down to `V_λ` |
@@ -105,18 +106,18 @@ substitute `_root_.ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof`
 
 | leaf | Lean | printed form? | reason |
 |---|---|---|---|
-| `afCharpolyDS965` | `AfTateLam.AfCharpolyDS965` | **yes** (AI-read, no human reading) | DS Thm 9.6.5 at `k = 2` prints the characteristic equation `x² − a_p x + χ(p)p` of `ρ_{f,λ}(Frob_𝔭)` over `K_{f,λ}`, and DS identify the weight-2 `ρ_{f,λ}` with the §9.5 construction `e_λ V_ℓ(A_f)` (Exercise 9.5.2(a)), aftate-fix2's `V_λ`. The weakenings are the same as for r16-close's `afTateDSLambdaSat`: newforms only, `N ≥ 2`, irreducibility and unramifiedness dropped. **Reading risk:** the identification is in DS's text right after the theorem, not inside the theorem statement, and the theorem itself is phrased existentially ("there is … a representation"). A strict reviewer may want Shimura 1971 Thm 7.14 as a second locator (UNVERIFIED, unread). The Frobenius convention and the passage `e_λ V_ℓ(A_f) ↔ K_λ ⊗ V_ℓ(A_f)` are as in r16-close's rating of `afTateDSLambdaSat` (no new risk). |
+| `afCharpolyDS965` | `AfTateLam.AfCharpolyDS965` | **yes** (AI-read); a later human reading rates it a consequence, GLUE (end of row) | DS Thm 9.6.5 at `k = 2` prints the characteristic equation `x² − a_p x + χ(p)p` of `ρ_{f,λ}(Frob_𝔭)` over `K_{f,λ}`, and DS identify the weight-2 `ρ_{f,λ}` with the §9.5 construction `e_λ V_ℓ(A_f)` (Exercise 9.5.2(a)), aftate-fix2's `V_λ`. The weakenings are the same as for r16-close's `afTateDSLambdaSat`: newforms only, `N ≥ 2`, irreducibility and unramifiedness dropped. **Reading risk:** the identification is in DS's paragraph after the theorem on p. 404 (HUMAN-READ, zachbaugher, issue #14 comment 7121091136), not inside the theorem statement, and the theorem itself is phrased existentially ("there is … a representation"). A strict reviewer may want Shimura 1971 Thm 7.14 as a second locator (UNVERIFIED, unread). The Frobenius convention and the passage `e_λ V_ℓ(A_f) ↔ K_λ ⊗ V_ℓ(A_f)` are as in r16-close's rating of `afTateDSLambdaSat` (no new risk). **Human reading** (issue #14 comment 7121091136): CONSEQUENCE; GLUE. DS print the `k = 2` characteristic equation without proof or citation (§9.5 proves only that `ρ_{f,λ}(Frob_𝔭)` satisfies the quadratic), and the step from DS's transported Galois action to the Lean's algebraic `A_f` is a dictionary argument that is not in the print. |
 | `heckeJ1DS`, `afShimura`, `igusaGL2DS` | unchanged | yes | as rated by r16-close (§4 there) |
 | (dropped) `afTateDSLambdaSat`, `afDetLambda` | — | — | both follow from `afCharpolyDS965` (the second by `afDetLambda_of_ds965`; the first by Cayley–Hamilton), so they are not needed |
 
 Proposed `locators.md` row (that file is not this task's to edit): `afCharpolyDS965`: DS GTM 228,
 corrected fourth printing (2016), Thm 9.6.5 and the paragraph after it, p. 404; `ρ_{f,λ}` as in Lemma 9.5.3,
-Thm 9.5.4 and Ex. 9.5.2(a); read (AI).
+Thm 9.5.4 and Ex. 9.5.2(a) (§9.5, pp. 397–402); read by a human reader (issue #14 comment 7121091136).
 
 ## 5. Also done
 
 The host path in r16-close's committed files (`docs/research/r16-close.md` l. 16–18 and
-`scratch/r16-close/log.md`) is reworded to "a local copy of the 2005 printing" (and of the 2016 printing).
+`scratch/r16-close/log.md`) is reworded so that no host path remains.
 
 ## 6. Files
 

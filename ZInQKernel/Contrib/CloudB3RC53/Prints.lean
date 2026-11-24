@@ -5,16 +5,17 @@ import ZInQKernel.Contrib.OneProof.PoleS12.Leaves
 /-!
 # RC53 blueprint: the printed results cited by the proof of Theorem 5.3
 
-`RC53.Prints` bundles one `Prop` per cited published result that this blueprint states over
+`RC53.Prints` bundles one `Prop` per cited result that this blueprint states over
 genuine definitions. Each is stated in the printed form in which the manuscript cites it, with its
 locator as the manuscript gives it. The statements of Kolyvagin Theorem 1 (MPI/90-69 p. 4; Proc.
 ICM 1990 p. 430), Dokchitser–Dokchitser Theorem 1.8 (arXiv:0906.1815v1 p. 4) and BCDT Theorem A
-with Introduction (1)–(6) (author manuscript pp. 1–3) were read; each leaf's docstring records the
+with Introduction (1)–(6) (author manuscript pp. 1–3) were read; each one's docstring records the
 standard identifications its Lean form adds (consequence form).
 
-Project rule (issue #74, decision 3): Gross–Zagier enters only through the printed leaves
+Project rule (issue #74, decision 3): Gross–Zagier enters only through the cited statements
 Cai–Shu–Tian Theorem 1.1 (`CST.CSTThm11Split`) and Kolyvagin Theorem 1
-(`KolyvaginThm1Printed`); there is no Gross–Zagier or Tian–Yuan–Zhang argument here.
+(`KolyvaginThm1Printed`, GLUE: its source is an unrefereed preprint); there is no Gross–Zagier
+or Tian–Yuan–Zhang argument here.
 
 The remaining cited results (Kato, Nekovář, Waldspurger, Cornut–Jetchev, Hoffstein–Luo,
 Bump–Friedberg–Hoffstein, Desjardins, Serre, Cai–Chen–Liu, Elkik, Milne ADT, Edixhoven, Lang,
@@ -38,7 +39,7 @@ Used in the proof of Theorem 5.3 through `lem:forward-rank` (tex L2386–2387, L
 L4052, L5264–5266, L7625–7627, L7780–7781, L8267, L10140, L10279).
 
 Form: consequence form. Theorem 1 of the print (p. 4) assumes a weak Weil parametrization
-X₀(N) → E with N the conductor (p. 3); `IsModular` is weaker. This leaf follows from
+X₀(N) → E with N the conductor (p. 3); `IsModular` is weaker. This GLUE form follows from
 `KolyvaginThm1WeilParam` and the GLUE `ModularToWeakWeil` (`kolyvaginThm1Printed_of_weilParam`,
 `Prints/Kolyvagin.lean`); those files are not on the Theorem 5.3 headline's route.
 

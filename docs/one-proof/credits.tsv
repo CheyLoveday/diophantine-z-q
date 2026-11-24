@@ -19,3 +19,4 @@ silverbergZarhinThm33	proof	mccorvie	yes	contrib desk	https://github.com/Deicyde
 silverbergZarhinThm35	reduction	mccorvie	yes	contrib desk	https://github.com/Deicyde/diophantine-z-q/pull/177	sz35-swap	c53390a7e0d4dec579a4c9b6be489e2fa768c836
 frozenTarget	statement-check	carlostoledo1891	yes	contrib desk	https://github.com/Deicyde/diophantine-z-q/pull/151	pr151-merge	19f23e1fa7f6d77b70d7d1799ed681f06d9ef63f
 dsThm965Printed	statement-check	zachbaugher	yes	contrib desk	https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7000317188	c2-records-1123	
+afCharpolyDS965	statement-check	zachbaugher	yes	contrib desk	https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7121091136	c2-records-1123	

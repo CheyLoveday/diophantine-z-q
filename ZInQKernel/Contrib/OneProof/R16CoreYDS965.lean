@@ -16,10 +16,12 @@ same page Diamond–Shurman identify the weight-2 case with the construction of 
 constructed `ρ_{f,λ}` for `k = 2` but did not prove its irreducibility or that the equation is the
 characteristic equation. So for `k = 2` the theorem is a statement about the `λ`-component
 `e_λ V_ℓ(A_f)` of Exercise 9.5.2(a), which is aftate-fix2's `V_λ = K_{f,λ} ⊗_{ℚ_ℓ ⊗ K_f} V_ℓ(A_f)`.
-(No human reading of this row. Theorem 9.6.5 on p. 404 was checked by a human reader in a print
-copy for the earlier `dsThm965Printed` row, issue #14 comment 7000317188.)
+(Human reading of this row in a print copy, issue #14 comment 7121091136: Theorem 9.6.5 at
+`k = 2`, the p. 404 paragraph after it, and Section 9.5 at pp. 395–402. It rates the row a
+consequence, GLUE: Diamond–Shurman print the `k = 2` characteristic equation without proof or
+citation, and Section 9.5 proves only that `ρ_{f,λ}(Frob_𝔭)` satisfies it.)
 
-* `AfTateLam.AfCharpolyDS965` (LEAF, printed form): DS Thm 9.6.5 at `k = 2` for the Section 9.5
+* `AfTateLam.AfCharpolyDS965` (consequence, GLUE): DS Thm 9.6.5 at `k = 2` for the Section 9.5
   realization, over `K_{f,λ}`, universally over DS's `A_f`. Its statement is aftate-fix2's
   `AfTateLam.AfTateDSLambda` verbatim (`afCharpolyDS965_iff : … ↔ AfTateDSLambda := Iff.rfl`); only the
   source changes (9.6.5 with its weight-2 identification, not 9.5.4).
@@ -42,7 +44,7 @@ open LeafModCurves PkgI3 PkgI3.AbVar
 open PkgI4 (Qbar GQ CF coeff IsNewform)
 open IsDedekindDomain NumberField
 
-/-- **LEAF (Diamond–Shurman Thm 9.6.5 at `k = 2`, for the Section 9.5 realization on `A_f`, over
+/-- **GLUE (Diamond–Shurman Thm 9.6.5 at `k = 2`, for the Section 9.5 realization on `A_f`, over
 `K_{f,λ}`).** For every `(A, π, θ)` that is DS's `(A_f, J₁(N) ↠ A_f, K_f-action)` (`AfShimura`'s
 characterization, for any model `X` of `X₁(N)`, generators, rational point, Jacobian and Hecke operators as
 in `HeckeJ1DS`), every prime `ℓ` and every place `λ ∣ ℓ` of `K_f`: for `p ∤ Nℓ` every arithmetic Frobenius
@@ -54,9 +56,9 @@ Source: Diamond–Shurman, *A First Course in Modular Forms*, GTM 228, Theorem 9
 equation of `ρ_{f,λ}(Frob_𝔭)` is `x² − a_p(f)x + χ(p)p^{k−1} = 0`"), with the identification on the same
 page that for `k = 2` the representation is the one constructed in Section 9.5 (corrected fourth
 printing, 2016, p. 404); `ρ_{f,λ}` and `V_ℓ(A_f)` as in Lemma 9.5.3, Theorem 9.5.4 and
-Exercise 9.5.2(a). Weakening: newforms only, `N ≥ 2`; irreducibility and
-unramifiedness dropped. `K_f` a number field and finiteness of `V_λ` are the print's presuppositions
-(instance arguments). The statement is `AfTateDSLambda` verbatim.
+Exercise 9.5.2(a) (2016 printing, §9.5 at pp. 397–402). Weakening: newforms only, `N ≥ 2`;
+irreducibility and unramifiedness dropped. `K_f` a number field and finiteness of `V_λ` are the
+print's presuppositions (instance arguments). The statement is `AfTateDSLambda` verbatim.
 
 Dictionary audit (hecke-pin, `ZInQKernel/Contrib/OneProof/HeckePin.lean`): the hypotheses are about DS's
 objects: `IsHeckeT`/`IsDiamond` pin `T_p`, `⟨d⟩` (`AfTateLam.HeckePin.isHeckeT_unique`,
