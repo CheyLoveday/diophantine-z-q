@@ -1,0 +1,65 @@
+'ZInQ.Manuscript.RC.HCMV21.exists_integral_class_prime_to' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_integral_class_avoiding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.ringClassField_maximal_eq_hilbertClassField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.OrientedCorrespondence' does not depend on any axioms
+'ZInQ.Manuscript.RC.HCMV21.orientedCorrespondence_of_orbit_maps' does not depend on any axioms
+'ZInQ.Manuscript.RC.HCMV21.weighted_sum_of_equivariant_reduction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.extendMorphism' depends on axioms: [Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.map_extendMorphism' depends on axioms: [Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.extendMorphism_comp' depends on axioms: [Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.extendMorphism_id' depends on axioms: [Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.finiteEtale_of_etale_composites' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.finiteEtale_kernel_of_etale_composites' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.HasGoodModelAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.IntegralJHasPotentiallyGoodReduction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.hasGoodModelAt_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.simultaneous_good_models' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.simultaneous_good_models_of_integral_j' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.imageLattice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealTranslate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.le_idealTranslate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealQuotientMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealQuotientMap_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealTorsion' depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.ker_idealQuotientMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealQuotientMap_bijOn_level' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealTranslate_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealTranslate_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealTranslate_principal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.homothety_scalar_in_fractionField' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.card_ker_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.scale_toAddSubgroup' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.card_ker_idealQuotientMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.card_geometric_q_torsion_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.supersingular_of_inert_action' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.hom_eq_of_pullback_invariantDifferential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.vc_pullback_differential' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_CM_variableChange_of_j_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.IsIdealPeriod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.IntegralSingularModuli' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.HilbertClassFieldGeneratedByJ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.ArtinActsOnJ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_artin_conjugate_j' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.hilbert_artin_is_arithmetic_frobenius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_frobenius_conjugate_j' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.isIntegral_hilbert_j' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.residueCharacter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.residueCharacter_mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.residueCharacter_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.residueCharacter_eq_of_generic_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.ker_le_torsion_of_dual_comp' depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.specializeKernel' depends on axioms: [propext, Quot.sound]

@@ -82,7 +82,5 @@ theorem chart_coordinates (hQ : Q ∥ N)
   · rw [X0Model.analyticJN, X0Model.analyticJN, hk]
     simpa only [jFunction, ofComplex_apply] using jFunction_invariant k (X0Model.dilate M τ)
 
-#print axioms coe_atkin
-#print axioms chart_coordinates
 
 end ZInQ.Manuscript.RC.AtkinRational

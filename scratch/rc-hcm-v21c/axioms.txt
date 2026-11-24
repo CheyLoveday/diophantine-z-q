@@ -1,0 +1,107 @@
+'ZInQ.Manuscript.RC.HCMV21.nsmul_mem_levelEnd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.span_levelEnd_eq_span_end' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.range_precomposeCurveMap_le_annihilator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.levelEnd_map_of_intertwines' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.GeometricKernel.0.ZInQ.Manuscript.RC.HCMV21.overHom_ext_geometricPoints' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.GeometricKernel.0.ZInQ.Manuscript.RC.HCMV21.homT_comp_eq_nsmul_id' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.GeometricKernel.0.ZInQ.Manuscript.RC.HCMV21.mem_range_homT_iff_coord_in_kernel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.existsUnique_factor_of_etale_kernel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.range_precomposeCurveMap_eq_annihilator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.factor_maps_level' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.factor_mem_levelHom' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.factor_intertwines_label' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_homT_range_of_etale_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_eq_nsmul_of_etale_homT_dvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mem_levelHom_iff_tateLevelPreimage_mapsTo' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.finiteEtale_mul_of_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.surjective_nsmul_of_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_eq_nsmul_of_primeTo_homT_dvd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.RamifiedCoset.0.ZInQ.Manuscript.RC.HCMV21.integralJ_sq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.division_scalar_factors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.division_existsUnique_quadraticPair' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.divisionVal_eq_one_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.divisionVal_uniformizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.division_uniformizer_decomposition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.divisionVal_torus_even' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.RamifiedCoset.0.ZInQ.Manuscript.RC.HCMV21.uniformizer_sq_value' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.RamifiedCoset.0.ZInQ.Manuscript.RC.HCMV21.uniformizer_sq_torus' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.division_doubleCoset_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.division_red_unit_conj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.division_uniformizer_switches' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.RamifiedCoset.0.ZInQ.Manuscript.RC.HCMV21.central_uniformizer_even' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.RamifiedCoset.0.ZInQ.Manuscript.RC.HCMV21.inverseConj_mul' depends on axioms: [propext]
+'ZInQ.Manuscript.RC.HCMV21.division_same_orientation_iff_even' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.projector_first_normalForm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.projector_forms_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.level_projector_eq_zero_or_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.projector_two_normalForms' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.levelRoot_projector_normalForm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.card_residue_embeddings' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.splitLevelLattice_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mapsTo_splitLevelLattice_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.splitSwap_mem_levelLattice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.commute_firstMatrix_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.SplitCoset.0.ZInQ.Manuscript.RC.HCMV21.firstMatrix_swap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.SplitCoset.0.ZInQ.Manuscript.RC.HCMV21.split_coset_factor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.split_level_doubleCoset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.preserves_principalRightIdeal_iff' depends on axioms: [propext]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.RightIdealCoordinates.0.ZInQ.Manuscript.RC.HCMV21.end_mul_apply' depends on axioms: [propext,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.RightIdealCoordinates.0.ZInQ.Manuscript.RC.HCMV21.end_unit_cancel' depends on axioms: [propext,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.all_leftMultiples_map_iff' depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.latticeOfMaps_inverseTranslate' depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.latticeOfMaps_inverseTranslate_principal' depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.restricted_coset_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.InverseLattice.0.ZInQ.Manuscript.RC.HCMV21.inv_mul_le_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mem_completedIdeal_algebraMap_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.closure_fractionalIdeal_eq_completedIdeal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mem_completedIdeal_mul_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.sInvLat_eq_div_fractionalIdeal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_complexArtinCond' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.arithmetic_j_of_shimura' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.inverseAdelicOrbitAction_bijective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.orientedCorrespondence_of_inverseReferenceReads' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.sum_mul_inv_eq_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]

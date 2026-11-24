@@ -1,0 +1,125 @@
+'ZInQ.Manuscript.RC.HCMV21.mem_levelHom_iff_exists_levelQuotientMap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.levelEnd_eq_intersection_of_levelQuotient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.DeuringHomRank.0.ZInQ.Manuscript.RC.HCMV21.precomposeHom' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.DeuringHomRank.0.ZInQ.Manuscript.RC.HCMV21.precomposeHom_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.hom_basis_of_epi_both_ways' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.end_basis_of_deuring' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_reverse_of_etale_quotient' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.postcomposeToEnd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.QuotientHomLattice.0.ZInQ.Manuscript.RC.HCMV21.postcomposeToEnd_mem_level' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.span_quotient_levelHom_eq_source_order' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mem_postcomposeToEnd_levelHom_image_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TateHomLattice.0.ZInQ.Manuscript.RC.HCMV21.padic_exists_nat_add_pow_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_add_pow_smul_of_mem_span' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.span_homT_eq_top_of_basis' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.tateLevelSubmodule' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TateHomLattice.0.ZInQ.Manuscript.RC.HCMV21.tateLevelSubmodule_mem_pow_smul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.span_levelHom_eq_tateLevelMaps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.GeometricTateChain.0.ZInQ.Manuscript.RC.HCMV21.nonempty_tate_basis_two' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.span_homT_eq_top_of_deuring' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.span_levelHom_eq_tate_quotient_chain' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.GeometricTateChain.0.ZInQ.Manuscript.RC.HCMV21.homT_reverse_comp_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mem_tateRange_reverse_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.GeometricTateChain.0.ZInQ.Manuscript.RC.HCMV21.span_levelHom_eq_span_primary' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.span_levelHom_eq_tate_composite_quotient_chain' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.tateLevelPreimage_of_cyclic_generator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.CyclicTateChain.0.ZInQ.Manuscript.RC.HCMV21.exists_linearEquiv_of_primitive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_tateLevelPreimage_standard' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.latticeChainMaps' depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.latticeChainMaps_translate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.latticeChainMaps_eq_principal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mapsTo_latticeChainMaps_iff' depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.completeScalarCharacter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.completeScalarCharacter_one_tmul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.completeScalarCharacter_factors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detector_order_eq_of_maximal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detector_leftOrder_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detector_rightLattice_principal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.completion_maximal_of_order_maximal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.levelOrderOfEndOrder' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.levelOrderOfEndOrder_completion_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.quotientRightIdeal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localLattice_quotientRightIdeal_eq_span' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localLattice_quotientRightIdeal_eq_completion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.TateIdealRead.0.ZInQ.Manuscript.RC.HCMV21.span_levelHom_eq_span_hom_away_level' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mem_span_postcompose_levelHom_iff_range' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.tateRange_reverse_eq_range_of_torsion_kernel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mem_span_postcompose_levelHom_iff_local_factor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.RationalTateCoordinates.0.ZInQ.Manuscript.RC.HCMV21.algHom_liftEquiv_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.RationalTateCoordinates.0.ZInQ.Manuscript.RC.HCMV21.baseChangeEnd_span' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_rationalTate_coordinates_of_endOrder' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_rationalTate_coordinates_of_deuring' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.HCMV21.QuaternionTateRead.0.ZInQ.Manuscript.RC.HCMV21.image_span' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.localLattice_quotientRightIdeal_eq_localRight' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_adelic_quotientRightIdeal_of_localFactors' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.rightIdeal_eq_fromAdelic_of_completions' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.torusOrbitMap_eq_of_scaledLocalRight' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.orientedCorrespondence_of_completedReferenceReads' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

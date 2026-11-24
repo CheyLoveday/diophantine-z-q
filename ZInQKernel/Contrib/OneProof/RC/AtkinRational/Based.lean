@@ -85,7 +85,5 @@ theorem based_of_representedDifference {N Q : ℕ} [NeZero N] {hQ : Q ∥ N}
     projectiveValue (((a.comp W.hom W.overQ).comp π hπ).val))) hh
   convert hh' using 1 <;> abel
 
-#print axioms RepresentsDifference
-#print axioms based_of_representedDifference
 
 end ZInQ.Manuscript.RC.AtkinRational

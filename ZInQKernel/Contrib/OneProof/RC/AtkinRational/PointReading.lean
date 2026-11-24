@@ -215,22 +215,5 @@ theorem projectiveValue_surjective_of_origin [E.IsElliptic]
     rw [projectiveValue_affine_spec]
     simp only [a, Affine.CoordinateRing.evalAlgHom_of_X, Affine.CoordinateRing.evalAlgHom_root]
 
-#print axioms ellipticAffineOpen
-#print axioms ellipticAffineIso
-#print axioms ellipticAffineInclusion
-#print axioms range_ellipticAffineInclusion
-#print axioms mem_ellipticAffineOpen_iff
-#print axioms ellipticAffineLift
-#print axioms ellipticAffineLift_fac
-#print axioms affineRingMap
-#print axioms affineRingMap_Spec
-#print axioms affineRingMap_injective
-#print axioms projectiveValue_eq_some_of_affine
-#print axioms projectiveValue_affine_spec
-#print axioms projectiveValue_eq_zero_iff
-#print axioms projectiveValue_eq_of_affine
-#print axioms uniq_homs_of_rat_embedding
-#print axioms projectiveValue_injective_of_origin
-#print axioms projectiveValue_surjective_of_origin
 
 end ZInQ.Manuscript.RC.AtkinRational

@@ -169,8 +169,5 @@ theorem genericFibreAtScale {ℓ Q : ℕ} [(Ecurve ℓ).IsElliptic]
   exact ⟨π, hπ, hd, hscale, hzero, h,
     translatedAtkinAtInfinity (rationalAtkin hQ) π hπ _ h hzero⟩
 
-#print axioms representsDifference_of_origin
-#print axioms basedAtkinAtScale
-#print axioms genericFibreAtScale
 
 end ZInQ.Manuscript.RC.AtkinRational
