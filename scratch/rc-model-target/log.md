@@ -28,3 +28,5 @@
 - ChartPresentation.lean: presLift/presDehom/presEquiv (AdjoinRoot q ≃+* Chart W i);
   zyEquiv : W.toAffine.CoordinateRing ≃+* Chart W 2; zxEquiv : AdjoinRoot (zxPoly W) ≃+* Chart W 2 (monic in x);
   yEquiv hw : AdjoinRoot (yPoly W c w) ≃+* Chart W 1 (shear x = x'+cz; hw : w*(c³+a₂c²+a₄c+a₆) = -1). Build OK, std axioms.
+- ChartSmooth.lean: smooth_away_derivative (monic q over R[X], localized at q' : smooth over R via StandardEtalePair),
+  smooth_transport, smooth_zy, smooth_zx, span_partials_zChart [W.IsElliptic], smooth_chartZ : RingHom.Smooth (chartConst W 2). Build OK, std axioms.
