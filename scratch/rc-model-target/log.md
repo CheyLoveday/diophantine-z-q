@@ -33,3 +33,8 @@
 - ChartSmoothY.lean: yDeriv, derivative_yPoly, yPoly_monic, smooth_ydz hw, span_yChart hw,
   smooth_yChart_awayZ [W.IsElliptic] (overlap D₊(YZ) via Away.isLocalization_mul twice),
   smooth_chartY [W.IsElliptic] hw : RingHom.Smooth (chartConst W 1). Build OK, std axioms.
+- WeierstrassSmooth.lean: projStructure W := Proj.toSpecZero ≫ Spec.map gradingZeroEquiv (= weierstrassModel hom);
+  coord_zero_cube; iSup_basicOpen_YZ (D₊(Y) ∪ D₊(Z) = Proj); smooth_chart_iff; smooth_projStructure [IsElliptic] hw;
+  exists_shear (ℓ ≥ 5: third finite difference 6); **weierstrassModel_smooth h₅ W₀ hΔ :
+  Smooth (ModelNeron.weierstrassModel ell (W₀.map (algebraMap ℤ (LocalIntegers ell)))).hom**. Build OK, std axioms.
+  Note: Mathlib instance IsZariskiLocalAtSource @Smooth needs `backward.isDefEq.respectTransparency false` outside Mathlib.
