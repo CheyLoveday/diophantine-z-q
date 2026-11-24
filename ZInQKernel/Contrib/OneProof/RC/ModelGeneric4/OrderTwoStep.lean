@@ -21,6 +21,12 @@ set_option maxHeartbeats 2000000
 set_option synthInstance.maxHeartbeats 400000
 set_option linter.style.haveILetI false
 
+attribute [-instance] WeierstrassCurve.Affine.CoordinateRing.moduleFinite
+  WeierstrassCurve.Affine.instDecidableEqFunctionField WeierstrassCurve.Affine.CoordinateRing.isIntegral
+  WeierstrassCurve.Affine.instIsScalarTowerPolynomialRatFuncFunctionField_definitions
+  WeierstrassCurve.Affine.instAlgebraRatFuncFunctionField_definitions
+  WeierstrassCurve.Affine.instIsScalarTowerRatFuncFunctionField_definitions
+
 variable {F : Type} [Field F] [DecidableEq F] (W : WeierstrassCurve F) (x₀ y₀ : F)
 
 /-- The generic first coordinate of the order-two Vélu map, `x + G/(x - x₀)`. -/
@@ -182,5 +188,142 @@ theorem twoFFHom_Y :
     (W.veluQuotient2 x₀ y₀).toAffine (Polynomial.X : Polynomial (Polynomial F)))) = _
   rw [twoFFHom_algebraMap, twoCoordHom_mk]
   exact eval₂_X _ _
+
+omit [DecidableEq F] in
+theorem isIntegral_X_twoFFHom :
+    letI : Algebra (W.veluQuotient2 x₀ y₀).toAffine.FunctionField W.toAffine.FunctionField :=
+      (twoFFHom h2 hQ hgy).toRingHom.toAlgebra
+    _root_.IsIntegral (W.veluQuotient2 x₀ y₀).toAffine.FunctionField
+      (polyToFunctionField W.toAffine X) := by
+  letI : Algebra (W.veluQuotient2 x₀ y₀).toAffine.FunctionField W.toAffine.FunctionField :=
+    (twoFFHom h2 hQ hgy).toRingHom.toAlgebra
+  let V := (W.veluQuotient2 x₀ y₀).toAffine.FunctionField
+  let u : V := polyToFunctionField (W.veluQuotient2 x₀ y₀).toAffine X
+  have hd : polyToFunctionField W.toAffine X - algebraMap F W.toAffine.FunctionField x₀ ≠ 0 :=
+    sub_ne_zero.mpr (polyToFunctionField_X_ne_algebraMap x₀)
+  let p : V[X] := X ^ 2 + (C (-(u + algebraMap F V x₀)) * X +
+    C (u * algebraMap F V x₀ + algebraMap F V (W.veluGx x₀ y₀)))
+  have hu : algebraMap V W.toAffine.FunctionField u = twoXFun W x₀ y₀ := twoFFHom_X h2 hQ hgy
+  have hc : ∀ c : F, algebraMap V W.toAffine.FunctionField (algebraMap F V c) =
+      algebraMap F W.toAffine.FunctionField c := fun c => (twoFFHom h2 hQ hgy).commutes c
+  have e1 : algebraMap V W.toAffine.FunctionField (-(u + algebraMap F V x₀)) =
+      -(twoXFun W x₀ y₀ + algebraMap F W.toAffine.FunctionField x₀) := by
+    change twoFFHom h2 hQ hgy _ = _
+    rw [map_neg, map_add, twoFFHom_X, AlgHom.commutes]
+  have e2 : algebraMap V W.toAffine.FunctionField
+      (u * algebraMap F V x₀ + algebraMap F V (W.veluGx x₀ y₀)) =
+      twoXFun W x₀ y₀ * algebraMap F W.toAffine.FunctionField x₀ +
+        algebraMap F W.toAffine.FunctionField (W.veluGx x₀ y₀) := by
+    change twoFFHom h2 hQ hgy _ = _
+    rw [map_add, map_mul, twoFFHom_X, AlgHom.commutes, AlgHom.commutes]
+  have hroot : aeval (polyToFunctionField W.toAffine X) p = 0 := by
+    simp only [p, map_add, map_mul, map_pow, aeval_X, aeval_C, e1]
+    rw [hu, hc, hc]
+    simp only [twoXFun]
+    field_simp
+    ring
+  exact ⟨p, monic_X_pow_add (by exact_mod_cast degree_linear_lt), hroot⟩
+
+omit [DecidableEq F] in
+theorem adjoin_X_yGen_eq_top_twoFFHom :
+    letI : Algebra (W.veluQuotient2 x₀ y₀).toAffine.FunctionField W.toAffine.FunctionField :=
+      (twoFFHom h2 hQ hgy).toRingHom.toAlgebra
+    IntermediateField.adjoin (W.veluQuotient2 x₀ y₀).toAffine.FunctionField
+        ({polyToFunctionField W.toAffine X, yGen W.toAffine} : Set W.toAffine.FunctionField) =
+      ⊤ := by
+  letI : Algebra (W.veluQuotient2 x₀ y₀).toAffine.FunctionField W.toAffine.FunctionField :=
+    (twoFFHom h2 hQ hgy).toRingHom.toAlgebra
+  rw [eq_top_iff]
+  rintro z -
+  set L := IntermediateField.adjoin (W.veluQuotient2 x₀ y₀).toAffine.FunctionField
+    ({polyToFunctionField W.toAffine X, yGen W.toAffine} : Set W.toAffine.FunctionField)
+  have hconst : ∀ c : F, algebraMap F W.toAffine.FunctionField c ∈ L := fun c => by
+    rw [← (twoFFHom h2 hQ hgy).commutes c]; exact L.algebraMap_mem _
+  have hxmem : polyToFunctionField W.toAffine X ∈ L :=
+    IntermediateField.subset_adjoin _ _ (Set.mem_insert _ _)
+  have hymem : yGen W.toAffine ∈ L :=
+    IntermediateField.subset_adjoin _ _ (Set.mem_insert_of_mem _ rfl)
+  have hpoly : ∀ q : F[X], polyToFunctionField W.toAffine q ∈ L := fun q => by
+    induction q using Polynomial.induction_on' with
+    | add f g hf hg => rw [map_add]; exact add_mem hf hg
+    | monomial n c =>
+        rw [← C_mul_X_pow_eq_monomial, map_mul, map_pow, polyToFunctionField_C]
+        exact mul_mem (hconst c) (pow_mem hxmem n)
+  have hcr : ∀ r : W.toAffine.CoordinateRing,
+      algebraMap W.toAffine.CoordinateRing W.toAffine.FunctionField r ∈ L := fun r => by
+    obtain ⟨a, b, rfl⟩ := WeierstrassCurve.Affine.CoordinateRing.exists_smul_basis_eq r
+    rw [algebraMap_smul_basis]
+    exact add_mem (hpoly a) (mul_mem (hpoly b) hymem)
+  obtain ⟨a, b, _, hab⟩ := IsFractionRing.div_surjective (A := W.toAffine.CoordinateRing) z
+  rw [← hab]; exact div_mem (hcr a) (hcr b)
+
+omit [DecidableEq F] in
+theorem twoFFHom_finiteAlong : FiniteAlong F (twoFFHom h2 hQ hgy) := by
+  letI : Algebra (W.veluQuotient2 x₀ y₀).toAffine.FunctionField W.toAffine.FunctionField :=
+    (twoFFHom h2 hQ hgy).toRingHom.toAlgebra
+  show Module.Finite (W.veluQuotient2 x₀ y₀).toAffine.FunctionField W.toAffine.FunctionField
+  have hxint := isIntegral_X_twoFFHom h2 hQ hgy
+  set Lx := IntermediateField.adjoin (W.veluQuotient2 x₀ y₀).toAffine.FunctionField
+    ({polyToFunctionField W.toAffine X} : Set W.toAffine.FunctionField) with hLx
+  haveI hxfd : FiniteDimensional (W.veluQuotient2 x₀ y₀).toAffine.FunctionField Lx :=
+    IntermediateField.adjoin.finiteDimensional hxint
+  have hyint : _root_.IsIntegral Lx (yGen W.toAffine) := by
+    have hyFx : _root_.IsIntegral F[X] (yGen W.toAffine) := by
+      haveI : Module.Finite F[X] W.toAffine.CoordinateRing :=
+        Module.Finite.of_basis (WeierstrassCurve.Affine.CoordinateRing.basis W.toAffine)
+      show _root_.IsIntegral F[X]
+        (algebraMap W.toAffine.CoordinateRing W.toAffine.FunctionField
+          (WeierstrassCurve.Affine.CoordinateRing.mk W.toAffine
+            (Polynomial.X : Polynomial (Polynomial F))))
+      exact ((Algebra.IsIntegral.of_finite F[X] W.toAffine.CoordinateRing).isIntegral _).map
+        (IsScalarTower.toAlgHom F[X] W.toAffine.CoordinateRing W.toAffine.FunctionField)
+    have halg : ∀ r : F[X], (algebraMap F[X] W.toAffine.FunctionField) r ∈ Lx := by
+      intro r
+      induction r using Polynomial.induction_on' with
+      | add f g hf hg => rw [map_add]; exact add_mem hf hg
+      | monomial n c =>
+          rw [← C_mul_X_pow_eq_monomial, map_mul, map_pow,
+            show algebraMap F[X] W.toAffine.FunctionField (C c)
+              = algebraMap F W.toAffine.FunctionField c from rfl,
+            show algebraMap F[X] W.toAffine.FunctionField X
+              = polyToFunctionField W.toAffine X from rfl,
+            ← (twoFFHom h2 hQ hgy).commutes c]
+          exact mul_mem (IntermediateField.algebraMap_mem _ _)
+            (pow_mem (IntermediateField.mem_adjoin_simple_self _ _) n)
+    obtain ⟨q, hqmon, hq0⟩ := hyFx
+    let φ : F[X] →+* Lx :=
+      (algebraMap F[X] W.toAffine.FunctionField).codRestrict Lx.toSubring halg
+    refine ⟨q.map φ, hqmon.map φ, ?_⟩
+    rw [Polynomial.eval₂_map,
+      show (algebraMap Lx W.toAffine.FunctionField).comp φ
+          = algebraMap F[X] W.toAffine.FunctionField from RingHom.ext fun _ => rfl]
+    exact hq0
+  have hyint' : _root_.IsIntegral (W.veluQuotient2 x₀ y₀).toAffine.FunctionField
+      (yGen W.toAffine) :=
+    haveI : Algebra.IsIntegral (W.veluQuotient2 x₀ y₀).toAffine.FunctionField Lx :=
+      Algebra.IsIntegral.of_finite (W.veluQuotient2 x₀ y₀).toAffine.FunctionField Lx
+    haveI : IsScalarTower (W.veluQuotient2 x₀ y₀).toAffine.FunctionField Lx
+        W.toAffine.FunctionField := IntermediateField.isScalarTower_mid' Lx
+    isIntegral_trans (R := (W.veluQuotient2 x₀ y₀).toAffine.FunctionField) (A := Lx)
+      (yGen W.toAffine) hyint
+  have hfd : FiniteDimensional (W.veluQuotient2 x₀ y₀).toAffine.FunctionField
+      (IntermediateField.adjoin (W.veluQuotient2 x₀ y₀).toAffine.FunctionField
+        ({polyToFunctionField W.toAffine X, yGen W.toAffine}
+          : Set W.toAffine.FunctionField)) := by
+    refine IntermediateField.finiteDimensional_adjoin fun z hz => ?_
+    rcases hz with rfl | rfl
+    · exact hxint
+    · exact hyint'
+  rw [adjoin_X_yGen_eq_top_twoFFHom h2 hQ hgy] at hfd
+  exact (IntermediateField.topEquiv (F := (W.veluQuotient2 x₀ y₀).toAffine.FunctionField)
+    (E := W.toAffine.FunctionField)).toLinearEquiv.finiteDimensional
+
+omit [DecidableEq F] in
+theorem twoFFHom_isIntegral : (twoFFHom h2 hQ hgy).toRingHom.IsIntegral := by
+  letI : Algebra (W.veluQuotient2 x₀ y₀).toAffine.FunctionField W.toAffine.FunctionField :=
+    (twoFFHom h2 hQ hgy).toRingHom.toAlgebra
+  haveI : Module.Finite (W.veluQuotient2 x₀ y₀).toAffine.FunctionField W.toAffine.FunctionField :=
+    twoFFHom_finiteAlong h2 hQ hgy
+  exact fun z => (Algebra.IsIntegral.of_finite _ _).isIntegral z
 
 end WeierstrassCurve.ModelLevels.ModelGeneric4
