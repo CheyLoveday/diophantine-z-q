@@ -4,6 +4,7 @@ import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_W
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_WeierstrassCurve_exists_addMonoidHom_coe_eq_veluPointMap2
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_WeierstrassCurve_stepCurve_stepSubgroup_two_eq
 import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_WeierstrassCurve_veluGx_ne_zero_of_two_torsion
+import ZInQKernel.Contrib.CloudB2X0Transitive.Vendor.AnthropicFLT.Theorems.Thm_WeierstrassCurve_bijOn_cyclicQuotientJ_isRoot_modularPolynomial_of_transcendental_j
 
 /-! # The order-two Vélu step as a map of function fields
 
@@ -547,6 +548,132 @@ theorem twoFFHom_restrict_infinite [W.IsElliptic] [GenusOnePlaceGate W.toAffine]
   rw [← twoFFHom_X h2 hQ hgy, ← mem_restrictAlong_iff, polyToFunctionField_apply]
   exact hfin _
 
+/-- **The order-two seam.** With the fixed centred gates, the place of every point restricts along
+the order-two Vélu map of function fields to the place of its image under the vendored point map
+`veluPointMap2`. -/
+theorem twoFFHom_seam [CharZero F]
+    (hΔ : (W.veluQuotient2 x₀ y₀).Δ ≠ 0) (P : W.toAffine.Point) :
+    haveI : (W.veluQuotient2 x₀ y₀).IsElliptic := ⟨isUnit_iff_ne_zero.mpr hΔ⟩
+    (pointPlace W P).restrictAlong (twoFFHom h2 hQ hgy) (twoFFHom_isIntegral h2 hQ hgy) =
+      pointPlace (W.veluQuotient2 x₀ y₀) (veluPointMap2 h2 hQ hgy hΔ P) := by
+  haveI hV : (W.veluQuotient2 x₀ y₀).IsElliptic := ⟨isUnit_iff_ne_zero.mpr hΔ⟩
+  haveI := WeierstrassCurve.Affine.CoordinateRing.isDedekindDomain W
+  haveI := WeierstrassCurve.Affine.CoordinateRing.isDedekindDomain (W.veluQuotient2 x₀ y₀)
+  letI := gate W
+  haveI := gate_isCentred W
+  letI := gate (W.veluQuotient2 x₀ y₀)
+  haveI := gate_isCentred (W.veluQuotient2 x₀ y₀)
+  change Place.restrictAlong _ _ (placeOfPoint P) = placeOfPoint _
+  have hG : W.veluGx x₀ y₀ ≠ 0 := W.veluGx_ne_zero_of_two_torsion W.isUnit_Δ.ne_zero hQ hgy
+  cases P with
+  | zero =>
+      rw [veluPointMap2_zero, placeOfPoint_zero, placeOfPoint_zero]
+      exact twoFFHom_restrict_infinite h2 hQ hgy
+  | some r s h =>
+      by_cases hr : r = x₀
+      · rw [veluPointMap2_some_of_eq _ _ _ _ h hr, placeOfPoint_some, placeOfPoint_zero]
+        refine InfinitePlace.eq_of_not_isFinitePlace _ ?_
+        intro hfin
+        refine twoXFun_notMem_placeOfEquation_of_eq (W := W) (y₀ := y₀) h.1 hr hG ?_
+        rw [← twoFFHom_X h2 hQ hgy, ← mem_restrictAlong_iff, polyToFunctionField_apply]
+        exact hfin _
+      · rw [veluPointMap2_some_of_ne _ _ _ _ h hr, placeOfPoint_some, placeOfPoint_some]
+        exact twoFFHom_restrict_placeOfEquation_of_ne h2 hQ hgy h.1 hr _
+
 end Seam
+
+open P2MW.S_WeierstrassCurve_bijOn_cyclicQuotientJ_isRoot_modularPolynomial_of_transcendental_j.P2MKcKI
+  in
+/-- The order-two step of the vendored quotient is induced by a function-field map whose
+restriction of places is the vendored order-two Vélu map. -/
+theorem stepSeam_two {k : Type} [Field k] [DecidableEq k] [IsAlgClosed k] [CharZero k] :
+    StepSeam (k := k) 2 := by
+  intro E _ H _ _ hdvd
+  have h2 : (2 : k) ≠ 0 := two_ne_zero
+  let := Fintype.ofFinite H
+  obtain ⟨q, hq⟩ := exists_prime_addOrderOf_dvd_card (G := H) 2
+    (by rwa [Fintype.card_eq_nat_card])
+  have hQ2 : addOrderOf (q : E.toAffine.Point) = 2 :=
+    (addOrderOf_injective H.subtype Subtype.coe_injective q).trans hq
+  have hQ0 : (q : E.toAffine.Point) ≠ 0 := by
+    intro h0; rw [h0, addOrderOf_zero] at hQ2; omega
+  obtain ⟨x₀, y₀, hns, hqe⟩ : ∃ x₀ y₀ h, (q : E.toAffine.Point) = .some x₀ y₀ h := by
+    rcases hqP : (q : E.toAffine.Point) with _ | ⟨x₀, y₀, h⟩
+    · exact absurd hqP hQ0
+    · exact ⟨x₀, y₀, h, rfl⟩
+  have hgy : E.veluGy x₀ y₀ = 0 := by
+    have h2Q : (2 : ℕ) • (q : E.toAffine.Point) = 0 := hQ2 ▸ addOrderOf_nsmul_eq_zero _
+    rw [two_nsmul, hqe, ← eq_neg_iff_add_eq_zero, WeierstrassCurve.Affine.Point.neg_some] at h2Q
+    have hy := (WeierstrassCurve.Affine.Point.some.inj h2Q).2
+    rw [WeierstrassCurve.Affine.negY] at hy
+    rw [veluGy]
+    linear_combination -hy
+  have hΔ := veluQuotient2_Delta_ne_zero E.isUnit_Δ.ne_zero hns.1 hgy
+  haveI hV : (E.veluQuotient2 x₀ y₀).IsElliptic := ⟨isUnit_iff_ne_zero.mpr hΔ⟩
+  obtain ⟨φ, hφ⟩ := E.exists_addMonoidHom_coe_eq_veluPointMap2 h2 hns.1 hgy hΔ
+  have hQH : (WeierstrassCurve.Affine.Point.some x₀ y₀ hns : E.toAffine.Point) ∈ H :=
+    hqe ▸ q.property
+  have hbridge := E.stepCurve_stepSubgroup_two_eq h2 H hns hQH hgy hΔ φ hφ
+  have hker : φ.ker = AddSubgroup.zmultiples (WeierstrassCurve.Affine.Point.some x₀ y₀ hns) := by
+    rw [← hqe]
+    ext P
+    rw [mem_ker_veluPointMap2 E h2 hns.1 hgy hΔ φ hφ]
+    have hord : addOrderOf (q : E.toAffine.Point) = 2 := hQ2
+    constructor
+    · rintro (rfl | hP)
+      · exact AddSubgroup.zero_mem _
+      · rw [hP, ← hqe]; exact AddSubgroup.mem_zmultiples _
+    · intro hP
+      obtain ⟨m, rfl⟩ := AddSubgroup.mem_zmultiples_iff.1 hP
+      have hk : (m % 2) • (q : E.toAffine.Point) = m • (q : E.toAffine.Point) := by
+        have := mod_addOrderOf_zsmul (q : E.toAffine.Point) m
+        rwa [hord, Nat.cast_ofNat] at this
+      rcases Int.emod_two_eq_zero_or_one m with h | h
+      · left; rw [← hk, h, zero_smul]
+      · right; rw [← hk, h, one_smul, hqe]
+  have hseam : IsSeam (twoFFHom h2 hns.1 hgy) (twoFFHom_isIntegral h2 hns.1 hgy) φ := by
+    intro P
+    rw [show φ P = veluPointMap2 h2 hns.1 hgy hΔ P from congrFun hφ P]
+    exact twoFFHom_seam h2 hns.1 hgy hΔ P
+  have result (s : Σ V : WeierstrassCurve k, AddSubgroup V.toAffine.Point)
+      (hs : s = ⟨E.veluQuotient2 x₀ y₀, H.map φ⟩) :
+      ∃ _ : s.1.IsElliptic,
+        ∃ (ι : s.1.toAffine.FunctionField →ₐ[k] E.toAffine.FunctionField)
+          (hι : ι.toRingHom.IsIntegral), FiniteAlong k ι ∧
+          ∃ f : E.toAffine.Point →+ s.1.toAffine.Point,
+            f.ker ≤ H ∧ Nat.card f.ker = 2 ∧ H.map f = s.2 ∧ IsSeam ι hι f := by
+    subst hs
+    refine ⟨hV, twoFFHom h2 hns.1 hgy, twoFFHom_isIntegral h2 hns.1 hgy,
+      twoFFHom_finiteAlong h2 hns.1 hgy, φ, ?_, ?_, rfl, hseam⟩
+    · rw [hker]; exact AddSubgroup.zmultiples_le.mpr hQH
+    · rw [hker, Nat.card_zmultiples, ← hqe, hQ2]
+  exact result _ hbridge
+
+/-- **The composite at every level.** The vendored iterated Vélu quotient by a cyclic subgroup of
+any order is induced by a map of function fields whose restriction of places is a point
+homomorphism with kernel exactly that subgroup. -/
+theorem exists_quotientSeam {k : Type} [Field k] [DecidableEq k] [IsAlgClosed k] [CharZero k]
+    (n : ℕ) (hn : n ≠ 0)
+    (E : WeierstrassCurve k) [E.IsElliptic] (H : AddSubgroup E.toAffine.Point)
+    (hH : IsAddCyclic H ∧ Nat.card H = n) :
+    ∃ _ : (E.cyclicQuotientCurve H n).IsElliptic,
+      ∃ (ι : (E.cyclicQuotientCurve H n).toAffine.FunctionField →ₐ[k] E.toAffine.FunctionField)
+        (hι : ι.toRingHom.IsIntegral), FiniteAlong k ι ∧
+        ∃ g : E.toAffine.Point →+ (E.cyclicQuotientCurve H n).toAffine.Point,
+          g.ker = H ∧ IsSeam ι hι g :=
+  exists_quotientSeam_of_steps n hn (fun ℓ hℓ _ => by
+    by_cases h2 : ℓ = 2
+    · subst h2; exact stepSeam_two
+    · exact stepSeam_of_odd hℓ h2) E H hH
+
+#print axioms twoFun_equation
+#print axioms transcendental_twoXFun
+#print axioms twoFFHom
+#print axioms twoFFHom_finiteAlong
+#print axioms twoFFHom_isIntegral
+#print axioms twoFFHom_restrict_placeOfEquation_of_ne
+#print axioms twoFFHom_seam
+#print axioms stepSeam_two
+#print axioms exists_quotientSeam
 
 end WeierstrassCurve.ModelLevels.ModelGeneric4

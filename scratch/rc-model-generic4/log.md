@@ -17,3 +17,10 @@ Base: wip/rc-model-neron 64a338f4 merged with main 29bfbc3f (merge commit 5e0219
   ⟨u(1/N)⟩ has target j = j(Nτ) (lift z ↦ αz + c, preimage ℤτ + ℤ/N, homothety to ℤNτ + ℤ).
 - `pairQuotientJ_analyticCyclicPair_of_odd`: (b1) for odd N. Axioms: propext, Classical.choice, Quot.sound.
 - Missing for even N: the order-two step function-field map (`veluQuotient2`) with place seam.
+
+## (b1) closed for every N (OrderTwoStep, LatticeQuotient)
+- `twoFFHom`: order-two Vélu map of function fields (x ↦ x + G/(x−x₀), y ↦ y − G(a₁(x−x₀)+y−y₀)/(x−x₀)²);
+  `twoFFHom_finiteAlong`, `twoFFHom_isIntegral`, `twoFFHom_seam` (place restriction = `veluPointMap2`).
+- `stepSeam_two`, `exists_quotientSeam` (all n ≥ 1).
+- `pairQuotientJ_analyticCyclicPair : pairQuotientJ (analyticCyclicPair τ) = X0Model.analyticJN N τ`
+  for every τ ∈ ℍ, N ≥ 1. Axioms: propext, Classical.choice, Quot.sound. No sorry.
