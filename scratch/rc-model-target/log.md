@@ -46,3 +46,7 @@
 - FieldValue.lean: coord_mem_iff_chart, equiv_of_chartMorphism_eq (same morphism from Spec F ⇒ proportional vectors),
   chartMorphism_eq_of_equiv, exists_chartMorphism, fieldValue (affine point on W.map g), fieldValue_eq,
   fieldValue_chartMorphism, equiv_of_toAffine_eq, fieldValue_injective [W.IsElliptic]. Build OK, std axioms.
+- FormulaGluing.lean: fieldValue_congr, pointRing, eq_of_fieldValues (reduced source, separated cubic), Computes, morphism_of_local. OK.
+- FormulaMorphism.lean: nonsingular_of_unit_coord, equation_map, morphism_of_formulas (relative J0Cusps formula gluing). OK.
+- GroupLaw.lean: cubic W := Over.mk (projStructure W); fieldPt g; val; cubicHom_ext; cubicOne (0:1:0), val_one;
+  cubicInv (neg formula), val_inv; addLaws (addXYZ / Tau Ceti dblAddXYZ), cubicMul, val_mul. Build OK, std axioms.
