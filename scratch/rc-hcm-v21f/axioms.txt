@@ -1,0 +1,4 @@
+'ZInQ.Manuscript.RC.HCMV21.levelOrder_eq_intersection_of_levelQuotient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.levelOrderOfEndOrder_isEichler' depends on axioms: [propext, Classical.choice, Quot.sound]

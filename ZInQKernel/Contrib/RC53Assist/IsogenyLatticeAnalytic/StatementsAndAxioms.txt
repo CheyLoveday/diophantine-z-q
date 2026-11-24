@@ -1,0 +1,216 @@
+def ZInQ.Contrib.CloudB3RC53.ModularWeil.IsogenyLatticeAnalyticGlue : Prop :=
+∀ (F : Type) [inst : Field F] (σ : F →+* ℂ) (E₁ E₂ : WeierstrassCurve F),
+  E₁.IsElliptic →
+    E₂.IsElliptic →
+      ∀ (β : TauCeti.Isogeny E₁.toAffine E₂.toAffine) (α : F),
+        ZInQ.Contrib.CloudB3RC53.ModularWeil.IsPullbackScalar β α →
+          ∀ (Lat₁ Lat₂ : PeriodPair),
+            ZInQ.Contrib.CloudB3RC53.ModularWeil.IsLatticeOfEmb σ E₁ Lat₁ →
+              ZInQ.Contrib.CloudB3RC53.ModularWeil.IsLatticeOfEmb σ E₂ Lat₂ → ∀ l ∈ Lat₁.lattice, σ α * l ∈ Lat₂.lattice
+lattice_transport_of_periodic_curve_point : ∀ (L₁ L₂ : PeriodPair) {c : ℂ},
+  c ≠ 0 →
+    ∀ {X Y : ℂ → ℂ},
+      MeromorphicOn X Set.univ →
+        (∀ (z l : ℂ), l ∈ L₁.lattice → X (z + l) = X z) →
+          ∀ {t₀ : ℂ},
+            (∀ᶠ (t : ℂ) in nhds t₀, HasDerivAt X (c * (2 * Y t)) t) →
+              (∀ᶠ (t : ℂ) in nhds t₀, Y t ^ 2 = X t ^ 3 - L₂.g₂ / 4 * X t - L₂.g₃ / 4) →
+                ContinuousAt Y t₀ → Y t₀ ≠ 0 → ∀ l ∈ L₁.lattice, c * l ∈ L₂.lattice
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.lattice_transport_of_periodic_curve_point' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Germs.derivative_ofFun : ∀ (f : ℂ → ℂ), Germs.derivative ↑f = ↑(deriv f)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.derivative_ofFun' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Germs.represented_const : ∀ (L : PeriodPair) (a : ℂ), Germs.Represented L (Germs.constantHom a)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.represented_const' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@Germs.represented_add : ∀ {L : PeriodPair} {a b : Germs.AtZero},
+  Germs.Represented L a → Germs.Represented L b → Germs.Represented L (a + b)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.represented_add' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@Germs.represented_mul : ∀ {L : PeriodPair} {a b : Germs.AtZero},
+  Germs.Represented L a → Germs.Represented L b → Germs.Represented L (a * b)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.represented_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@Germs.represented_inv : ∀ {L : PeriodPair} {a : Germs.AtZero}, Germs.Represented L a → Germs.Represented L a⁻¹
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.represented_inv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@Germs.represented_pow : ∀ {L : PeriodPair} {a : Germs.AtZero},
+  Germs.Represented L a → ∀ (n : ℕ), Germs.Represented L (a ^ n)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.represented_pow' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@Germs.represented_eval₂ : ∀ {R : Type u_1} [inst : Semiring R] {L : PeriodPair} (φ : R →+* Germs.AtZero),
+  (∀ (a : R), Germs.Represented L (φ a)) →
+    ∀ {x : Germs.AtZero}, Germs.Represented L x → ∀ (p : Polynomial R), Germs.Represented L (Polynomial.eval₂ φ x p)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.represented_eval₂' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@Germs.eventually_ne_zero_of_represented : ∀ {L : PeriodPair} {g : Germs.AtZero},
+  Germs.Represented L g → g ≠ 0 → ∀ {f : ℂ → ℂ}, ↑f = g → ∀ᶠ (z : ℂ) in nhdsWithin 0 {0}ᶜ, f z ≠ 0
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.eventually_ne_zero_of_represented' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@Germs.isUnit_of_represented_ne_zero : ∀ {L : PeriodPair} {g : Germs.AtZero}, Germs.Represented L g → g ≠ 0 → IsUnit g
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.isUnit_of_represented_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@Germs.derivative_add : ∀ {L : PeriodPair} {a b : Germs.AtZero},
+  Germs.Represented L a → Germs.Represented L b → Germs.derivative (a + b) = Germs.derivative a + Germs.derivative b
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.derivative_add' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@Germs.derivative_mul : ∀ {L : PeriodPair} {a b : Germs.AtZero},
+  Germs.Represented L a →
+    Germs.Represented L b → Germs.derivative (a * b) = a * Germs.derivative b + b * Germs.derivative a
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.derivative_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Germs.derivative_const : ∀ (a : ℂ), Germs.derivative (Germs.constantHom a) = 0
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.Germs.derivative_const' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@algebraMap_germ : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (a : F),
+  (algebraMap F Germs.AtZero) a = Germs.constantHom ((algebraMap F ℂ) a)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.algebraMap_germ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@aeval_germ : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (f : ℂ → ℂ) (p : Polynomial F),
+  (Polynomial.aeval ↑f) p = ↑fun z => Polynomial.eval₂ (algebraMap F ℂ) (f z) p
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.aeval_germ' depends on axioms: [propext, Classical.choice, Quot.sound]
+@transcendental_weierstrass_germ : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (L : PeriodPair) (b : ℂ),
+  Transcendental F ↑fun z => L.weierstrassP z - b
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.transcendental_weierstrass_germ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@represented_uniformX : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F) (L : PeriodPair),
+  Germs.Represented L ↑(uniformX E L)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.represented_uniformX' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@represented_uniformY : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F) (L : PeriodPair),
+  Germs.Represented L ↑(uniformY E L)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.represented_uniformY' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@uniformization_equation : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair),
+  CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L →
+    (WeierstrassCurve.toAffine (E.toAffine.baseChange Germs.AtZero)).Equation ↑(uniformX E L) ↑(uniformY E L)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.uniformization_equation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@coordinateEvaluation_X : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F) (L : PeriodPair)
+  (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L),
+  (coordinateEvaluation E L hL) (CloudB3RC53.ModularWeil.coordX E.toAffine) = ↑(uniformX E L)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.coordinateEvaluation_X' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@coordinateEvaluation_Y : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F) (L : PeriodPair)
+  (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L),
+  (coordinateEvaluation E L hL) (CloudB3RC53.ModularWeil.coordY E.toAffine) = ↑(uniformY E L)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.coordinateEvaluation_Y' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@coordinateEvaluation_injective : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L),
+  Function.Injective ⇑(coordinateEvaluation E L hL)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.coordinateEvaluation_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@represented_coordinateEvaluation : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L) (a : E.toAffine.CoordinateRing),
+  Germs.Represented L ((coordinateEvaluation E L hL) a)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.represented_coordinateEvaluation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@coordinateEvaluation_isUnit : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L)
+  (a : ↥(nonZeroDivisors E.toAffine.CoordinateRing)), IsUnit ((coordinateEvaluation E L hL) ↑a)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.coordinateEvaluation_isUnit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@fieldEvaluation_algebraMap : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L) (a : E.toAffine.CoordinateRing),
+  (fieldEvaluation E L hL) ((algebraMap E.toAffine.CoordinateRing E.toAffine.FunctionField) a) =
+    (coordinateEvaluation E L hL) a
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.fieldEvaluation_algebraMap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@map_inv_of_represented : ∀ {K : Type u_1} [inst : Field K] (L : PeriodPair) (f : K →+* Germs.AtZero) {a : K},
+  a ≠ 0 → Germs.Represented L (f a) → f a⁻¹ = (f a)⁻¹
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.map_inv_of_represented' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@represented_fieldEvaluation : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L) (a : E.toAffine.FunctionField),
+  Germs.Represented L ((fieldEvaluation E L hL) a)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.represented_fieldEvaluation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@fieldEvaluation_genericX : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L),
+  (fieldEvaluation E L hL) E.toAffine.genericX = ↑(uniformX E L)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.fieldEvaluation_genericX' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@fieldEvaluation_genericY : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L),
+  (fieldEvaluation E L hL) E.toAffine.genericY = ↑(uniformY E L)
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.fieldEvaluation_genericY' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@fieldEvaluation_denominator : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L),
+  (fieldEvaluation E L hL) E.toAffine.invariantDifferentialDenom = ↑L.derivWeierstrassP
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.fieldEvaluation_denominator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@derivative_fieldEvaluation_genericX : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L),
+  Germs.derivative ((fieldEvaluation E L hL) E.toAffine.genericX) =
+    (fieldEvaluation E L hL) E.toAffine.invariantDifferentialDenom
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.derivative_fieldEvaluation_genericX' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@evaluated_pullbackScalar : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E₁ E₂ : WeierstrassCurve F)
+  [E₁.IsElliptic] [E₂.IsElliptic] (β : TauCeti.Isogeny E₁.toAffine E₂.toAffine) (α : F),
+  CloudB3RC53.ModularWeil.IsPullbackScalar β α →
+    ∀ (L : PeriodPair) (hL : CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E₁ L),
+      Germs.derivative ((fieldEvaluation E₁ L hL) (β.pullback (CloudB3RC53.ModularWeil.coordX E₂.toAffine))) =
+        Germs.constantHom ((algebraMap F ℂ) α) *
+          (fieldEvaluation E₁ L hL) (β.pullback (CloudB3RC53.ModularWeil.omegaDen E₂.toAffine))
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.evaluated_pullbackScalar' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@normalized_curve_equation : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E : WeierstrassCurve F)
+  (L : PeriodPair),
+  CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E L →
+    ∀ {x y : ℂ},
+      y ^ 2 + (algebraMap F ℂ) E.a₁ * x * y + (algebraMap F ℂ) E.a₃ * y =
+          x ^ 3 + (algebraMap F ℂ) E.a₂ * x ^ 2 + (algebraMap F ℂ) E.a₄ * x + (algebraMap F ℂ) E.a₆ →
+        ((y + y + (algebraMap F ℂ) E.a₁ * x + (algebraMap F ℂ) E.a₃) / 2) ^ 2 =
+          (x + (algebraMap F ℂ) E.b₂ / 12) ^ 3 - L.g₂ / 4 * (x + (algebraMap F ℂ) E.b₂ / 12) - L.g₃ / 4
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.normalized_curve_equation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@isogeny_transports_periods : ∀ {F : Type} [inst : Field F] [inst_1 : Algebra F ℂ] (E₁ E₂ : WeierstrassCurve F)
+  [E₁.IsElliptic] [E₂.IsElliptic] (β : TauCeti.Isogeny E₁.toAffine E₂.toAffine) (α : F),
+  CloudB3RC53.ModularWeil.IsPullbackScalar β α →
+    ∀ (L₁ L₂ : PeriodPair),
+      CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E₁ L₁ →
+        CloudB3RC53.ModularWeil.IsLatticeOfEmb (algebraMap F ℂ) E₂ L₂ →
+          ∀ l ∈ L₁.lattice, (algebraMap F ℂ) α * l ∈ L₂.lattice
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.isogeny_transports_periods' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+isogenyLatticeAnalyticGlue_holds : CloudB3RC53.ModularWeil.IsogenyLatticeAnalyticGlue
+'ZInQ.Contrib.RC53Assist.IsogenyLatticeAnalytic.isogenyLatticeAnalyticGlue_holds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

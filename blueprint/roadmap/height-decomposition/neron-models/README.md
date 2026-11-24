@@ -18,9 +18,6 @@ $\operatorname{Gal}(\Omega/K)$ that map $w$ to itself and act trivially on its r
 prime $\ell$ invertible in $\mathcal O$, $\operatorname{Gal}(\Omega/K)$ acts on the Tate module
 $T_\ell A=\varprojlim_nA(\Omega)[\ell^n]$.
 
-Of these three statements, two are published statements and one is a consequence of published
-theorems; none is proved here.
+It is not proved here.
 
-- [Néron models over Dedekind domains](neron-models-exist.md)
-- [Wild inertia acts trivially under semistable reduction](wild-inertia-trivial.md)
-- [Raynaud's criterion for semistable reduction](raynaud-criterion.md)
+- [Grothendieck's semistable reduction theorem](semistable-reduction-theorem.md)

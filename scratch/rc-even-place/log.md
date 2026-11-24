@@ -1,0 +1,10 @@
+- Bases: merged in the specified order.
+- Tex 8162–8167: ledger N4, omitted base coefficient in the shell shorthand; recorded in the report and fleet note.
+- App E witnesses: negative sign for the budget; positive sign on the companion twist for the singleton.
+- `Place.lean`: PASS; one prime above two, precompletion complex subring, p-adic maps into the completion, odd inverses contained and one-half excluded.
+- `Scalars.lean`: PASS; one place for bounded two-power characters, compatible archimedean and local lifts, rational integer-two factor.
+- `Source.lean`: PASS; all-index shift from squarefree bound and recurrence; subring-valued `SourceHyp` at every cutoff.
+- `Singleton.lean`: PASS; exact `Bp` and `Hp` in the coefficient ring at every index, from the depth-zero lower bound and shell recurrence.
+- Singleton support input: for primes, `q ∈ S ↔ q ∣ D.m₂` aligns the sieve and unary cutoff.
+- Verification: `lake env lean -j1`, serial invocations; 29/29 theorem audits exactly `[propext, Classical.choice, Quot.sound]`.
+- Actual bindings: not checked. Initial combined closure had 1,997 missing project artifacts. Direct checks stopped at absent `AppE.Rational`, `EvenBudget.Valuation`, and `KSplitSeed.Sieve` artifacts.

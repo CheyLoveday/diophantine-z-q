@@ -19,8 +19,8 @@ reduction modulo `t` is the residual model with `W = E[2]`.
 (`GenuineInst/CoefResidualCounts.lean`) instead take the change of condition with coefficients
 `ZMod 2` and its acyclic quotient `hW : W.toCC.Acyclic` over `ZMod 2`, where `t = 0`: the
 comparison blocks are `0`, and at an active place `h¹` of the unramified condition (`2`) differs
-from `h¹` of the full local complex (`4`), so that quotient is not acyclic (the peer's
-`active_full_change_not_acyclic`). Those constructors therefore only apply when no
+from `h¹` of the full local complex (`4`), so that quotient is not acyclic
+(`RC53Assist.ResidualWitnessActive`, `active_full_change_not_acyclic`). Those constructors therefore only apply when no
 unramified-to-full change happens at an active place. There is no bridge from the old `hW` to the
 text's statement: the old one is about `𝔽₂`-coefficients, the text's about `𝔽₂((t))`.
 

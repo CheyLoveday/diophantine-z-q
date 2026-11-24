@@ -1,0 +1,1202 @@
+ZInQ.Contrib.RC53Assist.CalibrationShape.residueTensorLift_apply {R A X Y : Type} [CommRing.{0} R] [CommRing.{0} A]
+  [Algebra.{0, 0} R A] [AddCommGroup.{0} X] [Module.{0, 0} R X] [AddCommGroup.{0} Y] (n : R)
+  (q : AddMonoidHom.{0, 0} X Y) (hq : Function.Surjective.{1, 1} ⇑q)
+  (hker : ∀ (x : X), Eq.{1} (q x) 0 → ∃ z, Eq.{1} x (HSMul.hSMul.{0, 0, 0} n z))
+  (hA : Eq.{1} ((Algebra.algebraMap.{0, 0} R A) n) 0) (x : X) :
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.CalibrationShape.residueTensorLift n q hq hker hA) (q x))
+    (TensorProduct.tmul.{0, 0, 0} R 1 x)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.residueTensorLift_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.residueTensorInverse_tmul {R A X Y : Type} [CommRing.{0} R] [CommRing.{0} A]
+  [Algebra.{0, 0} R A] [AddCommGroup.{0} X] [Module.{0, 0} R X] [AddCommGroup.{0} Y] (n : R)
+  (q : AddMonoidHom.{0, 0} X Y) (hq : Function.Surjective.{1, 1} ⇑q)
+  (hker : ∀ (x : X), Eq.{1} (q x) 0 → ∃ z, Eq.{1} x (HSMul.hSMul.{0, 0, 0} n z))
+  (hA : Eq.{1} ((Algebra.algebraMap.{0, 0} R A) n) 0) (a : A) (x : X) :
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.CalibrationShape.residueTensorInverse n q hq hker hA)
+      (TensorProduct.tmul.{0, 0, 0} ℤ a (q x)))
+    (TensorProduct.tmul.{0, 0, 0} R a x)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.residueTensorInverse_tmul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.tensorReduction_bijective {R A X Y : Type} [CommRing.{0} R] [CommRing.{0} A]
+  [Algebra.{0, 0} R A] [AddCommGroup.{0} X] [Module.{0, 0} R X] [AddCommGroup.{0} Y] (n : R)
+  (q : AddMonoidHom.{0, 0} X Y) (hq : Function.Surjective.{1, 1} ⇑q)
+  (hker : ∀ (x : X), Eq.{1} (q x) 0 → ∃ z, Eq.{1} x (HSMul.hSMul.{0, 0, 0} n z))
+  (hA : Eq.{1} ((Algebra.algebraMap.{0, 0} R A) n) 0)
+  (F : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} A) (TensorProduct.{0, 0, 0} R A X) (TensorProduct.{0, 0, 0} ℤ A Y))
+  (hF : ∀ (a : A) (x : X), Eq.{1} (F (TensorProduct.tmul.{0, 0, 0} R a x)) (TensorProduct.tmul.{0, 0, 0} ℤ a (q x))) :
+  Function.Bijective.{1, 1} ⇑F
+'ZInQ.Contrib.RC53Assist.CalibrationShape.tensorReduction_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.continuousReduction_bijective {G : Type} [Group.{0} G] [TopologicalSpace.{0} G]
+  [IsTopologicalGroup.{0} G] [CompactSpace.{0} G] {T : Type} [AddCommGroup.{0} T] [Module.{0, 0} ℤ_[2] T]
+  [DistribMulAction.{0, 0} G T] [SMulCommClass.{0, 0, 0} G ℤ_[2] T] [TopologicalSpace.{0} T] [ContinuousAdd.{0} T]
+  [ContinuousConstSMul.{0, 0} ℤ_[2] T] [ContinuousSMul.{0, 0} G T] {L : ℕ → Type} [(k : ℕ) → AddCommGroup.{0} (L k)]
+  [(k : ℕ) → DistribMulAction.{0, 0} G (L k)] [(k : ℕ) → TopologicalSpace.{0} (L k)]
+  [∀ (k : ℕ), DiscreteTopology.{0} (L k)] [∀ (k : ℕ), ContinuousSMul.{0, 0} G (L k)]
+  {p : (k : ℕ) → AddMonoidHom.{0, 0} T (L k)} {A : Type} [CommRing.{0} A] {π : RingHom.{0, 0} ℤ_[2] A} {N : Type}
+  [AddCommGroup.{0} N] [Module.{0, 0} A N] [DistribMulAction.{0, 0} G N] [SMulCommClass.{0, 0, 0} G A N]
+  [TopologicalSpace.{0} N] [DiscreteTopology.{0} N] [ContinuousSMul.{0, 0} G N]
+  (hp : ZInQ.Contrib.RC53Assist.Finiteness.IsTwoAdicLimit p) (i : ℕ) (f : LinearMap.{0, 0, 0, 0} π T N)
+  (hfc : Continuous.{0, 0} ⇑f)
+  (hf : ∀ (g : G) (t : T), Eq.{1} (f (HSMul.hSMul.{0, 0, 0} g t)) (HSMul.hSMul.{0, 0, 0} g (f t)))
+  (e : LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} A) (TensorProduct.{0, 0, 0} ℤ A (L i)) N)
+  (he : ∀ (t : T), Eq.{1} (f t) (e (TensorProduct.tmul.{0, 0, 0} ℤ 1 ((p i) t))))
+  (hA : Eq.{1} (π (HPow.hPow.{0, 0, 0} 2 i)) 0) (n : ℤ) :
+  Function.Bijective.{1, 1}
+    ⇑(ModuleCat.Hom.hom.{0, 0}
+        (HomologicalComplex.Hom.f.{0, 1, 0}
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.continuousCoefficientComplexMap f hfc hf).extend n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.continuousReduction_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.finiteCentralTensorEquiv_projection {K : Type} [Field.{0} K]
+  [NumberField.{0} K] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (t : ZInQ.Manuscript.RC.LambdaCoef.TateS K D.S (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)) :
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.CalibrationIntegral.inflatedCoefficientReduction D i) t)
+    ((ZInQ.Contrib.RC53Assist.CalibrationShape.finiteCentralTensorEquiv D i)
+      (TensorProduct.tmul.{0, 0, 0} ℤ 1 ((ZInQ.Manuscript.RC.LambdaCoef.projLev i) t)))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.finiteCentralTensorEquiv_projection' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.globalCentralReduction_bijective {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (n : ℤ) :
+  Function.Bijective.{1, 1}
+    ⇑(ModuleCat.Hom.hom.{0, 0}
+        (HomologicalComplex.Hom.f.{0, 1, 0}
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.continuousCoefficientComplexMap
+              (ZInQ.Contrib.RC53Assist.CalibrationIntegral.inflatedCoefficientReduction D i) ⋯ ⋯).extend
+          n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.globalCentralReduction_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.fullLocalCentralReduction_bijective {K : Type} [Field.{0} K]
+  [NumberField.{0} K] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S) (n : ℤ) :
+  Function.Bijective.{1, 1}
+    ⇑(ModuleCat.Hom.hom.{0, 0}
+        (HomologicalComplex.Hom.f.{0, 1, 0}
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.fullLocalCoefficientMap D i v).extend n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.fullLocalCentralReduction_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.coefficientPi_bijective {R A : Type} [CommRing.{0} R] [CommRing.{0} A]
+  {π : RingHom.{0, 0} R A} {ι : Type} [Fintype.{0} ι] {C : ι → ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  {D : ι → ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A}
+  (f : (v : ι) → ZInQ.Contrib.RC53Assist.CalibrationIntegral.CoefficientComplexMap π (C v) (D v)) (n : ℤ)
+  (hf :
+    ∀ (v : ι),
+      Function.Bijective.{1, 1} ⇑(ModuleCat.Hom.hom.{0, 0} (HomologicalComplex.Hom.f.{0, 1, 0} (f v).extend n))) :
+  Function.Bijective.{1, 1}
+    ⇑(ModuleCat.Hom.hom.{0, 0}
+        (HomologicalComplex.Hom.f.{0, 1, 0}
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.CoefficientComplexMap.pi f).extend n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.coefficientPi_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.coefficientSelmer_bijective {R A : Type} [CommRing.{0} R] [CommRing.{0} A]
+  {π : RingHom.{0, 0} R A} {D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.{0} R}
+  {D' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.{0} A}
+  (g :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.CoefficientComplexMap π
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D)
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D'))
+  (u :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.CoefficientComplexMap π
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D)
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D'))
+  (l :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.CoefficientComplexMap π
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.L.{0} D)
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.L.{0} D'))
+  (hres :
+    ∀ (i j : ℤ) (hij : Eq.{1} i j)
+      (a :
+        ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D) i)),
+      Eq.{1}
+        ((l.f j)
+          ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.res.{0} D) i j hij)
+            a))
+        ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.res.{0} D') i j hij)
+          ((g.f i) a)))
+  (hι :
+    ∀ (i j : ℤ) (hij : Eq.{1} i j)
+      (a :
+        ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D) i)),
+      Eq.{1}
+        ((l.f j)
+          ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.ι.{0} D) i j hij)
+            a))
+        ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.ι.{0} D') i j hij)
+          ((u.f i) a)))
+  (n : ℤ) (hg : Function.Bijective.{1, 1} ⇑(ModuleCat.Hom.hom.{0, 0} (HomologicalComplex.Hom.f.{0, 1, 0} g.extend n)))
+  (hu : Function.Bijective.{1, 1} ⇑(ModuleCat.Hom.hom.{0, 0} (HomologicalComplex.Hom.f.{0, 1, 0} u.extend n)))
+  (hl :
+    Function.Bijective.{1, 1}
+      ⇑(ModuleCat.Hom.hom.{0, 0} (HomologicalComplex.Hom.f.{0, 1, 0} l.extend (HSub.hSub.{0, 0, 0} n 1)))) :
+  Function.Bijective.{1, 1}
+    ⇑(ModuleCat.Hom.hom.{0, 0} (HomologicalComplex.Hom.f.{0, 1, 0} (g.selmer u l hres hι).extend n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.coefficientSelmer_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.coefficientSelmer_transport_bijective {R A : Type} [CommRing.{0} R]
+  [CommRing.{0} A] {π : RingHom.{0, 0} R A} {C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  {D D' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.{0} A} (e : Eq.{2} D D')
+  (eT :
+    Eq.{2}
+      (ZInQ.Contrib.RC53Assist.CalibrationIntegral.CoefficientComplexMap π C
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} D))
+      (ZInQ.Contrib.RC53Assist.CalibrationIntegral.CoefficientComplexMap π C
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} D')))
+  (f :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.CoefficientComplexMap π C
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} D))
+  (n : ℤ) (hf : Function.Bijective.{1, 1} ⇑(ModuleCat.Hom.hom.{0, 0} (HomologicalComplex.Hom.f.{0, 1, 0} f.extend n))) :
+  Function.Bijective.{1, 1} ⇑(ModuleCat.Hom.hom.{0, 0} (HomologicalComplex.Hom.f.{0, 1, 0} (Eq.mp.{1} eT f).extend n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.coefficientSelmer_transport_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.coefficientComparison_isIso {R A : Type} [CommRing.{0} R] [CommRing.{0} A]
+  {π : RingHom.{0, 0} R A} {C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R}
+  {D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A}
+  (f : ZInQ.Contrib.RC53Assist.CalibrationIntegral.CoefficientComplexMap π C D)
+  (hf :
+    ∀ (n : ℤ), Function.Bijective.{1, 1} ⇑(ModuleCat.Hom.hom.{0, 0} (HomologicalComplex.Hom.f.{0, 1, 0} f.extend n))) :
+  CategoryTheory.IsIso.{0, 1} f.extend
+'ZInQ.Contrib.RC53Assist.CalibrationShape.coefficientComparison_isIso' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.exists_residue_remainder (i : ℕ) (a : ℤ_[2]) :
+  ∃ b,
+    Eq.{1} a
+      (HAdd.hAdd.{0, 0, 0} (↑(ZInQ.Manuscript.RC.LambdaCoef.resN i a))
+        (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 i) b))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.exists_residue_remainder' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.scalarResidue_identity {R M : Type} [CommRing.{0} R] [AddCommGroup.{0} M]
+  [Module.{0, 0} R M] (a r d b : R) (ha : Eq.{1} a (HAdd.hAdd.{0, 0, 0} r (HMul.hMul.{0, 0, 0} d b))) (x y : M) :
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} a (HAdd.hAdd.{0, 0, 0} x (HSMul.hSMul.{0, 0, 0} d y)))
+    (HAdd.hAdd.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} r x)
+      (HSMul.hSMul.{0, 0, 0} d (HAdd.hAdd.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} b x) (HSMul.hSMul.{0, 0, 0} a y))))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.scalarResidue_identity' depends on axioms: [propext]
+ZInQ.Contrib.RC53Assist.CalibrationShape.tateKummerCocycle_mem_lattice {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)]
+  (P :
+    WeierstrassCurve.Affine.Point.{0}
+      (WeierstrassCurve.toAffine.{0}
+        (WeierstrassCurve.baseChange.{0, 0} W (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)))) :
+  Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerLattice W hFull v)
+    (ZInQ.Manuscript.RC53Assist.CentralKummer.tateKummerCocycle W hFull v P)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.tateKummerCocycle_mem_lattice' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localKummer_residue {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)] (i : ℕ)
+  (x : ZInQ.Contrib.RC53Assist.CalibrationShape.localTateCochain W v 1)
+  (hx : Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerLattice W hFull v) x) :
+  ∃ P z,
+    Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerLattice W hFull v) z ∧
+      Eq.{1} (Submodule.Quotient.mk.{0, 0} x)
+        (HAdd.hAdd.{0, 0, 0} ((ZInQ.Contrib.RC53Assist.CalibrationShape.tateKummerToQuot W hFull v) P)
+          (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 i) (Submodule.Quotient.mk.{0, 0} z)))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localKummer_residue' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_apply {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W] (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)] (n : ℕ)
+  (t : ZInQ.Manuscript.RC.LambdaCoef.TateS K S W) :
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v n) t)
+    ((ZInQ.Manuscript.RC.KummerMaps.compPt W v) (t.pt n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_two {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W] (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)] (n : ℕ)
+  (t : ZInQ.Manuscript.RC.LambdaCoef.TateS K S W) :
+  Eq.{1}
+    (HSMul.hSMul.{0, 0, 0} 2
+      ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v (HAdd.hAdd.{0, 0, 0} n 1)) t))
+    ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v n) t)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_two' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_two_pow {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W] (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)] (n i : ℕ)
+  (t : ZInQ.Manuscript.RC.LambdaCoef.TateS K S W) :
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v (HAdd.hAdd.{0, 0, 0} n i))
+      (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 i) t))
+    ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v n) t)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_two_pow' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_galois {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W] (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)] (n : ℕ)
+  (σ : ZInQ.Manuscript.RC.SelmerComplex.Gloc K v) (t : ZInQ.Manuscript.RC.LambdaCoef.TateS K S W) :
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v n)
+      (HSMul.hSMul.{0, 0, 0} ((ZInQ.Manuscript.RC.SelmerComplex.locMap K S v) σ) t))
+    (HSMul.hSMul.{0, 0, 0} σ ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v n) t))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_galois' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_zero {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W] (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)]
+  (t : ZInQ.Manuscript.RC.LambdaCoef.TateS K S W) :
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v 0) t) 0
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_kummer {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)]
+  {P :
+    WeierstrassCurve.Affine.Point.{0}
+      (WeierstrassCurve.toAffine.{0}
+        (WeierstrassCurve.baseChange.{0, 0} W (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)))}
+  {R :
+    ℕ →
+      ZInQ.Manuscript.RC.CoefModules.PtAlg (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)
+        (WeierstrassCurve.baseChange.{0, 0} W (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))}
+  (hR :
+    ZInQ.Manuscript.RC53Assist.CentralKummer.IsDivTower (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)
+      (WeierstrassCurve.baseChange.{0, 0} W (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) P R)
+  (n : ℕ) (g : Fin 1 → ZInQ.Manuscript.RC.SelmerComplex.Gloc K v) :
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v n)
+      (have this :=
+        ZInQ.Manuscript.RC.CoefModules.cfun.{0}
+          (ZInQ.Manuscript.RC53Assist.CentralKummer.tateKummerCocycleOf W hFull v hR) g;
+      this))
+    (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} (g 0) (R n)) (R n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_kummer' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_boundary {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W] (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)]
+  (c : ZInQ.Contrib.RC53Assist.CalibrationShape.localTateCochain W v 0) (n : ℕ)
+  (g : Fin 1 → ZInQ.Manuscript.RC.SelmerComplex.Gloc K v) :
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v n)
+      (have this :=
+        ZInQ.Manuscript.RC.CoefModules.cfun.{0}
+          ((ZInQ.Manuscript.RC.CoefModules.contD.{0} ℤ_[2] (ZInQ.Manuscript.RC.SelmerComplex.Gloc K v)
+              (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K S v)
+                (ZInQ.Manuscript.RC.LambdaCoef.TateS K S W))
+              0)
+            c)
+          g;
+      this))
+    (HSub.hSub.{0, 0, 0}
+      (HSMul.hSMul.{0, 0, 0} (g 0)
+        ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v n)
+          (have this := ZInQ.Manuscript.RC.CoefModules.cfun.{0} c Inhabited.default.{1};
+          this)))
+      ((ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint W v n)
+        (have this := ZInQ.Manuscript.RC.CoefModules.cfun.{0} c Inhabited.default.{1};
+        this)))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localTatePoint_boundary' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localKummer_division_of_boundary {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)] (i : ℕ)
+  (P :
+    WeierstrassCurve.Affine.Point.{0}
+      (WeierstrassCurve.toAffine.{0}
+        (WeierstrassCurve.baseChange.{0, 0} W (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))))
+  (y : ZInQ.Contrib.RC53Assist.CalibrationShape.localTateCochain W v 1)
+  (c : ZInQ.Contrib.RC53Assist.CalibrationShape.localTateCochain W v 0)
+  (hc :
+    Eq.{1}
+      (HSub.hSub.{0, 0, 0} (ZInQ.Manuscript.RC53Assist.CentralKummer.tateKummerCocycle W hFull v P)
+        (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 i) y))
+      ((ZInQ.Manuscript.RC.CoefModules.contD.{0} ℤ_[2] (ZInQ.Manuscript.RC.SelmerComplex.Gloc K v)
+          (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K S v)
+            (ZInQ.Manuscript.RC.LambdaCoef.TateS K S W))
+          0)
+        c)) :
+  Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerLattice W hFull v) y
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localKummer_division_of_boundary' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localKummer_saturated {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)] (i : ℕ)
+  (y : ZInQ.Contrib.RC53Assist.CalibrationShape.localTateCochain W v 1)
+  (hy :
+    Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerLattice W hFull v)
+      (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 i) y)) :
+  Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerLattice W hFull v) y
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localKummer_saturated' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localKummer_quotient_torsionFree {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  [DecidableEq.{1} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)] :
+  Module.IsTorsionFree.{0, 0} ℤ_[2]
+    (HasQuotient.Quotient.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationShape.localTateCochain W v 1)
+      (ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerLattice W hFull v))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localKummer_quotient_torsionFree' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerReduction_zero_bijective {K : Type} [Field.{0} K]
+  [NumberField.{0} K] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S) :
+  Function.Bijective.{1, 1}
+    ⇑(ModuleCat.Hom.hom.{0, 0}
+        (HomologicalComplex.Hom.f.{0, 1, 0}
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.kummerLocalCoefficientMap D ⋯ i v).extend 0))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerReduction_zero_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactConditionBoundary_coe {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S)
+  (c :
+    ↥(ZInQ.Manuscript.RC.SelmerComplex.contCochain.{0} ℤ_[2] (ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+        (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K D.S ↑v)
+          (ZInQ.Manuscript.RC.LambdaCoef.TateS K D.S (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)))
+        0)) :
+  Eq.{1}
+    ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0}
+        (ZInQ.Manuscript.RC53Assist.CentralKummer.tateKummerConditionι
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D) ⋯ ↑v)
+        1 1 ⋯)
+      ((ZInQ.Contrib.RC53Assist.CalibrationShape.compactConditionBoundary D v) c))
+    ((ZInQ.Manuscript.RC.CoefModules.contD.{0} ℤ_[2] (ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+        (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K D.S ↑v)
+          (ZInQ.Manuscript.RC.LambdaCoef.TateS K D.S (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)))
+        0)
+      c)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactConditionBoundary_coe' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.extendedLocalKummerOne_boundaries {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S) :
+  LE.le.{0}
+    (ZInQ.Manuscript.RC.CoefModules.contB1.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+      (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K D.S ↑v)
+        (ZInQ.Contrib.RC53Assist.CalibrationIntegral.finiteCentralModule D i)))
+    (LinearMap.range.{0, 0, 0, 0} (ZInQ.Contrib.RC53Assist.CalibrationShape.extendedLocalKummerOne D i v))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.extendedLocalKummerOne_boundaries' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.finiteCentralZ_eq_localTwist {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S) :
+  Eq.{1} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.finiteCentralZ D i v)
+    (ZInQ.Manuscript.RC.CoefModules.kummerZ' (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+      (ZInQ.Contrib.RC53Assist.CalibrationIntegral.localTwistIota D i v))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.finiteCentralZ_eq_localTwist' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.reducedKummer_sub_generator {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S)
+  (P :
+    WeierstrassCurve.Affine.Point.{0}
+      (WeierstrassCurve.toAffine.{0}
+        (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)
+          (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)))) :
+  Membership.mem.{0, 0}
+    (ZInQ.Manuscript.RC.CoefModules.contB1.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K ↑v)
+      (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K D.S ↑v)
+        (ZInQ.Contrib.RC53Assist.CalibrationIntegral.finiteCentralModule D i)))
+    (HSub.hSub.{0, 0, 0}
+      ((ZInQ.Contrib.RC53Assist.CalibrationIntegral.cochainCoefficientMap
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.localCoefficientReduction D i v) ⋯ 1)
+        (ZInQ.Manuscript.RC53Assist.CentralKummer.tateKummerCocycle
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D) ⋯ (↑v) P))
+      (ZInQ.Manuscript.RC.CoefModules.kummerCocycleIn (ZInQ.Contrib.RC53Assist.CalibrationIntegral.localTwistIota D i v)
+        1 P))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.reducedKummer_sub_generator' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.extendedLocalKummerOne_generators {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S) :
+  LE.le.{0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.finiteCentralZ D i v)
+    (LinearMap.range.{0, 0, 0, 0} (ZInQ.Contrib.RC53Assist.CalibrationShape.extendedLocalKummerOne D i v))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.extendedLocalKummerOne_generators' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummerSubtype_baseChange_injective {K : Type} [Field.{0} K]
+  [NumberField.{0} K] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S)
+  [Algebra.{0, 0} ℤ_[2] (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)] :
+  Function.Injective.{1, 1}
+    ⇑(LinearMap.baseChange.{0, 0, 0, 0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+        (Submodule.subtype.{0, 0}
+          (ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerLattice
+            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D) ⋯ ↑v)))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummerSubtype_baseChange_injective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerReduction_one_bijective {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S) :
+  Function.Bijective.{1, 1}
+    ⇑(ModuleCat.Hom.hom.{0, 0}
+        (HomologicalComplex.Hom.f.{0, 1, 0}
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.kummerLocalCoefficientMap D ⋯ i v).extend 1))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerReduction_one_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerReduction_bijective {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ)
+  (v : ZInQ.Manuscript.RC.SelmerComplex.Places K D.S) (n : ℤ) :
+  Function.Bijective.{1, 1}
+    ⇑(ModuleCat.Hom.hom.{0, 0}
+        (HomologicalComplex.Hom.f.{0, 1, 0}
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.kummerLocalCoefficientMap D ⋯ i v).extend n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localKummerReduction_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.canonicalCentralReduction_bijective {K : Type} [Field.{0} K]
+  [NumberField.{0} K] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ) (n : ℤ) :
+  Function.Bijective.{1, 1}
+    ⇑(ModuleCat.Hom.hom.{0, 0}
+        (HomologicalComplex.Hom.f.{0, 1, 0}
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.canonicalCentralReductionMap D i) n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.canonicalCentralReduction_bijective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.canonicalCentralReductionMap_isIso {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ) :
+  CategoryTheory.IsIso.{0, 1} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.canonicalCentralReductionMap D i)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.canonicalCentralReductionMap_isIso' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.canonicalCentralReductionMap_quasiIso {K : Type} [Field.{0} K]
+  [NumberField.{0} K] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ) :
+  QuasiIso.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.canonicalCentralReductionMap D i)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.canonicalCentralReductionMap_quasiIso' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.homology_subsingleton_of_term {R : Type} [CommRing.{0} R]
+  (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ)
+  (h : Subsingleton.{1} ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n)) :
+  Subsingleton.{1} ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.homology_subsingleton_of_term' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.subsingleton_of_exact {R : Type} [CommRing.{0} R]
+  {T : CategoryTheory.ShortComplex.{0, 1} (ModuleCat.{0, 0} R)} (h : CategoryTheory.ShortComplex.Exact.{0, 1} T)
+  (h₁ : Subsingleton.{1} ↑(CategoryTheory.ShortComplex.X₁.{0, 1} T))
+  (h₃ : Subsingleton.{1} ↑(CategoryTheory.ShortComplex.X₃.{0, 1} T)) :
+  Subsingleton.{1} ↑(CategoryTheory.ShortComplex.X₂.{0, 1} T)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.subsingleton_of_exact' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.pi_homology_subsingleton {R : Type} [CommRing.{0} R] {ι : Type}
+  (C : ι → ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ)
+  (h :
+    ∀ (v : ι),
+      Subsingleton.{1}
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (C v)) n)) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (ZInQ.Manuscript.RC.SelmerComplex.piCx.{0} C)) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.pi_homology_subsingleton' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.shiftDown_homology_subsingleton {R : Type} [CommRing.{0} R]
+  (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ)
+  (h :
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C)
+          (HSub.hSub.{0, 0, 0} n 1))) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (ZInQ.Contrib.CloudB3RC53.SelmerDuality.shiftDown.{0} C))
+        n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.shiftDown_homology_subsingleton' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.selmer_homology_subsingleton {R : Type} [CommRing.{0} R]
+  (D : ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.{0} R) (n : ℤ)
+  (hG :
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0} D))
+          n))
+  (hU :
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.U.{0} D))
+          n))
+  (hL :
+    Subsingleton.{1}
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.L.{0} D))
+          (HSub.hSub.{0, 0, 0} n 1))) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} D))
+        n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.selmer_homology_subsingleton' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.natCx_negative_term {R : Type} [CommRing.{0} R]
+  (C : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} R) ℕ) (n : ℤ) (hn : LT.lt.{0} n 0) :
+  Subsingleton.{1}
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0} C) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.natCx_negative_term' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.twoAdic_homology_subsingleton {G : Type} [Group.{0} G] [TopologicalSpace.{0} G]
+  [IsTopologicalGroup.{0} G] {T : Type} [AddCommGroup.{0} T] [Module.{0, 0} ℤ_[2] T] [DistribMulAction.{0, 0} G T]
+  [SMulCommClass.{0, 0, 0} G ℤ_[2] T] [TopologicalSpace.{0} T] [ContinuousAdd.{0} T]
+  [ContinuousConstSMul.{0, 0} ℤ_[2] T] [ContinuousSMul.{0, 0} G T] {L : ℕ → Type} [(k : ℕ) → AddCommGroup.{0} (L k)]
+  [(k : ℕ) → DistribMulAction.{0, 0} G (L k)] [(k : ℕ) → TopologicalSpace.{0} (L k)]
+  [∀ (k : ℕ), DiscreteTopology.{0} (L k)] [∀ (k : ℕ), ContinuousSMul.{0, 0} G (L k)]
+  {p : (k : ℕ) → AddMonoidHom.{0, 0} T (L k)} (hp : ZInQ.Contrib.RC53Assist.Finiteness.IsTwoAdicLimit p)
+  (hG : ZInQ.Contrib.RC53Assist.Finiteness.IsEquivariantLevels G p)
+  (hfin :
+    ∀ (k : ℕ) (m : ℤ),
+      Finite.{1}
+        ↑(HomologicalComplex.homology.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+                (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} ℤ G (L k))))
+            m))
+  (n : ℤ)
+  (hzero :
+    ∀ (k : ℕ),
+      Subsingleton.{1}
+        ↑(HomologicalComplex.homology.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+                (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} ℤ G (L k))))
+            n)) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} ℤ_[2] G T)))
+        n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.twoAdic_homology_subsingleton' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.globalTate_homology_high {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (k : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 k))
+  (hglob : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness)
+  (hcd : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo) (hK : NumberField.IsTotallyComplex.{0} K)
+  (hS : Set.Finite.{0} S)
+  (h2 :
+    ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v)
+  (n : ℤ) (hn : LT.lt.{0} 2 n) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+            (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} ℤ_[2] (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+              (ZInQ.Manuscript.RC.LambdaCoef.TateS K S W))))
+        n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.globalTate_homology_high' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.localTate_homology_high {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (k : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 k))
+  (hloc : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness)
+  (hcd : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo)
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) (n : ℤ) (hn : LT.lt.{0} 2 n) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+            (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} ℤ_[2] (ZInQ.Manuscript.RC.SelmerComplex.Gloc K v)
+              (ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K S v)
+                (ZInQ.Manuscript.RC.LambdaCoef.TateS K S W)))))
+        n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.localTate_homology_high' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.tateKummerCondition_high_term {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (k : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 k))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) (n : ℤ) (hn : LT.lt.{0} 1 n) :
+  Subsingleton.{1}
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Manuscript.RC53Assist.CentralKummer.tateKummerCondition W hFull v) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.tateKummerCondition_high_term' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummer_homology_high {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (k : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 k))
+  (hloc : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness)
+  (hglob : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness)
+  (hlocal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo)
+  (hglobal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo) (hK : NumberField.IsTotallyComplex.{0} K)
+  (hS : Set.Finite.{0} S)
+  (h2 :
+    ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v)
+  (n : ℤ) (hn : LT.lt.{0} 3 n) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Manuscript.RC53Assist.CentralKummer.compactKummerComplex S W hFull) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummer_homology_high' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummer_negative_term {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (k : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 k)) (n : ℤ)
+  (hn : LT.lt.{0} n 0) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC53Assist.CentralKummer.compactKummerComplex S W hFull) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummer_negative_term' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummer_homology_negative {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (k : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 k)) (n : ℤ)
+  (hn : LT.lt.{0} n 0) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Manuscript.RC53Assist.CentralKummer.compactKummerComplex S W hFull) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummer_homology_negative' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.basePointS_injective {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) : Function.Injective.{1, 1} ⇑(ZInQ.Contrib.RC53Assist.CalibrationShape.basePointS W)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.basePointS_injective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.basePointS_some {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  {x y : K} (h : WeierstrassCurve.Affine.Nonsingular.{0} (WeierstrassCurve.toAffine.{0} W) x y) :
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.CalibrationShape.basePointS W) (WeierstrassCurve.Affine.Point.some.{0} x y h))
+    (WeierstrassCurve.Affine.Point.some.{0} ((Algebra.algebraMap.{0, 0} K (ZInQ.Manuscript.RC.CoefModules.KS K S)) x)
+      ((Algebra.algebraMap.{0, 0} K (ZInQ.Manuscript.RC.CoefModules.KS K S)) y) ⋯)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.basePointS_some' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.exists_basePointS_of_fixed {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P :
+    WeierstrassCurve.Affine.Point.{0}
+      (WeierstrassCurve.toAffine.{0} (WeierstrassCurve.baseChange.{0, 0} W (ZInQ.Manuscript.RC.CoefModules.KS K S))))
+  (hP :
+    ∀ (σ : ZInQ.Manuscript.RC.SelmerComplex.GKS K S),
+      Eq.{1} ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} ↑(ZInQ.Manuscript.RC.CoefModules.galS K S σ)) P) P) :
+  ∃ Q, Eq.{1} ((ZInQ.Contrib.RC53Assist.CalibrationShape.basePointS W) Q) P
+'ZInQ.Contrib.RC53Assist.CalibrationShape.exists_basePointS_of_fixed' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.globalFixedTate_zero {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  [Finite.{1}
+      ↥(AddCommGroup.primaryComponent.{0} (WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} W)) 2)]
+  (t : ZInQ.Manuscript.RC.LambdaCoef.TateS K S W)
+  (ht : ∀ (σ : ZInQ.Manuscript.RC.SelmerComplex.GKS K S), Eq.{1} (HSMul.hSMul.{0, 0, 0} σ t) t) : Eq.{1} t 0
+'ZInQ.Contrib.RC53Assist.CalibrationShape.globalFixedTate_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.globalTate_homology_zero {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  [Finite.{1}
+      ↥(AddCommGroup.primaryComponent.{0} (WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} W)) 2)] :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+            (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} ℤ_[2] (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+              (ZInQ.Manuscript.RC.LambdaCoef.TateS K S W))))
+        0)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.globalTate_homology_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummer_homology_zero {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  [Finite.{1}
+      ↥(AddCommGroup.primaryComponent.{0} (WeierstrassCurve.Affine.Point.{0} (WeierstrassCurve.toAffine.{0} W)) 2)] :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Manuscript.RC53Assist.CentralKummer.compactKummerComplex S W hFull) 0)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummer_homology_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.finrank_range_dualMap_pid {R M N : Type} [CommRing.{0} R] [IsDomain.{0} R]
+  [IsPrincipalIdealRing.{0} R] [AddCommGroup.{0} M] [Module.{0, 0} R M] [AddCommGroup.{0} N] [Module.{0, 0} R N]
+  [Module.Free.{0, 0} R N] [Module.Finite.{0, 0} R N] (f : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N) :
+  Eq.{1} (Module.finrank.{0, 0} R ↥(LinearMap.range.{0, 0, 0, 0} (LinearMap.dualMap.{0, 0, 0} f)))
+    (Module.finrank.{0, 0} R ↥(LinearMap.range.{0, 0, 0, 0} f))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.finrank_range_dualMap_pid' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.range_dual_sign {R M N : Type} [CommRing.{0} R] [AddCommGroup.{0} M]
+  [Module.{0, 0} R M] [AddCommGroup.{0} N] [Module.{0, 0} R N] (f : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N)
+  (n : ℤ) :
+  Eq.{1}
+    (LinearMap.range.{0, 0, 0, 0}
+      (HSMul.hSMul.{0, 0, 0} (Neg.neg.{0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.sgn n)) f))
+    (LinearMap.range.{0, 0, 0, 0} f)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.range_dual_sign' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.differential_range_finrank_congr {R : Type} [CommRing.{0} R] [IsDomain.{0} R]
+  [IsPrincipalIdealRing.{0} R] (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) {i j i' j' : ℤ}
+  (hi : Eq.{1} i i') (hj : Eq.{1} j j') (h : Eq.{1} (HAdd.hAdd.{0, 0, 0} i 1) j)
+  (h' : Eq.{1} (HAdd.hAdd.{0, 0, 0} i' 1) j') :
+  Eq.{1}
+    (Module.finrank.{0, 0} R
+      ↥(LinearMap.range.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C i j h)))
+    (Module.finrank.{0, 0} R
+      ↥(LinearMap.range.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C i' j' h')))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.differential_range_finrank_congr' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.homology_finrank_sum {R : Type} [CommRing.{0} R] [IsDomain.{0} R]
+  [IsPrincipalIdealRing.{0} R] (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R) (n : ℤ)
+  [Module.Finite.{0, 0} R ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n)] :
+  Eq.{1}
+    (HAdd.hAdd.{0, 0, 0}
+      (HAdd.hAdd.{0, 0, 0}
+        (Module.finrank.{0, 0} R
+          ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C) n))
+        (Module.finrank.{0, 0} R
+          ↥(LinearMap.range.{0, 0, 0, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C (HSub.hSub.{0, 0, 0} n 1) n ⋯))))
+      (Module.finrank.{0, 0} R
+        ↥(LinearMap.range.{0, 0, 0, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} C n (HAdd.hAdd.{0, 0, 0} n 1) ⋯))))
+    (Module.finrank.{0, 0} R ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.homology_finrank_sum' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.dualCx_homology_finrank {R : Type} [CommRing.{0} R] [IsDomain.{0} R]
+  [IsPrincipalIdealRing.{0} R] (C : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} R)
+  [∀ (n : ℤ), Module.Free.{0, 0} R ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n)]
+  [∀ (n : ℤ), Module.Finite.{0, 0} R ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} C n)] (m n : ℤ) :
+  Eq.{1}
+    (Module.finrank.{0, 0} R
+      ↑(HomologicalComplex.homology.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.SelmerDuality.dualCx.{0} C m))
+          n))
+    (Module.finrank.{0, 0} R
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} C)
+          (HSub.hSub.{0, 0, 0} m n)))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.dualCx_homology_finrank' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummerComplex_curve_congr {K : Type} [Field.{0} K] [NumberField.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (W W' : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [WeierstrassCurve.IsElliptic.{0} W']
+  (hW : Eq.{1} W W') (hFull : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 n))
+  (hFull' : ∀ (n : ℕ), ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W' (HPow.hPow.{0, 0, 0} 2 n)) :
+  Eq.{2} (ZInQ.Manuscript.RC53Assist.CentralKummer.compactKummerComplex S W hFull)
+    (ZInQ.Manuscript.RC53Assist.CentralKummer.compactKummerComplex S W' hFull')
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactKummerComplex_curve_congr' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.cohomology_finrank_degree_congr {R : Type} [CommRing.{0} R]
+  (C : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} R) ℤ) {i j : ℤ} (h : Eq.{1} i j) :
+  Eq.{1} (Module.finrank.{0, 0} R ↑(HomologicalComplex.homology.{0, 1, 0} C i))
+    (Module.finrank.{0, 0} R ↑(HomologicalComplex.homology.{0, 1, 0} C j))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.cohomology_finrank_degree_congr' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.centralCohomologyFinite {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hloc : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness)
+  (hglob : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness)
+  (h2 :
+    ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} D.S v)
+  (n : ℤ) :
+  Module.Finite.{0, 0} ℤ_[2]
+    ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.centralCohomologyFinite' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactCentral_outside {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hloc : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness)
+  (hglob : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness)
+  (hlocal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo)
+  (hglobal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo) (hK : NumberField.IsTotallyComplex.{0} K)
+  (h2 :
+    ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} D.S v)
+  [Finite.{1}
+      ↥(AddCommGroup.primaryComponent.{0}
+          (WeierstrassCurve.Affine.Point.{0}
+            (WeierstrassCurve.toAffine.{0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)))
+          2)]
+  (n : ℤ) (hn : LT.lt.{0} n 1 ∨ LT.lt.{0} 3 n) :
+  Subsingleton.{1}
+    ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactCentral_outside' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx_toCC {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n)) :
+  Eq.{2}
+    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+      (ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx D hfinite))
+    (ZInQ.Contrib.RC53Assist.CalibrationModel.retainedCentralComplex D hfinite)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx_toCC' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx_terms {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n))
+  (n : ℤ) :
+  Module.Free.{0, 0} ℤ_[2]
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+          (ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx D hfinite) n) ∧
+    Module.Finite.{0, 0} ℤ_[2]
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+          (ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx D hfinite) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx_terms' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx_bounded {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n))
+  (hout :
+    ∀ (n : ℤ),
+      LT.lt.{0} n 1 ∨ LT.lt.{0} 3 n →
+        Subsingleton.{1}
+          ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+              n))
+  (n : ℤ) (hn : LT.lt.{0} n 0 ∨ LT.lt.{0} 3 n) :
+  Subsingleton.{1}
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx D hfinite) n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx_bounded' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx_computesRHom {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n))
+  (hout :
+    ∀ (n : ℤ),
+      LT.lt.{0} n 1 ∨ LT.lt.{0} 3 n →
+        Subsingleton.{1}
+          ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+              n)) :
+  ZInQ.Contrib.CloudB3RC53.SelmerDuality.TermwiseDualComputesRHom.{0} ℤ_[2]
+    (ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx D hfinite)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx_computesRHom' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.integralCentralDuality_ranks {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n))
+  (hdual : ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality D hfinite) (n : ℤ) :
+  Eq.{1}
+    (Module.finrank.{0, 0} ℤ_[2]
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D) n))
+    (Module.finrank.{0, 0} ℤ_[2]
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+          (HSub.hSub.{0, 0, 0} 3 n)))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.integralCentralDuality_ranks' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.arithmeticCentralFull (ℓ : ℕ) (k : ℤ)
+  [WeierstrassCurve.IsElliptic.{0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    Eq.{1} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)
+      (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)
+        (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)))
+  (n : ℕ) :
+  ZInQ.Manuscript.RC.CoefModules.FullTorsion (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k) D.S
+    (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)
+      (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))
+    (HPow.hPow.{0, 0, 0} 2 n)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.arithmeticCentralFull' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactCentral_eq_arithmetic (ℓ : ℕ) (k : ℤ)
+  [WeierstrassCurve.IsElliptic.{0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    Eq.{1} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)
+      (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)
+        (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))) :
+  Eq.{2} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+    (ZInQ.Manuscript.RC53Assist.CentralUniversal.arithmeticCompactComplex ℓ k D.S ⋯)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactCentral_eq_arithmetic' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.arithmeticCentralFinite (ℓ : ℕ) (k : ℤ)
+  [WeierstrassCurve.IsElliptic.{0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    Eq.{1} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)
+      (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)
+        (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)))
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n)) :
+  ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCohomologyFinite ℓ k D.S ⋯
+'ZInQ.Contrib.RC53Assist.CalibrationShape.arithmeticCentralFinite' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.compactCentral_rank_one (ℓ : ℕ) (k : ℤ)
+  [WeierstrassCurve.IsElliptic.{0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    Eq.{1} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)
+      (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)
+        (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)))
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n))
+  (hk : ¬IsSquare.{0} ↑k) (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k D.S ⋯)
+  (hSel : ZInQ.Manuscript.RC.SelmerCorankOneOverK ℓ k) :
+  Eq.{1}
+    (Module.finrank.{0, 0} ℤ_[2]
+      ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D) 1))
+    1
+'ZInQ.Contrib.RC53Assist.CalibrationShape.compactCentral_rank_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.calibrationShape_of_arithmetic (ℓ : ℕ) (k : ℤ)
+  [WeierstrassCurve.IsElliptic.{0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    Eq.{1} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)
+      (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)
+        (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)))
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n))
+  (hloc : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness)
+  (hglob : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness)
+  (hlocal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo)
+  (hglobal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo)
+  (hK : NumberField.IsTotallyComplex.{0} (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))
+  (h2 :
+    ∀
+      (v :
+        IsDedekindDomain.HeightOneSpectrum.{0}
+          (NumberField.RingOfIntegers.{0} (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))),
+      Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} D.S v)
+  [hpt :
+    Finite.{1}
+      ↥(AddCommGroup.primaryComponent.{0}
+          (WeierstrassCurve.Affine.Point.{0}
+            (WeierstrassCurve.toAffine.{0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)))
+          2)]
+  (hk : ¬IsSquare.{0} ↑k) (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k D.S ⋯)
+  (hSel : ZInQ.Manuscript.RC.SelmerCorankOneOverK ℓ k)
+  (hdual : ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality D hfinite) :
+  ZInQ.Contrib.RC53Assist.CalibrationModel.CalibrationCohomologyShape
+    (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.calibrationShape_of_arithmetic' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.diskTie_of_arithmetic (ℓ : ℕ) (k : ℤ)
+  [WeierstrassCurve.IsElliptic.{0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    Eq.{1} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)
+      (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)
+        (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)))
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n))
+  (hloc : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness)
+  (hglob : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness)
+  (hlocal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo)
+  (hglobal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo)
+  (hK : NumberField.IsTotallyComplex.{0} (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))
+  (h2 :
+    ∀
+      (v :
+        IsDedekindDomain.HeightOneSpectrum.{0}
+          (NumberField.RingOfIntegers.{0} (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))),
+      Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} D.S v)
+  [Finite.{1}
+      ↥(AddCommGroup.primaryComponent.{0}
+          (WeierstrassCurve.Affine.Point.{0}
+            (WeierstrassCurve.toAffine.{0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)))
+          2)]
+  (hk : ¬IsSquare.{0} ↑k) (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k D.S ⋯)
+  (hSel : ZInQ.Manuscript.RC.SelmerCorankOneOverK ℓ k)
+  (hdual : ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality D hfinite) :
+  ZInQ.Contrib.RC53Assist.Calibration.DiskTie D
+    (Matrix.det.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationModel.centralDiskMatrix D hfinite 1))
+    (Matrix.det.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationModel.centralDiskMatrix D hfinite 2))
+    (Matrix.det.{0, 0} (ZInQ.Contrib.RC53Assist.CalibrationModel.centralDiskMatrix D hfinite 3))
+'ZInQ.Contrib.RC53Assist.CalibrationShape.diskTie_of_arithmetic' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n)) :
+  Prop
+'ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ} (D : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n)) :
+  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} ℤ_[2]
+'ZInQ.Contrib.RC53Assist.CalibrationShape.centralRetainedGCx' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.CalibrationShape.integralCentralModel_of_arithmetic (ℓ : ℕ) (k : ℤ)
+  [WeierstrassCurve.IsElliptic.{0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)] {E₀ : WeierstrassCurve.{0} ℚ} {hZ : ℤ}
+  (D :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    Eq.{1} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)
+      (WeierstrassCurve.baseChange.{0, 0} (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)
+        (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)))
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite.{0, 0} ℤ_[2]
+        ↑(HomologicalComplex.homology.{0, 1, 0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex D)
+            n))
+  (hloc : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness)
+  (hglob : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness)
+  (hlocal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo)
+  (hglobal : ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo)
+  (hK : NumberField.IsTotallyComplex.{0} (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))
+  (h2 :
+    ∀
+      (v :
+        IsDedekindDomain.HeightOneSpectrum.{0}
+          (NumberField.RingOfIntegers.{0} (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))),
+      Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} D.S v)
+  [Finite.{1}
+      ↥(AddCommGroup.primaryComponent.{0}
+          (WeierstrassCurve.Affine.Point.{0}
+            (WeierstrassCurve.toAffine.{0} (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve D)))
+          2)]
+  (hk : ¬IsSquare.{0} ↑k) (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k D.S ⋯)
+  (hSel : ZInQ.Manuscript.RC.SelmerCorankOneOverK ℓ k)
+  (hdual : ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality D hfinite) :
+  ZInQ.Contrib.RC53Assist.CalibrationIntegral.IntegralBlockCentralModel D
+    (ZInQ.Contrib.RC53Assist.CalibrationModel.centralDiskMatrix D hfinite 1)
+    (ZInQ.Contrib.RC53Assist.CalibrationModel.centralDiskMatrix D hfinite 2)
+    (ZInQ.Contrib.RC53Assist.CalibrationModel.centralDiskMatrix D hfinite 3)
+'ZInQ.Contrib.RC53Assist.CalibrationShape.integralCentralModel_of_arithmetic' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]

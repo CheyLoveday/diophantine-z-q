@@ -10,36 +10,21 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the twenty-seven statements of the chapter in the
+The minimal height hypothesis is proved from the twenty-one statements of the chapter in the
 project's assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof
 is the project-authored note `docs/research/h-trust.md`.
-
-## Faltings semisimplicity
-
-G. Faltings, *Endlichkeitssätze für abelsche Varietäten über Zahlkörpern*, Invent. Math. 73 (1983),
-349–366, §5, Satz 3, p. 360. Locator unverified.
-
-## Faltings Tate conjecture
-
-G. Faltings, Invent. Math. 73 (1983), §5, Satz 4 (the case $A=B$), p. 360, and Korollar 1 (Tate's
-conjecture), pp. 360–361. Locators unverified.
 
 ## Pazuki bound
 
 F. Pazuki, *Theta height and Faltings height*, Bull. SMF 140 (2012), Corollary 1.3(2), upper half,
 read by the locator audit. The level-$2$ coordinates are a risk (project note height-split, §8).
 
-## Neron models exist
-
-S. Bosch, W. Lütkebohmert and M. Raynaud, *Néron Models* (1990), §1.4, Theorem 3, with §1.2,
-Definition 1, the existence half over an affine Dedekind base. Numbers unverified.
-
 ## Deligne representations
 
-F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228 (2005), Theorem 9.6.5, p. 393
-(fourth printing, 2016: p. 404; AI-read), stated over $K_{f,\lambda}$, with their Definition 5.8.1
-of normalized eigenforms; P. Deligne, Sém. Bourbaki 355 (1969); G. Shimura 1971, Theorem 7.14, for
-$k=2$. The numbers of Definition 5.8.1 and of Shimura's theorem are unverified.
+F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228, corrected fourth printing
+(2016), Theorem 9.6.5, p. 404, with Definitions 5.8.1 (p. 196), 6.5.3 (p. 238), 9.3.2 (p. 386) and
+9.3.3 (p. 387), and absolute Frobenius and inertia, pp. 384–385; P. Deligne, Sém. Bourbaki 355
+(1969); G. Shimura 1971, Theorem 7.14, for $k=2$. The number of Shimura's theorem is unverified.
 
 ## Deligne-Serre
 
@@ -74,13 +59,6 @@ audit) and §11.3; T. Gee, *Modularity lifting theorems*, Essent. Number Theory 
 arXiv:2202.05818v2: Fact 4.20 in §4.19, p. 28, with the conventions on pp. 2–3 (AI-read); R. Taylor,
 *Galois representations*, Ann. Fac. Sci. Toulouse Math. (6) 13 (2004). Kato's §11.3, Taylor and the
 journal numbering of Gee are unverified.
-
-## Wild inertia on Tate modules
-
-The 11/5 manuscript (`diophantine_zq.tex`, lines 817–818), without citation, right after its
-citation of Silverberg and Zarhin's Theorem 3.5 (line 816). For the standard argument: SGA 7 I,
-Exposé IX (A. Grothendieck), LNM 288 (1972), Proposition 3.5, p. 350, read in the MSRI/SLMath scan;
-that wild inertia is pro-$p$, J.-P. Serre, *Corps locaux*, Chapter IV, §2 (numbers unverified).
 
 ## Berger monodromy theorem
 
@@ -122,12 +100,6 @@ manuscript's citation. AI-read: arXiv:1403.6404v1, pp. 1 and 9, and p. 90; p. 98
 Independence of the height: G. Faltings, Invent. Math. 73 (1983), 349–366; P. Deligne, Sém. Bourbaki
 616 (1983/84); locators unverified.
 
-## Raynaud criterion
-
-A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of abelian varieties*,
-Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.5, p. 406 (proof: SGA 7 I, IX, Proposition 4.7),
-with semistable reduction as defined in §3, p. 405.
-
 ## Y3 over Z[1/30]
 
 The 11/5 manuscript (`diophantine_zq.tex`, lines 443–477), the construction of the integral model of
@@ -156,14 +128,6 @@ use has a harmless misprint, "$f_\sigma\mid T_n=a_n^\sigma f$" for
 "$f_\sigma\mid T_n=a_n^\sigma f_\sigma$". F. Diamond and J. Shurman, *A First Course in Modular
 Forms*, GTM 228 (2005), Definition 6.6.3, p. 241 (AI-read).
 
-## Degree of singular moduli
-
-The 11/5 manuscript (`diophantine_zq.tex`, lines 585–587), without a citation. D. A. Cox, *Primes of
-the form $x^2+ny^2$*, Theorem 11.1 (number unverified). The upstream audit of the manuscript's
-citations (project note `docs/theorem-application-audit/FINDINGS.md`) attributes the degree and the
-integrality of the class polynomial of an order to G. Fowler, Math. Proc. Cambridge Philos. Soc. 180
-(2026), 607–641, §2.1 (not read).
-
 ## Barquero-Sanchez et al. Eq. (6.2)
 
 A. Barquero-Sanchez, L. Cadwallader, O. Cannon, T. Genao and R. Masri, *Faltings heights of CM
@@ -173,32 +137,24 @@ manuscript's CM argument (project note `docs/reviews/height-replacement/height/A
 the manuscript's citation (`diophantine_zq.tex`, lines 595–605). The paper attributes the formula to
 Silverman, Proposition 1.1 (not read).
 
-## Y3 to P1j
-
-The 11/5 manuscript (`diophantine_zq.tex`, lines 420–440), in the proof of its Theorem 4.1: the
-normalizer quotient $\mathbf P^1_j$, with branch values $0,\infty,-16/27$ and indices $4,6,2$, cited
-to Baba–Granath and Lin–Yang (lines 420–422), and the action of $N/(\mathbb A_f^\times K_3)$ on
-$Y_3$ with the degree bound (lines 423–440). S. Baba and H. Granath, *Genus 2 curves with
-quaternionic multiplication*, Canad. J. Math. 60 (2008), Theorem 2.1, p. 737, and Lemma 3.1, pp.
-739–740, read by the locator audit; the table of §3.1, p. 740, is unverified. The manuscript's
-bibliography cites the 2005 preprint of that paper (MPI für Mathematik), Sections 2.1 and 3 and
-Proposition 10, which was not located. Y.-H. Lin and Y. Yang, *Quaternionic loci in Siegel's modular
-threefold*, arXiv:1807.00466v1 (2018), the version the manuscript cites (journal version Math. Z.
-295 (2020), 775–819, unverified); not read for this statement. The count
-$|(\mathcal O/3\mathcal O)^\times|=72$ is a computation of the project.
-
-## Faltings 1983 Lemma 1
-
-G. Faltings, *Endlichkeitssätze für abelsche Varietäten über Zahlkörpern*, Invent. Math. 73 (1983),
-349–366, §2, the Definition and Lemma 1, p. 350, read from the page image of the GDZ scan; the paper
-is in the manuscript's bibliography (`diophantine_zq.tex`, lines 11084–11086) and cited at lines 621
-and 733 for other results.
-
 ## Fowler Proposition 2.7
 
 G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.
 Proc. Cambridge Philos. Soc. 180 (2026), 607–641, Proposition 2.7, p. 615, with the class number
 defined on p. 613; the manuscript's citation (`diophantine_zq.tex`, lines 588–593).
+
+## Degree of singular moduli
+
+G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.
+Proc. Cambridge Philos. Soc. 180 (2026), 607–641, §2.1, p. 613, with the discriminant of a singular
+modulus defined on p. 612; D. A. Cox, *Primes of the form $x^2+ny^2$*, Theorem 11.1 and Proposition
+13.2, as Fowler cites them. The manuscript's use: `diophantine_zq.tex`, lines 584–587.
+
+## Semistable reduction theorem
+
+A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of abelian varieties*,
+Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.4, pp. 405–406 (proof: SGA 7 I, Exposé IX, Théorème
+3.6, p. 351), with semistable reduction as defined in §3, p. 405.
 
 ## Conrad Appendix B
 

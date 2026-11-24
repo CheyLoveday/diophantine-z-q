@@ -1,0 +1,81 @@
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocalLevels.0.ZInQ.Manuscript.RC.EvenJoin.tested_coprime_complement' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocalLevels.0.ZInQ.Manuscript.RC.EvenJoin.movingLevel_split' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.tested_square_not_dvd_movingLevel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocalLevels.0.ZInQ.Manuscript.RC.EvenJoin.exists_tested_unit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocalLevels.0.ZInQ.Manuscript.RC.EvenJoin.jacobi_eq_one_of_congr' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.evenBlockPrimes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.even_blockChar_at_tested_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocalLevels.0.ZInQ.Manuscript.RC.EvenJoin.mem_evenBlockPrimes_of_dvd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.tested_dvd_source_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.tested_not_dvd_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.WhittakerColumnValues' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerColumns.0.ZInQ.Manuscript.RC.EvenJoin.sumWhittaker' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.WhittakerColumns.0.ZInQ.Manuscript.RC.EvenJoin.sumWhittaker_fourier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.WhittakerColumnValues.comparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.RamifiedNewvectorAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.DilationWhittakerAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocal.0.ZInQ.Manuscript.RC.EvenJoin.blockKind' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocal.0.ZInQ.Manuscript.RC.EvenJoin.source_occurs' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocal.0.ZInQ.Manuscript.RC.EvenJoin.sourceKind' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocal.0.ZInQ.Manuscript.RC.EvenJoin.sourceKind_ramified_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.model_coefficient_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.placedCuspidalData' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.placedCuspidal_active' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.placedCuspidal_up' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.old_dilation_recurrence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.classical_up_at_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocal.0.ZInQ.Manuscript.RC.EvenJoin.placed_source_normalized' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.placedCuspidal_at_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.placedWhittaker' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.cuspidalLocalAt_of_comparisons' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.placedGaloisInput_of_carayol' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

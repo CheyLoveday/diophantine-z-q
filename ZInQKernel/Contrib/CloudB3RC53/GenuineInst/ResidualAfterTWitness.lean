@@ -2,11 +2,11 @@ import ZInQKernel.Contrib.CloudB3RC53.GenuineInst.ResidualAfterT2
 import ZInQKernel.Contrib.RC53Assist.ResidualWitnessActive.Witness
 
 /-!
-# Genuine instantiations, part 23: the repaired after-`t` inputs at the peer's active witness
+# Genuine instantiations, part 23: the repaired after-`t` inputs at the active witness
 
 Manuscript `diophantine_zq.tex`, Lemma `ex:limits-residual-bound`, tex 4593–4647.
 
-The peer's active witness (`RC53Assist/ResidualWitnessActive/Witness.lean`) builds the
+The active witness `RC53Assist.ResidualWitnessActive` (`Witness.lean`) builds the
 smaller-support free model `afterP = 𝔽₂[[t]] ⊗ (residual cone)` over `𝔽₂[[t]]` (`bcG`) and its base
 change `afterP' = 𝔽₂((t)) ⊗ afterP`. Here the inputs of `residualRankCounts_afterT'` /
 `residualRankCounts_afterT''` (part 22) that concern these models are built:
@@ -20,14 +20,14 @@ change `afterP' = 𝔽₂((t)) ⊗ afterP`. Here the inputs of `residualRankCoun
 * at the witness: `witness_ered : baseChangeCx constantCoeff afterP ≅ (selCx actSel).toCC` and
   `witness_ebc : afterP' ≅ baseChangeCx (𝔽₂[[t]] → 𝔽₂((t))) afterP`;
 * **the degree-`3` facts**: `witness_globalDegreeThreeVanishes` (`GlobalDegreeThreeVanishes actSel`,
-  from Milne ADT I.4.10 through the peer's all-degree comparison `allGenHEquiv`, which this tree
-  otherwise lacks) and `witness_eG3` (the identification of `actSel.G.X 3` with Mathlib's continuous
+  from Milne ADT I.4.10 through `RC53Assist.ResidualWitnessActive`'s comparison `allGenHEquiv`,
+  the instance form of `genHEquivAll`) and `witness_eG3` (the identification of `actSel.G.X 3` with Mathlib's continuous
   `H³` used by `residualRankCounts_afterT''`). The rank of `afterP` in degree `3`
   (`2 · |Places(S)|`, the local `H²`) is the local part, counted by part 22's full degree range; it
   is not constrained by these facts.
 
 **Remaining inputs for the full application** (not built here): `residualRankCounts_afterT'` sums
-`hUm`, `hLm` over `[0, 3]` and needs `eG` over `[0, 2]`; the peer's `act_hUm`, `act_hLm` are over
+`hUm`, `hLm` over `[0, 3]` and needs `eG` over `[0, 2]`; `RC53Assist.ResidualWitnessActive`'s `act_hUm`, `act_hLm` are over
 their degrees `{0, 1, 2}`, so the degree-`3` terms (`actSel.U.X 3`, a subsingleton, and
 `actSel.L.X 2`, the local `H²`) must be added to the bounds, together with the supports
 `[0, 3]` of `afterP'` and of the generic minimal model `L`, and the finiteness instances of `L`, `P'`.
@@ -124,20 +124,20 @@ section Witness
 open ZInQ.Contrib.CloudB3RC53.RankCounts ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.Limits
 
 /-- **The reduction comparison at the witness** (`ered` of `residualRankCounts_afterT'`): the
-reduction modulo `t` of the peer's `afterP` is the residual cone, as complexes. -/
+reduction modulo `t` of `RC53Assist.ResidualWitnessActive.afterP` is the residual cone, as complexes. -/
 def witness_ered :
     baseChangeCx (PowerSeries.constantCoeff : PowerSeries (ZMod 2) →+* ZMod 2) afterP ≅
       (selCx actSel).toCC :=
   reductionIso (selCx actSel)
 
-/-- **The base-change comparison at the witness** (`ebc` of `residualRankCounts_afterT'`): the peer's
+/-- **The base-change comparison at the witness** (`ebc` of `residualRankCounts_afterT'`):
 `afterP'` is the base change of `afterP` to `𝔽₂((t))`, as complexes. -/
 def witness_ebc :
     afterP' ≅ baseChangeCx (algebraMap (PowerSeries (ZMod 2)) (LaurentSeries (ZMod 2))) afterP :=
   bcG_toCC_iso_baseChangeCx afterP_G
 
 /-- **The degree-`3` global vanishing holds at the witness** (`hG3` of `residualRankCounts_afterT'`):
-from Milne ADT I.4.10 through the peer's all-degree comparison of genuine and Mathlib cohomology
+from Milne ADT I.4.10 through the all-degree comparison of genuine and Mathlib cohomology
 (`smallGlobal_off`). PROVED. -/
 theorem witness_globalDegreeThreeVanishes (h410 : MilneADT_I_4_10_totallyComplex) :
     GlobalDegreeThreeVanishes actSel := by

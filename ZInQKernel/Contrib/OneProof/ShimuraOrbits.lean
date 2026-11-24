@@ -203,6 +203,9 @@ theorem shimuraHeckeRelations_of_pointDictionary (h : PointDictionary) : Shimura
   · intro p hpN k s t hs ht'
     exact Orbits.isXi_good_step aj hX p hpN k (ht p) (hd _) hs ht'
 
+/-- `ShimuraThm1AsPrinted` is stronger than the printed Theorem 1 (its
+`PrintQuotient` conjunct is the p. 526 construction); the split route is
+`shimuraThm1Af_of_split_closed`. -/
 theorem shimuraThm1Af_of_printed_pointDictionary (hPrint : ShimuraThm1AsPrinted)
     (hPoint : PointDictionary) : R16Thm1b.ShimuraThm1Af :=
   shimuraThm1Af_of_printed' hPrint (shimuraHeckeRelations_of_pointDictionary hPoint)

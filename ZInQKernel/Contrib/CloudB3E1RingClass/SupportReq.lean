@@ -50,7 +50,7 @@ namespace ZInQ.Contrib.CloudB3E1RingClass
 
 open NumberField IsDedekindDomain
 open ZInQ.Manuscript ZInQ.Manuscript.RC ZInQ.Manuscript.RC.Wiring
-open ZInQ.Manuscript.RC.PrintsArith (Qbar CCLThm2_15Applied)
+open ZInQ.Manuscript.RC.PrintsArith (Qbar CCLThm2_15AppliedWithUnits)
 open ZInQ.Contrib.CloudB3E2.NormCochain (CSTParam FullAnchor)
 open ZInQ.Contrib.CloudB3RC53 (Ecurve)
 open ZInQ.Contrib.CloudB3RC53.CST (newformLevel)
@@ -130,7 +130,7 @@ and `h3ℓ` from `S0 ℓ ⊆ D.S` and `hS₀D` (the stage support contains the p
 Kind: definition. -/
 def e2ChainInputsS_of_support (P : StagedPresentation C D Fam x G.toFamily) (t : ℕ)
     (cp : CSTParam (Ecurve ℓ)) (emb : Qbar →ₐ[ℚ] ℂ) (κ : Qbar ≃ₐ[ℚ] AlgebraicClosure C.K)
-    (print : CCLThm2_15Applied (Ecurve ℓ) (FullAnchor (Ecurve ℓ) C.K cp emb κ))
+    (print : CCLThm2_15AppliedWithUnits (Ecurve ℓ) C.K (FullAnchor (Ecurve ℓ) C.K cp emb κ))
     (St : RCSteps D) (hodd : ¬ D.OddEmptyUnit) (hAdm : Fam.Admissible D.S D.kfin)
     (hlev : LevelPrimesBad) (hbase : S0 ℓ ⊆ D.S)
     (hS₀D : ∀ p ∈ D.S, ∀ v : HeightOneSpectrum (𝓞 C.K), ((p : ℕ) : 𝓞 C.K) ∈ v.asIdeal →

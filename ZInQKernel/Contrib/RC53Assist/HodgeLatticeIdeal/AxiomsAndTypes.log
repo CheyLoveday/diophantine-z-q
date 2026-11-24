@@ -1,0 +1,578 @@
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.mem_coefficientSubmodule' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap_injective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap_surjective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_map' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.existsUnique_coefficient' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientEquiv_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_fg' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_ne_bot' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.submodule_spans_of_ne_bot' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_coordinate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap_single' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap_dCls' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap_injective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_one_eq_map_omega' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaDetEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaDetEquiv_apply' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omega_fg' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_fg' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.rank_tensor_cotangent_of_dim_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.hodgeLattice_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_one_ne_bot' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_one_spans' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_eq_coefficient_map' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.existsUnique_detLattice_coefficient' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_detLattice_fg' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_detLattice_ne_bot' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_detLattice_spans' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_detLattice_isFractional' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal_coe' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal_ne_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaCoefficientEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaCoefficientEquiv_spec' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_coordinate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_relIndex' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_mul_absNorm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal_absNorm_ne_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_eq_norm_div' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_ne_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_integral_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.invariantDifferential_ideal_dictionary' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice_eq_span' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_coefficient_span_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_half_coefficient' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_two_coefficient' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_half_not_integral' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_two_fractional_not_integral' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_index_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_index_two' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_half_index' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_two_index' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_half_fractional' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.arbitrary_fractionalIdeal_unit_coordinates' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+'ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.arbitrary_fractionalIdeal_norm_index' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap.{u_1, u_2} {L : Type u_1} [Field.{u_1} L] {V : Type u_2}
+  [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V] [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V] (η : V) :
+  LinearMap.{u_1, u_1, u_1, u_2} (RingHom.id.{u_1} (NumberField.RingOfIntegers.{u_1} L)) L V
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap_apply.{u_1, u_2} {L : Type u_1} [Field.{u_1} L] {V : Type u_2}
+  [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V] [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V] (η : V) (a : L) :
+  Eq.{u_2 + 1} ((ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap.{u_1, u_2} η) a)
+    (HSMul.hSMul.{u_1, u_2, u_2} a η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_2} {L : Type u_1} [Field.{u_1} L] {V : Type u_2}
+  [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V] [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (M : Submodule.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V) (η : V) :
+  Submodule.{u_1, u_1} (NumberField.RingOfIntegers.{u_1} L) L
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.mem_coefficientSubmodule.{u_1, u_2} {L : Type u_1} [Field.{u_1} L]
+  {V : Type u_2} [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V]
+  [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (M : Submodule.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V) (η : V) (a : L) :
+  Membership.mem.{u_1, u_1} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_2} M η) a ↔
+    Membership.mem.{u_2, u_2} M (HSMul.hSMul.{u_1, u_2, u_2} a η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap_injective.{u_1, u_2} {L : Type u_1} [Field.{u_1} L]
+  {V : Type u_2} [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V]
+  [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V] (η : V) (hη : Ne.{u_2 + 1} η 0) :
+  Function.Injective.{u_1 + 1, u_2 + 1} ⇑(ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap.{u_1, u_2} η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap_surjective.{u_1, u_2} {L : Type u_1} [Field.{u_1} L]
+  {V : Type u_2} [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V]
+  [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (hV : Eq.{1} (Module.finrank.{u_1, u_2} L V) 1) (η : V) (hη : Ne.{u_2 + 1} η 0) :
+  Function.Surjective.{u_1 + 1, u_2 + 1} ⇑(ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap.{u_1, u_2} η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_map.{u_1, u_2} {L : Type u_1} [Field.{u_1} L]
+  {V : Type u_2} [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V]
+  [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (hV : Eq.{1} (Module.finrank.{u_1, u_2} L V) 1) (η : V) (hη : Ne.{u_2 + 1} η 0)
+  (M : Submodule.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V) :
+  Eq.{u_2 + 1} M
+    (Submodule.map.{u_1, u_1, u_1, u_2} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap.{u_1, u_2} η)
+      (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_2} M η))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.existsUnique_coefficient.{u_1, u_2} {L : Type u_1} [Field.{u_1} L]
+  {V : Type u_2} [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V]
+  [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (hV : Eq.{1} (Module.finrank.{u_1, u_2} L V) 1) (η : V) (hη : Ne.{u_2 + 1} η 0)
+  (M : Submodule.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V) (v : V) (hv : Membership.mem.{u_2, u_2} M v) :
+  ExistsUnique.{u_1 + 1} fun a =>
+    Membership.mem.{u_1, u_1} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_2} M η) a ∧
+      Eq.{u_2 + 1} (HSMul.hSMul.{u_1, u_2, u_2} a η) v
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientEquiv.{u_1, u_2} {L : Type u_1} [Field.{u_1} L] {V : Type u_2}
+  [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V] [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (hV : Eq.{1} (Module.finrank.{u_1, u_2} L V) 1) (η : V) (hη : Ne.{u_2 + 1} η 0)
+  (M : Submodule.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V) :
+  LinearEquiv.{u_1, u_1, u_1, u_2} (RingHom.id.{u_1} (NumberField.RingOfIntegers.{u_1} L))
+    ↥(ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_2} M η) ↥M
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientEquiv_apply.{u_1, u_2} {L : Type u_1} [Field.{u_1} L]
+  {V : Type u_2} [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V]
+  [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (hV : Eq.{1} (Module.finrank.{u_1, u_2} L V) 1) (η : V) (hη : Ne.{u_2 + 1} η 0)
+  (M : Submodule.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V)
+  (a : ↥(ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_2} M η)) :
+  Eq.{u_2 + 1} (↑((ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientEquiv.{u_1, u_2} hV η hη M) a))
+    (HSMul.hSMul.{u_1, u_2, u_2} (↑a) η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_fg.{u_1, u_2} {L : Type u_1} [Field.{u_1} L]
+  {V : Type u_2} [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V]
+  [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (hV : Eq.{1} (Module.finrank.{u_1, u_2} L V) 1) (η : V) (hη : Ne.{u_2 + 1} η 0)
+  (M : Submodule.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V) (hfg : Submodule.FG.{u_1, u_2} M) :
+  Submodule.FG.{u_1, u_1} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_2} M η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_ne_bot.{u_1, u_2} {L : Type u_1} [Field.{u_1} L]
+  {V : Type u_2} [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V]
+  [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (hV : Eq.{1} (Module.finrank.{u_1, u_2} L V) 1) (η : V) (hη : Ne.{u_2 + 1} η 0)
+  (M : Submodule.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V) (hM : Ne.{u_2 + 1} M Bot.bot.{u_2}) :
+  Ne.{u_1 + 1} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_2} M η) Bot.bot.{u_1}
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.submodule_spans_of_ne_bot.{u_1} {L : Type u_1} [Field.{u_1} L]
+  (I : Submodule.{u_1, u_1} (NumberField.RingOfIntegers.{u_1} L) L) (hI : Ne.{u_1 + 1} I Bot.bot.{u_1}) :
+  Eq.{u_1 + 1} (Submodule.span.{u_1, u_1} L ↑I) Top.top.{u_1}
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_coordinate.{u_1, u_2} {L : Type u_1} [Field.{u_1} L] {V : Type u_2}
+  [AddCommGroup.{u_2} V] [Module.{u_1, u_2} L V] [Module.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V]
+  [IsScalarTower.{u_1, u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) L V]
+  (hV : Eq.{1} (Module.finrank.{u_1, u_2} L V) 1) (η : V) (hη : Ne.{u_2 + 1} η 0)
+  (M : Submodule.{u_1, u_2} (NumberField.RingOfIntegers.{u_1} L) V) (a : L) :
+  Eq.{1} (ZInQ.DefFaltings.secIndex.{u_1, u_2} M (HSMul.hSMul.{u_1, u_2, u_2} a η))
+    (ZInQ.DefFaltings.secIndex.{u_1, u_1}
+      (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_2} M η) a)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K} {L : Type}
+  [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L) :
+  LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (NumberField.RingOfIntegers.{0} L)) G.cotangent (G.hodgeSpace 1)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap_single {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K} {L : Type}
+  [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (v : Fin 1 → G.cotangent) :
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap G) (v 0))
+    (TensorProduct.tmul.{0, 0, 0} (NumberField.RingOfIntegers.{0} L) 1
+      ((exteriorPower.ιMulti.{0, 0} (NumberField.RingOfIntegers.{0} L) 1) v))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap_dCls {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K} {L : Type}
+  [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (f : ↥(IsLocalRing.maximalIdeal.{0} ↑G.genStalk)) :
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap G) (G.dCls f))
+    (G.wedge (Matrix.vecCons.{0} f Matrix.vecEmpty.{0}))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap_injective {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L) :
+  Function.Injective.{1, 1} ⇑(ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap G)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_one_eq_map_omega {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L) :
+  Eq.{1} (G.detLattice 1) (Submodule.map.{0, 0, 0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap G) G.omega)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaDetEquiv {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K} {L : Type}
+  [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L) :
+  LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} (NumberField.RingOfIntegers.{0} L)) ↥G.omega ↥(G.detLattice 1)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaDetEquiv_apply {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (x : ↥G.omega) :
+  Eq.{1} (↑((ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaDetEquiv G) x))
+    ((ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap G) ↑x)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omega_fg {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K} {L : Type}
+  [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L) :
+  Submodule.FG.{0, 0} G.omega
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_fg {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K} {L : Type}
+  [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L) (g : ℕ) :
+  Submodule.FG.{0, 0} (G.detLattice g)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.rank_tensor_cotangent_of_dim_one {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) :
+  Eq.{2} (Module.rank.{0, 0} L (TensorProduct.{0, 0, 0} (NumberField.RingOfIntegers.{0} L) L G.cotangent)) 1
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.hodgeLattice_one {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K} {L : Type}
+  [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) :
+  Eq.{1} (Module.finrank.{0, 0} L (G.hodgeSpace 1)) 1 ∧
+    ∃ s,
+      Membership.mem.{0, 0} (G.detLattice 1) s ∧
+        Ne.{1} s 0 ∧ Ne.{1} (ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1) s) 0
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_one_ne_bot {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) : Ne.{1} (G.detLattice 1) Bot.bot.{0}
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_one_spans {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) : Eq.{1} (Submodule.span.{0, 0} L ↑(G.detLattice 1)) Top.top.{0}
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.detLattice_eq_coefficient_map {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0) :
+  Eq.{1} (G.detLattice 1)
+    (Submodule.map.{0, 0, 0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap.{0, 0} η)
+      (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.existsUnique_detLattice_coefficient {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0)
+  (v : G.hodgeSpace 1) (hv : Membership.mem.{0, 0} (G.detLattice 1) v) :
+  ExistsUnique.{1} fun a =>
+    Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η) a ∧
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} a η) v
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_detLattice_fg {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1)
+  (hη : Ne.{1} η 0) :
+  Submodule.FG.{0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_detLattice_ne_bot {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1)
+  (hη : Ne.{1} η 0) :
+  Ne.{1} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η) Bot.bot.{0}
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_detLattice_spans {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1)
+  (hη : Ne.{1} η 0) :
+  Eq.{1}
+    (Submodule.span.{0, 0} L
+      ↑(ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η))
+    Top.top.{0}
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule_detLattice_isFractional {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1)
+  (hη : Ne.{1} η 0) :
+  IsFractional.{0, 0} (nonZeroDivisors.{0} (NumberField.RingOfIntegers.{0} L))
+    (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0) :
+  FractionalIdeal.{0, 0} (nonZeroDivisors.{0} (NumberField.RingOfIntegers.{0} L)) L
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal_coe {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1)
+  (hη : Ne.{1} η 0) :
+  Eq.{1} (↑(ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal G hdim η hη))
+    (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal_ne_zero {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1)
+  (hη : Ne.{1} η 0) : Ne.{1} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal G hdim η hη) 0
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaCoefficientEquiv {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0) :
+  LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} (NumberField.RingOfIntegers.{0} L)) ↥G.omega
+    ↥(ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaCoefficientEquiv_spec {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0) (x : ↥G.omega) :
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} (↑((ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.omegaCoefficientEquiv G hdim η hη) x)) η)
+    ((ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap G) ↑x)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_coordinate {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0)
+  (a : L) :
+  Eq.{1} (ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1) (HSMul.hSMul.{0, 0, 0} a η))
+    (ZInQ.DefFaltings.secIndex.{0, 0}
+      (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η) a)
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_relIndex {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0) (a : L) :
+  Eq.{1} (ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1) (HSMul.hSMul.{0, 0, 0} a η))
+    (AddSubgroup.relIndex.{0}
+      (Submodule.toAddSubgroup.{0, 0} (Submodule.span.{0, 0} (NumberField.RingOfIntegers.{0} L) (singleton.{0, 0} a)))
+      (Submodule.toAddSubgroup.{0, 0}
+        (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η)))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_mul_absNorm {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0)
+  {a : L}
+  (ha :
+    Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η) a)
+  (ha0 : Ne.{1} a 0) :
+  Eq.{1}
+    (HMul.hMul.{0, 0, 0} (↑(ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1) (HSMul.hSMul.{0, 0, 0} a η)))
+      (FractionalIdeal.absNorm.{0, 0}
+        (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal G hdim η hη)))
+    (abs.{0} ((Algebra.norm.{0, 0} ℚ) a))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal_absNorm_ne_zero {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1)
+  (hη : Ne.{1} η 0) :
+  Ne.{1}
+    (FractionalIdeal.absNorm.{0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal G hdim η hη))
+    0
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_eq_norm_div {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0)
+  {a : L}
+  (ha :
+    Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η) a)
+  (ha0 : Ne.{1} a 0) :
+  Eq.{1} (↑(ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1) (HSMul.hSMul.{0, 0, 0} a η)))
+    (HDiv.hDiv.{0, 0, 0} (abs.{0} ((Algebra.norm.{0, 0} ℚ) a))
+      (FractionalIdeal.absNorm.{0, 0}
+        (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal G hdim η hη)))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_ne_zero {K : Type} [Field.{0} K] {E : PkgI3.AbVar.{0} K}
+  {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L] (G : ZInQ.DefFaltings.GroupModel E L)
+  (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0) {a : L}
+  (ha :
+    Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η) a)
+  (ha0 : Ne.{1} a 0) : Ne.{1} (ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1) (HSMul.hSMul.{0, 0, 0} a η)) 0
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.secIndex_detLattice_integral_smul {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (η : G.hodgeSpace 1) (hη : Ne.{1} η 0) {a : L}
+  (ha :
+    Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η) a)
+  (ha0 : Ne.{1} a 0) (r : NumberField.RingOfIntegers.{0} L) :
+  Eq.{1} (ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1) (HSMul.hSMul.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} r a) η))
+    (HMul.hMul.{0, 0, 0} ((Algebra.norm.{0, 0} ℤ) r).natAbs
+      (ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1) (HSMul.hSMul.{0, 0, 0} a η)))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.invariantDifferential_ideal_dictionary {K : Type} [Field.{0} K]
+  {E : PkgI3.AbVar.{0} K} {L : Type} [Field.{0} L] [NumberField.{0} L] [Algebra.{0, 0} K L]
+  (G : ZInQ.DefFaltings.GroupModel E L) (hdim : Eq.{1} (PkgI3.AbVar.dim.{0} E) 1) (E' : WeierstrassCurve.{0} L)
+  [WeierstrassCurve.IsElliptic.{0} E']
+  (e :
+    AlgEquiv.{0, 0, 0} L (WeierstrassCurve.Affine.FunctionField.{0} (WeierstrassCurve.toAffine.{0} E'))
+      ↑(AlgebraicGeometry.Scheme.functionField.{0}
+          (CategoryTheory.Over.left.{0, 1} (PkgI3.AbVar.X.{0} (E.baseChange L)))))
+  (i :
+    CategoryTheory.Iso.{0, 1} (CategoryTheory.Over.left.{0, 1} (PkgI3.AbVar.X.{0} (E.baseChange L)))
+      (AlgebraicGeometry.Proj.{0, 0} (WeierstrassCurve.Projective.grading.{0} (WeierstrassCurve.toProjective.{0} E'))))
+  (hfield :
+    Eq.{1}
+      (CommRingCat.Hom.hom.{0} (AlgebraicGeometry.Scheme.Hom.functionFieldMap.{0} (CategoryTheory.Iso.hom.{0, 1} i)))
+      (RingHom.comp.{0, 0, 0} (RingEquiv.toRingHom.{0, 0} (AlgEquiv.toRingEquiv.{0, 0, 0} e))
+        (RingEquiv.toRingHom.{0, 0} (ZInQ.Contrib.RC53Assist.S2aNumberField.projFunctionFieldEquiv E'))))
+  (hO :
+    Eq.{1}
+      ((CategoryTheory.Iso.hom.{0, 1} i)
+        (ZInQ.Contrib.RC53Assist.S2aNumberField.identityPoint (PkgI3.AbVar.X.{0} (E.baseChange L))))
+      (ZInQ.Contrib.RC53Assist.S2aNumberField.pointO E')) :
+  ∃ (hreg :
+    Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.HodgeLineBinding.regularAtOrigin (E.baseChange L))
+      ((ZInQ.Contrib.RC53Assist.HodgeLineBinding.kaehlerTransport.{0, 0, 0} e)
+        (WeierstrassCurve.Affine.invariantDifferential.{0} (WeierstrassCurve.toAffine.{0} E')))),
+    have η :=
+      ZInQ.Contrib.RC53Assist.HodgeLineBinding.hodgeEval G hdim
+        (Subtype.mk.{1}
+          ((ZInQ.Contrib.RC53Assist.HodgeLineBinding.kaehlerTransport.{0, 0, 0} e)
+            (WeierstrassCurve.Affine.invariantDifferential.{0} (WeierstrassCurve.toAffine.{0} E')))
+          hreg);
+    have I := ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0} (G.detLattice 1) η;
+    Eq.{1} η
+        (G.wedge
+          (Matrix.vecCons.{0} (ZInQ.Contrib.RC53Assist.HodgeLineBinding.originParameter G E' i hO)
+            Matrix.vecEmpty.{0})) ∧
+      Ne.{1} η 0 ∧
+        Eq.{1} (G.detLattice 1)
+            (Submodule.map.{0, 0, 0, 0} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap.{0, 0} η) I) ∧
+          Function.Injective.{1, 1} ⇑(ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coordinateMap.{0, 0} η) ∧
+            (∀ (v : G.hodgeSpace 1),
+                Membership.mem.{0, 0} (G.detLattice 1) v →
+                  ExistsUnique.{1} fun a => Membership.mem.{0, 0} I a ∧ Eq.{1} (HSMul.hSMul.{0, 0, 0} a η) v) ∧
+              Ne.{1} I Bot.bot.{0} ∧
+                Submodule.FG.{0, 0} I ∧
+                  Eq.{1} (Submodule.span.{0, 0} L ↑I) Top.top.{0} ∧
+                    ∃ J,
+                      Eq.{1} (↑J) I ∧
+                        Ne.{1} J 0 ∧
+                          ∃ c,
+                            (∀ (x : ↥G.omega),
+                                Eq.{1} (HSMul.hSMul.{0, 0, 0} (↑(c x)) η)
+                                  ((ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.oneHodgeMap G) ↑x)) ∧
+                              (∀ (a : L),
+                                  Eq.{1} (ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1) (HSMul.hSMul.{0, 0, 0} a η))
+                                    (AddSubgroup.relIndex.{0}
+                                      (Submodule.toAddSubgroup.{0, 0}
+                                        (Submodule.span.{0, 0} (NumberField.RingOfIntegers.{0} L) (singleton.{0, 0} a)))
+                                      (Submodule.toAddSubgroup.{0, 0} I))) ∧
+                                ∀ (a : L),
+                                  Membership.mem.{0, 0} I a →
+                                    Ne.{1} a 0 →
+                                      Eq.{1}
+                                          (HMul.hMul.{0, 0, 0}
+                                            (↑(ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1)
+                                                (HSMul.hSMul.{0, 0, 0} a η)))
+                                            (FractionalIdeal.absNorm.{0, 0} J))
+                                          (abs.{0} ((Algebra.norm.{0, 0} ℚ) a)) ∧
+                                        Eq.{1}
+                                            (↑(ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1)
+                                                (HSMul.hSMul.{0, 0, 0} a η)))
+                                            (HDiv.hDiv.{0, 0, 0} (abs.{0} ((Algebra.norm.{0, 0} ℚ) a))
+                                              (FractionalIdeal.absNorm.{0, 0} J)) ∧
+                                          Ne.{1}
+                                            (ZInQ.DefFaltings.secIndex.{0, 0} (G.detLattice 1)
+                                              (HSMul.hSMul.{0, 0, 0} a η))
+                                            0
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice :
+  Submodule.{0, 0} (NumberField.RingOfIntegers.{0} ℚ) ℚ
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice_eq_span :
+  Eq.{1} ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice
+    (Submodule.span.{0, 0} (NumberField.RingOfIntegers.{0} ℚ) (singleton.{0, 0} 1))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_coefficient_span_smul (η b : ℚ) (hη : Ne.{1} η 0) :
+  Eq.{1}
+    (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0}
+      (Submodule.span.{0, 0} (NumberField.RingOfIntegers.{0} ℚ) (singleton.{0, 0} (HSMul.hSMul.{0, 0, 0} b η))) η)
+    (Submodule.span.{0, 0} (NumberField.RingOfIntegers.{0} ℚ) (singleton.{0, 0} b))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_half_coefficient :
+  Eq.{1}
+    (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0}
+      ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice (1 / 2))
+    (Submodule.span.{0, 0} (NumberField.RingOfIntegers.{0} ℚ) (singleton.{0, 0} 2))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_two_coefficient :
+  Eq.{1}
+    (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0}
+      ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice 2)
+    (Submodule.span.{0, 0} (NumberField.RingOfIntegers.{0} ℚ) (singleton.{0, 0} (1 / 2)))
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_half_not_integral :
+  1 / 2 ∉ ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_two_fractional_not_integral :
+  Membership.mem.{0, 0}
+      (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0}
+        ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice 2)
+      (1 / 2) ∧
+    1 / 2 ∉ ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_index_one :
+  Eq.{1} (ZInQ.DefFaltings.secIndex.{0, 0} ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice 1) 1
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_index_two :
+  Eq.{1} (ZInQ.DefFaltings.secIndex.{0, 0} ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice 2) 2
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_half_index :
+  Eq.{1}
+    (ZInQ.DefFaltings.secIndex.{0, 0} (Submodule.span.{0, 0} (NumberField.RingOfIntegers.{0} ℚ) (singleton.{0, 0} 2)) 4)
+    2
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_two_index :
+  Eq.{1}
+    (ZInQ.DefFaltings.secIndex.{0, 0}
+      (Submodule.span.{0, 0} (NumberField.RingOfIntegers.{0} ℚ) (singleton.{0, 0} (1 / 2))) 1)
+    2
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rational_half_fractional :
+  have I :=
+    ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{0, 0}
+      ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.rationalUnitLattice (1 / 2);
+  Ne.{1} I Bot.bot.{0} ∧
+    Submodule.FG.{0, 0} I ∧
+      Eq.{1} (Submodule.span.{0, 0} ℚ ↑I) Top.top.{0} ∧
+        IsFractional.{0, 0} (nonZeroDivisors.{0} (NumberField.RingOfIntegers.{0} ℚ)) I
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.arbitrary_fractionalIdeal_unit_coordinates.{u_1} {L : Type u_1}
+  [Field.{u_1} L] [NumberField.{u_1} L]
+  (I : FractionalIdeal.{u_1, u_1} (nonZeroDivisors.{u_1} (NumberField.RingOfIntegers.{u_1} L)) L) :
+  Eq.{u_1 + 1} (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientSubmodule.{u_1, u_1} (↑I) 1) ↑I
+ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.NonVacuity.arbitrary_fractionalIdeal_norm_index.{u_1} {L : Type u_1}
+  [Field.{u_1} L] [NumberField.{u_1} L]
+  (I : FractionalIdeal.{u_1, u_1} (nonZeroDivisors.{u_1} (NumberField.RingOfIntegers.{u_1} L)) L) {a : L}
+  (ha : Membership.mem.{u_1, u_1} I a) (ha0 : Ne.{u_1 + 1} a 0) :
+  Eq.{1} (HMul.hMul.{0, 0, 0} (↑(ZInQ.DefFaltings.secIndex.{u_1, u_1} (↑I) a)) (FractionalIdeal.absNorm.{u_1, u_1} I))
+      (abs.{0} ((Algebra.norm.{0, u_1} ℚ) a)) ∧
+    Ne.{1} (ZInQ.DefFaltings.secIndex.{u_1, u_1} (↑I) a) 0

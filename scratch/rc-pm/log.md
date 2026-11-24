@@ -1,0 +1,15 @@
+- Base: `2481181053ae50cea6b6c2b9118de0f2e17f09ae`; branch `wip/rc-pm`.
+- `Stage.lean`: class representative independence; additive `λ_M ∘ [L]` from reduced Kummer and fixed finite row; good Hecke, Atkin–Lehner with killed cusp, uniformizer with sign +1.
+- `Theta.lean`: integral representatives, congruence for arbitrary lifts, both norm-weighted signs, pointwise reduction premise for `lamOf_reduction`, shared `P` for Visibility and App F, adjointness from the supplied line indexing.
+- `DetectorRow.lean`: finite Tate row transported by the specified torsion equivalence, normalized on projected vectors.
+- Inputs: `Geometry`, the line indexing, the reduced cuspidal annihilation, and torsion/Heegner comparison at the chosen place. Norm-character and frame data enter at the consumers. No new printed-form leaves.
+- Manuscript: no new error found; two Frobenius conventions at tex 8379 and 8440 agree under squaring. Citation locators UNVERIFIED.
+- Initial build: reused cached dependencies via an overlay. Lean could not resolve a transitive import across two overlay roots; using one overlay with symlinks to unchanged cached modules resolved it.
+- `Stage.lean` and `Theta.lean`: checked with `lake env lean --threads=1`; no warnings in these files; 22 axiom audits passed. Core commit: `c3b0ee41918291c600b3b1eb3f6228e034993391`.
+- Detector-row dependency replay: initially missed compiled IR for the vendored pole multiplier; added cached IR artifacts to the same temporary overlay and retried.
+- `DetectorRow.lean`: checked with `lake env lean --threads=1`; no warnings in this file; 2 axiom audits passed.
+- Final axiom audit: every declaration below reports `[propext, Classical.choice, Quot.sound]`. No other axioms.
+  - `Stage.lean`: `Geometry.pi_eq_of_rel`, `lam_frob`, `scaled`, `P`, `P_eq_of_rel`, `P_hecke_at`, `P_hecke`, `P_atkin`, `P_uniformizer`.
+  - `Theta.lean`: `isLift_valLift`, `dvd_sub_of_cast_eq`, `lifts_dvd`, `lift_atkin_dvd`, `lift_uniformizer_dvd`, `normWeighted_atkin_dvd`, `normWeighted_uniformizer_dvd`, `lift_at_reduction`, `visibilityStage`, `visibility_relift_dvd`, `stageCast`, `stageCast_P`, `appFStage`.
+  - `DetectorRow.lean`: `Evaluation.ofTateRow`, `Evaluation.ofTateRow_row_proj`.
+- Scope check: no edits to existing Lean modules; no import of `ZInQKernel.OneProof.Main`; no `sorry` or `axiom` in the new sources.

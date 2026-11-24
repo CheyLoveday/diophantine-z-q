@@ -155,20 +155,6 @@ This is the manuscript's own claim, which it derives from Buzzard's Theorem 2.1 
 The 11/5 manuscript (`diophantine_zq.tex`, lines 443–477), the construction of the integral model of $Y_3$; K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Theorem 2.1 and Corollary 2.3, read in the author's preprint (Theorem 2.1, p. 5; Corollary 2.3, p. 7; the moduli problem, without a polarization, p. 2; the canonical principal polarization, p. 3). The journal pages are unverified.
 """,
     ),
-    'y3ToP1j': dict(
-        group='shimura-curves', slug='y3-quotient-map',
-        title='The quotient map from Y₃ to the projective line',
-        anchor='Y3 to P1j',
-        statement=r"""
-The *quotient statement for $Y_3$* is the following assertion. Let $\overline{\mathbb Q}$ be an algebraic closure of $\mathbb Q$, and let $Y$ be a proper smooth curve over $\mathbb Q$ with a $\overline{\mathbb Q}$-point and with, for every field $F\supseteq\mathbb Q$, a bijection between $Y(F)$ and the isomorphism classes of QM abelian surfaces over $F$ with a level-$3$ structure; say that a point *classifies* the surfaces in its class. Suppose that, for every homomorphism of fields $F\to F'$, the image in $Y(F')$ of a point of $Y(F)$ classifies the base change to $F'$ of the surfaces that the point classifies, with their actions of $\mathcal O$ and their level structures; that there is a single family over $Y$, that is, a proper smooth morphism $\mathcal A\to Y$ of relative dimension $2$ with, for each $a\in\mathcal O$, an endomorphism $\iota(a)$ of $\mathcal A$ over $Y$ and a section $\eta(a)$ of $\mathcal A\to Y$, no group law or other condition being required, such that each field-valued point of $Y$ classifies the fibre of $\mathcal A$ at that point with the restrictions of the $\iota(a)$ and $\eta(a)$; and that every such family over a proper smooth curve $S$ over $\mathbb Q$ whose fibre at each field-valued point, with the restrictions of the $\iota(a)$ and $\eta(a)$, is a QM abelian surface with level-$3$ structure has a morphism $S\to Y$ over $\mathbb Q$ taking each field-valued point of $S$ to a point classifying its fibre. Then there is a morphism $\pi:Y\to\mathbf P^1_{\mathbb Q}$ with the following four properties, in which $y$ and $y'$ are $\overline{\mathbb Q}$-points of $Y$ classifying $(A,\iota,\eta)$ and $(A',\iota',\eta')$, and $\pi(y)$ is the image of $y$ in $\mathbf P^1(\overline{\mathbb Q})=\overline{\mathbb Q}\cup\{\infty\}$. First, $\pi(y)=\pi(y')$ exactly when $(A',\iota')$ is isomorphic to the twist $(A,\iota\circ\alpha)$ for some ring automorphism $\alpha$ of $\mathcal O$. Second, $\pi(y)=0$ exactly when the ring $\operatorname{End}_{\mathcal O}(A)$ of endomorphisms of $A$ commuting with $\iota(\mathcal O)$ contains an element $\phi$ with $\phi^2=-1$; $\pi(y)=\infty$ exactly when it contains an element $\phi$ with $\phi^2-\phi+1=0$; and $\pi(y)=-16/27$ exactly when it contains an element $\phi$ with $\phi^2=-6$. Third, $\pi$ maps $Y(\overline{\mathbb Q})$ onto $\mathbf P^1(\overline{\mathbb Q})$. Fourth, every fibre of $\pi$ on $Y(\overline{\mathbb Q})$ is finite, with at most $324$ points.
-""",
-        caveat=r"""
-This is the manuscript's own claim. In the proof of its Theorem 4.1 the manuscript shows that central finite ideles act trivially on $Y_3$ and concludes that the whole curve, "with all its determinant components", admits an action of $N/(\mathbb A_f^\times K_3)$, where $N$ is the finite-adelic normalizer of $\widehat{\mathcal O}$, with quotient $\mathbf P^1_j$ and $\deg(Y_3\to\mathbf P^1_j)\le4|(\mathcal O/3\mathcal O)^\times|\le324$; for the identification of the normalizer quotient with $\mathbf P^1_j$, with branch values $0,\infty,-16/27$, it cites Baba and Granath and Lin and Yang. No print states the result at level $3$. The statement is made for every curve with these moduli properties and asserts nothing about the existence of such a curve; nor does it assert the action, only the fibres of $\pi$. It reads the quotient on $\overline{\mathbb Q}$-points as the classes of the underlying QM abelian surfaces up to twist; that these classes are the orbits of $N$ is an argument made on the spot. It reads the branch values as the project reads the table in §3.1 of Baba and Granath, a locator that is unverified: the points at which $\operatorname{End}_{\mathcal O}(A)$ contains a root of $x^2+1$, of $x^2-x+1$ or of $x^2+6$, that is, the CM points of discriminants $-4$, $-3$ and $-24$, are exactly the fibres over $0$, $\infty$ and $-16/27$, respectively. The locator audit found in Baba and Granath's Theorem 2.1 and Lemma 3.1 that the quotient of the Shimura curve of level $\widehat{\mathcal O}^\times$ by its Atkin–Lehner involutions is $\mathbf P^1_{\mathbb Q}$; these results do not fix the numerical values of the coordinate. The indices $4,6,2$ that the manuscript gives with the branch values are not part of the statement, and the fibre bound is the degree bound read on points, since a finite morphism of degree $d$ has at most $d$ points in each geometric fibre. A review of this statement is pending.
-""",
-        src=r"""
-The 11/5 manuscript (`diophantine_zq.tex`, lines 420–440), in the proof of its Theorem 4.1: the normalizer quotient $\mathbf P^1_j$, with branch values $0,\infty,-16/27$ and indices $4,6,2$, cited to Baba–Granath and Lin–Yang (lines 420–422), and the action of $N/(\mathbb A_f^\times K_3)$ on $Y_3$ with the degree bound (lines 423–440). S. Baba and H. Granath, *Genus 2 curves with quaternionic multiplication*, Canad. J. Math. 60 (2008), Theorem 2.1, p. 737, and Lemma 3.1, pp. 739–740, read by the locator audit; the table of §3.1, p. 740, is unverified. The manuscript's bibliography cites the 2005 preprint of that paper (MPI für Mathematik), Sections 2.1 and 3 and Proposition 10, which was not located. Y.-H. Lin and Y. Yang, *Quaternionic loci in Siegel's modular threefold*, arXiv:1807.00466v1 (2018), the version the manuscript cites (journal version Math. Z. 295 (2020), 775–819, unverified); not read for this statement. The count $|(\mathcal O/3\mathcal O)^\times|=72$ is a computation of the project.
-""",
-    ),
     'cmHeight62': dict(
         group='cm-fibres', slug='elliptic-height-discriminant-formula',
         title='The discriminant formula for the Faltings height of an elliptic curve',
@@ -185,18 +171,34 @@ Equation (6.2) of Barquero-Sanchez, Cadwallader, Cannon, Genao and Masri is the 
 A. Barquero-Sanchez, L. Cadwallader, O. Cannon, T. Genao and R. Masri, *Faltings heights of CM elliptic curves and special Gamma values*, Res. Number Theory 3 (2017), art. 13, §6, Eq. (6.2), pp. 13–14, with the metric on p. 1, read in the published article by the upstream review of the manuscript's CM argument (project note `docs/reviews/height-replacement/height/AUDIT.md`, item 2); the manuscript's citation (`diophantine_zq.tex`, lines 595–605). The paper attributes the formula to Silverman, Proposition 1.1 (not read).
 """,
     ),
-    'cmjDegree': dict(
+    'cmjDegreePrint': dict(
         group='cm-fibres', slug='cm-field-degree',
-        title='The degree of a field of definition of a CM elliptic curve',
+        title='The degree of a singular modulus',
         anchor='Degree of singular moduli',
         statement=r"""
-The *degree statement* is the following assertion. Let $L$ be a number field and $E$ an elliptic curve over $L$ whose ring of endomorphisms over an algebraic closure of $L$ is isomorphic to an order $R$ of an imaginary quadratic field. Then $\#\operatorname{Pic}(R)\le[L:\mathbb Q]$.
+The *degree statement* is the following assertion. Let $\tau$ be a point of the upper half-plane
+satisfying $a\tau^2+b\tau+c=0$ with $a,b,c\in\mathbb Z$, $a>0$ and $\gcd(a,b,c)=1$, put
+$\Delta=b^2-4ac$, and let $x=j(\tau)$ be the corresponding singular modulus. Then for every order $R$
+of an imaginary quadratic field with discriminant $\Delta$, $[\mathbb Q(x):\mathbb Q]=\#\operatorname{Pic}(R)$,
+the class number of $R$.
 """,
         caveat=r"""
-The manuscript uses the classical fact without a citation: "The degree of $j(E)$ is its order class number, so $h(\Delta)\le d\le D$." The classical theorem is that the $j$-invariant of an elliptic curve with complex multiplication by an order $R$ generates a field of degree $h(R)$ over $\mathbb Q$ (for orders, Cox's Theorem 11.1, through the ring class field of $R$); since $j(E)$ lies in $L$, the statement follows. Reaching it from the print also takes the identification of the class number of $R$ with $\#\operatorname{Pic}(R)$, which is standard and not proved here. The upstream audit of the manuscript's citations attributes the degree to §2.1 of Fowler's paper, which has not been read for this statement. Cox's theorem number is unverified, and a review of the statement is pending.
+This is the equality over $\mathbb Q$ in a sentence of Fowler's §2.1, which he derives from Cox (Theorem
+11.1 and Proposition 13.2): for a singular modulus of discriminant $\Delta$, $[\mathbb Q(x):\mathbb Q]=h(\Delta)$,
+the class number of the imaginary quadratic order of discriminant $\Delta$. The discriminant is the
+one of his form definition. The order of discriminant $\Delta$ is a parameter here; Lean proves that it
+is unique up to isomorphism and that its class number does not depend on the choice. The manuscript
+uses the fact without a citation ("The degree of $j(E)$ is its order class number, so $h(\Delta)\le d\le D$"),
+and Lean derives from this statement the bound it needs: an elliptic curve over a number field $L$
+with complex multiplication by $R$ has $\#\operatorname{Pic}(R)\le[L:\mathbb Q]$. A person's reading
+of the publisher's PDF, recorded as a human reading, compared the sentence with the print. A two-lens
+review rated the statement published in its printed form.
 """,
         src=r"""
-The 11/5 manuscript (`diophantine_zq.tex`, lines 585–587), without a citation. D. A. Cox, *Primes of the form $x^2+ny^2$*, Theorem 11.1 (number unverified). The upstream audit of the manuscript's citations (project note `docs/theorem-application-audit/FINDINGS.md`) attributes the degree and the integrality of the class polynomial of an order to G. Fowler, Math. Proc. Cambridge Philos. Soc. 180 (2026), 607–641, §2.1 (not read).
+G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.
+Proc. Cambridge Philos. Soc. 180 (2026), 607–641, §2.1, p. 613, with the discriminant of a singular
+modulus defined on p. 612; D. A. Cox, *Primes of the form $x^2+ny^2$*, Theorem 11.1 and Proposition
+13.2, as Fowler cites them. The manuscript's use: `diophantine_zq.tex`, lines 584–587.
 """,
     ),
     'fowlerProp27PrintCanonical': dict(
@@ -228,121 +230,29 @@ Milne prints the isomorphism for an abelian variety over a separably closed fiel
 J. S. Milne, *Abelian varieties*, course notes, version 2.0 (March 16, 2008), Part I, Theorem 12.1(a), p. 55, and Remark 12.5, p. 56, read in the author's PDF; this is the version the manuscript cites (`diophantine_zq.tex`, lines 10966–10970). The 1986 chapter *Abelian varieties* in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Theorem 15.1(a), is not read. Pro-étale cohomology and its comparison with étale cohomology: B. Bhatt and P. Scholze, *The pro-étale topology for schemes*, Astérisque 369 (2015), Definition 6.8.1 and §5.6; these two numbers are unverified.
 """,
     ),
-    'elliotWildInertiaTrivial': dict(
-        group='neron-models', slug='wild-inertia-trivial',
-        title='Wild inertia acts trivially under semistable reduction',
-        anchor='Wild inertia on Tate modules',
+    'silverbergZarhinThm34': dict(
+        group='neron-models', slug='semistable-reduction-theorem',
+        title="Grothendieck's semistable reduction theorem",
+        anchor='Semistable reduction theorem',
         statement=r"""
-The *wild inertia statement* is the following assertion. Let $K$ be a number field, $\mathcal O$ a
-discrete valuation ring with fraction field $K$, $\Omega$ an algebraic closure of $K$, $w$ a
-valuation ring of $\Omega$ over $\mathcal O$, and $\ell$ a prime invertible in $\mathcal O$. Let $A$
-be an abelian variety over $K$ with semistable reduction at $\mathcal O$ in the sense of Silverberg
-and Zarhin: some Néron model of $A$ over $\mathcal O$ has a special fibre over the residue field
-whose identity component is an extension of an abelian variety by a torus, not necessarily split.
-Then every element $\sigma$ of $\operatorname{Gal}(\Omega/K)$ in the inertia group of $w$ that is
-wild, in the sense that $v_w(\sigma x-x)>v_w(x)$ for every nonzero $x\in\Omega$, where $v_w$ is the
-valuation of $w$, acts trivially on $T_\ell A=\varprojlim_n A(\Omega)[\ell^n]$.
+The *semistable reduction statement* is the following assertion. Let $K$ be a field, $\mathcal O$ a
+valuation ring of $K$ that is a discrete valuation ring, and $A$ an abelian variety over $K$. Then
+there is a finite Galois extension $E$ of $K$ inside an algebraic closure of $K$ such that for every
+valuation ring $V$ of $E$ with $V\cap K=\mathcal O$, the base change $A_E$ has semistable reduction
+at $V$: some Néron model of $A_E$ over $V$ has a special fibre over the residue field whose identity
+component is an extension of an abelian variety by a torus, not necessarily split.
 """,
         caveat=r"""
-This is a sentence of the manuscript, which cites nothing for it. At a prime $p$, once Raynaud's
-criterion gives semistable reduction over the local field $F$ obtained from the completion by
-adjoining the $3$-torsion of $A$ (the $5$-torsion if $p=3$), the manuscript says: "Its wild inertia
-acts trivially on each $V_\ell(A)$ with $\ell\ne p$." The statement reads this at a finite place of
-a number field, through two standard identifications (the decomposition group of $w$ is the Galois
-group of the completion, and Néron models commute with completion), and on $T_\ell A$, which embeds
-in $V_\ell(A)$. It is true and standard: under semistable reduction inertia acts unipotently on
-$T_\ell A$ (SGA 7 I, Exposé IX, Proposition 3.5), and wild inertia is pro-$p$, so it acts on each
-$A(\Omega)[\ell^n]$ with period prime to $\ell$. An argument given here derives the statement from
-these two facts, neither of which is proved here.
-""",
-        src=r"""
-The 11/5 manuscript (`diophantine_zq.tex`, lines 817–818), without citation, right after its
-citation of Silverberg and Zarhin's Theorem 3.5 (line 816). For the standard argument: SGA 7 I,
-Exposé IX (A. Grothendieck), LNM 288 (1972), Proposition 3.5, p. 350, read in the MSRI/SLMath scan;
-that wild inertia is pro-$p$, J.-P. Serre, *Corps locaux*, Chapter IV, §2 (numbers unverified).
-""",
-    ),
-    'neronSchemeExtensionDedekind': dict(
-        group='neron-models', slug='neron-models-exist',
-        title='Néron models over Dedekind domains',
-        anchor='Neron models exist',
-        statement=r"""
-The *Néron existence statement* is the following assertion. Let $D$ be a Dedekind domain that is not
-a field, with fraction field $L$, and $A$ an abelian variety over $L$. Then there is a smooth,
-separated, quasi-compact scheme $N$ over $D$ with generic fibre $A$ such that, for every smooth
-$D$-scheme $Y$, every morphism $Y_L\to A$ extends to a morphism $Y\to N$.
-""",
-        caveat=r"""
-It asks only for the existence of the extension, which is unique since $Y$ is flat over $D$ and $N$ is
-separated, and it is stated over an affine base; the group structure of the Néron model is not asked
-for.
-""",
-        src=r"""
-S. Bosch, W. Lütkebohmert and M. Raynaud, *Néron Models* (1990), §1.4, Theorem 3, with §1.2,
-Definition 1, the existence half over an affine Dedekind base. Numbers unverified.
-""",
-    ),
-    'silverbergZarhinThm35': dict(
-        group='neron-models', slug='raynaud-criterion',
-        title="Raynaud's criterion for semistable reduction",
-        anchor='Raynaud criterion',
-        statement=r"""
-The *Raynaud statement* is the following assertion. Let $K$ be a field with a discrete valuation,
-$n\ge3$ an integer not divisible by the residue characteristic, and $A$ an abelian variety over $K$
-all of whose points of order dividing $n$ are defined over $K$. Then $A$ has semistable reduction:
-for every Néron model of $A$, the identity component of its special fibre over the residue field is
-an extension of an abelian variety by a torus, not necessarily split.
-""",
-        caveat=r"""
-It is Theorem 3.5 of Silverberg and Zarhin, Raynaud's criterion, with the $n$-torsion defined over
-$K$ where the print allows an extension unramified over the valuation. A reading of the page image
-found the hypothesis $n\ge3$ (the text layer of the scan shows $n>3$).
+It is Theorem 3.4 of Silverberg and Zarhin, Grothendieck's semistable reduction theorem, which they
+prove by citing SGA 7 IX, Théorème 3.6. As stated here it also asserts that $A_E$ has a Néron model
+at each such $V$, which their notion of semistable reduction presupposes. That the valuation rings of
+$E$ over $\mathcal O$ are the localizations of the integral closure of $\mathcal O$ in $E$ at its
+maximal ideals is standard and not printed.
 """,
         src=r"""
 A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of abelian varieties*,
-Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.5, p. 406 (proof: SGA 7 I, IX, Proposition 4.7),
-with semistable reduction as defined in §3, p. 405.
-""",
-    ),
-    'faltingsLemma1DVRPrint': dict(
-        group='heights', slug='faltings-extension-lemma',
-        title='Homomorphisms of semiabelian schemes over a discrete valuation ring extend uniquely',
-        anchor='Faltings 1983 Lemma 1',
-        statement=r"""
-The *extension statement for semiabelian schemes* is the following assertion. Let $K$ be a field,
-$\mathcal O\subseteq K$ a valuation ring of $K$ that is a discrete valuation ring, with residue field
-$k$, and $A$ and $B$ abelian varieties over $K$. Let $G$ and $H$ be smooth, separated, quasi-compact
-group schemes over $\mathcal O$ with isomorphisms of group schemes $G_K\cong A$ and $H_K\cong B$ from
-their generic fibres, and suppose that the special fibres $G_k$ and $H_k$ are connected and
-semiabelian: each has an open connected subgroup scheme $U$ with a flat surjective homomorphism
-$U\to C$ onto an abelian variety $C$ over $k$ whose kernel becomes isomorphic as a group scheme to
-$\mathbb G_m^r$, for some $r\ge0$, after base change to an algebraic closure $\bar k$ of $k$; that is,
-for every $\bar k$-algebra $R$ there is an isomorphism of groups from $(R^\times)^r$ onto the kernel of
-$U(R)\to C(R)$, natural in $R$. Then for every homomorphism of group schemes $f:G_K\to H_K$ over $K$
-there is exactly one morphism of $\mathcal O$-schemes $g:G\to H$ whose base change to $K$ is $f$.
-""",
-        caveat=r"""
-Faltings states the lemma over any normal base $S$ with a dense open subscheme $U$, for a
-homomorphism over $U$ between two semiabelian varieties over $S$: smooth algebraic groups whose
-fibres are all connected of one common dimension $g$ and are extensions of an abelian variety by a
-torus. The statement is the case of the spectrum of a discrete valuation ring and its generic point,
-for models whose generic fibres are abelian varieties. Its hypotheses imply Faltings' definition.
-The generic fibre is an abelian variety, hence connected and an extension of itself by the trivial
-torus. A smooth model is flat, so its generic fibre is dense in it and the model is connected;
-smoothness then makes the relative dimension constant on the model, so both fibres have the same
-dimension. The project rates it a published statement in its printed form, a leaf: an AI reader read
-p. 350 verbatim from the page image and found the statement a direct instance, an AI reviewer rated
-it a leaf, and a third AI skeptic pass, checking fidelity to the print and the meaning of the formal
-statement, could not refute it. It replaced the statement that the semistable height does not change
-under extension of the base field, which is proved here from it, with Silverberg–Zarhin's criterion
-and the existence of Néron models over a Dedekind base. The manuscript lists Faltings' paper and
-cites it for other results, not for this lemma.
-""",
-        src=r"""
-G. Faltings, *Endlichkeitssätze für abelsche Varietäten über Zahlkörpern*, Invent. Math. 73 (1983),
-349–366, §2, the Definition and Lemma 1, p. 350, read from the page image of the GDZ scan; the paper
-is in the manuscript's bibliography (`diophantine_zq.tex`, lines 11084–11086) and cited at lines 621
-and 733 for other results.
+Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.4, pp. 405–406 (proof: SGA 7 I, Exposé IX,
+Théorème 3.6, p. 351), with semistable reduction as defined in §3, p. 405.
 """,
     ),
     'gaudronRemondSec9LowerAnSS': dict(
@@ -475,34 +385,6 @@ F. Pazuki, *Theta height and Faltings height*, Bull. SMF 140 (2012), Corollary 1
 read by the locator audit. The level-$2$ coordinates are a risk (project note height-split, §8).
 """,
     ),
-    'r9a': dict(
-        group='heights', slug='faltings-semisimplicity',
-        title="Faltings' semisimplicity theorem",
-        anchor='Faltings semisimplicity',
-        statement=r"""
-The *semisimplicity statement* is the following assertion. For an abelian variety $A$ over a number field $K$ and a prime $\ell$, the representation of $G_K$ on $V_\ell(A)$ is semisimple.
-""",
-        caveat=r"""
-
-""",
-        src=r"""
-G. Faltings, *Endlichkeitssätze für abelsche Varietäten über Zahlkörpern*, Invent. Math. 73 (1983), 349–366, §5, Satz 3, p. 360. Locator unverified.
-""",
-    ),
-    'r9b': dict(
-        group='heights', slug='faltings-tate-conjecture',
-        title="Faltings' theorem on Tate's conjecture",
-        anchor='Faltings Tate conjecture',
-        statement=r"""
-The *Tate statement* is the following assertion. For abelian varieties $A$ and $B$ over a number field $K$ and a prime $\ell$, the natural map $\operatorname{Hom}_K(A,B)\otimes\mathbb Z_\ell\to\operatorname{Hom}_{\mathbb Z_\ell}(T_\ell A,T_\ell B)$ is injective, with image the $G_K$-equivariant maps.
-""",
-        caveat=r"""
-
-""",
-        src=r"""
-G. Faltings, Invent. Math. 73 (1983), §5, Satz 4 (the case $A=B$), p. 360, and Korollar 1 (Tate's conjecture), pp. 360–361. Locators unverified.
-""",
-    ),
     'bergerSurveyF': dict(
         group='p-adic-hodge', slug='berger-de-rham-potentially-semistable',
         title="Berger's theorem: de Rham representations are potentially semistable",
@@ -592,7 +474,7 @@ conductor only for newforms with rational coefficients on $\Gamma_0(N)$.
 H. Darmon, F. Diamond and R. Taylor, *Fermat's Last Theorem*, Current Developments in Mathematics 1995 (1997), Theorem 3.1 (a)–(d), pp. 85–86, and the conductor in §2, p. 54 (read in Darmon's copy); H. Carayol, Ann. Sci. ÉNS (4) 19 (1986), 409–468, Théorème (A), pp. 409–411, the manuscript's citation, with §0.8, p. 411 (read in the numdam copy); W. Casselman, Math. Ann. 201 (1973), Theorem 1; K. Ribet, LNM 601 (1977), Theorem 2.3. The numbers of Casselman's and Ribet's theorems are unverified.
 """,
     ),
-    'dsThm965Printed': dict(
+    'dsThm965AtPrimes': dict(
         group='modular-galois', slug='deligne-representations',
         title="Deligne's Galois representations of eigenforms",
         anchor='Deligne representations',
@@ -600,16 +482,25 @@ H. Darmon, F. Diamond and R. Taylor, *Fermat's Last Theorem*, Current Developmen
 The *Deligne statement* is the following assertion. Let $f\in S_k(N,\chi)$ be a normalized eigenform of
 weight $k\ge2$ whose coefficient field $K_f$ is a number field, and $\lambda$ a prime of $K_f$ above a
 prime $\ell$, with completion $K_{f,\lambda}$. Then there is a continuous representation
-$\rho:G_{\mathbb Q}\to\mathrm{GL}_2(K_{f,\lambda})$ such that for every prime $p\nmid N\ell$: $\rho$ is
-unramified at $p$, and for every arithmetic Frobenius $\sigma$ at $p$ either the characteristic
-polynomial of $\rho(\sigma)$ is $x^2-a_p(f)x+\chi(p)p^{k-1}$ or $\rho(\sigma)$ satisfies this
-polynomial.
+$\rho:G_{\mathbb Q}\to\mathrm{GL}_2(K_{f,\lambda})$ with the following property for every prime
+$p\nmid N\ell$ and every maximal ideal $\mathfrak p$ of the ring $\overline{\mathbb Z}$ of algebraic
+integers lying over $p$. Every $\sigma\in G_{\mathbb Q}$ that maps $\mathfrak p$ to itself and acts
+trivially on $\overline{\mathbb Z}/\mathfrak p$ has $\rho(\sigma)=1$; and every $\sigma$ that maps
+$\mathfrak p$ to itself and acts on $\overline{\mathbb Z}/\mathfrak p$ as $x\mapsto x^p$ has
+characteristic polynomial $x^2-a_p(f)x+\chi(p)p^{k-1}$ for $\rho(\sigma)$.
 """,
         caveat=r"""
-Diamond and Shurman's theorem prints the characteristic polynomial ("the characteristic equation", in an AI reading of the 2005 and 2016 printings), which gives the statement directly; the alternative "satisfies" only weakens it. The statement drops the irreducibility of $\rho$, which the theorem also asserts, and assumes that $K_f$ is a number field, which the theorem presupposes.
+Diamond and Shurman's theorem prints the characteristic equation of $\rho(\mathrm{Frob}_{\mathfrak p})$
+for every maximal ideal $\mathfrak p$ over $p$, with inertia and Frobenius as in their §9.3. The statement
+drops the irreducibility of $\rho$, which the theorem also asserts, and assumes that $K_f$ is a number
+field, which the theorem presupposes. The bound $k\ge2$ is this project's restriction, not a hypothesis of
+the print.
 """,
         src=r"""
-F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228 (2005), Theorem 9.6.5, p. 393 (fourth printing, 2016: p. 404; AI-read), stated over $K_{f,\lambda}$, with their Definition 5.8.1 of normalized eigenforms; P. Deligne, Sém. Bourbaki 355 (1969); G. Shimura 1971, Theorem 7.14, for $k=2$. The numbers of Definition 5.8.1 and of Shimura's theorem are unverified.
+F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228, corrected fourth printing (2016),
+Theorem 9.6.5, p. 404, with Definitions 5.8.1 (p. 196), 6.5.3 (p. 238), 9.3.2 (p. 386) and 9.3.3
+(p. 387), and absolute Frobenius and inertia, pp. 384–385; P. Deligne, Sém. Bourbaki 355 (1969);
+G. Shimura 1971, Theorem 7.14, for $k=2$. The number of Shimura's theorem is unverified.
 """,
     ),
     'dsThm966Printed': dict(

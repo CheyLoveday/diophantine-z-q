@@ -13,8 +13,10 @@ on an inverse limit of roots of unity is needed.
 The zero endomorphism, separable endomorphisms, and multiplication by
 any integer satisfy the determinant--degree identity without any new
 geometric input. The full proposition `DetEqDegree` reduces to the named
-PRINT `InseparableWeilPairingCompatibility`, stated only for nonzero
-inseparable endomorphisms of the reduced curve.
+proposition `InseparableWeilPairingCompatibility`, stated only for nonzero
+inseparable endomorphisms of the reduced curve; that proposition is proved in
+`ZInQKernel/Contrib/RC53Assist/InseparableWeil/Compatibility.lean`
+(`inseparableWeilPairingCompatibility_proved`, with `detEqDegree_proved`).
 
 The Frobenius determinant-form slice `det(1 - n π) = 1 - a n + p n²`
 is proved without that PRINT: `n π - 1` is separable. Consequently the
@@ -255,8 +257,8 @@ theorem goodReductionFrobeniusTraceDictionaryQ_of_reductionComparison
     ZInQ.Contrib.RC53Assist.NewformPeriodsDictionary.GoodReductionFrobeniusTraceDictionaryQ :=
   goodReductionFrobeniusTraceDictionaryQ_of_one hR frobeniusTateDetFormOne_proved
 
-/-- **PRINT definition of an unproved geometric input** (Silverman
-III.8.2, III.8.6, and V.2.3): for a nonzero inseparable endomorphism of
+/-- **Definition of a geometric input, proved in `InseparableWeil/Compatibility.lean`**
+(Silverman III.8.2, III.8.6, and V.2.3): for a nonzero inseparable endomorphism of
 the reduced curve, the prime-power Weil pairing is scaled by its degree.
 The pairing and the induced torsion maps are the existing ones. There
 is no determinant or Tate-module conclusion in this input. -/

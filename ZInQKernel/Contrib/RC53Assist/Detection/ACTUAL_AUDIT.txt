@@ -1,0 +1,1075 @@
+ZInQKernel/Contrib/RC53Assist/Detection/ActualAxiomScratch.lean:94:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ZInQKernel/Contrib/RC53Assist/Detection/ActualAxiomScratch.lean:95:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ZInQKernel/Contrib/RC53Assist/Detection/ActualAxiomScratch.lean:152:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Actual.derivative_inertia_cannot_supply_nonquadratic`:
+  [IsTotallyComplex K]
+  [IsContChar α]
+  [E.IsElliptic]
+  [HasFullTwoTorsion K S E⁄K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsTotallyComplex K] [IsContChar α] [E.IsElliptic] [HasFullTwoTorsion K S E⁄K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/ActualAxiomScratch.lean:187:28: warning: This simp argument is unused:
+  mul_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [map_mul, map_inv, mul_left_comm, mul_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/ActualAxiomScratch.lean:187:38: warning: This simp argument is unused:
+  mul_left_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [map_mul, map_inv, mul_comm, mul_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/ActualAxiomScratch.lean:382:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ZInQKernel/Contrib/RC53Assist/Detection/ActualAxiomScratch.lean:443:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ZInQKernel/Contrib/RC53Assist/Detection/ActualAxiomScratch.lean:538:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Actual.principal_boundary_from_target`:
+  [SMulCommClass RationalSequences (ResAt P) (FibrePair P)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SMulCommClass RationalSequences (ResAt P) (FibrePair P)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/ActualAxiomScratch.lean:596:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Actual.embedding_requires_degree_zero_dimension`:
+  [SMulCommClass RationalSequences (ResAt P) (FibrePair P)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SMulCommClass RationalSequences (ResAt P) (FibrePair P)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+@ZInQ.Contrib.RC53Assist.Detection.Actual.inertiaLog : {k : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : ValuativeRel.{0} k] →
+      [inst_2 : TopologicalSpace.{0} k] →
+        [inst_3 : IsNonarchimedeanLocalField.{0} k] →
+          {n : ℕ} →
+            [NeZero.{0} n] →
+              {a : k} →
+                {β : AlgebraicClosure.{0} k} →
+                  n.Coprime
+                      (ringChar.{0}
+                        (IsLocalRing.ResidueField.{0} ↥(Valuation.integer.{0, 0} (ValuativeRel.valuation.{0} k)))) →
+                    Eq.{1} (HPow.hPow.{0, 0, 0} β n) ((algebraMap.{0, 0} k (AlgebraicClosure.{0} k)) a) →
+                      Ne.{1} β 0 →
+                        {σ₀ : Gal(AlgebraicClosure.{0} k/k)} →
+                          IsPrimitiveRoot.{0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} β σ₀) n →
+                            MonoidHom.{0, 0} (↥(TauCeti.inertiaSubgroup.{0} k)) (Multiplicative.{0} (ZMod n))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.inertiaLog' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.tameScalar : {k : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : ValuativeRel.{0} k] →
+      [inst_2 : TopologicalSpace.{0} k] →
+        [inst_3 : IsNonarchimedeanLocalField.{0} k] →
+          {n : ℕ} →
+            [NeZero.{0} n] →
+              {a : k} →
+                {β : AlgebraicClosure.{0} k} →
+                  n.Coprime
+                      (ringChar.{0}
+                        (IsLocalRing.ResidueField.{0} ↥(Valuation.integer.{0, 0} (ValuativeRel.valuation.{0} k)))) →
+                    Eq.{1} (HPow.hPow.{0, 0, 0} β n) ((algebraMap.{0, 0} k (AlgebraicClosure.{0} k)) a) →
+                      Ne.{1} β 0 →
+                        {σ₀ : Gal(AlgebraicClosure.{0} k/k)} →
+                          IsPrimitiveRoot.{0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} β σ₀) n →
+                            (i : ℕ) →
+                              AddMonoidHom.{0, 0} (ZMod n)
+                                  (Additive.{0} (Units.{0} (ZInQ.Manuscript.RC.Moving.Acoef i))) →
+                                MonoidHom.{0, 0} (↥(TauCeti.inertiaSubgroup.{0} k))
+                                  (Units.{0} (ZInQ.Manuscript.RC.Moving.Acoef i))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.tameScalar' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.tameScalar_generator : ∀ {k : Type} [inst : Field.{0} k]
+  [inst_1 : ValuativeRel.{0} k] [inst_2 : TopologicalSpace.{0} k] [inst_3 : IsNonarchimedeanLocalField.{0} k] {n : ℕ}
+  [inst_4 : NeZero.{0} n] {a : k} {β : AlgebraicClosure.{0} k}
+  (hn :
+    n.Coprime (ringChar.{0} (IsLocalRing.ResidueField.{0} ↥(Valuation.integer.{0, 0} (ValuativeRel.valuation.{0} k)))))
+  (hβ : Eq.{1} (HPow.hPow.{0, 0, 0} β n) ((algebraMap.{0, 0} k (AlgebraicClosure.{0} k)) a)) (hβ0 : Ne.{1} β 0)
+  {σ₀ : Gal(AlgebraicClosure.{0} k/k)}
+  (hζ : IsPrimitiveRoot.{0} (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} β σ₀) n) (i : ℕ) [Fact (LT.lt.{0} 1 n)]
+  (ψ : AddMonoidHom.{0, 0} (ZMod n) (Additive.{0} (Units.{0} (ZInQ.Manuscript.RC.Moving.Acoef i)))),
+  Eq.{1} (↑(Additive.toMul.{0} (ψ 1))) (HAdd.hAdd.{0, 0, 0} 1 (ZInQ.Manuscript.RC.Moving.tA i)) →
+    ∀ (hσ₀ : Membership.mem.{0, 0} (TauCeti.inertiaSubgroup.{0} k) σ₀),
+      Eq.{1} (↑((ZInQ.Contrib.RC53Assist.Detection.Actual.tameScalar hn hβ hβ0 hζ i ψ) (Subtype.mk.{1} σ₀ hσ₀)))
+        (HAdd.hAdd.{0, 0, 0} 1 (ZInQ.Manuscript.RC.Moving.tA i))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.tameScalar_generator' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.exists_local_tame_scalar : ∀ {k : Type} [inst : Field.{0} k]
+  [inst_1 : ValuativeRel.{0} k] [inst_2 : TopologicalSpace.{0} k] [inst_3 : IsNonarchimedeanLocalField.{0} k] (i d : ℕ),
+  LE.le.{0} (HMul.hMul.{0, 0, 0} 2 i) d →
+    LT.lt.{0} 0 d →
+      (HPow.hPow.{0, 0, 0} 2 d).Coprime
+          (ringChar.{0} (IsLocalRing.ResidueField.{0} ↥(Valuation.integer.{0, 0} (ValuativeRel.valuation.{0} k)))) →
+        ∃ χ σ, Eq.{1} (↑(χ σ)) (HAdd.hAdd.{0, 0, 0} 1 (ZInQ.Manuscript.RC.Moving.tA i))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.exists_local_tame_scalar' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.movingLabel_character_on_inertia : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  (L : ZInQ.Contrib.RC53Assist.InnerLimitArith.MovingLabel K S)
+  (σ : (i : ℕ) → ZInQ.Manuscript.RC.SelmerComplex.Gloc K (L.q i)),
+  (∀ (i : ℕ), Eq.{1} ((ZInQ.Manuscript.RC.SelmerComplex.urRes K (L.q i)) (σ i)) 1) →
+    ∀ (i : ℕ), Eq.{1} (α ((ZInQ.Manuscript.RC.SelmerComplex.locMap K S (L.q i)) (σ i))) 1
+'ZInQ.Contrib.RC53Assist.Detection.Actual.movingLabel_character_on_inertia' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.movingLabel_inertia_scalar_limit : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  (L : ZInQ.Contrib.RC53Assist.InnerLimitArith.MovingLabel K S)
+  (σ : (i : ℕ) → ZInQ.Manuscript.RC.SelmerComplex.Gloc K (L.q i)),
+  (∀ (i : ℕ), Eq.{1} ((ZInQ.Manuscript.RC.SelmerComplex.urRes K (L.q i)) (σ i)) 1) →
+    ∀ (U : Ultrafilter.{0} ℕ),
+      Eq.{1}
+        (ZInQ.Manuscript.RC.Limits.ulim.{0} U fun i =>
+          ↑(α ((ZInQ.Manuscript.RC.SelmerComplex.locMap K S (L.q i)) (σ i))))
+        1
+'ZInQ.Contrib.RC53Assist.Detection.Actual.movingLabel_inertia_scalar_limit' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.derivative_inertia_cannot_supply_nonquadratic : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [WeierstrassCurve.IsElliptic.{0} E]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_6 : Ideal.IsPrime.{0} P]
+  (L : ZInQ.Contrib.RC53Assist.InnerLimitArith.MovingLabel K S)
+  (σ : (i : ℕ) → ZInQ.Manuscript.RC.SelmerComplex.Gloc K (L.q i)),
+  (∀ (i : ℕ), Eq.{1} ((ZInQ.Manuscript.RC.SelmerComplex.urRes K (L.q i)) (σ i)) 1) →
+    ∀ (I : ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput S e α E C hdegree U P),
+      (∀ (i : ℕ),
+          Eq.{1} ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) (I.element i))
+            ((ZInQ.Manuscript.RC.SelmerComplex.locMap K S (L.q i)) (σ i))) →
+        False
+'ZInQ.Contrib.RC53Assist.Detection.Actual.derivative_inertia_cannot_supply_nonquadratic' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Actual.universal_parameter_power_ne_self : ∀ (q : ℕ),
+  LT.lt.{0} 1 q →
+    Ne.{1} (HPow.hPow.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} 1 PowerSeries.X.{0}) q) (HAdd.hAdd.{0, 0, 0} 1 PowerSeries.X.{0})
+'ZInQ.Contrib.RC53Assist.Detection.Actual.universal_parameter_power_ne_self' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.no_integral_fixed_tame_normalization : ∀ {G : Type} [inst : Group.{0} G]
+  (χ : MonoidHom.{0, 0} G (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) (φ σ : G) (q : ℕ),
+  LT.lt.{0} 1 q →
+    Eq.{1} (χ (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} φ σ) (Inv.inv.{0} φ))) (HPow.hPow.{0, 0, 0} (χ σ) q) →
+      Eq.{1} (↑(χ σ)) (HAdd.hAdd.{0, 0, 0} 1 PowerSeries.X.{0}) → False
+'ZInQ.Contrib.RC53Assist.Detection.Actual.no_integral_fixed_tame_normalization' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Actual.scalar_limit_of_finite_normalization : ∀
+  (v : ℕ → ZInQ.Manuscript.RC.Uniform.Lambda),
+  (∀ (i : ℕ),
+      Membership.mem.{0, 0} (ZInQ.Manuscript.RC.Limits.stageIdeal i)
+        (HSub.hSub.{0, 0, 0} (v i) (HAdd.hAdd.{0, 0, 0} 1 PowerSeries.X.{0}))) →
+    ∀ (U : Ultrafilter.{0} ℕ),
+      LE.le.{0} (↑U) Filter.cofinite.{0} →
+        Eq.{1} (ZInQ.Manuscript.RC.Limits.ulim.{0} U v) (HAdd.hAdd.{0, 0, 0} 1 PowerSeries.X.{0})
+'ZInQ.Contrib.RC53Assist.Detection.Actual.scalar_limit_of_finite_normalization' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Actual.residue_unit_of_not_mem : ∀ (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda)
+  [inst : Ideal.IsPrime.{0} P],
+  ∀ a ∉ P, IsUnit.{0} ((algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P)) a)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.residue_unit_of_not_mem' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Actual.nonquadratic_parameter_of_not_mem : ∀
+  (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst : Ideal.IsPrime.{0} P],
+  HMul.hMul.{0, 0, 0} PowerSeries.X.{0} (HAdd.hAdd.{0, 0, 0} PowerSeries.X.{0} 2) ∉ P →
+    Ne.{1}
+      (HPow.hPow.{0, 0, 0}
+        ((algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+          (HAdd.hAdd.{0, 0, 0} 1 PowerSeries.X.{0}))
+        2)
+      1
+'ZInQ.Contrib.RC53Assist.Detection.Actual.nonquadratic_parameter_of_not_mem' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Actual.nonquadratic_limit_of_finite_normalization : ∀
+  (v : ℕ → ZInQ.Manuscript.RC.Uniform.Lambda),
+  (∀ (i : ℕ),
+      Membership.mem.{0, 0} (ZInQ.Manuscript.RC.Limits.stageIdeal i)
+        (HSub.hSub.{0, 0, 0} (v i) (HAdd.hAdd.{0, 0, 0} 1 PowerSeries.X.{0}))) →
+    ∀ (U : Ultrafilter.{0} ℕ),
+      LE.le.{0} (↑U) Filter.cofinite.{0} →
+        ∀ (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst : Ideal.IsPrime.{0} P],
+          HMul.hMul.{0, 0, 0} PowerSeries.X.{0} (HAdd.hAdd.{0, 0, 0} PowerSeries.X.{0} 2) ∉ P →
+            Ne.{1}
+              (HPow.hPow.{0, 0, 0}
+                ((algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                  (ZInQ.Manuscript.RC.Limits.ulim.{0} U v))
+                2)
+              1
+'ZInQ.Contrib.RC53Assist.Detection.Actual.nonquadratic_limit_of_finite_normalization' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.rationalAbsoluteLift : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+        MonoidHom.{0, 0} Gal(AlgebraicClosure.{0} K/K) ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.rationalAbsoluteLift' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.galKOfQ_rationalAbsoluteLift : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (g : Gal(AlgebraicClosure.{0} K/K)),
+  Eq.{1}
+    (ZInQ.Contrib.RC53Assist.InnerLimitArith.galKOfQ e
+      ↑((ZInQ.Contrib.RC53Assist.Detection.Actual.rationalAbsoluteLift e) g) ⋯)
+    g
+'ZInQ.Contrib.RC53Assist.Detection.Actual.galKOfQ_rationalAbsoluteLift' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.rationalLocalLift : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+        (q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+          MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+            ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.rationalLocalLift' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.baseRestriction_rationalLocalLift : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (σ : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e)
+      ((ZInQ.Contrib.RC53Assist.Detection.Actual.rationalLocalLift e q) σ))
+    ((ZInQ.Manuscript.RC.SelmerComplex.locMap K S q) σ)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.baseRestriction_rationalLocalLift' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.rationalLocalLift_kernel_outside : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))),
+  ∀ q ∉ S,
+    ∀ (σ : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q),
+      Eq.{1} ((ZInQ.Manuscript.RC.SelmerComplex.urRes K q) σ) 1 →
+        Eq.{1}
+          ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e)
+            ((ZInQ.Contrib.RC53Assist.Detection.Actual.rationalLocalLift e q) σ))
+          1
+'ZInQ.Contrib.RC53Assist.Detection.Actual.rationalLocalLift_kernel_outside' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.characterCutout : {A : Type} →
+  [inst : CommGroup.{0} A] →
+    (H : Subgroup.{0} ZInQ.Manuscript.RC.PrintsArith.GalQ) →
+      MonoidHom.{0, 0} (↥H) A → IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar
+'ZInQ.Contrib.RC53Assist.Detection.Actual.characterCutout' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.le_characterCutout_iff : ∀ {A : Type} [inst : CommGroup.{0} A]
+  (H : Subgroup.{0} ZInQ.Manuscript.RC.PrintsArith.GalQ) (β : MonoidHom.{0, 0} (↥H) A)
+  (F : IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar),
+  LE.le.{0} F (ZInQ.Contrib.RC53Assist.Detection.Actual.characterCutout H β) ↔
+    ∀ (g : ↥H),
+      Eq.{1} (β g) 1 → ∀ (x : ZInQ.Manuscript.RC.PrintsArith.Qbar), Membership.mem.{0, 0} F x → Eq.{1} (↑g x) x
+'ZInQ.Contrib.RC53Assist.Detection.Actual.le_characterCutout_iff' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.inversion_on_characterCutout : ∀ {A : Type} [inst : CommGroup.{0} A]
+  (H : Subgroup.{0} ZInQ.Manuscript.RC.PrintsArith.GalQ) [inst_1 : Subgroup.Normal.{0} H]
+  (τ : ZInQ.Manuscript.RC.PrintsArith.GalQ) (β : MonoidHom.{0, 0} (↥H) A),
+  (∀ (g : ↥H),
+      Eq.{1} (β (Subtype.mk.{1} (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} τ ↑g) (Inv.inv.{0} τ)) ⋯))
+        (Inv.inv.{0} (β g))) →
+    ∀ (g : ↥H) (x : ZInQ.Manuscript.RC.PrintsArith.Qbar),
+      Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.Detection.Actual.characterCutout H β) x →
+        Eq.{1} ((HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} τ ↑g) (Inv.inv.{0} τ)) x) ((Inv.inv.{0} ↑g) x)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.inversion_on_characterCutout' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Actual.automorphisms_agree_on_sup : ∀
+  (F L : IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar) (σ θ : ZInQ.Manuscript.RC.PrintsArith.GalQ),
+  (∀ (x : ZInQ.Manuscript.RC.PrintsArith.Qbar), Membership.mem.{0, 0} F x → Eq.{1} (σ x) (θ x)) →
+    (∀ (x : ZInQ.Manuscript.RC.PrintsArith.Qbar), Membership.mem.{0, 0} L x → Eq.{1} (σ x) (θ x)) →
+      ∀ (x : ZInQ.Manuscript.RC.PrintsArith.Qbar), Membership.mem.{0, 0} (F ⊔ L) x → Eq.{1} (σ x) (θ x)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.automorphisms_agree_on_sup' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.dihedralKernelFields_of_cutout_bounds : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S)
+  (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2) (A D : ℕ → Type) [inst_4 : (i : ℕ) → CommGroup.{0} (A i)]
+  [inst_5 : (i : ℕ) → CommGroup.{0} (D i)]
+  (β : (i : ℕ) → MonoidHom.{0, 0} (↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)) (A i))
+  (δ : (i : ℕ) → MonoidHom.{0, 0} (↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)) (D i)),
+  (∀ (i : ℕ) (g : ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)),
+      Eq.{1} ((β i) (ZInQ.Contrib.RC53Assist.Detection.Inputs.baseConjugate S e C hdegree g)) (Inv.inv.{0} ((β i) g))) →
+    (∀ (i : ℕ) (g : ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)),
+        Eq.{1} ((δ i) (ZInQ.Contrib.RC53Assist.Detection.Inputs.baseConjugate S e C hdegree g))
+          (Inv.inv.{0} ((δ i) g))) →
+      ∀ (B : ℕ → IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar),
+        (∀ (i : ℕ),
+            LE.le.{0} (ZInQ.Contrib.RC53Assist.FrobeniusMatch.characterField S e α i)
+              (ZInQ.Contrib.RC53Assist.Detection.Actual.characterCutout
+                (ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e) (β i))) →
+          (∀ (i : ℕ),
+              LE.le.{0} (B i)
+                (ZInQ.Contrib.RC53Assist.Detection.Actual.characterCutout
+                  (ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e) (δ i))) →
+            ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields S e α C B
+'ZInQ.Contrib.RC53Assist.Detection.Actual.dihedralKernelFields_of_cutout_bounds' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.image_commutative_of_conjugate_inversion : ∀ {G J : Type} [inst : Group.{0} G]
+  [inst_1 : Group.{0} J] (ρ : MonoidHom.{0, 0} G J) (τ : J),
+  (∀ (g : G), Eq.{1} (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} τ (ρ g)) (Inv.inv.{0} τ)) (Inv.inv.{0} (ρ g))) →
+    ∀ (g h : G), Eq.{1} (HMul.hMul.{0, 0, 0} (ρ g) (ρ h)) (HMul.hMul.{0, 0, 0} (ρ h) (ρ g))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.image_commutative_of_conjugate_inversion' depends on axioms: [propext]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram : {A : Type} →
+  [inst : CommRing.{0} A] →
+    {G : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A} →
+      ZInQ.Manuscript.RC.FibreDuality.StagePairingInput G → Type
+'ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Actual.modelDiagram_from_stage_inputs : ∀ (i : ℕ) [inst : NeZero.{0} i]
+  (G : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Limits.StageA i)),
+  (∀ (n : ℤ),
+      Module.Flat.{0, 0} (ZInQ.Manuscript.RC.Limits.StageA i)
+        ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} G n)) →
+    ∀ {Uq : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Limits.StageA i)}
+      {res :
+        ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} G
+          (ZInQ.Contrib.RC53Assist.InnerLimit.splitLocalComplex (ZInQ.Manuscript.RC.Limits.StageA i))}
+      {ι :
+        ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} Uq
+          (ZInQ.Contrib.RC53Assist.InnerLimit.splitLocalComplex (ZInQ.Manuscript.RC.Limits.StageA i))}
+      (Q :
+        ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelPairData.{0}
+          (ZInQ.Manuscript.RC.FibreDuality.splitSelData G res Uq ι)
+          (ZInQ.Manuscript.RC.FibreDuality.splitSelData G res Uq ι))
+      (tr :
+        LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Limits.StageA i))
+          (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelPairData.resE.{0} Q))
+              3))
+          (ZInQ.Manuscript.RC.Limits.StageA i))
+      (htr :
+        ∀
+          (z :
+            ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx.{0}
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelPairData.resE.{0} Q))
+                2)),
+          Eq.{1}
+            (tr
+              ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.coneCx.{0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelPairData.resE.{0} Q))
+                  2 3 ⋯)
+                z))
+            0),
+      QuasiIso.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.SelmerDuality.GHom.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.SelmerDuality.globalDualityMap.{0} Q tr htr)) →
+        ZInQ.Contrib.RC53Assist.InnerLimitArith.ResidualCohomologyFinite G →
+          ∀ (lo hi : ℤ),
+            (∀ (n : ℤ),
+                LT.lt.{0} n lo ∨ LT.lt.{0} hi n →
+                  Eq.{1}
+                    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.Limits.StageA i))
+                      (ZInQ.Manuscript.RC.Limits.residualCohomologyAt G n))
+                    0) →
+              ∃ D,
+                ∀ (n : ℤ),
+                  Eq.{1} (D.model.rank n)
+                    (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.Limits.StageA i))
+                      (ZInQ.Manuscript.RC.Limits.residualCohomologyAt G n))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.modelDiagram_from_stage_inputs' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.boundary_reflection_of_retract : ∀ {A : Type} [inst : CommRing.{0} A]
+  {G Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A} (R : ZInQ.Manuscript.RC.Limits.GRetract G Q)
+  (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+  (y : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} G 0)),
+  Eq.{1} ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} R.i 1 1 ⋯) x)
+      ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} G 0 1 ⋯) y) →
+    Membership.mem.{0, 0} (LinearMap.range.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 0 1 ⋯)) x
+'ZInQ.Contrib.RC53Assist.Detection.Actual.boundary_reflection_of_retract' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.model_inclusion_injective : ∀ {A : Type} [inst : CommRing.{0} A]
+  {G Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A} (R : ZInQ.Manuscript.RC.Limits.GRetract G Q) (n : ℤ),
+  Function.Injective.{1, 1} ⇑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} R.i n n ⋯)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.model_inclusion_injective' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.actual_stage_model_exports : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K]
+  {S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  {α :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S₀)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_3 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (α i)]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  {F : ZInQ.Contrib.RC53Assist.RetainedAssembly.ActualStageFamily S₀ W α}
+  {O : ZInQ.Contrib.RC53Assist.RetainedAssembly.OldDualityData F}
+  {R : ZInQ.Contrib.RC53Assist.RetainedAssembly.StandardOldReference S₀ W α} {width : ℕ}
+  (a : ZInQ.Contrib.RC53Assist.RetainedAssembly.ArithmeticInputs F O R width)
+  (p : ZInQ.Contrib.RC53Assist.RetainedAssembly.ArithmeticPrints K) (hK : NumberField.IsTotallyComplex.{0} K)
+  (hS₀ : Set.Finite.{0} S₀)
+  (h2 :
+    ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S₀ v)
+  (i : ℕ) [inst_5 : NeZero.{0} i],
+  ∃ D,
+    ∀ (n : ℤ),
+      Eq.{1} (D.model.rank n)
+        (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.Limits.StageA i))
+          (ZInQ.Manuscript.RC.Limits.residualCohomologyAt (F.globalCx i) n))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.actual_stage_model_exports' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+          (α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+            [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              (E : WeierstrassCurve.{0} ℚ) →
+                [WeierstrassCurve.IsElliptic.{0} E] →
+                  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    Ultrafilter.{0} ℕ →
+                      (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                        [inst : Ideal.IsPrime.{0} P] →
+                          [DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            ℕ →
+                              ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P) →
+                                Type 1
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.principal_boundary_from_target : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  [SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (D : ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q)
+  (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1)),
+  groupCohomology.IsCoboundary₁.{0, 0}
+      (D.evalOne ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} D.retract.i 1 1 ⋯) x)) →
+    Membership.mem.{0, 0} (LinearMap.range.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 0 1 ⋯)) x
+'ZInQ.Contrib.RC53Assist.Detection.Actual.principal_boundary_from_target' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.retainedEvaluation_from_target : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+          (α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              (E : WeierstrassCurve.{0} ℚ) →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    (U : Ultrafilter.{0} ℕ) →
+                      (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            [SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                  (ZInQ.Manuscript.RC.Wiring.ResAt P) (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                              {n : ℕ} →
+                                {Q :
+                                    ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                      (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                  ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q →
+                                    ZInQ.Contrib.RC53Assist.Detection.RetainedEvaluation S E α e U P n Q
+'ZInQ.Contrib.RC53Assist.Detection.Actual.retainedEvaluation_from_target' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.target_degree_zero_identity : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  [inst_7 :
+    SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (D : ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q)
+  (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 0))
+  (g : ZInQ.Contrib.RC53Assist.Detection.RationalSequences),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.Detection.Actual.retainedEvaluation_from_target S e α E U P D).one
+      ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 0 1 ⋯) x) g)
+    (HSub.hSub.{0, 0, 0}
+      (HSMul.hSMul.{0, 0, 0} g
+        (D.evalZero ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} D.retract.i 0 0 ⋯) x)))
+      (D.evalZero ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} D.retract.i 0 0 ⋯) x)))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.target_degree_zero_identity' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.embedding_from_target : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+          (α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              (E : WeierstrassCurve.{0} ℚ) →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    (U : Ultrafilter.{0} ℕ) →
+                      (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            [SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                  (ZInQ.Manuscript.RC.Wiring.ResAt P) (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                              {n : ℕ} →
+                                {Q :
+                                    ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                      (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                  (D :
+                                      ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n
+                                        Q) →
+                                    Function.Surjective.{1, 1}
+                                        ⇑(D.evalZero ∘ₗ
+                                            ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} D.retract.i 0 0 ⋯) →
+                                      ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q
+'ZInQ.Contrib.RC53Assist.Detection.Actual.embedding_from_target' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.embedding_requires_degree_zero_dimension : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  [SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  [FiniteDimensional.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 0)]
+  (D : ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q),
+  LE.le.{0} 4
+    (Module.finrank.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 0))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.embedding_requires_degree_zero_dimension' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.no_embedding_of_small_degree_zero : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  [SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  [FiniteDimensional.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 0)],
+  LT.lt.{0}
+      (Module.finrank.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+        ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 0))
+      4 →
+    IsEmpty.{1} (ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.no_embedding_of_small_degree_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.h1_map_of_boundary_preservation : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  [inst_7 :
+    SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (V : ZInQ.Contrib.RC53Assist.Detection.RetainedEvaluation S E α e U P n Q)
+  (zero :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+      (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 0)) (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)),
+  (∀ (y : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 0))
+      (g : ZInQ.Contrib.RC53Assist.Detection.RationalSequences),
+      Eq.{1} (V.one ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 0 1 ⋯) y) g)
+        (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} g (zero y)) (zero y))) →
+    ∃ F,
+      Function.Injective.{1, 1} ⇑F ∧
+        ∀ (a : ↥(LinearMap.ker.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 1 2 ⋯))),
+          Eq.{1} (F ((ZInQ.Manuscript.RC.SelmerComplex.clsAt Q 1 2 ⋯) a))
+            ((CategoryTheory.ConcreteCategory.hom.{0, 0, 1, 0}
+                (groupCohomology.H1π.{0}
+                  (Rep.ofDistribMulAction.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                    ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                    (ZInQ.Contrib.RC53Assist.Detection.FibrePair P))))
+              (groupCohomology.cocyclesOfIsCocycle₁.{0} ⋯))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.h1_map_of_boundary_preservation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.h1_map_from_retained_target : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  [inst_7 :
+    SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (D : ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q),
+  ∃ F,
+    Function.Injective.{1, 1} ⇑F ∧
+      ∀ (a : ↥(LinearMap.ker.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 1 2 ⋯))),
+        Eq.{1} (F ((ZInQ.Manuscript.RC.SelmerComplex.clsAt Q 1 2 ⋯) a))
+          ((CategoryTheory.ConcreteCategory.hom.{0, 0, 1, 0}
+              (groupCohomology.H1π.{0}
+                (Rep.ofDistribMulAction.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                  ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Contrib.RC53Assist.Detection.FibrePair P))))
+            (groupCohomology.cocyclesOfIsCocycle₁.{0} ⋯))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.h1_map_from_retained_target' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.model : {A : Type} →
+  [inst : CommRing.{0} A] →
+    {G : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A} →
+      {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput G} →
+        ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram P → ZInQ.Manuscript.RC.Limits.GradedModel G
+'ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.model' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.diagram : {A : Type} →
+  [inst : CommRing.{0} A] →
+    {G : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A} →
+      {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput G} →
+        (self : ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram P) →
+          ZInQ.Manuscript.RC.FibreDuality.StageMatrixDiagram A self.model.rank
+'ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.diagram' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.differential : ∀ {A : Type} [inst : CommRing.{0} A]
+  {G : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput G}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram P), Eq.{1} self.diagram.dC self.model.dC
+'ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.differential' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.localization : ∀ {A : Type} [inst : CommRing.{0} A]
+  {G : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput G}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram P),
+  Eq.{1} self.diagram.res (ZInQ.Manuscript.RC.FibreDuality.modelRes self.model P)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.localization' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.global_pairing : ∀ {A : Type} [inst : CommRing.{0} A]
+  {G : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput G}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram P),
+  Eq.{1} self.diagram.glob (ZInQ.Manuscript.RC.FibreDuality.modelGlob self.model P)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.global_pairing' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.local_pairing : ∀ {A : Type} [inst : CommRing.{0} A]
+  {G : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} A} {P : ZInQ.Manuscript.RC.FibreDuality.StagePairingInput G}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram P), Eq.{1} self.diagram.loc P.loc
+'ZInQ.Contrib.RC53Assist.Detection.Actual.ModelDiagram.local_pairing' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.target : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q →
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.target' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.retract : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                (self :
+                                    ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q) →
+                                  ZInQ.Manuscript.RC.Limits.GRetract self.target Q
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.retract' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.evalZero : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                (self :
+                                    ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q) →
+                                  LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                    (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} self.target 0))
+                                    (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.evalZero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.evalOne : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                (self :
+                                    ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q) →
+                                  LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                    (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} self.target 1))
+                                    (ZInQ.Contrib.RC53Assist.Detection.RationalSequences →
+                                      ZInQ.Contrib.RC53Assist.Detection.FibrePair P)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.evalOne' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.evalTwo : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                (self :
+                                    ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q) →
+                                  LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                    (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} self.target 2))
+                                    (Prod.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                        ZInQ.Contrib.RC53Assist.Detection.RationalSequences →
+                                      ZInQ.Contrib.RC53Assist.Detection.FibrePair P)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.evalTwo' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.degree_zero : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q)
+  (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} self.target 0))
+  (g : ZInQ.Contrib.RC53Assist.Detection.RationalSequences),
+  Eq.{1} (self.evalOne ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} self.target 0 1 ⋯) x) g)
+    (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} g (self.evalZero x)) (self.evalZero x))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.degree_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.degree_one : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q)
+  (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} self.target 1))
+  (g h : ZInQ.Contrib.RC53Assist.Detection.RationalSequences),
+  Eq.{1} (self.evalTwo ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} self.target 1 2 ⋯) x) (Prod.mk.{0, 0} g h))
+    (HAdd.hAdd.{0, 0, 0}
+      (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} g (self.evalOne x h)) (self.evalOne x (HMul.hMul.{0, 0, 0} g h)))
+      (self.evalOne x g))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.degree_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.zero_surjective : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q),
+  Function.Surjective.{1, 1} ⇑self.evalZero
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.zero_surjective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.one_injective : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q),
+  Function.Injective.{1, 1} ⇑self.evalOne
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.one_injective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.original : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q →
+                                  Fin n →
+                                    ℕ →
+                                      ↑(HomologicalComplex.X.{0, 1, 0}
+                                          (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                                            ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                            (ZInQ.Manuscript.RC.LambdaCoef.TLam K S
+                                              (WeierstrassCurve.baseChange.{0, 0} E K) α))
+                                          1)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.original' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.coordinates : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q →
+                                  LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                    (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+                                    (Fin n → ZInQ.Manuscript.RC.Wiring.ResAt P)
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.coordinates' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.normalized : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison S e α E U P n Q)
+  (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+  (g : ℕ → ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)),
+  Eq.{1}
+    (self.evalOne ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} self.retract.i 1 1 ⋯) x)
+        ((ZInQ.Contrib.RC53Assist.Detection.baseSequenceInclusion e) g)).1
+    (ZInQ.Contrib.RC53Assist.Detection.basisValue P U self.original
+      ((ZInQ.Contrib.RC53Assist.Detection.baseSequenceRestriction S e) g) (self.coordinates x))
+'ZInQ.Contrib.RC53Assist.Detection.Actual.RetainedTargetComparison.normalized' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]

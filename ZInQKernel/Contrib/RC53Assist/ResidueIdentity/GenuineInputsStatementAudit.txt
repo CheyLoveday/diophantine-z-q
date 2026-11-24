@@ -1,0 +1,1051 @@
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.coefficientMap_comp : ∀ {R G M N : Type} [inst : CommRing.{0} R]
+  [inst_1 : Group.{0} G] [inst_2 : TopologicalSpace.{0} G] [inst_3 : IsTopologicalGroup.{0} G]
+  [inst_4 : AddCommGroup.{0} M] [inst_5 : Module.{0, 0} R M] [inst_6 : DistribMulAction.{0, 0} G M]
+  [inst_7 : SMulCommClass.{0, 0, 0} G R M] [inst_8 : TopologicalSpace.{0} M] [inst_9 : DiscreteTopology.{0} M]
+  [inst_10 : ContinuousSMul.{0, 0} G M] [inst_11 : AddCommGroup.{0} N] [inst_12 : Module.{0, 0} R N]
+  [inst_13 : DistribMulAction.{0, 0} G N] [inst_14 : SMulCommClass.{0, 0, 0} G R N] [inst_15 : TopologicalSpace.{0} N]
+  [inst_16 : DiscreteTopology.{0} N] [inst_17 : ContinuousSMul.{0, 0} G N]
+  (f : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N) (g : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) N M) (p : ℕ)
+  (z : ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N) p)),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.ResidueIdentity.coefficientMap f p)
+      ((ZInQ.Contrib.RC53Assist.ResidueIdentity.coefficientMap g p) z))
+    ((ZInQ.Contrib.RC53Assist.ResidueIdentity.coefficientMap (f ∘ₗ g) p) z)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.coefficientMap_comp' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate : {R G M N : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : TopologicalSpace.{0} G] →
+        [inst_3 : IsTopologicalGroup.{0} G] →
+          [inst_4 : AddCommGroup.{0} M] →
+            [inst_5 : Module.{0, 0} R M] →
+              [inst_6 : DistribMulAction.{0, 0} G M] →
+                [inst_7 : SMulCommClass.{0, 0, 0} G R M] →
+                  [inst_8 : TopologicalSpace.{0} M] →
+                    [inst_9 : DiscreteTopology.{0} M] →
+                      [inst_10 : ContinuousSMul.{0, 0} G M] →
+                        [inst_11 : AddCommGroup.{0} N] →
+                          [inst_12 : Module.{0, 0} R N] →
+                            [inst_13 : DistribMulAction.{0, 0} G N] →
+                              [inst_14 : SMulCommClass.{0, 0, 0} G R N] →
+                                [inst_15 : TopologicalSpace.{0} N] →
+                                  [inst_16 : DiscreteTopology.{0} N] →
+                                    [inst_17 : ContinuousSMul.{0, 0} G N] →
+                                      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+                                          (↑(HomologicalComplex.X.{0, 1, 0}
+                                              (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 2))
+                                          M →
+                                        LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N →
+                                          LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) N M →
+                                            LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+                                              (↑(HomologicalComplex.X.{0, 1, 0}
+                                                  (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N) 2))
+                                              N
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate_normalized : ∀ {R G M N : Type}
+  [inst : CommRing.{0} R] [inst_1 : Group.{0} G] [inst_2 : TopologicalSpace.{0} G] [inst_3 : IsTopologicalGroup.{0} G]
+  [inst_4 : AddCommGroup.{0} M] [inst_5 : Module.{0, 0} R M] [inst_6 : DistribMulAction.{0, 0} G M]
+  [inst_7 : SMulCommClass.{0, 0, 0} G R M] [inst_8 : TopologicalSpace.{0} M] [inst_9 : DiscreteTopology.{0} M]
+  [inst_10 : ContinuousSMul.{0, 0} G M] [inst_11 : AddCommGroup.{0} N] [inst_12 : Module.{0, 0} R N]
+  [inst_13 : DistribMulAction.{0, 0} G N] [inst_14 : SMulCommClass.{0, 0, 0} G R N] [inst_15 : TopologicalSpace.{0} N]
+  [inst_16 : DiscreteTopology.{0} N] [inst_17 : ContinuousSMul.{0, 0} G N]
+  (cM :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+      (↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 2)) M)
+  (f : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N) (g : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) N M),
+  (∀ (x : N), Eq.{1} (f (g x)) x) →
+    ∀ (u κ : G → R),
+      ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoNormalized cM u κ →
+        ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoNormalized
+          (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate cM f g) u κ
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate_normalized' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate_spec : ∀ {R G M N : Type} [inst : CommRing.{0} R]
+  [inst_1 : TopologicalSpace.{0} R] [DiscreteTopology.{0} R] [inst_3 : Group.{0} G] [inst_4 : TopologicalSpace.{0} G]
+  [inst_5 : IsTopologicalGroup.{0} G] [inst_6 : AddCommGroup.{0} M] [inst_7 : Module.{0, 0} R M]
+  [inst_8 : DistribMulAction.{0, 0} G M] [inst_9 : SMulCommClass.{0, 0, 0} G R M] [inst_10 : TopologicalSpace.{0} M]
+  [inst_11 : DiscreteTopology.{0} M] [inst_12 : ContinuousSMul.{0, 0} G M] [inst_13 : AddCommGroup.{0} N]
+  [inst_14 : Module.{0, 0} R N] [inst_15 : DistribMulAction.{0, 0} G N] [inst_16 : SMulCommClass.{0, 0, 0} G R N]
+  [inst_17 : TopologicalSpace.{0} N] [inst_18 : DiscreteTopology.{0} N] [inst_19 : ContinuousSMul.{0, 0} G N]
+  (cM :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+      (↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 2)) M),
+  ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoCoordinate cM →
+    ∀ (f : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N) (g : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) N M),
+      (∀ (x : N), Eq.{1} (f (g x)) x) →
+        ∀ (u κ : G → R),
+          Continuous.{0, 0} u →
+            Continuous.{0, 0} κ →
+              (∀ (a b : G), Eq.{1} (u (HMul.hMul.{0, 0, 0} a b)) (HAdd.hAdd.{0, 0, 0} (u a) (u b))) →
+                (∀ (a b : G), Eq.{1} (κ (HMul.hMul.{0, 0, 0} a b)) (HAdd.hAdd.{0, 0, 0} (κ a) (κ b))) →
+                  (∀ (a : G) (m : M), Eq.{1} (HSMul.hSMul.{0, 0, 0} a m) m) →
+                    (∀ (a : G) (m : N), Eq.{1} (HSMul.hSMul.{0, 0, 0} a m) m) →
+                      ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoNormalized cM u κ →
+                        ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoCoordinate
+                          (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate cM f g)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate_spec' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarProjection : {R M N : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : AddCommGroup.{0} M] →
+      [inst_2 : Module.{0, 0} R M] →
+        [inst_3 : AddCommGroup.{0} N] →
+          [inst_4 : Module.{0, 0} R N] →
+            LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) M (Fin 2 → R) →
+              LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) N R → LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarProjection' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarInclusion : {R M N : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : AddCommGroup.{0} M] →
+      [inst_2 : Module.{0, 0} R M] →
+        [inst_3 : AddCommGroup.{0} N] →
+          [inst_4 : Module.{0, 0} R N] →
+            LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) M (Fin 2 → R) →
+              LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) N R → LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) N M
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarInclusion' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarProjection_inclusion : ∀ {R M N : Type} [inst : CommRing.{0} R]
+  [inst_1 : AddCommGroup.{0} M] [inst_2 : Module.{0, 0} R M] [inst_3 : AddCommGroup.{0} N] [inst_4 : Module.{0, 0} R N]
+  (eM : LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) M (Fin 2 → R))
+  (eN : LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) N R) (m : N),
+  Eq.{1}
+    ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarProjection eM eN)
+      ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarInclusion eM eN) m))
+    m
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarProjection_inclusion' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarCoordinateFromPlane : {R G M N : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : TopologicalSpace.{0} G] →
+        [inst_3 : IsTopologicalGroup.{0} G] →
+          [inst_4 : AddCommGroup.{0} M] →
+            [inst_5 : Module.{0, 0} R M] →
+              [inst_6 : DistribMulAction.{0, 0} G M] →
+                [inst_7 : SMulCommClass.{0, 0, 0} G R M] →
+                  [inst_8 : TopologicalSpace.{0} M] →
+                    [inst_9 : DiscreteTopology.{0} M] →
+                      [inst_10 : ContinuousSMul.{0, 0} G M] →
+                        [inst_11 : AddCommGroup.{0} N] →
+                          [inst_12 : Module.{0, 0} R N] →
+                            [inst_13 : DistribMulAction.{0, 0} G N] →
+                              [inst_14 : SMulCommClass.{0, 0, 0} G R N] →
+                                [inst_15 : TopologicalSpace.{0} N] →
+                                  [inst_16 : DiscreteTopology.{0} N] →
+                                    [inst_17 : ContinuousSMul.{0, 0} G N] →
+                                      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+                                          (↑(HomologicalComplex.X.{0, 1, 0}
+                                              (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 2))
+                                          M →
+                                        LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) M (Fin 2 → R) →
+                                          LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) N R →
+                                            LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+                                              (↑(HomologicalComplex.X.{0, 1, 0}
+                                                  (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N) 2))
+                                              N
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarCoordinateFromPlane' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarTraceFromPlane : {R G M N : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : TopologicalSpace.{0} G] →
+        [inst_3 : IsTopologicalGroup.{0} G] →
+          [inst_4 : AddCommGroup.{0} M] →
+            [inst_5 : Module.{0, 0} R M] →
+              [inst_6 : DistribMulAction.{0, 0} G M] →
+                [inst_7 : SMulCommClass.{0, 0, 0} G R M] →
+                  [inst_8 : TopologicalSpace.{0} M] →
+                    [inst_9 : DiscreteTopology.{0} M] →
+                      [inst_10 : ContinuousSMul.{0, 0} G M] →
+                        [inst_11 : AddCommGroup.{0} N] →
+                          [inst_12 : Module.{0, 0} R N] →
+                            [inst_13 : DistribMulAction.{0, 0} G N] →
+                              [inst_14 : SMulCommClass.{0, 0, 0} G R N] →
+                                [inst_15 : TopologicalSpace.{0} N] →
+                                  [inst_16 : DiscreteTopology.{0} N] →
+                                    [inst_17 : ContinuousSMul.{0, 0} G N] →
+                                      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+                                          (↑(HomologicalComplex.X.{0, 1, 0}
+                                              (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 2))
+                                          M →
+                                        LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) M (Fin 2 → R) →
+                                          LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) N R →
+                                            LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+                                              (↑(HomologicalComplex.X.{0, 1, 0}
+                                                  (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N) 2))
+                                              R
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarTraceFromPlane' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarTraceFromPlane_spec : ∀ {R G M N : Type} [inst : CommRing.{0} R]
+  [inst_1 : TopologicalSpace.{0} R] [DiscreteTopology.{0} R] [inst_3 : Group.{0} G] [inst_4 : TopologicalSpace.{0} G]
+  [inst_5 : IsTopologicalGroup.{0} G] [inst_6 : AddCommGroup.{0} M] [inst_7 : Module.{0, 0} R M]
+  [inst_8 : DistribMulAction.{0, 0} G M] [inst_9 : SMulCommClass.{0, 0, 0} G R M] [inst_10 : TopologicalSpace.{0} M]
+  [inst_11 : DiscreteTopology.{0} M] [inst_12 : ContinuousSMul.{0, 0} G M] [inst_13 : AddCommGroup.{0} N]
+  [inst_14 : Module.{0, 0} R N] [inst_15 : DistribMulAction.{0, 0} G N] [inst_16 : SMulCommClass.{0, 0, 0} G R N]
+  [inst_17 : TopologicalSpace.{0} N] [inst_18 : DiscreteTopology.{0} N] [inst_19 : ContinuousSMul.{0, 0} G N]
+  (cM :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+      (↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G M) 2)) M),
+  ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoCoordinate cM →
+    ∀ (eM : LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) M (Fin 2 → R))
+      (eN : LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) N R) (u κ : G → R),
+      Continuous.{0, 0} u →
+        Continuous.{0, 0} κ →
+          (∀ (a b : G), Eq.{1} (u (HMul.hMul.{0, 0, 0} a b)) (HAdd.hAdd.{0, 0, 0} (u a) (u b))) →
+            (∀ (a b : G), Eq.{1} (κ (HMul.hMul.{0, 0, 0} a b)) (HAdd.hAdd.{0, 0, 0} (κ a) (κ b))) →
+              (∀ (a : G) (m : M), Eq.{1} (HSMul.hSMul.{0, 0, 0} a m) m) →
+                (∀ (a : G) (m : N), Eq.{1} (HSMul.hSMul.{0, 0, 0} a m) m) →
+                  ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoNormalized cM u κ →
+                    (∀
+                        (a :
+                          ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N)
+                              1)),
+                        Eq.{1}
+                          ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarTraceFromPlane cM eM eN)
+                            ((ModuleCat.Hom.hom.{0, 0}
+                                (HomologicalComplex.d.{0, 1, 0}
+                                  (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N) 1 2))
+                              a))
+                          0) ∧
+                      ∀ (r : R),
+                        ∃ z,
+                          Eq.{1}
+                              ((ModuleCat.Hom.hom.{0, 0}
+                                  (HomologicalComplex.d.{0, 1, 0}
+                                    (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R G N) 2 3))
+                                z)
+                              0 ∧
+                            Eq.{1} ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarTraceFromPlane cM eM eN) z) r
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.scalarTraceFromPlane_spec' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.actualScalar_nsmul : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (i : ℕ) (q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i))
+  (m : ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ),
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 i) m) 0
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.actualScalar_nsmul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate_brauerFormula : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : ValuativeRel.{0} F] [inst_2 : TopologicalSpace.{0} F] [inst_3 : IsNonarchimedeanLocalField.{0} F] {n : ℕ}
+  {R M N : Type} [inst_4 : CommRing.{0} R] [inst_5 : Algebra.{0, 0} (ZMod n) R] [inst_6 : AddCommGroup.{0} M]
+  [inst_7 : Module.{0, 0} R M] [inst_8 : Module.{0, 0} (ZMod n) M] [IsScalarTower.{0, 0, 0} (ZMod n) R M]
+  [inst_10 : DistribMulAction.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  [inst_11 : SMulCommClass.{0, 0, 0} (Field.absoluteGaloisGroup.{0} F) R M] [inst_12 : TopologicalSpace.{0} M]
+  [inst_13 : DiscreteTopology.{0} M] [inst_14 : ContinuousSMul.{0, 0} (Field.absoluteGaloisGroup.{0} F) M]
+  [inst_15 : AddCommGroup.{0} N] [inst_16 : Module.{0, 0} R N] [inst_17 : Module.{0, 0} (ZMod n) N]
+  [IsScalarTower.{0, 0, 0} (ZMod n) R N] [inst_19 : DistribMulAction.{0, 0} (Field.absoluteGaloisGroup.{0} F) N]
+  [inst_20 : SMulCommClass.{0, 0, 0} (Field.absoluteGaloisGroup.{0} F) R N] [inst_21 : TopologicalSpace.{0} N]
+  [inst_22 : DiscreteTopology.{0} N] [inst_23 : ContinuousSMul.{0, 0} (Field.absoluteGaloisGroup.{0} F) N]
+  (η : AddEquiv.{0, 0} (ZMod n) (TauCeti.KummerCoeff.{0} F n))
+  (hμ :
+    ∀ (g : TauCeti.AbsoluteGaloisGroup.{0} F) (x : TauCeti.KummerCoeff.{0} F n), Eq.{1} (HSMul.hSMul.{0, 0, 0} g x) x)
+  (hM : ∀ (g : Field.absoluteGaloisGroup.{0} F) (m : M), Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m)
+  (hN : ∀ (g : Field.absoluteGaloisGroup.{0} F) (m : N), Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m)
+  (cM :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+      (↑(HomologicalComplex.X.{0, 1, 0}
+          (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} R (Field.absoluteGaloisGroup.{0} F) M) 2))
+      M),
+  ZInQ.Contrib.RC53Assist.LocalDegreeTwo.BrauerCoordinateFormula η hμ hM cM →
+    ∀ (f : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) M N) (g : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R) N M),
+      (∀ (x : N), Eq.{1} (f (g x)) x) →
+        ZInQ.Contrib.RC53Assist.LocalDegreeTwo.BrauerCoordinateFormula η hμ hN
+          (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate cM f g)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.retractCoordinate_brauerFormula' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.localAction_trivial_of_frobenius : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {M : Type} [inst_2 : AddCommGroup.{0} M]
+  [inst_3 : DistribMulAction.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M] [inst_4 : TopologicalSpace.{0} M]
+  [DiscreteTopology.{0} M] [ContinuousSMul.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) M]
+  (L : ZInQ.Contrib.RC53Assist.InnerLimitArith.MovingLabel K S) (i : ℕ),
+  (∀ (m : M), Eq.{1} (HSMul.hSMul.{0, 0, 0} (L.frob i) m) m) →
+    ∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K (L.q i))
+      (m : ZInQ.Manuscript.RC.SelmerComplex.ResMod.{0} (ZInQ.Manuscript.RC.SelmerComplex.locMap K S (L.q i)) M),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.localAction_trivial_of_frobenius' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.alphaLev_openKernel : ∀ {K : Type} [inst : Field.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (i : ℕ),
+  ZInQ.Manuscript.RC.CoefModules.IsOpenKer (ZInQ.Manuscript.RC.LambdaCoef.alphaLev i α)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.alphaLev_openKernel' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.actualStage_frobenius_trivial : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (B : WeierstrassCurve.{0} ℚ) [inst_2 : WeierstrassCurve.IsElliptic.{0} B]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} B K)]
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  (L : ZInQ.Contrib.RC53Assist.InnerLimitArith.CompatibleArithmeticLabel B K S α) (i : ℕ)
+  (m :
+    ZInQ.Manuscript.RC.CoefModules.Mcoef K S (WeierstrassCurve.baseChange.{0, 0} B K) i
+      (ZInQ.Manuscript.RC.LambdaCoef.alphaLev i α)),
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} (L.label.frob i) m) m
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.actualStage_frobenius_trivial' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.actualStage_local_action_trivial : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (B : WeierstrassCurve.{0} ℚ) [inst_2 : WeierstrassCurve.IsElliptic.{0} B]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} B K)]
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α]
+  (L : ZInQ.Contrib.RC53Assist.InnerLimitArith.CompatibleArithmeticLabel B K S α) (i : ℕ)
+  (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K (L.label.q i))
+  (m :
+    ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM (WeierstrassCurve.baseChange.{0, 0} B K) i
+      (ZInQ.Manuscript.RC.LambdaCoef.alphaLev i α) (L.label.q i)),
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.actualStage_local_action_trivial' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.primitive_double_of_square : ∀ {F : Type} [inst : Field.{0} F] (i : ℕ)
+  [NeZero.{0} i] (ζ : F),
+  IsPrimitiveRoot.{0} (HPow.hPow.{0, 0, 0} ζ 2) (HPow.hPow.{0, 0, 0} 2 i) →
+    IsPrimitiveRoot.{0} ζ (HMul.hMul.{0, 0, 0} 2 (HPow.hPow.{0, 0, 0} 2 i))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.primitive_double_of_square' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.fixedRoots_of_double : ∀ {F : Type} [inst : Field.{0} F] (n : ℕ),
+  (∀ (g : Gal(AlgebraicClosure.{0} F/F)) (ζ : AlgebraicClosure.{0} F),
+      Eq.{1} (HPow.hPow.{0, 0, 0} ζ (HMul.hMul.{0, 0, 0} 2 n)) 1 → Eq.{1} (g ζ) ζ) →
+    ∀ (g : Gal(AlgebraicClosure.{0} F/F)) (ζ : AlgebraicClosure.{0} F),
+      Eq.{1} (HPow.hPow.{0, 0, 0} ζ n) 1 → Eq.{1} (g ζ) ζ
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.fixedRoots_of_double' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.orientation_kummer_doubleLift : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : ValuativeRel.{0} F] [inst_2 : TopologicalSpace.{0} F] [inst_3 : IsNonarchimedeanLocalField.{0} F] (i : ℕ)
+  [NeZero.{0} i] (D : ZInQ.Contrib.RC53Assist.LocalDegreeTwo.TameOrientation F (HPow.hPow.{0, 0, 0} 2 i)),
+  (∀ (g : Gal(AlgebraicClosure.{0} F/F)) (ζ : AlgebraicClosure.{0} F),
+      Eq.{1} (HPow.hPow.{0, 0, 0} ζ (HMul.hMul.{0, 0, 0} 2 (HPow.hPow.{0, 0, 0} 2 i))) 1 → Eq.{1} (g ζ) ζ) →
+    ∃ χ,
+      Continuous.{0, 0} χ ∧
+        (∀ (g h : Gal(AlgebraicClosure.{0} F/F)),
+            Eq.{1} (χ (HMul.hMul.{0, 0, 0} g h)) (HAdd.hAdd.{0, 0, 0} (χ g) (χ h))) ∧
+          ∀ (g : Gal(AlgebraicClosure.{0} F/F)), Eq.{1} (D.kummer g) ↑(χ g).val
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.orientation_kummer_doubleLift' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.local_cyclotomic_eq_one : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (i : ℕ) (q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i)),
+  (∀
+      (g :
+        Gal(AlgebraicClosure.{0}
+            (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K
+              q)/IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q))
+      (ζ : AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q)),
+      Eq.{1} (HPow.hPow.{0, 0, 0} ζ (HPow.hPow.{0, 0, 0} 2 i)) 1 → Eq.{1} (g ζ) ζ) →
+    ∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q),
+      Eq.{1} ((ZInQ.Manuscript.RC.CoefModules.cycS hμ) ((ZInQ.Manuscript.RC.SelmerComplex.locMap K S q) g)) 1
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.local_cyclotomic_eq_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.actualScalar_local_action_trivial : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (i : ℕ) (q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i)),
+  (∀
+      (g :
+        Gal(AlgebraicClosure.{0}
+            (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K
+              q)/IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q))
+      (ζ : AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q)),
+      Eq.{1} (HPow.hPow.{0, 0, 0} ζ (HPow.hPow.{0, 0, 0} 2 i)) 1 → Eq.{1} (g ζ) ζ) →
+    ∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q) (m : ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.actualScalar_local_action_trivial' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.fixedRoots_of_residue_congruence : ∀ {F : Type} [inst : Field.{0} F]
+  [inst_1 : ValuativeRel.{0} F] [inst_2 : TopologicalSpace.{0} F] [inst_3 : IsNonarchimedeanLocalField.{0} F] (n : ℕ)
+  [NeZero.{0} n],
+  n.Coprime (ringChar.{0} (IsLocalRing.ResidueField.{0} ↥(Valuation.integer.{0, 0} (ValuativeRel.valuation.{0} F)))) →
+    Eq.{1}
+        (HMod.hMod.{0, 0, 0}
+          (Nat.card.{0} (IsLocalRing.ResidueField.{0} ↥(Valuation.integer.{0, 0} (ValuativeRel.valuation.{0} F)))) n)
+        1 →
+      ∀ (g : Gal(AlgebraicClosure.{0} F/F)) (ζ : AlgebraicClosure.{0} F),
+        Eq.{1} (HPow.hPow.{0, 0, 0} ζ n) 1 → Eq.{1} (g ζ) ζ
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.fixedRoots_of_residue_congruence' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.coreExponent_neZero : ∀ (i : ℕ), NeZero.{0} (HPow.hPow.{0, 0, 0} 2 i)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.coreExponent_neZero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.coreScalar_topology : (i : ℕ) →
+  TopologicalSpace.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.coreScalar_topology' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.coreScalar_discrete : ∀ (i : ℕ),
+  DiscreteTopology.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.coreScalar_discrete' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore : {K : Type} →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        WeierstrassCurve.{0} K →
+          (i : ℕ) →
+            (α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))) →
+              [ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K) → Type
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.exists_actualLocalCore : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] (i : ℕ) [inst_3 : NeZero.{0} i]
+  (α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  (q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  2 ∉ IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} q →
+    ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 i) →
+      (∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q) (m : ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM W i α q),
+          Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m) →
+        (∀
+            (g :
+              Gal(AlgebraicClosure.{0}
+                  (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K
+                    q)/IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q))
+            (ζ : AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q)),
+            Eq.{1} (HPow.hPow.{0, 0, 0} ζ (HMul.hMul.{0, 0, 0} 2 (HPow.hPow.{0, 0, 0} 2 i))) 1 → Eq.{1} (g ζ) ζ) →
+          (∀ (n : ℤ),
+              Module.Finite.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                  (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+                    (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                      (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM W i α q)))
+                  n)) →
+            (∀ (n : ℤ),
+                Eq.{1}
+                  (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                    (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                      (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+                        (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                          (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                          (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM W i α q)))
+                      n))
+                  (ZInQ.Contrib.RC53Assist.LocalDegreeTwo.SplitTrace.splitLocalRank n)) →
+              Nonempty.{1} (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.exists_actualLocalCore' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.u : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          {i : ℕ} →
+            {α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+              [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)} →
+                  ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q →
+                    ZInQ.Manuscript.RC.SelmerComplex.Gloc K q → ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.u' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.κ : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          {i : ℕ} →
+            {α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+              [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)} →
+                  ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q →
+                    ZInQ.Manuscript.RC.SelmerComplex.Gloc K q → ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.κ' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.continuousU : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} {i : ℕ}
+  {α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q), Continuous.{0, 0} X.u
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.continuousU' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.continuousK : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} {i : ℕ}
+  {α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q), Continuous.{0, 0} X.κ
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.continuousK' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.additiveU : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} {i : ℕ}
+  {α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q)
+  (g h : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q),
+  Eq.{1} (X.u (HMul.hMul.{0, 0, 0} g h)) (HAdd.hAdd.{0, 0, 0} (X.u g) (X.u h))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.additiveU' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.additiveK : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} {i : ℕ}
+  {α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)}
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q)
+  (g h : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q),
+  Eq.{1} (X.κ (HMul.hMul.{0, 0, 0} g h)) (HAdd.hAdd.{0, 0, 0} (X.κ g) (X.κ h))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.additiveK' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.trivialN : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} {i : ℕ}
+  {α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)}
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i))
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q)
+  (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q) (m : ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ),
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.trivialN' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.cN : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          {i : ℕ} →
+            {α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+              [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)} →
+                  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i)) →
+                    ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q →
+                      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                        (↑(HomologicalComplex.X.{0, 1, 0}
+                            (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                              (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                            2))
+                        (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.cN' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.τ : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          {i : ℕ} →
+            {α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+              [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)} →
+                  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i)) →
+                    ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q →
+                      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                        (↑(HomologicalComplex.X.{0, 1, 0}
+                            (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                              (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                            2))
+                        (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.τ' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.coordinateN : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} {i : ℕ}
+  {α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)}
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i))
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q),
+  ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoCoordinate
+      (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.cN hμ X) ∧
+    ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoNormalized
+      (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.cN hμ X) X.u X.κ
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.coordinateN' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.trace_spec : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {W : WeierstrassCurve.{0} K} {i : ℕ}
+  {α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)}
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i))
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q),
+  (∀
+      (a :
+        ↑(HomologicalComplex.X.{0, 1, 0}
+            (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+              (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q) (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+            1)),
+      Eq.{1}
+        ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.τ hμ X)
+          ((ModuleCat.Hom.hom.{0, 0}
+              (HomologicalComplex.d.{0, 1, 0}
+                (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                  (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q) (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                1 2))
+            a))
+        0) ∧
+    ∀ (r : ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i),
+      ∃ z,
+        Eq.{1}
+            ((ModuleCat.Hom.hom.{0, 0}
+                (HomologicalComplex.d.{0, 1, 0}
+                  (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                    (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                    (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                  2 3))
+              z)
+            0 ∧
+          Eq.{1} ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.τ hμ X) z) r
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.trace_spec' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.scalarBrauerFormula : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          {i : ℕ} →
+            {α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+              [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)} →
+                  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i)) →
+                    ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q →
+                      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                          (↑(HomologicalComplex.X.{0, 1, 0}
+                              (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                                (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                              2))
+                          (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ) →
+                        Prop
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.scalarBrauerFormula' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.scalar_brauerFormula : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {W : WeierstrassCurve.{0} K}
+  {i : ℕ}
+  {α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)}
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i))
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q),
+  ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.scalarBrauerFormula hμ X
+    (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.cN hμ X)
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.scalar_brauerFormula' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.originalTrace_factor : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {W : WeierstrassCurve.{0} K}
+  {i : ℕ}
+  {α :
+    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α]
+  {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)}
+  (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i))
+  (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q)
+  (τ' :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+      (↑(HomologicalComplex.X.{0, 1, 0}
+          (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+            (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q) (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+          2))
+      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)),
+  (∀
+      (a :
+        ↑(HomologicalComplex.X.{0, 1, 0}
+            (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+              (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q) (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+            1)),
+      Eq.{1}
+        (τ'
+          ((ModuleCat.Hom.hom.{0, 0}
+              (HomologicalComplex.d.{0, 1, 0}
+                (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                  (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q) (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                1 2))
+            a))
+        0) →
+    (∀ (r : ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i),
+        ∃ z,
+          Eq.{1}
+              ((ModuleCat.Hom.hom.{0, 0}
+                  (HomologicalComplex.d.{0, 1, 0}
+                    (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                      (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                    2 3))
+                z)
+              0 ∧
+            Eq.{1} (τ' z) r) →
+      ∃ δ,
+        ∀
+          (z :
+            ↑(HomologicalComplex.X.{0, 1, 0}
+                (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                  (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q) (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                2)),
+          Eq.{1}
+              ((ModuleCat.Hom.hom.{0, 0}
+                  (HomologicalComplex.d.{0, 1, 0}
+                    (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                      (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                    2 3))
+                z)
+              0 →
+            Eq.{1} (τ' z)
+              (HMul.hMul.{0, 0, 0} (↑δ) ((ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.τ hμ X) z))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.originalTrace_factor' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.toArithmetic : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          [WeierstrassCurve.IsElliptic.{0} W] →
+            {i : ℕ} →
+              [inst_3 : NeZero.{0} i] →
+                {α :
+                    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                    {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)} →
+                      ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i) →
+                        (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q) →
+                          (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) →
+                            Eq.{1} (WeierstrassCurve.map.{0, 0} W ↑Cn.κ) W →
+                              ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 i) →
+                                (θ :
+                                    ContinuousMonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                                      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)) →
+                                  (s : ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) →
+                                    (∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q),
+                                        Eq.{1} (X.orientation.unramified (θ g)) (X.orientation.unramified g)) →
+                                      (∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q),
+                                          Eq.{1}
+                                            ((Algebra.algebraMap.{0, 0} (ZMod (HPow.hPow.{0, 0, 0} 2 i))
+                                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                              (X.orientation.kummer (θ g)))
+                                            (HMul.hMul.{0, 0, 0} s
+                                              ((Algebra.algebraMap.{0, 0} (ZMod (HPow.hPow.{0, 0, 0} 2 i))
+                                                  (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                                (X.orientation.kummer g)))) →
+                                        ZInQ.Contrib.RC53Assist.ResidueIdentity.StageArithmeticData i
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.toArithmetic' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.toArithmeticWithOriginalTrace : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          [WeierstrassCurve.IsElliptic.{0} W] →
+            {i : ℕ} →
+              [inst_3 : NeZero.{0} i] →
+                {α :
+                    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_4 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                    {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)} →
+                      (hμ : ZInQ.Manuscript.RC.CoefModules.HasRootsOfUnity K S (HPow.hPow.{0, 0, 0} 2 i)) →
+                        (X : ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q) →
+                          (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) →
+                            Eq.{1} (WeierstrassCurve.map.{0, 0} W ↑Cn.κ) W →
+                              ZInQ.Manuscript.RC.CoefModules.FullTorsion K S W (HPow.hPow.{0, 0, 0} 2 i) →
+                                (θ :
+                                    ContinuousMonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                                      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)) →
+                                  (s : ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i) →
+                                    (∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q),
+                                        Eq.{1} (X.orientation.unramified (θ g)) (X.orientation.unramified g)) →
+                                      (∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q),
+                                          Eq.{1}
+                                            ((Algebra.algebraMap.{0, 0} (ZMod (HPow.hPow.{0, 0, 0} 2 i))
+                                                (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                              (X.orientation.kummer (θ g)))
+                                            (HMul.hMul.{0, 0, 0} s
+                                              ((Algebra.algebraMap.{0, 0} (ZMod (HPow.hPow.{0, 0, 0} 2 i))
+                                                  (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                                (X.orientation.kummer g)))) →
+                                        (τ' :
+                                            LinearMap.{0, 0, 0, 0}
+                                              (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                              (↑(HomologicalComplex.X.{0, 1, 0}
+                                                  (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                                                    (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                                    (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                                                    (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                                                  2))
+                                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) →
+                                          (∀
+                                              (a :
+                                                ↑(HomologicalComplex.X.{0, 1, 0}
+                                                    (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                                                      (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                                      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                                                      (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                                                    1)),
+                                              Eq.{1}
+                                                (τ'
+                                                  ((ModuleCat.Hom.hom.{0, 0}
+                                                      (HomologicalComplex.d.{0, 1, 0}
+                                                        (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                                                          (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                                          (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                                                          (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                                                        1 2))
+                                                    a))
+                                                0) →
+                                            (∀ (r : ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i),
+                                                ∃ z,
+                                                  Eq.{1}
+                                                      ((ModuleCat.Hom.hom.{0, 0}
+                                                          (HomologicalComplex.d.{0, 1, 0}
+                                                            (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                                                              (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                                              (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                                                              (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualN i q hμ))
+                                                            2 3))
+                                                        z)
+                                                      0 ∧
+                                                    Eq.{1} (τ' z) r) →
+                                              ZInQ.Contrib.RC53Assist.ResidueIdentity.StageArithmeticData i
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.toArithmeticWithOriginalTrace' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.extraExponent_coprime : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (i : ℕ) (q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  2 ∉ IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} q →
+    (HMul.hMul.{0, 0, 0} 2 (HPow.hPow.{0, 0, 0} 2 i)).Coprime
+      (ringChar.{0}
+        (IsLocalRing.ResidueField.{0}
+          ↥(Valuation.integer.{0, 0}
+              (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q)))))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.extraExponent_coprime' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.exists_actualLocalCore_of_label : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (B : WeierstrassCurve.{0} ℚ) [inst_2 : WeierstrassCurve.IsElliptic.{0} B]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} B K)]
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α]
+  (L : ZInQ.Contrib.RC53Assist.InnerLimitArith.CompatibleArithmeticLabel B K S α) (i : ℕ) [inst_5 : NeZero.{0} i],
+  2 ∉ IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} (L.label.q i) →
+    Eq.{1}
+        (HMod.hMod.{0, 0, 0}
+          (Nat.card.{0}
+            (IsLocalRing.ResidueField.{0}
+              ↥(Valuation.integer.{0, 0}
+                  (ValuativeRel.valuation.{0}
+                    (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K (L.label.q i))))))
+          (HMul.hMul.{0, 0, 0} 2 (HPow.hPow.{0, 0, 0} 2 i)))
+        1 →
+      (∀ (n : ℤ),
+          Module.Finite.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+            (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+              (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+                (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                  (ZInQ.Manuscript.RC.SelmerComplex.Gloc K (L.label.q i))
+                  (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM (WeierstrassCurve.baseChange.{0, 0} B K) i
+                    (ZInQ.Manuscript.RC.LambdaCoef.alphaLev i α) (L.label.q i))))
+              n)) →
+        (∀ (n : ℤ),
+            Eq.{1}
+              (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                  (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+                    (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K (L.label.q i))
+                      (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM (WeierstrassCurve.baseChange.{0, 0} B K) i
+                        (ZInQ.Manuscript.RC.LambdaCoef.alphaLev i α) (L.label.q i))))
+                  n))
+              (ZInQ.Contrib.RC53Assist.LocalDegreeTwo.SplitTrace.splitLocalRank n)) →
+          Nonempty.{1}
+            (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore (WeierstrassCurve.baseChange.{0, 0} B K) i
+              (ZInQ.Manuscript.RC.LambdaCoef.alphaLev i α) (L.label.q i))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.exists_actualLocalCore_of_label' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.label_residue_extra_precision : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (B : WeierstrassCurve.{0} ℚ) [inst_2 : WeierstrassCurve.IsElliptic.{0} B]
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  (L : ZInQ.Contrib.RC53Assist.InnerLimitArith.CompatibleArithmeticLabel B K S α) (i : ℕ),
+  Dvd.dvd.{0} (HMul.hMul.{0, 0, 0} 2 (HPow.hPow.{0, 0, 0} 2 i)) (HAdd.hAdd.{0, 0, 0} (L.primes.ell i) 1) →
+    Eq.{1}
+      (HMod.hMod.{0, 0, 0}
+        (Nat.card.{0}
+          (IsLocalRing.ResidueField.{0}
+            ↥(Valuation.integer.{0, 0}
+                (ValuativeRel.valuation.{0}
+                  (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K (L.label.q i))))))
+        (HMul.hMul.{0, 0, 0} 2 (HPow.hPow.{0, 0, 0} 2 i)))
+      1
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.label_residue_extra_precision' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.exists_actualLocalCore_of_label_precision : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (B : WeierstrassCurve.{0} ℚ)
+  [inst_2 : WeierstrassCurve.IsElliptic.{0} B]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} B K)]
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α]
+  (L : ZInQ.Contrib.RC53Assist.InnerLimitArith.CompatibleArithmeticLabel B K S α) (i : ℕ) [inst_5 : NeZero.{0} i],
+  2 ∉ IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} (L.label.q i) →
+    Dvd.dvd.{0} (HMul.hMul.{0, 0, 0} 2 (HPow.hPow.{0, 0, 0} 2 i)) (HAdd.hAdd.{0, 0, 0} (L.primes.ell i) 1) →
+      (∀ (n : ℤ),
+          Module.Finite.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+            (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+              (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+                (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                  (ZInQ.Manuscript.RC.SelmerComplex.Gloc K (L.label.q i))
+                  (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM (WeierstrassCurve.baseChange.{0, 0} B K) i
+                    (ZInQ.Manuscript.RC.LambdaCoef.alphaLev i α) (L.label.q i))))
+              n)) →
+        (∀ (n : ℤ),
+            Eq.{1}
+              (Module.finrank.{0, 0} (IsLocalRing.ResidueField.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                (ZInQ.Manuscript.RC.Limits.residualCohomologyAt
+                  (ZInQ.Manuscript.RC.SelmerComplex.natCx.{0}
+                    (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                      (ZInQ.Manuscript.RC.SelmerComplex.Gloc K (L.label.q i))
+                      (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM (WeierstrassCurve.baseChange.{0, 0} B K) i
+                        (ZInQ.Manuscript.RC.LambdaCoef.alphaLev i α) (L.label.q i))))
+                  n))
+              (ZInQ.Contrib.RC53Assist.LocalDegreeTwo.SplitTrace.splitLocalRank n)) →
+          Nonempty.{1}
+            (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore (WeierstrassCurve.baseChange.{0, 0} B K) i
+              (ZInQ.Manuscript.RC.LambdaCoef.alphaLev i α) (L.label.q i))
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.exists_actualLocalCore_of_label_precision' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.mk : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {W : WeierstrassCurve.{0} K} →
+          {i : ℕ} →
+            {α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+              [inst_2 : ZInQ.Manuscript.RC.CoefModules.IsOpenKer α] →
+                {q : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)} →
+                  (orientation :
+                      ZInQ.Contrib.RC53Assist.LocalDegreeTwo.TameOrientation
+                        (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q) (HPow.hPow.{0, 0, 0} 2 i)) →
+                    (eM :
+                        LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                          (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM W i α q)
+                          (Fin 2 → ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)) →
+                      (cM :
+                          LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                            (↑(HomologicalComplex.X.{0, 1, 0}
+                                (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                                  (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+                                  (ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                                  (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM W i α q))
+                                2))
+                            (ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM W i α q)) →
+                        (η :
+                            AddEquiv.{0, 0} (ZMod (HPow.hPow.{0, 0, 0} 2 i))
+                              (TauCeti.KummerCoeff.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q)
+                                (HPow.hPow.{0, 0, 0} 2 i))) →
+                          (trivialM :
+                              ∀ (g : ZInQ.Manuscript.RC.SelmerComplex.Gloc K q)
+                                (m : ZInQ.Contrib.RC53Assist.ResidueIdentity.actualM W i α q),
+                                Eq.{1} (HSMul.hSMul.{0, 0, 0} g m) m) →
+                            (rootsDouble :
+                                ∀
+                                  (g :
+                                    Gal(AlgebraicClosure.{0}
+                                        (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K
+                                          q)/IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q))
+                                  (ζ :
+                                    AlgebraicClosure.{0}
+                                      (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K q)),
+                                  Eq.{1} (HPow.hPow.{0, 0, 0} ζ (HMul.hMul.{0, 0, 0} 2 (HPow.hPow.{0, 0, 0} 2 i))) 1 →
+                                    Eq.{1} (g ζ) ζ) →
+                              ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoCoordinate cM →
+                                (ZInQ.Contrib.RC53Assist.InnerLimitArith.LocalDegreeTwoNormalized cM
+                                    (fun g =>
+                                      (Algebra.algebraMap.{0, 0} (ZMod (HPow.hPow.{0, 0, 0} 2 i))
+                                          (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                        (orientation.unramified g))
+                                    fun g =>
+                                    (Algebra.algebraMap.{0, 0} (ZMod (HPow.hPow.{0, 0, 0} 2 i))
+                                        (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))
+                                      (orientation.kummer g)) →
+                                  ZInQ.Contrib.RC53Assist.LocalDegreeTwo.StageBrauerCoordinateFormula W i α q η
+                                      (ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.fixedRoots_of_double
+                                        (HPow.hPow.{0, 0, 0} 2 i) rootsDouble)
+                                      trivialM cM →
+                                    Eq.{1} (↑↑↑(Additive.toMul.{0} (η 1)))
+                                        (ZInQ.Contrib.CloudB3RC53.TameQuotient.kummerVal.{0} orientation.root
+                                          orientation.inertia) →
+                                      ZInQ.Contrib.RC53Assist.LocalDegreeTwo.SplitTrace.OrientedLocalRetraction eM
+                                          orientation.frobenius orientation.inertia cM →
+                                        ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore W i α q
+'ZInQ.Contrib.RC53Assist.ResidueIdentity.Genuine.ActualLocalCore.mk' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]

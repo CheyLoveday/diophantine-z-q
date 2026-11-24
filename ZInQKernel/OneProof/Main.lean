@@ -1,8 +1,10 @@
-import ZInQKernel.OneProof.H.TailZ98
+import ZInQKernel.OneProof.H.TailZ102
 import ZInQKernel.MainGreenTao
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRCGenuineFinal
 import ZInQKernel.Contrib.OneProof.CasselsTatePairing
+import ZInQKernel.Contrib.RC53Assist.BCDTPrint.Descent
+import ZInQKernel.Contrib.OneProof.SilvermanRankOne
 
 /-!
 # The whole proof in one theorem
@@ -12,14 +14,13 @@ the development fork, and from nothing else: the open bundles of the H chain, th
 converse, `ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine`, `diophantine_zq.tex` lines 1005–1011, over the genuine
 `Sel_{2^∞}(E_ℓ/ℚ)`), the Cassels–Tate pairing on the curves `E_ℓ` of Theorem 5.3
 (`ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves`, the printed input the manuscript cites for its Lemma 5.4 at
-`diophantine_zq.tex` L1079–1081; Lemma 5.4 itself is proved from it), the printed leaf BCDT Theorem A
-(`ZInQ.Manuscript.PoleS12.BCDTThmA`) and a consequence of Kolyvagin's Theorem 1
-(`ZInQ.Manuscript.PoleS12.KolyvaginThm1`, through Shimura's construction and Faltings' isogeny theorem).
+`diophantine_zq.tex` L1079–1081; Lemma 5.4 itself is proved from it), and the forward rank-one implication from
+Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Appendix C, Evidence 16.5.5, pp. 452–453.
 Pole completeness PC (`ZInQ.PoleCompleteness`, Theorem 5.2, lines 1001–1004, for the manuscript's pole polynomial) is
 proved from these by the manuscript's descent (lines 1019–1121):
-`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`
-(`Contrib/OneProof/CasselsTatePairing.lean`, over `Contrib/OneProof/PoleCompletenessFromRCGenuineFinal.lean`; fork
-issue #83), with Lemma 5.4 (`Contrib/OneProof/SelmerCorankFam.lean`, `Contrib/OneProof/Lemma54FromCasselsTate.lean`),
+`ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne`
+(`Contrib/OneProof/SilvermanRankOne.lean`, fork issue #83), with Lemma 5.4
+(`Contrib/OneProof/SelmerCorankFam.lean`, `Contrib/OneProof/Lemma54FromCasselsTate.lean`),
 the matrix construction, the local images, the 2-descent, Mordell–Weil for `E_ℓ` and the Kummer identification
 `#Sel₂(E_ℓ/ℚ) = #SelM ℓ` proved.
 It composes the compiled H chain with the headline
@@ -218,6 +219,41 @@ Math. Proc. Cambridge Philos. Soc. 180 (2026) section 2·1, p. 613; leaf, rated 
 `HDec.CMBranch.CMjBridges.cmjDegree_of_print_closed` from the leaf, with j-descent4's `abVarFunctionFieldGenusOne`
 (proved unconditionally) and Lean proving that the order of discriminant Δ and its proper class number are determined
 by Δ. `OpenResearchLeaves72` (`TailZ98`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open91` the new top.
+Five outside discharges (fork PRs #152, #156, #153, #155, #157) proved `neronSchemeExtensionDedekind`
+(`NeronDVR.neronSchemeExtensionDedekind_proof`) and `faltingsLemma1DVRPrint`
+(`ZInQ.FaltingsRestate.faltingsLemma1DVRPrint_proof`) outright, `r9a` and `r9b` from `gaudronRemondThm14AnSS`,
+`silverbergZarhinThm35` and the proved `neronSchemeExtensionDedekind`
+(`ZInQ.Contrib.TateFiniteApproximation.faltingsSemisimple_of_existing_leaves`, `faltingsTate_of_existing_leaves`), and
+`y3ToP1j` from `y3FullThreeRepZ30` and `deligneCanonicalModelY3EveryPrint` (`Y3P1j.y3ToP1j_of_printed_moduli`); no
+new leaf. `OpenResearchLeaves73` (`TailZ99`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open92`
+the new top.
+An outside discharge (fork PR #177) proved Silverberg–Zarhin's Theorem 3.3 outright
+(`SZRaynaud.silverbergZarhinThm33_proof`, `Contrib/OneProof/SZThm33/`); no new leaf. `OpenResearchLeaves74`
+(`TailZ100`, autofold) is the new generation and `HDec.HSyn.sixContactMin_of_open93` the new top (25 → 24 assumptions).
+The same PR derives Theorem 3.5 from the semistable reduction theorem (`SZRaynaud.silverbergZarhinThm35_of_sz34`).
+sz35-swap-1121 folds that swap after a two-lens reading of SZ Thm. 3.4 / SGA 7 IX Th. 3.6 (faithful, sound): the leaf
+`silverbergZarhinThm34` (Grothendieck's semistable reduction theorem, SZ Thm. 3.4, pp. 405–406) replaces
+`silverbergZarhinThm35` (Raynaud's criterion), which `SZRaynaud.silverbergZarhinThm35_of_sz34` proves from it with the
+proved Theorem 3.3. `OpenResearchLeaves76` (`TailZ102`, autofold) is the new generation and
+`HDec.HSyn.sixContactMin_of_open95` the new top (24 → 24 assumptions).
+
+bcdt-print replaced the frozen `ZInQ.Manuscript.PoleS12.BCDTThmA` by BCDT Theorem A as printed
+(`ZInQ.Contrib.RC53Assist.BCDTPrint.BCDTThmAPrinted`: condition (2) of Breuil–Conrad–Diamond–Taylor,
+J. Amer. Math. Soc. 14 (2001), Theorem A, for an eigenform of weight 2 on `Γ₁(N)` at some level `N`;
+leaf, rated LEAF): the hypothesis is `ZInQ.Contrib.RC53Assist.BCDTPrint.bcdtThmA_of_printed` from the
+leaf, Lean proving the trivial nebentypus (the Hecke relation against the recurrence of the curve's
+coefficients at good primes, Dirichlet's theorem for the diamond operators, then `Γ₀(N)`).
+
+The forward-rank fold replaces the two root arguments `hB` and `hK` with `hRank`, the rank-one line of
+Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C, Evidence 16.5.5, p. 453.
+Only Mordell–Weil rank one is used here; the pole proof does not use the finite-Sha conclusion.
+Theorem 5.3, the Cassels–Tate pairing, and the H bundles are unchanged (26 → 25 assumptions).
+Its record cites Miller's Theorem 4.4, from which
+`ZInQ.Manuscript.ForwardRankLiterature.silvermanRankOne_of_miller` proves it.
+
+Diamond–Shurman, Theorem 9.6.5, p. 393 (2005), supplies the weight-at-least-two representation in its
+prime-ideal convention. Lean proves the comparison with the existing inertia and arithmetic Frobenius
+interfaces. This changes one premise without adding to the count.
 
 The hypotheses of `frozenTarget` are therefore exactly the open statements. Discharging one means replacing a field or
 hypothesis by its proof; the theorem's statement then loses that hypothesis.
@@ -225,20 +261,19 @@ hypothesis by its proof; the theorem's statement then loses that hypothesis.
 
 namespace ZInQ.OneProof
 
-/-- **Theorem 1.1, from every statement still open:** the open H bundles, the manuscript's Theorem 5.3 (the restricted
-converse, the manuscript's own theorem (not a printed leaf)), the Cassels–Tate pairing on the curves `E_ℓ`, the printed
-leaf BCDT Theorem A and a consequence of Kolyvagin's Theorem 1 (through Shimura's construction and Faltings' isogeny theorem). Pole
-completeness PC (the manuscript's Theorem 5.2) is proved from the last four, with Lemma 5.4 proved from the pairing
-(`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`). -/
+/-- **Theorem 1.1, from every statement still open:** the open H bundles, the manuscript's Theorem 5.3 over
+its genuine Selmer condition, the Cassels–Tate pairing on the curves `E_ℓ`, and Silverman's rank-one forward
+implication (Appendix C, Evidence 16.5.5). Pole completeness (Theorem 5.2) uses only these last three inputs. -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves72) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves28)
+    (r : HDec.HSyn.OpenResearchLeaves76) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves28)
     (hRC : ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine)
-    (hCT : ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves) (hB : ZInQ.Manuscript.PoleS12.BCDTThmA)
-    (hK : ZInQ.Manuscript.PoleS12.KolyvaginThm1) :
+    (hCT : ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves)
+    (hRank : ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne) :
     ZInQ.FrozenTarget :=
   ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness
-    (HDec.HSyn.sixContactMin_of_open91 r t l)
-    (ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing hRC hCT hB hK)
+    (HDec.HSyn.sixContactMin_of_open95 r t l)
+    (ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne hRC hCT
+      (ZInQ.Manuscript.PoleS12.SilvermanRank.rankOne_of_aec hRank))
 
 end ZInQ.OneProof
 
