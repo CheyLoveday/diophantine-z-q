@@ -3161,3 +3161,4 @@ import ZInQKernel.Contrib.OneProof.ModularFrobeniusDual
 import ZInQKernel.Contrib.OneProof.ModularFrobeniusPrimes
 import ZInQKernel.Contrib.OneProof.Y3IntegralInvariantAffine
 import ZInQKernel.Contrib.OneProof.Y3IntegralTorsorPullback
+import ZInQKernel.Contrib.OneProof.SZThm35.PotentialSemistability.GaloisProlongations
