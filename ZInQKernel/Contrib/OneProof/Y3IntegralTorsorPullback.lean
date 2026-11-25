@@ -40,8 +40,8 @@ theorem isPullback_of_equivariant_kernelPairs
 
 open AlgebraicGeometry
 
-/-- For actions of the same relative group scheme, the square on the second projections
-is itself a pullback. Given the two torsor identities and an fppf source quotient map,
+/-- For any `g : G ⟶ S` (no group structure or action axioms are used), the square on the second
+projections is itself a pullback. Given the two torsor identities and an fppf source quotient map,
 the equivariant structure map therefore exhibits `A` as the pullback of `B` to `X`. -/
 theorem isPullback_of_fppf_torsor_quotients
     {S G A X B Y : Scheme} (g : G ⟶ S) (sX : X ⟶ S)

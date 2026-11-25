@@ -2,9 +2,10 @@ import Mathlib.AlgebraicGeometry.Morphisms.Separated
 
 /-! # Invariant affine neighborhoods from affine orbit neighborhoods
 
-This isolates the finite-intersection argument used in `Y3InvariantAffine.lean` from its
-curve-specific construction of affine neighborhoods. The affine intersection step is the
-separated-over-affine case of Stacks, Lemma 26.21.7 (Tag 01KP).
+This restates, without the curve-specific construction of affine neighborhoods, the
+finite-intersection argument of `Y3InvariantAffine.lean` (which does not import this file). The
+affine intersection step is the separated-over-affine case of Stacks, Tag 01KP (the lemma number
+is not checked against a recorded reading).
 -/
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopologicalSpace
