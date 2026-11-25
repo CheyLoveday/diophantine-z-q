@@ -3156,3 +3156,6 @@ import ZInQKernel.Contrib.OneProof.RC.ClassicalEulerFactors.Combined
 import ZInQKernel.Contrib.OneProof.RC.ClassicalEulerFactors.LocalFactors
 import ZInQKernel.Contrib.OneProof.RC.ClassicalEulerFactors.Parity
 import ZInQKernel.Contrib.OneProof.RC.ClassicalEulerFactors.Receiver
+import ZInQKernel.Contrib.OneProof.ModularCoeffFixedField
+import ZInQKernel.Contrib.OneProof.ModularFrobeniusDual
+import ZInQKernel.Contrib.OneProof.ModularFrobeniusPrimes
