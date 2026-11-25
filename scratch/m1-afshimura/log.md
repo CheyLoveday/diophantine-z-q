@@ -11,3 +11,6 @@
   complete action and theorem with Lean. The full `AfShimuraProof` module
   build passed. The 46 theorem entries in `axioms.txt` each use only
   `propext`, `Classical.choice` and `Quot.sound`.
+- Ran `lake build ZInQKernel.Contrib.OneProof.NOSNarrowChain` successfully
+  (15778 jobs). Then `lake env lean -j1 scratch/m1-afshimura/FoldCheck.lean`
+  exited successfully with no diagnostics.
