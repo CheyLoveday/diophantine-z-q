@@ -230,8 +230,8 @@ structure OpenResearchLeaves65DS : Prop where
   /-- cm-branch (leaf, printed form, pending review): Fowler, Math. Proc. Cambridge Philos. Soc.
     180 (2026), Prop. 2.7 (L588-590). -/
   fowlerProp27 : _root_.HDec.CMBranch.FowlerProp27
-  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus,
-    #Pic(R) <= [L:Q] (L586-587). -/
+  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, card
+    Pic(R) <= [L:Q] (L586-587). -/
   cmjDegree : _root_.HDec.CMBranch.CMjDegree
   /-- cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially
     good reduction (L596-597). -/
@@ -489,8 +489,8 @@ structure OpenResearchLeaves66DS : Prop where
   /-- cm-branch (leaf, printed form, pending review): Fowler, Math. Proc. Cambridge Philos. Soc.
     180 (2026), Prop. 2.7 (L588-590). -/
   fowlerProp27 : _root_.HDec.CMBranch.FowlerProp27
-  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus,
-    #Pic(R) <= [L:Q] (L586-587). -/
+  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, card
+    Pic(R) <= [L:Q] (L586-587). -/
   cmjDegree : _root_.HDec.CMBranch.CMjDegree
   /-- cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially
     good reduction (L596-597). -/
@@ -738,8 +738,8 @@ structure OpenResearchLeaves67DS : Prop where
   /-- cm-branch (leaf, printed form, pending review): Fowler, Math. Proc. Cambridge Philos. Soc.
     180 (2026), Prop. 2.7 (L588-590). -/
   fowlerProp27 : _root_.HDec.CMBranch.FowlerProp27
-  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus,
-    #Pic(R) <= [L:Q] (L586-587). -/
+  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, card
+    Pic(R) <= [L:Q] (L586-587). -/
   cmjDegree : _root_.HDec.CMBranch.CMjDegree
   /-- cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially
     good reduction (L596-597). -/
@@ -989,8 +989,8 @@ structure OpenResearchLeaves68DS : Prop where
     from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible
     isomorphisms. Euler clause and (iv) not in this row. -/
   shimuraThm1Af : _root_.R16Thm1b.ShimuraThm1Af
-  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus,
-    #Pic(R) <= [L:Q] (L586-587). -/
+  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, card
+    Pic(R) <= [L:Q] (L586-587). -/
   cmjDegree : _root_.HDec.CMBranch.CMjDegree
   /-- cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially
     good reduction (L596-597). -/
@@ -1228,8 +1228,8 @@ structure OpenResearchLeaves69DS : Prop where
     from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible
     isomorphisms. Euler clause and (iv) not in this row. -/
   shimuraThm1Af : _root_.R16Thm1b.ShimuraThm1Af
-  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus,
-    #Pic(R) <= [L:Q] (L586-587). -/
+  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, card
+    Pic(R) <= [L:Q] (L586-587). -/
   cmjDegree : _root_.HDec.CMBranch.CMjDegree
   /-- cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially
     good reduction (L596-597). -/
@@ -1468,8 +1468,8 @@ structure OpenResearchLeaves70DS : Prop where
     from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible
     isomorphisms. Euler clause and (iv) not in this row. -/
   shimuraThm1Af : _root_.R16Thm1b.ShimuraThm1Af
-  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus,
-    #Pic(R) <= [L:Q] (L586-587). -/
+  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, card
+    Pic(R) <= [L:Q] (L586-587). -/
   cmjDegree : _root_.HDec.CMBranch.CMjDegree
   /-- cm-branch (leaf, consequence form, pending review): Barquero-Sanchez et al., Res. Number
     Theory 3 (2017), Eq. (6.2) (L600-605). -/
@@ -1698,8 +1698,8 @@ structure OpenResearchLeaves71DS : Prop where
     from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible
     isomorphisms. Euler clause and (iv) not in this row. -/
   shimuraThm1Af : _root_.R16Thm1b.ShimuraThm1Af
-  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus,
-    #Pic(R) <= [L:Q] (L586-587). -/
+  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, card
+    Pic(R) <= [L:Q] (L586-587). -/
   cmjDegree : _root_.HDec.CMBranch.CMjDegree
   /-- cm-branch (leaf, consequence form, pending review): Barquero-Sanchez et al., Res. Number
     Theory 3 (2017), Eq. (6.2) (L600-605). -/

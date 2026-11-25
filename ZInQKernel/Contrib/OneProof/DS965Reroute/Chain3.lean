@@ -923,7 +923,7 @@ structure OpenResearchLeaves36EBCFSFU_y3x6NOSDS : Prop where
   /-- height-split, H-15: Gaudron–Rémond 2014 Thm 1.4 over the published stable height, replaces
     `r19`. -/
   gaudronRemondThm14 : _root_.ZInQ.HeightSplit.GaudronRemondThm14
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -1055,7 +1055,7 @@ structure OpenResearchLeaves35EBCFSFU_y3x6NOSDS : Prop where
   /-- height-split, H-15: Gaudron–Rémond 2014 Thm 1.4 over the published stable height, replaces
     `r19`. -/
   gaudronRemondThm14 : _root_.ZInQ.HeightSplit.GaudronRemondThm14
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -1620,8 +1620,8 @@ structure OpenResearchLeaves63NOSDS : Prop where
   /-- cm-branch (leaf, printed form, pending review): Fowler, Math. Proc. Cambridge Philos. Soc.
     180 (2026), Prop. 2.7 (L588-590). -/
   fowlerProp27 : _root_.HDec.CMBranch.FowlerProp27
-  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus,
-    #Pic(R) <= [L:Q] (L586-587). -/
+  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, card
+    Pic(R) <= [L:Q] (L586-587). -/
   cmjDegree : _root_.HDec.CMBranch.CMjDegree
   /-- cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially
     good reduction (L596-597). -/
@@ -1932,8 +1932,8 @@ structure OpenResearchLeaves64NOSDS : Prop where
   /-- cm-branch (leaf, printed form, pending review): Fowler, Math. Proc. Cambridge Philos. Soc.
     180 (2026), Prop. 2.7 (L588-590). -/
   fowlerProp27 : _root_.HDec.CMBranch.FowlerProp27
-  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus,
-    #Pic(R) <= [L:Q] (L586-587). -/
+  /-- cm-branch (leaf, ELLIOT-literature, pending review): the degree of a singular modulus, card
+    Pic(R) <= [L:Q] (L586-587). -/
   cmjDegree : _root_.HDec.CMBranch.CMjDegree
   /-- cm-branch (leaf, ELLIOT-literature, pending review): CM elliptic curves have potentially
     good reduction (L596-597). -/

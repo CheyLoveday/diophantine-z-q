@@ -141,7 +141,7 @@ structure _root_.HDec.HSyn.GR9.OpenResearchLeaves20GMEBSFU_y3cNOSDS : Prop where
     finite extension (`ZInQ.SSFaltings.FaltingsSemistableHeightBC`); replaces the SGA 7 IX Cor.
     3.3 fields. -/
   faltingsSemistableHeightBC : _root_.ZInQ.SSFaltings.FaltingsSemistableHeightBC
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -300,7 +300,7 @@ structure _root_.HDec.HSyn.GR9.OpenResearchLeaves19GMEBSFU_y3cNOSDS : Prop where
   `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -453,7 +453,7 @@ structure _root_.HDec.HSyn.GR9.OpenResearchLeaves18GMEBSFU_y3cNOSDS : Prop where
   `strictHenselizationPair`,
   `raynaudSemistable` and (by K1) `semistableReductionDVR`. -/
   raynaudSemistableSH : _root_.ReductGlue.RaynaudSemistableSH
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -608,7 +608,7 @@ structure _root_.HDec.HSyn.GR9.OpenResearchLeaves17GMEBSFU_y3cNOSDS : Prop where
   18.6.8, Stacks 05WR) with Néron models commuting with it (BLR §1.2 Prop. 2); numbers UNVERIFIED.
   -/
   strictHenselizationPair : _root_.ReductGlue.StrictHenselizationPair
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -711,7 +711,7 @@ structure _root_.HDec.HSyn.GR9.OpenResearchLeaves16GMEBSFU_y3cNOSDS : Prop where
   /-- reduct-split, r8: SGA 7 IX Prop. 3.5, "semistable ⇒ `(σ - 1)² = 0` on `T_ℓ`" (weakest
     reading). -/
   r6u : _root_.HDec.D2A6.R6U
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -863,7 +863,7 @@ structure _root_.HDec.HSyn.GR9.OpenResearchLeaves15GMEBSFU_y3cNOSDS : Prop where
   /-- reduct-split, r8: SGA 7 IX Prop. 3.5, "semistable ⇒ `(σ - 1)² = 0` on `T_ℓ`" (weakest
     reading). -/
   r6u : _root_.HDec.D2A6.R6U
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -1026,7 +1026,7 @@ structure _root_.HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3cNOSDS : Prop where
   /-- reduct-split, r8: SGA 7 IX Prop. 3.5, "semistable ⇒ `(σ - 1)² = 0` on `T_ℓ`" (weakest
     reading). -/
   r6u : _root_.HDec.D2A6.R6U
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -1252,7 +1252,7 @@ structure _root_.HDec.HSyn.GR9.OpenResearchLeaves9EBSFU_y3cNOSDS : Prop where
   /-- height-split, H-15: Gaudron–Rémond 2014 Thm 1.4 over the published stable height, replaces
     `r19`. -/
   gaudronRemondThm14 : _root_.ZInQ.HeightSplit.GaudronRemondThm14
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
@@ -1286,7 +1286,7 @@ structure _root_.HDec.HSyn.GR9.OpenResearchLeaves8EBSFU_y3cNOSDS : Prop where
   igusaPsi4 : QMSplit.Theta.IgusaPsi4
   igusaChi10 : QMSplit.Theta.IgusaChi10
   r5 : True
-  /-- fold34-eichler (eichler-bound): the upper bound `#CM(R) ≤ 2^{b(R)} h(R)`
+  /-- fold34-eichler (eichler-bound): the upper bound `card CM(R) ≤ 2^{b(R)} h(R)`
     (`GR56.R5fpCountLe`), the only
   half of González–Rotger's count that the chain reads (`FS5NoCM.nocm_on_witness_le`); replaces
   this generation's
