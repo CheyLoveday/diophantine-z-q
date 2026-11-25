@@ -17,3 +17,12 @@
 - AtkinField.lean (builds; standard axioms): pullback_jq (hQ : Q ∥ N) : AtkinRational.pullback hQ ⟨jq,_⟩ = ⟨jqN Q,_⟩; modularPolynomial_eval_field (M ∣ N) data : data.Φ.eval₂ (eval₂RingHom (Int.castRingHom F) jq) (jqN M) = 0 in F = modularFunctionField N.
 - RationalChart.lean (builds; standard axioms): ratToField h₂ : Y0RationalAlgebra h₂ →+* modularFunctionField N (= genericModularFieldEquiv ∘ Y0RationalGenericJInclusion, the comparison inside ModelNeron.chartField); ratToField_J (j ↦ jq); ratToField_isFractionRing; isIntegral_jqN; isIntegral_pullback_ratToField; atkinRat h₂ hQ : ring endo of Y0RationalAlgebra with ratToField_atkinRat : ratToField (atkinRat a) = AtkinRational.pullback hQ (ratToField a); atkinRat_J; genericMap_eq_chart (generic point of the rational open = generic point of X0); atkinRat_openImmersion : Spec.map (atkinRat) ≫ rationalOpenImmersion = rationalOpenImmersion ≫ (rationalAtkin hQ).hom.
   => item 2(a) (W_Q preserves the finite chart) is proved by the function-field route (integral closure over ℚ[j]), not the closed-point route.
+- IntegralTransfer.lean additions: exists_eq_of_isIntegralElem, isRadical_span_of_residue_reduced (k ⊗_R A reduced, 𝔪 = (π) ⇒ πA radical), restrictRange / restrictRange_spec.
+- Extension.lean (builds; standard axioms; no sorry):
+  levelToRat : A_R →+* A_ℚ (= Y0RationalBaseChange ∘ includeRight); levelToRat_injective (flatness); exists_pow_mul_mem_range; isRadical_span_ell (special fibre reduced, levelQuotient_fibre_reduced at the residue field);
+  isIntegral_atkinRat_levelToRat; atkinLevel hQ : A_R →+* A_R with levelToRat_atkinLevel; Wint h₅ htame h₂ hQ : Pinned.Y0Level ⟶ Pinned.Y0Level (= Over.homMk (Spec.map atkinLevel));
+  genericIso_inv_fst; conj_of_pullback; generic_map_Wint;
+  extendsAtkin_Wint q : PMWire.ExtendsAtkin (ModelNeron.source h₅ htame h₂) q (Wint … (isExactDivisor_primePow));
+  goodRow_extension : ∀ q, q.Prime → 0 < N.factorization q → ∃ W, ExtendsAtkin (ModelNeron.source h₅ htame h₂) q W  (= GoodRow.extension at the pinned model);
+  eq_Wint_of_extendsAtkin (uniqueness).
+- Pitfall: Pinned.Y0LevelAlgebra's synthesized CommRing instance defeats unification with Subalgebra.toSemiring (whnf timeouts at 1e6 heartbeats); fix: `attribute [local instance 2000] levelCommRing` (= Subalgebra.toCommRing _), generic lemmas over arbitrary rings, and term-mode Spec.map_comp chains instead of rw.

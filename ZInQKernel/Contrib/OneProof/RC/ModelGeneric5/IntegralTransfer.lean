@@ -1,6 +1,9 @@
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 import Mathlib.RingTheory.Polynomial.ScaleRoots
 import Mathlib.RingTheory.Nilpotent.Lemmas
+import Mathlib.RingTheory.TensorProduct.Quotient
+import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
 
 /-! Two algebraic steps of the integral-closure construction of the integral
 Atkin–Lehner operator (Atiyah–Macdonald, *Introduction to Commutative Algebra*, 1969,
@@ -19,6 +22,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Polynomial
+open scoped TensorProduct
 
 namespace ZInQ.Manuscript.RC.ModelGeneric5
 
@@ -99,9 +103,64 @@ theorem mem_range_of_isIntegral (hκ : Function.Injective (algebraMap A B)) (π 
       (a := a) (by rw [ha, pow_succ]; ring)
     exact ih hb ⟨c, hc⟩
 
+/-- The same, for a ring map `κ` instead of an algebra structure. -/
+theorem exists_eq_of_isIntegralElem {A B : Type*} [CommRing A] [CommRing B] (κ : A →+* B)
+    (hκ : Function.Injective κ) (π : A) (hπ : IsUnit (κ π)) (hrad : (Ideal.span {π}).IsRadical)
+    {b : B} (hb : κ.IsIntegralElem b) (n : ℕ) (a : A) (ha : κ a = κ π ^ n * b) :
+    ∃ c, κ c = b := by
+  letI := κ.toAlgebra
+  exact mem_range_of_isIntegral hκ π hπ hrad n hb ⟨a, ha⟩
+
 end Radical
+
+section Residue
+
+variable {R A : Type*} [CommRing R] [IsLocalRing R] [CommRing A] [Algebra R A]
+
+/-- If the special fibre `k ⊗_R A` is reduced and `𝔪_R = (π)`, then `πA` is radical. -/
+theorem isRadical_span_of_residue_reduced {π : R}
+    (hπ : IsLocalRing.maximalIdeal R = Ideal.span {π})
+    [IsReduced (IsLocalRing.ResidueField R ⊗[R] A)] :
+    (Ideal.span {algebraMap R A π}).IsRadical := by
+  have hm : (IsLocalRing.maximalIdeal R).map (algebraMap R A) = Ideal.span {algebraMap R A π} := by
+    rw [hπ, Ideal.map_span, Set.image_singleton]
+  let eq := Algebra.TensorProduct.quotIdealMapEquivQuotTensor A (IsLocalRing.maximalIdeal R)
+  have : IsReduced ((R ⧸ IsLocalRing.maximalIdeal R) ⊗[R] A) :=
+    inferInstanceAs (IsReduced (IsLocalRing.ResidueField R ⊗[R] A))
+  have : IsReduced (A ⧸ (IsLocalRing.maximalIdeal R).map (algebraMap R A)) :=
+    isReduced_of_injective eq.toRingHom eq.injective
+  rw [← hm]
+  exact (Ideal.isRadical_iff_quotient_reduced _).mpr inferInstance
+
+end Residue
+
+section Restrict
+
+variable {A B : Type*} [CommRing A] [CommRing B]
+
+/-- The restriction of a ring endomorphism `σ` of `B` to a subring `κ(A)` it preserves. -/
+def restrictRange (κ : A →+* B) (hκ : Function.Injective κ) (σ : B →+* B)
+    (h : ∀ a, ∃ c, κ c = σ (κ a)) : A →+* A :=
+  ((RingEquiv.ofBijective κ.rangeRestrict
+      ⟨fun _ _ hxy => hκ (congrArg Subtype.val hxy), κ.rangeRestrict_surjective⟩).symm.toRingHom).comp
+    ((σ.comp κ).codRestrict κ.range fun a => (RingHom.mem_range (f := κ)).mpr (h a))
+
+theorem restrictRange_spec (κ : A →+* B) (hκ : Function.Injective κ) (σ : B →+* B)
+    (h : ∀ a, ∃ c, κ c = σ (κ a)) (a : A) :
+    κ (restrictRange κ hκ σ h a) = σ (κ a) := by
+  let e := RingEquiv.ofBijective κ.rangeRestrict
+    ⟨fun _ _ hxy => hκ (congrArg Subtype.val hxy), κ.rangeRestrict_surjective⟩
+  let y : κ.range := ⟨σ (κ a), (RingHom.mem_range (f := κ)).mpr (h a)⟩
+  change κ (e.symm y) = y.val
+  exact congrArg Subtype.val (e.apply_symm_apply y)
+
+end Restrict
 
 #print axioms isIntegral_of_finite
 #print axioms mem_range_of_isIntegral
+#print axioms exists_eq_of_isIntegralElem
+#print axioms isRadical_span_of_residue_reduced
+#print axioms restrictRange
+#print axioms restrictRange_spec
 
 end ZInQ.Manuscript.RC.ModelGeneric5
