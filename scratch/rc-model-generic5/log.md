@@ -26,3 +26,4 @@
   goodRow_extension : ∀ q, q.Prime → 0 < N.factorization q → ∃ W, ExtendsAtkin (ModelNeron.source h₅ htame h₂) q W  (= GoodRow.extension at the pinned model);
   eq_Wint_of_extendsAtkin (uniqueness).
 - Pitfall: Pinned.Y0LevelAlgebra's synthesized CommRing instance defeats unification with Subalgebra.toSemiring (whnf timeouts at 1e6 heartbeats); fix: `attribute [local instance 2000] levelCommRing` (= Subalgebra.toCommRing _), generic lemmas over arbitrary rings, and term-mode Spec.map_comp chains instead of rw.
+- ComplexPoints.lean (builds; standard axioms): ringHom_eq_of_openImmersion; atkinRat_involutive; atkinLevel_involutive; Wint_comp_self (Wint ≫ Wint = 𝟙); rationalPointAtParameter_atkinRat ((x_τ) ∘ atkinRat = x_{W_Q τ}); atkinRatAlg; rationalPoints_atkinRat_complex (∀ complex y, ∃ τ, rationalPoints y = analyticCyclicPair τ ∧ rationalPoints (y ∘ atkinRat) = analyticCyclicPair (W_Q τ)).
