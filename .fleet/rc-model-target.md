@@ -22,7 +22,10 @@ lanes' fields. The `LocalTarget` route is also filled: `NeronDVRLocal` enters on
 
 **Retired frozen field or GLUE row:** none yet. The `hRC` row (`docs/one-proof/OPEN.md:462`) and
 `PreLeaves.odd_staged` (`RC/Wiring/Leaves.lean:305`) still need `point`, `point_frob` and `frobenius_sq`
-(same-place lane), `extension` and `point_W` (detector specialization), and the weighted (O.7) comparison.
+(same-place lane), `extension` and `point_W` (detector specialization), and `ha`, the aθ definition pin
+(tex 2081–2082; `RC/PMWire/Assembly.lean:221–233`, consumed at `RC/O7Actual/Family.lean:121`); (O.7) itself
+is proved (`RC/O7Actual/Family.lean:111`). The other inputs of `oddStagedOfGoodRows` (`refs`, `J`,
+`relations`, `cusps`, `hL`, `hsign`) are also still open.
 
 **What compiles.** 24 new modules under `ZInQKernel/Contrib/OneProof/RC/ModelTarget/` build with
 `lake build`, with no `sorry` and no axiom declaration. `#print axioms` gives only propext, Classical.choice

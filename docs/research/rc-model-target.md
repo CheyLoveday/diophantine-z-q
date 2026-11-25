@@ -13,8 +13,11 @@ other lanes:
 
 * `point`, `point_frob` and `frobenius_sq` (same-place comparison);
 * `extension` and `point_W` (detector specialization);
-* the weighted comparison that `PMWire.oddStagedOfGoodRows` takes
-  (`ZInQKernel/Contrib/OneProof/RC/PMWire/Assembly.lean:220`).
+* `ha`, the aθ definition pin (tex 2081–2082; `RC/PMWire/Assembly.lean:221–233`, consumed at
+  `RC/O7Actual/Family.lean:121`) that `PMWire.oddStagedOfGoodRows`
+  (`ZInQKernel/Contrib/OneProof/RC/PMWire/Assembly.lean:220`) takes. (O.7) itself is proved
+  (`DatumAt.representative`, `RC/O7Actual/Family.lean:111`);
+* the other inputs of `oddStagedOfGoodRows`: `refs`, `J`, `relations`, `cusps`, `hL` and `hsign`.
 
 ## Main result
 
@@ -28,12 +31,13 @@ The good cubic is `E = detE ℓ W₀ = ModelNeron.weierstrassModel ℓ W`, the `
 Weierstrass coordinate ring over `R`. The fixed rational and reduced equations are `E₀ = W₀⁄ℚ` and
 `Ebar = ReducedEquation W₀ ℓ`.
 
-The good equation is carried as detector data, as the brief asks. A link already exists:
-`PMWire.Assembly` fixes `E₀ = (EcurveZ ℓ)⁄ℚ` and `Ebar = ReducedEquation (EcurveZ ℓ) p`
-(`RC/PMWire/Assembly.lean:120–122`), and `Wiring.StageWitness.stage_facts`
-(`RC/Wiring/StageWitness.lean:141`) proves `¬ p ∣ Δ(EcurveZ ℓ)` at every stage prime. So the frozen
-instance is `W₀ = EcurveZ ℓ`, and `E₀` equals `W₀⁄ℚ` exactly. Good reduction is never derived from `π`,
-`J₀(N)` or the conductor.
+The good equation is carried as detector data, as the brief asks. Prime naming at the consumer: the
+lane prime `ℓ` of this report is the stage prime `(s.q.stage i).p` of `PMWire.oddStagedOfGoodRows`
+(not the curve index `ℓ` of `EcurveZ ℓ`); `W₀ := EcurveZ ℓ`, so `E₀ = (EcurveZ ℓ)⁄ℚ` and
+`Ebar = ReducedEquation (EcurveZ ℓ) (s.q.stage i).p` as in `RC/PMWire/Assembly.lean:120–122`; and `hΔ`
+is `StageKummer.stageGood` (`RC/StageKummer/Actual.lean:262`), in the form `StageKummer.goodAt s i`
+(`RC/StageKummer/Reference.lean:67–70`). Good reduction is never derived from `π`, `J₀(N)` or the
+conductor.
 
 Every declaration below builds with `lake build` and has no `sorry` or `axiom` declaration. Its
 `#print axioms` lists only `propext`, `Classical.choice` and `Quot.sound`.
@@ -159,7 +163,7 @@ None. The lane adds no printed-form statement. Nothing here is a leaf:
 | --- | --- |
 | `point`, `point_frob`, `frobenius_sq` | Other lane (same-place comparison). Ribet, *On modular representations of Gal(Q-bar/Q) arising from modular forms*, 1990, Prop. 3.6 (proved there) UNVERIFIED. The level-N correspondence is being built in the hCM lane from Voight, *Quaternion Algebras*, GTM 288, 2021, Thm. 42.1.9 and 42.3.2 (two-lens pass pending). |
 | `extension`, `point_W` | Other lane (detector specialization after generic4). Katz–Mazur 1985 §2.4 UNVERIFIED; Vélu 1971 UNVERIFIED. |
-| Weighted (O.7) comparison | Other lane (tex 9101–9113). It is the manuscript's own proposition, with no independent print. |
+| `ha`, the aθ definition pin, and the other inputs `refs`, `J`, `relations`, `cusps`, `hL`, `hsign` of `oddStagedOfGoodRows` | Other lanes. `ha` (tex 2081–2082; `RC/PMWire/Assembly.lean:221–233`, consumed at `RC/O7Actual/Family.lean:121`) pins the integer representative aθ; (O.7) itself is proved (`RC/O7Actual/Family.lean:111`). |
 | `LocalTarget.E ≅ E` (optional) | Not built. It follows from the Néron mapping property both ways: both are Néron models of `W₀⁄ℚ`, now proved, together with `cubicJE` and `LocalTarget.jE`. BLR, *Néron Models*, 1990, §1.2 Def. 1 UNVERIFIED. Lean work only, with no new input. |
 | Compatibility of `cubicJE` with the `J0Cusps` scheme law | Not needed by `GoodRow`, which asks only for the complex reading. It would follow from `val_mul` and `projectiveValue_eq_fieldValue` at all field points. |
 
@@ -169,13 +173,14 @@ None. The lane adds no printed-form statement. Nothing here is a leaf:
 * Inherited: Jetchev–Kane (tex 8468–8474; arXiv v1, journal version unread) attributes the class
   correspondence to Ribet 1990 Prop. 3.3. It does not print the Hecke, Atkin–Lehner or Frobenius
   compatibilities. Ribet's Prop. 3.3 and Rem. 3.5 defer their proofs to Milne 1979, Carayol 1986 and
-  Vignéras, so they are never cited. Ribet 1990 Prop. 3.6, which is proved there, is the citable converse.
+  Vignéras, so they are never cited. Ribet 1990 Prop. 3.6 (Invent. Math. 100 (1990); UNVERIFIED), which is
+  proved there, is the citable converse.
   The lead's ruling splits the `JetchevKane` structure: the class correspondence is GLUE, and the three
   compatibilities are ELLIOT, to be proved in Lean.
 * `isReduced_of_smooth_hom` (`GroupObj.lean:21`) calls the vendored theorem
   `ZInQ.Contrib.CloudW03NeronSurj.FLT.P2MW.S_AlgebraicGeometry_Smooth_isReduced_of_isReduced_of_isLocallyNoetherian.solution`
   (`ZInQKernel/Contrib/CloudR2NOS/Source/P2M/Sol/`). It is fully proved, with standard axioms. Its file
-  header calls it a "probe staging copy" of the FLT port, held outside H5. Its proof is four lines: smooth
+  header calls it a "probe staging copy" of the FLT port, held outside H5. Smooth
   maps are geometrically reduced by `isReduced_of_smooth_of_field`, then Mathlib's
   `GeometricallyReduced.isReduced_of_flat_of_isLocallyNoetherian` applies. The reviewer may prefer to
   rebind it.
@@ -195,7 +200,7 @@ None. The lane adds no printed-form statement. Nothing here is a leaf:
 | 8477–8479 | gap filled | "The good-reduction elliptic curve": its projective cubic over `ℤ_(ℓ)` is smooth (`weierstrassModel_smooth`), a group scheme (`weierstrassModelGrp`) and a Néron model (`weierstrassModel_isNeron`). Its generic fibre is the fixed rational cubic (`detGenericIso`) and its special fibre is the reduced cubic (`detFibreIso`, `detW_map_eq`). |
 | 8478–8479 | gap filled | "The map extends over the local base": with `E` the cubic, `GoodRow.πInt` is the Néron extension through `weierstrassModel_isNeron`. |
 | 8479–8492 | gap filled (target side) | Residue values of points read on the reduced equation, multiplicatively and Frobenius-equivariantly (`read`, `read_frob`). The supersingular labels and the specialization of the operators belong to other lanes. |
-| 9101–9113 | unverified | The weighted comparison still needs the other `GoodRow` fields. |
+| 9101–9113 | OK | (O.7) itself is proved (`RC/O7Actual/Family.lean:111`); `oddStagedOfGoodRows` still takes `ha`, the aθ definition pin (tex 2081–2082; `RC/PMWire/Assembly.lean:221–233`), and the other `GoodRow` fields. |
 
 ## The one edit to an existing file
 
