@@ -102,8 +102,12 @@ theorem localSemistableTatePrint_of_global (hS : GrothendieckSemistableReduction
 
 /-- **GLUE.** Grothendieck, SGA 7 I, Exposé IX, Corollary 3.8, condition (vi) equivalent to (i)
 of Proposition 3.5, joined with Silverman VII.5.1 and a Néron-model dictionary that is not cited.
-Locators UNVERIFIED: no reading of the SGA 7 original is on record (pp. 350, 353 are as cited). Use the actual integral Tate
-module at the complete local field. In the elliptic-curve specialization,
+Sources: the read copy is Silverberg–Zarhin, *Reduction of Abelian Varieties*,
+arXiv:alg-geom/9602014v2, Theorem 4.1(i)-(ii) (text body read), the provenance of main's
+`GrothendieckSemistableReductionPrint` (`RC53Assist/TateCurve/AdditiveReading.lean`), whose
+proof cites SGA 7 IX 3.5 and 3.8. The SGA 7 IX original is UNVERIFIED: no reading of it is on
+record (pp. 350, 353 are as cited; it is row 2 of the reading list, Th. 3.6 at p. 351). Use the
+actual integral Tate module at the complete local field. In the elliptic-curve specialization,
 semistability is good or multiplicative reduction of the local minimal
 Weierstrass equation (Silverman, AEC, 2nd ed., VII.5.1, p. 196). -/
 def SGA7IX38LocalEllipticCriterion : Prop :=

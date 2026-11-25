@@ -24,10 +24,10 @@ open ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent
 modulo squares*, Annals of Mathematics 172 (2010), Theorem 4.19 (= Theorem 1.4), specialized to
 `p = 2`, with the analytic order in place of the root number. It absorbs the root-number bridge
 that `DokchitserThm18` already marks GLUE. Locator UNVERIFIED: no reading of the Annals statement
-is on record (p. 593 is as cited, not read). The two integers stand for the corank of the genuine
-`2^∞`-Selmer group and the order of the actual complex Hasse–Weil `L`-function
-at 1. The print assumes no rational isogeny and no finiteness of Sha. The
-premises specifying the two integers do not assert the existence of those
+is on record (p. 593 is as cited, not read).
+The two integers stand for the corank of the genuine `2^∞`-Selmer group and the order of the
+actual complex Hasse–Weil `L`-function at 1. The print assumes no rational isogeny and no
+finiteness of Sha. The premises specifying the two integers do not assert the existence of those
 integers; the analytic order is witnessed independently in the application. -/
 def DokchitserAnnalsThm419AtTwo : Prop :=
   ∀ E : WeierstrassCurve ℚ, E.IsElliptic → ∀ r m : ℕ,
