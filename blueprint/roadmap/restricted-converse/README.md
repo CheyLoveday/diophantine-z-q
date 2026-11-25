@@ -52,8 +52,8 @@ Cai–Shu–Tian, Cornut–Jetchev and the parity theorem of Dokchitser–Dokchi
 The Lean for this proof is on main, in three places:
 - `ZInQKernel/Contrib/CloudB3RC53/`, the top layer, with its dependency graph `DAG.md`. That file lists every
   node of Sections 7–9 and Appendices E–G with its TeX lines and inputs; its status column dates from when
-  each row was written, and the module headers are authoritative. Only the top-level nodes have pages in
-  this chapter.
+  each row was written, and the module headers are authoritative. Each numbered statement of
+  Sections 7–9 and Appendices E–G has a page in this chapter.
 - `ZInQKernel/Contrib/OneProof/RC/`, which wires the steps together and collects what remains.
 - `ZInQKernel/Contrib/RC53Assist/`, supporting developments for individual steps.
 
