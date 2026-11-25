@@ -54,3 +54,9 @@
   cubicGrp W hs : GrpObj (cubic W) [noetherian domain, IsElliptic, Smooth]; **weierstrassModelGrp h₅ W₀ hΔ :
   GrpObj (weierstrassModel ell (W₀.map …))**; **weierstrassModel_isNeron h₅ W₀ hΔ : IsNeronModelOver (LocalIntegers ell) ℚ (cubic)**.
   Build OK, std axioms.
+- RuleGluing.lean: PointRule, morphism_of_rule (gluing with a field-point rule). OK.
+- BaseChange.lean: baseChangeScheme W ψ, bcVec, exists_baseChangeHom (Proj W ×_R S → Proj (W.map ψ)). OK.
+  Pitfall: stating values across defeq curves ((W.map ψ).map g vs W.map (g.comp ψ)) in a calc caused whnf timeouts; use vectors (toAffine of bcVec) instead.
+- BaseChangeInv.lean: structR, invVec, chart_equation_self/comp, exists_baseChangeInvHom (Proj (W.map ψ) → Proj W over ψ). OK.
+- BaseChangeIso.lean: **bcIso W ψ : (Over.pullback (Spec.map ψ)).obj (cubic W) ≅ cubic (W.map ψ)** (identity in coordinates),
+  under [W.IsElliptic] [(W.map ψ).IsElliptic] [IsReduced (baseChangeScheme W ψ)] [IsReduced (Proj (W.map ψ))]. Build OK, std axioms.
