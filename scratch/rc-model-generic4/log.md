@@ -53,3 +53,9 @@ Base: wip/rc-model-neron 64a338f4 merged with main 29bfbc3f (merge commit 5e0219
 - `exists_rationalPointAtParameter_eq`: every y : Y0RationalAlgebra →ₐ[ℚ] ℂ is rationalPointAtParameter h₂ τ.
 - `exists_complexPoint_eq`: every x : RationalCurveComplexPoints (branchFiniteOverQ N) has
   x.left ≫ (finiteChart N).ι = complexPoint N τ. Axioms standard.
+
+## Readings (item 5, partial)
+- `levelPoint`, `levelPairClass` (= rationalPoints h₂ ∘ levelPoint), `branchParameter`, `branchPairClass`
+  (= analyticCyclicPair of a parameter), `branchPairClass_eq` (independent of the parameter),
+  `pairClass_conjunct : branchPairClass (x ≫ e.hom) = levelPairClass x` for e = rationalOpenIsoOverQ h₂.
+- Not instantiated: GenericFibreComparison (Atkin–Lehner and Hecke readings not actual on both sides).
