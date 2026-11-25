@@ -56,7 +56,7 @@ theorem ith_pow_eq (hgen : RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p)
   rw [ith_pow, map_mul, mul_pow]
   exact (span_singleton_mul_right_unit ((c.isUnit.map _).pow m) _).symm
 
-/-- `W(R) ∩ (ker θ)^m = w^m W(R)`. -/
+/-- `W(R) ∩ (ker θ)^m ⊆ w^m W(R)` (the reverse inclusion is clear). -/
 theorem mem_span_pow_of_algebraMap
     (hgen : RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) = span {w}) (m : ℕ) {a : Ainf p}
     (h : algebraMap (Ainf p) (AinfP p) a ∈ Ith p ^ m) : a ∈ span {w ^ m} := by
@@ -64,7 +64,7 @@ theorem mem_span_pow_of_algebraMap
   rw [ith_pow] at h
   exact mem_xi_pow_of_algebraMap p m a h
 
-/-- `⋂_k (p^k W(R) + w^m W(R)) = w^m W(R)`. -/
+/-- `⋂_k (p^k W(R) + w^m W(R)) ⊆ w^m W(R)` (the reverse inclusion is clear). -/
 theorem mem_span_pow_of_forall
     (hgen : RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) = span {w}) (m : ℕ) {x : Ainf p}
     (h : ∀ k : ℕ, ∃ a b : Ainf p, x = (p : Ainf p) ^ k * a + w ^ m * b) :

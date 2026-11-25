@@ -2,10 +2,10 @@ import ZInQKernel.Contrib.OneProof.AcrisImageBasic
 
 /-! # Normalizing the coefficients of a divided-power series
 
-Fontaine, Astérisque 223 (1994), Exposé II, §4.1.2, p. 83: the coefficients of
-`Σ a_n w^n/n!` can be chosen with `θ(a_n) ≠ 0` whenever `a_n ≠ 0` (`exists_normalized`). For
-such a series, vanishing in `B_dR^+` forces every coefficient to vanish
-(`eq_zero_of_normalized`), which gives the injectivity of `A_cris → B_dR^+`.
+Fontaine, Astérisque 223 (1994), Exposé II, §4.1.2, p. 83: for a generator `w` of `ker θ`,
+the coefficients of `Σ a_n w^n/n!` can be chosen with `θ(a_n) ≠ 0` whenever `a_n ≠ 0`
+(`exists_normalized`). For such a series, vanishing in `B_dR^+` forces every coefficient to
+vanish (`eq_zero_of_normalized`), which gives the injectivity of `A_cris → B_dR^+`.
 -/
 
 noncomputable section
@@ -170,9 +170,9 @@ private theorem pAdicNull_carrySeq
       exact hprop j
   exact ⟨M + p * k, fun n hn => hmain k le_rfl n hn⟩
 
-/-- **Normalization** (carry `a_n = θ`-null part to the next index: `w b · w^n/n! = (n+1) b ·
-w^{n+1}/(n+1)!`). The partial sums of `f` and of the normalized `g` agree modulo `p^k D`
-from some point on. -/
+/-- **Normalization** (carry the `θ`-null part `w b` of each carried coefficient to the next
+index: `w b · w^n/n! = (n+1) b · w^{n+1}/(n+1)!`). The partial sums of `f` and of the
+normalized `g` agree modulo `p^k D` from some point on. -/
 theorem exists_normalized
     (hgen : RingHom.ker (WittVector.fontaineTheta 𝓞_ℂ_[p] p) = span {w})
     {f : (Ainf p)⟦X⟧} (hf : f ∈ restricted p) :

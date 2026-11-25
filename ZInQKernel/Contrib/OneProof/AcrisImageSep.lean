@@ -2,8 +2,9 @@ import ZInQKernel.Contrib.OneProof.AcrisImageBasic
 
 /-! # `W(R)[w^n/n!]` is `p`-adically separated modulo `(ker θ)^m`
 
-If `y ∈ D = W(R)[w^n/n!]` lies in `p^k D + (ker θ)^m` for every `k`, then `y ∈ (ker θ)^m`
-(`mem_ith_pow_of_forall`). Multiplying by `m!` moves `D` into `W(R)` modulo `(ker θ)^m`, where
+For a generator `w` of `ker θ`: if `y ∈ D = W(R)[w^n/n!]` lies in `p^k D + (ker θ)^m` for every
+`k`, then `y ∈ (ker θ)^m` (`mem_ith_pow_of_forall`). Multiplying by `m!` moves `D` into `W(R)`
+modulo `(ker θ)^m`, where
 this is `⋂_k (p^k W(R) + w^m W(R)) = w^m W(R)`. This is the separatedness behind the
 well-definedness of the map `A_cris → B_dR^+` (Fontaine, Astérisque 223 (1994), Exposé II,
 §§4.1.1–4.1.2, p. 83).

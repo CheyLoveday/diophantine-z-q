@@ -5,7 +5,8 @@ import ZInQKernel.Contrib.OneProof.AcrisImageSep
 /-! # Fontaine's `A_cris` injects into `B_dR^+` with image `AcrisOf`
 
 Fontaine, *Le corps des périodes p-adiques*, Astérisque 223 (1994), Exposé II: §2.3.3 (p. 78)
-defines `A_cris` as the `p`-adic separated completion of `W(R)[ξ^m/m! : m ≥ 1] ⊆ W(R)[1/p]`;
+identifies `A_cris` with the `p`-adic separated completion of `W(R)[ξ^m/m! : m ≥ 1] ⊆ W(R)[1/p]`
+(the tree's definition of `A_cris`);
 §4.1.2 (p. 83) states that every element is a series `Σ a_n ξ^n/n!` with `a_n → 0`
 `p`-adically and that the natural map `A_cris → B_dR^+` is injective. Brinon–Conrad's CMI
 notes (preliminary version, June 24, 2009), p. 129, note that the map is `G_K`-equivariant, omit
