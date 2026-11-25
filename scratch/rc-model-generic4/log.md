@@ -46,3 +46,10 @@ Base: wip/rc-model-neron 64a338f4 merged with main 29bfbc3f (merge commit 5e0219
 - Route: marked lift `markedLift` (cover coordinates −g₂/4, −g₃/4, ℘(1/N), ℘'(1/N)/2, Δ⁻¹), continuous in τ
   (`PeriodContinuity`: ℘' series majorant ≪ ‖v‖⁻³); chart side continuous (`ChartContinuity`); agree on the
   dense transcendental set (`GenericSpecialization`, `Density`); `Continuous.ext_on`.
+
+## ITEM 2 CLOSED (CoprimeLift, Homothety, AnalyticClasses, Surjectivity)
+- `exists_isCoprime_lift`, `analyticCyclicPair_eq_of_scale`, `isScale_smul`.
+- `exists_analyticCyclicPair_eq : ∃ τ, analyticCyclicPair τ = cl` for every cl : PairClasses ℂ N (2 ≤ N).
+- `exists_rationalPointAtParameter_eq`: every y : Y0RationalAlgebra →ₐ[ℚ] ℂ is rationalPointAtParameter h₂ τ.
+- `exists_complexPoint_eq`: every x : RationalCurveComplexPoints (branchFiniteOverQ N) has
+  x.left ≫ (finiteChart N).ι = complexPoint N τ. Axioms standard.
