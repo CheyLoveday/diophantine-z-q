@@ -13,8 +13,8 @@ under `sixContactMin_of_open83_nos`. Its only readers there:
 1. `openResearchLeaves36EBCFSFU_y3x6_of_54SFU_y3x6_nos`: `r11r12 := PanDict.panBerger_of_F …
    n.dsThm965Printed … n.dsThm966Printed`. `panBerger_of_F` reads the Diamond–Shurman arguments only
    through `PanBergerSplit.coeff_mem_range` (algebraicity of `a_q(g)`).
-2. `openResearchLeaves27_of_…28…_nos` (`dsThm965Weak_of_printed`) and `openResearchLeaves24_of_…25…_nos`
-   (`dsThm965_of_weak`), which feed
+2. `openResearchLeaves27_of_…28…_nos` (`dsThm965Weak_of_printed`) and
+   `openResearchLeaves24_of_…25…_nos` (`dsThm965_of_weak`), which feed
 3. `researchLeaves5_of_open7_pz_eb_u_c8_y3c_nos`: `r13 := … eigenformHT_of_kato_ds …` and
    `r14 := HodgeLF7.r14Det (r14Det_of_printed r.dsThm965 r.dsThm966)`.
 
@@ -29,8 +29,8 @@ under `sixContactMin_of_open83_nos`. Its only readers there:
 * `RepExists.lean`: `DS965Reroute.eigenformRepExistsG9_of_modularHT (h : ModularHTCoeff)
   (hDS : DSThm966Printed) : ZInQ.Contrib.G9.PkgI4.EigenformRepExists` (weight `≥ 2` from
   `modularHTCoeff` through T25, weight `1` from `artinTransport_proof`),
-  `eigenformRepExists_hsyn_of_g9`, `eigenformRepExists_of_modularHT … : HDec.HSyn.EigenformRepExists`,
-  `eigenformHT_of_kato_mht`.
+  `eigenformRepExists_hsyn_of_g9`,
+  `eigenformRepExists_of_modularHT … : HDec.HSyn.EigenformRepExists`, `eigenformHT_of_kato_mht`.
 * `PanBerger.lean`: `HDec.PkgI4.PanDict.coeff_mem_range_of_rep`, `panBerger_of_F' (hP) (hB)
   (hR : EigenformRepExists) : PanBerger`, `panBerger_of_F_mht (hP) (hB) (h : ModularHTCoeff)
   (hDS : DSThm966Printed) : PanBerger`.
