@@ -87,14 +87,21 @@ theorem eigenformRepExistsG9_of_modularHT (h : HTNewAssembly.ModularHTCoeff)
     exact eigenformRep_wt1 hDS ℓ ιC ιL hN hg
   · exact eigenformRep_wtGe2 h ℓ ιC ιL hN (by omega) hg
 
-/-- **R14 without its determinant, on the chain's copy** (`HSyn.EigenformRepExists`, the type of the
-field `r14` of the chain's `ResearchLeaves3` bundles), from `modularHTCoeff` and
+/-- `EigenformRepExists` moved from the G9 layer to the chain's copy `HSyn.EigenformRepExists`
+(same statement over `HSyn`'s copies of the objects; the converse of
+`eigenformRepExists_of_hsyn`). -/
+theorem eigenformRepExists_hsyn_of_g9 (h : ZInQ.Contrib.G9.PkgI4.EigenformRepExists) :
+    HDec.HSyn.EigenformRepExists := by
+  intro ℓ _ ιC ιL N k χ g hN hk hg
+  obtain ⟨ρ, hss, hatt⟩ := h ℓ ιC ιL N k χ g hN hk hg
+  exact ⟨⟨ρ.toHom, ρ.continuous_toHom⟩, hss, hatt⟩
+
+/-- **R14 without its determinant, on the chain's copy** (`HSyn.EigenformRepExists`, the type of
+the field `r14` of the chain's `ResearchLeaves3` bundles), from `modularHTCoeff` and
 `dsThm966Printed`. -/
 theorem eigenformRepExists_of_modularHT (h : HTNewAssembly.ModularHTCoeff)
-    (hDS : DSThm966EV.DSThm966Printed) : HDec.HSyn.EigenformRepExists := by
-  intro ℓ _ ιC ιL N k χ g hN hk hg
-  obtain ⟨ρ, hss, hatt⟩ := eigenformRepExistsG9_of_modularHT h hDS ℓ ιC ιL N k χ g hN hk hg
-  exact ⟨⟨ρ.toHom, ρ.continuous_toHom⟩, hss, hatt⟩
+    (hDS : DSThm966EV.DSThm966Printed) : HDec.HSyn.EigenformRepExists :=
+  eigenformRepExists_hsyn_of_g9 (eigenformRepExistsG9_of_modularHT h hDS)
 
 /-- **R13 (`EigenformHT`, G9 layer) without Diamond–Shurman 9.6.5**: `eigenformHT_of_kato` with
 `EigenformRepExists` from the live rows (replaces `eigenformHT_of_kato_ds`). -/
