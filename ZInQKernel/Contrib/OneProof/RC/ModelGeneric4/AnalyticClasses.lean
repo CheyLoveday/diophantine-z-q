@@ -59,4 +59,101 @@ theorem isScale_smul (τ₀ : ℍ) (γ : Matrix.SpecialLinearGroup (Fin 2) ℤ) 
     push_cast
     linear_combination (-(m : ℂ)) * hτ'
 
+open private ModelGeneric3.latticeGenerator from
+  ZInQKernel.Contrib.OneProof.RC.ModelGeneric3.AnalyticPair in
+/-- **Every complex cyclic pair class is analytic.** -/
+theorem exists_analyticCyclicPair_eq {N : ℕ} [NeZero N] (h₂ : 2 ≤ N) (cl : PairClasses ℂ N) :
+    ∃ τ : ℍ, ModelGeneric3.analyticCyclicPair (N := N) τ = cl := by
+  obtain ⟨τ₀, hτ₀⟩ := CMField2.exists_analyticJ_eq (pairJ cl)
+  let L := PeriodPair.ofTau τ₀
+  have hL : L.DiscriminantNeZero := L.discriminant_ne_zero
+  haveI hE : L.weierstrassCurve.IsElliptic :=
+    ⟨isUnit_iff_ne_zero.mpr hL.weierstrassCurve_Δ_ne_zero⟩
+  have hEj : L.weierstrassCurve.j = pairJ cl :=
+    (ModelGeneric3.analyticCyclicPair_j (N := N) τ₀).trans hτ₀
+  obtain ⟨D, hD⟩ := subgroupPair_surjective (N := N) L.weierstrassCurve ⟨cl, hEj.symm⟩
+  have hcl : cl = Quot.mk _ ⟨L.weierstrassCurve, hE, D⟩ := (congrArg Subtype.val hD).symm
+  obtain ⟨P, hP⟩ := subgroupOfGenerator_surjective D
+  obtain ⟨w, hw⟩ := (L.isUniformization_toPoint hL).2.1 P.1
+  have hNw : (N : ℂ) * w ∈ L.lattice := by
+    apply (L.isUniformization_toPoint hL).2.2
+    have : L.toPoint hL ((N : ℂ) * w) = N • L.toPoint hL w := by
+      rw [← nsmul_eq_mul]; exact map_nsmul (uniformization L hL) N w
+    rw [this, hw]
+    have h0 := addOrderOf_nsmul_eq_zero P.1
+    rwa [P.2] at h0
+  rw [PeriodPair.ofTau_lattice, Submodule.mem_span_pair] at hNw
+  obtain ⟨A, B, hAB⟩ := hNw
+  have hgcd : Int.gcd (Int.gcd A B) N = 1 := by
+    obtain ⟨g, hg⟩ : ∃ g, Int.gcd (Int.gcd A B) N = g := ⟨_, rfl⟩
+    rw [hg]
+    have hgN : g ∣ N := by
+      have := Int.gcd_dvd_right (Int.gcd A B : ℤ) N
+      rw [hg] at this
+      exact_mod_cast this
+    have hgA : (g : ℤ) ∣ A := hg ▸ (Int.gcd_dvd_left _ _).trans (Int.gcd_dvd_left _ _)
+    have hgB : (g : ℤ) ∣ B := hg ▸ (Int.gcd_dvd_left _ _).trans (Int.gcd_dvd_right _ _)
+    obtain ⟨A', rfl⟩ := hgA
+    obtain ⟨B', rfl⟩ := hgB
+    obtain ⟨M, hM⟩ := hgN
+    have hg0 : g ≠ 0 := by rintro h0; rw [h0, zero_mul] at hM; exact NeZero.ne N hM
+    have hMP : M • P.1 = 0 := by
+      rw [← hw]
+      have hmem : (M : ℂ) * w ∈ L.lattice := by
+        rw [PeriodPair.ofTau_lattice, Submodule.mem_span_pair]
+        refine ⟨A', B', ?_⟩
+        have hgC : (g : ℂ) ≠ 0 := by exact_mod_cast hg0
+        apply mul_left_cancel₀ hgC
+        simp only [zsmul_eq_mul, Int.cast_mul, Int.cast_natCast] at hAB ⊢
+        rw [hM] at hAB
+        push_cast at hAB
+        linear_combination hAB
+      have h1 : L.toPoint hL (M • w) = M • L.toPoint hL w := map_nsmul (uniformization L hL) M w
+      rw [← h1, nsmul_eq_mul]
+      exact L.toPoint_of_mem hL hmem
+    have hdvd := addOrderOf_dvd_of_nsmul_eq_zero hMP
+    rw [P.2] at hdvd
+    have hM0 : M ≠ 0 := by rintro rfl; rw [mul_zero] at hM; exact NeZero.ne N hM
+    have hle := Nat.le_of_dvd (Nat.pos_of_ne_zero hM0) hdvd
+    rw [hM] at hle
+    have : g ≤ 1 := by
+      by_contra hg1
+      push Not at hg1
+      have : M < g * M := lt_mul_left (Nat.pos_of_ne_zero hM0) hg1
+      omega
+    omega
+  obtain ⟨c, d, hcop, hcA, hdB⟩ := exists_isCoprime_lift N A B hgcd
+  obtain ⟨a, b, hab⟩ := hcop
+  let γ : Matrix.SpecialLinearGroup (Fin 2) ℤ := ⟨!![b, -a; c, d], by
+    rw [Matrix.det_fin_two_of]; linear_combination hab⟩
+  refine ⟨γ • τ₀, ?_⟩
+  have hs := isScale_smul τ₀ γ
+  have hγc : γ 1 0 = c := rfl
+  have hγd : γ 1 1 = d := rfl
+  rw [hγc, hγd] at hs
+  rw [hcl]
+  apply analyticCyclicPair_eq_of_scale h₂ (γ • τ₀) τ₀ _ hs
+  rw [← hP]
+  change AddSubgroup.zmultiples P.1 = _
+  congr 1
+  rw [← hw, toPoint_eq_toPoint_iff, PeriodPair.ofTau_lattice, Submodule.mem_span_pair]
+  obtain ⟨k, hk⟩ := hcA
+  obtain ⟨l, hl⟩ := hdB
+  refine ⟨-k, -l, ?_⟩
+  have hN0 : (N : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (NeZero.ne N)
+  simp only [zsmul_eq_mul, mul_one] at hAB ⊢
+  have hk' : (c : ℂ) = A + N * k := by
+    have := congrArg (fun z : ℤ => (z : ℂ)) hk; push_cast at this; linear_combination this
+  have hl' : (d : ℂ) = B + N * l := by
+    have := congrArg (fun z : ℤ => (z : ℂ)) hl; push_cast at this; linear_combination this
+  have hw' : w = (A * τ₀ + B) / N := by
+    rw [eq_div_iff hN0]; linear_combination -hAB
+  rw [hw', hk', hl']
+  field_simp
+  push_cast
+  ring
+
+#print axioms isScale_smul
+#print axioms exists_analyticCyclicPair_eq
+
 end WeierstrassCurve.ModelLevels.ModelGeneric4
