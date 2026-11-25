@@ -39,3 +39,10 @@ Base: wip/rc-model-neron 64a338f4 merged with main 29bfbc3f (merge commit 5e0219
 - `continuous_finitePointEval`, `continuous_rationalPointAtParameter`: τ ↦ x_τ(a) continuous on ℍ.
 - In progress: `PeriodContinuity` (g₂, g₃, ℘(1/N), ℘'(1/N) continuous in τ; imports WeberField),
   `PairClass` (marked lift continuity and item 1 at every τ by density).
+
+## ITEM 1 CLOSED (PairClass)
+- `rationalPoints_rationalPointAtParameter : rationalPoints h₂ (rationalPointAtParameter h₂ τ) = analyticCyclicPair τ`
+  for every τ ∈ ℍ and 2 ≤ N (collisions included). Axioms: propext, Classical.choice, Quot.sound.
+- Route: marked lift `markedLift` (cover coordinates −g₂/4, −g₃/4, ℘(1/N), ℘'(1/N)/2, Δ⁻¹), continuous in τ
+  (`PeriodContinuity`: ℘' series majorant ≪ ‖v‖⁻³); chart side continuous (`ChartContinuity`); agree on the
+  dense transcendental set (`GenericSpecialization`, `Density`); `Continuous.ext_on`.
