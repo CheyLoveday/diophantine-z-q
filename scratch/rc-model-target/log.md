@@ -74,3 +74,7 @@
   complexIso, complexUp, complex_curve, bcEq_value, detRational_isElliptic, cubicJE (= detGenericIso's composite, unfolded),
   projectiveValue_cubicJE, **readComplexCubic h₅ hΔ** (monoid hom), **readComplexCubic_eq** (rfl vs projectiveValue ∘ cubicJE).
   Build OK, std axioms. Pitfall: unifying detGenericIso with its bcIso composite timed out; use the composite (cubicJE) directly.
+- Supply.lean: GoodTarget (exactly the target-side GoodRow fields with closed := ModelNeron.closed ℓ);
+  **goodTarget ℓ W₀ K h₅ hΔ : GoodTarget ℓ K (ReducedEquation W₀ ℓ) (W₀⁄ℚ)** (all fields from the cubic);
+  GoodTarget.toGoodRow (assembles PMWire.GoodRow from it plus M/source/point/extension/point_W/point_frob/frobenius_sq).
+  Build OK (13591 jobs), std axioms.
