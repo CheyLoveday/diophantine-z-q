@@ -70,3 +70,7 @@
   resRing_curve, residue_structure, residueIso, resUp, readFun, readFun_mul. OK (compile ~10 min).
 - ReadEquiv.lean: readFun_eq, readFun_injective, readFun_surjective, **read h₅ hΔ : (residueSource ℓ K ⟶ special.obj E) ≃*
   Multiplicative ((ReducedEquation W₀ ℓ)⁄K).Point**, read_apply, **read_frob**. Build OK, std axioms.
+- CubicComplex.lean: projectiveValue_eq_fieldValue (J0Cusps value = fieldValue on Proj E₀), fieldValue_eqToHom, complexRing,
+  complexIso, complexUp, complex_curve, bcEq_value, detRational_isElliptic, cubicJE (= detGenericIso's composite, unfolded),
+  projectiveValue_cubicJE, **readComplexCubic h₅ hΔ** (monoid hom), **readComplexCubic_eq** (rfl vs projectiveValue ∘ cubicJE).
+  Build OK, std axioms. Pitfall: unifying detGenericIso with its bcIso composite timed out; use the composite (cubicJE) directly.
