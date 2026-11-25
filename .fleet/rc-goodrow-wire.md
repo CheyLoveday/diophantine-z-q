@@ -42,3 +42,5 @@ Classical.choice and Quot.sound. The item-1 doc fixes to the target and neron re
   `ha` (aθ pin, tex 2081–2082), `hL` and `hsign`. These are unchanged in content.
 
 Report: `docs/research/rc-goodrow-wire.md`. Log: `scratch/rc-goodrow-wire/log.md`.
+
+**SHA.** Last Lean/report commit: bcfebfc57; this hand-off file is committed on top of it (the branch tip is the final SHA).
