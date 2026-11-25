@@ -58,7 +58,7 @@ reference. **SPECULATIVE** = a judgement. **UNVERIFIED** = recalled without a so
 |---|---|---|---|
 | DS Thm 9.5.4 (2016 pp. 401–402) | read (human: issue #14 comment 7121091136) | `ρ_{f,λ}(Frob_𝔭)` "satisfies" `x² − a_p x + χ(p)p = 0` | gives `AfTateDSLambdaSat` only |
 | DS Thm 9.6.5 + the paragraph after it (2016 printing p. 404) | **read** (human, issue #14 comments 7000317188, 7121091136: the theorem and the paragraph after it) | "the characteristic equation" `x² − a_p x + χ(p)p^{k−1}`; for `k = 2` the representation is the §9.5 construction | **yes**: `AfCharpolyDS965`, which implies `AfDetLambda` |
-| DS Exercise 9.6.3 | read (AI; no page recorded) | (a) derive det from the characteristic equation of 9.6.5's `ρ`; (b) the converse | supporting only |
+| DS Exercise 9.6.3 | AI read only, unverified (issue #14 comment 7000317188 lists it under "Not read") | (a) derive det from the characteristic equation of 9.6.5's `ρ`; (b) the converse | supporting only |
 | Shimura 1971, Thm 7.14 | not available on this host | (UNVERIFIED: recalled as the characteristic polynomial of Frobenius on `V_ℓ` of the Shimura quotient) | unread |
 | Ribet, LNM 601 (1977) §§1–2 | not available on this host | (UNVERIFIED) | unread |
 | Weil pairing route (`weilPairingMumford`, main) | tree checked | main has `T09Pic.WeilPairingMumford0` on abelian varieties and duals | not pursued: the print makes it unnecessary. It would also need the canonical polarization of `J₁(N)`, the adjointness `T_p* = ⟨p⟩⁻¹T_p` and glue down to `V_λ` |

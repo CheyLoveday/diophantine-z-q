@@ -8,15 +8,16 @@ package `FixedFieldPackage` of Branch 2) bundles Sections 7–9 and Appendices E
 manuscript (`diophantine_zq.tex`). This file states the inputs from which `Skeleton.lean` proves
 that node, following Elliot's text: one `Prop` per input, named after the manuscript, with its tex
 lines, its kind and the lane expected to discharge it. Kinds: `PRINT` (a printed theorem taken as
-a leaf), `ELLIOT` (Elliot's own step, stated, not proved here), `GLUE` (textbook fact). The
-printed leaves already stated by the blueprint (`Prints`: BCDT Theorem A, Kolyvagin Theorem 1,
-Dokchitser–Dokchitser, Cai–Shu–Tian) are used, not restated.
+a leaf), `ELLIOT` (Elliot's own step, stated, not proved here), `GLUE` (textbook fact or cited
+statement). The cited results already stated by the blueprint (`Prints`: the printed leaves BCDT
+Theorem A, Dokchitser–Dokchitser and Cai–Shu–Tian, and Kolyvagin Theorem 1, a cited statement,
+GLUE: its source is the MPIM preprint MPI/90-69) are used, not restated.
 
 ## The inputs, with tex lines, kind and the lane expected to discharge each
 
 | input | tex | kind | lane |
 |---|---|---|---|
-| `Prints` (blueprint: `bcdt`, `kolyvagin`) | 1086–1108, used 2616–2626 | PRINT | RC8 / RC9 (stated by batch 3) |
+| `Prints` (blueprint: `bcdt`, `kolyvagin`) | 1086–1108, used 2616–2626 | PRINT (BCDT Thm A) + GLUE (Kolyvagin Thm 1) | RC8 / RC9 (stated by batch 3) |
 | `KummerCorankZero` | 1098–1104 | GLUE (Kummer sequence) | RC9 |
 | `RCSteps.lstar_ne_zero_iff` | 1825–1830 | ELLIOT/GLUE | RC11-even |
 | `RCSteps.genus_partner` | 2404–2408 | ELLIOT | RC13-nonvanishing |
