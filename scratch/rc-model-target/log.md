@@ -60,3 +60,13 @@
 - BaseChangeInv.lean: structR, invVec, chart_equation_self/comp, exists_baseChangeInvHom (Proj (W.map ψ) → Proj W over ψ). OK.
 - BaseChangeIso.lean: **bcIso W ψ : (Over.pullback (Spec.map ψ)).obj (cubic W) ≅ cubic (W.map ψ)** (identity in coordinates),
   under [W.IsElliptic] [(W.map ψ).IsElliptic] [IsReduced (baseChangeScheme W ψ)] [IsReduced (Proj (W.map ψ))]. Build OK, std axioms.
+- DetectorModel.lean: detW, exists_detShear, smooth_mapped, reduced_mapped, reduced_baseChange, detFibreIso ψ,
+  detW_map_eq, **detGenericIso : (generic R ℚ).obj (weierstrassModel ell (detW)) ≅ ellipticTarget (W₀⁄ℚ)**,
+  detProperGeneric, detGeomIntGeneric (transport from J0Cusps.projectiveAbVar via jE). Build OK, std axioms.
+- PullbackMul.lean: upHom, mul_left_fst ((a*b).left ≫ fst = (lift a↑ b↑ ≫ μ).left for Over.pullback). OK.
+- Link found: PMWire.Assembly fixes E₀ = (EcurveZ ℓ)⁄ℚ, Ebar = ReducedEquation (EcurveZ ℓ) p; stage primes satisfy
+  ¬ p ∣ (EcurveZ ℓ).Δ (StageWitness.stage_facts, RC/Wiring/StageWitness.lean:141).
+- Read.lean: pointCongr, pointCongr_toAffine, map_toAffine (Point.map σ ∘ toAffine = toAffine ∘ σ), detE, resRing, special,
+  resRing_curve, residue_structure, residueIso, resUp, readFun, readFun_mul. OK (compile ~10 min).
+- ReadEquiv.lean: readFun_eq, readFun_injective, readFun_surjective, **read h₅ hΔ : (residueSource ℓ K ⟶ special.obj E) ≃*
+  Multiplicative ((ReducedEquation W₀ ℓ)⁄K).Point**, read_apply, **read_frob**. Build OK, std axioms.
