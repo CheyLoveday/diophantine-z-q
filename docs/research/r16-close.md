@@ -51,7 +51,10 @@ reference. **SPECULATIVE** = a judgement. **UNVERIFIED** = recalled without a so
 
 5. **None of the leaves is proved outright** (§4). Each is a theorem about modular Jacobians (Hecke
    correspondences, Shimura's quotient, Eichler–Shimura, Igusa) with no Lean infrastructure in Mathlib or the
-   tree. Printed forms, locators and ratings are in §4; every DS locator was read in this task.
+   tree. Printed forms, locators and ratings are in §4. Of the DS locators, only Lemma 9.5.3, Thm 9.5.4,
+   Ex. 9.5.2 and Thm 9.6.5 with the paragraph after it are covered by human reads (issue #14 comments
+   7000317188 and 7121091136); the others (§6.3, Prop. 5.2.1, §7.9, Def. 6.6.3, Prop. 6.6.4, Thm 7.6.3,
+   (7.12), Ex. 9.6.3) were AI-read only and are not claimed as read.
 
 ## 1. The determinant: what is missing
 

@@ -23,7 +23,8 @@ folding it), so after that fold substitute `ZInQ.Contrib.CloudB3W16Torsion.mumfo
 - Verbatim target copy, with an `Iff.rfl` check.
 - Fold dry run `scratch/r16-close/autofold.json`: `sixContactMin_of_open49` compiles with standard axioms.
 
-**Leaf ratings.** Every DS locator was read in this task.
+**Leaf ratings.** DS Lemma 9.5.3, Thm 9.5.4 and Thm 9.6.5 are covered by human reads (issue #14 comments
+7000317188, 7121091136); the other DS locators below were AI-read only and are not claimed as read.
 - `heckeJ1DS` (DS §6.3, Prop 5.2.1, §7.9): printed form.
 - `afShimura` (Shimura 1973 Thm 1; DS Def 6.6.3): printed form.
 - `afTateDSLambdaSat`: printed form.
