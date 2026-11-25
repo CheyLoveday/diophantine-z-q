@@ -193,7 +193,11 @@ DeRhamScholze.HTMerge.ScholzeH1AbVar
 T10Etale.T10_TateDuality
 ```
 
-> Milne, Abelian varieties v2.00, Part I, Thm 12.1(a), as the manuscript cites it (lem:de-rham-descent L10966-10970); Milne 1986 (Cornell-Silverman) Thm 15.1(a): `H¹(A_K̄, ℤ_ℓ) = Hom(T_ℓ A, ℤ_ℓ)`, Galois-equivariantly, over Mathlib's pro-étale `EllAdicCohomology`.
+> `H¹(A_K̄, ℤ_ℓ) = Hom(T_ℓ A, ℤ_ℓ)`, Galois-equivariantly, over Mathlib's pro-étale
+> `EllAdicCohomology`: a consequence of Milne, Abelian Varieties v2.0 (March 16, 2008), Part I,
+> Thm 12.1(a), p. 55, with Rem. 12.5, p. 56 (Galois compatibility), as the manuscript cites it
+> (lem:de-rham-descent L10966-10970). The 1986 Cornell-Silverman chapter (Thm 15.1(a)) was not
+> read.
 
 ### afCharpolyDS965
 
@@ -249,7 +253,8 @@ CarayolRefold.CarayolThmAFrob
 HDec.CMBranch.CMHeight62
 ```
 
-> cm-branch (leaf, consequence form, pending review): Barquero-Sanchez et al., Res. Number Theory 3 (2017), Eq. (6.2) (L600-605).
+> cm-branch (leaf, consequence form; GLUE: rating refuted 11-17, reported formula):
+> Barquero-Sanchez et al., Res. Number Theory 3 (2017), Eq. (6.2) (L600-605).
 
 ### deligneCanonicalModelY3EveryPrint
 
@@ -263,7 +268,7 @@ HDec.CMBranch.CMHeight62
 Y3Hodge.DeligneCanonicalModelY3EveryPrint
 ```
 
-> Shimura 1967 Main Theorem I in Deligne's form (Sem. Bourbaki 389, sections 4-5; Milne, Introduction to Shimura varieties, sections 5-8 and 12-14) for Y3 = Sh_K3(B^x, H^pm), B = (2,-3|Q), stated as the print states it, for every witness (Y, Phi) of the printed fine-moduli clause list Y3Fix.R1fpPropsAbP: Psi : H^pm x (B (x) A_f)^x -> Y(C) onto with fibres exactly the print's double cosets B^x \ (H^pm x G(A_f) / K3) (DCRelPM); holomorphic in tau in H for every g; at [tau, u], u in O-hat^x (L_u = O), the abelian surface A with (H_1(A, Z), iota_*, h_A) = (O, left multiplication, h_tau) in genuine form (IsHodgeH1Print: H_1 = pi_1(A(C), 0)^ab for the classical topology, O acting by functoriality, the complex structure of Lie A through a holomorphic homomorphism e = exp_A o L, right multiplication by J_tau); Shimura's reciprocity law at CM points of H (conventions existential). Equivalent to the old field deligneCanonicalModelY3EveryH (Y3Hodge.print_iff_deligneH, both directions proved: restriction to H by exists_upper and dcRelPM_iff, retraction H^pm -> H by mu = 1+i, H_1 dictionary print_iff_hodge). Consequence form: bijective and holomorphic in place of the biholomorphism, moduli clause at O-hat^x without polarization (exists and is unique: Y3Hodge.lemmaP_H1, Lemma P on the genuine H_1) and level structure, reciprocity at CM points of H
+> Shimura 1967 Main Theorem I in Deligne's form (Sem. Bourbaki 389, sections 4-5, a seminar report: under Jack's 11-23 ruling (D2) it is a source only if it proves the statement, which is not checked; background reading only, not a source: Milne, Introduction to Shimura varieties (2005), sections 5-8 and 12-14) for Y3 = Sh_K3(B^x, H^pm), B = (2,-3|Q) (locators unverified; composite (GLUE)), for every witness (Y, Phi) of the printed fine-moduli clause list Y3Fix.R1fpPropsAbP: Psi : H^pm x (B (x) A_f)^x -> Y(C) onto with fibres exactly the print's double cosets B^x \ (H^pm x G(A_f) / K3) (DCRelPM); holomorphic in tau in H for every g; at [tau, u], u in O-hat^x (L_u = O), the abelian surface A with (H_1(A, Z), iota_*, h_A) = (O, left multiplication, h_tau) in genuine form (IsHodgeH1Print: H_1 = pi_1(A(C), 0)^ab for the classical topology, O acting by functoriality, the complex structure of Lie A through a holomorphic homomorphism e = exp_A o L, right multiplication by J_tau); Shimura's reciprocity law at CM points of H (conventions existential). Equivalent to the old field deligneCanonicalModelY3EveryH (Y3Hodge.print_iff_deligneH, both directions proved: restriction to H by exists_upper and dcRelPM_iff, retraction H^pm -> H by mu = 1+i, H_1 dictionary print_iff_hodge). Consequence form: bijective and holomorphic in place of the biholomorphism, moduli clause at O-hat^x without polarization (exists and is unique: Y3Hodge.lemmaP_H1, Lemma P on the genuine H_1) and level structure, reciprocity at CM points of H
 
 ### dsThm965AtPrimes
 
@@ -277,8 +282,9 @@ Y3Hodge.DeligneCanonicalModelY3EveryPrint
 DS965Places.DiamondShurman965AtPrimes
 ```
 
-> Diamond–Shurman, GTM 228 (2005), Theorem 9.6.5, p. 393: weight at least two, in the
-> prime-ideal convention. The inertia and arithmetic Frobenius comparison is proved.
+> Diamond–Shurman, GTM 228, corrected fourth printing (2016), Theorem 9.6.5, p. 404, restricted
+> to weight at least two (the project's bound; the print has none), in the prime-ideal convention.
+> The inertia and arithmetic Frobenius comparison is proved.
 
 ### gaudronRemondSec9LowerAnSS
 
@@ -292,7 +298,19 @@ DS965Places.DiamondShurman965AtPrimes
 ZInQ.BostGR9.GaudronRemondSec9LowerAnSS
 ```
 
-> bost-gr9 (fold-b112), printed form over the printed semistability: Gaudron-Remond, Polarisations et isogenies, Duke Math. J. 163 (2014), 2057-2108, section 9, proof of Lemme 9.1, p. 2098 (read by the locator audit, locators R21; cited by the manuscript at diophantine_zq.tex L894-895, step E4): h_F(A) >= -(3/2) dim A for every abelian variety over a number field, Faltings' original normalization, over ZInQ.SemistabAssembly.IsAnStableHeightSS (semistable reduction as printed, as gaudronRemondThm14AnSS). Replaces bostLowerBoundAnSS (strictly stronger: -(g/2) log(2 pi^2), BostGR9.sec9_bound_lt_bost; it implies the leaf, BostGR9.gaudronRemondSec9LowerAnSS_of_bostLowerBoundAnSS); consumed through BostGR9.gaudronRemondSec9LowerAn_of_ss, BostGR9.sec9Printed_of_an, BostGR9.grBostBound_of_sec9Printed and BostGR9.r21_of_grBost' (R21).
+> bost-gr9 (fold-b112), over the printed semistability: the weaker form of Gaudron-Remond,
+> Theoreme des periodes et degres minimaux d'isogenies, Comment. Math. Helv. 89 (2014), Cor. 8.4,
+> p. 400 (GR1; attribution: Bost), h(A) >= -(g/2) log(2 pi), with the normalization
+> h_F(A) = h(A) - (g/2) log pi on p. 352 (two-lens statement check 2026-11-24). Duke 163 p. 2098:
+> citation only (Gaudron-Remond, Polarisations et isogenies, Duke Math. J. 163 (2014), section 9,
+> proof of Lemme 9.1, citing GR1 Cor. 8.4; cited by the manuscript at diophantine_zq.tex L894-895,
+> step E4): h_F(A) >= -(3/2) dim A for every abelian variety over a number field, Faltings'
+> original normalization, over ZInQ.SemistabAssembly.IsAnStableHeightSS (semistable reduction as
+> printed, as gaudronRemondThm14AnSS). Replaces bostLowerBoundAnSS (strictly stronger:
+> -(g/2) log(2 pi^2), BostGR9.sec9_bound_lt_bost; it implies the leaf,
+> BostGR9.gaudronRemondSec9LowerAnSS_of_bostLowerBoundAnSS); consumed through
+> BostGR9.gaudronRemondSec9LowerAn_of_ss, BostGR9.sec9Printed_of_an,
+> BostGR9.grBostBound_of_sec9Printed and BostGR9.r21_of_grBost' (R21).
 
 ### gaudronRemondThm14AnSS
 
@@ -376,7 +394,7 @@ ZInQ.HeightSplit.PazukiCor13Upper
 R16Thm1b.ShimuraThm1Af
 ```
 
-> r16-thm1b: Shimura 1973 Thm 1 as printed, one row. For a newform f in S_2(Gamma_1(N)) with nebentypus chi, the kernel's model X of X_1(N), Jacobian J, Hecke operators T_p = xi_p, <d>: K_f finite over Q, and there is a triple (A, nu, theta) with Shimura's clauses (i) nu surjective with connected kernel, (ii) nu o xi_n = theta(a_n) o nu at n = p and n = p^2 (xi_{p^2} = T_p^2 - p<p>), (iii) dim A = [K_f : Q], and IsAfQuotient (ker nu = I_f J: nu kills I_f J and is universal for that), unique up to a nu-compatible isomorphism over Q among triples with (i)-(iii). Printed (AI page read): C = Ker(nu) (p. 525), C from the ideal annihilating f intersected with End(J) (p. 526), uniqueness up to isomorphisms over Q (p. 526), dimension and tangent space from m = 1 via q-expansions (p. 527). ON THE SPOT steps: C = I_f J (the ideal is ker rho, saturation, Hecke relations in both directions); (ii) for all n from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible isomorphisms. Euler clause and (iv) not in this row.
+> r16-thm1b: Shimura 1973 Thm 1 in consequence form (GLUE, pending review), one row. For a newform f in S_2(Gamma_1(N)) with nebentypus chi, the kernel's model X of X_1(N), Jacobian J, Hecke operators T_p = xi_p, <d>: K_f finite over Q, and there is a triple (A, nu, theta) with Shimura's clauses (i) nu surjective with connected kernel, (ii) nu o xi_n = theta(a_n) o nu at n = p and n = p^2 (xi_{p^2} = T_p^2 - p<p>), (iii) dim A = [K_f : Q], and IsAfQuotient (ker nu = I_f J: nu kills I_f J and is universal for that), unique up to a nu-compatible isomorphism over Q among triples with (i)-(iii). Printed (AI page read): C = Ker(nu) (p. 525), C from the ideal annihilating f intersected with End(J) (p. 526), uniqueness up to isomorphisms over Q (p. 526), dimension and tangent space from m = 1 via q-expansions (p. 527). ON THE SPOT steps: C = I_f J (the ideal is ker rho, saturation, Hecke relations in both directions); (ii) for all n from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible isomorphisms. Euler clause and (iv) not in this row.
 
 ### y3FullThreeRepZ30
 
@@ -508,7 +526,8 @@ ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne
 > Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C,
 > Evidence 16.5.5, p. 453, rank-one line. The Hasse–Weil L-function is represented
 > by its analytic continuation from the half-plane of absolute convergence.
-> Kind: PRINT.
+> Kind: consequence, GLUE. Silverman reports this line; the records derive it from
+> Miller, LMS J. Comput. Math. 14 (2011), Thm 4.4 (`silvermanRankOne_of_miller`).
 
 ## Credits
 
