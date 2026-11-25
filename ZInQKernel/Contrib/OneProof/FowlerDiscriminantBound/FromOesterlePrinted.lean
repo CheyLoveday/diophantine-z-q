@@ -10,9 +10,11 @@ open NumberField TauCeti.GlobalNumberFields
 universe u
 
 /-- Oesterlé, *Nombres de classes des corps quadratiques imaginaires*, Astérisque
-121–122 (1985), Exposé 631, Theorem 1 p. 310 with `C = 7000` from §5.1 p. 321.
-Here `d` is the positive magnitude of the field discriminant and the product uses each
-prime divisor of `d` except the largest. The class group is that of the full ring of integers. -/
+121–122 (1985), Exposé 631, Theorem 1 p. 310, with `C = 7000`. Here `d` is the positive
+magnitude of the field discriminant and the product uses each prime divisor of `d` except
+the largest. The class group is that of the full ring of integers.
+Unread: §5.1, p. 321, takes the constant from [Ce] ("on montre (cf. [Ce]) que l'on peut
+prendre C = 7000"); [Ce] has not been read. -/
 def OesterleTheorem1Printed : Prop :=
   ∀ (K : Type u) [Field K] [NumberField K] [IsTotallyComplex K], Module.finrank ℚ K = 2 →
     let d := (NumberField.discr K).natAbs

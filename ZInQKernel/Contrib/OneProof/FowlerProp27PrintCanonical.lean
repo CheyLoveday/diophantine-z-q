@@ -6,8 +6,10 @@ import ZInQKernel.Contrib.OneProof.FowlerDiscriminantBound.FromOesterlePrinted
 `FowlerProp27PrintCanonical` follows from `OesterleTheorem1Printed`, the printed form of
 Oesterlé, *Nombres de classes des corps quadratiques imaginaires*, Séminaire Bourbaki
 1983/84, Exposé 631, Astérisque 121–122 (1985), Theorem 1, p. 310, with the constant
-`C = 7000` of §5.1, p. 321. The conductor product, the unit-index bounds and the genus
-divisibility used in Fowler's argument are proved in `FowlerDiscriminantBound`. -/
+`C = 7000`, which §5.1, p. 321, takes from the unread reference [Ce]. Oesterlé's statement
+is the stronger one: this file records the implication and does not replace the Fowler
+hypothesis. The conductor product, the unit-index bounds and the genus divisibility used in
+Fowler's argument are proved in `FowlerDiscriminantBound`. -/
 
 namespace HDec.CMBranch.FowlerBridges
 
