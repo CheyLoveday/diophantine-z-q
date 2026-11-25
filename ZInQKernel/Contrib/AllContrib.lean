@@ -3159,3 +3159,5 @@ import ZInQKernel.Contrib.OneProof.RC.ClassicalEulerFactors.Receiver
 import ZInQKernel.Contrib.OneProof.ModularCoeffFixedField
 import ZInQKernel.Contrib.OneProof.ModularFrobeniusDual
 import ZInQKernel.Contrib.OneProof.ModularFrobeniusPrimes
+import ZInQKernel.Contrib.OneProof.Y3IntegralInvariantAffine
+import ZInQKernel.Contrib.OneProof.Y3IntegralTorsorPullback
