@@ -45,3 +45,5 @@ and Quot.sound. The modules:
   staging copy; it is four lines over Mathlib.
 
 Report: `docs/research/rc-model-target.md`. Log: `scratch/rc-model-target/log.md`.
+
+**SHAs.** Last Lean commit: `840b43927e5a35eabf61129460410627c2c90fb0`. Hand-off commit with the report: `292a97a5a01c0807fb5017ac8bba5caf0d2534c1`. This file is committed last, on top of these.
