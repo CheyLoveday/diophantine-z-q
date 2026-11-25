@@ -11,9 +11,8 @@ open ZInQ.Contrib.ChebFD.HSyn (Qbar GQ gZ LiesOver IsArithFrob zbarLoc liesOver_
 
 /-- A full polynomial on geometric Frobenius at valuation places gives the full arithmetic
 polynomial on the contragredient at primes of the algebraic integers. The trace remains on
-geometric Frobenius of the original representation. The coefficients are already in the
-completion where `ρ` is defined; the continuous map out of it can be the chosen coefficient
-embedding, not a separately chosen embedding of the same number field. -/
+geometric Frobenius of the original representation. `R` is any nontrivial commutative ring and
+`φ : R →+* S` any ring hom; `φ` enters only through the trace. -/
 theorem arithmetic_atPrime_and_geometric_trace {R S : Type*} [CommRing R] [Nontrivial R]
     [CommRing S] (φ : R →+* S) (ρ : GQ →* GL (Fin 2) R) (a b : R)
     {p : ℕ} (hp : p.Prime) (P : Ideal Zbar) [P.IsPrime]

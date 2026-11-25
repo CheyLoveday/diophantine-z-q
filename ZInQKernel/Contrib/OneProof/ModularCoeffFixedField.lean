@@ -3,7 +3,11 @@ import Mathlib.FieldTheory.Galois.Infinite
 import Mathlib.FieldTheory.IsAlgClosed.Classification
 import Mathlib.Algebra.MvPolynomial.Equiv
 
-/-! # Fixed coefficients under complex field automorphisms -/
+/-! # Fixed coefficients under complex field automorphisms
+
+General Galois descent inside `ℂ`: an element of a number field fixed by every automorphism of
+`ℂ` over `L` lies in `L`. Nothing about modular forms is asserted here; in particular this does
+not prove the coefficient-field inclusion for oldforms. -/
 
 namespace ModularCoeffFixedField
 
