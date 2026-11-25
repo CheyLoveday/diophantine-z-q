@@ -172,7 +172,7 @@ None. The lane adds no printed-form statement. Nothing here is a leaf:
   Vignéras, so they are never cited. Ribet 1990 Prop. 3.6, which is proved there, is the citable converse.
   The lead's ruling splits the `JetchevKane` structure: the class correspondence is GLUE, and the three
   compatibilities are ELLIOT, to be proved in Lean.
-* `isReduced_of_smooth_hom` (`GroupObj.lean:23`) calls the vendored theorem
+* `isReduced_of_smooth_hom` (`GroupObj.lean:21`) calls the vendored theorem
   `ZInQ.Contrib.CloudW03NeronSurj.FLT.P2MW.S_AlgebraicGeometry_Smooth_isReduced_of_isReduced_of_isLocallyNoetherian.solution`
   (`ZInQKernel/Contrib/CloudR2NOS/Source/P2M/Sol/`). It is fully proved, with standard axioms. Its file
   header calls it a "probe staging copy" of the FLT port, held outside H5. Its proof is four lines: smooth
