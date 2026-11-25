@@ -85,10 +85,10 @@ actual sextic and an isogeny between `B_K` and `A^m`.
   product GL₂-type over `Spec ℤ[1/N]`. Good reduction gives the abelian
   scheme, and the generic endomorphisms extend by the Néron property (compare
   the proof of Corollary 6.4 on the same page). Its stable height is in the
-  original Faltings convention (metric in `2.1, p. 5). Equation (3.1), p. 6,
+  original Faltings convention (metric in §2.1, p. 5). Equation (3.1), p. 6,
   gives the half-log-degree change after passing to a common semistable field.
 * **Explicit isogeny transfer.** Apply Gaudron–Rémond,
-  [*Polarisations et isogénies*](https://lmbp.uca.fr/`gaudron/art13.pdf),
+  [*Polarisations et isogénies*](https://lmbp.uca.fr/~gaudron/art13.pdf),
   Duke Math. J. 163 (2014), Theorem 1.4, p. 2060, with `B_K` as the source
   and `A^m` as the target. Both isogenies are bounded by the source's
   `κ` (pp. 2058–2059; stable height in the original convention). With
