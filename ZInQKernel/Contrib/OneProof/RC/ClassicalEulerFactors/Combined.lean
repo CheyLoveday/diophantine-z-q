@@ -15,7 +15,7 @@ open ZInQ.Contrib.RC53Assist.G0Prints
 open ZInQ.Contrib.RC53Assist.TateCurve
 
 /-- Apply the exact Theorem 5.3 receiver with the BCDT and parity adapters
-already verified. Both local-factor fields are constructed from the
+proved in Lean. Both local-factor fields are constructed from the
 same bad-prime dictionary. The actual Shimura geometric reading and
 all remaining manuscript data and hypotheses stay explicit. -/
 theorem restrictedConverseGenuine_of_classicalLocalFactors_and_annals419

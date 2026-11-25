@@ -100,8 +100,9 @@ theorem localSemistableTatePrint_of_global (hS : GrothendieckSemistableReduction
   exact (nilpotent_global_iff_local E p hp ℓ ι r hres σ).mp
     ((hS E ℓ p hp hℓp.symm D).mp (Or.inr hm) (r σ) hri)
 
-/-- Grothendieck, SGA 7 I, Exposé IX, Corollary 3.8 (p. 353), condition (vi)
-equivalent to (i) of Proposition 3.5 (p. 350). Use the actual integral Tate
+/-- **GLUE.** Grothendieck, SGA 7 I, Exposé IX, Corollary 3.8, condition (vi) equivalent to (i)
+of Proposition 3.5, joined with Silverman VII.5.1 and a Néron-model dictionary that is not cited.
+Locators UNVERIFIED: no reading of the SGA 7 original is on record (pp. 350, 353 are as cited). Use the actual integral Tate
 module at the complete local field. In the elliptic-curve specialization,
 semistability is good or multiplicative reduction of the local minimal
 Weierstrass equation (Silverman, AEC, 2nd ed., VII.5.1, p. 196). -/
@@ -120,7 +121,7 @@ def SGA7IX38LocalEllipticCriterion : Prop :=
           (WeierstrassCurve.tateModuleGaloisRepresentation
             (E.baseChange ((primeIdealQ p hp).adicCompletion ℚ)) ℓ σ - 1))
 
-/-- The published local criterion supplies the old global reading using
+/-- The local criterion (GLUE, above) supplies the old global reading using
 both directions of the actual inertia comparison. -/
 theorem grothendieckSemistableReductionPrint_of_sga7 (hS : SGA7IX38LocalEllipticCriterion) :
     GrothendieckSemistableReductionPrint := by

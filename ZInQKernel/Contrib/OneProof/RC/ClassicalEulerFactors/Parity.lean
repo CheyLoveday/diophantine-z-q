@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.OneProof.RC.PrintsAnalytic.ModularNewformPrinted
 import ZInQKernel.Contrib.CloudB3RC53.Hasse.Final
 import ZInQKernel.Contrib.CloudB3RC53.Assembly
 
-/-! # Published analytic-order parity for the restricted converse
+/-! # Analytic-order parity (a consequence form, GLUE) for the restricted converse
 
 This supplies the sign used in `diophantine_zq.tex` lines 1792–1796.
 It does not change the curve, the Selmer hypothesis or the subsequent proof.
@@ -20,9 +20,11 @@ open ZInQ.Contrib.RC53Assist.NewformGlueG0.Descent
   (Shimura1973ConjugateEigenforms Carayol1986RationalNewformEulerFactors
     Faltings1983EulerFactorRigidityQ)
 
-/-- Dokchitser–Dokchitser, *On the Birch–Swinnerton-Dyer quotients modulo squares*,
-Annals of Mathematics 172 (2010), Theorem 4.19 (= Theorem 1.4), p. 593,
-specialized to `p = 2`. The two integers stand for the corank of the genuine
+/-- **GLUE (consequence form).** Dokchitser–Dokchitser, *On the Birch–Swinnerton-Dyer quotients
+modulo squares*, Annals of Mathematics 172 (2010), Theorem 4.19 (= Theorem 1.4), specialized to
+`p = 2`, with the analytic order in place of the root number. It absorbs the root-number bridge
+that `DokchitserThm18` already marks GLUE. Locator UNVERIFIED: no reading of the Annals statement
+is on record (p. 593 is as cited, not read). The two integers stand for the corank of the genuine
 `2^∞`-Selmer group and the order of the actual complex Hasse–Weil `L`-function
 at 1. The print assumes no rational isogeny and no finiteness of Sha. The
 premises specifying the two integers do not assert the existence of those
@@ -64,7 +66,7 @@ theorem rootNumber_of_annals419 (hA : DokchitserAnnalsThm419AtTwo)
   exact hw
 
 /-- Supply the old analytic consequence interface. The 2-torsion condition
-of that interface is unused by the exact Annals theorem over `ℚ`. -/
+of that interface is unused by this consequence form of the Annals theorem over `ℚ`. -/
 theorem dokchitserThm18_of_annals419 (hA : DokchitserAnnalsThm419AtTwo)
     (hM : ModularNewform) : DokchitserThm18 := by
   intro E hE _ r hr
