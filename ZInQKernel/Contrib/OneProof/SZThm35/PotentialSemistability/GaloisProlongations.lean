@@ -1,7 +1,9 @@
 import ZInQKernel.Contrib.CloudR2NOS.Valuation.Conjugacy
 import ZInQKernel.HDecomp.A6.Extend
 
-/-! The valued-field step in the proof of SGA 7 I, Exp. IX, Théorème 3.6 (p. 352). -/
+/-! A valued-field step used in the proof of SGA 7 I, Exp. IX, Théorème 3.6. Locator UNVERIFIED:
+no reading of the SGA 7 original is on record (the page is not given). The proof takes `F` to be
+the normal closure of `E`. -/
 
 namespace SZRaynaud
 
