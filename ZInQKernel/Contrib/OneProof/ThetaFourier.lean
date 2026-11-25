@@ -9,7 +9,7 @@ one, so the theta section has a nonzero value on each such slice.
 -/
 
 open scoped Topology
-open Filter Matrix Complex UnitAddTorus
+open Filter Matrix Complex MeasureTheory UnitAddTorus
 
 noncomputable section
 
@@ -29,18 +29,25 @@ private theorem summable_smul_mFourier {a : (Fin g → ℤ) → ℂ}
   apply Summable.of_norm
   simpa only [norm_smul, mFourier_norm, mul_one] using ha
 
+-- Use the normalized Haar measure of Mathlib's Fourier basis.
+local instance : MeasureSpace UnitAddCircle := ⟨AddCircle.haarAddCircle⟩
+
+local instance : IsProbabilityMeasure (volume : Measure UnitAddCircle) :=
+  inferInstanceAs (IsProbabilityMeasure AddCircle.haarAddCircle)
+
 private theorem mFourierCoeff_tsum_smul_mFourier {a : (Fin g → ℤ) → ℂ}
     (ha : Summable fun n => ‖a n‖) (n : Fin g → ℤ) :
     mFourierCoeff ((∑' k, a k • mFourier k) : C(UnitAddTorus (Fin g), ℂ)) n = a n := by
   classical
   let coeff : C(UnitAddTorus (Fin g), ℂ) →L[ℂ] ℂ :=
-    (innerSL ℂ (mFourierLp 2 n)).comp (ContinuousMap.toLp 2 _ ℂ)
+    (innerSL ℂ (mFourierLp 2 n)).comp (ContinuousMap.toLp 2 volume ℂ)
   have hcoeff (f : C(UnitAddTorus (Fin g), ℂ)) : coeff f = mFourierCoeff f n := by
-    change inner ℂ (mFourierLp 2 n) (f.toLp 2 _ ℂ) = _
+    change inner ℂ (mFourierLp 2 n) (f.toLp 2 volume ℂ) = _
     rw [← mFourierCoeff_toLp f n, ← mFourierBasis_repr, HilbertBasis.repr_apply_apply,
       coe_mFourierBasis]
-  have hb (k : Fin g → ℤ) : coeff (mFourier k) = if n = k then 1 else 0 :=
-    (orthonormal_iff_ite.mp orthonormal_mFourier) n k
+  have hb (k : Fin g → ℤ) : coeff (mFourier k) = if n = k then 1 else 0 := by
+    change inner ℂ (mFourierLp 2 n) (mFourierLp 2 k) = _
+    exact (orthonormal_iff_ite.mp orthonormal_mFourier) n k
   rw [← hcoeff, coeff.map_tsum (summable_smul_mFourier ha)]
   simp only [map_smul, hb, smul_eq_mul, mul_ite, mul_one, mul_zero]
   rw [tsum_eq_single n]
@@ -66,7 +73,8 @@ theorem thetaOnRealSlice_apply (Ω : Matrix (Fin g) (Fin g) ℂ) (hΩ : Ω ∈ S
     (z : Fin g → ℂ) (x : Fin g → ℝ) :
     thetaOnRealSlice Ω z (fun j => (x j : UnitAddCircle)) =
       riemannTheta Ω (z + fun j => (x j : ℂ)) := by
-  let eval := ContinuousMap.evalCLM ℂ (fun j => (x j : UnitAddCircle))
+  let eval : C(UnitAddTorus (Fin g), ℂ) →L[ℂ] ℂ :=
+    ContinuousMap.evalCLM ℂ (fun j => (x j : UnitAddCircle))
   change eval (∑' n, riemannThetaSummand Ω n z • mFourier n) = _
   rw [eval.map_tsum (summable_smul_mFourier (summable_norm_riemannThetaSummand Ω hΩ z))]
   unfold riemannTheta
@@ -82,7 +90,11 @@ theorem mFourierCoeff_thetaOnRealSlice (Ω : Matrix (Fin g) (Fin g) ℂ)
 @[simp] theorem mFourierCoeff_thetaOnRealSlice_zero (Ω : Matrix (Fin g) (Fin g) ℂ)
     (hΩ : Ω ∈ SiegelSpace g) (z : Fin g → ℂ) : mFourierCoeff (thetaOnRealSlice Ω z) 0 = 1 := by
   rw [mFourierCoeff_thetaOnRealSlice Ω hΩ]
-  simp [riemannThetaSummand, intVec]
+  have hzero : intVec (0 : Fin g → ℤ) = 0 := by
+    funext j
+    change ((0 : ℤ) : ℂ) = 0
+    simp only [Int.cast_zero]
+  simp [riemannThetaSummand, hzero]
 
 /-- The Riemann theta function is nonzero somewhere on every real translate. -/
 theorem exists_riemannTheta_add_real_ne_zero (Ω : Matrix (Fin g) (Fin g) ℂ)
