@@ -11,3 +11,7 @@
 - subset_stageExclusions, not_dvd_tame_of_not_mem_stageExclusions (exists_detector_stages sequences are over stageExclusions ℓ Dw hstar B ⊇ B)
 - two_le_newformLevel (hN : 0 < CST.newformLevel E) : 2 ≤ CST.newformLevel E  [S₂(SL₂ℤ)=0 via Mathlib CuspForm.rank_eq_zero_of_weight_lt_twelve; a₁(E)=1 via lFunction_one]
 - two_le_level (hN : 0 < StageKummer.level ℓ) : 2 ≤ StageKummer.level ℓ  (h₂ from the hN hypothesis of oddStagedOfGoodRows)
+
+## Item 2 pieces
+- IntegralTransfer.lean (builds; standard axioms): isIntegral_of_finite (θ : D →+* B finite, φ : B →+* C, φ∘θ lands in integral elements over A ⇒ φ b integral over A); mem_range_of_isIntegral (κ = algebraMap A B injective, κ π unit, span{π} radical, b integral, κ(π)^n b ∈ range ⇒ b ∈ range).
+- AtkinField.lean (builds; standard axioms): pullback_jq (hQ : Q ∥ N) : AtkinRational.pullback hQ ⟨jq,_⟩ = ⟨jqN Q,_⟩; modularPolynomial_eval_field (M ∣ N) data : data.Φ.eval₂ (eval₂RingHom (Int.castRingHom F) jq) (jqN M) = 0 in F = modularFunctionField N.
