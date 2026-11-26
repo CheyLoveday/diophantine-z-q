@@ -3290,3 +3290,7 @@ import ZInQKernel.Contrib.OneProof.GR14Printed.Check
 import ZInQKernel.Contrib.OneProof.GR14Printed.DimZero
 import ZInQKernel.Contrib.OneProof.GR14Printed.FiniteKernel
 import ZInQKernel.Contrib.OneProof.GR14Printed.Printed
+import ZInQKernel.Contrib.OneProof.DeligneY3Bridges.Check
+import ZInQKernel.Contrib.OneProof.DeligneY3Bridges.LevelCompat
+import ZInQKernel.Contrib.OneProof.DeligneY3Bridges.Similitude
+import ZInQKernel.Contrib.OneProof.DeligneY3Bridges.Statement
