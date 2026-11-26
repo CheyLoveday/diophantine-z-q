@@ -9,7 +9,7 @@ hypotheses `G` and `hcop` replaced by
 * `hB : (N φ(N)).primeFactors ⊆ s.B` (`N := StageKummer.level ℓ`), and
 * `sp : ∀ i, StageSamePlace s hN hB (X i) i` (the same-place data at every stage),
 
-under the substitution `R i := LocalIntegers (s.q.stage i).p`, `G := stageRows s hN hB π hQ sp`
+under the substitution `R i := LocalIntegers (s.q.stage i).p`, `G := stageRows a s π hQ hN hB sp`
 (`G i = stageRow s hN hB π hQ i (sp i)`) and `hcop := stage_coprime s hN hB`. The hypotheses
 `J`, `relations`, `cusps`, `refs` and `ha` mention `G`, `hcop` or `R` and are restated with
 exactly the same content after this substitution. `htame` and `hcop` are derived from `hB`

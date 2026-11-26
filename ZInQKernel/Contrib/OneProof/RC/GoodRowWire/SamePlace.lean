@@ -30,8 +30,9 @@ lane). The supersingular points `X.Point` of the coarse fibre map to geometric p
 special fibre of the pinned model `Pinned.Y0Level h₅ htame h₂` over the residue field `K`,
 compatibly with the Atkin–Lehner operators (through the integral operator `Wint` of
 `ModelGeneric5`, at the exact divisor `q ^ v_q(N)`), and with the prime-field Frobenius, which
-is an involution on `X.Point`. The fields are those of `PMWire.GoodRow` (`RC/PMWire/Model.lean`),
-with `Wint` for `(extension q hq he).choose` in `point_W`. -/
+is an involution on `X.Point`. The fields `point`, `point_W`, `point_frob` and `frobenius_sq` are
+those of `PMWire.GoodRow` (`RC/PMWire/Model.lean`), with `Wint` for `(extension q hq he).choose` in
+`point_W`. -/
 structure SamePlaceData (h₅ : 5 ≤ ell) (htame : ¬ ell ∣ N * N.totient) (h₂ : 2 ≤ N)
     (K : Type) [Field K] [Algebra (ZMod ell) K] (X : PMAdelic.CoarseFibre) where
   /-- The special-fibre point of each supersingular point (`GoodRow.point`). -/
