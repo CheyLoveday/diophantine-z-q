@@ -1,7 +1,7 @@
 """ds965-reroute: copy reroute of the live chain without `dsThm965AtPrimes`.
 
 Inputs (read from the pinned base, never edited): NOSNarrowChain.lean (the live copy chain under
-`sixContactMin_of_open83_nos`), TailZ91..TailZ102 (the generations above it), and C8Chain's
+`sixContactMin_of_open83_nos`), TailZ91..TailZ103 (the generations above it), and C8Chain's
 `GaloisPiecesC8`. Output: Contrib files with
 
 * every NOS-chain declaration that takes a bundle carrying a Diamond-Shurman 9.6.5 field
@@ -16,8 +16,8 @@ Inputs (read from the pinned base, never edited): NOSNarrowChain.lean (the live 
 * the readers: `panBerger_of_F` -> `panBerger_of_F_mht`, `eigenformHT_of_kato_ds` ->
   `eigenformHT_of_kato`, `r14Det_of_printed` -> `eigenformRepExists_hsyn_of_g9`,
   `eigenformRepExists_of_r14Det r.r14` -> `r.r14`;
-* the generations TailZ91..TailZ102 copied without `dsThm965Printed` / `dsThm965AtPrimes`, with
-  the top `HDec.HSyn.sixContactMin_of_open95_ds (r : OpenResearchLeaves76DS)`.
+* the generations TailZ91..TailZ103 copied without `dsThm965Printed` / `dsThm965AtPrimes`, with
+  the top `HDec.HSyn.sixContactMin_of_open96_ds (r : OpenResearchLeaves77DS)`.
 
 `set_option maxHeartbeats` lines of the sources are dropped (default limit).
 Usage: python3 gen_ds.py SRC_DIR OUT_DIR
@@ -262,7 +262,7 @@ def main():
     # the generations above the NOS chain
     top_blocks = []
     prev_top = None
-    for i in range(91, 103):
+    for i in range(91, 104):
         src = (SRC / f'TailZ{i}.lean').read_text()
         end = src.rindex('#print axioms') if '#print axioms' in src else len(src)
         body = src[src.index('namespace HDec'):end]
@@ -295,7 +295,7 @@ HEADER = '''{imports}
 
 /-! # The live chain without `dsThm965AtPrimes` ({part}; ds965-reroute, generated)
 
-Generated from `NOSNarrowChain.lean` and the generations `TailZ91`–`TailZ102`: every declaration
+Generated from `NOSNarrowChain.lean` and the generations `TailZ91`–`TailZ103`: every declaration
 that takes a bundle carrying a Diamond–Shurman 9.6.5 field, `R14Det` or `GaloisPiecesC8` is copied
 with the suffix `DS` / `_ds`. Below the conversion that reads `modularHTCoeff`, the 9.6.5 field is
 replaced by `repExists` (R14 without its determinant, from `modularHTCoeff` and
@@ -322,14 +322,15 @@ if __name__ == '__main__':
     parts.append(cur)
     prev = None
     for k, blks in enumerate(parts, 1):
-        imports = ['import ZInQKernel.Contrib.OneProof.DS965Reroute.PanBerger'] if prev is None \
+        imports = ['import ZInQKernel.Contrib.OneProof.DS965Reroute.PanBerger',
+                   'import ZInQKernel.OneProof.H.TailZ103'] if prev is None \
             else [f'import ZInQKernel.Contrib.OneProof.DS965Reroute.{prev}']
         name = f'Chain{k}'
         text = HEADER.format(imports='\n'.join(imports), part=f'part {k} of {len(parts)}')
         text += '\n' + '\n'.join(blks)
         text = text.replace('set_option linter.style.longLine false\n', '')
         if k == len(parts):
-            text += '\n#print axioms HDec.HSyn.sixContactMin_of_open95_ds\n'
+            text += '\n#print axioms HDec.HSyn.sixContactMin_of_open96_ds\n'
         text = wrap_lines(text)
         bad = [l for l in text.split("\n") if len(l) > 100]
         for l in bad[:5]: print("LONG", len(l), l[:160])

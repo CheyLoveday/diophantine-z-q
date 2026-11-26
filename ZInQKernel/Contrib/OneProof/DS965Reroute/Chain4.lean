@@ -2,7 +2,7 @@ import ZInQKernel.Contrib.OneProof.DS965Reroute.Chain3
 
 /-! # The live chain without `dsThm965AtPrimes` (part 4 of 5; ds965-reroute, generated)
 
-Generated from `NOSNarrowChain.lean` and the generations `TailZ91`–`TailZ102`: every declaration
+Generated from `NOSNarrowChain.lean` and the generations `TailZ91`–`TailZ103`: every declaration
 that takes a bundle carrying a Diamond–Shurman 9.6.5 field, `R14Det` or `GaloisPiecesC8` is copied
 with the suffix `DS` / `_ds`. Below the conversion that reads `modularHTCoeff`, the 9.6.5 field is
 replaced by `repExists` (R14 without its determinant, from `modularHTCoeff` and

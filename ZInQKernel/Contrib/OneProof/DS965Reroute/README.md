@@ -4,9 +4,10 @@ Goal: remove the research hypothesis `dsThm965AtPrimes` (Diamond–Shurman 9.6.5
 `ZInQ.OneProof.frozenTarget` by routing its three uses on the live route to rows that stay live,
 with no new leaf. Count 24 → 23; strict and strictest GLUE 17 → 16; LEAF unchanged.
 
-## Where `dsThm965AtPrimes` is used (base `9b223968`)
+## Where `dsThm965AtPrimes` is used (base `3df47b6b`; unchanged below `TailZ103` since `9b223968`)
 
-`TailZ101` converts it to `dsThm965Printed` (`DS965Places.dsThm965Printed_of_atPrimes`); the field
+`TailZ103` passes it unchanged to `TailZ102`; `TailZ101` converts it to `dsThm965Printed`
+(`DS965Places.dsThm965Printed_of_atPrimes`); the field
 is passed unchanged through `TailZ100`–`TailZ91` into `NOSNarrowChain.lean`, the live copy chain
 under `sixContactMin_of_open83_nos`. Its only readers there:
 
@@ -37,7 +38,7 @@ under `sixContactMin_of_open83_nos`. Its only readers there:
 
 ## The copy reroute (`Chain1`–`Chain5`, generated)
 
-Generated from `NOSNarrowChain.lean`, `TailZ91`–`TailZ102` and `C8Chain.lean`'s `GaloisPiecesC8`
+Generated from `NOSNarrowChain.lean`, `TailZ91`–`TailZ103` and `C8Chain.lean`'s `GaloisPiecesC8`
 by a text-level generator in the style of `scratch/nos-narrow-fold/gen_chain.py` (taint by name from
 the bundles that carry a 9.6.5 field or `R14Det`, and from `GaloisPiecesC8`; suffix `DS` for
 structures, `_ds` for theorems; `set_option maxHeartbeats` lines dropped):
@@ -59,17 +60,22 @@ structures, `_ds` for theorems; `set_option maxHeartbeats` lines dropped):
   `researchLeaves3_of_open2_…_ds`: `r14 := r.r14`.
 * `GaloisPiecesC8DS` = `GaloisPiecesC8` without `r14det`; its constructor in
   `sixContactMin_of_open4_cm_u_c8_y3c_nos_ds` drops `r.r14`.
-* `TailZ91`–`TailZ102` copied as `OpenResearchLeaves65DS`–`76DS` without the 9.6.5 field; new
-  top `HDec.HSyn.sixContactMin_of_open95_ds (r : OpenResearchLeaves76DS) (t : OpenTextbookLeaves18)
+* `TailZ91`–`TailZ103` copied as `OpenResearchLeaves65DS`–`77DS` without the 9.6.5 field; new
+  top `HDec.HSyn.sixContactMin_of_open96_ds (r : OpenResearchLeaves77DS) (t : OpenTextbookLeaves18)
   (l : OpenAddedLeaves28) : ZInQ.SixContactMin`.
 
 ## The fold (integrator)
 
-`OneProof/H/TailZ103.lean`: `OpenResearchLeaves77` = `OpenResearchLeaves76` without
-`dsThm965AtPrimes` (the fields of `OpenResearchLeaves76DS`), the field-by-field conversion
-`openResearchLeaves76DS_of_OpenResearchLeaves77`, and
-`sixContactMin_of_open96 (r : OpenResearchLeaves77) t l :=
-sixContactMin_of_open95_ds (openResearchLeaves76DS_of_OpenResearchLeaves77 r) t l`; `Main.lean`:
-`frozenTarget (r : HDec.HSyn.OpenResearchLeaves77) …` through `sixContactMin_of_open96`; the
+`OneProof/H/TailZ104.lean`: `OpenResearchLeaves78` = `OpenResearchLeaves77` without
+`dsThm965AtPrimes` (the fields of `OpenResearchLeaves77DS`), the field-by-field conversion
+`openResearchLeaves77DS_of_OpenResearchLeaves78`, and
+`sixContactMin_of_open97 (r : OpenResearchLeaves78) t l :=
+sixContactMin_of_open96_ds (openResearchLeaves77DS_of_OpenResearchLeaves78 r) t l`; `Main.lean`:
+`frozenTarget (r : HDec.HSyn.OpenResearchLeaves78) …` through `sixContactMin_of_open97`
+(`FoldCheck.frozenTarget_without_ds965` is that body over `OpenResearchLeaves77DS`); the
 `kinds.tsv` row of `dsThm965AtPrimes` removed; OPEN.md regenerated. No existing constant changes.
 `afCharpolyDS965` (the k = 2 statement on `A_f`) is untouched.
+
+PR #202 (the `conradAppB` discharge fold) also needs `TailZ104`. Whichever lands first takes it;
+the other regenerates on top (for this reroute: re-run `gen_ds.txt` with the generations up to
+the new top, so that `OpenResearchLeaves…DS` follows the new bundle).
