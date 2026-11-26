@@ -78,12 +78,18 @@ is the alternating property, and the row states it as `∀ ξ, l ξ ξ = 0`.
 - One hypothesis replaces one, so the count is unchanged.
 - The new row is a direct instance of one refereed print. It quantifies over all elliptic curves
   over `ℚ`, as the print does, not only over the curves `E_ℓ`.
-- As Lean statements the two rows are incomparable. Both imply the Poonen–Stoll form, which is all
+- Neither row is shown to imply the other in the tree (from Theorem 1.1 to "kernel ⊆
+  `divisiblePart`" needs `Ш[q]` or `Ш/qШ` finite). Both imply the Poonen–Stoll form, which is all
   the consumer reads.
+- Of the two restatements, the Poonen–Stoll form is the weaker hypothesis
+  (`casselsTatePairingCurvesPS_of_casselsIV` shows this row implies it at `E_ℓ`); this row is the
+  more direct single-print instance.
 
-**Holder.** `hCT` is held by an outside contributor, who was asked on #158 to agree to restating
-it. The fold waits for that agreement. Folding into `Main.lean` is integrator work and is not done
-here.
+**Holder.** `hCT` is held by an outside contributor. The request on #158 asks them to agree to
+restating it to the Poonen–Stoll form `PoleS12.CasselsTatePairingCurvesPS` (#207); it does not
+name `CasselsIVThm11Elliptic`. Restating `hCT` to this row needs the holder's agreement to this
+row specifically, and the fold waits for it. Folding into `Main.lean` is integrator work and is not
+done here.
 
 ## Reading notes
 
