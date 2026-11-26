@@ -5,3 +5,7 @@
 - vendored-via-Backport only: LinearAlgebra.Exact (import rewritten to Backport path, 1 importer: Topology/Algebra/Group/Profinite/ProP/Devissage)
 - contributor draft commit 1f3ef0e3: not in local repo; cross-check skipped
 - port.py: 103 files copied
+- already vendored closure files differing from pin (kept): 8, all with Modified lines (vdiff.py): Backport/LinearAlgebra/Exact, NumberTheory/LocalField/UnitFiltration/Pow, RepresentationTheory/FDRep, ContCohomology/Coinduced/Discrete, TateCohomology/TrivialityCriterion, Profinite/Generation, Profinite/Sylow/Basic, Profinite/Sylow/Existence
+- textual scan of 103 new files for sorry/native_decide/axiom: none
+- build1 (both roots, cold for all 523 ZInQKernel modules of the closure, Mathlib prebuilt; LEAN_NUM_THREADS=4, CPUQuota=1600%): success, 0 errors, 0 local changes; real 8m26s, user 39m04s
+- build2 warm rebuild: success, real 2.6s
