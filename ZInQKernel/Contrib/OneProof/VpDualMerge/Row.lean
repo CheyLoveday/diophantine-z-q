@@ -49,10 +49,12 @@ the `A[p^n](F̄)` (`A.galRep p`, `G_F` acting on coordinates of `F̄`-points), a
 Source: Scholze, *p-adic Hodge theory for rigid-analytic varieties*, Forum Math. Pi 1 (2013) e1,
 Cor. 1.8, pp. 5-6 (`H^i(X_{k̄,ét}, ℚ_p)` of a proper smooth rigid-analytic variety is de Rham),
 at `X = A^an`, with Thm 9.1(ii), p. 74, and Thm 9.3, p. 75 (comparison of the algebraic and the
-analytic objects); and Milne, *Abelian varieties*, in Cornell-Silverman (eds.), *Arithmetic
-Geometry* (Springer, 1986), Thm 15.1(a), p. 129, with Rem. 15.5, p. 131
-(`H¹(A_{k_s}, ℤ_p) ≅ Hom(T_p A, ℤ_p)`, compatibly with `Gal(k_s/k)`), which identifies
-`H¹_ét(A_{F̄}, ℚ_p)` with `V_p(A)^∨`. -/
+analytic objects); and Milne, *Abelian Varieties* v2.0 (March 16, 2008), Part I, Thm 12.1(a),
+p. 55, with Rem. 12.5, p. 56 (`H¹(A_{k_s}, ℤ_p) ≅ Hom(T_p A, ℤ_p)`, compatibly with
+`Gal(k_s/k)`; the edition read on main), which identifies `H¹_ét(A_{F̄}, ℚ_p)` with `V_p(A)^∨`.
+The same statement in Milne, *Abelian varieties*, in Cornell-Silverman (eds.), *Arithmetic
+Geometry* (Springer, 1986), Thm 15.1(a), p. 129, with Rem. 15.5, p. 131, is not yet read on main
+(draft #204). -/
 abbrev VpDualIsDeRham (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) : Prop :=
   IsDeRhamFam p (fun σ => (A.galRep p).dual σ)
 
@@ -61,15 +63,19 @@ abbrev VpDualIsDeRham (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) : Prop :=
 Source: Scholze, Forum Math. Pi 1 (2013) e1, Cor. 1.8, pp. 5-6 (the filtered `D_dR` of
 `H^i(X_{k̄,ét}, ℚ_p)` is `H^i_dR(X)` with its Hodge filtration, the Hodge-de Rham spectral sequence
 degenerating, so `gr^j H¹_dR = H^{1-j}(X, Ω^j)` vanishes for `j ∉ {0, 1}`), with Thms 9.1(ii)
-and 9.3, pp. 74-75; and Milne, *Abelian varieties*, in Cornell-Silverman (1986), Thm 15.1(a)
-and Rem. 15.5, for the passage from `H¹_ét(A_{F̄}, ℚ_p)` to `V_p(A)^∨`. -/
+and 9.3, pp. 74-75; and Milne, *Abelian Varieties* v2.0 (2008), Part I, Thm 12.1(a), p. 55,
+with Rem. 12.5, p. 56 (the edition read on main; the 1986 Cornell-Silverman chapter, Thm 15.1(a)
+and Rem. 15.5, is not yet read on main, draft #204), for the passage from `H¹_ét(A_{F̄}, ℚ_p)` to
+`V_p(A)^∨`. -/
 abbrev VpDualHodgeRange (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) : Prop :=
   HodgeRange p (fun σ => (A.galRep p).dual σ) 1
 
 /-- **Clause (iii): `dim_{ℚ_p} Fil¹ D_dR(V_p(A)^∨) = [F:ℚ_p] · g`** for `A` of dimension `g`.
 Source: Scholze, Forum Math. Pi 1 (2013) e1, Cor. 1.8, pp. 5-6, with Thm 9.1(ii), p. 74, at
-`i = 0` (`Fil¹ H¹_dR(A) = H⁰(A, Ω¹_A)`); Milne, *Abelian varieties*, in Cornell-Silverman (1986),
-Thm 15.1(a) and Rem. 15.5, for the passage to `V_p(A)^∨`. The Hodge number
+`i = 0` (`Fil¹ H¹_dR(A) = H⁰(A, Ω¹_A)`); Milne, *Abelian Varieties* v2.0 (2008), Part I,
+Thm 12.1(a), p. 55, with Rem. 12.5, p. 56 (the edition read on main; the 1986 Cornell-Silverman
+chapter, Thm 15.1(a) and Rem. 15.5, is not yet read on main, draft #204), for the passage to
+`V_p(A)^∨`. The Hodge number
 `h^{1,0}(A) = dim_F H⁰(A, Ω¹_A) = g` is not in Scholze's paper; it is cited from Mumford,
 *Abelian varieties*, §4 (`Ω¹_A ≅ 𝒪_A^g`), the source the row `scholzeH1AbVar` names, locator
 unverified. -/
@@ -84,15 +90,17 @@ end Clauses
 de Rham (clause (i), `VpDualIsDeRham`), its Hodge filtration has its jumps in `[0, 1]` (clause (ii),
 `VpDualHodgeRange`), and `dim_{ℚ_p} Fil¹ D_dR = [F:ℚ_p] · g` (clause (iii), `VpDualFilOneDim`).
 Sources, clause by clause in the docstrings of the three clauses: Scholze, Forum Math. Pi 1 (2013)
-e1, Cor. 1.8 with Thms 9.1(ii) and 9.3; Milne, *Abelian varieties*, in Cornell-Silverman (1986),
-Thm 15.1(a) and Rem. 15.5; `h^{1,0}(A) = g` from Mumford, *Abelian varieties*, §4 (locator
-unverified). It is weaker than the pair it replaces (`vpDual_of_pair`). -/
+e1, Cor. 1.8 with Thms 9.1(ii) and 9.3; Milne, *Abelian Varieties* v2.0 (2008), Part I,
+Thm 12.1(a), p. 55, with Rem. 12.5, p. 56 (the edition read on main; the 1986 Cornell-Silverman
+chapter, Thm 15.1(a) and Rem. 15.5, is not yet read on main, draft #204); `h^{1,0}(A) = g` from
+Mumford, *Abelian varieties*, §4 (locator unverified). It is weaker than the pair it replaces
+(`vpDual_of_pair`). -/
 def VpDualDeRhamAbVar : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
     (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) (g : ℕ), A.dim = (g : WithBot ℕ∞) →
     VpDualIsDeRham p A ∧ VpDualHodgeRange p A ∧ VpDualFilOneDim p A g
 
-/-- The row, with its clauses unfolded: the statement of the research report, verbatim. -/
+/-- The row with its three clauses unfolded (`Iff.rfl`). -/
 theorem vpDualDeRhamAbVar_iff : VpDualDeRhamAbVar ↔
     ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
       (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) (g : ℕ), A.dim = (g : WithBot ℕ∞) →
@@ -163,7 +171,7 @@ theorem hodgeTateDecompOr_of_vpDual (hV : VpDualDeRhamAbVar) :
 /-- **The H field `hodgeTateDecompAbVar`** from the row (the conclusion of
 `HTMerge.hodgeTateDecompAbVar_of_scholzeH1`). -/
 theorem hodgeTateDecompAbVar_of_vpDual (hV : VpDualDeRhamAbVar) : HodgeTateDecompAbVar :=
-  fun p _ F _ _ _ A g hg => htDecomp_of_vpDual hV p A g hg
+  fun p _ _ _ _ _ A g hg => htDecomp_of_vpDual hV p A g hg
 
 end
 

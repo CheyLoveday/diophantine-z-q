@@ -1,4 +1,4 @@
-# vpdual-merge (work in progress)
+# vpdual-merge
 
 Goal: replace the two added-bundle rows `scholzeH1AbVar` (`DeRhamScholze.HTMerge.ScholzeH1AbVar`)
 and `t10TateDuality` (`T10Etale.T10_TateDuality`) of `ZInQ.OneProof.frozenTarget` by one weaker
@@ -125,7 +125,7 @@ end HDec
   add one consequence row (GLUE):
 
   ```
-  added	vpDual	consequence	pending review: new row (vpdual-merge), merges scholzeH1AbVar and t10TateDuality, which imply it (DeRhamScholze.HTMerge.vpDual_of_pair through HTMerge.dual_of_H1; Lean); stated on V_p(A)^dual built from Fbar-points, so the pro-etale vs classical comparison, the rigid analytification and Fbar vs C_p are no longer Lean-side steps but print-to-print steps on classical objects; consequence of several prints: Scholze Cor. 1.8 with Thms 9.1(ii), 9.3 (clauses i-iii on H^1_et(A_Fbar, Q_p)), Milne 1986 Thm 15.1(a) with Rem. 15.5 (H^1 = V_p(A)^dual, Galois-equivariantly), h^{1,0}(A) = g (Mumford, Abelian varieties, section 4, locator UNVERIFIED); Milne 1986 is a conference-proceedings chapter, refereeing status unverified; a LEAF rating needs a ruling on readings that combine several prints	GLUE	GLUE	Scholze, p-adic Hodge theory for rigid-analytic varieties, Forum Math. Pi 1 (2013) e1, Cor. 1.8 pp. 5-6, Thm 9.1(ii) p. 74, Thm 9.3 p. 75, Rem. 8.9 p. 72 (corrigendum Forum Math. Pi 4 (2016) e6: no effect on these); Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry, Springer 1986, Thm 15.1(a) p. 129 with Rem. 15.5 p. 131; h^{1,0}(A) = g: Mumford, Abelian varieties, section 4 (UNVERIFIED); manuscript diophantine_zq.tex lem:de-rham-descent L10939-10970 and L10996	vpdual-merge; pending review	R7	long-pole	T4	pending-review,unverified-locator	elliotglazer/diophantine-z-q#84
+  added	vpDual	consequence	pending review: new row (vpdual-merge), merges scholzeH1AbVar and t10TateDuality, which imply it (DeRhamScholze.HTMerge.vpDual_of_pair through HTMerge.dual_of_H1; Lean); stated on V_p(A)^dual built from Fbar-points, so the pro-etale vs classical comparison, the rigid analytification and Fbar vs C_p are no longer Lean-side steps but print-to-print steps on classical objects; consequence of several prints: Scholze Cor. 1.8 with Thms 9.1(ii), 9.3 (clauses i-iii on H^1_et(A_Fbar, Q_p)), Milne, Abelian Varieties v2.0 (2008) Part I Thm 12.1(a) with Rem. 12.5 (H^1 = V_p(A)^dual, Galois-equivariantly; the edition read on main; the 1986 Cornell-Silverman Thm 15.1(a) with Rem. 15.5 is not yet read on main, draft #204), h^{1,0}(A) = g (Mumford, Abelian varieties, section 4, locator UNVERIFIED); a LEAF rating needs a ruling on readings that combine several prints	GLUE	GLUE	Scholze, p-adic Hodge theory for rigid-analytic varieties, Forum Math. Pi 1 (2013) e1, Cor. 1.8 pp. 5-6, Thm 9.1(ii) p. 74, Thm 9.3 p. 75, Rem. 8.9 p. 72 (corrigendum Forum Math. Pi 4 (2016) e6: no effect on these); Milne, Abelian Varieties v2.0 (March 16, 2008), Part I, Thm 12.1(a) p. 55 with Rem. 12.5 p. 56 (Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry, Springer 1986, Thm 15.1(a) p. 129 with Rem. 15.5 p. 131: not yet read on main, draft #204); h^{1,0}(A) = g: Mumford, Abelian varieties, section 4 (UNVERIFIED); manuscript diophantine_zq.tex lem:de-rham-descent L10939-10970 and L10996	vpdual-merge; pending review	R7	long-pole	T4	pending-review,unverified-locator	elliotglazer/diophantine-z-q#84
   ```
 * Reviews: move every `reviews.tsv` row of `scholzeH1AbVar` and `t10TateDuality` to
   `reviews-retired.tsv`. At `c0534273` neither file has a row for either field, so this step is
@@ -145,10 +145,12 @@ end HDec
    Thm 9.3, p. 75, with Rem. 8.9, p. 72 (étale cohomology of the analytification). Corrigendum,
    Forum Math. Pi 4 (2016) e6: no effect on these. Gives clauses (i)-(ii) and
    `Fil¹ = H⁰(A, Ω¹)` for `H¹_ét(A_{F̄}, ℚ_p)`.
-2. Milne, *Abelian varieties*, in Cornell-Silverman (eds.), *Arithmetic Geometry* (Springer 1986),
-   Thm 15.1(a), p. 129, with Rem. 15.5, p. 131: `H¹(A_{k_s}, ℤ_ℓ) ≅ Hom(T_ℓ A, ℤ_ℓ)`, compatibly
-   with `Gal(k_s/k)`. Moves (1) to `V_p(A)^∨`. The volume is conference proceedings; its
-   refereeing status is unverified.
+2. Milne, *Abelian Varieties* v2.0 (March 16, 2008), Part I, Thm 12.1(a), p. 55, with Rem. 12.5,
+   p. 56: `H¹(A_{k_s}, ℤ_ℓ) ≅ Hom(T_ℓ A, ℤ_ℓ)`, compatibly with `Gal(k_s/k)`. Moves (1) to
+   `V_p(A)^∨`. This is the edition read on main (the `t10TateDuality` docstring). The same
+   statement in Milne, *Abelian varieties*, in Cornell-Silverman (eds.), *Arithmetic Geometry*
+   (Springer 1986), Thm 15.1(a), p. 129, with Rem. 15.5, p. 131, is not yet read on main
+   (draft #204); that volume is conference proceedings, refereeing status unverified.
 3. `h^{1,0}(A) = dim H⁰(A, Ω¹_A) = g`, for clause (iii): Mumford, *Abelian varieties*, §4
    (`Ω¹_A ≅ 𝒪_A^g`), the source the row `scholzeH1AbVar` names; locator unverified.
 
