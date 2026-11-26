@@ -41,6 +41,7 @@ def dagK (x : BK K) : BK K := muInvK * star x * muK
 /-- `E₀ ⊗ K = trd(μ⁻¹ x ȳ)` on `B ⊗ K` (the PEL datum's symplectic form `ψ`). -/
 def E0K (x y : BK K) : K := 2 * (muInvK * x * star y).re
 
+omit [CharZero K] in
 theorem decompK (z : BK K) :
     z = z.re • (1 : BK K) + z.imI • (⟨0, 1, 0, 0⟩ : BK K) + z.imJ • (⟨0, 0, 1, 0⟩ : BK K) +
       z.imK • (⟨0, 0, 0, 1⟩ : BK K) := by

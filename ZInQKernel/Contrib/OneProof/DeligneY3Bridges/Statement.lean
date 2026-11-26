@@ -42,10 +42,7 @@ open NumberField IsDedekindDomain TauCeti.ClassFieldTheory TauCeti.GlobalNumberF
 
 /-! ## The PEL datum over `ℚ` -/
 
-theorem muInv_rat : DeligneY3Bridges.muInv ℚ = RvQMPolar.muInv := by
-  first
-  | rfl
-  | (ext <;> simp [DeligneY3Bridges.muInv, RvQMPolar.muInv])
+theorem muInv_rat : DeligneY3Bridges.muInv ℚ = RvQMPolar.muInv := rfl
 
 /-- **`ψ` over `ℚ` is the kernel's `E₀`**: `trd(μ⁻¹ x ȳ)`. -/
 theorem psi_rat (x y : LeafQM.B) : DeligneY3Bridges.psi ℚ x y = RvQMPolar.E0 x y := by
@@ -62,10 +59,8 @@ theorem psi_rosati (a x y : LeafQM.B) :
 
 /-- The kernel's `nrd` is `x x̄`. -/
 theorem nrdQ_eq (x : LeafQM.B) : ShimuraGlue.nrdQ ℚ x = DeligneY3Bridges.nrd ℚ x := by
-  first
-  | (simp [ShimuraGlue.nrdQ_apply, DeligneY3Bridges.nrd]; ring)
-  | simp [ShimuraGlue.nrdQ_apply, DeligneY3Bridges.nrd]
-  | (rw [ShimuraGlue.nrdQ_apply]; simp [DeligneY3Bridges.nrd]; ring)
+  simp [ShimuraGlue.nrdQ_apply, DeligneY3Bridges.nrd]
+  ring
 
 /-! ## `G(ℚ)`, `G(𝔸_f)`, base change -/
 

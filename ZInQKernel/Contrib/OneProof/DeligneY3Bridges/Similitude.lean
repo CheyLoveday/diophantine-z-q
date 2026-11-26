@@ -47,6 +47,7 @@ def nrd (x : QB R) : R := (x * star x).re
 
 variable {R}
 
+omit [Algebra ℚ R] in
 theorem mul_star_eq_nrd (x : QB R) : x * star x = (nrd R x : QB R) :=
   QuaternionAlgebra.mul_star_eq_coe x
 
@@ -60,6 +61,7 @@ theorem psi_mul_right (c x y : QB R) : psi R (x * c) (y * c) = nrd R c * psi R x
   rw [psi, psi, h, QuaternionAlgebra.coe_mul_eq_smul, QuaternionAlgebra.re_smul, smul_eq_mul]
   ring
 
+omit [Algebra ℚ R] in
 /-- `nrd` of a unit is a unit: `nrd γ · nrd γ⁻¹ = 1`. -/
 theorem nrd_mul_nrd_inv (γ : (QB R)ˣ) : nrd R (γ : QB R) * nrd R ((γ⁻¹ : (QB R)ˣ) : QB R) = 1 := by
   apply QuaternionAlgebra.coe_injective (c₁ := (2 : R)) (c₂ := 0) (c₃ := -3)
@@ -125,9 +127,11 @@ def toSim (γ : (QB R)ˣ) : (Module.End R (QB R))ˣ where
     show x * ((γ⁻¹ : (QB R)ˣ) : QB R) * (γ : QB R) = x
     rw [mul_assoc, Units.inv_mul, mul_one]
 
+omit [Algebra ℚ R] in
 theorem toSim_apply (γ : (QB R)ˣ) (x : QB R) :
     (toSim γ : Module.End R (QB R)) x = x * ((γ⁻¹ : (QB R)ˣ) : QB R) := rfl
 
+omit [Algebra ℚ R] in
 theorem toSim_inv_apply (γ : (QB R)ˣ) (x : QB R) :
     (((toSim γ)⁻¹ : (Module.End R (QB R))ˣ) : Module.End R (QB R)) x = x * (γ : QB R) := rfl
 
@@ -201,6 +205,7 @@ theorem psi_simEquiv (γ : (QB R)ˣ) (x y : QB R) :
       nrd R ((γ⁻¹ : (QB R)ˣ) : QB R) * psi R x y := by
   simp only [simEquiv_apply, psi_mul_right]
 
+omit [Algebra ℚ R] in
 /-- `nrd(γ⁻¹) = nrd(γ)⁻¹` in `R`. -/
 theorem nrd_inv_eq (γ : (QB R)ˣ) :
     nrd R ((γ⁻¹ : (QB R)ˣ) : QB R) = (((nrdUnit γ)⁻¹ : Rˣ) : R) := rfl
@@ -228,7 +233,8 @@ theorem app_simEquiv_inv (γ : (QB R)ˣ) (x : QB R) :
 theorem simEquiv_symm_apply (f : simGroup R) :
     (((simEquiv R).symm f)⁻¹ : (QB R)ˣ) = (app f 1 : QB R) := rfl
 
-/-- Every unit of `B ⊗ R` with unit reduced norm. -/
+omit [Algebra ℚ R] in
+/-- An element of `B ⊗ R` whose reduced norm is a unit is a unit. -/
 theorem isUnit_of_isUnit_nrd {x : QB R} (h : IsUnit (nrd R x)) : IsUnit x := by
   obtain ⟨n, hn⟩ := h
   have hs : star x * x = ((n : R) : QB R) := by
