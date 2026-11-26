@@ -80,7 +80,7 @@ proves that the two agree after `g ↦ g⁻¹`.
 | 2 | `Ψ z g = Ψ z' g' ↔ DCRelPM z g z' g'` (`γ ∈ B`, `nrd γ ≠ 0`, `k ∈ K3Q`) | 1.8 p.129: "K\X × G(𝔸^f)/G(ℚ)"; 4.9 (`G`); 1.7 p.129 and 4.12 p.148 (`K_n`) | `PEL.dcRelPEL_iff` (`γ ∈ B^× ↔ G(ℚ)`, `bEmb ↔ baseChange`, `K3Q ↔ G(Ẑ) ∩ K_3`); Deligne's side convention: `PEL.dcRelDel_iff_PM` (`g ↦ g⁻¹`); `X = ℍ^±` with the `GL₂(ℝ)` action: `Y3Hodge.iota_mul_Jmat`, `Y3Hodge.F0_iff`; restriction to `ℍ`: `Y3Hodge.dcRelPM_iff`, `Y3Hodge.exists_upper` | match after the identifications; the level is `K = G(Ẑ) ∩ K_3` (step R3) |
 | 3 | `τ ↦ Ψ(τ, g)` holomorphic on `ℍ` for every `g` | 1.8 p.129: `_K M_ℂ` is a complex-analytic quotient | none needed | weaker than the print (it gives a biholomorphism) |
 | 4 | at `g = 1`: `IsShimuraHolFamilyHP` (fibres in `IsHodgeH1Print` form) | Scholie 4.11 p.148 and 4.12 p.148–149: `H₁(A, ℚ) ≅ V` as `L`-module with `h`; `T̂(B) = k⁻¹(V̂_ℤ)` | `Y3Hodge.print_iff_hodge`, `Y3Hodge.lemmaP_H1`, `Y3Hodge.F0_iff` (already proved) | match on `H₁`; polarization and level dropped (weaker) |
-| 5 | reciprocity at CM points, `ε`, `δ` existential | Def. 3.13 (canonical model) and Thm 4.19 p.151 | `toGAf` is a group isomorphism (`map_mul` in `PEL.print_of_PEL`) | weaker (existential conventions, CM points of `ℍ` only); 4.19 is cited, not proved, in the print (step D2) |
+| 5 | reciprocity at CM points, `ε`, `δ` existential | Def. 3.13 (canonical model) and Thm 4.19 p.151 | `toGAf` is a group isomorphism (`map_mul` in `PEL.print_of_PEL`) | weaker (existential conventions, CM points of `ℍ` only); **D2 open**: 4.19 is cited, not proved, in the print, and Shimura–Taniyama [16] must be read in the original |
 | U | `ModuliAtUnitsHP`: at `u ∈ OhatU`, `IsHodgeH1Print` | 4.12: `T̂(B) = k⁻¹(V̂_ℤ)`, `L_g = B ∩ 𝒪̂ g⁻¹`; for `u ∈ G(Ẑ)` the lattice is `𝒪` | `PEL.mem_OhatU_iff` (`OhatU ↔ G(Ẑ)`) | match on `H₁`; polarization and level dropped (weaker) |
 
 No clause is stronger than the print once the identifications are applied: `print_iff_PEL` is an
@@ -109,9 +109,11 @@ equivalence, and clauses 3, 4, 5 and U are weakenings of the print's statements.
   the kernel's `LevelPrint` is `𝒪`-linear only. `LevelCompat.level_similitude` proves the
   algebraic half (at each `ℓ`, a `B`-linear isomorphism respects the forms up to one scalar);
   that the Weil pairing of the canonical polarization has adjoint `†` is a reading step.
-* **D2.** The print refers Thm 4.19 to Shimura–Taniyama [16] and the last step of Thm 4.21 to
-  Mumford [8]. Whether "proved modulo cited refereed theorems" meets the project's source rule
-  is the maintainer's call.
+* **D2 (open).** The print does not prove Thm 4.19: it refers it to Shimura–Taniyama [16]
+  ("On renvoie à [16] pour la démonstration"), and the last step of Thm 4.21 rests on Mumford [8].
+  A statement that a paper only cites must be read in the original source, so Shimura–Taniyama
+  [16] (for Thm 4.19) and Mumford [8] (for the last step of 4.21) must be read in the original.
+  D2 stays open until then.
 
 ## Files
 

@@ -16,8 +16,9 @@ the same adjoint (the Weil pairing of a polarization inducing `†`), the form i
 `BK`, `muK`, `muInvK`, `dagK`, `E0K`, `decompK` and `eq_smul_E0K` are ported from the file
 `ZInQKernel/Contrib/OneProof/ShimuraY3StrictLemmaP.lean` of this repository's branch
 `wip/y3abu-strict` (head `e0197d03acee9946ebfa74617cf661ec77238665`, section `LevelCompat`),
-unchanged apart from the namespace and line breaks. `psi_eq_E0K` identifies `E0K` with `ψ` of
-`DeligneY3Bridges.Similitude`.
+with these changes only: the namespace, line breaks, shortened docstrings (the docstring of
+`muK` and `muInvK` split in two), and an `omit [CharZero K] in` before `decompK`. The proofs are
+unchanged. `psi_eq_E0K` identifies `E0K` with `ψ` of `DeligneY3Bridges.Similitude`.
 -/
 
 noncomputable section
