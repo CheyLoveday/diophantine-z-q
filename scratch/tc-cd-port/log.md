@@ -1,0 +1,18 @@
+# tc-cd-port results log
+- pin checkout HEAD 5a01f5fe3621126cccf9ba22e700493cbc7b7156: ok
+- host tools closure.py / tcport.py: absent; replaced by scratch/tc-cd-port/closure.py, port.py
+- closure: target 474 (67 new), FiniteModule 397 (56 new), union 521, vendored 418, new 103 (modules.txt)
+- vendored-via-Backport only: LinearAlgebra.Exact (import rewritten to Backport path, 1 importer: Topology/Algebra/Group/Profinite/ProP/Devissage)
+- contributor draft commit 1f3ef0e3: not in local repo; cross-check skipped
+- port.py: 103 files copied
+- already vendored closure files differing from pin (kept): 8, all with Modified lines (vdiff.py): Backport/LinearAlgebra/Exact, NumberTheory/LocalField/UnitFiltration/Pow, RepresentationTheory/FDRep, ContCohomology/Coinduced/Discrete, TateCohomology/TrivialityCriterion, Profinite/Generation, Profinite/Sylow/Basic, Profinite/Sylow/Existence
+- textual scan of 103 new files for sorry/native_decide/axiom: none
+- build1 (both roots, cold for all 523 ZInQKernel modules of the closure, Mathlib prebuilt; LEAN_NUM_THREADS=4, CPUQuota=1600%): success, 0 errors, 0 local changes; real 8m26s, user 39m04s
+- build2 warm rebuild: success, real 2.6s
+- Axioms.lean (lake env lean): target type and 4x [propext, Classical.choice, Quot.sound]
+- build3 (prerequisites of Clash.lean: 53 existing TauCeti top modules + ZInQKernel.OneProof.Main): stopped at the 2 h background limit after 4104 builds, 0 errors; all 53 TauCeti top modules built, OneProof.Main not built; not restarted
+- ClashTC.lean (both roots + 53 existing TauCeti top modules, lake env lean): rc 0, no output (no clash); 1m45s
+- NewDecls.lean: 1259 non-internal declarations in the 103 new modules (new-decls.txt), 86 outside namespace TauCeti
+- static check vs non-TauCeti ZInQKernel sources (OneProof.Main side): no definition of any of the 86 names in the same namespace (one same-last-component theorem, restrict_surjective_of_discrete, in namespace P2MW.*.C3Aux of two CloudB3W16Torsion/CloudR2NOS files: no clash); the only two non-TauCeti files opening namespace TauCeti (OneProof/PointedGenusZeroFunctionField, RC53Assist/PullbackScalar/ResidueComparisonProof) declare none of the 1259 names
+- second copy of LinearAlgebra/Exact: none (only Backport/LinearAlgebra/Exact.lean)
+- git diff --name-status base..index: 114 A, 1 M (ThirdParty/TauCeti/NOTICE)
