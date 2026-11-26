@@ -1,7 +1,7 @@
 import ZInQKernel.Contrib.OneProof.ScholzeH1AbVar
 
 /-!
-# vpdual-merge: one row `VpDualDeRhamAbVar` in place of `ScholzeH1AbVar` and `T10_TateDuality`
+# vpdual-merge: `VpDualDeRhamAbVar`, the statement on `V_p(A)^∨` behind two added rows
 
 The added bundle of `ZInQ.OneProof.frozenTarget` carries two rows that the live route reads only
 together, as the pair of arguments of the three `HTMerge` theorems
@@ -14,14 +14,16 @@ together, as the pair of arguments of the three `HTMerge` theorems
 
 Those theorems use the second row only through `HTMerge.dual_of_H1`, which moves the three clauses
 of the first row from `H¹` to `V_p(A)^∨`. This file states the three clauses on `V_p(A)^∨` directly,
-as one row, with `V_p(A) = ℚ_p ⊗ T_p(A)` built from the `F̄`-points of `A`:
+as one derived statement (glue, not a row of `frozenTarget`), with `V_p(A) = ℚ_p ⊗ T_p(A)` built
+from the `F̄`-points of `A`. It is meant to be fed by single-print rows on `V_p(A)` (in progress),
+which are to imply it in Lean:
 
-* `VpDualDeRhamAbVar`: the row (three clauses, `VpDualIsDeRham`, `VpDualHodgeRange`,
+* `VpDualDeRhamAbVar`: the statement (three clauses, `VpDualIsDeRham`, `VpDualHodgeRange`,
   `VpDualFilOneDim`);
-* `vpDual_of_pair`: the pair implies the row, so the row is weaker than the two rows it replaces;
+* `vpDual_of_pair`: the current pair of rows implies the statement;
 * `deRhamVpAbVarDirect_of_vpDual`, `hodgeTateDecompOr_of_vpDual` (through
   `hodgeTateDecompHom_of_vpDual`) and `hodgeTateDecompAbVar_of_vpDual` (through
-  `htDecomp_of_vpDual`): the three outputs of the `HTMerge` theorems from the row alone. Their
+  `htDecomp_of_vpDual`): the three outputs of the `HTMerge` theorems from the statement alone. Their
   statements are those of the `HTMerge` theorems; only the hypotheses change.
 -/
 
@@ -37,7 +39,7 @@ open scoped TensorProduct
 
 noncomputable section
 
-/-! ## §1. The row -/
+/-! ## §1. The statement -/
 
 section Clauses
 
@@ -84,8 +86,8 @@ abbrev VpDualFilOneDim (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) (g : ℕ) : Prop :
 
 end Clauses
 
-/-- **The merged row (consequence of several prints; replaces `scholzeH1AbVar` and
-`t10TateDuality`).** For every prime `p`, every finite extension `F/ℚ_p` and every abelian variety
+/-- **The statement on `V_p(A)^∨` (derived glue, not a row).** For every prime `p`, every
+finite extension `F/ℚ_p` and every abelian variety
 `A/F` of dimension `g`, the dual `V_p(A)^∨` of the rational Tate module (built from `F̄`-points) is
 de Rham (clause (i), `VpDualIsDeRham`), its Hodge filtration has its jumps in `[0, 1]` (clause (ii),
 `VpDualHodgeRange`), and `dim_{ℚ_p} Fil¹ D_dR = [F:ℚ_p] · g` (clause (iii), `VpDualFilOneDim`).
@@ -93,14 +95,15 @@ Sources, clause by clause in the docstrings of the three clauses: Scholze, Forum
 e1, Cor. 1.8 with Thms 9.1(ii) and 9.3; Milne, *Abelian Varieties* v2.0 (2008), Part I,
 Thm 12.1(a), p. 55, with Rem. 12.5, p. 56 (the edition read on main; the 1986 Cornell-Silverman
 chapter, Thm 15.1(a) and Rem. 15.5, is not yet read on main, draft #204); `h^{1,0}(A) = g` from
-Mumford, *Abelian varieties*, §4 (locator unverified). It is weaker than the pair it replaces
+Mumford, *Abelian varieties*, §4 (locator unverified). These are the sources of the current pair;
+the statement is to be derived in Lean from single-print rows. The current pair implies it
 (`vpDual_of_pair`). -/
 def VpDualDeRhamAbVar : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
     (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) (g : ℕ), A.dim = (g : WithBot ℕ∞) →
     VpDualIsDeRham p A ∧ VpDualHodgeRange p A ∧ VpDualFilOneDim p A g
 
-/-- The row with its three clauses unfolded (`Iff.rfl`). -/
+/-- The statement with its three clauses unfolded (`Iff.rfl`). -/
 theorem vpDualDeRhamAbVar_iff : VpDualDeRhamAbVar ↔
     ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
       (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) (g : ℕ), A.dim = (g : WithBot ℕ∞) →
@@ -109,7 +112,7 @@ theorem vpDualDeRhamAbVar_iff : VpDualDeRhamAbVar ↔
         finrank ℚ_[p] (filD p (fun σ => (A.galRep p).dual σ) 1) = finrank ℚ_[p] F * g :=
   Iff.rfl
 
-/-- **The merge is weaker: the pair implies the row.** `HTMerge.dual_of_H1` moves the three
+/-- **The pair implies the statement.** `HTMerge.dual_of_H1` moves the three
 clauses of `ScholzeH1AbVar` along Milne's identification (`T10_TateDuality`), with Mumford's
 torsion theorem proved (`mumfordTorsionAlgClosed_proof`). -/
 theorem vpDual_of_pair (hN : ScholzeH1AbVar) (hT : T10Etale.T10_TateDuality) :
@@ -118,10 +121,11 @@ theorem vpDual_of_pair (hN : ScholzeH1AbVar) (hT : T10Etale.T10_TateDuality) :
     dual_of_H1 p hT ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof A _
       (hN p F A g hg)
 
-/-! ## §2. The three outputs of the `HTMerge` theorems, from the row alone -/
+/-! ## §2. The three outputs of the `HTMerge` theorems, from the statement alone -/
 
 /-- **The Hodge-Tate decomposition `ℂ_p ⊗ V_p(A) ≅ ℂ_p(1)^g ⊕ ℂ_p^g`** for one abelian variety of
-dimension `g`, from the row (the proof of `HTMerge.htDecomp_of_H1` after its `dual_of_H1` step). -/
+dimension `g`, from the statement (the proof of `HTMerge.htDecomp_of_H1` after its `dual_of_H1`
+step). -/
 theorem htDecomp_of_vpDual (hV : VpDualDeRhamAbVar) (p : ℕ) [Fact p.Prime] {F : Type} [Field F]
     [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F] (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F) (g : ℕ)
     (hg : A.dim = (g : WithBot ℕ∞)) :
@@ -143,7 +147,7 @@ theorem htDecomp_of_vpDual (hV : VpDualDeRhamAbVar) (p : ℕ) [Fact p.Prime] {F 
   exact ⟨ZInQ.Contrib.HodgeTateOr.dualEquiv p e,
     ZInQ.Contrib.HodgeTateOr.dualEquiv_map p (A.galRep p) e he⟩
 
-/-- **`deRhamVpAbVarDirect`** from the row (the conclusion of
+/-- **`deRhamVpAbVarDirect`** from the statement (the conclusion of
 `HTMerge.deRhamVpAbVarDirect_of_scholzeH1Milne`). -/
 theorem deRhamVpAbVarDirect_of_vpDual (hV : VpDualDeRhamAbVar) :
     DeRhamPrint.Direct.DeRhamVpAbVarDirect := by
@@ -153,7 +157,7 @@ theorem deRhamVpAbVarDirect_of_vpDual (hV : VpDualDeRhamAbVar) :
     (isDeRhamTensorOver_of_H1 p ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof A
       (hV p F A g hg).1)
 
-/-- **`HodgeTateDecompHom`** from the row (the conclusion of
+/-- **`HodgeTateDecompHom`** from the statement (the conclusion of
 `HTMerge.hodgeTateDecompHom_of_scholzeH1`, with `DeRhamHodgeTate01` proved). -/
 theorem hodgeTateDecompHom_of_vpDual (hV : VpDualDeRhamAbVar) :
     ZInQ.Contrib.HodgeTateOr.HodgeTateDecompHom := by
@@ -162,13 +166,13 @@ theorem hodgeTateDecompHom_of_vpDual (hV : VpDualDeRhamAbVar) :
   obtain ⟨h1, h2, -⟩ := hV p F A g hg
   exact DeRhamScholze.TT.deRhamHodgeTate01_proof p F (A.V p) (A.galRep p) h1 h2
 
-/-- **`HodgeTateDecompOr`** from the row (the conclusion of
+/-- **`HodgeTateDecompOr`** from the statement (the conclusion of
 `HTMerge.hodgeTateDecompOr_of_scholzeH1Milne`). -/
 theorem hodgeTateDecompOr_of_vpDual (hV : VpDualDeRhamAbVar) :
     ZInQ.Contrib.HodgeTateOr.HodgeTateDecompOr :=
   ZInQ.Contrib.HodgeTateOr.or_of_hom (hodgeTateDecompHom_of_vpDual hV)
 
-/-- **The H field `hodgeTateDecompAbVar`** from the row (the conclusion of
+/-- **The H field `hodgeTateDecompAbVar`** from the statement (the conclusion of
 `HTMerge.hodgeTateDecompAbVar_of_scholzeH1`). -/
 theorem hodgeTateDecompAbVar_of_vpDual (hV : VpDualDeRhamAbVar) : HodgeTateDecompAbVar :=
   fun p _ _ _ _ _ A g hg => htDecomp_of_vpDual hV p A g hg

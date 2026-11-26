@@ -28,7 +28,7 @@ example : HDec.HSyn.OpenResearchLeaves78 → HDec.HSyn.OpenTextbookLeaves18 →
     HDec.HSyn.OpenAddedLeaves29VP → _root_.ZInQ.SixContactMin :=
   HDec.HSyn.sixContactMin_of_open98_vp
 
-/-- **Theorem 1.1 with one row `vpDual`**: `frozenTarget` with the added bundle
+/-- **Theorem 1.1 with one field `vpDual`**: `frozenTarget` with the added bundle
 `OpenAddedLeaves29VP` (`VpDualDeRhamAbVar` in place of `ScholzeH1AbVar` and `T10_TateDuality`). -/
 theorem frozenTarget_with_vpDual
     (r : HDec.HSyn.OpenResearchLeaves78) (t : HDec.HSyn.OpenTextbookLeaves18)

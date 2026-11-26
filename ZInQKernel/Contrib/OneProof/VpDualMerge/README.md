@@ -1,28 +1,34 @@
 # vpdual-merge
 
-Goal: replace the two added-bundle rows `scholzeH1AbVar` (`DeRhamScholze.HTMerge.ScholzeH1AbVar`)
-and `t10TateDuality` (`T10Etale.T10_TateDuality`) of `ZInQ.OneProof.frozenTarget` by one weaker
-row about the dual Tate module, `vpDual : DeRhamScholze.HTMerge.VpDualDeRhamAbVar`: `V_p(A)^∨` is
-de Rham, its Hodge jumps lie in `[0, 1]`, and `dim_{ℚ_p} Fil¹ D_dR = [F:ℚ_p] · g`. Count 22 → 21;
-strict and strictest GLUE 16 → 15 (in the H bundles, 6 published / 13 glue → 6 / 12); LEAF
-unchanged. No statement gets stronger: the pair implies the new row (`vpDual_of_pair`).
+Glue for a later fold that replaces the added-bundle rows `scholzeH1AbVar`
+(`DeRhamScholze.HTMerge.ScholzeH1AbVar`) and `t10TateDuality` (`T10Etale.T10_TateDuality`) of
+`ZInQ.OneProof.frozenTarget` by two single-print rows on `V_p(A)` (in progress, in a separate lane).
 
-This is an alternative to the draft PR #204, which proves `t10TateDuality` equivalent to
-Milne (1986), Thm 15.1(a) with Rem. 15.5. The two routes cannot both land as they stand: this one
-removes the row that #204 restates. The owner chooses between them. This contribution claims
-neither row.
+Both current rows are read on the live route only through one statement about the dual Tate module,
+`DeRhamScholze.HTMerge.VpDualDeRhamAbVar`: `V_p(A)^∨` is de Rham, its Hodge jumps lie in `[0, 1]`,
+and `dim_{ℚ_p} Fil¹ D_dR = [F:ℚ_p] · g`. Under the owner's ruling (each row is one printed theorem,
+with the glue derived in Lean), this statement is **not a row**. It is a derived `Prop`: the
+single-print rows are to imply it in Lean, and this directory carries everything above it, namely
+the conversions to the three `HTMerge` outputs and a copy of the live chain whose added bundle has
+the one field `vpDual` in place of the pair. The current pair implies the statement
+(`vpDual_of_pair`), so nothing here is stronger than `main`.
 
-Base: `main` at `c05342735cf71fe001e0dcf8c617743f62d135ba` (docs only since `72ab3180`).
+This PR is add-only and changes no count. It claims no row. Draft PR #204 (`t10TateDuality` via
+Milne 1986) touches the same row; the later fold settles how the two fit together.
+
+Base: `main` at `c05342735cf71fe001e0dcf8c617743f62d135ba` (the run also built on top of
+`e9956cda`, which only adds `CasselsTatePS`).
 
 ## Files
 
-* `Row.lean`: the row and its conversions, in `DeRhamScholze.HTMerge`.
+* `Row.lean`: the statement and its conversions, in `DeRhamScholze.HTMerge` (the file name
+  predates the owner's ruling; `VpDualDeRhamAbVar` is not a row).
   * `VpDualDeRhamAbVar`, with its three clauses `VpDualIsDeRham`, `VpDualHodgeRange`,
     `VpDualFilOneDim` (each with its sources); `vpDualDeRhamAbVar_iff` unfolds them (`Iff.rfl`).
     `V_p(A) = ℚ_p ⊗ T_p(A)` is `A.V p` with `A.galRep p`, built from the `F̄`-points of `A`.
   * `vpDual_of_pair : ScholzeH1AbVar → T10_TateDuality → VpDualDeRhamAbVar`, through the existing
     `HTMerge.dual_of_H1` (with `mumfordTorsionAlgClosed_proof`).
-  * The three outputs of the `HTMerge` theorems from the row alone:
+  * The three outputs of the `HTMerge` theorems from the statement alone:
     `deRhamVpAbVarDirect_of_vpDual`, `hodgeTateDecompOr_of_vpDual` (through
     `hodgeTateDecompHom_of_vpDual`) and `hodgeTateDecompAbVar_of_vpDual` (through
     `htDecomp_of_vpDual`).
@@ -86,87 +92,53 @@ declarations:
   `sixContactMin_of_open98_vp` (through `openResearchLeaves77DS_of_OpenResearchLeaves78`, reused).
 * The research and textbook bundles are unchanged and reused.
 
-## The fold (integrator): `OneProof/H/TailZ106.lean`
+## Plan for the later fold (in progress; not part of this PR)
 
-```lean
-import ZInQKernel.OneProof.H.TailZ105
-import ZInQKernel.Contrib.OneProof.VpDualMerge.Chain
+The fold that removes `scholzeH1AbVar` and `t10TateDuality` needs two single-print rows on `V_p(A)`
+and one Lean theorem from them to `VpDualDeRhamAbVar`. The candidates being worked out in a separate
+lane:
 
-namespace HDec
-namespace HSyn
+* Colmez, *Périodes p-adiques des variétés abéliennes*, Math. Ann. 292 (1992), Thm 5.2: `V_p(A)` is
+  de Rham. The period pairing `H¹_dR(A) × T_p(A) → B_dR` is Galois-equivariant, sends `H⁰(Ω¹)` into
+  `Fil¹ B_dR`, and is non-degenerate over `B_dR` (Thm 5.2(ii), p. 639).
+* Fontaine, *Formes différentielles et modules de Tate des variétés abéliennes sur les corps
+  locaux*, Invent. Math. 65 (1982): the Hodge-Tate decomposition `ℂ_p ⊗ V_p(A) ≅ ℂ_p(1)^g ⊕ ℂ_p^g`.
 
-/-- `OpenAddedLeaves29` with `vpDual` in place of `scholzeH1AbVar` and `t10TateDuality`
-(vpdual-merge; the pair implies it, `DeRhamScholze.HTMerge.vpDual_of_pair`). -/
-structure OpenAddedLeaves30 : Prop where
-  /-- (the docstring of `VpDualDeRhamAbVar`: clauses and sources) -/
-  vpDual : _root_.DeRhamScholze.HTMerge.VpDualDeRhamAbVar
+Then, in order:
 
-/-- `OpenAddedLeaves29VP` (the bundle of the copy chain) from `OpenAddedLeaves30`. -/
-theorem openAddedLeaves29VP_of_OpenAddedLeaves30 (n : OpenAddedLeaves30) :
-    OpenAddedLeaves29VP where
-  vpDual := n.vpDual
+1. A Lean theorem `vpDual_of_colmez_fontaine : <Colmez row> → <Fontaine row> → VpDualDeRhamAbVar`.
+   Clause (i) comes from the de Rham row (dualized, `DeRhamPrint.isDeRhamTensorOver_dual`). Clauses
+   (ii)-(iii) come from the Hodge-Tate decomposition through the equality of Hodge and Hodge-Tate
+   numbers for de Rham representations. That equality is not in the tree; whether it is proved in
+   Lean or needs its own row is for that lane to settle.
+2. `OneProof/H/TailZ106.lean`: `OpenAddedLeaves30 := {<Colmez row>, <Fontaine row>}`; a conversion
+   `openAddedLeaves29VP_of_OpenAddedLeaves30 (n) : OpenAddedLeaves29VP` with
+   `vpDual := vpDual_of_colmez_fontaine n.… n.…`; and
+   `sixContactMin_of_open99 r t l := sixContactMin_of_open98_vp r t
+   (openAddedLeaves29VP_of_OpenAddedLeaves30 l)`.
+3. `Main.lean`: `frozenTarget (l : HDec.HSyn.OpenAddedLeaves30)` through `sixContactMin_of_open99`
+   (`FoldCheck.frozenTarget_with_vpDual` is that body over `OpenAddedLeaves29VP`).
+4. `docs/one-proof/kinds.tsv`: the two rows `added scholzeH1AbVar` and `added t10TateDuality` are
+   replaced by the two single-print rows (written by that lane; no merged row). Count unchanged
+   (22), with each new row rated by its own reading. Any `reviews.tsv` rows of the two old fields go
+   to `reviews-retired.tsv` (there are none at `c0534273`). OPEN.md is regenerated with
+   `scripts/one_proof/render_open.py`.
 
-/-- **G0 with only the open leaves and the open glue** (vpdual-merge-fold). -/
-theorem sixContactMin_of_open99 (r : OpenResearchLeaves78) (t : OpenTextbookLeaves18)
-    (l : OpenAddedLeaves30) : ZInQ.SixContactMin :=
-  sixContactMin_of_open98_vp r t (openAddedLeaves29VP_of_OpenAddedLeaves30 l)
+No existing constant changes. `ScholzeH1AbVar`, `T10_TateDuality` and the `HTMerge` theorems stay
+for the superseded tops.
 
-end HSyn
-end HDec
+Sources of the current pair, recorded in the clause docstrings of `Row.lean` (they cover the
+current rows only and are not a reading of the statement):
 
-#print axioms HDec.HSyn.sixContactMin_of_open99
-```
-
-* `Main.lean`: import `ZInQKernel.OneProof.H.TailZ106`; `frozenTarget (r : …OpenResearchLeaves78)
-  (t : …OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves30) …` through
-  `HDec.HSyn.sixContactMin_of_open99 r t l`. `FoldCheck.frozenTarget_with_vpDual` is that body over
-  `OpenAddedLeaves29VP`. Add a vpdual-merge paragraph to the module docstring.
-* `docs/one-proof/kinds.tsv`: remove the rows `added scholzeH1AbVar` and `added t10TateDuality`;
-  add one consequence row (GLUE):
-
-  ```
-  added	vpDual	consequence	pending review: new row (vpdual-merge), merges scholzeH1AbVar and t10TateDuality, which imply it (DeRhamScholze.HTMerge.vpDual_of_pair through HTMerge.dual_of_H1; Lean); stated on V_p(A)^dual built from Fbar-points, so the pro-etale vs classical comparison, the rigid analytification and Fbar vs C_p are no longer Lean-side steps but print-to-print steps on classical objects; consequence of several prints: Scholze Cor. 1.8 with Thms 9.1(ii), 9.3 (clauses i-iii on H^1_et(A_Fbar, Q_p)), Milne, Abelian Varieties v2.0 (2008) Part I Thm 12.1(a) with Rem. 12.5 (H^1 = V_p(A)^dual, Galois-equivariantly; the edition read on main; the 1986 Cornell-Silverman Thm 15.1(a) with Rem. 15.5 is not yet read on main, draft #204), h^{1,0}(A) = g (Mumford, Abelian varieties, section 4, locator UNVERIFIED); a LEAF rating needs a ruling on readings that combine several prints	GLUE	GLUE	Scholze, p-adic Hodge theory for rigid-analytic varieties, Forum Math. Pi 1 (2013) e1, Cor. 1.8 pp. 5-6, Thm 9.1(ii) p. 74, Thm 9.3 p. 75, Rem. 8.9 p. 72 (corrigendum Forum Math. Pi 4 (2016) e6: no effect on these); Milne, Abelian Varieties v2.0 (March 16, 2008), Part I, Thm 12.1(a) p. 55 with Rem. 12.5 p. 56 (Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry, Springer 1986, Thm 15.1(a) p. 129 with Rem. 15.5 p. 131: not yet read on main, draft #204); h^{1,0}(A) = g: Mumford, Abelian varieties, section 4 (UNVERIFIED); manuscript diophantine_zq.tex lem:de-rham-descent L10939-10970 and L10996	vpdual-merge; pending review	R7	long-pole	T4	pending-review,unverified-locator	elliotglazer/diophantine-z-q#84
-  ```
-* Reviews: move every `reviews.tsv` row of `scholzeH1AbVar` and `t10TateDuality` to
-  `reviews-retired.tsv`. At `c0534273` neither file has a row for either field, so this step is
-  empty unless a review lands before the fold.
-* Claims: `t10TateDuality` is held by the project (claim on #14); its claim is closed with the row.
-  PR #204 restates that row, so it must be resolved first, by the owner's choice of route.
-* `docs/one-proof/OPEN.md`: regenerate with `scripts/one_proof/render_open.py` (22 → 21; strict
-  6 published / 12 glue).
-* No existing constant changes. `ScholzeH1AbVar`, `T10_TateDuality` and the `HTMerge` theorems
-  stay in the tree for the superseded tops.
-
-## Prints the merged row needs (for the ruling on a reading that combines several prints)
-
-1. Scholze, *p-adic Hodge theory for rigid-analytic varieties*, Forum Math. Pi 1 (2013) e1:
-   Cor. 1.8, pp. 5-6 (de Rham, Hodge-Tate decomposition, filtered `D_dR = H^i_dR(X)`), at
-   `X = A^an`; Thm 9.1(ii), p. 74 (coherent cohomology of the analytification, for all `i ⩾ 0`);
-   Thm 9.3, p. 75, with Rem. 8.9, p. 72 (étale cohomology of the analytification). Corrigendum,
-   Forum Math. Pi 4 (2016) e6: no effect on these. Gives clauses (i)-(ii) and
-   `Fil¹ = H⁰(A, Ω¹)` for `H¹_ét(A_{F̄}, ℚ_p)`.
-2. Milne, *Abelian Varieties* v2.0 (March 16, 2008), Part I, Thm 12.1(a), p. 55, with Rem. 12.5,
-   p. 56: `H¹(A_{k_s}, ℤ_ℓ) ≅ Hom(T_ℓ A, ℤ_ℓ)`, compatibly with `Gal(k_s/k)`. Moves (1) to
-   `V_p(A)^∨`. This is the edition read on main (the `t10TateDuality` docstring). The same
-   statement in Milne, *Abelian varieties*, in Cornell-Silverman (eds.), *Arithmetic Geometry*
-   (Springer 1986), Thm 15.1(a), p. 129, with Rem. 15.5, p. 131, is not yet read on main
-   (draft #204); that volume is conference proceedings, refereeing status unverified.
-3. `h^{1,0}(A) = dim H⁰(A, Ω¹_A) = g`, for clause (iii): Mumford, *Abelian varieties*, §4
-   (`Ω¹_A ≅ 𝒪_A^g`), the source the row `scholzeH1AbVar` names; locator unverified.
-
-Candidates for a version without Scholze (not read here): Colmez, *Périodes p-adiques des
-variétés abéliennes*, Math. Ann. 292 (1992), Thm 5.2(ii), p. 639. Its period pairing
-`H¹_dR(A) × T_p(A) → B_dR` is Galois-equivariant, sends `H⁰(Ω¹)` into `Fil¹ B_dR`, and is
-non-degenerate over `B_dR`. That gives clause (i) on `T_p(A)` directly (no Milne step) and
-`Fil¹ ⊇ H⁰(Ω¹)`. With the Hodge-Tate decomposition `ℂ_p ⊗ V_p(A) ≅ ℂ_p(1)^g ⊕ ℂ_p^g` of
-Fontaine, *Formes différentielles et modules de Tate des variétés abéliennes sur les corps
-locaux*, Invent. Math. 65 (1982), and the equality of Hodge and Hodge-Tate numbers for de Rham
-representations, it would give clauses (ii)-(iii). It would be a reading of two or three prints as
-well.
+* Scholze, Forum Math. Pi 1 (2013) e1, Cor. 1.8, pp. 5-6, Thm 9.1(ii), p. 74, and Thm 9.3, p. 75.
+* Milne, *Abelian Varieties* v2.0 (March 16, 2008), Part I, Thm 12.1(a), p. 55, with Rem. 12.5,
+  p. 56: the edition read on main (the `t10TateDuality` docstring). The same statement in Milne,
+  *Abelian varieties*, in Cornell-Silverman (eds.), *Arithmetic Geometry* (Springer 1986),
+  Thm 15.1(a), p. 129, with Rem. 15.5, p. 131, is not yet read on main (draft #204).
+* `h^{1,0}(A) = g`: Mumford, *Abelian varieties*, §4 (locator unverified).
 
 ## Open points
 
-* Rating: GLUE (a consequence of several prints). A LEAF needs the owner's ruling on readings that
-  combine prints, and a source for `h^{1,0} = g`.
-* The route excludes #204's route; the owner chooses.
+* The Lean theorem from the two single-print rows to `VpDualDeRhamAbVar` (step 1) is the remaining
+  glue. The equality of Hodge and Hodge-Tate numbers for de Rham representations is the likely gap.
 * If `main` gains a `TailZ106` first, re-run `gen_vp.txt` with its top in `SOURCES` and `TOP_OLD`.
