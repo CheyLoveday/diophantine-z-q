@@ -54,7 +54,22 @@ This directory is add-only and changes no count. It claims no row.
 
 ## Fold plan (not part of this PR)
 
-1. `OneProof/H/TailZ106.lean`:
+Generation numbers below are for current main (top `sixContactMin_of_open98`, 22 statements).
+Draft #212 (the `y3FullThreeRepZ30` fold, 22 → 29) takes the same next generation
+(`ZInQKernel/OneProof/H/TailZ106.lean`, `OpenResearchLeaves79`, `sixContactMin_of_open99`).
+Whichever fold lands second regenerates on the new main:
+
+* #212 first: this fold becomes `TailZ107.lean` with
+  `sixContactMin_of_open100 (r : OpenResearchLeaves79) (t : OpenTextbookLeaves18)
+  (l : OpenAddedLeaves30) := sixContactMin_of_open98_vp
+  (openResearchLeaves78_of_OpenResearchLeaves79 r) t (openAddedLeaves29VP_of_OpenAddedLeaves30 l)`,
+  `ZInQKernel/OneProof/Main.lean` keeps `r : OpenResearchLeaves79`, the count is 29 → 29, and `FoldCheck.lean`'s two `frozenTarget_with_*` are restated over
+  `OpenResearchLeaves79`.
+* this fold first: #212 regenerates as `TailZ107.lean` / `sixContactMin_of_open100` over
+  `OpenAddedLeaves30`, its count still 22 → 29.
+
+1. `ZInQKernel/OneProof/H/TailZ106.lean` (`TailZ107` / `sixContactMin_of_open100` if #212 lands
+   first):
    ```lean
    structure OpenAddedLeaves30 : Prop where
      colmez1992DeRhamAbVar : DeRhamScholze.TatePrints.Colmez1992DeRhamAbVar
@@ -70,7 +85,7 @@ This directory is add-only and changes no count. It claims no row.
      sixContactMin_of_open98_vp r t (openAddedLeaves29VP_of_OpenAddedLeaves30 l)
    ```
    (`FoldCheck.lean` checks the same terms over `TatePrints.OpenAddedLeaves30`.)
-2. `Main.lean`: `frozenTarget (l : HDec.HSyn.OpenAddedLeaves30)` through
+2. `ZInQKernel/OneProof/Main.lean`: `frozenTarget (l : HDec.HSyn.OpenAddedLeaves30)` through
    `sixContactMin_of_open99`; the body is `FoldCheck.frozenTarget_with_addedLeaves30`.
    `VpDualDeRhamAbVar` is derived glue, not a row.
 3. `docs/one-proof/kinds.tsv`: remove `added scholzeH1AbVar` and `added t10TateDuality`; add two
@@ -78,8 +93,11 @@ This directory is add-only and changes no count. It claims no row.
    and strictest `GLUE` until each is read (three-lens reading against the original print), with
    the sources and locators above and the reading risks below.
 4. `reviews.tsv`: move any rows of the two old fields to `reviews-retired.tsv`. Regenerate
-   `OPEN.md` (`scripts/one_proof/render_open.py`).
-5. Count: 17 research + 2 added + 3 `frozenTarget` hypotheses = 22 before and after (22 → 22).
+   `OPEN.md` (`scripts/one_proof/render_open.py`); also regenerate
+   `docs/one-proof/open-statements.json` and the `Main.lean` narrative paragraph, as the fold
+   tooling does.
+5. Count: 17 research + 2 added + 3 `frozenTarget` hypotheses = 22: 22 → 22 on current main;
+   29 → 29 if #212 lands first.
    The GLUE tally is unchanged at the fold; if both readings pass, both rows become LEAF
    (published single prints). `ScholzeH1AbVar`, `T10_TateDuality` and the `HTMerge` theorems stay
    in the tree for the superseded tops.
