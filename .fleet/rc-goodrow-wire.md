@@ -16,7 +16,9 @@ assembles `PMWire.GoodRow` at every stage prime from:
 * `ModelGeneric5.goodRow_extension`, with witness `Wint` (generic5 lane);
 * one explicit input, `SamePlaceData` (`RC/GoodRowWire/SamePlace.lean`), which holds `point`, `point_W`
   (stated with `Wint`), `point_frob` and `frobenius_sq`. Its owner is the same-place lane in the hCM
-  lane (tex 8479–8492).
+  lane (tex 8479–8492). It fixes `point` only up to an equivariant choice on each orbit, and faithfulness
+  is carried by `refs` and `relations` over the same `stageRows … sp`, so `sp`, `refs` and `relations`
+  must come from one construction of `point` (report, Known issues).
 
 All type equalities hold by definitional unfolding, so no bridge or cast was needed.
 

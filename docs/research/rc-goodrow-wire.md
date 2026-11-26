@@ -146,6 +146,14 @@ support of D_w h_* and any other finite set". No `Setup` is built here.
 * `relations`, `cusps` and `refs` are stated over `stageRows`, so their owners must supply them on the
   pinned model `Pinned.Y0Level` and the good cubic `detE`. In particular, `HeckePacket.source_eq` and
   `target_eq` refer to `S.point`.
+* Degenerate witnesses. `SamePlaceData` fixes `point` only up to an equivariant choice on each orbit:
+  post-composing `point` with the special-fibre map of `Wint_q0` preserves the four fields, as it already
+  does in `PMWire.GoodRow`. A constant `point` is ruled out: `point_frob` forces it to be `F_ell`-rational,
+  and `point_W` would need a common fixed point of every `Wint_q`; `X.frobenius` is pinned by
+  `J.frobenius` on `X.ss` (`RC/PMAdelic/Comparison.lean:89–90`). Faithfulness is carried by `refs`
+  (`CMDiagram.sourceResidue`, `RC/PMWire/CM.lean:163`; `Reference.hCM`, `RC/PMWire/Assembly.lean:168–174`)
+  and `relations` (`HeckePacket.source_eq` and `target_eq`), which are typed over the same
+  `stageRows … sp`. So `sp`, `refs` and `relations` must come from one construction of `point`.
 
 ## Manuscript check
 
