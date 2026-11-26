@@ -3264,3 +3264,11 @@ import ZInQKernel.Contrib.OneProof.C8Manuscript.CyclotomicFactor
 import ZInQKernel.Contrib.OneProof.C8Manuscript.PeriodCoordinates
 import ZInQKernel.Contrib.OneProof.C8Manuscript.RankOnePeriod
 import ZInQKernel.Contrib.OneProof.C8Manuscript.TwistPeriod
+import ZInQKernel.Contrib.OneProof.DS965Reroute.Chain1
+import ZInQKernel.Contrib.OneProof.DS965Reroute.Chain2
+import ZInQKernel.Contrib.OneProof.DS965Reroute.Chain3
+import ZInQKernel.Contrib.OneProof.DS965Reroute.Chain4
+import ZInQKernel.Contrib.OneProof.DS965Reroute.Chain5
+import ZInQKernel.Contrib.OneProof.DS965Reroute.FoldCheck
+import ZInQKernel.Contrib.OneProof.DS965Reroute.PanBerger
+import ZInQKernel.Contrib.OneProof.DS965Reroute.RepExists
