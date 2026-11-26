@@ -216,20 +216,6 @@ This is Fowler's Proposition 2.7 as printed: the print takes $h(\Delta)$ to be t
 G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math. Proc. Cambridge Philos. Soc. 180 (2026), 607–641, Proposition 2.7, p. 615, with the class number defined on p. 613; the manuscript's citation (`diophantine_zq.tex`, lines 588–593).
 """,
     ),
-    't10TateDuality': dict(
-        group='abelian-varieties', slug='tate-module-duality',
-        title='The first ℓ-adic cohomology of an abelian variety is dual to its Tate module',
-        anchor='Milne Theorem 12.1',
-        statement=r"""
-The *duality statement for the Tate module* is the following assertion. Let $K$ be a field, $\overline K$ an algebraic closure, $G_K=\operatorname{Aut}_K(\overline K)$, $A$ an abelian variety over $K$, $A_{\overline K}=A\times_K\overline K$, and $\ell$ a prime different from the characteristic of $K$. Let $H^1(A_{\overline K},\mathbb Z_\ell)$ be the first cohomology group of the pro-étale site of $A_{\overline K}$ with coefficients in the sheaf $U\mapsto C(U,\mathbb Z_\ell)$ of continuous $\mathbb Z_\ell$-valued functions, a $\mathbb Z_\ell$-module on which $\sigma\in G_K$ acts by pull-back along the automorphism $1\times\operatorname{Spec}\sigma$ of $A_{\overline K}$, and let $G_K$ act on the Tate module $T_\ell A=\varprojlim_n A(\overline K)[\ell^n]$ through its action on the points of $A$. Then there is an isomorphism of $\mathbb Z_\ell$-modules $\phi:H^1(A_{\overline K},\mathbb Z_\ell)\to\operatorname{Hom}_{\mathbb Z_\ell}(T_\ell A,\mathbb Z_\ell)$ with $\phi(\sigma x)=\phi(x)\circ\sigma^{-1}$ for every $\sigma\in G_K$ and every $x$.
-""",
-        caveat=r"""
-Milne prints the isomorphism for an abelian variety over a separably closed field, with the étale cohomology group $H^1(A_{\rm et},\mathbb Z_\ell)$, as Theorem 12.1(a) with Remark 12.5, and records in that remark, without proof, that it is compatible with the natural action of $\operatorname{Gal}(k^{\rm sep}/k)$ when $A$ is defined over $k$; the statement applies this to $A_{\overline K}$. An AI reading of the notes found the statement a consequence of these, not a direct instance, through two steps: the agreement of pro-étale cohomology with coefficients $C(-,\mathbb Z_\ell)$ with étale $\ell$-adic cohomology, a comparison theorem of Bhatt and Scholze, and the use of an algebraic closure in place of a separable closure, which changes nothing in characteristic $0$ and in general follows from the topological invariance of étale cohomology.
-""",
-        src=r"""
-J. S. Milne, *Abelian varieties*, course notes, version 2.0 (March 16, 2008), Part I, Theorem 12.1(a), p. 55, and Remark 12.5, p. 56, read in the author's PDF; this is the version the manuscript cites (`diophantine_zq.tex`, lines 10966–10970). The 1986 chapter *Abelian varieties* in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Theorem 15.1(a), is not read. Pro-étale cohomology and its comparison with étale cohomology: B. Bhatt and P. Scholze, *The pro-étale topology for schemes*, Astérisque 369 (2015), Definition 6.8.1 and §5.6; these two numbers are unverified.
-""",
-    ),
     'silverbergZarhinThm34': dict(
         group='neron-models', slug='semistable-reduction-theorem',
         title="Grothendieck's semistable reduction theorem",
@@ -410,20 +396,6 @@ It is Theorem 1.0.4 of Pan, whose hypotheses are those of his Conjecture 1.0.1, 
 """,
         src=r"""
 L. Pan, *The Fontaine–Mazur conjecture in the residually reducible case*, J. Amer. Math. Soc. 35 (2022), 1031–1169, Theorem 1.0.4, read in arXiv:1901.07166v2, the version the manuscript cites: Conjecture 1.0.1, p. 2; Theorem 1.0.4, p. 5; conventions (geometric Frobenius, Hodge–Tate weight $-1$ for the cyclotomic character), pp. 6–7. The journal numbering is unverified. Potential semistability in the sense of Fontaine as in O. Brinon and B. Conrad, *CMI summer school notes on $p$-adic Hodge theory* (preliminary version, June 24, 2009): admissibility in the dimension form, §5.2, pp. 67–68; $A_{\rm cris}$, p. 128, and its image in $B_{\rm dR}^+$, p. 129; $B_{\rm cris}$, Definition 9.1.4, p. 131; $B_{\rm st}$, Definition 9.2.3, p. 138, its embedding in $B_{\rm dR}$, pp. 140–142, injective by Theorem 9.2.10, p. 143; potential semistability, Theorem 9.3.5, p. 148.
-""",
-    ),
-    'scholzeH1AbVar': dict(
-        group='p-adic-hodge', slug='scholze-de-rham-comparison',
-        title="Scholze's comparison theorem for H¹ of an abelian variety",
-        anchor='Scholze comparison',
-        statement=r"""
-The *Scholze statement* is the following assertion. Let $F$ be a finite extension of $\mathbb Q_p$, $A$ an abelian variety of dimension $g$ over $F$, and $W=\mathbb Q_p\otimes_{\mathbb Z_p}H^1(A_{\overline F},\mathbb Z_p)$, where $H^1(A_{\overline F},\mathbb Z_p)$ is the first pro-étale cohomology group of $A_{\overline F}=A\times_F\overline F$ with coefficients in $\mathbb Z_p$, on which $G_F$ acts through its action on $\overline F$. Let $G_F$ act on $B_{\rm dR}$ through the restriction map $G_F\to G_{\mathbb Q_p}$ along an embedding of $\overline{\mathbb Q}_p$ in $\overline F$, put $D_{\rm dR}=(B_{\rm dR}\otimes_{\mathbb Q_p}W)^{G_F}$, and for $j\ge0$ let $\mathrm{Fil}^jD_{\rm dR}=D_{\rm dR}\cap(\mathfrak m^j\otimes_{\mathbb Q_p}W)$, where $\mathfrak m$ is the maximal ideal of $B_{\rm dR}^+$ and $\mathfrak m^0=B_{\rm dR}^+$. Then $W$ is finite-dimensional over $\mathbb Q_p$ and de Rham, that is, $\dim_{\mathbb Q_p}D_{\rm dR}=[F:\mathbb Q_p]\dim_{\mathbb Q_p}W$; the filtration has its jumps in $\{0,1\}$, that is, $\mathrm{Fil}^0D_{\rm dR}=D_{\rm dR}$ and $\mathrm{Fil}^2D_{\rm dR}=0$; and $\dim_{\mathbb Q_p}\mathrm{Fil}^1D_{\rm dR}=[F:\mathbb Q_p]\,g$.
-""",
-        caveat=r"""
-Scholze's Corollary 1.8 is about a proper smooth rigid-analytic variety over a complete discretely valued extension of $\mathbb Q_p$ with perfect residue field: its étale cohomology with coefficients $\mathbb Q_p$ is de Rham, with associated filtered vector space its de Rham cohomology. The manuscript applies it to the analytification of $A$ and returns to algebraic cohomology through his Theorems 9.1 and 9.3. The statement is made on the étale side: under the filtered isomorphism $D_{\rm dR}\cong H^1_{\rm dR}(A/F)$ its last two clauses say that the Hodge filtration of $H^1_{\rm dR}(A/F)$ has its jumps in $\{0,1\}$ and that $\mathrm{Fil}^1H^1_{\rm dR}(A/F)=H^0(A,\Omega^1_A)$ has dimension $g$ over $F$. The manuscript's lemma is about abelian surfaces, whose Hodge numbers $2,2$ it states without a citation; the statement is for abelian varieties of every dimension. The cohomology here is pro-étale; its agreement with the classical $p$-adic étale cohomology, the inverse limit of the groups with coefficients $\mathbb Z/p^n$, is a further step not proved here.
-""",
-        src=r"""
-P. Scholze, *$p$-adic Hodge theory for rigid-analytic varieties*, Forum Math. Pi 1 (2013), e1, Corollary 1.8, pp. 5–6, and Theorems 9.1 and 9.3, pp. 74–75 (arXiv:1205.3463v2, p. 4 and pp. 53–54), with the corrigendum, Forum Math. Pi 4 (2016), e6; read by the locator audit; the manuscript's citation. The 11/5 manuscript (`diophantine_zq.tex`): the lemma on de Rham comparison and finite descent, lines 10939–10965, and the Hodge numbers $2,2$, line 10996. For general $g$, $\dim_FH^0(A,\Omega^1_A)=g$: D. Mumford, *Abelian varieties*, §4; locator unverified.
 """,
     ),
     'afCharpolyDS965': dict(
