@@ -159,16 +159,18 @@ theorem isSemiAbelianModel_of_range (𝒢₀ 𝒩 : GroupModel A L) (i : 𝒢₀
     haveI : IsOpenImmersion ((Over.pullback d).map i).left :=
       ZInQ.H5Glue.isOpenImmersion_pullback_map _ i
     haveI : IsMonHom ((Over.pullback d).map i) := inferInstance
-    exact hasSemiAbelianG0Torus_transfer ((Over.pullback d).map i)
+    have key := hasSemiAbelianG0Torus_transfer ((Over.pullback d).map i)
       (range_fibre_map d 𝒢₀ 𝒩 i hO hr) (hS.2 𝔭)
+    exact key
   · let d := Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) (ResBar 𝔭)))
     letI : GrpObj ((Over.pullback d).obj 𝒢₀.G) := Functor.grpObjObj
     letI : GrpObj ((Over.pullback d).obj 𝒩.G) := Functor.grpObjObj
     haveI : IsOpenImmersion ((Over.pullback d).map i).left :=
       ZInQ.H5Glue.isOpenImmersion_pullback_map _ i
     haveI : IsMonHom ((Over.pullback d).map i) := inferInstance
-    exact hasSemiAbelianG0_transfer ((Over.pullback d).map i)
+    have key := hasSemiAbelianG0_transfer ((Over.pullback d).map i)
       (range_fibre_map d 𝒢₀ 𝒩 i hO hr) (hS.1 𝔭)
+    exact key
 
 /-- **`𝒩⁰` is a semi-abelian group model** (given that `𝒩⁰` is open): a group model `𝒢₀` with an
 open immersion homomorphism `𝒢₀ → 𝒩` with image `𝒩⁰`, semi-abelian when `𝒩` is semistable as
