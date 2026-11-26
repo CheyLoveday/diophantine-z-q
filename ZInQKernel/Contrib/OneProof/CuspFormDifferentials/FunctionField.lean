@@ -7,12 +7,11 @@ import Mathlib.Algebra.Algebra.Hom.Rat
 `ℂ(j, j_N)`, `j_N(τ) = j(Nτ)`.
 
 Source: F. Diamond and J. Shurman, *A First Course in Modular Forms*, Graduate Texts in
-Mathematics 228, Springer (2005), Section 7.5 "Function fields over C", beginning on
-p. 279 of the 2005 printing (p. 283 in the corrected fourth printing, 2016). The section
-title and page are confirmed from the publisher's table of contents. The page itself was
-not read: no authorized copy of p. 279 was available, so the wording below is the
-standard statement of the result (`ℂ(X₀(N)) = ℂ(j, j_N)`), its theorem number is
-unverified, and the reading status is UNREAD.
+Mathematics 228, Springer, corrected fourth printing (2016), Section 7.5 "Function fields
+over C". The section title is confirmed from the publisher's table of contents. No page
+was read, so the wording below is the standard statement of the result
+(`ℂ(X₀(N)) = ℂ(j, j_N)`), its page and theorem number are unverified, and the reading
+status is UNREAD.
 
 Reading. A meromorphic function on `X₀(N)` is a meromorphic function `g` on `ℍ` that is
 `Γ₀(N)`-invariant and meromorphic at every cusp. Meromorphy at the cusp `σ(∞)`,
@@ -91,7 +90,7 @@ structure IsX0Function (g : ℂ → ℂ) : Prop where
   cusp_holomorphic : ∀ σ : SL(2, ℤ), ∀ᶠ z : ℂ in comap Complex.im atTop,
     DifferentiableAt ℂ (fun w : ℂ => g (σ • ofComplex w : ℍ)) z
 
-/-- **P1, printed form (Diamond–Shurman, GTM 228, §7.5, `ℂ(X₀(N)) = ℂ(j, j_N)`).** For
+/-- **P1, printed form (Diamond–Shurman, GTM 228 (2016), §7.5, `ℂ(X₀(N)) = ℂ(j, j_N)`).** For
 every `N ≥ 1`, every meromorphic function `g` on `X₀(N)` is a rational function of `j`
 and `j_N(τ) = j(Nτ)` with complex coefficients: there are complex polynomials `P`, `Q` in
 two variables with `Q(j, j_N) ≠ 0` and `g · Q(j, j_N) = P(j, j_N)` as meromorphic

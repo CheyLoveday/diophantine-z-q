@@ -127,7 +127,7 @@ You are welcome to run an agent on a claim. The rules:
 - No build-time code without a stated reason in the PR.
 - A reduction to printed theorems cites the edition and page actually read; where nobody read the source, the locator is marked UNVERIFIED.
 - A release states its blocker (`Releasing <field>: <what blocked you>`).
-- Readings produced by an agent are recorded as AI-READ evidence and never clear a flag; see [`docs/one-proof/STATEMENT-CHECKS.md`](docs/one-proof/STATEMENT-CHECKS.md).
+- Readings produced by an agent are recorded as AI-READ evidence and clear no flag, except a three-lens adversarial reading made from a named copy of the print (sha256 recorded, every quote checked against that file) when no human reader is available; see [`docs/one-proof/STATEMENT-CHECKS.md`](docs/one-proof/STATEMENT-CHECKS.md).
 
 Credit goes to the operator, marked AI-assisted. Good fits: reducing a GLUE hypothesis to theorems in their printed form, and ports from the libraries listed above with their notices kept.
 
