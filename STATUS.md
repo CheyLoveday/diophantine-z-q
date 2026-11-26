@@ -21,10 +21,10 @@ The open statements of the current proof (generated from docs/one-proof/OPEN.md;
 in the Glossary at the end):
 
 <!-- open-count:begin -->
-**21 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves77`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end of docs/one-proof/OPEN.md.
+**20 hypotheses of the H part** (in the bundles `OpenAddedLeaves29`, `OpenResearchLeaves77`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end of docs/one-proof/OPEN.md.
 
-* **Strict count: 4 published / 17 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
-* By kind: consequence 13, published 8.
+* **Strict count: 4 published / 16 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* By kind: consequence 12, published 8.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->
 
