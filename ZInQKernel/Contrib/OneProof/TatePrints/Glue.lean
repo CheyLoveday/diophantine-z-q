@@ -235,39 +235,64 @@ theorem filB_zero_mul {x y : BdR p} (hx : x ∈ filB p 0) (hy : y ∈ filB p 0) 
   obtain ⟨b, -, rfl⟩ := hy
   exact ⟨a * b, by simp, map_mul _ a b⟩
 
-/-- **G1, Hom form.** For a finite-dimensional representation `V` of `G_F` with a family of
-`G_F`-equivariant maps `V → B_dR⁺`, non-degenerate after base change to `B_dR` (Colmez's
-pairing), `dim_{ℚ_p} Hom_{G_F}(V, B_dR) = [F:ℚ_p] · dim V` and every `G_F`-equivariant map
-`V → B_dR` has values in `B_dR⁺`. -/
-theorem ddr_of_nondeg {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] [FiniteDimensional ℚ_[p] V]
+/-- The non-degeneracy clause for the family `range P`. -/
+theorem nondeg_range {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] {H : Type}
+    (P : H → (V →ₗ[ℚ_[p]] BdR p))
+    (hnd : ∀ x : BdR p ⊗[ℚ_[p]] V, (∀ ω, (P ω).liftBaseChange (BdR p) x = 0) → x = 0) :
+    ∀ x : BdR p ⊗[ℚ_[p]] V, (∀ φ ∈ Set.range P, φ.liftBaseChange (BdR p) x = 0) → x = 0 :=
+  fun x hx => hnd x fun ω => hx (P ω) ⟨ω, rfl⟩
+
+/-- The equivariance clause for the family `range P`. -/
+theorem equivariant_range {V : Type*} [AddCommGroup V] [Module ℚ_[p] V]
     (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V) {H : Type}
-    (P : H → (V →ₗ[ℚ_[p]] BdR p)) (h0 : ∀ ω u, P ω u ∈ filB p 0)
+    (P : H → (V →ₗ[ℚ_[p]] BdR p))
+    (hgal : ∀ ω (σ : Field.absoluteGaloisGroup F) u,
+      P ω (ρ σ u) = bdrAct p (gfToGqp p F σ) (P ω u)) :
+    ∀ φ ∈ Set.range P, ∀ σ v, φ (ρ σ v) = bdrAct p (gfToGqp p F σ) (φ v) := by
+  rintro _ ⟨ω, rfl⟩ σ v
+  exact hgal ω σ v
+
+set_option maxHeartbeats 4000000 in
+/-- **G1, Hom form, dimension.** For a finite-dimensional representation `V` of `G_F` with a
+family of `G_F`-equivariant maps `V → B_dR`, non-degenerate after base change to `B_dR`
+(Colmez's pairing), `dim_{ℚ_p} Hom_{G_F}(V, B_dR) = [F:ℚ_p] · dim V`. -/
+theorem finrank_ddr_of_nondeg {V : Type*} [AddCommGroup V] [Module ℚ_[p] V]
+    [FiniteDimensional ℚ_[p] V] (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V)
+    {H : Type} (P : H → (V →ₗ[ℚ_[p]] BdR p))
     (hgal : ∀ ω (σ : Field.absoluteGaloisGroup F) u,
       P ω (ρ σ u) = bdrAct p (gfToGqp p F σ) (P ω u))
     (hnd : ∀ x : BdR p ⊗[ℚ_[p]] V, (∀ ω, (P ω).liftBaseChange (BdR p) x = 0) → x = 0) :
-    finrank ℚ_[p] (ddrSpaceOver p ρ) = finrank ℚ_[p] F * finrank ℚ_[p] V ∧
-      ddrSpaceOver p ρ ≤ filH p 0 := by
-  have hnd' : ∀ x : BdR p ⊗[ℚ_[p]] V,
-      (∀ φ ∈ Set.range P, φ.liftBaseChange (BdR p) x = 0) → x = 0 :=
-    fun x hx => hnd x fun ω => hx (P ω) ⟨ω, rfl⟩
-  have hSD : ∀ φ ∈ Set.range P, ∀ σ v, φ (ρ σ v) = bdrAct p (gfToGqp p F σ) (φ v) := by
-    rintro _ ⟨ω, rfl⟩ σ v
-    exact hgal ω σ v
-  refine ⟨?_, ?_⟩
-  · exact @Gen.finrank_of_nondeg ℚ_[p] (BdR p) (Field.absoluteGaloisGroup F) V _
-      (DeRhamPrint.bdrField p) (inferInstance : Algebra ℚ_[p] (BdR p)) _ _
-      (fun σ => bdrAct p (gfToGqp p F σ)) (fun σ => ρ σ) _ (rep_surjective ρ)
-      (ddrSpaceOver p ρ) (fun _ => Iff.rfl) (DeRhamPrint.bdrFix p F) (fun _ => Iff.rfl)
-      (finrank ℚ_[p] F) (BdRInv.bdRInvariantsPrinted_proof p F) Module.finrank_pos
-      (Set.range P) hSD hnd'
-  · intro ψ hψ v
-    exact @Gen.forall_prop_of_nondeg ℚ_[p] (BdR p) (Field.absoluteGaloisGroup F) V _
-      (DeRhamPrint.bdrField p) (inferInstance : Algebra ℚ_[p] (BdR p)) _ _
-      (fun σ => bdrAct p (gfToGqp p F σ)) (fun σ => ρ σ) _ (rep_surjective ρ)
-      (DeRhamPrint.bdrFix p F) (fun _ => Iff.rfl) (Set.range P) hSD hnd'
-      (fun x => x ∈ filB p 0) (zero_mem _) (fun _ _ hx hy => add_mem hx hy)
-      (fun _ _ hx hy => filB_zero_mul hx hy) bdrFix_le_filB_zero
-      (by rintro _ ⟨ω, rfl⟩ u; exact h0 ω u) ψ hψ v
+    finrank ℚ_[p] (ddrSpaceOver p ρ) = finrank ℚ_[p] F * finrank ℚ_[p] V := by
+  have hpos : 0 < finrank ℚ_[p] F := Module.finrank_pos
+  have hB : finrank ℚ_[p] (DeRhamPrint.bdrFix p F) = finrank ℚ_[p] F :=
+    BdRInv.bdRInvariantsPrinted_proof p F
+  exact @Gen.finrank_of_nondeg ℚ_[p] (BdR p) (Field.absoluteGaloisGroup F) V _
+    (DeRhamPrint.bdrField p) (inferInstance : Algebra ℚ_[p] (BdR p)) _ _
+    (fun σ => bdrAct p (gfToGqp p F σ)) (fun σ => ρ σ) _ (rep_surjective ρ)
+    (ddrSpaceOver p ρ) (fun _ => Iff.rfl) (DeRhamPrint.bdrFix p F) (fun _ => Iff.rfl)
+    (finrank ℚ_[p] F) hB hpos (Set.range P) (equivariant_range ρ P hgal) (nondeg_range P hnd)
+
+set_option maxHeartbeats 4000000 in
+/-- **G1, Hom form, values.** Under the same hypotheses, with the family valued in `B_dR⁺`,
+every `G_F`-equivariant map `V → B_dR` has values in `B_dR⁺`. -/
+theorem ddr_le_filH_zero_of_nondeg {V : Type*} [AddCommGroup V] [Module ℚ_[p] V]
+    [FiniteDimensional ℚ_[p] V] (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V)
+    {H : Type} (P : H → (V →ₗ[ℚ_[p]] BdR p)) (h0 : ∀ ω u, P ω u ∈ filB p 0)
+    (hgal : ∀ ω (σ : Field.absoluteGaloisGroup F) u,
+      P ω (ρ σ u) = bdrAct p (gfToGqp p F σ) (P ω u))
+    (hnd : ∀ x : BdR p ⊗[ℚ_[p]] V, (∀ ω, (P ω).liftBaseChange (BdR p) x = 0) → x = 0) :
+    ddrSpaceOver p ρ ≤ filH p 0 := by
+  have hPS : ∀ φ ∈ Set.range P, ∀ u, φ u ∈ filB p 0 := by
+    rintro _ ⟨ω, rfl⟩ u
+    exact h0 ω u
+  intro ψ hψ v
+  exact @Gen.forall_prop_of_nondeg ℚ_[p] (BdR p) (Field.absoluteGaloisGroup F) V _
+    (DeRhamPrint.bdrField p) (inferInstance : Algebra ℚ_[p] (BdR p)) _ _
+    (fun σ => bdrAct p (gfToGqp p F σ)) (fun σ => ρ σ) _ (rep_surjective ρ)
+    (DeRhamPrint.bdrFix p F) (fun _ => Iff.rfl) (Set.range P) (equivariant_range ρ P hgal)
+    (nondeg_range P hnd) (fun x => x ∈ filB p 0) (zero_mem _)
+    (fun _ _ hx hy => add_mem hx hy) (fun _ _ hx hy => filB_zero_mul hx hy)
+    bdrFix_le_filB_zero hPS ψ hψ v
 
 end G1
 
@@ -282,7 +307,8 @@ theorem dual_deRham_fil0_of_colmez (hC : Colmez1992DeRhamAbVar) (p : ℕ) [Fact 
     ZInQ.Contrib.CloudB3W16Torsion.mumfordTorsionAlgClosed_proof)
     (DeRhamPrint.natCast_p_ne_zero p F) A g hg).1
   obtain ⟨H, P, h0, hgal, hnd⟩ := hC p F A
-  obtain ⟨hD, hfil⟩ := ddr_of_nondeg (A.galRep p) P h0 hgal hnd
+  have hD := finrank_ddr_of_nondeg (A.galRep p) P hgal hnd
+  have hfil := ddr_le_filH_zero_of_nondeg (A.galRep p) P h0 hgal hnd
   refine ⟨⟨inferInstance, ?_⟩, hfil⟩
   rw [← LinearEquiv.finrank_map_eq (tensorDualEquiv p (V := A.V p)), map_ddrFam_dual, hD,
     Subspace.dual_finrank_eq]
