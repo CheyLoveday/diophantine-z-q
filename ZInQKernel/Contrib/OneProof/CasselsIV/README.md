@@ -43,8 +43,10 @@ is the alternating property, and the row states it as `∀ ξ, l ξ ξ = 0`.
 ## Dictionary: Cassels's Ш and the tree's `sha`
 
 - Cassels's Ш is the group of classes of everywhere locally trivial principal homogeneous spaces.
-  He works with it cohomologically: "WC = H¹(Γ, 𝔊)" (p. 108), continuous cochains for the Krull
-  topology (p. 96, footnote 5).
+  He works with it cohomologically: a "1—1 correspondence between WC and H¹(Γ, 𝔊̄)" (§1, p. 98),
+  with 𝔊̄ the points of C over the algebraic closure k̄ and continuous cocycles (p. 98,
+  footnote 12); p. 108 repeats "WC = H¹(Γ, 𝔊̄)". On p. 98, Ш "is just the intersection of the
+  kernels of the maps WC(k) → WC(k_𝔭), where k_𝔭 runs through all the local completions of k".
 - "Everywhere locally trivial" is triviality under the restriction `j_𝔭` for every valuation `𝔭`
   of `k` (p. 105, (5.1)). The archimedean places are included: p. 108 treats "a finite extension
   of a p-adic field (or the reals)".

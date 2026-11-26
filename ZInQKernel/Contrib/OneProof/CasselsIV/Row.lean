@@ -20,12 +20,16 @@ This file states the theorem at `k = ℚ` in the tree's vocabulary and proves no
 * `C`, an abelian variety of dimension 1 over `k = ℚ`: an elliptic curve `E/ℚ`
   (`WeierstrassCurve ℚ` with `E.IsElliptic`).
 * `Ш`: Cassels's group of "classes of principal homogeneous spaces for `C` defined over `k` which
-  are everywhere locally trivial" (p. 95). Cassels identifies these classes with Galois cohomology:
-  "`WC = H¹(Γ, 𝔊)`" (p. 108), with `Γ` the Galois group of `k̄/k` and `𝔊` the points of `C` over
-  `k̄`, using continuous cochains (p. 96, footnote 5: "continuous when `Γ` is endowed with the Krull
-  topology"). "Everywhere locally trivial" means trivial under the restriction map `j_𝔭` for every
-  valuation `𝔭` of `k` (p. 105, (5.1)), and the archimedean valuations are among them: p. 108
-  treats "a finite extension of a `p`-adic field (or the reals)". The tree's `sha E`
+  are everywhere locally trivial" (p. 95). Cassels identifies these classes with Galois cohomology
+  in §1, p. 98: a "1—1 correspondence between `WC` and `H¹(Γ, 𝔊̄)`", where "`𝔊̄` is the group of
+  points of `C` defined over the algebraic closure `k̄` of `k` and `Γ` is the galois group of
+  `k̄/k`", with continuous cocycles (p. 98, footnote 12: "continuous cocycles when `Γ` has the
+  Krull topology and `𝔊̄` the discrete topology"); p. 108 repeats "`WC = H¹(Γ, 𝔊̄)`". Also p. 98:
+  "`Ш` is just the intersection of the kernels of the maps `WC(k) → WC(k_𝔭)`, where `k_𝔭` runs
+  through all the local completions of `k`". "Everywhere locally trivial" means trivial under the
+  restriction map `j_𝔭` for every valuation `𝔭` of `k` (p. 105, (5.1)), and the archimedean
+  valuations are among them: p. 108 treats "a finite extension of a `p`-adic field (or the
+  reals)". The tree's `sha E`
   (`SelmerTwoPower.sha`) is the subgroup of `H¹(G_ℚ, E(ℚˢ))`, continuous cohomology with discrete
   coefficients, of the classes that restrict to zero at every `ℚ_p` (`embFin`) **and** at `ℝ`
   (`embInf`, `RealCompletion`). So the real place is included. In characteristic `0` the
@@ -42,8 +46,11 @@ noncomputable section
 
 namespace ZInQ.Manuscript.SelmerTwoPower
 
-/-- **Cassels (1962), Theorem 1.1, at `k = ℚ`, for one curve `E`.** Cassels, *Arithmetic on curves
-of genus 1. IV. Proof of the Hauptvermutung*, J. reine angew. Math. 211 (1962), p. 95:
+/-- **Cassels (1962), Theorem 1.1, at `k = ℚ`, for one curve `E`.** This is the statement for a
+given curve, meaningful only for an elliptic `E`: Cassels's `C` is an abelian variety of
+dimension 1. The row is `CasselsIVThm11Elliptic`, which carries the guard `E.IsElliptic`; applied
+to a singular cubic, this unguarded helper says more than Cassels does. Cassels, *Arithmetic on
+curves of genus 1. IV. Proof of the Hauptvermutung*, J. reine angew. Math. 211 (1962), p. 95:
 
 "Theorem 1.1. Let `k` be an algebraic numberfield, `C` an abelian variety of dimension 1 and `Ш`
 the corresponding Tate-Šafarevič group of classes of principal homogeneous spaces for `C` defined
