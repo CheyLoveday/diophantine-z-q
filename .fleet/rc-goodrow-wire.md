@@ -40,6 +40,10 @@ Classical.choice and Quot.sound. The item-1 doc fixes to the target and neron re
   `exists_detector_stages` (`subset_stageExclusions`).
 * `J` and `refs` (hCM lane), `relations` (detector specialization), `cusps` (J0Cusps), `H` and `hm`,
   `ha` (aθ pin, tex 2081–2082), `hL` and `hsign`. These are unchanged in content.
+* `π`, `hQ` and `han` (the fixed parametrization and its complex reading `phiAn`; `han` is a
+  substantive input), `F` and `hN`, and the three instance arguments (`NeZero` of the newform level
+  and of `StageKummer.level ℓ`, and `IsElliptic` of `(EcurveZ ℓ)⁄ℚ`), as in `oddStagedOfGoodRows`.
+* `X`, the coarse fibres: fixed by `J`'s owner (hCM lane); `sp` must be supplied for the same `X`.
 
 Report: `docs/research/rc-goodrow-wire.md`. Log: `scratch/rc-goodrow-wire/log.md`.
 

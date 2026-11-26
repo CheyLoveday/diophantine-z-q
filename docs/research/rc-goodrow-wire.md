@@ -113,6 +113,10 @@ The file uses `open scoped Classical`, as `Assembly.lean:11` does, so the `Decid
 | `refs` (`Reference`: embedding, orientation, CM reductions, `hCM`, `diagram`) | hCM lane (CM points) |
 | `ha` (aθ definition pin, tex 2081–2082) | O.7 lane |
 | `hL`, `hsign` | theta side / sign lane |
+| `π`, `hQ` (the fixed parametrization `X0Model3.model N ⟶ Proj` of `(EcurveZ ℓ)⁄ℚ` over `ℚ`) and `han` (its complex points are `phiAn` of the newform; a substantive input) | the fixed parametrization, unchanged from `oddStagedOfGoodRows` |
+| `F` (`ConsumerNewform`), `hN : 0 < N` | newform data, as in `oddStagedOfGoodRows` |
+| instance arguments `[NeZero (CST.newformLevel (Ecurve ℓ))]`, `[NeZero (StageKummer.level ℓ)]`, `[((EcurveZ ℓ)⁄ℚ).IsElliptic]` | as in `oddStagedOfGoodRows` |
+| `X : ℕ → PMAdelic.CoarseFibre` | fixed by `J`'s owner (hCM lane); `sp` must be supplied for the same `X` |
 
 `hB` is satisfiable. When the setup comes from `Stages.exists_detector_stages`, `s.B` is
 `stageExclusions ℓ Dw hstar B'` (`RC/Stages/DetectorStages.lean:48–49`, `RC/Stages/Actual.lean:99`).
