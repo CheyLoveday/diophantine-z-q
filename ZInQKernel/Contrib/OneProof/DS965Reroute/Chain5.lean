@@ -1136,11 +1136,14 @@ structure OpenResearchLeaves77DS : Prop where
     Replaces silverbergZarhinThm35 (Raynaud's criterion), which
     SZRaynaud.silverbergZarhinThm35_of_sz34 proves from it with the proved Theorem 3.3. -/
   silverbergZarhinThm34 : _root_.SZRaynaud.SilverbergZarhinThm34
-  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.6 = Theoreme
-    5.19 of arXiv:math/0102179v3; Theoreme 0.7 there is Sen's theorem) in the printed form of
-    Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR
-    of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de
-    Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. -/
+  /-- Berger's p-adic monodromy theorem, Invent. Math. 148 (2002), 219-284, as cited by the manuscript
+    (bibitem berger2002; Théorème 0.7 = Corollaire 5.22 in the author copy, Théorème 0.6 = Théorème
+    5.19 of arXiv:math/0102179v3): every de Rham representation of G_{Q_p} is potentially
+    semistable, here in Fontaine's dimension form over BstFOf (Astérisque 223 (1994), Exp. III,
+    1.8.5 and 5.6.1; Exp. II, 4.2.4-4.2.5). Colmez, Astérisque 319 (2008), Théorème 0.1, prints the
+    basis form, which implies this field (PanBergerRefereed.bergerSurveyF_of_colmez); the converse
+    needs the G_K-regularity of B_st, which is not proved, so ColmezThm01 is not a replacement at
+    the same count. -/
   bergerSurveyF : _root_.HDec.PkgI4.PanDict.BergerSurveyF
   /-- Pan, J. Amer. Math. Soc. 35 (2022), Theorem 1.0.4 with Conjecture 1.0.1 (arXiv:1901.07166v2
     pp. 5 and 2), p >= 5, with potential semistability in Fontaine's sense (Astérisque 223 (1994),

@@ -45,7 +45,7 @@ theorem c8Leaves_of_OpenAddedLeaves28_vp (n : OpenAddedLeaves28VP) :
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain3.lean:1654
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain3.lean (openResearchLeaves60_y3x6_of_OpenResearchLeaves63_nos_ds)
 -- (openResearchLeaves60_y3x6_of_OpenResearchLeaves63_nos_ds), edits:
 -- hodgeTateDecompOr_of_scholzeH1Milne x1
 namespace HDec
@@ -81,7 +81,7 @@ theorem openResearchLeaves60_y3x6_of_OpenResearchLeaves63_nos_ds_vp (n : OpenRes
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain3.lean:1691
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain3.lean (sixContactMin_of_open82_nos_ds)
 -- (sixContactMin_of_open82_nos_ds), edits: hodgeTateDecompAbVar_of_scholzeH1 x1
 namespace HDec
 namespace HSyn
@@ -111,7 +111,7 @@ theorem sixContactMin_of_open82_nos_ds_vp (r : OpenResearchLeaves63NOSDS) (t : O
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain3.lean:1998
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain3.lean (sixContactMin_of_open83_nos_ds)
 -- (sixContactMin_of_open83_nos_ds)
 namespace HDec
 namespace HSyn
@@ -122,7 +122,7 @@ theorem sixContactMin_of_open83_nos_ds_vp (r : OpenResearchLeaves64NOSDS) (t : O
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean:280 (sixContactMin_of_open84_ds)
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean (sixContactMin_of_open84_ds)
 namespace HDec
 namespace HSyn
 /-- The H chain with the NOS row removed. -/
@@ -132,7 +132,7 @@ theorem sixContactMin_of_open84_ds_vp (r : OpenResearchLeaves65DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean:508
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean (openResearchLeaves65_of_OpenResearchLeaves66_ds)
 -- (openResearchLeaves65_of_OpenResearchLeaves66_ds), edits: deRhamVpAbVarDirect_of_scholzeH1Milne
 -- x1
 namespace HDec
@@ -173,7 +173,7 @@ theorem openResearchLeaves65_of_OpenResearchLeaves66_ds_vp (n : OpenResearchLeav
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean:543 (sixContactMin_of_open85_ds)
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean (sixContactMin_of_open85_ds)
 namespace HDec
 namespace HSyn
 /-- **G0 with only the open leaves and the open glue** (pr106 + cm-port2; generated). -/
@@ -183,7 +183,7 @@ theorem sixContactMin_of_open85_ds_vp (r : OpenResearchLeaves66DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean:797 (sixContactMin_of_open86_ds)
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean (sixContactMin_of_open86_ds)
 namespace HDec
 namespace HSyn
 /-- **G0 with only the open leaves and the open glue** (faltings-fold; generated). -/
@@ -193,7 +193,7 @@ theorem sixContactMin_of_open86_ds_vp (r : OpenResearchLeaves67DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean:1049
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean (sixContactMin_of_open87_ds)
 -- (sixContactMin_of_open87_ds)
 namespace HDec
 namespace HSyn
@@ -204,7 +204,7 @@ theorem sixContactMin_of_open87_ds_vp (r : OpenResearchLeaves68DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean:1289
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean (sixContactMin_of_open88_ds)
 -- (sixContactMin_of_open88_ds)
 namespace HDec
 namespace HSyn
@@ -215,7 +215,7 @@ theorem sixContactMin_of_open88_ds_vp (r : OpenResearchLeaves69DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean:1526
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean (sixContactMin_of_open89_ds)
 -- (sixContactMin_of_open89_ds)
 namespace HDec
 namespace HSyn
@@ -226,7 +226,7 @@ theorem sixContactMin_of_open89_ds_vp (r : OpenResearchLeaves70DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean:1760
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain4.lean (sixContactMin_of_open90_ds)
 -- (sixContactMin_of_open90_ds)
 namespace HDec
 namespace HSyn
@@ -237,7 +237,7 @@ theorem sixContactMin_of_open90_ds_vp (r : OpenResearchLeaves71DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean:240 (sixContactMin_of_open91_ds)
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean (sixContactMin_of_open91_ds)
 namespace HDec
 namespace HSyn
 /-- **G0 with only the open leaves and the open glue** (Fowler singular modulus degree (CM degree
@@ -248,7 +248,7 @@ theorem sixContactMin_of_open91_ds_vp (r : OpenResearchLeaves72DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean:458 (sixContactMin_of_open92_ds)
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean (sixContactMin_of_open92_ds)
 namespace HDec
 namespace HSyn
 /-- **G0 with only the open leaves and the open glue** (outside-fold-1120; generated). -/
@@ -258,7 +258,7 @@ theorem sixContactMin_of_open92_ds_vp (r : OpenResearchLeaves73DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean:658 (sixContactMin_of_open93_ds)
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean (sixContactMin_of_open93_ds)
 namespace HDec
 namespace HSyn
 /-- **G0 with only the open leaves and the open glue** (outside-fold-1121; generated). -/
@@ -268,7 +268,7 @@ theorem sixContactMin_of_open93_ds_vp (r : OpenResearchLeaves74DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean:856 (sixContactMin_of_open94_ds)
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean (sixContactMin_of_open94_ds)
 namespace HDec
 namespace HSyn
 /-- The same height estimate from the updated research hypotheses. -/
@@ -278,7 +278,7 @@ theorem sixContactMin_of_open94_ds_vp (r : OpenResearchLeaves75DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean:1056
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean (sixContactMin_of_open95_ds)
 -- (sixContactMin_of_open95_ds)
 namespace HDec
 namespace HSyn
@@ -289,7 +289,7 @@ theorem sixContactMin_of_open95_ds_vp (r : OpenResearchLeaves76DS) (t : OpenText
 end HSyn
 end HDec
 
--- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean:1251
+-- copied from ZInQKernel/Contrib/OneProof/DS965Reroute/Chain5.lean (sixContactMin_of_open96_ds)
 -- (sixContactMin_of_open96_ds)
 namespace HDec
 namespace HSyn
