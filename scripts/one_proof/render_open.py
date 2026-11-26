@@ -79,6 +79,24 @@ NUMBER = {1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six', 7: 'se
 VERDICTS = {'YES', 'CONSEQUENCE', 'NO-statement', 'NO-locator', 'UNVERIFIED'}
 COPIES = {'library-print', 'author-copy', 'scan'}
 EVIDENCE = {'HUMAN-READ', 'AI-READ'}
+# AI-READ rows recorded before the real-text rule of 2026-11-26 (field, first word of commit): they get a note
+# instead of a failure. Every other AI-READ row names the file it read (sha256 in edition) and quotes it.
+# ('hRank', 'a6d49800b') read no copy: it carries the 014ea897b row's quote over the proved Lean equivalence
+# millerRankOneOnMinimalQ_iff, so it is legacy with that row.
+LEGACY_AI_READS = {('pazukiCor13Upper', 'e1b31749'), ('hRC', '181efe5b'), ('hCT', '181efe5b'),
+                   ('hRank', '119a412d'), ('hRank', 'fa21b107'), ('hRank', '014ea897b'), ('hRank', 'a6d49800b'),
+                   ('dsThm966Printed', '29bfbc3f'), ('silverbergZarhinThm34', 'a728cb72'),
+                   ('gaudronRemondSec9LowerAnSS', '55cc29bd4')}
+SHA256_COPY = re.compile(r'sha256 [0-9a-f]{6,}')
+
+
+def real_text_missing(r):
+    """What an AI-READ row lacks under the real-text rule (2026-11-26), or None."""
+    if r['evidence'] != 'AI-READ':
+        return None
+    gaps = [w for w, ok in (('a sha256 of the copy read in edition', SHA256_COPY.search(r['edition'])),
+                            ('a verbatim quote', r['quote'].strip())) if not ok]
+    return ' and '.join(gaps) or None
 CREDIT_KINDS = {'proof', 'reduction', 'statement-check', 'statement-fix', 'review', 'referee', 'setup'}
 ISSUE_REF = re.compile(r'[\w.-]+/[\w.-]+#\d+')
 # text that must not appear in generated, contributor-facing or table files. Site-specific patterns
@@ -249,6 +267,9 @@ def validate(m):
             problems.append(f"reviews.tsv: {f}: known_reader is empty or yes")
         if not r['ai_use']:
             problems.append(f'reviews.tsv: {f}: ai_use must be stated (none, or what a tool did)')
+        gap = real_text_missing(r)
+        if gap and (f, r['commit'].split(' ')[0]) not in LEGACY_AI_READS:
+            problems.append(f'reviews.tsv: {f}: an AI-READ row needs {gap} (real-text rule, 2026-11-26)')
     for r in m['credits']:
         if r['kind'] not in CREDIT_KINDS:
             problems.append(f"credits.tsv: {r['item']}: unknown kind {r['kind']!r}")
@@ -629,6 +650,11 @@ def main():
     if gone:
         print(f"note: claims.tsv names rows that are no longer open (skipped; the claims sync removes them): "
               f"{', '.join(gone)}")
+    for r in m['reviews']:
+        gap = real_text_missing(r)
+        if gap and (r['field'], r['commit'].split(' ')[0]) in LEGACY_AI_READS:
+            print(f"note: reviews.tsv: {r['field']} ({r['commit'].split(' ')[0]}) is an AI-READ row from before the "
+                  f'real-text rule and lacks {gap}')
     if '--check' in sys.argv:
         problems += marker_problems
         for p, content in res.items():

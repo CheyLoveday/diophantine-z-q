@@ -104,6 +104,28 @@ def test_volatile_rows_are_not_offered():
     assert '[`b`](OPEN.md#b)' in pages and '[`c`](OPEN.md#c)' not in pages
 
 
+
+def review(field, commit, edition, quote, evidence='AI-READ'):
+    return dict(field=field, commit=commit, reader='AI review', known_reader='', edition=edition, page='1',
+                display='', copy='scan', quote=quote, verdict='YES', not_read='', ai_use='whole reading by AI',
+                relayed_by='', url='', ruling='', ruled_by='', evidence=evidence)
+
+
+def test_real_text_rule():
+    """An AI-READ row names the copy read (sha256) and quotes it (2026-11-26); legacy rows are only noted."""
+    m = board()
+    m['reviews'] = [review('a', 'abc1234', 'J. 1 (2000), scan sha256 0123abcd', '"the printed words"'),
+                    review('b', 'abc1234', 'J. 1 (2000), scan', '"the printed words"'),
+                    review('c', 'abc1234', 'J. 1 (2000), scan sha256 0123abcd', ''),
+                    review('a', 'abc1234', 'J. 1 (2000), scan', '', evidence='HUMAN-READ')]
+    probs = [p for p in render_open.validate(m) if 'real-text rule' in p]
+    assert len(probs) == 2 and 'b: ' in probs[0] and 'sha256' in probs[0] and 'c: ' in probs[1], probs
+    legacy = sorted(render_open.LEGACY_AI_READS)[0]
+    assert render_open.real_text_missing(review(legacy[0], legacy[1] + ' (re-read)', 'scan', ''))
+    m['reviews'] = [review('a', legacy[1] + ' (re-read)', 'scan', '')]
+    m['reviews'][0]['field'] = legacy[0]
+    assert not [p for p in render_open.validate(m) if 'real-text rule' in p]
+
 if __name__ == '__main__':
     for name, fn in list(globals().items()):
         if name.startswith('test_'):
