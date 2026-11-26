@@ -3279,3 +3279,6 @@ import ZInQKernel.Contrib.OneProof.ThetaLineBundle
 import ZInQKernel.Contrib.OneProof.ThetaSeriesConvergence
 import ZInQKernel.Contrib.OneProof.CasselsTatePS.Basic
 import ZInQKernel.Contrib.OneProof.CasselsTatePS.FoldCheck
+import ZInQKernel.Contrib.OneProof.VpDualMerge.Chain
+import ZInQKernel.Contrib.OneProof.VpDualMerge.FoldCheck
+import ZInQKernel.Contrib.OneProof.VpDualMerge.Row
