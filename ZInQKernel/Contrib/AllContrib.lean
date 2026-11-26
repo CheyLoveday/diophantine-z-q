@@ -3282,3 +3282,7 @@ import ZInQKernel.Contrib.OneProof.CasselsTatePS.FoldCheck
 import ZInQKernel.Contrib.OneProof.VpDualMerge.Chain
 import ZInQKernel.Contrib.OneProof.VpDualMerge.FoldCheck
 import ZInQKernel.Contrib.OneProof.VpDualMerge.Row
+import ZInQKernel.Contrib.OneProof.HRankD2.Check
+import ZInQKernel.Contrib.OneProof.HRankD2.EulerProduct
+import ZInQKernel.Contrib.OneProof.HRankD2.LSeriesHasseWeil
+import ZInQKernel.Contrib.OneProof.HRankD2.NodeSlopes
