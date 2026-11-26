@@ -105,7 +105,26 @@ the argument needs `B_st` (5.1.2(ii) gives both); Exp. II, 3.1.3 writes the seri
 Not read: the journal text of Pan's paper. Under STATEMENT-CHECKS.md ("Refereed papers read from an author copy"),
 the row keeps its rating while that check is pending.
 
-## 4. Effect on the board
+## 4. What the readings do not establish
+
+* **Scope.** Each leaf is a direct instance, not the whole printed theorem. Colmez's Théorème 0.1 is for every
+  finite extension `K` of `W(k)[1/p]`, `k` perfect; the leaf is `K = ℚ_p`. Pan's Theorem 1.0.4 is for every odd `p`,
+  with a residual condition at `p = 3`; the leaf is `p ≥ 5`. The manuscript uses only `ℚ_p` and `ℓ = 5`. A literal
+  transcription would need Colmez over a general base field (not expressible with the tree's period rings yet) and
+  Pan's residual condition at `p = 3`.
+* **Form of Pan's conclusion.** The Lean conclusion is weaker in form than "comes from a cuspidal eigenform up to
+  twist": the eigenform need not be normalized, the traces must match only at almost all primes, and the twist is
+  by any continuous character. All three readers found it implied by the print; two judged it equal in content.
+* **Pan's journal text** (J. Amer. Math. Soc. 35 (2022)) was not read; the readings are of arXiv:1901.07166v2, the
+  version the manuscript cites.
+* **Refereeing of Astérisque 319** is supported only indirectly (the Société Mathématique de France's policy and a
+  referee acknowledgement in another article of the same volume).
+* **The manuscript's citation.** At this step the manuscript cites Berger, Invent. Math. 148 (2002), not Colmez.
+  Berger's printed `B_st` is `B_max[log [π̄]]`, and his comparison with Fontaine's `D_st` is asserted without proof
+  (§1.2), so a Berger leaf would also need that comparison proved; docs/research/pb-refereed-fold.md records the
+  switch.
+
+## 5. Effect on the board
 
 Both rows are rated LEAF (strict and strictest), with flags recording the instance, the lenses and the ruling.
 The strict count of the H hypotheses goes from 4/15 to 6/13 (19 hypotheses, after the Conrad App. B and `dsThm965AtPrimes` folds).

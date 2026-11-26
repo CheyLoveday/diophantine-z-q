@@ -195,6 +195,23 @@ Each reviews.tsv row has an evidence column: HUMAN-READ when a person read the p
 above (AI use stated, a short verbatim quote, edition and page), AI-READ otherwise. AI-READ never counts as a human
 reading: OPEN.md's count of human readings counts only distinct readers with evidence HUMAN-READ.
 
+**Adversarial AI readings (ruling 2026-11-26).** With no human reader available, an adversarial AI reading stands
+in for the human reading that rates a row. It is three independent readings of the page images, each quoting the
+print verbatim with edition and page:
+
+* fidelity: every clause of the Lean statement, with every definition it uses unfolded, is mapped to the printed
+  text (match, match after a proved identification named by its Lean theorem, direct instance, or mismatch);
+* skeptic: hidden standing hypotheses, conventions (Frobenius, Hodge-Tate sign, normalizations), vacuity, the
+  quantifiers, and what the statements of the relied-on identifications actually say;
+* red team: the print is read before the Lean and stated in plain words, then every difference is listed.
+
+The three readers run on different model families. A row is rated on the reading only if no reader finds a
+mismatch beyond a direct instance of the print. Every difference a reader reports is recorded in the report, with
+the reading the row follows. The evidence stays AI-READ (it is not a human reading, and OPEN.md's count of human
+readings does not change), the ruling goes in the reviews.tsv row, and a pending comparison of a journal text with
+the author copy that was read stays pending (next section). First applied to `colmezThm01` and `panThm104F`
+([docs/research/pb-adversarial-readings.md](../research/pb-adversarial-readings.md)).
+
 ## Preprints and author copies
 
 Published means refereed (ruling 2026-11-20):
