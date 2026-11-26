@@ -3272,3 +3272,8 @@ import ZInQKernel.Contrib.OneProof.DS965Reroute.Chain5
 import ZInQKernel.Contrib.OneProof.DS965Reroute.FoldCheck
 import ZInQKernel.Contrib.OneProof.DS965Reroute.PanBerger
 import ZInQKernel.Contrib.OneProof.DS965Reroute.RepExists
+import ZInQKernel.Contrib.OneProof.ThetaAxioms
+import ZInQKernel.Contrib.OneProof.ThetaFourier
+import ZInQKernel.Contrib.OneProof.ThetaLineAnalytic
+import ZInQKernel.Contrib.OneProof.ThetaLineBundle
+import ZInQKernel.Contrib.OneProof.ThetaSeriesConvergence
