@@ -108,24 +108,18 @@
    "docstring":
    "Grothendieck's semistable reduction theorem as stated in Silverberg-Zarhin, Ann. Inst. Fourier 45 (1995), Theorem 3.4, pp. 405-406 (proof: SGA 7 I, Exp. IX, Th. 3.6, p. 351): for an abelian variety A over a field K with a discrete valuation ring O, one finite Galois extension E of K inside an algebraic closure such that A_E has semistable reduction (HasSemistableReductionSZ, which also asserts a Neron model) at every prolongation of O to E. Replaces silverbergZarhinThm35 (Raynaud's criterion), which SZRaynaud.silverbergZarhinThm35_of_sz34 proves from it with the proved Theorem 3.3. ",
    "bundle": "OpenResearchLeaves76"},
-  {"type": "HDec.G0Galois.C8Conrad.ConradAppB",
-   "statement": "HDec.G0Galois.C8Conrad.ConradAppB",
-   "field": "conradAppB",
-   "docstring":
-   "Conrad, Lifting global representations with local properties (author preprint, Dec. 11 2011), App. B, p. 32 (Hodge-Tate => locally algebraic, `ConradAppBQp`) and p. 33 Prop. B.3 (the Hodge-Tate weight is the exponent, `ConradPropB3Qp`), base field `ℚ_p`: the manuscript's citation at diophantine_zq.tex L760-762 (step C8). Replaces the Picard route to `DetTate` (consumer (i)). ",
-   "bundle": "OpenAddedLeaves28"},
   {"type": "DeRhamScholze.HTMerge.ScholzeH1AbVar",
    "statement": "DeRhamScholze.HTMerge.ScholzeH1AbVar",
    "field": "scholzeH1AbVar",
    "docstring":
    "Scholze, p-adic Hodge theory for rigid-analytic varieties, Forum Math. Pi 1 (2013), Cor. 1.8 with Thms 9.1, 9.3 (diophantine_zq.tex lem:de-rham-descent L10954-10965, step C3) with the Hodge numbers of `H¹_dR(A/F)` (L10996): `H¹_et(A_F̄, ℚ_p)` of an abelian variety of dimension g over a finite `F/ℚ_p` is de Rham with Hodge jumps in [0, 1] and `dim Fil¹ D_dR = [F:ℚ_p] g`, over Mathlib's pro-étale `Scheme.EllAdicCohomology`. General g is a generalization (the manuscript's lemma is g = 2, `ScholzeH1AbSurf`, implied). ",
-   "bundle": "OpenAddedLeaves28"},
+   "bundle": "OpenAddedLeaves29"},
   {"type": "T10Etale.T10_TateDuality",
    "statement": "T10Etale.T10_TateDuality",
    "field": "t10TateDuality",
    "docstring":
    "`H¹(A_K̄, ℤ_ℓ) = Hom(T_ℓ A, ℤ_ℓ)`, Galois-equivariantly, over Mathlib's pro-étale\n`EllAdicCohomology`: a consequence of Milne, Abelian Varieties v2.0 (March 16, 2008), Part I,\nThm 12.1(a), p. 55, with Rem. 12.5, p. 56 (Galois compatibility), as the manuscript cites it\n(lem:de-rham-descent L10966-10970). The 1986 Cornell-Silverman chapter (Thm 15.1(a)) was not\nread. ",
-   "bundle": "OpenAddedLeaves28"},
+   "bundle": "OpenAddedLeaves29"},
   {"type": "ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine",
    "statement": "ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine",
    "field": "hRC",
@@ -146,4 +140,4 @@
    "docstring":
    "Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C,\nEvidence 16.5.5, p. 453, rank-one line. The Hasse–Weil L-function is represented\nby its analytic continuation from the half-plane of absolute convergence.\nKind: consequence, GLUE. Silverman reports this line; the records derive it from\nMiller, LMS J. Comput. Math. 14 (2011), Thm 4.4 (`silvermanRankOne_of_miller`). ",
    "bundle": "frozenTarget"}],
- "count": 24}
+ "count": 23}

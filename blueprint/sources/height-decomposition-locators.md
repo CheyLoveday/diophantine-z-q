@@ -10,9 +10,9 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the twenty-one statements of the chapter in the
-project's assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof
-is the project-authored note `docs/research/h-trust.md`.
+The minimal height hypothesis is proved from the twenty statements of the chapter in the project's
+assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof is the
+project-authored note `docs/research/h-trust.md`.
 
 ## Pazuki bound
 
@@ -154,16 +154,6 @@ modulus defined on p. 612; D. A. Cox, *Primes of the form $x^2+ny^2$*, Theorem 1
 A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of abelian varieties*,
 Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.4, pp. 405–406 (proof: SGA 7 I, Exposé IX, Théorème
 3.6, p. 351), with semistable reduction as defined in §3, p. 405.
-
-## Conrad Appendix B
-
-B. Conrad, *Lifting global representations with local properties*, author preprint, December 11,
-2011, Appendix B: p. 32 (Definition B.1; the sentence after it, that $\psi$ is locally algebraic if
-and only if its underlying $\mathbb Q_p$-representation is Hodge–Tate, citing J.-P. Serre, *Abelian
-$\ell$-adic representations and elliptic curves*, III, A6, Corollary 2; the arithmetic normalization
-of the Artin map) and p. 33, Proposition B.3, with its proof on pp. 33–34 (AI-read); the
-manuscript's citation, Appendix B, pp. 32–33 (`diophantine_zq.tex`, lines 760–762). Serre's book is
-not read.
 
 ## Scholze comparison
 

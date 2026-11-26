@@ -158,7 +158,7 @@ scratch/contrib-kit/DischargesTest.lean:13:8: warning: declaration uses `sorry`
 DISCHARGES [OpenResearchLeaves76.carayolThmAFrob] by CarayolRefold.frob_of_DDT31
   still assumes: [CarayolDDT.CarayolDDT31]
   axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves28.scholzeH1AbVar] by DeRhamScholze.HTMerge.scholzeH1AbVar_of_old
+DISCHARGES [OpenAddedLeaves29.scholzeH1AbVar] by DeRhamScholze.HTMerge.scholzeH1AbVar_of_old
   still assumes: [DeRhamScholze.ScholzeDeRhamAlg, DeRhamScholze.HTAbVar.HodgeNumberH1AbVar]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves76.cmHeight62] by HDec.CMBranch.CMInputs2.cmHeight62
@@ -166,12 +166,6 @@ DISCHARGES [OpenResearchLeaves76.cmHeight62] by HDec.CMBranch.CMInputs2.cmHeight
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves76.cmHeight62] by HDec.CMBranch.CMInputs3.cmHeight62
   still assumes: [HDec.CMBranch.CMInputs3]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves28.conradAppB] by HDec.G0Galois.C8Conrad.C8Inputs.conradAppB
-  still assumes: [HDec.G0Galois.C8Conrad.C8Inputs]
-  axioms: [propext, Classical.choice, Quot.sound]
-DISCHARGES [OpenAddedLeaves28.conradAppB] by HDec.G0Galois.C8Conrad.C8Leaves.conradAppB
-  still assumes: [HDec.G0Galois.C8Conrad.C8Leaves]
   axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves76.pazukiCor13Upper] by HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3cNOS.pazukiCor13Upper
   still assumes: [HDec.HSyn.GR9.OpenResearchLeaves14GMEBSFU_y3cNOS]
@@ -576,7 +570,7 @@ DISCHARGES [OpenResearchLeaves76.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 24 open hypotheses, 18487 theorems checked, 137 discharge one
+#discharges: 23 open hypotheses, 18716 theorems checked, 135 discharge one
 ```
 <!-- worked-example:end -->
 

@@ -4,7 +4,7 @@ article_id: af_230a0d438afb5f9cc0cbd43d
 
 # The minimal height hypothesis from the literature
 
-This chapter proves the [minimal height hypothesis](../main/six-contact-min.md) from twenty-one
+This chapter proves the [minimal height hypothesis](../main/six-contact-min.md) from twenty
 statements: theorems from the literature, some of them specialized, weakened or combined. The
 manuscript's route to the hypothesis uses twenty-three research-level theorems, thirty-five textbook
 theorems and twenty glue steps; the project has split these into smaller statements, proved many of
@@ -12,16 +12,16 @@ them, and replaced others by published statements from which it derives them. Wh
 here, grouped by the theory each statement comes from; the groups follow the project's own
 classification, and their boundaries are a matter of convenience.
 
-Of the twenty-one statements from the literature, six are published statements: the printed theorem,
-or a direct instance of it that needs no argument. Fifteen are consequences of published theorems,
+Of the twenty statements from the literature, six are published statements: the printed theorem, or
+a direct instance of it that needs no argument. Fourteen are consequences of published theorems,
 which take further theorems to reach from the print. The project's strict convention, which counts a
 published statement only once its reading against the print and its review are complete and find it
-in its printed form, counts four of the twenty-one as published. None of the twenty-one is proved
-here, and every step from them to the minimal height hypothesis is.
+in its printed form, counts four of the twenty as published. None of the twenty is proved here, and
+every step from them to the minimal height hypothesis is.
 
 ## The theorem
 
-- [The minimal height hypothesis from twenty-one statements](minimal-height-from-leaves.md)
+- [The minimal height hypothesis from twenty statements](minimal-height-from-leaves.md)
 
 ## The statements from the literature
 
