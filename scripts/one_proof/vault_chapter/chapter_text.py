@@ -459,35 +459,6 @@ conductor only for newforms with rational coefficients on $\Gamma_0(N)$.
 H. Darmon, F. Diamond and R. Taylor, *Fermat's Last Theorem*, Current Developments in Mathematics 1995 (1997), Theorem 3.1 (a)–(d), pp. 85–86, and the conductor in §2, p. 54 (read in Darmon's copy); H. Carayol, Ann. Sci. ÉNS (4) 19 (1986), 409–468, Théorème (A), pp. 409–411, the manuscript's citation, with §0.8, p. 411 (read in the numdam copy); W. Casselman, Math. Ann. 201 (1973), Theorem 1; K. Ribet, LNM 601 (1977), Theorem 2.3. The numbers of Casselman's and Ribet's theorems are unverified.
 """,
     ),
-    'dsThm965AtPrimes': dict(
-        group='modular-galois', slug='deligne-representations',
-        title="Deligne's Galois representations of eigenforms",
-        anchor='Deligne representations',
-        statement=r"""
-The *Deligne statement* is the following assertion. Let $f\in S_k(N,\chi)$ be a normalized eigenform of
-weight $k\ge2$ whose coefficient field $K_f$ is a number field, and $\lambda$ a prime of $K_f$ above a
-prime $\ell$, with completion $K_{f,\lambda}$. Then there is a continuous representation
-$\rho:G_{\mathbb Q}\to\mathrm{GL}_2(K_{f,\lambda})$ with the following property for every prime
-$p\nmid N\ell$ and every maximal ideal $\mathfrak p$ of the ring $\overline{\mathbb Z}$ of algebraic
-integers lying over $p$. Every $\sigma\in G_{\mathbb Q}$ that maps $\mathfrak p$ to itself and acts
-trivially on $\overline{\mathbb Z}/\mathfrak p$ has $\rho(\sigma)=1$; and every $\sigma$ that maps
-$\mathfrak p$ to itself and acts on $\overline{\mathbb Z}/\mathfrak p$ as $x\mapsto x^p$ has
-characteristic polynomial $x^2-a_p(f)x+\chi(p)p^{k-1}$ for $\rho(\sigma)$.
-""",
-        caveat=r"""
-Diamond and Shurman's theorem prints the characteristic equation of $\rho(\mathrm{Frob}_{\mathfrak p})$
-for every maximal ideal $\mathfrak p$ over $p$, with inertia and Frobenius as in their §9.3. The statement
-drops the irreducibility of $\rho$, which the theorem also asserts, and assumes that $K_f$ is a number
-field, which the theorem presupposes. The bound $k\ge2$ is this project's restriction, not a hypothesis of
-the print.
-""",
-        src=r"""
-F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228, corrected fourth printing (2016),
-Theorem 9.6.5, p. 404, with Definitions 5.8.1 (p. 196), 6.5.3 (p. 238), 9.3.2 (p. 386) and 9.3.3
-(p. 387), and absolute Frobenius and inertia, pp. 384–385; P. Deligne, Sém. Bourbaki 355 (1969);
-G. Shimura 1971, Theorem 7.14, for $k=2$. The number of Shimura's theorem is unverified.
-""",
-    ),
     'dsThm966Printed': dict(
         group='modular-galois', slug='deligne-serre',
         title='The Deligne–Serre theorem',
