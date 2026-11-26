@@ -74,14 +74,17 @@ ping, and is released if there is no reply within 7 days of the ping.
 
 | hypothesis | holder | since |
 | --- | --- | --- |
+| [`dsThm965AtPrimes`](#dsthm965atprimes) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/197)) | 2026-11-25 |
 | [`dsThm966Printed`](#dsthm966printed) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) | 2026-11-17 |
 | [`modularHTCoeff`](#modularhtcoeff) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/191)) | 2026-11-24 |
 | [`carayolThmAFrob`](#carayolthmafrob) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) | 2026-11-19 |
 | [`shimuraThm1Af`](#shimurathm1af) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6997431192)) | 2026-11-19 |
 | [`cmHeight62`](#cmheight62) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) | 2026-11-19 |
+| [`conradAppB`](#conradappb) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/200)) | 2026-11-25 |
 | [`t10TateDuality`](#t10tateduality) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6996190309)) | 2026-11-19 |
 | [`hRC`](#hrc) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) | 2026-11-17 |
 | [`hCT`](#hct) | @mccorvie ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) | 2026-11-20 |
+| [`hRank`](#hrank) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/198)) | 2026-11-25 |
 
 ## Packets
 
@@ -125,7 +128,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 
 | hypothesis | bundle | kind | strict | flag class | label | tier | area | human reads | status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [`conradAppB`](#conradappb) | added | consequence | GLUE | pending-review |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | open |
+| [`conradAppB`](#conradappb) | added | consequence | GLUE | pending-review |  |  | [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/200)) |
 | [`scholzeH1AbVar`](#scholzeh1abvar) | added | consequence | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`t10TateDuality`](#t10tateduality) | added | consequence | GLUE | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6996190309)) |
 | [`afCharpolyDS965`](#afcharpolyds965) | research | consequence | GLUE | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 1 | open (last released by [@zachbaugher](https://github.com/zachbaugher): released) |
@@ -133,7 +136,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`carayolThmAFrob`](#carayolthmafrob) | research | consequence | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) |
 | [`cmHeight62`](#cmheight62) | research | consequence | GLUE | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) |
 | [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
-| [`dsThm965AtPrimes`](#dsthm965atprimes) | research | published | GLUE | pending-reading |  | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 1 | open |
+| [`dsThm965AtPrimes`](#dsthm965atprimes) | research | published | GLUE | pending-reading |  | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 1 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/197)) |
 | [`gaudronRemondSec9LowerAnSS`](#gaudronremondsec9loweranss) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`gaudronRemondThm14AnSS`](#gaudronremondthm14anss) | research | published | GLUE | pending-review | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`javanpeykarThm111An`](#javanpeykarthm111an) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
@@ -148,7 +151,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 | [`silverbergZarhinThm34`](#silverbergzarhinthm34) | research | published | LEAF | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
 | [`hCT`](#hct) | frozenTarget | published | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) |
-| [`hRank`](#hrank) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | open |
+| [`hRank`](#hrank) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/198)) |
 
 ## The hypotheses
 
@@ -158,7 +161,7 @@ Picard scheme and Weil pairing. Claim it on [Deicyde #14](https://github.com/Dei
 * Source: Conrad, Lifting global representations with local properties, author preprint Dec. 11 2011, App. B: p. 32 (arithmetic normalization, HT <=> locally algebraic paragraph after Def. B.1) and p. 33 Prop. B.3 (proof pp. 33-34), base field Q_p; diophantine_zq.tex L760-762, bibitem L11046-11049
 * packet [R10](#packet-r10); discussion: [elliotglazer #81](https://github.com/elliotglazer/diophantine-z-q/issues/81).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/200)).
 
 ```lean
 HDec.G0Galois.C8Conrad.ConradAppB
@@ -214,7 +217,7 @@ AfTateLam.AfCharpolyDS965
 
 ### bergerSurveyF
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves76.bergerSurveyF`; kind **consequence**, strict **GLUE**; flag: reviewer verdict queue29 (11-17): consequence, GLUE/GLUE: re-routed (Jack 11-17) to Brinon-Conrad Thm 9.3.5 p. 148, 'only if' half (de Rham implies potentially semistable), stated in BC without proof as a result of Berger and Andre-Kedlaya-Mebkhout; the conclusion is BC's dimension form (5.2 pp. 67-68), so the dimension-to-basis step is gone; de Rham matches BC since B_dR^{G_Qp} = Q_p is proved in Lean (BdRInv.bdRInvariantsPrinted_proof); deciding step: BC define B_st abstractly (Def. 9.2.3 p. 138) and BstFOf is its image in B_dR, so BC's conclusion gives the Lean's only through the injectivity of Thm 9.2.10 p. 143, not proved in Lean (BergerBst.LogPTildeTranscendental is an open Prop, reduced in Lean to log[p~] not in Frac(B_max) (LogPTransc.logPTildeTranscendental_iff_notInFrac, Contrib/OneProof/LogPTranscendenceBdR.lean)); co-step: BC define A_cris abstractly (p. 128) and AcrisOf is BC's printed description of its image (p. 129, proof omitted); LEAF if both are proved or ruled definitional; earlier: q22 GLUE (dimension-to-basis, survey ring).
+* Bundle field `HDec.HSyn.OpenResearchLeaves76.bergerSurveyF`; kind **consequence**, strict **GLUE**; flag: reviewer verdict queue29 (11-17): consequence, GLUE/GLUE: re-routed (Jack 11-17) to Brinon-Conrad Thm 9.3.5 p. 148, 'only if' half (de Rham implies potentially semistable), stated in BC without proof as a result of Berger and Andre-Kedlaya-Mebkhout; the conclusion is BC's dimension form (5.2 pp. 67-68), so the dimension-to-basis step is gone; de Rham matches BC since B_dR^{G_Qp} = Q_p is proved in Lean (BdRInv.bdRInvariantsPrinted_proof); deciding step: BC define B_st abstractly (Def. 9.2.3 p. 138) and BstFOf is its image in B_dR, so BC's conclusion gives the Lean's only through the injectivity of Thm 9.2.10 p. 143, proved in Lean by #194 (LogPFontaine.logPTildeTranscendental_proof proves BergerBst.LogPTildeTranscendental, via Fontaine's Lemme 4.3.1; AbstractPeriods.isPstAbstract_iff: pst over the abstract B_st is IsPstF); co-step: BC define A_cris abstractly (p. 128) and AcrisOf is BC's printed description of its image (p. 129, proof omitted), proved in Lean by #194 (AcrisImage.fontaineCrystallineImage_proof, AcrisImage.acris_image); both steps proved in Lean (#194, merged 11-25), but the row stays GLUE/GLUE: its only source, the Brinon-Conrad notes, is unrefereed (ruling 11-20; Jack 11-25); earlier: q22 GLUE (dimension-to-basis, survey ring).
 * Source: Brinon-Conrad, CMI summer school notes on p-adic Hodge theory, preliminary version June 24, 2009 (bibitem brinon-conrad), Thm 9.3.5 p. 148 ('only if' half), with semistable = B_st-admissible in the dimension form (5.2 pp. 67-68), B_st Def. 9.2.3 p. 138 (abstract) embedded in B_dR pp. 140-142 (log p = 0) and injective by Thm 9.2.10 p. 143, B_cris Def. 9.1.4 p. 131, A_cris p. 128 (abstract) with its image in B_dR^+ p. 129 (p-adic topology), de Rham = B_dR-admissible (5.2; Thm 4.4.13 p. 64); the manuscript cites Berger, Invent. Math. 148 (2002), Theoreme 0.6 (= Theoreme 5.19 of arXiv:math/0102179v3) at tex 739-741; IsPstF (dimension form, BergerBst.IsAdmissible) over BstFOf in Contrib/OneProof/PanBergerFontaine.lean
 * packet [R7](#packet-r7); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * Human readings recorded: none.
@@ -275,7 +278,7 @@ Y3Hodge.DeligneCanonicalModelY3EveryPrint
 * Source: Diamond–Shurman, A First Course in Modular Forms, Springer GTM 228, corrected fourth printing (2016), Theorem 9.6.5, p. 404; the weight bound k >= 2 is the project's restriction; Def. 5.8.1 and §§9.1–9.3. The book’s prime-ideal inertia and arithmetic Frobenius conventions are connected to the live valuation-subring formulation by DS965Places.dsThm965Printed_of_atPrimes.
 * packet [R7](#packet-r7); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * Human readings recorded: 1.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/197)).
 
 ```lean
 DS965Places.DiamondShurman965AtPrimes
@@ -355,7 +358,7 @@ HTNewAssembly.ModularHTCoeff
 
 ### panPrintedF
 
-* Bundle field `HDec.HSyn.OpenResearchLeaves76.panPrintedF`; kind **consequence**, strict **GLUE**; flag: reviewer verdict queue29 (11-17): consequence, GLUE/GLUE: Pan arXiv:1901.07166v2 Conj. 1.0.1 and Thm 1.0.4 checked clause by clause against the v2 LaTeX source (p = 3 proviso only, HT(eps) = -1, geometric Frobenius, iota_p fixed); pst is Brinon-Conrad's dimension form (5.2 pp. 67-68, Thm 9.3.5 p. 148) and the pst model clause is proved (PstModel.localIsPstF_iff_forall); deciding step: Brinon-Conrad define B_st abstractly (Def. 9.2.3 p. 138) and BstFOf is its image in B_dR, so identifying them needs the injectivity of Thm 9.2.10 p. 143, not proved in Lean (BergerBst.LogPTildeTranscendental is an open Prop, reduced in Lean to log[p~] not in Frac(B_max) (LogPTransc.logPTildeTranscendental_iff_notInFrac, Contrib/OneProof/LogPTranscendenceBdR.lean)); co-steps: LocalDistinctHTP on some finite model is equivalent to every model (HTModel.localDistinctHTP_iff_forall); BC define A_cris abstractly (p. 128) and AcrisOf is BC's printed description of its image in B_dR^+ (p. 129, proof omitted); LEAF once both are proved or ruled definitional; earlier: q22 GLUE (model clause, survey ring).
+* Bundle field `HDec.HSyn.OpenResearchLeaves76.panPrintedF`; kind **consequence**, strict **GLUE**; flag: reviewer verdict queue29 (11-17): consequence, GLUE/GLUE: Pan arXiv:1901.07166v2 Conj. 1.0.1 and Thm 1.0.4 checked clause by clause against the v2 LaTeX source (p = 3 proviso only, HT(eps) = -1, geometric Frobenius, iota_p fixed); pst is Brinon-Conrad's dimension form (5.2 pp. 67-68, Thm 9.3.5 p. 148) and the pst model clause is proved (PstModel.localIsPstF_iff_forall); deciding step: Brinon-Conrad define B_st abstractly (Def. 9.2.3 p. 138) and BstFOf is its image in B_dR, so identifying them needs the injectivity of Thm 9.2.10 p. 143, proved in Lean by #194 (LogPFontaine.logPTildeTranscendental_proof proves BergerBst.LogPTildeTranscendental, via Fontaine's Lemme 4.3.1; AbstractPeriods.isPstAbstract_iff: pst over the abstract B_st is IsPstF); co-steps: LocalDistinctHTP on some finite model is equivalent to every model (HTModel.localDistinctHTP_iff_forall); BC define A_cris abstractly (p. 128) and AcrisOf is BC's printed description of its image in B_dR^+ (p. 129, proof omitted), proved in Lean by #194 (AcrisImage.fontaineCrystallineImage_proof, AcrisImage.acris_image); both steps proved in Lean (#194, merged 11-25), but the row stays GLUE/GLUE: it cites Pan's arXiv v2, and the published version (J. Amer. Math. Soc. 35 (2022)) has not been checked against it (ruling 11-20; Jack 11-25); earlier: q22 GLUE (model clause, survey ring).
 * Source: Pan, The Fontaine-Mazur conjecture in the residually reducible case, arXiv:1901.07166v2 (the version the manuscript cites), Thm 1.0.4 with Conj. 1.0.1 (published J. Amer. Math. Soc. 35 (2022), 1031-1169); 'potentially semi-stable in the sense of Fontaine' in Brinon-Conrad's dimension form (CMI notes, preliminary version June 24, 2009, 5.2 pp. 67-68, Thm 9.3.5 p. 148) over the image in B_dR of Brinon-Conrad's B_st (Def. 9.2.3 p. 138, abstract; embedded pp. 140-142 with log p = 0; injective by Thm 9.2.10 p. 143), B_cris Def. 9.1.4 p. 131, A_cris p. 128 (abstract) with its image in B_dR^+ p. 129 (p-adic topology), on a model V = E^n (model-independent: PstModel.localIsPstF_iff_forall); LocalIsPstF over BstFOf in Contrib/OneProof/PanBergerFontaine.lean
 * packet [R7](#packet-r7); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * Human readings recorded: none.
@@ -516,7 +519,7 @@ ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves
 * Source: Miller, LMS J. Comput. Math. 14 (2011), Thm 4.4, pp. 336-337, via ForwardRankLiterature.silvermanRankOne_of_miller (MillerForwardRank.lean); Silverman AEC App. C 16.5.5 reports it
 * discussion: [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/198)).
 
 ```lean
 ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne
