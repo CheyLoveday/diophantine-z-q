@@ -9,7 +9,7 @@ lean: HDec.HSyn.sixContactMin_of_open95
 
 # The minimal height hypothesis from twenty-one statements
 
-The [minimal height hypothesis](../main/six-contact-min.md) follows from the twenty-one statements
+The [minimal height hypothesis](../multiplication/certificate/six-contact-min.md) follows from the twenty-one statements
 of this chapter taken together: theorems from the literature, grouped by the theory they come from
 ([Shimura curves of discriminant 6](shimura-curves/README.md),
 [complex multiplication](cm-fibres/README.md), [abelian varieties](abelian-varieties/README.md),
@@ -35,7 +35,7 @@ height hypothesis.
 
 ## Depends on
 
-- [The minimal height hypothesis](../main/six-contact-min.md)
+- [The minimal height hypothesis](../multiplication/certificate/six-contact-min.md)
 
 ## Proof depends on
 
