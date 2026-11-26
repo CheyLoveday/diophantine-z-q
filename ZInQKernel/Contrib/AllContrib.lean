@@ -3286,3 +3286,7 @@ import ZInQKernel.Contrib.OneProof.HRankD2.Check
 import ZInQKernel.Contrib.OneProof.HRankD2.EulerProduct
 import ZInQKernel.Contrib.OneProof.HRankD2.LSeriesHasseWeil
 import ZInQKernel.Contrib.OneProof.HRankD2.NodeSlopes
+import ZInQKernel.Contrib.OneProof.GR14Printed.Check
+import ZInQKernel.Contrib.OneProof.GR14Printed.DimZero
+import ZInQKernel.Contrib.OneProof.GR14Printed.FiniteKernel
+import ZInQKernel.Contrib.OneProof.GR14Printed.Printed
