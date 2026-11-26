@@ -8,6 +8,8 @@ Verdict counts (OK / gap filled / error / unverified):
 * y3-route-a: 0 / 2 (1 ON THE SPOT) / 0 / 7
 * carirr-refold: 0 / 1 / 0 / 5
 * r16-shimura73: 0 / 1 / 1 / 3. The error is at L770-773: Shimura 1973 Thm 1 gives only the total Euler identity.
+  Revised later on 2026-11-17: a full reading of Shimura 1973 makes this a citation-level gap, not an error (see the
+  dated note under Issues for the ledger in docs/research/manuscript-check-round1.md).
 * pc-from-rc (round 1): 3 / 4 / 0 / 5. One of the unverified rows is the open gap at L1042-1056 (the Boolean-assignment sketch).
 * r3prime-etale: no rows; it relies on no manuscript step.
 

@@ -64,7 +64,7 @@ unproved statement, `ShimuraTotalToComponents`.
 | tex lines | step | verdict | reason | evidence |
 |---|---|---|---|---|
 | L768-770 | Li's Fricke formula (p. 296) makes the span of the coefficient conjugates Fricke-stable | gap filled | the text applies Li to every conjugate `f^σ`, which needs each conjugate to be a newform. Neither citation covers this, and the task supplied it as `ConjNewform` (Shimura 1971 Thm 3.52 + Galois stability of the new space; numbers UNVERIFIED). The deduction is proved. Li's locator is UNVERIFIED | report "Known issues" item 3, §3 step 1; `R16ShimuraLi.frickeStable_of_li` |
-| L770-773 | Shimura 1973 Thm 1 (quotient + Euler-factor identity) ⇒ `r_5` is a constituent of `V_5(A_f)` | error | the locator audit read Thm 1 (pp. 526-527): it gives only the total Euler identity on `V_ℓ(A_f)`, which does not fix which embedding's traces each `K_f`-component carries (the `θ∘τ` remark, ON THE SPOT). The per-embedding statement needs Eichler–Shimura (Shimura 1971 Thm 7.9/7.14, or DS 9.6.5), which is not cited here. Not repaired. A reading of Shimura 1973 §0 and Thm 2 is still pending | report "Known issues" item 1, §3 step 3; `R16ShimuraLi.ShimuraTotalToComponents` (named, unproved) |
+| L770-773 | Shimura 1973 Thm 1 (quotient + Euler-factor identity) ⇒ `r_5` is a constituent of `V_5(A_f)` | error, revised to gap (see Issues for the ledger) | the locator audit read Thm 1 (pp. 526-527): it gives only the total Euler identity on `V_ℓ(A_f)`, which does not fix which embedding's traces each `K_f`-component carries (the `θ∘τ` remark, ON THE SPOT). The per-embedding statement needs Eichler–Shimura (Shimura 1971 Thm 7.9/7.14, or DS 9.6.5), which is not cited here. Not repaired. A reading of Shimura 1973 §0 and Thm 2 is still pending | report "Known issues" item 1, §3 step 3; `R16ShimuraLi.ShimuraTotalToComponents` (named, unproved) |
 | L770-773 | Euler identity only up to finitely many Euler factors | unverified | the exceptional set is UNVERIFIED. Report item 2 concerns the Lean field, which asks for every `p ∤ Nℓ`. The manuscript itself uses only primes outside `T ∪ {3,5}` and the level (L778, L789-791), plus Chebotarev (L792) | report "Known issues" item 2; reading L776-794 |
 | L773-774 | equivalently, `r_5^∨` is a cohomological constituent; the duality preserves the conductor | unverified | not discussed in the report | reading only |
 | L776-794 | the same constituent statement used at `ℓ = 3` for `r_3` | unverified | the Lean route does not use r16 at three; not checked | report §4 |
@@ -103,6 +103,12 @@ identification ON THE SPOT, outside the manuscript.
 * **error**, L770-773 (r16-shimura73): Shimura 1973 Thm 1, as the locator audit read it, gives only the total Euler
   identity, not the per-embedding constituent `r_5 ⊂ V_5(A_f)`. The missing citation is Eichler–Shimura (Shimura 1971
   Thm 7.9/7.14, or DS 9.6.5). A reading of Shimura 1973 §0 and Thm 2 is pending.
+* **Revised after this table (2026-11-17): gap, not error**, L770-773. A full reading of Shimura 1973 (all 22
+  pages) found no ℓ-adic, Tate-module or Frobenius-trace statement: both zeta identities in the paper are total, so
+  Thm 1 alone cannot give the per-embedding constituent. The missing inputs are standard and unstated: the
+  `K_f`-linear Eichler–Shimura relation (Shimura 1971 (7.5.1-2) moved to `A_f`, or DS 9.5-9.6), then Chebotarev,
+  Brauer–Nesbitt and Faltings semisimplicity. The conclusion is true and nothing printed about it is false, so the
+  step is a citation-level gap. `docs/research/rv-h-a9c9.md` §2.4 (R-C9-1) reached the same repair.
 * **gap filled**, L768-770 (r16-shimura73): Li is applied to every conjugate `f^σ`, which needs the conjugates to be
   newforms. Uncited; supplied as `ConjNewform`.
 * **gap filled**, L852-857 (carirr-refold): D5's "local–global compatibility" has no citation. It needs Carayol A and
