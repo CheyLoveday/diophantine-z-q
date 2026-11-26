@@ -19,14 +19,13 @@ field's, unchanged.
 -/
 
 open CategoryTheory
-open PkgI3 (AbVar)
 open ZInQ.DefFaltings ZInQ.SemistabAssembly
 
 namespace ZInQ.GR14Printed
 
 /-- **The field restricted to `g ≥ 1`** (B1): `GaudronRemondThm14AnSS` with `1 ≤ g` added. -/
 def GaudronRemondThm14AnSSPos : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (A B : AbVar K) (g : ℕ) (x : ℝ), 1 ≤ g →
+  ∀ (K : Type) [Field K] [NumberField K] (A B : PkgI3.AbVar K) (g : ℕ) (x : ℝ), 1 ≤ g →
     A.dim = (g : WithBot ℕ∞) → IsAnStableHeightSS A x →
     (∃ φ : A.X ⟶ B.X, IsIsogeny φ) →
     (∃ φ : A.X ⟶ B.X, IsIsogeny φ ∧ (isogDeg φ : ℝ) ≤ grKappa g (Module.finrank ℚ K) x) ∧
@@ -50,7 +49,7 @@ and `g ≥ 1`, p. 2058; isogenies "surjectif de noyau fini" and the degree, §2,
 to `k = K`, over the same height as the field: `GaudronRemondThm14AnSS` with `1 ≤ g` added and
 `IsIsogeny` replaced by `IsIsogenyPrinted` (hypothesis and conclusion). -/
 def GaudronRemondThm14Printed : Prop :=
-  ∀ (K : Type) [Field K] [NumberField K] (A B : AbVar K) (g : ℕ) (x : ℝ), 1 ≤ g →
+  ∀ (K : Type) [Field K] [NumberField K] (A B : PkgI3.AbVar K) (g : ℕ) (x : ℝ), 1 ≤ g →
     A.dim = (g : WithBot ℕ∞) → IsAnStableHeightSS A x →
     (∃ φ : A.X ⟶ B.X, IsIsogenyPrinted φ) →
     (∃ φ : A.X ⟶ B.X, IsIsogenyPrinted φ ∧
