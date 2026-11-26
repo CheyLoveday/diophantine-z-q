@@ -21,10 +21,10 @@ The open statements of the current proof (generated from docs/one-proof/OPEN.md;
 in the Glossary at the end):
 
 <!-- open-count:begin -->
-**21 hypotheses of the H part** (in the bundles `OpenAddedLeaves28`, `OpenResearchLeaves77`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end of docs/one-proof/OPEN.md.
+**19 hypotheses of the H part** (in the bundles `OpenAddedLeaves30`, `OpenResearchLeaves78`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end of docs/one-proof/OPEN.md.
 
-* **Strict count: 4 published / 17 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
-* By kind: consequence 13, published 8.
+* **Strict count: 8 published / 11 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* By kind: consequence 10, published 9.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->
 
@@ -36,12 +36,13 @@ in the Glossary at the end):
   theorem (Theorem 5.3), the Cassels–Tate pairing on its curves (from which Lean proves Lemma 5.4), and the rank-one
   line of Silverman's *The Arithmetic of Elliptic Curves*, 2nd ed., Appendix C, Evidence 16.5.5, p. 453.
   The construction is the manuscript's; the textbook citation replaces the two previous forward-rank inputs.
-- **Reduced in Lean:** H follows from 21 statements that are still open, and Lean proves every step from them to H
-  (`HDec.HSyn.sixContactMin_of_open95`, the H part of `ZInQ.OneProof.frozenTarget`). By the project's ratings, 8 of
-  them are published theorems (some specialized or weakened) and 13 are consequences of published theorems or of the
+- **Reduced in Lean:** H follows from 19 statements that are still open, and Lean proves every step from them to H
+  (`HDec.HSyn.sixContactMin_of_open99`, the H part of `ZInQ.OneProof.frozenTarget`). By the project's ratings, 9 of
+  them are published theorems (some specialized or weakened) and 10 are consequences of published theorems or of the
   manuscript's own text. Under the strict count, which also requires that a reader has checked the statement against
-  the printed page, 4 of the 21 count as published statements in their printed form and 17 do not.
-- **Open:** the 21 statements behind H and the three inputs of pole completeness: the manuscript's Theorem 5.3,
+  the printed page, 8 of the 19 count as published statements in their printed form and 11 do not. Since 2026-11-26,
+  with no human reader available, an adversarial AI reading stands in for the human one (docs/DECISIONS.md).
+- **Open:** the 19 statements behind H and the three inputs of pole completeness: the manuscript's Theorem 5.3,
   the Cassels–Tate pairing, and Silverman's rank-one implication.
 
 These 24 statements are exactly the hypotheses of `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`).
