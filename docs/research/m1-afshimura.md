@@ -115,6 +115,14 @@ The source reading for `hRC`'s κ route, `shimuraEmbeddings` and
 `carayolEulerFactors` is still required. The reviewer owns the decision
 about the `ShimuraThm1AsPrinted` and `ShimuraRing0` split.
 
+As landed (2026-11-26): the DS reroute and the tate-prints fold had moved the live route, so the fold
+removes `shimuraThm1Af` from `OpenResearchLeaves79` (`TailZ107`), `OpenResearchLeaves78` (`TailZ105`), the
+DS copies `DS965Reroute/Chain3`-`Chain5` with their forwards and `FoldCheck`, and the two forwards in
+`VpDualMerge/Chain.lean`. `afShimura := _root_.AfTateLam.afShimura_proof` goes into the NOS conversion
+copied in `DS965Reroute/Chain3`, which imports `AfShimuraProof`. `TailZ86`-`TailZ103`, `NOSNarrowChain`,
+`CMOpen` and `Y3Open` are off the live route and keep their copies. The count goes from 22 to 21, with one
+GLUE row fewer.
+
 ## Known issues
 
 - The earlier source audit records a missing conjugation subscript in

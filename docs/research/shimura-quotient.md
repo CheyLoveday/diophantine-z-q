@@ -1,5 +1,9 @@
 # Shimura's quotient and rational intertwining
 
+2026-11-26: the general quotient construction is no longer a scoped stop. `AbVarQuotientBySubvarietyExists`
+is proved (`abVarQuotientBySubvarietyExists`, `AbVarQuotientComplement.lean`; docs/research/abvar-quotient.md),
+and `AfTateLam.afShimura_proof` uses it. The text below predates that.
+
 **Scoped result.** The rational equation is proved equivalent to `HeckeCompat`,
 including independence of the denominator. The scheme-theoretic sum of the
 annihilator images exists as an abelian subvariety. The printed universal
