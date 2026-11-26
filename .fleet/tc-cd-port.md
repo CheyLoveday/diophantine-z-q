@@ -20,3 +20,4 @@
 - Build: cold 8 min 26 s for 523 modules (4 threads); warm rebuild 2.6 s.
 - AllContrib not touched (left to the lead's integration chain).
 - Report: docs/research/tc-cd-port.md.
+- Final SHA: 7437d693ce73b5632827606711bbec8c0cf8c279 adds this note, with all work before it. The only later commit adds this SHA line.
