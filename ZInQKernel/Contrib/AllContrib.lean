@@ -3294,3 +3294,6 @@ import ZInQKernel.Contrib.OneProof.DeligneY3Bridges.Check
 import ZInQKernel.Contrib.OneProof.DeligneY3Bridges.LevelCompat
 import ZInQKernel.Contrib.OneProof.DeligneY3Bridges.Similitude
 import ZInQKernel.Contrib.OneProof.DeligneY3Bridges.Statement
+import ZInQKernel.Contrib.OneProof.TatePrints.FoldCheck
+import ZInQKernel.Contrib.OneProof.TatePrints.Glue
+import ZInQKernel.Contrib.OneProof.TatePrints.Rows
