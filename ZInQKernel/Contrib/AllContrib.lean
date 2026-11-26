@@ -3308,6 +3308,9 @@ import ZInQKernel.Contrib.OneProof.DeRhamHTMult.Periods
 import ZInQKernel.Contrib.OneProof.DeRhamHTMult.TateSen
 import ZInQKernel.Contrib.OneProof.DeRhamHTMult.TateSenCp
 import ZInQKernel.Contrib.OneProof.DeRhamHTMult.TiltValuation
+import ZInQKernel.Contrib.OneProof.CasselsIV.FoldCheck
+import ZInQKernel.Contrib.OneProof.CasselsIV.Glue
+import ZInQKernel.Contrib.OneProof.CasselsIV.Row
 import ZInQKernel.Contrib.OneProof.RC.GoodRowWire.Assembly
 import ZInQKernel.Contrib.OneProof.RC.GoodRowWire.Row
 import ZInQKernel.Contrib.OneProof.RC.GoodRowWire.SamePlace
