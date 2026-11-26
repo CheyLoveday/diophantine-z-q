@@ -216,7 +216,7 @@ theorem continuous_ptsE (τ : L →+* ℂ) :
   apply TopologicalSpace.isOpen_generateFrom_of_mem
   refine ⟨f.left ⁻¹ᵁ U, f.left.app U s, V, hV, ?_⟩
   ext p
-  simp only [Set.mem_preimage, Set.mem_setOf_eq, ptsE_apply]
+  simp only [Set.mem_preimage, Set.mem_ofPred_eq, ptsE_apply]
   rw [evalAt_comp]
   exact Iff.rfl
 
@@ -232,12 +232,11 @@ theorem continuous_ptsE_symm (τ : L →+* ℂ) :
   refine ⟨f.left ''ᵁ V, (f.left.appIso V).inv t, W, hW, ?_⟩
   ext q
   obtain ⟨p, rfl⟩ := (ptsE 𝒢 𝒩 f τ).surjective q
-  simp only [Set.mem_preimage, Set.mem_setOf_eq, Equiv.symm_apply_apply, ptsE_apply]
-  rw [← evalAt_push]
   have hpre : (p ≫ f).left ⁻¹ᵁ (f.left ''ᵁ V) = p.left ⁻¹ᵁ V := by
     show p.left ⁻¹ᵁ (f.left ⁻¹ᵁ (f.left ''ᵁ V)) = _
     rw [Scheme.Hom.preimage_image_eq]
-  rw [hpre]
+  simp only [Set.mem_preimage, Set.mem_ofPred_eq, Equiv.symm_apply_apply]
+  rw [ptsE_apply, ← evalAt_push, hpre]
 
 /-! ## Holomorphic charts -/
 
