@@ -86,7 +86,6 @@ end TatePrints
 #print axioms DeRhamScholze.TatePrints.rep_surjective
 #print axioms DeRhamScholze.TatePrints.bdrFix_le_filB_zero
 #print axioms DeRhamScholze.TatePrints.filB_zero_mul
-#print axioms DeRhamScholze.TatePrints.fd_bdrFix
 #print axioms DeRhamScholze.TatePrints.ddr_of_nondeg
 #print axioms DeRhamScholze.TatePrints.dual_deRham_fil0_of_colmez
 #print axioms DeRhamScholze.TatePrints.htSpaceOver_eq_bot_of_card

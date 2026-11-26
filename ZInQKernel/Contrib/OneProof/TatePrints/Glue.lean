@@ -128,13 +128,14 @@ theorem repr_fixed {ι : Type*} [Fintype ι] (hρ : ∀ g, Function.Surjective (
   exact (sub_eq_zero.mp this).symm
 
 /-- **Admissible implies de Rham, Hom form.** If `Hom_G(V, B)` (`D`) contains a `B`-basis of
-`Hom_K(V, B)` indexed by `ι`, then `dim_K D = #ι · dim_K B^G`. -/
+`Hom_K(V, B)` indexed by `ι`, then `dim_K D = #ι · dim_K B^G` (`dim_K B^G = d > 0`). -/
 theorem finrank_of_basis {ι : Type*} [Fintype ι] (hρ : ∀ g, Function.Surjective (ρ g))
     (D : Submodule K (V →ₗ[K] B)) (hD : ∀ φ, φ ∈ D ↔ ∀ g v, φ (ρ g v) = aR g (φ v))
-    (E : Submodule K B) (hE : ∀ x, x ∈ E ↔ ∀ g, aR g x = x) [FiniteDimensional K E]
-    (b : Basis ι B (V →ₗ[K] B)) (hb : ∀ i, b i ∈ D) :
-    finrank K D = Fintype.card ι * finrank K E := by
+    (E : Submodule K B) (hE : ∀ x, x ∈ E ↔ ∀ g, aR g x = x) {d : ℕ} (hEd : finrank K E = d)
+    (hd : 0 < d) (b : Basis ι B (V →ₗ[K] B)) (hb : ∀ i, b i ∈ D) :
+    finrank K D = Fintype.card ι * d := by
   classical
+  haveI : FiniteDimensional K E := Module.finite_of_finrank_pos (by rw [hEd]; exact hd)
   have hb' : ∀ i g v, b i (ρ g v) = aR g (b i v) := fun i => (hD _).mp (hb i)
   let Ψ : D →ₗ[K] (ι → E) :=
     { toFun := fun ψ i => ⟨b.repr ψ i, (hE _).mpr fun g =>
@@ -167,18 +168,19 @@ theorem finrank_of_basis {ι : Type*} [Fintype ι] (hρ : ∀ g, Function.Surjec
     change b.repr (∑ j, (e j : B) • b j) i = e i
     simp [Finsupp.single_apply]
   rw [(LinearEquiv.ofBijective Ψ ⟨hΨi, hΨs⟩).finrank_eq, Module.finrank_pi_fintype,
-    Finset.sum_const, Finset.card_univ, smul_eq_mul]
+    Finset.sum_const, Finset.card_univ, smul_eq_mul, hEd]
 
 /-- **A non-degenerate family of equivariant maps: the dimension count.**
-`dim_K Hom_G(V, B) = dim_K B^G · dim_K V`. -/
+`dim_K Hom_G(V, B) = d · dim_K V` when `dim_K B^G = d > 0`. -/
 theorem finrank_of_nondeg [FiniteDimensional K V] (hρ : ∀ g, Function.Surjective (ρ g))
     (D : Submodule K (V →ₗ[K] B)) (hD : ∀ φ, φ ∈ D ↔ ∀ g v, φ (ρ g v) = aR g (φ v))
-    (E : Submodule K B) (hE : ∀ x, x ∈ E ↔ ∀ g, aR g x = x) [FiniteDimensional K E]
-    (S : Set (V →ₗ[K] B)) (hSD : S ⊆ D)
+    (E : Submodule K B) (hE : ∀ x, x ∈ E ↔ ∀ g, aR g x = x) {d : ℕ} (hEd : finrank K E = d)
+    (hd : 0 < d) (S : Set (V →ₗ[K] B)) (hSD : S ⊆ D)
     (hS : ∀ x : B ⊗[K] V, (∀ φ ∈ S, φ.liftBaseChange B x = 0) → x = 0) :
-    finrank K D = finrank K E * finrank K V := by
+    finrank K D = d * finrank K V := by
   obtain ⟨b, hb⟩ := exists_basis_of_span S (span_eq_top_of_nondeg S hS)
-  rw [finrank_of_basis aR ρ hρ D hD E hE b (fun i => hSD (hb i)), Fintype.card_fin, mul_comm]
+  rw [finrank_of_basis aR ρ hρ D hD E hE hEd hd b (fun i => hSD (hb i)), Fintype.card_fin,
+    mul_comm]
 
 /-- **A non-degenerate family of equivariant maps: the values.** A property of elements of `B`
 closed under `0`, `+` and `·`, held by `B^G` and by the values of the family, is held by the
@@ -233,11 +235,6 @@ theorem filB_zero_mul {x y : BdR p} (hx : x ∈ filB p 0) (hy : y ∈ filB p 0) 
   obtain ⟨b, -, rfl⟩ := hy
   exact ⟨a * b, by simp, map_mul _ a b⟩
 
-/-- `finrank B_dR^{G_F} = [F:ℚ_p]`, so `B_dR^{G_F}` is finite-dimensional. -/
-theorem fd_bdrFix : FiniteDimensional ℚ_[p] (DeRhamPrint.bdrFix p F) :=
-  Module.finite_of_finrank_pos (by
-    rw [BdRInv.bdRInvariantsPrinted_proof p F]; exact Module.finrank_pos)
-
 /-- **G1, Hom form.** For a finite-dimensional representation `V` of `G_F` with a family of
 `G_F`-equivariant maps `V → B_dR⁺`, non-degenerate after base change to `B_dR` (Colmez's
 pairing), `dim_{ℚ_p} Hom_{G_F}(V, B_dR) = [F:ℚ_p] · dim V` and every `G_F`-equivariant map
@@ -250,7 +247,6 @@ theorem ddr_of_nondeg {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] [FiniteDim
     (hnd : ∀ x : BdR p ⊗[ℚ_[p]] V, (∀ ω, (P ω).liftBaseChange (BdR p) x = 0) → x = 0) :
     finrank ℚ_[p] (ddrSpaceOver p ρ) = finrank ℚ_[p] F * finrank ℚ_[p] V ∧
       ddrSpaceOver p ρ ≤ filH p 0 := by
-  haveI := fd_bdrFix (p := p) (F := F)
   have hnd' : ∀ x : BdR p ⊗[ℚ_[p]] V,
       (∀ φ ∈ Set.range P, φ.liftBaseChange (BdR p) x = 0) → x = 0 :=
     fun x hx => hnd x fun ω => hx (P ω) ⟨ω, rfl⟩
@@ -258,12 +254,12 @@ theorem ddr_of_nondeg {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] [FiniteDim
     rintro _ ⟨ω, rfl⟩ σ v
     exact hgal ω σ v
   refine ⟨?_, ?_⟩
-  · have h := @Gen.finrank_of_nondeg ℚ_[p] (BdR p) (Field.absoluteGaloisGroup F) V _
+  · exact @Gen.finrank_of_nondeg ℚ_[p] (BdR p) (Field.absoluteGaloisGroup F) V _
       (DeRhamPrint.bdrField p) (inferInstance : Algebra ℚ_[p] (BdR p)) _ _
       (fun σ => bdrAct p (gfToGqp p F σ)) (fun σ => ρ σ) _ (rep_surjective ρ)
-      (ddrSpaceOver p ρ) (fun _ => Iff.rfl) (DeRhamPrint.bdrFix p F) (fun _ => Iff.rfl) _
+      (ddrSpaceOver p ρ) (fun _ => Iff.rfl) (DeRhamPrint.bdrFix p F) (fun _ => Iff.rfl)
+      (finrank ℚ_[p] F) (BdRInv.bdRInvariantsPrinted_proof p F) Module.finrank_pos
       (Set.range P) hSD hnd'
-    rw [h, BdRInv.bdRInvariantsPrinted_proof p F]
   · intro ψ hψ v
     exact @Gen.forall_prop_of_nondeg ℚ_[p] (BdR p) (Field.absoluteGaloisGroup F) V _
       (DeRhamPrint.bdrField p) (inferInstance : Algebra ℚ_[p] (BdR p)) _ _
@@ -299,6 +295,7 @@ variable {p : ℕ} [Fact p.Prime] {F : Type*} [Field F] [Algebra ℚ_[p] F] [Fin
 variable {V : Type*} [AddCommGroup V] [Module ℚ_[p] V] [FiniteDimensional ℚ_[p] V]
   (ρ : Representation ℚ_[p] (Field.absoluteGaloisGroup F) V)
 
+set_option maxHeartbeats 1600000 in
 /-- **G2.** If `dim_{F'} Hom_{G_F}(V, ℂ_p) + dim_{F'} Hom_{G_F}(V, ℂ_p(1)) = dim_{ℚ_p} V`, then
 `Hom_{G_F}(V, ℂ_p(j)) = 0` for `j ∉ {0, 1}`: the two spaces give a `ℂ_p`-basis of
 `Hom(V, ℂ_p)` (Tate-Sen, `linIndep_two`), and the coordinates of an element of weight `j` are
@@ -349,14 +346,18 @@ theorem htSpaceOver_eq_bot_of_card
       rw [hexp]
       ext k
       rw [B.repr_sum_self]
-    have hk := congrFun hrep k
-    rw [tAct_of_mem ρ hf σ, map_smul, Finsupp.smul_apply, smul_eq_mul] at hk
+    have hk : algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) (-j)) * B.repr f k =
+        cpAct p (gfToGqp p F σ) (B.repr f k) *
+          algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) (-wt k)) := by
+      have h := congrFun hrep k
+      rw [tAct_of_mem ρ hf σ, map_smul, Finsupp.smul_apply, smul_eq_mul] at h
+      exact h
     have e1 : cycPow p (gfToGqp p F σ) (j - wt k) =
         cycPow p (gfToGqp p F σ) j * cycPow p (gfToGqp p F σ) (-wt k) := by
       rw [← HT.cycPow_add, sub_eq_add_neg]
     have e2 : cycPow p (gfToGqp p F σ) j * cycPow p (gfToGqp p F σ) (-j) = 1 := by
       rw [← HT.cycPow_add, add_neg_cancel, cycPow_zero]
-    rw [Algebra.smul_def, e1, map_mul]
+    rw [Algebra.smul_def, e1, map_mul (algebraMap ℚ_[p] ℂ_[p])]
     calc algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) j) *
           algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) (-wt k)) *
           cpAct p (gfToGqp p F σ) (B.repr f k)
@@ -365,7 +366,8 @@ theorem htSpaceOver_eq_bot_of_card
             algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) (-wt k))) := by ring
       _ = algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) j) *
           (algebraMap ℚ_[p] ℂ_[p] (cycPow p (gfToGqp p F σ) (-j)) * B.repr f k) := by rw [← hk]
-      _ = B.repr f k := by rw [← mul_assoc, ← map_mul, e2, map_one, one_mul]
+      _ = B.repr f k := by
+        rw [← mul_assoc, ← map_mul (algebraMap ℚ_[p] ℂ_[p]), e2, map_one, one_mul]
   rw [← B.sum_repr f]
   simp [hc]
 
