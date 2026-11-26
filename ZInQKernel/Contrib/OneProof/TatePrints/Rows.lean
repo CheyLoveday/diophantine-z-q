@@ -30,7 +30,7 @@ Standing hypotheses, p. 629: "soit X une variété abélienne définie sur une e
 Q_p, et 𝒳 un modèle de X sur les entiers de K"; p. 638: "Dans la suite de cette section, X sera
 une variété abélienne, 𝒳 un modèle propre de X sur O_K. [...] Par construction, 𝒳(O_{C_p})
 s'identifie à X(C_p)"; p. 639: "Soit u=(…,u_n,…), où u_n ∈ 𝒳(O_{C_p}), un élément du module de
-Tate T_p(X) de X." No reduction hypothesis. `B_dR` is Fontaine's (§2, p. 631).
+Tate T_p(X) de X." No reduction hypothesis. `B_dR` is Fontaine's (§2, p. 632).
 
 Print, p. 639:
 "Théorème 5.2. (i) Si F_ω est une des primitives de ω définie à la proposition 4.1, alors la suite

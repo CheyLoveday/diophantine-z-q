@@ -63,7 +63,8 @@ Whichever fold lands second regenerates on the new main:
   `sixContactMin_of_open100 (r : OpenResearchLeaves79) (t : OpenTextbookLeaves18)
   (l : OpenAddedLeaves30) := sixContactMin_of_open98_vp
   (openResearchLeaves78_of_OpenResearchLeaves79 r) t (openAddedLeaves29VP_of_OpenAddedLeaves30 l)`,
-  `ZInQKernel/OneProof/Main.lean` keeps `r : OpenResearchLeaves79`, the count is 29 → 29, and `FoldCheck.lean`'s two `frozenTarget_with_*` are restated over
+  `ZInQKernel/OneProof/Main.lean` keeps `r : OpenResearchLeaves79`, the count is 29 → 29, and
+  `FoldCheck.lean`'s two `frozenTarget_with_*` are restated over
   `OpenResearchLeaves79`.
 * this fold first: #212 regenerates as `TailZ107.lean` / `sixContactMin_of_open100` over
   `OpenAddedLeaves30`, its count still 22 → 29.
@@ -116,7 +117,7 @@ Whichever fold lands second regenerates on the new main:
    Théorème 2', not in Théorème 2's statement. A reader who rates it CONSEQUENCE would name the
    missing step `dim_K H⁰(X, Ω¹) = dim_K H¹(X, O_X) = d`.
 4. **Period ring.** Mathlib's `BDeRhamPlus` and `BdR = Frac(B_dR⁺)` against Fontaine's `B_dR`
-   (Colmez §2, p. 631); the same identification as in the existing `B_dR` rows
+   (Colmez §2, p. 632); the same identification as in the existing `B_dR` rows
    (`TDict.bdREquivAwayT`).
 5. **Twists and fields.** `C(1) = C ⊗ lim μ_{pⁿ}` is `htF ρ 1` (σ acting by `χ(σ)σ`); Fontaine's
    `K` is the image `F' ⊆ ℚ̄_p` of `F`; `Hom_{Z_p[G]}(T_p, C(i)) = Hom_{G_F}(V_p, ℂ_p(i))` since
