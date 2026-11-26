@@ -22,10 +22,11 @@ lanes' fields. The `LocalTarget` route is also filled: `NeronDVRLocal` enters on
 
 **Retired frozen field or GLUE row:** none yet. The `hRC` row (`docs/one-proof/OPEN.md:462`) and
 `PreLeaves.odd_staged` (`RC/Wiring/Leaves.lean:305`) still need `point`, `point_frob` and `frobenius_sq`
-(same-place lane), `extension` and `point_W` (detector specialization), and `ha`, the aθ definition pin
+(same-place lane), `point_W` (an input of `SamePlaceData`, same-place lane in the hCM lane; it also needs the
+special-fibre action of `Wint`, generic5 item 4, not started), and `ha`, the aθ definition pin
 (tex 2081–2082; `RC/PMWire/Assembly.lean:221–233`, consumed at `RC/O7Actual/Family.lean:121`); (O.7)
 is derived in Lean from the listed inputs (`O7Actual`'s `DatumAt.representative`, `RC/O7Actual/Family.lean:111`, converts `DatumAt.reduce` into the (O.7) shape, but the actual `DatumAt` is built from `J`, `G` (now `stageRows … sp`), `relations`, `cusps` and `refs`). The other inputs of `oddStagedOfGoodRows` (`refs`, `J`,
-`relations`, `cusps`, `hL`, `hsign`) are also still open.
+`relations`, `cusps`, `hL`, `hsign`) are also still open. `extension` is supplied by `ModelGeneric5.goodRow_extension` (witness `Wint`).
 
 **What compiles.** 24 new modules under `ZInQKernel/Contrib/OneProof/RC/ModelTarget/` build with
 `lake build`, with no `sorry` and no axiom declaration. `#print axioms` gives only propext, Classical.choice

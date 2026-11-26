@@ -12,7 +12,9 @@ None yet. This lane retires no field of `frozenTarget` and changes no GLUE count
 other lanes:
 
 * `point`, `point_frob` and `frobenius_sq` (same-place comparison);
-* `extension` and `point_W` (detector specialization);
+* `point_W`: an input of `SamePlaceData`, owned by the same-place lane (the hCM lane); it also needs
+  the special-fibre action of `Wint` (generic5 item 4, not started). (`extension` is supplied by
+  `ModelGeneric5.goodRow_extension`, witness `Wint`.)
 * `ha`, the aθ definition pin (tex 2081–2082; `RC/PMWire/Assembly.lean:221–233`, consumed at
   `RC/O7Actual/Family.lean:121`) that `PMWire.oddStagedOfGoodRows`
   (`ZInQKernel/Contrib/OneProof/RC/PMWire/Assembly.lean:220`) takes. (O.7)
@@ -57,7 +59,8 @@ Every declaration below builds with `lake build` and has no `sorry` or `axiom` d
 | `read` | supplied: `read` (`ReadEquiv.lean:84`) |
 | `read_frob` | supplied: `read_frob` (`ReadEquiv.lean:108`) |
 | `point`, `point_frob`, `frobenius_sq` | open: same-place comparison lane (hCM's v21g builds the supersingular pair classes first) |
-| `extension`, `point_W` | open: detector specialization lane (after generic4) |
+| `extension` | supplied: `ModelGeneric5.goodRow_extension` (witness `Wint`) |
+| `point_W` | open: input of `SamePlaceData`, owned by the same-place lane (the hCM lane); also needs the special-fibre action of `Wint` (generic5 item 4, not started) |
 
 `goodTarget ℓ W₀ K h₅ hΔ : GoodTarget ℓ K (ReducedEquation W₀ ℓ) (W₀⁄ℚ)` (`Supply.lean:52`) packages the
 ten supplied fields. `GoodTarget` (`Supply.lean:28`) lists exactly the corresponding fields of `GoodRow`,
@@ -162,7 +165,8 @@ None. The lane adds no printed-form statement. Nothing here is a leaf:
 | Item | Status and reduction |
 | --- | --- |
 | `point`, `point_frob`, `frobenius_sq` | Other lane (same-place comparison). Ribet, *On modular representations of Gal(Q-bar/Q) arising from modular forms*, 1990, Prop. 3.6 (proved there) UNVERIFIED. The level-N correspondence is being built in the hCM lane from Voight, *Quaternion Algebras*, GTM 288, 2021, Thm. 42.1.9 and 42.3.2 (two-lens pass pending). |
-| `extension`, `point_W` | Other lane (detector specialization after generic4). Katz–Mazur 1985 §2.4 UNVERIFIED; Vélu 1971 UNVERIFIED. |
+| `extension` | Supplied by `ModelGeneric5.goodRow_extension` (witness `Wint`). |
+| `point_W` | Other lane: an input of `SamePlaceData`, owned by the same-place lane (the hCM lane); it also needs the special-fibre action of `Wint` (generic5 item 4, not started). |
 | `ha`, the aθ definition pin, and the other inputs `refs`, `J`, `relations`, `cusps`, `hL`, `hsign` of `oddStagedOfGoodRows` | Other lanes. `ha` (tex 2081–2082; `RC/PMWire/Assembly.lean:221–233`, consumed at `RC/O7Actual/Family.lean:121`) pins the integer representative aθ; (O.7) is derived in Lean from the listed inputs (`O7Actual`'s `DatumAt.representative`, `RC/O7Actual/Family.lean:111`, converts `DatumAt.reduce` into the (O.7) shape, but the actual `DatumAt` is built from `J`, `G` (now `stageRows … sp`), `relations`, `cusps` and `refs`). |
 | `LocalTarget.E ≅ E` (optional) | Not built. It follows from the Néron mapping property both ways: both are Néron models of `W₀⁄ℚ`, now proved, together with `cubicJE` and `LocalTarget.jE`. BLR, *Néron Models*, 1990, §1.2 Def. 1 UNVERIFIED. Lean work only, with no new input. |
 | Compatibility of `cubicJE` with the `J0Cusps` scheme law | Not needed by `GoodRow`, which asks only for the complex reading. It would follow from `val_mul` and `projectiveValue_eq_fieldValue` at all field points. |

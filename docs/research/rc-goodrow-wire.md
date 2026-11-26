@@ -42,7 +42,7 @@ Here `p := (s.q.stage i).p`, `N := StageKummer.level ℓ`, `h₅ := stagePrime_f
 | `read`, `read_frob` | target lane: `ModelTarget.read`, `ModelTarget.read_frob` |
 | `extension` | generic5 lane: `ModelGeneric5.goodRow_extension h₅ htame h₂` (witness `Wint`). `stageRow_W`: the row's `W q hq he` is `Wint` (`eq_Wint_of_extendsAtkin`) |
 | `point` | same-place lane: `S.point` (`stageRow_point`) |
-| `point_W` | same-place lane: `S.point_W`, converted to the `GoodRow` form by `SamePlaceData.point_W_choose` |
+| `point_W` | same-place lane (the hCM lane): `S.point_W`, converted to the `GoodRow` form by `SamePlaceData.point_W_choose`; also needs the special-fibre action of `Wint` (generic5 item 4, not started) |
 | `point_frob` | same-place lane: `S.point_frob` |
 | `frobenius_sq` | same-place lane: `S.frobenius_sq` |
 

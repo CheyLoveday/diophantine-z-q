@@ -84,7 +84,7 @@ On normality (item 2(b)): the run does not need normality of the integral ring, 
 | `readComplex`, `readComplex_eq` | open | target lane (rc-model-target) |
 | `point` | open | same-place comparison (hCM lane) |
 | **`extension`** | **supplied (this run)** | `ModelGeneric5.goodRow_extension` |
-| `point_W` | open | detector Atkin–Lehner lane (items 3–4 here) + `point` (hCM lane) |
+| `point_W` | open | input of `SamePlaceData`, owned by the same-place lane (the hCM lane); also needs the special-fibre action of `Wint` (item 4 here, not started) |
 | `read`, `read_frob` | open | target lane |
 | `point_frob`, `frobenius_sq` | open | same-place comparison (hCM lane) |
 
