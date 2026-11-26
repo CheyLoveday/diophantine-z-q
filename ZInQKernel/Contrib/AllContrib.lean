@@ -3277,3 +3277,5 @@ import ZInQKernel.Contrib.OneProof.ThetaFourier
 import ZInQKernel.Contrib.OneProof.ThetaLineAnalytic
 import ZInQKernel.Contrib.OneProof.ThetaLineBundle
 import ZInQKernel.Contrib.OneProof.ThetaSeriesConvergence
+import ZInQKernel.Contrib.OneProof.CasselsTatePS.Basic
+import ZInQKernel.Contrib.OneProof.CasselsTatePS.FoldCheck
