@@ -57,10 +57,12 @@ theorem geometricallyConnected_genericFibre (𝒢 : GroupModel A L) :
     have : ConnectedSpace (𝒢.G.hom ⁻¹' {genericPt L}) :=
       Subtype.connectedSpace (isConnected_genericFibre 𝒢)
     exact (𝒢.G.hom.fiberHomeo (genericPt L)).connectedSpace_iff.mpr this
-  have hlft : LocallyOfFiniteType (𝒢.G.hom.fiberToSpecResidueField (genericPt L)) :=
-    MorphismProperty.pullback_snd (P := @LocallyOfFiniteType) _ _ inferInstance
-  have hqc : QuasiCompact (𝒢.G.hom.fiberToSpecResidueField (genericPt L)) :=
-    MorphismProperty.pullback_snd (P := @QuasiCompact) _ _ inferInstance
+  have hlft : LocallyOfFiniteType (𝒢.G.hom.fiberToSpecResidueField (genericPt L)) := by
+    change LocallyOfFiniteType (pullback.snd 𝒢.G.hom _)
+    infer_instance
+  have hqc : QuasiCompact (𝒢.G.hom.fiberToSpecResidueField (genericPt L)) := by
+    change QuasiCompact (pullback.snd 𝒢.G.hom _)
+    infer_instance
   exact geomConnOfRationalPoint_proof
     ((Spec (CommRingCat.of (𝓞 L))).residueField (genericPt L)) (𝒢.G.hom.fiber (genericPt L))
     (𝒢.G.hom.fiberToSpecResidueField (genericPt L)) (SGA3IdComp.eF 𝒢.G (genericPt L))
