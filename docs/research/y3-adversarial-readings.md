@@ -220,3 +220,38 @@ Proposed, for the maintainer:
 * `buzzardThm21Cor23V15`, `buzzardFrameRepTorsor5`, `serreRigidityLevel3`,
   `projectiveFalseEllipticCurve`: remain consequences (GLUE). Their unprinted steps are checked and
   repaired above; `projectiveFalseEllipticCurve` also rests on the polarization convention.
+
+## 7. Addendum: unit U8, `MilneRem84` and `GeomCard5`
+
+A follow-up contribution (#215, folded into this pull request) proves `BuzzardFrameRepTorsor 5` in Lean from `MilneProp207 5` and
+`GeomCard5` (`buzzardFrameRepTorsor5_of_milne`), and both counts `GeomCard3` and `GeomCard5` from
+`MilneRem84` (`geomCard3_of_rem84`, `geomCard5_of_rem84`). Its new input, `MilneRem84`, was read
+the same way as U1 to U7: three independent lenses on three model families, from the page images
+of the hashed copies above, with every quote checked mechanically.
+
+| Unit | Lean | Print | Fidelity | Skeptic | Red team |
+| --- | --- | --- | --- | --- | --- |
+| U8 | `MilneRem84`, `GeomCard5` (Defs.lean at `034e0cedd3de0e5a935bcf8ead74044524a0850c`, SHA-256 `09201b4da9a1a55331fc668cbb104577f6f15b153f5a727aaf2900281ecc51b6`) | Milne 1986 Thm 8.2 (p. 13), Rem. 8.4 (p. 14), §20 (p. 42) | FWC, MINOR | FAITHFUL | FWC, MINOR |
+
+Rem. 8.4, p. 14: "If k is separably algebraically closed and n is not divisible by its
+characteristic, then the theorem says that the kernel A_n(k) of n : A(k) → A(k) has n^{2g}
+elements." `MilneRem84` is its instance at g = 2 on the geometric fibres of an `FEC` over a
+ℤ[1/30]-scheme, for every n with `(n : k) ≠ 0`, which is the printed hypothesis (n > 0 from
+Thm 8.2, and n not divisible by the characteristic); `x ^ n = 1` in the group of k-points of the
+fibre is the kernel A_n(k). `GeomCard5` is the instance n = 5. The caveats are MINOR and concern
+the docstring: it should also cite Thm 8.2, which Rem. 8.4 refers to, and the dimension g = 2
+comes from the `FEC` field `SmoothOfRelativeDimension 2`, not from p. 42, which supplies only that
+geometric fibres are abelian varieties. All 42 source quotes and 46 Lean quotes were found; one,
+the Milne 2008 Rem. 7.3 display "A_n(k) ≝ Ker(n : A(k) → A(k)) has order n^{2g}", whose text layer
+reads "An.k/ dfD Ker.nW A.k/ ! A.k// has order n2g", was confirmed by hand.
+
+Both docstring fixes were applied after the reading, comments only, at commit
+`7c408638d7e5ed45abc03bcb40a216809e4b5a39` (Defs.lean SHA-256
+`0f96770c343ae739d48830dfb60127f324041d9840d07a371b211448abf266e1`; the code is identical after
+stripping comments). The Thm 8.2 quotation added there matches p. 13 of the retyped edition.
+
+Effect (folded in this pull request at the owner's request): `milneTorsionCount3` and
+`buzzardFrameRepTorsor5` leave the board and one row, `milneTorsionCount` (`MilneRem84`), enters,
+so the count is 28 rather than 29. The unit U2 reading (Buzzard's sentence printed without proof)
+is no longer relied on. In section 6, `milneTorsionCount` takes the place of `milneTorsionCount3`
+among the LEAF candidates, and `buzzardFrameRepTorsor5` leaves the consequence rows.
