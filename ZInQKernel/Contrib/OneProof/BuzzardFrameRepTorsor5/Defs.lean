@@ -27,9 +27,13 @@ Geometry*, Springer (1986), Remark 8.4, p. 14 of the author's retyped edition, w
 and exponents transcribed: "If k is separably algebraically closed and n is not divisible by its
 characteristic, then the theorem says that the kernel A_n(k) of n : A(k) → A(k) has n^{2g}
 elements. As this is also true for all n′ dividing n, it follows that A_n(k) is a free
-Z/nZ-module of rank 2g." The same statement is Remark 7.3, p. 34, of Milne's course notes v2.0
-(2008). A geometric fibre of a false elliptic curve is an abelian variety of dimension `g = 2`
-(ibid. (1986), Section 20, p. 42), so the count is `n ^ 4`. -/
+Z/nZ-module of rank 2g." The theorem it refers to is Thm 8.2, p. 13 of the same edition: "Let A
+be an abelian variety of dimension g, and let n > 0 be an integer. Then n_A: A → A is an isogeny
+of degree n^{2g}; it is étale if and only if the characteristic of k does not divide n." The same
+statement is Remark 7.3, p. 34, of Milne's course notes v2.0 (2008). Section 20, p. 42 (ibid.,
+1986) defines an abelian scheme as a proper smooth group scheme with connected geometric fibres,
+so a geometric fibre of a false elliptic curve is an abelian variety; its dimension `g = 2` comes
+from the field `smooth : SmoothOfRelativeDimension 2 F.hom` of `FEC`, so the count is `n ^ 4`. -/
 def MilneRem84 : Prop :=
   ∀ (S : Over Z30Base) (A : FEC S.left) (k : Type) [Field k] [IsAlgClosed k]
     (s : Spec (CommRingCat.of k) ⟶ S.left) (n : ℕ), (n : k) ≠ 0 →
