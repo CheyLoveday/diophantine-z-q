@@ -142,14 +142,16 @@ end
 /-! ## Kato's de Rham form and `ModularHTCoeff` -/
 
 /-- **Kato's de Rham form of the modular Galois representation** (K. Kato, *p-adic Hodge theory
-and values of zeta functions of modular forms*, Astérisque 295 (2004), 117–290: 9.4, p. 188, for
-the representation `V_{F_λ}(f)` of 8.3, pp. 181–182, with the Frobenius polynomial recalled in
-14.10.3, p. 240; geometric Frobenius), over a finite coefficient field `E ⊆ ℚ̄_ℓ`: for a newform
-`f` of weight `k ≥ 2` there are a finite `E/ℚ_ℓ` inside `ℚ̄_ℓ` and a continuous
+and values of zeta functions of modular forms*, Astérisque 295 (2004), 117–290; geometric
+Frobenius). Locators, all UNVERIFIED for this leaf (no reading of the print recorded): §§9.2–9.4,
+(9.2.2), pp. 187–188 for `V_{F_λ}(f)` de Rham at every level (the locators recorded for row R13 in
+`docs/research/htnew-assembly.md`); §11.3 for the Hodge filtration jumps `0, k − 1`; 8.3 for
+`V_{F_λ}(f)` and 14.10.3 for its Frobenius polynomial. Over a finite coefficient field `E ⊆ ℚ̄_ℓ`:
+for a newform `f` of weight `k ≥ 2` there are a finite `E/ℚ_ℓ` inside `ℚ̄_ℓ` and a continuous
 `ρ : G_ℚ → GL₂(E)`, unramified at `p ∤ Nℓ`, with geometric Frobenius traces `a_p(f)`, such that
 `ρ|_{G_{ℚ_ℓ}}` is de Rham and the graded pieces of its de Rham filtration have `E`-dimension one
 in degrees `0` and `k − 1` and zero otherwise (in `ℚ_ℓ`-dimensions,
-`[E : ℚ_ℓ] · {0, k − 1}.count i`). No human reading recorded; locators as in the research notes. -/
+`[E : ℚ_ℓ] · {0, k − 1}.count i`). -/
 def KatoDeRhamCoeff : Prop :=
   ∀ (ℓ : ℕ) [Fact ℓ.Prime] (ιC : Qbar →ₐ[ℚ] ℂ) (ιL : Qbar →ₐ[ℚ] PadicAlgCl ℓ)
     (N : ℕ) [NeZero N] (k : ℤ) (f : HeckeRing.GL2.Newform N k), 2 ≤ k →

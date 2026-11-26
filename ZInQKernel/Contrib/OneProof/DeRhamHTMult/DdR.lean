@@ -6,8 +6,9 @@ Over the period ring `B_dR` of `ZInQKernel/Contrib/G9` (the copy with the kernel
 `cycPow`), for `V = E^n` with `ρ : G_{ℚ_p} → GL_n(E)`:
 
 * `ddrT p ρ = (B_dR ⊗_{ℚ_p} V)^{G_{ℚ_p}}` and `IsDeRhamT p ρ`: `dim_{ℚ_p} D_dR(V) = dim_{ℚ_p} V`
-  (the tensor form of Fontaine's definition, the same statement as the tree's
-  `PanBergerSplit.ddrU` / `IsDeRhamU`);
+  (the tensor form of Fontaine's definition; the analogue, over this copy of `B_dR`, of
+  `PanBergerSplit.ddrU` / `IsDeRhamU`, which are stated over a separate copy; no Lean bridge
+  between the two copies is written yet);
 * `filBdR p i = ξ^i B_dR^+` (`ξ` Fontaine's generator of `ker θ`), the de Rham filtration;
 * `filDdR p ρ i = D_dR(V) ∩ (Fil^i B_dR ⊗ V)`, `grDdR p ρ i = Fil^i D_dR / Fil^{i+1} D_dR`;
 * `htT p ρ i = (ℂ_p(i) ⊗_{ℚ_p} V)^{G_{ℚ_p}}`, `σ` acting on `ℂ_p(i)` by `χ(σ)^i σ`.
