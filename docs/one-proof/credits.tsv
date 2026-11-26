@@ -26,3 +26,5 @@ LogPTildeTranscendental	proof	project	yes		https://github.com/Deicyde/diophantin
 FontaineCrystallineImage	proof	project	yes		https://github.com/Deicyde/diophantine-z-q/pull/194	pb-refereed-fold	d1e82159e970e503ff92f4972327294c59f7b080
 colmezThm01	statement-check	project	yes			pb-adversarial-readings	
 panThm104F	statement-check	project	yes			pb-adversarial-readings	
+colmez1992DeRhamAbVar	statement-check	project	yes			tate-prints-adversarial-readings	
+fontaine1982HTAbVar	statement-check	project	yes			tate-prints-adversarial-readings	
