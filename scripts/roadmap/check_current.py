@@ -75,8 +75,11 @@ def check_generated_chapter(fix):
     with tempfile.TemporaryDirectory() as scratch:
         for part in ('ZInQKernel/OneProof', 'docs/one-proof', 'blueprint', 'scripts/one_proof/vault_chapter'):
             shutil.copytree(os.path.join(ROOT, part), os.path.join(scratch, part))
-        subprocess.run([sys.executable, '-I', os.path.join(scratch, gen), scratch], cwd=scratch, check=True,
-                       capture_output=True, text=True)
+        run = subprocess.run([sys.executable, '-I', os.path.join(scratch, gen), scratch], cwd=scratch,
+                             capture_output=True, text=True)
+        if run.returncode:
+            out = (run.stderr or run.stdout).strip().splitlines()
+            return [f'{gen} failed: {out[-1] if out else f"exit status {run.returncode}"}']
         bad = []
 
         def walk(cmp, rel):

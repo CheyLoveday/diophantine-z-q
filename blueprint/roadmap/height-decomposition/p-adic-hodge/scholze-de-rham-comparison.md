@@ -3,7 +3,7 @@ article_id: af_664cfda47ff5d8f46cbb7512
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenAddedLeaves28.scholzeH1AbVar
+lean: HDec.HSyn.OpenAddedLeaves29.scholzeH1AbVar
 ---
 
 # Scholze's comparison theorem for H¹ of an abelian variety

@@ -3,7 +3,7 @@ article_id: af_0c7347a32b40c0ee27f665db
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenAddedLeaves28.t10TateDuality
+lean: HDec.HSyn.OpenAddedLeaves29.t10TateDuality
 ---
 
 # The first ℓ-adic cohomology of an abelian variety is dual to its Tate module

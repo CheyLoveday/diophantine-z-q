@@ -36,10 +36,9 @@ is any element of $\mathrm{SL}_2(\mathbb Z)$ with lower row $(c,d')$, $N\mid c$ 
 respectively $d'\equiv d$, modulo $N$. That such operators exist on every model, for Shimura's Hecke
 correspondences, is proved here and is no longer an open statement.
 
-Of these six statements, two are published statements and four are consequences of published
+Of these five statements, one is a published statement and four are consequences of published
 theorems; none is proved here.
 
-- [Deligne's Galois representations of eigenforms](deligne-representations.md)
 - [The Deligne–Serre theorem](deligne-serre.md)
 - [Frobenius on the Tate module of Shimura's abelian variety](shimura-af-frobenius.md)
 - [Hodge–Tate weights of the representation of a newform](kato-hodge-tate-weights.md)

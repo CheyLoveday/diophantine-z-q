@@ -10,39 +10,20 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the twenty-one statements of the chapter in the
-project's assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof
-is the project-authored note `docs/research/h-trust.md`.
+The minimal height hypothesis is proved from the nineteen statements of the chapter in the project's
+assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof is the
+project-authored note `docs/research/h-trust.md`.
 
 ## Pazuki bound
 
 F. Pazuki, *Theta height and Faltings height*, Bull. SMF 140 (2012), Corollary 1.3(2), upper half,
 read by the locator audit. The level-$2$ coordinates are a risk (project note height-split, §8).
 
-## Deligne representations
-
-F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228, corrected fourth printing
-(2016), Theorem 9.6.5, p. 404, with Definitions 5.8.1 (p. 196), 6.5.3 (p. 238), 9.3.2 (p. 386) and
-9.3.3 (p. 387), and absolute Frobenius and inertia, pp. 384–385; P. Deligne, Sém. Bourbaki 355
-(1969); G. Shimura 1971, Theorem 7.14, for $k=2$. The number of Shimura's theorem is unverified.
-
 ## Deligne-Serre
 
 P. Deligne and J.-P. Serre, *Formes modulaires de poids 1*, Ann. Sci. ÉNS (4) 7 (1974), Théorème 4.1
 with display (4.1.1), pp. 513–514 (AI-read). The form for normalized eigenforms is F. Diamond and J.
 Shurman, GTM 228 (2005), Theorem 9.6.6 (numbering unverified).
-
-## Pan Theorem 1.0.4
-
-L. Pan, *The Fontaine–Mazur conjecture in the residually reducible case*, J. Amer. Math. Soc. 35
-(2022), 1031–1169, Theorem 1.0.4, read in arXiv:1901.07166v2, the version the manuscript cites:
-Conjecture 1.0.1, p. 2; Theorem 1.0.4, p. 5; conventions (geometric Frobenius, Hodge–Tate weight
-$-1$ for the cyclotomic character), pp. 6–7. The journal numbering is unverified. Potential
-semistability in the sense of Fontaine as in O. Brinon and B. Conrad, *CMI summer school notes on
-$p$-adic Hodge theory* (preliminary version, June 24, 2009): admissibility in the dimension form,
-§5.2, pp. 67–68; $A_{\rm cris}$, p. 128, and its image in $B_{\rm dR}^+$, p. 129; $B_{\rm cris}$,
-Definition 9.1.4, p. 131; $B_{\rm st}$, Definition 9.2.3, p. 138, its embedding in $B_{\rm dR}$, pp.
-140–142, injective by Theorem 9.2.10, p. 143; potential semistability, Theorem 9.3.5, p. 148.
 
 ## Diamond-Shurman 9.6.5 on Af
 
@@ -59,18 +40,6 @@ audit) and §11.3; T. Gee, *Modularity lifting theorems*, Essent. Number Theory 
 arXiv:2202.05818v2: Fact 4.20 in §4.19, p. 28, with the conventions on pp. 2–3 (AI-read); R. Taylor,
 *Galois representations*, Ann. Fac. Sci. Toulouse Math. (6) 13 (2004). Kato's §11.3, Taylor and the
 journal numbering of Gee are unverified.
-
-## Berger monodromy theorem
-
-O. Brinon and B. Conrad, *CMI summer school notes on $p$-adic Hodge theory* (preliminary version,
-June 24, 2009), Theorem 9.3.5, p. 148, the "only if" half; admissibility by dimension, §5.2, pp.
-67–68; $A_{\rm cris}$, p. 128, and its image in $B_{\rm dR}^+$, p. 129; $B_{\rm cris}$, Definition
-9.1.4, p. 131; $B_{\rm st}$, Definition 9.2.3, p. 138, its embedding in $B_{\rm dR}$, pp. 140–142,
-and Theorem 9.2.10, p. 143; $B_{\rm dR}^{G_K}=K$, Theorem 4.4.13, p. 64 (AI-read; in the
-manuscript's bibliography, which cites it for other results). The manuscript cites L. Berger,
-*Représentations $p$-adiques et équations différentielles*, Invent. Math. 148 (2002), 219–284,
-Théorème 0.6 = Théorème 5.19 (arXiv math/0102179v3, pp. 6 and 56, AI-read; Théorème 0.7 there is
-Sen's theorem); the journal numbering is unverified.
 
 ## Shimura Main Theorem I in Deligne form
 
@@ -155,15 +124,28 @@ A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of 
 Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.4, pp. 405–406 (proof: SGA 7 I, Exposé IX, Théorème
 3.6, p. 351), with semistable reduction as defined in §3, p. 405.
 
-## Conrad Appendix B
+## Colmez Theorem 0.1
 
-B. Conrad, *Lifting global representations with local properties*, author preprint, December 11,
-2011, Appendix B: p. 32 (Definition B.1; the sentence after it, that $\psi$ is locally algebraic if
-and only if its underlying $\mathbb Q_p$-representation is Hodge–Tate, citing J.-P. Serre, *Abelian
-$\ell$-adic representations and elliptic curves*, III, A6, Corollary 2; the arithmetic normalization
-of the Artin map) and p. 33, Proposition B.3, with its proof on pp. 33–34 (AI-read); the
-manuscript's citation, Appendix B, pp. 32–33 (`diophantine_zq.tex`, lines 760–762). Serre's book is
-not read.
+P. Colmez, *Espaces vectoriels de dimension finie et représentations de de Rham*, Astérisque 319
+(2008), 117–186: Théorème 0.1 and the definitions of de Rham, semistable and potentially semistable,
+§0.2, p. 118; $B_{\rm st}^+=B_{\rm cris}^+[u]$, p. 120 (AI-read: an adversarial reading by three
+independent lenses, 2026-11-26, which the maintainer accepts in place of a person's reading; no
+person has read the pages). Fontaine's rings: J.-M. Fontaine, *Le corps des périodes $p$-adiques*,
+Astérisque 223 (1994), Exp. II. The manuscript cites L. Berger, *Représentations $p$-adiques et
+équations différentielles*, Invent. Math. 148 (2002), 219–284.
+
+## Pan Theorem 1.0.4
+
+L. Pan, *The Fontaine–Mazur conjecture in the residually reducible case*, J. Amer. Math. Soc. 35
+(2022), 1031–1169, Theorem 1.0.4, read in arXiv:1901.07166v2, the version the manuscript cites:
+Conjecture 1.0.1, p. 2; Theorem 1.0.4, p. 5; conventions (geometric Frobenius, Hodge–Tate weight
+$-1$ for the cyclotomic character), pp. 6–7. The journal text is still to be checked. Potential
+semistability as in J.-M. Fontaine, *Représentations $p$-adiques semi-stables*, Astérisque 223
+(1994), Exp. III: 5.6.1, p. 166, in the equivalent form of 1.8.5, pp. 134–135;
+$B_{\rm st}^+=B_{\rm cris}^+[X]$, Exp. II, 3.1.5–3.1.6, p. 81, and $B_{\rm st}$ identified with its
+image in $B_{\rm dR}$, Exp. II, 4.2.4–4.2.5, p. 86 (AI-read: an adversarial reading by three
+independent lenses, 2026-11-26, which the maintainer accepts in place of a person's reading; no
+person has read the pages).
 
 ## Scholze comparison
 
