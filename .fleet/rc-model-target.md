@@ -23,8 +23,8 @@ lanes' fields. The `LocalTarget` route is also filled: `NeronDVRLocal` enters on
 **Retired frozen field or GLUE row:** none yet. The `hRC` row (`docs/one-proof/OPEN.md:462`) and
 `PreLeaves.odd_staged` (`RC/Wiring/Leaves.lean:305`) still need `point`, `point_frob` and `frobenius_sq`
 (same-place lane), `extension` and `point_W` (detector specialization), and `ha`, the aθ definition pin
-(tex 2081–2082; `RC/PMWire/Assembly.lean:221–233`, consumed at `RC/O7Actual/Family.lean:121`); (O.7) itself
-is proved (`RC/O7Actual/Family.lean:111`). The other inputs of `oddStagedOfGoodRows` (`refs`, `J`,
+(tex 2081–2082; `RC/PMWire/Assembly.lean:221–233`, consumed at `RC/O7Actual/Family.lean:121`); (O.7)
+is derived in Lean from the listed inputs (`O7Actual`'s `DatumAt.representative`, `RC/O7Actual/Family.lean:111`, converts `DatumAt.reduce` into the (O.7) shape, but the actual `DatumAt` is built from `J`, `G` (now `stageRows … sp`), `relations`, `cusps` and `refs`). The other inputs of `oddStagedOfGoodRows` (`refs`, `J`,
 `relations`, `cusps`, `hL`, `hsign`) are also still open.
 
 **What compiles.** 24 new modules under `ZInQKernel/Contrib/OneProof/RC/ModelTarget/` build with

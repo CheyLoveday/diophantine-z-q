@@ -155,6 +155,6 @@ support of D_w h_* and any other finite set". No `Setup` is built here.
 | 8478–8479 | gap filled | The good-reduction elliptic curve and the extension of the map: `goodTarget` with `hΔ := goodAt s i`; `πInt` through `weierstrassModel_isNeron`. |
 | 8486–8488 | gap filled (extension); open (`point_W`) | Atkin–Lehner over the local base: `Wint` (generic5); its action on the special-fibre points is in `sp`. |
 | 8489–8492 | open (input) | Frobenius on the supersingular set: `point_frob` and `frobenius_sq` in `sp`. |
-| 9101–9113 | OK | (O.7) is proved (`RC/O7Actual/Family.lean:111`); the wiring feeds `oddStagedOfGoodRows`. |
+| 9101–9113 | reduced to the listed inputs | (O.7) is derived in Lean from the listed inputs (`O7Actual`'s `DatumAt.representative`, `RC/O7Actual/Family.lean:111`, converts `DatumAt.reduce` into the (O.7) shape, but the actual `DatumAt` is built from `J`, `G` (now `stageRows … sp`), `relations`, `cusps` and `refs`); the wiring feeds `oddStagedOfGoodRows`. |
 
 Provenance: everything in this run is wiring, on the spot (c). No new leaf and no print.
