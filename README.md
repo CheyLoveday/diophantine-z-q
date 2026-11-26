@@ -69,6 +69,26 @@ nasqret/z-in-q-lean also has a weaker, qualitative theorem that replaces the hei
 whose constant is not explicit. That bound is ineffective: it shows that a polynomial exists but gives none of
 Theorem 1.1's numbers, such as the count of variables. Neither route above uses it.
 
+## Roadmap
+
+The [roadmap](blueprint/roadmap/README.md) writes the proof out as a book, with a page for each statement the Lean
+proves or assumes: what it says, how the Lean statement differs from the manuscript's, its Lean name, and whether it
+is proved, cited from the literature or open. It opens with a diagram of the proof and a status table for each route,
+and then has one part for each piece of the proof:
+- [the construction](blueprint/roadmap/construction.md): the polynomial and why its zeros project to ℤ;
+- [the height input](blueprint/roadmap/height-input.md): the minimal height hypothesis, from the open statements of
+  [the height decomposition](blueprint/roadmap/height-decomposition/README.md);
+- [the pole input](blueprint/roadmap/pole-input.md): pole completeness, by Elliot's route from
+  [Theorem 5.3, the restricted converse](blueprint/roadmap/restricted-converse/README.md), whose proof in the
+  manuscript's Sections 7–9 and Appendices E–G has a page for each numbered statement, or by the congruent-number
+  route.
+
+The [blueprint site](https://deicyde.github.io/diophantine-z-q/) renders the roadmap with its dependency graph. The
+height-decomposition chapter is generated from the Lean and the ratings in `docs/one-proof/`.
+`python3 scripts/roadmap/check_current.py` checks the roadmap against the tree: that every Lean name it cites exists,
+that the generated chapter is current (`--fix` regenerates it), and that every field of Theorem 5.3's remaining
+hypotheses it names exists.
+
 ## Status (fork `main` at `29bfbc3f`, merged 2026-11-22)
 
 - **One theorem, [`ZInQ.OneProof.frozenTarget`](ZInQKernel/OneProof/Main.lean), proves `ZInQ.FrozenTarget` from 24
