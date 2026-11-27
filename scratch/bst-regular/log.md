@@ -18,3 +18,17 @@ Base 182e3388b7416a1d625b1786b945b2e2b77b2e4e (confirmed). Worktree needed `lean
 - Compile pitfalls: `simpa using hsum` / `linearIndependent_iff'` on `dB` timed out (AddCommGroup unification);
   `Fintype.linearIndependent_iffₛ` works. `simp_rw [hrel]` loops (rhs contains lhs). No Field instance on BdR p
   (no map_inv₀); keep inverses in ℚ_p.
+
+## Conditional targets: ZInQKernel/Contrib/OneProof/BstRegular/Bst.lean — COMPILES (lake build OK)
+
+- Open Props (not proved; stated precisely, taken as theorem arguments, no axiom):
+  - `BstFracInvariants` (c): ∀ p ε₀ h K finite, x,y ∈ BstFOf(ξ), y ≠ 0, z ∈ B_dR, z·y = x, z G_K-fixed ⇒ z ∈ BstFOf(ξ).
+  - `BstLineUnits` (d): ∀ p ε₀ h K finite, b ∈ BstFOf(ξ), b ≠ 0, ∀σ∈G_K ∃c∈ℚ_p, σb = c·b ⇒ ∃ b' ∈ BstFOf(ξ), b b' = 1.
+- `isRegularB_bst` : BstFracInvariants → BstLineUnits → IsRegularB (BstFOf ξ) G_K. VERIFIED (stability: bstF_stable).
+- `isAdmissibleT_of_isAdmissible` (target 1, conditional on (c),(d)). VERIFIED.
+- `isPstFBasis_iff_isPstF`, `localIsPstFBasis_iff_localIsPstF` (target 2, conditional). VERIFIED.
+- `colmezThm01_iff_bergerSurveyF` (target 3, conditional; forward direction unconditional = bergerSurveyF_of_colmez). VERIFIED.
+- #print axioms for all: [propext, Classical.choice, Quot.sound] (scratch/bst-regular/Axioms.lean).
+- Tree check: `BergerBst.FontaineBstInvariants` (B_st^{G_K} = K_0, dimension form) is a named input, NOT proved;
+  B_dR^{G_K} = K proved (dimension form, `BdRInv.bdRInvariantsPrinted_proof`); log[p̃] transcendental over B_cris/B_max
+  proved (`LogPFontaine.logPTildeTranscendental_proof`); no Frobenius-based K ⊗_{K_0} B_cris → B_dR injectivity found.
