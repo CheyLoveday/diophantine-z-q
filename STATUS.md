@@ -23,7 +23,7 @@ in the Glossary at the end):
 <!-- open-count:begin -->
 **19 hypotheses of the H part** (in the bundles `OpenAddedLeaves30`, `OpenResearchLeaves80`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end of docs/one-proof/OPEN.md.
 
-* **Strict count: 5 published / 14 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 6 published / 13 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * By kind: consequence 12, published 7.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->
@@ -40,7 +40,7 @@ in the Glossary at the end):
   (`HDec.HSyn.sixContactMin_of_open101`, the H part of `ZInQ.OneProof.frozenTarget`). By the project's ratings, 7 of
   them are published theorems (some specialized or weakened) and 12 are consequences of published theorems or of the
   manuscript's own text. Under the strict count, which also requires that a reader has checked the statement against
-  the printed page, 5 of the 19 count as published statements in their printed form and 14 do not. Since 2026-11-26,
+  the printed page, 6 of the 19 count as published statements in their printed form and 13 do not. Since 2026-11-26,
   with no human reader available, an adversarial AI reading stands in for the human one (docs/DECISIONS.md).
 - **Open:** the 19 statements behind H and the three inputs of pole completeness: the manuscript's Theorem 5.3,
   the Cassels–Tate pairing, and Silverman's rank-one implication.

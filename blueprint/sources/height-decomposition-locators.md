@@ -140,8 +140,9 @@ pages.
 
 É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014), 2057–2108,
 Théorème 1.4, p. 2060, with $\kappa$ and $g\ge1$ on p. 2058 and isogenies and their degree on p.
-2062. AI-read: a three-lens adversarial reading of page images of the authors' copy, 2026-11-27
-(docs/research/item-m-adversarial-readings.md); no person has read these pages.
+2062. AI-read: a three-lens adversarial reading of page images of Duke's version of record, posted
+on the first author's page, 2026-11-27 (docs/research/item-m-adversarial-readings.md,
+docs/research/duke163-version-of-record.md); no person has read these pages.
 
 ## EGA IV 9.7.7
 

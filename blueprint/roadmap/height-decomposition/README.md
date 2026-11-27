@@ -17,7 +17,7 @@ Of the nineteen statements from the literature, seven are published statements: 
 or a direct instance of it that needs no argument. Twelve are consequences of published theorems,
 which take further theorems to reach from the print. The project's strict convention, which counts a
 published statement only once its reading against the print and its review are complete and find it
-in its printed form, counts five of the nineteen as published. None of the nineteen is proved here,
+in its printed form, counts six of the nineteen as published. None of the nineteen is proved here,
 and every step from them to the minimal height hypothesis is.
 
 ## The theorem

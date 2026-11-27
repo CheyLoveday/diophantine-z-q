@@ -15,7 +15,7 @@ removes it. See
 
 **19 hypotheses of the H part** (in the bundles `OpenAddedLeaves30`, `OpenResearchLeaves80`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
 
-* **Strict count: 5 published / 14 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 6 published / 13 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
@@ -80,6 +80,7 @@ ping, and is released if there is no reply within 7 days of the ping.
 | --- | --- | --- |
 | [`dsThm966Printed`](#dsthm966printed) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) | 2026-11-17 |
 | [`afCharpolyDS965`](#afcharpolyds965) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/224)) | 2026-11-27 |
+| [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7219588708)) | 2026-11-27 |
 | [`y3FullThreeRepZ30`](#y3fullthreerepz30) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/211)) | 2026-11-26 |
 | [`carayolThmAFrob`](#carayolthmafrob) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) | 2026-11-19 |
 | [`cmHeight62`](#cmheight62) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) | 2026-11-19 |
@@ -108,7 +109,7 @@ Heights. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/is
 * [`pazukiCor13Upper`](#pazukicor13upper) (GLUE): Pazuki, Bull. SMF 140 (2012) Cor. 1.3(2), upper half (read by the audit; RISK: Pazuki's level-2 coordinates, height-split §8)
 * [`javanpeykarThm111An`](#javanpeykarthm111an) (GLUE): Javanpeykar, Polynomial bounds for Arakelov invariants of Belyi curves, Algebra Number Theory 8 (2014), Thm 1.1.1, p. 90 (arXiv:1403.6404v1 Thm 1.1.1, p. 1) and section 2.3, p. 98 (arXiv p. 9); locators recorded by the locator audit (docs/research/locators.md row R18); cited at diophantine_zq.tex L870; over the stable height with the metric on A_tau(C)^an (r3-residual), semistability of the Jacobian's Neron model (semistab-assembly; not the print's Def. 2.2.1)
 * [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) (GLUE): Gaudron-Rémond (GR1), Théorème des périodes et degrés minimaux d'isogénies, Comment. Math. Helv. 89 (2014), 343-403, Cor. 8.4, p. 400 (h(A) >= -(1/2)(dim A) log(2 pi), proved there; attribution: Bost), height of a semi-abelian model as in section 2.3, p. 351, with h_F(A) = h(A) - (g/2) log pi and the weakening to -(3/2) dim A on p. 352; Duke 163 section 9, proof of Lemme 9.1, p. 2098, cites it (diophantine_zq.tex L894-895, step E4); over the GR1 height (IsGR1StableHeightOriginal)
-* [`gaudronRemondThm14GR1`](#gaudronremondthm14gr1) (GLUE; pending-reading): Gaudron-Rémond, Polarisations et isogénies, Duke Math. J. 163 (2014), 2057-2108, Thm 1.4, p. 2060 (g >= 1 and κ(A), p. 2058; couples of isogenies, p. 2059; isogenies 'surjectif de noyau fini' and their degree, p. 2062), over the GR1 height h_F of a semi-abelian model (GR1 section 2.3, as Duke p. 2058 refers); specialization K = k; the couple split into two isogenies
+* [`gaudronRemondThm14GR1`](#gaudronremondthm14gr1) (LEAF): Gaudron-Rémond, Polarisations et isogénies, Duke Math. J. 163 (2014), 2057-2108 (version of record, DOI 10.1215/00127094-2782528), Thm 1.4, p. 2060 (g >= 1 and κ(A), p. 2058; couples of isogenies, p. 2059; isogenies 'surjectif de noyau fini' and their degree, p. 2062), over the GR1 height h_F of a semi-abelian model (GR1 section 2.3, as Duke p. 2058 refers); specialization K = k; the couple split into two isogenies
 * [`egaIV_9_7_7_OL`](#egaiv_9_7_7_ol) (LEAF): EGA IV₃ (Grothendieck-Dieudonné), Publ. Math. IHÉS 28 (1966), Théorème (9.7.7)(ii), p. 79, with EGA IV₁, Publ. Math. IHÉS 20 (1964), (1.6.1), p. 234; EGA IV₂, Publ. Math. IHÉS 24 (1965), (4.5.1)-(4.5.2), p. 61; EGA 0_III, Publ. Math. IHÉS 11 (1961), (9.1.1), (9.1.2), (9.1.11), pp. 12-14; at S = Spec O_L, L a number field, for smooth, quasi-compact, quasi-separated morphisms
 
 ### Packet R7
@@ -131,9 +132,8 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 | [`bergerSurveyF`](#bergersurveyf) | research | consequence | GLUE | pending-reading | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/231)) |
 | [`carayolThmAFrob`](#carayolthmafrob) | research | consequence | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) |
 | [`cmHeight62`](#cmheight62) | research | consequence | GLUE | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) |
-| [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
+| [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7219588708)) |
 | [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/232)) |
-| [`gaudronRemondThm14GR1`](#gaudronremondthm14gr1) | research | published | GLUE | pending-reading | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`javanpeykarThm111An`](#javanpeykarthm111an) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`modularHTCoeff`](#modularhtcoeff) | research | consequence | GLUE | pending-review | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open (last released by the project: #191 landed as additive code without a fold. Its premise `NewformGeometricComparison` is stronger than `ModularHTCoeff` (it fixes one of the row's two normalizations and adds algebraic coefficients...) |
 | [`panThm104F`](#panthm104f) | research | published | GLUE | pending-reading | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
@@ -145,6 +145,7 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 | [`dsThm966Printed`](#dsthm966printed) | research | published | LEAF | note | good-first |  | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) |
 | [`egaIV_9_7_7_OL`](#egaiv_9_7_7_ol) | research | published | LEAF | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`fowlerProp27PrintCanonical`](#fowlerprop27printcanonical) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 1 | open (last released by the project: no fold. Oesterlé's Théorème 1 implies Fowler's Proposition 2·7, so putting it in place of the Fowler row at the same count would make `frozenTarget`'s hypothesis stronger (review on #184). #184 st...) |
+| [`gaudronRemondThm14GR1`](#gaudronremondthm14gr1) | research | published | LEAF | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
 | [`hCT`](#hct) | frozenTarget | published | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) |
 | [`hRank`](#hrank) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/198)) |
@@ -257,7 +258,7 @@ HDec.CMBranch.CMHeight62
 * Source: Shimura, Ann. of Math. 85 (1967), Main Theorem I; Deligne, Travaux de Shimura, Sem. Bourbaki 389 (1971) sections 4-5 (Cor. 5.7, Ex. 5.8; a seminar report under Jack 11-23 (D2): a source only if it proves the statement, not checked); at B = (2,-3|Q), level K3, as a consequence; locators UNVERIFIED
 * discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7219588708)).
 
 ```lean
 Y3Hodge.DeligneCanonicalModelY3EveryPrint
@@ -302,29 +303,6 @@ ZInQ.HeightModelM.GaudronRemondSec9LowerGR1Weak
 > ZInQ.HeightModelM.IsGR1StableHeightOriginal). Replaces gaudronRemondSec9LowerAnSS, which
 > ZInQ.HeightModelM.gaudronRemondSec9LowerAnSS_of_GR1Weak proves from it and egaIV_9_7_7_OL; the
 > converse (from the GR1 height to the Néron-model height) is not proved in the tree.
-
-### gaudronRemondThm14GR1
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves80.gaudronRemondThm14GR1`; kind **published**, strict **GLUE**; flag: pending reading: the Duke journal text; adversarial AI reading 11-27 (docs/research/item-m-adversarial-readings.md; three independent lenses on three model families from page images) of the authors' copy with the Duke pagination: fidelity PASS, skeptic PASS, red team PASS, no blocking item; GLUE until the Duke journal text is compared (real-text rule), and a LEAF rating after that check also needs the lead's ruling on the two height reading steps in the notes below (commutativity of the model; stalk lattice to global sections), which are arguments, not Lean theorems (as in the colmez1992DeRhamAbVar ruling, 2026-11-26); direct instance of Thm 1.4, p. 2060, at K = k (g >= 1 and κ(A), p. 2058; couple of isogenies, p. 2059; isogenies 'surjectif de noyau fini' with degree the order of the kernel, p. 2062, characteristic 0), the couple split into two isogenies of degree at most κ (equivalent: deg = max); the height is GR1's h_F of a semi-abelian model (Duke p. 2058 refers to GR1 section 2.3, read in the EMS journal file); with egaIV_9_7_7_OL it implies the replaced field gaudronRemondThm14Printed (proved: gaudronRemondThm14Printed_of_GR1); the converse (GR1 height => Néron-model height, so the old field => the new row) is not proved in the tree; the height notes of gaudronRemondSec9LowerGR1Weak apply: reading notes (non-blocking): GroupModel does not state commutativity, which follows from separatedness and flatness by an argument (the generic fibre of the product is schematically dense and A is commutative), not a Lean theorem; GR1 prints no formula for the normalized Arakelov degree (Def. 2.1, p. 351), so the standard one is used (log #(ω/O_K' η) minus the sum of the log norms, over [K':Q]); the stalk-built lattice (printedOmega, an intersection of stalk lattices) and the global sheaf of differentials e*Ω of GR1 section 2.3 are linked by the tree's height dictionary (theta_injective, omegaAt_map, omega_map, printedOmega_eq), the last step from stalks to global sections of a locally free sheaf being the standard fact.
-* Source: Gaudron-Rémond, Polarisations et isogénies, Duke Math. J. 163 (2014), 2057-2108, Thm 1.4, p. 2060 (g >= 1 and κ(A), p. 2058; couples of isogenies, p. 2059; isogenies 'surjectif de noyau fini' and their degree, p. 2062), over the GR1 height h_F of a semi-abelian model (GR1 section 2.3, as Duke p. 2058 refers); specialization K = k; the couple split into two isogenies
-* packet [R5](#packet-r5); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.HeightModelM.GaudronRemondThm14GR1
-```
-
-> item-m-fold: Gaudron-Rémond, Polarisations et isogénies, Duke Math. J. 163 (2014), 2057-2108,
-> Thm 1.4, p. 2060, with g >= 1 and κ(A) as on p. 2058 and isogenies "surjectif de noyau fini", the
-> degree being the order of the kernel (p. 2062); read in the authors' copy with the Duke
-> pagination, the comparison with the Duke journal text is still to be made. The height is the h_F
-> of a semi-abelian model of GR1 section 2.3, to which Duke p. 2058 refers
-> (ZInQ.HeightModelM.IsGR1StableHeightOriginal). As in the replaced field, one number field K
-> carries A, B and the isogenies (K = k), and the printed couple is split into two isogenies of
-> degree at most κ. Replaces gaudronRemondThm14Printed, which
-> ZInQ.HeightModelM.gaudronRemondThm14Printed_of_GR1 proves from it and egaIV_9_7_7_OL; the converse
-> (from the GR1 height to the Néron-model height) is not proved in the tree.
 
 ### javanpeykarThm111An
 
@@ -547,6 +525,29 @@ HDec.CMBranch.FowlerBridges.FowlerProp27PrintCanonical
 > 1 modulo 4 and positive n, h(Δ) ≤ n implies √|Δ| ≤ 2n² exp(21000n²), with h(Δ) the proper ideal
 > class number of the unique order of discriminant Δ.
 
+### gaudronRemondThm14GR1
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves80.gaudronRemondThm14GR1`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-27 (docs/research/item-m-adversarial-readings.md; three independent lenses on three model families from page images): fidelity PASS, skeptic PASS, red team PASS, no blocking item; journal-text check satisfied by the version of record: the copy read (sha256 6d62ddb8a0aa8f8b…, 52 pages, posted on the first author's institutional page) is Duke's typeset version of record, its p. 2057 footer printing 'DUKE MATHEMATICAL JOURNAL Vol. 163, No. 11, © 2014 DOI 10.1215/00127094-2782528', and its pages 2057-2108 matching Crossref's record for that DOI (Duke Math. J. 163(11), pp. 2057-2108, 2014-08-15) (docs/research/duke163-version-of-record.md); the two argument steps the earlier flag named are now Lean theorems: commutativity of semi-abelian models (HeightModelM2.groupModel_isCommMonObj, isSemiAbelianModel_iff_and_comm) and the stalk lattice equal to the global-sections lattice (globalDetLattice_eq), #234; θ bijective, stalks of e*Ω¹ injecting into the generic fibre, and the spans (HeightModelM3), #237; residual readings (HeightModelM3/README.md): Mathlib has no sheaf of relative differentials, so the stalk formula and globalOmega stand in for Γ(S, e*Ω¹), and the one-factor wedge identity in the Hodge line (that the wedge with one factor multiplied by a lift of c is c|_η · (v₁ ∧ ⋯ ∧ v_g)) is not proved; rated published, LEAF under the maintainer's general rule of 2026-11-26 (adversarial AI reading against real text, docs/DECISIONS.md), the lead to confirm; direct instance of Thm 1.4, p. 2060, at K = k (g >= 1 and κ(A), p. 2058; couple of isogenies, p. 2059; isogenies 'surjectif de noyau fini' with degree the order of the kernel, p. 2062, characteristic 0), the couple split into two isogenies of degree at most κ (equivalent: deg = max); the height is GR1's h_F of a semi-abelian model (Duke p. 2058 refers to GR1 section 2.3, read in the EMS journal file); it depends on egaIV_9_7_7_OL (EGA IV₃ (9.7.7)): with it, it implies the replaced field gaudronRemondThm14Printed (proved: gaudronRemondThm14Printed_of_GR1); the converse (GR1 height => Néron-model height, so the old field => the new row) is not proved in the tree; reading note (non-blocking): GR1 prints no formula for the normalized Arakelov degree (Def. 2.1, p. 351), so the standard one is used (log #(ω/O_K' η) minus the sum of the log norms, over [K':Q]).
+* Source: Gaudron-Rémond, Polarisations et isogénies, Duke Math. J. 163 (2014), 2057-2108 (version of record, DOI 10.1215/00127094-2782528), Thm 1.4, p. 2060 (g >= 1 and κ(A), p. 2058; couples of isogenies, p. 2059; isogenies 'surjectif de noyau fini' and their degree, p. 2062), over the GR1 height h_F of a semi-abelian model (GR1 section 2.3, as Duke p. 2058 refers); specialization K = k; the couple split into two isogenies
+* packet [R5](#packet-r5); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+ZInQ.HeightModelM.GaudronRemondThm14GR1
+```
+
+> item-m-fold: Gaudron-Rémond, Polarisations et isogénies, Duke Math. J. 163 (2014), 2057-2108,
+> Thm 1.4, p. 2060, with g >= 1 and κ(A) as on p. 2058 and isogenies "surjectif de noyau fini", the
+> degree being the order of the kernel (p. 2062); read in the authors' copy with the Duke
+> pagination, the comparison with the Duke journal text is still to be made. The height is the h_F
+> of a semi-abelian model of GR1 section 2.3, to which Duke p. 2058 refers
+> (ZInQ.HeightModelM.IsGR1StableHeightOriginal). As in the replaced field, one number field K
+> carries A, B and the isogenies (K = k), and the printed couple is split into two isogenies of
+> degree at most κ. Replaces gaudronRemondThm14Printed, which
+> ZInQ.HeightModelM.gaudronRemondThm14Printed_of_GR1 proves from it and egaIV_9_7_7_OL; the converse
+> (from the GR1 height to the Néron-model height) is not proved in the tree.
+
 ## Hypotheses outside the H part
 
 These are `frozenTarget`'s other arguments (outside the H bundles); they are not part of the counts above.
@@ -654,4 +655,4 @@ ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne
 | gaudronRemondThm14GR1 | statement-check | project | yes |  |
 
 
-<!-- render stamp: claims-free 77223a61f224a111, output d9a7b6e14aad3827 -->
+<!-- render stamp: claims-free a6e9fbc4dcb3dab9, output 88540cf65e294fd5 -->
