@@ -31,11 +31,13 @@ That step is still an argument, so the statement is not the printed form and the
 not count it as published; the corollary itself over this height passed a three-lens AI reading, and
 the project declined to carry it instead, as it is stronger (ruling of 2026-11-24). They print no
 formula for the normalized Arakelov degree, and the standard one is used here. The model is not
-required to be commutative; that it is follows from separatedness and flatness by a standard
-argument that is not a Lean theorem. With the constructibility statement of EGA IV (9.7.7), the
-statement implies the same bound for the stable Faltings heights of this section, built from Néron
-models, and this implication is proved in Lean; the converse is not proved here. It is a hypothesis,
-not proved here.
+required to be commutative; that it is, is proved in Lean, and so are the passage from stalks to
+global sections and one identity of wedges in the Hodge line; what remains a reading is that the
+stalk formula and the global sections used here are those of the sheaf of differentials, which
+Mathlib does not yet have. With the constructibility statement of EGA IV (9.7.7), the statement
+implies the same bound for the stable Faltings heights of this section, built from Néron models, and
+this implication is proved in Lean; the converse is not proved here. It is a hypothesis, not proved
+here.
 
 ## Depends on
 
