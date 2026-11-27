@@ -12,3 +12,10 @@ by modularHTCoeff, htnew-assembly) moved here for the same reason.
 Later (fold-b105, pb-p1): the row of panPrintedP (replaced by panPrintedF, Pan over Fontaine's B_st as printed) moved here for the same reason.
 
 Later (ds965-reroute-fold, #197): the rows of dsThm965AtPrimes moved here. The field was removed by a reroute (its readers now use modularHTCoeff and dsThm966Printed), with no replacement leaf; the readings, one of them a human reading of the characteristic-equation clause, are kept here as a record.
+
+Later (item-m-fold, the rows of #219): the row of gaudronRemondSec9LowerAnSS moved here. The field was replaced by
+gaudronRemondSec9LowerGR1Weak, Cor. 8.4 of Gaudron-Rémond (Comment. Math. Helv. 89 (2014)) weakened in Lean over the
+height of a semi-abelian model, and gaudronRemondThm14Printed by gaudronRemondThm14GR1, the same theorem over that
+height, with the leaf egaIV_9_7_7_OL; with it the new rows imply the old fields in Lean, and the converse is not
+proved. gaudronRemondThm14Printed had no row in reviews.tsv (its earlier reading, of a different statement under the
+same name, is the e1b31749 row above). The readings of the new rows are in docs/research/item-m-adversarial-readings.md.
