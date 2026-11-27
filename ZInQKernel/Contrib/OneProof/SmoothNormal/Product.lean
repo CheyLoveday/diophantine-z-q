@@ -5,7 +5,10 @@ import Mathlib
 
 Let `R` be a commutative noetherian ring all of whose localizations at prime ideals are
 integrally closed domains. Then `R` is isomorphic to a finite product of integrally closed
-domains, namely the quotients `R ⧸ p` by its finitely many minimal primes `p`.
+domains, namely the quotients `R ⧸ p` by its finitely many minimal primes `p`. This is the last
+sentence of EGA IV₂ (5.13.5) (Publ. Math. IHÉS 24 (1965), p. 133): "Si A est noethérien et
+normal, A est composé direct d'un nombre fini d'anneaux intègres et intégralement clos
+(I, 5.1.4)"; it is proved here.
 
 Outline.
 * For a prime `m` with `R_m` a domain, the kernel of `R → R_m` is a prime ideal contained in

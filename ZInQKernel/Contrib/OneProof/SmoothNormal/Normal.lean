@@ -24,9 +24,14 @@ Source: A. Grothendieck, *Éléments de géométrie algébrique IV, Étude local
 
 "Proposition (17.5.7). — Soit f: X → Y un morphisme localement de présentation finie, lisse en un point x ∈ X, posons y = f(x). Alors, pour que l'anneau O_x soit réduit (resp. intégralement clos, resp. géométriquement unibranche), il faut et il suffit que O_y le soit."
 
-Convention: for a ring, EGA's "intégralement clos" means an integrally closed domain
-(EGA 0_I, (4.1.4); a scheme is normal when all its local rings are integrally closed domains).
-Here "integrally closed domain" is `IsDomain R ∧ IsIntegrallyClosed R`.
+Convention. EGA 0_I (4.1.4) (Publ. Math. IHÉS 4 (1960), p. 37) calls a sheaf of rings normal
+at a point "si sa fibre 𝒜_x est un anneau intègre et intégralement clos", and EGA IV₂ (5.13.5)
+(Publ. Math. IHÉS 24 (1965), p. 133) says: "Nous dirons qu'un anneau A est normal si Spec(A) est
+un schéma normal, autrement dit si, pour tout idéal premier p de A, A_p est intègre et
+intégralement clos". In the proof of (5.8.6) (p. 108), "dire que X est normal signifie que pour
+tout x ∈ X, O_x est un anneau local noethérien intégralement clos", and the proof goes on with
+"puisque O_x est intègre": for local rings, EGA's "intégralement clos" includes "intègre"
+(Bourbaki's convention). Here "integrally closed domain" is `IsDomain R ∧ IsIntegrallyClosed R`.
 
 Only the "intégralement clos" case is stated, only in the direction from `O_y` to `O_x`, and for
 a morphism smooth at every point. A smooth morphism is locally of finite presentation (on affine
@@ -92,7 +97,8 @@ theorem stalk_of_smooth (hE : EGAIV17_5_7) (X : Over Z30Base) [Smooth X.hom] (x 
 /-! ## Rings of sections over affine opens -/
 
 /-- A noetherian normal ring: a noetherian ring whose localizations at all primes are
-integrally closed domains. -/
+integrally closed domains (a normal ring in the sense of EGA IV₂ (5.13.5), p. 133, quoted at
+`EGAIV17_5_7`). -/
 def IsNormalNoeth (R : Type) [CommRing R] : Prop :=
   IsNoetherianRing R ∧ ∀ (p : Ideal R) (_ : p.IsPrime),
     IsDomain (Localization.AtPrime p) ∧ IsIntegrallyClosed (Localization.AtPrime p)
