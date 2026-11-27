@@ -82,7 +82,7 @@ The headline Lean theorem is
 `ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`
 (`ZInQKernel/MainGreenTao.lean`), with the two hypotheses `hH : SixContactMin` and `hPC : PoleCompleteness`.
 `ZInQ.OneProof.frozenTarget` (`ZInQKernel/OneProof/Main.lean`) applies it to H and to pole completeness. It takes the
-open statements of H as the fields of `HDec.HSyn.OpenResearchLeaves79` and `HDec.HSyn.OpenAddedLeaves30` (the third
+open statements of H as the fields of `HDec.HSyn.OpenResearchLeaves80` and `HDec.HSyn.OpenAddedLeaves30` (the third
 bundle, `HDec.HSyn.OpenTextbookLeaves18`, has no open field left), and the three inputs of pole completeness as the
 hypotheses `hRC` (Theorem 5.3), `hCT` (the Cassels–Tate pairing on the curves of Theorem 5.3, from which Lean proves
 Lemma 5.4), and `hRank` (Silverman's forward rank-one implication), and nothing else.

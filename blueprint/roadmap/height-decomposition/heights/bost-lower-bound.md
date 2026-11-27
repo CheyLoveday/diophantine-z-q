@@ -22,19 +22,20 @@ $\|\eta\|_\tau^2=2^{-g}\int_{A_\tau(\mathbb C)}|\eta\wedge\overline\eta|$, integ
 complex manifold $A_\tau(\mathbb C)$.
 
 It is not printed in this form but follows from published theorems; reaching it from the print takes
-further theorems, which are not proved here. Gaudron and Rémond's Corollaire 8.4 states
-$h(A)\ge-\frac g2\log(2\pi)$ for their height $h=h_F+\frac g2\log\pi$ of a semi-abelian model, that
-is $h_F(A)\ge-\frac g2\log(2\pi^2)$; since $\frac12\log(2\pi^2)<\frac32$ this gives the statement, a
-weakening they make themselves on p. 352. The weakening is proved in Lean
-(`ZInQ.HeightModelM.gaudronRemondSec9LowerGR1Weak_of_GR1`), but it is an argument, so the statement
-is not the printed form and the strict count does not count it as published; the corollary itself
-over this height passed a three-lens AI reading, and the project declined to carry it instead, as it
-is stronger (ruling of 2026-11-24). They print no formula for the normalized Arakelov degree, and
-the standard one is used here. The model is not required to be commutative; that it is follows from
-separatedness and flatness by a standard argument that is not a Lean theorem. With the
-constructibility statement of EGA IV (9.7.7), the statement implies the same bound for the stable
-Faltings heights of this section, built from Néron models, and this implication is proved in Lean;
-the converse is not proved here. It is a hypothesis, not proved here.
+further theorems, which are not proved here. Here, unlike the general case, the one further step is
+proved in Lean (`ZInQ.HeightModelM.gaudronRemondSec9LowerGR1Weak_of_GR1`): Gaudron and Rémond's
+Corollaire 8.4 states $h(A)\ge-\frac g2\log(2\pi)$ for their height $h=h_F+\frac g2\log\pi$ of a
+semi-abelian model, that is $h_F(A)\ge-\frac g2\log(2\pi^2)$, and since
+$\frac12\log(2\pi^2)<\frac32$ this gives the statement, a weakening they make themselves on p. 352.
+That step is still an argument, so the statement is not the printed form and the strict count does
+not count it as published; the corollary itself over this height passed a three-lens AI reading, and
+the project declined to carry it instead, as it is stronger (ruling of 2026-11-24). They print no
+formula for the normalized Arakelov degree, and the standard one is used here. The model is not
+required to be commutative; that it is follows from separatedness and flatness by a standard
+argument that is not a Lean theorem. With the constructibility statement of EGA IV (9.7.7), the
+statement implies the same bound for the stable Faltings heights of this section, built from Néron
+models, and this implication is proved in Lean; the converse is not proved here. It is a hypothesis,
+not proved here.
 
 ## Depends on
 
