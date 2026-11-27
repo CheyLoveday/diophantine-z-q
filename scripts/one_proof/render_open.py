@@ -81,8 +81,10 @@ COPIES = {'library-print', 'author-copy', 'scan'}
 EVIDENCE = {'HUMAN-READ', 'AI-READ'}
 # AI-READ rows recorded before the real-text rule of 2026-11-26 (field, first word of commit): they get a note
 # instead of a failure. Every other AI-READ row names the file it read (sha256 in edition) and quotes it.
+# ('hRank', 'a6d49800b') read no copy: it carries the 014ea897b row's quote over the proved Lean equivalence
+# millerRankOneOnMinimalQ_iff, so it is legacy with that row.
 LEGACY_AI_READS = {('pazukiCor13Upper', 'e1b31749'), ('hRC', '181efe5b'), ('hCT', '181efe5b'),
-                   ('hRank', '119a412d'), ('hRank', 'fa21b107'), ('hRank', '014ea897b'),
+                   ('hRank', '119a412d'), ('hRank', 'fa21b107'), ('hRank', '014ea897b'), ('hRank', 'a6d49800b'),
                    ('dsThm966Printed', '29bfbc3f'), ('silverbergZarhinThm34', 'a728cb72'),
                    ('gaudronRemondSec9LowerAnSS', '55cc29bd4')}
 SHA256_COPY = re.compile(r'sha256 [0-9a-f]{6,}')

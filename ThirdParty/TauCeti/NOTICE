@@ -123,6 +123,15 @@ Repository: https://github.com/TauCetiProject/TauCeti
   AlgebraicGeometry/EllipticCurve/MordellWeil/XSubT.lean (see below). The commit-5a01f5fe module
   Algebra.Group.MapMulMulEqOne of that closure is not vendored: the Backport/ copy of the
   commit-4d91513e version (task t40-tate) is used instead.
+- Commit 5a01f5fe (as above; Apache-2.0, The Tau Ceti contributors): the 103 further modules
+  vendored unmodified by the Z-in-Q task tc-cd-port (the union of the closures of
+  NumberTheory.ClassFieldTheory.Local.CohomologicalDimension.AbsoluteGaloisGroup, the
+  cohomological dimension cd_l(G_K) = 2 of the absolute Galois group of a p-adic field, and
+  NumberTheory.ClassFieldTheory.Local.Duality.FiniteModule, local duality for finite modules;
+  521 modules, 418 vendored earlier; list in scratch/tc-cd-port/modules.txt). No file is
+  locally changed. The commit-5a01f5fe module LinearAlgebra.Exact of that closure is not
+  vendored: the Backport/ copy of the commit-4d91513e version (task t40-tate) is imported
+  instead.
 
 Location in this repository
 ---------------------------
