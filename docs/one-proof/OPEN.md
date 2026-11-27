@@ -523,3 +523,5 @@ ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne
 | gaudronRemondThm14AnSS | reduction | project | yes | https://github.com/Deicyde/diophantine-z-q/pull/209 |
 | afShimura supplied by AfTateLam.afShimura_proof; shimuraThm1Af no longer needed | proof | project | yes | https://github.com/Deicyde/diophantine-z-q/commit/484c399c1b9158cbe6c38c21515622d81ab43d78 |
 
+
+<!-- render stamp: claims-free 6250209be3b76cd6, output edabe39a2b9fcd26 -->
