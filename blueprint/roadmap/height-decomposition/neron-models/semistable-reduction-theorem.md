@@ -3,7 +3,7 @@ article_id: af_70dd910be7c9583b5f9744da
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenResearchLeaves76.silverbergZarhinThm34
+lean: HDec.HSyn.OpenResearchLeaves79.silverbergZarhinThm34
 ---
 
 # Grothendieck's semistable reduction theorem
@@ -15,12 +15,13 @@ valuation ring $V$ of $E$ with $V\cap K=\mathcal O$, the base change $A_E$ has s
 at $V$: some Néron model of $A_E$ over $V$ has a special fibre over the residue field whose identity
 component is an extension of an abelian variety by a torus, not necessarily split.
 
-It is a published statement: the printed theorem, or a direct instance of it that needs no argument.
-It is Theorem 3.4 of Silverberg and Zarhin, Grothendieck's semistable reduction theorem, which they
-prove by citing SGA 7 IX, Théorème 3.6. As stated here it also asserts that $A_E$ has a Néron model
-at each such $V$, which their notion of semistable reduction presupposes. That the valuation rings
-of $E$ over $\mathcal O$ are the localizations of the integral closure of $\mathcal O$ in $E$ at its
-maximal ideals is standard and not printed. It is a hypothesis, not proved here.
+It is not printed in this form but follows from published theorems; reaching it from the print takes
+further theorems, which are not proved here. It is Theorem 3.4 of Silverberg and Zarhin,
+Grothendieck's semistable reduction theorem, which they prove by citing SGA 7 IX, Théorème 3.6. As
+stated here it also asserts that $A_E$ has a Néron model at each such $V$, which their notion of
+semistable reduction presupposes. That the valuation rings of $E$ over $\mathcal O$ are the
+localizations of the integral closure of $\mathcal O$ in $E$ at its maximal ideals is standard and
+not printed. It is a hypothesis, not proved here.
 
 ## Depends on
 

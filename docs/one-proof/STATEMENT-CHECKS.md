@@ -212,6 +212,15 @@ readings does not change), the ruling goes in the reviews.tsv row, and a pending
 the author copy that was read stays pending (next section). First applied to `colmezThm01` and `panThm104F`
 ([docs/research/pb-adversarial-readings.md](../research/pb-adversarial-readings.md)).
 
+**Real text (ruling 2026-11-26).** Each reader works from a named copy of the source: the reviews.tsv row records
+the file's sha256 in edition and quotes it verbatim, and every quote is checked against that file's text, not
+recall. `render_open.py` fails an AI-READ row without both; rows recorded before the rule get a note. For AI-READ
+rows that meet this condition, the adversarial reading above supersedes the older paragraphs of this file that say
+an AI-READ reading clears only the `unread` flag, never counts as a human reading, and has none of the effects
+under "What happens to a report": it has the effects of the human reading it stands in for. The evidence column
+still says AI-READ, and OPEN.md's count of human readings still counts only HUMAN-READ rows. Recorded in
+[DECISIONS.md](../DECISIONS.md).
+
 ## Preprints and author copies
 
 Published means refereed (ruling 2026-11-20):

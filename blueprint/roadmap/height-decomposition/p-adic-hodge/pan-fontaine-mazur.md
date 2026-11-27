@@ -3,7 +3,7 @@ article_id: af_31d43031b0df878483ebd899
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenResearchLeaves76.panPrintedF
+lean: HDec.HSyn.OpenResearchLeaves79.panThm104F
 ---
 
 # Pan's Fontaine–Mazur theorem
@@ -33,20 +33,20 @@ $\dim_{B_{\rm st}^{G_K}}(B_{\rm st}\otimes_{\mathbb Q_p}V)^{G_K}=\dim_{\mathbb Q
 $B_{\rm st}=B_{\rm cris}[\log[\tilde p]]$ is Fontaine's ring inside $B_{\rm dR}$, with
 $B_{\rm cris}=A_{\rm cris}[1/t]$ and $\log_p(p)=0$.
 
-It is not printed in this form but follows from published theorems; reaching it from the print takes
-further theorems, which are not proved here. It is Theorem 1.0.4 of Pan, whose hypotheses are those
-of his Conjecture 1.0.1, taken for $p\ge5$; the print also covers $p=3$ under a further condition. A
-review checked every clause against the arXiv version that the manuscript cites, with Pan's
-conventions: geometric Frobenius, Hodge–Tate weight $-1$ for the cyclotomic character, and a fixed
-$\iota_p$. Potential semistability is Brinon and Conrad's notion, semistability over a finite
-extension with admissibility in the form of the equality of dimensions; that it does not depend on
-the model of $\rho$ is proved here, and so is the same for the Hodge–Tate condition. The review
-rates the statement a consequence because Brinon and Conrad define $B_{\rm st}$ abstractly: the
-statement uses its image in $B_{\rm dR}$, which is isomorphic to it by the injectivity in their
-Theorem 9.2.10, not proved here, and it uses their description of the image of $A_{\rm cris}$ in
-$B_{\rm dR}^+$, which they print without proof. The conclusion asks only for the traces at almost
-every prime, which is weaker than the printed modularity. Pan obtains Theorem 1.0.4 by combining his
-results with work of Skinner–Wiles, Kisin and Hu–Tan. It is a hypothesis, not proved here.
+It is a published statement: the printed theorem, or a direct instance of it that needs no argument.
+Its reading against the print or its review is not complete, and until both are the project's strict
+count does not count it as published. It is Theorem 1.0.4 of Pan, whose hypotheses are those of his
+Conjecture 1.0.1, taken for $p\ge5$; the print covers every odd $p$, with a further residual
+condition at $p=3$. A three-lens AI reading checked every clause against the arXiv version that the
+manuscript cites, with Pan's conventions: geometric Frobenius, Hodge–Tate weight $-1$ for the
+cyclotomic character, and a fixed $\iota_p$; the journal text has not been read. Potential
+semistability is Fontaine's notion: the representation becomes $B_{\rm st}$-admissible over a finite
+extension, admissibility meaning the equality of dimensions, with $B_{\rm st}$ taken as its image in
+$B_{\rm dR}$, as Fontaine describes it; that it does not depend on the model of $\rho$ is proved
+here, and so is the same for the Hodge–Tate condition. The conclusion asks only for the traces at
+almost every prime, which is weaker than the printed modularity. Pan obtains Theorem 1.0.4 by
+combining his results with work of Skinner–Wiles, Kisin and Hu–Tan. It is a hypothesis, not proved
+here.
 
 ## Depends on
 
