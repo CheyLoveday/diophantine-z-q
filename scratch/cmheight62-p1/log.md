@@ -15,3 +15,13 @@ Base: 96f3a26b70770167ba4e9005a601a737dc618133 (confirmed `git rev-parse HEAD`).
 - `sum_log_norm_eq` (step 5): Σ log|σD| = log|N_{L/ℚ}D|.
 - `finrank_mul_modelHeight_eq_summand62` (step 6 abstract): from per-σ hypothesis
   |σD|·‖η‖_σ^12 = |discAn τ_σ|·(Im τ_σ)^6, d·h = Σ summand62 + (1/12)(log|N D| − 12 log N Jη).
+
+## Step 0 — Model.lean compiles. VERIFIED
+- `exists_metrizedModel (hdim : E.dim = 1) (𝒢 : GroupModel E L) : ∃ M : MetrizedModel E L 1, M.model = 𝒢`
+  from `ZInQ.HeightGlue.metrizationOfUniformization` + `ZInQ.Metrization2.analyticUniformizationOfDim_of_uniformizationExists`
+  + `HDec.CMBranch.CMjBridges.uniformization_exists` (T35, proved in tree).
+- T35 audit (#print axioms, VERIFIED):
+  'HDec.CMBranch.CMjBridges.uniformization_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+  'ZInQ.Metrization2.analyticUniformizationOfDim_of_uniformizationExists' depends on axioms: [propext, Classical.choice, Quot.sound]
+- `abVarFunctionFieldGenusOne` is proved (ZInQKernel/Contrib/OneProof/JDescent4Genus.lean:14), so the short model of
+  JDescent5Sections is unconditional.
