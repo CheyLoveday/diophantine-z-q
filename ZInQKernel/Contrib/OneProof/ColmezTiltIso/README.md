@@ -16,8 +16,10 @@ as named Lean theorems.
 | `Theta.lean` | `Ring` | Witt expansion, `wittEquiv`, the printed `θ` is `fontaineTheta` |
 | `Cp.lean` | `Theta`, `G9.KerTheta` | `O = 𝓞_ℂ_[p]`: limits in `ℂ_p`, `thetaPlusCp`, Galois action |
 | `BdR.lean` | `Cp` | Colmez's `B_dR^+`, `B_dR` as printed, isomorphic to the tree's |
+| `Action.lean` | `BdR` | the Galois action on Colmez's `B_dR^+` and `B_dR`, intertwined with the tree's |
 | `TpShape.lean` | `G9.I4Layer` | the period pairing on `T_p` versus on `V_p = ℚ_p ⊗ T_p` |
 | `RowTp.lean` | `TpShape`, `ColmezTorsionIso.Row` | the Colmez row stated on `T_p` |
+| `Check.lean` | `Action`, `RowTp` | `#print axioms` for the main declarations |
 
 `Ring.lean` and `Theta.lean` work for any commutative ring `O` that is `p`-adically complete with
 `p` not a unit (Mathlib's standing hypotheses for `PreTilt.untilt` and `fontaineTheta`).
@@ -55,9 +57,19 @@ Galois (`Cp.lean`):
 * `galAct p σ : ColmezR 𝓞_ℂ_[p] p →+* ColmezR 𝓞_ℂ_[p] p` for `σ ∈ GQp p`, componentwise:
   `galAct_seq : ((galAct p σ x).seq n : ℂ_[p]) = cpAct p σ (x.seq n)`.
 * `colmezEquiv_galAct`: `colmezEquiv (galAct p σ x) = DR.preTiltMap p (oAct p σ) (colmezEquiv x)`.
-* `wittEquiv_map_galAct`, `bdrPlusMap_ofLoc_wittEquiv`, `bdrAct_wittEquiv`: the same on `W`, on
-  `B_dR^+` (the tree's `DR.bdrPlusMap p (oAct p σ)`) and on `B_dR` (the tree's `bdrAct p σ`), on
-  the image of `W(R)`.
+* `wittEquiv_map_galAct`, `bdrPlusMap_ofLoc_wittEquiv`, `bdrAct_wittEquiv`: the same on `W`, and on
+  the image of `W(R)` in `B_dR^+` and `B_dR`.
+* `Action.lean` defines the action on all of Colmez's rings from the componentwise one:
+  `colmezLocAct p σ` on `W(R)[1/p]` (the localization of `WittVector.map (galAct p σ)`),
+  `colmezBdRPlusAct p σ` on `ColmezBdRPlus 𝓞_ℂ_[p] p` (the induced map of adic completions,
+  `DR.adicMap`), and `colmezBdRAct p σ` on its fraction field (universal property). Then:
+  * `colmezBdRPlusAct_of`: on the image of `w ∈ W(R)` it is `WittVector.map (galAct p σ)`;
+    `colmezBdRPlusAct_inv_apply`: `σ⁻¹` undoes `σ`.
+  * **`colmezBdRPlusEquiv_act`**: `colmezBdRPlusEquiv (colmezBdRPlusAct p σ x) =
+    DR.bdrPlusMap p (oAct p σ) (colmezBdRPlusEquiv x)` for every `x`.
+  * **`colmezBdREquiv_act`**: `colmezBdREquiv p (colmezBdRAct p σ y) =
+    bdrAct p σ (colmezBdREquiv p y)` for every `y`.
+  * `bdrKer_BdR_eq : BdrKer.BdR 𝓞_ℂ_[p] p = BdR p` (by `rfl`) and `ofLoc_eq_ofPlus`.
 
 `B_dR^+` and `B_dR` (`BdR.lean`):
 
@@ -81,15 +93,23 @@ Row on `T_p` (`TpShape.lean`, `RowTp.lean`):
   `B_dR` is a `ℤ_p`-algebra through `ℤ_p ⊂ ℚ_p` (`Tp.algZp`, a scoped instance).
 * `Colmez1992DeRhamAbVarTp`: the row with `P ω : T_p(X) →ₗ[ℤ_p] B_dR`, `T_p(X)` built from
   `X(ℂ_p)` (`TCp`), as in the print; `colmez1992DeRhamAbVarTp_iff_cp` and
-  `colmez1992DeRhamAbVar_iff_tp` (equivalent to the row as stated).
+  `colmez1992DeRhamAbVar_iff_tp` (equivalent to the row as stated). It inherits the weakenings of
+  `Colmez1992DeRhamAbVarCp`: `H¹_dR(X)` is an existential type, bilinearity in `ω`, the `Fil¹`
+  clause and (iii) are dropped.
 
-All declarations depend only on `propext`, `Classical.choice` and `Quot.sound`.
+`Check.lean` prints `#print axioms` for the ring isomorphism, the printed addition, `colmezTheta`,
+`eq_colmezTheta_of_printed`, `colmezBdRPlusEquiv`, `colmezBdREquiv`, the actions and the two
+intertwining theorems, and the `T_p` equivalences; in the hosted discharge check each lists exactly
+`propext`, `Classical.choice`, `Quot.sound`.
 
 ## Consequence for the `B_dR` rows
 
 The tree's `B_dR^+ = BDeRhamPlus 𝓞_ℂ_[p] p` and `B_dR = BDeRham 𝓞_ℂ_[p] p` are Colmez's (and so
 Fontaine's) up to the named isomorphisms `colmezEquiv`, `wittEquiv`, `colmezBdRPlusEquiv` and
-`colmezBdREquiv`, compatibly with `θ` and with the action of `G_{ℚ_p}` on the image of `W(R)`. The
+`colmezBdREquiv`, compatibly with `θ` and with the action of `G_{ℚ_p}`: the action on Colmez's `B_dR^+` and `B_dR`,
+built from the componentwise action on `R`, corresponds under `colmezBdRPlusEquiv` and
+`colmezBdREquiv` to the tree's `DR.bdrPlusMap p (oAct p σ)` and `bdrAct p σ` on the whole rings.
+The
 existing tree theorems that complete the identification are used directly:
 `isDiscreteValuationRing_BDeRhamPlus`, `ker_thetaPlusCp`, `thetaPlusCp_surjective`,
 `maximalIdeal_BDeRhamPlus` and `isFractionRing_BDeRham` (all in `G9/KerTheta.lean`), with the
@@ -102,6 +122,5 @@ functoriality lemmas `bdrPlusMap_ofLoc`, `locMap_algebraMap` and the definition 
   carried over from `PreTilt`; addition, multiplication, powers, `0` and `1` are the printed ones.
 * The valuation `v_R(x) = v̂(x^{(0)})` and the topology on `B⁺_dR` described on p. 632 are not
   formalized.
-* Galois compatibility on `B_dR^+` and `B_dR` is stated on the image of `W(R)`. A transported
-  action on all of `ColmezBdRPlus` (through `colmezBdRPlusEquiv`) and a proof that it is the
-  continuous extension of the componentwise action are not included.
+* That `σ ↦ colmezBdRPlusAct p σ` is multiplicative in `σ` is not stated here (only that `σ⁻¹`
+  undoes `σ`); the intertwining theorems do not depend on it.
