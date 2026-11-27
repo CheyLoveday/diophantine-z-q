@@ -3629,3 +3629,10 @@ import ZInQKernel.Contrib.OneProof.BstRegular.Bst
 import ZInQKernel.Contrib.OneProof.ColmezTiltIso.Algebra
 import ZInQKernel.Contrib.OneProof.ColmezTiltIso.Check2
 import ZInQKernel.Contrib.OneProof.ColmezTiltIso.RowPrinted
+import ZInQKernel.Contrib.OneProof.HeightModelM2.Arith
+import ZInQKernel.Contrib.OneProof.HeightModelM2.Check
+import ZInQKernel.Contrib.OneProof.HeightModelM2.Commutative
+import ZInQKernel.Contrib.OneProof.HeightModelM2.GR1Rows
+import ZInQKernel.Contrib.OneProof.HeightModelM2.GlobalDet
+import ZInQKernel.Contrib.OneProof.HeightModelM2.GlobalSections
+import ZInQKernel.Contrib.OneProof.HeightModelM2.Separated
