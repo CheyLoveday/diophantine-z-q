@@ -79,9 +79,11 @@ isomorphism), `colmezShape_iff_cp`.
 * A ruling by Jack or the maintainer on the model step, proposed and not given
   (`docs/one-proof/kinds.tsv` lists it as open, and `docs/one-proof/STATEMENT-CHECKS.md` leaves
   count verdicts to them). It covers two facts, neither a Lean theorem: Colmez's
-  `𝒳(O_{C_p}) = X(C_p)` for a proper model over `O_K` (p. 638; valuative criterion; the tree has
-  no integral model), and that a proper model exists for every `A` (the print takes one as given,
-  pp. 629 and 638).
+  `𝒳(O_{C_p}) = X(C_p)` for a proper model over `O_K` (p. 638), whose input, the valuative
+  criterion of properness, is in Mathlib (`AlgebraicGeometry.IsProper.eq_valuativeCriterion`) but
+  not yet applied to `𝓞_ℂ_[p] → ℂ_[p]`; and that a proper model exists for every `A`, in neither the
+  tree nor Mathlib (the print takes one as given, pp. 629 and 638). `ColmezTiltIso/PRINTED.md`
+  (#235) gives a schematic Lean statement of the step.
 * The readers' non-blocking points (2) (`ℤ_p`-linearity in `u`) and (3) (dropped clauses) are
   unchanged.
 * The ledgers (`kinds.tsv`, `reviews.tsv`, the open list) are not edited here (add-only).
