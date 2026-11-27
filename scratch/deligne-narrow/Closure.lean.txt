@@ -1,0 +1,117 @@
+
+open Lean Elab Command Meta in
+run_cmd do
+  let env ← getEnv
+  -- An imported declaration can reach a target only if its module transitively
+  -- imports the target's module. Restrict the search to those modules; in
+  -- particular no unrelated large proof needs to be unfolded.
+  let mut eligible : NameHashSet := {}
+  let seeds := [`ZInQKernel.Contrib.OneProof.Y3HodgePrint, `ZInQKernel.Contrib.OneProof.DeligneNarrow]
+  let mut size := 1
+  while size != eligible.size do
+    size := eligible.size
+    for i in [:env.header.modules.size] do
+      let m := env.header.modules[i]!.module
+      if seeds.contains m || env.header.moduleData[i]!.imports.any (fun p => eligible.contains p.module) then
+        eligible := eligible.insert m
+  unless seeds.all (eligible.contains ·) do
+    throwError "Missing seed module"
+  let inScope (d : Name) : Bool :=
+    match env.getModuleIdxFor? d with
+    | some i => eligible.contains env.header.modules[i.toNat]!.module
+    | none => true -- current scratch file
+  let roots := #[`ZInQ.OneProof.frozenTarget, `ZInQ.OneProof.frozenTargetDeligneNarrow,
+    `HDec.HSyn.sixContactMin_of_open82, `HDec.HSyn.sixContactMin_of_open83]
+  let mut edges : Std.HashMap Name (Array Name) := {}
+  let mut closures : Array NameHashSet := #[]
+  for root in roots do
+    let mut seen : NameHashSet := ({} : NameHashSet).insert root
+    let mut todo := #[root]
+    while !todo.isEmpty do
+      let c := todo.back!
+      todo := todo.pop
+      let mut deps := edges[c]?.getD #[]
+      if !edges.contains c then
+        if let some ci := env.find? c then
+          deps := ci.type.getUsedConstants
+          if let some v := ci.value? (allowOpaque := true) then
+            deps := deps ++ v.getUsedConstants
+        edges := edges.insert c deps
+      for d in deps do
+        if inScope d && !seen.contains d then
+          seen := seen.insert d
+          todo := todo.push d
+    closures := closures.push seen
+  let old := closures[0]!
+  let new := closures[1]!
+  let oldH := closures[2]!
+  let newH := closures[3]!
+  logInfo m!"Relevant closure sizes (old/new): headline {old.size}/{new.size}; H {oldH.size}/{newH.size}."
+  for c in #[`Y3Hodge.DeligneCanonicalModelY3EveryPrint, `Y3Hodge.DeligneCanonicalModelY3Narrow,
+      `Y3Hodge.IsHodgeH1Print, `Y3Hodge.lemmaP_H1] do
+    unless inScope c do throwError "Target outside eligible modules: {c}"
+    logInfo m!"{c}: headline {old.contains c}/{new.contains c}; H {oldH.contains c}/{newH.contains c}"
+  let former := `Y3Hodge.DeligneCanonicalModelY3EveryPrint
+  let narrowed := `Y3Hodge.DeligneCanonicalModelY3Narrow
+  for (was, now) in #[(old, new), (oldH, newH)] do
+    unless was.contains former && !now.contains former && now.contains narrowed do
+      throwError "Deligne dependency check failed"
+  let oldBundle := `HDec.HSyn.OpenResearchLeaves63
+  let newBundle := `HDec.HSyn.OpenResearchLeaves64
+  let oldField := `deligneCanonicalModelY3EveryPrint
+  let newField := `deligneCanonicalModelY3Narrow
+  let fields := getStructureFields env oldBundle
+  let expected := fields.map (fun f => if f == oldField then newField else f)
+  unless fields.contains oldField && expected == getStructureFields env newBundle do
+    throwError "More than the Deligne field changed"
+  for f in fields do
+    let name := if f == oldField then newField else f
+    let a := (env.find? (oldBundle ++ f)).get!.type.bindingBody!
+    let b := (env.find? (newBundle ++ name)).get!.type.bindingBody!
+    if f == oldField then
+      unless a.isConstOf former && b.isConstOf narrowed do
+        throwError "Unexpected Deligne field types"
+    else unless a == b do
+      throwError "Type changed: {f}"
+  let headlineType (c : Name) := (env.find? c).get!.type
+  liftTermElabM do
+    forallTelescope (headlineType `ZInQ.OneProof.frozenTarget) fun xs r =>
+      forallTelescope (headlineType `ZInQ.OneProof.frozenTargetDeligneNarrow) fun ys s => do
+        unless xs.size == 7 && ys.size == 7 && r == s do
+          throwError "Headline arity or conclusion changed"
+        for i in [1:xs.size] do
+          unless (← inferType xs[i]!) == (← inferType ys[i]!) do
+            throwError "Headline argument {i} changed"
+  logInfo m!"Checked: all {fields.size} research fields, only the Deligne field replaced; all other headline argument types and the conclusion match."
+
+example (old : HDec.HSyn.OpenResearchLeaves63) : HDec.HSyn.OpenResearchLeaves64 where
+  r9a := old.r9a
+  r9b := old.r9b
+  pazukiCor13Upper := old.pazukiCor13Upper
+  neronSchemeExtensionDedekind := old.neronSchemeExtensionDedekind
+  neronOggShafarevichSep := old.neronOggShafarevichSep
+  dsThm965Printed := old.dsThm965Printed
+  dsThm966Printed := old.dsThm966Printed
+  panPrintedF := old.panPrintedF
+  afCharpolyDS965 := old.afCharpolyDS965
+  deRhamVpAbVarDirect := old.deRhamVpAbVarDirect
+  modularHTCoeff := old.modularHTCoeff
+  faltingsSemistableHeightBC := old.faltingsSemistableHeightBC
+  elliotWildInertiaTrivial := old.elliotWildInertiaTrivial
+  bergerSurveyF := old.bergerSurveyF
+  deligneCanonicalModelY3Narrow := Y3Hodge.narrow_of_print old.deligneCanonicalModelY3EveryPrint
+  gaudronRemondSec9LowerAnSS := old.gaudronRemondSec9LowerAnSS
+  gaudronRemondThm14AnSS := old.gaudronRemondThm14AnSS
+  javanpeykarThm111An := old.javanpeykarThm111An
+  silverbergZarhinThm35 := old.silverbergZarhinThm35
+  y3FullThreeRepZ30 := old.y3FullThreeRepZ30
+  carayolThmAFrob := old.carayolThmAFrob
+  bShStandardModel := old.bShStandardModel
+  shimuraThm1Af := old.shimuraThm1Af
+  cmFibreSplit := old.cmFibreSplit
+  fowlerProp27 := old.fowlerProp27
+  cmjDegree := old.cmjDegree
+  cmPotentialGood := old.cmPotentialGood
+  cmHeight62 := old.cmHeight62
+  y3ToP1j := old.y3ToP1j
+  heckeSqrtBranchAny := old.heckeSqrtBranchAny
