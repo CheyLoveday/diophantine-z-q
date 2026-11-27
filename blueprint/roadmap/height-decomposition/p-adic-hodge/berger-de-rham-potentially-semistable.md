@@ -25,18 +25,18 @@ for $\tilde p=(p,p^{1/p},\dots)$, Fontaine's $\log[\tilde p]$ with $\log_p(p)=0$
 made for every such $\omega$ and $\varepsilon$.
 
 It is not printed in this form but follows from published theorems; reaching it from the print takes
-further theorems, which are not proved here. It is Berger's theorem, Théorème 0.7 of his Inventiones
-paper (Théorème 0.6 in the arXiv version), at the base field $\mathbb Q_p$ for representations of
-the form $E^n$, with potential semistability in Fontaine's sense: the representation becomes
-$B_{\rm st}$-admissible over a finite extension, admissibility meaning the equality of dimensions,
-with $B_{\rm st}$ taken as its image in $B_{\rm dR}$, as Fontaine describes it. Berger works over
-his own variant of $B_{\rm st}$ and states that it has the same $D_{\rm st}$ as Fontaine's; reaching
-Fontaine's ring from his is a step of the reading, not a theorem proved here, so the statement
-counts as a consequence of the print. Its de Rham condition is the one above because
-$B_{\rm dR}^{G_{\mathbb Q_p}}=\mathbb Q_p$, which is proved here. Colmez prints the conclusion in
-the stronger form of a basis (Théorème 0.1 of his 2008 paper); that form implies this statement,
-which is proved here, but the converse needs the $G_K$-regularity of $B_{\rm st}$, which is not. It
-is a hypothesis, not proved here.
+further theorems, which are not proved here. It is Berger's theorem, from his Inventiones paper
+(Théorème 0.6 in the arXiv version; the journal's theorem number is unverified), at the base field
+$\mathbb Q_p$ for representations of the form $E^n$, with potential semistability in Fontaine's
+sense: the representation becomes $B_{\rm st}$-admissible over a finite extension, admissibility
+meaning the equality of dimensions, with $B_{\rm st}$ taken as its image in $B_{\rm dR}$, as
+Fontaine describes it. Berger works over his own variant of $B_{\rm st}$ and states that it has the
+same $D_{\rm st}$ as Fontaine's; reaching Fontaine's ring from his is a step of the reading, not a
+theorem proved here, so the statement counts as a consequence of the print. Its de Rham condition is
+the one above because $B_{\rm dR}^{G_{\mathbb Q_p}}=\mathbb Q_p$, which is proved here. Colmez
+prints the conclusion in the stronger form of a basis (Théorème 0.1 of his 2008 paper); that form
+implies this statement, which is proved here, but the converse needs the $G_K$-regularity of
+$B_{\rm st}$, which is not. It is a hypothesis, not proved here.
 
 ## Depends on
 

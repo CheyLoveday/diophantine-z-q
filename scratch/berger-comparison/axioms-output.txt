@@ -1,0 +1,47 @@
+'ZInQ.Manuscript.BergerComparison.isAdmissibleT_of_equivariant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.isAdmissibleT_fontaine_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.isAdmissibleT_paper_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.bergerPaperStComparison_of_frobenius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.isPstFBasis_of_paper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_pLog' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pLog_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pLog_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_residue_factors' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logXi_mem_amax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.residueLog_mem_amax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.residueLog_mul_kernelUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logSmallTeich_mem_amax' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coordinateFromUnit_adjoin_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.frobenius_xi_add_neg_pow_dvd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.frobenius_xi_div_p_mem_acris' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.eval₂_wittFrobenius_mem_acris' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logPlus_congr' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pthDivision_mem_acris._proof_1_1' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.fontaineRing_le' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.psEval_polynomial' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.const_mem_acris' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.inclT_periodAct' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.intoPlus_mem_amax' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pthDivision_mem_acris' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.xiMul_mem' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.dvd_pLogTerm' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wLocArg.eq_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+Checked the axiom allowlist for 48 theorems.

@@ -1,0 +1,452 @@
+'ZInQ.Manuscript.BergerComparison.mem_crystallineIntegral' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.polynomial_mem_restricted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.frobBeforeDescent_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxToImage_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.integralFrobenius_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logSmallTeich_eq_logTeich' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.cyclotomicCoordinate_eq_of_normalized' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_cyclotomic_correction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_small_power_of_correction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_cyclotomic_small_unit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.cyclotomicCoordinate_adjoin_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pDvd_iff_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_restricted_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.restricted_isAdicComplete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.dividedPowerRestricted_isAdicComplete' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.integralFrobenius_zp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.integralFrobenius_logTeich' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maximalEval_polynomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.integralFrobenius_galois' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.localizedFrobenius_integral' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.localizedFrobenius_logTeich' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coefficientFrobenius_galois' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_maximal_denominator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.clear_maximal_log_relation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_scaledInverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.negativeLogSeries_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.scaledNegativeLog_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.scaledNegativeLog_mod_p' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.residueLog_independent_of_lift' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logSmallTeich_eq_residueLog' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logSmallTeich_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.xiPow_dvd_of_mod_every_pPow' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wittLogTerm_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pLogTerm_eq_mul_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pLog_agrees_logPlus_on_overlap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.eq_zero_of_integral_log_relation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maximalEval_relation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pow_p_dvd_of_dvd_xi_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maximalEval_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.amax_eq_zero_of_pDvd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_polynomial_mod_pPow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.restricted_to_amax_ext' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.restrictedEval_polynomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logPTilde_notInFrac' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logPTilde_transcendental' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.fontainePolynomialEmbedding' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.frobeniusTransport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.bergerPaperStComparison' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.bergerSurveyF_of_cyclotomic_basis' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.deRhamBasis_of_isDeRhamU' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.evaluateMaximalSt_val' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.evaluateMaximalSt_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.evaluateMaximalSt_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.semistableFrobenius_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.semistableFrobenius_log' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.semistableFrobenius_galois' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.semistableFrobenius_intertwines' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pLog_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.loc_injective' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coeff_reduction_zero' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.inclusion_val' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.cyclotomic_power_near_neg_p._proof_1_1' (private) depends on axioms: [propext,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.independent_val' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reduceCoeffs._proof_3' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial._proof_8' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.norm_lt_one_of_close' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.includeCrystalline._proof_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisIntoMax._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.evalDP._proof_3' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.invariant_independent' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logP._proof_3' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxLift.eq_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial._proof_5' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.p_nat_q' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisIntoMax._proof_3' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.frobBeforeDescent_relation' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pLogTerm_xi' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.dpSeries_injective' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxIntoSt_galois' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.norm_pow_sub_lt._proof_1_2' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.quotientSeq.eq_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maximalEval_C' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.exists_phiXiDiv' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.invariant_independent._simp_1_4' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.top_multiple._proof_1_2' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.scaledInverse_spec' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxBdR._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logRestricted_eval' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.one_add_p_isUnit' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.both_scaled' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.T._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.t_mul_inv' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisEmbed._proof_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.scaledLogPoly_high' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logRestricted._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.res_xi_ne_zero' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wPlus._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.invariant_independent._simp_1_1' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maximalEval_X' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wittAct._proof_3' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxStEquiv._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.p_mul_inv' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.evalMod_compat' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.phi_teich_sub_one' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxStEquiv._proof_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.frobStRing_apply' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.invariant_independent._simp_1_5' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.scaledInverse.congr_simp' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wPlus._proof_2' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.scaledLogPoly_map' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.ker_maxToImage_le' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.ev._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logP._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.scaledLogPoly_eval' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxLift_inj' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.next._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.finite_term' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logPolynomial.eq_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.evalDP._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coeff_split' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logPolynomial_approx._simp_1_4' (private) depends on axioms: [propext]
+'ZInQ.Manuscript.BergerComparison.near_p_root' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reduceCoeffs._proof_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.quotientSeq_restricted._proof_1_2' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.p_dvd_of_norm' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.norm_eq_of_close' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.galoisMaximal_polynomial' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logPolynomial_approx._simp_1_3' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.eval_logPolynomial' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logXi_add' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.T._proof_2' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.max_mul_inv' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logArg_mem' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.evalDP_coeffLift' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial_coeff' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.next._proof_2' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pLog_xi_mod' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.includeCrystalline._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.top_multiple._simp_1_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.frobStRing_coeff' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.next_coeff_succ' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.both_scaled._proof_1_3' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.plusAct_omega' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.dvd_relation_mul' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reduceCoeffs._proof_1' (private) depends on axioms: []
+'ZInQ.Manuscript.BergerComparison.p_mul_omega' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.dpSeries_neg' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pLogTerm_one_dvd' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pDvd_cancel_xiPow' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.p_dvd_maximal' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.cyclotomic_power_near_neg_p' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coeffLift._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisLift._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.LocalizedMax._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.invariant_independent._simp_1_3' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logRestricted.eq_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisIntoMax._proof_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial._proof_6' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.eval_frob_logPolynomial' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.p_mul_omega' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.plusAct_witt' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxLift_surj' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.scaledLogPoly_high._proof_1_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.prime_binomial' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.norm_pow_sub_lt' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxLift._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial._proof_7' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxEquiv._proof_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coeff_split._proof_1_5' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logPolynomial_approx' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.iter_coeff_succ' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.denominator._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial._proof_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxEmbed._proof_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wittFrobenius_logCoeff' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.periodAct_val_ring' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reduceCoeffs_exists' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.finiteLogs' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxInv._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.restricted_eq_zero' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.Tilt._proof_3' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisLift.eq_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.p_nat_q_nat' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.quotientSeq_restricted' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.cris_mul_inv' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coeff_split._proof_1_1' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisIntoSt_val' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxEquiv._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logA._proof_2' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.next_const' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.quotientSeq_restricted._proof_1_1' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.next_coeff_succ._simp_1_1' (private) depends on axioms: [propext]
+'ZInQ.Manuscript.BergerComparison.scaledLogPoly.eq_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.prime_binomial._proof_1_4' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.includeCrystalline._proof_3' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.Tilt._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.smod_iff_dvd' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.dvd_term' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coeffLift._proof_2' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.eval_phiXiLift' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coeff_split._proof_1_4' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.norm_pow_sub_lt._proof_1_1' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maxEmbed._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisInv._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.quotientConst._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.Tilt._proof_2' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.integralToCris_log' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.prime_binomial._simp_1_3' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.maximalEval_X_ne_zero' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.plusAct_phiOmega' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.localized_scalar' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.quotientSeq_step' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.pLog_xi_mod._proof_1_1' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.invariant_independent._simp_1_2' (private) depends on axioms: [propext]
+'ZInQ.Manuscript.BergerComparison.semistable_galois_log' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial.eq_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.basis_of_fixed_finrank' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial._proof_4' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.evalDP._proof_2' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.modP_iff' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.eval_congr_trunc' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wittAct._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.prime_binomial._proof_1_1' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisEmbed._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial._proof_3' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisIntoSt_galois_frob' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logP._proof_2' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wittAct._proof_2' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.stCrisLog._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.prime_binomial._proof_1_2' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.logA._proof_1' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wPlus._proof_3' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.semistable_galois_coeff' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.constant_dvd_of_eval_zero' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.quotientSeq_restricted._proof_1_3' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.T._proof_3' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.norm_sub_of_p_dvd' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.quotientConst_spec' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.addEquiv_pDvd' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.frobBeforeDescent._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wittAct_frob' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.dpSeries_zero' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.reducePolynomial._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coeff_split._proof_1_3' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.cyclotomic_power_near_neg_p._proof_1_2' (private) depends on axioms: [propext,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.coeff_split._proof_1_2' (private) depends on axioms: [propext, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.crisIntoSt._proof_1' (private) depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerComparison.wittFrobenius_zp' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerComparison.top_multiple' (private) depends on axioms: [propext, Classical.choice, Quot.sound]
+Checked the axiom allowlist for 422 declarations, including 324 theorems.

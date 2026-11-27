@@ -1,0 +1,5 @@
+import ZInQKernel.Contrib.OneProof.BergerReroute.BergerReroute
+
+#print axioms ZInQ.Manuscript.BergerReroute.bergerSurveyF_of_thm06Print
+#print axioms ZInQ.Manuscript.BergerReroute.fontainePolynomialEmbedding_of_logPTildeTranscendental
+#print axioms ZInQ.Manuscript.BergerReroute.isPstF_of_paperSt

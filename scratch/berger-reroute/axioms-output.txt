@@ -1,0 +1,5 @@
+'ZInQ.Manuscript.BergerReroute.bergerSurveyF_of_thm06Print' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.BergerReroute.fontainePolynomialEmbedding_of_logPTildeTranscendental' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.BergerReroute.isPstF_of_paperSt' depends on axioms: [propext, Classical.choice, Quot.sound]
