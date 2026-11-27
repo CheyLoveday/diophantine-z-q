@@ -1,0 +1,3 @@
+before: H 33, strict 5 LEAF / 28 GLUE, strictest 5 LEAF / 28 GLUE; headline 37, strict 5 LEAF / 32 GLUE, strictest 5 LEAF / 32 GLUE
+after: H 33, strict 5 LEAF / 28 GLUE, strictest 5 LEAF / 28 GLUE; headline 37, strict 5 LEAF / 32 GLUE, strictest 5 LEAF / 32 GLUE
+Replacement passes kinds_row_problems and must_be_glue.
