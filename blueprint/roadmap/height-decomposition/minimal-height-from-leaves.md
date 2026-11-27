@@ -17,11 +17,11 @@ this chapter taken together: theorems from the literature, grouped by the theory
 [Faltings 1983 and Faltings heights](heights/README.md),
 [p-adic Hodge theory](p-adic-hodge/README.md),
 [Galois representations of modular forms](modular-galois/README.md)). Of the eighteen statements
-from the literature, seven are published statements, some of them specialized or weakened; and
-eleven are consequences of published theorems, which take further theorems to reach from the print.
-The project's strict convention, which counts a published statement only once its reading against
-the print and its review are complete and find it in its printed form, counts five of the eighteen
-as published. None of the eighteen is proved here.
+from the literature, six are published statements, some of them specialized or weakened; and twelve
+are consequences of published theorems, which take further theorems to reach from the print. The
+project's strict convention, which counts a published statement only once its reading against the
+print and its review are complete and find it in its printed form, counts four of the eighteen as
+published. None of the eighteen is proved here.
 
 The proof follows the manuscript's proof of its Theorem 4.1 at the one instance the main theorem
 uses, which the project has split into named steps, each proved from these statements and the steps

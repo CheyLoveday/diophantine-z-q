@@ -20,19 +20,20 @@ $P_\omega(\sigma u)=\sigma\bigl(P_\omega(u)\bigr)$ for every $\sigma\in G_F$ and
 $x\in B_{\rm dR}\otimes_{\mathbb Q_p}V_pA$ is sent to $0$ by the $B_{\rm dR}$-linear extension
 $b\otimes u\mapsto b\,P_\omega(u)$ of every $P_\omega$, then $x=0$.
 
-It is a published statement: the printed theorem, or a direct instance of it that needs no argument.
-It is Théorème 5.2 (i)–(ii) of Colmez with $H$ the de Rham cohomology $H^1_{\rm dR}(A/F)$ and
-$P_\omega(u)=\int_u\omega$, the $p$-adic period of $\omega$ along $u$, extended
-$\mathbb Q_p$-linearly from $T_pA$ to $V_pA$. Of the printed theorem the statement keeps three
-clauses: the periods lie in $B_{\rm dR}^+$, they commute with the action of $G_F$, and the pairing
-is non-degenerate on the side of $T_pA$ once the scalars are extended to $B_{\rm dR}$. The extension
-to $V_pA$ uses the linearity in $u$, which the readings take from "bilinéaire" and from the proof on
-p. 640. The statement drops the identification of $H$ with de Rham cohomology, the linearity in
-$\omega$, the compatibility with the filtrations, part (iii) and the functoriality. Colmez works
-with a proper model of $A$ over the integers of $F$, which exists, and the periods do not depend on
-it. He builds $T_pA$ from the points of $A$ over $\mathbb C_p$; on $p$-power torsion these are the
-points over $\overline F$, since $A[p^n]$ is finite over $F$, a standard identification that the
-readings take and that no Lean theorem states. It is a hypothesis, not proved here.
+It is not printed in this form but follows from published theorems; reaching it from the print takes
+further theorems, which are not proved here. It is Théorème 5.2 (i)–(ii) of Colmez with $H$ the de
+Rham cohomology $H^1_{\rm dR}(A/F)$ and $P_\omega(u)=\int_u\omega$, the $p$-adic period of $\omega$
+along $u$, extended $\mathbb Q_p$-linearly from $T_pA$ to $V_pA$. Of the printed theorem the
+statement keeps three clauses: the periods lie in $B_{\rm dR}^+$, they commute with the action of
+$G_F$, and the pairing is non-degenerate on the side of $T_pA$ once the scalars are extended to
+$B_{\rm dR}$. The extension to $V_pA$ uses the linearity in $u$, which the readings take from
+"bilinéaire" and from the proof on p. 640. The statement drops the identification of $H$ with de
+Rham cohomology, the linearity in $\omega$, the compatibility with the filtrations, part (iii) and
+the functoriality. Colmez works with a proper model of $A$ over the integers of $F$, which exists,
+and the periods do not depend on it. He builds $T_pA$ from the points of $A$ over $\mathbb C_p$; on
+$p$-power torsion these are the points over $\overline F$, since $A[p^n]$ is finite over $F$, a
+standard identification that the readings take and that no Lean theorem states. It is a hypothesis,
+not proved here.
 
 ## Depends on
 

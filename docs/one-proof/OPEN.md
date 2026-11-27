@@ -15,12 +15,12 @@ removes it. See
 
 **18 hypotheses of the H part** (in the bundles `OpenAddedLeaves30`, `OpenResearchLeaves79`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
 
-* **Strict count: 5 published / 13 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 4 published / 14 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
   column `flag`).
-* By kind: consequence 11, published 7.
+* By kind: consequence 12, published 6.
 
 ## Kernel-wide readings
 
@@ -46,10 +46,12 @@ Readings that apply to every statement built on a shared kernel definition.
   extending the action on the positive ring by `DeRhamPrint.BdRT.awayTAct_comp` and matching the kernel's `bdrAct`
   by `DeRhamPrint.BdRT.bdREquivAwayT_intertwines`. A print defining B_dR as B_dR^+[1/t] is now matched by proved
   lemmas (TDict.bdREquivAwayT, BdRT.fontaineT_reading), so reading a statement through that definition no longer
-  makes it GLUE. The row whose statement reaches `B_dR` is `scholzeH1AbVar` (`DeRhamScholze.HTMerge.ScholzeH1AbVar`,
-  over `DeRhamScholze.ddrFam`, `D_dR = (B_dR ⊗ W)^{G_F}`, and `DeRhamScholze.filD`, `Fil^j D_dR = D_dR ∩ (t^j B_dR^+
-  ⊗ W)`); its rating is unchanged. `deRhamVpAbVarDirect` is no longer a row: it is derived from `scholzeH1AbVar` and
-  `t10TateDuality` (`DeRhamScholze.HTMerge.deRhamVpAbVarDirect_of_scholzeH1Milne`, fork PR #106). Fontaine,
+  makes it GLUE. The rows whose statements use `B_dR` are `colmez1992DeRhamAbVar` (the period pairing takes values
+  in `B_dR^+`), `bergerSurveyF` (its de Rham condition, and potential semistability over `BstFOf` inside `B_dR`) and
+  `panThm104F` (potential semistability over `BstFOf`). `deRhamVpAbVarDirect` is not a row: it is derived from
+  `vpDual` (`DeRhamScholze.HTMerge.deRhamVpAbVarDirect_of_vpDual`), which
+  `DeRhamScholze.TatePrints.vpDual_of_colmezFontaine` derives from `colmez1992DeRhamAbVar` and `fontaine1982HTAbVar`
+  (tate-prints fold). Fontaine,
   *Astérisque* 223, Exp. II is outside the manuscript's bibliography and unread. Berger 2002 §1.2 is UNVERIFIED as a
   locator for this definition.
 
@@ -112,13 +114,14 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 * [`modularHTCoeff`](#modularhtcoeff) (GLUE; pending-review): Content: Deligne, Sem. Bourbaki 355 (1969/1971); Faltings, Math. Ann. 278 (1987); Saito, Invent. Math. 129 (1997); Kato, Asterisque 295 (2004) sections 9.2-9.4, (9.2.2), pp. 187-188 (V_{F_lambda}(f) over F_lambda; read by the locator audit, row R13) and 11.3 (UNVERIFIED). Existence form printed in Taylor, Galois representations, Ann. Fac. Sci. Toulouse Math. (6) 13 (2004); Gee, Modularity lifting theorems, Essent. Number Theory 1 (2022), Fact 4.20 in section 4.19, p. 28 of arXiv:2202.05818v2 (AI-read; a survey Fact with no citation, proof only sketched in Remark 4.22, so a report; journal numbering UNVERIFIED)
 * [`bergerSurveyF`](#bergersurveyf) (GLUE; pending-reading): Berger, Représentations p-adiques et équations différentielles, Invent. Math. 148 (2002), 219-284 (bibitem berger2002; theorem number UNVERIFIED, 0.6 or 0.7); definitions: Fontaine, Astérisque 223 (1994), Exp. III 1.8.5 pp. 134-135 and 5.6.1 p. 166, Exp. II 4.2.4-4.2.5 p. 86; corroborating: Colmez, Espaces vectoriels de dimension finie et représentations de de Rham, Astérisque 319 (2008), 117-186, Théorème 0.1 p. 118 (ColmezThm01 in Contrib/OneProof/PanBergerRefereed.lean, basis form); IsPstF (dimension form, BergerBst.IsAdmissible) over BstFOf in Contrib/OneProof/PanBergerFontaine.lean
 * [`panThm104F`](#panthm104f) (GLUE; pending-reading): Pan, The Fontaine-Mazur conjecture in the residually reducible case, arXiv:1901.07166v2 (the version the manuscript cites; the version read), Thm 1.0.4 with Conj. 1.0.1, pp. 5 and 2; published J. Amer. Math. Soc. 35 (2022), 1031-1169, whose numbering is unchecked; Fontaine, Astérisque 223 (1994), Exp. II §3.1 p. 81 and §4.2 p. 86, Exp. III 1.8.5 pp. 134-135 and 5.6.1 p. 166; PanThm104F in Contrib/OneProof/PanBergerRefereed.lean (= PanDict.PanPrintedF)
-* [`colmez1992DeRhamAbVar`](#colmez1992derhamabvar) (LEAF): Colmez, Périodes p-adiques des variétés abéliennes, Math. Ann. 292 (1992), 629-644, Théorème 5.2 (i)-(ii), p. 639 (standing hypotheses pp. 629, 638-639; B_dR §2, p. 632; proof pp. 639-641); Colmez1992DeRhamAbVar in Contrib/OneProof/TatePrints/Rows.lean
+* [`colmez1992DeRhamAbVar`](#colmez1992derhamabvar) (GLUE): Colmez, Périodes p-adiques des variétés abéliennes, Math. Ann. 292 (1992), 629-644, Théorème 5.2 (i)-(ii), p. 639 (standing hypotheses pp. 629, 638-639; B_dR §2, p. 632; proof pp. 639-641); Colmez1992DeRhamAbVar in Contrib/OneProof/TatePrints/Rows.lean
 * [`fontaine1982HTAbVar`](#fontaine1982htabvar) (LEAF): Fontaine, Formes différentielles et modules de Tate des variétés abéliennes sur les corps locaux, Invent. Math. 65 (1982), 379-409, Théorème 2 (Tate, Raynaud) and its proof, p. 388 (standing hypotheses 0.1 p. 379, §1.1 p. 381, §3 p. 387; T_p(X), 3.1 p. 388); Fontaine1982HTAbVar in Contrib/OneProof/TatePrints/Rows.lean
 
 ## Index
 
 | hypothesis | bundle | kind | strict | flag class | label | tier | area | human reads | status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [`colmez1992DeRhamAbVar`](#colmez1992derhamabvar) | added | consequence | GLUE | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`afCharpolyDS965`](#afcharpolyds965) | research | consequence | GLUE | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 1 | open (last released by [@zachbaugher](https://github.com/zachbaugher): released) |
 | [`bergerSurveyF`](#bergersurveyf) | research | consequence | GLUE | pending-reading | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`carayolThmAFrob`](#carayolthmafrob) | research | consequence | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) |
@@ -132,7 +135,6 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`silverbergZarhinThm34`](#silverbergzarhinthm34) | research | consequence | GLUE | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 1 | open |
 | [`y3FullThreeRepZ30`](#y3fullthreerepz30) | research | consequence | GLUE | unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/211)) |
-| [`colmez1992DeRhamAbVar`](#colmez1992derhamabvar) | added | published | LEAF | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`fontaine1982HTAbVar`](#fontaine1982htabvar) | added | published | LEAF | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`cmjDegreePrint`](#cmjdegreeprint) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 1 | open |
 | [`dsThm966Printed`](#dsthm966printed) | research | published | LEAF | note | good-first |  | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) |
@@ -142,6 +144,24 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 | [`hRank`](#hrank) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/198)) |
 
 ## The hypotheses
+
+### colmez1992DeRhamAbVar
+
+* Bundle field `HDec.HSyn.OpenAddedLeaves30.colmez1992DeRhamAbVar`; kind **consequence**, strict **GLUE**; flag: GLUE (the lead 2026-11-26, Tate-fold audit): the row's T_p is built from F̄-points (G9/I4Layer.lean:661), Colmez's from X(C_p); the readings call the identification a reading step, and it is not a Lean theorem. LEAF path: a named Lean theorem identifying A[p^n](F̄) with A[p^n](C_p), G_F-equivariantly, with the model step ruled. Reading: adversarial AI reading 11-26 (docs/research/tate-prints-adversarial-readings.md; three independent lenses on three model families from the page images: fidelity PASS, skeptic PASS, red team PASS, no blocking item): direct instance of Colmez, Math. Ann. 292 (1992), Thm 5.2 (i)-(ii) p. 639 at the print's generality (every prime p, every finite K/Q_p, every abelian variety, no reduction hypothesis; standing hypotheses pp. 629, 632, 638-639), with weakenings only: H^1_dR(X) an existential type; kept: values in B_dR^+ (filB p 0), Galois compatibility ('g(∫_u ω) = ∫_{g(u)} ω si g ∈ Gal(K̄/K)'), non-degeneracy on the T_p side after extending scalars to B_dR ('non-dégénérée quand on étend les scalaires à B_DR'); G_F acts through gfToGqp (embF_gfToGqp, embF_bijective, range_gfToGqp_eq); recorded non-blocking points: (1) T_p from the Fbar-points of A versus Colmez's u_n in X(C_p) (pp. 638-639), isomorphic on torsion (X[p^n] is finite over F, so its C_p-points lie in Fbar); the tree proves the torsion count (ZInQ.Contrib.CloudB3W16Torsion.card_torsion), the isomorphism itself is a reading step; (2) Z_p-linearity in u, needed for the Q_p-linear extension to V_p, read from 'bilinéaire' and from the bound in the proof on p. 640; (3) dropped clauses: bilinearity in ω, the Fil^1 clause, (iii); B_dR is Mathlib's BDeRham (Colmez §2, p. 632); general rule (the maintainer 11-26): with no human reader available an adversarial AI reading may stand in for the human reading (evidence AI-READ); with fontaine1982HTAbVar it gives VpDualDeRhamAbVar (vpDual_of_colmezFontaine, #213); replaces scholzeH1AbVar and t10TateDuality.
+* Source: Colmez, Périodes p-adiques des variétés abéliennes, Math. Ann. 292 (1992), 629-644, Théorème 5.2 (i)-(ii), p. 639 (standing hypotheses pp. 629, 638-639; B_dR §2, p. 632; proof pp. 639-641); Colmez1992DeRhamAbVar in Contrib/OneProof/TatePrints/Rows.lean
+* packet [R7](#packet-r7); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+DeRhamScholze.TatePrints.Colmez1992DeRhamAbVar
+```
+
+> Colmez, Périodes p-adiques des variétés abéliennes, Math. Ann. 292 (1992), 629-644, Théorème 5.2 (i)-(ii),
+> p. 639: for an abelian variety A over a finite extension F of ℚ_p, the p-adic period pairing (ω, u) ↦ ∫_u ω
+> takes values in B_dR⁺, commutes with the action of G_F, and is non-degenerate on the side of
+> V_p(A) = ℚ_p ⊗ T_p(A) after extending scalars to B_dR. H¹_dR(A) is weakened to an existential type;
+> bilinearity in ω, the Fil¹ clause and (iii) are dropped.
 
 ### afCharpolyDS965
 
@@ -338,27 +358,9 @@ Y3RouteA.Y3FullThreeRepZ30
 
 > y3-route-a, the manuscript's own conclusion (diophantine_zq.tex L473-477; one object: the integral model X35/G5 of Y3 with its universal family): the moduli problem of abelian surfaces with an action of the maximal order O of B = (2,-3|Q) and full O-linear level-3 structure (QMAbSchemeP: at every geometric point eta : O/3O = A_s[3], i.e. a section of Isom_O(O/3O, A[3])) is represented on locally noetherian Z[1/30]-schemes by a proper smooth curve over Z[1/30] with a universal QMAbSchemeP; its generic fibre is Y3 (proved: Y3RouteA.y3RepresentableQ_of_z30 gives Y3Audit.Y3RepresentableQ). Manuscript derivation: Buzzard, Duke Math. J. 87 (1997) Thm 2.1 and Cor. 2.3 at V1(5) over Z[1/30] (L443-446); full five-marking (L447-449); the finite etale sheaf Isom_O(O/3O, A[3]), nonempty on geometric fibres since the Tate lattice is free of rank one over O_3 (L449-462); free action of G5 = (O/5O)^x by torsion-freeness of 1 + 3M4(Z3) (L465-472); quotient X35/G5 and descent of the universal abelian scheme with polarization, O-action and three-marking (L472-477). Weaker than the manuscript: proper for projective, locally noetherian universe-0 bases, no polarization (equivalent through the canonical principal polarization, relative Lemma P: ON THE SPOT, not proved in the tree). Implies Y3Fix.Y3FineModuliAbP (Y3RouteA.y3FineModuliAbP_of_z30).
 
-### colmez1992DeRhamAbVar
-
-* Bundle field `HDec.HSyn.OpenAddedLeaves30.colmez1992DeRhamAbVar`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-26 (docs/research/tate-prints-adversarial-readings.md; three independent lenses on three model families from the page images: fidelity PASS, skeptic PASS, red team PASS, no blocking item): direct instance of Colmez, Math. Ann. 292 (1992), Thm 5.2 (i)-(ii) p. 639 at the print's generality (every prime p, every finite K/Q_p, every abelian variety, no reduction hypothesis; standing hypotheses pp. 629, 632, 638-639), with weakenings only: H^1_dR(X) an existential type; kept: values in B_dR^+ (filB p 0), Galois compatibility ('g(∫_u ω) = ∫_{g(u)} ω si g ∈ Gal(K̄/K)'), non-degeneracy on the T_p side after extending scalars to B_dR ('non-dégénérée quand on étend les scalaires à B_DR'); G_F acts through gfToGqp (embF_gfToGqp, embF_bijective, range_gfToGqp_eq); recorded non-blocking points: (1) T_p from the Fbar-points of A versus Colmez's u_n in X(C_p) (pp. 638-639), isomorphic on torsion (X[p^n] is finite over F, so its C_p-points lie in Fbar); the tree proves the torsion count (ZInQ.Contrib.CloudB3W16Torsion.card_torsion), the isomorphism itself is a reading step; (2) Z_p-linearity in u, needed for the Q_p-linear extension to V_p, read from 'bilinéaire' and from the bound in the proof on p. 640; (3) dropped clauses: bilinearity in ω, the Fil^1 clause, (iii); B_dR is Mathlib's BDeRham (Colmez §2, p. 632); the maintainer 11-26: with no human reader available the adversarial AI reading stands in for the human reading (evidence AI-READ); with fontaine1982HTAbVar it gives VpDualDeRhamAbVar (vpDual_of_colmezFontaine, #213); replaces scholzeH1AbVar and t10TateDuality.
-* Source: Colmez, Périodes p-adiques des variétés abéliennes, Math. Ann. 292 (1992), 629-644, Théorème 5.2 (i)-(ii), p. 639 (standing hypotheses pp. 629, 638-639; B_dR §2, p. 632; proof pp. 639-641); Colmez1992DeRhamAbVar in Contrib/OneProof/TatePrints/Rows.lean
-* packet [R7](#packet-r7); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-DeRhamScholze.TatePrints.Colmez1992DeRhamAbVar
-```
-
-> Colmez, Périodes p-adiques des variétés abéliennes, Math. Ann. 292 (1992), 629-644, Théorème 5.2 (i)-(ii),
-> p. 639: for an abelian variety A over a finite extension F of ℚ_p, the p-adic period pairing (ω, u) ↦ ∫_u ω
-> takes values in B_dR⁺, commutes with the action of G_F, and is non-degenerate on the side of
-> V_p(A) = ℚ_p ⊗ T_p(A) after extending scalars to B_dR. H¹_dR(A) is weakened to an existential type;
-> bilinearity in ω, the Fil¹ clause and (iii) are dropped.
-
 ### fontaine1982HTAbVar
 
-* Bundle field `HDec.HSyn.OpenAddedLeaves30.fontaine1982HTAbVar`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-26 (docs/research/tate-prints-adversarial-readings.md; three independent lenses on three model families from the page images: fidelity PASS, skeptic PASS, red team PASS, no blocking item): direct instance (K a finite extension of Q_p) of Fontaine, Invent. Math. 65 (1982), Thm 2 (Tate, Raynaud) p. 388, whose K is complete, discretely valued, of characteristic 0, with perfect residue field of characteristic p (§1.1 p. 381, §3 p. 387; no reduction hypothesis), in dimension form: dim_K Hom_{Z_p[G]}(T_p(X), C(i)) = d for i = 1, 0, with T_p(X) = Hom_Z(Q_p/Z_p, X(K̄)) (3.1 p. 388, the K̄-points as in the row) and M(i) = M ⊗ T^{⊗i} (0.1 p. 379); read as htF (A.galRep p) i over F' = fieldF p F (a Z_p[G]-map from T_p to the Q_p-space C(i) is a G_F-map from V_p; C(1) is C with σ acting by χ(σ)σ, the sign checked against §1.7 p. 383); recorded non-blocking points: (1) '= g' is printed in the proof on p. 388 ('chacune de ces dimensions est égale à d', the deduction of Thm 2 from Thm 2'), not in the boxed statement, from which it also follows with dim H^0(X, Ω) = dim H^1(X, O_X) = d; (2) the maps ρ^1_X, ρ^0_X, their canonicity and functoriality are dropped; (3) the Fontaine locator is p. 388 (Thm 2 and its proof); the maintainer 11-26: with no human reader available the adversarial AI reading stands in for the human reading (evidence AI-READ); with colmez1992DeRhamAbVar it gives VpDualDeRhamAbVar (vpDual_of_colmezFontaine, #213); replaces scholzeH1AbVar and t10TateDuality.
+* Bundle field `HDec.HSyn.OpenAddedLeaves30.fontaine1982HTAbVar`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-26 (docs/research/tate-prints-adversarial-readings.md; three independent lenses on three model families from the page images: fidelity PASS, skeptic PASS, red team PASS, no blocking item): Fontaine, Invent. Math. 65 (1982), Théorème 2 (Tate, Raynaud), with the dimension count printed in its proof, p. 388, at K a finite extension of Q_p; whose K is complete, discretely valued, of characteristic 0, with perfect residue field of characteristic p (§1.1 p. 381, §3 p. 387; no reduction hypothesis), in dimension form: dim_K Hom_{Z_p[G]}(T_p(X), C(i)) = d for i = 1, 0, with T_p(X) = Hom_Z(Q_p/Z_p, X(K̄)) (3.1 p. 388, the K̄-points as in the row) and M(i) = M ⊗ T^{⊗i} (0.1 p. 379); read as htF (A.galRep p) i over F' = fieldF p F (a Z_p[G]-map from T_p to the Q_p-space C(i) is a G_F-map from V_p; C(1) is C with σ acting by χ(σ)σ, the sign checked against §1.7 p. 383); recorded non-blocking points: (1) '= g' is printed in the proof on p. 388 ('chacune de ces dimensions est égale à d', the deduction of Thm 2 from Thm 2'), not in the boxed statement, from which it also follows with dim H^0(X, Ω) = dim H^1(X, O_X) = d; (2) the maps ρ^1_X, ρ^0_X, their canonicity and functoriality are dropped; (3) the Fontaine locator is p. 388 (Thm 2 and its proof); general rule (the maintainer 11-26): with no human reader available an adversarial AI reading may stand in for the human reading (evidence AI-READ); LEAF on the lead's row ruling 2026-11-26 (cmjDegreePrint precedent: a sentence printed in a refereed paper counts), conditional on the quotes being confirmed against the hashed GDZ copy; with colmez1992DeRhamAbVar it gives VpDualDeRhamAbVar (vpDual_of_colmezFontaine, #213); replaces scholzeH1AbVar and t10TateDuality.
 * Source: Fontaine, Formes différentielles et modules de Tate des variétés abéliennes sur les corps locaux, Invent. Math. 65 (1982), 379-409, Théorème 2 (Tate, Raynaud) and its proof, p. 388 (standing hypotheses 0.1 p. 379, §1.1 p. 381, §3 p. 387; T_p(X), 3.1 p. 388); Fontaine1982HTAbVar in Contrib/OneProof/TatePrints/Rows.lean
 * packet [R7](#packet-r7); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84).
 * Human readings recorded: none.
