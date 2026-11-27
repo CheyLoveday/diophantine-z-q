@@ -85,7 +85,7 @@ EVIDENCE = {'HUMAN-READ', 'AI-READ'}
 # millerRankOneOnMinimalQ_iff, so it is legacy with that row.
 LEGACY_AI_READS = {('pazukiCor13Upper', 'e1b31749'), ('hRC', '181efe5b'), ('hCT', '181efe5b'),
                    ('hRank', '119a412d'), ('hRank', 'fa21b107'), ('hRank', '014ea897b'), ('hRank', 'a6d49800b'),
-                   ('dsThm966Printed', '29bfbc3f'), ('silverbergZarhinThm34', 'a728cb72'),
+                   ('silverbergZarhinThm34', 'a728cb72'),
                    ('gaudronRemondSec9LowerAnSS', '55cc29bd4')}
 SHA256_COPY = re.compile(r'sha256 [0-9a-f]{6,}')
 
