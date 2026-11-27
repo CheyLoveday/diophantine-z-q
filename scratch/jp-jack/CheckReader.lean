@@ -1,0 +1,3 @@
+import ZInQKernel.Contrib.OneProof.JavanpeykarJacKReader
+
+#print axioms JavanpeykarJacK.javanpeykarBound_of_jacK
