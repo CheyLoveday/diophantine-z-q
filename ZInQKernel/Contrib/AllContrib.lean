@@ -3654,3 +3654,7 @@ import ZInQKernel.Contrib.OneProof.HeightModelM3.GR1Rows
 import ZInQKernel.Contrib.OneProof.HeightModelM3.Spans
 import ZInQKernel.Contrib.OneProof.HeightModelM3.StalkInjective
 import ZInQKernel.Contrib.OneProof.HeightModelM3.Theta
+import ZInQKernel.Contrib.OneProof.Y3Lattice412.Check
+import ZInQKernel.Contrib.OneProof.Y3Lattice412.Convention
+import ZInQKernel.Contrib.OneProof.Y3Lattice412.Lattice
+import ZInQKernel.Contrib.OneProof.Y3Lattice412.Moduli

@@ -84,6 +84,8 @@ ping, and is released if there is no reply within 7 days of the ping.
 | [`carayolThmAFrob`](#carayolthmafrob) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) | 2026-11-19 |
 | [`cmHeight62`](#cmheight62) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) | 2026-11-19 |
 | [`silverbergZarhinThm34`](#silverbergzarhinthm34) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/223)) | 2026-11-27 |
+| [`bergerSurveyF`](#bergersurveyf) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/231)) | 2026-11-27 |
+| [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/232)) | 2026-11-27 |
 | [`hRC`](#hrc) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) | 2026-11-17 |
 | [`hCT`](#hct) | @mccorvie ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) | 2026-11-20 |
 | [`hRank`](#hrank) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/198)) | 2026-11-25 |
@@ -126,11 +128,11 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`colmez1992DeRhamAbVar`](#colmez1992derhamabvar) | added | consequence | GLUE | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`afCharpolyDS965`](#afcharpolyds965) | research | consequence | GLUE | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 1 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/224)) |
-| [`bergerSurveyF`](#bergersurveyf) | research | consequence | GLUE | pending-reading | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
+| [`bergerSurveyF`](#bergersurveyf) | research | consequence | GLUE | pending-reading | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/231)) |
 | [`carayolThmAFrob`](#carayolthmafrob) | research | consequence | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) |
 | [`cmHeight62`](#cmheight62) | research | consequence | GLUE | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) |
 | [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
-| [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/232)) |
 | [`gaudronRemondThm14GR1`](#gaudronremondthm14gr1) | research | published | GLUE | pending-reading | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`javanpeykarThm111An`](#javanpeykarthm111an) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`modularHTCoeff`](#modularhtcoeff) | research | consequence | GLUE | pending-review | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open (last released by the project: #191 landed as additive code without a fold. Its premise `NewformGeometricComparison` is stronger than `ModularHTCoeff` (it fixes one of the row's two normalizations and adds algebraic coefficients...) |
@@ -194,7 +196,7 @@ AfTateLam.AfCharpolyDS965
 * Source: Berger, Représentations p-adiques et équations différentielles, Invent. Math. 148 (2002), 219-284 (bibitem berger2002; theorem number UNVERIFIED, 0.6 or 0.7); definitions: Fontaine, Astérisque 223 (1994), Exp. III 1.8.5 pp. 134-135 and 5.6.1 p. 166, Exp. II 4.2.4-4.2.5 p. 86; corroborating: Colmez, Espaces vectoriels de dimension finie et représentations de de Rham, Astérisque 319 (2008), 117-186, Théorème 0.1 p. 118 (ColmezThm01 in Contrib/OneProof/PanBergerRefereed.lean, basis form); IsPstF (dimension form, BergerBst.IsAdmissible) over BstFOf in Contrib/OneProof/PanBergerFontaine.lean
 * packet [R7](#packet-r7); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/231)).
 
 ```lean
 HDec.PkgI4.PanDict.BergerSurveyF
@@ -285,7 +287,7 @@ Y3Hodge.DeligneCanonicalModelY3EveryPrint
 * Source: Gaudron-Rémond (GR1), Théorème des périodes et degrés minimaux d'isogénies, Comment. Math. Helv. 89 (2014), 343-403, Cor. 8.4, p. 400 (h(A) >= -(1/2)(dim A) log(2 pi), proved there; attribution: Bost), height of a semi-abelian model as in section 2.3, p. 351, with h_F(A) = h(A) - (g/2) log pi and the weakening to -(3/2) dim A on p. 352; Duke 163 section 9, proof of Lemme 9.1, p. 2098, cites it (diophantine_zq.tex L894-895, step E4); over the GR1 height (IsGR1StableHeightOriginal)
 * packet [R5](#packet-r5); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/232)).
 
 ```lean
 ZInQ.HeightModelM.GaudronRemondSec9LowerGR1Weak
@@ -652,4 +654,4 @@ ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne
 | gaudronRemondThm14GR1 | statement-check | project | yes |  |
 
 
-<!-- render stamp: claims-free 77223a61f224a111, output ce9ca4d903201e68 -->
+<!-- render stamp: claims-free 77223a61f224a111, output d9a7b6e14aad3827 -->
