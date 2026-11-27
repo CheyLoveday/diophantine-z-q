@@ -109,7 +109,21 @@ properness enters only through the hypothesis of `Step7`.
 
 ## 3. `#discharges`
 
-See the last section (filled in after the run of `#discharges` on a scratch file importing `OneProof.Main`).
+`scratch/cmheight62-p1/Discharges.lean` (imports `ZInQKernel.OneProof.Main`, `ZInQKernel.OneProof.Discharges`,
+`ZInQKernel.Contrib.OneProof.CMHeight62.Final`), run with `lake env lean` after `lake build ZInQKernel.OneProof.Main
+ZInQKernel.OneProof.Discharges` (Build completed successfully). The lines for the new theorems (VERIFIED):
+
+```
+DISCHARGES [OpenResearchLeaves79.cmHeight62] by ZInQ.Contrib.CMHeight62.cmHeight62_of_step7
+  still assumes: [ZInQ.Contrib.CMHeight62.ArchIdentity, ZInQ.Contrib.CMHeight62.Step7]
+DISCHARGES [OpenResearchLeaves79.cmHeight62] by ZInQ.Contrib.CMHeight62.cmHeight62_of_step7'
+  still assumes: [ZInQ.Contrib.CMHeight62.Step7]
+#discharges: 21 open hypotheses, 20769 theorems checked, 369 discharge one
+```
+
+(The other `cmHeight62` lines of the run are the pre-existing bundle projections `CMInputs2.cmHeight62`,
+`OpenResearchLeaves6xNOS/DS.cmHeight62`, … .) So `cmHeight62` is matched with the single remaining assumption
+`Step7`; per the fold rule this is not a discharge (no count change).
 
 ## 4. Gap analysis for step 7 (no Lean)
 

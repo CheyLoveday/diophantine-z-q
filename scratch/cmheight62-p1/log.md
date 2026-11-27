@@ -89,3 +89,4 @@ Base: 96f3a26b70770167ba4e9005a601a737dc618133 (confirmed `git rev-parse HEAD`).
 - grep: no sorry/axiom/admit in ZInQKernel/Contrib/OneProof/CMHeight62/.
 - Pitfalls: `set` on M.model created shadowed Φ✝ and timeouts — write terms out / top-level helper defs (`fOf`);
   rw [top_le_preimage_iff] on (ptC σ).left morphisms timed out — use a dedicated lemma (`zero_mem_dom`).
+- #discharges run: see scratch/cmheight62-p1/discharges.out (cmHeight62_of_step7' still assumes [Step7]). VERIFIED
