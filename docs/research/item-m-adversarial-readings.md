@@ -4,7 +4,8 @@
 (`ZInQ.HeightModelM.EGAIV_9_7_7_OL`) is a direct instance of EGA IV₃, Théorème (9.7.7)(ii). R2
 (`ZInQ.HeightModelM.GaudronRemondSec9LowerGR1`) is Corollaire 8.4 of Gaudron–Rémond, Comment. Math. Helv. 89
 (2014), over their height of a semi-abelian model; the field the fold carries, `GaudronRemondSec9LowerGR1Weak`, is
-its weakening to `h_F(A) ≥ -(3/2) dim A`, proved in Lean (`gaudronRemondSec9LowerGR1Weak_of_GR1`). R3
+its weakening to `h_F(A) ≥ -(3/2) dim A`, proved in Lean (`gaudronRemondSec9LowerGR1Weak_of_GR1`), and so a
+consequence of the print, not the printed form (§8). R3
 (`ZInQ.HeightModelM.GaudronRemondThm14GR1`) is a direct instance of Théorème 1.4 of Gaudron–Rémond, Duke Math. J.
 163 (2014), over the same height. No reader found a clause stronger than the print, a missing hypothesis, or a
 definition that admits models or height values the print excludes. The non-blocking points are listed in §6.
@@ -193,8 +194,10 @@ The clauses:
 
 `gaudronRemondSec9LowerGR1Weak`, `gaudronRemondThm14GR1` and `egaIV_9_7_7_OL` replace `gaudronRemondSec9LowerAnSS`
 and `gaudronRemondThm14Printed` in the research bundle `OpenResearchLeaves80`
-(`ZInQKernel/OneProof/H/TailZ108.lean`). `egaIV_9_7_7_OL` is rated published, LEAF;
-`gaudronRemondSec9LowerGR1Weak` consequence, LEAF (the step from the print is a Lean theorem);
-`gaudronRemondThm14GR1` published, GLUE pending the Duke journal text. The count of open statements goes from 21 to
-22, and the H part from 18 to 19. The strict count of the H part goes from 4/14 to 6/13, and from 4/17 to 6/16 with
-the three root hypotheses.
+(`ZInQKernel/OneProof/H/TailZ108.lean`). `egaIV_9_7_7_OL` is rated published, LEAF.
+`gaudronRemondSec9LowerGR1Weak` is a consequence, GLUE: the weakening from Corollaire 8.4 is proved in Lean, but it
+is an argument, so the row is not the printed form or a direct instance; a swap to Corollaire 8.4 itself is declined
+as stronger (ruling of 2026-11-24, as for the replaced field). `gaudronRemondThm14GR1` is published, GLUE pending
+the Duke journal text. The reading results above are unchanged by these ratings. The count of open statements goes
+from 21 to 22, and the H part from 18 to 19. The strict count of the H part goes from 4/14 to 5/14, and from 4/17 to
+5/17 with the three root hypotheses.

@@ -15,7 +15,7 @@ removes it. See
 
 **19 hypotheses of the H part** (in the bundles `OpenAddedLeaves30`, `OpenResearchLeaves80`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
 
-* **Strict count: 6 published / 13 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
+* **Strict count: 5 published / 14 glue** (the strictest flagged reading; no hypothesis carries a strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
@@ -105,7 +105,7 @@ Heights. Claim it on [Deicyde #14](https://github.com/Deicyde/diophantine-z-q/is
 
 * [`pazukiCor13Upper`](#pazukicor13upper) (GLUE): Pazuki, Bull. SMF 140 (2012) Cor. 1.3(2), upper half (read by the audit; RISK: Pazuki's level-2 coordinates, height-split §8)
 * [`javanpeykarThm111An`](#javanpeykarthm111an) (GLUE): Javanpeykar, Polynomial bounds for Arakelov invariants of Belyi curves, Algebra Number Theory 8 (2014), Thm 1.1.1, p. 90 (arXiv:1403.6404v1 Thm 1.1.1, p. 1) and section 2.3, p. 98 (arXiv p. 9); locators recorded by the locator audit (docs/research/locators.md row R18); cited at diophantine_zq.tex L870; over the stable height with the metric on A_tau(C)^an (r3-residual), semistability of the Jacobian's Neron model (semistab-assembly; not the print's Def. 2.2.1)
-* [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) (LEAF): Gaudron-Rémond (GR1), Théorème des périodes et degrés minimaux d'isogénies, Comment. Math. Helv. 89 (2014), 343-403, Cor. 8.4, p. 400 (h(A) >= -(1/2)(dim A) log(2 pi), proved there; attribution: Bost), height of a semi-abelian model as in section 2.3, p. 351, with h_F(A) = h(A) - (g/2) log pi and the weakening to -(3/2) dim A on p. 352; Duke 163 section 9, proof of Lemme 9.1, p. 2098, cites it (diophantine_zq.tex L894-895, step E4); over the GR1 height (IsGR1StableHeightOriginal)
+* [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) (GLUE): Gaudron-Rémond (GR1), Théorème des périodes et degrés minimaux d'isogénies, Comment. Math. Helv. 89 (2014), 343-403, Cor. 8.4, p. 400 (h(A) >= -(1/2)(dim A) log(2 pi), proved there; attribution: Bost), height of a semi-abelian model as in section 2.3, p. 351, with h_F(A) = h(A) - (g/2) log pi and the weakening to -(3/2) dim A on p. 352; Duke 163 section 9, proof of Lemme 9.1, p. 2098, cites it (diophantine_zq.tex L894-895, step E4); over the GR1 height (IsGR1StableHeightOriginal)
 * [`gaudronRemondThm14GR1`](#gaudronremondthm14gr1) (GLUE; pending-reading): Gaudron-Rémond, Polarisations et isogénies, Duke Math. J. 163 (2014), 2057-2108, Thm 1.4, p. 2060 (g >= 1 and κ(A), p. 2058; couples of isogenies, p. 2059; isogenies 'surjectif de noyau fini' and their degree, p. 2062), over the GR1 height h_F of a semi-abelian model (GR1 section 2.3, as Duke p. 2058 refers); specialization K = k; the couple split into two isogenies
 * [`egaIV_9_7_7_OL`](#egaiv_9_7_7_ol) (LEAF): EGA IV₃ (Grothendieck-Dieudonné), Publ. Math. IHÉS 28 (1966), Théorème (9.7.7)(ii), p. 79, with EGA IV₁, Publ. Math. IHÉS 20 (1964), (1.6.1), p. 234; EGA IV₂, Publ. Math. IHÉS 24 (1965), (4.5.1)-(4.5.2), p. 61; EGA 0_III, Publ. Math. IHÉS 11 (1961), (9.1.1), (9.1.2), (9.1.11), pp. 12-14; at S = Spec O_L, L a number field, for smooth, quasi-compact, quasi-separated morphisms
 
@@ -130,6 +130,7 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 | [`carayolThmAFrob`](#carayolthmafrob) | research | consequence | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) |
 | [`cmHeight62`](#cmheight62) | research | consequence | GLUE | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) |
 | [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
+| [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`gaudronRemondThm14GR1`](#gaudronremondthm14gr1) | research | published | GLUE | pending-reading | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`javanpeykarThm111An`](#javanpeykarthm111an) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`modularHTCoeff`](#modularhtcoeff) | research | consequence | GLUE | pending-review | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open (last released by the project: #191 landed as additive code without a fold. Its premise `NewformGeometricComparison` is stronger than `ModularHTCoeff` (it fixes one of the row's two normalizations and adds algebraic coefficients...) |
@@ -142,7 +143,6 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 | [`dsThm966Printed`](#dsthm966printed) | research | published | LEAF | note | good-first |  | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) |
 | [`egaIV_9_7_7_OL`](#egaiv_9_7_7_ol) | research | published | LEAF | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`fowlerProp27PrintCanonical`](#fowlerprop27printcanonical) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 1 | open (last released by the project: no fold. Oesterlé's Théorème 1 implies Fowler's Proposition 2·7, so putting it in place of the Fowler row at the same count would make `frozenTarget`'s hypothesis stronger (review on #184). #184 st...) |
-| [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) | research | consequence | LEAF | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
 | [`hCT`](#hct) | frozenTarget | published | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) |
 | [`hRank`](#hrank) | frozenTarget | consequence | GLUE | note |  |  | [Deicyde #127](https://github.com/Deicyde/diophantine-z-q/issues/127) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/198)) |
@@ -278,6 +278,28 @@ Y3Hodge.DeligneCanonicalModelY3EveryPrint
 > bijective and holomorphic in place of the biholomorphism, moduli clause at O-hat^x without
 > polarization (exists and is unique: Y3Hodge.lemmaP_H1, Lemma P on the genuine H_1) and level
 > structure, reciprocity at CM points of H
+
+### gaudronRemondSec9LowerGR1Weak
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves80.gaudronRemondSec9LowerGR1Weak`; kind **consequence**, strict **GLUE**; flag: consequence, GLUE: a weakening of GR1 Cor. 8.4 (Comment. Math. Helv. 89 (2014), p. 400, over the GR1 height of a semi-abelian model, section 2.3, p. 351, read with h_F = h - (g/2) log pi, p. 352) to h_F(A) >= -(3/2) dim A, proved in Lean (gaudronRemondSec9LowerGR1Weak_of_GR1), the weakening Gaudron and Rémond make on p. 352; a weakening needs an argument, so the row is not the printed form or a direct instance (OPEN.md, LEAF and GLUE); Cor. 8.4 over the GR1 height (GaudronRemondSec9LowerGR1) passed the adversarial AI reading 11-27 (docs/research/item-m-adversarial-readings.md; three independent lenses on three model families from page images of the EMS journal file of GR1: fidelity PASS, skeptic PASS, red team PASS, no blocking item); a swap to Cor. 8.4 itself is declined as stronger (ruling 11-24, as for the replaced field); with egaIV_9_7_7_OL it implies the replaced field gaudronRemondSec9LowerAnSS (proved: gaudronRemondSec9LowerAnSS_of_GR1Weak); the converse (GR1 height => Néron-model height, so the old field => the new row) is not proved in the tree; reading notes (non-blocking): GroupModel does not state commutativity, which follows from separatedness and flatness by an argument (the generic fibre of the product is schematically dense and A is commutative), not a Lean theorem; GR1 prints no formula for the normalized Arakelov degree (Def. 2.1, p. 351), so the standard one is used (log #(ω/O_K' η) minus the sum of the log norms, over [K':Q]); the stalk-built lattice (printedOmega, an intersection of stalk lattices) and the global sheaf of differentials e*Ω of GR1 section 2.3 are linked by the tree's height dictionary (theta_injective, omegaAt_map, omega_map, printedOmega_eq), the last step from stalks to global sections of a locally free sheaf being the standard fact.
+* Source: Gaudron-Rémond (GR1), Théorème des périodes et degrés minimaux d'isogénies, Comment. Math. Helv. 89 (2014), 343-403, Cor. 8.4, p. 400 (h(A) >= -(1/2)(dim A) log(2 pi), proved there; attribution: Bost), height of a semi-abelian model as in section 2.3, p. 351, with h_F(A) = h(A) - (g/2) log pi and the weakening to -(3/2) dim A on p. 352; Duke 163 section 9, proof of Lemme 9.1, p. 2098, cites it (diophantine_zq.tex L894-895, step E4); over the GR1 height (IsGR1StableHeightOriginal)
+* packet [R5](#packet-r5); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+ZInQ.HeightModelM.GaudronRemondSec9LowerGR1Weak
+```
+
+> item-m-fold: Gaudron-Rémond (GR1), Théorème des périodes et degrés minimaux d'isogénies,
+> Comment. Math. Helv. 89 (2014), 343-403, Cor. 8.4, p. 400 (attribution: Bost), h(A) >= -(1/2)(dim
+> A) log(2 pi), read in Faltings' original normalization h_F(A) = h(A) - (g/2) log pi (p. 352) and
+> weakened to h_F(A) >= -(3/2) dim A, the weakening Gaudron and Rémond make on p. 352; Lean proves
+> the weak form from the print (ZInQ.HeightModelM.gaudronRemondSec9LowerGR1Weak_of_GR1). The height
+> is that of a semi-abelian model (GR1 section 2.3, p. 351;
+> ZInQ.HeightModelM.IsGR1StableHeightOriginal). Replaces gaudronRemondSec9LowerAnSS, which
+> ZInQ.HeightModelM.gaudronRemondSec9LowerAnSS_of_GR1Weak proves from it and egaIV_9_7_7_OL; the
+> converse (from the GR1 height to the Néron-model height) is not proved in the tree.
 
 ### gaudronRemondThm14GR1
 
@@ -522,28 +544,6 @@ HDec.CMBranch.FowlerBridges.FowlerProp27PrintCanonical
 > Fowler, Proposition 2·7: for an imaginary quadratic order discriminant Δ < 0 congruent to 0 or
 > 1 modulo 4 and positive n, h(Δ) ≤ n implies √|Δ| ≤ 2n² exp(21000n²), with h(Δ) the proper ideal
 > class number of the unique order of discriminant Δ.
-
-### gaudronRemondSec9LowerGR1Weak
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves80.gaudronRemondSec9LowerGR1Weak`; kind **consequence**, strict **LEAF**; flag: adversarial AI reading 11-27 (docs/research/item-m-adversarial-readings.md; three independent lenses on three model families from page images of the EMS journal file of GR1: fidelity PASS, skeptic PASS, red team PASS, no blocking item) of the print GaudronRemondSec9LowerGR1 (GR1 Cor. 8.4, p. 400, over the GR1 height of a semi-abelian model, section 2.3, p. 351, read with h_F = h - (g/2) log pi, p. 352); this row is its weakening h_F(A) >= -(3/2) dim A, proved in Lean (gaudronRemondSec9LowerGR1Weak_of_GR1), the weakening Gaudron and Rémond make on p. 352; a consequence counted LEAF on the lead's standards (journal text read; the step from the print is a Lean theorem; not stronger than the replaced field); with egaIV_9_7_7_OL it implies the replaced field gaudronRemondSec9LowerAnSS (proved: gaudronRemondSec9LowerAnSS_of_GR1Weak); the converse (GR1 height => Néron-model height, so the old field => the new row) is not proved in the tree; reading notes (non-blocking): GroupModel does not state commutativity, which follows from separatedness and flatness by an argument (the generic fibre of the product is schematically dense and A is commutative), not a Lean theorem; GR1 prints no formula for the normalized Arakelov degree (Def. 2.1, p. 351), so the standard one is used (log #(ω/O_K' η) minus the sum of the log norms, over [K':Q]); the stalk-built lattice (printedOmega, an intersection of stalk lattices) and the global sheaf of differentials e*Ω of GR1 section 2.3 are linked by the tree's height dictionary (theta_injective, omegaAt_map, omega_map, printedOmega_eq), the last step from stalks to global sections of a locally free sheaf being the standard fact.
-* Source: Gaudron-Rémond (GR1), Théorème des périodes et degrés minimaux d'isogénies, Comment. Math. Helv. 89 (2014), 343-403, Cor. 8.4, p. 400 (h(A) >= -(1/2)(dim A) log(2 pi), proved there; attribution: Bost), height of a semi-abelian model as in section 2.3, p. 351, with h_F(A) = h(A) - (g/2) log pi and the weakening to -(3/2) dim A on p. 352; Duke 163 section 9, proof of Lemme 9.1, p. 2098, cites it (diophantine_zq.tex L894-895, step E4); over the GR1 height (IsGR1StableHeightOriginal)
-* packet [R5](#packet-r5); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-ZInQ.HeightModelM.GaudronRemondSec9LowerGR1Weak
-```
-
-> item-m-fold: Gaudron-Rémond (GR1), Théorème des périodes et degrés minimaux d'isogénies,
-> Comment. Math. Helv. 89 (2014), 343-403, Cor. 8.4, p. 400 (attribution: Bost), h(A) >= -(1/2)(dim
-> A) log(2 pi), read in Faltings' original normalization h_F(A) = h(A) - (g/2) log pi (p. 352) and
-> weakened to h_F(A) >= -(3/2) dim A, the weakening Gaudron and Rémond make on p. 352; Lean proves
-> the weak form from the print (ZInQ.HeightModelM.gaudronRemondSec9LowerGR1Weak_of_GR1). The height
-> is that of a semi-abelian model (GR1 section 2.3, p. 351;
-> ZInQ.HeightModelM.IsGR1StableHeightOriginal). Replaces gaudronRemondSec9LowerAnSS, which
-> ZInQ.HeightModelM.gaudronRemondSec9LowerAnSS_of_GR1Weak proves from it and egaIV_9_7_7_OL; the
-> converse (from the GR1 height to the Néron-model height) is not proved in the tree.
 
 ## Hypotheses outside the H part
 

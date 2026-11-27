@@ -285,7 +285,6 @@ person has read these pages.
         group='heights', slug='bost-lower-bound',
         title='The lower bound for the Faltings height',
         anchor='Gaudron-Remond lower bound',
-        lean_step='`ZInQ.HeightModelM.gaudronRemondSec9LowerGR1Weak_of_GR1`',
         statement=r"""
 The *lower bound statement* is the following assertion. Let $A$ be an abelian variety of dimension
 $g$ over a number field $K$. Then every height $h_F(A)$ of a semi-abelian model of $A$, in
@@ -305,6 +304,10 @@ over the complex manifold $A_\tau(\mathbb C)$.
 Gaudron and Rémond's Corollaire 8.4 states $h(A)\ge-\frac g2\log(2\pi)$ for their height
 $h=h_F+\frac g2\log\pi$ of a semi-abelian model, that is $h_F(A)\ge-\frac g2\log(2\pi^2)$; since
 $\frac12\log(2\pi^2)<\frac32$ this gives the statement, a weakening they make themselves on p. 352.
+The weakening is proved in Lean (`ZInQ.HeightModelM.gaudronRemondSec9LowerGR1Weak_of_GR1`), but it is
+an argument, so the statement is not the printed form and the strict count does not count it as
+published; the corollary itself over this height passed a three-lens AI reading, and the project
+declined to carry it instead, as it is stronger (ruling of 2026-11-24).
 They print no formula for the normalized Arakelov degree, and the standard one is used here. The
 model is not required to be commutative; that it is follows from separatedness and flatness by a
 standard argument that is not a Lean theorem. With the constructibility statement of EGA IV (9.7.7),
