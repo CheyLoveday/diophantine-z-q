@@ -182,7 +182,9 @@ Lake build of its imports. The three new theorems depend only on
 `propext`, `Classical.choice`, and `Quot.sound`; see
 `scratch/berger-reroute/axioms-output.txt`.
 
-The focused check in `scratch/berger-reroute/Discharges.lean` verified
+The focused check in `scratch/berger-reroute/Discharges.lean` (removed
+when this work landed on main: it named `OpenResearchLeaves72`, which main
+no longer has) verified
 the row's type against the source of `Main.lean` and `TailZ98.lean`
 and ran the repository's `#discharges` matcher on that one row.
 It matched `bergerSurveyF_of_thm06Print`, assuming only

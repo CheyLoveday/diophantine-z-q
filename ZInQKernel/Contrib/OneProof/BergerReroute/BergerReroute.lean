@@ -20,9 +20,11 @@ private abbrev xi (p : ℕ) [Fact p.Prime] := ZInQ.Contrib.G9.BdrKer.Cp.xi p
 /--
 Draft Fontaine-ring consequence of Berger's de Rham ⇒ potentially semistable theorem,
 *Représentations p-adiques et équations différentielles*, Invent. Math. 148 (2002), 219–284.
-Locator **UNVERIFIED** in the journal: the repository audit gives Théorème 0.6 in arXiv v3
-and Théorème 0.7 in the later author copy. The paper's reported basis condition over
-`B_max[log [π̄]]` still needs to be connected to the Fontaine-ring basis condition below.
+Locator **UNVERIFIED** in the journal print (`docs/one-proof/pages-wanted.md`, packet R7):
+Théorème 0.6 = Théorème 5.19 of arXiv:math/0102179v3; an earlier AI reading of the author copy,
+with no recorded hash or quote, gives Théorème 0.7 = Corollaire 5.22 (Théorème 0.8 there being
+Sen's theorem). The paper's reported basis condition over `B_max[log [π̄]]` still needs to be
+connected to the Fontaine-ring basis condition below.
 
 Here `V = E^n` is viewed over `ℚ_p`. De Rham is `dim_{ℚ_p} (B_dR ⊗ V)^G = dim_{ℚ_p} V`.
 The conclusion is that over some finite `K/ℚ_p`, `B_st ⊗ V` has a basis of `G_K`-fixed

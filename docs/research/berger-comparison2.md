@@ -126,6 +126,8 @@ total, including 324 theorems, use only `propext`, `Classical.choice`
 and `Quot.sound`.
 
 The focused `#discharges` in `scratch/berger-comparison2/Discharges.lean`
+(removed when this work landed on main: it named `OpenResearchLeaves72`,
+which main no longer has)
 matches the type of the existing headline row without importing the
 headline module. It finds the new transfer, with only the inline
 paper-ring basis implication still assumed. The raw results are
