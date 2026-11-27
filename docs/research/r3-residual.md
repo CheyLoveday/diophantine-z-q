@@ -106,11 +106,24 @@ To remove even R3′, one could prove `IsHolChart` charts are the charts of the 
 of `𝒢 ×_{𝓞_L,τ} Spec ℂ`. That needs a bridge `Pts τ ≃ CPt(𝒢_τ)` (homeomorphism and evaluation), which is
 not done (§6).
 
-**Gaudron–Rémond's other caveat (secondary step, not done).** The leaf bounds `isogDeg φ = #ker(φ)(K̄)`, while GR
-bound the degree of `φ`. A consequence of the print needs `#ker(K̄) ≤ deg φ`. In characteristic 0 the two are
-equal (the kernel is étale, Cartier; STANDARD), but this is not proved in Lean. `PicDict.finiteOfFiniteKerPts`
-gives only finiteness. If a reviewer counts this as a step, `gaudronRemondThm14An` stays GLUE on it alone. The
-proved part of the count is then −2.
+**Gaudron–Rémond's other caveat (secondary step, now proved in Lean).** The leaf bounds `isogDeg φ = #ker(φ)(K̄)`,
+while GR bound the degree of `φ`. A consequence of the print needs `#ker(K̄) ≤ deg φ`. When this report was written,
+that step was not proved in Lean. It now is (gr-isogdeg, `docs/research/gr-isogdeg.md`). In
+`ZInQKernel/Contrib/OneProof/GaudronRemondIsogDeg.lean`, `ZInQ.GRIsogDeg.isogDeg_le_finDeg` proves
+`isogDeg φ ≤ finDeg φ` for every isogeny over any field, and `ZInQ.GRIsogDeg.isogDeg_eq_finDeg` proves equality in
+characteristic 0. Here `finDeg φ` is Mathlib's `Scheme.Hom.finrank` of `φ` at the generic point of the target, which
+is `[K(A) : K(B)]`.
+
+The bundle field is now `gaudronRemondThm14Printed`, of type `ZInQ.GR14Printed.GaudronRemondThm14Printed`
+(gr14-printed, fork PR #209; `OpenResearchLeaves79`), not this report's `gaudronRemondThm14An`. That field also
+bounds `isogDeg`, over number fields, and its isogenies satisfy `IsIsogeny` by
+`ZInQ.GR14Printed.isIsogenyPrinted_iff`, so `isogDeg_eq_finDeg` applies to them. The degree in the field is
+therefore the degree of the isogeny as a finite morphism, and the degree no longer separates the field from the
+print. What is left for the field is what `docs/one-proof/OPEN.md` lists for it: the p. 2062 locator for isogenies
+and their degree (UNVERIFIED: no reading covers it), the specialization `K′ = k`, the split of the printed couple
+into two isogenies, and the readings named in its flag. The bridges in §4 of `GaudronRemondIsogDeg.lean` are stated
+for the retired forms `ZInQ.R3Residual.GaudronRemondThm14An` and `ZInQ.HeightFix.GaudronRemondThm14Printed`; no Lean
+theorem yet states the current field with `finDeg`.
 
 ## 4. Files
 

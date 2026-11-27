@@ -315,7 +315,7 @@ structure OpenResearchLeaves60_y3x6NOSDS : Prop where
   elliotWildInertiaTrivial : _root_.SZRaynaud.ElliotWildInertiaTrivial
   /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
     5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
-    of arXiv:math/0102179v3) in the printed form of
+    of arXiv:math/0102179v3; journal locator UNVERIFIED) in the printed form of
     Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR
     of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de
     Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. -/
@@ -558,7 +558,7 @@ structure OpenResearchLeaves59_y3x6NOSDS : Prop where
   elliotWildInertiaTrivial : _root_.SZRaynaud.ElliotWildInertiaTrivial
   /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
     5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
-    of arXiv:math/0102179v3) in the printed form of
+    of arXiv:math/0102179v3; journal locator UNVERIFIED) in the printed form of
     Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR
     of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de
     Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. -/
@@ -811,7 +811,7 @@ structure OpenResearchLeaves54SFU_y3x6NOSDS : Prop where
   r6u : _root_.HDec.D2A6.R6U
   /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
     5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
-    of arXiv:math/0102179v3) in the printed form of
+    of arXiv:math/0102179v3; journal locator UNVERIFIED) in the printed form of
     Berger, An introduction to the theory of p-adic representations (arXiv:math/0210184v1, IV.5.1
     p. 30, IV.5.3 p. 31): a de Rham p-adic representation V = E^n of G_Qp is potentially
     semistable over Fontaine's B_st = B_cris[log p~] (II.3.1, II.3.3), basis form (I.2.3).
@@ -1486,7 +1486,7 @@ structure OpenResearchLeaves63NOSDS : Prop where
   elliotWildInertiaTrivial : _root_.SZRaynaud.ElliotWildInertiaTrivial
   /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
     5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
-    of arXiv:math/0102179v3) in the printed form of
+    of arXiv:math/0102179v3; journal locator UNVERIFIED) in the printed form of
     Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR
     of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de
     Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. -/
@@ -1785,7 +1785,7 @@ structure OpenResearchLeaves64NOSDS : Prop where
   elliotWildInertiaTrivial : _root_.SZRaynaud.ElliotWildInertiaTrivial
   /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
     5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
-    of arXiv:math/0102179v3) in the printed form of
+    of arXiv:math/0102179v3; journal locator UNVERIFIED) in the printed form of
     Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR
     of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de
     Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. -/

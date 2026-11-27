@@ -68,7 +68,7 @@ Readings that apply to every statement built on a shared kernel definition.
 
 ## Good first targets
 
-* [`silverbergZarhinThm34`](#silverbergzarhinthm34): a good first target; consequence, [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
+None at the moment.
 
 ## Held
 
@@ -79,9 +79,12 @@ ping, and is released if there is no reply within 7 days of the ping.
 | hypothesis | holder | since |
 | --- | --- | --- |
 | [`dsThm966Printed`](#dsthm966printed) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) | 2026-11-17 |
+| [`afCharpolyDS965`](#afcharpolyds965) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/224)) | 2026-11-27 |
+| [`gaudronRemondSec9LowerAnSS`](#gaudronremondsec9loweranss) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7209358329)) | 2026-11-27 |
 | [`y3FullThreeRepZ30`](#y3fullthreerepz30) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/211)) | 2026-11-26 |
 | [`carayolThmAFrob`](#carayolthmafrob) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) | 2026-11-19 |
 | [`cmHeight62`](#cmheight62) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) | 2026-11-19 |
+| [`silverbergZarhinThm34`](#silverbergzarhinthm34) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/223)) | 2026-11-27 |
 | [`hRC`](#hrc) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) | 2026-11-17 |
 | [`hCT`](#hct) | @mccorvie ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) | 2026-11-20 |
 | [`hRank`](#hrank) | the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/198)) | 2026-11-25 |
@@ -122,18 +125,18 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 | hypothesis | bundle | kind | strict | flag class | label | tier | area | human reads | status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`colmez1992DeRhamAbVar`](#colmez1992derhamabvar) | added | consequence | GLUE | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
-| [`afCharpolyDS965`](#afcharpolyds965) | research | consequence | GLUE | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 1 | open (last released by [@zachbaugher](https://github.com/zachbaugher): released) |
+| [`afCharpolyDS965`](#afcharpolyds965) | research | consequence | GLUE | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 1 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/224)) |
 | [`bergerSurveyF`](#bergersurveyf) | research | consequence | GLUE | pending-reading | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`carayolThmAFrob`](#carayolthmafrob) | research | consequence | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) |
 | [`cmHeight62`](#cmheight62) | research | consequence | GLUE | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) |
 | [`deligneCanonicalModelY3EveryPrint`](#delignecanonicalmodely3everyprint) | research | consequence | GLUE | pending-review |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
-| [`gaudronRemondSec9LowerAnSS`](#gaudronremondsec9loweranss) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
+| [`gaudronRemondSec9LowerAnSS`](#gaudronremondsec9loweranss) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7209358329)) |
 | [`gaudronRemondThm14Printed`](#gaudronremondthm14printed) | research | published | GLUE | pending-review, unverified-locator | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`javanpeykarThm111An`](#javanpeykarthm111an) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`modularHTCoeff`](#modularhtcoeff) | research | consequence | GLUE | pending-review | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open (last released by the project: #191 landed as additive code without a fold. Its premise `NewformGeometricComparison` is stronger than `ModularHTCoeff` (it fixes one of the row's two normalizations and adds algebraic coefficients...) |
 | [`panThm104F`](#panthm104f) | research | published | GLUE | pending-reading | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`silverbergZarhinThm34`](#silverbergzarhinthm34) | research | consequence | GLUE | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 1 | open |
+| [`silverbergZarhinThm34`](#silverbergzarhinthm34) | research | consequence | GLUE | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 1 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/223)) |
 | [`y3FullThreeRepZ30`](#y3fullthreerepz30) | research | consequence | GLUE | unverified-locator |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/211)) |
 | [`fontaine1982HTAbVar`](#fontaine1982htabvar) | added | published | LEAF | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`cmjDegreePrint`](#cmjdegreeprint) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 1 | open |
@@ -169,7 +172,7 @@ DeRhamScholze.TatePrints.Colmez1992DeRhamAbVar
 * Source: Diamond-Shurman, A First Course in Modular Forms, GTM 228, corrected fourth printing (2016), Theorem 9.6.5 and the paragraph after it, p. 404; rho_{f,lambda} and V_l(A_f) as in Lemma 9.5.3, Theorem 9.5.4, Exercise 9.5.2(a) (Section 9.5, pp. 397-402); placements read by a human reader (HUMAN-READ, zachbaugher, Deicyde/diophantine-z-q#14 comment 7121091136)
 * discussion: [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37).
 * Human readings recorded: 1.
-* Status: open (last released by [@zachbaugher](https://github.com/zachbaugher): released).
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/224)).
 
 ```lean
 AfTateLam.AfCharpolyDS965
@@ -189,7 +192,7 @@ AfTateLam.AfCharpolyDS965
 HDec.PkgI4.PanDict.BergerSurveyF
 ```
 
-> Berger's p-adic monodromy theorem, Invent. Math. 148 (2002), 219-284, as cited by the manuscript (bibitem berger2002; Théorème 0.7 = Corollaire 5.22 in the author copy, Théorème 0.6 = Théorème 5.19 of arXiv:math/0102179v3): every de Rham representation of G_{Q_p} is potentially semistable, here in Fontaine's dimension form over BstFOf (Astérisque 223 (1994), Exp. III, 1.8.5 and 5.6.1; Exp. II, 4.2.4-4.2.5). Colmez, Astérisque 319 (2008), Théorème 0.1, prints the basis form, which implies this field (PanBergerRefereed.bergerSurveyF_of_colmez); the converse needs the G_K-regularity of B_st, which is not proved, so ColmezThm01 is not a replacement at the same count.
+> Berger's p-adic monodromy theorem, Invent. Math. 148 (2002), 219-284, as cited by the manuscript (bibitem berger2002; Théorème 0.7 = Corollaire 5.22 in the author copy, Théorème 0.6 = Théorème 5.19 of arXiv:math/0102179v3; journal locator UNVERIFIED): every de Rham representation of G_{Q_p} is potentially semistable, here in Fontaine's dimension form over BstFOf (Astérisque 223 (1994), Exp. III, 1.8.5 and 5.6.1; Exp. II, 4.2.4-4.2.5). Colmez, Astérisque 319 (2008), Théorème 0.1, prints the basis form, which implies this field (PanBergerRefereed.bergerSurveyF_of_colmez); the converse needs the G_K-regularity of B_st, which is not proved, so ColmezThm01 is not a replacement at the same count.
 
 ### carayolThmAFrob
 
@@ -240,7 +243,7 @@ Y3Hodge.DeligneCanonicalModelY3EveryPrint
 * Source: Gaudron-Remond (GR1), Theoreme des periodes et degres minimaux d'isogenies, Comment. Math. Helv. 89 (2014), 343-403, Cor. 8.4, p. 400 (h(A) >= -(1/2)(dim A) log(2 pi), proved there; attribution: Bost), with the normalization h_F(A) = h(A) - (g/2) log pi on p. 352 (section 2.3); Duke 163 p. 2098: citation only (Gaudron-Remond, Polarisations et isogenies, Duke Math. J. 163 (2014), 2057-2108, section 9, proof of Lemme 9.1, cites GR1 Cor. 8.4; locators.md R21); cited by diophantine_zq.tex L894-895 (step E4); over the stable height with the metric on A_tau(C)^an (r3-residual), semistability as printed (IsAnStableHeightSS; semistab-assembly); replaces Bost, Sem. Bourbaki 795, which does not print this display (its Thm 2.1 i, p. 119, prints only h >= C_0(g))
 * packet [R5](#packet-r5); label long-pole (statement checks first; Lean only at Mathlib scale); tier T4 (model triage, unreviewed); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: none.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7209358329)).
 
 ```lean
 ZInQ.BostGR9.GaudronRemondSec9LowerAnSS
@@ -336,7 +339,7 @@ ZInQ.HeightSplit.PazukiCor13Upper
 * Source: Silverberg-Zarhin, Ann. Inst. Fourier 45 (1995), Theorem 3.4, pp. 405-406 (proof: SGA 7 I, Exp. IX, Th. 3.6, p. 351); Grothendieck's semistable reduction theorem; replaces silverbergZarhinThm35 (Raynaud's criterion) through SZRaynaud.silverbergZarhinThm35_of_sz34; Néron-model existence: SGA 7 I, Exp. IX, §3.2.1, p. 348
 * packet [R1](#packet-r1); label good-first (a good first target); discussion: [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85).
 * Human readings recorded: 1.
-* Status: open.
+* Status: held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/223)).
 
 ```lean
 SZRaynaud.SilverbergZarhinThm34
