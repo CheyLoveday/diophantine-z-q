@@ -539,8 +539,9 @@ ZInQ.HeightModelM.GaudronRemondThm14GR1
 
 > item-m-fold: Gaudron-Rémond, Polarisations et isogénies, Duke Math. J. 163 (2014), 2057-2108,
 > Thm 1.4, p. 2060, with g >= 1 and κ(A) as on p. 2058 and isogenies "surjectif de noyau fini", the
-> degree being the order of the kernel (p. 2062); read in the authors' copy with the Duke
-> pagination, the comparison with the Duke journal text is still to be made. The height is the h_F
+> degree being the order of the kernel (p. 2062); read in Duke's version of record (the footer of
+> p. 2057 gives Vol. 163, No. 11, DOI 10.1215/00127094-2782528, and the pages run 2057-2108; see
+> docs/research/duke163-version-of-record.md). The height is the h_F
 > of a semi-abelian model of GR1 section 2.3, to which Duke p. 2058 refers
 > (ZInQ.HeightModelM.IsGR1StableHeightOriginal). As in the replaced field, one number field K
 > carries A, B and the isogenies (K = k), and the printed couple is split into two isogenies of
@@ -655,4 +656,4 @@ ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne
 | gaudronRemondThm14GR1 | statement-check | project | yes |  |
 
 
-<!-- render stamp: claims-free a6e9fbc4dcb3dab9, output 88540cf65e294fd5 -->
+<!-- render stamp: claims-free 63dd500c5e6ebb03, output edaeb39e29066e66 -->
