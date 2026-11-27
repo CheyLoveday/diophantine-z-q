@@ -61,7 +61,7 @@ theorem smul_mem_comap_secOmega (c : Γ(Spec (CommRingCat.of (𝓞 L)), V)) (x :
     (hx : algebraMap 𝒢.genStalk (Reta L) x = germEta V hV c) {m : 𝒢.cotangent}
     (hm : m ∈ (secOmega 𝒢 V W hV hVW).comap (theta' 𝒢)) :
     x • m ∈ (secOmega 𝒢 V W hV hVW).comap (theta' 𝒢) := by
-  show theta 𝒢 (x • m) ∈ secOmega 𝒢 V W hV hVW
+  show ZInQ.HeightDict.Conormal.theta 𝒢 (x • m) ∈ secOmega 𝒢 V W hV hVW
   rw [map_smul, ← algebraMap_smul (Reta L) x, hx]
   exact germEta_smul_mem_secOmega 𝒢 hV hVW c hm
 
