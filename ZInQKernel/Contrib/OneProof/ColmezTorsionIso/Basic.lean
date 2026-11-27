@@ -16,9 +16,11 @@ built from the `F̄`-points (the row's `A.T p`, `G9/I4Layer.lean`) is isomorphic
 
 * **Base field and variety.** Colmez's `K` is the row's `F` and his `X` is the row's `A` (an abelian
   variety over `F`, with no integral model). His identification `𝒳(O_{C_p}) = X(C_p)` for a proper
-  model `𝒳` over `O_K` (p. 638, "Par construction") is taken as given, as is the existence of such a
-  model for every `A`; neither is a Lean theorem, and both are proposed for a ruling by Jack or the
-  maintainer. The row's Lean form uses only `X(C_p)` and its Galois action, both read off `A`; as
+  model `𝒳` over `O_K` (p. 638, "Par construction") is a Lean theorem since #239
+  (`ColmezProperModel.modelPtsEquiv`, `modelPtsEquiv_gal`). The model step reduces to the existence
+  of such a model for every `A` (`ColmezProperModel.ProperModelExists`, `properModelPoints_iff`),
+  which is in neither the tree nor Mathlib and is proposed for a ruling by Jack or the maintainer.
+  The row's Lean form uses only `X(C_p)` and its Galois action, both read off `A`; as
   printed, 5.2(i) builds the limit from `F_ω(a_n)`, which goes through the model.
 * **The embedding `F̄ → ℂ_p`.** The tree's `G_F → G_{ℚ_p}` (`gfToGqp`) is restriction along the
   isomorphism `embF : ℚ̄_p ≃ F̄` (`G9.embF_gfToGqp`, `G9.embF_bijective`). We use the same

@@ -55,6 +55,11 @@ The row inherits the weakenings of `Colmez1992DeRhamAbVarCp`:
 
 ## Not formalized: the proper model (Colmez, p. 638)
 
+Since #239 (`ColmezProperModel/`) the points identification below is a Lean theorem
+(`modelPtsEquiv`, `modelPtsEquiv_gal`), and `properModelPoints_iff` proves
+`ProperModelPoints ↔ ProperModelExists`; only the existence of a proper model remains
+(`ColmezProperModel/README.md`). The rest of this section is the note as written at #235.
+
 Colmez fixes a proper model `𝒳` of `X` over `O_K` and writes `u_n ∈ 𝒳(O_{C_p})`, using "Par
 construction, 𝒳(O_{C_p}) s'identifie à X(C_p)" (p. 638). The theorem's statement depends only on
 `X(C_p)` and its Galois action, and the proof shows the pairing does not depend on `𝒳` (p. 640). The

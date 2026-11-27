@@ -38,8 +38,8 @@ existential type, bilinearity in `ω`, the `Fil¹` clause and (iii) dropped), ex
 built as in the print, from the `C_p`-points: `VCp p A = ℚ_p ⊗ lim A(ℂ_p)[pⁿ]`, and `g ∈ G_F` acts
 on coordinates through its continuous action on `ℂ_p` (`galRepCp`, `g ↦ cpAct (gfToGqp g)`).
 Colmez's `K` is `F` and his `X` is `A`; `ℂ_p` is an `F`-algebra through `F ≅ F' ⊆ ℚ̄_p ⊂ ℂ_p`, the
-embedding behind `gfToGqp` (the model step is proposed for a ruling by Jack or the maintainer:
-`ColmezTorsionIso/Basic.lean`). -/
+embedding behind `gfToGqp` (the model step reduces to `ColmezProperModel.ProperModelExists`,
+proposed for a ruling by Jack or the maintainer: `ColmezTorsionIso/Basic.lean`). -/
 def Colmez1992DeRhamAbVarCp : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
     (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F),

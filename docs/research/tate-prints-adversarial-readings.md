@@ -197,7 +197,8 @@ pⁿ" for the `pⁿ`-th roots of unity) is unambiguous from the notation `μ_{p�
   change.
 * **The `C_p`-points step of R1** was argued here (finite torsion schemes, the torsion count `card_torsion`). Since
   #228 the identification is a Lean theorem (`ColmezCp.colmez1992DeRhamAbVar_iff_cp`, `ColmezTorsionIso.vCp_galRep`);
-  the model step behind `X(C_p)` is proposed for a ruling by Jack or the maintainer.
+  since #239 so is `𝒳(O_{C_p}) = X(C_p)` (`ColmezProperModel.modelPtsEquiv`), and the model step reduces to
+  `ColmezProperModel.ProperModelExists`, proposed for a ruling by Jack or the maintainer.
 * **Scope.** R1 is Colmez's theorem at its own generality, minus dropped clauses. R2 is Fontaine's theorem only for
   `K` finite over `ℚ_p` (Fontaine allows any complete discretely valued `K` of characteristic 0 with perfect residue
   field), and only in dimension form.

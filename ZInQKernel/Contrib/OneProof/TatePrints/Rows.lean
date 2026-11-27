@@ -51,8 +51,9 @@ Lean form (direct instance, with weakenings only):
 * dropped: bilinearity in `ω`, the `Fil¹` clause and (iii).
 Base field: a finite `F/ℚ_p`, as in the print. Reading point: the print builds `T_p(X)` from
 `X(C_p)`, the row from the `F̄`-points of `A`; since #228 the two are identified in Lean
-(`ColmezCp.colmez1992DeRhamAbVar_iff_cp`, `ColmezTorsionIso.vCp_galRep`). The model step behind
-`X(C_p)` is proposed for a ruling by Jack or the maintainer. -/
+(`ColmezCp.colmez1992DeRhamAbVar_iff_cp`, `ColmezTorsionIso.vCp_galRep`). Since #239
+`𝒳(O_{C_p}) = X(C_p)` is a Lean theorem (`ColmezProperModel.modelPtsEquiv`); the model step reduces
+to `ColmezProperModel.ProperModelExists`, proposed for a ruling by Jack or the maintainer. -/
 def Colmez1992DeRhamAbVar : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Algebra ℚ_[p] F] [FiniteDimensional ℚ_[p] F]
     (A : ZInQ.Contrib.G9.PkgI4.I3.AbVar F),

@@ -25,11 +25,12 @@ Add-only. Imports: `G9/Galois.lean`, `AbVarBC/Main.lean` (`Basic`, `Shape`), and
 ## The model step, proposed for a ruling by Jack or the maintainer
 
 * Colmez's `K` is `F` and his `X` is `A`. His identification `𝒳(O_{C_p}) = X(C_p)` for a proper
-  model `𝒳` over `O_K` (p. 638, "Par construction"), and the existence of such a model for every
-  `A`, are taken as given here; neither is a Lean theorem, and both are proposed for a ruling by
-  Jack or the maintainer (see What remains). The row's Lean form uses only `X(C_p)` and its Galois
-  action, both read off `A` over `F`; as printed, 5.2(i) builds the limit from `F_ω(a_n)`, which
-  goes through the model.
+  model `𝒳` over `O_K` (p. 638, "Par construction") is a Lean theorem since #239
+  (`ColmezProperModel.modelPtsEquiv`, `modelPtsEquiv_gal`). The model step reduces to the existence
+  of such a model for every `A` (`ColmezProperModel.ProperModelExists`), which is in neither the
+  tree nor Mathlib and is proposed for a ruling by Jack or the maintainer (see What remains). The
+  row's Lean form uses only `X(C_p)` and its Galois action, both read off `A` over `F`; as printed,
+  5.2(i) builds the limit from `F_ω(a_n)`, which goes through the model.
 * `C_p` is an `F`-algebra through `F → ℚ̄_p ⊂ C_p`, `y ↦ phiF y` (`algCp`, a local instance only),
   whose image is the tree's `F'`. The embedding `F̄ → C_p` is `x ↦ embF⁻¹ x` (`iotaFbar`), the
   same isomorphism `ℚ̄_p ≃ F̄` that defines `gfToGqp`; it is an `F`-algebra map.
@@ -78,12 +79,12 @@ isomorphism), `colmezShape_iff_cp`.
   statement against p. 639 is needed; it differs from the read row only in `T_p` and its action).
 * A ruling by Jack or the maintainer on the model step, proposed and not given
   (`docs/one-proof/kinds.tsv` lists it as open, and `docs/one-proof/STATEMENT-CHECKS.md` leaves
-  count verdicts to them). It covers two facts, neither a Lean theorem: Colmez's
-  `𝒳(O_{C_p}) = X(C_p)` for a proper model over `O_K` (p. 638), whose input, the valuative
-  criterion of properness, is in Mathlib (`AlgebraicGeometry.IsProper.eq_valuativeCriterion`) but
-  not yet applied to `𝓞_ℂ_[p] → ℂ_[p]`; and that a proper model exists for every `A`, in neither the
-  tree nor Mathlib (the print takes one as given, pp. 629 and 638). `ColmezTiltIso/PRINTED.md`
-  (#235) gives a schematic Lean statement of the step.
+  count verdicts to them). Since #239 Colmez's `𝒳(O_{C_p}) = X(C_p)` for a proper model over
+  `O_K` (p. 638) is a Lean theorem (`ColmezProperModel.modelPtsEquiv`, `modelPtsEquiv_gal`, through
+  Mathlib's valuative criterion), and the step reduces to `ProperModelExists`, a proper model with
+  generic fibre `A` for every `A` (`properModelPoints_iff`). That is in neither the tree nor
+  Mathlib: it needs the projectivity of abelian varieties (`ColmezProperModel/README.md`); the print
+  takes a model as given, pp. 629 and 638. The ruling, or a Lean proof, is on `ProperModelExists`.
 * The readers' non-blocking points (2) (`ℤ_p`-linearity in `u`) and (3) (dropped clauses) are
   unchanged.
 * The ledgers (`kinds.tsv`, `reviews.tsv`, the open list) are not edited here (add-only).
