@@ -17,6 +17,7 @@ stated.
 
 namespace DeRhamScholze.TatePrints.ColmezTp
 
+open CategoryTheory AlgebraicGeometry Limits MonoidalCategory CartesianMonoidalCategory MonObj
 open ZInQ.Contrib.G9 ZInQ.Contrib.G9.PkgI4 Module
 open ZInQ.Contrib.ColmezTorsionIso (TCp galTCp)
 open ZInQ.Contrib.ColmezTiltIso.Tp (shapeT_iff_shapeV)
