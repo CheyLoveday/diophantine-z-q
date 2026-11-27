@@ -82,10 +82,14 @@ def ProperModelPoints : Prop :=
 
 Given `ProperModelPoints`, `φ` identifies `lim 𝒳(O_{C_p})[pⁿ]` with `TCp p A`, `G_F`-equivariantly.
 The rows above are stated on `TCp p A`, so they become statements on Colmez's
-`T_p(X) = lim 𝒳(O_{C_p})[pⁿ]` with no further reading step. Two inputs, neither in the tree or
-Mathlib, would prove it:
+`T_p(X) = lim 𝒳(O_{C_p})[pⁿ]` with no further reading step. One input is in neither the tree nor
+Mathlib, and one is in Mathlib but not yet applied:
 
-* existence of a proper model, for instance the closure of `A` in a projective embedding over `O_F`;
-* the valuative criterion of properness, which makes `𝒳(O_{C_p}) → 𝒳(C_p) = A(C_p)` a bijection.
+* existence of a proper model, for instance the closure of `A` in a projective embedding over `O_F`
+  (this also needs the projectivity of `A`);
+* the valuative criterion of properness is in Mathlib (`AlgebraicGeometry.IsProper.eq_valuativeCriterion`,
+  Stacks 0BX5, for any valuation ring). Applying it to `𝓞_ℂ_[p] → ℂ_[p]` (the `ValuationRing` and
+  `IsFractionRing` instances, and the identification with `A.Pt ℂ_[p]`) is not done. It makes
+  `𝒳(O_{C_p}) → 𝒳(C_p) = A(C_p)` a bijection.
 
 The group law on `𝒳(O_{C_p})` is transported from `A(ℂ_p)` along this bijection.
