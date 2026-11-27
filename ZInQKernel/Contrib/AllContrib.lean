@@ -3649,3 +3649,8 @@ import ZInQKernel.Contrib.OneProof.CMHeight62.Model
 import ZInQKernel.Contrib.OneProof.CMHeight62.Periods
 import ZInQKernel.Contrib.OneProof.CMHeight62.Short
 import ZInQKernel.Contrib.OneProof.CMHeight62.ShortModel
+import ZInQKernel.Contrib.OneProof.HeightModelM3.Check
+import ZInQKernel.Contrib.OneProof.HeightModelM3.GR1Rows
+import ZInQKernel.Contrib.OneProof.HeightModelM3.Spans
+import ZInQKernel.Contrib.OneProof.HeightModelM3.StalkInjective
+import ZInQKernel.Contrib.OneProof.HeightModelM3.Theta
