@@ -3664,3 +3664,6 @@ import ZInQKernel.Contrib.OneProof.ColmezProperModel.ModelRow
 import ZInQKernel.Contrib.OneProof.ColmezProperModel.ModelTate
 import ZInQKernel.Contrib.OneProof.ColmezProperModel.Points
 import ZInQKernel.Contrib.OneProof.ColmezProperModel.Valuative
+import ZInQKernel.Contrib.OneProof.HeightModelM4.Check
+import ZInQKernel.Contrib.OneProof.HeightModelM4.GR1Rows
+import ZInQKernel.Contrib.OneProof.HeightModelM4.Wedge
