@@ -32,3 +32,16 @@ Base 182e3388b7416a1d625b1786b945b2e2b77b2e4e (confirmed). Worktree needed `lean
 - Tree check: `BergerBst.FontaineBstInvariants` (B_st^{G_K} = K_0, dimension form) is a named input, NOT proved;
   B_dR^{G_K} = K proved (dimension form, `BdRInv.bdRInvariantsPrinted_proof`); log[p̃] transcendental over B_cris/B_max
   proved (`LogPFontaine.logPTildeTranscendental_proof`); no Frobenius-based K ⊗_{K_0} B_cris → B_dR injectivity found.
+
+## #print axioms output (scratch/bst-regular/Axioms.lean, lake env lean)
+'HDec.PkgI4.BstRegular.isAdmissibleT_of_isAdmissible_of_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.BstRegular.isDomain_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.BstRegular.isRegularB_bst' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.BstRegular.isAdmissibleT_of_isAdmissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.BstRegular.isPstFBasis_iff_isPstF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.BstRegular.localIsPstFBasis_iff_localIsPstF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.PkgI4.BstRegular.colmezThm01_iff_bergerSurveyF' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+## Reductions considered, not attempted (see report §4)
+- d1 (line in B_cris[X] has degree 0): needs log[p̃] ∉ Frac(B_cris) + B_dR^{G_K} at general K; tree has G_{Q_p} only;
+  at general K this needs K ⊗_{K_0} B_cris → B_dR injective (c2). Not pursued.
