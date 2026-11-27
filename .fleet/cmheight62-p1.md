@@ -21,3 +21,8 @@ ZInQKernel/Contrib/OneProof/CMHeight62/, docs/research/cmheight62-p1.md, scratch
 
 **Compiles:** `lake build ZInQKernel.Contrib.OneProof.CMHeight62.Final` succeeds; HodgeLineBinding.All and
 HodgeLatticeIdeal.All both build.
+
+**#discharges:** `cmHeight62_of_step7'` matches `OpenResearchLeaves79.cmHeight62`, still assumes `[Step7]`
+(scratch/cmheight62-p1/discharges.out).
+
+**Final SHA:** all work is at `74d5c8087c778404fcd09ad01c2eee5ae369749a`; this file is committed last, as its child.
