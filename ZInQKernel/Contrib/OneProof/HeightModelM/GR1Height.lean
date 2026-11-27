@@ -30,7 +30,7 @@ noncomputable section
 
 open CategoryTheory AlgebraicGeometry Limits Topology MonObj
 open ZInQ.DefFaltings ZInQ.HeightSplit ZInQ.HeightGlue ZInQ.HeightDict ZInQ.HeightFix
-open ZInQ.R3Residual ZInQ.H5Glue ZInQ.SemistabAssembly
+open ZInQ.R3Residual ZInQ.H5Glue ZInQ.SemistabAssembly CToPrinted
 open scoped NumberField
 
 set_option linter.style.haveILetI false
