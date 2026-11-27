@@ -9,9 +9,9 @@ lean: HDec.HSyn.sixContactMin_of_open101
 
 # The minimal height hypothesis from nineteen statements
 
-The [minimal height hypothesis](../main/six-contact-min.md) follows from the nineteen statements of
-this chapter taken together: theorems from the literature, grouped by the theory they come from
-([Shimura curves of discriminant 6](shimura-curves/README.md),
+The [minimal height hypothesis](../multiplication/certificate/six-contact-min.md) follows from the
+nineteen statements of this chapter taken together: theorems from the literature, grouped by the
+theory they come from ([Shimura curves of discriminant 6](shimura-curves/README.md),
 [complex multiplication](cm-fibres/README.md),
 [Néron models, semistable reduction and monodromy](neron-models/README.md),
 [Faltings 1983 and Faltings heights](heights/README.md),
@@ -35,7 +35,7 @@ height hypothesis.
 
 ## Depends on
 
-- [The minimal height hypothesis](../main/six-contact-min.md)
+- [The minimal height hypothesis](../multiplication/certificate/six-contact-min.md)
 
 ## Proof depends on
 

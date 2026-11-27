@@ -3615,3 +3615,4 @@ import ZInQKernel.Contrib.OneProof.HeightModelM.SemiAbelianModel
 import ZInQKernel.Contrib.OneProof.JavanpeykarJacK
 import ZInQKernel.Contrib.OneProof.JavanpeykarJacKEx
 import ZInQKernel.Contrib.OneProof.JavanpeykarJacKReader
+import ZInQKernel.Contrib.OneProof.DeligneNarrow
