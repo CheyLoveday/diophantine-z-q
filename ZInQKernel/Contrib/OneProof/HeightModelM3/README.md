@@ -12,8 +12,18 @@
    localizations of an affine chart. `range_stalkToGeneric`: its image is `printedOmegaAt s`.
    `mem_globalOmega_iff`: `globalOmega` is the module of compatible families of germs of
    `e*Ω¹`, one in each stalk.
-3. **Spans** (`Spans.lean`). `germEta_smul_mem_secOmega` and `smul_wedge_mem_detSec`: the
-   `𝓞_L`-spans `secOmega` and `detSec` are `𝒪_S(V)`-modules.
+3. **Spans** (`Spans.lean`). `secOmega V W` is an `𝒪_S(V)`-module (`germEta_smul_mem_secOmega`);
+   the generating wedges of `detSec` are closed under multiplying one factor by a lift of `c`
+   (`smul_wedge_mem_detSec`).
 
 `GR1Rows.lean` restates the implications from the GR1 rows over `IsGR1StableHeightGlobal` to the
 bundle's fields. `Check.lean` prints the axioms.
+
+Remaining readings (not Lean theorems):
+1. Mathlib has no sheaf of relative differentials. `stalkOmega s` is defined by the stalk formula
+   `(e*Ω¹)_s = 𝒪_{S,s} ⊗_{𝒪_{𝒢,e(s)}} Ω[𝒪_{𝒢,e(s)}/𝓞_L]`, and `globalOmega` (elements that are
+   sections near every point, `HeightModelM2`) stands in for `Γ(S, e*Ω¹)`. That these are the
+   stalk and the global sections of the sheaf `e*Ω¹_{𝒢/S}` is a reading.
+2. `smul_wedge_mem_detSec` shows that multiplying one factor of a wedge by a lift `x` of
+   `c ∈ 𝒪_S(V)` stays in `detSec`. That this element is `c|_η · (v₁ ∧ ⋯ ∧ v_g)` in the Hodge line
+   (`𝒪_{S,η} ≅ L`, compatible with the action of `𝒪_{𝒢,ξ}` on `𝔪_ξ/𝔪_ξ²`) is not proved.

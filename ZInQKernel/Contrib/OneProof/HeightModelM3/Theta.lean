@@ -52,15 +52,15 @@ theorem mapCotangent_surjective : Function.Surjective (Ideal.mapCotangent
     Ideal.mapCotangent_toCotangent _ _ _ _ _⟩
 
 /-- **`θ` is surjective** (the conormal sequence, with `Ω[𝒪_{S,η}/𝓞_L] = 0`). -/
-theorem theta_surjective : Function.Surjective (theta 𝒢) :=
+theorem theta_surjective : Function.Surjective (ZInQ.HeightDict.Conormal.theta 𝒢) :=
   (kerCotangentToTensor_surjective 𝒢).comp (mapCotangent_surjective 𝒢)
 
-theorem theta_bijective : Function.Bijective (theta 𝒢) :=
-  ⟨theta_injective 𝒢, theta_surjective 𝒢⟩
+theorem theta_bijective : Function.Bijective (ZInQ.HeightDict.Conormal.theta 𝒢) :=
+  ⟨ZInQ.HeightDict.Conormal.theta_injective 𝒢, theta_surjective 𝒢⟩
 
 /-- **`θ : 𝔪_ξ/𝔪_ξ² ≃ 𝒪_{S,η} ⊗ Ω[𝒪_{𝒢,ξ}/𝓞_L]`.** -/
 noncomputable def thetaEquiv :
     𝒢.cotangent ≃ₗ[𝒢.genStalk] (Reta L) ⊗[𝒢.genStalk] Ω[𝒢.genStalk⁄𝓞 L] :=
-  LinearEquiv.ofBijective (theta 𝒢) (theta_bijective 𝒢)
+  LinearEquiv.ofBijective (ZInQ.HeightDict.Conormal.theta 𝒢) (theta_bijective 𝒢)
 
 end ZInQ.HeightModelM3

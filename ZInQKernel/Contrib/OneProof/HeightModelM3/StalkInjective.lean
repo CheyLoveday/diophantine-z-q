@@ -25,7 +25,8 @@ image: its stalks inject into the generic fibre.
 * `secOmega_existsUnique_germ`: a section over `V ∋ s` has a unique germ in the stalk at `s`.
 * `mem_globalOmega_iff`: `t ∈ globalOmega` iff at every `s` it is the image of exactly one
   element of the stalk. So `globalOmega` is the module of compatible families of germs of
-  `e*Ω¹`, i.e. `Γ(S, e*Ω¹)` itself, and not only its image. -/
+  `e*Ω¹`: the sections of `e*Ω¹` (not only of its image in the generic fibre), up to README
+  reading 1. -/
 open CategoryTheory AlgebraicGeometry Opposite
 open NumberField KaehlerDifferential
 open ZInQ.DefFaltings ZInQ.HeightDict ZInQ.HeightDict.Conormal ZInQ.HeightModelM2
@@ -96,10 +97,10 @@ noncomputable def algBEta : Algebra (𝒢.G.left.presheaf.stalk (𝒢.unitSectio
 
 attribute [local instance] algB algBO algBXi algOEta algBEta
 
-instance towerRBXi : IsScalarTower (𝓞 L) (𝒢.G.left.presheaf.stalk (𝒢.unitSection s)) 𝒢.genStalk :=
+theorem towerRBXi : IsScalarTower (𝓞 L) (𝒢.G.left.presheaf.stalk (𝒢.unitSection s)) 𝒢.genStalk :=
   IsScalarTower.of_algebraMap_eq fun a => (specMap_stalkAlg 𝒢 s a).symm
 
-instance towerBXiEta :
+theorem towerBXiEta :
     IsScalarTower (𝒢.G.left.presheaf.stalk (𝒢.unitSection s)) 𝒢.genStalk (Reta L) :=
   IsScalarTower.of_algebraMap_eq fun _ => rfl
 
@@ -109,9 +110,11 @@ theorem unitStalk_specMap (b : 𝒢.G.left.presheaf.stalk (𝒢.unitSection s)) 
     (genericPt_specializes s)
   exact congrArg (fun f => f.hom b) h
 
-instance towerBOEta : IsScalarTower (𝒢.G.left.presheaf.stalk (𝒢.unitSection s))
+theorem towerBOEta : IsScalarTower (𝒢.G.left.presheaf.stalk (𝒢.unitSection s))
     ((Spec (CommRingCat.of (𝓞 L))).presheaf.stalk s) (Reta L) :=
   IsScalarTower.of_algebraMap_eq fun b => unitStalk_specMap 𝒢 s b
+
+attribute [local instance] towerRBXi towerBXiEta towerBOEta
 
 /-- **The stalk of `e*Ω¹_{𝒢/S}` at `s`**: `𝒪_{S,s} ⊗_{𝒪_{𝒢,e(s)}} Ω[𝒪_{𝒢,e(s)}/𝓞_L]` (the stalk
 of `Ω_{𝒢/S}` at `e(s)` is `Ω[𝒪_{𝒢,e(s)}/𝒪_{S,s}] = Ω[𝒪_{𝒢,e(s)}/𝓞_L]`). -/
@@ -349,7 +352,8 @@ theorem secOmega_existsUnique_germ {V : (Spec (CommRingCat.of (𝓞 L))).Opens}
 
 end Stalk
 
-/-- **`globalOmega` is `Γ(S, e*Ω¹)`, not only its image**: an element of the generic fibre is a
+/-- **`globalOmega` consists of the sections of `e*Ω¹` (not only of its image in the generic
+fibre), up to README reading 1**: an element of the generic fibre is a
 global section iff at every point `s` it is the image of exactly one element of the stalk
 `(e*Ω¹)_s`. So a global section is the same as a family of germs, one in each stalk, with a common
 generic image; since every stalk injects into the generic fibre, this family is determined by

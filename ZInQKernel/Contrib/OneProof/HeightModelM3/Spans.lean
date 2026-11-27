@@ -4,12 +4,13 @@ import ZInQKernel.Contrib.OneProof.HeightModelM3.Theta
 /-! # Spans over `𝓞_L` and over `𝒪_S(V)`, and wedges of images of `θ`
 
 `secOmega`, `detSec` and `printedOmegaAt` are `𝓞_L`-spans, while the sections of the sheaf over
-`V` form an `𝒪_S(V)`-module. They agree:
+`V` form an `𝒪_S(V)`-module. What is proved:
 
 * `germEta_smul_mem_secOmega`: `secOmega V W` is stable under every `c ∈ 𝒪_S(V)`;
 * `smul_mem_comap_secOmega`, `smul_wedge_mem_detSec`: a lift `x ∈ 𝒪_{𝒢,ξ}` of `c`
-  (`exists_lift_germEta`) acts on `θ⁻¹(secOmega V W)`, so `c · (v₁ ∧ ⋯ ∧ v_g)`, computed in one
-  factor, is again a wedge of sections.
+  (`exists_lift_germEta`) acts on `θ⁻¹(secOmega V W)`, so a generating wedge of `detSec` with one
+  factor multiplied by `x` is again a wedge of sections. That this element is
+  `c|_η · (v₁ ∧ ⋯ ∧ v_g)` in the Hodge line is README reading 2.
 
 `detSec` wedges sections in the image of `θ`; by `theta_surjective` this is every section
 (`map_comap_secOmega`). -/
@@ -65,9 +66,9 @@ theorem smul_mem_comap_secOmega (c : Γ(Spec (CommRingCat.of (𝓞 L)), V)) (x :
   rw [map_smul, ← algebraMap_smul (Reta L) x, hx]
   exact germEta_smul_mem_secOmega 𝒢 hV hVW c hm
 
-/-- **`detSec` is an `𝒪_S(V)`-module**: `c · (v₁ ∧ ⋯ ∧ v_g)`, computed as `(c v_i)` in one factor,
-is again a wedge of sections over `V`; so the `𝓞_L`-span of the wedges is their
-`𝒪_S(V)`-span. -/
+/-- **The generating wedges of `detSec` are closed under multiplying one factor by a lift `x` of
+`c ∈ 𝒪_S(V)`**: the wedge with `v_i` replaced by `x • v_i` is again a wedge of sections over `V`.
+(That this element is `c|_η · (v₁ ∧ ⋯ ∧ v_g)` in the Hodge line is README reading 2.) -/
 theorem smul_wedge_mem_detSec (g : ℕ) (v : Fin g → (secOmega 𝒢 V W hV hVW).comap (theta' 𝒢))
     (i : Fin g) (c : Γ(Spec (CommRingCat.of (𝓞 L)), V)) (x : 𝒢.genStalk)
     (hx : algebraMap 𝒢.genStalk (Reta L) x = germEta V hV c) :
