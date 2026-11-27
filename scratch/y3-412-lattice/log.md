@@ -24,3 +24,9 @@ Base: d28aef9839b8c12dcda2b24b3a22c993f4975dbf (VERIFIED, git rev-parse HEAD at 
 - `moduliAtUnitsHP_of_lattice`, `moduliAtUsedUnitsHP_of_lattice` (for Ψ restricted by toPM). COMPILED.
 - Check.lean: 30 `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]` (scratch/y3-412-lattice/axioms.txt). VERIFIED.
 - `lake build` of Lattice, Convention, Moduli, Check: success.
+
+## Part C / report
+- docs/research/y3-412-lattice.md written. Read (VERIFIED): `finiteSubgroupQuotient_exists` is over ℚ only (AbVarQuotientFinite.lean);
+  `FiniteStabilizerQuotientExists` internal unproved input; `HomLatticeCorr` leaf; `UniformizationLeafAll` leaf;
+  `Y3Hodge.iota_mul_Jmat` exists (Y3HodgePrint.lean:832, needs nrd > 0).
+- Class-number-one shortcut for the converse: SPECULATIVE, not attempted (B3).
