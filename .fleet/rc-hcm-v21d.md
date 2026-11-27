@@ -1,0 +1,7 @@
+# Completed Hom lattices at the detector
+
+**Scoped stop.** The cyclic level quotient gives the integral intersection of the two level-one endomorphism orders. The completed enhanced Hom lattice away from the detector consists of the integral Tate maps preserving both lattices, including the cyclic chain at 2. For a coprime quotient, the completion away from its degree is the reference level order. At a prime supporting the degree, the actual finite torsion kernel determines the reverse local generator. The adelic assembly accepts the resulting completed Hom reads and proves the inverse `OrientedCorrespondence` for that family.
+
+At the detector, maximality survives completion and a scalar endomorphism character in the explicit division order factors through its residue field. The remaining input is the attachment of the actual reduced reference to the detector’s fixed rational quaternion algebra and tangent character, and of its same-place CM quotients to the points selected by `PMGeometry.GeometricInput.classes`. That equivalence gives coarse Hecke divisor comparisons. It has no map from individual reduced scheme pairs. The actual reduction correspondence and the independent parametrization square remain open.
+
+All 14 new modules checked on Lean 4.35.0. The audit covers 57 declarations with only `propext`, `Classical.choice`, and `Quot.sound`. Zero new printed candidates. No manuscript or source error was verified. [Research report](../docs/research/rc-hcm-v21d.md) · [Axiom audit](../scratch/rc-hcm-v21d/axioms.txt)

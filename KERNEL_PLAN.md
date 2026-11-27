@@ -1,28 +1,32 @@
 # Kernel-checked formalization plan
 
-> **Superseded on 2026-11-17.** The pole-completeness part of this plan describes Route K, the
-> route the project used until fork issues #76 and #77: a pole polynomial for the congruent
-> number curves `y² = x(x − ℓ)(x + ℓ)`, whose pole completeness was proved from the certified
-> rank hypothesis CR₃, with CR₃ derived from Tian–Yuan–Zhang and Gross–Zagier. Route K is
-> retired and kept at the tag `route-k-final`; `docs/research/rs-pole.md` records why it was
-> adopted. The main theorem now follows the manuscript, apart from route AP and the catalogue
-> bound CAT₈ described below.
+> **Two routes (2026-11-20).** The project keeps two proofs of the theorem side by side, as means
+> to the same end; they differ in how they obtain pole completeness. The pole-completeness
+> part of this plan describes **the congruent-number route** (called Route K below): a pole
+> polynomial for the congruent number curves `y² = x(x − ℓ)(x + ℓ)`, whose pole completeness is
+> proved from the certified rank hypothesis CR₃, with CR₃ derived from Tian–Yuan–Zhang and
+> Gross–Zagier. Since fork issues #76 and #77 it is not in `main`'s build, because the kernel has
+> one pole polynomial. It is kept at the tag `route-k-final`, nasqret/z-in-q-lean builds on it,
+> and fork issue #104 plans bringing the two together upstream; `docs/research/rs-pole.md`
+> records why it was adopted. `main` carries **Elliot's route**, which follows the manuscript,
+> apart from route AP and the catalogue bound CAT₈ described below.
 > `ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness`
 > (`ZInQKernel/MainGreenTao.lean`) proves the target from the minimal height hypothesis
 > `SixContactMin` and pole completeness `PoleCompleteness`, the manuscript's Theorem 5.2 for its
 > own polynomial (curves `y² = x(x − ℓ)(x + 3ℓ)`). `ZInQ.OneProof.frozenTarget` replaces
 > `SixContactMin` by the open statements listed in `docs/one-proof/OPEN.md`, and proves
-> `PoleCompleteness` from four hypotheses, as the manuscript's Section 5.1 does:
+> `PoleCompleteness` from three hypotheses:
 > - the restricted converse theorem (Theorem 5.3, `hRC`);
 > - the Cassels–Tate pairing on the curves `E_ℓ` (`hCT`, Poonen–Stoll's statement of Cassels' theorem), from which
 >   Lean proves Lemma 5.4;
-> - consequences of the two printed inputs of Lemma 5.5: BCDT's Theorem A (`hB`) and Kolyvagin's
->   Theorem 1 (`hK`).
+> - the rank-one display of Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Appendix C,
+>   Evidence 16.5.5, p. 453 (`hRank`).
 >
-> The proof is `ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`
-> (the Lemma 5.4 swap, over fork #90's `poleCompleteness_of_restrictedConverseGenuine_final`, squashed as
-> `5eca1103`). Proving Theorem 5.3 itself is fork issue #83. The rest of this document is kept as a record of the
-> plan.
+> The proof is `ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne`, reusing the same
+> construction and the proof of Lemma 5.4. Theorem 5.3 stays the hypothesis `hRC`. Fork PR #110 reduces it to step-level hypotheses
+> (`ZInQ.Manuscript.RC.Wiring.restrictedConverseGenuine_of_leaves : Prints → RCLeaves → RestrictedConverseGenuine`),
+> some of which still state their step's conclusion directly and are being restated over the manuscript's objects.
+> Proving those steps is fork issue #83. The rest of this document is kept as a record of the plan.
 
 This fork works toward a Lean proof of the 11/5 manuscript's Theorem 1.1, the statement
 frozen upstream as `ZInQ.exists_bounded_integer_polynomial_defining_integers`
@@ -46,6 +50,7 @@ why. The three below predate the rule and have not yet been reviewed against it.
 | Proposition 6.2, used by multiplication | The fixed twenty-two-prime pattern, from Green–Tao linear equations in primes, Möbius–nilsequences and Green–Tao–Ziegler | Route AP: Szemerédi's theorem in the primes (`ZInQ.greenTaoDense`, from the vendored Green–Tao proof) with the weak form of Proposition D (`ZInQ.Density.goodPrimeDensity`) | The manuscript's inputs are not in Lean and would be a hypothesis; route AP's input is proved, so no hypothesis is needed |
 | The catalogue bound CAT, a step in the proof of Proposition 12.1 | The explicit progression estimate of Bennett–Martin–O'Bryant–Rechnitzer, with the catalogue below `2^(W³)` | The weaker form CAT₈ (`ZInQ.catalogueBound8`), with the catalogue below `2^(W⁸)`, from an effective Dirichlet theorem | The weaker bound is all the proof uses and can be proved in Lean |
 | Theorem 4.1, the six-contact height estimate | Stated for all admissible `S` and `R`, with the manuscript's own sourcing of each step | Enters as its one instance `SixContactMin`; the derivation from the literature re-sources some steps of Section 4 and replaces the last one | Recorded step by step in `docs/research/h-trust.md` |
+| Lemma 5.5, forward rank-one step | Modularity and Kolyvagin's forward rank theorem | Use only the rank-one implication in Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C, Evidence 16.5.5, p. 453 | The pole proof needs the Mordell–Weil rank conclusion, not finiteness of Sha or a modular parametrization; one cited input replaces two root hypotheses without changing Theorem 5.3 or the pole construction |
 
 ## What can and cannot be formalized
 

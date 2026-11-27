@@ -1,0 +1,141 @@
+@ZInQ.Contrib.RC53Assist.NonzeroIdentification.constantCochain_injective : ∀ {k G M : Type} [inst : CommRing.{0} k]
+  [inst_1 : Group.{0} G] [inst_2 : TopologicalSpace.{0} G] [inst_3 : AddCommGroup.{0} M] [inst_4 : Module.{0, 0} k M]
+  [inst_5 : DistribMulAction.{0, 0} G M] [inst_6 : SMulCommClass.{0, 0, 0} G k M] [inst_7 : TopologicalSpace.{0} M]
+  [inst_8 : ContinuousAdd.{0} M] [inst_9 : ContinuousConstSMul.{0, 0} k M] (n : ℕ),
+  Function.Injective.{1, 1} ⇑(ZInQ.Contrib.RC53Assist.NonzeroIdentification.constantCochain n)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.constantCochain_injective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.NonzeroIdentification.cochainTerm_nontrivial : ∀ {k G M : Type} [inst : CommRing.{0} k]
+  [inst_1 : Group.{0} G] [inst_2 : TopologicalSpace.{0} G] [inst_3 : AddCommGroup.{0} M] [inst_4 : Module.{0, 0} k M]
+  [inst_5 : DistribMulAction.{0, 0} G M] [inst_6 : SMulCommClass.{0, 0, 0} G k M] [inst_7 : TopologicalSpace.{0} M]
+  [inst_8 : ContinuousAdd.{0} M] [inst_9 : ContinuousConstSMul.{0, 0} k M] [Nontrivial.{0} M]
+  [inst_11 : ContinuousMul.{0} G] [inst_12 : ContinuousSMul.{0, 0} G M] (n : ℕ),
+  Nontrivial.{0} ↑(HomologicalComplex.X.{0, 1, 0} (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0} k G M) n)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.cochainTerm_nontrivial' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.NonzeroIdentification.familyConditions_full : ∀ (b : ℕ)
+  (v :
+    ZInQ.Manuscript.RC.SelmerComplex.Places ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+      ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂'),
+  ↑v ∉ ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂ →
+    ∀ (n : ℤ),
+      Function.Bijective.{1, 1}
+        ⇑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0}
+            (ZInQ.Manuscript.RC.SelmerComplex.LocalConditions.i.{0}
+              (ZInQ.Contrib.RC53Assist.NonzeroIdentification.familyConditions b) v)
+            n n ⋯)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.familyConditions_full' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.NonzeroIdentification.family_global_nontrivial : ∀ (b n : ℕ),
+  Nontrivial.{0}
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0}
+          (ZInQ.Manuscript.RC.SelmerComplex.galoisSelData ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+            ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂'
+            (MonoidAlgebra.{0, 0} ZInQ.Manuscript.RC.Determinant.OO (ZInQ.Manuscript.RC.Determinant.SignGroup b))
+            (ZInQ.Contrib.RC53Assist.NonzeroIdentification.FamilyCoefficient b)
+            (ZInQ.Contrib.RC53Assist.NonzeroIdentification.familyConditions b)))
+        ↑n)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.family_global_nontrivial' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.NonzeroIdentification.family_local_nontrivial : ∀ (b n : ℕ)
+  (v :
+    ZInQ.Manuscript.RC.SelmerComplex.Places ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+      ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂'),
+  Nontrivial.{0}
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Manuscript.RC.SelmerComplex.localCx.{0}
+          (MonoidAlgebra.{0, 0} ZInQ.Manuscript.RC.Determinant.OO (ZInQ.Manuscript.RC.Determinant.SignGroup b))
+          (ZInQ.Manuscript.RC.SelmerComplex.GKS ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+            ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂')
+          (fun w => ZInQ.Manuscript.RC.SelmerComplex.Gloc ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA ↑w)
+          (fun w =>
+            ZInQ.Manuscript.RC.SelmerComplex.locMap ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+              ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂' ↑w)
+          (ZInQ.Contrib.RC53Assist.NonzeroIdentification.FamilyCoefficient b) v)
+        ↑n)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.family_local_nontrivial' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.NonzeroIdentification.augmentation_global_nontrivial : ∀ (n : ℕ),
+  Nontrivial.{0}
+    ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0}
+          (ZInQ.Contrib.CloudB3RC53.ClearingComplex.galoisFullData
+            ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+            ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.hS₂ (ZMod 2)
+            ZInQ.Contrib.RC53Assist.NonzeroIdentification.AugmentationCoefficient
+            ZInQ.Contrib.RC53Assist.NonzeroIdentification.augmentationConditions))
+        ↑n)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.augmentation_global_nontrivial' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.NonzeroIdentification.family_not_degreewise_zero : ∀ (b : ℕ),
+  ¬∀ (n : ℤ),
+      Subsingleton.{1}
+        ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0}
+              (ZInQ.Manuscript.RC.SelmerComplex.galoisSelData ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+                ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂'
+                (MonoidAlgebra.{0, 0} ZInQ.Manuscript.RC.Determinant.OO (ZInQ.Manuscript.RC.Determinant.SignGroup b))
+                (ZInQ.Contrib.RC53Assist.NonzeroIdentification.FamilyCoefficient b)
+                (ZInQ.Contrib.RC53Assist.NonzeroIdentification.familyConditions b)))
+            n)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.family_not_degreewise_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.NonzeroIdentification.augmentation_not_degreewise_zero : ¬∀ (n : ℤ),
+    Subsingleton.{1}
+      ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.G.{0}
+            (ZInQ.Contrib.CloudB3RC53.ClearingComplex.galoisFullData
+              ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+              ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.hS₂ (ZMod 2)
+              ZInQ.Contrib.RC53Assist.NonzeroIdentification.AugmentationCoefficient
+              ZInQ.Contrib.RC53Assist.NonzeroIdentification.augmentationConditions))
+          n)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.augmentation_not_degreewise_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.NonzeroIdentification.nonzero_full_triangle : CategoryTheory.ShortComplex.ShortExact.{0, 1}
+  (ZInQ.Contrib.CloudB3RC53.ClearingComplex.galoisFullSES ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+    ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.hS₂ (ZMod 2)
+    ZInQ.Contrib.RC53Assist.NonzeroIdentification.AugmentationCoefficient
+    ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.ψurB
+    ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.hψurB
+    ZInQ.Contrib.RC53Assist.NonzeroIdentification.augmentationConditions)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.nonzero_full_triangle' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.NonzeroIdentification.nonzero_data_witness : ∀ (b : ℕ),
+  Nonempty.{2}
+      (ZInQ.Contrib.CloudB3RC53.ClearingComplex.FullCore
+        (ZInQ.Manuscript.RC.SelmerComplex.NewPlaces ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+          ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂
+          ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂')
+        b 0 0 0 0) ∧
+    Nontrivial.{0} (ZInQ.Contrib.RC53Assist.NonzeroIdentification.FamilyCoefficient b) ∧
+      Nontrivial.{0} ZInQ.Contrib.RC53Assist.NonzeroIdentification.AugmentationCoefficient ∧
+        ZInQ.Manuscript.RC.SelmerComplex.NekovarFiniteSetting ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+            ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂ 2 (ZMod 2) ∧
+          Nonempty.{1}
+              (ZInQ.Manuscript.RC.SelmerComplex.NewPlaces ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+                ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂
+                ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.S₂') ∧
+            CategoryTheory.ShortComplex.ShortExact.{0, 1}
+              (ZInQ.Contrib.CloudB3RC53.ClearingComplex.galoisFullSES
+                ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualQEmpty.KA
+                ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.hS₂ (ZMod 2)
+                ZInQ.Contrib.RC53Assist.NonzeroIdentification.AugmentationCoefficient
+                ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.ψurB
+                ZInQ.Contrib.CloudB3RC53.ClearingComplex.ActualOnePlace.hψurB
+                ZInQ.Contrib.RC53Assist.NonzeroIdentification.augmentationConditions)
+'ZInQ.Contrib.RC53Assist.NonzeroIdentification.nonzero_data_witness' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+
+[exit code: 0]

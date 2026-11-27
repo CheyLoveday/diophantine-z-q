@@ -1,0 +1,69 @@
+'ZInQ.Manuscript.RC.HCMV21.adelicOrbitAction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.adelicOrbitAction_smul_idele' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.adelicOrbitAction_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.orientedCorrespondence_to_adelicOrbit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.rationalTorusUnits' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.torusOrbitMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.torusOrbitMap_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.adelicOrbitEquivClassGroup' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.adelicOrbitEquivClassGroup_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.IdealLatticeClass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.analytic_orbit_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealClass_eq_iff_complexHomothety' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idealClass_eq_of_jLattice_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.hilbertField_eq_adjoin_of_artinActsOnJ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.eq_of_kronecker_root_of_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.hilbertField_eq_adjoin_of_freeArtinOrbit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.inputsAtDatum_of_orientedCorrespondence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.point_reduction_of_orientedCorrespondence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detectorResidueCharacter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detectorResidueCharacter_mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detectorOrderScalars' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detectorResidueCharacter_eq_scalar_reduction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detector_inert_prime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.detector_frobenius_switches' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.mem_levelLattice_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.heegnerDatum_ideal_pair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.simultaneous_good_models_of_descended_j' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.formPeriod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.formPeriod_lattice' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.heegnerForm_ideal_pair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.heegnerBranchPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.hilbert_j_integral_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.exists_variableChange_ofJ_of_lattice' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.eq_scalar_add_smul_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.commute_units_iff_mem_fieldUnits' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.comap_order_eq_integralClosure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.isOrderUnit_iff_isIntegral_and_inv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.existsUnique_quotientCompare' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.orientedCorrespondence_of_primeTo_representatives' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.hilbertArtin_of_idele' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.idelic_j_reciprocity_of_shimura' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.ideal_j_reciprocity_of_shimura' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.geometricResidueCharacter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.geometricResidueCharacter_eq_of_intertwines' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.HCMV21.frobenius_comp_ne_of_card_sq' depends on axioms: [propext, Classical.choice, Quot.sound]

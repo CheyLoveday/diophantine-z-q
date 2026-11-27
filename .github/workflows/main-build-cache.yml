@@ -8,6 +8,10 @@
 # axioms of ZInQ.OneProof.frozenTarget and fails unless they are among propext, Classical.choice and Quot.sound
 # (scripts/one_proof/check_axioms.py). A run that passes is the evidence that this commit's proof compiles on a
 # hosted runner; blueprint-pages.yml deploys the site only for such a commit.
+#
+# For that reason it also runs after a push that changes what the site is built from besides Lean and the
+# blueprint: the formal companion, the theme and mkdocs.yml. Such a change would otherwise wait, unpublished, for
+# the next Lean change. Its run restores the cache, has nothing new to compile, and checks the axioms again.
 
 name: main build cache
 
@@ -21,6 +25,11 @@ on:
       - 'lean-toolchain'
       - 'lean/lakefile.toml'
       - '.github/workflows/main-build-cache.yml'
+      # Site inputs that are not Lean (see the note above). blueprint/ is not listed: it changes with nearly
+      # every pull request, almost always beside the Lean it describes.
+      - 'docs/companion/**'
+      - 'theme/**'
+      - 'mkdocs.yml'
       # scratch/ is outside every build target.
       - '!scratch/**'
   workflow_dispatch:
@@ -54,8 +63,8 @@ jobs:
           set -euo pipefail
           df -h / /mnt || true
           free -h
-          # Preinstalled software this job does not use. A full build of the OneProof targets is about 41 GB
-          # (34 GB for this repository, 7 GB for Mathlib), and the cache archive needs room as well.
+          # Preinstalled software this job does not use. A full build of the OneProof targets is about 15 GB
+          # (8 GB for this repository, 7 GB for Mathlib), and the cache archive needs room as well.
           sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache \
             /usr/local/share/boost /usr/share/swift /usr/lib/jvm /usr/local/julia* /usr/local/share/chromium \
             /usr/local/share/powershell /usr/local/lib/node_modules /opt/microsoft /opt/google /opt/az \
@@ -63,9 +72,9 @@ jobs:
           sudo swapoff -a
           sudo rm -f /swapfile /mnt/swapfile
           # Swap goes on the separate temporary disk when the runner has one. Otherwise it is a swap file on /,
-          # sized to leave about 75 GB of / for the toolchain and Mathlib (12 GB), the build (34 GB), a cache
-          # archive of up to 10 GB, and a margin. The run of 2026-11-17 used an 82 GB swap file, filled / and
-          # stopped without saving.
+          # sized to leave about 75 GB of / for the toolchain and Mathlib (12 GB), the build (about 8 GB once the
+          # setup files are removed, see the build step), a cache archive of up to 10 GB, and a margin. The run of
+          # 2026-11-17 used an 82 GB swap file, filled / and stopped without saving.
           if mountpoint -q /mnt; then
             dir=/mnt
             avail="$(df --output=avail -BG /mnt | tail -n 1 | tr -dc '0-9')"
@@ -135,12 +144,20 @@ jobs:
           # the measurements and the exit status below.
           set +e -uo pipefail
           deadline=$(($(date +%s) + 310 * 60))
+          # Lake writes one setup file per module (`.lake/build/ir/**/*.setup.json`) listing the olean of every
+          # module in its import closure. Lean reads it once, when it starts compiling that module, and nothing
+          # reads it afterwards; at about 6 MB each they were 48 of the build's 53 GB on 2026-11-20 (issue #170).
+          # Remove the restored ones now, each new one two minutes after it was written, and the rest once the build
+          # ends.
+          drop_setup() { find .lake/build/ir lean/.lake/build/ir -name '*.setup.json' "$@" -delete 2> /dev/null; }
+          drop_setup
           setsid lake build +ZInQKernel.OneProof.Main +ZInQKernel.OneProof.Discharges &
           pid=$!
           stopped=
           peak_mem=0
           peak_swap=0
           while kill -0 "$pid" 2> /dev/null; do
+            drop_setup -mmin +2
             avail="$(df --output=avail -BG / | tail -n 1 | tr -dc '0-9')"
             read -r mem swap <<< "$(free -m | awk '/^Mem:/ {m = $3} /^Swap:/ {s = $3} END {print m + 0, s + 0}')"
             if [ "$mem" -gt "$peak_mem" ]; then peak_mem=$mem; fi
@@ -161,6 +178,7 @@ jobs:
           done
           wait "$pid"
           status=$?
+          drop_setup
           echo "::notice::Peak use, sampled every 30 s: ${peak_mem} MB of memory and ${peak_swap} MB of swap."
           if sudo dmesg | grep -i -E 'oom-kill|out of memory'; then
             echo "::warning::The kernel killed a process for lack of memory during the build."

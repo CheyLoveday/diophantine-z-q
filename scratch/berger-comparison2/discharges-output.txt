@@ -1,0 +1,20 @@
+DISCHARGES [bergerSurveyF] by HDec.PkgI4.PanDict.bergerSurveyF_of_basis
+  still assumes: [HDec.PkgI4.PanDict.BergerSurveyFBasis]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [bergerSurveyF] by ZInQ.Manuscript.BergerComparison.bergerSurveyF_of_cyclotomic_basis
+  still assumes: [∀ (p : ℕ) [inst : Fact (Nat.Prime p)] (ε₀ : PreTilt (↥𝓞_ℂ_[p]) p)
+   (h : HDec.PkgI4.BmaxOne.IsGenEps p ε₀) (n : ℕ) (E : IntermediateField ℚ_[p] (PadicAlgCl p))
+   [FiniteDimensional ℚ_[p] ↥E] (ρE : PkgI4.GQp p →* GL (Fin n) ↥E),
+   Continuous ⇑ρE →
+     ZInQ.Manuscript.BergerComparison.HasDeRhamBasis p ρE →
+       ∃ K,
+         FiniteDimensional ℚ_[p] ↥K ∧
+           HDec.PkgI4.BmaxOne.IsAdmissibleT p
+             (Algebra.adjoin ℚ_[p]
+               (↑(HDec.PkgI4.BergerBst.Bmax p) ∪ {ZInQ.Manuscript.BergerComparison.cyclotomicCoordinate p h}))
+             K.fixingSubgroup ρE]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [bergerSurveyF] by ZInQ.Manuscript.BergerReroute.bergerSurveyF_of_thm06Print
+  still assumes: [ZInQ.Manuscript.BergerReroute.BergerThm06Print]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 1 open hypotheses, 1472 theorems checked, 3 discharge one
