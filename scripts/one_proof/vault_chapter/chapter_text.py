@@ -341,12 +341,12 @@ $h_F$ in Faltings' original normalization, which they take from §2.3 of their p
 *Commentarii*; the printed couple of isogenies is split into two isogenies, each of degree at most
 $\kappa$. It was read in Duke's typeset version of record, as posted on the first author's page
 (its first-page footer gives the volume, issue and DOI, and its pages 2057–2108 match the journal's
-record), so the reading is against the journal text. Two steps of the height that the reading took as
-arguments, the commutativity of the model and the passage from stalks to global sections, are now
-proved in Lean; what remains a reading is that the stalk formula and the global sections used here
-are those of the sheaf of differentials, which Mathlib does not yet have, and one identity of wedges
-in the Hodge line. Because that identity is not proved, the published rating waits on the lead's
-confirmation. With the constructibility statement of EGA IV (9.7.7), the statement implies the
+record), so the reading is against the journal text. Three steps of the height that the reading took
+as arguments, the commutativity of the model, the passage from stalks to global sections and one
+identity of wedges in the Hodge line, are now proved in Lean; what remains a reading is that the
+stalk formula and the global sections used here are those of the sheaf of differentials, which
+Mathlib does not yet have. The published rating still waits on the lead's confirmation. With the
+constructibility statement of EGA IV (9.7.7), the statement implies the
 same theorem for the stable Faltings heights of this section, built from Néron models, and this
 implication is proved in Lean; the converse is not proved here.
 """,
