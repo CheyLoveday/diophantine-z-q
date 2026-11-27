@@ -3626,6 +3626,9 @@ import ZInQKernel.Contrib.OneProof.ColmezTiltIso.Theta
 import ZInQKernel.Contrib.OneProof.ColmezTiltIso.TpShape
 import ZInQKernel.Contrib.OneProof.BstRegular.Abstract
 import ZInQKernel.Contrib.OneProof.BstRegular.Bst
+import ZInQKernel.Contrib.OneProof.ColmezTiltIso.Algebra
+import ZInQKernel.Contrib.OneProof.ColmezTiltIso.Check2
+import ZInQKernel.Contrib.OneProof.ColmezTiltIso.RowPrinted
 import ZInQKernel.Contrib.OneProof.CMHeight62.Analysis
 import ZInQKernel.Contrib.OneProof.CMHeight62.Archimedean
 import ZInQKernel.Contrib.OneProof.CMHeight62.Assembly
