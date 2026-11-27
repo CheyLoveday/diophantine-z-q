@@ -22,6 +22,10 @@ open ZInQ.Contrib.ColmezTorsionIso (TCp galTCp)
 open ZInQ.Contrib.ColmezTiltIso.Tp (shapeT_iff_shapeV)
 open scoped TensorProduct ZInQ.Contrib.ColmezTiltIso.Tp
 
+/- `ℂ_p` is an `F`-algebra through `F → ℚ̄_p ⊂ ℂ_p`, as in `ColmezTorsionIso/Basic.lean`; the
+group structure on `A(ℂ_p)`, hence the module structure on `TCp`, uses it. -/
+attribute [local instance] ZInQ.Contrib.ColmezTorsionIso.algCp
+
 /-- **Row R1 on `T_p`** (Colmez, Théorème 5.2 (i)-(ii), p. 639): the statement of
 `Colmez1992DeRhamAbVarCp` with `P ω` a `ℤ_p`-linear map on `T_p(X) = lim A(ℂ_p)[pⁿ]` (`TCp`),
 `G_F` acting through `galTCp`, and non-degeneracy after extending scalars from `ℤ_p` to `B_dR`
