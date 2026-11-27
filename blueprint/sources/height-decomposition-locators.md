@@ -10,7 +10,7 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the eighteen statements of the chapter in the project's
+The minimal height hypothesis is proved from the nineteen statements of the chapter in the project's
 assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof is the
 project-authored note `docs/research/h-trust.md`.
 
@@ -46,14 +46,6 @@ journal numbering of Gee are unverified.
 G. Shimura, Ann. of Math. 85 (1967), Main Theorem I; P. Deligne, *Travaux de Shimura*, Sém. Bourbaki
 389 (1971), §§4–5 (Corollaire 5.7, Exemple 5.8); J. Milne, *Introduction to Shimura varieties*
 (2005), §§5–8 and 12–14. Numbers unverified.
-
-## Bost lower bound
-
-É. Gaudron and G. Rémond, *Théorème des périodes et degrés minimaux d'isogénies*, Comment. Math.
-Helv. 89 (2014), 343–403, Corollaire 8.4, p. 400, attributed there to Bost, with the normalization
-of §2.3, p. 352. É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014),
-2057–2108, §9, proof of Lemme 9.1, p. 2098, with the normalization of $h_F$ on p. 2058; the
-manuscript's citation, a citation only of Corollaire 8.4.
 
 ## Javanpeykar bound
 
@@ -134,10 +126,31 @@ $B_{\rm st}$; $B_{\rm st}$ inside $B_{\rm dR}$ as in J.-M. Fontaine, *Le corps d
 $p$-adiques*, Astérisque 223 (1994), Exp. II, 4.2.4–4.2.5, p. 86. AI-read: a three-lens adversarial
 reading of page images, 2026-11-26 (docs/research/pb-adversarial-readings.md).
 
+## Gaudron-Remond lower bound
+
+É. Gaudron and G. Rémond, *Théorème des périodes et degrés minimaux d'isogénies*, Comment. Math.
+Helv. 89 (2014), 343–403, Corollaire 8.4, p. 400, attributed there to Bost, with the height of §2.3,
+p. 351, and the normalization and the weakening on p. 352. The manuscript cites É. Gaudron and G.
+Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014), 2057–2108, §9, proof of Lemme 9.1,
+p. 2098, which cites Corollaire 8.4. AI-read: a three-lens adversarial reading of page images of the
+journal file, 2026-11-27 (docs/research/item-m-adversarial-readings.md); no person has read these
+pages.
+
 ## Gaudron-Remond isogeny bound
 
 É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014), 2057–2108,
-Théorème 1.4, p. 2060, with $\kappa$ on p. 2058.
+Théorème 1.4, p. 2060, with $\kappa$ and $g\ge1$ on p. 2058 and isogenies and their degree on p.
+2062. AI-read: a three-lens adversarial reading of page images of the authors' copy, 2026-11-27
+(docs/research/item-m-adversarial-readings.md); no person has read these pages.
+
+## EGA IV 9.7.7
+
+A. Grothendieck and J. Dieudonné, *Éléments de géométrie algébrique IV, troisième partie*, Publ.
+Math. IHÉS 28 (1966), Théorème (9.7.7), p. 79; with EGA IV₁, Publ. Math. IHÉS 20 (1964), (1.6.1), p.
+234; EGA IV₂, Publ. Math. IHÉS 24 (1965), (4.5.1)–(4.5.2), p. 61; and EGA 0_III, Publ. Math. IHÉS 11
+(1961), (9.1.1), (9.1.2) and (9.1.11), pp. 12–14. AI-read: a three-lens adversarial reading of page
+images of the numdam scans, 2026-11-27 (docs/research/item-m-adversarial-readings.md); no person has
+read these pages.
 
 ## Colmez Theorem 5.2
 

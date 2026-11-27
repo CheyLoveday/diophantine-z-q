@@ -71,6 +71,15 @@ of an abelian variety by a torus, over the residue field, over its algebraic clo
 as each statement that uses it says. This is Faltings' normalization $h_F$; Deligne's is
 $h_D=h_F+\frac g2\log\pi$. The height and semistable reduction enter through the project's own
 definitions; that these agree with the published ones is a judgement of AI reviews.
+
+Two statements below take instead the height of Gaudron and Rémond. For a number field $L\supseteq K$,
+a *semi-abelian model* of $A_L$ is a smooth separated group scheme of finite type over
+$\mathcal O_L$, with an isomorphism of group schemes from its generic fibre to $A_L$, whose fibre at
+every maximal ideal is connected and an extension of an abelian variety by a torus, over the residue
+field and over its algebraic closure; its height is built in the same way from its invariant
+differentials of top degree along the zero section. By the constructibility statement of EGA IV
+(9.7.7) and a proof in Lean, every stable Faltings height in the sense above is such a height; the
+converse is not proved here.
 """),
     dict(dir='p-adic-hodge', title='p-adic Hodge theory', intro=r"""
 Let $p$ be a prime, $\overline{\mathbb Q}_p$ an algebraic closure of $\mathbb Q_p$, $\mathbb C_p$ its
@@ -165,7 +174,7 @@ $$h_F(E)\le\frac1{[L:\mathbb Q]}\sum_{\sigma:L\to\mathbb C}-\frac1{12}\log\Bigl(
 Here $h_F(E)$ is the stable Faltings height of $E$: the infimum in $[-\infty,+\infty]$, over all number fields $L'\supseteq K$ and all smooth separated group schemes $\mathcal N$ of finite type over $\mathcal O_{L'}$ whose generic fibre is isomorphic to $E_{L'}$ as a group scheme, of the height of $\mathcal N$, which is the Arakelov degree of the $\mathcal O_{L'}$-module $\omega_{\mathcal N}$ of invariant differentials of $\mathcal N$, with the metric $\|\omega\|_{\sigma'}^2=\frac i2\int_{E_{\sigma'}(\mathbb C)}\omega\wedge\overline\omega$ at each embedding $\sigma':L'\to\mathbb C$, divided by $[L':\mathbb Q]$.
 """,
         caveat=r"""
-Equation (6.2) of Barquero-Sanchez, Cadwallader, Cannon, Genao and Masri is the general formula for the Faltings height of an elliptic curve over a number field through its minimal discriminant and the modular discriminant at its periods, which the paper attributes to Silverman; the upstream review of the manuscript's CM argument read it in the published article, in Faltings' original metric and with $\Delta(\tau)=(2\pi)^{12}\eta(\tau)^{24}$. The statement is its case of good reduction everywhere, where the term of the minimal discriminant vanishes, and keeps only the inequality $\le$, the half the manuscript uses; it is not restricted to curves with complex multiplication. The manuscript's remark that the extension to $L$ does not change the stable height is built into the definition above, an infimum over all extensions. Reaching the statement from the print takes the comparison of the height in the paper with the height of $\mathcal G$ in that definition, which is not proved here. The display of (6.2) has not been re-read for this statement, and a review of the statement is pending.
+Equation (6.2) of Barquero-Sanchez, Cadwallader, Cannon, Genao and Masri is the general formula for the Faltings height of an elliptic curve over a number field through its minimal discriminant and the modular discriminant at its periods, which the paper attributes to Silverman; the upstream review of the manuscript's CM argument read it in the published article, in Faltings' original metric and with $\Delta(\tau)=(2\pi)^{12}\eta(\tau)^{24}$. The statement is its case of good reduction everywhere, where the term of the minimal discriminant vanishes, and keeps only the inequality $\le$, the half the manuscript uses; it is not restricted to curves with complex multiplication. The manuscript's remark that the extension to $L$ does not change the stable height is built into the definition above, an infimum over all extensions. An exact formula is proved here for every smooth group scheme $\mathcal G$ as above, proper or not: if $D$ is the discriminant of a short Weierstrass equation of $E$ over $K$, $\eta$ its invariant differential and $J$ the fractional ideal of $\mathcal O_L$ of the $a\in L$ with $a\eta\in\omega_{\mathcal G}$, then the height $h(\mathcal G)$ of $\mathcal G$ satisfies $[L:\mathbb Q]\,h(\mathcal G)=\sum_\sigma-\frac1{12}\log\bigl(|\Delta(\tau_\sigma)|(\operatorname{Im}\tau_\sigma)^6\bigr)+\frac1{12}\bigl(\log|N_{L/\mathbb Q}D|-12\log N(J)\bigr)$. The statement follows from this formula and the inequality $|N_{L/\mathbb Q}D|\le N(J)^{12}$ for proper $\mathcal G$, which is not proved here. The display of (6.2) has not been re-read for this statement, and a review of the statement is pending.
 """,
         src=r"""
 A. Barquero-Sanchez, L. Cadwallader, O. Cannon, T. Genao and R. Masri, *Faltings heights of CM elliptic curves and special Gamma values*, Res. Number Theory 3 (2017), art. 13, §6, Eq. (6.2), pp. 13–14, with the metric on p. 1, read in the published article by the upstream review of the manuscript's CM argument (project note `docs/reviews/height-replacement/height/AUDIT.md`, item 2); the manuscript's citation (`diophantine_zq.tex`, lines 595–605). The paper attributes the formula to Silverman, Proposition 1.1 (not read).
@@ -241,59 +250,105 @@ Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.4, pp. 405–406 (proof: SGA 
 Théorème 3.6, p. 351), with semistable reduction as defined in §3, p. 405.
 """,
     ),
-    'gaudronRemondSec9LowerAnSS': dict(
-        group='heights', slug='bost-lower-bound',
-        title='The lower bound for the Faltings height',
-        anchor='Bost lower bound',
+    'egaIV_9_7_7_OL': dict(
+        group='neron-models', slug='ega-geometrically-connected-fibres',
+        title='The locus of geometrically connected fibres',
+        anchor='EGA IV 9.7.7',
         statement=r"""
-The *lower bound statement* is the following assertion. Let $A$ be an abelian variety of dimension
-$g$ over a number field $K$. Then every stable Faltings height $h_F(A)$ of $A$, in Faltings'
-normalization, satisfies $h_F(A)\ge-\tfrac32\,g$. Here a *stable Faltings height* of $A$ is a real
-number of the form
-$$h_F(A)=\frac1{[L:\mathbb Q]}\Bigl(\log\#\bigl(\omega/\mathcal O_L\eta\bigr)-\frac12\sum_{\tau:L\to\mathbb C}\log\|\eta\|_\tau^2\Bigr),$$
-where $L\supseteq K$ is a number field, $\mathcal N$ is a Néron model of $A_L$ over $\mathcal O_L$
-with semistable reduction at every maximal ideal of $\mathcal O_L$ (the identity component of the
-special fibre is an extension of an abelian variety by a torus, both over the residue field and over
-its algebraic closure), $\omega$ is the lattice of invariant differentials of top degree on
-$\mathcal N$, $\eta\in\omega$ is nonzero with $\omega/\mathcal O_L\eta$ finite, and
-$\|\eta\|_\tau^2=(i/2)^g\int_{A_\tau(\mathbb C)}\eta\wedge\overline\eta$, integrated over the
-complex manifold $A_\tau(\mathbb C)$.
+The *constructibility statement* is the following assertion. Let $L$ be a number field,
+$S=\operatorname{Spec}\mathcal O_L$, and $f:X\to S$ a smooth, quasi-compact and quasi-separated
+morphism of schemes. Let $E$ be the set of points $s\in S$ whose fibre
+$X_s=X\times_S\operatorname{Spec}k(s)$ is geometrically connected, in the sense that
+$X_s\otimes_{k(s)}F$ is empty or connected for every field extension $F$ of $k(s)$. Then $E$ is
+locally constructible in $S$: every point of $S$ has an open neighbourhood $V$ such that $E\cap V$
+belongs to the smallest family of subsets of $V$ that contains the retrocompact open subsets and is
+stable under finite intersections and complements.
 """,
         caveat=r"""
-Gaudron and Rémond use the inequality in the proof of their Lemme 9.1, citing Bost through Corollary 8.4
-of their 2014 paper in *Commentarii*; an AI reading of both papers found the inequality in Faltings'
-original normalization, as here. That corollary states $h(A)\ge-\frac g2\log(2\pi)$ for their height
-$h=h_F+\frac g2\log\pi$, which gives the stronger $h_F(A)\ge-\frac g2\log(2\pi^2)$.
+It is Théorème (9.7.7)(ii) of EGA IV for $S=\operatorname{Spec}\mathcal O_L$ and smooth morphisms,
+which are of finite presentation when quasi-compact and quasi-separated (EGA IV (1.6.1)). EGA defines
+geometric connectedness by the number of connected components over an algebraic closure, at most
+one; its equivalence with the form above is printed in EGA IV (4.5.1)–(4.5.2) and is not a Lean
+theorem. The proof uses the statement only to show that a stable Faltings height built from a Néron
+model is a height of a semi-abelian model in the sense of Gaudron and Rémond.
+""",
+        src=r"""
+A. Grothendieck and J. Dieudonné, *Éléments de géométrie algébrique IV, troisième partie*, Publ.
+Math. IHÉS 28 (1966), Théorème (9.7.7), p. 79; with EGA IV₁, Publ. Math. IHÉS 20 (1964), (1.6.1),
+p. 234; EGA IV₂, Publ. Math. IHÉS 24 (1965), (4.5.1)–(4.5.2), p. 61; and EGA 0_III, Publ. Math.
+IHÉS 11 (1961), (9.1.1), (9.1.2) and (9.1.11), pp. 12–14. AI-read: a three-lens adversarial reading
+of page images of the numdam scans, 2026-11-27 (docs/research/item-m-adversarial-readings.md); no
+person has read these pages.
+""",
+    ),
+    'gaudronRemondSec9LowerGR1Weak': dict(
+        group='heights', slug='bost-lower-bound',
+        title='The lower bound for the Faltings height',
+        anchor='Gaudron-Remond lower bound',
+        statement=r"""
+The *lower bound statement* is the following assertion. Let $A$ be an abelian variety of dimension
+$g$ over a number field $K$. Then every height $h_F(A)$ of a semi-abelian model of $A$, in
+Faltings' normalization, satisfies $h_F(A)\ge-\tfrac32\,g$. Here such a height is a real number of
+the form
+$$h_F(A)=\frac1{[L:\mathbb Q]}\Bigl(\log\#\bigl(\omega/\mathcal O_L\eta\bigr)-\frac12\sum_{\tau:L\to\mathbb C}\log\|\eta\|_\tau^2\Bigr),$$
+where $L\supseteq K$ is a number field, $\mathcal A$ is a semi-abelian model of $A_L$ over
+$\mathcal O_L$ (a smooth separated group scheme of finite type over $\mathcal O_L$, with an
+isomorphism of group schemes from its generic fibre to $A_L$, whose fibre at every maximal ideal is
+connected and an extension of an abelian variety by a torus, over the residue field and over its
+algebraic closure), $\omega$ is the lattice of invariant differentials of top degree on
+$\mathcal A$ along its zero section, $\eta\in\omega$ is nonzero with $\omega/\mathcal O_L\eta$
+finite, and $\|\eta\|_\tau^2=2^{-g}\int_{A_\tau(\mathbb C)}|\eta\wedge\overline\eta|$, integrated
+over the complex manifold $A_\tau(\mathbb C)$.
+""",
+        caveat=r"""
+Here, unlike the general case, the one further step is proved in Lean
+(`ZInQ.HeightModelM.gaudronRemondSec9LowerGR1Weak_of_GR1`): Gaudron and Rémond's Corollaire 8.4
+states $h(A)\ge-\frac g2\log(2\pi)$ for their height $h=h_F+\frac g2\log\pi$ of a semi-abelian
+model, that is $h_F(A)\ge-\frac g2\log(2\pi^2)$, and since $\frac12\log(2\pi^2)<\frac32$ this gives
+the statement, a weakening they make themselves on p. 352. That step is still an argument, so the
+statement is not the printed form and the strict count does not count it as published; the corollary itself over this height passed a three-lens AI reading, and the project
+declined to carry it instead, as it is stronger (ruling of 2026-11-24).
+They print no formula for the normalized Arakelov degree, and the standard one is used here. The
+model is not required to be commutative; that it is follows from separatedness and flatness by a
+standard argument that is not a Lean theorem. With the constructibility statement of EGA IV (9.7.7),
+the statement implies the same bound for the stable Faltings heights of this section, built from
+Néron models, and this implication is proved in Lean; the converse is not proved here.
 """,
         src=r"""
 É. Gaudron and G. Rémond, *Théorème des périodes et degrés minimaux d'isogénies*, Comment. Math.
-Helv. 89 (2014), 343–403, Corollaire 8.4, p. 400, attributed there to Bost, with the normalization
-of §2.3, p. 352. É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014),
-2057–2108, §9, proof of Lemme 9.1, p. 2098, with the normalization of $h_F$ on p. 2058; the
-manuscript's citation, a citation only of Corollaire 8.4.
+Helv. 89 (2014), 343–403, Corollaire 8.4, p. 400, attributed there to Bost, with the height of §2.3,
+p. 351, and the normalization and the weakening on p. 352. The manuscript cites É. Gaudron and
+G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014), 2057–2108, §9, proof of
+Lemme 9.1, p. 2098, which cites Corollaire 8.4. AI-read: a three-lens adversarial reading of page
+images of the journal file, 2026-11-27 (docs/research/item-m-adversarial-readings.md); no person has
+read these pages.
 """,
     ),
-    'gaudronRemondThm14Printed': dict(
+    'gaudronRemondThm14GR1': dict(
         group='heights', slug='gaudron-remond-isogeny-bound',
         title='The isogeny theorem of Gaudron and Rémond',
         anchor='Gaudron-Remond isogeny bound',
         statement=r"""
 The *isogeny statement* is the following assertion. Let $A$ and $B$ be abelian varieties over a number
-field $K$ of degree $d$ that are isogenous over $K$, with $\dim A=g\geq1$, and let $h_F(A)$ be a stable
-Faltings height of $A$, built as for the [lower bound](bost-lower-bound.md). Then there are isogenies
-$A\to B$ and $B\to A$ over $K$ of degree at most
+field $K$ of degree $d$ that are isogenous over $K$, with $\dim A=g\geq1$, and let $h_F(A)$ be a
+height of a semi-abelian model of $A$, built as for the [lower bound](bost-lower-bound.md). Then
+there are isogenies $A\to B$ and $B\to A$ over $K$ of degree at most
 $$\kappa=\Bigl((14g)^{64g^2}\,d\,\max\bigl(h_F(A),\log d,1\bigr)^2\Bigr)^{1024g^3}.$$
 """,
         caveat=r"""
-It is Theorem 1.4 of Gaudron and Rémond for isogenies over the base field, with the stable height in
-Faltings' original normalization and semistable reduction in its printed form: the identity
-component of the special fibre is semi-abelian over the residue field and over its algebraic
-closure. A further reading of semistability, as the absence of $\mathbb G_a$ (SGA 7 IX 2.1.5), is
-still to be matched.
+It is Theorem 1.4 of Gaudron and Rémond for isogenies over the base field, with their stable height
+$h_F$ in Faltings' original normalization, which they take from §2.3 of their paper in
+*Commentarii*; the printed couple of isogenies is split into two isogenies, each of degree at most
+$\kappa$. It was read in the authors' copy, which carries the Duke pagination; the comparison with
+the journal text is still to be made. With the constructibility statement of EGA IV (9.7.7), the
+statement implies the same theorem for the stable Faltings heights of this section, built from
+Néron models, and this implication is proved in Lean; the converse is not proved here.
 """,
         src=r"""
 É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014), 2057–2108,
-Théorème 1.4, p. 2060, with $\kappa$ on p. 2058.
+Théorème 1.4, p. 2060, with $\kappa$ and $g\ge1$ on p. 2058 and isogenies and their degree on
+p. 2062. AI-read: a three-lens adversarial reading of page images of the authors' copy, 2026-11-27
+(docs/research/item-m-adversarial-readings.md); no person has read these pages.
 """,
     ),
     'javanpeykarThm111An': dict(
@@ -309,8 +364,8 @@ $\mathbf P^1\setminus\{0,1,\infty\}$; let $\deg_B(X)$ be the least degree of a B
 $W$ be an abelian variety over $\overline{\mathbb Q}$ that represents the degree-zero part of the
 Picard functor of $X$, with the group law given by the tensor product of line bundles. Then every
 stable Faltings height $h$ of $W$ satisfies $h\le13\cdot10^6\,g\,\deg_B(X)^5$; here a stable
-Faltings height of $W$ is a stable Faltings height, built as for the
-[lower bound](bost-lower-bound.md), of an abelian variety $V$ over a number field
+Faltings height of $W$ is a stable Faltings height, in the sense of the
+[introduction](README.md), of an abelian variety $V$ over a number field
 $L\subset\overline{\mathbb Q}$ whose base change to $\overline{\mathbb Q}$ is isomorphic to $W$.
 """,
         caveat=r"""
@@ -378,7 +433,7 @@ read by the locator audit. The level-$2$ coordinates are a risk (project note he
 The *Berger statement* is the following assertion. Let $E$ be a finite extension of $\mathbb Q_p$ inside $\overline{\mathbb Q}_p$ and $\rho:G_{\mathbb Q_p}\to\mathrm{GL}_n(E)$ a continuous representation, and let $V=E^n$, viewed as a representation of $G_{\mathbb Q_p}$ over $\mathbb Q_p$ of dimension $d=\dim_{\mathbb Q_p}V$. If $V$ is de Rham, that is, $\dim_{\mathbb Q_p}(B_{\rm dR}\otimes_{\mathbb Q_p}V)^{G_{\mathbb Q_p}}=d$, then $V$ is potentially semistable: there is a finite extension $K$ of $\mathbb Q_p$ inside $\overline{\mathbb Q}_p$ with $\dim_{B_{\rm st}^{G_K}}(B_{\rm st}\otimes_{\mathbb Q_p}V)^{G_K}=d$. Here $B_{\rm st}$ is the $\mathbb Q_p$-subalgebra of $B_{\rm dR}$ generated by $A_{\rm cris}$, $1/t$ and $\log[\tilde p]$: $A_{\rm cris}$ is the set of sums $\sum_{m\ge0}a_m\omega^m/m!$ in $B_{\rm dR}^+$ with $a_m\in A_{\rm inf}=W(\mathcal O_{\mathbb C_p}^\flat)$ tending to $0$ $p$-adically, where $\omega$ generates the kernel of $\theta:A_{\rm inf}\to\mathcal O_{\mathbb C_p}$; $t=\log[\varepsilon]$, where $\varepsilon=(1,\zeta_p,\zeta_{p^2},\dots)\in\mathcal O_{\mathbb C_p}^\flat$ is a compatible system of primitive $p$-power roots of unity; and $\log[\tilde p]=-\sum_{m\ge1}(1-[\tilde p]/p)^m/m$ for $\tilde p=(p,p^{1/p},\dots)$, Fontaine's $\log[\tilde p]$ with $\log_p(p)=0$. The assertion is made for every such $\omega$ and $\varepsilon$.
 """,
         caveat=r"""
-It is Berger's theorem, from his Inventiones paper (Théorème 0.6 in the arXiv version; the journal's theorem number is unverified), at the base field $\mathbb Q_p$ for representations of the form $E^n$, with potential semistability in Fontaine's sense: the representation becomes $B_{\rm st}$-admissible over a finite extension, admissibility meaning the equality of dimensions, with $B_{\rm st}$ taken as its image in $B_{\rm dR}$, as Fontaine describes it. Berger works over his own variant of $B_{\rm st}$ and states that it has the same $D_{\rm st}$ as Fontaine's; reaching Fontaine's ring from his is a step of the reading, not a theorem proved here, so the statement counts as a consequence of the print. Its de Rham condition is the one above because $B_{\rm dR}^{G_{\mathbb Q_p}}=\mathbb Q_p$, which is proved here. Colmez prints the conclusion in the stronger form of a basis (Théorème 0.1 of his 2008 paper); that form implies this statement, which is proved here, but the converse needs the $G_K$-regularity of $B_{\rm st}$, which is not.
+It is Berger's theorem, from his Inventiones paper (Théorème 0.6 in the arXiv version; the journal's theorem number is unverified), at the base field $\mathbb Q_p$ for representations of the form $E^n$, with potential semistability in Fontaine's sense: the representation becomes $B_{\rm st}$-admissible over a finite extension, admissibility meaning the equality of dimensions, with $B_{\rm st}$ taken as its image in $B_{\rm dR}$, as Fontaine describes it. Berger works over his own variant of $B_{\rm st}$ and states that it has the same $D_{\rm st}$ as Fontaine's; reaching Fontaine's ring from his is a step of the reading, not a theorem proved here, so the statement counts as a consequence of the print. Its de Rham condition is the one above because $B_{\rm dR}^{G_{\mathbb Q_p}}=\mathbb Q_p$, which is proved here. Colmez prints the conclusion in the stronger form of a basis (Théorème 0.1 of his 2008 paper); that form implies this statement, which is proved here, and the converse is proved here from two properties of $B_{\rm st}$ that make it $G_K$-regular, for every finite extension $K$ of $\mathbb Q_p$ in $\overline{\mathbb Q}_p$: the $G_K$-invariants of its field of fractions lie in $B_{\rm st}$, and a nonzero element $b$ of $B_{\rm st}$ with $\sigma(b)\in\mathbb Q_pb$ for every $\sigma\in G_K$ is a unit of $B_{\rm st}$. Both are in Fontaine's account of $B_{\rm st}$ (the locator is unverified); neither is proved here.
 """,
         src=r"""
 L. Berger, *Représentations $p$-adiques et équations différentielles*, Invent. Math. 148 (2002), 219–284, the manuscript's citation; its theorem number in the journal is unverified. In arXiv math/0102179v3 it is Théorème 0.6 = Théorème 5.19, pp. 6 and 56. An earlier AI reading of the author copy, with no recorded hash or quote, gives Théorème 0.7, p. 6, proved as Corollaire 5.22, with Théorème 0.8 there Sen's theorem. The typeset journal pages are unread. Potential semistability in the sense of J.-M. Fontaine, *Représentations $p$-adiques semi-stables*, Astérisque 223 (1994), Exp. III: potential $B_{\rm st}$-admissibility, 5.6.1, p. 166; admissibility by dimension, 1.8.5, pp. 134–135; $B_{\rm st}$ inside $B_{\rm dR}$ as in J.-M. Fontaine, *Le corps des périodes $p$-adiques*, Astérisque 223 (1994), Exp. II, 4.2.4–4.2.5, p. 86. The basis form: P. Colmez, Astérisque 319 (2008), 117–186, Théorème 0.1, p. 118 (a corroborating record, not this row's source).
@@ -406,7 +461,7 @@ L. Pan, *The Fontaine–Mazur conjecture in the residually reducible case*, J. A
 The *period statement* is the following assertion. Let $F$ be a finite extension of $\mathbb Q_p$, $\overline F$ an algebraic closure of $F$, $G_F=\operatorname{Gal}(\overline F/F)$, $A$ an abelian variety over $F$, $T_pA=\varprojlim_nA(\overline F)[p^n]$ its Tate module and $V_pA=\mathbb Q_p\otimes_{\mathbb Z_p}T_pA$, on which $G_F$ acts through its action on the points of $A$, and let $G_F$ act on $B_{\rm dR}$ through the restriction map $G_F\to G_{\mathbb Q_p}$ along an embedding of $\overline{\mathbb Q}_p$ in $\overline F$. Then there are a set $H$ and, for each $\omega\in H$, a $\mathbb Q_p$-linear map $P_\omega:V_pA\to B_{\rm dR}$ with the following properties: every value $P_\omega(u)$ lies in $B_{\rm dR}^+$; $P_\omega(\sigma u)=\sigma\bigl(P_\omega(u)\bigr)$ for every $\sigma\in G_F$ and $u\in V_pA$; and if $x\in B_{\rm dR}\otimes_{\mathbb Q_p}V_pA$ is sent to $0$ by the $B_{\rm dR}$-linear extension $b\otimes u\mapsto b\,P_\omega(u)$ of every $P_\omega$, then $x=0$.
 """,
         caveat=r"""
-It is Théorème 5.2 (i)–(ii) of Colmez with $H$ the de Rham cohomology $H^1_{\rm dR}(A/F)$ and $P_\omega(u)=\int_u\omega$, the $p$-adic period of $\omega$ along $u$, extended $\mathbb Q_p$-linearly from $T_pA$ to $V_pA$. Of the printed theorem the statement keeps three clauses: the periods lie in $B_{\rm dR}^+$, they commute with the action of $G_F$, and the pairing is non-degenerate on the side of $T_pA$ once the scalars are extended to $B_{\rm dR}$. The extension to $V_pA$ uses the linearity in $u$, which the readings take from "bilinéaire" and from the proof on p. 640. The statement drops the identification of $H$ with de Rham cohomology, the linearity in $\omega$, the compatibility with the filtrations, part (iii) and the functoriality. Colmez works with a proper model of $A$ over the integers of $F$, which exists, and the periods do not depend on it. He builds $T_pA$ from the points of $A$ over $\mathbb C_p$; on $p$-power torsion these are the points over $\overline F$, since $A[p^n]$ is finite over $F$, a standard identification that the readings take and that no Lean theorem states.
+It is Théorème 5.2 (i)–(ii) of Colmez with $H$ the de Rham cohomology $H^1_{\rm dR}(A/F)$ and $P_\omega(u)=\int_u\omega$, the $p$-adic period of $\omega$ along $u$, extended $\mathbb Q_p$-linearly from $T_pA$ to $V_pA$. Of the printed theorem the statement keeps three clauses: the periods lie in $B_{\rm dR}^+$, they commute with the action of $G_F$, and the pairing is non-degenerate on the side of $T_pA$ once the scalars are extended to $B_{\rm dR}$. The extension to $V_pA$ uses the linearity in $u$, which the readings take from "bilinéaire" and from the proof on p. 640. The statement drops the identification of $H$ with de Rham cohomology, the linearity in $\omega$, the compatibility with the filtrations, part (iii) and the functoriality. Colmez works with a proper model of $A$ over the integers of $F$, which exists, and the periods do not depend on it. He builds $T_pA$ from the points of $A$ over $\mathbb C_p$; on $p$-power torsion these are the points over $\overline F$, since $A[p^n]$ is finite over $F$, and this identification, compatible with the action of $G_F$, is proved here. Reading Colmez's points over $\mathbb C_p$, which he takes through the proper model, as the points of $A$ is a step of the reading.
 """,
         src=r"""
 P. Colmez, *Périodes $p$-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème 5.2 (i)–(ii), p. 639, with the standing hypotheses on pp. 629 and 638 and $B_{\rm dR}$ as in §2, p. 632; the proof is on pp. 639–641. AI-read: a three-lens adversarial reading of page images, 2026-11-26 (docs/research/tate-prints-adversarial-readings.md); no person has read these pages. For this step the manuscript's lemma on de Rham comparison and finite descent (`diophantine_zq.tex`, lines 10939–10973) cites Scholze's Corollary 1.8 and Milne's Theorem 12.1(a); this statement and the Hodge–Tate theorem of Tate and Raynaud (Fontaine's Théorème 2) replace those two citations.

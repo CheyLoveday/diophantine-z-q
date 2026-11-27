@@ -1,0 +1,95 @@
+'HDec.HSyn.GR9.openResearchLeaves33_of_OpenResearchLeaves34_eb_cf_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves32_of_OpenResearchLeaves33_eb_cf_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves31_of_OpenResearchLeaves32_eb_cf_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves29GM_of_OpenResearchLeaves31_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves28_of_OpenResearchLeaves29_gm_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves27_of_OpenResearchLeaves28_gm_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves26_of_OpenResearchLeaves27_gm_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves25_of_OpenResearchLeaves26_hf_gm_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves24_of_OpenResearchLeaves25_gm_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves23_of_OpenResearchLeaves24_hf_gm_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves22_of_OpenResearchLeaves23_gm_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves21_of_OpenResearchLeaves22_hf_gm_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves20_of_OpenResearchLeaves21_hf_gm_eb_sf_u_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openGlue7_of_OpenGlue8_hf_gm_pz_eb_sf_u_c8_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open28_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open29_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open30_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open31_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open32_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open33_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open34_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open35_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open36_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open37_hf_gm_pz_eb_sf_u_c8_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.sixContactMin_of_open45_pz_eb_sf_u_hm_cm_y3c_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.openResearchLeaves59_y3x6_of_60_y3x6_dn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.openResearchLeaves54SFU_y3x6_of_59_y3x6_dn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves36EBCFSFU_y3x6_of_54SFU_y3x6_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves35EBCFSFU_y3x6_of_36_y3x6_dn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.GR9.openResearchLeaves34_y3c_of_35EBCFSFU_y3x6_dn' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.openResearchLeaves60_y3x6N_of_OpenResearchLeaves64' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HDec.HSyn.sixContactMin_of_open83' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.OneProof.frozenTargetDeligneNarrow' depends on axioms: [propext, Classical.choice, Quot.sound]
+Relevant closure sizes (old/new): headline 1226/1237; H 1225/1236.
+Y3Hodge.DeligneCanonicalModelY3EveryPrint: headline true/false; H true/false
+Y3Hodge.DeligneCanonicalModelY3Narrow: headline false/true; H false/true
+Y3Hodge.IsHodgeH1Print: headline true/true; H true/true
+Y3Hodge.lemmaP_H1: headline false/false; H false/false
+Checked: all 30 research fields, only the Deligne field replaced; all other headline argument types and the conclusion match.
