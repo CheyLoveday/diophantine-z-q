@@ -1,0 +1,11 @@
+- Base: `e42e7b46260a12caf65bd5903a8fe55b462f3f38`.
+- Haar plan: multiply actual local Haar volumes on the compact open base cylinder; normalize global Haar there.
+- Weil index inventory: real `gammaReal`/ `weilIndexAxioms_real`; no instantiated finite indices or global product formula on the base.
+- Product formula locator: tex 9000–9004, Weil, Acta Math. 111 (1964), II.30, Proposition 5, independently UNVERIFIED.
+- `Measure.lean`: PASS, 10 theorem audits. `ν_f(L)=` `ENNReal.ofReal (finiteVolume a)`; `nuF a = normalizedHaar a`.
+- `Local.lean`: PASS, 6 theorem audits. Local character kernel is `ℤₚ`; local Fourier kernel on a translate integrates to the mass times the center phase on the dual and zero elsewhere.
+- `Index.lean`: PASS, 3 theorem audits. The real index is `zetaEight ^ 3` for both forms; `WeilIndexProductFormula` implies the two products with that common real index.
+- `Operators.lean`: PASS, 17 theorem audits. The explicit inverse upper and Weyl actions factor into the local operators on each class indicator; the global Weyl integral uses the measure in `adelic_pair_comparison`.
+- `Comparison.lean`: PASS, 5 theorem audits. Local tensor evaluations on elementary indicators imply the base generator descriptions on the rectangular spaces. The two index products give both `IntertwinesGenerators` conclusions by `adelic_pair_comparison`.
+- Final audit: 5 successful `lake env lean` checks, 41 `#print axioms` results, all restricted to `propext`, `Classical.choice`, and `Quot.sound`.
+- Remaining analytic inputs: actual finite index family, compatible realized local lifts satisfying `GeneratorTensorAction`, and `WeilIndexProductFormula`. Stage inputs unchanged. No manuscript error identified in scope. No new prints.

@@ -35,14 +35,14 @@ cannot be formalized as written. Each deviation is recorded with its reason in
 six-contact height estimate (the manuscript's Theorem 4.1). They differ in how they obtain pole completeness
 (Theorem 5.2).
 
-- **Elliot's route**, the proof on `main`, follows the manuscript. It uses the manuscript's own pole polynomial, with
-  curves y² = x(x − ℓ)(x + 3ℓ), and proves pole completeness from four statements, as the manuscript's Section 5.1
-  does:
+- **Elliot's route**, the proof on `main`, uses the manuscript's own pole polynomial, with
+  curves y² = x(x − ℓ)(x + 3ℓ), and proves pole completeness from three statements:
   - the manuscript's restricted converse theorem (Theorem 5.3);
   - the Cassels–Tate pairing on the curves of Theorem 5.3 (Poonen–Stoll's statement of Cassels' theorem, the print
     the manuscript cites for its Lemma 5.4; Lean proves Lemma 5.4 from it);
-  - consequences of the two printed theorems behind its Lemma 5.5: the modularity theorem of Breuil, Conrad,
-    Diamond and Taylor (Theorem A), and Kolyvagin's Theorem 1.
+  - the forward rank-one implication in Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed., Appendix C,
+    Evidence 16.5.5, p. 453. This supplies just the Mordell–Weil rank conclusion of Lemma 5.5. It replaces the
+    two previous modularity and Kolyvagin inputs; the pole construction and the restricted converse are unchanged.
 
   Theorem 5.3 stays one hypothesis of the main theorem. Separately,
   [#110](https://github.com/Deicyde/diophantine-z-q/pull/110) reduces it, along the manuscript's Sections 7–9 and
@@ -69,31 +69,52 @@ nasqret/z-in-q-lean also has a weaker, qualitative theorem that replaces the hei
 whose constant is not explicit. That bound is ineffective: it shows that a polynomial exists but gives none of
 Theorem 1.1's numbers, such as the count of variables. Neither route above uses it.
 
-## Status (fork `main` at `ff165f7c`, 2026-11-20)
+## Roadmap
 
-- **One theorem, [`ZInQ.OneProof.frozenTarget`](ZInQKernel/OneProof/Main.lean), proves `ZInQ.FrozenTarget` from 31
+The [roadmap](blueprint/roadmap/README.md) writes the proof out as a book, with a page for each statement in the
+proof's outline: what it says, how the Lean statement differs from the manuscript's, its Lean name, and whether it
+is proved, cited from the literature or open. It opens with a diagram of the proof and a status table for each route,
+and then has one part for each piece of the proof:
+- [the construction](blueprint/roadmap/construction.md): the polynomial and why its zeros project to ℤ;
+- [the height input](blueprint/roadmap/height-input.md): the minimal height hypothesis, from the open statements of
+  [the height decomposition](blueprint/roadmap/height-decomposition/README.md);
+- [the pole input](blueprint/roadmap/pole-input.md): pole completeness, by Elliot's route from
+  [Theorem 5.3, the restricted converse](blueprint/roadmap/restricted-converse/README.md), whose proof in the
+  manuscript's Sections 7–9 and Appendices E–G has a page for each numbered statement, or by the congruent-number
+  route.
+
+The [blueprint site](https://deicyde.github.io/diophantine-z-q/) renders the roadmap with its dependency graph. The
+height-decomposition chapter is generated from the Lean and the ratings in `docs/one-proof/`.
+`python3 scripts/roadmap/check_current.py` checks the roadmap against the tree: that every Lean name it cites exists,
+that the generated chapter is current (`--fix` regenerates it), and that every field of Theorem 5.3's remaining
+hypotheses it names exists.
+
+## Status (fork `main` at `29bfbc3f`, merged 2026-11-22)
+
+- **One theorem, [`ZInQ.OneProof.frozenTarget`](ZInQKernel/OneProof/Main.lean), proves `ZInQ.FrozenTarget` from 24
   open hypotheses, statements not yet proved in Lean.** Lean's kernel checks it with no `sorry` and only the standard
   axioms `propext`, `Classical.choice` and `Quot.sound`. Everything else, including every finite computation, is
   proved in Lean. Since 2026-11-18 GitHub's hosted runners run this check too: the [main build
   cache](.github/workflows/main-build-cache.yml) workflow builds the theorem after a push to `main` that changes Lean
   and fails unless its axioms are among these three. Its [first passing
-  run](https://github.com/Deicyde/diophantine-z-q/actions/runs/44219370755) was at `be73b91c`, its [last passing run on
-  `main`](https://github.com/Deicyde/diophantine-z-q/actions/runs/44513481236) was at `3078ae6a`, the build at this
-  commit had not finished on this block's date, and its [run
-  list](https://github.com/Deicyde/diophantine-z-q/actions/workflows/main-build-cache.yml) shows the other commits it
-  has passed on ([#62](https://github.com/Deicyde/diophantine-z-q/issues/62)). The [build-cost
+  run](https://github.com/Deicyde/diophantine-z-q/actions/runs/44219370755) was at `be73b91c`. After its run at `3078ae6a` (2026-11-19)
+  its runs on `main` failed, each at the workflow's disk-space guard, or were cancelled by the next landing, until
+  [#171](https://github.com/Deicyde/diophantine-z-q/pull/171) made it delete Lake's per-module setup files (48 of the build's
+  53 GB). Every run a push started since has passed, except one that was cancelled; the [latest
+  passing run](https://github.com/Deicyde/diophantine-z-q/actions/runs/45030880796) is at `29bfbc3f`, with 24 open hypotheses,
+  and the [run list](https://github.com/Deicyde/diophantine-z-q/actions/workflows/main-build-cache.yml) shows the other
+  commits it has passed on ([#62](https://github.com/Deicyde/diophantine-z-q/issues/62)). The [build-cost
   table](docs/one-proof/CONTRIBUTING.md#what-it-costs-to-build) has no build by anyone outside the project yet.
-- **The hypotheses are premises, not axioms:** Lean proves "if they all hold, then ℤ is Diophantine in ℚ". 27 belong
-  to the six-contact height estimate (the manuscript's Theorem 4.1). The other four are the inputs from which Lean
-  proves pole completeness (the manuscript's Theorem 5.2), as the manuscript does: its Theorem 5.3, the Cassels–Tate
-  pairing on its curves E_ℓ: y² = x(x − ℓ)(x + 3ℓ) (from which Lean proves its Lemma 5.4), and consequences of the
-  modularity theorem of Breuil, Conrad, Diamond and Taylor and of Kolyvagin's Theorem 1. Of the 27, 13 are classed as
-  published theorems and 14 as consequences of a published theorem or of the manuscript's text. Under the strict count
-  (a refereed theorem as printed, checked against the page), 7 qualify; the other 20 still need an argument or a
+- **The hypotheses are premises, not axioms:** Lean proves "if they all hold, then ℤ is Diophantine in ℚ". 21 belong
+  to the six-contact height estimate (the manuscript's Theorem 4.1). The other three supply pole completeness
+  (Theorem 5.2): the manuscript's Theorem 5.3, the Cassels–Tate pairing on its curves `E_ℓ` (from which Lean proves
+  Lemma 5.4), and Silverman's forward rank-one implication. Of the 21, 8 are classed as published theorems and
+  13 as consequences of a published theorem or of the manuscript's text. Under the strict
+  count (a refereed theorem as printed, checked against the page), 4 qualify; the other 17 still need an argument or a
   reading. AI raters assigned these classes. The live list, with each statement's source, rating and holder, is
   [`docs/one-proof/OPEN.md`](docs/one-proof/OPEN.md).
-- **Progress:** 65 open hypotheses on 2026-11-15, 30 on 2026-11-17, 33 on 2026-11-18, 31 now. The count falls when a
-  hypothesis is proved, can rise or fall when one is restated as printed statements, and changes when the proof
+- **Progress:** 65 open hypotheses on 2026-11-15, 30 on 2026-11-17, 33 on 2026-11-18, 31 on 2026-11-19, 25 on 2026-11-20, 24 now. The
+  count falls when a hypothesis is proved, can rise or fall when one is restated as printed statements, and changes when the proof
   follows the manuscript more closely: the switch away from Route K removed five hypotheses and added pole
   completeness, following the manuscript's complex-multiplication argument in Section 4 added four, and deriving pole
   completeness from its Section 5 replaced one by four. So it does not measure proved content.
@@ -144,9 +165,11 @@ A cold build is long. The default `lake build` does not build this theorem, so n
 12-core, 18 GB machine, 694 of the 5,225 project modules built in 41 minutes. On GitHub's hosted runners the first
 cold build, of this target and the discharges target, took about seven and a half hours of build time over two
 runs (16,331 Lake jobs); a run that starts from the previous build of `main` takes 10 to 14 minutes when a push
-changes few files. Allow about 50 GB of disk: the finished hosted build is 37 GiB for this repository and 6.7 GiB
-for Mathlib. Use a short checkout path, because Lake writes a file of several megabytes per module that embeds
-absolute paths. Clone with `git clone --depth 1 --single-branch`: the fork has several hundred branches.
+changes few files. Allow about 60 GB of disk: a finished build is about 53 GB for this repository, plus 6.7 GiB for
+Mathlib. Of the 53 GB, 48 GB are Lake's per-module setup files, a file of several megabytes per module; the hosted
+workflow deletes them from its restored build, which leaves about 8 GB
+([#171](https://github.com/Deicyde/diophantine-z-q/pull/171)). Use a short checkout path, because the setup files
+embed absolute paths. Clone with `git clone --depth 1 --single-branch`: the fork has several hundred branches.
 
 ## More
 

@@ -37,3 +37,6 @@ jobs:
         run: python -I scripts/one_proof/test_scoring.py
       - name: Claims sync unit tests (fixtures only, no network)
         run: python -I -m unittest discover -s scripts/claims -p 'test_*.py'
+      - name: Roadmap agrees with the Lean and the generated chapter (warning only)
+        continue-on-error: true
+        run: python -I scripts/roadmap/check_current.py

@@ -1,0 +1,248 @@
+@WeierstrassCoordinates : {k : Type u_3} →
+  {F : Type u_4} →
+    [inst : Field k] → [inst_1 : Field F] → [inst_2 : Algebra k F] → Place k F → WeierstrassCurve k → F → F → Prop
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.ord_x : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → P.ord x = -2
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.ord_x' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.ord_x_nonneg : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → ∀ (Q : Place k F), Q ≠ P → 0 ≤ Q.ord x
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.ord_x_nonneg' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.ord_y : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → P.ord y = -3
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.ord_y' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.ord_y_nonneg : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → ∀ (Q : Place k F), Q ≠ P → 0 ≤ Q.ord y
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.ord_y_nonneg' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.equation : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → (W⁄F).toAffine.Equation x y
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.equation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.x_ne_zero : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F}, WeierstrassCoordinates P W x y → x ≠ 0
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.x_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.y_ne_zero : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F}, WeierstrassCoordinates P W x y → y ≠ 0
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.y_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.transcendental_x : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → Transcendental k x
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.transcendental_x' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.transcendental_y : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → Transcendental k y
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.transcendental_y' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.poles_x : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F} (h : WeierstrassCoordinates P W x y)
+  (hF : IsFunctionField k F), Divisor.poles hF (Units.mk0 x ⋯) = 2 • WeilDivisor.ofPoint P
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.poles_x' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.poles_y : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F} (h : WeierstrassCoordinates P W x y)
+  (hF : IsFunctionField k F), Divisor.poles hF (Units.mk0 y ⋯) = 3 • WeilDivisor.ofPoint P
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.poles_y' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.finrank_adjoin_x_eq_two : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → IsFunctionField k F → P.degree = 1 → Module.finrank (↥k⟮x⟯) F = 2
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.finrank_adjoin_x_eq_two' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.finrank_adjoin_y_eq_three : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → IsFunctionField k F → P.degree = 1 → Module.finrank (↥k⟮y⟯) F = 3
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.finrank_adjoin_y_eq_three' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.adjoin_eq_top : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → IsFunctionField k F → P.degree = 1 → k⟮x, y⟯ = ⊤
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.adjoin_eq_top' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@exists_cubic_relation : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F] [inst_2 : Algebra k F],
+  IsFunctionField k F →
+    IsIntegrallyClosedIn k F →
+      genus k F = 1 →
+        ∀ {P : Place k F},
+          P.degree = 1 →
+            ∀ {x y : F},
+              x ≠ 0 →
+                P.ord x = -2 →
+                  (∀ (Q : Place k F), Q ≠ P → 0 ≤ Q.ord x) →
+                    y ≠ 0 →
+                      P.ord y = -3 →
+                        (∀ (Q : Place k F), Q ≠ P → 0 ≤ Q.ord y) →
+                          ∃ c, c 5 ≠ 0 ∧ ∑ i, c i • ![1, x, y, x ^ 2, x * y, x ^ 3] i = y ^ 2
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.WeierstrassModelAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.exists_cubic_relation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@exists_weierstrassCoordinates_of_genus_eq_one : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F],
+  IsFunctionField k F →
+    IsIntegrallyClosedIn k F → genus k F = 1 → ∀ {P : Place k F}, P.degree = 1 → ∃ W x y, WeierstrassCoordinates P W x y
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.exists_weierstrassCoordinates_of_genus_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@genus_zero_of_single_generator : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {x : F}, Transcendental k x → k⟮x⟯ = ⊤ → genus k F = 0
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.WeierstrassModelAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.genus_zero_of_single_generator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.singular_slope_generates : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y →
+    IsFunctionField k F →
+      P.degree = 1 →
+        ∀ {x₀ y₀ : k}, W.toAffine.IsSingular x₀ y₀ → k⟮(y - (algebraMap k F) y₀) / (x - (algebraMap k F) x₀)⟯ = ⊤
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.singular_slope_generates' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.singular_slope_transcendental : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k]
+  [inst_1 : Field F] [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y →
+    IsFunctionField k F →
+      P.degree = 1 →
+        ∀ {x₀ y₀ : k},
+          W.toAffine.IsSingular x₀ y₀ → Transcendental k ((y - (algebraMap k F) y₀) / (x - (algebraMap k F) x₀))
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.singular_slope_transcendental' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.genus_zero_of_singular : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y →
+    IsFunctionField k F → P.degree = 1 → ∀ {x₀ y₀ : k}, W.toAffine.IsSingular x₀ y₀ → genus k F = 0
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.genus_zero_of_singular' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@WeierstrassCoordinates.isElliptic : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {P : Place k F} {W : WeierstrassCurve k} {x y : F},
+  WeierstrassCoordinates P W x y → ∀ [PerfectField k], IsFunctionField k F → P.degree = 1 → genus k F ≠ 0 → W.IsElliptic
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.WeierstrassCoordinates.isElliptic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@evaluation_injective : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F] [inst_2 : Algebra k F]
+  {W : Affine k} {x y : F} (h : (W⁄F).toAffine.Equation x y),
+  Transcendental k x → Function.Injective ⇑(Affine.CoordinateRing.evalAlgHom h)
+'_private.ZInQKernel.Contrib.RC53Assist.InvariantDifferential.WeierstrassModelAxiomScratch.0.ZInQ.Contrib.RC53Assist.InvariantDifferential.evaluation_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@weierstrassFieldLift : {k : Type u_3} →
+  {F : Type u_4} →
+    [inst : Field k] →
+      [inst_1 : Field F] →
+        [inst_2 : Algebra k F] →
+          {W : Affine k} → {x y : F} → (W⁄F).toAffine.Equation x y → Transcendental k x → W.FunctionField →ₐ[k] F
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.weierstrassFieldLift' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@weierstrassFieldLift_algebraMap : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {W : Affine k} {x y : F} (h : (W⁄F).toAffine.Equation x y) (hx : Transcendental k x)
+  (z : W.CoordinateRing),
+  (weierstrassFieldLift h hx) ((algebraMap W.CoordinateRing W.FunctionField) z) = (Affine.CoordinateRing.evalAlgHom h) z
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.weierstrassFieldLift_algebraMap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@weierstrassFieldLift_genericX : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {W : Affine k} {x y : F} (h : (W⁄F).toAffine.Equation x y) (hx : Transcendental k x),
+  (weierstrassFieldLift h hx) W.genericX = x
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.weierstrassFieldLift_genericX' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@weierstrassFieldLift_genericY : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {W : Affine k} {x y : F} (h : (W⁄F).toAffine.Equation x y) (hx : Transcendental k x),
+  (weierstrassFieldLift h hx) W.genericY = y
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.weierstrassFieldLift_genericY' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@weierstrassFieldLift_fieldRange : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {W : Affine k} {x y : F} (h : (W⁄F).toAffine.Equation x y) (hx : Transcendental k x),
+  (weierstrassFieldLift h hx).fieldRange = k⟮x, y⟯
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.weierstrassFieldLift_fieldRange' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@weierstrassFieldEquiv : {k : Type u_3} →
+  {F : Type u_4} →
+    [inst : Field k] →
+      [inst_1 : Field F] →
+        [inst_2 : Algebra k F] →
+          {W : Affine k} →
+            {x y : F} → (W⁄F).toAffine.Equation x y → Transcendental k x → k⟮x, y⟯ = ⊤ → W.FunctionField ≃ₐ[k] F
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.weierstrassFieldEquiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@weierstrassFieldEquiv_genericX : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {W : Affine k} {x y : F} (h : (W⁄F).toAffine.Equation x y) (hx : Transcendental k x)
+  (hxy : k⟮x, y⟯ = ⊤), (weierstrassFieldEquiv h hx hxy) W.genericX = x
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.weierstrassFieldEquiv_genericX' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@weierstrassFieldEquiv_genericY : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] {W : Affine k} {x y : F} (h : (W⁄F).toAffine.Equation x y) (hx : Transcendental k x)
+  (hxy : k⟮x, y⟯ = ⊤), (weierstrassFieldEquiv h hx hxy) W.genericY = y
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.weierstrassFieldEquiv_genericY' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@exists_weierstrassEquation_of_genus_eq_one : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F],
+  IsFunctionField k F →
+    IsIntegrallyClosedIn k F → genus k F = 1 → ∀ {P : Place k F}, P.degree = 1 → ∃ W, Nonempty (W.FunctionField ≃ₐ[k] F)
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.exists_weierstrassEquation_of_genus_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@exists_weierstrassModel_of_genus_eq_one : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F]
+  [inst_2 : Algebra k F] [PerfectField k],
+  IsFunctionField k F →
+    IsIntegrallyClosedIn k F →
+      genus k F = 1 →
+        ∀ {P : Place k F},
+          P.degree = 1 →
+            ∃ W,
+              WeierstrassCurve.IsElliptic W ∧
+                ∃ e,
+                  P.ord (e W.genericX) = -2 ∧
+                    P.ord (e W.genericY) = -3 ∧
+                      (∀ (Q : Place k F), Q ≠ P → 0 ≤ Q.ord (e W.genericX)) ∧
+                        ∀ (Q : Place k F), Q ≠ P → 0 ≤ Q.ord (e W.genericY)
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.exists_weierstrassModel_of_genus_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@exists_weierstrassModel : ∀ {k : Type u_3} {F : Type u_4} [inst : Field k] [inst_1 : Field F] [inst_2 : Algebra k F]
+  [PerfectField k],
+  IsFunctionField k F →
+    IsIntegrallyClosedIn k F →
+      IsEllipticFunctionField k F → ∃ W, WeierstrassCurve.IsElliptic W ∧ Nonempty (W.FunctionField ≃ₐ[k] F)
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.exists_weierstrassModel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@s2b_rational : ∀ {L : Type u_3} [inst : Field L] [inst_1 : Algebra ℚ L],
+  IsFunctionField ℚ L →
+    IsIntegrallyClosedIn ℚ L →
+      IsEllipticFunctionField ℚ L → ∃ W, WeierstrassCurve.IsElliptic W ∧ Nonempty (W.FunctionField ≃ₐ[ℚ] L)
+'ZInQ.Contrib.RC53Assist.InvariantDifferential.s2b_rational' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,637 @@
+Kernel audit of the disk-order modules: exact elaborated types (#check) and axiom dependencies (#print axioms) of the principal declarations, produced by a scratch file outside the source tree importing the five modules.
+
+@arith0_central : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  [Finite
+      ↥(AddCommGroup.primaryComponent (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)],
+  ∃ i₀,
+    ∀ i ≥ i₀,
+      Nat.card ↑(G.selH i 0) =
+        2 ^
+          (padicValNat 2
+              (Nat.card
+                ↥(AddCommGroup.primaryComponent
+                    (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)) *
+            i)
+@arith0_of_mordellWeil : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ},
+  MordellWeilNumberFieldPrint →
+    ∀ (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ),
+      ∃ i₀,
+        ∀ i ≥ i₀,
+          Nat.card ↑(G.selH i 0) =
+            2 ^
+              (padicValNat 2
+                  (Nat.card
+                    ↥(AddCommGroup.primaryComponent
+                        (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)) *
+                i)
+@arith3_central : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n)),
+  ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality G hfinite →
+    ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+      ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+        ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+          ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+            NumberField.IsTotallyComplex K →
+              (∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)), 2 ∈ v.asIdeal → v ∈ G.S) →
+                ∀
+                  [Finite
+                      ↥(AddCommGroup.primaryComponent
+                          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)],
+                  Module.finrank ℤ_[2]
+                        ↑(HomologicalComplex.homology
+                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 1) =
+                      1 →
+                    ∃ i₀,
+                      ∀ i ≥ i₀,
+                        Nat.card ↑(G.selH i 3) =
+                          2 ^
+                            (padicValNat 2
+                                (Nat.card
+                                  ↥(AddCommGroup.primaryComponent
+                                      (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)) *
+                              i)
+@arith2_central : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n)),
+  ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality G hfinite →
+    ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+      ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+        ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+          ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+            NumberField.IsTotallyComplex K →
+              (∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)), 2 ∈ v.asIdeal → v ∈ G.S) →
+                ∀
+                  [Finite
+                      ↥(AddCommGroup.primaryComponent
+                          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)],
+                  Module.finrank ℤ_[2]
+                        ↑(HomologicalComplex.homology
+                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 1) =
+                      1 →
+                    ∀ (shaA : ℕ),
+                      Nat.card
+                            ↥(Submodule.torsion ℤ_[2]
+                                ↑(HomologicalComplex.homology
+                                    (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 2)) =
+                          2 ^ padicValNat 2 shaA →
+                        ∃ i₀,
+                          ∀ i ≥ i₀,
+                            Nat.card ↑(G.selH i 2) =
+                              2 ^
+                                ((i + padicValNat 2 shaA +
+                                    padicValNat 2
+                                      (Nat.card
+                                        ↥(AddCommGroup.primaryComponent
+                                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point
+                                            2))) *
+                                  i)
+@diskArith_central : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n)),
+  ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality G hfinite →
+    ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+      ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+        ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+          ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+            NumberField.IsTotallyComplex K →
+              (∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)), 2 ∈ v.asIdeal → v ∈ G.S) →
+                ∀
+                  [Finite
+                      ↥(AddCommGroup.primaryComponent
+                          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)],
+                  Module.finrank ℤ_[2]
+                        ↑(HomologicalComplex.homology
+                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 1) =
+                      1 →
+                    ∀ (shaA : ℕ),
+                      Nat.card
+                            ↥(Submodule.torsion ℤ_[2]
+                                ↑(HomologicalComplex.homology
+                                    (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 2)) =
+                          2 ^ padicValNat 2 shaA →
+                        ZInQ.Contrib.RC53Assist.Calibration.DiskArith G
+                          (Nat.card
+                            ↥(AddCommGroup.primaryComponent
+                                (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2))
+                          shaA
+@diskArith_central_actual : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n)),
+  ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality G hfinite →
+    ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+      ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+        ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+          ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+            NumberField.IsTotallyComplex K →
+              (∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)), 2 ∈ v.asIdeal → v ∈ G.S) →
+                ∀
+                  [Finite
+                      ↥(AddCommGroup.primaryComponent
+                          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)],
+                  Module.finrank ℤ_[2]
+                        ↑(HomologicalComplex.homology
+                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 1) =
+                      1 →
+                    ZInQ.Contrib.RC53Assist.Calibration.DiskArith G
+                      (Nat.card
+                        ↥(AddCommGroup.primaryComponent
+                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2))
+                      (Nat.card
+                        ↥(Submodule.torsion ℤ_[2]
+                            ↑(HomologicalComplex.homology
+                                (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 2)))
+@diskArith_of_declared_orders : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ}
+  {hZ : ℤ} (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n)),
+  ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality G hfinite →
+    ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+      ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+        ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+          ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+            NumberField.IsTotallyComplex K →
+              (∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)), 2 ∈ v.asIdeal → v ∈ G.S) →
+                ∀
+                  [Finite
+                      ↥(AddCommGroup.primaryComponent
+                          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)],
+                  Module.finrank ℤ_[2]
+                        ↑(HomologicalComplex.homology
+                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 1) =
+                      1 →
+                    ∀ (tA shaA : ℕ),
+                      padicValNat 2 tA =
+                          padicValNat 2
+                            (Nat.card
+                              ↥(AddCommGroup.primaryComponent
+                                  (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)) →
+                        padicValNat 2 shaA =
+                            padicValNat 2
+                              (Nat.card
+                                ↥(Submodule.torsion ℤ_[2]
+                                    ↑(HomologicalComplex.homology
+                                        (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 2))) →
+                          ZInQ.Contrib.RC53Assist.Calibration.DiskArith G tA shaA
+@diskArith_central_of_literature : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ}
+  {hZ : ℤ} (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ),
+  MordellWeilNumberFieldPrint →
+    ZInQ.Contrib.RC53Assist.DerivedKummer.MilneLocalDualityPrint →
+      ZInQ.Contrib.RC53Assist.DerivedKummer.MilneFiniteLocalDualityPrint →
+        ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound.MilneFiniteDegreeBoundPrint →
+          ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralCompactLocality →
+            ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralGlobalDuality →
+              ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+                ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+                  ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+                    ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+                      NumberField.IsTotallyComplex K →
+                        (∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)),
+                            2 ∈ v.asIdeal → v ∈ G.S) →
+                          Module.finrank ℤ_[2]
+                                ↑(HomologicalComplex.homology
+                                    (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 1) =
+                              1 →
+                            ZInQ.Contrib.RC53Assist.Calibration.DiskArith G
+                              (Nat.card
+                                ↥(AddCommGroup.primaryComponent
+                                    (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2))
+                              (Nat.card
+                                ↥(Submodule.torsion ℤ_[2]
+                                    ↑(HomologicalComplex.homology
+                                        (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 2)))
+@diskArith_central_of_literature_sha : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ}
+  {hZ : ℤ} (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ),
+  MordellWeilNumberFieldPrint →
+    ZInQ.Contrib.RC53Assist.DerivedKummer.MilneLocalDualityPrint →
+      ZInQ.Contrib.RC53Assist.DerivedKummer.MilneFiniteLocalDualityPrint →
+        ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound.MilneFiniteDegreeBoundPrint →
+          ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralCompactLocality →
+            ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralGlobalDuality →
+              ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+                ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+                  ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+                    ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+                      NumberField.IsTotallyComplex K →
+                        (∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)),
+                            2 ∈ v.asIdeal → v ∈ G.S) →
+                          Module.finrank ℤ_[2]
+                                ↑(HomologicalComplex.homology
+                                    (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 1) =
+                              1 →
+                            ∀ (shaA : ℕ),
+                              Nat.card
+                                    ↥(Submodule.torsion ℤ_[2]
+                                        ↑(HomologicalComplex.homology
+                                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 2)) =
+                                  2 ^ padicValNat 2 shaA →
+                                ZInQ.Contrib.RC53Assist.Calibration.DiskArith G
+                                  (Nat.card
+                                    ↥(AddCommGroup.primaryComponent
+                                        (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2))
+                                  shaA
+diskArith_central_selmer : ∀ (ℓ : ℕ) (k : ℤ) [inst : (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).IsElliptic]
+  {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G =
+      (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).baseChange (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n)),
+  ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality G hfinite →
+    ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+      ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+        ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+          ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+            NumberField.IsTotallyComplex (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k) →
+              (∀
+                  (v :
+                    IsDedekindDomain.HeightOneSpectrum
+                      (NumberField.RingOfIntegers (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))),
+                  2 ∈ v.asIdeal → v ∈ G.S) →
+                ∀
+                  [Finite
+                      ↥(AddCommGroup.primaryComponent
+                          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)],
+                  Module.finrank ℤ_[2]
+                        ↑(HomologicalComplex.homology
+                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 1) =
+                      1 →
+                    ∀ (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k G.S ⋯)
+                      (shaA : ℕ),
+                      Nat.card
+                            (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.SelK ℓ k) ⧸
+                              (ZInQ.Manuscript.RC53Assist.CentralUniversal.arithmetic_j ℓ k G.S ⋯ I ⋯).range) =
+                          2 ^ padicValNat 2 shaA →
+                        ZInQ.Contrib.RC53Assist.Calibration.DiskArith G
+                          (Nat.card
+                            ↥(AddCommGroup.primaryComponent
+                                (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2))
+                          shaA
+diskArith_arithmetic : ∀ (ℓ : ℕ) (k : ℤ) [inst : (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).IsElliptic]
+  {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G =
+      (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).baseChange (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)),
+  MordellWeilNumberFieldPrint →
+    ZInQ.Contrib.RC53Assist.DerivedKummer.MilneLocalDualityPrint →
+      ZInQ.Contrib.RC53Assist.DerivedKummer.MilneFiniteLocalDualityPrint →
+        ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound.MilneFiniteDegreeBoundPrint →
+          ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralCompactLocality →
+            ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralGlobalDuality →
+              ∀ (hglob : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness)
+                (hloc : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness),
+                ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+                  ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+                    NumberField.IsTotallyComplex (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k) →
+                      ∀
+                        (h2 :
+                          ∀
+                            (v :
+                              IsDedekindDomain.HeightOneSpectrum
+                                (NumberField.RingOfIntegers
+                                  (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))),
+                            2 ∈ v.asIdeal → v ∈ G.S),
+                        ¬IsSquare ↑k →
+                          ∀ (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k G.S ⋯),
+                            ZInQ.Manuscript.RC.SelmerCorankOneOverK ℓ k →
+                              ∀ (shaA : ℕ),
+                                Nat.card
+                                      (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.SelK ℓ k) ⧸
+                                        (ZInQ.Manuscript.RC53Assist.CentralUniversal.arithmetic_j ℓ k G.S ⋯ I
+                                            ⋯).range) =
+                                    2 ^ padicValNat 2 shaA →
+                                  ZInQ.Contrib.RC53Assist.Calibration.DiskArith G
+                                    (Nat.card
+                                      ↥(AddCommGroup.primaryComponent
+                                          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point
+                                          2))
+                                    shaA
+diskArith_address : ∀ (ℓ : ℕ) (k : ℤ) [inst : (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).IsElliptic] {E₀ : WeierstrassCurve ℚ}
+  {hZ : ℤ}
+  (G :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G =
+      (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).baseChange (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)),
+  MordellWeilNumberFieldPrint →
+    ZInQ.Contrib.RC53Assist.DerivedKummer.MilneLocalDualityPrint →
+      ZInQ.Contrib.RC53Assist.DerivedKummer.MilneFiniteLocalDualityPrint →
+        ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound.MilneFiniteDegreeBoundPrint →
+          ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralCompactLocality →
+            ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralGlobalDuality →
+              ∀ (hglob : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness)
+                (hloc : ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness),
+                ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+                  ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+                    k < 0 →
+                      ∀
+                        (h2 :
+                          ∀
+                            (v :
+                              IsDedekindDomain.HeightOneSpectrum
+                                (NumberField.RingOfIntegers
+                                  (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))),
+                            2 ∈ v.asIdeal → v ∈ G.S)
+                        (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k G.S ⋯),
+                        ZInQ.Manuscript.RC.SelmerCorankOneOverK ℓ k →
+                          ∀ (shaA : ℕ),
+                            Nat.card
+                                  (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.SelK ℓ k) ⧸
+                                    (ZInQ.Manuscript.RC53Assist.CentralUniversal.arithmetic_j ℓ k G.S ⋯ I ⋯).range) =
+                                2 ^ padicValNat 2 shaA →
+                              ZInQ.Contrib.RC53Assist.Calibration.DiskArith G
+                                (Nat.card
+                                  ↥(AddCommGroup.primaryComponent
+                                      (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2))
+                                shaA
+diskArith_address_sha : ∀ (ℓ : ℕ) (k : ℤ) [inst : (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).IsElliptic]
+  {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G =
+      (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).baseChange (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)),
+  MordellWeilNumberFieldPrint →
+    KummerSequenceTwoPowerPrint →
+      ZInQ.Contrib.RC53Assist.DerivedKummer.MilneLocalDualityPrint →
+        ZInQ.Contrib.RC53Assist.DerivedKummer.MilneFiniteLocalDualityPrint →
+          ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound.MilneFiniteDegreeBoundPrint →
+            ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralCompactLocality →
+              ZInQ.Contrib.RC53Assist.IntegralDuality.NekovarIntegralGlobalDuality →
+                ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+                  ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+                    ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+                      ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+                        k < 0 →
+                          (∀
+                              (v :
+                                IsDedekindDomain.HeightOneSpectrum
+                                  (NumberField.RingOfIntegers
+                                    (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))),
+                              2 ∈ v.asIdeal → v ∈ G.S) →
+                            ∀
+                              [Finite
+                                  ↥(AddCommGroup.primaryComponent
+                                      (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.shaK
+                                          (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k)
+                                          (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)))
+                                      2)]
+                              (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k G.S ⋯),
+                              ZInQ.Manuscript.RC.SelmerCorankOneOverK ℓ k →
+                                ZInQ.Contrib.RC53Assist.Calibration.DiskArith G
+                                  (Nat.card
+                                    ↥(AddCommGroup.primaryComponent
+                                        (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2))
+                                  (Nat.card
+                                    ↥(AddCommGroup.primaryComponent
+                                        (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.shaK
+                                            (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k)
+                                            (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)))
+                                        2))
+card_selmer_quot_eq_sha : ∀ (ℓ : ℕ) (k : ℤ) [inst : (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).IsElliptic]
+  {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G =
+      (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).baseChange (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)),
+  KummerSequenceTwoPowerPrint →
+    ∀
+      [Finite
+          ↥(AddCommGroup.primaryComponent
+              (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.shaK (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k)
+                  (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)))
+              2)]
+      (hfinite :
+        ∀ (n : ℤ),
+          Module.Finite ℤ_[2]
+            ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n))
+      (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k G.S ⋯),
+      Nat.card
+          (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.SelK ℓ k) ⧸
+            (ZInQ.Manuscript.RC53Assist.CentralUniversal.arithmetic_j ℓ k G.S ⋯ I ⋯).range) =
+        Nat.card
+          ↥(AddCommGroup.primaryComponent
+              (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.shaK (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k)
+                  (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ)))
+              2)
+@card_quot_eq_of_kummer : ∀ {S T V : Type} [inst : AddCommGroup S] [inst_1 : AddCommGroup T] [inst_2 : AddCommGroup V]
+  (j : V →+ S) (φ : S →+ T) (P : AddSubgroup T) [Finite ↥P],
+  (∀ (v : V) (n : ℕ), n ≠ 0 → ∃ w, n • w = v) →
+    Finite (S ⧸ j.range) →
+      φ.range = P →
+        (∀ (y : S), φ y = 0 → ∀ (n : ℕ), n ≠ 0 → ∃ z, φ z = 0 ∧ n • z = y) → Nat.card (S ⧸ j.range) = Nat.card ↥P
+KummerSequenceTwoPowerPrint : Prop
+def ZInQ.Contrib.RC53Assist.DiskOrders.KummerSequenceTwoPowerPrint : Prop :=
+∀ (k : ℤ) (E : WeierstrassCurve ℚ),
+  E.IsElliptic →
+    (∀
+        (x :
+          ↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.shaK (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k) E)),
+        x ∈
+            AddCommGroup.primaryComponent
+              (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.shaK (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k)
+                  E))
+              2 ↔
+          ∃
+            y ∈
+              ZInQ.Manuscript.RC53Assist.QuadraticDescent.selmerK (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k)
+                E,
+            (ZInQ.Manuscript.RC53Assist.QuadraticDescent.inclK (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k) E)
+                y =
+              ↑x) ∧
+      ∀
+        (y :
+          TauCeti.ContCohomology.H1
+            (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.galK (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k)))
+            (ZInQ.Manuscript.SelmerTwoPower.TwoPowerCoeff E)),
+        (ZInQ.Manuscript.RC53Assist.QuadraticDescent.inclK (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k) E) y =
+            0 →
+          ∀ (n : ℕ),
+            n ≠ 0 →
+              ∃ z,
+                (ZInQ.Manuscript.RC53Assist.QuadraticDescent.inclK (ZInQ.Manuscript.RC53Assist.QuadraticDescent.sqrtK k)
+                        E)
+                      z =
+                    0 ∧
+                  n • z = y
+finite_central_torsion : MordellWeilNumberFieldPrint →
+  ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] [inst_2 : DecidableEq K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+    (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ),
+    Finite
+      ↥(AddCommGroup.primaryComponent (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)
+@shape_of_duality : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n)),
+  ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality G hfinite →
+    ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneLocalFiniteness →
+      ZInQ.Contrib.RC53Assist.InnerLimitArith.MilneGlobalFiniteness →
+        ZInQ.Contrib.RC53Assist.CalibrationShape.MilneLocalDimensionTwo →
+          ZInQ.Contrib.RC53Assist.CalibrationShape.MilneGlobalDimensionTwo →
+            NumberField.IsTotallyComplex K →
+              (∀ (v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)), 2 ∈ v.asIdeal → v ∈ G.S) →
+                ∀
+                  [Finite
+                      ↥(AddCommGroup.primaryComponent
+                          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G).toAffine.Point 2)],
+                  Module.finrank ℤ_[2]
+                        ↑(HomologicalComplex.homology
+                            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 1) =
+                      1 →
+                    ZInQ.Contrib.RC53Assist.CalibrationModel.CalibrationCohomologyShape
+                      (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G)
+@disk3_valuation_eq_disk1 : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n)),
+  ZInQ.Contrib.RC53Assist.CalibrationShape.IntegralCentralKummerDuality G hfinite →
+    ZInQ.Contrib.RC53Assist.CalibrationModel.CalibrationCohomologyShape
+        (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) →
+      (ZInQ.Contrib.RC53Assist.CalibrationModel.centralDiskMatrix G hfinite 3).det.valuation =
+        (ZInQ.Contrib.RC53Assist.CalibrationModel.centralDiskMatrix G hfinite 1).det.valuation
+@card_selH_zero : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ),
+  Nat.card ↑(G.selH i 0) =
+    Nat.card
+      ↥(ZInQ.Manuscript.RC.CoefModules.invariantsSub (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+          (ZInQ.Manuscript.RC.SelmerComplex.GKS K G.S)
+          (ZInQ.Contrib.RC53Assist.CalibrationIntegral.finiteCentralModule G i))
+@card_central_invariants : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ) (i : ℕ),
+  i ≠ 0 →
+    Nat.card
+        ↥(ZInQ.Manuscript.RC.CoefModules.invariantsSub (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)
+            (ZInQ.Manuscript.RC.SelmerComplex.GKS K G.S)
+            (ZInQ.Contrib.RC53Assist.CalibrationIntegral.finiteCentralModule G i)) =
+      Nat.card { P // ∀ (σ : ZInQ.Manuscript.RC.SelmerComplex.GKS K G.S), σ • P = P } ^ i
+@card_lev_invariants : ∀ {K : Type} [inst : Field K] [NumberField K]
+  {S : Set (IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K))} (W : WeierstrassCurve K) (i : ℕ),
+  Nat.card { P // ∀ (σ : ZInQ.Manuscript.RC.SelmerComplex.GKS K S), σ • P = P } =
+    Nat.card ↥(AddSubgroup.torsionBy W.toAffine.Point ↑(2 ^ i))
+@card_dual_H3 : ∀ {R : Type} [inst : CommRing R] {C : CochainComplex (ModuleCat R) ℤ}
+  (T : (n : ℤ) → ZInQ.Contrib.RC53Assist.CalibrationModel.DiagonalResolution ↑(HomologicalComplex.homology C n)),
+  (T 0).generators = 0 →
+    (T (-1)).generators = 0 →
+      (T 0).relations = 0 →
+        Nat.card
+            ↑(HomologicalComplex.homology
+                (ZInQ.Contrib.CloudB3RC53.SelmerDuality.dualCx
+                    (ZInQ.Contrib.RC53Assist.CalibrationModel.resolutionGCx C fun n => (T n).toFreeResolution) 3).toCC
+                3) =
+          Nat.card (T 1).DiskCokernel
+@card_torsion_two : ∀ {K : Type} [inst : Field K] [inst_1 : NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G : ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData K E₀ hZ)
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n)),
+  Nat.card
+      ↥(Submodule.torsion ℤ_[2]
+          ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 2)) =
+    2 ^ (ZInQ.Contrib.RC53Assist.CalibrationModel.centralDiskMatrix G hfinite 2).det.valuation
+card_torsion_two_eq_selmer : ∀ (ℓ : ℕ) (k : ℤ) [inst : (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).IsElliptic]
+  {E₀ : WeierstrassCurve ℚ} {hZ : ℤ}
+  (G :
+    ZInQ.Contrib.RC53Assist.Calibration.GenuineKummerData (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k)
+      E₀ hZ)
+  (hcurve :
+    ZInQ.Contrib.RC53Assist.CalibrationIntegral.centralCurve G =
+      (ZInQ.Contrib.CloudB3RC53.Ecurve ℓ).baseChange (ZInQ.Manuscript.RC53Assist.CentralUniversal.QuadraticField k))
+  (hfinite :
+    ∀ (n : ℤ),
+      Module.Finite ℤ_[2]
+        ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) n))
+  (I : ZInQ.Manuscript.RC53Assist.CentralUniversal.KummerCoefficientComparison ℓ k G.S ⋯),
+  Nat.card
+      ↥(Submodule.torsion ℤ_[2]
+          ↑(HomologicalComplex.homology (ZInQ.Contrib.RC53Assist.CalibrationIntegral.compactCentralComplex G) 2)) =
+    Nat.card
+      (↥(ZInQ.Manuscript.RC53Assist.QuadraticDescent.SelK ℓ k) ⧸
+        (ZInQ.Manuscript.RC53Assist.CentralUniversal.arithmetic_j ℓ k G.S ⋯ I ⋯).range)
+MordellWeilNumberFieldPrint : Prop
+def ZInQ.Contrib.RC53Assist.DiskOrders.MordellWeilNumberFieldPrint : Prop :=
+∀ (K : Type) [inst : Field K] [NumberField K] [inst_2 : DecidableEq K] (W : WeierstrassCurve K),
+  W.IsElliptic → AddGroup.FG W.toAffine.Point
+'ZInQ.Contrib.RC53Assist.DiskOrders.arith0_central' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.arith0_of_mordellWeil' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.arith3_central' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.arith2_central' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_central' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_central_actual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_of_declared_orders' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_central_of_literature' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_central_of_literature_sha' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_central_selmer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_arithmetic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_address' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_address_sha' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_selmer_quot_eq_sha' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_quot_eq_of_kummer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.q2z2_pi_divisible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.isTotallyComplex_of_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.disk3_valuation_eq_disk1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_selH_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_selH0' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_central_invariants' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_lev_invariants' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_primaryComponent_two' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.torsionBy_eq_primaryComponent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.finite_central_torsion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_dual_H3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_diskCokernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_torsion_eq_diskCokernel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_torsion_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_torsion_two_eq_selmer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.shape_of_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.diskArith_congr_valuation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.card_rightInvariants' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.DiskOrders.finiteCentralTensorEquiv_galois' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

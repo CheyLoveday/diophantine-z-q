@@ -34,10 +34,11 @@ no `𝔽₂((t))`-coefficient Galois cochains in this tree).
 * `transfer_after_inverting_t'`, `residualRankCounts_afterT'`;
 * `globalDegreeThreeVanishes_of_milne`, `residualRankCounts_afterT''`: the named GLUE discharged by
   the Milne print from an identification `eG3` of the degree-`3` global term with Mathlib's
-  continuous `H³` (the degree-`3` genuine-to-Mathlib comparison is missing, so `eG3` cannot yet be
-  stated against the genuine `genH K S₀ 3` or derived from a minimal model);
+  continuous `H³`; the genuine form, against `genH K S₀ 3`, is `residualRankCounts_afterT'''`
+  (`ResidualAfterT3.lean`, through `genHEquivAll`, the all-degree comparison
+  `ContBridge.contCohomologyLinearEquiv`);
 * Non-vacuity: `transfer_after_inverting_t'_nonvacuous`, `reduction_nonvacuous` (zero complexes;
-  model level only — like the peer's witness, they do not tie the models to the arithmetic
+  model level only — like `RC53Assist.ResidualWitnessActive`, they do not tie the models to the arithmetic
   cochains). Non-vacuity of the whole constructor is not shown (as for
   `residualRankCounts_genuine`).
 
@@ -143,7 +144,8 @@ def punitCxIsoBaseChange {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S)
 
 /-- **Non-vacuity of the inputs of `transfer_after_inverting_t'`** at `𝔽₂[[t]] → 𝔽₂((t))`, with the
 zero complexes (the base-change comparison is an isomorphism of complexes; model level only — as
-the peer's witness, this does not tie the models to the arithmetic cochains). PROVED. -/
+`RC53Assist.ResidualWitnessActive`, this does not tie the models to the arithmetic cochains).
+PROVED. -/
 theorem transfer_after_inverting_t'_nonvacuous : 0 ≤ 0 :=
   transfer_after_inverting_t' (algebraMap (PowerSeries (ZMod 2)) (LaurentSeries (ZMod 2)))
     (punitCx (PowerSeries (ZMod 2))) (punitCx (LaurentSeries (ZMod 2)))
@@ -174,11 +176,10 @@ term of the global part of the residual model is identified with Mathlib's conti
 `H³(G_{K,S₀}, W)` (`eG3`, the same kind of term-level identification as `eG` in degrees `0..2`),
 then Milne ADT I.4.10 (`H³ = 0` for totally complex `K`) gives rank `0`. PROVED.
 
-The identification targets Mathlib's `continuousCohomology 3 (Wrep K S₀)`, not the genuine `genH K
-S₀ 3`: the comparison of the genuine continuous cochains with Mathlib's continuous cohomology
-(`genHEquiv`) exists only in degrees `≤ 2`. That degree-`3` genuine-to-Mathlib comparison is the
-missing piece for stating `eG3` against `genH` (or for deriving it from a minimal model
-quasi-isomorphic to the genuine global complex). -/
+The identification here targets Mathlib's `continuousCohomology 3 (Wrep K S₀)`. The genuine and
+Mathlib continuous cohomology agree in every degree (`ContBridge.contCohomologyLinearEquiv`,
+packaged as `genHEquivAll`); the form with `eG3` against the genuine `genH K S₀ 3` is
+`globalDegreeThreeVanishes_of_milne_genH` (`ResidualAfterT3.lean`). -/
 theorem globalDegreeThreeVanishes_of_milne {K : Type} [Field K] [NumberField K]
     (h410 : MilneADT_I_4_10_totallyComplex) (hK : IsTotallyComplex K) {N r : ℕ}
     {D : Finset ℕ} (hN : N ≠ 0) (hr : r.Prime) (hD : ∀ p ∈ D, p.Prime)
@@ -274,8 +275,8 @@ open Classical in
 /-- **`residualRankCounts_afterT'` with the degree-`3` vanishing from the Milne print**: the named
 GLUE `GlobalDegreeThreeVanishes Dsel` is replaced by the identification `eG3` of the degree-`3`
 global term with Mathlib's continuous `H³(G_{K,S₀}, W)` (the same kind as `eG`), and discharged by
-`globalDegreeThreeVanishes_of_milne` (Milne ADT I.4.10, already an argument). The degree-`3`
-genuine-to-Mathlib comparison is the missing piece for stating `eG3` against `genH K S₀ 3`.
+`globalDegreeThreeVanishes_of_milne` (Milne ADT I.4.10, already an argument). The form with `eG3`
+against the genuine `genH K S₀ 3` is `residualRankCounts_afterT'''` (`ResidualAfterT3.lean`).
 PROVED. -/
 def residualRankCounts_afterT'' (h410 : MilneADT_I_4_10_totallyComplex)
     (h51 : MilneADT_I_5_1_totallyComplex) (h28 : MilneADT_I_2_8) (h23 : MilneADT_I_2_3_trivial)

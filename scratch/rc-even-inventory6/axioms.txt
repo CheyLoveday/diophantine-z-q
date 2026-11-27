@@ -1,0 +1,92 @@
+'ZInQ.Manuscript.RC.EvenJoin.localUnitResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.localUnitResidue_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedLocalCharacter.0.ZInQ.Manuscript.RC.EvenJoin.localUnitResidue_natCast' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.charConductor_of_localUnitResidue' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.tested_sourceLevel_exponent_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.tested_sourceChar_at_tested_unit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.SourceCentralCharacterAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.sourceCentralCharacter_of_tested' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.quadraticChar_of_cyclotomic_action' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.ReciprocityAt.ResidueCyclotomic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.reciprocity_quadratic_of_residue' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.residueAction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.localFrob' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.residueFrob_infinite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.residueActionWeil' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.residueAction_inertia' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.residueExponentData' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.residueExponentMap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.residueExponent_spec' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.residueExponent_inertia' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.LocalWeilReciprocity.0.ZInQ.Manuscript.RC.EvenJoin.residueExponent_frob' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.localWeilReciprocity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.localWeilReciprocity_residue' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedRamifiedFactor.0.ZInQ.Manuscript.RC.EvenJoin.unramified_eq_of_uniformizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedRamifiedFactor.0.ZInQ.Manuscript.RC.EvenJoin.induced_central_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedRamifiedFactor.0.ZInQ.Manuscript.RC.EvenJoin.fixed_eq_zero_of_induced_eval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.induced_finrank_level_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.orderedInducingCharacters_unique' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.ramifiedFactorOfPrincipal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.halfModulusOfRoot_complex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.NormalizedCuspSource.LocalWhittakerDiagonal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.NormalizedCuspSource.localWhittakerTest_of_diagonal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.LocalPrincipalAction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.RamifiedPrincipalInputsAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.exists_placed_local_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.ramifiedLocalModelAt_of_principalInputs' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.ramifiedLocalModelAt_of_localWeil' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.placedGaloisInput_of_carayol_of_principalInputs' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

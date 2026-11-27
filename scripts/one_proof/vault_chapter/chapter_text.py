@@ -155,20 +155,6 @@ This is the manuscript's own claim, which it derives from Buzzard's Theorem 2.1 
 The 11/5 manuscript (`diophantine_zq.tex`, lines 443–477), the construction of the integral model of $Y_3$; K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Theorem 2.1 and Corollary 2.3, read in the author's preprint (Theorem 2.1, p. 5; Corollary 2.3, p. 7; the moduli problem, without a polarization, p. 2; the canonical principal polarization, p. 3). The journal pages are unverified.
 """,
     ),
-    'y3ToP1j': dict(
-        group='shimura-curves', slug='y3-quotient-map',
-        title='The quotient map from Y₃ to the projective line',
-        anchor='Y3 to P1j',
-        statement=r"""
-The *quotient statement for $Y_3$* is the following assertion. Let $\overline{\mathbb Q}$ be an algebraic closure of $\mathbb Q$, and let $Y$ be a proper smooth curve over $\mathbb Q$ with a $\overline{\mathbb Q}$-point and with, for every field $F\supseteq\mathbb Q$, a bijection between $Y(F)$ and the isomorphism classes of QM abelian surfaces over $F$ with a level-$3$ structure; say that a point *classifies* the surfaces in its class. Suppose that, for every homomorphism of fields $F\to F'$, the image in $Y(F')$ of a point of $Y(F)$ classifies the base change to $F'$ of the surfaces that the point classifies, with their actions of $\mathcal O$ and their level structures; that there is a single family over $Y$, that is, a proper smooth morphism $\mathcal A\to Y$ of relative dimension $2$ with, for each $a\in\mathcal O$, an endomorphism $\iota(a)$ of $\mathcal A$ over $Y$ and a section $\eta(a)$ of $\mathcal A\to Y$, no group law or other condition being required, such that each field-valued point of $Y$ classifies the fibre of $\mathcal A$ at that point with the restrictions of the $\iota(a)$ and $\eta(a)$; and that every such family over a proper smooth curve $S$ over $\mathbb Q$ whose fibre at each field-valued point, with the restrictions of the $\iota(a)$ and $\eta(a)$, is a QM abelian surface with level-$3$ structure has a morphism $S\to Y$ over $\mathbb Q$ taking each field-valued point of $S$ to a point classifying its fibre. Then there is a morphism $\pi:Y\to\mathbf P^1_{\mathbb Q}$ with the following four properties, in which $y$ and $y'$ are $\overline{\mathbb Q}$-points of $Y$ classifying $(A,\iota,\eta)$ and $(A',\iota',\eta')$, and $\pi(y)$ is the image of $y$ in $\mathbf P^1(\overline{\mathbb Q})=\overline{\mathbb Q}\cup\{\infty\}$. First, $\pi(y)=\pi(y')$ exactly when $(A',\iota')$ is isomorphic to the twist $(A,\iota\circ\alpha)$ for some ring automorphism $\alpha$ of $\mathcal O$. Second, $\pi(y)=0$ exactly when the ring $\operatorname{End}_{\mathcal O}(A)$ of endomorphisms of $A$ commuting with $\iota(\mathcal O)$ contains an element $\phi$ with $\phi^2=-1$; $\pi(y)=\infty$ exactly when it contains an element $\phi$ with $\phi^2-\phi+1=0$; and $\pi(y)=-16/27$ exactly when it contains an element $\phi$ with $\phi^2=-6$. Third, $\pi$ maps $Y(\overline{\mathbb Q})$ onto $\mathbf P^1(\overline{\mathbb Q})$. Fourth, every fibre of $\pi$ on $Y(\overline{\mathbb Q})$ is finite, with at most $324$ points.
-""",
-        caveat=r"""
-This is the manuscript's own claim. In the proof of its Theorem 4.1 the manuscript shows that central finite ideles act trivially on $Y_3$ and concludes that the whole curve, "with all its determinant components", admits an action of $N/(\mathbb A_f^\times K_3)$, where $N$ is the finite-adelic normalizer of $\widehat{\mathcal O}$, with quotient $\mathbf P^1_j$ and $\deg(Y_3\to\mathbf P^1_j)\le4|(\mathcal O/3\mathcal O)^\times|\le324$; for the identification of the normalizer quotient with $\mathbf P^1_j$, with branch values $0,\infty,-16/27$, it cites Baba and Granath and Lin and Yang. No print states the result at level $3$. The statement is made for every curve with these moduli properties and asserts nothing about the existence of such a curve; nor does it assert the action, only the fibres of $\pi$. It reads the quotient on $\overline{\mathbb Q}$-points as the classes of the underlying QM abelian surfaces up to twist; that these classes are the orbits of $N$ is an argument made on the spot. It reads the branch values as the project reads the table in §3.1 of Baba and Granath, a locator that is unverified: the points at which $\operatorname{End}_{\mathcal O}(A)$ contains a root of $x^2+1$, of $x^2-x+1$ or of $x^2+6$, that is, the CM points of discriminants $-4$, $-3$ and $-24$, are exactly the fibres over $0$, $\infty$ and $-16/27$, respectively. The locator audit found in Baba and Granath's Theorem 2.1 and Lemma 3.1 that the quotient of the Shimura curve of level $\widehat{\mathcal O}^\times$ by its Atkin–Lehner involutions is $\mathbf P^1_{\mathbb Q}$; these results do not fix the numerical values of the coordinate. The indices $4,6,2$ that the manuscript gives with the branch values are not part of the statement, and the fibre bound is the degree bound read on points, since a finite morphism of degree $d$ has at most $d$ points in each geometric fibre. A review of this statement is pending.
-""",
-        src=r"""
-The 11/5 manuscript (`diophantine_zq.tex`, lines 420–440), in the proof of its Theorem 4.1: the normalizer quotient $\mathbf P^1_j$, with branch values $0,\infty,-16/27$ and indices $4,6,2$, cited to Baba–Granath and Lin–Yang (lines 420–422), and the action of $N/(\mathbb A_f^\times K_3)$ on $Y_3$ with the degree bound (lines 423–440). S. Baba and H. Granath, *Genus 2 curves with quaternionic multiplication*, Canad. J. Math. 60 (2008), Theorem 2.1, p. 737, and Lemma 3.1, pp. 739–740, read by the locator audit; the table of §3.1, p. 740, is unverified. The manuscript's bibliography cites the 2005 preprint of that paper (MPI für Mathematik), Sections 2.1 and 3 and Proposition 10, which was not located. Y.-H. Lin and Y. Yang, *Quaternionic loci in Siegel's modular threefold*, arXiv:1807.00466v1 (2018), the version the manuscript cites (journal version Math. Z. 295 (2020), 775–819, unverified); not read for this statement. The count $|(\mathcal O/3\mathcal O)^\times|=72$ is a computation of the project.
-""",
-    ),
     'cmHeight62': dict(
         group='cm-fibres', slug='elliptic-height-discriminant-formula',
         title='The discriminant formula for the Faltings height of an elliptic curve',
@@ -230,140 +216,29 @@ This is Fowler's Proposition 2.7 as printed: the print takes $h(\Delta)$ to be t
 G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math. Proc. Cambridge Philos. Soc. 180 (2026), 607–641, Proposition 2.7, p. 615, with the class number defined on p. 613; the manuscript's citation (`diophantine_zq.tex`, lines 588–593).
 """,
     ),
-    't10TateDuality': dict(
-        group='abelian-varieties', slug='tate-module-duality',
-        title='The first ℓ-adic cohomology of an abelian variety is dual to its Tate module',
-        anchor='Milne Theorem 12.1',
+    'silverbergZarhinThm34': dict(
+        group='neron-models', slug='semistable-reduction-theorem',
+        title="Grothendieck's semistable reduction theorem",
+        anchor='Semistable reduction theorem',
         statement=r"""
-The *duality statement for the Tate module* is the following assertion. Let $K$ be a field, $\overline K$ an algebraic closure, $G_K=\operatorname{Aut}_K(\overline K)$, $A$ an abelian variety over $K$, $A_{\overline K}=A\times_K\overline K$, and $\ell$ a prime different from the characteristic of $K$. Let $H^1(A_{\overline K},\mathbb Z_\ell)$ be the first cohomology group of the pro-étale site of $A_{\overline K}$ with coefficients in the sheaf $U\mapsto C(U,\mathbb Z_\ell)$ of continuous $\mathbb Z_\ell$-valued functions, a $\mathbb Z_\ell$-module on which $\sigma\in G_K$ acts by pull-back along the automorphism $1\times\operatorname{Spec}\sigma$ of $A_{\overline K}$, and let $G_K$ act on the Tate module $T_\ell A=\varprojlim_n A(\overline K)[\ell^n]$ through its action on the points of $A$. Then there is an isomorphism of $\mathbb Z_\ell$-modules $\phi:H^1(A_{\overline K},\mathbb Z_\ell)\to\operatorname{Hom}_{\mathbb Z_\ell}(T_\ell A,\mathbb Z_\ell)$ with $\phi(\sigma x)=\phi(x)\circ\sigma^{-1}$ for every $\sigma\in G_K$ and every $x$.
+The *semistable reduction statement* is the following assertion. Let $K$ be a field, $\mathcal O$ a
+valuation ring of $K$ that is a discrete valuation ring, and $A$ an abelian variety over $K$. Then
+there is a finite Galois extension $E$ of $K$ inside an algebraic closure of $K$ such that for every
+valuation ring $V$ of $E$ with $V\cap K=\mathcal O$, the base change $A_E$ has semistable reduction
+at $V$: some Néron model of $A_E$ over $V$ has a special fibre over the residue field whose identity
+component is an extension of an abelian variety by a torus, not necessarily split.
 """,
         caveat=r"""
-Milne prints the isomorphism for an abelian variety over a separably closed field, with the étale cohomology group $H^1(A_{\rm et},\mathbb Z_\ell)$, as Theorem 12.1(a) with Remark 12.5, and records in that remark, without proof, that it is compatible with the natural action of $\operatorname{Gal}(k^{\rm sep}/k)$ when $A$ is defined over $k$; the statement applies this to $A_{\overline K}$. An AI reading of the notes found the statement a consequence of these, not a direct instance, through two steps: the agreement of pro-étale cohomology with coefficients $C(-,\mathbb Z_\ell)$ with étale $\ell$-adic cohomology, a comparison theorem of Bhatt and Scholze, and the use of an algebraic closure in place of a separable closure, which changes nothing in characteristic $0$ and in general follows from the topological invariance of étale cohomology.
-""",
-        src=r"""
-J. S. Milne, *Abelian varieties*, course notes, version 2.0 (March 16, 2008), Part I, Theorem 12.1(a), p. 55, and Remark 12.5, p. 56, read in the author's PDF; this is the version the manuscript cites (`diophantine_zq.tex`, lines 10966–10970). The 1986 chapter *Abelian varieties* in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Theorem 15.1(a), is not read. Pro-étale cohomology and its comparison with étale cohomology: B. Bhatt and P. Scholze, *The pro-étale topology for schemes*, Astérisque 369 (2015), Definition 6.8.1 and §5.6; these two numbers are unverified.
-""",
-    ),
-    'silverbergZarhinThm33': dict(
-        group='neron-models', slug='inertia-criterion',
-        title="Silverberg and Zarhin's inertia criterion for semistable reduction",
-        anchor='Inertia criterion',
-        statement=r"""
-The *inertia criterion statement* is the following assertion. Let $K$ be a field, $\mathcal O$ a
-valuation ring of $K$ that is a discrete valuation ring, $\Omega$ an algebraic closure of $K$, $w$ a
-valuation ring of $\Omega$ over $\mathcal O$, $\ell$ a prime invertible in $\mathcal O$, and $A$ an
-abelian variety over $K$, with $V_\ell A=\mathbb Q_\ell\otimes_{\mathbb Z_\ell}T_\ell A$. Say that an
-abelian variety has semistable reduction at a discrete valuation ring when some Néron model of it
-there has a special fibre over the residue field whose identity component is an extension of an
-abelian variety by a torus, not necessarily split. Suppose that $A$ has semistable reduction at
-$\mathcal O$, or that for some finite separable extension $E$ of $K$ inside $\Omega$ such that
-$w\cap E$ is a discrete valuation ring, $A_E$ has semistable reduction at $w\cap E$. Then $A$ has
-semistable reduction at $\mathcal O$ if and only if the inertia group $I$ of $w$ acts trivially on
-$V_\ell A/(V_\ell A)^I$: that is, $\tau(\sigma x-x)=\sigma x-x$ for all $\sigma,\tau\in I$ and all
-$x\in V_\ell A$.
-""",
-        caveat=r"""
-It is Theorem 3.3 of Silverberg and Zarhin, which they attribute to Grothendieck, for the print's
-Galois extension taken to be the separable closure, as their proofs of Lemma 5.5 and Proposition 6.1
-take it; the algebraic closure $\Omega$ stands in for the separable closure. The print defines
-semistability at a place only for a discrete valuation, so for the infinite extension "semistable at
-$w$" is read as semistable at some finite separable subextension, the base allowed: that is the
-hypothesis above. A two-lens review rated the statement glue rather than the printed form, for these
-readings and because $K$ is any field; a page reading alone would not change that. The manuscript
-cites Theorem 3.5 of the same paper (Raynaud's criterion) and then states, without citation, that wild
-inertia acts trivially on each $V_\ell(A)$ with $\ell\ne p$. Lean derives that sentence from this
-statement.
+It is Theorem 3.4 of Silverberg and Zarhin, Grothendieck's semistable reduction theorem, which they
+prove by citing SGA 7 IX, Théorème 3.6. As stated here it also asserts that $A_E$ has a Néron model
+at each such $V$, which their notion of semistable reduction presupposes. That the valuation rings of
+$E$ over $\mathcal O$ are the localizations of the integral closure of $\mathcal O$ in $E$ at its
+maximal ideals is standard and not printed.
 """,
         src=r"""
 A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of abelian varieties*,
-Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.3, p. 405, with semistable reduction as defined in
-§3, p. 405; the proofs of Lemma 5.5 (p. 411) and Proposition 6.1 (pp. 412–413) apply it at the
-separable closure. Read by an AI model (2026-11-17). The manuscript cites the paper at
-`diophantine_zq.tex` line 816 and in its bibliography (lines 11077–11080); the uncited sentence is
-at lines 817–818.
-""",
-    ),
-    'neronSchemeExtensionDedekind': dict(
-        group='neron-models', slug='neron-models-exist',
-        title='Néron models over Dedekind domains',
-        anchor='Neron models exist',
-        statement=r"""
-The *Néron existence statement* is the following assertion. Let $D$ be a Dedekind domain that is not
-a field, with fraction field $L$, and $A$ an abelian variety over $L$. Then there is a smooth,
-separated, quasi-compact scheme $N$ over $D$ with generic fibre $A$ such that, for every smooth
-$D$-scheme $Y$, every morphism $Y_L\to A$ extends to a morphism $Y\to N$.
-""",
-        caveat=r"""
-It asks only for the existence of the extension, which is unique since $Y$ is flat over $D$ and $N$ is
-separated, and it is stated over an affine base; the group structure of the Néron model is not asked
-for.
-""",
-        src=r"""
-S. Bosch, W. Lütkebohmert and M. Raynaud, *Néron Models* (1990), §1.4, Theorem 3, with §1.2,
-Definition 1, the existence half over an affine Dedekind base. Numbers unverified.
-""",
-    ),
-    'silverbergZarhinThm35': dict(
-        group='neron-models', slug='raynaud-criterion',
-        title="Raynaud's criterion for semistable reduction",
-        anchor='Raynaud criterion',
-        statement=r"""
-The *Raynaud statement* is the following assertion. Let $K$ be a field with a discrete valuation,
-$n\ge3$ an integer not divisible by the residue characteristic, and $A$ an abelian variety over $K$
-all of whose points of order dividing $n$ are defined over $K$. Then $A$ has semistable reduction:
-for every Néron model of $A$, the identity component of its special fibre over the residue field is
-an extension of an abelian variety by a torus, not necessarily split.
-""",
-        caveat=r"""
-It is Theorem 3.5 of Silverberg and Zarhin, Raynaud's criterion, with the $n$-torsion defined over
-$K$ where the print allows an extension unramified over the valuation. A reading of the page image
-found the hypothesis $n\ge3$ (the text layer of the scan shows $n>3$).
-""",
-        src=r"""
-A. Silverberg and Yu. G. Zarhin, *Semistable reduction and torsion subgroups of abelian varieties*,
-Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.5, p. 406 (proof: SGA 7 I, IX, Proposition 4.7),
-with semistable reduction as defined in §3, p. 405.
-""",
-    ),
-    'faltingsLemma1DVRPrint': dict(
-        group='heights', slug='faltings-extension-lemma',
-        title='Homomorphisms of semiabelian schemes over a discrete valuation ring extend uniquely',
-        anchor='Faltings 1983 Lemma 1',
-        statement=r"""
-The *extension statement for semiabelian schemes* is the following assertion. Let $K$ be a field,
-$\mathcal O\subseteq K$ a valuation ring of $K$ that is a discrete valuation ring, with residue field
-$k$, and $A$ and $B$ abelian varieties over $K$. Let $G$ and $H$ be smooth, separated, quasi-compact
-group schemes over $\mathcal O$ with isomorphisms of group schemes $G_K\cong A$ and $H_K\cong B$ from
-their generic fibres, and suppose that the special fibres $G_k$ and $H_k$ are connected and
-semiabelian: each has an open connected subgroup scheme $U$ with a flat surjective homomorphism
-$U\to C$ onto an abelian variety $C$ over $k$ whose kernel becomes isomorphic as a group scheme to
-$\mathbb G_m^r$, for some $r\ge0$, after base change to an algebraic closure $\bar k$ of $k$; that is,
-for every $\bar k$-algebra $R$ there is an isomorphism of groups from $(R^\times)^r$ onto the kernel of
-$U(R)\to C(R)$, natural in $R$. Then for every homomorphism of group schemes $f:G_K\to H_K$ over $K$
-there is exactly one morphism of $\mathcal O$-schemes $g:G\to H$ whose base change to $K$ is $f$.
-""",
-        caveat=r"""
-Faltings states the lemma over any normal base $S$ with a dense open subscheme $U$, for a
-homomorphism over $U$ between two semiabelian varieties over $S$: smooth algebraic groups whose
-fibres are all connected of one common dimension $g$ and are extensions of an abelian variety by a
-torus. The statement is the case of the spectrum of a discrete valuation ring and its generic point,
-for models whose generic fibres are abelian varieties. Its hypotheses imply Faltings' definition.
-The generic fibre is an abelian variety, hence connected and an extension of itself by the trivial
-torus. A smooth model is flat, so its generic fibre is dense in it and the model is connected;
-smoothness then makes the relative dimension constant on the model, so both fibres have the same
-dimension. The project rates it a published statement in its printed form, a leaf: an AI reader read
-p. 350 verbatim from the page image and found the statement a direct instance, an AI reviewer rated
-it a leaf, and a third AI skeptic pass, checking fidelity to the print and the meaning of the formal
-statement, could not refute it. It replaced the statement that the semistable height does not change
-under extension of the base field, which is proved here from it, with Silverberg–Zarhin's criterion
-and the existence of Néron models over a Dedekind base. The manuscript lists Faltings' paper and
-cites it for other results, not for this lemma.
-""",
-        src=r"""
-G. Faltings, *Endlichkeitssätze für abelsche Varietäten über Zahlkörpern*, Invent. Math. 73 (1983),
-349–366, §2, the Definition and Lemma 1, p. 350, read from the page image of the GDZ scan; the paper
-is in the manuscript's bibliography (`diophantine_zq.tex`, lines 11084–11086) and cited at lines 621
-and 733 for other results.
+Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.4, pp. 405–406 (proof: SGA 7 I, Exposé IX,
+Théorème 3.6, p. 351), with semistable reduction as defined in §3, p. 405.
 """,
     ),
     'gaudronRemondSec9LowerAnSS': dict(
@@ -391,21 +266,20 @@ original normalization, as here. That corollary states $h(A)\ge-\frac g2\log(2\p
 $h=h_F+\frac g2\log\pi$, which gives the stronger $h_F(A)\ge-\frac g2\log(2\pi^2)$.
 """,
         src=r"""
-É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014), 2057–2108, §9,
-proof of Lemme 9.1, p. 2098, with the normalization of $h_F$ on p. 2058; the manuscript's citation.
 É. Gaudron and G. Rémond, *Théorème des périodes et degrés minimaux d'isogénies*, Comment. Math.
-Helv. 89 (2014), 343–403, Corollaire 8.4 and §2.3, as numbered in arXiv 1105.1230v1 (pp. 37 and 6–7),
-which was read; the numbering of the published version is unverified. J.-B. Bost, Sém. Bourbaki 795,
-Astérisque 237 (1996) (unread).
+Helv. 89 (2014), 343–403, Corollaire 8.4, p. 400, attributed there to Bost, with the normalization
+of §2.3, p. 352. É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014),
+2057–2108, §9, proof of Lemme 9.1, p. 2098, with the normalization of $h_F$ on p. 2058; the
+manuscript's citation, a citation only of Corollaire 8.4.
 """,
     ),
-    'gaudronRemondThm14AnSS': dict(
+    'gaudronRemondThm14Printed': dict(
         group='heights', slug='gaudron-remond-isogeny-bound',
         title='The isogeny theorem of Gaudron and Rémond',
         anchor='Gaudron-Remond isogeny bound',
         statement=r"""
 The *isogeny statement* is the following assertion. Let $A$ and $B$ be abelian varieties over a number
-field $K$ of degree $d$ that are isogenous over $K$, with $\dim A=g$, and let $h_F(A)$ be a stable
+field $K$ of degree $d$ that are isogenous over $K$, with $\dim A=g\geq1$, and let $h_F(A)$ be a stable
 Faltings height of $A$, built as for the [lower bound](bost-lower-bound.md). Then there are isogenies
 $A\to B$ and $B\to A$ over $K$ of degree at most
 $$\kappa=\Bigl((14g)^{64g^2}\,d\,\max\bigl(h_F(A),\log d,1\bigr)^2\Bigr)^{1024g^3}.$$
@@ -496,34 +370,6 @@ F. Pazuki, *Theta height and Faltings height*, Bull. SMF 140 (2012), Corollary 1
 read by the locator audit. The level-$2$ coordinates are a risk (project note height-split, §8).
 """,
     ),
-    'r9a': dict(
-        group='heights', slug='faltings-semisimplicity',
-        title="Faltings' semisimplicity theorem",
-        anchor='Faltings semisimplicity',
-        statement=r"""
-The *semisimplicity statement* is the following assertion. For an abelian variety $A$ over a number field $K$ and a prime $\ell$, the representation of $G_K$ on $V_\ell(A)$ is semisimple.
-""",
-        caveat=r"""
-
-""",
-        src=r"""
-G. Faltings, *Endlichkeitssätze für abelsche Varietäten über Zahlkörpern*, Invent. Math. 73 (1983), 349–366, §5, Satz 3, p. 360. Locator unverified.
-""",
-    ),
-    'r9b': dict(
-        group='heights', slug='faltings-tate-conjecture',
-        title="Faltings' theorem on Tate's conjecture",
-        anchor='Faltings Tate conjecture',
-        statement=r"""
-The *Tate statement* is the following assertion. For abelian varieties $A$ and $B$ over a number field $K$ and a prime $\ell$, the natural map $\operatorname{Hom}_K(A,B)\otimes\mathbb Z_\ell\to\operatorname{Hom}_{\mathbb Z_\ell}(T_\ell A,T_\ell B)$ is injective, with image the $G_K$-equivariant maps.
-""",
-        caveat=r"""
-
-""",
-        src=r"""
-G. Faltings, Invent. Math. 73 (1983), §5, Satz 4 (the case $A=B$), p. 360, and Korollar 1 (Tate's conjecture), pp. 360–361. Locators unverified.
-""",
-    ),
     'bergerSurveyF': dict(
         group='p-adic-hodge', slug='berger-de-rham-potentially-semistable',
         title="Berger's theorem: de Rham representations are potentially semistable",
@@ -532,27 +378,13 @@ G. Faltings, Invent. Math. 73 (1983), §5, Satz 4 (the case $A=B$), p. 360, and 
 The *Berger statement* is the following assertion. Let $E$ be a finite extension of $\mathbb Q_p$ inside $\overline{\mathbb Q}_p$ and $\rho:G_{\mathbb Q_p}\to\mathrm{GL}_n(E)$ a continuous representation, and let $V=E^n$, viewed as a representation of $G_{\mathbb Q_p}$ over $\mathbb Q_p$ of dimension $d=\dim_{\mathbb Q_p}V$. If $V$ is de Rham, that is, $\dim_{\mathbb Q_p}(B_{\rm dR}\otimes_{\mathbb Q_p}V)^{G_{\mathbb Q_p}}=d$, then $V$ is potentially semistable: there is a finite extension $K$ of $\mathbb Q_p$ inside $\overline{\mathbb Q}_p$ with $\dim_{B_{\rm st}^{G_K}}(B_{\rm st}\otimes_{\mathbb Q_p}V)^{G_K}=d$. Here $B_{\rm st}$ is the $\mathbb Q_p$-subalgebra of $B_{\rm dR}$ generated by $A_{\rm cris}$, $1/t$ and $\log[\tilde p]$: $A_{\rm cris}$ is the set of sums $\sum_{m\ge0}a_m\omega^m/m!$ in $B_{\rm dR}^+$ with $a_m\in A_{\rm inf}=W(\mathcal O_{\mathbb C_p}^\flat)$ tending to $0$ $p$-adically, where $\omega$ generates the kernel of $\theta:A_{\rm inf}\to\mathcal O_{\mathbb C_p}$; $t=\log[\varepsilon]$, where $\varepsilon=(1,\zeta_p,\zeta_{p^2},\dots)\in\mathcal O_{\mathbb C_p}^\flat$ is a compatible system of primitive $p$-power roots of unity; and $\log[\tilde p]=-\sum_{m\ge1}(1-[\tilde p]/p)^m/m$ for $\tilde p=(p,p^{1/p},\dots)$, Fontaine's $\log[\tilde p]$ with $\log_p(p)=0$. The assertion is made for every such $\omega$ and $\varepsilon$.
 """,
         caveat=r"""
-Brinon and Conrad state the theorem without proof, crediting Berger and André–Kedlaya–Mebkhout, as the "only if" half of their Theorem 9.3.5, with semistability defined by the equality of dimensions (§5.2). They construct $A_{\rm cris}$ and $B_{\rm st}$ abstractly and map them to $B_{\rm dR}$, while the statement uses the images: reaching it from their theorem takes their Theorem 9.2.10, that the map from $B_{\rm st}$ to $B_{\rm dR}$ is injective, and their description of the image of $A_{\rm cris}$ in $B_{\rm dR}^+$, for which they omit the proof that the map is injective; neither is proved here. Their de Rham condition is the one above because $B_{\rm dR}^{G_{\mathbb Q_p}}=\mathbb Q_p$, which is proved here. The statement takes the base field $\mathbb Q_p$ and representations of the form $E^n$. The manuscript cites Berger's paper, whose Théorème 0.6 is the same theorem over Berger's own variant of $B_{\rm st}$, which has the same $D_{\rm st}$.
+It is Berger's theorem, from his Inventiones paper (Théorème 0.6 in the arXiv version; the journal's theorem number is unverified), at the base field $\mathbb Q_p$ for representations of the form $E^n$, with potential semistability in Fontaine's sense: the representation becomes $B_{\rm st}$-admissible over a finite extension, admissibility meaning the equality of dimensions, with $B_{\rm st}$ taken as its image in $B_{\rm dR}$, as Fontaine describes it. Berger works over his own variant of $B_{\rm st}$ and states that it has the same $D_{\rm st}$ as Fontaine's; reaching Fontaine's ring from his is a step of the reading, not a theorem proved here, so the statement counts as a consequence of the print. Its de Rham condition is the one above because $B_{\rm dR}^{G_{\mathbb Q_p}}=\mathbb Q_p$, which is proved here. Colmez prints the conclusion in the stronger form of a basis (Théorème 0.1 of his 2008 paper); that form implies this statement, which is proved here, but the converse needs the $G_K$-regularity of $B_{\rm st}$, which is not.
 """,
         src=r"""
-O. Brinon and B. Conrad, *CMI summer school notes on $p$-adic Hodge theory* (preliminary version, June 24, 2009), Theorem 9.3.5, p. 148, the "only if" half; admissibility by dimension, §5.2, pp. 67–68; $A_{\rm cris}$, p. 128, and its image in $B_{\rm dR}^+$, p. 129; $B_{\rm cris}$, Definition 9.1.4, p. 131; $B_{\rm st}$, Definition 9.2.3, p. 138, its embedding in $B_{\rm dR}$, pp. 140–142, and Theorem 9.2.10, p. 143; $B_{\rm dR}^{G_K}=K$, Theorem 4.4.13, p. 64 (AI-read; in the manuscript's bibliography, which cites it for other results). The manuscript cites L. Berger, *Représentations $p$-adiques et équations différentielles*, Invent. Math. 148 (2002), 219–284, Théorème 0.6 = Théorème 5.19 (arXiv math/0102179v3, pp. 6 and 56, AI-read; Théorème 0.7 there is Sen's theorem); the journal numbering is unverified.
+L. Berger, *Représentations $p$-adiques et équations différentielles*, Invent. Math. 148 (2002), 219–284, the manuscript's citation; its theorem number in the journal is unverified. In arXiv math/0102179v3 it is Théorème 0.6 = Théorème 5.19, pp. 6 and 56. An earlier AI reading of the author copy, with no recorded hash or quote, gives Théorème 0.7, p. 6, proved as Corollaire 5.22, with Théorème 0.8 there Sen's theorem. The typeset journal pages are unread. Potential semistability in the sense of J.-M. Fontaine, *Représentations $p$-adiques semi-stables*, Astérisque 223 (1994), Exp. III: potential $B_{\rm st}$-admissibility, 5.6.1, p. 166; admissibility by dimension, 1.8.5, pp. 134–135; $B_{\rm st}$ inside $B_{\rm dR}$ as in J.-M. Fontaine, *Le corps des périodes $p$-adiques*, Astérisque 223 (1994), Exp. II, 4.2.4–4.2.5, p. 86. The basis form: P. Colmez, Astérisque 319 (2008), 117–186, Théorème 0.1, p. 118 (a corroborating record, not this row's source).
 """,
     ),
-    'conradAppB': dict(
-        group='p-adic-hodge', slug='conrad-local-algebraicity',
-        title='Local algebraicity of Hodge–Tate characters',
-        anchor='Conrad Appendix B',
-        statement=r"""
-The *local algebraicity statement* is the following assertion. Let $E$ be a finite extension of $\mathbb Q_p$ inside $\overline{\mathbb Q}_p$ and $\psi:G_{\mathbb Q_p}\to E^\times$ a continuous character. Let $\chi$ be the $p$-adic cyclotomic character and $\mathrm{Art}:\mathbb Q_p^\times\to G_{\mathbb Q_p}^{\rm ab}$ the local Artin map, normalized so that uniformizers go to arithmetic Frobenius elements; thus $\chi(\mathrm{Art}(u))=u^{-1}$ for $u\in\mathbb Z_p^\times$. Call $\psi$ *locally algebraic of exponent* $m\in\mathbb Z$ if there is $k\ge0$ such that $\psi(\sigma)=u^m$ for every $u\in\mathbb Z_p^\times$ with $u\equiv1\pmod{p^k}$ and every $\sigma\in G_{\mathbb Q_p}$ whose image in $G_{\mathbb Q_p}^{\rm ab}$ is $\mathrm{Art}(u)$. For $i\in\mathbb Z$ let $H_i(\psi)$ be the $\mathbb Q_p$-vector space of $\mathbb Q_p$-linear maps $\phi:E\to\mathbb C_p$ with $\phi(\psi(\sigma)x)=\chi(\sigma)^i\,\sigma(\phi(x))$ for all $\sigma\in G_{\mathbb Q_p}$ and $x\in E$, and call the integer part of $\dim_{\mathbb Q_p}H_{-i}(\psi)/[E:\mathbb Q_p]$ the multiplicity of $i$ as a Hodge–Tate weight of $\psi$ (the cyclotomic character has weight $-1$). Then: (a) if some integer $w$ has multiplicity $1$ and every other integer has multiplicity $0$, then $\psi$ is locally algebraic of some exponent; (b) if $\psi$ is locally algebraic of exponent $-n$ for an integer $n$, then $\dim_{\mathbb Q_p}H_n(\psi)=[E:\mathbb Q_p]$.
-""",
-        caveat=r"""
-Part (a) is the direction "Hodge–Tate implies locally algebraic" of the sentence after Conrad's Definition B.1, which he states for a finite extension $L$ of $\mathbb Q_p$ and credits to Tate through Serre's book, without proof; here $L=\mathbb Q_p$. Reaching (a) from it takes two steps not proved here: multiplicity $1$ for $w$ gives $\dim_{\mathbb Q_p}H_{-w}(\psi)\ge[E:\mathbb Q_p]$, which makes the underlying $\mathbb Q_p$-representation Hodge–Tate by the inequality $\sum_i\dim_{\mathbb Q_p}H_i(\psi)\le[E:\mathbb Q_p]$; and every homomorphism of tori $\mathbb G_m\to R_{E/\mathbb Q_p}\mathbb G_m$ over $\mathbb Q_p$ is $x\mapsto x^n$. Part (b) is Proposition B.3 at $L=\mathbb Q_p$, in Conrad's conventions: the arithmetic normalization, and the cyclotomic character of weight $+1$. Proposition B.3 assumes $\psi$ Hodge–Tate, which for a locally algebraic $\psi$ is the other direction of the same sentence; and passing from its conclusion, $\mathbb C_p\otimes_{\mathbb Q_p}E\cong\mathbb C_p(n)^{[E:\mathbb Q_p]}$, to $\dim_{\mathbb Q_p}H_n(\psi)=[E:\mathbb Q_p]$ takes linear algebra and the theorem of Ax, Sen and Tate, which is proved here, while the passage itself is not. Conrad's appendix is in an unrefereed author preprint, the version the manuscript cites; an AI reading of both pages found these statements there.
-""",
-        src=r"""
-B. Conrad, *Lifting global representations with local properties*, author preprint, December 11, 2011, Appendix B: p. 32 (Definition B.1; the sentence after it, that $\psi$ is locally algebraic if and only if its underlying $\mathbb Q_p$-representation is Hodge–Tate, citing J.-P. Serre, *Abelian $\ell$-adic representations and elliptic curves*, III, A6, Corollary 2; the arithmetic normalization of the Artin map) and p. 33, Proposition B.3, with its proof on pp. 33–34 (AI-read); the manuscript's citation, Appendix B, pp. 32–33 (`diophantine_zq.tex`, lines 760–762). Serre's book is not read.
-""",
-    ),
-    'panPrintedF': dict(
+    'panThm104F': dict(
         group='p-adic-hodge', slug='pan-fontaine-mazur',
         title="Pan's Fontaine–Mazur theorem",
         anchor='Pan Theorem 1.0.4',
@@ -560,24 +392,38 @@ B. Conrad, *Lifting global representations with local properties*, author prepri
 The *Fontaine–Mazur statement* is the following assertion. Let $p\ge5$ be a prime, $\iota_p:\overline{\mathbb Q}_p\to\mathbb C$ an isomorphism of fields, and $\rho:G_{\mathbb Q}\to\mathrm{GL}_2(\overline{\mathbb Q}_p)$ a continuous representation that is irreducible over $\overline{\mathbb Q}_p$, unramified outside finitely many primes and odd ($\det\rho(c)=-1$ for every complex conjugation $c$), and whose restriction to $G_{\mathbb Q_p}$ is potentially semistable in the sense of Fontaine and Hodge–Tate with two distinct Hodge–Tate weights. Then $\rho$ comes from a cuspidal eigenform up to twist: there are a nonzero cusp form $g$ of some weight on some $\Gamma_1(N)$, on which the diamond operators act through a character, that is an eigenvector of every Hecke operator $T_n$ with $n$ prime to $N$, with eigenvalues $\lambda_n(g)$; a continuous representation $\rho_g:G_{\mathbb Q}\to\mathrm{GL}_2(\overline{\mathbb Q}_p)$ attached to $g$ through $\iota_p$, in the sense that for all but finitely many primes $q\nmid N$ it is unramified at $q$ and every geometric Frobenius at $q$ has trace $\iota_p^{-1}(\lambda_q(g))$; a continuous character $\psi:G_{\mathbb Q}\to\overline{\mathbb Q}_p^\times$; and a matrix $P\in\mathrm{GL}_2(\overline{\mathbb Q}_p)$ with $\rho=\psi\cdot P\rho_gP^{-1}$. Each of the two local conditions is asked on some model $V=E^2$ of $\rho|_{G_{\mathbb Q_p}}$ over a finite extension $E$ of $\mathbb Q_p$ inside $\overline{\mathbb Q}_p$. *Hodge–Tate with two distinct weights* means that $\dim_E(V\otimes_{\mathbb Q_p}\mathbb C_p(w))^{G_{\mathbb Q_p}}$ is $1$ for two distinct integers $w$ and $0$ for every other $w$, where $\mathbb C_p(w)$ is $\mathbb C_p$ with $\sigma$ acting as $\chi_p(\sigma)^w\sigma$ for the cyclotomic character $\chi_p$, so that $\chi_p$ has Hodge–Tate weight $-1$. *Potentially semistable* means that for some finite extension $K$ of $\mathbb Q_p$ inside $\overline{\mathbb Q}_p$, $\dim_{B_{\rm st}^{G_K}}(B_{\rm st}\otimes_{\mathbb Q_p}V)^{G_K}=\dim_{\mathbb Q_p}V$, where $B_{\rm st}=B_{\rm cris}[\log[\tilde p]]$ is Fontaine's ring inside $B_{\rm dR}$, with $B_{\rm cris}=A_{\rm cris}[1/t]$ and $\log_p(p)=0$.
 """,
         caveat=r"""
-It is Theorem 1.0.4 of Pan, whose hypotheses are those of his Conjecture 1.0.1, taken for $p\ge5$; the print also covers $p=3$ under a further condition. A review checked every clause against the arXiv version that the manuscript cites, with Pan's conventions: geometric Frobenius, Hodge–Tate weight $-1$ for the cyclotomic character, and a fixed $\iota_p$. Potential semistability is Brinon and Conrad's notion, semistability over a finite extension with admissibility in the form of the equality of dimensions; that it does not depend on the model of $\rho$ is proved here, and so is the same for the Hodge–Tate condition. The review rates the statement a consequence because Brinon and Conrad define $B_{\rm st}$ abstractly: the statement uses its image in $B_{\rm dR}$, which is isomorphic to it by the injectivity in their Theorem 9.2.10, not proved here, and it uses their description of the image of $A_{\rm cris}$ in $B_{\rm dR}^+$, which they print without proof. The conclusion asks only for the traces at almost every prime, which is weaker than the printed modularity. Pan obtains Theorem 1.0.4 by combining his results with work of Skinner–Wiles, Kisin and Hu–Tan.
+It is Theorem 1.0.4 of Pan, whose hypotheses are those of his Conjecture 1.0.1, taken for $p\ge5$; the print covers every odd $p$, with a further residual condition at $p=3$. A three-lens AI reading checked every clause against the arXiv version that the manuscript cites, with Pan's conventions: geometric Frobenius, Hodge–Tate weight $-1$ for the cyclotomic character, and a fixed $\iota_p$; the journal text has not been read. Potential semistability is Fontaine's notion: the representation becomes $B_{\rm st}$-admissible over a finite extension, admissibility meaning the equality of dimensions, with $B_{\rm st}$ taken as its image in $B_{\rm dR}$, as Fontaine describes it; that it does not depend on the model of $\rho$ is proved here, and so is the same for the Hodge–Tate condition. The conclusion asks only for the traces at almost every prime, which is weaker than the printed modularity. Pan obtains Theorem 1.0.4 by combining his results with work of Skinner–Wiles, Kisin and Hu–Tan.
 """,
         src=r"""
-L. Pan, *The Fontaine–Mazur conjecture in the residually reducible case*, J. Amer. Math. Soc. 35 (2022), 1031–1169, Theorem 1.0.4, read in arXiv:1901.07166v2, the version the manuscript cites: Conjecture 1.0.1, p. 2; Theorem 1.0.4, p. 5; conventions (geometric Frobenius, Hodge–Tate weight $-1$ for the cyclotomic character), pp. 6–7. The journal numbering is unverified. Potential semistability in the sense of Fontaine as in O. Brinon and B. Conrad, *CMI summer school notes on $p$-adic Hodge theory* (preliminary version, June 24, 2009): admissibility in the dimension form, §5.2, pp. 67–68; $A_{\rm cris}$, p. 128, and its image in $B_{\rm dR}^+$, p. 129; $B_{\rm cris}$, Definition 9.1.4, p. 131; $B_{\rm st}$, Definition 9.2.3, p. 138, its embedding in $B_{\rm dR}$, pp. 140–142, injective by Theorem 9.2.10, p. 143; potential semistability, Theorem 9.3.5, p. 148.
+L. Pan, *The Fontaine–Mazur conjecture in the residually reducible case*, J. Amer. Math. Soc. 35 (2022), 1031–1169, Theorem 1.0.4, read in arXiv:1901.07166v2, the version the manuscript cites: Conjecture 1.0.1, p. 2; Theorem 1.0.4, p. 5; conventions (geometric Frobenius, Hodge–Tate weight $-1$ for the cyclotomic character), pp. 6–7. The journal text and its numbering are unread. Potential semistability in the sense of J.-M. Fontaine, *Représentations $p$-adiques semi-stables*, Astérisque 223 (1994), Exp. III: potential $B_{\rm st}$-admissibility, 5.6.1, p. 166; admissibility by dimension, 1.8.5, pp. 134–135, under the regularity that 5.1.2(ii), p. 155, supplies for $B_{\rm st}$; $B_{\rm st}$ inside $B_{\rm dR}$ as in J.-M. Fontaine, *Le corps des périodes $p$-adiques*, Astérisque 223 (1994), Exp. II, 4.2.4–4.2.5, p. 86. AI-read: a three-lens adversarial reading of page images, 2026-11-26 (docs/research/pb-adversarial-readings.md).
 """,
     ),
-    'scholzeH1AbVar': dict(
-        group='p-adic-hodge', slug='scholze-de-rham-comparison',
-        title="Scholze's comparison theorem for H¹ of an abelian variety",
-        anchor='Scholze comparison',
+    'colmez1992DeRhamAbVar': dict(
+        group='p-adic-hodge', slug='colmez-p-adic-periods',
+        title="Colmez's p-adic periods of an abelian variety",
+        anchor='Colmez Theorem 5.2',
         statement=r"""
-The *Scholze statement* is the following assertion. Let $F$ be a finite extension of $\mathbb Q_p$, $A$ an abelian variety of dimension $g$ over $F$, and $W=\mathbb Q_p\otimes_{\mathbb Z_p}H^1(A_{\overline F},\mathbb Z_p)$, where $H^1(A_{\overline F},\mathbb Z_p)$ is the first pro-étale cohomology group of $A_{\overline F}=A\times_F\overline F$ with coefficients in $\mathbb Z_p$, on which $G_F$ acts through its action on $\overline F$. Let $G_F$ act on $B_{\rm dR}$ through the restriction map $G_F\to G_{\mathbb Q_p}$ along an embedding of $\overline{\mathbb Q}_p$ in $\overline F$, put $D_{\rm dR}=(B_{\rm dR}\otimes_{\mathbb Q_p}W)^{G_F}$, and for $j\ge0$ let $\mathrm{Fil}^jD_{\rm dR}=D_{\rm dR}\cap(\mathfrak m^j\otimes_{\mathbb Q_p}W)$, where $\mathfrak m$ is the maximal ideal of $B_{\rm dR}^+$ and $\mathfrak m^0=B_{\rm dR}^+$. Then $W$ is finite-dimensional over $\mathbb Q_p$ and de Rham, that is, $\dim_{\mathbb Q_p}D_{\rm dR}=[F:\mathbb Q_p]\dim_{\mathbb Q_p}W$; the filtration has its jumps in $\{0,1\}$, that is, $\mathrm{Fil}^0D_{\rm dR}=D_{\rm dR}$ and $\mathrm{Fil}^2D_{\rm dR}=0$; and $\dim_{\mathbb Q_p}\mathrm{Fil}^1D_{\rm dR}=[F:\mathbb Q_p]\,g$.
+The *period statement* is the following assertion. Let $F$ be a finite extension of $\mathbb Q_p$, $\overline F$ an algebraic closure of $F$, $G_F=\operatorname{Gal}(\overline F/F)$, $A$ an abelian variety over $F$, $T_pA=\varprojlim_nA(\overline F)[p^n]$ its Tate module and $V_pA=\mathbb Q_p\otimes_{\mathbb Z_p}T_pA$, on which $G_F$ acts through its action on the points of $A$, and let $G_F$ act on $B_{\rm dR}$ through the restriction map $G_F\to G_{\mathbb Q_p}$ along an embedding of $\overline{\mathbb Q}_p$ in $\overline F$. Then there are a set $H$ and, for each $\omega\in H$, a $\mathbb Q_p$-linear map $P_\omega:V_pA\to B_{\rm dR}$ with the following properties: every value $P_\omega(u)$ lies in $B_{\rm dR}^+$; $P_\omega(\sigma u)=\sigma\bigl(P_\omega(u)\bigr)$ for every $\sigma\in G_F$ and $u\in V_pA$; and if $x\in B_{\rm dR}\otimes_{\mathbb Q_p}V_pA$ is sent to $0$ by the $B_{\rm dR}$-linear extension $b\otimes u\mapsto b\,P_\omega(u)$ of every $P_\omega$, then $x=0$.
 """,
         caveat=r"""
-Scholze's Corollary 1.8 is about a proper smooth rigid-analytic variety over a complete discretely valued extension of $\mathbb Q_p$ with perfect residue field: its étale cohomology with coefficients $\mathbb Q_p$ is de Rham, with associated filtered vector space its de Rham cohomology. The manuscript applies it to the analytification of $A$ and returns to algebraic cohomology through his Theorems 9.1 and 9.3. The statement is made on the étale side: under the filtered isomorphism $D_{\rm dR}\cong H^1_{\rm dR}(A/F)$ its last two clauses say that the Hodge filtration of $H^1_{\rm dR}(A/F)$ has its jumps in $\{0,1\}$ and that $\mathrm{Fil}^1H^1_{\rm dR}(A/F)=H^0(A,\Omega^1_A)$ has dimension $g$ over $F$. The manuscript's lemma is about abelian surfaces, whose Hodge numbers $2,2$ it states without a citation; the statement is for abelian varieties of every dimension. The cohomology here is pro-étale; its agreement with the classical $p$-adic étale cohomology, the inverse limit of the groups with coefficients $\mathbb Z/p^n$, is a further step not proved here.
+It is Théorème 5.2 (i)–(ii) of Colmez with $H$ the de Rham cohomology $H^1_{\rm dR}(A/F)$ and $P_\omega(u)=\int_u\omega$, the $p$-adic period of $\omega$ along $u$, extended $\mathbb Q_p$-linearly from $T_pA$ to $V_pA$. Of the printed theorem the statement keeps three clauses: the periods lie in $B_{\rm dR}^+$, they commute with the action of $G_F$, and the pairing is non-degenerate on the side of $T_pA$ once the scalars are extended to $B_{\rm dR}$. The extension to $V_pA$ uses the linearity in $u$, which the readings take from "bilinéaire" and from the proof on p. 640. The statement drops the identification of $H$ with de Rham cohomology, the linearity in $\omega$, the compatibility with the filtrations, part (iii) and the functoriality. Colmez works with a proper model of $A$ over the integers of $F$, which exists, and the periods do not depend on it. He builds $T_pA$ from the points of $A$ over $\mathbb C_p$; on $p$-power torsion these are the points over $\overline F$, since $A[p^n]$ is finite over $F$, a standard identification that the readings take and that no Lean theorem states.
 """,
         src=r"""
-P. Scholze, *$p$-adic Hodge theory for rigid-analytic varieties*, Forum Math. Pi 1 (2013), e1, Corollary 1.8, pp. 5–6, and Theorems 9.1 and 9.3, pp. 74–75 (arXiv:1205.3463v2, p. 4 and pp. 53–54), with the corrigendum, Forum Math. Pi 4 (2016), e6; read by the locator audit; the manuscript's citation. The 11/5 manuscript (`diophantine_zq.tex`): the lemma on de Rham comparison and finite descent, lines 10939–10965, and the Hodge numbers $2,2$, line 10996. For general $g$, $\dim_FH^0(A,\Omega^1_A)=g$: D. Mumford, *Abelian varieties*, §4; locator unverified.
+P. Colmez, *Périodes $p$-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème 5.2 (i)–(ii), p. 639, with the standing hypotheses on pp. 629 and 638 and $B_{\rm dR}$ as in §2, p. 632; the proof is on pp. 639–641. AI-read: a three-lens adversarial reading of page images, 2026-11-26 (docs/research/tate-prints-adversarial-readings.md); no person has read these pages. For this step the manuscript's lemma on de Rham comparison and finite descent (`diophantine_zq.tex`, lines 10939–10973) cites Scholze's Corollary 1.8 and Milne's Theorem 12.1(a); this statement and the Hodge–Tate theorem of Tate and Raynaud (Fontaine's Théorème 2) replace those two citations.
+""",
+    ),
+    'fontaine1982HTAbVar': dict(
+        group='p-adic-hodge', slug='fontaine-hodge-tate-abelian',
+        title='The Hodge–Tate theorem of Tate and Raynaud for abelian varieties',
+        anchor='Fontaine Theorem 2',
+        statement=r"""
+The *Hodge–Tate statement* is the following assertion. Let $F$ be a finite extension of $\mathbb Q_p$, $\overline F$ an algebraic closure of $F$, $G_F=\operatorname{Gal}(\overline F/F)$, $A$ an abelian variety of dimension $g$ over $F$, and $V_pA=\mathbb Q_p\otimes_{\mathbb Z_p}T_pA$ with $T_pA=\varprojlim_nA(\overline F)[p^n]$, on which $G_F$ acts through its action on the points of $A$. Let $G_F$ act on $\mathbb C_p$ through the restriction map $G_F\to G_{\mathbb Q_p}$ along an embedding of $\overline{\mathbb Q}_p$ in $\overline F$, and let $F$ act on $\mathbb C_p$ through the same embedding. For $i=0,1$ let $W_i$ be the $F$-vector space of $\mathbb Q_p$-linear maps $\varphi:V_pA\to\mathbb C_p$ with $\varphi(\sigma v)=\chi_p(\sigma)^i\,\sigma\bigl(\varphi(v)\bigr)$ for all $\sigma\in G_F$ and $v\in V_pA$, that is, of the $G_F$-equivariant maps $V_pA\to\mathbb C_p(i)$. Then $\dim_FW_1=\dim_FW_0=g$.
+""",
+        caveat=r"""
+It is Théorème 2 of Fontaine, which he credits to Tate and Raynaud and proves anew, for $K=F$ finite over $\mathbb Q_p$, in dimension form. Fontaine gives canonical $F$-linear bijections from $H^1(A,\mathcal O_A)$ onto $\operatorname{Hom}_{\mathbb Z_p[G_F]}(T_pA,\mathbb C_p)$ and from $H^0(A,\Omega^1_A)$ onto $\operatorname{Hom}_{\mathbb Z_p[G_F]}(T_pA,\mathbb C_p(1))$, and the equality of both dimensions with $g$ is printed in the proof on the same page; the statement keeps only the two dimensions. A $\mathbb Z_p$-linear map from $T_pA$ to $\mathbb C_p(i)$ extends uniquely to $V_pA$, and a generator of $\varprojlim_n\mu_{p^n}(\overline F)$ identifies Fontaine's $\mathbb C_p(1)$ with the twist used here. Fontaine allows any complete discretely valued field of characteristic $0$ with perfect residue field of characteristic $p$; the statement takes only finite extensions of $\mathbb Q_p$.
+""",
+        src=r"""
+J.-M. Fontaine, *Formes différentielles et modules de Tate des variétés abéliennes sur les corps locaux*, Invent. Math. 65 (1982), 379–409, Théorème 2 and its proof, p. 388, with the standing hypotheses in 0.1, p. 379, §1.1, p. 381, and §3, p. 387, and $T_p(X)$ as in 3.1, p. 388. AI-read: a three-lens adversarial reading of page images, 2026-11-26 (docs/research/tate-prints-adversarial-readings.md); no person has read these pages. For this step the manuscript's lemma on de Rham comparison and finite descent (`diophantine_zq.tex`, lines 10939–10973) cites Scholze's Corollary 1.8 and Milne's Theorem 12.1(a), and it states the Hodge numbers $2,2$ of $H^1_{\rm dR}(A/F)$ and the weights $0,0,-1,-1$ of the Tate module without a citation (lines 10996–10997). With Colmez's Théorème 5.2 this statement replaces the two citations, and Lean derives from the pair the de Rham property and the Hodge filtration of the dual of $V_pA$ that those lines use (`DeRhamScholze.TatePrints.vpDual_of_colmezFontaine`).
 """,
     ),
     'afCharpolyDS965': dict(
@@ -585,13 +431,13 @@ P. Scholze, *$p$-adic Hodge theory for rigid-analytic varieties*, Forum Math. Pi
         title="Frobenius on the Tate module of Shimura's abelian variety",
         anchor='Diamond-Shurman 9.6.5 on Af',
         statement=r"""
-The *Frobenius statement on $A_f$* is the following assertion. Let $f\in S_2(\Gamma_1(N))$ be a newform with character $\chi$, $N\ge2$; let $X$, $P_0$ and $J$ be as in the [introduction](README.md), $T_p$ ($p$ prime) and $\langle d\rangle$ ($d\in(\mathbb Z/N)^\times$) Hecke operators on $J$ in the sense there, and $I_f$ as in the statement on [Shimura's abelian variety](shimura-abelian-varieties.md). Let $A$ be an abelian variety over $\mathbb Q$ with a surjective homomorphism $\pi:J\to A$ that kills $I_fJ$ and through which every homomorphism from $J$ to an abelian variety killing $I_fJ$ factors uniquely, and let $\theta:K_f\to\operatorname{End}^0(A)$ be a ring homomorphism such that, for every prime $p$, $\theta(a_p(f))$ is an endomorphism $e$ of $A$ with $\pi\circ T_p=e\circ\pi$, and, for every $d$, $\chi(d)$ lies in $K_f$ and $\theta(\chi(d))$ is an endomorphism $e$ of $A$ with $\pi\circ\langle d\rangle=e\circ\pi$. Suppose that $K_f$ is a number field. Let $\ell$ be a prime, $\lambda$ a place of $K_f$ above $\ell$ and $V_\lambda=K_{f,\lambda}\otimes_{\mathbb Q_\ell\otimes K_f}V_\ell(A)$, where $K_f$ acts on $V_\ell(A)$ through $\theta$, and suppose that $V_\lambda$ is finite-dimensional over $K_{f,\lambda}$. Then for every prime $p\nmid N\ell$, $\chi(p)$ lies in $K_f$ and every arithmetic Frobenius at $p$ acts on $V_\lambda$ with characteristic polynomial $x^2-a_p(f)x+\chi(p)\,p$ over $K_{f,\lambda}$.
+The *Frobenius statement on $A_f$* is the following assertion. Let $f\in S_2(\Gamma_1(N))$ be a newform with character $\chi$, $N\ge2$; let $X$, $P_0$ and $J$ be as in the [introduction](README.md), $T_p$ ($p$ prime) and $\langle d\rangle$ ($d\in(\mathbb Z/N)^\times$) Hecke operators on $J$ in the sense there, and $I_f$ the set of endomorphisms $h(T_p,\langle d\rangle)$ of $J$, for $h$ a polynomial with integer coefficients in noncommuting variables, one for each prime $p$ and each $d$, such that $h(a_p(f),\chi(d))=0$; a homomorphism $\phi$ from $J$ *kills $I_fJ$* when $\phi\circ u=0$ for every $u\in I_f$. Let $A$ be an abelian variety over $\mathbb Q$ with a surjective homomorphism $\pi:J\to A$ that kills $I_fJ$ and through which every homomorphism from $J$ to an abelian variety killing $I_fJ$ factors uniquely, and let $\theta:K_f\to\operatorname{End}^0(A)$ be a ring homomorphism such that, for every prime $p$, $\theta(a_p(f))$ is an endomorphism $e$ of $A$ with $\pi\circ T_p=e\circ\pi$, and, for every $d$, $\chi(d)$ lies in $K_f$ and $\theta(\chi(d))$ is an endomorphism $e$ of $A$ with $\pi\circ\langle d\rangle=e\circ\pi$. Suppose that $K_f$ is a number field. Let $\ell$ be a prime, $\lambda$ a place of $K_f$ above $\ell$ and $V_\lambda=K_{f,\lambda}\otimes_{\mathbb Q_\ell\otimes K_f}V_\ell(A)$, where $K_f$ acts on $V_\ell(A)$ through $\theta$, and suppose that $V_\lambda$ is finite-dimensional over $K_{f,\lambda}$. Then for every prime $p\nmid N\ell$, $\chi(p)$ lies in $K_f$ and every arithmetic Frobenius at $p$ acts on $V_\lambda$ with characteristic polynomial $x^2-a_p(f)x+\chi(p)\,p$ over $K_{f,\lambda}$.
 """,
         caveat=r"""
-Diamond and Shurman's Theorem 9.6.5 asserts that there is a representation $\rho_{f,\lambda}$ in which Frobenius has this characteristic polynomial, and a paragraph after it, on the same page, identifies $\rho_{f,\lambda}$ for $k=2$ with the construction of their Section 9.5 on $V_\ell(A_f)$, which is $V_\lambda$. The statement asks for the polynomial on every $(A,\pi,\theta)$ with these properties of $A_f$, for newforms with $N\ge2$, and drops irreducibility and unramifiedness; that $K_f$ is a number field and that $V_\lambda$ is finite-dimensional are the print's presuppositions. A review rates it a consequence: the theorem is an existence statement, identified with $V_\lambda$ only in the text after it, and that the given Hecke operators and $I_f$ are Diamond and Shurman's rests on statements about the complex points and the Abel–Jacobi map of $X_1(N)$ that are not proved here. That $(A,\pi)$ is unique up to unique isomorphism, and $\theta$ determined by it, is proved here. Only AI agents have read the theorem and the paragraph after it, in the 2005 and 2016 printings.
+Diamond and Shurman's Theorem 9.6.5 asserts that there is a representation $\rho_{f,\lambda}$ in which Frobenius has this characteristic polynomial, and a paragraph after it, on the same page, identifies $\rho_{f,\lambda}$ for $k=2$ with the construction of their Section 9.5 on $V_\ell(A_f)$, which is $V_\lambda$. The statement asks for the polynomial on every $(A,\pi,\theta)$ with these properties of $A_f$, for newforms with $N\ge2$, and drops irreducibility and unramifiedness; that $K_f$ is a number field and that $V_\lambda$ is finite-dimensional are the print's presuppositions. A review rates it a consequence: the theorem is an existence statement, identified with $V_\lambda$ only in the text after it, and that the given Hecke operators and $I_f$ are Diamond and Shurman's rests on statements about the complex points and the Abel–Jacobi map of $X_1(N)$ that are not proved here. That $(A,\pi)$ is unique up to unique isomorphism, and $\theta$ determined by it, is proved here. A human reader has checked the theorem at $k=2$, the paragraph after it and Section 9.5 in a print copy of the corrected fourth printing (2016). Diamond and Shurman state the characteristic polynomial for $k=2$ without proof or citation, and Section 9.5 proves only that Frobenius satisfies it.
 """,
         src=r"""
-F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228 (2005), Theorem 9.6.5 and the paragraph after it, p. 393 (fourth printing, 2016: p. 404); Lemma 9.5.3, Theorem 9.5.4 and Exercise 9.5.2(a), pp. 389–391; $A_f$ and the action of $K_f$, Definition 6.6.3, p. 241, and Proposition 6.6.4, p. 242 (all AI-read).
+F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228, corrected fourth printing (2016), Theorem 9.6.5 and the paragraph after it, p. 404; Lemma 9.5.3, Theorem 9.5.4 and Exercise 9.5.2(a), in Section 9.5, pp. 397–402 (read by a human reader, Deicyde/diophantine-z-q#14 comment 7121091136); $A_f$ and the action of $K_f$, Definition 6.6.3 and Proposition 6.6.4 (AI-read).
 """,
     ),
     'carayolThmAFrob': dict(
@@ -611,26 +457,6 @@ conductor only for newforms with rational coefficients on $\Gamma_0(N)$.
 """,
         src=r"""
 H. Darmon, F. Diamond and R. Taylor, *Fermat's Last Theorem*, Current Developments in Mathematics 1995 (1997), Theorem 3.1 (a)–(d), pp. 85–86, and the conductor in §2, p. 54 (read in Darmon's copy); H. Carayol, Ann. Sci. ÉNS (4) 19 (1986), 409–468, Théorème (A), pp. 409–411, the manuscript's citation, with §0.8, p. 411 (read in the numdam copy); W. Casselman, Math. Ann. 201 (1973), Theorem 1; K. Ribet, LNM 601 (1977), Theorem 2.3. The numbers of Casselman's and Ribet's theorems are unverified.
-""",
-    ),
-    'dsThm965Printed': dict(
-        group='modular-galois', slug='deligne-representations',
-        title="Deligne's Galois representations of eigenforms",
-        anchor='Deligne representations',
-        statement=r"""
-The *Deligne statement* is the following assertion. Let $f\in S_k(N,\chi)$ be a normalized eigenform of
-weight $k\ge2$ whose coefficient field $K_f$ is a number field, and $\lambda$ a prime of $K_f$ above a
-prime $\ell$, with completion $K_{f,\lambda}$. Then there is a continuous representation
-$\rho:G_{\mathbb Q}\to\mathrm{GL}_2(K_{f,\lambda})$ such that for every prime $p\nmid N\ell$: $\rho$ is
-unramified at $p$, and for every arithmetic Frobenius $\sigma$ at $p$ either the characteristic
-polynomial of $\rho(\sigma)$ is $x^2-a_p(f)x+\chi(p)p^{k-1}$ or $\rho(\sigma)$ satisfies this
-polynomial.
-""",
-        caveat=r"""
-Diamond and Shurman's theorem prints the characteristic polynomial ("the characteristic equation", in an AI reading of the 2005 and 2016 printings), which gives the statement directly; the alternative "satisfies" only weakens it. The statement drops the irreducibility of $\rho$, which the theorem also asserts, and assumes that $K_f$ is a number field, which the theorem presupposes.
-""",
-        src=r"""
-F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228 (2005), Theorem 9.6.5, p. 393 (fourth printing, 2016: p. 404; AI-read), stated over $K_{f,\lambda}$, with their Definition 5.8.1 of normalized eigenforms; P. Deligne, Sém. Bourbaki 355 (1969); G. Shimura 1971, Theorem 7.14, for $k=2$. The numbers of Definition 5.8.1 and of Shimura's theorem are unverified.
 """,
     ),
     'dsThm966Printed': dict(
@@ -659,20 +485,6 @@ The two alternatives are the two normalizations in which the literature states t
 """,
         src=r"""
 P. Deligne, Sém. Bourbaki 355 (1969); G. Faltings, Math. Ann. 278 (1987); T. Saito, Invent. Math. 129 (1997); K. Kato, Astérisque 295 (2004), §§9.2–9.4, (9.2.2), pp. 187–188 (read by the locator audit) and §11.3; T. Gee, *Modularity lifting theorems*, Essent. Number Theory 1 (2022), read in arXiv:2202.05818v2: Fact 4.20 in §4.19, p. 28, with the conventions on pp. 2–3 (AI-read); R. Taylor, *Galois representations*, Ann. Fac. Sci. Toulouse Math. (6) 13 (2004). Kato's §11.3, Taylor and the journal numbering of Gee are unverified.
-""",
-    ),
-    'shimuraThm1Af': dict(
-        group='modular-galois', slug='shimura-abelian-varieties',
-        title="Shimura's abelian variety attached to a newform",
-        anchor='Shimura abelian varieties',
-        statement=r"""
-The *Shimura statement* is the following assertion. Let $f\in S_2(\Gamma_1(N))$ be a newform with character $\chi$, $N\ge2$; let $X$, $P_0$ and $J$ be as in the [introduction](README.md), and $T_p$ ($p$ prime) and $\langle d\rangle$ ($d\in(\mathbb Z/N)^\times$) Hecke operators on $J$ in the sense there. Let $I_f$ be the set of endomorphisms $h(T_p,\langle d\rangle)$ of $J$, for $h$ a polynomial with integer coefficients in noncommuting variables, one for each prime $p$ and each $d$, such that $h(a_p(f),\chi(d))=0$; a homomorphism $\phi$ from $J$ *kills $I_fJ$* when $\phi\circ u=0$ for every $u\in I_f$. For an abelian variety $A$ over $\mathbb Q$, a homomorphism $\nu:J\to A$ and a ring homomorphism $\theta:K_f\to\operatorname{End}^0(A)$, consider the clauses: (i) $\nu$ is surjective and has connected kernel, in the sense that whenever $\nu=\psi\circ\phi$ with $\phi:J\to B$ a surjective homomorphism onto an abelian variety and $\psi:B\to A$ an isogeny, $\psi$ is an isomorphism; (ii) for every prime $p$, $\nu\circ T_p=\theta(a_p(f))\circ\nu$, and for every prime $p\nmid N$, $\nu\circ(T_p^2-p\langle p\rangle)=\theta(a_{p^2}(f))\circ\nu$, both in $\operatorname{Hom}(J,A)\otimes\mathbb Q$, where $\nu\circ t=\theta(a)\circ\nu$ there means that for some integer $m>0$, $m\,\theta(a)$ is an endomorphism $e$ of $A$ with $m(\nu\circ t)=e\circ\nu$; (iii) $\dim A=[K_f:\mathbb Q]$. Then $K_f$ is a number field, and there is a triple $(A,\nu,\theta)$ with (i)–(iii) such that $\nu$ kills $I_fJ$ and every homomorphism from $J$ to an abelian variety that kills $I_fJ$ factors uniquely through $\nu$; and for every triple $(A',\nu',\theta')$ with (i)–(iii) there is an isomorphism $\psi:A\to A'$ over $\mathbb Q$ with $\psi\circ\nu=\nu'$.
-""",
-        caveat=r"""
-Shimura's Theorem 1, for a normalized eigenform of all the $T_n$ on any group between $\Gamma_1(N)$ and $\Gamma_0(N)$, constructs the quotient $A=J/C$ with $C=\ker\nu$, builds $C$ from the ideal of the Hecke ring annihilating $f$ intersected with $\operatorname{End}(J)$, gives (i)–(iii) with $\nu\circ\xi_n=\theta(a_n)\circ\nu$ for every $n$, and states that under (i) and (ii) the triple is unique up to isomorphism over $\mathbb Q$; an AI reading of the print found these on pp. 525–527. Three steps are made on the spot: that $C$ is $I_fJ$, through a saturation argument and the Hecke relations between Shimura's $\xi_n$ and the $T_p$, $\langle d\rangle$; that (ii) at $n=p$ and $n=p^2$, with $\xi_{p^2}=T_p^2-p\langle p\rangle$, gives (ii) for every $n$, so that the triples of the uniqueness clause are Shimura's; and that his isomorphism is compatible with $\nu$. The uniqueness clause here compares only triples that also satisfy (iii), which weakens the printed one. The statement takes $\Gamma=\Gamma_1(N)$ and newforms, takes $T_p$ to be Shimura's $\xi_p$ through the identifications of the statement on Hecke operators, and omits his clauses on the cotangent space and on the zeta function of $A$. Diamond and Shurman define $A_f$ as $J/I_fJ$ over $\mathbb C$. A review of this statement is pending.
-""",
-        src=r"""
-G. Shimura, *On the factors of the jacobian variety of a modular function field*, J. Math. Soc. Japan 25 (1973), 523–544, Theorem 1, p. 526, with its construction and proof, pp. 525–527 (AI page read): $C=\operatorname{Ker}(\nu)$, p. 525; $C$ from the ideal annihilating $f$ intersected with $\operatorname{End}(J)$, and uniqueness under (i) and (ii) up to isomorphisms over $\mathbb Q$, p. 526; multiplicity one from $q$-expansions, p. 527. A sentence on p. 526 that the statement does not use has a harmless misprint, "$f_\sigma\mid T_n=a_n^\sigma f$" for "$f_\sigma\mid T_n=a_n^\sigma f_\sigma$". F. Diamond and J. Shurman, *A First Course in Modular Forms*, GTM 228 (2005), Definition 6.6.3, p. 241 (AI-read).
 """,
     ),
 }

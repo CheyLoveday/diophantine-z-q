@@ -1,0 +1,2575 @@
+powerTwoNeZero : ∀ (n : ℕ), NeZero.{0} (HPow.hPow.{0, 0, 0} 2 n)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.powerTwoNeZero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@levelEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          [WeierstrassCurve.IsElliptic.{0} W] →
+            [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] →
+              [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] →
+                (n : ℕ) → AddEquiv.{0, 0} (Manuscript.RC.LambdaCoef.Lev K S W n) (Manuscript.RC.LambdaCoef.Lev K S₀ W n)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.levelEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@levelEquiv_incl : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (n : ℕ) (Q : Manuscript.RC.LambdaCoef.Lev K S W n),
+  Eq.{1} ((Manuscript.RC.CoefModules.inclTors W (HPow.hPow.{0, 0, 0} 2 n)) ((levelEquiv W n) Q))
+    ((Manuscript.RC.CoefModules.inclTors W (HPow.hPow.{0, 0, 0} 2 n)) Q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.levelEquiv_incl' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@levelEquiv_point : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (n : ℕ) (Q : Manuscript.RC.LambdaCoef.Lev K S W n),
+  Eq.{1} ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} (Manuscript.RC.CoefModules.inclS K S₀)) ↑((levelEquiv W n) Q))
+    ((WeierstrassCurve.Affine.Point.map.{0, 0, 0, 0} (Manuscript.RC.CoefModules.inclS K S)) ↑Q)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.levelEquiv_point' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@levelEquiv_trans : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (n : ℕ)
+  (Q : Manuscript.RC.LambdaCoef.Lev K S W (HAdd.hAdd.{0, 0, 0} n 1)),
+  Eq.{1} ((levelEquiv W n) ((Manuscript.RC.LambdaCoef.transLev K S W n) Q))
+    ((Manuscript.RC.LambdaCoef.transLev K S₀ W n) ((levelEquiv W (HAdd.hAdd.{0, 0, 0} n 1)) Q))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.levelEquiv_trans' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@levelEquiv_symm_trans : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (n : ℕ)
+  (Q : Manuscript.RC.LambdaCoef.Lev K S₀ W (HAdd.hAdd.{0, 0, 0} n 1)),
+  Eq.{1} ((AddEquiv.symm.{0, 0} (levelEquiv W n)) ((Manuscript.RC.LambdaCoef.transLev K S₀ W n) Q))
+    ((Manuscript.RC.LambdaCoef.transLev K S W n) ((AddEquiv.symm.{0, 0} (levelEquiv W (HAdd.hAdd.{0, 0, 0} n 1))) Q))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.levelEquiv_symm_trans' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@tateEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          [WeierstrassCurve.IsElliptic.{0} W] →
+            [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] →
+              [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] →
+                LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} ℤ_[2]) (Manuscript.RC.LambdaCoef.TateS K S W)
+                  (Manuscript.RC.LambdaCoef.TateS K S₀ W)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.tateEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@tateEquiv_proj : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (n : ℕ) (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+  Eq.{1} ((Manuscript.RC.LambdaCoef.projLev n) ((tateEquiv W) Q))
+    ((levelEquiv W n) ((Manuscript.RC.LambdaCoef.projLev n) Q))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.tateEquiv_proj' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@continuous_tateEquiv : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W], Continuous.{0, 0} ⇑(tateEquiv W)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.continuous_tateEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@continuous_tateEquiv_symm : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W],
+  Continuous.{0, 0} ⇑(LinearEquiv.symm.{0, 0, 0, 0} (tateEquiv W))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.continuous_tateEquiv_symm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@tateContinuousEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          [WeierstrassCurve.IsElliptic.{0} W] →
+            [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] →
+              [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] →
+                ContinuousLinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} ℤ_[2]) (Manuscript.RC.LambdaCoef.TateS K S W)
+                  (Manuscript.RC.LambdaCoef.TateS K S₀ W)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.tateContinuousEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@inclTors_absolute_action : ∀ {K : Type} [inst : Field.{0} K] [NumberField.{0} K] (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W]
+  {U : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (N : ℕ) [NeZero.{0} N]
+  (τ : Field.absoluteGaloisGroup.{0} K) (Q : Manuscript.RC.CoefModules.TorsS K U W ↑N),
+  Eq.{1}
+    ((Manuscript.RC.CoefModules.inclTors W N)
+      (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.resAbsCont K U) τ) Q))
+    ((Multiplicative.toAdd.{0} ((WeierstrassCurve.torsionGaloisAction.{0, 0} W ↑N) (id.{1} τ)))
+      ((Manuscript.RC.CoefModules.inclTors W N) Q))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.inclTors_absolute_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@levelEquiv_absolute_action : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (n : ℕ) (τ : Field.absoluteGaloisGroup.{0} K)
+  (Q : Manuscript.RC.LambdaCoef.Lev K S W n),
+  Eq.{1} ((levelEquiv W n) (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.resAbsCont K S) τ) Q))
+    (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.resAbsCont K S₀) τ) ((levelEquiv W n) Q))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.levelEquiv_absolute_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@tateEquiv_absolute_action : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (τ : Field.absoluteGaloisGroup.{0} K)
+  (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+  Eq.{1} ((tateEquiv W) (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.resAbsCont K S) τ) Q))
+    (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.resAbsCont K S₀) τ) ((tateEquiv W) Q))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.tateEquiv_absolute_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@tateEquiv_local_action : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (σ : Manuscript.RC.SelmerComplex.Gloc K v) (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+  Eq.{1} ((tateEquiv W) (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) σ) Q))
+    (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S₀ v) σ) ((tateEquiv W) Q))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.tateEquiv_local_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@tateEquiv_inflation_action : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (hS : S₀ ⊆ S) (g : Manuscript.RC.SelmerComplex.GKS K S)
+  (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+  Eq.{1} ((tateEquiv W) (HSMul.hSMul.{0, 0, 0} g Q))
+    (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.inflMap K hS) g) ((tateEquiv W) Q))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.tateEquiv_inflation_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          [WeierstrassCurve.IsElliptic.{0} W] →
+            [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] →
+              [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] →
+                (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                  [inst_5 : Ideal.IsPrime.{0} P] →
+                    (α₀ :
+                        MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀)
+                          (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                      (α :
+                          MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S)
+                            (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                        LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} (Manuscript.RC.Wiring.ResAt P))
+                          (Manuscript.RC.LambdaCoef.VP K S W P α) (Manuscript.RC.LambdaCoef.VP K S₀ W P α₀)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_tmul : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (c : Manuscript.RC.Wiring.ResAt P) (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+  Eq.{1}
+    ((fibreEquiv W P α₀ α)
+      (have this := TensorProduct.tmul.{0, 0, 0} ℤ_[2] c Q;
+      this))
+    (have this := TensorProduct.tmul.{0, 0, 0} ℤ_[2] c ((tateEquiv W) Q);
+    this)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_tmul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_symm_tmul : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (c : Manuscript.RC.Wiring.ResAt P) (Q : Manuscript.RC.LambdaCoef.TateS K S₀ W),
+  Eq.{1}
+    ((LinearEquiv.symm.{0, 0, 0, 0} (fibreEquiv W P α₀ α))
+      (have this := TensorProduct.tmul.{0, 0, 0} ℤ_[2] c Q;
+      this))
+    (have this := TensorProduct.tmul.{0, 0, 0} ℤ_[2] c ((LinearEquiv.symm.{0, 0, 0, 0} (tateEquiv W)) Q);
+    this)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_symm_tmul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_lambda_smul : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (l : Manuscript.RC.Uniform.Lambda) (x : Manuscript.RC.LambdaCoef.VP K S W P α),
+  Eq.{1} ((fibreEquiv W P α₀ α) (HSMul.hSMul.{0, 0, 0} l x)) (HSMul.hSMul.{0, 0, 0} l ((fibreEquiv W P α₀ α) x))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_lambda_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_symm_lambda_smul : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (l : Manuscript.RC.Uniform.Lambda) (x : Manuscript.RC.LambdaCoef.VP K S₀ W P α₀),
+  Eq.{1} ((LinearEquiv.symm.{0, 0, 0, 0} (fibreEquiv W P α₀ α)) (HSMul.hSMul.{0, 0, 0} l x))
+    (HSMul.hSMul.{0, 0, 0} l ((LinearEquiv.symm.{0, 0, 0, 0} (fibreEquiv W P α₀ α)) x))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_symm_lambda_smul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_latt : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  {x : Manuscript.RC.LambdaCoef.VP K S W P α},
+  Membership.mem.{0, 0} (Manuscript.RC.LambdaCoef.latt K S W P α) x →
+    Membership.mem.{0, 0} (Manuscript.RC.LambdaCoef.latt K S₀ W P α₀) ((fibreEquiv W P α₀ α) x)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_latt' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_symm_latt : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  {x : Manuscript.RC.LambdaCoef.VP K S₀ W P α₀},
+  Membership.mem.{0, 0} (Manuscript.RC.LambdaCoef.latt K S₀ W P α₀) x →
+    Membership.mem.{0, 0} (Manuscript.RC.LambdaCoef.latt K S W P α)
+      ((LinearEquiv.symm.{0, 0, 0, 0} (fibreEquiv W P α₀ α)) x)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_symm_latt' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_nbhd : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) (n : ℕ)
+  {x : Manuscript.RC.LambdaCoef.VP K S W P α},
+  Membership.mem.{0, 0} (Manuscript.RC.LambdaCoef.fibNbhd K S W P α n) x →
+    Membership.mem.{0, 0} (Manuscript.RC.LambdaCoef.fibNbhd K S₀ W P α₀ n) ((fibreEquiv W P α₀ α) x)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_nbhd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_symm_nbhd : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) (n : ℕ)
+  {x : Manuscript.RC.LambdaCoef.VP K S₀ W P α₀},
+  Membership.mem.{0, 0} (Manuscript.RC.LambdaCoef.fibNbhd K S₀ W P α₀ n) x →
+    Membership.mem.{0, 0} (Manuscript.RC.LambdaCoef.fibNbhd K S W P α n)
+      ((LinearEquiv.symm.{0, 0, 0, 0} (fibreEquiv W P α₀ α)) x)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_symm_nbhd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@continuous_fibreEquiv : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)),
+  Continuous.{0, 0} ⇑(fibreEquiv W P α₀ α)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.continuous_fibreEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@continuous_fibreEquiv_symm : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)),
+  Continuous.{0, 0} ⇑(LinearEquiv.symm.{0, 0, 0, 0} (fibreEquiv W P α₀ α))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.continuous_fibreEquiv_symm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreContinuousEquiv : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          [WeierstrassCurve.IsElliptic.{0} W] →
+            [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] →
+              [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] →
+                (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                  [inst_5 : Ideal.IsPrime.{0} P] →
+                    (α₀ :
+                        MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀)
+                          (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                      (α :
+                          MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S)
+                            (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                        ContinuousLinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} (Manuscript.RC.Wiring.ResAt P))
+                          (Manuscript.RC.LambdaCoef.VP K S W P α) (Manuscript.RC.LambdaCoef.VP K S₀ W P α₀)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreContinuousEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_inflation_action : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) (hS : S₀ ⊆ S)
+  (g : Manuscript.RC.SelmerComplex.GKS K S),
+  Eq.{1} (α g) (α₀ ((Manuscript.RC.SelmerComplex.inflMap K hS) g)) →
+    ∀ (x : Manuscript.RC.LambdaCoef.VP K S W P α),
+      Eq.{1} ((fibreEquiv W P α₀ α) (HSMul.hSMul.{0, 0, 0} g x))
+        (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.inflMap K hS) g) ((fibreEquiv W P α₀ α) x))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_inflation_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fibreEquiv_local_action : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (σ : Manuscript.RC.SelmerComplex.Gloc K v),
+  Eq.{1} (α ((Manuscript.RC.SelmerComplex.locMap K S v) σ)) (α₀ ((Manuscript.RC.SelmerComplex.locMap K S₀ v) σ)) →
+    ∀ (x : Manuscript.RC.LambdaCoef.VP K S W P α),
+      Eq.{1} ((fibreEquiv W P α₀ α) (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) σ) x))
+        (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S₀ v) σ) ((fibreEquiv W P α₀ α) x))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.fibreEquiv_local_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@inflated_fibreEquiv_Galois : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda)) (hS : S₀ ⊆ S)
+  (g : Manuscript.RC.SelmerComplex.GKS K S)
+  (x :
+    Manuscript.RC.LambdaCoef.VP K S W P
+      (MonoidHom.comp.{0, 0, 0} α₀
+        (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS)))),
+  Eq.{1}
+    ((fibreEquiv W P α₀
+        (MonoidHom.comp.{0, 0, 0} α₀
+          (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+      (HSMul.hSMul.{0, 0, 0} g x))
+    (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.inflMap K hS) g)
+      ((fibreEquiv W P α₀
+          (MonoidHom.comp.{0, 0, 0} α₀
+            (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+        x))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.inflated_fibreEquiv_Galois' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@inflated_fibreEquiv_local : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P]
+  (α₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Units.{0} Manuscript.RC.Uniform.Lambda)) (hS : S₀ ⊆ S)
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (σ : Manuscript.RC.SelmerComplex.Gloc K v)
+  (x :
+    Manuscript.RC.LambdaCoef.VP K S W P
+      (MonoidHom.comp.{0, 0, 0} α₀
+        (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS)))),
+  Eq.{1}
+    ((fibreEquiv W P α₀
+        (MonoidHom.comp.{0, 0, 0} α₀
+          (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+      (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) σ) x))
+    (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S₀ v) σ)
+      ((fibreEquiv W P α₀
+          (MonoidHom.comp.{0, 0, 0} α₀
+            (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+        x))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.inflated_fibreEquiv_local' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primitive_fibreEquiv_local_action : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [inst_2 : WeierstrassCurve.IsElliptic.{0} W]
+  [inst_3 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [inst_4 : Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P] (hS : S₀ ⊆ S)
+  (χ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ℤ))
+  (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (σ : Manuscript.RC.SelmerComplex.Gloc K v)
+  (x :
+    Manuscript.RC.LambdaCoef.VP K S W P
+      (Manuscript.RC.LambdaCoef.lambdaChar χ
+        (MonoidHom.comp.{0, 0, 0} ξ₀
+          (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))),
+  Eq.{1}
+    ((fibreEquiv W P (Manuscript.RC.LambdaCoef.lambdaChar 1 ξ₀)
+        (Manuscript.RC.LambdaCoef.lambdaChar χ
+          (MonoidHom.comp.{0, 0, 0} ξ₀
+            (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS)))))
+      (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) σ) x))
+    (HSMul.hSMul.{0, 0, 0} (↑(χ ((Manuscript.RC.SelmerComplex.locMap K S v) σ)))
+      (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S₀ v) σ)
+        ((fibreEquiv W P (Manuscript.RC.LambdaCoef.lambdaChar 1 ξ₀)
+            (Manuscript.RC.LambdaCoef.lambdaChar χ
+              (MonoidHom.comp.{0, 0, 0} ξ₀
+                (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS)))))
+          x)))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.CoefficientComparison.primitive_fibreEquiv_local_action' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fieldModule_injective.{u_1} : ∀ {k : Type} [inst : Field.{0} k] (V : ModuleCat.{u_1, 0} k),
+  CategoryTheory.Injective.{u_1, u_1 + 1} V
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.fieldModule_injective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@natCx_nonnegative : ∀ {k : Type} [inst : Field.{0} k] (C : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} k) ℕ),
+  CochainComplex.IsStrictlyGE.{0, 1}
+    (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Manuscript.RC.SelmerComplex.natCx.{0} C)) 0
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.natCx_nonnegative' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@homotopyEquiv_of_nonnegative_field_quasiIso.{u_1} : ∀ {k : Type} [inst : Field.{0} k]
+  {C D : CochainComplex.{u_1, u_1 + 1, 0} (ModuleCat.{u_1, 0} k) ℤ} [CochainComplex.IsStrictlyGE.{u_1, u_1 + 1} C 0]
+  [CochainComplex.IsStrictlyGE.{u_1, u_1 + 1} D 0] (f : Quiver.Hom.{u_1, u_1 + 1} C D),
+  QuasiIso.{u_1, u_1 + 1, 0} f → ∃ e, Eq.{u_1 + 1} (HomotopyEquiv.hom.{u_1, u_1 + 1, 0} e) f
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.homotopyEquiv_of_nonnegative_field_quasiIso' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@nonnegative_field_contractible.{u_1} : ∀ {k : Type} [inst : Field.{0} k]
+  (C : CochainComplex.{u_1, u_1 + 1, 0} (ModuleCat.{u_1, 0} k) ℤ) [CochainComplex.IsStrictlyGE.{u_1, u_1 + 1} C 0],
+  HomologicalComplex.Acyclic.{u_1, u_1 + 1, 0} C →
+    Nonempty.{u_1 + 1} (Homotopy.{u_1, u_1 + 1, 0} (CategoryTheory.CategoryStruct.id.{u_1, u_1 + 1} C) 0)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.nonnegative_field_contractible' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@cochainMorphism : {k : Type} →
+  [inst : CommRing.{0} k] →
+    {A B : CloudB3RC53.PairedFunctional.GCx.{0} k} →
+      CloudB3RC53.PairedFunctional.GHom.{0} A B →
+        Quiver.Hom.{0, 1} (CloudB3RC53.PairedFunctional.GCx.toCC.{0} A) (CloudB3RC53.PairedFunctional.GCx.toCC.{0} B)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.cochainMorphism' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@coefficientCochainsIso : {k G M L : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : TopologicalSpace.{0} G] →
+        [inst_3 : IsTopologicalGroup.{0} G] →
+          [inst_4 : AddCommGroup.{0} M] →
+            [inst_5 : Module.{0, 0} k M] →
+              [inst_6 : TopologicalSpace.{0} M] →
+                [inst_7 : ContinuousAdd.{0} M] →
+                  [inst_8 : DistribMulAction.{0, 0} G M] →
+                    [inst_9 : SMulCommClass.{0, 0, 0} G k M] →
+                      [inst_10 : ContinuousConstSMul.{0, 0} k M] →
+                        [inst_11 : ContinuousSMul.{0, 0} G M] →
+                          [inst_12 : AddCommGroup.{0} L] →
+                            [inst_13 : Module.{0, 0} k L] →
+                              [inst_14 : TopologicalSpace.{0} L] →
+                                [inst_15 : ContinuousAdd.{0} L] →
+                                  [inst_16 : DistribMulAction.{0, 0} G L] →
+                                    [inst_17 : SMulCommClass.{0, 0, 0} G k L] →
+                                      [inst_18 : ContinuousConstSMul.{0, 0} k L] →
+                                        [inst_19 : ContinuousSMul.{0, 0} G L] →
+                                          (e : ContinuousLinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} k) M L) →
+                                            (∀ (g : G) (x : M),
+                                                Eq.{1} (e (HSMul.hSMul.{0, 0, 0} g x))
+                                                  (HSMul.hSMul.{0, 0, 0} g (e x))) →
+                                              CategoryTheory.Iso.{0, 1}
+                                                (Manuscript.RC.SelmerComplex.contCochains.{0} k G M)
+                                                (Manuscript.RC.SelmerComplex.contCochains.{0} k G L)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.coefficientCochainsIso' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fullCochainsIso : {k : Type} →
+  [inst : CommRing.{0} k] →
+    {C D : CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} k) ℕ} →
+      CategoryTheory.Iso.{0, 1} C D →
+        CategoryTheory.Iso.{0, 1} (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Manuscript.RC.SelmerComplex.natCx.{0} C))
+          (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (Manuscript.RC.SelmerComplex.natCx.{0} D))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.fullCochainsIso' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@actualLocalCoefficientCochains : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          [WeierstrassCurve.IsElliptic.{0} W] →
+            [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] →
+              [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] →
+                (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                  [inst_5 : Ideal.IsPrime.{0} P] →
+                    [inst_6 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                      (α₀ :
+                          MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀)
+                            (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                        [inst_7 : Manuscript.RC.LambdaCoef.IsContChar α₀] →
+                          (α :
+                              MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S)
+                                (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                            [inst_8 : Manuscript.RC.LambdaCoef.IsContChar α] →
+                              (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                                (∀ (σ : Manuscript.RC.SelmerComplex.Gloc K v),
+                                    Eq.{1} (α ((Manuscript.RC.SelmerComplex.locMap K S v) σ))
+                                      (α₀ ((Manuscript.RC.SelmerComplex.locMap K S₀ v) σ))) →
+                                  CategoryTheory.Iso.{0, 1}
+                                    (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                      (Manuscript.RC.SelmerComplex.natCx.{0}
+                                        (Manuscript.RC.SelmerComplex.contCochains.{0} (Manuscript.RC.Wiring.ResAt P)
+                                          (Manuscript.RC.SelmerComplex.Gloc K v)
+                                          (Manuscript.RC.SelmerComplex.ResMod.{0}
+                                            (Manuscript.RC.SelmerComplex.locMap K S v)
+                                            (Manuscript.RC.LambdaCoef.VP K S W P α)))))
+                                    (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                      (Manuscript.RC.SelmerComplex.natCx.{0}
+                                        (Manuscript.RC.SelmerComplex.contCochains.{0} (Manuscript.RC.Wiring.ResAt P)
+                                          (Manuscript.RC.SelmerComplex.Gloc K v)
+                                          (Manuscript.RC.SelmerComplex.ResMod.{0}
+                                            (Manuscript.RC.SelmerComplex.locMap K S₀ v)
+                                            (Manuscript.RC.LambdaCoef.VP K S₀ W P α₀)))))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.actualLocalCoefficientCochains' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+NSWWildKernelIdentification : Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.NSWWildKernelIdentification' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+NSWOddWildProOrder : Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.NSWOddWildProOrder' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@PrimeToTwoKernel : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v) → Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.PrimeToTwoKernel' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@KernelActsTrivially : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        WeierstrassCurve.{0} K →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [Ideal.IsPrime.{0} P] →
+              MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v) → Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.KernelActsTrivially' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@LocalQuotient : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v) → Type
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.LocalQuotient' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@localQuotientGroup : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+          [Subgroup.Normal.{0} N] → Group.{0} (LocalQuotient v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.localQuotientGroup' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@localQuotientTopology : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) → TopologicalSpace.{0} (LocalQuotient v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.localQuotientTopology' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@localQuotientTopologicalGroup : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_2 : Subgroup.Normal.{0} N],
+  IsTopologicalGroup.{0} (LocalQuotient v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.localQuotientTopologicalGroup' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@localQuotientMap : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+          [inst_2 : Subgroup.Normal.{0} N] →
+            ContinuousMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.Gloc K v) (LocalQuotient v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.localQuotientMap' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@QuotientCoefficients : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        WeierstrassCurve.{0} K →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [Ideal.IsPrime.{0} P] →
+              MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda) →
+                (_v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K _v) → Type
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.QuotientCoefficients' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientCoefficientAdd : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+                    AddCommGroup.{0} (QuotientCoefficients W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientCoefficientAdd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientCoefficientModule : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+                    Module.{0, 0} (Manuscript.RC.Wiring.ResAt P) (QuotientCoefficients W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientCoefficientModule' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientCoefficientTopology : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+                    TopologicalSpace.{0} (QuotientCoefficients W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientCoefficientTopology' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientCoefficientTopologicalAddGroup : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)), IsTopologicalAddGroup.{0} (QuotientCoefficients W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientCoefficientTopologicalAddGroup' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientCoefficientConstantScalar : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [Manuscript.RC.LambdaCoef.IsHeightOneOdd P],
+  ContinuousConstSMul.{0, 0} (Manuscript.RC.Wiring.ResAt P) (QuotientCoefficients W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientCoefficientConstantScalar' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@localEndAction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+                    MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.Gloc K v)
+                      (Module.End.{0, 0} (Manuscript.RC.Wiring.ResAt P) (QuotientCoefficients W P α v N))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.localEndAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientEndAction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+                    [inst_3 : Subgroup.Normal.{0} N] →
+                      [KernelActsTrivially W P α v N] →
+                        MonoidHom.{0, 0} (LocalQuotient v N)
+                          (Module.End.{0, 0} (Manuscript.RC.Wiring.ResAt P) (QuotientCoefficients W P α v N))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientEndAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientCoefficientAction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+                    [inst_3 : Subgroup.Normal.{0} N] →
+                      [KernelActsTrivially W P α v N] →
+                        DistribMulAction.{0, 0} (LocalQuotient v N) (QuotientCoefficients W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientCoefficientAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientCoefficientScalarComm : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_3 : Subgroup.Normal.{0} N]
+  [inst_4 : KernelActsTrivially W P α v N],
+  SMulCommClass.{0, 0, 0} (LocalQuotient v N) (Manuscript.RC.Wiring.ResAt P) (QuotientCoefficients W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientCoefficientScalarComm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientCoefficient_pullback : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_3 : Subgroup.Normal.{0} N]
+  [inst_4 : KernelActsTrivially W P α v N] (σ : Manuscript.RC.SelmerComplex.Gloc K v)
+  (x : QuotientCoefficients W P α v N),
+  Eq.{1} (HSMul.hSMul.{0, 0, 0} ((localQuotientMap v N) σ) x)
+    (have this :=
+      HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) σ)
+        (have this := x;
+        this);
+    this)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientCoefficient_pullback' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientCoefficientContinuous : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_3 : Subgroup.Normal.{0} N]
+  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P] [Manuscript.RC.LambdaCoef.IsContChar α]
+  [inst_6 : KernelActsTrivially W P α v N], ContinuousSMul.{0, 0} (LocalQuotient v N) (QuotientCoefficients W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientCoefficientContinuous' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@coefficientIdentity : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+                    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (Manuscript.RC.Wiring.ResAt P))
+                      (QuotientCoefficients W P α v N)
+                      (Manuscript.RC.SelmerComplex.ResMod.{0} (Manuscript.RC.SelmerComplex.locMap K S v)
+                        (Manuscript.RC.LambdaCoef.VP K S W P α))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.coefficientIdentity' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@coefficientIdentity_continuous : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)), Continuous.{0, 0} ⇑(coefficientIdentity W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.coefficientIdentity_continuous' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@coefficientIdentity_compatible : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_3 : Subgroup.Normal.{0} N]
+  [inst_4 : KernelActsTrivially W P α v N] (σ : Manuscript.RC.SelmerComplex.Gloc K v)
+  (x : QuotientCoefficients W P α v N),
+  Eq.{1} ((coefficientIdentity W P α v N) (HSMul.hSMul.{0, 0, 0} ((localQuotientMap v N) σ) x))
+    (HSMul.hSMul.{0, 0, 0} σ ((coefficientIdentity W P α v N) x))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.coefficientIdentity_compatible' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientFull : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+                    [Subgroup.Normal.{0} N] →
+                      [Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                        [Manuscript.RC.LambdaCoef.IsContChar α] →
+                          [KernelActsTrivially W P α v N] →
+                            CloudB3RC53.PairedFunctional.GCx.{0} (Manuscript.RC.Wiring.ResAt P)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientFull' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@absoluteFull : {K : Type} →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        WeierstrassCurve.{0} K →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K) →
+                  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                    [Manuscript.RC.LambdaCoef.IsContChar α] →
+                      CloudB3RC53.PairedFunctional.GCx.{0} (Manuscript.RC.Wiring.ResAt P)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.absoluteFull' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@inflation : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+                    [inst_3 : Subgroup.Normal.{0} N] →
+                      [inst_4 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                        [inst_5 : Manuscript.RC.LambdaCoef.IsContChar α] →
+                          [inst_6 : KernelActsTrivially W P α v N] →
+                            Quiver.Hom.{0, 1} (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (quotientFull W P α v N))
+                              (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (absoluteFull W P α v))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.inflation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@kernelActsTrivially_of_tate_character : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)),
+  (∀ (σ : ↥N) (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) ↑σ) Q) Q) →
+    (∀ (σ : ↥N), Eq.{1} (α ((Manuscript.RC.SelmerComplex.locMap K S v) ↑σ)) 1) → KernelActsTrivially W P α v N
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.kernelActsTrivially_of_tate_character' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@wildKernel_urRes_one : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (σ : ↥(ActualTameKernel.wildKernel v)), Eq.{1} ((Manuscript.RC.SelmerComplex.urRes K v) ↑σ) 1
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.wildKernel_urRes_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@wildKernel_tate_fixed : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W],
+  ∀ v ∉ S₀,
+    ∀ (σ : ↥(ActualTameKernel.wildKernel v)) (Q : Manuscript.RC.LambdaCoef.TateS K S W),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) ↑σ) Q) Q
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.wildKernel_tate_fixed' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primitive_wild_quadChar : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  Nat.Coprime 2
+      (ringChar.{0}
+        (IsLocalRing.ResidueField.{0}
+          ↥(Valuation.integer.{0, 0}
+              (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))))) →
+    ∀ (hh0 : Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h) 0),
+      Eq.{1}
+          ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+            (Units.mk0.{0} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h)
+              hh0))
+          (Multiplicative.ofAdd.{0} 1) →
+        ∀ (σ : ↥(ActualTameKernel.wildKernel v)),
+          Eq.{1} ((Manuscript.RC.CoefModules.quadChar s hs hs0) ((Manuscript.RC.SelmerComplex.locMap K S v) ↑σ)) 1
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.primitive_wild_quadChar' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@actual_old_primitive_kernel_trivial : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (hS : S₀ ⊆ S) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+  (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]))
+  (v : Manuscript.RC.SelmerComplex.Places K S),
+  ↑v ∉ S₀ →
+    Nat.Coprime 2
+        (ringChar.{0}
+          (IsLocalRing.ResidueField.{0}
+            ↥(Valuation.integer.{0, 0}
+                (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))))) →
+      ∀ (hh0 : Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h) 0),
+        Eq.{1}
+            ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+              (Units.mk0.{0} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h)
+                hh0))
+            (Multiplicative.ofAdd.{0} 1) →
+          KernelActsTrivially W P
+            (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+              (MonoidHom.comp.{0, 0, 0} ξ₀
+                (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+            (↑v) (ActualTameKernel.wildKernel ↑v)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.actual_old_primitive_kernel_trivial' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+Nekovar414Fibre : Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.Nekovar414Fibre' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+absolute_inflation_homotopy : Nekovar414Fibre →
+  ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+    (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+    (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_4 : Ideal.IsPrime.{0} P]
+    [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+    (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+    [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α]
+    (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+    (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_7 : Subgroup.Normal.{0} N] [PrimeToTwoKernel v N]
+    [inst_9 : KernelActsTrivially W P α v N], ∃ e, Eq.{1} (HomotopyEquiv.hom.{0, 1, 0} e) (inflation W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.absolute_inflation_homotopy' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primeToTwoKernel_of_proOdd : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)),
+  IsClosed.{0} ↑N → ∀ (ell : ℕ), Nat.Prime ell → Ne.{1} ell 2 → TauCeti.IsProP.{0} ell ↥N → PrimeToTwoKernel v N
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.primeToTwoKernel_of_proOdd' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+old_place_absolute_tame_comparison : Nekovar414Fibre →
+  ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+    (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+    (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_4 : Ideal.IsPrime.{0} P]
+    [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+    (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+    [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α] (v : Manuscript.RC.SelmerComplex.Places K S)
+    [PrimeToTwoKernel (↑v) (ActualTameKernel.wildKernel ↑v)]
+    [inst_8 : KernelActsTrivially W P α (↑v) (ActualTameKernel.wildKernel ↑v)],
+    ∃ e, Eq.{1} (HomotopyEquiv.inv.{0, 1, 0} e) (inflation W P α (↑v) (ActualTameKernel.wildKernel ↑v))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.old_place_absolute_tame_comparison' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@geometricNorm : {k M : Type} →
+  [inst : CommRing.{0} k] →
+    [inst_1 : AddCommGroup.{0} M] → [inst_2 : Module.{0, 0} k M] → ℕ → Module.End.{0, 0} k M → Module.End.{0, 0} k M
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.geometricNorm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@geometricNorm_identity : ∀ {k M : Type} [inst : CommRing.{0} k] [inst_1 : AddCommGroup.{0} M]
+  [inst_2 : Module.{0, 0} k M] (L : ℕ) (t : Module.End.{0, 0} k M),
+  Eq.{1} (HMul.hMul.{0, 0, 0} (geometricNorm L t) (HSub.hSub.{0, 0, 0} t 1))
+    (HSub.hSub.{0, 0, 0} (HPow.hPow.{0, 0, 0} t L) 1)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.geometricNorm_identity' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@geometric_tame_relation : ∀ {k M : Type} [inst : CommRing.{0} k] [inst_1 : AddCommGroup.{0} M]
+  [inst_2 : Module.{0, 0} k M] (L : ℕ) (f t : Module.End.{0, 0} k M),
+  Eq.{1} (HMul.hMul.{0, 0, 0} t f) (HMul.hMul.{0, 0, 0} f (HPow.hPow.{0, 0, 0} t L)) →
+    Eq.{1}
+      (HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} (HMul.hMul.{0, 0, 0} f (geometricNorm L t)) 1)
+        (HSub.hSub.{0, 0, 0} t 1))
+      (HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} t 1) (HSub.hSub.{0, 0, 0} f 1))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.geometric_tame_relation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@TameFrame : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) → [Subgroup.Normal.{0} N] → Type
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.TameFrame' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frame_operator_relation : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_2 : Subgroup.Normal.{0} N]
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_3 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  [inst_4 : KernelActsTrivially W P α v N] (F : TameFrame v N),
+  Eq.{1}
+    (HMul.hMul.{0, 0, 0} ((quotientEndAction W P α v N) ((localQuotientMap v N) F.t))
+      ((quotientEndAction W P α v N) ((localQuotientMap v N) F.f)))
+    (HMul.hMul.{0, 0, 0} ((quotientEndAction W P α v N) ((localQuotientMap v N) F.f))
+      (HPow.hPow.{0, 0, 0} ((quotientEndAction W P α v N) ((localQuotientMap v N) F.t))
+        (Nat.card.{0}
+          (IsLocalRing.ResidueField.{0}
+            ↥(Valuation.integer.{0, 0}
+                (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)))))))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frame_operator_relation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frameTameComplex : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+          (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+            [inst_2 : Subgroup.Normal.{0} N] →
+              (W : WeierstrassCurve.{0} K) →
+                (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                  [inst_3 : Ideal.IsPrime.{0} P] →
+                    (α :
+                        MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S)
+                          (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                      [KernelActsTrivially W P α v N] →
+                        TameFrame v N → CochainComplex.{0, 1, 0} (ModuleCat.{0, 0} (Manuscript.RC.Wiring.ResAt P)) ℤ
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frameTameComplex' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@quotientValue : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+          (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+            [inst_2 : Subgroup.Normal.{0} N] →
+              (W : WeierstrassCurve.{0} K) →
+                (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                  [inst_3 : Ideal.IsPrime.{0} P] →
+                    (α :
+                        MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S)
+                          (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                      [inst_4 : KernelActsTrivially W P α v N] →
+                        [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                          [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α] →
+                            (n : ℕ) →
+                              ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} (quotientFull W P α v N) ↑n) →
+                                (Fin n → LocalQuotient v N) → QuotientCoefficients W P α v N
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.quotientValue' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frameLambdaZero : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+          (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+            [inst_2 : Subgroup.Normal.{0} N] →
+              (W : WeierstrassCurve.{0} K) →
+                (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                  [inst_3 : Ideal.IsPrime.{0} P] →
+                    (α :
+                        MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S)
+                          (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                      [inst_4 : KernelActsTrivially W P α v N] →
+                        [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                          [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α] →
+                            ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} (quotientFull W P α v N) 0) →
+                              QuotientCoefficients W P α v N
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frameLambdaZero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frameLambdaOne : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+          (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+            [inst_2 : Subgroup.Normal.{0} N] →
+              (W : WeierstrassCurve.{0} K) →
+                (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                  [inst_3 : Ideal.IsPrime.{0} P] →
+                    (α :
+                        MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S)
+                          (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                      [inst_4 : KernelActsTrivially W P α v N] →
+                        [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                          [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α] →
+                            TameFrame v N →
+                              ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} (quotientFull W P α v N) 1) →
+                                Prod.{0, 0} (QuotientCoefficients W P α v N) (QuotientCoefficients W P α v N)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frameLambdaOne' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frameLambdaTwo : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+          (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+            [inst_2 : Subgroup.Normal.{0} N] →
+              (W : WeierstrassCurve.{0} K) →
+                (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                  [inst_3 : Ideal.IsPrime.{0} P] →
+                    (α :
+                        MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S)
+                          (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                      [inst_4 : KernelActsTrivially W P α v N] →
+                        [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                          [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α] →
+                            TameFrame v N →
+                              ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} (quotientFull W P α v N) 2) →
+                                QuotientCoefficients W P α v N
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frameLambdaTwo' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@FrameComparison : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+          (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) →
+            [inst_2 : Subgroup.Normal.{0} N] →
+              (W : WeierstrassCurve.{0} K) →
+                (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                  [inst_3 : Ideal.IsPrime.{0} P] →
+                    (α :
+                        MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S)
+                          (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                      [KernelActsTrivially W P α v N] →
+                        [Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                          [Manuscript.RC.LambdaCoef.IsContChar α] → TameFrame v N → Type
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.FrameComparison' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frameTame_nonnegative : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_2 : Subgroup.Normal.{0} N]
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_3 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  [inst_4 : KernelActsTrivially W P α v N] (F : TameFrame v N),
+  CochainComplex.IsStrictlyGE.{0, 1} (frameTameComplex v N W P α F) 0
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frameTame_nonnegative' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frame_comparison_homotopy : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_2 : Subgroup.Normal.{0} N]
+  (W : WeierstrassCurve.{0} K) (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_3 : Ideal.IsPrime.{0} P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  [inst_4 : KernelActsTrivially W P α v N] [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+  [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α] (F : TameFrame v N) (C : FrameComparison v N W P α F),
+  ∃ e, Eq.{1} (HomotopyEquiv.hom.{0, 1, 0} e) C.map
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frame_comparison_homotopy' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+Nekovar721Structure : Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.Nekovar721Structure' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+actual_wild_primeToTwo : NSWWildKernelIdentification →
+  NSWOddWildProOrder →
+    ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Ne.{1}
+          (ringChar.{0}
+            (IsLocalRing.ResidueField.{0}
+              ↥(Valuation.integer.{0, 0}
+                  (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)))))
+          2 →
+        PrimeToTwoKernel v (ActualTameKernel.wildKernel v)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.actual_wild_primeToTwo' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+RetainedTameStructure : Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.RetainedTameStructure' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+retainedTameStructure_of_sources : NSWWildKernelIdentification →
+  NSWOddWildProOrder → Nekovar721Structure → RetainedTameStructure
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.retainedTameStructure_of_sources' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+Nekovar723Fibre : Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.Nekovar723Fibre' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+retained_absolute_tame_homotopy : NSWWildKernelIdentification →
+  Nekovar414Fibre →
+    Nekovar723Fibre →
+      ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+        (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W]
+        [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+        [inst_4 : Ideal.IsPrime.{0} P] [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+        (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+        [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α] (v : Manuscript.RC.SelmerComplex.Places K S),
+        Ne.{1}
+            (ringChar.{0}
+              (IsLocalRing.ResidueField.{0}
+                ↥(Valuation.integer.{0, 0}
+                    (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)))))
+            2 →
+          ∀ [PrimeToTwoKernel (↑v) (ActualTameKernel.wildKernel ↑v)]
+            [inst_8 : KernelActsTrivially W P α (↑v) (ActualTameKernel.wildKernel ↑v)]
+            (F : TameFrame (↑v) (ActualTameKernel.wildKernel ↑v)),
+            ∃ A C B,
+              Eq.{1} (HomotopyEquiv.hom.{0, 1, 0} A) (inflation W P α (↑v) (ActualTameKernel.wildKernel ↑v)) ∧
+                Eq.{1} (HomotopyEquiv.hom.{0, 1, 0} B) C.map ∧
+                  Nonempty.{1}
+                    (HomotopyEquiv.{0, 1, 0} (CloudB3RC53.PairedFunctional.GCx.toCC.{0} (absoluteFull W P α ↑v))
+                      (frameTameComplex (↑v) (ActualTameKernel.wildKernel ↑v) W P α F))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.retained_absolute_tame_homotopy' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@FrameUnitTests : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (W : WeierstrassCurve.{0} K) →
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+            [inst_2 : Ideal.IsPrime.{0} P] →
+              (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)) →
+                (v : Manuscript.RC.SelmerComplex.Places K S) →
+                  [KernelActsTrivially W P α (↑v) (ActualTameKernel.wildKernel ↑v)] →
+                    TameFrame (↑v) (ActualTameKernel.wildKernel ↑v) → Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.FrameUnitTests' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@absolute_contraction_of_frame : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_4 : Ideal.IsPrime.{0} P]
+  [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α] (v : Manuscript.RC.SelmerComplex.Places K S)
+  [PrimeToTwoKernel (↑v) (ActualTameKernel.wildKernel ↑v)]
+  [inst_8 : KernelActsTrivially W P α (↑v) (ActualTameKernel.wildKernel ↑v)]
+  (F : TameFrame (↑v) (ActualTameKernel.wildKernel ↑v)),
+  NSWWildKernelIdentification →
+    Nekovar414Fibre →
+      Nekovar723Fibre →
+        Ne.{1}
+            (ringChar.{0}
+              (IsLocalRing.ResidueField.{0}
+                ↥(Valuation.integer.{0, 0}
+                    (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)))))
+            2 →
+          FrameUnitTests W P α v F → Nonempty.{1} (Contraction (absoluteFull W P α ↑v))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.absolute_contraction_of_frame' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frameUnitTests_of_primitive : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (W : WeierstrassCurve.{0} K)
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_2 : Ideal.IsPrime.{0} P]
+  [Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  (v : Manuscript.RC.SelmerComplex.Places K S)
+  [inst_4 : KernelActsTrivially W P α (↑v) (ActualTameKernel.wildKernel ↑v)]
+  (F : TameFrame (↑v) (ActualTameKernel.wildKernel ↑v)),
+  (∀ (x : Manuscript.RC.LambdaCoef.VP K S W P α),
+      Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S ↑v) F.t) x) (Neg.neg.{0} x)) →
+    FrameUnitTests W P α v F
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frameUnitTests_of_primitive' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@continuous_openKernel_character : ∀ {G H : Type} [inst : Group.{0} G] [inst_1 : TopologicalSpace.{0} G]
+  [IsTopologicalGroup.{0} G] [inst_3 : Group.{0} H] [inst_4 : TopologicalSpace.{0} H] (χ : MonoidHom.{0, 0} G H),
+  IsOpen.{0} ↑(MonoidHom.ker.{0, 0} χ) → Continuous.{0, 0} ⇑χ
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.continuous_openKernel_character' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primitiveQuotientSign : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (s : Manuscript.RC.CoefModules.KS K S) →
+          {h : K} →
+            Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h) →
+              Ne.{1} s 0 →
+                (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+                  Nat.Coprime 2
+                      (ringChar.{0}
+                        (IsLocalRing.ResidueField.{0}
+                          ↥(Valuation.integer.{0, 0}
+                              (ValuativeRel.valuation.{0}
+                                (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))))) →
+                    (hh0 :
+                        Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h)
+                          0) →
+                      Eq.{1}
+                          ((TauCeti.normalizedValuation.{0}
+                              (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+                            (Units.mk0.{0}
+                              ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h)
+                              hh0))
+                          (Multiplicative.ofAdd.{0} 1) →
+                        MonoidHom.{0, 0} (LocalQuotient v (ActualTameKernel.wildKernel v)) (Units.{0} ℤ)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.primitiveQuotientSign' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primitiveQuotientSign_pullback : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (hodd :
+    Nat.Coprime 2
+      (ringChar.{0}
+        (IsLocalRing.ResidueField.{0}
+          ↥(Valuation.integer.{0, 0}
+              (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))))))
+  (hh0 : Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h) 0)
+  (hv :
+    Eq.{1}
+      ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+        (Units.mk0.{0} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h) hh0))
+      (Multiplicative.ofAdd.{0} 1))
+  (σ : Manuscript.RC.SelmerComplex.Gloc K v),
+  Eq.{1} ((primitiveQuotientSign s hs hs0 v hodd hh0 hv) ((localQuotientMap v (ActualTameKernel.wildKernel v)) σ))
+    ((Manuscript.RC.CoefModules.quadChar s hs hs0) ((Manuscript.RC.SelmerComplex.locMap K S v) σ))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.primitiveQuotientSign_pullback' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@primitiveQuotientSign_continuous : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (hodd :
+    Nat.Coprime 2
+      (ringChar.{0}
+        (IsLocalRing.ResidueField.{0}
+          ↥(Valuation.integer.{0, 0}
+              (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))))))
+  (hh0 : Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h) 0)
+  (hv :
+    Eq.{1}
+      ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+        (Units.mk0.{0} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h) hh0))
+      (Multiplicative.ofAdd.{0} 1)),
+  Continuous.{0, 0} ⇑(primitiveQuotientSign s hs hs0 v hodd hh0 hv)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.primitiveQuotientSign_continuous' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frame_primitive_sign : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  Nat.Coprime 2
+      (ringChar.{0}
+        (IsLocalRing.ResidueField.{0}
+          ↥(Valuation.integer.{0, 0}
+              (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))))) →
+    ∀ (hh0 : Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h) 0),
+      Eq.{1}
+          ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+            (Units.mk0.{0} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h)
+              hh0))
+          (Multiplicative.ofAdd.{0} 1) →
+        ∀ (F : TameFrame v (ActualTameKernel.wildKernel v)),
+          Eq.{1} ((Manuscript.RC.CoefModules.quadChar s hs hs0) ((Manuscript.RC.SelmerComplex.locMap K S v) F.t)) (-1)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frame_primitive_sign' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@frame_primitive_fibre_scalar : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  Nat.Coprime 2
+      (ringChar.{0}
+        (IsLocalRing.ResidueField.{0}
+          ↥(Valuation.integer.{0, 0}
+              (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))))) →
+    ∀ (hh0 : Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h) 0),
+      Eq.{1}
+          ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+            (Units.mk0.{0} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) h)
+              hh0))
+          (Multiplicative.ofAdd.{0} 1) →
+        ∀ (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W]
+          [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+          (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P] (hS : S₀ ⊆ S)
+          (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2])),
+          v ∉ S₀ →
+            ∀ (F : TameFrame v (ActualTameKernel.wildKernel v))
+              (x :
+                Manuscript.RC.LambdaCoef.VP K S W P
+                  (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+                    (MonoidHom.comp.{0, 0, 0} ξ₀
+                      (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))),
+              Eq.{1} (HSMul.hSMul.{0, 0, 0} ((Manuscript.RC.SelmerComplex.locMap K S v) F.t) x) (Neg.neg.{0} x)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.frame_primitive_fibre_scalar' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+actual_old_primitive_absolute_contraction : NSWWildKernelIdentification →
+  NSWOddWildProOrder →
+    Nekovar414Fibre →
+      Nekovar721Structure →
+        Nekovar723Fibre →
+          ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+            {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+            (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W]
+            [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+            (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+            [inst_6 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+            (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+            (hs0 : Ne.{1} s 0) (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]))
+            [inst_7 :
+              Manuscript.RC.LambdaCoef.IsContChar
+                (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+                  (MonoidHom.comp.{0, 0, 0} ξ₀
+                    (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))]
+            (v : Manuscript.RC.SelmerComplex.Places K S),
+            ↑v ∉ S₀ →
+              Nat.Coprime 2
+                  (ringChar.{0}
+                    (IsLocalRing.ResidueField.{0}
+                      ↥(Valuation.integer.{0, 0}
+                          (ValuativeRel.valuation.{0}
+                            (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))))) →
+                ∀
+                  (hh0 :
+                    Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h) 0),
+                  Eq.{1}
+                      ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+                        (Units.mk0.{0}
+                          ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h)
+                          hh0))
+                      (Multiplicative.ofAdd.{0} 1) →
+                    Nonempty.{1}
+                      (Contraction
+                        (absoluteFull W P
+                          (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+                            (MonoidHom.comp.{0, 0, 0} ξ₀
+                              (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))
+                          ↑v))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.actual_old_primitive_absolute_contraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@fullSubContraction : {k : Type} →
+  [inst : Field.{0} k] →
+    {L : CloudB3RC53.PairedFunctional.GCx.{0} k} →
+      Contraction L → Contraction (CloudB3RC53.SwitchInputs.SubFam.top L).cx
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.fullSubContraction' depends on axioms: [propext,
+ Quot.sound.{u}]
+actual_old_primitive_full_condition_contraction : NSWWildKernelIdentification →
+  NSWOddWildProOrder →
+    Nekovar414Fibre →
+      Nekovar721Structure →
+        Nekovar723Fibre →
+          ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+            {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+            (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W]
+            [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+            (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+            [inst_6 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+            (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+            (hs0 : Ne.{1} s 0) (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]))
+            [inst_7 :
+              Manuscript.RC.LambdaCoef.IsContChar
+                (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+                  (MonoidHom.comp.{0, 0, 0} ξ₀
+                    (ContinuousMonoidHom.toMonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.inflMap K hS))))]
+            (v : Manuscript.RC.SelmerComplex.Places K S),
+            ↑v ∉ S₀ →
+              Nat.Coprime 2
+                  (ringChar.{0}
+                    (IsLocalRing.ResidueField.{0}
+                      ↥(Valuation.integer.{0, 0}
+                          (ValuativeRel.valuation.{0}
+                            (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))))) →
+                ∀
+                  (hh0 :
+                    Ne.{1} ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h) 0),
+                  Eq.{1}
+                      ((TauCeti.normalizedValuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v))
+                        (Units.mk0.{0}
+                          ((algebraMap.{0, 0} K (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K ↑v)) h)
+                          hh0))
+                      (Multiplicative.ofAdd.{0} 1) →
+                    Nonempty.{1}
+                      (Contraction
+                        (CloudB3RC53.SwitchInputs.SubFam.top
+                            (Manuscript.RC.SelmerComplex.localCx.{0} (Manuscript.RC.Wiring.ResAt P)
+                              (Manuscript.RC.SelmerComplex.GKS K S) (fun w => Manuscript.RC.SelmerComplex.Gloc K ↑w)
+                              (fun w => Manuscript.RC.SelmerComplex.locMap K S ↑w)
+                              (Manuscript.RC.LambdaCoef.VP K S W P
+                                (Manuscript.RC.LambdaCoef.lambdaChar (Manuscript.RC.CoefModules.quadChar s hs hs0)
+                                  (MonoidHom.comp.{0, 0, 0} ξ₀
+                                    (ContinuousMonoidHom.toMonoidHom.{0, 0}
+                                      (Manuscript.RC.SelmerComplex.inflMap K hS)))))
+                              v)).cx)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.actual_old_primitive_full_condition_contraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+def ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.NSWWildKernelIdentification : Prop :=
+∀ (K : Type) [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  Eq.{1} (ActualTameKernel.tameRadicalField v) (ActualTameKernel.maximalTameField v) ∧
+    Eq.{1} (ActualTameKernel.wildKernel v) (ActualTameKernel.maximalTameKernel v)
+def ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.NSWOddWildProOrder : Prop :=
+∀ (K : Type) [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  Ne.{1}
+      (ringChar.{0}
+        (IsLocalRing.ResidueField.{0}
+          ↥(Valuation.integer.{0, 0}
+              (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)))))
+      2 →
+    ∀ (U : OpenNormalSubgroup.{0} ↥(ActualTameKernel.maximalTameKernel v)),
+      (Nat.card.{0}
+            (HasQuotient.Quotient.{0, 0} ↥(ActualTameKernel.maximalTameKernel v)
+              ↑(OpenNormalSubgroup.toOpenSubgroup.{0} U))).Coprime
+        2
+def ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.Nekovar414Fibre : Prop :=
+∀ (K : Type) [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) (W : WeierstrassCurve.{0} K)
+  [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_4 : Ideal.IsPrime.{0} P]
+  [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+  (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+  [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))
+  (N : Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)) [inst_7 : Subgroup.Normal.{0} N] [PrimeToTwoKernel v N]
+  [inst_9 : KernelActsTrivially W P α v N], QuasiIso.{0, 1, 0} (inflation W P α v N)
+def ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.Nekovar721Structure : Prop :=
+NSWWildKernelIdentification →
+  ∀ (K : Type) [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+    (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+    Ne.{1}
+        (ringChar.{0}
+          (IsLocalRing.ResidueField.{0}
+            ↥(Valuation.integer.{0, 0}
+                (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)))))
+        2 →
+      Nonempty.{1} (TameFrame v (ActualTameKernel.wildKernel v))
+def ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.RetainedTameStructure : Prop :=
+∀ (K : Type) [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+  Ne.{1}
+      (ringChar.{0}
+        (IsLocalRing.ResidueField.{0}
+          ↥(Valuation.integer.{0, 0}
+              (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)))))
+      2 →
+    PrimeToTwoKernel v (ActualTameKernel.wildKernel v) ∧ Nonempty.{1} (TameFrame v (ActualTameKernel.wildKernel v))
+def ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.Nekovar723Fibre : Prop :=
+NSWWildKernelIdentification →
+  ∀ (K : Type) [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+    (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+    (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+    (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_4 : Ideal.IsPrime.{0} P]
+    [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+    (α : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda))
+    [inst_6 : Manuscript.RC.LambdaCoef.IsContChar α]
+    (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+    Ne.{1}
+        (ringChar.{0}
+          (IsLocalRing.ResidueField.{0}
+            ↥(Valuation.integer.{0, 0}
+                (ValuativeRel.valuation.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)))))
+        2 →
+      ∀ [PrimeToTwoKernel v (ActualTameKernel.wildKernel v)]
+        [inst_8 : KernelActsTrivially W P α v (ActualTameKernel.wildKernel v)]
+        (F : TameFrame v (ActualTameKernel.wildKernel v)),
+        Nonempty.{1} (FrameComparison v (ActualTameKernel.wildKernel v) W P α F)
+@tameRadicals : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        Set.{0} (AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.tameRadicals' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@tameRadicalField : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        IntermediateField.{0, 0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)
+          (AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.tameRadicalField' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@wildKernel : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.wildKernel' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@wildKernel_normal : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)), Subgroup.Normal.{0} (wildKernel v)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.wildKernel_normal' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@wildKernel_closed : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)), IsClosed.{0} ↑(wildKernel v)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.wildKernel_closed' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@wildKernel_fixes : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) (σ : ↥(wildKernel v))
+  (x : AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)),
+  Membership.mem.{0, 0} (tameRadicalField v) x → Eq.{1} ((id.{1} ↑σ) x) x
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.wildKernel_fixes' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@wildKernel_inertia : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) (σ : ↥(wildKernel v)),
+  Membership.mem.{0, 0} (TauCeti.inertiaSubgroup.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) ↑σ
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.wildKernel_inertia' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@finiteTame : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        IntermediateField.{0, 0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)
+            (AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) →
+          Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.finiteTame' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@maximalTameField : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        IntermediateField.{0, 0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)
+          (AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.maximalTameField' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@maximalTameKernel : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.maximalTameKernel' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+def ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.finiteTame : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        IntermediateField.{0, 0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)
+            (AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) →
+          Prop :=
+fun {K} [Field.{0} K] [NumberField.{0} K] v E =>
+  ∃ (hfinite : Module.Finite.{0, 0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v) ↥E),
+    TauCeti.IsTamelyRamified.{0, 0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v) ↥E
+def ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.maximalTameField : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        IntermediateField.{0, 0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)
+          (AlgebraicClosure.{0} (IsDedekindDomain.HeightOneSpectrum.adicCompletion.{0, 0} K v)) :=
+fun {K} [Field.{0} K] [NumberField.{0} K] v => ⨆ E, ⨆ (_ : finiteTame v E), E
+def ZInQ.Contrib.RC53Assist.StrictSymmFull.RetainedInflation.ActualTameKernel.maximalTameKernel : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)) →
+        Subgroup.{0} (Manuscript.RC.SelmerComplex.Gloc K v) :=
+fun {K} [Field.{0} K] [NumberField.{0} K] v =>
+  have this := IntermediateField.fixingSubgroup.{0, 0} (maximalTameField v);
+  this
+@RetainedReduction : {k GS V : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : Group.{0} GS] →
+      [inst_2 : TopologicalSpace.{0} GS] →
+        {Gv : V → Type} →
+          [inst_3 : (v : V) → Group.{0} (Gv v)] →
+            [inst_4 : (v : V) → TopologicalSpace.{0} (Gv v)] →
+              [inst_5 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] →
+                {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} →
+                  {M : Type} →
+                    [inst_6 : AddCommGroup.{0} M] →
+                      [inst_7 : Module.{0, 0} k M] →
+                        [inst_8 : DistribMulAction.{0, 0} GS M] →
+                          [inst_9 : SMulCommClass.{0, 0, 0} GS k M] →
+                            [inst_10 : TopologicalSpace.{0} M] →
+                              [inst_11 : ContinuousAdd.{0} M] →
+                                [inst_12 : ContinuousConstSMul.{0, 0} k M] →
+                                  [inst_13 : ContinuousSMul.{0, 0} GS M] →
+                                    V →
+                                      ((v : V) →
+                                          CloudB3RC53.SwitchInputs.SubFam
+                                            (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v)) →
+                                        Set.{0} V → Type
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.RetainedReduction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@erase_strict : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS] [inst_2 : TopologicalSpace.{0} GS]
+  [inst_3 : DecidableEq.{1} V] {Gv : V → Type} [inst_4 : (v : V) → Group.{0} (Gv v)]
+  [inst_5 : (v : V) → TopologicalSpace.{0} (Gv v)] [inst_6 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)]
+  {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type} [inst_7 : AddCommGroup.{0} M]
+  [inst_8 : Module.{0, 0} k M] [inst_9 : DistribMulAction.{0, 0} GS M] [inst_10 : SMulCommClass.{0, 0, 0} GS k M]
+  [inst_11 : TopologicalSpace.{0} M] [inst_12 : ContinuousAdd.{0} M] [inst_13 : ContinuousConstSMul.{0, 0} k M]
+  [inst_14 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V),
+  q ∉ E →
+    Eq.{1}
+      (eraseFull E
+        (CloudB3RC53.SwitchInputs.switchStrK k Gv (fun v => Manuscript.RC.SelmerComplex.ResMod.{0} (loc v) M) q old))
+      (CloudB3RC53.SwitchInputs.switchStrK k Gv (fun v => Manuscript.RC.SelmerComplex.ResMod.{0} (loc v) M) q
+        (eraseFull E old))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.erase_strict' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@erase_relaxed : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS] [inst_2 : TopologicalSpace.{0} GS]
+  [inst_3 : DecidableEq.{1} V] {Gv : V → Type} [inst_4 : (v : V) → Group.{0} (Gv v)]
+  [inst_5 : (v : V) → TopologicalSpace.{0} (Gv v)] [inst_6 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)]
+  {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type} [inst_7 : AddCommGroup.{0} M]
+  [inst_8 : Module.{0, 0} k M] [inst_9 : DistribMulAction.{0, 0} GS M] [inst_10 : SMulCommClass.{0, 0, 0} GS k M]
+  [inst_11 : TopologicalSpace.{0} M] [inst_12 : ContinuousAdd.{0} M] [inst_13 : ContinuousConstSMul.{0, 0} k M]
+  [inst_14 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V),
+  q ∉ E →
+    Eq.{1}
+      (eraseFull E
+        (CloudB3RC53.SwitchInputs.switchRelK k Gv (fun v => Manuscript.RC.SelmerComplex.ResMod.{0} (loc v) M) q old))
+      (CloudB3RC53.SwitchInputs.switchRelK k Gv (fun v => Manuscript.RC.SelmerComplex.ResMod.{0} (loc v) M) q
+        (eraseFull E old))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.erase_relaxed' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@strictComparison : {k GS V : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : Group.{0} GS] →
+      [inst_2 : TopologicalSpace.{0} GS] →
+        [inst_3 : DecidableEq.{1} V] →
+          {Gv : V → Type} →
+            [inst_4 : (v : V) → Group.{0} (Gv v)] →
+              [inst_5 : (v : V) → TopologicalSpace.{0} (Gv v)] →
+                [inst_6 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] →
+                  {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} →
+                    {M : Type} →
+                      [inst_7 : AddCommGroup.{0} M] →
+                        [inst_8 : Module.{0, 0} k M] →
+                          [inst_9 : DistribMulAction.{0, 0} GS M] →
+                            [inst_10 : SMulCommClass.{0, 0, 0} GS k M] →
+                              [inst_11 : TopologicalSpace.{0} M] →
+                                [inst_12 : ContinuousAdd.{0} M] →
+                                  [inst_13 : ContinuousConstSMul.{0, 0} k M] →
+                                    [inst_14 : ContinuousSMul.{0, 0} GS M] →
+                                      (q : V) →
+                                        (old :
+                                            (v : V) →
+                                              CloudB3RC53.SwitchInputs.SubFam
+                                                (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v)) →
+                                          (E : Set.{0} V) →
+                                            (side : (v : V) → Set.{0} (Gv v)) →
+                                              q ∉ E →
+                                                (v : V) →
+                                                  CloudB3RC53.PairedFunctional.GHom.{0}
+                                                    ((continuousSwitch q (eraseFull E old) side).str v).cx
+                                                    ((continuousSwitch q old side).str v).cx
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.strictComparison' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@relaxedComparison : {k GS V : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : Group.{0} GS] →
+      [inst_2 : TopologicalSpace.{0} GS] →
+        [inst_3 : DecidableEq.{1} V] →
+          {Gv : V → Type} →
+            [inst_4 : (v : V) → Group.{0} (Gv v)] →
+              [inst_5 : (v : V) → TopologicalSpace.{0} (Gv v)] →
+                [inst_6 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] →
+                  {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} →
+                    {M : Type} →
+                      [inst_7 : AddCommGroup.{0} M] →
+                        [inst_8 : Module.{0, 0} k M] →
+                          [inst_9 : DistribMulAction.{0, 0} GS M] →
+                            [inst_10 : SMulCommClass.{0, 0, 0} GS k M] →
+                              [inst_11 : TopologicalSpace.{0} M] →
+                                [inst_12 : ContinuousAdd.{0} M] →
+                                  [inst_13 : ContinuousConstSMul.{0, 0} k M] →
+                                    [inst_14 : ContinuousSMul.{0, 0} GS M] →
+                                      (q : V) →
+                                        (old :
+                                            (v : V) →
+                                              CloudB3RC53.SwitchInputs.SubFam
+                                                (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v)) →
+                                          (E : Set.{0} V) →
+                                            (side : (v : V) → Set.{0} (Gv v)) →
+                                              q ∉ E →
+                                                (v : V) →
+                                                  CloudB3RC53.PairedFunctional.GHom.{0}
+                                                    ((continuousSwitch q (eraseFull E old) side).rel v).cx
+                                                    ((continuousSwitch q old side).rel v).cx
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.relaxedComparison' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@reduced_degreeTwoZero : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS]
+  [inst_2 : TopologicalSpace.{0} GS] [inst_3 : DecidableEq.{1} V] {Gv : V → Type} [inst_4 : (v : V) → Group.{0} (Gv v)]
+  [inst_5 : (v : V) → TopologicalSpace.{0} (Gv v)] [inst_6 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)]
+  {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type} [inst_7 : AddCommGroup.{0} M]
+  [inst_8 : Module.{0, 0} k M] [inst_9 : DistribMulAction.{0, 0} GS M] [inst_10 : SMulCommClass.{0, 0, 0} GS k M]
+  [inst_11 : TopologicalSpace.{0} M] [inst_12 : ContinuousAdd.{0} M] [inst_13 : ContinuousConstSMul.{0, 0} k M]
+  [inst_14 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) (R : RetainedReduction q old E),
+  StrictLocal.DegreeTwoZero (continuousSwitch q (eraseFull E old) side).Ustr
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.reduced_degreeTwoZero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@reducedIsotropy : {k GS V : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : Group.{0} GS] →
+      [inst_2 : TopologicalSpace.{0} GS] →
+        [inst_3 : DecidableEq.{1} V] →
+          {Gv : V → Type} →
+            [inst_4 : (v : V) → Group.{0} (Gv v)] →
+              [inst_5 : (v : V) → TopologicalSpace.{0} (Gv v)] →
+                [inst_6 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] →
+                  {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} →
+                    {M : Type} →
+                      [inst_7 : AddCommGroup.{0} M] →
+                        [inst_8 : Module.{0, 0} k M] →
+                          [inst_9 : DistribMulAction.{0, 0} GS M] →
+                            [inst_10 : SMulCommClass.{0, 0, 0} GS k M] →
+                              [inst_11 : TopologicalSpace.{0} M] →
+                                [inst_12 : ContinuousAdd.{0} M] →
+                                  [inst_13 : ContinuousConstSMul.{0, 0} k M] →
+                                    [inst_14 : ContinuousSMul.{0, 0} GS M] →
+                                      (q : V) →
+                                        (old :
+                                            (v : V) →
+                                              CloudB3RC53.SwitchInputs.SubFam
+                                                (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v)) →
+                                          (E : Set.{0} V) →
+                                            (side : (v : V) → Set.{0} (Gv v)) →
+                                              {T : Type} →
+                                                [inst_15 : AddCommGroup.{0} T] →
+                                                  [inst_16 : Module.{0, 0} k T] →
+                                                    [inst_17 : DistribMulAction.{0, 0} GS T] →
+                                                      [inst_18 : SMulCommClass.{0, 0, 0} GS k T] →
+                                                        [inst_19 : TopologicalSpace.{0} T] →
+                                                          [inst_20 : ContinuousAdd.{0} T] →
+                                                            [inst_21 : ContinuousConstSMul.{0, 0} k T] →
+                                                              [inst_22 : ContinuousSMul.{0, 0} GS T] →
+                                                                (β :
+                                                                    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M
+                                                                      (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M T)) →
+                                                                  (hβ :
+                                                                      ∀ (g : GS) (x y : M),
+                                                                        Eq.{1}
+                                                                          ((β (HSMul.hSMul.{0, 0, 0} g x))
+                                                                            (HSMul.hSMul.{0, 0, 0} g y))
+                                                                          (HSMul.hSMul.{0, 0, 0} g ((β x) y))) →
+                                                                    (hβc : Continuous.{0, 0} fun x => (β x.1) x.2) →
+                                                                      q ∉ E →
+                                                                        ContinuousIsotropy q old side β hβ hβc →
+                                                                          ContinuousIsotropy q (eraseFull E old) side β
+                                                                            hβ hβc
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.reducedIsotropy' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@reducedIsotropy_formula : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS]
+  [inst_2 : TopologicalSpace.{0} GS] [inst_3 : DecidableEq.{1} V] {Gv : V → Type} [inst_4 : (v : V) → Group.{0} (Gv v)]
+  [inst_5 : (v : V) → TopologicalSpace.{0} (Gv v)] [inst_6 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)]
+  {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type} [inst_7 : AddCommGroup.{0} M]
+  [inst_8 : Module.{0, 0} k M] [inst_9 : DistribMulAction.{0, 0} GS M] [inst_10 : SMulCommClass.{0, 0, 0} GS k M]
+  [inst_11 : TopologicalSpace.{0} M] [inst_12 : ContinuousAdd.{0} M] [inst_13 : ContinuousConstSMul.{0, 0} k M]
+  [inst_14 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) {T : Type} [inst_15 : AddCommGroup.{0} T]
+  [inst_16 : Module.{0, 0} k T] [inst_17 : DistribMulAction.{0, 0} GS T] [inst_18 : SMulCommClass.{0, 0, 0} GS k T]
+  [inst_19 : TopologicalSpace.{0} T] [inst_20 : ContinuousAdd.{0} T] [inst_21 : ContinuousConstSMul.{0, 0} k T]
+  [inst_22 : ContinuousSMul.{0, 0} GS T]
+  (β : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M T))
+  (hβ :
+    ∀ (g : GS) (x y : M),
+      Eq.{1} ((β (HSMul.hSMul.{0, 0, 0} g x)) (HSMul.hSMul.{0, 0, 0} g y)) (HSMul.hSMul.{0, 0, 0} g ((β x) y)))
+  (hβc : Continuous.{0, 0} fun x => (β x.1) x.2) (hq : q ∉ E) (I : ContinuousIsotropy q old side β hβ hβc) (v : V)
+  (i j l : ℤ) (hij : Eq.{1} (HAdd.hAdd.{0, 0, 0} i j) (HAdd.hAdd.{0, 0, 0} l 1))
+  (x : ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} ((continuousSwitch q (eraseFull E old) side).str v).cx i))
+  (y : ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} ((continuousSwitch q (eraseFull E old) side).rel v).cx j)),
+  Eq.{1}
+    (((Manuscript.RC.SelmerComplex.TruncIsotropyData.h.{0} (reducedIsotropy q old E side β hβ hβc hq I) v i j l hij) x)
+      y)
+    (((Manuscript.RC.SelmerComplex.TruncIsotropyData.h.{0} I v i j l hij)
+        ((CloudB3RC53.PairedFunctional.GHom.f.{0} (strictComparison q old E side hq v) i i rfl.{1}) x))
+      ((CloudB3RC53.PairedFunctional.GHom.f.{0} (relaxedComparison q old E side hq v) j j rfl.{1}) y))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.reducedIsotropy_formula' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@reduced_strictSymmetry : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS]
+  [inst_2 : TopologicalSpace.{0} GS] [inst_3 : IsTopologicalGroup.{0} GS] [inst_4 : DecidableEq.{1} V] {Gv : V → Type}
+  [inst_5 : (v : V) → Group.{0} (Gv v)] [inst_6 : (v : V) → TopologicalSpace.{0} (Gv v)]
+  [inst_7 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type}
+  [inst_8 : AddCommGroup.{0} M] [inst_9 : Module.{0, 0} k M] [inst_10 : DistribMulAction.{0, 0} GS M]
+  [inst_11 : SMulCommClass.{0, 0, 0} GS k M] [inst_12 : TopologicalSpace.{0} M] [inst_13 : ContinuousAdd.{0} M]
+  [inst_14 : ContinuousConstSMul.{0, 0} k M] [inst_15 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) {T : Type} [inst_16 : AddCommGroup.{0} T]
+  [inst_17 : Module.{0, 0} k T] [inst_18 : DistribMulAction.{0, 0} GS T] [inst_19 : SMulCommClass.{0, 0, 0} GS k T]
+  [inst_20 : TopologicalSpace.{0} T] [inst_21 : ContinuousAdd.{0} T] [inst_22 : ContinuousConstSMul.{0, 0} k T]
+  [inst_23 : ContinuousSMul.{0, 0} GS T]
+  (β : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M T))
+  (hβ :
+    ∀ (g : GS) (x y : M),
+      Eq.{1} ((β (HSMul.hSMul.{0, 0, 0} g x)) (HSMul.hSMul.{0, 0, 0} g y)) (HSMul.hSMul.{0, 0, 0} g ((β x) y)))
+  (hβc : Continuous.{0, 0} fun x => (β x.1) x.2) (R : RetainedReduction q old E)
+  (I : ContinuousIsotropy q old side β hβ hβc) (c : k)
+  (hc : ∀ (x y : M), Eq.{1} ((β x) y) (HSMul.hSMul.{0, 0, 0} c ((β y) x))),
+  let X' := continuousSwitch q (eraseFull E old) side;
+  have I' := reducedIsotropy q old E side β hβ hβc R.new_retained I;
+  let Q' := continuousPairData q (eraseFull E old) side β hβ hβc I';
+  have Cd := CloudB3RC53.Hsw.localPairCupOneGen GS Gv loc β hβ hβc c hc;
+  CloudB3RC53.Hsw.StrictSymmTrunc (continuousRelaxedData q (eraseFull E old) side) X'.Ustr X'.fr Q' Cd ∧
+    CloudB3RC53.Hsw.StrictSymm (continuousRelaxedData q (eraseFull E old) side) X'.Ustr X'.fr
+      (CloudB3RC53.SwitchInputs.SelPairDataTrunc.toSelPairData.{0} Q') Cd.trunc
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.reduced_strictSymmetry' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@reduced_rc26_strictSymm : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS]
+  [inst_2 : TopologicalSpace.{0} GS] [inst_3 : DecidableEq.{1} V] {Gv : V → Type} [inst_4 : (v : V) → Group.{0} (Gv v)]
+  [inst_5 : (v : V) → TopologicalSpace.{0} (Gv v)] [inst_6 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)]
+  {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type} [inst_7 : AddCommGroup.{0} M]
+  [inst_8 : Module.{0, 0} k M] [inst_9 : DistribMulAction.{0, 0} GS M] [inst_10 : SMulCommClass.{0, 0, 0} GS k M]
+  [inst_11 : TopologicalSpace.{0} M] [inst_12 : ContinuousAdd.{0} M] [inst_13 : ContinuousConstSMul.{0, 0} k M]
+  [inst_14 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) {T : Type} [inst_15 : AddCommGroup.{0} T]
+  [inst_16 : Module.{0, 0} k T] [inst_17 : DistribMulAction.{0, 0} GS T] [inst_18 : SMulCommClass.{0, 0, 0} GS k T]
+  [inst_19 : TopologicalSpace.{0} T] [inst_20 : ContinuousAdd.{0} T] [inst_21 : ContinuousConstSMul.{0, 0} k T]
+  [inst_22 : ContinuousSMul.{0, 0} GS T]
+  (β : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M T))
+  (hβ :
+    ∀ (g : GS) (x y : M),
+      Eq.{1} ((β (HSMul.hSMul.{0, 0, 0} g x)) (HSMul.hSMul.{0, 0, 0} g y)) (HSMul.hSMul.{0, 0, 0} g ((β x) y)))
+  (hβc : Continuous.{0, 0} fun x => (β x.1) x.2) (R : RetainedReduction q old E)
+  (I : ContinuousIsotropy q old side β hβ hβc) (c : k),
+  let X' := continuousSwitch q (eraseFull E old) side;
+  have I' := reducedIsotropy q old E side β hβ hβc R.new_retained I;
+  ∀ (v : V) (s₂ : ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} (X'.str v).cx 2))
+    (t₁ : ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} (X'.str v).cx 1)),
+    Membership.mem.{0, 0}
+      (LinearMap.range.{0, 0, 0, 0}
+        (CloudB3RC53.PairedFunctional.GCx.d.{0} (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc T v) 1 2 rfl.{1}))
+      (HSub.hSub.{0, 0, 0}
+        (HSub.hSub.{0, 0, 0}
+          (((continuousForward q (eraseFull E old) side β hβ hβc I' v 2 1 2 rfl.{1}) s₂)
+            ((CloudB3RC53.PairedFunctional.GHom.f.{0} (continuousLocalInclusion q (eraseFull E old) side v) 1 1 rfl.{1})
+              t₁))
+          (HSMul.hSMul.{0, 0, 0} c
+            (((continuousForward q (eraseFull E old) side β hβ hβc I' v 1 2 2 rfl.{1}) t₁)
+              ((CloudB3RC53.PairedFunctional.GHom.f.{0} (continuousLocalInclusion q (eraseFull E old) side v) 2 2
+                  rfl.{1})
+                s₂))))
+        (((Manuscript.RC.SelmerComplex.localCupOne21.{0} k GS Gv loc β hβc v)
+            ((CloudB3RC53.PairedFunctional.GHom.f.{0} (X'.rel v).incl 2 2 rfl.{1})
+              ((CloudB3RC53.PairedFunctional.GHom.f.{0} (continuousLocalInclusion q (eraseFull E old) side v) 2 2
+                  rfl.{1})
+                s₂)))
+          ((CloudB3RC53.PairedFunctional.GHom.f.{0} (X'.rel v).incl 1 1 rfl.{1})
+            ((CloudB3RC53.PairedFunctional.GHom.f.{0} (continuousLocalInclusion q (eraseFull E old) side v) 1 1 rfl.{1})
+              t₁))))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.reduced_rc26_strictSymm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@retained_condition_maps : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS]
+  [inst_2 : TopologicalSpace.{0} GS] [inst_3 : IsTopologicalGroup.{0} GS] [inst_4 : DecidableEq.{1} V] {Gv : V → Type}
+  [inst_5 : (v : V) → Group.{0} (Gv v)] [inst_6 : (v : V) → TopologicalSpace.{0} (Gv v)]
+  [inst_7 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type}
+  [inst_8 : AddCommGroup.{0} M] [inst_9 : Module.{0, 0} k M] [inst_10 : DistribMulAction.{0, 0} GS M]
+  [inst_11 : SMulCommClass.{0, 0, 0} GS k M] [inst_12 : TopologicalSpace.{0} M] [inst_13 : ContinuousAdd.{0} M]
+  [inst_14 : ContinuousConstSMul.{0, 0} k M] [inst_15 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) (hq : q ∉ E) (i j : ℤ) (hij : Eq.{1} i j),
+  (∀
+      (x :
+        ↑(CloudB3RC53.PairedFunctional.GCx.X.{0}
+            (CloudB3RC53.PairedFunctional.SelData.U.{0} (continuousStrictData q (eraseFull E old) side)) i)),
+      Eq.{1}
+        ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+            (CloudB3RC53.PairedFunctional.SelData.ι.{0} (continuousStrictData q (eraseFull E old) side)) i j hij)
+          x)
+        ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+            (CloudB3RC53.PairedFunctional.SelData.ι.{0} (continuousStrictData q old side)) i j hij)
+          ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+              (Manuscript.RC.SelmerComplex.piMap.{0} (strictComparison q old E side hq)) i i rfl.{1})
+            x))) ∧
+    ∀
+      (x :
+        ↑(CloudB3RC53.PairedFunctional.GCx.X.{0}
+            (CloudB3RC53.PairedFunctional.SelData.U.{0} (continuousRelaxedData q (eraseFull E old) side)) i)),
+      Eq.{1}
+        ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+            (CloudB3RC53.PairedFunctional.SelData.ι.{0} (continuousRelaxedData q (eraseFull E old) side)) i j hij)
+          x)
+        ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+            (CloudB3RC53.PairedFunctional.SelData.ι.{0} (continuousRelaxedData q old side)) i j hij)
+          ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+              (Manuscript.RC.SelmerComplex.piMap.{0} (relaxedComparison q old E side hq)) i i rfl.{1})
+            x))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.retained_condition_maps' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@strictSelmerComparison : {k GS V : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : Group.{0} GS] →
+      [inst_2 : TopologicalSpace.{0} GS] →
+        [inst_3 : IsTopologicalGroup.{0} GS] →
+          [inst_4 : DecidableEq.{1} V] →
+            {Gv : V → Type} →
+              [inst_5 : (v : V) → Group.{0} (Gv v)] →
+                [inst_6 : (v : V) → TopologicalSpace.{0} (Gv v)] →
+                  [inst_7 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] →
+                    {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} →
+                      {M : Type} →
+                        [inst_8 : AddCommGroup.{0} M] →
+                          [inst_9 : Module.{0, 0} k M] →
+                            [inst_10 : DistribMulAction.{0, 0} GS M] →
+                              [inst_11 : SMulCommClass.{0, 0, 0} GS k M] →
+                                [inst_12 : TopologicalSpace.{0} M] →
+                                  [inst_13 : ContinuousAdd.{0} M] →
+                                    [inst_14 : ContinuousConstSMul.{0, 0} k M] →
+                                      [inst_15 : ContinuousSMul.{0, 0} GS M] →
+                                        (q : V) →
+                                          (old :
+                                              (v : V) →
+                                                CloudB3RC53.SwitchInputs.SubFam
+                                                  (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v)) →
+                                            (E : Set.{0} V) →
+                                              (side : (v : V) → Set.{0} (Gv v)) →
+                                                q ∉ E →
+                                                  CloudB3RC53.PairedFunctional.GHom.{0}
+                                                    (CloudB3RC53.PairedFunctional.selCx.{0}
+                                                      (continuousStrictData q (eraseFull E old) side))
+                                                    (CloudB3RC53.PairedFunctional.selCx.{0}
+                                                      (continuousStrictData q old side))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.strictSelmerComparison' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@relaxedSelmerComparison : {k GS V : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : Group.{0} GS] →
+      [inst_2 : TopologicalSpace.{0} GS] →
+        [inst_3 : IsTopologicalGroup.{0} GS] →
+          [inst_4 : DecidableEq.{1} V] →
+            {Gv : V → Type} →
+              [inst_5 : (v : V) → Group.{0} (Gv v)] →
+                [inst_6 : (v : V) → TopologicalSpace.{0} (Gv v)] →
+                  [inst_7 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] →
+                    {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} →
+                      {M : Type} →
+                        [inst_8 : AddCommGroup.{0} M] →
+                          [inst_9 : Module.{0, 0} k M] →
+                            [inst_10 : DistribMulAction.{0, 0} GS M] →
+                              [inst_11 : SMulCommClass.{0, 0, 0} GS k M] →
+                                [inst_12 : TopologicalSpace.{0} M] →
+                                  [inst_13 : ContinuousAdd.{0} M] →
+                                    [inst_14 : ContinuousConstSMul.{0, 0} k M] →
+                                      [inst_15 : ContinuousSMul.{0, 0} GS M] →
+                                        (q : V) →
+                                          (old :
+                                              (v : V) →
+                                                CloudB3RC53.SwitchInputs.SubFam
+                                                  (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v)) →
+                                            (E : Set.{0} V) →
+                                              (side : (v : V) → Set.{0} (Gv v)) →
+                                                q ∉ E →
+                                                  CloudB3RC53.PairedFunctional.GHom.{0}
+                                                    (CloudB3RC53.PairedFunctional.selCx.{0}
+                                                      (continuousRelaxedData q (eraseFull E old) side))
+                                                    (CloudB3RC53.PairedFunctional.selCx.{0}
+                                                      (continuousRelaxedData q old side))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.relaxedSelmerComparison' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@retained_traced_pairing : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS]
+  [inst_2 : TopologicalSpace.{0} GS] [inst_3 : IsTopologicalGroup.{0} GS] [inst_4 : DecidableEq.{1} V] {Gv : V → Type}
+  [inst_5 : (v : V) → Group.{0} (Gv v)] [inst_6 : (v : V) → TopologicalSpace.{0} (Gv v)]
+  [inst_7 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type}
+  [inst_8 : AddCommGroup.{0} M] [inst_9 : Module.{0, 0} k M] [inst_10 : DistribMulAction.{0, 0} GS M]
+  [inst_11 : SMulCommClass.{0, 0, 0} GS k M] [inst_12 : TopologicalSpace.{0} M] [inst_13 : ContinuousAdd.{0} M]
+  [inst_14 : ContinuousConstSMul.{0, 0} k M] [inst_15 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) {T : Type} [inst_16 : AddCommGroup.{0} T]
+  [inst_17 : Module.{0, 0} k T] [inst_18 : DistribMulAction.{0, 0} GS T] [inst_19 : SMulCommClass.{0, 0, 0} GS k T]
+  [inst_20 : TopologicalSpace.{0} T] [inst_21 : ContinuousAdd.{0} T] [inst_22 : ContinuousConstSMul.{0, 0} k T]
+  [inst_23 : ContinuousSMul.{0, 0} GS T]
+  (β : LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) M T))
+  (hβ :
+    ∀ (g : GS) (x y : M),
+      Eq.{1} ((β (HSMul.hSMul.{0, 0, 0} g x)) (HSMul.hSMul.{0, 0, 0} g y)) (HSMul.hSMul.{0, 0, 0} g ((β x) y)))
+  (hβc : Continuous.{0, 0} fun x => (β x.1) x.2) (hq : q ∉ E) (I : ContinuousIsotropy q old side β hβ hβc)
+  (tr :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k)
+      (↑(CloudB3RC53.PairedFunctional.GCx.X.{0}
+          (CloudB3RC53.PairedFunctional.coneCx.{0}
+            (CloudB3RC53.SwitchInputs.SelPairDataTrunc.resE.{0} (continuousPairData q old side β hβ hβc I)))
+          3))
+      k)
+  (i j : ℤ) (hij : Eq.{1} (HAdd.hAdd.{0, 0, 0} i j) 3)
+  (x :
+    ↑(CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (CloudB3RC53.PairedFunctional.selCx.{0} (continuousStrictData q (eraseFull E old) side)) i))
+  (y :
+    ↑(CloudB3RC53.PairedFunctional.GCx.X.{0}
+        (CloudB3RC53.PairedFunctional.selCx.{0} (continuousRelaxedData q (eraseFull E old) side)) j)),
+  Eq.{1}
+    (tr
+      (CloudB3RC53.SwitchInputs.selCupFunT.{0}
+        (continuousPairData q (eraseFull E old) side β hβ hβc (reducedIsotropy q old E side β hβ hβc hq I)) i j 3 hij x
+        y))
+    (tr
+      (CloudB3RC53.SwitchInputs.selCupFunT.{0} (continuousPairData q old side β hβ hβc I) i j 3 hij
+        ((CloudB3RC53.PairedFunctional.GHom.f.{0} (strictSelmerComparison q old E side hq) i i rfl.{1}) x)
+        ((CloudB3RC53.PairedFunctional.GHom.f.{0} (relaxedSelmerComparison q old E side hq) j j rfl.{1}) y)))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.retained_traced_pairing' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@condition_retractions : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS]
+  [inst_2 : TopologicalSpace.{0} GS] [inst_3 : DecidableEq.{1} V] {Gv : V → Type} [inst_4 : (v : V) → Group.{0} (Gv v)]
+  [inst_5 : (v : V) → TopologicalSpace.{0} (Gv v)] [inst_6 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)]
+  {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type} [inst_7 : AddCommGroup.{0} M]
+  [inst_8 : Module.{0, 0} k M] [inst_9 : DistribMulAction.{0, 0} GS M] [inst_10 : SMulCommClass.{0, 0, 0} GS k M]
+  [inst_11 : TopologicalSpace.{0} M] [inst_12 : ContinuousAdd.{0} M] [inst_13 : ContinuousConstSMul.{0, 0} k M]
+  [inst_14 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) (R : RetainedReduction q old E),
+  (∃ C, Eq.{1} C.inc (Manuscript.RC.SelmerComplex.piMap.{0} (strictComparison q old E side R.new_retained))) ∧
+    ∃ C, Eq.{1} C.inc (Manuscript.RC.SelmerComplex.piMap.{0} (relaxedComparison q old E side R.new_retained))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.condition_retractions' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@selmer_retractions : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS] [inst_2 : TopologicalSpace.{0} GS]
+  [inst_3 : IsTopologicalGroup.{0} GS] [inst_4 : DecidableEq.{1} V] {Gv : V → Type}
+  [inst_5 : (v : V) → Group.{0} (Gv v)] [inst_6 : (v : V) → TopologicalSpace.{0} (Gv v)]
+  [inst_7 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type}
+  [inst_8 : AddCommGroup.{0} M] [inst_9 : Module.{0, 0} k M] [inst_10 : DistribMulAction.{0, 0} GS M]
+  [inst_11 : SMulCommClass.{0, 0, 0} GS k M] [inst_12 : TopologicalSpace.{0} M] [inst_13 : ContinuousAdd.{0} M]
+  [inst_14 : ContinuousConstSMul.{0, 0} k M] [inst_15 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) (R : RetainedReduction q old E),
+  (∃ C,
+      Eq.{1} C.inc (Manuscript.RC.SelmerComplex.piMap.{0} (strictComparison q old E side R.new_retained)) ∧
+        Nonempty.{1}
+          (HomotopyEquiv.{0, 1, 0}
+            (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (CloudB3RC53.PairedFunctional.selCx.{0}
+                (CloudB3RC53.SelmerDuality.restrictData.{0} (continuousStrictData q old side) C.inc)))
+            (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (CloudB3RC53.PairedFunctional.selCx.{0} (continuousStrictData q old side))))) ∧
+    ∃ C,
+      Eq.{1} C.inc (Manuscript.RC.SelmerComplex.piMap.{0} (relaxedComparison q old E side R.new_retained)) ∧
+        Nonempty.{1}
+          (HomotopyEquiv.{0, 1, 0}
+            (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (CloudB3RC53.PairedFunctional.selCx.{0}
+                (CloudB3RC53.SelmerDuality.restrictData.{0} (continuousRelaxedData q old side) C.inc)))
+            (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (CloudB3RC53.PairedFunctional.selCx.{0} (continuousRelaxedData q old side))))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.selmer_retractions' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@reduced_data_eq : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS] [inst_2 : TopologicalSpace.{0} GS]
+  [inst_3 : IsTopologicalGroup.{0} GS] [inst_4 : DecidableEq.{1} V] {Gv : V → Type}
+  [inst_5 : (v : V) → Group.{0} (Gv v)] [inst_6 : (v : V) → TopologicalSpace.{0} (Gv v)]
+  [inst_7 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type}
+  [inst_8 : AddCommGroup.{0} M] [inst_9 : Module.{0, 0} k M] [inst_10 : DistribMulAction.{0, 0} GS M]
+  [inst_11 : SMulCommClass.{0, 0, 0} GS k M] [inst_12 : TopologicalSpace.{0} M] [inst_13 : ContinuousAdd.{0} M]
+  [inst_14 : ContinuousConstSMul.{0, 0} k M] [inst_15 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) (hq : q ∉ E),
+  Eq.{2} (continuousStrictData q (eraseFull E old) side)
+      (CloudB3RC53.SelmerDuality.restrictData.{0} (continuousStrictData q old side)
+        (Manuscript.RC.SelmerComplex.piMap.{0} (strictComparison q old E side hq))) ∧
+    Eq.{2} (continuousRelaxedData q (eraseFull E old) side)
+      (CloudB3RC53.SelmerDuality.restrictData.{0} (continuousRelaxedData q old side)
+        (Manuscript.RC.SelmerComplex.piMap.{0} (relaxedComparison q old E side hq)))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.reduced_data_eq' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@actual_selmer_equivalences : ∀ {k GS V : Type} [inst : Field.{0} k] [inst_1 : Group.{0} GS]
+  [inst_2 : TopologicalSpace.{0} GS] [inst_3 : IsTopologicalGroup.{0} GS] [inst_4 : DecidableEq.{1} V] {Gv : V → Type}
+  [inst_5 : (v : V) → Group.{0} (Gv v)] [inst_6 : (v : V) → TopologicalSpace.{0} (Gv v)]
+  [inst_7 : ∀ (v : V), IsTopologicalGroup.{0} (Gv v)] {loc : (v : V) → ContinuousMonoidHom.{0, 0} (Gv v) GS} {M : Type}
+  [inst_8 : AddCommGroup.{0} M] [inst_9 : Module.{0, 0} k M] [inst_10 : DistribMulAction.{0, 0} GS M]
+  [inst_11 : SMulCommClass.{0, 0, 0} GS k M] [inst_12 : TopologicalSpace.{0} M] [inst_13 : ContinuousAdd.{0} M]
+  [inst_14 : ContinuousConstSMul.{0, 0} k M] [inst_15 : ContinuousSMul.{0, 0} GS M] (q : V)
+  (old : (v : V) → CloudB3RC53.SwitchInputs.SubFam (Manuscript.RC.SelmerComplex.localCx.{0} k GS Gv loc M v))
+  (E : Set.{0} V) (side : (v : V) → Set.{0} (Gv v)) (R : RetainedReduction q old E),
+  Nonempty.{1}
+      (HomotopyEquiv.{0, 1, 0}
+        (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (CloudB3RC53.PairedFunctional.selCx.{0} (continuousStrictData q (eraseFull E old) side)))
+        (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (CloudB3RC53.PairedFunctional.selCx.{0} (continuousStrictData q old side)))) ∧
+    Nonempty.{1}
+      (HomotopyEquiv.{0, 1, 0}
+        (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (CloudB3RC53.PairedFunctional.selCx.{0} (continuousRelaxedData q (eraseFull E old) side)))
+        (CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (CloudB3RC53.PairedFunctional.selCx.{0} (continuousRelaxedData q old side))))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ContinuousReduction.actual_selmer_equivalences' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@placesDecidable : {K : Type} →
+  [inst : Field.{0} K] →
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+      DecidableEq.{1} (Manuscript.RC.SelmerComplex.Places K S)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ActualSwitchAssembly.placesDecidable' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@coefficientCharacter : {K : Type} →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        S₀ ⊆ S →
+          (s : Manuscript.RC.CoefModules.KS K S) →
+            {h : K} →
+              Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h) →
+                Ne.{1} s 0 →
+                  MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]) →
+                    MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} Manuscript.RC.Uniform.Lambda)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ActualSwitchAssembly.coefficientCharacter' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@PrimitivePlace : {K : Type} →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      {S₀ : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+          {h : K} → Manuscript.RC.SelmerComplex.Places K S → Prop
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ActualSwitchAssembly.PrimitivePlace' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@OtherPlaceInputs : {K : Type} →
+  [inst : Field.{0} K] →
+    [NumberField.{0} K] →
+      {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        S₀ ⊆ S →
+          WeierstrassCurve.{0} K →
+            (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+              [Ideal.IsPrime.{0} P] →
+                (s : Manuscript.RC.CoefModules.KS K S) →
+                  {h : K} →
+                    Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h) →
+                      Ne.{1} s 0 →
+                        MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]) →
+                          Manuscript.RC.SelmerComplex.Places K S → Type
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ActualSwitchAssembly.OtherPlaceInputs' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@other_place_contraction : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W]
+  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) [inst_4 : Ideal.IsPrime.{0} P]
+  [inst_5 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]))
+  [inst_6 : Manuscript.RC.LambdaCoef.IsContChar (coefficientCharacter hS s hs hs0 ξ₀)],
+  RetainedInflation.NSWWildKernelIdentification →
+    RetainedInflation.NSWOddWildProOrder →
+      RetainedInflation.Nekovar414Fibre →
+        RetainedInflation.Nekovar723Fibre →
+          ∀ (v : Manuscript.RC.SelmerComplex.Places K S) (O : OtherPlaceInputs hS W P s hs hs0 ξ₀ v),
+            Nonempty.{1}
+              (Contraction
+                (CloudB3RC53.SwitchInputs.SubFam.top
+                    (Manuscript.RC.SelmerComplex.localCx.{0} (Manuscript.RC.Wiring.ResAt P)
+                      (Manuscript.RC.SelmerComplex.GKS K S) (fun w => Manuscript.RC.SelmerComplex.Gloc K ↑w)
+                      (fun w => Manuscript.RC.SelmerComplex.locMap K S ↑w)
+                      (Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)) v)).cx)
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ActualSwitchAssembly.other_place_contraction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@actualRetainedReduction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        (hS : S₀ ⊆ S) →
+          (W : WeierstrassCurve.{0} K) →
+            [WeierstrassCurve.IsElliptic.{0} W] →
+              [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W] →
+                [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] →
+                  (P : Ideal.{0} Manuscript.RC.Uniform.Lambda) →
+                    [inst_5 : Ideal.IsPrime.{0} P] →
+                      [inst_6 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P] →
+                        (s : Manuscript.RC.CoefModules.KS K S) →
+                          {h : K} →
+                            (hs :
+                                Eq.{1} (HPow.hPow.{0, 0, 0} s 2)
+                                  ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h)) →
+                              (hs0 : Ne.{1} s 0) →
+                                (ξ₀ :
+                                    MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀)
+                                      (Multiplicative.{0} ℤ_[2])) →
+                                  [inst_7 : Manuscript.RC.LambdaCoef.IsContChar (coefficientCharacter hS s hs hs0 ξ₀)] →
+                                    (q : Manuscript.RC.SelmerComplex.Places K S) →
+                                      (old :
+                                          (v : Manuscript.RC.SelmerComplex.Places K S) →
+                                            CloudB3RC53.SwitchInputs.SubFam
+                                              (Manuscript.RC.SelmerComplex.localCx.{0} (Manuscript.RC.Wiring.ResAt P)
+                                                (Manuscript.RC.SelmerComplex.GKS K S)
+                                                (fun w => Manuscript.RC.SelmerComplex.Gloc K ↑w)
+                                                (fun w => Manuscript.RC.SelmerComplex.locMap K S ↑w)
+                                                (Manuscript.RC.LambdaCoef.VP K S W P
+                                                  (coefficientCharacter hS s hs hs0 ξ₀))
+                                                v)) →
+                                        (E Eprim : Set.{0} (Manuscript.RC.SelmerComplex.Places K S)) →
+                                          RetainedInflation.NSWWildKernelIdentification →
+                                            RetainedInflation.NSWOddWildProOrder →
+                                              RetainedInflation.Nekovar414Fibre →
+                                                RetainedInflation.Nekovar721Structure →
+                                                  RetainedInflation.Nekovar723Fibre →
+                                                    q ∉ E →
+                                                      (∀ (v : Manuscript.RC.SelmerComplex.Places K S),
+                                                          Membership.mem.{0, 0} E v →
+                                                            Eq.{1} (old v)
+                                                              (CloudB3RC53.SwitchInputs.SubFam.top
+                                                                (Manuscript.RC.SelmerComplex.localCx.{0}
+                                                                  (Manuscript.RC.Wiring.ResAt P)
+                                                                  (Manuscript.RC.SelmerComplex.GKS K S)
+                                                                  (fun w => Manuscript.RC.SelmerComplex.Gloc K ↑w)
+                                                                  (fun w => Manuscript.RC.SelmerComplex.locMap K S ↑w)
+                                                                  (Manuscript.RC.LambdaCoef.VP K S W P
+                                                                    (coefficientCharacter hS s hs hs0 ξ₀))
+                                                                  v))) →
+                                                        (∀ (v : Manuscript.RC.SelmerComplex.Places K S),
+                                                            Membership.mem.{0, 0} Eprim v → PrimitivePlace v) →
+                                                          ((v : Manuscript.RC.SelmerComplex.Places K S) →
+                                                              Membership.mem.{0, 0} E v →
+                                                                v ∉ Eprim → OtherPlaceInputs hS W P s hs hs0 ξ₀ v) →
+                                                            (∀ (v : Manuscript.RC.SelmerComplex.Places K S),
+                                                                Ne.{1} v q →
+                                                                  v ∉ E → StrictLocal.DegreeTwoZero (old v).cx) →
+                                                              ContinuousReduction.RetainedReduction q old E
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ActualSwitchAssembly.actualRetainedReduction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@actual_reduced_switch_symmetry : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P] [inst_6 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]))
+  [inst_7 : Manuscript.RC.LambdaCoef.IsContChar (coefficientCharacter hS s hs hs0 ξ₀)]
+  (q : Manuscript.RC.SelmerComplex.Places K S)
+  (old :
+    (v : Manuscript.RC.SelmerComplex.Places K S) →
+      CloudB3RC53.SwitchInputs.SubFam
+        (Manuscript.RC.SelmerComplex.localCx.{0} (Manuscript.RC.Wiring.ResAt P) (Manuscript.RC.SelmerComplex.GKS K S)
+          (fun w => Manuscript.RC.SelmerComplex.Gloc K ↑w) (fun w => Manuscript.RC.SelmerComplex.locMap K S ↑w)
+          (Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)) v))
+  (E Eprim : Set.{0} (Manuscript.RC.SelmerComplex.Places K S))
+  (side : (v : Manuscript.RC.SelmerComplex.Places K S) → Set.{0} (Manuscript.RC.SelmerComplex.Gloc K ↑v)) {T : Type}
+  [inst_8 : AddCommGroup.{0} T] [inst_9 : Module.{0, 0} (Manuscript.RC.Wiring.ResAt P) T]
+  [inst_10 : TopologicalSpace.{0} T] [inst_11 : ContinuousAdd.{0} T]
+  [inst_12 : ContinuousConstSMul.{0, 0} (Manuscript.RC.Wiring.ResAt P) T]
+  [inst_13 : DistribMulAction.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) T]
+  [inst_14 : SMulCommClass.{0, 0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Manuscript.RC.Wiring.ResAt P) T]
+  [inst_15 : ContinuousSMul.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) T]
+  (β :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (Manuscript.RC.Wiring.ResAt P))
+      (Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀))
+      (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (Manuscript.RC.Wiring.ResAt P))
+        (Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)) T))
+  (hβ :
+    ∀ (g : Manuscript.RC.SelmerComplex.GKS K S)
+      (x y : Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)),
+      Eq.{1} ((β (HSMul.hSMul.{0, 0, 0} g x)) (HSMul.hSMul.{0, 0, 0} g y)) (HSMul.hSMul.{0, 0, 0} g ((β x) y)))
+  (hβc : Continuous.{0, 0} fun x => (β x.1) x.2),
+  RetainedInflation.NSWWildKernelIdentification →
+    RetainedInflation.NSWOddWildProOrder →
+      RetainedInflation.Nekovar414Fibre →
+        RetainedInflation.Nekovar721Structure →
+          RetainedInflation.Nekovar723Fibre →
+            q ∉ E →
+              (∀ (v : Manuscript.RC.SelmerComplex.Places K S),
+                  Membership.mem.{0, 0} E v →
+                    Eq.{1} (old v)
+                      (CloudB3RC53.SwitchInputs.SubFam.top
+                        (Manuscript.RC.SelmerComplex.localCx.{0} (Manuscript.RC.Wiring.ResAt P)
+                          (Manuscript.RC.SelmerComplex.GKS K S) (fun w => Manuscript.RC.SelmerComplex.Gloc K ↑w)
+                          (fun w => Manuscript.RC.SelmerComplex.locMap K S ↑w)
+                          (Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)) v))) →
+                (∀ (v : Manuscript.RC.SelmerComplex.Places K S), Membership.mem.{0, 0} Eprim v → PrimitivePlace v) →
+                  ∀
+                    (hother :
+                      (v : Manuscript.RC.SelmerComplex.Places K S) →
+                        Membership.mem.{0, 0} E v → v ∉ Eprim → OtherPlaceInputs hS W P s hs hs0 ξ₀ v),
+                    (∀ (v : Manuscript.RC.SelmerComplex.Places K S),
+                        Ne.{1} v q → v ∉ E → StrictLocal.DegreeTwoZero (old v).cx) →
+                      ∀ (I : ContinuousIsotropy q old side β hβ hβc) (c : Manuscript.RC.Wiring.ResAt P)
+                        (hc :
+                          ∀ (x y : Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)),
+                            Eq.{1} ((β x) y) (HSMul.hSMul.{0, 0, 0} c ((β y) x))),
+                        ∃ R,
+                          let X' := continuousSwitch q (eraseFull E old) side;
+                          have I' := ContinuousReduction.reducedIsotropy q old E side β hβ hβc R.new_retained I;
+                          let Q' := continuousPairData q (eraseFull E old) side β hβ hβc I';
+                          have Cd :=
+                            CloudB3RC53.Hsw.localPairCupOneGen (Manuscript.RC.SelmerComplex.GKS K S)
+                              (fun v => Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                              (fun v => Manuscript.RC.SelmerComplex.locMap K S ↑v) β hβ hβc c hc;
+                          CloudB3RC53.Hsw.StrictSymmTrunc (continuousRelaxedData q (eraseFull E old) side) X'.Ustr X'.fr
+                              Q' Cd ∧
+                            CloudB3RC53.Hsw.StrictSymm (continuousRelaxedData q (eraseFull E old) side) X'.Ustr X'.fr
+                              (CloudB3RC53.SwitchInputs.SelPairDataTrunc.toSelPairData.{0} Q') Cd.trunc
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ActualSwitchAssembly.actual_reduced_switch_symmetry' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@actual_reduced_switch_rc26 : ∀ {K : Type} [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S₀ S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} (hS : S₀ ⊆ S)
+  (W : WeierstrassCurve.{0} K) [WeierstrassCurve.IsElliptic.{0} W] [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S₀ W]
+  [Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S W] (P : Ideal.{0} Manuscript.RC.Uniform.Lambda)
+  [inst_5 : Ideal.IsPrime.{0} P] [inst_6 : Manuscript.RC.LambdaCoef.IsHeightOneOdd P]
+  (s : Manuscript.RC.CoefModules.KS K S) {h : K}
+  (hs : Eq.{1} (HPow.hPow.{0, 0, 0} s 2) ((algebraMap.{0, 0} K (Manuscript.RC.CoefModules.KS K S)) h))
+  (hs0 : Ne.{1} s 0) (ξ₀ : MonoidHom.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S₀) (Multiplicative.{0} ℤ_[2]))
+  [inst_7 : Manuscript.RC.LambdaCoef.IsContChar (coefficientCharacter hS s hs hs0 ξ₀)]
+  (q : Manuscript.RC.SelmerComplex.Places K S)
+  (old :
+    (v : Manuscript.RC.SelmerComplex.Places K S) →
+      CloudB3RC53.SwitchInputs.SubFam
+        (Manuscript.RC.SelmerComplex.localCx.{0} (Manuscript.RC.Wiring.ResAt P) (Manuscript.RC.SelmerComplex.GKS K S)
+          (fun w => Manuscript.RC.SelmerComplex.Gloc K ↑w) (fun w => Manuscript.RC.SelmerComplex.locMap K S ↑w)
+          (Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)) v))
+  (E Eprim : Set.{0} (Manuscript.RC.SelmerComplex.Places K S))
+  (side : (v : Manuscript.RC.SelmerComplex.Places K S) → Set.{0} (Manuscript.RC.SelmerComplex.Gloc K ↑v)) {T : Type}
+  [inst_8 : AddCommGroup.{0} T] [inst_9 : Module.{0, 0} (Manuscript.RC.Wiring.ResAt P) T]
+  [inst_10 : TopologicalSpace.{0} T] [inst_11 : ContinuousAdd.{0} T]
+  [inst_12 : ContinuousConstSMul.{0, 0} (Manuscript.RC.Wiring.ResAt P) T]
+  [inst_13 : DistribMulAction.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) T]
+  [inst_14 : SMulCommClass.{0, 0, 0} (Manuscript.RC.SelmerComplex.GKS K S) (Manuscript.RC.Wiring.ResAt P) T]
+  [inst_15 : ContinuousSMul.{0, 0} (Manuscript.RC.SelmerComplex.GKS K S) T]
+  (β :
+    LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (Manuscript.RC.Wiring.ResAt P))
+      (Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀))
+      (LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (Manuscript.RC.Wiring.ResAt P))
+        (Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)) T))
+  (hβ :
+    ∀ (g : Manuscript.RC.SelmerComplex.GKS K S)
+      (x y : Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)),
+      Eq.{1} ((β (HSMul.hSMul.{0, 0, 0} g x)) (HSMul.hSMul.{0, 0, 0} g y)) (HSMul.hSMul.{0, 0, 0} g ((β x) y)))
+  (hβc : Continuous.{0, 0} fun x => (β x.1) x.2),
+  RetainedInflation.NSWWildKernelIdentification →
+    RetainedInflation.NSWOddWildProOrder →
+      RetainedInflation.Nekovar414Fibre →
+        RetainedInflation.Nekovar721Structure →
+          RetainedInflation.Nekovar723Fibre →
+            q ∉ E →
+              (∀ (v : Manuscript.RC.SelmerComplex.Places K S),
+                  Membership.mem.{0, 0} E v →
+                    Eq.{1} (old v)
+                      (CloudB3RC53.SwitchInputs.SubFam.top
+                        (Manuscript.RC.SelmerComplex.localCx.{0} (Manuscript.RC.Wiring.ResAt P)
+                          (Manuscript.RC.SelmerComplex.GKS K S) (fun w => Manuscript.RC.SelmerComplex.Gloc K ↑w)
+                          (fun w => Manuscript.RC.SelmerComplex.locMap K S ↑w)
+                          (Manuscript.RC.LambdaCoef.VP K S W P (coefficientCharacter hS s hs hs0 ξ₀)) v))) →
+                (∀ (v : Manuscript.RC.SelmerComplex.Places K S), Membership.mem.{0, 0} Eprim v → PrimitivePlace v) →
+                  ∀
+                    (hother :
+                      (v : Manuscript.RC.SelmerComplex.Places K S) →
+                        Membership.mem.{0, 0} E v → v ∉ Eprim → OtherPlaceInputs hS W P s hs hs0 ξ₀ v),
+                    (∀ (v : Manuscript.RC.SelmerComplex.Places K S),
+                        Ne.{1} v q → v ∉ E → StrictLocal.DegreeTwoZero (old v).cx) →
+                      ∀ (I : ContinuousIsotropy q old side β hβ hβc) (c : Manuscript.RC.Wiring.ResAt P),
+                        ∃ R,
+                          let X' := continuousSwitch q (eraseFull E old) side;
+                          have I' := ContinuousReduction.reducedIsotropy q old E side β hβ hβc R.new_retained I;
+                          ∀ (v : Manuscript.RC.SelmerComplex.Places K S)
+                            (s₂ : ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} (X'.str v).cx 2))
+                            (t₁ : ↑(CloudB3RC53.PairedFunctional.GCx.X.{0} (X'.str v).cx 1)),
+                            Membership.mem.{0, 0}
+                              (LinearMap.range.{0, 0, 0, 0}
+                                (CloudB3RC53.PairedFunctional.GCx.d.{0}
+                                  (Manuscript.RC.SelmerComplex.localCx.{0} (Manuscript.RC.Wiring.ResAt P)
+                                    (Manuscript.RC.SelmerComplex.GKS K S)
+                                    (fun v => Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                                    (fun v => Manuscript.RC.SelmerComplex.locMap K S ↑v) T v)
+                                  1 2 rfl.{1}))
+                              (HSub.hSub.{0, 0, 0}
+                                (HSub.hSub.{0, 0, 0}
+                                  (((continuousForward q (eraseFull E old) side β hβ hβc I' v 2 1 2 rfl.{1}) s₂)
+                                    ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+                                        (continuousLocalInclusion q (eraseFull E old) side v) 1 1 rfl.{1})
+                                      t₁))
+                                  (HSMul.hSMul.{0, 0, 0} c
+                                    (((continuousForward q (eraseFull E old) side β hβ hβc I' v 1 2 2 rfl.{1}) t₁)
+                                      ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+                                          (continuousLocalInclusion q (eraseFull E old) side v) 2 2 rfl.{1})
+                                        s₂))))
+                                (((Manuscript.RC.SelmerComplex.localCupOne21.{0} (Manuscript.RC.Wiring.ResAt P)
+                                      (Manuscript.RC.SelmerComplex.GKS K S)
+                                      (fun v => Manuscript.RC.SelmerComplex.Gloc K ↑v)
+                                      (fun v => Manuscript.RC.SelmerComplex.locMap K S ↑v) β hβc v)
+                                    ((CloudB3RC53.PairedFunctional.GHom.f.{0} (X'.rel v).incl 2 2 rfl.{1})
+                                      ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+                                          (continuousLocalInclusion q (eraseFull E old) side v) 2 2 rfl.{1})
+                                        s₂)))
+                                  ((CloudB3RC53.PairedFunctional.GHom.f.{0} (X'.rel v).incl 1 1 rfl.{1})
+                                    ((CloudB3RC53.PairedFunctional.GHom.f.{0}
+                                        (continuousLocalInclusion q (eraseFull E old) side v) 1 1 rfl.{1})
+                                      t₁))))
+'ZInQ.Contrib.RC53Assist.StrictSymmFull.ActualSwitchAssembly.actual_reduced_switch_rc26' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]

@@ -1,6 +1,9 @@
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Pin
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate19Theta
-import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate18E2
+import ZInQKernel.Contrib.OneProof.RC.Wiring.ChainCond
+import ZInQKernel.Contrib.CloudB3E2Norm.H20PresClassMatch
+import ZInQKernel.Contrib.CloudB3E1RingClass.GenuineMovingData
+import ZInQKernel.Contrib.OneProof.RC.CCLUnitIndex.Units
 
 /-!
 # Lane E2's classes of the actual Heegner points as a class provider on the staged presentation
@@ -32,8 +35,8 @@ are those of the presentation by definition (`alphaStageU_eq`, by `rfl`), and `i
   (`E2ChainInputsS.hθ`, `E2ChainInputsS.hsplit`);
 * `E2ChainInputsS.hα` (PROVED), `E2ChainInputsS.actualPt`, `E2ChainInputsS.gE2`,
   `E2ChainInputsS.g` (definitions), **`E2ChainInputsS.hG`**, `E2ChainInputsS.urContU`,
-  `E2ChainInputsS.hloc` (PROVED) and **`e2ProviderS P t I : StageClassesAtS P (t + 1)`**, as in
-  `CommonCoordinate18E2.lean`, with `staged_stageFrobInput` for the junction and `P.places`,
+  `E2ChainInputsS.hloc` (PROVED) and **`e2ProviderS P t I : StageClassesAtS P (t + 1)`**,
+  with `staged_stageFrobInput` for the junction and `P.places`,
   `P.movingConj` for the places.
 
 Kinds: definitions, data, PROVED.
@@ -52,7 +55,8 @@ open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Contrib.CloudB3RC53.UnramifiedComplex
 open ZInQ.Manuscript.RC.CoefModules ZInQ.Manuscript.RC.LambdaCoef
 open ZInQ.Manuscript.RC.HeegnerAlgebra (Acoef)
 open ZInQ.Manuscript.RC.Uniform (Lambda)
-open ZInQ.Manuscript.RC.PrintsArith (Qbar HeegnerPointData CCLThm2_15Applied)
+open ZInQ.Manuscript.RC.PrintsArith (Qbar HeegnerPointData CCLThm2_15AppliedWithUnits
+  cclUnitFactor cclUnitFactor_eq_one_of_discr_lt)
 open ZInQ.Contrib.CloudB3E2.NormCochain (CSTParam FullAnchor ThetaOfDelta heegnerActual gx
   gx_step_heegner_at exists_ux stageIsoA eK alphaStage alphaShap hα_of_theta groupRingTop
   PsiTrivialAt2N univChar thetaOfDelta_of quadOfDelta_family piOfDelta_of_moving inflMap_trans)
@@ -220,9 +224,9 @@ structure E2ChainInputsS (P : StagedPresentation C D Fam x G.toFamily) (t : ℕ)
   emb : Qbar →ₐ[ℚ] ℂ
   /-- the identification `ℚ̄ ≃ K̄` (definition; tex 2914–2936) -/
   κ : Qbar ≃ₐ[ℚ] AlgebraicClosure C.K
-  /-- PRINT: Cai–Chen–Liu, Trans. AMS 370 (2018), Theorem 2.15, through the parametrization,
-  with lane E2's full anchor (tex 2914–2936) -/
-  print : CCLThm2_15Applied (Ecurve ℓ) (FullAnchor (Ecurve ℓ) C.K cp emb κ)
+  /-- The weighted application of Cai–Chen–Liu, Theorem 2.15, through the parametrization
+  with the full anchor (tex 2914–2936). -/
+  print : CCLThm2_15AppliedWithUnits (Ecurve ℓ) C.K (FullAnchor (Ecurve ℓ) C.K cp emb κ)
   /-- `k < 0` (definition: the final companion; from the ELLIOT field `RCSteps.companion`,
   tex 2595–2603) -/
   hk0 : D.kfin < 0
@@ -232,6 +236,8 @@ structure E2ChainInputsS (P : StagedPresentation C D Fam x G.toFamily) (t : ℕ)
   /-- `k ≡ 1 (mod 4)` (definition: the final companion; from `RCSteps.companion`,
   tex 2595–2603) -/
   hk4 : D.kfin % 4 = 1
+  /-- The companion exclusion from `RCSteps.companion` (tex 2595–2603, 2839–2840). -/
+  hk3 : D.kfin ≠ -3
   /-- the base conductor at the stage (definition; tex 2914–2921, 2847–2855) -/
   d : ℕ
   /-- it is positive (definition) -/
@@ -266,6 +272,7 @@ variable {P : StagedPresentation C D Fam x G.toFamily} {t : ℕ} (I : E2ChainInp
 /-- The base conductor is nonzero (PROVED). -/
 instance neZero_d : NeZero I.d := ⟨I.hd.ne'⟩
 
+omit [(Ecurve ℓ).IsElliptic] in
 omit [(Ecurve ℓ).IsElliptic] in
 include I in
 /-- **The step primes split: `jacobiSym (disc K) q_i = 1`** (PROVED from `P.split` and the
@@ -379,6 +386,22 @@ theorem hθ : ThetaOfDelta (Δ := (Acoef (t + 1))ˣ) (P.hS (t + 1)) (Set.Subset.
 
 /-! ### The anchored datum and the classes -/
 
+include I in
+/-- In the manuscript's application the old conductor is the print's `c` and `m = 1`.
+The companion conditions make the index of integral units one (tex 2920–2922). -/
+theorem unitFactor_eq_one : cclUnitFactor C.K 1 = 1 := by
+  apply cclUnitFactor_eq_one_of_discr_lt (finrank_of_sqrt P.hr P.hgen I.hk0)
+  rw [discr_of_sqrt P.hr P.hgen I.hk0 I.hksq I.hk4]
+  have h0 := I.hk0
+  have h3 := I.hk3
+  have h4 := I.hk4
+  omega
+
+/-- Equation (4.1) on the anchored datum, after discharging the unit factor. -/
+theorem normRelations :
+    ∃ H : HeegnerPointData (Ecurve ℓ), H.NormRelations ∧ FullAnchor (Ecurve ℓ) C.K I.cp I.emb I.κ H :=
+  I.print.exists_normRelations I.unitFactor_eq_one
+
 /-- **The anchored datum of lane E2's step identity at the stage** (tex 2914–2936).
 Kind: definition. -/
 def datum : HeegnerPointData (Ecurve ℓ) :=
@@ -388,7 +411,7 @@ def datum : HeegnerPointData (Ecurve ℓ) :=
     (Set.Subset.refl (P.S (t + 1))) (t + 1) (P.sh (t + 1)) (P.hs (t + 1)) (P.hs0 (t + 1))
     (HasFullTwoTorsion.full (t + 1)) (P.piU (t + 1)) (MonoidHom.id _) P.Pk
     (id_units_injective (t + 1)) (P.psiTrivialU (t + 1)) (StageRing (t + 1)) (P.place (t + 1))
-    I.print)
+    I.normRelations)
 
 /-- The full anchor of the datum (tex 2914–2936). Kind: PROVED. -/
 theorem anchor : FullAnchor (Ecurve ℓ) C.K I.cp I.emb I.κ I.datum := by
@@ -397,7 +420,7 @@ theorem anchor : FullAnchor (Ecurve ℓ) C.K I.cp I.emb I.κ I.datum := by
     (P.hS (t + 1)) (P.hS (t + 1)) (Set.Subset.refl (P.S (t + 1))) (t + 1) (P.sh (t + 1))
     (P.hs (t + 1)) (P.hs0 (t + 1)) (HasFullTwoTorsion.full (t + 1)) (P.piU (t + 1))
     (MonoidHom.id _) P.Pk (id_units_injective (t + 1)) (P.psiTrivialU (t + 1))
-    (StageRing (t + 1)) (P.place (t + 1)) I.print)).fst
+    (StageRing (t + 1)) (P.place (t + 1)) I.normRelations)).fst
   exact h
 
 /-- The conductors are prime to `N D_K` for the datum (PROVED). -/
@@ -573,7 +596,7 @@ theorem hG : ∀ i < P.ps.length,
     (P.hS (t + 1)) (Set.Subset.refl (P.S (t + 1))) (t + 1) (P.sh (t + 1)) (P.hs (t + 1))
     (P.hs0 (t + 1)) (HasFullTwoTorsion.full (t + 1)) (P.piU (t + 1)) (MonoidHom.id _) P.Pk
     (id_units_injective (t + 1)) (P.psiTrivialU (t + 1)) (StageRing (t + 1)) (P.place (t + 1))
-    I.print)
+    I.normRelations)
   obtain ⟨bG, hbG⟩ := hall (I.hadmD hi) (I.hsplitD hi) (Tp := chainT P.pidx i) (p := P.pidx i)
     (I.classSupport_subset i) (I.classSupport_subset (i + 1)) (I.hSd i) (I.hSd (i + 1))
     (I.hm i) (I.hm (i + 1)) (I.hgood' i) (I.hgood' (i + 1)) I.d I.hθ (dvd_chainCond I.d P.ps i)

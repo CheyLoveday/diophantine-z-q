@@ -1,0 +1,8 @@
+import ZInQKernel.Contrib.TauCeti.NumberTheory.ClassFieldTheory.Local.CohomologicalDimension.AbsoluteGaloisGroup
+import ZInQKernel.Contrib.TauCeti.NumberTheory.ClassFieldTheory.Local.Duality.FiniteModule
+
+#check @TauCeti.ClassFieldTheory.cohomologicalDimensionAt_absoluteGaloisGroup_eq_two
+#print axioms TauCeti.ClassFieldTheory.cohomologicalDimensionAt_absoluteGaloisGroup_eq_two
+#print axioms TauCeti.ClassFieldTheory.dualityMap_bijective_of_smul_kummerCoeff_eq_self
+#print axioms TauCeti.cohomologicalDimensionAt_le_iff
+#print axioms TauCeti.ContCohomology.subsingleton_continuousCohomology_ofDiscreteModule_iff
