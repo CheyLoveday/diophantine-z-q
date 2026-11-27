@@ -23,5 +23,5 @@ theorems; none is proved here.
 
 - [Pazuki's comparison of the theta height with the Faltings height](pazuki-bound.md)
 - [The lower bound for the Faltings height](bost-lower-bound.md)
-- [The isogeny theorem of Gaudron and Rémond](gaudron-remond-isogeny-bound.md)
 - [Javanpeykar's bound for curves with a Belyi map](javanpeykar-bound.md)
+- [The isogeny theorem of Gaudron and Rémond](gaudron-remond-isogeny-bound.md)

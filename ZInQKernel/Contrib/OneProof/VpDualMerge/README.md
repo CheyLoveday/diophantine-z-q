@@ -6,8 +6,12 @@ Glue for a later fold that replaces the added-bundle rows `scholzeH1AbVar`
 
 Both current rows are read on the live route only through one statement about the dual Tate module,
 `DeRhamScholze.HTMerge.VpDualDeRhamAbVar`: `V_p(A)^∨` is de Rham, its Hodge jumps lie in `[0, 1]`,
-and `dim_{ℚ_p} Fil¹ D_dR = [F:ℚ_p] · g`. Under the owner's ruling (each row is one printed theorem,
-with the glue derived in Lean), this statement is **not a row**. It is a derived `Prop`: the
+and `dim_{ℚ_p} Fil¹ D_dR = [F:ℚ_p] · g`. This statement is **not a row**: each row is one printed
+theorem, with the glue derived in Lean. (An earlier version cited an "owner's ruling" for this,
+which no record contains. The lead ruled it on 2026-11-26: the two prints are kept rather than a
+single `vpDual` row (#206's 21-field form), since each print is a literature citation with a path
+to LEAF and a composite field never is one, following the maintainer's direction to reduce the
+argument to known literature citations.) It is a derived `Prop`: the
 single-print rows are to imply it in Lean, and this directory carries everything above it, namely
 the conversions to the three `HTMerge` outputs and a copy of the live chain whose added bundle has
 the one field `vpDual` in place of the pair. The current pair implies the statement

@@ -36,29 +36,23 @@
    "docstring":
    "bost-gr9 (fold-b112), over the printed semistability: the weaker form of Gaudron-Remond,\nTheoreme des periodes et degres minimaux d'isogenies, Comment. Math. Helv. 89 (2014), Cor. 8.4,\np. 400 (GR1; attribution: Bost), h(A) >= -(g/2) log(2 pi), with the normalization\nh_F(A) = h(A) - (g/2) log pi on p. 352 (two-lens statement check 2026-11-24). Duke 163 p. 2098:\ncitation only (Gaudron-Remond, Polarisations et isogenies, Duke Math. J. 163 (2014), section 9,\nproof of Lemme 9.1, citing GR1 Cor. 8.4; cited by the manuscript at diophantine_zq.tex L894-895,\nstep E4): h_F(A) >= -(3/2) dim A for every abelian variety over a number field, Faltings'\noriginal normalization, over ZInQ.SemistabAssembly.IsAnStableHeightSS (semistable reduction as\nprinted, as gaudronRemondThm14AnSS). Replaces bostLowerBoundAnSS (strictly stronger:\n-(g/2) log(2 pi^2), BostGR9.sec9_bound_lt_bost; it implies the leaf,\nBostGR9.gaudronRemondSec9LowerAnSS_of_bostLowerBoundAnSS); consumed through\nBostGR9.gaudronRemondSec9LowerAn_of_ss, BostGR9.sec9Printed_of_an,\nBostGR9.grBostBound_of_sec9Printed and BostGR9.r21_of_grBost' (R21). ",
    "bundle": "OpenResearchLeaves79"},
-  {"type": "ZInQ.SemistabAssembly.GaudronRemondThm14AnSS",
-   "statement": "ZInQ.SemistabAssembly.GaudronRemondThm14AnSS",
-   "field": "gaudronRemondThm14AnSS",
-   "docstring":
-   "Gaudron-Remond, Duke Math. J. 163 (2014) Thm 1.4 (p. 2060; kappa p. 2058; read by the audit), over the stable height with the metric on A_tau(C)^an (r3-residual) and semistable reduction as printed (identity component of the special fibre semi-abelian over k(p) and over k(p)bar; semistab-assembly). GaudronRemondThm14An verbatim with IsSemistableRes replaced by IsSemistablePrinted; it implies GaudronRemondThm14An (gaudronRemondThm14An_of_ss). ",
-   "bundle": "OpenResearchLeaves79"},
   {"type": "JavanpeykarAnRetype.JavanpeykarThm111An",
    "statement": "JavanpeykarAnRetype.JavanpeykarThm111An",
    "field": "javanpeykarThm111An",
    "docstring":
    "jp-an-retype: Javanpeykar, Algebra Number Theory 8 (2014), Thm 1.1.1 (h_Fal(X) <= 13*10^6 * g * deg_B(X)^5 for a smooth projective connected curve X/Qbar of genus g >= 1) composed with Section 2.3 (h_Fal(X) = stable Faltings height of Jac X), as the manuscript cites it at diophantine_zq.tex L870 (applied to J = J_1(N)). JavanpeykarDirect.JavanpeykarThm111 verbatim with IsStableHeightBar replaced by IsStableHeightBarAn: the stable height of a model over a number field L of the Jacobian W, read as IsAnStableHeightSS (archimedean metric (i/2)^g int eta~ wedge eta~-bar on the complex manifold A_tau(C)^an, densities in every holomorphic chart, r3-residual; semistability: semi-abelian reduction of the Jacobian's Neron model, IsSemistablePrinted, semistab-assembly; not the print's curve-model semistability, Def. 2.2.1). Replaces javanpeykarThm111 (JavanpeykarAnRetype.javanpeykarThm111_of_an, with mumfordTorsionAlgClosed and uniformizationLeafAll_proof for T35); the converse javanpeykarThm111An_of_thm111 holds given T35, so the leaf is not stronger than the row it replaces. ",
    "bundle": "OpenResearchLeaves79"},
+  {"type": "Y3RouteA.Y3FullThreeRepZ30",
+   "statement": "Y3RouteA.Y3FullThreeRepZ30",
+   "field": "y3FullThreeRepZ30",
+   "docstring":
+   "y3-route-a, the manuscript's own conclusion (diophantine_zq.tex L473-477; one object: the integral model X35/G5 of Y3 with its universal family): the moduli problem of abelian surfaces with an action of the maximal order O of B = (2,-3|Q) and full O-linear level-3 structure (QMAbSchemeP: at every geometric point eta : O/3O = A_s[3], i.e. a section of Isom_O(O/3O, A[3])) is represented on locally noetherian Z[1/30]-schemes by a proper smooth curve over Z[1/30] with a universal QMAbSchemeP; its generic fibre is Y3 (proved: Y3RouteA.y3RepresentableQ_of_z30 gives Y3Audit.Y3RepresentableQ). Manuscript derivation: Buzzard, Duke Math. J. 87 (1997) Thm 2.1 and Cor. 2.3 at V1(5) over Z[1/30] (L443-446); full five-marking (L447-449); the finite etale sheaf Isom_O(O/3O, A[3]), nonempty on geometric fibres since the Tate lattice is free of rank one over O_3 (L449-462); free action of G5 = (O/5O)^x by torsion-freeness of 1 + 3M4(Z3) (L465-472); quotient X35/G5 and descent of the universal abelian scheme with polarization, O-action and three-marking (L472-477). Weaker than the manuscript: proper for projective, locally noetherian universe-0 bases, no polarization (equivalent through the canonical principal polarization, relative Lemma P: ON THE SPOT, not proved in the tree). Implies Y3Fix.Y3FineModuliAbP (Y3RouteA.y3FineModuliAbP_of_z30). ",
+   "bundle": "OpenResearchLeaves79"},
   {"type": "CarayolRefold.CarayolThmAFrob",
    "statement": "CarayolRefold.CarayolThmAFrob",
    "field": "carayolThmAFrob",
    "docstring":
    "carirr-refold, consequence of Darmon-Diamond-Taylor 1997 Thm 3.1 (proved: CarayolRefold.frob_of_DDT31 from carirr-odd's transcription CarayolDDT.CarayolDDT31), with the Frobenius clause in the normalization the manuscript reads off Carayol 1986 Theoreme (A) (diophantine_zq.tex L9784-9796): for a printed newform f (Tau Ceti Newform N 2, psi = f.chi) with number field K_f and a place lambda | l, a continuous rho : G_Q -> GL_2(K_{f,lambda}) that is irreducible (Ribet 1977), unramified at p not dividing N l with arithmetic Frobenius of trace a_p and determinant p psi(p) (polynomial X^2 - a_p X + p psi(p)), and with codim V^{I_p} + integral_0^infty codim V^{G_p^u} du = v_p(N) at every p != l (Carayol Thm A + conductor of local Langlands + Casselman 1973 Thm 1; packaged in DDT 3.1). Oddness is proved from the Frobenius determinant (CarayolRefold.odd_of_frobDet, one Chebotarev element). Carayol's own form (sigma_lambda(pi)|G_{Q_p} <-> pi_p under local Langlands) has no Lean form (no pi_{f,p}, Weil-Deligne representations or local Langlands in Lean). Replaces carayolThmAIrr. ",
-   "bundle": "OpenResearchLeaves79"},
-  {"type": "R16Thm1b.ShimuraThm1Af",
-   "statement": "R16Thm1b.ShimuraThm1Af",
-   "field": "shimuraThm1Af",
-   "docstring":
-   "r16-thm1b: Shimura 1973 Thm 1 in consequence form (GLUE, pending review), one row. For a newform f in S_2(Gamma_1(N)) with nebentypus chi, the kernel's model X of X_1(N), Jacobian J, Hecke operators T_p = xi_p, <d>: K_f finite over Q, and there is a triple (A, nu, theta) with Shimura's clauses (i) nu surjective with connected kernel, (ii) nu o xi_n = theta(a_n) o nu at n = p and n = p^2 (xi_{p^2} = T_p^2 - p<p>), (iii) dim A = [K_f : Q], and IsAfQuotient (ker nu = I_f J: nu kills I_f J and is universal for that), unique up to a nu-compatible isomorphism over Q among triples with (i)-(iii). Printed (AI page read): C = Ker(nu) (p. 525), C from the ideal annihilating f intersected with End(J) (p. 526), uniqueness up to isomorphisms over Q (p. 526), dimension and tangent space from m = 1 via q-expansions (p. 527). ON THE SPOT steps: C = I_f J (the ideal is ker rho, saturation, Hecke relations in both directions); (ii) for all n from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible isomorphisms. Euler clause and (iv) not in this row. ",
    "bundle": "OpenResearchLeaves79"},
   {"type": "HDec.CMBranch.CMHeight62",
    "statement": "HDec.CMBranch.CMHeight62",
@@ -84,59 +78,23 @@
    "docstring":
    "Grothendieck's semistable reduction theorem as stated in Silverberg-Zarhin, Ann. Inst. Fourier 45 (1995), Theorem 3.4, pp. 405-406 (proof: SGA 7 I, Exp. IX, Th. 3.6, p. 351): for an abelian variety A over a field K with a discrete valuation ring O, one finite Galois extension E of K inside an algebraic closure such that A_E has semistable reduction (HasSemistableReductionSZ, which also asserts a Neron model) at every prolongation of O to E. Replaces silverbergZarhinThm35 (Raynaud's criterion), which SZRaynaud.silverbergZarhinThm35_of_sz34 proves from it with the proved Theorem 3.3. ",
    "bundle": "OpenResearchLeaves79"},
-  {"type": "HDec.PkgI4.PanBergerRefereed.ColmezThm01",
-   "statement": "HDec.PkgI4.PanBergerRefereed.ColmezThm01",
-   "field": "colmezThm01",
+  {"type": "HDec.PkgI4.PanDict.BergerSurveyF",
+   "statement": "HDec.PkgI4.PanDict.BergerSurveyF",
+   "field": "bergerSurveyF",
    "docstring":
-   "Colmez, Astérisque 319 (2008), Théorème 0.1, p. 118, in its printed form: every de Rham representation of G_{Q_p} is potentially semistable, with the definitions of §0.2, p. 118 (semi-stable = B_st^+[1/t] ⊗ V ≅ (B_st^+[1/t])^d as G_L-module, Fontaine's rings). Replaces bergerSurveyF, whose source (Brinon-Conrad Thm 9.3.5) is unrefereed; bergerSurveyF_of_colmez. ",
+   "Berger's p-adic monodromy theorem, Invent. Math. 148 (2002), 219-284, as cited by the manuscript (bibitem berger2002; Théorème 0.7 = Corollaire 5.22 in the author copy, Théorème 0.6 = Théorème 5.19 of arXiv:math/0102179v3): every de Rham representation of G_{Q_p} is potentially semistable, here in Fontaine's dimension form over BstFOf (Astérisque 223 (1994), Exp. III, 1.8.5 and 5.6.1; Exp. II, 4.2.4-4.2.5). Colmez, Astérisque 319 (2008), Théorème 0.1, prints the basis form, which implies this field (PanBergerRefereed.bergerSurveyF_of_colmez); the converse needs the G_K-regularity of B_st, which is not proved, so ColmezThm01 is not a replacement at the same count. ",
    "bundle": "OpenResearchLeaves79"},
   {"type": "HDec.PkgI4.PanBergerRefereed.PanThm104F",
    "statement": "HDec.PkgI4.PanBergerRefereed.PanThm104F",
    "field": "panThm104F",
    "docstring":
-   "Pan, J. Amer. Math. Soc. 35 (2022), Theorem 1.0.4 with Conjecture 1.0.1 (arXiv:1901.07166v2 pp. 5 and 2), p >= 5, with potential semistability in Fontaine's sense (Astérisque 223 (1994), Exp. III, 5.6.1, in the equivalent form of 1.8.5). Same statement as the replaced panPrintedF; only the source of the definitions changes from Brinon-Conrad's notes to Fontaine's exposés; panPrintedF_of_thm104F. ",
+   "Pan, The Fontaine-Mazur conjecture in the residually reducible case, Theorem 1.0.4 with Conjecture 1.0.1, read in arXiv:1901.07166v2 (pp. 5 and 2), the version the manuscript cites; published in J. Amer. Math. Soc. 35 (2022), whose numbering is unchecked. Here p >= 5, with potential semistability in Fontaine's sense (Astérisque 223 (1994), Exp. III, 5.6.1, in the equivalent form of 1.8.5). Same statement as the replaced panPrintedF, token for token; only the source of the definitions changes from Brinon-Conrad's notes to Fontaine's exposés; panPrintedF_of_thm104F. ",
    "bundle": "OpenResearchLeaves79"},
-  {"type": "Y3Buzzard.BuzzardThm21Cor23V15'",
-   "statement": "Y3Buzzard.BuzzardThm21Cor23V15'",
-   "field": "buzzardThm21Cor23V15",
+  {"type": "ZInQ.GR14Printed.GaudronRemondThm14Printed",
+   "statement": "ZInQ.GR14Printed.GaudronRemondThm14Printed",
+   "field": "gaudronRemondThm14Printed",
    "docstring":
-   "y3-printed, consequence of Buzzard, Duke Math. J. 87 (1997) Thm 2.1 and Cor. 2.3 at U = V1(5), where M_U d = 30 (author's preprint: Thm 2.1 p. 5, Cor. 2.3 p. 7): a proper smooth curve X over Z[1/30] with a closed immersion into some P^N over Z[1/30], and an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End; injectivity of iota is automatic over a nonempty base, README B-1) over X with a V1(5)-structure (a section Q with 5Q = 0 and iota(3 + 2k)Q = 0, nonzero at every geometric point), universal for such data over every Z[1/30]-scheme S: exactly one g : S -> X over Z[1/30] admits an O-compatible cartesian square carrying Q' to Q, and that square is unique. Unprinted steps: Buzzard's V1(5) for a choice of his fixed kappa with kappa(3 + 2k) = diag(1, 0) mod 5 (README B-5); uniqueness of the square is the absence of automorphisms in the proof of Cor. 2.3 (Lemma 2.2); projective over the affine base gives the closed immersion; no polarization in the data. One of the seven rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_rem84); prints quoted and unprinted steps written out in ZInQKernel/Contrib/OneProof/Y3FullThreeRepZ30/README.md. ",
-   "bundle": "OpenResearchLeaves79"},
-  {"type": "Y3Buzzard.MilneProp207 3",
-   "statement": "Y3Buzzard.MilneProp207 3",
-   "field": "milneProp207At3",
-   "docstring":
-   "y3-printed, Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry (Springer 1986), Prop. 20.7 at g = 2, n = 3 (p. 44 of the author's retyped edition): for an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End; injectivity of iota is automatic over a nonempty base, README B-1) over a Z[1/30]-scheme S, iota(3), which is multiplication by 3 (proved: iotaHom_natCast), is finite and etale. On a Z[1/30]-scheme no residue characteristic divides 3. One of the seven rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_rem84); prints quoted and unprinted steps written out in ZInQKernel/Contrib/OneProof/Y3FullThreeRepZ30/README.md. ",
-   "bundle": "OpenResearchLeaves79"},
-  {"type": "Y3Buzzard.MilneRem84",
-   "statement": "Y3Buzzard.MilneRem84",
-   "field": "milneTorsionCount",
-   "docstring":
-   "y3-printed, Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry (Springer 1986), Rem. 8.4 at g = 2 (p. 14 of the author's retyped edition), with Thm 8.2 (p. 13) and section 20 (p. 42): for an FEC (an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End) over a Z[1/30]-scheme S, a geometric point s : Spec k -> S and every n with (n : k) != 0, exactly n^4 points of A_s(k) are killed by n. Gives GeomCard3 (n = 3; proved: Y3Buzzard.geomCard3_of_rem84) and, with MilneProp207 5, BuzzardFrameRepTorsor 5 (proved: Y3Buzzard.buzzardFrameRepTorsor5_of_milne with Y3Buzzard.geomCard5_of_rem84), so Buzzard's representability sentence, printed without proof, is not an input. One of the seven rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_rem84). ",
-   "bundle": "OpenResearchLeaves79"},
-  {"type": "Y3Buzzard.SerreRigidityLevel3'",
-   "statement": "Y3Buzzard.SerreRigidityLevel3'",
-   "field": "serreRigidityLevel3",
-   "docstring":
-   "y3-printed, consequence of Milne, Abelian varieties (1986) Cor. 2.2 (p. 3) and Prop. 17.5(b) (p. 37 of the author's retyped edition) with Buzzard 1997 section 1 (the canonical principal polarization, preprint p. 3): let theta be an automorphism over S of an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End; injectivity of iota is automatic over a nonempty base, README B-1) commuting with iota(O), s : Spec k -> S a geometric point with char k not 2 or 3, and P in A_s(k) such that a |-> iota(a)P is a bijection O/3O -> A_s[3]; if theta fixes P, it fixes every point of A_s(k). Unprinted steps: theta fixes 0 since iota(0) = 0, so it is a homomorphism on the fibre; theta preserves Buzzard's polarization by its uniqueness (README B-2, B-3). One of the seven rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_rem84); prints quoted and unprinted steps written out in ZInQKernel/Contrib/OneProof/Y3FullThreeRepZ30/README.md. ",
-   "bundle": "OpenResearchLeaves79"},
-  {"type": "Y3Buzzard.ZeroPreservingIsHomLN",
-   "statement": "Y3Buzzard.ZeroPreservingIsHomLN",
-   "field": "milneZeroPreservingHomLN",
-   "docstring":
-   "y3-printed, Milne, Abelian varieties (1986) Cor. 20.2(a) (p. 43 of the author's retyped edition), restricted to locally noetherian bases: a morphism over S of FECs (abelian schemes of relative dimension 2 with a ring homomorphism from O) carrying the unit section to the unit section is a homomorphism. The printed proof applies Prop. 20.1, stated for a connected base; Lan, Harvard thesis (2008) Cor. 1.3.1.6 states it over any base, citing GIT Cor. 6.4. One of the seven rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_rem84); prints quoted and unprinted steps written out in ZInQKernel/Contrib/OneProof/Y3FullThreeRepZ30/README.md. ",
-   "bundle": "OpenResearchLeaves79"},
-  {"type": "Y3Buzzard.ProjectiveFEC",
-   "statement": "Y3Buzzard.ProjectiveFEC",
-   "field": "projectiveFalseEllipticCurve",
-   "docstring":
-   "y3-printed, consequence of Buzzard 1997 section 1 (the canonical principal polarization), Lan, Harvard thesis (2008) Thm 1.3.2.6, Lemma 1.3.2.16, Cor. 1.3.1.5, Prop. 1.3.2.18 and Def. 1.3.2.20, and the Stacks Project, tags 01VT, 0C4K and 0B45: an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End; injectivity of iota is automatic over a nonempty base, README B-1) over a Z[1/30]-scheme X that has a closed immersion into some P^N over Z[1/30] has a closed immersion into some P^N' (not asked to lie over Z[1/30]). Unprinted step: Buzzard's polarization, read in Milne's sense, is a polarization in Lan's sense (README B-6). One of the seven rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_rem84); prints quoted and unprinted steps written out in ZInQKernel/Contrib/OneProof/Y3FullThreeRepZ30/README.md. ",
-   "bundle": "OpenResearchLeaves79"},
-  {"type": "Y3Buzzard.MilneProp207 5",
-   "statement": "Y3Buzzard.MilneProp207 5",
-   "field": "milneProp207At5",
-   "docstring":
-   "y3-printed, Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry (Springer 1986), Prop. 20.7 at g = 2, n = 5 (p. 44 of the author's retyped edition): for an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End; injectivity of iota is automatic over a nonempty base, README B-1) over a Z[1/30]-scheme S, iota(5), which is multiplication by 5 (proved: iotaHom_natCast), is finite and etale. On a Z[1/30]-scheme no residue characteristic divides 5. One of the seven rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_rem84); prints quoted and unprinted steps written out in ZInQKernel/Contrib/OneProof/Y3FullThreeRepZ30/README.md. ",
+   "Gaudron–Rémond, Duke Math. J. 163 (2014), Thm 1.4 (p. 2060), with the printed hypotheses: `A` of dimension `g ≥ 1` (p. 2058), with κ(A) as on p. 2058, and isogenies \"surjectif de noyau fini\", the degree being the order of the kernel (§2, p. 2062; locator UNVERIFIED: no reading covers it). Two departures from the print stay, as in the replaced field (GR14Printed/README.md): the specialization `K′ = k` (one number field `K` carries `A`, `B` and the isogenies), and the split of the printed couple into two separate isogenies `A → B` and `B → A`, each of degree at most κ, which is weaker than the couple. The height is the field's `IsAnStableHeightSS`. The form implies the replaced field (`ZInQ.GR14Printed.gaudronRemondThm14AnSS_of_printed`, with the proved `g = 0` case and `isIsogenyPrinted_iff`), and the converse holds (`gaudronRemondThm14Printed_iff`). ",
    "bundle": "OpenResearchLeaves79"},
   {"type": "DeRhamScholze.TatePrints.Colmez1992DeRhamAbVar",
    "statement": "DeRhamScholze.TatePrints.Colmez1992DeRhamAbVar",
@@ -170,4 +128,4 @@
    "docstring":
    "Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C,\nEvidence 16.5.5, p. 453, rank-one line. The Hasse–Weil L-function is represented\nby its analytic continuation from the half-plane of absolute convergence.\nKind: consequence, GLUE. Silverman reports this line; the records derive it from\nMiller, LMS J. Comput. Math. 14 (2011), Thm 4.4 (`silvermanRankOne_of_miller`). ",
    "bundle": "frozenTarget"}],
- "count": 28}
+ "count": 21}

@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.DS965Reroute.Chain2
+import ZInQKernel.Contrib.OneProof.AfShimuraProof
 
 /-! # The live chain without `dsThm965AtPrimes` (part 3 of 5; ds965-reroute, generated)
 
@@ -312,8 +313,9 @@ structure OpenResearchLeaves60_y3x6NOSDS : Prop where
     manuscript cites nothing. With silverbergZarhinThm35 it gives D2 (d2a6-reroute:
     Contrib/OneProof/D2WildNF.lean) and replaces sga7_IX_3_5_ForwardGeom_Def34. -/
   elliotWildInertiaTrivial : _root_.SZRaynaud.ElliotWildInertiaTrivial
-  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.6 = Theoreme
-    5.19 of arXiv:math/0102179v3; Theoreme 0.7 there is Sen's theorem) in the printed form of
+  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
+    5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
+    of arXiv:math/0102179v3) in the printed form of
     Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR
     of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de
     Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. -/
@@ -420,19 +422,6 @@ structure OpenResearchLeaves60_y3x6NOSDS : Prop where
     (defined in Shimura 1971, which the 1973 print cites) and (B4) Shimura's xi_p, <d> act on the
     classes of the x_tau by DS's double-coset formulas (convention dictionary). -/
   bShStandardModel : _root_.R16Thm1.BShStandardModel
-  /-- r16-thm1b: Shimura 1973 Thm 1 as printed, one row. For a newform f in S_2(Gamma_1(N)) with
-    nebentypus chi, the kernel's model X of X_1(N), Jacobian J, Hecke operators T_p = xi_p, <d>:
-    K_f finite over Q, and there is a triple (A, nu, theta) with Shimura's clauses (i) nu
-    surjective with connected kernel, (ii) nu o xi_n = theta(a_n) o nu at n = p and n = p^2
-    (xi_{p^2} = T_p^2 - p<p>), (iii) dim A = [K_f : Q], and IsAfQuotient (ker nu = I_f J: nu kills
-    I_f J and is universal for that), unique up to a nu-compatible isomorphism over Q among
-    triples with (i)-(iii). Printed (AI page read): C = Ker(nu) (p. 525), C from the ideal
-    annihilating f intersected with End(J) (p. 526), uniqueness up to isomorphisms over Q (p.
-    526), dimension and tangent space from m = 1 via q-expansions (p. 527). ON THE SPOT steps: C =
-    I_f J (the ideal is ker rho, saturation, Hecke relations in both directions); (ii) for all n
-    from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible
-    isomorphisms. Euler clause and (iv) not in this row. -/
-  shimuraThm1Af : _root_.R16Thm1b.ShimuraThm1Af
   /-- y3-p1j (leaf, kind consequence, flag ELLIOT): the manuscript's map `Y₃ → P¹_j`
     (diophantine_zq.tex L420-440; normalizer quotient cited to Baba–Granath and Lin–Yang at
     L420-422): on every fine witness, `π : Y → P¹` with fibres = `Aut 𝒪`-twist classes, CM values
@@ -567,8 +556,9 @@ structure OpenResearchLeaves59_y3x6NOSDS : Prop where
     manuscript cites nothing. With silverbergZarhinThm35 it gives D2 (d2a6-reroute:
     Contrib/OneProof/D2WildNF.lean) and replaces sga7_IX_3_5_ForwardGeom_Def34. -/
   elliotWildInertiaTrivial : _root_.SZRaynaud.ElliotWildInertiaTrivial
-  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.6 = Theoreme
-    5.19 of arXiv:math/0102179v3; Theoreme 0.7 there is Sen's theorem) in the printed form of
+  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
+    5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
+    of arXiv:math/0102179v3) in the printed form of
     Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR
     of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de
     Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. -/
@@ -819,8 +809,9 @@ structure OpenResearchLeaves54SFU_y3x6NOSDS : Prop where
     (extension of an abelian variety by a split torus => no G_a) is proved by rigidity for G_a
     (GaRigidity.noGaSubgroup_of_semiAbelian) -/
   r6u : _root_.HDec.D2A6.R6U
-  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.6 = Theoreme
-    5.19 of arXiv:math/0102179v3; Theoreme 0.7 there is Sen's theorem) in the printed form of
+  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
+    5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
+    of arXiv:math/0102179v3) in the printed form of
     Berger, An introduction to the theory of p-adic representations (arXiv:math/0210184v1, IV.5.1
     p. 30, IV.5.3 p. 31): a de Rham p-adic representation V = E^n of G_Qp is potentially
     semistable over Fontaine's B_st = B_cris[log p~] (II.3.1, II.3.3), basis form (I.2.3).
@@ -1167,7 +1158,7 @@ theorem openResearchLeaves59_y3x6_of_60_y3x6_nos_ds (n : OpenResearchLeaves60_y3
   dsThm966Printed := n.dsThm966Printed
   panPrintedF := n.panPrintedF
   heckeJ1DS := _root_.R16Thm1.heckeJ1DS_of_bSh n.bShStandardModel
-  afShimura := _root_.R16Thm1b.afShimura_of_thm1Af n.shimuraThm1Af
+  afShimura := _root_.AfTateLam.afShimura_proof
   afCharpolyDS965 := n.afCharpolyDS965
   deRhamVpAbVarDirect := n.deRhamVpAbVarDirect
   hodgeTateDecompOr := n.hodgeTateDecompOr
@@ -1493,8 +1484,9 @@ structure OpenResearchLeaves63NOSDS : Prop where
     manuscript cites nothing. With silverbergZarhinThm35 it gives D2 (d2a6-reroute:
     Contrib/OneProof/D2WildNF.lean) and replaces sga7_IX_3_5_ForwardGeom_Def34. -/
   elliotWildInertiaTrivial : _root_.SZRaynaud.ElliotWildInertiaTrivial
-  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.6 = Theoreme
-    5.19 of arXiv:math/0102179v3; Theoreme 0.7 there is Sen's theorem) in the printed form of
+  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
+    5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
+    of arXiv:math/0102179v3) in the printed form of
     Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR
     of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de
     Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. -/
@@ -1601,19 +1593,6 @@ structure OpenResearchLeaves63NOSDS : Prop where
     (defined in Shimura 1971, which the 1973 print cites) and (B4) Shimura's xi_p, <d> act on the
     classes of the x_tau by DS's double-coset formulas (convention dictionary). -/
   bShStandardModel : _root_.R16Thm1.BShStandardModel
-  /-- r16-thm1b: Shimura 1973 Thm 1 as printed, one row. For a newform f in S_2(Gamma_1(N)) with
-    nebentypus chi, the kernel's model X of X_1(N), Jacobian J, Hecke operators T_p = xi_p, <d>:
-    K_f finite over Q, and there is a triple (A, nu, theta) with Shimura's clauses (i) nu
-    surjective with connected kernel, (ii) nu o xi_n = theta(a_n) o nu at n = p and n = p^2
-    (xi_{p^2} = T_p^2 - p<p>), (iii) dim A = [K_f : Q], and IsAfQuotient (ker nu = I_f J: nu kills
-    I_f J and is universal for that), unique up to a nu-compatible isomorphism over Q among
-    triples with (i)-(iii). Printed (AI page read): C = Ker(nu) (p. 525), C from the ideal
-    annihilating f intersected with End(J) (p. 526), uniqueness up to isomorphisms over Q (p.
-    526), dimension and tangent space from m = 1 via q-expansions (p. 527). ON THE SPOT steps: C =
-    I_f J (the ideal is ker rho, saturation, Hecke relations in both directions); (ii) for all n
-    from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible
-    isomorphisms. Euler clause and (iv) not in this row. -/
-  shimuraThm1Af : _root_.R16Thm1b.ShimuraThm1Af
   /-- cm-branch (GLUE, open): A8 at a CM fibre and the matrix units (diophantine_zq.tex L520-562,
     L581-586). -/
   cmFibreSplit : _root_.HDec.CMBranch.CMFibreSplit
@@ -1677,7 +1656,6 @@ theorem openResearchLeaves60_y3x6_of_OpenResearchLeaves63_nos_ds (n : OpenResear
   y3FullThreeRepZ30 := n.y3FullThreeRepZ30
   carayolThmAFrob := n.carayolThmAFrob
   bShStandardModel := n.bShStandardModel
-  shimuraThm1Af := n.shimuraThm1Af
   y3ToP1j := n.y3ToP1j
   heckeSqrtBranchAny := n.heckeSqrtBranchAny
 end HSyn
@@ -1805,8 +1783,9 @@ structure OpenResearchLeaves64NOSDS : Prop where
     manuscript cites nothing. With silverbergZarhinThm35 it gives D2 (d2a6-reroute:
     Contrib/OneProof/D2WildNF.lean) and replaces sga7_IX_3_5_ForwardGeom_Def34. -/
   elliotWildInertiaTrivial : _root_.SZRaynaud.ElliotWildInertiaTrivial
-  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.6 = Theoreme
-    5.19 of arXiv:math/0102179v3; Theoreme 0.7 there is Sen's theorem) in the printed form of
+  /-- R11 (pb-p1, fold-b105). Berger's theorem (Invent. Math. 148 (2002), Theoreme 0.7 = Cor.
+    5.22 in the author copy (Theoreme 0.8 there is Sen's theorem) = Theoreme 0.6 = Theoreme 5.19
+    of arXiv:math/0102179v3) in the printed form of
     Brinon-Conrad Thm 9.3.5 p. 148 ('only if' half): potentially semistable over the image in B_dR
     of Brinon-Conrad's B_st (as above), dimension form (Brinon-Conrad §5.2 pp. 67-68), for a de
     Rham p-adic representation V = E^n of G_Qp. Replaces bergerPrintedVT. -/
@@ -1913,19 +1892,6 @@ structure OpenResearchLeaves64NOSDS : Prop where
     (defined in Shimura 1971, which the 1973 print cites) and (B4) Shimura's xi_p, <d> act on the
     classes of the x_tau by DS's double-coset formulas (convention dictionary). -/
   bShStandardModel : _root_.R16Thm1.BShStandardModel
-  /-- r16-thm1b: Shimura 1973 Thm 1 as printed, one row. For a newform f in S_2(Gamma_1(N)) with
-    nebentypus chi, the kernel's model X of X_1(N), Jacobian J, Hecke operators T_p = xi_p, <d>:
-    K_f finite over Q, and there is a triple (A, nu, theta) with Shimura's clauses (i) nu
-    surjective with connected kernel, (ii) nu o xi_n = theta(a_n) o nu at n = p and n = p^2
-    (xi_{p^2} = T_p^2 - p<p>), (iii) dim A = [K_f : Q], and IsAfQuotient (ker nu = I_f J: nu kills
-    I_f J and is universal for that), unique up to a nu-compatible isomorphism over Q among
-    triples with (i)-(iii). Printed (AI page read): C = Ker(nu) (p. 525), C from the ideal
-    annihilating f intersected with End(J) (p. 526), uniqueness up to isomorphisms over Q (p.
-    526), dimension and tangent space from m = 1 via q-expansions (p. 527). ON THE SPOT steps: C =
-    I_f J (the ideal is ker rho, saturation, Hecke relations in both directions); (ii) for all n
-    from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible
-    isomorphisms. Euler clause and (iv) not in this row. -/
-  shimuraThm1Af : _root_.R16Thm1b.ShimuraThm1Af
   /-- cm-branch (GLUE, open): A8 at a CM fibre and the matrix units (diophantine_zq.tex L520-562,
     L581-586). -/
   cmFibreSplit : _root_.HDec.CMBranch.CMFibreSplit
@@ -1979,7 +1945,6 @@ theorem openResearchLeaves63_of_OpenResearchLeaves64_nos_ds (n : OpenResearchLea
   y3FullThreeRepZ30 := n.y3FullThreeRepZ30
   carayolThmAFrob := n.carayolThmAFrob
   bShStandardModel := n.bShStandardModel
-  shimuraThm1Af := n.shimuraThm1Af
   cmFibreSplit := n.cmFibreSplit
   fowlerProp27 := n.fowlerProp27
   cmjDegree := n.cmjDegree

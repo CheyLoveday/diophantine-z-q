@@ -7,13 +7,16 @@ Field removed (rerouted, not proved): `dsThm965AtPrimes`. Its readers on the liv
 `modularHTCoeff` (weight at least 2) and `dsThm966Printed` (weight 1) through the copy chain
 `Contrib/OneProof/DS965Reroute/Chain1`-`Chain5` (#197), whose top is `sixContactMin_of_open96_ds`; the
 determinant clause of `R14Det`, which the live route does not read, is dropped there.
-Fields added (new leaves): none. -/
+Fields added (new leaves): none.
+Edited in place later: berger-restore puts `bergerSurveyF` back in place of `colmezThm01`, and
+m1-afshimura removes `shimuraThm1Af`, whose one reader, the field `afShimura`, is proved. -/
 
 namespace HDec
 
 namespace HSyn
 
-/-- `OpenResearchLeaves77` without `dsThm965AtPrimes` (ds965-reroute-fold). -/
+/-- `OpenResearchLeaves77` without `dsThm965AtPrimes` (ds965-reroute-fold) and `shimuraThm1Af` (m1-afshimura),
+with `bergerSurveyF` in place of `colmezThm01` (berger-restore). -/
 structure OpenResearchLeaves78 : Prop where
   /-- height-split, H-18: the upper half of Pazuki 2012 Cor. 1.3(2), replaces `r22`. -/
   pazukiCor13Upper : _root_.ZInQ.HeightSplit.PazukiCor13Upper
@@ -47,8 +50,6 @@ structure OpenResearchLeaves78 : Prop where
   y3FullThreeRepZ30 : _root_.Y3RouteA.Y3FullThreeRepZ30
   /-- carirr-refold, consequence of Darmon-Diamond-Taylor 1997 Thm 3.1 (proved: CarayolRefold.frob_of_DDT31 from carirr-odd's transcription CarayolDDT.CarayolDDT31), with the Frobenius clause in the normalization the manuscript reads off Carayol 1986 Theoreme (A) (diophantine_zq.tex L9784-9796): for a printed newform f (Tau Ceti Newform N 2, psi = f.chi) with number field K_f and a place lambda | l, a continuous rho : G_Q -> GL_2(K_{f,lambda}) that is irreducible (Ribet 1977), unramified at p not dividing N l with arithmetic Frobenius of trace a_p and determinant p psi(p) (polynomial X^2 - a_p X + p psi(p)), and with codim V^{I_p} + integral_0^infty codim V^{G_p^u} du = v_p(N) at every p != l (Carayol Thm A + conductor of local Langlands + Casselman 1973 Thm 1; packaged in DDT 3.1). Oddness is proved from the Frobenius determinant (CarayolRefold.odd_of_frobDet, one Chebotarev element). Carayol's own form (sigma_lambda(pi)|G_{Q_p} <-> pi_p under local Langlands) has no Lean form (no pi_{f,p}, Weil-Deligne representations or local Langlands in Lean). Replaces carayolThmAIrr. -/
   carayolThmAFrob : _root_.CarayolRefold.CarayolThmAFrob
-  /-- r16-thm1b: Shimura 1973 Thm 1 in consequence form (GLUE, pending review), one row. For a newform f in S_2(Gamma_1(N)) with nebentypus chi, the kernel's model X of X_1(N), Jacobian J, Hecke operators T_p = xi_p, <d>: K_f finite over Q, and there is a triple (A, nu, theta) with Shimura's clauses (i) nu surjective with connected kernel, (ii) nu o xi_n = theta(a_n) o nu at n = p and n = p^2 (xi_{p^2} = T_p^2 - p<p>), (iii) dim A = [K_f : Q], and IsAfQuotient (ker nu = I_f J: nu kills I_f J and is universal for that), unique up to a nu-compatible isomorphism over Q among triples with (i)-(iii). Printed (AI page read): C = Ker(nu) (p. 525), C from the ideal annihilating f intersected with End(J) (p. 526), uniqueness up to isomorphisms over Q (p. 526), dimension and tangent space from m = 1 via q-expansions (p. 527). ON THE SPOT steps: C = I_f J (the ideal is ker rho, saturation, Hecke relations in both directions); (ii) for all n from p and p^2 via xi_{p^2} = T_p^2 - p<p> (a theorem step, the Hecke relation); nu-compatible isomorphisms. Euler clause and (iv) not in this row. -/
-  shimuraThm1Af : _root_.R16Thm1b.ShimuraThm1Af
   /-- cm-branch (leaf, consequence form; GLUE: rating refuted 11-17, reported formula):
   Barquero-Sanchez et al., Res. Number Theory 3 (2017), Eq. (6.2) (L600-605). -/
   cmHeight62 : _root_.HDec.CMBranch.CMHeight62
@@ -58,9 +59,9 @@ structure OpenResearchLeaves78 : Prop where
   cmjDegreePrint : HDec.CMBranch.CMjBridges.CMjDegreePrint
   /-- Grothendieck's semistable reduction theorem as stated in Silverberg-Zarhin, Ann. Inst. Fourier 45 (1995), Theorem 3.4, pp. 405-406 (proof: SGA 7 I, Exp. IX, Th. 3.6, p. 351): for an abelian variety A over a field K with a discrete valuation ring O, one finite Galois extension E of K inside an algebraic closure such that A_E has semistable reduction (HasSemistableReductionSZ, which also asserts a Neron model) at every prolongation of O to E. Replaces silverbergZarhinThm35 (Raynaud's criterion), which SZRaynaud.silverbergZarhinThm35_of_sz34 proves from it with the proved Theorem 3.3. -/
   silverbergZarhinThm34 : _root_.SZRaynaud.SilverbergZarhinThm34
-  /-- Colmez, Astérisque 319 (2008), Théorème 0.1, p. 118, in its printed form: every de Rham representation of G_{Q_p} is potentially semistable, with the definitions of §0.2, p. 118 (semi-stable = B_st^+[1/t] ⊗ V ≅ (B_st^+[1/t])^d as G_L-module, Fontaine's rings). Replaces bergerSurveyF, whose source (Brinon-Conrad Thm 9.3.5) is unrefereed; bergerSurveyF_of_colmez. -/
-  colmezThm01 : _root_.HDec.PkgI4.PanBergerRefereed.ColmezThm01
-  /-- Pan, J. Amer. Math. Soc. 35 (2022), Theorem 1.0.4 with Conjecture 1.0.1 (arXiv:1901.07166v2 pp. 5 and 2), p >= 5, with potential semistability in Fontaine's sense (Astérisque 223 (1994), Exp. III, 5.6.1, in the equivalent form of 1.8.5). Same statement as the replaced panPrintedF; only the source of the definitions changes from Brinon-Conrad's notes to Fontaine's exposés; panPrintedF_of_thm104F. -/
+  /-- Berger's p-adic monodromy theorem, Invent. Math. 148 (2002), 219-284, as cited by the manuscript (bibitem berger2002; Théorème 0.7 = Corollaire 5.22 in the author copy, Théorème 0.6 = Théorème 5.19 of arXiv:math/0102179v3): every de Rham representation of G_{Q_p} is potentially semistable, here in Fontaine's dimension form over BstFOf (Astérisque 223 (1994), Exp. III, 1.8.5 and 5.6.1; Exp. II, 4.2.4-4.2.5). Colmez, Astérisque 319 (2008), Théorème 0.1, prints the basis form, which implies this field (PanBergerRefereed.bergerSurveyF_of_colmez); the converse needs the G_K-regularity of B_st, which is not proved, so ColmezThm01 is not a replacement at the same count. -/
+  bergerSurveyF : _root_.HDec.PkgI4.PanDict.BergerSurveyF
+  /-- Pan, The Fontaine-Mazur conjecture in the residually reducible case, Theorem 1.0.4 with Conjecture 1.0.1, read in arXiv:1901.07166v2 (pp. 5 and 2), the version the manuscript cites; published in J. Amer. Math. Soc. 35 (2022), whose numbering is unchecked. Here p >= 5, with potential semistability in Fontaine's sense (Astérisque 223 (1994), Exp. III, 5.6.1, in the equivalent form of 1.8.5). Same statement as the replaced panPrintedF, token for token; only the source of the definitions changes from Brinon-Conrad's notes to Fontaine's exposés; panPrintedF_of_thm104F. -/
   panThm104F : _root_.HDec.PkgI4.PanBergerRefereed.PanThm104F
 
 /-- `OpenResearchLeaves77DS` (the bundle of the copy chain of #197) from `OpenResearchLeaves78`, field by field. -/
@@ -75,12 +76,11 @@ theorem openResearchLeaves77DS_of_OpenResearchLeaves78 (n : OpenResearchLeaves78
   javanpeykarThm111An := n.javanpeykarThm111An
   y3FullThreeRepZ30 := n.y3FullThreeRepZ30
   carayolThmAFrob := n.carayolThmAFrob
-  shimuraThm1Af := n.shimuraThm1Af
   cmHeight62 := n.cmHeight62
   fowlerProp27PrintCanonical := n.fowlerProp27PrintCanonical
   cmjDegreePrint := n.cmjDegreePrint
   silverbergZarhinThm34 := n.silverbergZarhinThm34
-  colmezThm01 := n.colmezThm01
+  bergerSurveyF := n.bergerSurveyF
   panThm104F := n.panThm104F
 
 /-- **G0 with only the open leaves and the open glue** (ds965-reroute-fold). -/

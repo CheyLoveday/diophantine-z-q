@@ -3,7 +3,7 @@ article_id: af_095c27de41c3a3a60de425ba
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenResearchLeaves76.afCharpolyDS965
+lean: HDec.HSyn.OpenResearchLeaves79.afCharpolyDS965
 ---
 
 # Frobenius on the Tate module of Shimura's abelian variety
@@ -11,10 +11,12 @@ lean: HDec.HSyn.OpenResearchLeaves76.afCharpolyDS965
 The *Frobenius statement on $A_f$* is the following assertion. Let $f\in S_2(\Gamma_1(N))$ be a
 newform with character $\chi$, $N\ge2$; let $X$, $P_0$ and $J$ be as in the
 [introduction](README.md), $T_p$ ($p$ prime) and $\langle d\rangle$ ($d\in(\mathbb Z/N)^\times$)
-Hecke operators on $J$ in the sense there, and $I_f$ as in the statement on
-[Shimura's abelian variety](shimura-abelian-varieties.md). Let $A$ be an abelian variety over
-$\mathbb Q$ with a surjective homomorphism $\pi:J\to A$ that kills $I_fJ$ and through which every
-homomorphism from $J$ to an abelian variety killing $I_fJ$ factors uniquely, and let
+Hecke operators on $J$ in the sense there, and $I_f$ the set of endomorphisms
+$h(T_p,\langle d\rangle)$ of $J$, for $h$ a polynomial with integer coefficients in noncommuting
+variables, one for each prime $p$ and each $d$, such that $h(a_p(f),\chi(d))=0$; a homomorphism
+$\phi$ from $J$ *kills $I_fJ$* when $\phi\circ u=0$ for every $u\in I_f$. Let $A$ be an abelian
+variety over $\mathbb Q$ with a surjective homomorphism $\pi:J\to A$ that kills $I_fJ$ and through
+which every homomorphism from $J$ to an abelian variety killing $I_fJ$ factors uniquely, and let
 $\theta:K_f\to\operatorname{End}^0(A)$ be a ring homomorphism such that, for every prime $p$,
 $\theta(a_p(f))$ is an endomorphism $e$ of $A$ with $\pi\circ T_p=e\circ\pi$, and, for every $d$,
 $\chi(d)$ lies in $K_f$ and $\theta(\chi(d))$ is an endomorphism $e$ of $A$ with
@@ -44,7 +46,7 @@ and Section 9.5 proves only that Frobenius satisfies it. It is a hypothesis, not
 
 ## Depends on
 
-- [Shimura's abelian variety attached to a newform](shimura-abelian-varieties.md)
+None.
 
 ## Sources
 

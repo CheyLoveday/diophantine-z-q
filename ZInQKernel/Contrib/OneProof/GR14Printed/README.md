@@ -72,3 +72,14 @@ so only Lean ⇒ print is needed, and `IsSemistablePrinted` already states that 
 The open point is the model: the Néron model with semi-abelian identity components against GR1's
 semi-abelian model (item M of the report). This contribution does not address it, so a reading
 should disclose it.
+
+## As landed (2026-11-26)
+
+The fold landed as `ZInQKernel/OneProof/H/TailZ107.lean`: `OpenResearchLeaves79` with
+`gaudronRemondThm14Printed` in place of `gaudronRemondThm14AnSS`, and `sixContactMin_of_open100`, which
+composes the conversion with `sixContactMin_of_open99` (the tate-prints fold had taken `TailZ106`). The field
+docstring names the printed hypotheses (`g ≥ 1`, p. 2058; isogenies "surjectif de noyau fini", §2, p. 2062,
+a locator no reading covers yet) and the two departures the field keeps, the specialization `K′ = k` and the
+split of the couple. The flag edit above was not applied as written: the kinds row keeps the SGA 7 IX 2.1.5
+sentence, marked superseded once GR1 §2.3 p. 351 and Duke's definition of `h_F` are read, and adds the open
+point on the model (item M).

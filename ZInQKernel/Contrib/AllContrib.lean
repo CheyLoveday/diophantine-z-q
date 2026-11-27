@@ -3566,3 +3566,10 @@ import ZInQKernel.Contrib.TauCeti.Topology.Algebra.Group.Torsion
 import ZInQKernel.Contrib.TauCeti.Topology.Algebra.GroupAction.InternalHom.DoubleDual
 import ZInQKernel.Contrib.TauCeti.Topology.Instances.ZMod
 import ZInQKernel.Contrib.TauCeti.Topology.Separation.Profinite
+import ZInQKernel.Contrib.OneProof.AbVarQuotientComplement
+import ZInQKernel.Contrib.OneProof.AbVarQuotientConnected
+import ZInQKernel.Contrib.OneProof.AbVarQuotientFinite
+import ZInQKernel.Contrib.OneProof.AfShimuraProof
+import ZInQKernel.Contrib.OneProof.ShimuraQuotientGeometry
+import ZInQKernel.Contrib.OneProof.ShimuraQuotientHecke
+import ZInQKernel.Contrib.OneProof.ShimuraQuotientImageSum
