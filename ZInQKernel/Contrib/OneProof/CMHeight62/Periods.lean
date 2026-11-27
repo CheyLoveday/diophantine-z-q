@@ -75,7 +75,9 @@ theorem period_comparison [NumberField K] (hdim : E.dim = 1) (M : MetrizedModel 
     {ΛE : Submodule ℤ (Fin 1 → ℂ)} {ΦE : (Fin 1 → ℂ) → CPts E (σ.comp (algebraMap K L))}
     (hE : IsUniformization (σ.comp (algebraMap K L)) ΛE ΦE) :
     ∃ k : ℂ, k ≠ 0 ∧ (∀ z, ptL E σ (ZInQ.Metrization2.chi M.model (Φ z)) = ΦE (k • z)) ∧
-      (∀ z, z ∈ M.hodge.periods σ ↔ k • z ∈ ΛE) := by
+      (∀ z, z ∈ M.hodge.periods σ ↔ k • z ∈ ΛE) ∧
+      (∀ W : (E.baseChange L).X.left.Opens,
+        IsOpen {z | ⊤ ≤ (ZInQ.Metrization2.chi M.model (Φ z)).left ⁻¹ᵁ W}) := by
   have hg : E.dim = ((1 : ℕ) : WithBot ℕ∞) := by rw [hdim]; rfl
   have hgL : (E.baseChange L).dim = ((1 : ℕ) : WithBot ℕ∞) := by
     rw [← hg]; exact G0Dim.dim_baseChange L E.X.left E.X.hom
@@ -102,7 +104,19 @@ theorem period_comparison [NumberField K] (hdim : E.dim = 1) (M : MetrizedModel 
   have hlat : ∀ z, z ∈ M.hodge.periods σ ↔ k • z ∈ ΛE := by
     intro z
     rw [hTΛ z, ← hU.2.1, ← hE.2.1, ← hlin, hM, MulEquiv.map_eq_one_iff]
-  refine ⟨k, ?_, hpt, hlat⟩
+  have hop : ∀ W : (E.baseChange L).X.left.Opens,
+      IsOpen {z | ⊤ ≤ (ZInQ.Metrization2.chi M.model (Φ z)).left ⁻¹ᵁ W} := by
+    intro W
+    have hset : {z | ⊤ ≤ (ZInQ.Metrization2.chi M.model (Φ z)).left ⁻¹ᵁ W} =
+        (fun z => T z) ⁻¹' cDom Φ₀ W := by
+      ext z
+      simp only [Set.mem_ofPred_eq, Set.mem_preimage]
+      rw [hchi]
+      rfl
+    rw [hset]
+    exact (hU.2.2.2.1 W).preimage
+      (LinearMap.continuous_of_finiteDimensional (T : (Fin 1 → ℂ) →ₗ[ℂ] (Fin 1 → ℂ)))
+  refine ⟨k, ?_, hpt, hlat, hop⟩
   intro hk0
   rw [hk0] at hlat
   have := M.hodge.periods_discrete σ
