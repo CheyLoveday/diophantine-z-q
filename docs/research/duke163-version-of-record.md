@@ -29,20 +29,23 @@ This is the file the adversarial AI reading of `gaudronRemondThm14GR1` used
 
 The volume, issue, DOI and pagination of the file match the Crossref record exactly, and the file is the journal's
 typeset text (footer, running heads and page numbers of the journal). So the "Duke journal text" whose comparison
-the row's flag asked for is the text that was read: the journal-text check is satisfied by this copy.
+the row's flag asked for is the text that was read: the journal-text check is satisfied by this copy. It is the
+author-posted final typeset file; it was not byte-compared with Project Euclid's copy (paywalled; Euclid downloads
+usually carry a cover page, which this file lacks).
 
 ## Effect
 
-`gaudronRemondThm14GR1` is rated published, LEAF (AI-READ) under the maintainer's general rule of 2026-11-26
-(docs/DECISIONS.md), the lead to confirm. The two height argument steps that the row's earlier flag named are Lean
-theorems since #234 (commutativity of semi-abelian models; stalk lattice equal to the global-sections lattice) and
-#237 (θ bijective; stalks of e*Ω¹ injecting into the generic fibre; spans). The residual readings are those of
+`gaudronRemondThm14GR1` is rated published, LEAF under the strict reading (AI-READ, the maintainer's general rule of
+2026-11-26, docs/DECISIONS.md) and GLUE under the strictest reading, the lead to confirm. The height argument steps
+that the row's earlier flag named are Lean theorems since #234 (commutativity of semi-abelian models; stalk lattice equal to the global-sections lattice) and
+#237 (θ bijective; stalks of e*Ω¹ injecting into the generic fibre; spans), except for two residual readings, those of
 `ZInQKernel/Contrib/OneProof/HeightModelM3/README.md`: Mathlib has no sheaf of relative differentials, so the stalk
 formula and `globalOmega` stand in for Γ(S, e*Ω¹), and the one-factor wedge identity in the Hodge line is not
-proved. The converse (GR1 height ⇒ Néron-model height) is not proved, and the implication to the replaced field
+proved. A strict reading of the 11-26 ruling (a reading step is not a direct instance; `colmez1992DeRhamAbVar`) would
+ask for a Lean theorem for that identity, which keeps the row GLUE until the lead rules. The converse (GR1 height ⇒ Néron-model height) is not proved, and the implication to the replaced field
 `gaudronRemondThm14Printed` goes through `egaIV_9_7_7_OL` (EGA IV₃ (9.7.7)).
 
-Strict count of the H part: 5/14 → 6/13.
+Strict count of the H part: 5/14 (the strictest reading), 6/13 without the one strictest-reading flag.
 
 ## Also used by
 

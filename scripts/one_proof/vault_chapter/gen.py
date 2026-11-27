@@ -59,8 +59,10 @@ assert count['project glue'] == sum(1 for f in fields if LEAVES[f]['group'] is N
 for f in fields:
     if kind[f] != 'published':
         assert kinds[f]['strict'] != 'LEAF', (f, kinds[f]['strict'])
-strict = sum(1 for f in fields if kinds[f]['strict'] == 'LEAF')
-pending = [f for f in fields if kind[f] == 'published' and kinds[f]['strict'] != 'LEAF']
+# the strict count is the strictest flagged reading, as in OPEN.md; strict_loose leaves out the strictest-reading flags
+strict = sum(1 for f in fields if kinds[f]['strictest'] == 'LEAF')
+strict_loose = sum(1 for f in fields if kinds[f]['strict'] == 'LEAF')
+pending = [f for f in fields if kind[f] == 'published' and kinds[f]['strictest'] != 'LEAF']
 # published rows that a completed review rated glue (kinds.tsv flag 'glue (rated): ...'), not rows awaiting a step
 rated_glue = [f for f in pending if kinds[f]['flag'].startswith('glue (rated)')]
 assert len({LEAVES[f]['slug'] for f in fields}) == len(fields)
@@ -256,7 +258,9 @@ glue = [f for f in fields if LEAVES[f]['group'] is None]
 assert len(glue) <= 1, glue
 strict_sentence = (f"The project's strict convention, which counts a published statement only once its reading "
                    f"against the print and its review are complete and find it in its printed form, counts {w(strict)} of the {w(len(fields))} as "
-                   f"published." if pending else '')
+                   f"published" + (f" ({w(strict_loose)} without the strictest reading of {w(strict_loose - strict)} flagged "
+                                   f"statement{'s' if strict_loose - strict != 1 else ''})" if strict_loose != strict else '')
+                   + "." if pending else '')
 
 
 def kinds_list(published, consequence, composite):

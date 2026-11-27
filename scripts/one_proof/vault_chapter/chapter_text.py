@@ -345,7 +345,8 @@ record), so the reading is against the journal text. Two steps of the height tha
 arguments, the commutativity of the model and the passage from stalks to global sections, are now
 proved in Lean; what remains a reading is that the stalk formula and the global sections used here
 are those of the sheaf of differentials, which Mathlib does not yet have, and one identity of wedges
-in the Hodge line. With the constructibility statement of EGA IV (9.7.7), the statement implies the
+in the Hodge line. Because that identity is not proved, the published rating waits on the lead's
+confirmation. With the constructibility statement of EGA IV (9.7.7), the statement implies the
 same theorem for the stable Faltings heights of this section, built from Néron models, and this
 implication is proved in Lean; the converse is not proved here.
 """,
