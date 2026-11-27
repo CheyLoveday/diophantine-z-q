@@ -58,11 +58,14 @@ def V1GL5 : Subgroup (Matrix.GeneralLinearGroup (Fin 2) (ZMod 5)) where
 
 /-- The isomorphism `κ` on units, `(O/5O)ˣ ≃* GL₂(ℤ/5ℤ)`, `δ ↦ κ(δ)` with `κ = kappa5⁻¹`.
 
-Buzzard fixes his isomorphism `κ` arbitrarily (p. 2). Here `κ` is fixed through `kappa5`: it
-sends the classes of `E = e5`, `X`, `Y`, `1 - E` to the matrix units `e₁₁`, `e₁₂`, `e₂₁`, `e₂₂`,
-so `κ(E) = e₁₁`. Every ring isomorphism `O/5O ≅ M₂(ℤ/5ℤ)` is the reduction of an isomorphism
-`O ⊗ ℤ₅ ≅ M₂(ℤ₅)` (Skolem–Noether over `F₅`, and surjectivity of `GL₂(ℤ₅) → GL₂(F₅)`), so this
-choice is one of Buzzard's, and his results hold for it. -/
+Buzzard, p. 2: "Fix once and for all an isomorphism κ : O_D ⊗_Z R → M_2(R)", where `R` is the
+limit of `ℤ/Mℤ` over `M` prime to `d`, that is `∏_{p ∤ 6} ℤ_p`. Here `κ` mod 5 is fixed through
+`kappa5`: it sends the classes of `E = e5`, `X`, `Y`, `1 - E` to the matrix units `e₁₁`, `e₁₂`,
+`e₂₁`, `e₂₂`, so `κ(E) = e₁₁`. This is the reduction of an admissible `κ`: a ring isomorphism
+`O/5O ≅ M₂(F₅)` differs from the reduction of a given `κ` by a ring automorphism of `M₂(F₅)`,
+which is `F₅`-linear (`F₅` is the prime field) and hence inner (Skolem–Noether); lifting its
+conjugating matrix to `GL₂(ℤ₅)`, and taking the identity at the other primes of `R`, gives an
+admissible `κ` whose reduction mod 5 is `kappa5.symm`. Buzzard's results hold for every `κ`. -/
 def kappaGL5 : Y3OrderMod.G 5 ≃* Matrix.GeneralLinearGroup (Fin 2) (ZMod 5) :=
   Units.mapEquiv kappa5.symm.toMulEquiv
 
@@ -169,7 +172,16 @@ For the square `h : A' → A` over `g : S' ⟶ S` (the first two bullets are `Is
 `O`-linearity of `h` in `BuzzardXDV15Lit`), the third bullet says: there is an isomorphism of
 étale sheaves `ψ : F_{A'/S',H} ≅ F_{A_{S'}/S',H}` (the target being `F_{A/S,H}` restricted to
 `S'`-schemes along `g`) induced by the transport of literal frames `α ↦ (q ↦ h ∘ α q)`, and it
-carries `α'` to the restriction of `α` along `g`. -/
+carries `α'` to the restriction of `α` along `g`.
+
+Why a cartesian, `O`-linear `h` is what the first two bullets ask for: `O`-linearity at `a = 0`
+gives `h ∘ e' = e ∘ g`, since `ι(0)` is the zero endomorphism, so the induced `S'`-isomorphism
+`A' → A ×_S S'` preserves the zero section and is therefore an isomorphism of abelian schemes
+(J. S. Milne, *Abelian Varieties* (1986), Cor. 20.2(a), p. 43: "Every morphism of abelian schemes
+carrying the zero section into the zero section is a homomorphism", stated in §20 for abelian
+schemes over any scheme `S`). Milne proves 20.2 through the rigidity of his Prop. 20.1; a proof
+over an arbitrary base is in Mumford's GIT, Cor. 6.4, which is not read here. Hence the uniqueness
+clauses of `BuzzardXDV15Lit` quantify over exactly Buzzard's morphisms. -/
 def LevelFibreLit {S S' : Scheme.{0}} (A : FEC S) (α : LevelStrLit A) (g : S' ⟶ S) (A' : FEC S')
     (α' : LevelStrLit A') (h : A'.F.left ⟶ A.F.left) : Prop :=
   ∃ ψ : LevelPreLit A' ≅ (Over.map g).op ⋙ LevelPreLit A,
@@ -202,7 +214,13 @@ clause: objects have no non-trivial automorphisms). Morphisms are those of p. 5,
 Dropped: "algebraic stack" (Mathlib has no algebraic stacks; a stack associated to a scheme is
 one) and "regular" (it follows from smoothness over the regular base `Spec ℤ[1/30]`, which is
 kept). "Projective" is stated as a closed immersion into some `PN N` over the base, as in
-`BuzzardThm21Cor23V15'` (Mathlib has no projective morphisms). -/
+`BuzzardThm21Cor23V15'` (Mathlib has no projective morphisms); over the affine base this is EGA's
+"projective" (EGA II (5.5.4)(ii), with the ampleness of `O_Y` on an affine scheme `Y`).
+
+The empty base: Buzzard's `i` is injective, which excludes `S = ∅` (`End(∅)` is the zero ring),
+while `FEC` admits the empty curve. Over `S = ∅` every clause of the leaf holds trivially (a
+unique `g`, a unique `h`, and the sheaves are singletons), so the leaf is not stronger than the
+print. -/
 def BuzzardXDV15Lit : Prop :=
   ∃ (X : Over Z30Base) (A : FEC X.left) (α : LevelStrLit A),
     IsProper X.hom ∧ SmoothOfRelativeDimension 1 X.hom ∧

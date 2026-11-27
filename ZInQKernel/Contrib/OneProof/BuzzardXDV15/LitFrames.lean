@@ -4,10 +4,11 @@ import Mathlib
 /-!
 # Literal full level-5 structures (Buzzard, Def. 1.1)
 
-Buzzard (Duke Math. J. 87 (1997), p. 3): a naive full level `M` structure on `A/S` is an
-isomorphism `α : (O ⊗ Z/MZ)_S ≅ A[M]` of `S`-schemes preserving the left action of `O`, and
-`F_{A/S,M}(T)` is the set of full level `M` structures on `A_T`; `δ ∈ (O/MO)ˣ` acts by
-`α ↦ α ∘ r_δ`, with `r_δ` the right multiplication by `δ`.
+Buzzard (Duke Math. J. 87 (1997), p. 3): a naive full level `M` structure on `A/S` is "an
+isomorphism α : (O_D ⊗ ℤ/Mℤ)_S ≅ A[M] of schemes which preserves the left action of O_D", and
+`F_{A/S,M}(T)` is the set of full level `M` structures on `A_T`, that is, isomorphisms of
+`T`-schemes `(O ⊗ Z/MZ)_T ≅ A[M]_T`; `δ ∈ (O/MO)ˣ` acts by `α ↦ α ∘ r_δ`, with `r_δ` the right
+multiplication by `δ`.
 
 Here `M = 5`. The constant scheme `(O/5O)_T` is `∐_q T`, so a morphism of `T`-schemes
 `(O/5O)_T ⟶ A[5]_T = A[5] ×_S T` is a family `α q` of `5`-torsion points of `A` over `T` (its
