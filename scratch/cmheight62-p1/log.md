@@ -56,3 +56,15 @@ Base: 96f3a26b70770167ba4e9005a601a737dc618133 (confirmed `git rev-parse HEAD`).
   `not_forall_mem_of_discrete`,
 - `period_comparison hdim M σ hΦ hE : ∃ k ≠ 0, (∀ z, ptL E σ (chi M.model (Φ z)) = ΦE (k • z)) ∧ (∀ z, z ∈ M.hodge.periods σ ↔ k • z ∈ ΛE)`
   by T35 → theta → analyticUniformizationUnique_of_t35 → ptL → HomLinearLift(f = id).
+
+## Eval.lean, Germ.lean compile (evaluation bridge). VERIFIED
+- `ev q V s` (value at Spec ℂ → X), `ev_comp`, `ev_res`, `ev_mul`, `ev_neg`.
+- `stalkCongr_germ`, `fstGF`, `genE := gen.hom.left ≫ bcProj`, `genE_unit`,
+  `germ_pullbacks_eq` (germs at ξ_L of the pull-backs of reps of tG and tE agree; uses originStalkEquiv_spec).
+- `ptc`, `top_le_preimage_iff`, `gpt p := secC ≫ mapG p`, `gpt_fst`, `chi_left`, `gpt_eq`, `evalAt_eq_ev`,
+  `ptL_chi_left`, `cEvalAt_ptL_chi_eq_ev`, `one_left_apply`, `chi_one`, `gen_inv_identity`, `gpt_one_apply`.
+- `rep_mul_y`: r|·y| = −x| on V ⊓ (E∖0) (germToFunctionField injectivity), `ev_rep_mul_y`.
+- `germAlong_mul_y` (bridge): ∀ᶠ z in 𝓝 0, p z ∈ E∖0 → germAlong Φ tG z · y(p z) = −x(p z), p z = ptL (chi (Φ z)),
+  given openness of {z | gpt (Φ z) ∈ W} for opens W of 𝒢_L.
+- Pitfall: (cptObj σ).left vs (ptC σ).left vs Spec ℂ are only defeq; `rw` fails on morphisms between them —
+  use term-mode Eq.trans/congrArg (TailE style).

@@ -108,17 +108,17 @@ section Points
 variable (𝒢 : GroupModel E L) {σ : L →+* ℂ}
 
 /-- The point of `Spec ℂ`, typed in `cptObj σ`. -/
-def ptc (σ : L →+* ℂ) : (cptObj σ).left := IsLocalRing.closedPoint ℂ
+def ptc {F : Type} [Field F] (σ : F →+* ℂ) : (cptObj σ).left := IsLocalRing.closedPoint ℂ
 
-theorem eq_ptc (σ : L →+* ℂ) (x : (cptObj σ).left) : x = ptc σ :=
+theorem eq_ptc {F : Type} [Field F] (σ : F →+* ℂ) (x : (cptObj σ).left) : x = ptc σ :=
   Subsingleton.elim (α := PrimeSpectrum ℂ) _ _
 
-theorem top_le_preimage_iff {X : Scheme.{0}} (q : (cptObj σ).left ⟶ X) (W : X.Opens) :
-    ⊤ ≤ q ⁻¹ᵁ W ↔ q (ptc σ) ∈ W := by
+theorem top_le_preimage_iff {F : Type} [Field F] {τ : F →+* ℂ} {X : Scheme.{0}}
+    (q : (cptObj τ).left ⟶ X) (W : X.Opens) : ⊤ ≤ q ⁻¹ᵁ W ↔ q (ptc τ) ∈ W := by
   constructor
   · intro h; exact h (Set.mem_univ _)
   · intro h x _
-    rw [eq_ptc σ x]; exact h
+    rw [eq_ptc τ x]; exact h
 
 /-- The point `Spec ℂ → 𝒢_L` underlying a complex point of `𝒢`. -/
 def gpt (p : 𝒢.Pts σ) : (cptObj σ).left ⟶ (genericFibre L 𝒢.G).left :=
@@ -182,5 +182,92 @@ theorem gpt_one_apply : gpt 𝒢 (1 : 𝒢.Pts σ) (ptc σ) = genericFibreUnit �
   exact gen_inv_identity 𝒢
 
 end Points
+
+section ESide
+
+variable (D : ShortData E)
+
+theorem genericPoint_mem {V : E.X.left.Opens} (hV : (V : Set E.X.left).Nonempty) :
+    genericPoint E.X.left ∈ V :=
+  ((genericPoint_spec E.X.left).mem_open_set_iff V.isOpen).mpr (by simpa using hV)
+
+/-- **`r · y = −x` on `V ∩ (E ∖ 0)`** for a representative `r` of `t_E`. -/
+theorem rep_mul_y {V : E.X.left.Opens} (hV : abVarIdentity E ∈ V) (r : Γ(E.X.left, V))
+    (hr : E.X.left.presheaf.germ V (abVarIdentity E) hV r = D.tE) :
+    E.X.left.presheaf.map (homOfLE (inf_le_left : V ⊓ abVarPunctured E ≤ V)).op r *
+      E.X.left.presheaf.map (homOfLE (inf_le_right : V ⊓ abVarPunctured E ≤ _)).op D.y =
+    -E.X.left.presheaf.map (homOfLE (inf_le_right : V ⊓ abVarPunctured E ≤ _)).op D.x := by
+  have := D.nonempty_punctured
+  have : Nonempty V := ⟨⟨_, hV⟩⟩
+  have : Nonempty (V ⊓ abVarPunctured E : E.X.left.Opens) := by
+    obtain ⟨⟨w, hw⟩⟩ := D.nonempty_punctured
+    exact ⟨⟨genericPoint E.X.left, genericPoint_mem ⟨_, hV⟩, genericPoint_mem ⟨w, hw⟩⟩⟩
+  apply E.X.left.germToFunctionField_injective (V ⊓ abVarPunctured E)
+  rw [map_mul, map_neg, germToFunctionField_restrict, germToFunctionField_restrict,
+    germToFunctionField_restrict, ← E.X.left.algebraMap_germ_eq_germToFunctionField hV, hr]
+  erw [D.algebraMap_tE]
+  change D.fXY * D.Y = -D.X
+  rw [ShortData.fXY, neg_div, neg_mul, div_mul_cancel₀ _ D.Y_ne_zero]
+
+/-- The evaluated form of `rep_mul_y`. -/
+theorem ev_rep_mul_y {V : E.X.left.Opens} (hV : abVarIdentity E ∈ V) (r : Γ(E.X.left, V))
+    (hr : E.X.left.presheaf.germ V (abVarIdentity E) hV r = D.tE)
+    (q : Spec (CommRingCat.of ℂ) ⟶ E.X.left) (hq : ⊤ ≤ q ⁻¹ᵁ (V ⊓ abVarPunctured E)) :
+    ev q V r * ev q (abVarPunctured E) D.y = -ev q (abVarPunctured E) D.x := by
+  rw [ev_res q (inf_le_left : V ⊓ abVarPunctured E ≤ V) hq,
+    ev_res q (inf_le_right : V ⊓ abVarPunctured E ≤ _) hq D.y,
+    ev_res q (inf_le_right : V ⊓ abVarPunctured E ≤ _) hq D.x, ← ev_mul q _ hq, ← ev_neg q _ hq,
+    rep_mul_y D hV r hr]
+
+end ESide
+
+section Bridge
+
+open Filter Topology
+
+/-- **The evaluation bridge.** Along an analytic uniformization `Φ` of the model, for `z` near
+`0`, the chosen representative of `t = tG` (the one `germAlong`, hence `jacDet`, uses) satisfies
+`t(Φ z) · y(p z) = −x(p z)` at the image point `p z ∈ E(ℂ)_{σ|K}` whenever `p z ≠ 0`. -/
+theorem germAlong_mul_y (D : ShortData E) (𝒢 : GroupModel E L) {σ : L →+* ℂ}
+    {Λ : Submodule ℤ (Fin 1 → ℂ)} {Φ : (Fin 1 → ℂ) → 𝒢.Pts σ}
+    (hΦ : 𝒢.IsAnalyticUniformization σ Λ Φ)
+    (hopen : ∀ W : (genericFibre L 𝒢.G).left.Opens, IsOpen {z | ⊤ ≤ gpt 𝒢 (Φ z) ⁻¹ᵁ W}) :
+    ∀ᶠ z in 𝓝 0, ⊤ ≤ (ptL E σ (ZInQ.Metrization2.chi 𝒢 (Φ z))).left ⁻¹ᵁ abVarPunctured E →
+      𝒢.germAlong Φ (D.tG 𝒢 : 𝒢.genStalk) z *
+          cEvalAt (ptL E σ (ZInQ.Metrization2.chi 𝒢 (Φ z))) (abVarPunctured E) D.y =
+        -cEvalAt (ptL E σ (ZInQ.Metrization2.chi 𝒢 (Φ z))) (abVarPunctured E) D.x := by
+  set t : 𝒢.genStalk := (D.tG 𝒢 : 𝒢.genStalk)
+  set U := (𝒢.exists_rep t).choose
+  set m := (𝒢.exists_rep t).choose_spec.choose
+  set s := (𝒢.exists_rep t).choose_spec.choose_spec.choose
+  have hs : 𝒢.G.left.presheaf.germ U 𝒢.genericUnit m s = t :=
+    (𝒢.exists_rep t).choose_spec.choose_spec.choose_spec
+  obtain ⟨V, hV, r, hr⟩ := TopCat.Presheaf.exists_germ_eq E.X.left.presheaf D.tE
+  have hg := germ_pullbacks_eq 𝒢 D m s hs hV r hr
+  obtain ⟨W, hW, iU, iV, hWeq⟩ := TopCat.Presheaf.germ_eq _ _ _ _ _ _ hg
+  have h0 : (0 : Fin 1 → ℂ) ∈ {z | ⊤ ≤ gpt 𝒢 (Φ z) ⁻¹ᵁ W} := by
+    have h1 : Φ 0 = 1 := (hΦ.2.1 0).mpr Λ.zero_mem
+    change ⊤ ≤ gpt 𝒢 (Φ 0) ⁻¹ᵁ W
+    rw [h1, top_le_preimage_iff, gpt_one_apply]
+    exact hW
+  filter_upwards [(hopen W).mem_nhds h0] with z hz hpunct
+  have hz' : ⊤ ≤ gpt 𝒢 (Φ z) ⁻¹ᵁ W := hz
+  -- the model side
+  have e1 : 𝒢.germAlong Φ t z = 𝒢.evalAt (Φ z) U s := rfl
+  have e2 : 𝒢.evalAt (Φ z) U s =
+      cEvalAt (ptL E σ (ZInQ.Metrization2.chi 𝒢 (Φ z))) V r := by
+    rw [evalAt_eq_ev, cEvalAt_ptL_chi_eq_ev, ev_res _ iU.le hz', ev_res _ iV.le hz']
+    exact congrArg _ hWeq
+  -- the point lies in `V`
+  have hqV : ⊤ ≤ (ptL E σ (ZInQ.Metrization2.chi 𝒢 (Φ z))).left ⁻¹ᵁ (V ⊓ abVarPunctured E) := by
+    rw [top_le_preimage_iff] at hz' hpunct ⊢
+    refine ⟨?_, hpunct⟩
+    have := iV.le hz'
+    change (gpt 𝒢 (Φ z) ≫ genE 𝒢) (ptc σ) ∈ V at this
+    rwa [← ptL_chi_left] at this
+  rw [e1, e2]
+  exact ev_rep_mul_y D hV r hr _ hqV
+
+end Bridge
 
 end ZInQ.Contrib.CMHeight62
