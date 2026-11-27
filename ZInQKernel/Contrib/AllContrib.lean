@@ -3573,3 +3573,4 @@ import ZInQKernel.Contrib.OneProof.AfShimuraProof
 import ZInQKernel.Contrib.OneProof.ShimuraQuotientGeometry
 import ZInQKernel.Contrib.OneProof.ShimuraQuotientHecke
 import ZInQKernel.Contrib.OneProof.ShimuraQuotientImageSum
+import ZInQKernel.Contrib.OneProof.GaudronRemondIsogDeg
