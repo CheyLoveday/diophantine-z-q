@@ -68,3 +68,24 @@ Base: 96f3a26b70770167ba4e9005a601a737dc618133 (confirmed `git rev-parse HEAD`).
   given openness of {z | gpt (Φ z) ∈ W} for opens W of 𝒢_L.
 - Pitfall: (cptObj σ).left vs (ptC σ).left vs Spec ℂ are only defeq; `rw` fails on morphisms between them —
   use term-mode Eq.trans/congrArg (TailE style).
+
+## Step 4 (first bullet) — Short.lean compiles. VERIFIED
+- `cEvalAt_sectionConst`, `short_comparison` (u ≠ 0, x(Φ_E(cw)) = u²℘(w), y = u³℘'(w)/2, Φ_E(cw) ∈ E∖0 off the lattice;
+  JDescent2 proof re-run keeping D's x, y), `exists_weierstrassP_eq'`, `sigma_W_Δ : σ(Δ_W) = u^12 · discAn τ`.
+
+## Step 4 (analysis) — Analysis.lean compiles. VERIFIED
+- `wp_eq` (℘ = 1/w² + ℘[L-0]), `dwp_eq` (℘' = −2/w³ + ℘'[L-0]), `numψ`, `denψ`, `ψ`, `hasDerivAt_ψ` (ψ'(0) = 1/u),
+  `ratio_eq_ψ`, `eventually_denψ_ne_zero`, `dwp_ne_zero`, `hasDerivAt_of_eventually_ψ`.
+
+## Covolume.lean compiles. VERIFIED
+- `covolume_eq_of_mem_iff : (∀ z, z ∈ Λ ↔ ∃ m n, z 0 = a(m+nτ)) → covol Λ = ‖a‖² Im τ`
+  (BPAnalytic.covolume_periodLattice g = 1 + covolume_comap_mul_det).
+
+## Final.lean compiles (lake build ...CMHeight62.Final: Build completed successfully). VERIFIED
+- `arch_at`: coeff_σ η_W = (k/c)/u ≠ 0, covol Λ_σ = ‖c/k‖² Im τ, ‖η_W‖² = Im τ/‖u‖², identity.
+- `archIdentity : ArchIdentity` (no hypotheses).
+- `finrank_mul_modelHeight_eq_exact'` (step 6, unconditional), `cmHeight62_of_step7' : Step7 → HDec.CMBranch.CMHeight62`.
+- #print axioms (scratch/cmheight62-p1/Axioms.lean): every listed theorem depends on [propext, Classical.choice, Quot.sound].
+- grep: no sorry/axiom/admit in ZInQKernel/Contrib/OneProof/CMHeight62/.
+- Pitfalls: `set` on M.model created shadowed Φ✝ and timeouts — write terms out / top-level helper defs (`fOf`);
+  rw [top_le_preimage_iff] on (ptC σ).left morphisms timed out — use a dedicated lemma (`zero_mem_dom`).
