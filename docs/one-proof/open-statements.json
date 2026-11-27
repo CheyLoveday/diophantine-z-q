@@ -82,7 +82,7 @@
    "statement": "HDec.PkgI4.PanDict.BergerSurveyF",
    "field": "bergerSurveyF",
    "docstring":
-   "Berger's p-adic monodromy theorem, Invent. Math. 148 (2002), 219-284, as cited by the manuscript (bibitem berger2002; Théorème 0.7 = Corollaire 5.22 in the author copy, Théorème 0.6 = Théorème 5.19 of arXiv:math/0102179v3): every de Rham representation of G_{Q_p} is potentially semistable, here in Fontaine's dimension form over BstFOf (Astérisque 223 (1994), Exp. III, 1.8.5 and 5.6.1; Exp. II, 4.2.4-4.2.5). Colmez, Astérisque 319 (2008), Théorème 0.1, prints the basis form, which implies this field (PanBergerRefereed.bergerSurveyF_of_colmez); the converse needs the G_K-regularity of B_st, which is not proved, so ColmezThm01 is not a replacement at the same count. ",
+   "Berger's p-adic monodromy theorem, Invent. Math. 148 (2002), 219-284, as cited by the manuscript (bibitem berger2002; Théorème 0.7 = Corollaire 5.22 in the author copy, Théorème 0.6 = Théorème 5.19 of arXiv:math/0102179v3; journal locator UNVERIFIED): every de Rham representation of G_{Q_p} is potentially semistable, here in Fontaine's dimension form over BstFOf (Astérisque 223 (1994), Exp. III, 1.8.5 and 5.6.1; Exp. II, 4.2.4-4.2.5). Colmez, Astérisque 319 (2008), Théorème 0.1, prints the basis form, which implies this field (PanBergerRefereed.bergerSurveyF_of_colmez); the converse needs the G_K-regularity of B_st, which is not proved, so ColmezThm01 is not a replacement at the same count. ",
    "bundle": "OpenResearchLeaves79"},
   {"type": "HDec.PkgI4.PanBergerRefereed.PanThm104F",
    "statement": "HDec.PkgI4.PanBergerRefereed.PanThm104F",

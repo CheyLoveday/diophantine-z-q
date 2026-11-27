@@ -110,15 +110,16 @@ Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.4, pp. 405–406 (proof: SGA 
 
 ## Berger monodromy theorem
 
-O. Brinon and B. Conrad, *CMI summer school notes on $p$-adic Hodge theory* (preliminary version,
-June 24, 2009), Theorem 9.3.5, p. 148, the "only if" half; admissibility by dimension, §5.2, pp.
-67–68; $A_{\rm cris}$, p. 128, and its image in $B_{\rm dR}^+$, p. 129; $B_{\rm cris}$, Definition
-9.1.4, p. 131; $B_{\rm st}$, Definition 9.2.3, p. 138, its embedding in $B_{\rm dR}$, pp. 140–142,
-and Theorem 9.2.10, p. 143; $B_{\rm dR}^{G_K}=K$, Theorem 4.4.13, p. 64 (AI-read; in the
-manuscript's bibliography, which cites it for other results). The manuscript cites L. Berger,
-*Représentations $p$-adiques et équations différentielles*, Invent. Math. 148 (2002), 219–284,
-Théorème 0.6 = Théorème 5.19 (arXiv math/0102179v3, pp. 6 and 56, AI-read; Théorème 0.7 there is
-Sen's theorem); the journal numbering is unverified.
+L. Berger, *Représentations $p$-adiques et équations différentielles*, Invent. Math. 148 (2002),
+219–284, the manuscript's citation; its theorem number in the journal is unverified. In arXiv
+math/0102179v3 it is Théorème 0.6 = Théorème 5.19, pp. 6 and 56. An earlier AI reading of the author
+copy, with no recorded hash or quote, gives Théorème 0.7, p. 6, proved as Corollaire 5.22, with
+Théorème 0.8 there Sen's theorem. The typeset journal pages are unread. Potential semistability in
+the sense of J.-M. Fontaine, *Représentations $p$-adiques semi-stables*, Astérisque 223 (1994), Exp.
+III: potential $B_{\rm st}$-admissibility, 5.6.1, p. 166; admissibility by dimension, 1.8.5, pp.
+134–135; $B_{\rm st}$ inside $B_{\rm dR}$ as in J.-M. Fontaine, *Le corps des périodes $p$-adiques*,
+Astérisque 223 (1994), Exp. II, 4.2.4–4.2.5, p. 86. The basis form: P. Colmez, Astérisque 319
+(2008), 117–186, Théorème 0.1, p. 118 (a corroborating record, not this row's source).
 
 ## Pan Theorem 1.0.4
 
