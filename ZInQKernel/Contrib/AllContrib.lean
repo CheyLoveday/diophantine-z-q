@@ -3658,3 +3658,9 @@ import ZInQKernel.Contrib.OneProof.Y3Lattice412.Check
 import ZInQKernel.Contrib.OneProof.Y3Lattice412.Convention
 import ZInQKernel.Contrib.OneProof.Y3Lattice412.Lattice
 import ZInQKernel.Contrib.OneProof.Y3Lattice412.Moduli
+import ZInQKernel.Contrib.OneProof.ColmezProperModel.Check
+import ZInQKernel.Contrib.OneProof.ColmezProperModel.Colmez
+import ZInQKernel.Contrib.OneProof.ColmezProperModel.ModelRow
+import ZInQKernel.Contrib.OneProof.ColmezProperModel.ModelTate
+import ZInQKernel.Contrib.OneProof.ColmezProperModel.Points
+import ZInQKernel.Contrib.OneProof.ColmezProperModel.Valuative
