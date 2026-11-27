@@ -1,0 +1,12 @@
+import ZInQKernel.Contrib.OneProof.JavanpeykarJacKEx
+
+#print axioms JavanpeykarJacK.JavanpeykarThm111JacKEx
+#print axioms JavanpeykarJacK.isAnStableHeightSS_iff_kernel
+#print axioms JavanpeykarJacK.isAnStableHeightSS_of_iso
+#print axioms JavanpeykarJacK.isAnStableHeightSS_of_picZero
+#print axioms JavanpeykarJacK.isAnStableHeightSS_unique
+#print axioms JavanpeykarJacK.exists_isAnStableHeightSS
+#print axioms JavanpeykarJacK.javanpeykarThm111JacKEx_of_jacK
+#print axioms JavanpeykarJacK.javanpeykarThm111JacKEx_of_an
+#print axioms JavanpeykarJacK.javanpeykarThm111JacK_of_jacKEx
+#print axioms JavanpeykarJacK.javanpeykarBound_of_jacKEx

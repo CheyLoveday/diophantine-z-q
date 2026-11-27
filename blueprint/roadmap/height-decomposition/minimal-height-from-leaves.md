@@ -4,24 +4,25 @@ declaration: theorem
 origin: bridged
 statement: formalized
 proof: formalized
-lean: HDec.HSyn.sixContactMin_of_open100
+lean: HDec.HSyn.sixContactMin_of_open101
 ---
 
-# The minimal height hypothesis from eighteen statements
+# The minimal height hypothesis from nineteen statements
 
-The [minimal height hypothesis](../main/six-contact-min.md) follows from the eighteen statements of
-this chapter taken together: theorems from the literature, grouped by the theory they come from
-([Shimura curves of discriminant 6](shimura-curves/README.md),
+The [minimal height hypothesis](../multiplication/certificate/six-contact-min.md) follows from the
+nineteen statements of this chapter taken together: theorems from the literature, grouped by the
+theory they come from ([Shimura curves of discriminant 6](shimura-curves/README.md),
 [complex multiplication](cm-fibres/README.md),
 [Néron models, semistable reduction and monodromy](neron-models/README.md),
 [Faltings 1983 and Faltings heights](heights/README.md),
 [p-adic Hodge theory](p-adic-hodge/README.md),
-[Galois representations of modular forms](modular-galois/README.md)). Of the eighteen statements
-from the literature, six are published statements, some of them specialized or weakened; and twelve
-are consequences of published theorems, which take further theorems to reach from the print. The
-project's strict convention, which counts a published statement only once its reading against the
-print and its review are complete and find it in its printed form, counts four of the eighteen as
-published. None of the eighteen is proved here.
+[Galois representations of modular forms](modular-galois/README.md)). Of the nineteen statements
+from the literature, seven are published statements, some of them specialized or weakened; and
+twelve are consequences of published theorems, which take further theorems to reach from the print.
+The project's strict convention, which counts a published statement only once its reading against
+the print and its review are complete and find it in its printed form, counts five of the nineteen
+as published (six without the strictest reading of one flagged statement). None of the nineteen is
+proved here.
 
 The proof follows the manuscript's proof of its Theorem 4.1 at the one instance the main theorem
 uses, which the project has split into named steps, each proved from these statements and the steps
@@ -35,7 +36,7 @@ height hypothesis.
 
 ## Depends on
 
-- [The minimal height hypothesis](../main/six-contact-min.md)
+- [The minimal height hypothesis](../multiplication/certificate/six-contact-min.md)
 
 ## Proof depends on
 
@@ -44,7 +45,6 @@ height hypothesis.
 - [Frobenius on the Tate module of Shimura's abelian variety](modular-galois/shimura-af-frobenius.md)
 - [Hodge–Tate weights of the representation of a newform](modular-galois/kato-hodge-tate-weights.md)
 - [Shimura's Main Theorem I on Y₃ in Deligne's form](shimura-curves/shimura-main-theorem-y3.md)
-- [The lower bound for the Faltings height](heights/bost-lower-bound.md)
 - [Javanpeykar's bound for curves with a Belyi map](heights/javanpeykar-bound.md)
 - [The integral model of Y₃ over ℤ[1/30]](shimura-curves/y3-integral-model.md)
 - [Carayol's theorem on the conductor](modular-galois/carayol-conductor.md)
@@ -54,7 +54,9 @@ height hypothesis.
 - [Grothendieck's semistable reduction theorem](neron-models/semistable-reduction-theorem.md)
 - [Berger's theorem: de Rham representations are potentially semistable](p-adic-hodge/berger-de-rham-potentially-semistable.md)
 - [Pan's Fontaine–Mazur theorem](p-adic-hodge/pan-fontaine-mazur.md)
+- [The lower bound for the Faltings height](heights/bost-lower-bound.md)
 - [The isogeny theorem of Gaudron and Rémond](heights/gaudron-remond-isogeny-bound.md)
+- [The locus of geometrically connected fibres](neron-models/ega-geometrically-connected-fibres.md)
 - [Colmez's p-adic periods of an abelian variety](p-adic-hodge/colmez-p-adic-periods.md)
 - [The Hodge–Tate theorem of Tate and Raynaud for abelian varieties](p-adic-hodge/fontaine-hodge-tate-abelian.md)
 

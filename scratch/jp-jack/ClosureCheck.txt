@@ -1,0 +1,17 @@
+'HDec.HSyn.OpenResearchLeaves67_jp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.openResearchLeaves36EBCFSFU_y3x6_of_67_jp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HDec.HSyn.sixContactMin_of_open86_jp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.OneProof.frozenTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.OneProof.frozenTarget_jp' depends on axioms: [propext, Classical.choice, Quot.sound]
+ZInQ.OneProof.frozenTarget: 299583 declarations in closure
+  JavanpeykarAnRetype.JavanpeykarThm111An: present
+  JavanpeykarJacK.JavanpeykarThm111JacKEx: absent
+  JavanpeykarJacK.javanpeykarBound_of_jacKEx: absent
+  ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_faltingsLemma1Print: present
+  sorryAx: absent
+ZInQ.OneProof.frozenTarget_jp: 299298 declarations in closure
+  JavanpeykarAnRetype.JavanpeykarThm111An: absent
+  JavanpeykarJacK.JavanpeykarThm111JacKEx: present
+  JavanpeykarJacK.javanpeykarBound_of_jacKEx: present
+  ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_faltingsLemma1Print: present
+  sorryAx: absent

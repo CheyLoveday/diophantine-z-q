@@ -1,0 +1,42 @@
+#print axioms HDec.HSyn.OpenResearchLeaves67_jp
+#print axioms HDec.HSyn.openResearchLeaves36EBCFSFU_y3x6_of_67_jp
+#print axioms HDec.HSyn.sixContactMin_of_open86_jp
+#print axioms ZInQ.OneProof.frozenTarget
+#print axioms ZInQ.OneProof.frozenTarget_jp
+
+open Lean Elab Command in
+/-- Check declaration types, values (including opaque values) and inductive constructors. -/
+elab "#jp_closure " root:ident status:ident : command => do
+  let env ← getEnv
+  unless (env.find? root.getId).isSome do
+    throwError "missing root {root.getId}"
+  let expectOld := status.getId == `old
+  unless expectOld || status.getId == `new do
+    throwError "expected old or new"
+  let mut seen : NameSet := {}
+  let mut stack := #[root.getId]
+  while !stack.isEmpty do
+    let n := stack.back!
+    stack := stack.pop
+    if seen.contains n then continue
+    seen := seen.insert n
+    if let some ci := env.find? n then
+      stack := stack ++ ci.type.getUsedConstants
+      if let some v := ci.value? (allowOpaque := true) then
+        stack := stack ++ v.getUsedConstants
+      if let .inductInfo i := ci then
+        stack := stack ++ i.ctors.toArray
+  IO.println s!"{root.getId}: {seen.size} declarations in closure"
+  for (n, expected) in [
+      (`JavanpeykarAnRetype.JavanpeykarThm111An, expectOld),
+      (`JavanpeykarJacK.JavanpeykarThm111JacKEx, !expectOld),
+      (`JavanpeykarJacK.javanpeykarBound_of_jacKEx, !expectOld),
+      (`ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_faltingsLemma1Print, true),
+      (`sorryAx, false)] do
+    let found := seen.contains n
+    IO.println s!"  {n}: {if found then "present" else "absent"}"
+    unless found == expected do
+      throwError "{n}: present={found}, expected={expected}"
+
+#jp_closure ZInQ.OneProof.frozenTarget old
+#jp_closure ZInQ.OneProof.frozenTarget_jp new

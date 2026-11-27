@@ -1,0 +1,2 @@
+'JavanpeykarJacK.JavanpeykarThm111JacK' depends on axioms: [propext, Classical.choice, Quot.sound]
+'JavanpeykarJacK.javanpeykarThm111JacK_of_an' depends on axioms: [propext, Classical.choice, Quot.sound]
