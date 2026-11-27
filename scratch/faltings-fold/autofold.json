@@ -1,0 +1,22 @@
+{
+  "name": "faltings-fold",
+  "imports": [
+    "ZInQKernel.Contrib.OneProof.FaltingsDict2Models"
+  ],
+  "discharges": [
+    {
+      "field": "faltingsSemistableHeightBC",
+      "proof": "_root_.ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_faltingsLemma1Print {n}.faltingsLemma1DVRPrint {n}.silverbergZarhinThm35 {n}.neronSchemeExtensionDedekind",
+      "leaves": [
+        {
+          "name": "faltingsLemma1DVRPrint",
+          "type": "_root_.ZInQ.FaltingsRestate.FaltingsLemma1DVRPrint",
+          "doc": "Faltings 1983, p. 350, Lemma 1 (page read by the reading desk): a generic-fibre homomorphism of semiabelian schemes with abelian generic fibres extends uniquely as a morphism. S = Spec O is normal and U is its dense generic open. The model hypotheses give extensions by actual torus group schemes on both residue-field fibres, by isSemiabelianModelO_imp_faltingsDefScheme. The specialization is faltingsLemma1DVRPrint_of_printed; faltingsLemma1DVR_iff_print proves equivalence to the homomorphism form.",
+          "kind": "published",
+          "flag": "page read verbatim from the page image by the reading desk (p. 350, Definition and Lemma 1); rated by the reviewer, a third two-lens skeptic pass (print fidelity, Lean semantics) could not refute it. Re-route within a cited source: the paper is in the manuscript's bibliography (L11084-11086) and cited at L621 and L733, but for other results, not Lemma 1. Proved bridges: faltingsLemma1DVRPrint_of_printed, isSemiabelianModelO_imp_faltingsDefScheme, hasTorusExtensionScheme_of_hasTorusExtension, faltingsLemma1DVR_iff_print. Encoding: U is an open immersion (jO_genericOpen); the two fibres are base changes along jO and along the residue map (specDVR_points shows they exhaust Spec O)",
+          "source": "Faltings, Invent. Math. 73 (1983), 349-366, p. 350, Definition and Lemma 1 (read verbatim from the page image by the reading desk); paper listed at diophantine_zq.tex L11084-11086, cited at L621 and L733 for other results"
+        }
+      ]
+    }
+  ]
+}

@@ -79,6 +79,24 @@ NUMBER = {1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six', 7: 'se
 VERDICTS = {'YES', 'CONSEQUENCE', 'NO-statement', 'NO-locator', 'UNVERIFIED'}
 COPIES = {'library-print', 'author-copy', 'scan'}
 EVIDENCE = {'HUMAN-READ', 'AI-READ'}
+# AI-READ rows recorded before the real-text rule of 2026-11-26 (field, first word of commit): they get a note
+# instead of a failure. Every other AI-READ row names the file it read (sha256 in edition) and quotes it.
+# ('hRank', 'a6d49800b') read no copy: it carries the 014ea897b row's quote over the proved Lean equivalence
+# millerRankOneOnMinimalQ_iff, so it is legacy with that row.
+LEGACY_AI_READS = {('pazukiCor13Upper', 'e1b31749'), ('hRC', '181efe5b'), ('hCT', '181efe5b'),
+                   ('hRank', '119a412d'), ('hRank', 'fa21b107'), ('hRank', '014ea897b'), ('hRank', 'a6d49800b'),
+                   ('dsThm966Printed', '29bfbc3f'), ('silverbergZarhinThm34', 'a728cb72'),
+                   ('gaudronRemondSec9LowerAnSS', '55cc29bd4')}
+SHA256_COPY = re.compile(r'sha256 [0-9a-f]{6,}')
+
+
+def real_text_missing(r):
+    """What an AI-READ row lacks under the real-text rule (2026-11-26), or None."""
+    if r['evidence'] != 'AI-READ':
+        return None
+    gaps = [w for w, ok in (('a sha256 of the copy read in edition', SHA256_COPY.search(r['edition'])),
+                            ('a verbatim quote', r['quote'].strip())) if not ok]
+    return ' and '.join(gaps) or None
 CREDIT_KINDS = {'proof', 'reduction', 'statement-check', 'statement-fix', 'review', 'referee', 'setup'}
 ISSUE_REF = re.compile(r'[\w.-]+/[\w.-]+#\d+')
 # text that must not appear in generated, contributor-facing or table files. Site-specific patterns
@@ -249,6 +267,9 @@ def validate(m):
             problems.append(f"reviews.tsv: {f}: known_reader is empty or yes")
         if not r['ai_use']:
             problems.append(f'reviews.tsv: {f}: ai_use must be stated (none, or what a tool did)')
+        gap = real_text_missing(r)
+        if gap and (f, r['commit'].split(' ')[0]) not in LEGACY_AI_READS:
+            problems.append(f'reviews.tsv: {f}: an AI-READ row needs {gap} (real-text rule, 2026-11-26)')
     for r in m['credits']:
         if r['kind'] not in CREDIT_KINDS:
             problems.append(f"credits.tsv: {r['item']}: unknown kind {r['kind']!r}")
@@ -327,8 +348,9 @@ def render(m):
     count_lines = [
         f'**{n} hypotheses of the H part** (in the bundles '
         f'`{"`, `".join(sorted({h["bundle"] for h in hyps if h["bundle"] != "frozenTarget"}))}`), '
-        f'plus {words(len(tops))} manuscript hypothes{"is" if len(tops) == 1 else "es"} outside the H part '
-        f'(`{"`, `".join(tops)}`: pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.',
+        f'plus {words(len(tops))} hypothes{"is" if len(tops) == 1 else "es"} outside the H part '
+        f'(`{"`, `".join(tops)}`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), '
+        f'listed at the end.',
         '',
         f'* **Strict count: {strictest["LEAF"]} published / {strictest["GLUE"]} glue** (the strictest flagged reading; '
         + (f'{strict["LEAF"]}/{strict["GLUE"]} without the {words(n_flags)} strictest-reading '
@@ -370,22 +392,33 @@ def render(m):
     w('Readings that apply to every statement built on a shared kernel definition.')
     w('')
     w('* **Published means read.** A hypothesis counts as published only after a reader has checked it against the printed')
-    w('  page; unread and unverified rows count as glue (ruling 2026-11-17).')
-    w("* **B_dR.** The kernel's B_dR is Mathlib's `BDeRham O_Cp p`, in four textual copies, each `rfl` to it:")
-    w('  `ZInQ.Contrib.G9.PkgI4.BdR` (I4Layer.lean), `BdrKer.BdR` (KerTheta.lean), `HDec.PkgI4.BdR`')
-    w('  (OneProof/H/LPrefix.lean) and the KerTheta copy in OneProof/H/TailC.lean. Lean proves (KerTheta) that')
-    w('  B_dR^+ = `BDeRhamPlus` is a xi-adically complete DVR with maximal ideal (xi), xi = p - [p-flat], and that')
-    w('  `BDeRham` is its fraction field and is isomorphic to B_dR^+[1/xi], with the functorial G_Qp-action. The')
-    w("  construction of B_dR^+ (W(PreTilt O_Cp)[1/p] completed at ker theta) is the print's (Fontaine, Asterisque 223")
-    w('  Exp. II; Berger 2002 section 1.2): a definition-level reading. A print defining B_dR as Frac(B_dR^+) or')
-    w('  B_dR^+[1/xi] is matched by proved lemmas (`isFractionRing_BDeRham`, `bdREquivAway`). A print defining')
-    w('  B_dR = B_dR^+[1/t], t = log[eps] (Berger 2002 section 1.2), is matched only through t != 0 in B_dR^+, which')
-    w('  Lean does not prove (t is not constructed in B_dR^+): a step, so a statement read through that definition is')
-    w("  GLUE. No statement's rating depends on it today (deRhamH1AbVarT, the only row whose statement reaches B_dR, is")
-    w('  GLUE for another reason). To close it: construct t in B_dR^+ and prove t != 0 from [eps] - 1 != 0 in W(R),')
-    w('  injectivity of W(R)[1/p] -> B_dR^+ (xi-adic separatedness of A_inf) and log(1 + x) = x times a unit for x in')
-    w("  the maximal ideal; then B_dR^+[1/t] = B_dR^+[1/xi] by `eq_xi_pow_mul_unit`. Fontaine's uniformizer theorem is")
-    w('  not needed.')
+    w('  page; unread and unverified rows count as glue (ruling 2026-11-17). With no human reader available, an')
+    w('  adversarial AI reading in three independent lenses stands in for the human one (ruling 2026-11-26,')
+    w('  STATEMENT-CHECKS.md, "Adversarial AI readings").')
+    w('* **B_dR.** The manuscript uses `B_dR` in its invariant spaces (L10984–L10992) without defining the ring. Use')
+    w("  Brinon–Conrad (provenance (b), the manuscript's `brinon-conrad`), Def. 4.4.7, p. 60 and the discussion on p. 131,")
+    w("  before Def. 9.1.4 (which defines B_cris), for `B_dR` and the `B_dR^+[1/t]` presentation. The kernel's ring is")
+    w("  Mathlib's `BDeRham 𝓞_ℂ_[p] p`: the `ZInQ.Contrib.G9.PkgI4.BdR`, `ZInQ.Contrib.G9.BdrKer.BdR`, `HDec.PkgI4.BdR`,")
+    w("  and `ZInQKernel/OneProof/H/TailC.lean` copies are each definitionally equal to it. The positive ring is Mathlib's")
+    w('  `BDeRhamPlus`, the completion of `W(PreTilt 𝓞_ℂ_[p])[1/p]` at `ker θ`. In `ZInQ.Contrib.G9.BdrKer.Cp`,')
+    w('  `ker_fontaineTheta_Cp` and `ker_fontaineThetaInvertP_Cp` supply the generator `xi = p - [p-flat]` before and after')
+    w('  inverting `p`; `isAdicComplete_BDeRhamPlus`, `isDiscreteValuationRing_BDeRhamPlus`, and `maximalIdeal_BDeRhamPlus`')
+    w('  give the complete DVR and its maximal ideal. `isFractionRing_BDeRham` and `bdREquivAway` match the fraction field')
+    w('  and the presentation inverting `xi`. The period `t = log[ε]` is `DeRhamPrint.TDict.tt`;')
+    w('  `DeRhamPrint.BdRT.tt_eq_logTeich` identifies it with `HDec.PkgI4.BergerBst.logTeich` for the same `ε`, and')
+    w('  `DeRhamPrint.BdRT.fontaineT_reading` gives `t ≠ 0`, the uniformizer properties, and `σ(t) = χ(σ)t`. The `[1/t]`')
+    w('  presentation is matched by `DeRhamPrint.TDict.bdREquivAwayT`. Its Galois action is `DeRhamPrint.BdRT.awayTAction`,')
+    w("  extending the action on the positive ring by `DeRhamPrint.BdRT.awayTAct_comp` and matching the kernel's `bdrAct`")
+    w('  by `DeRhamPrint.BdRT.bdREquivAwayT_intertwines`. A print defining B_dR as B_dR^+[1/t] is now matched by proved')
+    w('  lemmas (TDict.bdREquivAwayT, BdRT.fontaineT_reading), so reading a statement through that definition no longer')
+    w('  makes it GLUE. The rows whose statements use `B_dR` are `colmez1992DeRhamAbVar` (the period pairing takes values')
+    w('  in `B_dR^+`), `bergerSurveyF` (its de Rham condition, and potential semistability over `BstFOf` inside `B_dR`) and')
+    w('  `panThm104F` (potential semistability over `BstFOf`). `deRhamVpAbVarDirect` is not a row: it is derived from')
+    w("  `vpDual` (`DeRhamScholze.HTMerge.deRhamVpAbVarDirect_of_vpDual`), which")
+    w("  `DeRhamScholze.TatePrints.vpDual_of_colmezFontaine` derives from `colmez1992DeRhamAbVar` and `fontaine1982HTAbVar`")
+    w("  (tate-prints fold). Fontaine,")
+    w("  *Astérisque* 223, Exp. II is outside the manuscript's bibliography and unread. Berger 2002 §1.2 is UNVERIFIED as a")
+    w('  locator for this definition.')
     w('')
     w('## How to help')
     w('')
@@ -509,11 +542,14 @@ def render(m):
     w('')
     for f in order:
         section(f)
-    w('## Manuscript hypotheses outside the H part')
+    w('## Hypotheses outside the H part')
     w('')
     w("These are `frozenTarget`'s other arguments (outside the H bundles); they are not part of the counts above.")
     w('Pole completeness PC (`ZInQ.PoleCompleteness`) is Theorem 5.2 of the 11/5 manuscript for its own pole')
-    w('polynomial; the manuscript derives it from its restricted converse, Theorem 5.3. The former Route K inputs')
+    w('polynomial. Lean proves it from these by the manuscript\'s descent (Section 5.1):')
+    w('`ZInQ.Manuscript.PoleS12.poleCompleteness_of_restrictedConverseGenuine_casselsTatePairing`')
+    w('(`ZInQKernel/Contrib/OneProof/CasselsTatePairing.lean`). Only `hRC`, the restricted converse (Theorem 5.3), is')
+    w('the manuscript\'s own theorem; each entry\'s kind says what the others are. The former Route K inputs')
     w('(Tian–Yuan–Zhang and Gross–Zagier) are no longer hypotheses.')
     w('')
     for f in tops:
@@ -616,6 +652,11 @@ def main():
     if gone:
         print(f"note: claims.tsv names rows that are no longer open (skipped; the claims sync removes them): "
               f"{', '.join(gone)}")
+    for r in m['reviews']:
+        gap = real_text_missing(r)
+        if gap and (r['field'], r['commit'].split(' ')[0]) in LEGACY_AI_READS:
+            print(f"note: reviews.tsv: {r['field']} ({r['commit'].split(' ')[0]}) is an AI-READ row from before the "
+                  f'real-text rule and lacks {gap}')
     if '--check' in sys.argv:
         problems += marker_problems
         for p, content in res.items():

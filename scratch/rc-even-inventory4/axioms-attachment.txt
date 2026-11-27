@@ -1,0 +1,35 @@
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PrimeComparison.0.ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.mem_or_inv_mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.atPrime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.integerAlgebra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.isLocalizationAtPrime' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PrimeComparison.0.ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.nonunits_int' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.liesOver' depends on axioms: [propext, Classical.choice, Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PrimeComparison.0.ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.stabilizes' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PrimeComparison.0.ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.residue_action' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.arithFrob' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.inertia' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PrimeComparison.exists_comparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'_private.ZInQKernel.Contrib.OneProof.RC.EvenJoin.PlacedSourceAttachment.0.ZInQ.Manuscript.RC.EvenJoin.NormalizedCuspSource.printField' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.NormalizedCuspSource.attachmentOfCarayol' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.two_mem_receiving' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Manuscript.RC.EvenJoin.PlacedCuspLists.attachmentsOfCarayol' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

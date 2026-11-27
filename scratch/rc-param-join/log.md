@@ -1,0 +1,12 @@
+- Base `cb118b8c28f2be24a232973df9018b043b80cd1b`; merged `b5055efc2efa0568ebee1c3071783c84589024ca` without conflicts.
+- `CMFieldOfDefinition` covers arbitrary quadratic orders with discriminant prime to the level. For the rough companion use the exact selector form and order of conductor `h.natAbs`.
+- `IsParamScale` states nonvanishing and lattice inclusion. Existing `curve_scale` chooses a rational scale only with `NewformPeriodsRational`; it does not identify the scalar already in the assembly.
+- `AtScale.algebraicParametrizationAtScale`: actual `Ecurve ℓ` and `X0Branch.model (newformLevel (Ecurve ℓ))`, fixed `f, Lat, κ` and rational representative. Serial compile passed.
+- `AtScale.prepared_values`: `∀ h hp, StageSelector.PreparedParamValue … hp`; `AtScale.missing_values`: `StageKummer.MissingParamValues s`. Positive level from `s`; extra inputs `hr, hCM`. Serial compile passed.
+- `RingValues.conductorOrder_discr`: quadratic order of conductor `c` has index `c` and discriminant `discr K * c²`. `RingValues.ring_values`: exact `RingParamValue` for every `h k hp hk`. Serial compile passed.
+- `Assembly.genus_values`: exact `halgG` family of the rough assembly. `Assembly.gz34CompAt`: `Gz34CompAt W 0` with both `halgG` and `halgR` supplied by the joined chart. Serial compile passed.
+- Inherited citation scope issue: tex 1784's cited pair does not supply the normalized newform statement or tex 1788's Hecke identity. See the Milne audit.
+- Transitive repository import walk: no `ZInQKernel.OneProof.Main`.
+- `Cusps.algebraicParametrizationAtScale_and_cuspLimits`: same interior map and nonzero rational representative, limit zero at infinity and scaled `cuspSymbol` along each rational cusp chart. Serial compile passed after rebuilding the existing `ZInQKernel/Contrib/OneProof/RC/ParamAtScale/Cusps.lean` artifact from source.
+- Final validation: four deliverable files passed `lake env lean -j1 -DautoImplicit=false`, resource checks before every invocation. Eight `#print axioms` outputs, each exactly `[propext, Classical.choice, Quot.sound]`.
+- Remaining cusp input: actual `[c(r)] − [c(∞)]` in `J₀(N_E)` maps under `α q_f` to the computed period-quotient value at each nonzero-weight cusp. No Jacobian or specialization theorem added.

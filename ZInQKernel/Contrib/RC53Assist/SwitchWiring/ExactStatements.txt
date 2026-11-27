@@ -1,0 +1,1598 @@
+Exact theorem, constructor, and input-record statements
+Printer options: pp.universes=true; pp.fullNames=true; pp.proofs=true.
+17 theorems, 4 principal constructors, 8 complete input records.
+Statements and axiom reports below are preserved verbatim.
+
+@ZInQ.Contrib.RC53Assist.SwitchWiring.ghom_heq : ∀ {k : Type} [inst : Field.{0} k]
+  {C C' D D' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} k},
+  Eq.{2} C C' →
+    Eq.{2} D D' →
+      ∀ {f : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} C D}
+        {g : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} C' D'},
+        HEq.{1} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} f)
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} g) →
+          HEq.{1} f g
+'ZInQ.Contrib.RC53Assist.SwitchWiring.ghom_heq' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns.mk : ∀ {U : Ultrafilter.{0} ℕ}
+  {C M : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {rC :
+    ZInQ.Contrib.RC53Assist.InnerLimit.MapStages C
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U)}
+  {rM :
+    ZInQ.Contrib.RC53Assist.InnerLimit.MapStages M
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U)}
+  (ranks : Eq.{1} C.rank M.rank),
+  (∀ (a b : ℤ) (hab : Eq.{1} (HAdd.hAdd.{0, 0, 0} a 1) b),
+      ∀ᶠ (i : ℕ) in ↑U,
+        ∀ (x : Fin (C.rank b)) (y : Fin (C.rank a)),
+          Membership.mem.{0, 0} (ZInQ.Manuscript.RC.Limits.stageIdeal i)
+            (HSub.hSub.{0, 0, 0} (C.d i a b hab x y)
+              (M.d i a b hab (Fin.cast (congrFun.{1, 1} ranks b) x) (Fin.cast (congrFun.{1, 1} ranks a) y)))) →
+    (∀ (a : ℤ),
+        ∀ᶠ (i : ℕ) in ↑U,
+          ∀
+            (x :
+              Fin
+                ((ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U).rank
+                  a))
+            (y : Fin (C.rank a)),
+            Membership.mem.{0, 0} (ZInQ.Manuscript.RC.Limits.stageIdeal i)
+              (HSub.hSub.{0, 0, 0} (rC.f i a a rfl.{1} x y)
+                (rM.f i a a rfl.{1} x (Fin.cast (congrFun.{1, 1} ranks a) y)))) →
+      ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns C M rC rM
+'ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns.mk' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns.data_eq : ∀ {U : Ultrafilter.{0} ℕ}
+  (hU : LE.le.{0} (↑U) Filter.cofinite.{0}) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda)
+  [inst : Ideal.IsPrime.{0} P]
+  {C M : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+  {rC :
+    ZInQ.Contrib.RC53Assist.InnerLimit.MapStages C
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U)}
+  {rM :
+    ZInQ.Contrib.RC53Assist.InnerLimit.MapStages M
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U)},
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns C M rC rM →
+    ∀ (s : ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind),
+      Eq.{2}
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+          (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P)) C rC s)
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+          (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P)) M rM s)
+'ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns.data_eq' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.finite_side_data : ∀ {U : Ultrafilter.{0} ℕ}
+  (hU : LE.le.{0} (↑U) Filter.cofinite.{0}) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda)
+  [inst : Ideal.IsPrime.{0} P]
+  (C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U)
+  (D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C),
+  Eq.{2}
+    (ZInQ.Contrib.RC53Assist.InnerLimit.finiteLimitSide (ZInQ.Contrib.RC53Assist.InnerLimit.fibreLimitGlobal U hU P C)
+        (ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages.resLimit hU D P)).Dside
+    (ZInQ.Contrib.RC53Assist.SwitchWiring.retainedFibreData hU P C D
+      ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.finite)
+'ZInQ.Contrib.RC53Assist.SwitchWiring.finite_side_data' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.singular_side_data : ∀ {U : Ultrafilter.{0} ℕ}
+  (hU : LE.le.{0} (↑U) Filter.cofinite.{0}) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda)
+  [inst : Ideal.IsPrime.{0} P]
+  (C : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U)
+  (D : ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages U C),
+  Eq.{2}
+    (ZInQ.Contrib.RC53Assist.InnerLimit.singularLimitSide (ZInQ.Contrib.RC53Assist.InnerLimit.fibreLimitGlobal U hU P C)
+        (ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages.resLimit hU D P)).Dside
+    (ZInQ.Contrib.RC53Assist.SwitchWiring.retainedFibreData hU P C D
+      ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.singular)
+'ZInQ.Contrib.RC53Assist.SwitchWiring.singular_side_data' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.step_finite_side_data : ∀ {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst : Ideal.IsPrime.{0} P] {F : Type} [inst_1 : Field.{0} F] {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F}
+  {S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι}
+  (X : ZInQ.Contrib.CloudB3RC53.SwitchInputs.InnerLimitStepData P S₀ S₁),
+  Eq.{2} X.toStep.SF.Dside
+    (ZInQ.Contrib.RC53Assist.SwitchWiring.retainedFibreData X.hU P X.C X.D
+      ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.finite)
+'ZInQ.Contrib.RC53Assist.SwitchWiring.step_finite_side_data' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.step_singular_side_data : ∀ {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst : Ideal.IsPrime.{0} P] {F : Type} [inst_1 : Field.{0} F] {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F}
+  {S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι}
+  (X : ZInQ.Contrib.CloudB3RC53.SwitchInputs.InnerLimitStepData P S₀ S₁),
+  Eq.{2} X.toStep.SS.Dside
+    (ZInQ.Contrib.RC53Assist.SwitchWiring.retainedFibreData X.hU P X.C X.D
+      ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.singular)
+'ZInQ.Contrib.RC53Assist.SwitchWiring.step_singular_side_data' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.mk : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {U : Ultrafilter.{0} ℕ} →
+          {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} →
+            {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+              [inst_2 : Ideal.IsPrime.{0} P] →
+                (Config Prime : Type) →
+                  (ZInQ.Contrib.RC53Assist.InnerLimitArith.MovingLabel K S → Prime) →
+                    (actual : Config) →
+                      (Config → Prime → Config) →
+                        (diagram :
+                            Config →
+                              ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U) →
+                          (restriction :
+                              (c : Config) →
+                                ZInQ.Contrib.RC53Assist.InnerLimit.MapStages (diagram c)
+                                  (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages
+                                    ZInQ.Manuscript.RC.Limits.stageIdeal U)) →
+                            (kind : Config → ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind) →
+                              Localization.AtPrime.{0} P →
+                                (zAct :
+                                    ↑(HomologicalComplex.X.{0, 1, 0}
+                                        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                            (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                                              ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                                              (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda
+                                                (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                              (diagram actual) (restriction actual) (kind actual))))
+                                        1)) →
+                                  Eq.{1}
+                                      ((ModuleCat.Hom.hom.{0, 0}
+                                          (HomologicalComplex.d.{0, 1, 0}
+                                            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                                (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                                                  ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                                                  (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda
+                                                    (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                                  (diagram actual) (restriction actual) (kind actual))))
+                                            1 2))
+                                        zAct)
+                                      0 →
+                                    (lamAct :
+                                        LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                          (↑(HomologicalComplex.X.{0, 1, 0}
+                                              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                                  (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                                                    ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                                                    (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda
+                                                      (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                                    (diagram actual) (restriction actual) (kind actual))))
+                                              2))
+                                          (ZInQ.Manuscript.RC.Wiring.ResAt P)) →
+                                      (∀
+                                          (y :
+                                            ↑(HomologicalComplex.X.{0, 1, 0}
+                                                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                                    (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                                                      ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                                                      (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda
+                                                        (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                                      (diagram actual) (restriction actual) (kind actual))))
+                                                1)),
+                                          Eq.{1}
+                                            (lamAct
+                                              ((ModuleCat.Hom.hom.{0, 0}
+                                                  (HomologicalComplex.d.{0, 1, 0}
+                                                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                                      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                                        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                                                          ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                                                          (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda
+                                                            (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                                          (diagram actual) (restriction actual) (kind actual))))
+                                                    1 2))
+                                                y))
+                                            0) →
+                                        ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P
+'ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.mk' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.mk : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {U : Ultrafilter.{0} ℕ} →
+          {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} →
+            {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+              [inst_2 : Ideal.IsPrime.{0} P] →
+                {A : ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P} →
+                  {F : Type} →
+                    [inst_3 : Field.{0} F] →
+                      {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} →
+                        {u : F} →
+                          (stage : A.Config → ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι) →
+                            (model :
+                                (c : A.Config) →
+                                  HomotopyEquiv.{0, 1, 0}
+                                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} (A.fibre c)))
+                                    (ZInQ.Contrib.CloudB3RC53.SwitchInputs.twoTermFiberComplex.{0, 0}
+                                      (ZInQ.Manuscript.RC.Wiring.resAt P) (stage c))) →
+                              (Eq.{1}
+                                  ((ModuleCat.Hom.hom.{0, 0}
+                                      (HomologicalComplex.Hom.f.{0, 1, 0} (HomotopyEquiv.hom.{0, 1, 0} (model A.actual))
+                                        1))
+                                    A.zAct)
+                                  fun i =>
+                                  (ZInQ.Manuscript.RC.Wiring.resAt P)
+                                    (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.z.{0, 0} (stage A.actual) i)) →
+                                (∀
+                                    (y :
+                                      ↑(HomologicalComplex.X.{0, 1, 0}
+                                          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                                              (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                                                ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                                                (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda
+                                                  (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                                (A.diagram A.actual) (A.restriction A.actual) (A.kind A.actual))))
+                                          2)),
+                                    Eq.{1} (A.lamAct y)
+                                      (dotProduct.{0, 0}
+                                        (fun i =>
+                                          (ZInQ.Manuscript.RC.Wiring.resAt P)
+                                            (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.w.{0, 0}
+                                              (stage A.actual) i))
+                                        ((ModuleCat.Hom.hom.{0, 0}
+                                            (HomologicalComplex.Hom.f.{0, 1, 0}
+                                              (HomotopyEquiv.hom.{0, 1, 0} (model A.actual)) 2))
+                                          y))) →
+                                  Eq.{1} (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.u.{0, 0} (stage A.actual))
+                                      u →
+                                    ¬A.family.quadratic (ZInQ.Manuscript.RC.Wiring.resAt P) →
+                                      (∀ (c : A.Config),
+                                          ZInQ.Contrib.CloudB3RC53.SwitchInputs.Reach A.next A.actual c →
+                                            ∃ i,
+                                              Ne.{1}
+                                                ((ZInQ.Manuscript.RC.Wiring.resAt P)
+                                                  (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.z.{0, 0}
+                                                    (stage c) i))
+                                                0) →
+                                        ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame A ι u
+'ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.mk' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.mk : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {E : WeierstrassCurve.{0} ℚ} →
+          [inst_2 : WeierstrassCurve.IsElliptic.{0} E] →
+            [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+              {αStage :
+                  (i : ℕ) →
+                    MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                      (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                [inst_4 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] →
+                  Set.Finite.{0} S →
+                    (∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+                        Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 →
+                          Membership.mem.{0, 0} S v) →
+                      ZInQ.Contrib.RC53Assist.RetainedAssembly.ArithmeticPrints K →
+                        (family :
+                            ZInQ.Contrib.RC53Assist.RetainedAssembly.ActualStageFamily S
+                              (WeierstrassCurve.baseChange.{0, 0} E K) αStage) →
+                          (old : ZInQ.Contrib.RC53Assist.RetainedAssembly.OldDualityData family) →
+                            (reference :
+                                ZInQ.Contrib.RC53Assist.RetainedAssembly.StandardOldReference S
+                                  (WeierstrassCurve.baseChange.{0, 0} E K) αStage) →
+                              (width : ℕ) →
+                                ZInQ.Contrib.RC53Assist.RetainedAssembly.ArithmeticInputs family old reference width →
+                                  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage
+'ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.mk' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.result : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [NumberField.IsTotallyComplex.{0} K] →
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+          {E : WeierstrassCurve.{0} ℚ} →
+            [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+              [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                {αStage :
+                    (i : ℕ) →
+                      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] →
+                    (T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage) →
+                      (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) →
+                        (hW :
+                            Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+                              (WeierstrassCurve.baseChange.{0, 0} E K)) →
+                          (U : Ultrafilter.{0} ℕ) →
+                            (hU : LE.le.{0} (↑U) Filter.cofinite.{0}) →
+                              ZInQ.Contrib.RC53Assist.RetainedAssembly.AssembledLimit T.arithmetic U hU Cn hW
+'ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.result' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.mk : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [inst_2 : NumberField.IsTotallyComplex.{0} K] →
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+          {E : WeierstrassCurve.{0} ℚ} →
+            [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+              [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                {αStage :
+                    (i : ℕ) →
+                      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] →
+                    {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage} →
+                      {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S} →
+                        {hW :
+                            Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+                              (WeierstrassCurve.baseChange.{0, 0} E K)} →
+                          {U : Ultrafilter.{0} ℕ} →
+                            {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} →
+                              {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                                [inst_6 : Ideal.IsPrime.{0} P] →
+                                  {e :
+                                      AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K)
+                                        ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+                                    {χ :
+                                        MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                          (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+                                      [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] →
+                                        (degree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2) →
+                                          Eq.{1} (Ideal.height.{0} P) 1 →
+                                            Ne.{1} P (Ideal.span.{0} (Singleton.singleton.{0, 0} 2)) →
+                                              ZInQ.Manuscript.RC.PrintsArith.SerreThm3 →
+                                                ZInQ.Manuscript.RC.PrintsArith.HasNoCM E →
+                                                  (B0 :
+                                                      ℕ →
+                                                        IntermediateField.{0, 0} ℚ
+                                                          ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+                                                    (∀ (i : ℕ), Normal.{0, 0} ℚ ↥(B0 i)) →
+                                                      (∀ (i : ℕ), FiniteDimensional.{0, 0} ℚ ↥(B0 i)) →
+                                                        ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields S
+                                                            e χ Cn B0 →
+                                                          ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput
+                                                              S e χ E Cn degree U P →
+                                                            (F0 :
+                                                                ℕ →
+                                                                  IntermediateField.{0, 0} ℚ
+                                                                    ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+                                                              (∀ (i : ℕ), FiniteDimensional.{0, 0} ℚ ↥(F0 i)) →
+                                                                (ℕ → Finset.{0} ℕ) →
+                                                                  (n : ℕ) →
+                                                                    ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding
+                                                                        S e χ E U P n (T.global Cn hW U hU P) →
+                                                                      (cycle :
+                                                                          ↥(LinearMap.ker.{0, 0, 0, 0}
+                                                                              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                                                                                (T.global Cn hW U hU P) 1 2 rfl.{1}))) →
+                                                                        Ne.{1}
+                                                                            ((ZInQ.Manuscript.RC.SelmerComplex.clsAt
+                                                                                (T.global Cn hW U hU P) 1 2 rfl.{1})
+                                                                              cycle)
+                                                                            0 →
+                                                                          LT.lt.{0} 1
+                                                                              (Module.finrank.{0, 0}
+                                                                                (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                                                                                ↑(HomologicalComplex.homology.{0, 1, 0}
+                                                                                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                                                                      (T.global Cn hW U hU P))
+                                                                                    1)) →
+                                                                            ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining
+                                                                              T Cn hW U hU P e χ
+'ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.mk' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.detect : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [inst_2 : NumberField.IsTotallyComplex.{0} K] →
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+          {E : WeierstrassCurve.{0} ℚ} →
+            [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+              [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                {αStage :
+                    (i : ℕ) →
+                      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] →
+                    {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage} →
+                      {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S} →
+                        {hW :
+                            Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+                              (WeierstrassCurve.baseChange.{0, 0} E K)} →
+                          {U : Ultrafilter.{0} ℕ} →
+                            {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} →
+                              {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                                [inst_6 : Ideal.IsPrime.{0} P] →
+                                  {e :
+                                      AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K)
+                                        ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+                                    {χ :
+                                        MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                          (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+                                      [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] →
+                                        (A :
+                                            ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e
+                                              χ) →
+                                          ZInQ.Contrib.RC53Assist.Detection.ArithmeticDetection S T.finiteSupport e χ E
+                                            Cn U P A.B0 A.F0 A.excluded A.degree (T.global Cn hW U hU P) A.evaluation
+                                            A.cycle
+'ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.detect' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.hdet : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+  {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage}
+  {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hW :
+    Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+      (WeierstrassCurve.baseChange.{0, 0} E K)}
+  {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst_6 : Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ]
+  (A : ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e χ)
+  (columns :
+    ZInQ.Contrib.RC53Assist.StageStepDetection.RetainedEvaluationColumns hU P (T.result Cn hW U hU).D A.evaluation
+      A.label),
+  LE.le.{0}
+    (ZInQ.Manuscript.RC.Uniform.finPlane.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      (ZInQ.Contrib.RC53Assist.InnerLimit.Vec2 (ZInQ.Manuscript.RC.Wiring.ResAt P))
+      (ZInQ.Contrib.RC53Assist.InnerLimit.Vec2 (ZInQ.Manuscript.RC.Wiring.ResAt P)))
+    (ZInQ.Contrib.RC53Assist.InnerLimit.limitRelaxed (T.global Cn hW U hU P)
+        (ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages.resLimit hU (T.result Cn hW U hU).D P)).U
+'ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.hdet' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.mk : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [inst_2 : NumberField.IsTotallyComplex.{0} K] →
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+          {E : WeierstrassCurve.{0} ℚ} →
+            [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+              [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                {αStage :
+                    (i : ℕ) →
+                      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] →
+                    {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage} →
+                      {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S} →
+                        {hW :
+                            Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+                              (WeierstrassCurve.baseChange.{0, 0} E K)} →
+                          {U : Ultrafilter.{0} ℕ} →
+                            {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} →
+                              {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                                [inst_6 : Ideal.IsPrime.{0} P] →
+                                  {e :
+                                      AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K)
+                                        ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+                                    {χ :
+                                        MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                          (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+                                      [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] →
+                                        {A :
+                                            ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e
+                                              χ} →
+                                          {F : Type} →
+                                            [inst_8 : Field.{0} F] →
+                                              {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} →
+                                                {S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι} →
+                                                  ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U
+                                                      (T.result Cn hW U hU).C (T.result Cn hW U hU).D →
+                                                    ZInQ.Contrib.RC53Assist.StageStepDetection.RetainedEvaluationColumns
+                                                        hU P (T.result Cn hW U hU).D A.evaluation A.label →
+                                                      (finiteModel :
+                                                          ZInQ.Contrib.RC53Assist.InnerLimitMoving.IntegralMatrixStageData
+                                                            ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                                                            (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda
+                                                              (Localization.AtPrime.{0} P))
+                                                            ι
+                                                            (ZInQ.Contrib.RC53Assist.InnerLimitMoving.selmerStages
+                                                              (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeDiagram
+                                                                (T.result Cn hW U hU).C
+                                                                (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages
+                                                                  (T.result Cn hW U hU).D)
+                                                                ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.finite))) →
+                                                        (singularModel :
+                                                            ZInQ.Contrib.RC53Assist.InnerLimitMoving.IntegralMatrixStageData
+                                                              ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                                                              (Algebra.algebraMap.{0, 0}
+                                                                ZInQ.Manuscript.RC.Uniform.Lambda
+                                                                (Localization.AtPrime.{0} P))
+                                                              ι
+                                                              (ZInQ.Contrib.RC53Assist.InnerLimitMoving.selmerStages
+                                                                (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeDiagram
+                                                                  (T.result Cn hW U hU).C
+                                                                  (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages
+                                                                    (T.result Cn hW U hU).D)
+                                                                  ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.singular))) →
+                                                          Eq.{1} finiteModel.stage S₀ →
+                                                            Eq.{1} singularModel.stage S₁ →
+                                                              ZInQ.Contrib.CloudB3RC53.UniformSwitch.CoordStep.{0, 0} ι
+                                                                  (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.u.{0,
+                                                                      0}
+                                                                    S₀)
+                                                                  (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.u.{0,
+                                                                      0}
+                                                                    S₁) →
+                                                                Eq.{1} T.family.q A.label.q →
+                                                                  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs
+                                                                    A ι S₀ S₁
+'ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.mk' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.toStepData : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [inst_2 : NumberField.IsTotallyComplex.{0} K] →
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+          {E : WeierstrassCurve.{0} ℚ} →
+            [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+              [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                {αStage :
+                    (i : ℕ) →
+                      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] →
+                    {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage} →
+                      {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S} →
+                        {hW :
+                            Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+                              (WeierstrassCurve.baseChange.{0, 0} E K)} →
+                          {U : Ultrafilter.{0} ℕ} →
+                            {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} →
+                              {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                                [inst_6 : Ideal.IsPrime.{0} P] →
+                                  {e :
+                                      AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K)
+                                        ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+                                    {χ :
+                                        MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                          (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+                                      [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] →
+                                        {A :
+                                            ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e
+                                              χ} →
+                                          {F : Type} →
+                                            [inst_8 : Field.{0} F] →
+                                              {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} →
+                                                {S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι} →
+                                                  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs A ι S₀ S₁ →
+                                                    ZInQ.Contrib.CloudB3RC53.SwitchInputs.InnerLimitStepData P S₀ S₁
+'ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.toStepData' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.certificate : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+  {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage}
+  {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hW :
+    Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+      (WeierstrassCurve.baseChange.{0, 0} E K)}
+  {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst_6 : Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ]
+  {A : ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e χ} {F : Type} [inst_8 : Field.{0} F]
+  {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F}
+  {S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι}
+  (X : ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs A ι S₀ S₁),
+  ZInQ.Contrib.RC53Assist.InnerLimit.FibreInnerLimitPairingCertificate U hU P (T.result Cn hW U hU).C
+    (ZInQ.Manuscript.RC.FibreDuality.RetainedLimitPairingStages.resLimit hU (T.result Cn hW U hU).D P)
+    (X.localArithmetic.εAt P) 1 (X.localArithmetic.JAt P)
+'ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.certificate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.retained_C : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+  {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage}
+  {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hW :
+    Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+      (WeierstrassCurve.baseChange.{0, 0} E K)}
+  {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst_6 : Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ]
+  {A : ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e χ} {F : Type} [inst_8 : Field.{0} F]
+  {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F}
+  {S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι}
+  (X : ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs A ι S₀ S₁),
+  Eq.{1} X.toStepData.C (T.result Cn hW U hU).C
+'ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.retained_C' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.retained_D : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+  {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage}
+  {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hW :
+    Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+      (WeierstrassCurve.baseChange.{0, 0} E K)}
+  {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst_6 : Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ]
+  {A : ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e χ} {F : Type} [inst_8 : Field.{0} F]
+  {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F}
+  {S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι}
+  (X : ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs A ι S₀ S₁),
+  Eq.{1} X.toStepData.D (T.result Cn hW U hU).D
+'ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.retained_D' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.retained_E : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+  {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage}
+  {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hW :
+    Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+      (WeierstrassCurve.baseChange.{0, 0} E K)}
+  {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst_6 : Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ]
+  {A : ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e χ} {F : Type} [inst_8 : Field.{0} F]
+  {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F}
+  {S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι}
+  (X : ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs A ι S₀ S₁),
+  Eq.{1} X.toStepData.E (T.result Cn hW U hU).E
+'ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.retained_E' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.mk : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [inst_2 : NumberField.IsTotallyComplex.{0} K] →
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+          {E : WeierstrassCurve.{0} ℚ} →
+            [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+              [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                {αStage :
+                    (i : ℕ) →
+                      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] →
+                    {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S} →
+                      {hW :
+                          Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+                            (WeierstrassCurve.baseChange.{0, 0} E K)} →
+                        {U : Ultrafilter.{0} ℕ} →
+                          {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} →
+                            {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                              [inst_6 : Ideal.IsPrime.{0} P] →
+                                {e :
+                                    AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+                                  {χ :
+                                      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                        (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+                                    [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] →
+                                      {F : Type} →
+                                        [inst_8 : Field.{0} F] →
+                                          {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} →
+                                            {u : F} →
+                                              {A : ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P} →
+                                                {B : ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame A ι u} →
+                                                  {c : A.Config} →
+                                                    (retention :
+                                                        ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage) →
+                                                      (detection :
+                                                          ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining
+                                                            retention Cn hW U hU P e χ) →
+                                                        ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs
+                                                            detection ι (B.stage c)
+                                                            (B.stage (A.next c (A.primeOfLabel detection.label))) →
+                                                          ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns
+                                                              (retention.result Cn hW U hU).C (A.diagram c)
+                                                              (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages
+                                                                (retention.result Cn hW U hU).D)
+                                                              (A.restriction c) →
+                                                            ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns
+                                                                (retention.result Cn hW U hU).C
+                                                                (A.diagram (A.next c (A.primeOfLabel detection.label)))
+                                                                (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages
+                                                                  (retention.result Cn hW U hU).D)
+                                                                (A.restriction
+                                                                  (A.next c (A.primeOfLabel detection.label))) →
+                                                              Eq.{1} (A.kind c)
+                                                                  ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.finite →
+                                                                Eq.{1}
+                                                                    (A.kind (A.next c (A.primeOfLabel detection.label)))
+                                                                    ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.singular →
+                                                                  ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining
+                                                                    A B c
+'ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.mk' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.mk : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [inst_2 : NumberField.IsTotallyComplex.{0} K] →
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+          {E : WeierstrassCurve.{0} ℚ} →
+            [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+              [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                {αStage :
+                    (i : ℕ) →
+                      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] →
+                    {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S} →
+                      {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+                        {χ :
+                            MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                              (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+                          [inst_6 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] →
+                            {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                              [inst_7 : Ideal.IsPrime.{0} P] →
+                                {F : Type} →
+                                  [inst_8 : Field.{0} F] →
+                                    {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} →
+                                      {u : F} →
+                                        (hW :
+                                            Eq.{1}
+                                              (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K)
+                                                ↑Cn.κ)
+                                              (WeierstrassCurve.baseChange.{0, 0} E K)) →
+                                          (U : Ultrafilter.{0} ℕ) →
+                                            (hU : LE.le.{0} (↑U) Filter.cofinite.{0}) →
+                                              (atlas : ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P) →
+                                                (frame : ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame atlas ι u) →
+                                                  ((c : atlas.Config) →
+                                                      ZInQ.Contrib.CloudB3RC53.SwitchInputs.Reach atlas.next
+                                                          atlas.actual c →
+                                                        LT.lt.{0} 1
+                                                            (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.fiberDim.{0,
+                                                                0, 0}
+                                                              (ZInQ.Manuscript.RC.Wiring.resAt P) (frame.stage c)) →
+                                                          ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining
+                                                            atlas frame c) →
+                                                    ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs αStage Cn e χ P
+                                                      ι u
+'ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.mk' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.toInnerLimitSwitchInputs : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [inst_2 : NumberField.IsTotallyComplex.{0} K] →
+        {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+          {E : WeierstrassCurve.{0} ℚ} →
+            [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+              [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                {αStage :
+                    (i : ℕ) →
+                      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))} →
+                  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] →
+                    {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_6 : Ideal.IsPrime.{0} P] →
+                          {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+                            {χ :
+                                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                  (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+                              [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] →
+                                {F : Type} →
+                                  [inst_8 : Field.{0} F] →
+                                    {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} →
+                                      {u : F} →
+                                        (X : ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs αStage Cn e χ P ι u) →
+                                          ZInQ.Contrib.CloudB3RC53.SwitchInputs.InnerLimitSwitchInputs P X.atlas.family
+                                            ι u
+'ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.toInnerLimitSwitchInputs' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.regular : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [inst_5 : ∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+  {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst_6 : Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_7 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] {F : Type} [inst_8 : Field.{0} F]
+  {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} {u : F}
+  (X : ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs αStage Cn e χ P ι u),
+  Function.Injective.{1, 1} ⇑ι → ∃ a, Eq.{1} (ι a) u
+'ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.regular' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.fixedLocalRange : ∀ {k : Type} [inst : Field.{0} k]
+  {G G' U U' L : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} k}
+  {r : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} G L}
+  {r' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} G' L}
+  {i : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U L}
+  {i' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} U' L},
+  Eq.{2} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.mk.{0} G U L r i)
+      (ZInQ.Contrib.CloudB3RC53.PairedFunctional.SelData.mk.{0} G' U' L r' i') →
+    Eq.{1} (LinearMap.range.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} i 1 1 rfl.{1}))
+      (LinearMap.range.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.f.{0} i' 1 1 rfl.{1}))
+'ZInQ.Contrib.RC53Assist.SwitchWiring.fixedLocalRange' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.finite_singular_ne : ∀ {k : Type} [inst : Field.{0} k]
+  {G G' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} k}
+  (r : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} G (ZInQ.Contrib.RC53Assist.InnerLimit.splitLocalComplex k))
+  (r' : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GHom.{0} G' (ZInQ.Contrib.RC53Assist.InnerLimit.splitLocalComplex k)),
+  Ne.{2} (ZInQ.Contrib.RC53Assist.InnerLimit.finiteLimitSide G r).Dside
+    (ZInQ.Contrib.RC53Assist.InnerLimit.singularLimitSide G' r').Dside
+'ZInQ.Contrib.RC53Assist.SwitchWiring.finite_singular_ne' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.successor_dimension_le_one : ∀ {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst : Ideal.IsPrime.{0} P] {F : Type} [inst_1 : Field.{0} F] {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F}
+  {u : F}
+  {Φ :
+    ZInQ.Contrib.CloudB3RC53.SwitchInputs.SwitchFamily (ZInQ.Manuscript.RC.Wiring.ResAt P) (Localization.AtPrime.{0} P)}
+  (X : ZInQ.Contrib.CloudB3RC53.SwitchInputs.InnerLimitSwitchInputs P Φ ι u) {c : Φ.Config} {p : Φ.Prime},
+  ZInQ.Contrib.CloudB3RC53.SwitchInputs.Reach Φ.next Φ.actual c →
+    ∀ (Y : ZInQ.Contrib.CloudB3RC53.SwitchInputs.InnerLimitStepData P (X.stage c) (X.stage (Φ.next c p))),
+      Eq.{2} Y.toStep.SS.Dside (Φ.fibre (Φ.next c p)) →
+        LE.le.{0}
+          (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.fiberDim.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.resAt P)
+            (X.stage (Φ.next c p)))
+          1
+'ZInQ.Contrib.RC53Assist.SwitchWiring.successor_dimension_le_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.reachable_dimension_le_three : ∀ {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [inst : Ideal.IsPrime.{0} P] {F : Type} [inst_1 : Field.{0} F] {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F}
+  {u : F}
+  {Φ :
+    ZInQ.Contrib.CloudB3RC53.SwitchInputs.SwitchFamily (ZInQ.Manuscript.RC.Wiring.ResAt P) (Localization.AtPrime.{0} P)}
+  (X : ZInQ.Contrib.CloudB3RC53.SwitchInputs.InnerLimitSwitchInputs P Φ ι u) {c : Φ.Config},
+  ZInQ.Contrib.CloudB3RC53.SwitchInputs.Reach Φ.next Φ.actual c →
+    LE.le.{0}
+      (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.fiberDim.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.resAt P)
+        (X.stage c))
+      3
+'ZInQ.Contrib.RC53Assist.SwitchWiring.reachable_dimension_le_three' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.SwitchWiring.no_inputs_of_large_actual_fibre : ∀
+  {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst : Ideal.IsPrime.{0} P] {F : Type} [inst_1 : Field.{0} F]
+  {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} {u : F}
+  {Φ :
+    ZInQ.Contrib.CloudB3RC53.SwitchInputs.SwitchFamily (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      (Localization.AtPrime.{0} P)},
+  LT.lt.{0} 3
+      (Module.finrank.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+        ↑(HomologicalComplex.homology.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} (Φ.fibre Φ.actual)))
+            1)) →
+    ¬Nonempty.{1} (ZInQ.Contrib.CloudB3RC53.SwitchInputs.InnerLimitSwitchInputs P Φ ι u)
+'ZInQ.Contrib.RC53Assist.SwitchWiring.no_inputs_of_large_actual_fibre' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+structure ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns {U : Ultrafilter.{0} ℕ}
+  (C M : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U)
+  (rC :
+    ZInQ.Contrib.RC53Assist.InnerLimit.MapStages C
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U))
+  (rM :
+    ZInQ.Contrib.RC53Assist.InnerLimit.MapStages M
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U)) :
+  Prop
+number of parameters: 5
+fields:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns.ranks : Eq.{1} C.rank M.rank
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns.differential : ∀ (a b : ℤ)
+      (hab : Eq.{1} (HAdd.hAdd.{0, 0, 0} a 1) b),
+      ∀ᶠ (i : ℕ) in ↑U,
+        ∀ (x : Fin (C.rank b)) (y : Fin (C.rank a)),
+          Membership.mem.{0, 0} (ZInQ.Manuscript.RC.Limits.stageIdeal i)
+            (HSub.hSub.{0, 0, 0} (C.d i a b hab x y) (M.d i a b hab (Fin.cast ⋯ x) (Fin.cast ⋯ y)))
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns.localization : ∀ (a : ℤ),
+      ∀ᶠ (i : ℕ) in ↑U,
+        ∀
+          (x :
+            Fin
+              ((ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U).rank
+                a))
+          (y : Fin (C.rank a)),
+          Membership.mem.{0, 0} (ZInQ.Manuscript.RC.Limits.stageIdeal i)
+            (HSub.hSub.{0, 0, 0} (rC.f i a a ⋯ x y) (rM.f i a a ⋯ x (Fin.cast ⋯ y)))
+constructor:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns.mk {U : Ultrafilter.{0} ℕ}
+    {C M : ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U}
+    {rC :
+      ZInQ.Contrib.RC53Assist.InnerLimit.MapStages C
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U)}
+    {rM :
+      ZInQ.Contrib.RC53Assist.InnerLimit.MapStages M
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U)}
+    (ranks : Eq.{1} C.rank M.rank)
+    (differential :
+      ∀ (a b : ℤ) (hab : Eq.{1} (HAdd.hAdd.{0, 0, 0} a 1) b),
+        ∀ᶠ (i : ℕ) in ↑U,
+          ∀ (x : Fin (C.rank b)) (y : Fin (C.rank a)),
+            Membership.mem.{0, 0} (ZInQ.Manuscript.RC.Limits.stageIdeal i)
+              (HSub.hSub.{0, 0, 0} (C.d i a b hab x y) (M.d i a b hab (Fin.cast ⋯ x) (Fin.cast ⋯ y))))
+    (localization :
+      ∀ (a : ℤ),
+        ∀ᶠ (i : ℕ) in ↑U,
+          ∀
+            (x :
+              Fin
+                ((ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U).rank
+                  a))
+            (y : Fin (C.rank a)),
+            Membership.mem.{0, 0} (ZInQ.Manuscript.RC.Limits.stageIdeal i)
+              (HSub.hSub.{0, 0, 0} (rC.f i a a ⋯ x y) (rM.f i a a ⋯ x (Fin.cast ⋯ y)))) :
+    ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns C M rC rM
+structure ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas {K : Type} [Field.{0} K] [NumberField.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) (U : Ultrafilter.{0} ℕ)
+  (hU : LE.le.{0} (↑U) Filter.cofinite.{0}) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [Ideal.IsPrime.{0} P] :
+  Type 1
+number of parameters: 8
+fields:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.Config : Type
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.Prime : Type
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.primeOfLabel : ZInQ.Contrib.RC53Assist.InnerLimitArith.MovingLabel K
+        S →
+      self.Prime
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.actual : self.Config
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.next : self.Config → self.Prime → self.Config
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.diagram : self.Config →
+      ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.restriction : (c : self.Config) →
+      ZInQ.Contrib.RC53Assist.InnerLimit.MapStages (self.diagram c)
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.kind : self.Config →
+      ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.t : Localization.AtPrime.{0} P
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.zAct : ↑(HomologicalComplex.X.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+            (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+              ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+              (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+              (self.diagram self.actual) (self.restriction self.actual) (self.kind self.actual))))
+        1)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.hzAct : Eq.{1}
+      ((ModuleCat.Hom.hom.{0, 0}
+          (HomologicalComplex.d.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                  ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                  (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                  (self.diagram self.actual) (self.restriction self.actual) (self.kind self.actual))))
+            1 2))
+        self.zAct)
+      0
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.lamAct : LinearMap.{0, 0, 0, 0}
+      (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+      (↑(HomologicalComplex.X.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+              (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                (self.diagram self.actual) (self.restriction self.actual) (self.kind self.actual))))
+          2))
+      (ZInQ.Manuscript.RC.Wiring.ResAt P)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.hlamAct : ∀
+      (y :
+        ↑(HomologicalComplex.X.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                  ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                  (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                  (self.diagram self.actual) (self.restriction self.actual) (self.kind self.actual))))
+            1)),
+      Eq.{1}
+        (self.lamAct
+          ((ModuleCat.Hom.hom.{0, 0}
+              (HomologicalComplex.d.{0, 1, 0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                    (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                      ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                      (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                      (self.diagram self.actual) (self.restriction self.actual) (self.kind self.actual))))
+                1 2))
+            y))
+        0
+constructor:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas.mk {K : Type} [Field.{0} K] [NumberField.{0} K]
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {U : Ultrafilter.{0} ℕ}
+    {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [Ideal.IsPrime.{0} P]
+    (Config Prime : Type) (primeOfLabel : ZInQ.Contrib.RC53Assist.InnerLimitArith.MovingLabel K S → Prime)
+    (actual : Config) (next : Config → Prime → Config)
+    (diagram : Config → ZInQ.Contrib.RC53Assist.InnerLimit.ComplexStages ZInQ.Manuscript.RC.Limits.stageIdeal U)
+    (restriction :
+      (c : Config) →
+        ZInQ.Contrib.RC53Assist.InnerLimit.MapStages (diagram c)
+          (ZInQ.Contrib.RC53Assist.InnerLimitMoving.fullLocalStages ZInQ.Manuscript.RC.Limits.stageIdeal U))
+    (kind : Config → ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind) (t : Localization.AtPrime.{0} P)
+    (zAct :
+      ↑(HomologicalComplex.X.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+              (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                (diagram actual) (restriction actual) (kind actual))))
+          1))
+    (hzAct :
+      Eq.{1}
+        ((ModuleCat.Hom.hom.{0, 0}
+            (HomologicalComplex.d.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                  (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                    ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                    (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                    (diagram actual) (restriction actual) (kind actual))))
+              1 2))
+          zAct)
+        0)
+    (lamAct :
+      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+        (↑(HomologicalComplex.X.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                  ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                  (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                  (diagram actual) (restriction actual) (kind actual))))
+            2))
+        (ZInQ.Manuscript.RC.Wiring.ResAt P))
+    (hlamAct :
+      ∀
+        (y :
+          ↑(HomologicalComplex.X.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                  (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                    ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                    (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                    (diagram actual) (restriction actual) (kind actual))))
+              1)),
+        Eq.{1}
+          (lamAct
+            ((ModuleCat.Hom.hom.{0, 0}
+                (HomologicalComplex.d.{0, 1, 0}
+                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                    (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                        ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                        (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda
+                          (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                        (diagram actual) (restriction actual) (kind actual))))
+                  1 2))
+              y))
+          0) :
+    ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P
+structure ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {U : Ultrafilter.{0} ℕ}
+  {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [Ideal.IsPrime.{0} P]
+  (A : ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P) {F : Type} [Field.{0} F]
+  (ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F) (u : F) : Type
+number of parameters: 13
+fields:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.stage : A.Config →
+      ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.model : (c : A.Config) →
+      HomotopyEquiv.{0, 1, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} (A.fibre c)))
+        (ZInQ.Contrib.CloudB3RC53.SwitchInputs.twoTermFiberComplex.{0, 0} (ZInQ.Manuscript.RC.Wiring.resAt P)
+          (self.stage c))
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.hz0 : Eq.{1}
+      ((ModuleCat.Hom.hom.{0, 0}
+          (HomologicalComplex.Hom.f.{0, 1, 0} (HomotopyEquiv.hom.{0, 1, 0} (self.model A.actual)) 1))
+        A.zAct)
+      fun i =>
+      (ZInQ.Manuscript.RC.Wiring.resAt P)
+        (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.z.{0, 0} (self.stage A.actual) i)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.hw0 : ∀
+      (y :
+        ↑(HomologicalComplex.X.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                  ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                  (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                  (A.diagram A.actual) (A.restriction A.actual) (A.kind A.actual))))
+            2)),
+      Eq.{1} (A.lamAct y)
+        (dotProduct.{0, 0}
+          (fun i =>
+            (ZInQ.Manuscript.RC.Wiring.resAt P)
+              (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.w.{0, 0} (self.stage A.actual) i))
+          ((ModuleCat.Hom.hom.{0, 0}
+              (HomologicalComplex.Hom.f.{0, 1, 0} (HomotopyEquiv.hom.{0, 1, 0} (self.model A.actual)) 2))
+            y))
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.hu0 : Eq.{1}
+      (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.u.{0, 0} (self.stage A.actual)) u
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.hnq : ¬A.family.quadratic (ZInQ.Manuscript.RC.Wiring.resAt P)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.primitive : ∀ (c : A.Config),
+      ZInQ.Contrib.CloudB3RC53.SwitchInputs.Reach A.next A.actual c →
+        ∃ i,
+          Ne.{1}
+            ((ZInQ.Manuscript.RC.Wiring.resAt P)
+              (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.z.{0, 0} (self.stage c) i))
+            0
+constructor:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame.mk {K : Type} [Field.{0} K] [NumberField.{0} K]
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {U : Ultrafilter.{0} ℕ}
+    {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [Ideal.IsPrime.{0} P]
+    {A : ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P} {F : Type} [Field.{0} F]
+    {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} {u : F}
+    (stage : A.Config → ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι)
+    (model :
+      (c : A.Config) →
+        HomotopyEquiv.{0, 1, 0}
+          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0} (A.fibre c)))
+          (ZInQ.Contrib.CloudB3RC53.SwitchInputs.twoTermFiberComplex.{0, 0} (ZInQ.Manuscript.RC.Wiring.resAt P)
+            (stage c)))
+    (hz0 :
+      Eq.{1}
+        ((ModuleCat.Hom.hom.{0, 0}
+            (HomologicalComplex.Hom.f.{0, 1, 0} (HomotopyEquiv.hom.{0, 1, 0} (model A.actual)) 1))
+          A.zAct)
+        fun i =>
+        (ZInQ.Manuscript.RC.Wiring.resAt P)
+          (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.z.{0, 0} (stage A.actual) i))
+    (hw0 :
+      ∀
+        (y :
+          ↑(HomologicalComplex.X.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                (ZInQ.Contrib.CloudB3RC53.PairedFunctional.selCx.{0}
+                  (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeSideData
+                    ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+                    (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                    (A.diagram A.actual) (A.restriction A.actual) (A.kind A.actual))))
+              2)),
+        Eq.{1} (A.lamAct y)
+          (dotProduct.{0, 0}
+            (fun i =>
+              (ZInQ.Manuscript.RC.Wiring.resAt P)
+                (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.w.{0, 0} (stage A.actual) i))
+            ((ModuleCat.Hom.hom.{0, 0}
+                (HomologicalComplex.Hom.f.{0, 1, 0} (HomotopyEquiv.hom.{0, 1, 0} (model A.actual)) 2))
+              y)))
+    (hu0 : Eq.{1} (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.u.{0, 0} (stage A.actual)) u)
+    (hnq : ¬A.family.quadratic (ZInQ.Manuscript.RC.Wiring.resAt P))
+    (primitive :
+      ∀ (c : A.Config),
+        ZInQ.Contrib.CloudB3RC53.SwitchInputs.Reach A.next A.actual c →
+          ∃ i,
+            Ne.{1}
+              ((ZInQ.Manuscript.RC.Wiring.resAt P)
+                (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.z.{0, 0} (stage c) i))
+              0) :
+    ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame A ι u
+structure ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest {K : Type} [Field.{0} K] [NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [WeierstrassCurve.IsElliptic.{0} E]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] : Type 1
+number of parameters: 9
+fields:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.finiteSupport : Set.Finite.{0} S
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.dyadicSupport : ∀
+      (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+      Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.prints : ZInQ.Contrib.RC53Assist.RetainedAssembly.ArithmeticPrints
+      K
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.family : ZInQ.Contrib.RC53Assist.RetainedAssembly.ActualStageFamily
+      S (WeierstrassCurve.baseChange.{0, 0} E K) αStage
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.old : ZInQ.Contrib.RC53Assist.RetainedAssembly.OldDualityData
+      self.family
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.reference : ZInQ.Contrib.RC53Assist.RetainedAssembly.StandardOldReference
+      S (WeierstrassCurve.baseChange.{0, 0} E K) αStage
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.width : ℕ
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.arithmetic : ZInQ.Contrib.RC53Assist.RetainedAssembly.ArithmeticInputs
+      self.family self.old self.reference self.width
+constructor:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest.mk {K : Type} [Field.{0} K] [NumberField.{0} K]
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+    {E : WeierstrassCurve.{0} ℚ} [WeierstrassCurve.IsElliptic.{0} E]
+    [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+    {αStage :
+      (i : ℕ) →
+        MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+          (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+    [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] (finiteSupport : Set.Finite.{0} S)
+    (dyadicSupport :
+      ∀ (v : IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)),
+        Membership.mem.{0, 0} (IsDedekindDomain.HeightOneSpectrum.asIdeal.{0} v) 2 → Membership.mem.{0, 0} S v)
+    (prints : ZInQ.Contrib.RC53Assist.RetainedAssembly.ArithmeticPrints K)
+    (family :
+      ZInQ.Contrib.RC53Assist.RetainedAssembly.ActualStageFamily S (WeierstrassCurve.baseChange.{0, 0} E K) αStage)
+    (old : ZInQ.Contrib.RC53Assist.RetainedAssembly.OldDualityData family)
+    (reference :
+      ZInQ.Contrib.RC53Assist.RetainedAssembly.StandardOldReference S (WeierstrassCurve.baseChange.{0, 0} E K) αStage)
+    (width : ℕ) (arithmetic : ZInQ.Contrib.RC53Assist.RetainedAssembly.ArithmeticInputs family old reference width) :
+    ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage
+structure ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining {K : Type} [Field.{0} K] [NumberField.{0} K]
+  [NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [WeierstrassCurve.IsElliptic.{0} E]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+  (T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage)
+  (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S)
+  (hW :
+    Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+      (WeierstrassCurve.baseChange.{0, 0} E K))
+  (U : Ultrafilter.{0} ℕ) (hU : LE.le.{0} (↑U) Filter.cofinite.{0}) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda)
+  [Ideal.IsPrime.{0} P] (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] : Type
+number of parameters: 20
+fields:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.degree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.height : Eq.{1} (Ideal.height.{0} P) 1
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.notTwo : Ne.{1} P
+      (Ideal.span.{0} (Singleton.singleton.{0, 0} 2))
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.serre : ZInQ.Manuscript.RC.PrintsArith.SerreThm3
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.nonCM : ZInQ.Manuscript.RC.PrintsArith.HasNoCM E
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.B0 : ℕ →
+      IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.normalB : ∀ (i : ℕ), Normal.{0, 0} ℚ ↥(self.B0 i)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.finiteB : ∀ (i : ℕ), FiniteDimensional.{0, 0} ℚ ↥(self.B0 i)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.dihedral : ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields
+      S e χ Cn self.B0
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.inertia : ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput
+      S e χ E Cn ⋯ U P
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.F0 : ℕ →
+      IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.finiteF : ∀ (i : ℕ), FiniteDimensional.{0, 0} ℚ ↥(self.F0 i)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.excluded : ℕ → Finset.{0} ℕ
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.n : ℕ
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.embedding : ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding
+      S e χ E U P self.n (T.global Cn hW U hU P)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.cycle : ↥(LinearMap.ker.{0, 0, 0, 0}
+        (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} (T.global Cn hW U hU P) 1 2 ⋯))
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.cycle_nonzero : Ne.{1}
+      ((ZInQ.Manuscript.RC.SelmerComplex.clsAt (T.global Cn hW U hU P) 1 2 ⋯) self.cycle) 0
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.dimension : LT.lt.{0} 1
+      (Module.finrank.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+        ↑(HomologicalComplex.homology.{0, 1, 0}
+            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (T.global Cn hW U hU P)) 1))
+constructor:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining.mk {K : Type} [Field.{0} K] [NumberField.{0} K]
+    [NumberField.IsTotallyComplex.{0} K]
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+    {E : WeierstrassCurve.{0} ℚ} [WeierstrassCurve.IsElliptic.{0} E]
+    [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+    {αStage :
+      (i : ℕ) →
+        MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+          (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+    [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+    {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage}
+    {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+    {hW :
+      Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+        (WeierstrassCurve.baseChange.{0, 0} E K)}
+    {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+    [Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+    {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+    [ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] (degree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+    (height : Eq.{1} (Ideal.height.{0} P) 1) (notTwo : Ne.{1} P (Ideal.span.{0} (Singleton.singleton.{0, 0} 2)))
+    (serre : ZInQ.Manuscript.RC.PrintsArith.SerreThm3) (nonCM : ZInQ.Manuscript.RC.PrintsArith.HasNoCM E)
+    (B0 : ℕ → IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar)
+    (normalB : ∀ (i : ℕ), Normal.{0, 0} ℚ ↥(B0 i)) (finiteB : ∀ (i : ℕ), FiniteDimensional.{0, 0} ℚ ↥(B0 i))
+    (dihedral : ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields S e χ Cn B0)
+    (inertia : ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput S e χ E Cn degree U P)
+    (F0 : ℕ → IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar)
+    (finiteF : ∀ (i : ℕ), FiniteDimensional.{0, 0} ℚ ↥(F0 i)) (excluded : ℕ → Finset.{0} ℕ) (n : ℕ)
+    (embedding :
+      ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e χ E U P n (T.global Cn hW U hU P))
+    (cycle :
+      ↥(LinearMap.ker.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} (T.global Cn hW U hU P) 1 2 ⋯)))
+    (cycle_nonzero : Ne.{1} ((ZInQ.Manuscript.RC.SelmerComplex.clsAt (T.global Cn hW U hU P) 1 2 ⋯) cycle) 0)
+    (dimension :
+      LT.lt.{0} 1
+        (Module.finrank.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+          ↑(HomologicalComplex.homology.{0, 1, 0}
+              (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0} (T.global Cn hW U hU P)) 1))) :
+    ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e χ
+structure ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs {K : Type} [Field.{0} K] [NumberField.{0} K]
+  [NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [WeierstrassCurve.IsElliptic.{0} E]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+  {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage}
+  {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hW :
+    Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+      (WeierstrassCurve.baseChange.{0, 0} E K)}
+  {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ]
+  (A : ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e χ) {F : Type} [Field.{0} F]
+  (ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F)
+  (S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι) : Type 1
+number of parameters: 26
+fields:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.localArithmetic : ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic
+      U (T.result Cn hW U hU).C (T.result Cn hW U hU).D
+  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.columns : ZInQ.Contrib.RC53Assist.StageStepDetection.RetainedEvaluationColumns
+      hU P (T.result Cn hW U hU).D A.evaluation A.label
+  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.finiteModel : ZInQ.Contrib.RC53Assist.InnerLimitMoving.IntegralMatrixStageData
+      ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+      (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (Localization.AtPrime.{0} P)) ι
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.selmerStages
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeDiagram (T.result Cn hW U hU).C
+          (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages (T.result Cn hW U hU).D)
+          ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.finite))
+  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.singularModel : ZInQ.Contrib.RC53Assist.InnerLimitMoving.IntegralMatrixStageData
+      ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero hU
+      (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (Localization.AtPrime.{0} P)) ι
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.selmerStages
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeDiagram (T.result Cn hW U hU).C
+          (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages (T.result Cn hW U hU).D)
+          ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.singular))
+  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.finiteStage : Eq.{1} self.finiteModel.stage S₀
+  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.singularStage : Eq.{1} self.singularModel.stage S₁
+  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.coordinate : ZInQ.Contrib.CloudB3RC53.UniformSwitch.CoordStep.{0,
+        0}
+      ι (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.u.{0, 0} S₀)
+      (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.u.{0, 0} S₁)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.places : Eq.{1} T.family.q A.label.q
+constructor:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs.mk {K : Type} [Field.{0} K] [NumberField.{0} K]
+    [NumberField.IsTotallyComplex.{0} K]
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+    {E : WeierstrassCurve.{0} ℚ} [WeierstrassCurve.IsElliptic.{0} E]
+    [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+    {αStage :
+      (i : ℕ) →
+        MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+          (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+    [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+    {T : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage}
+    {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+    {hW :
+      Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+        (WeierstrassCurve.baseChange.{0, 0} E K)}
+    {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+    [Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+    {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+    [ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ]
+    {A : ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining T Cn hW U hU P e χ} {F : Type} [Field.{0} F]
+    {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F}
+    {S₀ S₁ : ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.{0, 0} ι}
+    (localArithmetic :
+      ZInQ.Contrib.RC53Assist.ResidueIdentity.RetainedLocalArithmetic U (T.result Cn hW U hU).C (T.result Cn hW U hU).D)
+    (columns :
+      ZInQ.Contrib.RC53Assist.StageStepDetection.RetainedEvaluationColumns hU P (T.result Cn hW U hU).D A.evaluation
+        A.label)
+    (finiteModel :
+      ZInQ.Contrib.RC53Assist.InnerLimitMoving.IntegralMatrixStageData ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero
+        hU (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (Localization.AtPrime.{0} P)) ι
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.selmerStages
+          (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeDiagram (T.result Cn hW U hU).C
+            (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages (T.result Cn hW U hU).D)
+            ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.finite)))
+    (singularModel :
+      ZInQ.Contrib.RC53Assist.InnerLimitMoving.IntegralMatrixStageData ZInQ.Manuscript.RC.Limits.stageIdeal_tendsToZero
+        hU (Algebra.algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (Localization.AtPrime.{0} P)) ι
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.selmerStages
+          (ZInQ.Contrib.RC53Assist.InnerLimitMoving.derivativeDiagram (T.result Cn hW U hU).C
+            (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages (T.result Cn hW U hU).D)
+            ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.singular)))
+    (finiteStage : Eq.{1} finiteModel.stage S₀) (singularStage : Eq.{1} singularModel.stage S₁)
+    (coordinate :
+      ZInQ.Contrib.CloudB3RC53.UniformSwitch.CoordStep.{0, 0} ι
+        (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.u.{0, 0} S₀)
+        (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.u.{0, 0} S₁))
+    (places : Eq.{1} T.family.q A.label.q) : ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs A ι S₀ S₁
+structure ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining {K : Type} [Field.{0} K] [NumberField.{0} K]
+  [NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [WeierstrassCurve.IsElliptic.{0} E]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+  [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hW :
+    Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+      (WeierstrassCurve.baseChange.{0, 0} E K)}
+  {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+  [Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] {F : Type} [Field.{0} F]
+  {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} {u : F}
+  (A : ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P)
+  (B : ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame A ι u) (c : A.Config) : Type 1
+number of parameters: 26
+fields:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.retention : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest
+      αStage
+  ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.detection : ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining
+      self.retention Cn hW U hU P e χ
+  ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.step : ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs
+      self.detection ι (B.stage c) (B.stage (A.next c (A.primeOfLabel self.detection.label)))
+  ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.finiteColumns : ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns
+      (self.retention.result Cn hW U hU).C (A.diagram c)
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages (self.retention.result Cn hW U hU).D)
+      (A.restriction c)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.singularColumns : ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns
+      (self.retention.result Cn hW U hU).C (A.diagram (A.next c (A.primeOfLabel self.detection.label)))
+      (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages (self.retention.result Cn hW U hU).D)
+      (A.restriction (A.next c (A.primeOfLabel self.detection.label)))
+  ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.finiteKind : Eq.{1} (A.kind c)
+      ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.finite
+  ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.singularKind : Eq.{1}
+      (A.kind (A.next c (A.primeOfLabel self.detection.label)))
+      ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.singular
+constructor:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining.mk {K : Type} [Field.{0} K] [NumberField.{0} K]
+    [NumberField.IsTotallyComplex.{0} K]
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+    {E : WeierstrassCurve.{0} ℚ} [WeierstrassCurve.IsElliptic.{0} E]
+    [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+    {αStage :
+      (i : ℕ) →
+        MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+          (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+    [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+    {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+    {hW :
+      Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+        (WeierstrassCurve.baseChange.{0, 0} E K)}
+    {U : Ultrafilter.{0} ℕ} {hU : LE.le.{0} (↑U) Filter.cofinite.{0}} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda}
+    [Ideal.IsPrime.{0} P] {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+    {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+    [ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] {F : Type} [Field.{0} F]
+    {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} {u : F}
+    {A : ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P}
+    {B : ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame A ι u} {c : A.Config}
+    (retention : ZInQ.Contrib.RC53Assist.SwitchWiring.RetentionRequest αStage)
+    (detection : ZInQ.Contrib.RC53Assist.SwitchWiring.DetectionRemaining retention Cn hW U hU P e χ)
+    (step :
+      ZInQ.Contrib.RC53Assist.SwitchWiring.StepRemainingInputs detection ι (B.stage c)
+        (B.stage (A.next c (A.primeOfLabel detection.label))))
+    (finiteColumns :
+      ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns (retention.result Cn hW U hU).C (A.diagram c)
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages (retention.result Cn hW U hU).D)
+        (A.restriction c))
+    (singularColumns :
+      ZInQ.Contrib.RC53Assist.SwitchWiring.DiagramColumns (retention.result Cn hW U hU).C
+        (A.diagram (A.next c (A.primeOfLabel detection.label)))
+        (ZInQ.Contrib.RC53Assist.InnerLimitMoving.retainedRestrictionStages (retention.result Cn hW U hU).D)
+        (A.restriction (A.next c (A.primeOfLabel detection.label))))
+    (finiteKind : Eq.{1} (A.kind c) ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.finite)
+    (singularKind :
+      Eq.{1} (A.kind (A.next c (A.primeOfLabel detection.label)))
+        ZInQ.Contrib.RC53Assist.InnerLimitMoving.ConditionKind.singular) :
+    ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining A B c
+structure ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs {K : Type} [Field.{0} K] [NumberField.{0} K]
+  [NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} {E : WeierstrassCurve.{0} ℚ}
+  [WeierstrassCurve.IsElliptic.{0} E]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (αStage :
+    (i : ℕ) →
+      MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+        (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i)))
+  [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)] (Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S)
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [Ideal.IsPrime.{0} P]
+  {F : Type} [Field.{0} F] (ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F) (u : F) : Type 1
+number of parameters: 20
+fields:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.hW : Eq.{1}
+      (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+      (WeierstrassCurve.baseChange.{0, 0} E K)
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.U : Ultrafilter.{0} ℕ
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.hU : LE.le.{0} (↑self.U) Filter.cofinite.{0}
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.atlas : ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S self.U
+      ⋯ P
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.frame : ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame
+      self.atlas ι u
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.switch : (c : self.atlas.Config) →
+      ZInQ.Contrib.CloudB3RC53.SwitchInputs.Reach self.atlas.next self.atlas.actual c →
+        LT.lt.{0} 1
+            (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.fiberDim.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.resAt P)
+              (self.frame.stage c)) →
+          ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining self.atlas self.frame c
+constructor:
+  ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs.mk {K : Type} [Field.{0} K] [NumberField.{0} K]
+    [NumberField.IsTotallyComplex.{0} K]
+    {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+    {E : WeierstrassCurve.{0} ℚ} [WeierstrassCurve.IsElliptic.{0} E]
+    [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+    {αStage :
+      (i : ℕ) →
+        MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+          (Units.{0} (ZInQ.Manuscript.RC.HeegnerAlgebra.Acoef i))}
+    [∀ (i : ℕ), ZInQ.Manuscript.RC.CoefModules.IsOpenKer (αStage i)]
+    {Cn : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+    {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+    {χ : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+    [ZInQ.Manuscript.RC.LambdaCoef.IsContChar χ] {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [Ideal.IsPrime.{0} P]
+    {F : Type} [Field.{0} F] {ι : RingHom.{0, 0} (Localization.AtPrime.{0} P) F} {u : F}
+    (hW :
+      Eq.{1} (WeierstrassCurve.map.{0, 0} (WeierstrassCurve.baseChange.{0, 0} E K) ↑Cn.κ)
+        (WeierstrassCurve.baseChange.{0, 0} E K))
+    (U : Ultrafilter.{0} ℕ) (hU : LE.le.{0} (↑U) Filter.cofinite.{0})
+    (atlas : ZInQ.Contrib.RC53Assist.SwitchWiring.FibreAtlas S U hU P)
+    (frame : ZInQ.Contrib.RC53Assist.SwitchWiring.FamilyFrame atlas ι u)
+    (switch :
+      (c : atlas.Config) →
+        ZInQ.Contrib.CloudB3RC53.SwitchInputs.Reach atlas.next atlas.actual c →
+          LT.lt.{0} 1
+              (ZInQ.Contrib.CloudB3RC53.UniformSwitch.TwoTermStage.fiberDim.{0, 0, 0}
+                (ZInQ.Manuscript.RC.Wiring.resAt P) (frame.stage c)) →
+            ZInQ.Contrib.RC53Assist.SwitchWiring.ReachableSwitchRemaining atlas frame c) :
+    ZInQ.Contrib.RC53Assist.SwitchWiring.RemainingInputs αStage Cn e χ P ι u

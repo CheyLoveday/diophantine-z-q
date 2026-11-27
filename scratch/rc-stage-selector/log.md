@@ -1,0 +1,10 @@
+- Base: `f14a1399541c1b5ccb0228866e214694f44bd3f1`.
+- Witness: `OddStagedInstance.dat` comes from `GenusOddInstance.selG`; the witness code consumes the datum and handles its exact twist and specialization.
+- Prepared arithmetic: `D > 0`, `D*hstar < 0`, squarefree, `1 mod  8`, local squares at `2N`; `A=N`, `B² ≡ D*hstar mod  4N`, `C=(B²-D*hstar)/(4N)`.
+- Genus action: conductor-one ring class field equals Hilbert class field; use the action on `√hstar`; verify the Jacobi values at odd primes and the idempotent half root above two.
+- Open input: `PreparedParamValue` at the chosen form for each uncovered admissible nonwitness parameter.
+- Selector: preserve `some` entries; fill admissible nonwitness holes; provide an exact selection equation for `lamOf_admissible` and preserve `jgen` at prepared simple zeros.
+- Checks: `Forms.lean` passed `lake env lean -j1`; all three theorem audits list only `propext`, `Classical.choice`, and `Quot.sound`.
+- Checks: `Character.lean` passed `lake env lean -j1`; all eight theorem audits list only `propext`, `Classical.choice`, and `Quot.sound`.
+- Checks: `Selector.lean` passed `lake env lean -j1`; all nine theorem audits and both datum and selector audits list only `propext`, `Classical.choice`, and `Quot.sound`.
+- Interfaces: `extendSelG_witness` keeps the original witness equation; `exists_selected_of_admissible` supplies the equation for `StageMap.lamOf_admissible`; `preparedGlue_of_withStages` obtains the filter bridge from the existing stage equality.

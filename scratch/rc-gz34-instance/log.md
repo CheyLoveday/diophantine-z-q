@@ -1,0 +1,10 @@
+- Base: `56ff832825d5debcba47505977b8b9ecd95a925a`.
+- `Forms.lean`: primitive form of discriminant `k |h|²` by scaling the coefficients at level coprime to `h`. Compiles; all three audits standard.
+- `Character.lean`: Jacobi symbol of ideal norm descends to Picard group; principal generators have square norm modulo the conductor. Compiles; all three audits standard.
+- `Primitive.lean`: omitted prime, unramified smaller ring class field, exclusion of root and fixed-field witness. Compiles; all seven audits standard.
+- `Selector.lean`: genus and ring-class selectors total on required domains given `PreparedParamValue` and `RingParamValue`. Compiles; all five theorem audits standard.
+- `Curve.lean`: actual ellipticity, attained level and coefficient-matching cusp form, lattice, conditional scale, and filter adapters. The level support follows by comparing the good-prime and newform-level recurrences for the coefficient of `p²`. Compiles; all ten theorem audits standard.
+- `Assembly.lean`: fixes the same form, lattice and scale for both selectors; produces `GenusOddInstance W`, `Gz34CompAt W 0`, and `Gz34Target W`. The rough clause takes no final-`k` fields. Compiles; all four theorem audits and the instance audit standard.
+- `StageSupport.lean`: existing stage support and base level inclusion give the prepared-filter inputs. Compiles; theorem audit standard.
+- Verification: seven files checked with `lake env lean`; 33 theorem audits, with no dependencies beyond `propext`, `Classical.choice`, and `Quot.sound`.
+- Existing interface departure: one support combines the old support and primes of final `k`; see `RC/Wiring/CompanionLeaf.lean`.

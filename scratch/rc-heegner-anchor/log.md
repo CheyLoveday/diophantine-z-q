@@ -1,0 +1,14 @@
+- Base `9b775780330d05957a01cff3400c66d9c6c9183d`; merged `ffdca9362949858bbc380d77b081427385896296` without conflicts.
+- Inherited citation scope issue at tex 1784 and 1788: map and quotient covered; normalized newform and Hecke identity outside the cited pair.
+- `conductorOrder_discr`: quadratic order of conductor `d` has index `d`, hence discriminant `D_K d²`.
+- `splitPrime`, `conductorForm`: split degree-one prime gives local unit square checks; existing ring form construction gives `A = N` and primitivity.
+- `factor_embedding`, `fieldPoint_map_map`: field-of-definition witness into ℂ factors through the fixed ℚ̄ embedding; base changes compose.
+- `cmPointValue`, `cmPointsAtScale`: a descended field point in the chart and its image under one rational `π` at `phiAn E p.f p.Lat p.κ`.
+- `genuineHeegnerAnchor`: constructs fields and points from those evaluations for all admissible conductors; the Galois slots of the record are quantified independently of the witness.
+- Remaining mathematical inputs: `CMFieldOfDefinition` on the constructed model, rational representative of the fixed scale, and existing curve and split imaginary quadratic field data. Norm relations and orientation compatibility separate.
+- Verification process error: the first dependency job survived an attempted stop and overlapped its replacement. Both jobs were interrupted and confirmed stopped before resuming with a single serial build guarded by a lock.
+- `Conductors.lean`: passed `lake env lean -j1 -DautoImplicit=false`. Axiom checks for `conductorOrder_discr`, `splitPrime` and `conductorForm`: `propext`, `Classical.choice`, `Quot.sound`.
+- `Comparison.lean`: passed `lake env lean -j1 -DautoImplicit=false`. Axiom checks for `factor_embedding`, `fieldPoint_map_map` and `cmPointValue`: `propext`, `Classical.choice`, `Quot.sound`.
+- Dependency recovery: rebuilt the existing Tau Ceti homogeneous polynomial module from source. Its stale artifact still exported `MvPolynomial.IsHomogeneous.eval₂_const_mul`; the checked-in declaration is private. The imported `ModFnClassify.ProjectiveIdentity` and `ModFnClassify.AtScale` then compiled.
+- `AtScale.lean`: passed `lake env lean -j1 -DautoImplicit=false`. Axiom checks for `cmPointsAtScale` and `genuineHeegnerAnchor`: `propext`, `Classical.choice`, `Quot.sound`.
+- Final import chain checked without `ZInQKernel.OneProof.Main`. No new axioms, sorries, or prints.

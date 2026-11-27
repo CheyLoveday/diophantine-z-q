@@ -1,0 +1,13 @@
+- Base 36701da4a392a674d9d6a031b07d1868b5aa8f9c; merged c2bb312793a4de6142f0695d87961aeb7edf6e2e.
+- Tex 8427–8428, 9471–9483: exact sieve defined by the zero-or-retain operations; no enumeration of odd-stage sieve primes.
+- Tex 10527–10531: bounded label groups require control of the extra sieve coordinates.
+- `Sieve.lean`: exact zero-or-retain on both stage and lift; mask uses `m * b ∣ k` at norm `k` and is invariant under the square of a good prime.
+- `Sieve.lean` passed `lake env lean -j1` with lint warnings; ten audits, all limited to `propext`, `Classical.choice`, and `Quot.sound`.
+- `Actual.lean`: `pmSievedStage_good_iff` gives the exact domain for arbitrary `F`; the original `pmStage` has the requested completeness direction.
+- `Actual.lean`: `pmSieved_newformLevel` certifies the same level order and class set for the stage and integral lift. `pmSievedLift_support` derives late vanishing and retains original local vanishing.
+- `Actual.lean` first check passed; all eleven audits have only the three permitted axioms.
+- `Consumers.lean` first check exposed proof elaboration at the type/support boundary; made the local support hypothesis explicit and provided the label type for radical detection.
+- `pmSievedSource`: retain `LateSieve` alongside the original integral lift; both resulting projections apply that list.
+- `Consumers.lean`: exact prime-divisor equality; `IsTypeChar`, open kernel and radical support; stage-good, fresh-domain, old and ambient coprimality, and unchanged `LevelSetup`.
+- Final serial `lake env lean -j1`: `Sieve.lean`, `Actual.lean` and `Consumers.lean` all passed. Four tactic sequencing lint warnings in `Sieve.lean`; no other diagnostics.
+- Final audits: 34 declarations, covering all 24 new theorems, including private helpers. Only `propext`, `Classical.choice` and `Quot.sound`.

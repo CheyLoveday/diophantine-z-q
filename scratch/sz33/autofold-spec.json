@@ -1,0 +1,4 @@
+{"name": "outside-fold-1121",
+ "imports": ["ZInQKernel.Contrib.OneProof.SZThm33.SemistableCriterion"],
+ "discharges": [
+   {"field": "silverbergZarhinThm33", "proof": "_root_.SZRaynaud.silverbergZarhinThm33_proof"}]}

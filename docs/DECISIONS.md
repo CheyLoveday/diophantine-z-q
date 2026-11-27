@@ -3,6 +3,17 @@
 One line per decision: date, what was decided, and where (issue, pull request or comment). Newest first. A decision
 that replaces an older one says so, and the older line stays.
 
+- 2026-11-26: The adversarial AI reading counts only against real text: each lens works from a named copy of the
+  source, whose sha256 is recorded in the reviews.tsv row, and every quote is checked against that file's text, not
+  recall (the maintainer, 2026-11-26: "I just want to make sure the AI is actually comparing against REAL TEXT not
+  just what is in their memory", confirming the line below). For AI-READ rows that meet it, this rule and the line
+  below supersede the older text that an AI reading clears only the `unread` flag and never stands in for a human
+  reading ([STATEMENT-CHECKS.md](one-proof/STATEMENT-CHECKS.md), [CONTRIBUTING.md](../CONTRIBUTING.md)).
+  `render_open.py` fails an AI-READ row without a sha256 and a quote; rows recorded before the rule are noted.
+- 2026-11-26: With no human reader available, an adversarial AI reading stands in for the human reading of a
+  printed source: three independent AI lenses (fidelity, skeptic, red team) read the page images, and a row is
+  rated on it only if no lens finds a mismatch beyond a direct instance. The evidence stays AI-READ. First applied
+  to `colmezThm01` and `panThm104F` ([docs/research/pb-adversarial-readings.md](research/pb-adversarial-readings.md)).
 - 2026-11-17: The reference text is the 5 November manuscript; the Lean deviates from it only when needed, and each
   deviation is documented. ([#95](https://github.com/Deicyde/diophantine-z-q/issues/95), [#97](https://github.com/Deicyde/diophantine-z-q/pull/97))
 - 2026-11-17: The proof follows the manuscript's Section 5: the headline takes pole completeness (Theorem 5.2), and

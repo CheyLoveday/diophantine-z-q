@@ -1,0 +1,13 @@
+- Base: 93ca7124fea7ffb509b9bc4e032cddcabac325e4. Prior place construction and singleton divisions unchanged.
+- Tex 8162–8167: inherited ledger N4 normalization issue.
+- Tex 10393–10404: inherited (G.4b) support wording issue; shell proof uses the full transported sieve.
+- Seeded local Lake traces only for matching source files; normal dependency-hash validation remains enabled.
+- Import build: Lake compiler calls serialized and host capacity checked before each call.
+- Producer interfaces: same phase witness with retained set, phase equality, and both two-power orders; one negative source per type and one positive source on the companion twist.
+- Coefficient interfaces: `SourceAtPlace` plus good-prime order; `SingletonCoefficientsAt` supplies the characteristic-zero ring, both denominator conditions, phases, and all-index `Bp` and `Hp`.
+- Import build PASS: `AppE.Assembly`, `EvenBudget.Place`, `EvenPlace.Singleton`, `KSplitSeed.Sieve`, and `KSplitSeed.Seed`, including `AuxInputs.Assembly` and `EvenReading.Source`.
+- Initial binding build: producer, source and budget files passed; the singleton consumer wrapper failed on a redundant `dsimp` (`dsimp made no progress`). Removed it and cleaned lint warnings in the new files.
+- Final binding build PASS: all four new modules via Lake.
+- Direct serial file checks PASS: `Producer.lean`, `Sources.lean`, `BudgetBinding.lean`, `KSplitBinding.lean` via `lake env lean -j1`.
+- `Axioms.lean`: PASS; 15/15 results report exactly `[propext, Classical.choice, Quot.sound]`.
+- Remaining inputs: even analytic, constituent/formwise, and local-block data; stationary support alignment and the transported old-unit lower bound; the singleton matching-prime, determinant and trace packet.
