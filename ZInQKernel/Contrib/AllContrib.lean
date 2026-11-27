@@ -3574,6 +3574,9 @@ import ZInQKernel.Contrib.OneProof.ShimuraQuotientGeometry
 import ZInQKernel.Contrib.OneProof.ShimuraQuotientHecke
 import ZInQKernel.Contrib.OneProof.ShimuraQuotientImageSum
 import ZInQKernel.Contrib.OneProof.GaudronRemondIsogDeg
+import ZInQKernel.Contrib.OneProof.ColmezTorsionIso.Basic
+import ZInQKernel.Contrib.OneProof.ColmezTorsionIso.Row
+import ZInQKernel.Contrib.OneProof.ColmezTorsionIso.Shape
 import ZInQKernel.Contrib.OneProof.Y3LemmaP
 import ZInQKernel.Contrib.OneProof.Y3RelLemmaP
 import ZInQKernel.Contrib.OneProof.Y3RelLemmaPSeesaw
