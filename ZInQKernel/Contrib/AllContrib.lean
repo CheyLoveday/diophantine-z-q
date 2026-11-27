@@ -3612,3 +3612,6 @@ import ZInQKernel.Contrib.OneProof.HeightModelM.MetricTransport
 import ZInQKernel.Contrib.OneProof.HeightModelM.OpenIdComp
 import ZInQKernel.Contrib.OneProof.HeightModelM.Rows
 import ZInQKernel.Contrib.OneProof.HeightModelM.SemiAbelianModel
+import ZInQKernel.Contrib.OneProof.JavanpeykarJacK
+import ZInQKernel.Contrib.OneProof.JavanpeykarJacKEx
+import ZInQKernel.Contrib.OneProof.JavanpeykarJacKReader
