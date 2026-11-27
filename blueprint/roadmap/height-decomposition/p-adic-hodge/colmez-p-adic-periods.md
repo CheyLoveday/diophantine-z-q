@@ -31,10 +31,10 @@ $B_{\rm dR}$. The extension to $V_pA$ uses the linearity in $u$, which the readi
 Rham cohomology, the linearity in $\omega$, the compatibility with the filtrations, part (iii) and
 the functoriality. Colmez works with a proper model of $A$ over the integers of $F$, which exists,
 and the periods do not depend on it. He builds $T_pA$ from the points of $A$ over $\mathbb C_p$; on
-$p$-power torsion these are the points over $\overline F$, since $A[p^n]$ is finite over $F$. This
-identification, compatible with the action of $G_F$, is proved here, and so is the equivalence of
-the statement with the same statement for $T_pA$ built from the points over $\mathbb C_p$, as Colmez
-builds it. It is a hypothesis, not proved here.
+$p$-power torsion these are the points over $\overline F$, since $A[p^n]$ is finite over $F$, and
+this identification, compatible with the action of $G_F$, is proved here. Reading Colmez's points
+over $\mathbb C_p$, which he takes through the proper model, as the points of $A$ is a step of the
+reading. It is a hypothesis, not proved here.
 
 ## Depends on
 
