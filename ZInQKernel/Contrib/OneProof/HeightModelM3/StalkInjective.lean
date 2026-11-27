@@ -81,7 +81,7 @@ variable (s : Spec (CommRingCat.of (𝓞 L)))
 /-- `𝓞_L → 𝒪_{𝒢,e(s)}`. -/
 noncomputable def algB : Algebra (𝓞 L) (𝒢.G.left.presheaf.stalk (𝒢.unitSection s)) :=
   (stalkAlg 𝒢 (𝒢.unitSection s)).toAlgebra
-/-- `e^#_s : 𝒪_{𝒢,e(s)} → 𝒪_{S,s}`. -/
+/-- The unit section on stalks, `𝒪_{𝒢,e(s)} → 𝒪_{S,s}`. -/
 noncomputable def algBO : Algebra (𝒢.G.left.presheaf.stalk (𝒢.unitSection s))
     ((Spec (CommRingCat.of (𝓞 L))).presheaf.stalk s) := (unitStalk 𝒢 s).toAlgebra
 /-- The specialization `𝒪_{𝒢,e(s)} → 𝒪_{𝒢,ξ}`. -/
