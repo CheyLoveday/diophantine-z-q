@@ -3616,3 +3616,5 @@ import ZInQKernel.Contrib.OneProof.JavanpeykarJacK
 import ZInQKernel.Contrib.OneProof.JavanpeykarJacKEx
 import ZInQKernel.Contrib.OneProof.JavanpeykarJacKReader
 import ZInQKernel.Contrib.OneProof.DeligneNarrow
+import ZInQKernel.Contrib.OneProof.BstRegular.Abstract
+import ZInQKernel.Contrib.OneProof.BstRegular.Bst
