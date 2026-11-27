@@ -150,18 +150,102 @@ It is Shimura's Main Theorem I in Deligne's adelic form, at $B=\left(\frac{2,-3}
 G. Shimura, Ann. of Math. 85 (1967), Main Theorem I; P. Deligne, *Travaux de Shimura*, Sém. Bourbaki 389 (1971), §§4–5 (Corollaire 5.7, Exemple 5.8); J. Milne, *Introduction to Shimura varieties* (2005), §§5–8 and 12–14. Numbers unverified.
 """,
     ),
-    'y3FullThreeRepZ30': dict(
-        group='shimura-curves', slug='y3-integral-model',
-        title='The integral model of Y₃ over ℤ[1/30]',
-        anchor='Y3 over Z[1/30]',
+    'buzzardThm21Cor23V15': dict(
+        group='shimura-curves', slug='buzzard-v15-model',
+        title="Buzzard's model at level V₁(5) over ℤ[1/30]",
+        anchor='Buzzard Thm 2.1 and Cor 2.3 at V1(5)',
         statement=r"""
-The *integral model statement* is the following assertion. Over a scheme $S$, consider abelian schemes $\mathcal A$ of relative dimension $2$ with a ring homomorphism $\mathcal O\to\operatorname{End}_S(\mathcal A)$ and a full $\mathcal O$-linear level-$3$ structure: an $\mathcal O$-linear homomorphism $\mathcal O/3\mathcal O\to\mathcal A(S)$ that is a bijection onto $\mathcal A_s[3]$ at every geometric point $s$ of $S$. There are a proper smooth curve $\mathcal Y$ over $\mathbb Z[1/30]$ and such an abelian scheme $\mathcal A$ over $\mathcal Y$ that is universal on locally noetherian schemes over $\mathbb Z[1/30]$: for every locally noetherian $\mathbb Z[1/30]$-scheme $S$ and every such $\mathcal A'$ over $S$ there is exactly one morphism $g:S\to\mathcal Y$ over $\mathbb Z[1/30]$ for which $\mathcal A'$ is isomorphic to $g^*\mathcal A$ compatibly with the actions of $\mathcal O$ and the level structures.
+The *$V_1(5)$ model statement* is the following assertion. Let $e=3+2ij\in\mathcal O$; it has reduced trace $6$ and reduced norm $-15$, so it reduces to an idempotent of rank one in $\mathcal O/5\mathcal O$. For a scheme $S$ and an abelian scheme $\mathcal A$ of relative dimension $2$ over $S$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}_S(\mathcal A)$, a *$V_1(5)$-structure* is a section $Q$ of $\mathcal A$ over $S$ with $5Q=0$ and $\iota(e)Q=0$ that is nonzero at every geometric point of $S$. There are a scheme $X$ over $\mathbb Z[1/30]$, proper and smooth of relative dimension $1$, with a closed immersion into some $\mathbb P^N_{\mathbb Z[1/30]}$ over $\mathbb Z[1/30]$, and such an $(\mathcal A,\iota)$ over $X$ with a $V_1(5)$-structure $Q$, with the following property. For every scheme $S$ over $\mathbb Z[1/30]$ and every such $(\mathcal A',\iota')$ over $S$ with a $V_1(5)$-structure $Q'$, there is exactly one morphism $g:S\to X$ over $\mathbb Z[1/30]$ for which some cartesian square from $\mathcal A'\to S$ to $\mathcal A\to X$ over $g$ commutes with the actions of $\mathcal O$ and carries $Q'$ to $Q$; and that square is unique.
 """,
         caveat=r"""
-This is the manuscript's own claim, which it derives from Buzzard's Theorem 2.1 and Corollary 2.3 at the level $V_1(5)$ over $\mathbb Z[1/30]$, the finite étale sheaf of $\mathcal O$-linear isomorphisms $\mathcal O/3\mathcal O\cong A[3]$, the free action of $(\mathcal O/5\mathcal O)^\times$ and descent. No print states it at level $3$: Buzzard excludes level structure at the primes dividing the discriminant. The statement asks for a proper curve where the manuscript has a projective one, tests the universal property only on locally noetherian bases, and omits the polarization; the two forms of the moduli problem agree through the canonical principal polarization, an argument made on the spot and not proved here. That the generic fibre of $\mathcal Y$ represents the same problem over $\mathbb Q$, and so is the curve $Y_3$ of this chapter, is proved here.
+It is Buzzard's Theorem 2.1 with Corollary 2.3 at the level $U=V_1(5)$, for which $\mathbb Z[1/M_Ud]=\mathbb Z[1/30]$: the moduli stack $X_D(U)$ is proper and smooth of relative dimension $1$ over $\mathbb Z[1/30]$, it is the stack associated to a scheme, and that scheme is projective. Three steps are not printed and are written out in the notes accompanying the Lean proof. Buzzard defines $V_1(5)$ through an isomorphism $\kappa:\mathcal O\otimes R\to\mathrm M_2(R)$, $R=\prod_{p\nmid6}\mathbb Z_p$, fixed once and for all; the statement takes $\kappa$ with $\kappa(e)\equiv\operatorname{diag}(1,0)\bmod5$, and for that choice his $V_1(5)$-structures are the sections $Q$ above. Uniqueness of the square is the absence of automorphisms established in the proof of Corollary 2.3, through Lemma 2.2. Projectivity over the affine base gives the closed immersion. The polarization is not part of the data, and $\iota$ is not asked to be injective, which it is automatically over a nonempty base.
 """,
         src=r"""
-The 11/5 manuscript (`diophantine_zq.tex`, lines 443–477), the construction of the integral model of $Y_3$; K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Theorem 2.1 and Corollary 2.3, read in the author's preprint (Theorem 2.1, p. 5; Corollary 2.3, p. 7; the moduli problem, without a polarization, p. 2; the canonical principal polarization, p. 3). The journal pages are unverified.
+K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Theorem 2.1, Lemma 2.2 and Corollary 2.3, read in the author's preprint (Theorem 2.1, p. 5; Corollary 2.3, p. 7). The journal pages are unverified.
+""",
+    ),
+    'milneProp207At3': dict(
+        group='abelian-varieties', slug='milne-multiplication-by-3',
+        title="Multiplication by 3 on an abelian scheme is finite étale",
+        anchor='Milne Prop 20.7 at n = 3',
+        statement=r"""
+For every scheme $S$ over $\mathbb Z[1/30]$ and every abelian scheme $\mathcal A$ of relative dimension $2$ over $S$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}_S(\mathcal A)$, the endomorphism $\iota(3)$ of $\mathcal A$ is finite and étale.
+""",
+        caveat=r"""
+It is the case $g=2$, $n=3$ of Milne's Proposition 20.7, which states for an abelian scheme of relative dimension $g$ that multiplication by $n$ is flat, surjective and finite, and étale exactly when $n$ is divisible by no residue characteristic of the base; no residue characteristic of a $\mathbb Z[1/30]$-scheme divides $3$. That $\iota(3)$ is multiplication by $3$ is proved here, and the action of $\mathcal O$ plays no other part.
+""",
+        src=r"""
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Proposition 20.7, read in the author's retyped edition (p. 44 there; abelian schemes are defined on p. 42). The pages of the 1986 printing are unverified.
+""",
+    ),
+    'milneTorsionCount': dict(
+        group='abelian-varieties', slug='milne-torsion-count',
+        title="The n-torsion of an abelian surface has n⁴ points",
+        anchor='Milne Rem 8.4',
+        statement=r"""
+For every scheme $S$ over $\mathbb Z[1/30]$, every abelian scheme $\mathcal A$ of relative dimension $2$ over $S$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}_S(\mathcal A)$, every geometric point $s:\operatorname{Spec}k\to S$ and every positive integer $n$ not divisible by the characteristic of $k$, exactly $n^4$ points of $\mathcal A_s(k)$ are killed by $n$.
+""",
+        caveat=r"""
+It is Milne's Remark 8.4 at $g=2$: over a separably closed field whose characteristic does not divide $n$, the $n$-torsion of an abelian variety of dimension $g$ has $n^{2g}$ elements. The fibre $\mathcal A_s$ is an abelian surface over $k$ (Milne, §20, and the relative dimension). The action of $\mathcal O$ plays no part. The counts at $n=3$ and $n=5$ are proved from it here, and with Milne's Proposition 20.7 at $n=5$ they give the representability of full level-$5$ structures by an étale torsor, which Buzzard prints without proof.
+""",
+        src=r"""
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Theorem 8.2, Remark 8.4 and §20, read in the author's retyped edition (pp. 13, 14 and 42 there); the same statement is Remark 7.3 of Milne's course notes *Abelian varieties*, v2.0 (2008). The pages of the 1986 printing are unverified.
+""",
+    ),
+    'serreRigidityLevel3': dict(
+        group='shimura-curves', slug='serre-rigidity-level-3',
+        title="Serre's rigidity lemma at level 3",
+        anchor='Serre rigidity at level 3',
+        statement=r"""
+Let $\mathcal A$ be an abelian scheme of relative dimension $2$ over a scheme $S$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}_S(\mathcal A)$, and $\theta$ an automorphism of $\mathcal A$ over $S$ commuting with $\iota(a)$ for every $a\in\mathcal O$. Let $s:\operatorname{Spec}k\to S$ be a geometric point whose field has characteristic neither $2$ nor $3$, and $P\in\mathcal A_s(k)$ a point such that $a\mapsto\iota(a)P$ is a bijection from $\mathcal O/3\mathcal O$ onto the $3$-torsion of $\mathcal A_s(k)$. If $\theta$ fixes $P$, then $\theta$ fixes every point of $\mathcal A_s(k)$.
+""",
+        caveat=r"""
+A consequence of printed statements, not a single print. Since $\iota(0)=0$, $\theta$ fixes the zero section, so on the fibre it is a homomorphism (Milne, Corollary 2.2); commuting with $\mathcal O$ and fixing $P$, it is the identity on the $3$-torsion. Buzzard states that $\mathcal A_s$ has a unique principal polarization $\lambda$ whose Rosati involution induces $x\mapsto t^{-1}\bar xt$ on $\mathcal O$, for a fixed $t\in\mathcal O$ with $t^2=-6$; then $\theta^\vee\lambda\theta$ is another such polarization, so $\theta$ preserves $\lambda$. That step is not printed and is written out in the notes accompanying the Lean proof. Milne's Proposition 17.5(b) at $n=3$, in characteristic other than $3$, ends the argument. In characteristic $p$ Buzzard's uniqueness is printed with a sketched proof.
+""",
+        src=r"""
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Corollary 2.2 and Proposition 17.5(b), read in the author's retyped edition (pp. 3 and 37 there); K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1, read in the author's preprint (p. 3). The same statements of Milne's are Corollary 1.2 and Proposition 14.4(b) of his course notes, v2.0 (2008). The pages of the 1986 printing and of the journal are unverified.
+""",
+    ),
+    'milneZeroPreservingHomLN': dict(
+        group='abelian-varieties', slug='milne-zero-preserving-homomorphism',
+        title="Morphisms of abelian schemes fixing zero are homomorphisms",
+        anchor='Milne Cor 20.2(a)',
+        statement=r"""
+For every locally noetherian scheme $S$, abelian schemes $\mathcal A$ and $\mathcal A'$ of relative dimension $2$ over $S$ with ring homomorphisms from $\mathcal O$ to their endomorphism rings, and every morphism $f:\mathcal A\to\mathcal A'$ over $S$ carrying the zero section of $\mathcal A$ to that of $\mathcal A'$, $f$ is a homomorphism.
+""",
+        caveat=r"""
+It is Milne's Corollary 20.2(a), which is stated for abelian schemes over any base, restricted to locally noetherian bases and relative dimension $2$; the actions of $\mathcal O$ play no part. Milne's proof applies his rigidity lemma, Proposition 20.1, which is stated for a connected base. Lan states the corollary over any base, citing Mumford's *Geometric invariant theory*, Corollary 6.4.
+""",
+        src=r"""
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Corollary 20.2(a) and Proposition 20.1, read in the author's retyped edition (p. 43 there); K.-W. Lan, *Arithmetic compactifications of PEL-type Shimura varieties*, Harvard thesis (2008), Corollary 1.3.1.6. The pages of the 1986 printing are unverified, and Mumford's corollary was not read.
+""",
+    ),
+    'projectiveFalseEllipticCurve': dict(
+        group='shimura-curves', slug='false-elliptic-curves-projective',
+        title="False elliptic curves over a projective base are projective",
+        anchor='False elliptic curves are projective',
+        statement=r"""
+Let $X$ be a scheme over $\mathbb Z[1/30]$ with a closed immersion into some $\mathbb P^N_{\mathbb Z[1/30]}$ over $\mathbb Z[1/30]$, and $\mathcal A$ an abelian scheme of relative dimension $2$ over $X$ with a ring homomorphism $\mathcal O\to\operatorname{End}_X(\mathcal A)$. Then $\mathcal A$ has a closed immersion into some $\mathbb P^{N'}_{\mathbb Z[1/30]}$.
+""",
+        caveat=r"""
+A consequence of printed statements, not a single print, and weaker than what they give: the closed immersion is not asked to lie over $\mathbb Z[1/30]$. Buzzard's canonical principal polarization $\lambda$ of $\mathcal A$ is read in Milne's sense, as $\varphi_L$ with $L$ ample at every geometric point; Buzzard does not define a polarization over a base. It is symmetric by Lan's Lemma 1.3.2.16 and rigidity on the connected components of the noetherian $X$, so it is a polarization in Lan's sense, and $(\mathrm{Id},\lambda)^*\mathcal P$ is relatively ample over $X$ (Lan, Proposition 1.3.2.18). Since $\mathcal O_X(1)$ is ample, twisting by a power of its pull-back gives a sheaf ample relative to $\mathbb Z[1/30]$, and a proper scheme over an affine base with a relatively ample sheaf has a closed immersion into projective space (Stacks Project). The symmetry step is written out in the notes accompanying the Lean proof.
+""",
+        src=r"""
+K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1, read in the author's preprint (p. 3); K.-W. Lan, *Arithmetic compactifications of PEL-type Shimura varieties*, Harvard thesis (2008), Theorem 1.3.2.6, Lemma 1.3.2.16, Corollary 1.3.1.5, Proposition 1.3.2.18 and Definition 1.3.2.20 (Proposition 1.3.2.15 and Definition 1.3.2.16 of the 2021 revision); J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), §20 (p. 46 of the author's retyped edition); The Stacks Project, tags 01VT, 0C4K and 0B45. The journal and 1986 pages are unverified.
+""",
+    ),
+    'milneProp207At5': dict(
+        group='abelian-varieties', slug='milne-multiplication-by-5',
+        title="Multiplication by 5 on an abelian scheme is finite étale",
+        anchor='Milne Prop 20.7 at n = 5',
+        statement=r"""
+For every scheme $S$ over $\mathbb Z[1/30]$ and every abelian scheme $\mathcal A$ of relative dimension $2$ over $S$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}_S(\mathcal A)$, the endomorphism $\iota(5)$ of $\mathcal A$ is finite and étale.
+""",
+        caveat=r"""
+It is the case $g=2$, $n=5$ of Milne's Proposition 20.7, which states for an abelian scheme of relative dimension $g$ that multiplication by $n$ is flat, surjective and finite, and étale exactly when $n$ is divisible by no residue characteristic of the base; no residue characteristic of a $\mathbb Z[1/30]$-scheme divides $5$. That $\iota(5)$ is multiplication by $5$ is proved here, and the action of $\mathcal O$ plays no other part.
+""",
+        src=r"""
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Proposition 20.7, read in the author's retyped edition (p. 44 there; abelian schemes are defined on p. 42). The pages of the 1986 printing are unverified.
 """,
     ),
     'cmHeight62': dict(

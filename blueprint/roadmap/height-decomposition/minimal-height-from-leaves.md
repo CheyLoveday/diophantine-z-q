@@ -4,25 +4,25 @@ declaration: theorem
 origin: bridged
 statement: formalized
 proof: formalized
-lean: HDec.HSyn.sixContactMin_of_open101
+lean: HDec.HSyn.sixContactMin_of_open102
 ---
 
-# The minimal height hypothesis from nineteen statements
+# The minimal height hypothesis from twenty-five statements
 
 The [minimal height hypothesis](../multiplication/certificate/six-contact-min.md) follows from the
-nineteen statements of this chapter taken together: theorems from the literature, grouped by the
+twenty-five statements of this chapter taken together: theorems from the literature, grouped by the
 theory they come from ([Shimura curves of discriminant 6](shimura-curves/README.md),
-[complex multiplication](cm-fibres/README.md),
+[complex multiplication](cm-fibres/README.md), [abelian varieties](abelian-varieties/README.md),
 [Néron models, semistable reduction and monodromy](neron-models/README.md),
 [Faltings 1983 and Faltings heights](heights/README.md),
 [p-adic Hodge theory](p-adic-hodge/README.md),
-[Galois representations of modular forms](modular-galois/README.md)). Of the nineteen statements
-from the literature, seven are published statements, some of them specialized or weakened; and
-twelve are consequences of published theorems, which take further theorems to reach from the print.
-The project's strict convention, which counts a published statement only once its reading against
-the print and its review are complete and find it in its printed form, counts five of the nineteen
-as published (six without the strictest reading of one flagged statement). None of the nineteen is
-proved here.
+[Galois representations of modular forms](modular-galois/README.md)). Of the twenty-five statements
+from the literature, eleven are published statements, some of them specialized or weakened; and
+fourteen are consequences of published theorems, which take further theorems to reach from the
+print. The project's strict convention, which counts a published statement only once its reading
+against the print and its review are complete and find it in its printed form, counts nine of the
+twenty-five as published (ten without the strictest reading of one flagged statement). None of the
+twenty-five is proved here.
 
 The proof follows the manuscript's proof of its Theorem 4.1 at the one instance the main theorem
 uses, which the project has split into named steps, each proved from these statements and the steps
@@ -46,7 +46,6 @@ height hypothesis.
 - [Hodge–Tate weights of the representation of a newform](modular-galois/kato-hodge-tate-weights.md)
 - [Shimura's Main Theorem I on Y₃ in Deligne's form](shimura-curves/shimura-main-theorem-y3.md)
 - [Javanpeykar's bound for curves with a Belyi map](heights/javanpeykar-bound.md)
-- [The integral model of Y₃ over ℤ[1/30]](shimura-curves/y3-integral-model.md)
 - [Carayol's theorem on the conductor](modular-galois/carayol-conductor.md)
 - [The discriminant formula for the Faltings height of an elliptic curve](cm-fibres/elliptic-height-discriminant-formula.md)
 - [Fowler's bound for discriminants of bounded class number](cm-fibres/fowler-class-number-bound.md)
@@ -57,6 +56,13 @@ height hypothesis.
 - [The lower bound for the Faltings height](heights/bost-lower-bound.md)
 - [The isogeny theorem of Gaudron and Rémond](heights/gaudron-remond-isogeny-bound.md)
 - [The locus of geometrically connected fibres](neron-models/ega-geometrically-connected-fibres.md)
+- [Buzzard's model at level V₁(5) over ℤ[1/30]](shimura-curves/buzzard-v15-model.md)
+- [Multiplication by 3 on an abelian scheme is finite étale](abelian-varieties/milne-multiplication-by-3.md)
+- [The n-torsion of an abelian surface has n⁴ points](abelian-varieties/milne-torsion-count.md)
+- [Serre's rigidity lemma at level 3](shimura-curves/serre-rigidity-level-3.md)
+- [Morphisms of abelian schemes fixing zero are homomorphisms](abelian-varieties/milne-zero-preserving-homomorphism.md)
+- [False elliptic curves over a projective base are projective](shimura-curves/false-elliptic-curves-projective.md)
+- [Multiplication by 5 on an abelian scheme is finite étale](abelian-varieties/milne-multiplication-by-5.md)
 - [Colmez's p-adic periods of an abelian variety](p-adic-hodge/colmez-p-adic-periods.md)
 - [The Hodge–Tate theorem of Tate and Raynaud for abelian varieties](p-adic-hodge/fontaine-hodge-tate-abelian.md)
 

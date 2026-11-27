@@ -10,9 +10,9 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the nineteen statements of the chapter in the project's
-assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof is the
-project-authored note `docs/research/h-trust.md`.
+The minimal height hypothesis is proved from the twenty-five statements of the chapter in the
+project's assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof
+is the project-authored note `docs/research/h-trust.md`.
 
 ## Pazuki bound
 
@@ -54,14 +54,6 @@ A. Javanpeykar, *Polynomial bounds for Arakelov invariants of Belyi curves*, Alg
 manuscript's citation. AI-read: arXiv:1403.6404v1, pp. 1 and 9, and p. 90; p. 98 not checked.
 Independence of the height: G. Faltings, Invent. Math. 73 (1983), 349–366; P. Deligne, Sém. Bourbaki
 616 (1983/84); locators unverified.
-
-## Y3 over Z[1/30]
-
-The 11/5 manuscript (`diophantine_zq.tex`, lines 443–477), the construction of the integral model of
-$Y_3$; K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Theorem 2.1
-and Corollary 2.3, read in the author's preprint (Theorem 2.1, p. 5; Corollary 2.3, p. 7; the moduli
-problem, without a polarization, p. 2; the canonical principal polarization, p. 3). The journal
-pages are unverified.
 
 ## Carayol conductor
 
@@ -152,6 +144,58 @@ Math. IHÉS 28 (1966), Théorème (9.7.7), p. 79; with EGA IV₁, Publ. Math. IH
 (1961), (9.1.1), (9.1.2) and (9.1.11), pp. 12–14. AI-read: a three-lens adversarial reading of page
 images of the numdam scans, 2026-11-27 (docs/research/item-m-adversarial-readings.md); no person has
 read these pages.
+
+## Buzzard Thm 2.1 and Cor 2.3 at V1(5)
+
+K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Theorem 2.1, Lemma
+2.2 and Corollary 2.3, read in the author's preprint (Theorem 2.1, p. 5; Corollary 2.3, p. 7). The
+journal pages are unverified.
+
+## Milne Prop 20.7 at n = 3
+
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*,
+Springer (1986), Proposition 20.7, read in the author's retyped edition (p. 44 there; abelian
+schemes are defined on p. 42). The pages of the 1986 printing are unverified.
+
+## Milne Rem 8.4
+
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*,
+Springer (1986), Theorem 8.2, Remark 8.4 and §20, read in the author's retyped edition (pp. 13, 14
+and 42 there); the same statement is Remark 7.3 of Milne's course notes *Abelian varieties*, v2.0
+(2008). The pages of the 1986 printing are unverified.
+
+## Serre rigidity at level 3
+
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*,
+Springer (1986), Corollary 2.2 and Proposition 17.5(b), read in the author's retyped edition (pp. 3
+and 37 there); K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1,
+read in the author's preprint (p. 3). The same statements of Milne's are Corollary 1.2 and
+Proposition 14.4(b) of his course notes, v2.0 (2008). The pages of the 1986 printing and of the
+journal are unverified.
+
+## Milne Cor 20.2(a)
+
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*,
+Springer (1986), Corollary 20.2(a) and Proposition 20.1, read in the author's retyped edition (p. 43
+there); K.-W. Lan, *Arithmetic compactifications of PEL-type Shimura varieties*, Harvard thesis
+(2008), Corollary 1.3.1.6. The pages of the 1986 printing are unverified, and Mumford's corollary
+was not read.
+
+## False elliptic curves are projective
+
+K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1, read in the
+author's preprint (p. 3); K.-W. Lan, *Arithmetic compactifications of PEL-type Shimura varieties*,
+Harvard thesis (2008), Theorem 1.3.2.6, Lemma 1.3.2.16, Corollary 1.3.1.5, Proposition 1.3.2.18 and
+Definition 1.3.2.20 (Proposition 1.3.2.15 and Definition 1.3.2.16 of the 2021 revision); J. S.
+Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*,
+Springer (1986), §20 (p. 46 of the author's retyped edition); The Stacks Project, tags 01VT, 0C4K
+and 0B45. The journal and 1986 pages are unverified.
+
+## Milne Prop 20.7 at n = 5
+
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*,
+Springer (1986), Proposition 20.7, read in the author's retyped edition (p. 44 there; abelian
+schemes are defined on p. 42). The pages of the 1986 printing are unverified.
 
 ## Colmez Theorem 5.2
 
