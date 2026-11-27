@@ -71,8 +71,8 @@ Theorem 1.1's numbers, such as the count of variables. Neither route above uses 
 
 ## Roadmap
 
-The [roadmap](blueprint/roadmap/README.md) writes the proof out as a book, with a page for each statement the Lean
-proves or assumes: what it says, how the Lean statement differs from the manuscript's, its Lean name, and whether it
+The [roadmap](blueprint/roadmap/README.md) writes the proof out as a book, with a page for each statement in the
+proof's outline: what it says, how the Lean statement differs from the manuscript's, its Lean name, and whether it
 is proved, cited from the literature or open. It opens with a diagram of the proof and a status table for each route,
 and then has one part for each piece of the proof:
 - [the construction](blueprint/roadmap/construction.md): the polynomial and why its zeros project to ℤ;
