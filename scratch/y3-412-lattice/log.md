@@ -16,3 +16,11 @@ Base: d28aef9839b8c12dcda2b24b3a22c993f4975dbf (VERIFIED, git rev-parse HEAD at 
 - Convention.lean (A5): needed `noncomputable section`; `show`/`change` to beta-reduce image lambdas. COMPILED.
 - Constructions: L_g = 𝒪·binv γ from classNumberOneB_proof + A4 (with k := u ∈ OhatU, g := 1) + A2.
   Basis e_i = ofInt(Pi.single i 1) * α; lin. indep. via right mult by binv α and coordinates; span via `eq_sum_oVec` (cQ coordinates).
+
+## Part B (Y3Lattice412/Moduli.lean)
+- `IsHodgeH1PrintAt P τ L`: c : L → Path; 𝒪-clause `∀ (a : O) (b : L) (hab : a*b ∈ L), ...`.
+- Needed `attribute [local instance] CloudB3W17Hodge.classicalTopology` (as in Y3HodgePrint.lean:48) for `Path (1 : P.A.Pt ℂ) 1`.
+- `isHodgeH1PrintAt_O_iff` via `setOEquiv : {b | InO b} ≃ O` (identity on elements; membership defeq). COMPILED.
+- `moduliAtUnitsHP_of_lattice`, `moduliAtUsedUnitsHP_of_lattice` (for Ψ restricted by toPM). COMPILED.
+- Check.lean: 30 `#print axioms` lines, all `[propext, Classical.choice, Quot.sound]` (scratch/y3-412-lattice/axioms.txt). VERIFIED.
+- `lake build` of Lattice, Convention, Moduli, Check: success.
