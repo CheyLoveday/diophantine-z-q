@@ -10,7 +10,7 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the twenty-five statements of the chapter in the
+The minimal height hypothesis is proved from the twenty-six statements of the chapter in the
 project's assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof
 is the project-authored note `docs/research/h-trust.md`.
 
@@ -145,11 +145,11 @@ Math. IHÉS 28 (1966), Théorème (9.7.7), p. 79; with EGA IV₁, Publ. Math. IH
 images of the numdam scans, 2026-11-27 (docs/research/item-m-adversarial-readings.md); no person has
 read these pages.
 
-## Buzzard Thm 2.1 and Cor 2.3 at V1(5)
+## Buzzard Thm 2.1 and Cor 2.3 at V1(5), literal
 
-K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Theorem 2.1, Lemma
-2.2 and Corollary 2.3, read in the author's preprint (Theorem 2.1, p. 5; Corollary 2.3, p. 7). The
-journal pages are unverified.
+K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1, Theorem 2.1,
+Lemma 2.2 and Corollary 2.3, read in the author's preprint (pp. 2–7; Theorem 2.1, p. 5; Corollary
+2.3, p. 7). The journal pages are unverified.
 
 ## Milne Prop 20.7 at n = 3
 
@@ -164,14 +164,20 @@ Springer (1986), Theorem 8.2, Remark 8.4 and §20, read in the author's retyped 
 and 42 there); the same statement is Remark 7.3 of Milne's course notes *Abelian varieties*, v2.0
 (2008). The pages of the 1986 printing are unverified.
 
-## Serre rigidity at level 3
+## Buzzard Lemma 2.2 at N = 5
+
+K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Definition 1.1 and
+Lemma 2.2, read in the author's preprint (pp. 3 and 6); J. S. Milne, *Abelian varieties*, in G.
+Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Proposition 20.7, read
+in the author's retyped edition (p. 44 there); J. Voight, *Quaternion algebras*, Graduate Texts in
+Mathematics 288, Springer (2021), Theorem 15.5.5. The journal pages and those of the 1986 printing
+are unverified.
+
+## Milne Thm 12.5
 
 J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*,
-Springer (1986), Corollary 2.2 and Proposition 17.5(b), read in the author's retyped edition (pp. 3
-and 37 there); K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1,
-read in the author's preprint (p. 3). The same statements of Milne's are Corollary 1.2 and
-Proposition 14.4(b) of his course notes, v2.0 (2008). The pages of the 1986 printing and of the
-journal are unverified.
+Springer (1986), Corollary 2.4, Remark 8.4 and Theorem 12.5, read in the author's retyped edition
+(pp. 3, 14 and 21 there). The pages of the 1986 printing are unverified.
 
 ## Milne Cor 20.2(a)
 

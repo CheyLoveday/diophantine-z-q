@@ -150,18 +150,46 @@ It is Shimura's Main Theorem I in Deligne's adelic form, at $B=\left(\frac{2,-3}
 G. Shimura, Ann. of Math. 85 (1967), Main Theorem I; P. Deligne, *Travaux de Shimura*, Sém. Bourbaki 389 (1971), §§4–5 (Corollaire 5.7, Exemple 5.8); J. Milne, *Introduction to Shimura varieties* (2005), §§5–8 and 12–14. Numbers unverified.
 """,
     ),
-    'buzzardThm21Cor23V15': dict(
-        group='shimura-curves', slug='buzzard-v15-model',
-        title="Buzzard's model at level V₁(5) over ℤ[1/30]",
-        anchor='Buzzard Thm 2.1 and Cor 2.3 at V1(5)',
+    'buzzardXDV15Lit': dict(
+        group='shimura-curves', slug='buzzard-v15-moduli-problem',
+        title="Buzzard's moduli problem at level V₁(5) is a projective curve over ℤ[1/30]",
+        anchor='Buzzard Thm 2.1 and Cor 2.3 at V1(5), literal',
         statement=r"""
-The *$V_1(5)$ model statement* is the following assertion. Let $e=3+2ij\in\mathcal O$; it has reduced trace $6$ and reduced norm $-15$, so it reduces to an idempotent of rank one in $\mathcal O/5\mathcal O$. For a scheme $S$ and an abelian scheme $\mathcal A$ of relative dimension $2$ over $S$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}_S(\mathcal A)$, a *$V_1(5)$-structure* is a section $Q$ of $\mathcal A$ over $S$ with $5Q=0$ and $\iota(e)Q=0$ that is nonzero at every geometric point of $S$. There are a scheme $X$ over $\mathbb Z[1/30]$, proper and smooth of relative dimension $1$, with a closed immersion into some $\mathbb P^N_{\mathbb Z[1/30]}$ over $\mathbb Z[1/30]$, and such an $(\mathcal A,\iota)$ over $X$ with a $V_1(5)$-structure $Q$, with the following property. For every scheme $S$ over $\mathbb Z[1/30]$ and every such $(\mathcal A',\iota')$ over $S$ with a $V_1(5)$-structure $Q'$, there is exactly one morphism $g:S\to X$ over $\mathbb Z[1/30]$ for which some cartesian square from $\mathcal A'\to S$ to $\mathcal A\to X$ over $g$ commutes with the actions of $\mathcal O$ and carries $Q'$ to $Q$; and that square is unique.
+Fix the isomorphism $\kappa:\mathcal O/5\mathcal O\to\mathrm M_2(\mathbb F_5)$ sending the classes of $e=3+2ij$, $X$, $Y$, $1-e$ to the four matrix units, and let $H\subset(\mathcal O/5\mathcal O)^\times$ be the group of units $\delta$ with $\kappa(\delta)=\left(\begin{smallmatrix}a&b\\0&1\end{smallmatrix}\right)$. For a scheme $S$ over $\mathbb Z[1/30]$ and an abelian scheme $\mathcal A$ of relative dimension $2$ over $S$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}_S(\mathcal A)$, a *full level-$5$ structure* over an $S$-scheme $T$ is an isomorphism of $T$-schemes $(\mathcal O/5\mathcal O)_T\to\mathcal A[5]_T$ commuting with the left actions of $\mathcal O$; $\delta$ acts by $\alpha\mapsto\alpha\circ r_\delta$; and a *level-$V_1(5)$ structure* on $\mathcal A$ is a section over $S$ of the étale sheafification, on $S$-schemes, of $T\mapsto H\backslash\{\text{full level-5 structures over }T\}$. There are a scheme $X$ over $\mathbb Z[1/30]$, proper and smooth of relative dimension $1$, with a closed immersion into some $\mathbb P^N_{\mathbb Z[1/30]}$ over $\mathbb Z[1/30]$, and such an $(\mathcal A,\iota)$ over $X$ with a level-$V_1(5)$ structure, such that for every scheme $S$ over $\mathbb Z[1/30]$ and every such $(\mathcal A',\iota')$ over $S$ with a level-$V_1(5)$ structure there is exactly one $g:S\to X$ over which $(\mathcal A',\iota')$ maps to $(\mathcal A,\iota)$ (a cartesian square commuting with $\mathcal O$ and carrying the one level structure to the other), and that map is unique.
 """,
         caveat=r"""
-It is Buzzard's Theorem 2.1 with Corollary 2.3 at the level $U=V_1(5)$, for which $\mathbb Z[1/M_Ud]=\mathbb Z[1/30]$: the moduli stack $X_D(U)$ is proper and smooth of relative dimension $1$ over $\mathbb Z[1/30]$, it is the stack associated to a scheme, and that scheme is projective. Three steps are not printed and are written out in the notes accompanying the Lean proof. Buzzard defines $V_1(5)$ through an isomorphism $\kappa:\mathcal O\otimes R\to\mathrm M_2(R)$, $R=\prod_{p\nmid6}\mathbb Z_p$, fixed once and for all; the statement takes $\kappa$ with $\kappa(e)\equiv\operatorname{diag}(1,0)\bmod5$, and for that choice his $V_1(5)$-structures are the sections $Q$ above. Uniqueness of the square is the absence of automorphisms established in the proof of Corollary 2.3, through Lemma 2.2. Projectivity over the affine base gives the closed immersion. The polarization is not part of the data, and $\iota$ is not asked to be injective, which it is automatically over a nonempty base.
+It is Buzzard's Theorem 2.1 with Corollary 2.3 at the level $U=V_1(5)$, for which $\mathbb Z[1/M_Ud]=\mathbb Z[1/30]$, with his own definitions of level structures (Definitions 1.1 and 1.2) and of the morphisms of $X^D(U)$. Buzzard fixes $\kappa$ once and for all; every isomorphism $\mathcal O/5\mathcal O\cong\mathrm M_2(\mathbb F_5)$ is the reduction of an admissible one, so his results hold for the $\kappa$ above. "Algebraic stack" and "regular" are dropped, and projectivity over the affine base is stated as the closed immersion (EGA II (5.5.4)(ii)). Buzzard asks that $\mathcal A'\to\mathcal A_S$ be an isomorphism compatible with $\iota$; the statement asks for a cartesian square commuting with $\mathcal O$, which carries zero to zero and so is a homomorphism (Milne, Corollary 20.2(a)). Over the empty base, which Buzzard's injectivity of $\iota$ excludes, every clause holds trivially. The concrete form of level-$V_1(5)$ structures used elsewhere in the proof (a section $Q$ with $5Q=0$ and $\iota(e)Q=0$, nonzero at every geometric point) is derived from this one in the Lean proof, with Milne's Proposition 20.7 and Remark 8.4 at $n=5$.
 """,
         src=r"""
-K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Theorem 2.1, Lemma 2.2 and Corollary 2.3, read in the author's preprint (Theorem 2.1, p. 5; Corollary 2.3, p. 7). The journal pages are unverified.
+K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1, Theorem 2.1, Lemma 2.2 and Corollary 2.3, read in the author's preprint (pp. 2–7; Theorem 2.1, p. 5; Corollary 2.3, p. 7). The journal pages are unverified.
+""",
+    ),
+    'buzzardLemma22Full5': dict(
+        group='shimura-curves', slug='buzzard-lemma-2-2-level-5',
+        title="An automorphism fixing a full level-5 structure is the identity",
+        anchor='Buzzard Lemma 2.2 at N = 5',
+        statement=r"""
+Let $k$ be an algebraically closed field whose characteristic is not $2$, $3$ or $5$, $\mathcal A$ an abelian surface over $k$ with an injective ring homomorphism $\iota:\mathcal O\to\operatorname{End}(\mathcal A)$, and $\theta$ an automorphism of $\mathcal A$ commuting with $\iota(a)$ for every $a\in\mathcal O$. If $\theta$ fixes a point $P\in\mathcal A(k)$ such that $a\mapsto\iota(a)P$ is a bijection from $\mathcal O/5\mathcal O$ onto the $5$-torsion of $\mathcal A(k)$, then $\theta$ is the identity.
+""",
+        caveat=r"""
+It is Buzzard's Lemma 2.2 at $N=5$, which is at least $4$ and prime to $d=6$. The map $x\mapsto\iota(x)P$ is a full level-$5$ structure in his sense (Definition 1.1): $\mathcal A[5]$ is finite étale because $5$ is invertible (Milne, Proposition 20.7), hence constant over $k$. Its orbit under Buzzard's group $H$ is a $V_1(5)$-structure, for any choice of his $\kappa$, and an automorphism fixing $P$ fixes it. The order $\mathcal O$ meets Buzzard's standing hypotheses: it is a maximal order (reduced discriminant $6$; Voight, Theorem 15.5.5) in the indefinite quaternion algebra $(2,-3)_{\mathbb Q}$, which is ramified exactly at $2$ and $3$.
+""",
+        src=r"""
+K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), Definition 1.1 and Lemma 2.2, read in the author's preprint (pp. 3 and 6); J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Proposition 20.7, read in the author's retyped edition (p. 44 there); J. Voight, *Quaternion algebras*, Graduate Texts in Mathematics 288, Springer (2021), Theorem 15.5.5. The journal pages and those of the 1986 printing are unverified.
+""",
+    ),
+    'milneThm125Pts': dict(
+        group='abelian-varieties', slug='milne-tate-module-injectivity',
+        title="Endomorphisms agreeing on l-power torsion are equal",
+        anchor='Milne Thm 12.5',
+        statement=r"""
+Let $k$ be an algebraically closed field, $\mathcal A$ an abelian surface over $k$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}(\mathcal A)$, and $\ell$ a prime different from the characteristic of $k$. If two endomorphisms of $\mathcal A$ agree on every point of $\mathcal A(k)$ of $\ell$-power order, they are equal.
+""",
+        caveat=r"""
+It follows from Milne's Theorem 12.5 by the printed parts only: if $f$ and $g$ agree on every $\mathcal A_{\ell^n}(k)$, then $T_\ell(f-g)=0$ (Remark 8.4 describes $T_\ell\mathcal A$ as the limit of the $\mathcal A_{\ell^n}(k)$); the map $\mathbb Z_\ell\otimes\operatorname{End}(\mathcal A)\to\operatorname{End}(T_\ell\mathcal A)$ is injective, so $1\otimes(f-g)=0$; and $\operatorname{End}(\mathcal A)$ is a free $\mathbb Z$-module, so $f=g$. The difference is taken in the commutative group $\operatorname{End}(\mathcal A)$ (Corollary 2.4). The action of $\mathcal O$ plays no part.
+""",
+        src=r"""
+J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Corollary 2.4, Remark 8.4 and Theorem 12.5, read in the author's retyped edition (pp. 3, 14 and 21 there). The pages of the 1986 printing are unverified.
 """,
     ),
     'milneProp207At3': dict(
@@ -190,20 +218,6 @@ It is Milne's Remark 8.4 at $g=2$: over a separably closed field whose character
 """,
         src=r"""
 J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Theorem 8.2, Remark 8.4 and §20, read in the author's retyped edition (pp. 13, 14 and 42 there); the same statement is Remark 7.3 of Milne's course notes *Abelian varieties*, v2.0 (2008). The pages of the 1986 printing are unverified.
-""",
-    ),
-    'serreRigidityLevel3': dict(
-        group='shimura-curves', slug='serre-rigidity-level-3',
-        title="Serre's rigidity lemma at level 3",
-        anchor='Serre rigidity at level 3',
-        statement=r"""
-Let $\mathcal A$ be an abelian scheme of relative dimension $2$ over a scheme $S$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}_S(\mathcal A)$, and $\theta$ an automorphism of $\mathcal A$ over $S$ commuting with $\iota(a)$ for every $a\in\mathcal O$. Let $s:\operatorname{Spec}k\to S$ be a geometric point whose field has characteristic neither $2$ nor $3$, and $P\in\mathcal A_s(k)$ a point such that $a\mapsto\iota(a)P$ is a bijection from $\mathcal O/3\mathcal O$ onto the $3$-torsion of $\mathcal A_s(k)$. If $\theta$ fixes $P$, then $\theta$ fixes every point of $\mathcal A_s(k)$.
-""",
-        caveat=r"""
-A consequence of printed statements, not a single print. Since $\iota(0)=0$, $\theta$ fixes the zero section, so on the fibre it is a homomorphism (Milne, Corollary 2.2); commuting with $\mathcal O$ and fixing $P$, it is the identity on the $3$-torsion. Buzzard states that $\mathcal A_s$ has a unique principal polarization $\lambda$ whose Rosati involution induces $x\mapsto t^{-1}\bar xt$ on $\mathcal O$, for a fixed $t\in\mathcal O$ with $t^2=-6$; then $\theta^\vee\lambda\theta$ is another such polarization, so $\theta$ preserves $\lambda$. That step is not printed and is written out in the notes accompanying the Lean proof. Milne's Proposition 17.5(b) at $n=3$, in characteristic other than $3$, ends the argument. In characteristic $p$ Buzzard's uniqueness is printed with a sketched proof.
-""",
-        src=r"""
-J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Corollary 2.2 and Proposition 17.5(b), read in the author's retyped edition (pp. 3 and 37 there); K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1, read in the author's preprint (p. 3). The same statements of Milne's are Corollary 1.2 and Proposition 14.4(b) of his course notes, v2.0 (2008). The pages of the 1986 printing and of the journal are unverified.
 """,
     ),
     'milneZeroPreservingHomLN': dict(

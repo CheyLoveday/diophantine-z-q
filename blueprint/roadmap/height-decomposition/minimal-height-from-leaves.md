@@ -4,25 +4,25 @@ declaration: theorem
 origin: bridged
 statement: formalized
 proof: formalized
-lean: HDec.HSyn.sixContactMin_of_open102
+lean: HDec.HSyn.sixContactMin_of_open103
 ---
 
-# The minimal height hypothesis from twenty-five statements
+# The minimal height hypothesis from twenty-six statements
 
 The [minimal height hypothesis](../multiplication/certificate/six-contact-min.md) follows from the
-twenty-five statements of this chapter taken together: theorems from the literature, grouped by the
+twenty-six statements of this chapter taken together: theorems from the literature, grouped by the
 theory they come from ([Shimura curves of discriminant 6](shimura-curves/README.md),
 [complex multiplication](cm-fibres/README.md), [abelian varieties](abelian-varieties/README.md),
 [Néron models, semistable reduction and monodromy](neron-models/README.md),
 [Faltings 1983 and Faltings heights](heights/README.md),
 [p-adic Hodge theory](p-adic-hodge/README.md),
-[Galois representations of modular forms](modular-galois/README.md)). Of the twenty-five statements
-from the literature, eleven are published statements, some of them specialized or weakened; and
-fourteen are consequences of published theorems, which take further theorems to reach from the
-print. The project's strict convention, which counts a published statement only once its reading
-against the print and its review are complete and find it in its printed form, counts nine of the
-twenty-five as published (ten without the strictest reading of one flagged statement). None of the
-twenty-five is proved here.
+[Galois representations of modular forms](modular-galois/README.md)). Of the twenty-six statements
+from the literature, fourteen are published statements, some of them specialized or weakened; and
+twelve are consequences of published theorems, which take further theorems to reach from the print.
+The project's strict convention, which counts a published statement only once its reading against
+the print and its review are complete and find it in its printed form, counts nine of the twenty-six
+as published (ten without the strictest reading of one flagged statement). None of the twenty-six is
+proved here.
 
 The proof follows the manuscript's proof of its Theorem 4.1 at the one instance the main theorem
 uses, which the project has split into named steps, each proved from these statements and the steps
@@ -56,10 +56,11 @@ height hypothesis.
 - [The lower bound for the Faltings height](heights/bost-lower-bound.md)
 - [The isogeny theorem of Gaudron and Rémond](heights/gaudron-remond-isogeny-bound.md)
 - [The locus of geometrically connected fibres](neron-models/ega-geometrically-connected-fibres.md)
-- [Buzzard's model at level V₁(5) over ℤ[1/30]](shimura-curves/buzzard-v15-model.md)
+- [Buzzard's moduli problem at level V₁(5) is a projective curve over ℤ[1/30]](shimura-curves/buzzard-v15-moduli-problem.md)
 - [Multiplication by 3 on an abelian scheme is finite étale](abelian-varieties/milne-multiplication-by-3.md)
 - [The n-torsion of an abelian surface has n⁴ points](abelian-varieties/milne-torsion-count.md)
-- [Serre's rigidity lemma at level 3](shimura-curves/serre-rigidity-level-3.md)
+- [An automorphism fixing a full level-5 structure is the identity](shimura-curves/buzzard-lemma-2-2-level-5.md)
+- [Endomorphisms agreeing on l-power torsion are equal](abelian-varieties/milne-tate-module-injectivity.md)
 - [Morphisms of abelian schemes fixing zero are homomorphisms](abelian-varieties/milne-zero-preserving-homomorphism.md)
 - [False elliptic curves over a projective base are projective](shimura-curves/false-elliptic-curves-projective.md)
 - [Multiplication by 5 on an abelian scheme is finite étale](abelian-varieties/milne-multiplication-by-5.md)
