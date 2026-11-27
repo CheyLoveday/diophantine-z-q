@@ -20,9 +20,12 @@ namespace Y3Buzzard.SmoothNormal
 
 /-- Leaf (EGA IV₄, Prop. (17.5.7)), the "intégralement clos" case, for a smooth morphism.
 
-Source: A. Grothendieck, *Éléments de géométrie algébrique IV, Étude locale des schémas et des morphismes de schémas (quatrième partie)*, Publ. Math. IHÉS 32 (1967), Prop. (17.5.7), p. 70:
+Source: A. Grothendieck, *Éléments de géométrie algébrique IV, Étude locale des schémas et des
+morphismes de schémas (quatrième partie)*, Publ. Math. IHÉS 32 (1967), Prop. (17.5.7), p. 70:
 
-"Proposition (17.5.7). — Soit f: X → Y un morphisme localement de présentation finie, lisse en un point x ∈ X, posons y = f(x). Alors, pour que l'anneau O_x soit réduit (resp. intégralement clos, resp. géométriquement unibranche), il faut et il suffit que O_y le soit."
+"Proposition (17.5.7). — Soit f : X → Y un morphisme localement de présentation finie, lisse en
+un point x ∈ X; posons y = f(x). Alors, pour que l'anneau 𝒪_{X,x} soit réduit (resp. intégralement
+clos, resp. géométriquement unibranche), il faut et il suffit que 𝒪_{Y,y} le soit."
 
 Convention. EGA 0_I (4.1.4) (Publ. Math. IHÉS 4 (1960), p. 37) calls a sheaf of rings normal
 at a point "si sa fibre 𝒜_x est un anneau intègre et intégralement clos", and EGA IV₂ (5.13.5)
@@ -33,10 +36,18 @@ tout x ∈ X, O_x est un anneau local noethérien intégralement clos", and the 
 "puisque O_x est intègre": for local rings, EGA's "intégralement clos" includes "intègre"
 (Bourbaki's convention). Here "integrally closed domain" is `IsDomain R ∧ IsIntegrallyClosed R`.
 
-Only the "intégralement clos" case is stated, only in the direction from `O_y` to `O_x`, and for
-a morphism smooth at every point. A smooth morphism is locally of finite presentation (on affine
-opens its ring maps are smooth, and smooth algebras are finitely presented), so the hypotheses of
-the Proposition hold at every point `x`, with `y = f(x)`. -/
+Only the "intégralement clos" case is stated, only in the direction from `𝒪_{Y,y}` to `𝒪_{X,x}`,
+and for a morphism smooth at every point. The hypotheses of the Proposition hold at every point
+`x`, with `y = f(x)`:
+* `f` is locally of finite presentation: on affine opens its ring maps are smooth, and smooth
+  algebras are finitely presented.
+* `f` is lisse at `x`. For affine opens `U ⊆ Y` and `V ⊆ f⁻¹ U`, `Smooth f` makes the ring map
+  `Γ(Y, U) → Γ(X, V)` smooth, so `Γ(X, V)` is a formally smooth `Γ(Y, U)`-algebra
+  (`Algebra.Smooth`), and algebra maps into `B ⧸ I`, for `I` nilpotent, lift to `B`
+  (`Algebra.FormallySmooth.exists_lift`). For affine schemes this lifting property is EGA's formal
+  smoothness (17.1.1), by Remark (17.1.2)(i) (p. 56, via 0_IV (19.3.1) and (19.10.1)). Formal
+  smoothness is local on `X` and on `Y` (17.1.6, pp. 58–59), so `f` is formally smooth, hence
+  lisse (17.3.1, p. 61), and therefore lisse at every point of `X` (17.3.7, p. 62). -/
 def EGAIV17_5_7 : Prop :=
   ∀ {X Y : Scheme.{0}} (f : X ⟶ Y) [Smooth f] (x : X),
     IsDomain (Y.presheaf.stalk (f.base x)) → IsIntegrallyClosed (Y.presheaf.stalk (f.base x)) →
