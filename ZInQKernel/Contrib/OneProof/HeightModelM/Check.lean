@@ -15,7 +15,9 @@ Every theorem below should depend on `propext`, `Classical.choice` and `Quot.sou
 #print axioms ZInQ.HeightModelM.isGR1StableHeightOriginal_of_isAnStableHeightSS
 #print axioms ZInQ.HeightModelM.bostLowerBoundAnSS_of_GR1
 #print axioms ZInQ.HeightModelM.gaudronRemondSec9LowerAnSS_of_GR1
+#print axioms ZInQ.HeightModelM.gaudronRemondSec9LowerGR1Weak_of_GR1
+#print axioms ZInQ.HeightModelM.gaudronRemondSec9LowerAnSS_of_GR1Weak
 #print axioms ZInQ.HeightModelM.gaudronRemondThm14Printed_of_GR1
 #print axioms ZInQ.HeightModelM.gaudronRemondThm14AnSS_of_GR1
-#print axioms ZInQ.HeightModelM.openResearchLeaves78_of_M
+#print axioms ZInQ.HeightModelM.openResearchLeaves79_of_M
 #print axioms ZInQ.HeightModelM.frozenTargetM

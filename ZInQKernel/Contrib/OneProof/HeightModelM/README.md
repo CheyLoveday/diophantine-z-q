@@ -12,32 +12,51 @@ semi-abelian model. This directory supplies it, from one printed leaf, EGA IV₃
 * `isGR1StableHeightOriginal_of_isAnStableHeightSS (hE : EGAIV_9_7_7_OL) :
   IsAnStableHeightSS A x → IsGR1StableHeightOriginal A x`. The semi-abelian model is `𝒩⁰`, the
   open union of the identity components of the fibres of the semistable Néron model `𝒩`, over the
-  same ring of integers. The section is pulled back along `𝒩⁰ → 𝒩`, and the index and archimedean
-  norms are unchanged.
-* `gaudronRemondSec9LowerAnSS_of_GR1 : EGAIV_9_7_7_OL → GaudronRemondSec9LowerGR1 →
-  ZInQ.BostGR9.GaudronRemondSec9LowerAnSS`, through `bostLowerBoundAnSS_of_GR1` and the existing
-  weakening `ZInQ.BostGR9.gaudronRemondSec9LowerAnSS_of_bostLowerBoundAnSS`.
-* `gaudronRemondThm14AnSS_of_GR1 : EGAIV_9_7_7_OL → GaudronRemondThm14GR1 →
-  ZInQ.SemistabAssembly.GaudronRemondThm14AnSS`, through `gaudronRemondThm14Printed_of_GR1` and
-  the existing `ZInQ.GR14Printed.gaudronRemondThm14AnSS_of_printed`.
-* `frozenTargetM`: `ZInQ.OneProof.frozenTarget` with those two research fields replaced by
-  `GaudronRemondSec9LowerGR1`, `GaudronRemondThm14GR1` and `EGAIV_9_7_7_OL`.
+  same ring of integers. The section is pulled back along `𝒩⁰ → 𝒩`, and the index and
+  archimedean norms are unchanged.
+* `GaudronRemondSec9LowerGR1` is GR1 Cor. 8.4 as printed (Bost's strength) over the GR1 height.
+  `GaudronRemondSec9LowerGR1Weak` is the same at the current field's strength, `-(3/2) g`.
+  `gaudronRemondSec9LowerGR1Weak_of_GR1` proves the print implies the weak form (the weakening
+  GR make on p. 352), and `gaudronRemondSec9LowerAnSS_of_GR1Weak : EGAIV_9_7_7_OL →
+  GaudronRemondSec9LowerGR1Weak → ZInQ.BostGR9.GaudronRemondSec9LowerAnSS` gives the current row.
+  The fold carries the weak form, so the restatement is not stronger than the current field.
+* `gaudronRemondThm14Printed_of_GR1 : EGAIV_9_7_7_OL → GaudronRemondThm14GR1 →
+  ZInQ.GR14Printed.GaudronRemondThm14Printed` gives the current Duke row
+  (`gaudronRemondThm14AnSS_of_GR1` gives the older `AnSS` form too).
+* `frozenTargetM`: `ZInQ.OneProof.frozenTarget` with the research bundle
+  `OpenResearchLeaves79M`. Its proof term is current `Main`'s, with `r` passed through
+  `openResearchLeaves79_of_M` and nothing else changed.
+* **Direction.** The new rows imply the old fields (proved). The converse, from the GR1 height to
+  the Néron-model height (a semi-abelian model's height is computed on some semistable Néron
+  model), is not proved in the tree, so the GR1 rows are not shown equivalent to the old fields.
 
 Axioms of every theorem: `propext`, `Classical.choice`, `Quot.sound` (`Check.lean`). No `sorry`,
 no `axiom`, no build-time code.
 
 ## Files
 
-| file | content |
-|---|---|
-| `EGA977.lean` | The leaf `EGAIV_9_7_7_OL`, EGA IV₃ (9.7.7)(ii) at `Spec 𝓞_L`, and the glue `genericConnectedFibresOL_of_ega`: a locally constructible subset of `Spec 𝓞_L` that contains the generic point has finite complement, so a smooth model with geometrically connected generic fibre has only finitely many disconnected fibres. Imports Mathlib only. |
-| `OpenIdComp.lean` | `isOpen_idCompSet_of_ega`: `𝒢⁰` is open for every group model `𝒢` over `𝓞_L`. The generic fibre is geometrically connected (Stacks 04KV, already proved in the tree). Also `SGA3_VIB_3_10_NeronOLPrinted` and its proofs from `GenericConnectedFibresOL` and from the leaf. |
-| `SemiAbelianModel.lean` | `IsSemiAbelianModel`, GR1's "modèle semi-abélien": every special fibre is connected and an extension of an abelian variety by a torus, over `k(𝔭)` and over `k̄(𝔭)`. `exists_semiAbelianModel`: the open `𝒩⁰` of a group model that is semistable as printed is a semi-abelian group model, with an open immersion homomorphism onto `𝒩⁰`. |
-| `MetricTransport.lean` | Along any open immersion homomorphism `𝒢₀ → 𝒩` of group models: the Hodge lattice and the index of a section (`secIndex_hodgeMap`); the analytic topology on complex points (a homeomorphism); holomorphic charts in both directions; the measures `(i/2)^g η̃ ∧ η̄̃`; and so `isAnMetricSq_hodgeMap`. |
-| `GR1Height.lean` | `IsGR1StableHeightOriginal`, GR1 §2.3 in Faltings' original normalization, and the identification. |
-| `Rows.lean` | The printed rows `GaudronRemondSec9LowerGR1` and `GaudronRemondThm14GR1` and their implications to the current rows. |
-| `FoldCheck.lean` | `OpenResearchLeaves78M`, `openResearchLeaves78_of_M`, `frozenTargetM`. It imports the chain top and the headline modules, not `Main`. |
-| `Check.lean` | `#print axioms` for the theorems above. |
+* `EGA977.lean`: the leaf `EGAIV_9_7_7_OL`, EGA IV₃ (9.7.7)(ii) at `Spec 𝓞_L`, and the glue
+  `genericConnectedFibresOL_of_ega`. A locally constructible subset of `Spec 𝓞_L` that contains
+  the generic point has finite complement, so a smooth model with geometrically connected generic
+  fibre has only finitely many disconnected fibres. Imports Mathlib only.
+* `OpenIdComp.lean`: `isOpen_idCompSet_of_ega`, `𝒢⁰` is open for every group model `𝒢` over
+  `𝓞_L`. The generic fibre is geometrically connected (Stacks 04KV, proved in the tree). Also
+  `SGA3_VIB_3_10_NeronOLPrinted` and its proofs.
+* `SemiAbelianModel.lean`: `IsSemiAbelianModel`, GR1's "modèle semi-abélien" (every special
+  fibre connected and an extension of an abelian variety by a torus, over `k(𝔭)` and `k̄(𝔭)`), and
+  `exists_semiAbelianModel` (the open `𝒩⁰` is a semi-abelian group model with an open immersion
+  homomorphism onto `𝒩⁰`).
+* `MetricTransport.lean`: along an open immersion homomorphism `𝒢₀ → 𝒩` of group models, the
+  Hodge lattice and the index (`secIndex_hodgeMap`), the analytic topology (a homeomorphism),
+  holomorphic charts in both directions, the measures `(i/2)^g η̃ ∧ η̄̃`, hence
+  `isAnMetricSq_hodgeMap`.
+* `GR1Height.lean`: `IsGR1StableHeightOriginal` (GR1 §2.3, original normalization) and the
+  identification.
+* `Rows.lean`: the printed rows `GaudronRemondSec9LowerGR1` (and its weak form) and
+  `GaudronRemondThm14GR1`, and their implications to the current rows.
+* `FoldCheck.lean`: `OpenResearchLeaves79M`, `openResearchLeaves79_of_M`, `frozenTargetM`. It
+  imports the chain top (`TailZ107`) and the headline modules, not `Main`.
+* `Check.lean`: `#print axioms` for the theorems above.
 
 ## Reading notes
 
@@ -78,13 +97,18 @@ clear no flag.
 
 The fold is a copy reroute with no change to existing declarations.
 
-1. The new research bundle is `OpenResearchLeaves78M`: `OpenResearchLeaves78` with
-   `gaudronRemondSec9LowerAnSS` and `gaudronRemondThm14AnSS` replaced by
-   `gaudronRemondSec9LowerGR1`, `gaudronRemondThm14GR1` and `egaIV_9_7_7_OL`. That is 18 fields
-   instead of 17, so the H count goes from 19 to 20 and the total from 22 to 23.
-2. `Main` changes only `r`'s type. It goes through `openResearchLeaves78_of_M`, as `frozenTargetM`
-   does here.
-3. Rating, pending the statement checks: the two GR1 rows are the prints over GR1's own height,
-   and the EGA row is a direct instance of a refereed print. Each is a LEAF candidate once read.
-   The old forms remain reachable through `gaudronRemondSec9LowerAnSS_of_GR1` and
-   `gaudronRemondThm14AnSS_of_GR1`.
+1. The new research bundle is `OpenResearchLeaves79M`: `OpenResearchLeaves79` with
+   `gaudronRemondSec9LowerAnSS` and `gaudronRemondThm14Printed` replaced by
+   `gaudronRemondSec9LowerGR1Weak`, `gaudronRemondThm14GR1` and `egaIV_9_7_7_OL`, every other
+   field kept (`bergerSurveyF` included). Bundle 16 → 17 fields, H 18 → 19, total 21 → 22.
+2. `Main` changes only `r`'s type. It goes through `openResearchLeaves79_of_M`, as
+   `frozenTargetM` does here.
+3. Rating, pending the statement checks:
+   * `egaIV_9_7_7_OL` (read from the numdam journal scans) and the Sec9 rows (read from the EMS
+     journal file of GR1; the bundle carries the weak form, the full Cor. 8.4 is the read print)
+     are LEAF candidates.
+   * `gaudronRemondThm14GR1` was read from the authors' copy of the Duke paper with Duke
+     pagination. Following the precedent of `panThm104F`, it stays GLUE until the Duke journal
+     text is checked.
+   * The old forms stay reachable through `gaudronRemondSec9LowerAnSS_of_GR1Weak` and
+     `gaudronRemondThm14Printed_of_GR1`.
