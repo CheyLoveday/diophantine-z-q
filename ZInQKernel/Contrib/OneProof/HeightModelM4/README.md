@@ -10,10 +10,10 @@ wedge identity in the Hodge line, as Lean theorems (`Wedge.lean`).
   (`germEtaField V hV`, a ring map). `hodgeAction` is the `𝒪_S(V)`-module structure on the Hodge
   line in which `c` acts as the scalar `c|_η`.
 - **`x` acts through the section.** `smul_cotangent_eq_of_algebraMap_eq`: `x ∈ 𝒪_{𝒢,ξ}` acts on
-  `𝔪_ξ/𝔪_ξ²` through `e^#(x) ∈ 𝒪_{S,η}`, since `ker e^# = 𝔪_ξ` kills `𝔪_ξ/𝔪_ξ²`.
+  `𝔪_ξ/𝔪_ξ²` through `e^♯(x) ∈ 𝒪_{S,η}`, since `ker e^♯ = 𝔪_ξ` kills `𝔪_ξ/𝔪_ξ²`.
 - **The wedge identity.** `etaFieldEquiv_smul_wedge`: for every `x ∈ 𝒪_{𝒢,ξ}`,
-  `e^#(x) • (1 ⊗ v₁ ∧ ⋯ ∧ v_g) = 1 ⊗ v₁ ∧ ⋯ ∧ (x • v_i) ∧ ⋯ ∧ v_g`, by multilinearity (write
-  `e^#(x) = a/t`; then `x` acts as `a · t⁻¹`). `germEtaField_smul_wedge` and
+  `e^♯(x) • (1 ⊗ v₁ ∧ ⋯ ∧ v_g) = 1 ⊗ v₁ ∧ ⋯ ∧ (x • v_i) ∧ ⋯ ∧ v_g`, by multilinearity (write
+  `e^♯(x) = a/t`; then `x` acts as `a · t⁻¹`). `germEtaField_smul_wedge` and
   `hodgeAction_smul_wedge`: for a lift `x` of `c ∈ 𝒪_S(V)`,
   `c|_η • (v₁ ∧ ⋯ ∧ v_g) = v₁ ∧ ⋯ ∧ (x • v_i) ∧ ⋯ ∧ v_g` in the Hodge line.
 - **Submodules.** For `g ≥ 1`: `germEtaField_smul_mem_detSec` and `detSecSubmodule` (`detSec V W`

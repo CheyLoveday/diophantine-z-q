@@ -12,11 +12,11 @@ of `L` (`germEtaField V hV c`). This is the natural action of `𝒪_S(V)` on the
 What is proved:
 
 * `smul_cotangent_eq_of_algebraMap_eq`: `x ∈ 𝒪_{𝒢,ξ}` acts on `𝔪_ξ/𝔪_ξ²` through its image
-  `e^#(x) ∈ 𝒪_{S,η}` (two elements with the same image act in the same way, since
-  `ker e^# = 𝔪_ξ` kills `𝔪_ξ/𝔪_ξ²`);
+  `e^♯(x) ∈ 𝒪_{S,η}` (two elements with the same image act in the same way, since
+  `ker e^♯ = 𝔪_ξ` kills `𝔪_ξ/𝔪_ξ²`);
 * `etaFieldEquiv_smul_wedge`, the wedge identity: for every `x ∈ 𝒪_{𝒢,ξ}`, every `v₁, …, v_g` and
-  every index `i`, `e^#(x) • (1 ⊗ v₁ ∧ ⋯ ∧ v_g) = 1 ⊗ v₁ ∧ ⋯ ∧ (x • v_i) ∧ ⋯ ∧ v_g` (by
-  multilinearity: write `e^#(x) = a/t`, then `x` acts as `a · t⁻¹`);
+  every index `i`, `e^♯(x) • (1 ⊗ v₁ ∧ ⋯ ∧ v_g) = 1 ⊗ v₁ ∧ ⋯ ∧ (x • v_i) ∧ ⋯ ∧ v_g` (by
+  multilinearity: write `e^♯(x) = a/t`, then `x` acts as `a · t⁻¹`);
 * `germEtaField_smul_wedge`: hence, for a lift `x` of `c ∈ 𝒪_S(V)`,
   `c|_η • (1 ⊗ v₁ ∧ ⋯ ∧ v_g) = 1 ⊗ v₁ ∧ ⋯ ∧ (x • v_i) ∧ ⋯ ∧ v_g`;
 * `germEtaField_smul_mem_detSec` and `detSecSubmodule`: for `g ≥ 1`, `detSec V W` is an
@@ -99,7 +99,7 @@ theorem hodgeAction_smul (g : ℕ) (V : (Spec (CommRingCat.of (𝓞 L))).Opens)
     c • y = germEtaField V hV c • y :=
   rfl
 
-/-! ## `𝒪_{𝒢,ξ}` acts on `𝔪_ξ/𝔪_ξ²` through `e^#` -/
+/-! ## `𝒪_{𝒢,ξ}` acts on `𝔪_ξ/𝔪_ξ²` through `e^♯` -/
 
 /-- `𝔪_ξ` kills `𝔪_ξ/𝔪_ξ²`. -/
 theorem smul_eq_zero_of_mem_maximalIdeal {z : 𝒢.genStalk}
@@ -111,8 +111,8 @@ theorem smul_eq_zero_of_mem_maximalIdeal {z : 𝒢.genStalk}
     exact Ideal.mul_mem_mul hz w.2
   exact key m
 
-/-- **`x ∈ 𝒪_{𝒢,ξ}` acts on `𝔪_ξ/𝔪_ξ²` through `e^#(x) ∈ 𝒪_{S,η}`**: elements with the same
-image under `e^# : 𝒪_{𝒢,ξ} → 𝒪_{S,η}` act in the same way. -/
+/-- **`x ∈ 𝒪_{𝒢,ξ}` acts on `𝔪_ξ/𝔪_ξ²` through `e^♯(x) ∈ 𝒪_{S,η}`**: elements with the same
+image under `e^♯ : 𝒪_{𝒢,ξ} → 𝒪_{S,η}` act in the same way. -/
 theorem smul_cotangent_eq_of_algebraMap_eq {x y : 𝒢.genStalk}
     (h : algebraMap 𝒢.genStalk (Reta L) x = algebraMap 𝒢.genStalk (Reta L) y)
     (m : 𝒢.cotangent) : x • m = y • m := by
@@ -125,8 +125,8 @@ theorem smul_cotangent_eq_of_algebraMap_eq {x y : 𝒢.genStalk}
 /-! ## The wedge identity -/
 
 /-- **The one-factor wedge identity in the Hodge line**: for `x ∈ 𝒪_{𝒢,ξ}`,
-`e^#(x) • (1 ⊗ v₁ ∧ ⋯ ∧ v_g) = 1 ⊗ v₁ ∧ ⋯ ∧ (x • v_i) ∧ ⋯ ∧ v_g`, with `e^#(x) ∈ 𝒪_{S,η} ≅ L`.
-Write `e^#(x) = a/t` with `a, t ∈ 𝓞_L`, `t ≠ 0`; then `t` is a unit of `𝒪_{𝒢,ξ}`, `x` acts on
+`e^♯(x) • (1 ⊗ v₁ ∧ ⋯ ∧ v_g) = 1 ⊗ v₁ ∧ ⋯ ∧ (x • v_i) ∧ ⋯ ∧ v_g`, with `e^♯(x) ∈ 𝒪_{S,η} ≅ L`.
+Write `e^♯(x) = a/t` with `a, t ∈ 𝓞_L`, `t ≠ 0`; then `t` is a unit of `𝒪_{𝒢,ξ}`, `x` acts on
 `𝔪_ξ/𝔪_ξ²` as `a · t⁻¹`, and both sides are `a ⊗ v₁ ∧ ⋯ ∧ (t⁻¹ v_i) ∧ ⋯ ∧ v_g` by
 multilinearity. -/
 theorem etaFieldEquiv_smul_wedge {g : ℕ} (v : Fin g → 𝒢.cotangent) (i : Fin g)
