@@ -3604,3 +3604,11 @@ import ZInQKernel.Contrib.OneProof.BergerComparison.SurveyTransfer
 import ZInQKernel.Contrib.OneProof.BergerComparison.Transport
 import ZInQKernel.Contrib.OneProof.BergerComparison.WittLogAdd
 import ZInQKernel.Contrib.OneProof.BergerReroute.BergerReroute
+import ZInQKernel.Contrib.OneProof.HeightModelM.Check
+import ZInQKernel.Contrib.OneProof.HeightModelM.EGA977
+import ZInQKernel.Contrib.OneProof.HeightModelM.FoldCheck
+import ZInQKernel.Contrib.OneProof.HeightModelM.GR1Height
+import ZInQKernel.Contrib.OneProof.HeightModelM.MetricTransport
+import ZInQKernel.Contrib.OneProof.HeightModelM.OpenIdComp
+import ZInQKernel.Contrib.OneProof.HeightModelM.Rows
+import ZInQKernel.Contrib.OneProof.HeightModelM.SemiAbelianModel
