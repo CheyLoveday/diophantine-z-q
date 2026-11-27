@@ -1,0 +1,194 @@
+import ZInQKernel.Contrib.CloudB3E1RingClass.CurveDataExact
+import ZInQKernel.Contrib.OneProof.RC.Wiring.CommonCoordinate6Frobenius
+
+/-!
+# The coefficient datum and the moving characters of the final families
+
+Manuscript `diophantine_zq.tex`, tex 2595–2613, 2716–2737, 2836–2838, 3500–3702.
+
+The staged leaf (`CommonCoordinateInputsGenuineS`) asks for ONE coefficient datum `C` and, per
+final family, a genuine moving character over `C.K`. Lane E1's producers construct the character
+over `ℚ(s)` for a root `s` of `k` they choose themselves; the roots `±s` give different terms
+`quadField s`, so a fixed `C.K = ℚ(s₀)` needs the producer at a given root.
+
+* **`exists_genuineFamilyMovingCharacter_exactSr_at`** (PROVED): lane E1's
+  `exists_genuineFamilyMovingCharacter_exactSr` at a given root `s` of `k` — E1's construction
+  verbatim, with the root an argument instead of chosen inside the proof;
+* `quadTateCoef s₀` (definition): RC28's coefficient datum with `K = ℚ(s₀)`, `S` = all primes,
+  `K̄ ≃ ℚ̄` the uniqueness of algebraic closures over `ℚ(s₀) ⊆ ℚ̄`, and `E[2^∞] ⊆ E(K_S)` by
+  `hasFullTwoTorsion_univ` (as RC28's `TateCoef.rat`);
+* **`exists_familyCoef`** (PROVED): one datum `C` with `C.K = ℚ(s₀)` and, for every admissible
+  family, a genuine moving character over `C.K` with stage inputs over `√k = s₀`, `D = k`, and
+  exact moving supports.
+
+Kinds: definitions and PROVED.
+-/
+
+noncomputable section
+
+namespace ZInQ.Contrib.CloudB3E2.FamilyCoef
+
+open ZInQ.Contrib.CloudB3E1RingClass
+open NumberField IsDedekindDomain
+open ZInQ.Manuscript.RC ZInQ.Manuscript.RC.TateWiring ZInQ.Manuscript.RC.Wiring
+open ZInQ.Manuscript.RC.PrintsArith (SerreThm3 CMjInteger)
+open ZInQ.Contrib.ChebFD.C10 (Qbar)
+open ZInQ.Contrib.CloudB3RC53 (Ecurve)
+open ZInQ.Contrib.CloudB3RC53.CST (newformLevel SplitsIn)
+open scoped nonZeroDivisors
+
+/-- **Lane E1's exact-support producer at a given root `s` of `k`** (PROVED; E1's argument,
+the root an argument). -/
+theorem exists_genuineFamilyMovingCharacter_exactSr_at {ℓ : ℕ} {D : RCData ℓ} (St : RCSteps D)
+    (s : Qbar) (hs : s ^ 2 = algebraMap ℚ Qbar D.kfin)
+    (hodd : ¬ D.OddEmptyUnit)
+    (hS2N : ∀ p : ℕ, p.Prime → p ∣ 2 * newformLevel (Ecurve ℓ) → p ∈ D.S)
+    {F : Family} (hF : F.Admissible D.S D.kfin) {Q : Finset ℕ} (hQ : Q ⊆ F.Q)
+    (hS : SerreThm3) (hcm : CMjInteger) (hℓ : 0 < ℓ) (hT : FrobeniusTrace (Ecurve ℓ)) :
+    ∃ G : GenuineFamilyMovingCharacter (quadField s) ℓ Q,
+      (∀ i, (G.I i).sqrtD = s ∧ (G.I i).D = D.kfin) ∧
+      (∀ r, G.C.Sr r = {v | ((max r 1 : ℕ) : 𝓞 (quadField s)) ∈ v.asIdeal}) ∧
+      ∀ i, G.C.Sr (G.r i) = placesOf (quadField s) (G.r i : ℤ) := by
+  classical
+  obtain ⟨hk0, hksq, hk1, hk3, hkS, hk4, hk2N, -, -⟩ := St.companion hodd
+  set N := newformLevel (Ecurve ℓ)
+  have hN := twoN_ne_zero hS2N
+  set K := quadField s
+  let T2N : Finset ℕ := (2 * N).primeFactors
+  let U : Finset ℕ := T2N ∪ F.Q
+  have h2T : 2 ∈ T2N := Nat.mem_primeFactors.mpr ⟨Nat.prime_two, dvd_mul_right 2 N, hN⟩
+  have h2U : 2 ∈ U := Finset.mem_union_left _ h2T
+  -- every prime of `U` splits in `K`
+  have hsplit : ∀ p ∈ U, p.Prime ∧ SplitsIn K p := by
+    intro p hpU
+    rcases Finset.mem_union.mp hpU with hpT | hpQ
+    · obtain ⟨hp, hpd, -⟩ := Nat.mem_primeFactors.mp hpT
+      exact ⟨hp, splitsIn_of_squareAt hs hk0 hksq hk4 hp (hk2N p hp hpd)⟩
+    · obtain ⟨hp, hp2, hpS, hj, -⟩ := hF p hpQ
+      exact ⟨hp, splitsIn_of_squareAt hs hk0 hksq hk4 hp
+        (squareAt_of_jacobiSym hp hp2 (fun hd => hpS (hkS p hp hd)) hj)⟩
+  have hpair : ∀ x : U, ∃ P Q : HeightOneSpectrum (𝓞 K), P ≠ Q ∧
+      P.asIdeal * Q.asIdeal = Ideal.span {((((x : ℕ) : ℤ)) : 𝓞 K)} := fun x =>
+    exists_pair_of_splitsIn (hsplit x x.2).1 (hsplit x x.2).2
+  choose Pc Qc hneC hmulC using hpair
+  let e : U ≃ Fin U.card := U.equivFin
+  let p₀ : Fin U.card → ℕ := fun j => (e.symm j : ℕ)
+  let P₀ : Fin U.card → HeightOneSpectrum (𝓞 K) := fun j => Pc (e.symm j)
+  let Q₀ : Fin U.card → HeightOneSpectrum (𝓞 K) := fun j => Qc (e.symm j)
+  have hp₀ : ∀ j, (p₀ j).Prime := fun j => (hsplit _ (e.symm j).2).1
+  have hinj₀ : Function.Injective p₀ := fun a b h =>
+    e.symm.injective (Subtype.ext h)
+  let act₀ : Fin U.card → Prop := fun j => p₀ j ∈ F.Q
+  let over2N₀ : Fin U.card → Prop := fun j => p₀ j ∈ T2N
+  have hdis : ∀ j, act₀ j → ¬ over2N₀ j := by
+    intro j hQj hTj
+    obtain ⟨hp, hpd, -⟩ := Nat.mem_primeFactors.mp hTj
+    exact (hF _ hQj).2.2.1 (hS2N _ hp hpd)
+  have hodd2 : ∀ j, act₀ j → p₀ j ≠ 2 := fun j hj => (hF _ hj).2.1
+  have hsD : s ^ 2 = algebraMap ℚ Qbar ((D.kfin : ℤ) : ℚ) := hs
+  obtain ⟨S₁, C, I0, hpre, -, hlab, -, -, hDk, hSr⟩ :=
+    exists_genuineMovingComplete_Sr (Ecurve ℓ) 0 hsD (by exact_mod_cast hk0)
+      (no_sqrt_neg_one_k hs hk0 hksq hk1) (no_cube_root_k hs hk0 hksq hk3) P₀ Q₀ p₀ hp₀ hinj₀
+      (fun j => hneC _) (fun j => hmulC _) act₀ over2N₀ hdis hodd2 ∅ ∅ ∅ (Pc ⟨2, h2U⟩)
+  let I : ∀ i, GenuineMovingInputs (Ecurve ℓ) (2 * i) C := fun i => (I0.changeN (2 * i)).toInputs
+  have hIact : ∀ i j, (I i).act j ↔ I0.act j := fun _ _ => Iff.rfl
+  have hIover : ∀ i j, (I i).over2N j ↔ I0.over2N j := fun _ _ => Iff.rfl
+  let idx : ℕ → Fin U.card := fun q => if h : q ∈ U then e ⟨q, h⟩ else e ⟨2, h2U⟩
+  have hidx : ∀ q (h : q ∈ U), p₀ (idx q) = q := by
+    intro q h
+    simp only [idx, h, ↓reduceDIte, p₀, Equiv.symm_apply_apply]
+  let o : ℕ → Fin (U.card + S₁) := fun q => Fin.castAdd S₁ (idx q)
+  have hQU : ∀ q ∈ Q, q ∈ U := fun q hq => Finset.mem_union_right _ (hQ hq)
+  have act_o : ∀ i, ∀ q ∈ Q, (I i).act (o q) := by
+    intro i q hq
+    rw [hIact]
+    refine ((hlab (idx q)).1).mpr ?_
+    change p₀ (idx q) ∈ F.Q
+    rw [hidx q (hQU q hq)]
+    exact hQ hq
+  have p_o : ∀ q ∈ Q, C.p (o q) = q := by
+    intro q hq
+    rw [(hpre (idx q)).2.2, hidx q (hQU q hq)]
+  have over2N : ∀ i, ∀ v ∈ placesTwoN K ℓ, ∃ j, (I i).over2N j ∧ (v = C.𝔭 j ∨ v = C.𝔭bar j) := by
+    intro i v hv
+    obtain ⟨p, hp, hpd, hpv⟩ := exists_prime_dvd_of_mem v hN hv
+    have hpT : p ∈ T2N := Nat.mem_primeFactors.mpr ⟨hp, hpd, hN⟩
+    have hpU : p ∈ U := Finset.mem_union_left _ hpT
+    refine ⟨Fin.castAdd S₁ (idx p), ?_, ?_⟩
+    · rw [hIover]
+      refine ((hlab (idx p)).2).mpr ?_
+      change p₀ (idx p) ∈ T2N
+      rw [hidx p hpU]; exact hpT
+    · rw [(hpre (idx p)).1, (hpre (idx p)).2.1]
+      have hw : (((p₀ (idx p) : ℤ)) : 𝓞 K) ∈ v.asIdeal := by
+        rw [hidx p hpU, Int.cast_natCast]; exact hpv
+      exact eq_or_eq_of_mem_split (hmulC _) hw
+  have Sr_finite : ∀ r, (C.Sr r).Finite := by
+    intro r
+    rw [hSr r, Set.empty_union]
+    exact finite_setOf_natCast_mem (by omega)
+  refine ⟨GenuineFamilyMovingCharacter.ofInputs C I o act_o p_o over2N Sr_finite hS hcm hℓ
+    hT, fun i => ⟨rfl, hDk⟩, fun r => by
+      change C.Sr r = _
+      rw [hSr r, Set.empty_union], fun i => ?_⟩
+  change C.Sr _ = _
+  set G := GenuineFamilyMovingCharacter.ofInputs C I o act_o p_o over2N Sr_finite hS hcm hℓ hT
+  have hr1 : max (G.r i) 1 = G.r i := max_eq_left (G.r_prime i).one_lt.le
+  rw [hSr, Set.empty_union, hr1]
+  ext v
+  simp only [placesOf, Set.mem_ofPred_eq, Int.cast_natCast]
+
+/-- `ℚ̄` is an algebraic closure of `ℚ(s₀)` (PROVED). -/
+theorem isAlgClosure_quadField (s₀ : Qbar) : IsAlgClosure (quadField s₀) Qbar :=
+  ⟨inferInstance, Algebra.IsAlgebraic.tower_top (K := ℚ) (quadField s₀)⟩
+
+attribute [local instance] isAlgClosure_quadField
+
+/-- **The coefficient datum over `ℚ(s₀)`**: `K = ℚ(s₀)`, `S` = all primes, `K̄ ≃ ℚ̄` by the
+uniqueness of algebraic closures, `E[2^∞] ⊆ E(K_S)` by `hasFullTwoTorsion_univ`.
+Kind: definition. -/
+def quadTateCoef (ℓ : ℕ) [(Ecurve ℓ).IsElliptic] (s₀ : Qbar) : TateCoef (Ecurve ℓ) :=
+  { K := quadField s₀
+    S := Set.univ
+    e := (IsAlgClosure.equiv (quadField s₀) (AlgebraicClosure (quadField s₀)) Qbar).restrictScalars
+      ℚ
+    full := ZInQ.Manuscript.RC.LambdaCoef.hasFullTwoTorsion_univ }
+
+/-- **One coefficient datum and the moving characters of all admissible families** (PROVED):
+for a fixed root `s₀` of `k`, the datum `quadTateCoef ℓ s₀` and, for every admissible family `F`
+and `Q ⊆ F.Q`, a genuine moving character over its field with stage inputs over `√k = s₀`,
+`D = k`, and exact moving supports. -/
+theorem exists_familyCoef {ℓ : ℕ} [(Ecurve ℓ).IsElliptic] {D : RCData ℓ} (St : RCSteps D)
+    (hodd : ¬ D.OddEmptyUnit)
+    (hS2N : ∀ p : ℕ, p.Prime → p ∣ 2 * newformLevel (Ecurve ℓ) → p ∈ D.S)
+    (hS : SerreThm3) (hcm : CMjInteger) (hℓ : 0 < ℓ) (hT : FrobeniusTrace (Ecurve ℓ)) :
+    ∃ (s₀ : Qbar) (_ : s₀ ^ 2 = algebraMap ℚ Qbar D.kfin),
+      ∀ {F : Family}, F.Admissible D.S D.kfin → ∀ {Q : Finset ℕ}, Q ⊆ F.Q →
+        ∃ G : GenuineFamilyMovingCharacter (quadTateCoef ℓ s₀).K ℓ Q,
+          (∀ i, (G.I i).sqrtD = s₀ ∧ (G.I i).D = D.kfin) ∧
+          (∀ r, G.C.Sr r = {v | ((max r 1 : ℕ) : 𝓞 (quadField s₀)) ∈ v.asIdeal}) ∧
+          ∀ i, G.C.Sr (G.r i) = placesOf (quadField s₀) (G.r i : ℤ) := by
+  obtain ⟨s₀, hs₀⟩ :=
+    IsAlgClosed.exists_pow_nat_eq (algebraMap ℚ Qbar D.kfin) (by norm_num : 0 < 2)
+  exact ⟨s₀, hs₀, fun hF _ hQ =>
+    exists_genuineFamilyMovingCharacter_exactSr_at St s₀ hs₀ hodd hS2N hF hQ hS hcm hℓ hT⟩
+
+/-- **The leaf's per-family `(C, G)`** (PROVED): one coefficient datum `C` and, for every final
+family, a genuine moving character over `C.K` (the shape of `CommonCoordinateInputsGenuineS`'s
+`chains` up to the ultrafilter and the presentations), with stage inputs over `√k`, `D = k`, and
+exact moving supports. -/
+theorem exists_leafCoef {ℓ : ℕ} [(Ecurve ℓ).IsElliptic] {D : RCData ℓ} (St : RCSteps D)
+    (hodd : ¬ D.OddEmptyUnit)
+    (hS2N : ∀ p : ℕ, p.Prime → p ∣ 2 * newformLevel (Ecurve ℓ) → p ∈ D.S)
+    (hS : SerreThm3) (hcm : CMjInteger) (hℓ : 0 < ℓ) (hT : FrobeniusTrace (Ecurve ℓ)) :
+    ∃ (C : TateCoef (Ecurve ℓ)) (s₀ : Qbar) (_ : s₀ ^ 2 = algebraMap ℚ Qbar D.kfin)
+      (_ : C = quadTateCoef ℓ s₀),
+      ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F →
+        ∃ G : GenuineFamilyMovingCharacter C.K ℓ F.Q,
+          ∀ i, (G.I i).sqrtD = s₀ ∧ (G.I i).D = D.kfin := by
+  obtain ⟨s₀, hs₀, h⟩ := exists_familyCoef St hodd hS2N hS hcm hℓ hT
+  refine ⟨quadTateCoef ℓ s₀, s₀, hs₀, rfl, fun Co Ce F hF => ?_⟩
+  obtain ⟨G, hG, -, -⟩ := h hF.1 (subset_refl F.Q)
+  exact ⟨G, hG⟩
+
+end ZInQ.Contrib.CloudB3E2.FamilyCoef

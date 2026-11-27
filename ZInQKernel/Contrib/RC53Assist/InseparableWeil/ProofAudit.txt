@@ -1,0 +1,208 @@
+Inseparable Weil pairing: exact statements and axiom audit
+========================================================
+
+Source: ZInQKernel/Contrib/RC53Assist/InseparableWeil/Compatibility.lean
+Source SHA-256: 0368e9642a9594009d39fe907b14a9a406508cbbd7c200810549b511c6fe91fe
+Source size: 27444 bytes; 487 lines.
+Lean version: 4.35.0.
+
+Both the source file and an exact source copy followed by inspection commands
+passed single-file Lean checking with six threads and an 800000-heartbeat limit.
+The source itself contains no inspection commands.
+
+Status
+------
+InseparableWeilPairingCompatibility is proved with no additional hypotheses.
+DetEqDegree is proved through detEqDegree_of_inseparableWeilPairingCompatibility.
+No mathematical input remains for either proposition. Existing files were not
+changed; incorporation of this new module is not performed here.
+
+The proof retains the ramification multiplicities in geometric fibres. Their
+sum is the degree, and translation preserves them. The correcting Weil
+function is the product of the addition functions raised to those
+multiplicities. Thus the divisor proof works for arbitrary isogenies over an
+algebraically closed field, without requiring Frobenius factorization.
+References: Silverman II.3, III.3.5, III.4.8, III.8.2, III.8.6, V.2.3;
+Stichtenoth Definition 3.1.8 and Corollary 3.1.14.
+
+The following are the elaborated signature and axiom inspection outputs.
+All thirteen new theorems use exactly [propext, Classical.choice, Quot.sound].
+The three auxiliary definitions are also audited; torsionMap needs no choice.
+
+PROVED THEOREMS: translation and multiplication (Silverman III.4.8)
+----------------------------------------------------------------
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.map_translation_tautologicalPoint.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  [IsSepClosed K] {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂]
+  (φ : TauCeti.Isogeny W₁ W₂) (α : W₁.Point →+ W₂.Point)
+  (hα : ∀ (P : W₁.Point), (TauCeti.Isogeny.Hom.ofIsogeny φ).pointMap P = α P) (P : W₁.Point) :
+  (WeierstrassCurve.Affine.Point.map ↑(W₁.translation ((WeierstrassCurve.Affine.Point.equivBaseChangeSelf W₁) P)))
+      (TauCeti.Isogeny.Hom.ofIsogeny φ).tautologicalPoint =
+    (TauCeti.Isogeny.Hom.ofIsogeny φ).tautologicalPoint +
+      (WeierstrassCurve.Affine.Point.baseChange K W₁.FunctionField)
+        ((WeierstrassCurve.Affine.Point.equivBaseChangeSelf W₂) (α P))
+'ZInQ.Contrib.RC53Assist.InseparableWeil.map_translation_tautologicalPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.fieldPullback_comp_translation.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  [IsSepClosed K] {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂]
+  (φ : TauCeti.Isogeny W₁ W₂) (α : W₁.Point →+ W₂.Point)
+  (hα : ∀ (P : W₁.Point), (TauCeti.Isogeny.Hom.ofIsogeny φ).pointMap P = α P) (P : W₁.Point) :
+  φ.fieldPullback.comp ↑(W₂.translation ((WeierstrassCurve.Affine.Point.equivBaseChangeSelf W₂) (α P))) =
+    (↑(W₁.translation ((WeierstrassCurve.Affine.Point.equivBaseChangeSelf W₁) P))).comp φ.fieldPullback
+'ZInQ.Contrib.RC53Assist.InseparableWeil.fieldPullback_comp_translation' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.comp_mulByInt.{u_1} {K : Type u_1} [Field K] [DecidableEq K] [IsSepClosed K]
+  {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂]
+  (φ : TauCeti.Isogeny W₁ W₂) (α : W₁.Point →+ W₂.Point)
+  (hα : ∀ (P : W₁.Point), (TauCeti.Isogeny.Hom.ofIsogeny φ).pointMap P = α P) {n : ℤ}
+  (h₁ : TauCeti.Isogeny.psiFunctionField W₁ n ≠ 0) (h₂ : TauCeti.Isogeny.psiFunctionField W₂ n ≠ 0) :
+  φ.comp (TauCeti.Isogeny.mulByIntIsogeny W₁ h₁) = (TauCeti.Isogeny.mulByIntIsogeny W₂ h₂).comp φ
+'ZInQ.Contrib.RC53Assist.InseparableWeil.comp_mulByInt' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.fieldPullback_mulByInt_comm.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  [IsSepClosed K] {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂]
+  (φ : TauCeti.Isogeny W₁ W₂) (α : W₁.Point →+ W₂.Point)
+  (hα : ∀ (P : W₁.Point), (TauCeti.Isogeny.Hom.ofIsogeny φ).pointMap P = α P) {n : ℤ}
+  (h₁ : TauCeti.Isogeny.psiFunctionField W₁ n ≠ 0) (h₂ : TauCeti.Isogeny.psiFunctionField W₂ n ≠ 0)
+  (z : W₂.FunctionField) :
+  (TauCeti.Isogeny.mulByIntIsogeny W₁ h₁).fieldPullback (φ.fieldPullback z) =
+    φ.fieldPullback ((TauCeti.Isogeny.mulByIntIsogeny W₂ h₂).fieldPullback z)
+'ZInQ.Contrib.RC53Assist.InseparableWeil.fieldPullback_mulByInt_comm' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+DEFINITIONS: ramification and fibres (Silverman II.3; Stichtenoth Definition 3.1.5)
+-------------------------------------------------------------------------------
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.ramificationMultiplicity.{u_1} {K : Type u_1} [Field K]
+  {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] (φ : TauCeti.Isogeny W₁ W₂) (R : W₁.Point) : ℕ
+'ZInQ.Contrib.RC53Assist.InseparableWeil.ramificationMultiplicity' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.fibreFinset.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂]
+  (φ : TauCeti.Isogeny W₁ W₂) (Q : W₂.Point) : Finset W₁.Point
+'ZInQ.Contrib.RC53Assist.InseparableWeil.fibreFinset' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+PROVED THEOREMS: weighted fibres (Silverman II.2, II.3, III.4.8; Stichtenoth 3.1.8, 3.1.14)
+-------------------------------------------------------------------------------------
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.mem_fibreFinset.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂]
+  (φ : TauCeti.Isogeny W₁ W₂) (Q : W₂.Point) (R : W₁.Point) :
+  R ∈ fibreFinset φ Q ↔ (TauCeti.Isogeny.Hom.ofIsogeny φ).pointMap R = Q
+'ZInQ.Contrib.RC53Assist.InseparableWeil.mem_fibreFinset' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.restrict_eq_pointEquivDegreeOnePlace_iff.{u_1} {K : Type u_1} [Field K]
+  [DecidableEq K] {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂]
+  [IsAlgClosed K] (φ : TauCeti.Isogeny W₁ W₂) (Q : W₂.Point) (P : TauCeti.Place K W₁.FunctionField) :
+  TauCeti.Place.restrict K W₂.FunctionField P = ↑(W₂.pointEquivDegreeOnePlace Q) ↔
+    ∃ R, (TauCeti.Isogeny.Hom.ofIsogeny φ).pointMap R = Q ∧ ↑(W₁.pointEquivDegreeOnePlace R) = P
+'ZInQ.Contrib.RC53Assist.InseparableWeil.restrict_eq_pointEquivDegreeOnePlace_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.divisorPullback_ofPoint_weighted.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂] [IsAlgClosed K]
+  (φ : TauCeti.Isogeny W₁ W₂) (Q : W₂.Point) :
+  (ZInQ.Contrib.CloudB3RC53.WeilIsogeny.pb φ)
+      (TauCeti.AlgebraicGeometry.WeilDivisor.ofPoint ↑(W₂.pointEquivDegreeOnePlace Q)) =
+    ∑ R ∈ fibreFinset φ Q,
+      ramificationMultiplicity φ R • TauCeti.AlgebraicGeometry.WeilDivisor.ofPoint ↑(W₁.pointEquivDegreeOnePlace R)
+'ZInQ.Contrib.RC53Assist.InseparableWeil.divisorPullback_ofPoint_weighted' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.ramificationMultiplicity_add.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂] [IsAlgClosed K]
+  (φ : TauCeti.Isogeny W₁ W₂) (α : W₁.Point →+ W₂.Point)
+  (hα : ∀ (P : W₁.Point), (TauCeti.Isogeny.Hom.ofIsogeny φ).pointMap P = α P) (T R : W₁.Point) :
+  ramificationMultiplicity φ (T + R) = ramificationMultiplicity φ R
+'ZInQ.Contrib.RC53Assist.InseparableWeil.ramificationMultiplicity_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.sum_ramificationMultiplicity.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  {W₁ W₂ : WeierstrassCurve.Affine K} [WeierstrassCurve.IsElliptic W₁] [WeierstrassCurve.IsElliptic W₂] [IsAlgClosed K]
+  (φ : TauCeti.Isogeny W₁ W₂) (Q : W₂.Point) : ∑ R ∈ fibreFinset φ Q, ramificationMultiplicity φ R = φ.degree
+'ZInQ.Contrib.RC53Assist.InseparableWeil.sum_ramificationMultiplicity' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+PROVED THEOREM: Weil divisor pullback (Silverman III.8.2; Stichtenoth Definition 3.1.8)
+----------------------------------------------------------------------------------
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.pb_weilPairingDivisor_weighted.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  [IsAlgClosed K] {E₁ E₂ : WeierstrassCurve K} [E₁.IsElliptic] [E₂.IsElliptic]
+  (φ : TauCeti.Isogeny E₁.toAffine E₂.toAffine) (α : E₁.toAffine.Point →+ E₂.toAffine.Point)
+  (hα : ∀ (P : E₁.toAffine.Point), (TauCeti.Isogeny.Hom.ofIsogeny φ).pointMap P = α P) {n : ℤ}
+  (h₁ : TauCeti.Isogeny.psiFunctionField E₁.toAffine n ≠ 0) (h₂ : TauCeti.Isogeny.psiFunctionField E₂.toAffine n ≠ 0)
+  (T : E₁.toAffine.Point) :
+  (ZInQ.Contrib.CloudB3RC53.WeilIsogeny.pb φ) (TauCeti.Isogeny.weilPairingDivisor E₂ h₂ (α T)) =
+    (ZInQ.Contrib.CloudB3RC53.WeilIsogeny.pb (TauCeti.Isogeny.mulByIntIsogeny E₁.toAffine h₁))
+      (∑ R ∈ fibreFinset φ 0,
+        ramificationMultiplicity φ R •
+          (TauCeti.AlgebraicGeometry.WeilDivisor.ofPoint ↑(E₁.toAffine.pointEquivDegreeOnePlace (T + R)) -
+            TauCeti.AlgebraicGeometry.WeilDivisor.ofPoint ↑(E₁.toAffine.pointEquivDegreeOnePlace R)))
+'ZInQ.Contrib.RC53Assist.InseparableWeil.pb_weilPairingDivisor_weighted' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+DEFINITION: induced torsion map (Silverman III.4.8)
+-------------------------------------------------
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.torsionMap.{u_1, u_2} {A : Type u_1} {B : Type u_2} [AddCommGroup A]
+  [AddCommGroup B] (α : A →+ B) (N : ℕ) (S : ↥(Submodule.torsionBy ℤ A ↑N)) : ↥(Submodule.torsionBy ℤ B ↑N)
+'ZInQ.Contrib.RC53Assist.InseparableWeil.torsionMap' depends on axioms: [propext, Quot.sound]
+
+PROVED THEOREM: arbitrary-isogeny compatibility (Silverman III.8.2 and III.8.6)
+----------------------------------------------------------------------------
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.weilPairing_torsionMap.{u_1} {K : Type u_1} [Field K] [DecidableEq K]
+  [IsAlgClosed K] {E₁ E₂ : WeierstrassCurve K} [E₁.IsElliptic] [E₂.IsElliptic]
+  (φ : TauCeti.Isogeny E₁.toAffine E₂.toAffine) (α : E₁.toAffine.Point →+ E₂.toAffine.Point)
+  (hα : ∀ (P : E₁.toAffine.Point), (TauCeti.Isogeny.Hom.ofIsogeny φ).pointMap P = α P) (N : ℕ) [NeZero N] (hN : ↑N ≠ 0)
+  (S T : ↥(Submodule.torsionBy ℤ E₁.toAffine.Point ↑N)) :
+  ((TauCeti.Isogeny.weilPairing E₂ N hN) (torsionMap α N S)) (torsionMap α N T) =
+    φ.degree • ((TauCeti.Isogeny.weilPairing E₁ N hN) S) T
+'ZInQ.Contrib.RC53Assist.InseparableWeil.weilPairing_torsionMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+PROVED TARGET THEOREMS (Silverman III.8.2, III.8.6, V.2.3)
+--------------------------------------------------------
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.inseparableWeilPairingCompatibility_proved :
+  ZInQ.Contrib.RC53Assist.DetDegree.InseparableWeilPairingCompatibility
+'ZInQ.Contrib.RC53Assist.InseparableWeil.inseparableWeilPairingCompatibility_proved' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ZInQ.Contrib.RC53Assist.InseparableWeil.detEqDegree_proved : ZInQ.Contrib.CloudB3RC53.ModularWeil.DetEqDegree
+'ZInQ.Contrib.RC53Assist.InseparableWeil.detEqDegree_proved' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+EXACT EXISTING TARGET DEFINITIONS
+--------------------------------
+
+The reduced curve in these definitions is Et.baseChange (AlgebraicClosure (ZMod p)).
+The following are the inspected bodies of the existing propositions, not new inputs.
+
+ def ZInQ.Contrib.RC53Assist.DetDegree.InseparableWeilPairingCompatibility : Prop :=
+∀ (p : ℕ) [inst : Fact (Nat.Prime p)] (Et : WeierstrassCurve (ZMod p)) [inst_1 : Et.IsElliptic] (ℓ : ℕ)
+  [inst_2 : Fact (Nat.Prime ℓ)],
+  ℓ ≠ p →
+    ∀
+      (f :
+        TauCeti.Isogeny.Hom (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine
+          (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine)
+      (hf : f ≠ 0),
+      ¬Algebra.IsSeparable (↥(TauCeti.Isogeny.Hom.toIsogeny hf).fieldPullback.fieldRange)
+            (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.FunctionField →
+        ∀
+          (α :
+            (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point →+
+              (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point),
+          (∀ (P : (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point), f.pointMap P = α P) →
+            ∀ (n : ℕ) (hN : ↑(ℓ ^ n) ≠ 0)
+              (S T : TauCeti.TateModuleLevel ℓ (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point n),
+              ((TauCeti.Isogeny.weilPairing (Et.baseChange (AlgebraicClosure (ZMod p))) (ℓ ^ n) hN)
+                    ((TauCeti.TateModule.levelMap α n) S))
+                  ((TauCeti.TateModule.levelMap α n) T) =
+                f.degree • ((TauCeti.Isogeny.weilPairing (Et.baseChange (AlgebraicClosure (ZMod p))) (ℓ ^ n) hN) S) T
+
+ def ZInQ.Contrib.CloudB3RC53.ModularWeil.DetEqDegree : Prop :=
+∀ (p : ℕ) [inst : Fact (Nat.Prime p)] (Et : WeierstrassCurve (ZMod p)) [inst_1 : Et.IsElliptic] (ℓ : ℕ)
+  [inst_2 : Fact (Nat.Prime ℓ)],
+  ℓ ≠ p →
+    ∀
+      (f :
+        TauCeti.Isogeny.Hom (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine
+          (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine)
+      (α :
+        (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point →+
+          (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point),
+      (∀ (P : (Et.baseChange (AlgebraicClosure (ZMod p))).toAffine.Point), f.pointMap P = α P) →
+        LinearMap.det (TauCeti.TateModule.mapLinearMap α) = ↑f.degree

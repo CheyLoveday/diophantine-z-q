@@ -1,0 +1,42 @@
+ 19:33:14 up 4 days,  3:11,  6 users,  load average: 5.23, 4.52, 4.11
+               total        used        free      shared  buff/cache   available
+Mem:             235          79          22           0         136         155
+Swap:            255          63         192
+DISCHARGES [cmFibreSplit] by HDec.CMBranch.CMInputs2.cmFibreSplit
+  still assumes: [HDec.CMBranch.CMInputs2]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [cmFibreSplit] by HDec.CMBranch.FibreSplit.cmFibreSplit_of
+  still assumes: [HDec.QMLattice.YuB6Alg,
+ ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC,
+ HDec.CMBranch.FibreSplit.CMHomFieldModel,
+ HDec.CMBranch.FibreSplit.CMMatrixUnitSplit]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [cmFibreSplit] by HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder
+  still assumes: [HDec.QMLattice.YuB6Alg,
+ ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC,
+ G0ModField.FibreCoverExists,
+ PkgI2.NeronOggShafarevich,
+ HDec.PkgI2.RaynaudCriterionNF,
+ PkgI2.TorsionStructure,
+ HDec.CMBranch.FibreSplit.CMCurveOrder]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [cmFibreSplit] by HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder324
+  still assumes: [HDec.QMLattice.YuB6Alg,
+ ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC,
+ G0ModField.FibreCoverExists,
+ PkgI2.NeronOggShafarevich,
+ HDec.PkgI2.RaynaudCriterionNF,
+ PkgI2.TorsionStructure]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [cmFibreSplit] by HDec.CMBranch.FibreSplit.cmFibreSplit_of_leaves
+  still assumes: [HDec.QMLattice.YuB6Alg,
+ ZInQ.Contrib.OneProof.HomFreeC.HomFreeFiniteC,
+ G0ModField.FibreCoverExists,
+ PkgI2.NeronOggShafarevich,
+ HDec.PkgI2.RaynaudCriterionNF,
+ PkgI2.TorsionStructure]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [cmFibreSplit] by HDec.HSyn.OpenResearchLeaves58CM.cmFibreSplit
+  still assumes: [HDec.HSyn.OpenResearchLeaves58CM]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 5 open hypotheses, 13492 theorems checked, 6 discharge one

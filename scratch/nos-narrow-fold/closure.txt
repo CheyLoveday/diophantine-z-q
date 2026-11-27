@@ -1,0 +1,21 @@
+HDec.HSyn.sixContactMin_of_open83: closure size 276762
+  NOSSepDict.NeronOggShafarevichSep: PRESENT
+  PkgI2.NeronOggShafarevich: PRESENT
+  NOSSepDict.neronOggShafarevich_of_sep: PRESENT
+  NOSNarrow.NeronOggShafarevichSepPerfect: absent
+  NOSNarrow.nosForward_proof: absent
+  sorryAx: absent
+HDec.HSyn.sixContactMin_of_open84: closure size 276749
+  NOSSepDict.NeronOggShafarevichSep: absent
+  PkgI2.NeronOggShafarevich: absent
+  NOSSepDict.neronOggShafarevich_of_sep: absent
+  NOSNarrow.NeronOggShafarevichSepPerfect: absent
+  NOSNarrow.nosForward_proof: PRESENT
+  sorryAx: absent
+ZInQ.OneProof.frozenTarget: closure size 298881
+  NOSSepDict.NeronOggShafarevichSep: absent
+  PkgI2.NeronOggShafarevich: absent
+  NOSSepDict.neronOggShafarevich_of_sep: absent
+  NOSNarrow.NeronOggShafarevichSepPerfect: absent
+  NOSNarrow.nosForward_proof: PRESENT
+  sorryAx: absent

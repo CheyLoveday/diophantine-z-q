@@ -10,9 +10,10 @@ Fork issue #83, round 2 (task pc-s12), corrections (a), (b), (e) of the Theorem 
 
 * `IsModular`: modularity of `E/ℚ`, written fresh: the Dirichlet coefficients of Mathlib's
   `E.LFunction` are the `q`-expansion coefficients of a weight-2 cusp form on `Γ₀(N)`.
-* `BCDTThmA` (printed leaf): every elliptic curve over `ℚ` is modular.
-* `KolyvaginThm1` (consequence of Kolyvagin's Theorem 1, the `r = 1` case: Kolyvagin assumes a weak Weil
-  parametrization, and `IsModular` gives one through Shimura's construction and Faltings' isogeny theorem):
+* `BCDTThmA` (a consequence of the printed Theorem A, by `bcdtThmA_of_printed`): every elliptic curve
+  over `ℚ` is modular.
+* `KolyvaginThm1` (consequence of BCDT Theorem A and Kolyvagin's Theorem 1 together, the `r = 1` case:
+  Kolyvagin assumes a weak Weil parametrization, which `IsModular` alone does not give; see its docstring):
   a modular elliptic curve with `ord_{s=1} L(E,s) = 1` has rank one and finite `Ш(E/ℚ)` (Tau Ceti's Ш,
   `SelmerTwoPower.sha`).
 * `kolyvaginRankOne_of_printed`: round 1's `KolyvaginRankOne` from the two prints.
@@ -42,7 +43,8 @@ def IsModular (E : WeierstrassCurve ℚ) : Prop :=
   ∃ (N : ℕ) (_ : 0 < N) (f : CuspForm (CongruenceSubgroup.Gamma0 N : Subgroup (GL (Fin 2) ℝ)) 2),
     ∀ n : ℕ, 0 < n → (UpperHalfPlane.qExpansion 1 f).coeff n = (E.LFunction n : ℂ)
 
-/-- **Breuil–Conrad–Diamond–Taylor, Theorem A** (printed leaf; J. Amer. Math. Soc. 14 (2001)
+/-- **Breuil–Conrad–Diamond–Taylor, Theorem A** (a consequence of the print, through its condition (2);
+J. Amer. Math. Soc. 14 (2001)
 843–939; the manuscript cites the author manuscript, `\cite[Theorem A]{bcdt}`, tex L1092):
 every elliptic curve over `ℚ` is modular (Theorem A, p. 1 of the author manuscript). The print's
 notion of "modular" is its Introduction's conditions (1)–(6) (p. 3); condition (2) says that
@@ -60,11 +62,13 @@ Theorems 1–5, pp. 4–5; tex L1093, `\cite[Theorem 1, pp. 4–5]{kolyvagin}`; 
 issue #83: https://github.com/Deicyde/diophantine-z-q/issues/83#issuecomment-6962416523):
 a modular elliptic curve `E/ℚ` with `ord_{s=1} L(E, s) = 1` has `rank E(ℚ) = 1` and finite
 `Ш(E/ℚ)`. Theorem 1 (p. 4) assumes a weak Weil parametrization `X₀(N) → E` with `N` the conductor
-(p. 3). `IsModular` is a weaker hypothesis, so this statement is a consequence of the print: it follows
-from Kolyvagin's weak Weil parametrization hypothesis only through Shimura's construction (an abelian
-variety quotient of `J₀(N)` attached to the newform) and Faltings' isogeny theorem (with trivial
-nebentypus), the step BCDT cite
-for (2) ⇒ (6) on p. 3 of their author manuscript. `Ш` is `SelmerTwoPower.sha` (Tau Ceti's Shafarevich–Tate group, local triviality at every
+(p. 3). `IsModular` is not that premise, and it is not BCDT's condition (2) either: it fixes no level
+and no eigenform. The statement holds for every `E/ℚ` by BCDT Theorem A (condition (2), level `N(E)`),
+Shimura's construction and Faltings' isogeny theorem (the step BCDT cite for (2) ⇒ (6) on p. 3 of their
+author manuscript, with trivial nebentypus to land on `X₀`); in that derivation the premise `IsModular` is
+not used. From `IsModular` alone the bridge needs, in addition, Atkin–Lehner–Li newform theory and
+Carayol's theorem (level = conductor); compare `ZInQ.Contrib.CloudB3RC53.ModularToWeakWeil`. So this statement is a
+consequence of two prints together, not of Kolyvagin's theorem alone. `Ш` is `SelmerTwoPower.sha` (Tau Ceti's Shafarevich–Tate group, local triviality at every
 place). The print is a preprint, not a refereed paper (Known issue, round 1); its `r = 0` case is
 not used. -/
 def KolyvaginThm1 : Prop :=

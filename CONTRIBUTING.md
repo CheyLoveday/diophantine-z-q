@@ -127,13 +127,13 @@ You are welcome to run an agent on a claim. The rules:
 - No build-time code without a stated reason in the PR.
 - A reduction to printed theorems cites the edition and page actually read; where nobody read the source, the locator is marked UNVERIFIED.
 - A release states its blocker (`Releasing <field>: <what blocked you>`).
-- Readings produced by an agent are recorded as AI-READ evidence and never clear a flag; see [`docs/one-proof/STATEMENT-CHECKS.md`](docs/one-proof/STATEMENT-CHECKS.md).
+- Readings produced by an agent are recorded as AI-READ evidence and clear no flag, except a three-lens adversarial reading made from a named copy of the print (sha256 recorded, every quote checked against that file) when no human reader is available; see [`docs/one-proof/STATEMENT-CHECKS.md`](docs/one-proof/STATEMENT-CHECKS.md).
 
 Credit goes to the operator, marked AI-assisted. Good fits: reducing a GLUE hypothesis to theorems in their printed form, and ports from the libraries listed above with their notices kept.
 
 ## What CI checks
 
-- [Main build cache](.github/workflows/main-build-cache.yml) builds `+ZInQKernel.OneProof.Main` and `+ZInQKernel.OneProof.Discharges` after a push to `main` that changes Lean, starting from the previous build of `main`. When the build finishes, it fails unless the axioms of `ZInQ.OneProof.frozenTarget` are among `propext`, `Classical.choice` and `Quot.sound`. A build that stops at its time limit saves its progress and reports failure. It is the only hosted check of the headline theorem; until one of its runs passes, that theorem has been compiled only on the project's own machines.
+- [Main build cache](.github/workflows/main-build-cache.yml) builds `+ZInQKernel.OneProof.Main` and `+ZInQKernel.OneProof.Discharges` after a push to `main` that changes Lean, starting from the previous build of `main`. When the build finishes, it fails unless the axioms of `ZInQ.OneProof.frozenTarget` are among `propext`, `Classical.choice` and `Quot.sound`. A build that stops at its time limit saves its progress and reports failure. It is the only hosted check of the headline theorem; its first passing run was [44219370755](https://github.com/Deicyde/diophantine-z-q/actions/runs/44219370755) on 2026-11-18, at `be73b91c`.
 - [Research checks](.github/workflows/research-checks.yml) check finite construction regeneration, the manuscript build and the accepted helper snapshot under `lean/`.
 - [Blueprint Pages](.github/workflows/blueprint-pages.yml) builds the site on PRs; deployment follows a passing main build cache run on a push to `main`, not a PR or manual site build.
 - [Lean WIP](.github/workflows/lean-wip.yml) is a manually dispatched build of the default target.

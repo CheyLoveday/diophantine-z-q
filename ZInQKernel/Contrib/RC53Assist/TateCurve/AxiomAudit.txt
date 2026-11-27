@@ -1,0 +1,64 @@
+ZInQ.Contrib.RC53Assist.GlobalTrace.tateCurveTateModulePrint_of_literature :
+ZInQ.Contrib.RC53Assist.TateCurve.SilvermanC141TateUniformizationPrint →
+  ZInQ.Contrib.RC53Assist.TateCurve.LocalSemistableTatePrint →
+    ZInQ.Contrib.RC53Assist.TateCurve.LocalUnramifiedValueGroupPrint →
+      ZInQ.Contrib.RC53Assist.TateCurve.LocalFrobeniusGenerationPrint →
+        ZInQ.Contrib.RC53Assist.GlobalTrace.TateCurveTateModulePrint
+ZInQ.Contrib.RC53Assist.GlobalTrace.additiveReductionCoinvariantsVanish_of_prints :
+ZInQ.Contrib.RC53Assist.TateCurve.GrothendieckSemistableReductionPrint →
+  ZInQ.Contrib.RC53Assist.TateCurve.SilvermanIII81GaloisWeilPairingPrint →
+    ZInQ.Contrib.RC53Assist.GlobalTrace.AdditiveReductionCoinvariantsVanish
+'ZInQ.Contrib.RC53Assist.GlobalTrace.tateCurveTateModulePrint_of_literature' depends on axioms:
+[propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.GlobalTrace.additiveReductionCoinvariantsVanish_of_prints' depends on
+axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.prescribedTateEquiv' depends on axioms: [propext,
+Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.kummerTateBasis' depends on axioms: [propext, Classical.choice,
+Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.kummerRoots_nonempty' depends on axioms: [propext,
+Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.signed_kummer_columns' depends on axioms: [propext,
+Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.tate_character_cocycle_laws' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.tateCyclotomicCharacter' depends on axioms: [propext,
+Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.isomorphism_point_sign' depends on axioms: [propext,
+Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.descendedUniformization_equivariant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.inertia_moves_parameter_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.frobenius_sign_of_unramified' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.inertia_fixes_torsion_unit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.rational_tate_det_inertia' depends on axioms: [propext,
+Classical.choice, Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.augmentation_eq_top_of_finite_image' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.augmentation_eq_top_of_ramified_tate' depends on axioms:
+[propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.uniformizationQuotientEquiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.admissible_parameter_exists' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ZInQ.Contrib.RC53Assist.TateCurve.rational_tate_example_invariants' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Build completed successfully (10870 jobs).

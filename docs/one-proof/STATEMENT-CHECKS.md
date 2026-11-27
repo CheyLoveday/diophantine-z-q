@@ -181,14 +181,58 @@ or the maintainer, and the ruling is recorded in the reviews.tsv row (ruled_by).
 through a pull request that cites that row. The person who records a reading is not the one who decides what it
 changes.
 
+**Row dependencies (Jack, 2026-11-24).** A bridge for row R may rest on row S only if S is a `frozenTarget`
+hypothesis rated LEAF or proved; the dependency is recorded on R; demoting S demotes R in the same commit; two
+rows can never certify each other.
+
 Readings produced by AI tools, the project's included, are recorded as AI-READ evidence. An AI-READ reading clears
 exactly one flag, `unread`, and only when the row's log records a page read of the cited print; for a source the
-manuscript cites, the arXiv version it cites counts as the print. It never counts as a human reading, and it clears
-no other flag: reading risks and statement checks stay the reviewer's call.
+manuscript cites, the arXiv version it cites counts as the print for this flag (the next section says what else it
+needs). It never counts as a human reading, and it clears no other flag: reading risks and statement checks stay
+the reviewer's call.
 
 Each reviews.tsv row has an evidence column: HUMAN-READ when a person read the print and the row meets the rule
 above (AI use stated, a short verbatim quote, edition and page), AI-READ otherwise. AI-READ never counts as a human
 reading: OPEN.md's count of human readings counts only distinct readers with evidence HUMAN-READ.
+
+**Adversarial AI readings (ruling 2026-11-26).** With no human reader available, an adversarial AI reading stands
+in for the human reading that rates a row. It is three independent readings of the page images, each quoting the
+print verbatim with edition and page:
+
+* fidelity: every clause of the Lean statement, with every definition it uses unfolded, is mapped to the printed
+  text (match, match after a proved identification named by its Lean theorem, direct instance, or mismatch);
+* skeptic: hidden standing hypotheses, conventions (Frobenius, Hodge-Tate sign, normalizations), vacuity, the
+  quantifiers, and what the statements of the relied-on identifications actually say;
+* red team: the print is read before the Lean and stated in plain words, then every difference is listed.
+
+The three readers run on different model families. A row is rated on the reading only if no reader finds a
+mismatch beyond a direct instance of the print. Every difference a reader reports is recorded in the report, with
+the reading the row follows. The evidence stays AI-READ (it is not a human reading, and OPEN.md's count of human
+readings does not change), the ruling goes in the reviews.tsv row, and a pending comparison of a journal text with
+the author copy that was read stays pending (next section). First applied to `colmezThm01` and `panThm104F`
+([docs/research/pb-adversarial-readings.md](../research/pb-adversarial-readings.md)).
+
+**Real text (ruling 2026-11-26).** Each reader works from a named copy of the source: the reviews.tsv row records
+the file's sha256 in edition and quotes it verbatim, and every quote is checked against that file's text, not
+recall. `render_open.py` fails an AI-READ row without both; rows recorded before the rule get a note. For AI-READ
+rows that meet this condition, the adversarial reading above supersedes the older paragraphs of this file that say
+an AI-READ reading clears only the `unread` flag, never counts as a human reading, and has none of the effects
+under "What happens to a report": it has the effects of the human reading it stands in for. The evidence column
+still says AI-READ, and OPEN.md's count of human readings still counts only HUMAN-READ rows. Recorded in
+[DECISIONS.md](../DECISIONS.md).
+
+## Preprints and author copies
+
+Published means refereed (ruling 2026-11-20):
+
+* **Unrefereed sources.** A statement whose only source has not been refereed (an arXiv-only paper, a preprint
+  series such as an MPIM preprint, lecture notes) is never published and never LEAF, whatever a reading finds. It
+  counts as glue until it is proved in Lean or reduced to refereed sources, for example a refereed paper or book
+  that states it.
+* **Refereed papers read from an author copy.** When the reading used an author copy or an arXiv version of a
+  refereed paper (the version the manuscript cites included), the quoted statement is checked against the
+  journal text. The row keeps its rating while that check is pending. If the journal statement differs in a way
+  that matters, the row becomes glue until it is repaired.
 
 ## What happens to a report
 

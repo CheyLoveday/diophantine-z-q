@@ -1,0 +1,1762 @@
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:161:6: warning: Try this: intro hg x
+
+Note: This linter can be disabled with `set_option linter.tacticAnalysis.introMerge false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:167:6: warning: Try this: intro hg a
+
+Note: This linter can be disabled with `set_option linter.tacticAnalysis.introMerge false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:238:60: warning: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:271:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_mul`:
+  [IsContChar α]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContChar α] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:287:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_one`:
+  [IsContChar α]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContChar α] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:299:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation_first`:
+  [IsContChar α]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContChar α] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:313:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation_swap`:
+  [IsContChar α]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContChar α] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:336:54: warning: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [pairCoordinates, Matrix.mulVec, dotProduct]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:415:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:426:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:427:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:420:0: warning: Definition `genuineCoefficientDictionary` is a proposition; use `theorem` instead of `def`
+
+Note: This linter can be disabled with `set_option linter.defProp false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:434:46: warning: This simp argument is unused:
+  LinearMap.comp_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [inducedSequenceRepresentation, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:434:68: warning: This simp argument is unused:
+  LinearEquiv.coe_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [inducedSequenceRepresentation, LinearMap.comp_apply, LinearEquiv.apply_symm_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:435:6: warning: This simp argument is unused:
+  LinearEquiv.apply_symm_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [inducedSequenceRepresentation, LinearMap.comp_apply, LinearEquiv.coe_coe]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:443:46: warning: This simp argument is unused:
+  LinearMap.comp_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [inducedSequenceRepresentation, LinearEquiv.coe_coe]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:443:68: warning: This simp argument is unused:
+  LinearEquiv.coe_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [inducedSequenceRepresentation, LinearMap.comp_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:704:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_norm_scalar`:
+  [E.IsElliptic]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [E.IsElliptic] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:715:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_scalar_commutator`:
+  [E.IsElliptic]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [E.IsElliptic] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:770:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.norm_scalar_fixes_fields`:
+  [∀ (i : ℕ), Normal ℚ ↥(B i)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [∀ (i : ℕ), Normal ℚ ↥(B i)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:832:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.tlam_scalar_stage`:
+  [IsTotallyComplex K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsTotallyComplex K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:895:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_scalar_conjugate`:
+  [E.IsElliptic]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [E.IsElliptic] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1019:82: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1019:82: warning: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1026:82: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1026:82: warning: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1033:82: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1033:82: warning: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1074:62: warning: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [elementaryMatrix]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1118:77: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1118:73: warning: Unused tactic linter: `<;>` should be replaced with `;` or be removed.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1118:77: warning: Unused tactic linter: `ring` does nothing.
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1151:0: warning: automatically included section variable(s) unused in theorem `ZInQ.Contrib.RC53Assist.Detection.Inputs.tlamActionMatrix_character`:
+  [IsTotallyComplex K]
+  [IsContChar α]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsTotallyComplex K] [IsContChar α] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1200:56: warning: Variable name `hBA` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hBA
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1207:32: warning: This simp argument is unused:
+  mul_smul_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [smul_mul_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1207:47: warning: This simp argument is unused:
+  smul_mul_assoc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [mul_smul_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1641:41: warning: Variable name `ha` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _ha
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+ZInQKernel/Contrib/RC53Assist/Detection/InputsAxiomScratch.lean:1642:7: warning: Variable name `hdim` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hdim
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.coindPair : {R G M : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : AddCommGroup.{0} M] →
+        [inst_3 : Module.{0, 0} R M] →
+          (H : Subgroup.{0} G) →
+            G →
+              (ρ : Representation.{0, 0, 0} R (↥H) M) →
+                LinearMap.{0, 0, 0, 0} (RingHom.id.{0} R)
+                  (↥(Representation.coindV.{0, 0, 0, 0} (Subgroup.subtype.{0} H) ρ)) (Prod.{0, 0} M M)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.coindPair' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoind : {R G M : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : AddCommGroup.{0} M] →
+        [inst_3 : Module.{0, 0} R M] →
+          (H : Subgroup.{0} G) →
+            (τ : G) →
+              (∀ (g : G), Membership.mem.{0, 0} H g ∨ Membership.mem.{0, 0} H (HMul.hMul.{0, 0, 0} g τ)) →
+                (ρ : Representation.{0, 0, 0} R (↥H) M) →
+                  Prod.{0, 0} M M → ↥(Representation.coindV.{0, 0, 0, 0} (Subgroup.subtype.{0} H) ρ)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoind' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.coindPairEquiv : {R G M : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : AddCommGroup.{0} M] →
+        [inst_3 : Module.{0, 0} R M] →
+          (H : Subgroup.{0} G) →
+            (τ : G) →
+              Eq.{1} (HMul.hMul.{0, 0, 0} τ τ) 1 →
+                τ ∉ H →
+                  (∀ (g : G), Membership.mem.{0, 0} H g ∨ Membership.mem.{0, 0} H (HMul.hMul.{0, 0, 0} g τ)) →
+                    (ρ : Representation.{0, 0, 0} R (↥H) M) →
+                      LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R)
+                        (↥(Representation.coindV.{0, 0, 0, 0} (Subgroup.subtype.{0} H) ρ)) (Prod.{0, 0} M M)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.coindPairEquiv' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedPair : {R G M : Type} →
+  [inst : CommRing.{0} R] →
+    [inst_1 : Group.{0} G] →
+      [inst_2 : AddCommGroup.{0} M] →
+        [inst_3 : Module.{0, 0} R M] →
+          (H : Subgroup.{0} G) →
+            (τ : G) →
+              Eq.{1} (HMul.hMul.{0, 0, 0} τ τ) 1 →
+                τ ∉ H →
+                  (∀ (g : G), Membership.mem.{0, 0} H g ∨ Membership.mem.{0, 0} H (HMul.hMul.{0, 0, 0} g τ)) →
+                    Representation.{0, 0, 0} R (↥H) M → Representation.{0, 0, 0} R G (Prod.{0, 0} M M)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedPair' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedPair_conjugation : ∀ {R G M : Type} [inst : CommRing.{0} R]
+  [inst_1 : Group.{0} G] [inst_2 : AddCommGroup.{0} M] [inst_3 : Module.{0, 0} R M] (H : Subgroup.{0} G) (τ : G)
+  (hτ : Eq.{1} (HMul.hMul.{0, 0, 0} τ τ) 1) (hτH : τ ∉ H)
+  (hcoset : ∀ (g : G), Membership.mem.{0, 0} H g ∨ Membership.mem.{0, 0} H (HMul.hMul.{0, 0, 0} g τ))
+  (ρ : Representation.{0, 0, 0} R (↥H) M) (x : Prod.{0, 0} M M),
+  Eq.{1} (((ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedPair H τ hτ hτH hcoset ρ) τ) x) (Prod.mk.{0, 0} x.2 x.1)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedPair_conjugation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedPair_restriction : ∀ {R G M : Type} [inst : CommRing.{0} R]
+  [inst_1 : Group.{0} G] [inst_2 : AddCommGroup.{0} M] [inst_3 : Module.{0, 0} R M] (H : Subgroup.{0} G) (τ : G)
+  (hτ : Eq.{1} (HMul.hMul.{0, 0, 0} τ τ) 1) (hτH : τ ∉ H)
+  (hcoset : ∀ (g : G), Membership.mem.{0, 0} H g ∨ Membership.mem.{0, 0} H (HMul.hMul.{0, 0, 0} g τ))
+  (ρ : Representation.{0, 0, 0} R (↥H) M) (h : ↥H) (x : Prod.{0, 0} M M),
+  Eq.{1} (((ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedPair H τ hτ hτH hcoset ρ) ↑h) x).1 ((ρ h) x.1)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedPair_restriction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalEmbedding : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+        AlgHom.{0, 0, 0} ℚ K ZInQ.Manuscript.RC.PrintsArith.Qbar
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalEmbedding' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalBaseGroup_index_two : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar),
+  Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+    Eq.{1} (Subgroup.index.{0} (ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)) 2
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalBaseGroup_index_two' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.tateConjugation_not_mem : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  [NumberField.IsTotallyComplex.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S),
+  ZInQ.Manuscript.RC.KummerMaps.tateConjQ e C ∉ ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.tateConjugation_not_mem' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.two_coset_cover : ∀ {G : Type} [inst : Group.{0} G] (H : Subgroup.{0} G),
+  Eq.{1} (Subgroup.index.{0} H) 2 →
+    ∀ (τ : G),
+      Eq.{1} (HMul.hMul.{0, 0, 0} τ τ) 1 →
+        τ ∉ H → ∀ (g : G), Membership.mem.{0, 0} H g ∨ Membership.mem.{0, 0} H (HMul.hMul.{0, 0, 0} g τ)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.two_coset_cover' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoordinates : (R : Type) →
+  [inst : CommRing.{0} R] →
+    LinearEquiv.{0, 0, 0, 0} (RingHom.id.{0} R) (Prod.{0, 0} (Fin 2 → R) (Fin 2 → R)) (Sum.{0, 0} (Fin 2) (Fin 2) → R)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoordinates' depends on axioms: [propext, Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoordinates_left : ∀ (R : Type) [inst : CommRing.{0} R]
+  (x : Prod.{0, 0} (Fin 2 → R) (Fin 2 → R)) (j : Fin 2),
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoordinates R) x (Sum.inl.{0, 0} j)) (x.1 j)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoordinates_left' depends on axioms: [propext, Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoordinates_right : ∀ (R : Type) [inst : CommRing.{0} R]
+  (x : Prod.{0, 0} (Fin 2 → R) (Fin 2 → R)) (j : Fin 2),
+  Eq.{1} ((ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoordinates R) x (Sum.inr.{0, 0} j)) (x.2 j)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.pairCoordinates_right' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.matrix_map_scalar_one : ∀ {R A n : Type} [inst : CommRing.{0} R]
+  [inst_1 : CommRing.{0} A] [inst_2 : DecidableEq.{1} n] (f : RingHom.{0, 0} R A) (a : R),
+  Eq.{1} (Matrix.map.{0, 0, 0, 0} (HSMul.hSMul.{0, 0, 0} a 1) ⇑f) (HSMul.hSMul.{0, 0, 0} (f a) 1)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.matrix_map_scalar_one' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.baseCoordinateRepresentation : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+          MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+            (E : WeierstrassCurve.{0} ℚ) →
+              [WeierstrassCurve.IsElliptic.{0} E] →
+                [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                  Representation.{0, 0, 0} ZInQ.Manuscript.RC.Uniform.Lambda
+                    (↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e))
+                    (Fin 2 → ZInQ.Manuscript.RC.Uniform.Lambda)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.baseCoordinateRepresentation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [NumberField.IsTotallyComplex.{0} K] →
+        (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+          AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+            MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+              (E : WeierstrassCurve.{0} ℚ) →
+                [WeierstrassCurve.IsElliptic.{0} E] →
+                  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    ZInQ.Manuscript.RC.CoefModules.ActualConj K S →
+                      Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+                        Representation.{0, 0, 0} ZInQ.Manuscript.RC.Uniform.Lambda ZInQ.Manuscript.RC.PrintsArith.GalQ
+                          (Prod.{0, 0} (Fin 2 → ZInQ.Manuscript.RC.Uniform.Lambda)
+                            (Fin 2 → ZInQ.Manuscript.RC.Uniform.Lambda))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [NumberField.IsTotallyComplex.{0} K] →
+        (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+          AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+            MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+              (E : WeierstrassCurve.{0} ℚ) →
+                [WeierstrassCurve.IsElliptic.{0} E] →
+                  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    ZInQ.Manuscript.RC.CoefModules.ActualConj K S →
+                      Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+                        ZInQ.Manuscript.RC.PrintsArith.GalQ →
+                          Matrix.{0, 0, 0} (Sum.{0, 0} (Fin 2) (Fin 2)) (Sum.{0, 0} (Fin 2) (Fin 2))
+                            ZInQ.Manuscript.RC.Uniform.Lambda
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_mul : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (g h : ZInQ.Manuscript.RC.PrintsArith.GalQ),
+  Eq.{1} (ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix S e α E C hdegree (HMul.hMul.{0, 0, 0} g h))
+    (HMul.hMul.{0, 0, 0} (ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix S e α E C hdegree g)
+      (ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix S e α E C hdegree h))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_mul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_one : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2),
+  Eq.{1} (ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix S e α E C hdegree 1) 1
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation_first : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (g : ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e))
+  (x : Prod.{0, 0} (Fin 2 → ZInQ.Manuscript.RC.Uniform.Lambda) (Fin 2 → ZInQ.Manuscript.RC.Uniform.Lambda)),
+  Eq.{1} (((ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation S e α E C hdegree) ↑g) x).1
+    (Matrix.mulVec.{0, 0, 0}
+      (ZInQ.Contrib.RC53Assist.Detection.tlamActionMatrix ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) g))
+      x.1)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation_first' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation_swap : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (x : Prod.{0, 0} (Fin 2 → ZInQ.Manuscript.RC.Uniform.Lambda) (Fin 2 → ZInQ.Manuscript.RC.Uniform.Lambda)),
+  Eq.{1}
+    (((ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation S e α E C hdegree)
+        (ZInQ.Manuscript.RC.KummerMaps.tateConjQ e C))
+      x)
+    (Prod.mk.{0, 0} x.2 x.1)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedRepresentation_swap' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_first : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (g : ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)) (j : Fin 2) (l : Sum.{0, 0} (Fin 2) (Fin 2)),
+  Eq.{1} (ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix S e α E C hdegree (↑g) (Sum.inl.{0, 0} j) l)
+    (Sum.elim.{0, 0, 1}
+      (fun k =>
+        ZInQ.Contrib.RC53Assist.Detection.tlamActionMatrix ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) g) j
+          k)
+      (fun x => 0) l)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_first' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_swap : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (a b : Sum.{0, 0} (Fin 2) (Fin 2)),
+  Eq.{1}
+    (ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix S e α E C hdegree
+      (ZInQ.Manuscript.RC.KummerMaps.tateConjQ e C) a b)
+    (ite.{1} (Eq.{1} a (Sum.swap.{0, 0} b)) 1 0)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.rationalInducedMatrix_swap' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [NumberField.IsTotallyComplex.{0} K] →
+        (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+          AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+            MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+              (E : WeierstrassCurve.{0} ℚ) →
+                [WeierstrassCurve.IsElliptic.{0} E] →
+                  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    ZInQ.Manuscript.RC.CoefModules.ActualConj K S →
+                      Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+                        Ultrafilter.{0} ℕ →
+                          (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                            [inst : Ideal.IsPrime.{0} P] →
+                              ZInQ.Contrib.RC53Assist.Detection.RationalSequences →
+                                Matrix.{0, 0, 0} (Sum.{0, 0} (Fin 2) (Fin 2)) (Sum.{0, 0} (Fin 2) (Fin 2))
+                                  (ZInQ.Manuscript.RC.Wiring.ResAt P)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix_one : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_6 : Ideal.IsPrime.{0} P],
+  Eq.{1} (ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix S e α E C hdegree U P 1) 1
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix_mul : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_6 : Ideal.IsPrime.{0} P]
+  (g h : ZInQ.Contrib.RC53Assist.Detection.RationalSequences),
+  Eq.{1}
+    (ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix S e α E C hdegree U P (HMul.hMul.{0, 0, 0} g h))
+    (HMul.hMul.{0, 0, 0} (ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix S e α E C hdegree U P g)
+      (ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix S e α E C hdegree U P h))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceMatrix_mul' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceRepresentation : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [NumberField.IsTotallyComplex.{0} K] →
+        (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+          AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+            (α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+              [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+                (E : WeierstrassCurve.{0} ℚ) →
+                  [WeierstrassCurve.IsElliptic.{0} E] →
+                    [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                      ZInQ.Manuscript.RC.CoefModules.ActualConj K S →
+                        Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+                          Ultrafilter.{0} ℕ →
+                            (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                              [inst : Ideal.IsPrime.{0} P] →
+                                Representation.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                                  ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                  (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceRepresentation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceAction : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [NumberField.IsTotallyComplex.{0} K] →
+        (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+          AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+            (α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+              [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+                (E : WeierstrassCurve.{0} ℚ) →
+                  [WeierstrassCurve.IsElliptic.{0} E] →
+                    [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                      ZInQ.Manuscript.RC.CoefModules.ActualConj K S →
+                        Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+                          Ultrafilter.{0} ℕ →
+                            (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                              [inst : Ideal.IsPrime.{0} P] →
+                                DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                  (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceAction' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceScalarComm : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_6 : Ideal.IsPrime.{0} P],
+  SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Manuscript.RC.Wiring.ResAt P)
+    (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.inducedSequenceScalarComm' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.genuineCoefficientDictionary : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [inst_2 : NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2)
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_6 : Ideal.IsPrime.{0} P],
+  ZInQ.Contrib.RC53Assist.Detection.InducedCoefficientDictionary S e α E C U P
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.genuineCoefficientDictionary' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.image_span_mul : ∀ {k G M : Type} [inst : Field.{0} k] [inst_1 : Group.{0} G]
+  [inst_2 : AddCommGroup.{0} M] [inst_3 : Module.{0, 0} k M] (ρ : Representation.{0, 0, 0} k G (Prod.{0, 0} M M))
+  {a b : Module.End.{0, 0} k (Prod.{0, 0} M M)},
+  Membership.mem.{0, 0} (Submodule.span.{0, 0} k (Set.range.{0, 1} ⇑ρ)) a →
+    Membership.mem.{0, 0} (Submodule.span.{0, 0} k (Set.range.{0, 1} ⇑ρ)) b →
+      Membership.mem.{0, 0} (Submodule.span.{0, 0} k (Set.range.{0, 1} ⇑ρ)) (HMul.hMul.{0, 0, 0} a b)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.image_span_mul' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.block11 : {k M : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : AddCommGroup.{0} M] →
+      [inst_2 : Module.{0, 0} k M] → Module.End.{0, 0} k M → Module.End.{0, 0} k (Prod.{0, 0} M M)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.block11' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.block12 : {k M : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : AddCommGroup.{0} M] →
+      [inst_2 : Module.{0, 0} k M] → Module.End.{0, 0} k M → Module.End.{0, 0} k (Prod.{0, 0} M M)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.block12' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.block21 : {k M : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : AddCommGroup.{0} M] →
+      [inst_2 : Module.{0, 0} k M] → Module.End.{0, 0} k M → Module.End.{0, 0} k (Prod.{0, 0} M M)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.block21' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.block22 : {k M : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : AddCommGroup.{0} M] →
+      [inst_2 : Module.{0, 0} k M] → Module.End.{0, 0} k M → Module.End.{0, 0} k (Prod.{0, 0} M M)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.block22' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.block11Linear : {k M : Type} →
+  [inst : Field.{0} k] →
+    [inst_1 : AddCommGroup.{0} M] →
+      [inst_2 : Module.{0, 0} k M] →
+        LinearMap.{0, 0, 0, 0} (RingHom.id.{0} k) (Module.End.{0, 0} k M) (Module.End.{0, 0} k (Prod.{0, 0} M M))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.block11Linear' depends on axioms: [propext, Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.full_span_of_scalar_separation : ∀ {k G M : Type} [inst : Field.{0} k]
+  [inst_1 : Group.{0} G] [inst_2 : AddCommGroup.{0} M] [inst_3 : Module.{0, 0} k M]
+  (ρ : Representation.{0, 0, 0} k G (Prod.{0, 0} M M)) {H : Type} [inst_4 : Group.{0} H] (ι : MonoidHom.{0, 0} H G)
+  (r : Representation.{0, 0, 0} k H M),
+  Eq.{1} (Submodule.span.{0, 0} k (Set.range.{0, 1} ⇑r)) Top.top.{0} →
+    (∀ (h : H) (x : Prod.{0, 0} M M), Eq.{1} ((ρ (ι h)) x).1 ((r h) x.1)) →
+      ∀ (τ : G),
+        (∀ (x : Prod.{0, 0} M M), Eq.{1} ((ρ τ) x) (Prod.mk.{0, 0} x.2 x.1)) →
+          ∀ (s : G) (a b : k),
+            Ne.{1} a b →
+              (∀ (x : Prod.{0, 0} M M),
+                  Eq.{1} ((ρ s) x) (Prod.mk.{0, 0} (HSMul.hSMul.{0, 0, 0} a x.1) (HSMul.hSMul.{0, 0, 0} b x.2))) →
+                Eq.{1} (Submodule.span.{0, 0} k (Set.range.{0, 1} ⇑ρ)) Top.top.{0}
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.full_span_of_scalar_separation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.coefficientSpanWitness_of_full : (P :
+    Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+  [inst : Ideal.IsPrime.{0} P] →
+    [inst_1 :
+        DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+          (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+      [inst_2 :
+          SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+            (ZInQ.Manuscript.RC.Wiring.ResAt P) (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+        Eq.{1}
+            (Submodule.span.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+              (Set.range.{0, 1}
+                (ZInQ.Contrib.RC53Assist.Detection.linearAction (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                  (ZInQ.Contrib.RC53Assist.Detection.FibrePair P))))
+            Top.top.{0} →
+          ZInQ.Contrib.RC53Assist.Detection.CoefficientSpanWitness P
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.coefficientSpanWitness_of_full' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.coefficientSpanWitness_of_separation : (P :
+    Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+  [inst : Ideal.IsPrime.{0} P] →
+    [inst_1 :
+        DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+          (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+      [inst_2 :
+          SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+            (ZInQ.Manuscript.RC.Wiring.ResAt P) (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+        {H : Type} →
+          [inst_3 : Group.{0} H] →
+            (ι : MonoidHom.{0, 0} H ZInQ.Contrib.RC53Assist.Detection.RationalSequences) →
+              (r :
+                  Representation.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P) H
+                    (Fin 2 → ZInQ.Manuscript.RC.Wiring.ResAt P)) →
+                Eq.{1} (Submodule.span.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P) (Set.range.{0, 1} ⇑r)) Top.top.{0} →
+                  (∀ (h : H) (x : ZInQ.Contrib.RC53Assist.Detection.FibrePair P),
+                      Eq.{1} (HSMul.hSMul.{0, 0, 0} (ι h) x).1 ((r h) x.1)) →
+                    (τ : ZInQ.Contrib.RC53Assist.Detection.RationalSequences) →
+                      (∀ (x : ZInQ.Contrib.RC53Assist.Detection.FibrePair P),
+                          Eq.{1} (HSMul.hSMul.{0, 0, 0} τ x) (Prod.mk.{0, 0} x.2 x.1)) →
+                        (s : ZInQ.Contrib.RC53Assist.Detection.RationalSequences) →
+                          (a b : ZInQ.Manuscript.RC.Wiring.ResAt P) →
+                            Ne.{1} a b →
+                              (∀ (x : ZInQ.Contrib.RC53Assist.Detection.FibrePair P),
+                                  Eq.{1} (HSMul.hSMul.{0, 0, 0} s x)
+                                    (Prod.mk.{0, 0} (HSMul.hSMul.{0, 0, 0} a x.1) (HSMul.hSMul.{0, 0, 0} b x.2))) →
+                                ZInQ.Contrib.RC53Assist.Detection.CoefficientSpanWitness P
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.coefficientSpanWitness_of_separation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.fixes_torsionField_of_tate_trivial : ∀ (E : WeierstrassCurve.{0} ℚ)
+  [WeierstrassCurve.IsElliptic.{0} E] (g : ZInQ.Manuscript.RC.PrintsArith.GalQ),
+  (∀ (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2), Eq.{1} (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2) g) x) x) →
+    ∀ (i : ℕ) (x : ZInQ.Manuscript.RC.PrintsArith.Qbar),
+      Membership.mem.{0, 0} (ZInQ.Manuscript.RC.GlueSweep.Tate.torsField E i) x → Eq.{1} (g x) x
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.fixes_torsionField_of_tate_trivial' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_norm_scalar : ∀ (E : WeierstrassCurve.{0} ℚ)
+  [WeierstrassCurve.IsElliptic.{0} E] (g τ : ZInQ.Manuscript.RC.PrintsArith.GalQ) (u : ℤ_[2]),
+  (∀ (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2),
+      Eq.{1} (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2) g) x) (HSMul.hSMul.{0, 0, 0} u x)) →
+    ∀ (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2),
+      Eq.{1}
+        (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2)
+            (HMul.hMul.{0, 0, 0}
+              (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} g 2) τ) (HPow.hPow.{0, 0, 0} g 2))
+              (Inv.inv.{0} τ)))
+          x)
+        (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} u 4) x)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_norm_scalar' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_scalar_commutator : ∀ (E : WeierstrassCurve.{0} ℚ)
+  [WeierstrassCurve.IsElliptic.{0} E] (z : ZInQ.Manuscript.RC.PrintsArith.GalQ) (u : ℤ_[2]),
+  (∀ (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2),
+      Eq.{1} (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2) z) x) (HSMul.hSMul.{0, 0, 0} u x)) →
+    ∀ (g : ZInQ.Manuscript.RC.PrintsArith.GalQ) (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2),
+      Eq.{1}
+        (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2)
+            (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} z g) (Inv.inv.{0} z)) (Inv.inv.{0} g)))
+          x)
+        x
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_scalar_commutator' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+          (α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+            [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              ZInQ.Manuscript.RC.CoefModules.ActualConj K S →
+                (ℕ → IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar) → Prop
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.square_mem_quadratic : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S),
+  Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+    ∀ (g : ZInQ.Manuscript.RC.PrintsArith.GalQ),
+      Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e) (HPow.hPow.{0, 0, 0} g 2)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.square_mem_quadratic' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.norm_scalar_fixes_fields : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S)
+  (B : ℕ → IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar) [∀ (i : ℕ), Normal.{0, 0} ℚ ↥(B i)],
+  Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+    ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields S e α C B →
+      ∀ (g : ZInQ.Manuscript.RC.PrintsArith.GalQ) (i : ℕ) (x : ZInQ.Manuscript.RC.PrintsArith.Qbar),
+        Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.FrobeniusMatch.characterField S e α i ⊔ B i) x →
+          Eq.{1}
+            ((HMul.hMul.{0, 0, 0}
+                (HMul.hMul.{0, 0, 0}
+                  (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} g 2) (ZInQ.Manuscript.RC.KummerMaps.tateConjQ e C))
+                  (HPow.hPow.{0, 0, 0} g 2))
+                (Inv.inv.{0} (ZInQ.Manuscript.RC.KummerMaps.tateConjQ e C)))
+              x)
+            x
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.norm_scalar_fixes_fields' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.field_commutator_mem : ∀
+  (F : IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar) [Normal.{0, 0} ℚ ↥F]
+  (z : ZInQ.Manuscript.RC.PrintsArith.GalQ),
+  (∀ (x : ZInQ.Manuscript.RC.PrintsArith.Qbar), Membership.mem.{0, 0} F x → Eq.{1} (z x) x) →
+    ∀ (g : ZInQ.Manuscript.RC.PrintsArith.GalQ),
+      Membership.mem.{0, 0} (IntermediateField.fixingSubgroup.{0, 0} F)
+        (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} z g) (Inv.inv.{0} z)) (Inv.inv.{0} g))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.field_commutator_mem' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.exists_arithmetic_scalar_element : ∀ (E : WeierstrassCurve.{0} ℚ)
+  [inst : WeierstrassCurve.IsElliptic.{0} E] {K : Type} [inst_1 : Field.{0} K] [inst_2 : NumberField.{0} K]
+  [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S)
+  (B : ℕ → IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar) [∀ (i : ℕ), Normal.{0, 0} ℚ ↥(B i)],
+  ZInQ.Manuscript.RC.PrintsArith.SerreThm3 →
+    ZInQ.Manuscript.RC.PrintsArith.HasNoCM E →
+      Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+        ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields S e α C B →
+          ∃ n,
+            LE.le.{0} 2 n ∧
+              ∃ z,
+                (∀ (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2),
+                    Eq.{1} (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2) z) x)
+                      (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} 1 (HPow.hPow.{0, 0, 0} 2 n)) 4)
+                        x)) ∧
+                  (∀ (i : ℕ) (x : ZInQ.Manuscript.RC.PrintsArith.Qbar),
+                      Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.FrobeniusMatch.characterField S e α i ⊔ B i) x →
+                        Eq.{1} (z x) x) ∧
+                    ∀ (g : ZInQ.Manuscript.RC.PrintsArith.GalQ) (i : ℕ),
+                      Membership.mem.{0, 0}
+                        (ZInQ.Contrib.RC53Assist.FrobeniusMatch.derivativeKernel S e α E i ⊓
+                          IntermediateField.fixingSubgroup.{0, 0} (B i))
+                        (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} z g) (Inv.inv.{0} z))
+                          (Inv.inv.{0} g))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.exists_arithmetic_scalar_element' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.tlam_scalar_stage : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [WeierstrassCurve.IsElliptic.{0} E]
+  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (z : ZInQ.Manuscript.RC.PrintsArith.GalQ)
+  (hK :
+    ∀ (x : K),
+      Eq.{1} (z (e ((algebraMap.{0, 0} K (AlgebraicClosure.{0} K)) x)))
+        (e ((algebraMap.{0, 0} K (AlgebraicClosure.{0} K)) x)))
+  (μ : ℤ_[2]),
+  (∀ (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2),
+      Eq.{1} (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2) z) x) (HSMul.hSMul.{0, 0, 0} μ x)) →
+    (∀ (i : ℕ) (x : ZInQ.Manuscript.RC.PrintsArith.Qbar),
+        Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.FrobeniusMatch.characterField S e α i) x → Eq.{1} (z x) x) →
+      ∀ (i : ℕ) (x : ZInQ.Manuscript.RC.LambdaCoef.TLam K S (WeierstrassCurve.baseChange.{0, 0} E K) α),
+        Membership.mem.{0, 0} (ZInQ.Manuscript.RC.LambdaCoef.tlamNbhd K S (WeierstrassCurve.baseChange.{0, 0} E K) α i)
+          (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} (ZInQ.Contrib.RC53Assist.InnerLimitArith.gksOfQ S e z hK) x)
+            (HSMul.hSMul.{0, 0, 0} ((algebraMap.{0, 0} ℤ_[2] ZInQ.Manuscript.RC.Uniform.Lambda) μ) x))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.tlam_scalar_stage' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.tlam_scalar_matrix_limit : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (z : ZInQ.Manuscript.RC.PrintsArith.GalQ)
+  (hK :
+    ∀ (x : K),
+      Eq.{1} (z (e ((algebraMap.{0, 0} K (AlgebraicClosure.{0} K)) x)))
+        (e ((algebraMap.{0, 0} K (AlgebraicClosure.{0} K)) x)))
+  (μ : ℤ_[2]),
+  (∀ (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2),
+      Eq.{1} (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2) z) x) (HSMul.hSMul.{0, 0, 0} μ x)) →
+    (∀ (i : ℕ) (x : ZInQ.Manuscript.RC.PrintsArith.Qbar),
+        Membership.mem.{0, 0} (ZInQ.Contrib.RC53Assist.FrobeniusMatch.characterField S e α i) x → Eq.{1} (z x) x) →
+      ∀ (U : Ultrafilter.{0} ℕ),
+        LE.le.{0} (↑U) Filter.cofinite.{0} →
+          Eq.{1}
+            (ZInQ.Manuscript.RC.Limits.ulimMat.{0, 0, 0} U fun x =>
+              ZInQ.Contrib.RC53Assist.Detection.tlamActionMatrix
+                (ZInQ.Contrib.RC53Assist.InnerLimitArith.gksOfQ S e z hK))
+            (HSMul.hSMul.{0, 0, 0} ((algebraMap.{0, 0} ℤ_[2] ZInQ.Manuscript.RC.Uniform.Lambda) μ) 1)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.tlam_scalar_matrix_limit' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_scalar_conjugate : ∀ (E : WeierstrassCurve.{0} ℚ)
+  [WeierstrassCurve.IsElliptic.{0} E] (z τ : ZInQ.Manuscript.RC.PrintsArith.GalQ) (μ : ℤ_[2]),
+  (∀ (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2),
+      Eq.{1} (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2) z) x) (HSMul.hSMul.{0, 0, 0} μ x)) →
+    ∀ (x : ZInQ.Manuscript.RC.PrintsArith.TateMod E 2),
+      Eq.{1}
+        (((ZInQ.Manuscript.RC.PrintsArith.tateRep E 2) (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} τ z) (Inv.inv.{0} τ)))
+          x)
+        (HSMul.hSMul.{0, 0, 0} μ x)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_scalar_conjugate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.arithmeticCommonScalar_of_dihedral : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [NumberField.IsTotallyComplex.{0} K] →
+        (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+          (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+            (α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+              [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+                (E : WeierstrassCurve.{0} ℚ) →
+                  [inst_4 : WeierstrassCurve.IsElliptic.{0} E] →
+                    [inst_5 :
+                        ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                      (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) →
+                        (U : Ultrafilter.{0} ℕ) →
+                          LE.le.{0} (↑U) Filter.cofinite.{0} →
+                            (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                              [inst_6 : Ideal.IsPrime.{0} P] →
+                                [inst_7 :
+                                    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                                  ZInQ.Contrib.RC53Assist.Detection.InducedCoefficientDictionary S e α E C U P →
+                                    (B : ℕ → IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+                                      [∀ (i : ℕ), Normal.{0, 0} ℚ ↥(B i)] →
+                                        ZInQ.Manuscript.RC.PrintsArith.SerreThm3 →
+                                          ZInQ.Manuscript.RC.PrintsArith.HasNoCM E →
+                                            Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+                                              ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields S e α C B →
+                                                ZInQ.Contrib.RC53Assist.Detection.ArithmeticCommonScalar S e α E P B
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.arithmeticCommonScalar_of_dihedral' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.serre_small_matrices : ∀ (E : WeierstrassCurve.{0} ℚ)
+  [inst : WeierstrassCurve.IsElliptic.{0} E],
+  ZInQ.Manuscript.RC.PrintsArith.SerreThm3 →
+    ZInQ.Manuscript.RC.PrintsArith.HasNoCM E →
+      ∃ n,
+        LE.le.{0} 2 n ∧
+          ∀ (X : Matrix.{0, 0, 0} (Fin 2) (Fin 2) ℤ_[2]),
+            ∃ g,
+              Eq.{1} (ZInQ.Manuscript.RC.TateWiring.tateMatrix E g)
+                (HAdd.hAdd.{0, 0, 0} 1 (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 n) X))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.serre_small_matrices' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix : (k : Type) →
+  [CommRing.{0} k] → Fin 2 → Fin 2 → Matrix.{0, 0, 0} (Fin 2) (Fin 2) k
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix' does not depend on any axioms
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.elementary_square00 : ∀ {k : Type} [inst : CommRing.{0} k] (u : k),
+  Eq.{1}
+    (HPow.hPow.{0, 0, 0}
+      (HAdd.hAdd.{0, 0, 0} 1
+        (HSMul.hSMul.{0, 0, 0} u (ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix k 0 0)))
+      2)
+    (HAdd.hAdd.{0, 0, 0} 1
+      (HSMul.hSMul.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} 2 u) (HPow.hPow.{0, 0, 0} u 2))
+        (ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix k 0 0)))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.elementary_square00' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.elementary_square01 : ∀ {k : Type} [inst : CommRing.{0} k] (u : k),
+  Eq.{1}
+    (HPow.hPow.{0, 0, 0}
+      (HAdd.hAdd.{0, 0, 0} 1
+        (HSMul.hSMul.{0, 0, 0} u (ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix k 0 1)))
+      2)
+    (HAdd.hAdd.{0, 0, 0} 1
+      (HSMul.hSMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} 2 u)
+        (ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix k 0 1)))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.elementary_square01' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.elementary_square10 : ∀ {k : Type} [inst : CommRing.{0} k] (u : k),
+  Eq.{1}
+    (HPow.hPow.{0, 0, 0}
+      (HAdd.hAdd.{0, 0, 0} 1
+        (HSMul.hSMul.{0, 0, 0} u (ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix k 1 0)))
+      2)
+    (HAdd.hAdd.{0, 0, 0} 1
+      (HSMul.hSMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} 2 u)
+        (ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix k 1 0)))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.elementary_square10' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.four_small_squares_span : ∀ {k : Type} [inst : Field.{0} k] [CharZero.{0} k]
+  (n : ℕ),
+  Eq.{1}
+    (Submodule.span.{0, 0} k
+      (Set.range.{0, 1} fun j =>
+        Matrix.vecCons.{0} 1
+          (Matrix.vecCons.{0}
+            (HPow.hPow.{0, 0, 0}
+              (HAdd.hAdd.{0, 0, 0} 1
+                (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 n)
+                  (ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix k 0 0)))
+              2)
+            (Matrix.vecCons.{0}
+              (HPow.hPow.{0, 0, 0}
+                (HAdd.hAdd.{0, 0, 0} 1
+                  (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 n)
+                    (ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix k 0 1)))
+                2)
+              (Matrix.vecCons.{0}
+                (HPow.hPow.{0, 0, 0}
+                  (HAdd.hAdd.{0, 0, 0} 1
+                    (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} 2 n)
+                      (ZInQ.Contrib.RC53Assist.Detection.Inputs.elementaryMatrix k 1 0)))
+                  2)
+                Matrix.vecEmpty.{0})))
+          j))
+    Top.top.{0}
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.four_small_squares_span' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.exists_four_quadratic_tate_span : ∀ (E : WeierstrassCurve.{0} ℚ)
+  [inst : WeierstrassCurve.IsElliptic.{0} E] {K : Type} [inst_1 : Field.{0} K] [inst_2 : NumberField.{0} K]
+  [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S),
+  ZInQ.Manuscript.RC.PrintsArith.SerreThm3 →
+    ZInQ.Manuscript.RC.PrintsArith.HasNoCM E →
+      Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+        ∀ (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_4 : Ideal.IsPrime.{0} P],
+          Eq.{1} (Ideal.height.{0} P) 1 →
+            Ne.{1} P (Ideal.span.{0} (singleton.{0, 0} 2)) →
+              ∃ f,
+                Eq.{1}
+                  (Submodule.span.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                    (Set.range.{0, 1} fun j =>
+                      Matrix.map.{0, 0, 0, 0} (ZInQ.Manuscript.RC.TateWiring.tateMatrix E ↑(f j))
+                        ⇑(algebraMap.{0, 0} ℤ_[2] (ZInQ.Manuscript.RC.Wiring.ResAt P))))
+                  Top.top.{0}
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.exists_four_quadratic_tate_span' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.tlamActionMatrix_character : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (g : ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)),
+  Eq.{1}
+    (ZInQ.Contrib.RC53Assist.Detection.tlamActionMatrix ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) g))
+    (HSMul.hSMul.{0, 0, 0} (↑(α ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) g)))
+      (Matrix.map.{0, 0, 0, 0} (ZInQ.Contrib.RC53Assist.InnerLimitArith.rhoKMatrix S E e ↑g)
+        ⇑(algebraMap.{0, 0} ℤ_[2] ZInQ.Manuscript.RC.Uniform.Lambda)))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.tlamActionMatrix_character' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.span_unit_rescaling : ∀ {k V I : Type} [inst : Field.{0} k]
+  [inst_1 : AddCommGroup.{0} V] [inst_2 : Module.{0, 0} k V] (f : I → V) (a : I → k),
+  (∀ (i : I), Ne.{1} (a i) 0) →
+    Eq.{1} (Submodule.span.{0, 0} k (Set.range.{0, 1} fun i => HSMul.hSMul.{0, 0, 0} (a i) (f i)))
+      (Submodule.span.{0, 0} k (Set.range.{0, 1} f))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.span_unit_rescaling' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.span_matrix_conjugation : ∀ {k I : Type} [inst : Field.{0} k]
+  (A B : Matrix.{0, 0, 0} (Fin 2) (Fin 2) k),
+  Eq.{1} (HMul.hMul.{0, 0, 0} A B) 1 →
+    Eq.{1} (HMul.hMul.{0, 0, 0} B A) 1 →
+      ∀ (f : I → Matrix.{0, 0, 0} (Fin 2) (Fin 2) k),
+        Eq.{1} (Submodule.span.{0, 0} k (Set.range.{0, 1} f)) Top.top.{0} →
+          Eq.{1}
+            (Submodule.span.{0, 0} k (Set.range.{0, 1} fun i => HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} A (f i)) B))
+            Top.top.{0}
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.span_matrix_conjugation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.exists_four_twisted_span : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S),
+  ZInQ.Manuscript.RC.PrintsArith.SerreThm3 →
+    ZInQ.Manuscript.RC.PrintsArith.HasNoCM E →
+      Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+        ∀ (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_6 : Ideal.IsPrime.{0} P],
+          Eq.{1} (Ideal.height.{0} P) 1 →
+            Ne.{1} P (Ideal.span.{0} (singleton.{0, 0} 2)) →
+              ∃ f,
+                Eq.{1}
+                  (Submodule.span.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                    (Set.range.{0, 1} fun j =>
+                      Matrix.map.{0, 0, 0, 0}
+                        (ZInQ.Contrib.RC53Assist.Detection.tlamActionMatrix
+                          ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) (f j)))
+                        ⇑(algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))))
+                  Top.top.{0}
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.exists_four_twisted_span' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.baseSequenceRepresentation : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+          MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+            (E : WeierstrassCurve.{0} ℚ) →
+              [WeierstrassCurve.IsElliptic.{0} E] →
+                [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                  Ultrafilter.{0} ℕ →
+                    (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                      [inst_4 : Ideal.IsPrime.{0} P] →
+                        Representation.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                          (ℕ → ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e))
+                          (Fin 2 → ZInQ.Manuscript.RC.Wiring.ResAt P)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.baseSequenceRepresentation' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.baseSequenceRepresentation_span : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) (U : Ultrafilter.{0} ℕ)
+  (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_6 : Ideal.IsPrime.{0} P],
+  ZInQ.Manuscript.RC.PrintsArith.SerreThm3 →
+    ZInQ.Manuscript.RC.PrintsArith.HasNoCM E →
+      Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+        Eq.{1} (Ideal.height.{0} P) 1 →
+          Ne.{1} P (Ideal.span.{0} (singleton.{0, 0} 2)) →
+            Eq.{1}
+              (Submodule.span.{0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                (Set.range.{0, 1} ⇑(ZInQ.Contrib.RC53Assist.Detection.Inputs.baseSequenceRepresentation S e α E U P)))
+              Top.top.{0}
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.baseSequenceRepresentation_span' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.baseConjugate : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+          ZInQ.Manuscript.RC.CoefModules.ActualConj K S →
+            Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+              ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e) →
+                ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.baseConjugate' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+          MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+            WeierstrassCurve.{0} ℚ →
+              ZInQ.Manuscript.RC.CoefModules.ActualConj K S →
+                Eq.{1} (Module.finrank.{0, 0} ℚ K) 2 →
+                  Ultrafilter.{0} ℕ → (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) → [Ideal.IsPrime.{0} P] → Type
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_precision_character_limit : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] [NumberField.IsTotallyComplex.{0} K]
+  (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ) [inst_4 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_5 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (U : Ultrafilter.{0} ℕ) (g : ℕ → ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)),
+  (∀ (i : ℕ) (x : ZInQ.Manuscript.RC.PrintsArith.Qbar),
+      Membership.mem.{0, 0} (ZInQ.Manuscript.RC.GlueSweep.Tate.torsField E i) x → Eq.{1} (↑(g i) x) x) →
+    LE.le.{0} (↑U) Filter.cofinite.{0} →
+      Eq.{1}
+        (ZInQ.Manuscript.RC.Limits.ulimMat.{0, 0, 0} U fun i =>
+          ZInQ.Contrib.RC53Assist.Detection.tlamActionMatrix
+            ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) (g i)))
+        (HSMul.hSMul.{0, 0, 0}
+          (ZInQ.Manuscript.RC.Limits.ulim.{0} U fun i =>
+            ↑(α ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) (g i))))
+          1)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.tate_precision_character_limit' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.genuineCoefficientSpanWitness : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [inst_2 : NumberField.IsTotallyComplex.{0} K] →
+        (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+          (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+            (α :
+                MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                  (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+              [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+                (E : WeierstrassCurve.{0} ℚ) →
+                  [inst_4 : WeierstrassCurve.IsElliptic.{0} E] →
+                    [inst_5 :
+                        ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                      (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) →
+                        (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2) →
+                          (U : Ultrafilter.{0} ℕ) →
+                            (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                              [inst_6 : Ideal.IsPrime.{0} P] →
+                                LE.le.{0} (↑U) Filter.cofinite.{0} →
+                                  Eq.{1} (Ideal.height.{0} P) 1 →
+                                    Ne.{1} P (Ideal.span.{0} (singleton.{0, 0} 2)) →
+                                      ZInQ.Manuscript.RC.PrintsArith.SerreThm3 →
+                                        ZInQ.Manuscript.RC.PrintsArith.HasNoCM E →
+                                          ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput S e α E C
+                                              hdegree U P →
+                                            ZInQ.Contrib.RC53Assist.Detection.CoefficientSpanWitness P
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.genuineCoefficientSpanWitness' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar →
+          (α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+            [ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              (E : WeierstrassCurve.{0} ℚ) →
+                [WeierstrassCurve.IsElliptic.{0} E] →
+                  [ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    Ultrafilter.{0} ℕ →
+                      (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                        [inst : Ideal.IsPrime.{0} P] →
+                          [DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            ℕ →
+                              ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P) →
+                                Type
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.retainedEvaluation_of_embedding : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+          (α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              (E : WeierstrassCurve.{0} ℚ) →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    (U : Ultrafilter.{0} ℕ) →
+                      (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q →
+                                  ZInQ.Contrib.RC53Assist.Detection.RetainedEvaluation S E α e U P n Q
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.retainedEvaluation_of_embedding' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.exists_injective_actual_h1_map : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K)))
+  (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar)
+  (α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda))
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] (E : WeierstrassCurve.{0} ℚ)
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  (U : Ultrafilter.{0} ℕ) (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  [inst_7 :
+    SMulCommClass.{0, 0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Manuscript.RC.Wiring.ResAt P)
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (D : ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q),
+  ∃ F,
+    Function.Injective.{1, 1} ⇑F ∧
+      ∀ (a : ↥(LinearMap.ker.{0, 0, 0, 0} (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 1 2 ⋯))),
+        Eq.{1} (F ((ZInQ.Manuscript.RC.SelmerComplex.clsAt Q 1 2 ⋯) a))
+          ((CategoryTheory.ConcreteCategory.hom.{0, 0, 1, 0}
+              (groupCohomology.H1π.{0}
+                (Rep.ofDistribMulAction.{0, 0, 0} (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                  ZInQ.Contrib.RC53Assist.Detection.RationalSequences (ZInQ.Contrib.RC53Assist.Detection.FibrePair P))))
+            (groupCohomology.cocyclesOfIsCocycle₁.{0} ⋯))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.exists_injective_actual_h1_map' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedBoundaryReflection : (P :
+    Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+  [inst : Ideal.IsPrime.{0} P] →
+    [DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+          (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+      {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+        LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+            (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+            (ZInQ.Contrib.RC53Assist.Detection.RationalSequences → ZInQ.Contrib.RC53Assist.Detection.FibrePair P) →
+          Prop
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedBoundaryReflection' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.retainedEvaluation_of_boundary_reflection : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+        (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+          (α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              (E : WeierstrassCurve.{0} ℚ) →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    (U : Ultrafilter.{0} ℕ) →
+                      (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              (Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)) →
+                                (original :
+                                    Fin n →
+                                      ℕ →
+                                        ↑(HomologicalComplex.X.{0, 1, 0}
+                                            (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                                              ZInQ.Manuscript.RC.Uniform.Lambda
+                                              (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                              (ZInQ.Manuscript.RC.LambdaCoef.TLam K S
+                                                (WeierstrassCurve.baseChange.{0, 0} E K) α))
+                                            1)) →
+                                  (coordinates :
+                                      LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                        (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+                                        (Fin n → ZInQ.Manuscript.RC.Wiring.ResAt P)) →
+                                    (one :
+                                        LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                          (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+                                          (ZInQ.Contrib.RC53Assist.Detection.RationalSequences →
+                                            ZInQ.Contrib.RC53Assist.Detection.FibrePair P)) →
+                                      (two :
+                                          LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                            (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 2))
+                                            (Prod.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                                ZInQ.Contrib.RC53Assist.Detection.RationalSequences →
+                                              ZInQ.Contrib.RC53Assist.Detection.FibrePair P)) →
+                                        (∀ (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+                                            (g h : ZInQ.Contrib.RC53Assist.Detection.RationalSequences),
+                                            Eq.{1}
+                                              (two ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 1 2 ⋯) x)
+                                                (Prod.mk.{0, 0} g h))
+                                              (HAdd.hAdd.{0, 0, 0}
+                                                (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} g (one x h))
+                                                  (one x (HMul.hMul.{0, 0, 0} g h)))
+                                                (one x g))) →
+                                          ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedBoundaryReflection P one →
+                                            (∀ (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+                                                (g : ℕ → ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)),
+                                                Eq.{1}
+                                                  (one x
+                                                      ((ZInQ.Contrib.RC53Assist.Detection.baseSequenceInclusion e) g)).1
+                                                  (ZInQ.Contrib.RC53Assist.Detection.basisValue P U original
+                                                    ((ZInQ.Contrib.RC53Assist.Detection.baseSequenceRestriction S e) g)
+                                                    (coordinates x))) →
+                                              ZInQ.Contrib.RC53Assist.Detection.RetainedEvaluation S E α e U P n Q
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.retainedEvaluation_of_boundary_reflection' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.detection_with_constructed_inputs : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      [inst_2 : NumberField.IsTotallyComplex.{0} K] →
+        (S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))) →
+          (hS : Set.Finite.{0} S) →
+            (e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+              (α :
+                  MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                    (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)) →
+                [inst_3 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+                  (E : WeierstrassCurve.{0} ℚ) →
+                    [inst_4 : WeierstrassCurve.IsElliptic.{0} E] →
+                      [inst_5 :
+                          ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S
+                            (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                        (C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S) →
+                          (hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2) →
+                            (U : Ultrafilter.{0} ℕ) →
+                              LE.le.{0} (↑U) Filter.cofinite.{0} →
+                                (P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda) →
+                                  [inst_6 : Ideal.IsPrime.{0} P] →
+                                    Eq.{1} (Ideal.height.{0} P) 1 →
+                                      Ne.{1} P (Ideal.span.{0} (singleton.{0, 0} 2)) →
+                                        ZInQ.Manuscript.RC.PrintsArith.SerreThm3 →
+                                          ZInQ.Manuscript.RC.PrintsArith.HasNoCM E →
+                                            (B : ℕ → IntermediateField.{0, 0} ℚ ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+                                              [∀ (i : ℕ), Normal.{0, 0} ℚ ↥(B i)] →
+                                                [inst_8 : ∀ (i : ℕ), FiniteDimensional.{0, 0} ℚ ↥(B i)] →
+                                                  ZInQ.Contrib.RC53Assist.Detection.Inputs.DihedralKernelFields S e α C
+                                                      B →
+                                                    ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput S
+                                                        e α E C hdegree U P →
+                                                      (F :
+                                                          ℕ →
+                                                            IntermediateField.{0, 0} ℚ
+                                                              ZInQ.Manuscript.RC.PrintsArith.Qbar) →
+                                                        [inst_9 : ∀ (i : ℕ), FiniteDimensional.{0, 0} ℚ ↥(F i)] →
+                                                          (excl : ℕ → Finset.{0} ℕ) →
+                                                            {n : ℕ} →
+                                                              (Q :
+                                                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)) →
+                                                                [FiniteDimensional.{0, 0}
+                                                                      (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                                                                      ↑(HomologicalComplex.homology.{0, 1, 0}
+                                                                          (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                                                            Q)
+                                                                          1)] →
+                                                                  (D :
+                                                                      ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding
+                                                                        S e α E U P n Q) →
+                                                                    (a :
+                                                                        ↥(LinearMap.ker.{0, 0, 0, 0}
+                                                                            (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0}
+                                                                              Q 1 2 ⋯))) →
+                                                                      Ne.{1}
+                                                                          ((ZInQ.Manuscript.RC.SelmerComplex.clsAt Q 1 2
+                                                                              ⋯)
+                                                                            a)
+                                                                          0 →
+                                                                        LT.lt.{0} 1
+                                                                            (Module.finrank.{0, 0}
+                                                                              (ZInQ.Manuscript.RC.Wiring.ResAt P)
+                                                                              ↑(HomologicalComplex.homology.{0, 1, 0}
+                                                                                  (ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.toCC.{0}
+                                                                                    Q)
+                                                                                  1)) →
+                                                                          ZInQ.Contrib.RC53Assist.Detection.ArithmeticDetection
+                                                                            S hS e α E C U P B F excl hdegree Q
+                                                                            (ZInQ.Contrib.RC53Assist.Detection.Inputs.retainedEvaluation_of_embedding
+                                                                              S e α E U P D)
+                                                                            a
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.detection_with_constructed_inputs' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput.element : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            {E : WeierstrassCurve.{0} ℚ} →
+              {C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S} →
+                {hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2} →
+                  {U : Ultrafilter.{0} ℕ} →
+                    {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                      [inst_2 : Ideal.IsPrime.{0} P] →
+                        ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput S e α E C hdegree U P →
+                          ℕ → ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput.element' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput.torsion : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  {E : WeierstrassCurve.{0} ℚ} {C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2} {U : Ultrafilter.{0} ℕ}
+  {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_2 : Ideal.IsPrime.{0} P]
+  (self : ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput S e α E C hdegree U P) (i : ℕ)
+  (x : ZInQ.Manuscript.RC.PrintsArith.Qbar),
+  Membership.mem.{0, 0} (ZInQ.Manuscript.RC.GlueSweep.Tate.torsField E i) x → Eq.{1} (↑(self.element i) x) x
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput.torsion' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput.inverse : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  {E : WeierstrassCurve.{0} ℚ} {C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2} {U : Ultrafilter.{0} ℕ}
+  {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_2 : Ideal.IsPrime.{0} P]
+  (self : ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput S e α E C hdegree U P) (i : ℕ),
+  Eq.{1}
+    (α
+      ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e)
+        (ZInQ.Contrib.RC53Assist.Detection.Inputs.baseConjugate S e C hdegree (self.element i))))
+    (Inv.inv.{0} (α ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) (self.element i))))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput.inverse' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput.nonquadratic : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  {E : WeierstrassCurve.{0} ℚ} {C : ZInQ.Manuscript.RC.CoefModules.ActualConj K S}
+  {hdegree : Eq.{1} (Module.finrank.{0, 0} ℚ K) 2} {U : Ultrafilter.{0} ℕ}
+  {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_2 : Ideal.IsPrime.{0} P]
+  (self : ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput S e α E C hdegree U P),
+  Ne.{1}
+    (HPow.hPow.{0, 0, 0}
+      ((algebraMap.{0, 0} ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.Wiring.ResAt P))
+        (ZInQ.Manuscript.RC.Limits.ulim.{0} U fun i =>
+          ↑(α ((ZInQ.Contrib.RC53Assist.Detection.baseRestriction S e) (self.element i)))))
+      2)
+    1
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.NonquadraticInertiaInput.nonquadratic' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.original : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q →
+                                  Fin n →
+                                    ℕ →
+                                      ↑(HomologicalComplex.X.{0, 1, 0}
+                                          (ZInQ.Manuscript.RC.SelmerComplex.contCochains.{0}
+                                            ZInQ.Manuscript.RC.Uniform.Lambda (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                                            (ZInQ.Manuscript.RC.LambdaCoef.TLam K S
+                                              (WeierstrassCurve.baseChange.{0, 0} E K) α))
+                                          1)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.original' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.coordinates : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q →
+                                  LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                    (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+                                    (Fin n → ZInQ.Manuscript.RC.Wiring.ResAt P)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.coordinates' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.zero : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q →
+                                  LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                    (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 0))
+                                    (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.one : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q →
+                                  LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                    (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+                                    (ZInQ.Contrib.RC53Assist.Detection.RationalSequences →
+                                      ZInQ.Contrib.RC53Assist.Detection.FibrePair P)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.two : {K : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : NumberField.{0} K] →
+      {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))} →
+        {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar} →
+          {α :
+              MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S)
+                (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)} →
+            [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] →
+              {E : WeierstrassCurve.{0} ℚ} →
+                [inst_3 : WeierstrassCurve.IsElliptic.{0} E] →
+                  [inst_4 :
+                      ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)] →
+                    {U : Ultrafilter.{0} ℕ} →
+                      {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} →
+                        [inst_5 : Ideal.IsPrime.{0} P] →
+                          [inst_6 :
+                              DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)] →
+                            {n : ℕ} →
+                              {Q :
+                                  ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0}
+                                    (ZInQ.Manuscript.RC.Wiring.ResAt P)} →
+                                ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q →
+                                  LinearMap.{0, 0, 0, 0} (RingHom.id.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P))
+                                    (↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 2))
+                                    (Prod.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+                                        ZInQ.Contrib.RC53Assist.Detection.RationalSequences →
+                                      ZInQ.Contrib.RC53Assist.Detection.FibrePair P)
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.two' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.differential_zero : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q)
+  (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 0))
+  (g : ZInQ.Contrib.RC53Assist.Detection.RationalSequences),
+  Eq.{1} (self.one ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 0 1 ⋯) x) g)
+    (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} g (self.zero x)) (self.zero x))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.differential_zero' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.differential_one : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q)
+  (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+  (g h : ZInQ.Contrib.RC53Assist.Detection.RationalSequences),
+  Eq.{1} (self.two ((ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.d.{0} Q 1 2 ⋯) x) (Prod.mk.{0, 0} g h))
+    (HAdd.hAdd.{0, 0, 0}
+      (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} g (self.one x h)) (self.one x (HMul.hMul.{0, 0, 0} g h)))
+      (self.one x g))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.differential_one' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.zero_surjective : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q),
+  Function.Surjective.{1, 1} ⇑self.zero
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.zero_surjective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.one_injective : ∀ {K : Type} [inst : Field.{0} K]
+  [inst_1 : NumberField.{0} K] {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q),
+  Function.Injective.{1, 1} ⇑self.one
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.one_injective' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]
+@ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.original_projection : ∀ {K : Type}
+  [inst : Field.{0} K] [inst_1 : NumberField.{0} K]
+  {S : Set.{0} (IsDedekindDomain.HeightOneSpectrum.{0} (NumberField.RingOfIntegers.{0} K))}
+  {e : AlgEquiv.{0, 0, 0} ℚ (AlgebraicClosure.{0} K) ZInQ.Manuscript.RC.PrintsArith.Qbar}
+  {α : MonoidHom.{0, 0} (ZInQ.Manuscript.RC.SelmerComplex.GKS K S) (Units.{0} ZInQ.Manuscript.RC.Uniform.Lambda)}
+  [inst_2 : ZInQ.Manuscript.RC.LambdaCoef.IsContChar α] {E : WeierstrassCurve.{0} ℚ}
+  [inst_3 : WeierstrassCurve.IsElliptic.{0} E]
+  [inst_4 : ZInQ.Manuscript.RC.LambdaCoef.HasFullTwoTorsion K S (WeierstrassCurve.baseChange.{0, 0} E K)]
+  {U : Ultrafilter.{0} ℕ} {P : Ideal.{0} ZInQ.Manuscript.RC.Uniform.Lambda} [inst_5 : Ideal.IsPrime.{0} P]
+  [inst_6 :
+    DistribMulAction.{0, 0} ZInQ.Contrib.RC53Assist.Detection.RationalSequences
+      (ZInQ.Contrib.RC53Assist.Detection.FibrePair P)]
+  {n : ℕ} {Q : ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.{0} (ZInQ.Manuscript.RC.Wiring.ResAt P)}
+  (self : ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding S e α E U P n Q)
+  (x : ↑(ZInQ.Contrib.CloudB3RC53.PairedFunctional.GCx.X.{0} Q 1))
+  (g : ℕ → ↥(ZInQ.Contrib.RC53Assist.Detection.rationalBaseGroup e)),
+  Eq.{1} (self.one x ((ZInQ.Contrib.RC53Assist.Detection.baseSequenceInclusion e) g)).1
+    (ZInQ.Contrib.RC53Assist.Detection.basisValue P U self.original
+      ((ZInQ.Contrib.RC53Assist.Detection.baseSequenceRestriction S e) g) (self.coordinates x))
+'ZInQ.Contrib.RC53Assist.Detection.Inputs.RetainedCochainEmbedding.original_projection' depends on axioms: [propext,
+ Classical.choice.{u},
+ Quot.sound.{u}]

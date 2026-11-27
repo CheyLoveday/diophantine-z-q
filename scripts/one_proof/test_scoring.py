@@ -1,9 +1,11 @@
-"""Unit tests of the LEAF/GLUE scoring rule (ruling 2026-11-17: unread and unverified rows count as glue).
+"""Unit tests of render_open.py: the LEAF/GLUE scoring rule (ruling 2026-11-17: unread and unverified rows count as
+glue), reading the tables as raw text, claims.tsv rows of hypotheses that are no longer open, and volatile.tsv rows.
 
 Run: python3 -I scripts/one_proof/test_scoring.py   (or pytest scripts/one_proof/test_scoring.py)
 """
 import os
 import sys
+import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import render_open  # noqa: E402
@@ -34,6 +36,95 @@ def test_read_row_keeps_leaf():
     assert not render_open.must_be_glue(flag)
     assert not [p for p in render_open.kinds_row_problems(row(flag, flag_class='note'), [], set()) if 'counts GLUE' in p]
 
+
+ISSUES = {'claims_issue': 'o/r#14', 'statement_checks_issue': '', 'packet_issues': {}, 'log_issue': 'o/r#3'}
+
+
+def claim(field, hold='held', url='https://github.com/o/r/pull/9'):
+    return dict(field=field, task='', status='', since='2026-11-17', issue='', holder_kind='project',
+                public_holder='project', claim_url=url, hold=hold)
+
+
+def board(claims_rows=(), volatile=()):
+    """What render_open.validate and render read: open rows a (project interest), b and c (packet R2, unread) and
+    the manuscript hypothesis hPC; volatile is a list of (field, note)."""
+    kinds_rows = [dict(row('reading: p. 1', flag_class='note'), field='a', label='project-interest', source='Src'),
+                  dict(row('unread: locator', 'GLUE', 'GLUE'), field='b', packet='R2', source='SGA 3'),
+                  dict(row('unread: locator', 'GLUE', 'GLUE'), field='c', packet='R2', source='EGA IV'),
+                  dict(row('reading: p. 2', flag_class='note'), field='hPC', bundle='frozenTarget', source='Thm')]
+    return dict(hyps=[dict(field=r['field'], bundle=r['bundle'], type='True', docstring='') for r in kinds_rows],
+                kinds={r['field']: r for r in kinds_rows}, kinds_rows=kinds_rows, claims_rows=list(claims_rows),
+                reviews=[], credits=[], volatile={f: dict(field=f, note=n, since='2026-11-18') for f, n in volatile},
+                issues=dict(ISSUES))
+
+
+def test_tables_are_read_as_raw_text():
+    # a cell that starts with a double quote keeps it and does not swallow the rows after it
+    with tempfile.TemporaryDirectory() as tmp:
+        vol, cl = os.path.join(tmp, 'volatile.tsv'), os.path.join(tmp, 'claims.tsv')
+        with open(vol, 'w') as fh:
+            fh.write('field\tnote\tsince\n'
+                     'fooA\t"renamed by fold-x\t2026-11-18\n'
+                     'fooB\tremoved by fold-x\t2026-11-18\n')
+        with open(cl, 'w') as fh:
+            fh.write('field\tstatus\thold\n'
+                     'x1\t"Lemma 2 fails\treleased\n'
+                     'x2\tworking on it\theld\n')
+        vrows, crows = render_open.read_tsv(vol), render_open.read_tsv(cl)
+    assert [(r['field'], r['note']) for r in vrows] == [('fooA', '"renamed by fold-x'), ('fooB', 'removed by fold-x')]
+    assert [(r['field'], r['hold']) for r in crows] == [('x1', 'released'), ('x2', 'held')]
+
+
+def test_claims_row_of_a_closed_field_is_skipped():
+    m = board([claim('dischargedX', url='https://github.com/o/r/tree/wip/x')])
+    assert render_open.validate(m) == []
+    open_md, _, _ = render_open.render(m)
+    assert 'dischargedX' not in open_md
+    assert '\nNothing is held.\n' in open_md
+    # the other claims.tsv checks still apply to such a row
+    assert any('hold must be one of' in p for p in render_open.validate(board([claim('dischargedX', hold='bogus')])))
+
+
+def test_volatile_rows_are_not_offered():
+    m = board([claim('hPC')], volatile=[('a', 'renamed by fold-x'), ('c', ''), ('hPC', '')])
+    assert render_open.validate(m) == []
+    open_md, pages, _ = render_open.render(m)
+    # a project-interest row and an open row are no longer offered; a held row keeps its holder
+    assert '* Status: may change soon, not offered: renamed by fold-x.' in open_md
+    assert '| 0 | may change soon, not offered: renamed by fold-x |' in open_md
+    assert '* Status: may change soon, not offered.' in open_md
+    assert '* Status: held by the project ([claim](https://github.com/o/r/pull/9)) (may change soon).' in open_md
+    assert '* Status: open.' in open_md
+    # the volatile project-interest row's label is shown without its offer
+    assert 'label project-interest (project interest, free to claim)' not in open_md
+    assert 'label project-interest' in open_md
+    # the Packets lists mark volatile rows, and pages-wanted.md leaves them out
+    assert '* [`c`](#c) (GLUE; unread) (may change soon): EGA IV' in open_md
+    assert '* [`b`](#b) (GLUE; unread): SGA 3' in open_md
+    assert '[`b`](OPEN.md#b)' in pages and '[`c`](OPEN.md#c)' not in pages
+
+
+
+def review(field, commit, edition, quote, evidence='AI-READ'):
+    return dict(field=field, commit=commit, reader='AI review', known_reader='', edition=edition, page='1',
+                display='', copy='scan', quote=quote, verdict='YES', not_read='', ai_use='whole reading by AI',
+                relayed_by='', url='', ruling='', ruled_by='', evidence=evidence)
+
+
+def test_real_text_rule():
+    """An AI-READ row names the copy read (sha256) and quotes it (2026-11-26); legacy rows are only noted."""
+    m = board()
+    m['reviews'] = [review('a', 'abc1234', 'J. 1 (2000), scan sha256 0123abcd', '"the printed words"'),
+                    review('b', 'abc1234', 'J. 1 (2000), scan', '"the printed words"'),
+                    review('c', 'abc1234', 'J. 1 (2000), scan sha256 0123abcd', ''),
+                    review('a', 'abc1234', 'J. 1 (2000), scan', '', evidence='HUMAN-READ')]
+    probs = [p for p in render_open.validate(m) if 'real-text rule' in p]
+    assert len(probs) == 2 and 'b: ' in probs[0] and 'sha256' in probs[0] and 'c: ' in probs[1], probs
+    legacy = sorted(render_open.LEGACY_AI_READS)[0]
+    assert render_open.real_text_missing(review(legacy[0], legacy[1] + ' (re-read)', 'scan', ''))
+    m['reviews'] = [review('a', legacy[1] + ' (re-read)', 'scan', '')]
+    m['reviews'][0]['field'] = legacy[0]
+    assert not [p for p in render_open.validate(m) if 'real-text rule' in p]
 
 if __name__ == '__main__':
     for name, fn in list(globals().items()):

@@ -1,0 +1,24 @@
+DISCHARGES [shimuraThm1Af] by ShimuraSteps.shimuraThm1Af_of_printed
+  still assumes: [ShimuraSteps.ShimuraThm1AsPrinted,
+ ShimuraSteps.ShimuraHeckeRelations,
+ ShimuraSteps.SameDimSurjectiveFinite]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [shimuraThm1Af] by ShimuraSteps.shimuraThm1Af_of_printed'
+  still assumes: [ShimuraSteps.ShimuraThm1AsPrinted, ShimuraSteps.ShimuraHeckeRelations]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [shimuraThm1Af] by ShimuraSteps.shimuraThm1Af_of_printed_closed
+  still assumes: [ShimuraSteps.ShimuraThm1AsPrinted]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [shimuraThm1Af] by ShimuraSteps.shimuraThm1Af_of_printed_pointDictionary
+  still assumes: [ShimuraSteps.ShimuraThm1AsPrinted, ShimuraSteps.PointDictionary]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [shimuraThm1Af] by ShimuraSteps.shimuraThm1Af_of_split
+  still assumes: [ShimuraSteps.ShimuraThm1Printed,
+ ShimuraSteps.ShimuraQuotientByC,
+ ShimuraSteps.ShimuraHeckeRelations,
+ ShimuraSteps.SameDimSurjectiveFinite]
+  axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [shimuraThm1Af] by ShimuraSteps.shimuraThm1Af_of_split_closed
+  still assumes: [ShimuraSteps.ShimuraThm1Printed, ShimuraSteps.ShimuraQuotientByC]
+  axioms: [propext, Classical.choice, Quot.sound]
+#discharges: 1 open hypotheses, 2148 theorems checked, 6 discharge one

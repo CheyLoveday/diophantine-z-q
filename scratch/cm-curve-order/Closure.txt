@@ -1,0 +1,12 @@
+ 19:30:49 up 4 days,  3:09,  6 users,  load average: 3.88, 4.38, 4.02
+               total        used        free      shared  buff/cache   available
+Mem:             235          79          23           0         134         156
+Swap:            255          63         192
+present: HDec.CMBranch.FibreSplit.cmCurveOrder324_of
+present: HDec.CMBranch.FibreSplit.cmFibreSplit_of_curveOrder324
+present: ZInQ.BostGR9.GaudronRemondSec9LowerAnSS
+absent: HDec.HSyn.OpenResearchLeaves58CM.cmFibreSplit
+absent: HDec.CMBranch.FibreSplit.cmCurveOrder_of
+absent: GR512Bridge.GonzalezRotgerThm512X6RCF
+absent: LeafQM.AV.R5ptProps
+all 30 research fields are read

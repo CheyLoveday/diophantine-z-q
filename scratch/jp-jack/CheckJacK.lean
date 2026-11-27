@@ -1,0 +1,4 @@
+import ZInQKernel.Contrib.OneProof.JavanpeykarJacK
+
+#print axioms JavanpeykarJacK.JavanpeykarThm111JacK
+#print axioms JavanpeykarJacK.javanpeykarThm111JacK_of_an

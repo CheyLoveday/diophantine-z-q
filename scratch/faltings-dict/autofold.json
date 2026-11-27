@@ -1,0 +1,23 @@
+{
+  "name": "faltings-dict",
+  "imports": [
+    "ZInQKernel.Contrib.OneProof.FaltingsRestate",
+    "ZInQKernel.Contrib.OneProof.FaltingsDict"
+  ],
+  "discharges": [
+    {
+      "field": "faltingsSemistableHeightBC",
+      "proof": "_root_.ZInQ.FaltingsRestate.faltingsSemistableHeightBC_of_faltingsLemma1 {n}.faltingsLemma1DVR {n}.silverbergZarhinThm35 {n}.neronSchemeExtensionDedekind",
+      "leaves": [
+        {
+          "name": "faltingsLemma1DVR",
+          "type": "_root_.ZInQ.FaltingsRestate.FaltingsLemma1DVR",
+          "doc": "Faltings 1983, p. 350, Lemma 1: a homomorphism over the generic fibre of two semiabelian schemes with abelian generic fibres extends uniquely as a homomorphism. S = Spec O (normal), U = its generic point (dense open); semiabelian fibrewise over residue fields, torus geometric (not required split), as in the Def. on p. 350. The bridge faltingsLemma1DVR_models gives the printed fibre conditions for both models by isSemiabelianModelO_imp_faltingsDef, including the torus extension on the whole closed fibre, the common finite fibre dimension, and commutativity. The theorem jO_genericOpen identifies the dense open, and faltingsLemma1DVR_of_printed checks the specialization.",
+          "kind": "published",
+          "flag": "AI page read by the reading desk: p. 350, Def. and Lemma 1; DVR reading checked by closedFibre_hasTorusExtension, fibre_dims, isCommMonObj_groupModelO, jO_genericOpen, and faltingsLemma1DVR_of_printed",
+          "source": "Faltings, Invent. Math. 73 (1983), 349–366, p. 350, Lemma 1; paper cited in diophantine_zq.tex L621 and L733 and listed at L11084–11086"
+        }
+      ]
+    }
+  ]
+}

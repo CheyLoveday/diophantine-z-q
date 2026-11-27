@@ -26,10 +26,11 @@ open scoped TensorProduct
 
 noncomputable section
 
-/-- **GLUE (standard; Fontaine's `t`).** `B_dR^+` has a uniformizer `t` (`𝔪 = (t)`) on which `G_{ℚ_p}` acts by
+/-- **Fontaine's `t` (proved: `DeRhamScholze.TT.fontaineTwistT`).** `B_dR^+` has a uniformizer `t` (`𝔪 = (t)`) on which `G_{ℚ_p}` acts by
 the cyclotomic character: `σ(t) = χ(σ) t`. Fontaine's `t = log [ε]` (Fontaine, Astérisque 223 (1994), Exp. II,
 §1.5; Brinon–Conrad, CMI notes, §4.3; numbers UNVERIFIED). In the tree: `TDict.tt` is `log [ε]` and
-`TDict.tt_eq_varpi_mul_unit` makes it a uniformizer; the Galois equivariance is not proved there. -/
+`TDict.tt_eq_varpi_mul_unit` makes it a uniformizer; the Galois equivariance is proved in
+`DeRhamScholze.TT.fontaineTwistT`, and the transformation law for `TDict.tt` is `DeRhamPrint.BdRT.bdrPlusMap_tt`. -/
 def FontaineTwistT : Prop :=
   ∀ (p : ℕ) [Fact p.Prime], ∃ t : BDeRhamPlus 𝓞_ℂ_[p] p,
     IsLocalRing.maximalIdeal (BDeRhamPlus 𝓞_ℂ_[p] p) = Ideal.span {t} ∧
