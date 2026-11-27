@@ -64,7 +64,8 @@ Colmez fixes a proper model `𝒳` of `X` over `O_K` and writes `u_n ∈ 𝒳(O_
 construction, 𝒳(O_{C_p}) s'identifie à X(C_p)" (p. 638). The theorem's statement depends only on
 `X(C_p)` and its Galois action, and the proof shows the pairing does not depend on `𝒳` (p. 640). The
 Lean rows build `T_p` from `A(ℂ_p)` (`TCp`). The step from `𝒳(O_{C_p})` to `X(C_p)` is therefore
-the one remaining presupposition. It is not formalized here; the lead is to rule on it.
+the one remaining presupposition. It is not formalized here; it is proposed for a ruling by Jack or
+the maintainer.
 
 The following Lean statement would discharge it. It is schematic and not compiled. Here
 `O_F := integralClosure ℤ_[p] F`, with `F` a `ℤ_p`-algebra through `ℚ_p`, and `ι : O_F →+* 𝓞_ℂ_[p]`
