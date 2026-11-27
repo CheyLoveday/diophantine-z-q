@@ -46,3 +46,13 @@ Base: 96f3a26b70770167ba4e9005a601a737dc618133 (confirmed `git rev-parse HEAD`).
   JDescent5 `abVar_period_abscissa_even`, `abVar_evaluatedPole_of_order`, `abVar_period_mem_punctured` give, for
   any IsPeriodAt-uniformization (Λ,Φ,s) of E at σ|K, u ≠ 0 with x(Φ(sz)) = u²℘(z), y(Φ(sz)) = u³℘'(z)/2 off the
   lattice (CM hypotheses of CMPeriodShortCoordinatesDoublePole unused in its proof).
+
+## BcPt.lean compiles. VERIFIED
+- `ptL E σ : CPts (E.baseChange L) σ ≃* CPts E (σ.comp (algebraMap K L))` (bcPt, Ω = ℂ), `ptL_left`,
+  `cEvalAt_ptL`, `cDom_ptL`, `isUniformization_ptL`.
+
+## Step 1 — Periods.lean compiles. VERIFIED
+- `isAnalyticUniformization_theta`, `homLinearLift` (= homLinearLift_of_corr (h69 uniformizationLeafAll_proof gagaMorphism_proof)),
+  `not_forall_mem_of_discrete`,
+- `period_comparison hdim M σ hΦ hE : ∃ k ≠ 0, (∀ z, ptL E σ (chi M.model (Φ z)) = ΦE (k • z)) ∧ (∀ z, z ∈ M.hodge.periods σ ↔ k • z ∈ ΛE)`
+  by T35 → theta → analyticUniformizationUnique_of_t35 → ptL → HomLinearLift(f = id).
