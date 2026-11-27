@@ -3626,3 +3626,16 @@ import ZInQKernel.Contrib.OneProof.ColmezTiltIso.Theta
 import ZInQKernel.Contrib.OneProof.ColmezTiltIso.TpShape
 import ZInQKernel.Contrib.OneProof.BstRegular.Abstract
 import ZInQKernel.Contrib.OneProof.BstRegular.Bst
+import ZInQKernel.Contrib.OneProof.CMHeight62.Analysis
+import ZInQKernel.Contrib.OneProof.CMHeight62.Archimedean
+import ZInQKernel.Contrib.OneProof.CMHeight62.Assembly
+import ZInQKernel.Contrib.OneProof.CMHeight62.BcPt
+import ZInQKernel.Contrib.OneProof.CMHeight62.Covolume
+import ZInQKernel.Contrib.OneProof.CMHeight62.Discriminant
+import ZInQKernel.Contrib.OneProof.CMHeight62.Eval
+import ZInQKernel.Contrib.OneProof.CMHeight62.Final
+import ZInQKernel.Contrib.OneProof.CMHeight62.Germ
+import ZInQKernel.Contrib.OneProof.CMHeight62.Model
+import ZInQKernel.Contrib.OneProof.CMHeight62.Periods
+import ZInQKernel.Contrib.OneProof.CMHeight62.Short
+import ZInQKernel.Contrib.OneProof.CMHeight62.ShortModel
