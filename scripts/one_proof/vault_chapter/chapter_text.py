@@ -71,6 +71,15 @@ of an abelian variety by a torus, over the residue field, over its algebraic clo
 as each statement that uses it says. This is Faltings' normalization $h_F$; Deligne's is
 $h_D=h_F+\frac g2\log\pi$. The height and semistable reduction enter through the project's own
 definitions; that these agree with the published ones is a judgement of AI reviews.
+
+Two statements below take instead the height of Gaudron and Rémond. For a number field $L\supseteq K$,
+a *semi-abelian model* of $A_L$ is a smooth separated group scheme of finite type over
+$\mathcal O_L$, with an isomorphism of group schemes from its generic fibre to $A_L$, whose fibre at
+every maximal ideal is connected and an extension of an abelian variety by a torus, over the residue
+field and over its algebraic closure; its height is built in the same way from its invariant
+differentials of top degree along the zero section. By the constructibility statement of EGA IV
+(9.7.7) and a proof in Lean, every stable Faltings height in the sense above is such a height; the
+converse is not proved here.
 """),
     dict(dir='p-adic-hodge', title='p-adic Hodge theory', intro=r"""
 Let $p$ be a prime, $\overline{\mathbb Q}_p$ an algebraic closure of $\mathbb Q_p$, $\mathbb C_p$ its
@@ -241,59 +250,102 @@ Ann. Inst. Fourier 45 (1995), 403–420, Theorem 3.4, pp. 405–406 (proof: SGA 
 Théorème 3.6, p. 351), with semistable reduction as defined in §3, p. 405.
 """,
     ),
-    'gaudronRemondSec9LowerAnSS': dict(
-        group='heights', slug='bost-lower-bound',
-        title='The lower bound for the Faltings height',
-        anchor='Bost lower bound',
+    'egaIV_9_7_7_OL': dict(
+        group='neron-models', slug='ega-geometrically-connected-fibres',
+        title='The locus of geometrically connected fibres',
+        anchor='EGA IV 9.7.7',
         statement=r"""
-The *lower bound statement* is the following assertion. Let $A$ be an abelian variety of dimension
-$g$ over a number field $K$. Then every stable Faltings height $h_F(A)$ of $A$, in Faltings'
-normalization, satisfies $h_F(A)\ge-\tfrac32\,g$. Here a *stable Faltings height* of $A$ is a real
-number of the form
-$$h_F(A)=\frac1{[L:\mathbb Q]}\Bigl(\log\#\bigl(\omega/\mathcal O_L\eta\bigr)-\frac12\sum_{\tau:L\to\mathbb C}\log\|\eta\|_\tau^2\Bigr),$$
-where $L\supseteq K$ is a number field, $\mathcal N$ is a Néron model of $A_L$ over $\mathcal O_L$
-with semistable reduction at every maximal ideal of $\mathcal O_L$ (the identity component of the
-special fibre is an extension of an abelian variety by a torus, both over the residue field and over
-its algebraic closure), $\omega$ is the lattice of invariant differentials of top degree on
-$\mathcal N$, $\eta\in\omega$ is nonzero with $\omega/\mathcal O_L\eta$ finite, and
-$\|\eta\|_\tau^2=(i/2)^g\int_{A_\tau(\mathbb C)}\eta\wedge\overline\eta$, integrated over the
-complex manifold $A_\tau(\mathbb C)$.
+The *constructibility statement* is the following assertion. Let $L$ be a number field,
+$S=\operatorname{Spec}\mathcal O_L$, and $f:X\to S$ a smooth, quasi-compact and quasi-separated
+morphism of schemes. Let $E$ be the set of points $s\in S$ whose fibre
+$X_s=X\times_S\operatorname{Spec}k(s)$ is geometrically connected, in the sense that
+$X_s\otimes_{k(s)}F$ is empty or connected for every field extension $F$ of $k(s)$. Then $E$ is
+locally constructible in $S$: every point of $S$ has an open neighbourhood $V$ such that $E\cap V$
+belongs to the smallest family of subsets of $V$ that contains the retrocompact open subsets and is
+stable under finite intersections and complements.
 """,
         caveat=r"""
-Gaudron and Rémond use the inequality in the proof of their Lemme 9.1, citing Bost through Corollary 8.4
-of their 2014 paper in *Commentarii*; an AI reading of both papers found the inequality in Faltings'
-original normalization, as here. That corollary states $h(A)\ge-\frac g2\log(2\pi)$ for their height
-$h=h_F+\frac g2\log\pi$, which gives the stronger $h_F(A)\ge-\frac g2\log(2\pi^2)$.
+It is Théorème (9.7.7)(ii) of EGA IV for $S=\operatorname{Spec}\mathcal O_L$ and smooth morphisms,
+which are of finite presentation when quasi-compact and quasi-separated (EGA IV (1.6.1)). EGA defines
+geometric connectedness by the number of connected components over an algebraic closure, at most
+one; its equivalence with the form above is printed in EGA IV (4.5.1)–(4.5.2) and is not a Lean
+theorem. The proof uses the statement only to show that a stable Faltings height built from a Néron
+model is a height of a semi-abelian model in the sense of Gaudron and Rémond.
+""",
+        src=r"""
+A. Grothendieck and J. Dieudonné, *Éléments de géométrie algébrique IV, troisième partie*, Publ.
+Math. IHÉS 28 (1966), Théorème (9.7.7), p. 79; with EGA IV₁, Publ. Math. IHÉS 20 (1964), (1.6.1),
+p. 234; EGA IV₂, Publ. Math. IHÉS 24 (1965), (4.5.1)–(4.5.2), p. 61; and EGA 0_III, Publ. Math.
+IHÉS 11 (1961), (9.1.1), (9.1.2) and (9.1.11), pp. 12–14. AI-read: a three-lens adversarial reading
+of page images of the numdam scans, 2026-11-27 (docs/research/item-m-adversarial-readings.md); no
+person has read these pages.
+""",
+    ),
+    'gaudronRemondSec9LowerGR1Weak': dict(
+        group='heights', slug='bost-lower-bound',
+        title='The lower bound for the Faltings height',
+        anchor='Gaudron-Remond lower bound',
+        lean_step='`ZInQ.HeightModelM.gaudronRemondSec9LowerGR1Weak_of_GR1`',
+        statement=r"""
+The *lower bound statement* is the following assertion. Let $A$ be an abelian variety of dimension
+$g$ over a number field $K$. Then every height $h_F(A)$ of a semi-abelian model of $A$, in
+Faltings' normalization, satisfies $h_F(A)\ge-\tfrac32\,g$. Here such a height is a real number of
+the form
+$$h_F(A)=\frac1{[L:\mathbb Q]}\Bigl(\log\#\bigl(\omega/\mathcal O_L\eta\bigr)-\frac12\sum_{\tau:L\to\mathbb C}\log\|\eta\|_\tau^2\Bigr),$$
+where $L\supseteq K$ is a number field, $\mathcal A$ is a semi-abelian model of $A_L$ over
+$\mathcal O_L$ (a smooth separated group scheme of finite type over $\mathcal O_L$, with an
+isomorphism of group schemes from its generic fibre to $A_L$, whose fibre at every maximal ideal is
+connected and an extension of an abelian variety by a torus, over the residue field and over its
+algebraic closure), $\omega$ is the lattice of invariant differentials of top degree on
+$\mathcal A$ along its zero section, $\eta\in\omega$ is nonzero with $\omega/\mathcal O_L\eta$
+finite, and $\|\eta\|_\tau^2=2^{-g}\int_{A_\tau(\mathbb C)}|\eta\wedge\overline\eta|$, integrated
+over the complex manifold $A_\tau(\mathbb C)$.
+""",
+        caveat=r"""
+Gaudron and Rémond's Corollaire 8.4 states $h(A)\ge-\frac g2\log(2\pi)$ for their height
+$h=h_F+\frac g2\log\pi$ of a semi-abelian model, that is $h_F(A)\ge-\frac g2\log(2\pi^2)$; since
+$\frac12\log(2\pi^2)<\frac32$ this gives the statement, a weakening they make themselves on p. 352.
+They print no formula for the normalized Arakelov degree, and the standard one is used here. The
+model is not required to be commutative; that it is follows from separatedness and flatness by a
+standard argument that is not a Lean theorem. With the constructibility statement of EGA IV (9.7.7),
+the statement implies the same bound for the stable Faltings heights of this section, built from
+Néron models, and this implication is proved in Lean; the converse is not proved here.
 """,
         src=r"""
 É. Gaudron and G. Rémond, *Théorème des périodes et degrés minimaux d'isogénies*, Comment. Math.
-Helv. 89 (2014), 343–403, Corollaire 8.4, p. 400, attributed there to Bost, with the normalization
-of §2.3, p. 352. É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014),
-2057–2108, §9, proof of Lemme 9.1, p. 2098, with the normalization of $h_F$ on p. 2058; the
-manuscript's citation, a citation only of Corollaire 8.4.
+Helv. 89 (2014), 343–403, Corollaire 8.4, p. 400, attributed there to Bost, with the height of §2.3,
+p. 351, and the normalization and the weakening on p. 352. The manuscript cites É. Gaudron and
+G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014), 2057–2108, §9, proof of
+Lemme 9.1, p. 2098, which cites Corollaire 8.4. AI-read: a three-lens adversarial reading of page
+images of the journal file, 2026-11-27 (docs/research/item-m-adversarial-readings.md); no person has
+read these pages.
 """,
     ),
-    'gaudronRemondThm14Printed': dict(
+    'gaudronRemondThm14GR1': dict(
         group='heights', slug='gaudron-remond-isogeny-bound',
         title='The isogeny theorem of Gaudron and Rémond',
         anchor='Gaudron-Remond isogeny bound',
         statement=r"""
 The *isogeny statement* is the following assertion. Let $A$ and $B$ be abelian varieties over a number
-field $K$ of degree $d$ that are isogenous over $K$, with $\dim A=g\geq1$, and let $h_F(A)$ be a stable
-Faltings height of $A$, built as for the [lower bound](bost-lower-bound.md). Then there are isogenies
-$A\to B$ and $B\to A$ over $K$ of degree at most
+field $K$ of degree $d$ that are isogenous over $K$, with $\dim A=g\geq1$, and let $h_F(A)$ be a
+height of a semi-abelian model of $A$, built as for the [lower bound](bost-lower-bound.md). Then
+there are isogenies $A\to B$ and $B\to A$ over $K$ of degree at most
 $$\kappa=\Bigl((14g)^{64g^2}\,d\,\max\bigl(h_F(A),\log d,1\bigr)^2\Bigr)^{1024g^3}.$$
 """,
         caveat=r"""
-It is Theorem 1.4 of Gaudron and Rémond for isogenies over the base field, with the stable height in
-Faltings' original normalization and semistable reduction in its printed form: the identity
-component of the special fibre is semi-abelian over the residue field and over its algebraic
-closure. A further reading of semistability, as the absence of $\mathbb G_a$ (SGA 7 IX 2.1.5), is
-still to be matched.
+It is Theorem 1.4 of Gaudron and Rémond for isogenies over the base field, with their stable height
+$h_F$ in Faltings' original normalization, which they take from §2.3 of their paper in
+*Commentarii*; the printed couple of isogenies is split into two isogenies, each of degree at most
+$\kappa$. It was read in the authors' copy, which carries the Duke pagination; the comparison with
+the journal text is still to be made. With the constructibility statement of EGA IV (9.7.7), the
+statement implies the same theorem for the stable Faltings heights of this section, built from
+Néron models, and this implication is proved in Lean; the converse is not proved here.
 """,
         src=r"""
 É. Gaudron and G. Rémond, *Polarisations et isogénies*, Duke Math. J. 163 (2014), 2057–2108,
-Théorème 1.4, p. 2060, with $\kappa$ on p. 2058.
+Théorème 1.4, p. 2060, with $\kappa$ and $g\ge1$ on p. 2058 and isogenies and their degree on
+p. 2062. AI-read: a three-lens adversarial reading of page images of the authors' copy, 2026-11-27
+(docs/research/item-m-adversarial-readings.md); no person has read these pages.
 """,
     ),
     'javanpeykarThm111An': dict(
@@ -309,8 +361,8 @@ $\mathbf P^1\setminus\{0,1,\infty\}$; let $\deg_B(X)$ be the least degree of a B
 $W$ be an abelian variety over $\overline{\mathbb Q}$ that represents the degree-zero part of the
 Picard functor of $X$, with the group law given by the tensor product of line bundles. Then every
 stable Faltings height $h$ of $W$ satisfies $h\le13\cdot10^6\,g\,\deg_B(X)^5$; here a stable
-Faltings height of $W$ is a stable Faltings height, built as for the
-[lower bound](bost-lower-bound.md), of an abelian variety $V$ over a number field
+Faltings height of $W$ is a stable Faltings height, in the sense of the
+[introduction](README.md), of an abelian variety $V$ over a number field
 $L\subset\overline{\mathbb Q}$ whose base change to $\overline{\mathbb Q}$ is isomorphic to $W$.
 """,
         caveat=r"""

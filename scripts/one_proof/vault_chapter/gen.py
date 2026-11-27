@@ -56,9 +56,13 @@ kind = {f: kinds[f]['kind'] for f in fields}
 count = {k: sum(1 for f in fields if kind[f] == k) for k in ('published', 'consequence', 'composite', 'project glue')}
 assert sum(count.values()) == len(fields), count
 assert count['project glue'] == sum(1 for f in fields if LEAVES[f]['group'] is None), count
+# A consequence counts LEAF only when the step from the print to it is a Lean theorem, which its entry in
+# chapter_text.py names as lean_step (the lead's standard; item-m-fold: gaudronRemondSec9LowerGR1Weak).
+lean_step = [f for f in fields if kind[f] == 'consequence' and kinds[f]['strict'] == 'LEAF']
 for f in fields:
     if kind[f] != 'published':
-        assert kinds[f]['strict'] != 'LEAF', (f, kinds[f]['strict'])
+        assert kinds[f]['strict'] != 'LEAF' or (f in lean_step and LEAVES[f].get('lean_step')), \
+            (f, kinds[f]['strict'])
 strict = sum(1 for f in fields if kinds[f]['strict'] == 'LEAF')
 pending = [f for f in fields if kind[f] == 'published' and kinds[f]['strict'] != 'LEAF']
 # published rows that a completed review rated glue (kinds.tsv flag 'glue (rated): ...'), not rows awaiting a step
@@ -89,8 +93,7 @@ KIND_SENTENCE = {
 
 # Statement dependencies inside the chapter (an article whose statement uses another's objects).
 DEPS = {
-    'gaudronRemondThm14Printed': ['gaudronRemondSec9LowerAnSS'],
-    'javanpeykarThm111An': ['gaudronRemondSec9LowerAnSS'],
+    'gaudronRemondThm14GR1': ['gaudronRemondSec9LowerGR1Weak'],
 }
 
 
@@ -215,6 +218,9 @@ for f in fields:
     body = [front(p, declaration='def', origin=origin, statement='formalized', lean=lean[f]), f"# {L['title']}", '',
             para(L['statement']), '']
     tail = KIND_SENTENCE[kind[f]]
+    if f in lean_step:
+        tail = (f"It is not printed in this form but follows from a published theorem by a step that is proved "
+                f"in Lean here ({LEAVES[f]['lean_step']}), so the project's strict count counts it as published.")
     if f in rated_glue:
         tail = ("It is a published theorem, but a review rated the form stated here glue rather than the printed "
                 "form, so the project's strict count does not count it as published.")
