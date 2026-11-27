@@ -16,6 +16,8 @@ as named Lean theorems.
 | `Theta.lean` | `Ring` | Witt expansion, `wittEquiv`, the printed `θ` is `fontaineTheta` |
 | `Cp.lean` | `Theta`, `G9.KerTheta` | `O = 𝓞_ℂ_[p]`: limits in `ℂ_p`, `thetaPlusCp`, Galois action |
 | `BdR.lean` | `Cp` | Colmez's `B_dR^+`, `B_dR` as printed, isomorphic to the tree's |
+| `TpShape.lean` | `G9.I4Layer` | the period pairing on `T_p` versus on `V_p = ℚ_p ⊗ T_p` |
+| `RowTp.lean` | `TpShape`, `ColmezTorsionIso.Row` | the Colmez row stated on `T_p` |
 
 `Ring.lean` and `Theta.lean` work for any commutative ring `O` that is `p`-adically complete with
 `p` not a unit (Mathlib's standing hypotheses for `PreTilt.untilt` and `fontaineTheta`).
@@ -71,6 +73,16 @@ Galois (`Cp.lean`):
   (`colmezBdREquiv_algebraMap`): the printed `B_dR`, "le corps des fractions de B⁺_dR", is the
   tree's `B_dR` (Mathlib's `BDeRham 𝓞_ℂ_[p] p`, the same type as `PkgI4.BdR p`).
 
+Row on `T_p` (`TpShape.lean`, `RowTp.lean`):
+
+* `Tp.shapeT_iff_shapeV`: for a `ℤ_p`-module `T` with `G_F`-action `τ`, the pairing
+  `P : H → (T →ₗ[ℤ_p] B_dR)` (values in a `ℚ_p`-submodule `S`, equivariant, non-degenerate on
+  `B_dR ⊗_{ℤ_p} T`) exists iff the same holds on `ℚ_p ⊗_{ℤ_p} T` with `B_dR ⊗_{ℚ_p} (ℚ_p ⊗ T)`.
+  `B_dR` is a `ℤ_p`-algebra through `ℤ_p ⊂ ℚ_p` (`Tp.algZp`, a scoped instance).
+* `Colmez1992DeRhamAbVarTp`: the row with `P ω : T_p(X) →ₗ[ℤ_p] B_dR`, `T_p(X)` built from
+  `X(ℂ_p)` (`TCp`), as in the print; `colmez1992DeRhamAbVarTp_iff_cp` and
+  `colmez1992DeRhamAbVar_iff_tp` (equivalent to the row as stated).
+
 All declarations depend only on `propext`, `Classical.choice` and `Quot.sound`.
 
 ## Consequence for the `B_dR` rows
@@ -93,4 +105,3 @@ functoriality lemmas `bdrPlusMap_ofLoc`, `locMap_algebraMap` and the definition 
 * Galois compatibility on `B_dR^+` and `B_dR` is stated on the image of `W(R)`. A transported
   action on all of `ColmezBdRPlus` (through `colmezBdRPlusEquiv`) and a proof that it is the
   continuous extension of the componentwise action are not included.
-* The Colmez row stated on `T_p` rather than `V_p` is not included here.
