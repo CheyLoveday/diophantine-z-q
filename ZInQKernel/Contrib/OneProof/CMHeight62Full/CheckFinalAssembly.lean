@@ -13,14 +13,13 @@ example : HDec.CMBranch.CMHeight62 := cmHeight62_unconditional
 
 example : ZInQ.Contrib.CMHeight62.Step7 := step7_unconditional
 
-example : LocalAssemblyCore := localAssemblyCore
-
 example : ShortComparisonInput := shortComparisonInput
 
 #check (cmHeight62_unconditional : HDec.CMBranch.CMHeight62)
 
 #print axioms shortComparisonInput
 #print axioms groupModel_isIntegral
-#print axioms localAssemblyCore
+#print axioms localAssemblyCoreK
+#print axioms localComparison_unconditional
 #print axioms step7_unconditional
 #print axioms cmHeight62_unconditional

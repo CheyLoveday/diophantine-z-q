@@ -7,13 +7,15 @@ import ZInQKernel.Contrib.OneProof.CMHeight62Full.RelDimOne
 /-!
 # cmHeight62 (finite place): the final assembly
 
-This file discharges the two open inputs of `TreeStep7.step7`.
+This file proves `Step7` along the route of `TreeStep7`.
 
 * `shortComparisonInput`: `ShortComparisonInput` from the tree instance of item H3
   (`treeH3_n11Inst`): `X' = ι(x)` and `Y' = ι(y)` satisfy the base-changed short equation, have
   pole orders two and three at the identity place and no other pole, and `t_L = −X'/Y'`.
-* `localAssemblyCore`: `LocalAssemblyCore` from the reduced per-place assembly
-  `localComparison_reduced`. The fraction field `Ω` of the generic stalk that H2 gives is also a
+* `localAssemblyCoreK`: the per-place assembly in the form of `LocalAssemblyCore`, but with the
+  curve over `K` as in `localComparison_reduced` (`LocalAssemblyCore` takes a curve over `L`,
+  which `localComparison_reduced` does not cover), proved from `localComparison_reduced`.
+  The fraction field `Ω` of the generic stalk that H2 gives is also a
   fraction field of the local ring `A` of the chart (the generic stalk is `A` localized at the
   prime `(t)`, node L2 (a)), and the inputs are moved along `Frac A ≅ Ω`. The centre data `hL1`
   is `CentreData.exists_centre_data` for `Frac A`. Its inputs are discharged here: the
@@ -25,7 +27,9 @@ This file discharges the two open inputs of `TreeStep7.step7`.
   (`irreducibleSpace_of_isIrreducible_genericFibre`), and reduced (`groupModel_isReduced`: it is
   flat over `𝓞_L` with reduced generic fibre `E_L`, which is scheme-theoretically dense), hence
   integral.
-* `step7_unconditional : Step7` and `cmHeight62_unconditional : CMHeight62`, with no hypotheses.
+* `localComparison_unconditional`, `step7_unconditional : Step7` and
+  `cmHeight62_unconditional : CMHeight62`, with no hypotheses (the proofs of
+  `TreeStep7.localComparison`, `step7` and `cmHeight62_full`, with these inputs).
 -/
 
 set_option autoImplicit false
@@ -237,7 +241,7 @@ theorem groupModel_isReduced (𝒢 : GroupModel E L) : AlgebraicGeometry.IsReduc
       (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) L)))) := by
     have hY : AlgebraicGeometry.IsReduced (E.baseChange L).X.left := inferInstance
     exact @isReduced_of_isOpenImmersion _ _ ((Over.forget _).mapIso 𝒢.gen).hom
-      (IsOpenImmersion.of_isIso _) hY
+      (@IsOpenImmersion.of_isIso _ _ _ (Iso.isIso_hom _)) hY
   exact fa_isReduced_of_flat L 𝒢.G.hom hgf
 
 /-- **The group model is integral**: reduced, and irreducible since it is flat over `𝓞_L` with an
@@ -249,16 +253,43 @@ theorem groupModel_isIntegral (𝒢 : GroupModel E L) : AlgebraicGeometry.IsInte
 
 end Integral
 
-/-! ## 4. `LocalAssemblyCore` (node L6) -/
+/-! ## 4. The per-place assembly (node L6) -/
 
 section Core
 
 set_option maxHeartbeats 1000000 in
-/-- **`LocalAssemblyCore`**, from the reduced per-place assembly and the centre data of
-`CentreData.exists_centre_data`. -/
-theorem localAssemblyCore : LocalAssemblyCore := by
-  intro K _ E L _ _ _ 𝒢 _ _ hprop v s hs _ _ _ _ _ _ _ _ _ _ F _ _ Ω _ _ _ _ Ψ P _ hdimP hfd
-    hv hτ hc W X' Y' hW hX' hY' hXS hYS tG htG
+/-- **The per-place assembly at `v` from the tree place (node L6).** This is `LocalAssemblyCore`
+with the curve `W` over `K` (as in `localComparison_reduced`) and without the chart, which is
+built here: for a proper `𝒢` with `𝒪_{𝒢,ξ}` a discrete valuation ring, a fraction field `Ω` of
+`𝒪_{𝒢,ξ}` with `Ψ : Ω ≅ F` and the place `P` as H2 gives them, a pair `X', Y'` on `W_L` with poles
+of orders two and three at `P` only, and `t_G ∈ 𝔪_ξ` with `Ψ t_G = −X'/Y'`, the comparison tuple
+of `abs_norm_le_of_comparisons` at `v` holds for `η = 𝒢.wedge ![t_G]`. -/
+theorem localAssemblyCoreK {K : Type} [Field K] {E : PkgI3.AbVar K} {L : Type} [Field L]
+    [NumberField L] [Algebra K L] (𝒢 : GroupModel E L) [IsDomain 𝒢.genStalk]
+    [IsDiscreteValuationRing 𝒢.genStalk] (hprop : IsProper 𝒢.G.hom)
+    (v : HeightOneSpectrum (𝓞 L)) (s : Spec (CommRingCat.of (𝓞 L)))
+    (hs : s.asIdeal = v.asIdeal) [IsDiscreteValuationRing (Localization.AtPrime s.asIdeal)]
+    (F : Type) [Field F] [Algebra L F] (Ω : Type) [Field Ω] [Algebra 𝒢.genStalk Ω]
+    [IsFractionRing 𝒢.genStalk Ω] [Algebra L Ω] (Ψ : Ω ≃ₐ[L] F) (P : TauCeti.Place L F)
+    (hdimP : ∀ n : ℕ, 1 ≤ n →
+      TauCeti.Divisor.dim (Finsupp.single P (n : ℤ) : TauCeti.Divisor L F) = n)
+    (hfd : ∀ n : ℕ, FiniteDimensional L (poleSpace P n))
+    (hv : ∀ g : Ω, P.valuation (Ψ g) ≤ 1 ↔ g ∈ (algebraMap 𝒢.genStalk Ω).range)
+    (hτ : ∀ τ : 𝒢.genStalk, maximalIdeal 𝒢.genStalk = Ideal.span {τ} →
+      P.valuation (Ψ (algebraMap 𝒢.genStalk Ω τ)) = WithZero.exp (-1 : ℤ))
+    (hc : ∀ c : 𝓞 L, algebraMap 𝒢.genStalk Ω (𝒢.structMap c) =
+      algebraMap L Ω (algebraMap (𝓞 L) L c))
+    (W : WeierstrassCurve K) (X' Y' : F)
+    (hW : ((W.map (algebraMap K L)).baseChange F).toAffine.Equation X' Y')
+    (hX' : P.valuation X' = WithZero.exp (1 : ℤ) ^ 2)
+    (hY' : P.valuation Y' = WithZero.exp (1 : ℤ) ^ 3)
+    (hXS : X' ∈ regularAway P) (hYS : Y' ∈ regularAway P)
+    (tG : maximalIdeal 𝒢.genStalk) (htG : Ψ (algebraMap 𝒢.genStalk Ω tG) = -X' / Y') :
+    ∃ (W₀ : WeierstrassCurve L) (C : WeierstrassCurve.VariableChange L)
+      (θ : 𝒢.hodgeSpace 1) (b : L),
+      v.valuation L W₀.Δ = 1 ∧ C⁻¹ • W.map (algebraMap K L) = W₀ ∧ θ ≠ 0 ∧
+      (∀ m ∈ 𝒢.detLattice 1, ∃ r : L, v.valuation L r ≤ 1 ∧ m = r • θ) ∧
+      𝒢.wedge ![tG] = b • θ ∧ v.valuation L (C.u : L) = v.valuation L b := by
   haveI := hprop
   -- the base: `R = (𝓞_L)_s`
   have hsb : s.asIdeal ≠ ⊥ := hs ▸ v.ne_bot
@@ -430,12 +461,61 @@ end Core
 
 /-! ## 5. `Step7` and `CMHeight62` -/
 
-/-- **`Step7`**, with no hypotheses. -/
-theorem step7_unconditional : ZInQ.Contrib.CMHeight62.Step7 :=
-  step7 localAssemblyCore shortComparisonInput
+section Final
+
+open HDec.CMBranch.CMjBridges (AbVarFunctionField abVarIdentity)
+open ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal
+  (coefficientFractionalIdeal_ne_zero coefficientFractionalIdeal_coe)
+
+attribute [local instance] HDec.CMBranch.CMjBridges.abVar_isIntegral
+  HDec.CMBranch.CMjBridges.abVarFunctionFieldAlgebra
+
+variable {K : Type} [Field K] [NumberField K] {L : Type} [Field L] [NumberField L]
+  [Algebra K L] {E : PkgI3.AbVar K}
+
+/-- **The local comparison at a finite place `v`** (the input `hcmp v` of
+`abs_norm_le_of_comparisons`), with no hypotheses: the tree place of H2, the pair of
+`shortComparisonInput` and `localAssemblyCoreK`. -/
+theorem localComparison_unconditional (hdim : E.dim = 1)
+    (D : ZInQ.Contrib.CMHeight62.ShortData E) (𝒢 : GroupModel E L)
+    (hprop : IsProper 𝒢.G.hom) (hη : D.etaW 𝒢 ≠ 0) (v : HeightOneSpectrum (𝓞 L)) :
+    ∃ (W₀ : WeierstrassCurve L) (C : WeierstrassCurve.VariableChange L)
+      (θ : 𝒢.hodgeSpace 1) (b : L),
+      v.valuation L W₀.Δ = 1 ∧ C⁻¹ • D.W.map (algebraMap K L) = W₀ ∧ θ ≠ 0 ∧
+      (∀ m ∈ 𝒢.detLattice 1, ∃ r : L, v.valuation L r ≤ 1 ∧ m = r • θ) ∧
+      D.etaW 𝒢 = b • θ ∧ v.valuation L (C.u : L) = v.valuation L b := by
+  obtain ⟨_, _⟩ := genStalk_isDiscreteValuationRing 𝒢 hdim
+  let s : Spec (CommRingCat.of (𝓞 L)) := (⟨v.asIdeal, v.isPrime⟩ : PrimeSpectrum (𝓞 L))
+  have hs : s.asIdeal = v.asIdeal := rfl
+  have : IsDiscreteValuationRing (Localization.AtPrime s.asIdeal) :=
+    IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain (𝓞 L) v.ne_bot _
+  letI := omegaAlgebra 𝒢 (FractionRing 𝒢.genStalk)
+  obtain ⟨X', Y', heq, hX, hY, hXS, hYS, htL⟩ :=
+    shortComparisonInput hdim D 𝒢 hη (identityPlace L hdim) (identityPlace_spec hdim).2.1
+  exact localAssemblyCoreK 𝒢 hprop v s hs _ (FractionRing 𝒢.genStalk)
+    (omegaAlgEquiv 𝒢 (FractionRing 𝒢.genStalk)) (identityPlace L hdim)
+    (identityPlace_spec hdim).2.2 (finiteDimensional_poleSpace_identityPlace hdim)
+    (valuation_omegaEquiv_le_one_iff hdim 𝒢 (FractionRing 𝒢.genStalk))
+    (fun _ hτ => valuation_omegaEquiv_eq_of_span_eq hdim 𝒢 (FractionRing 𝒢.genStalk) hτ)
+    (algebraMap_structMap_omega 𝒢 (FractionRing 𝒢.genStalk))
+    D.W X' Y' heq hX hY hXS hYS (D.tG 𝒢)
+    ((omegaEquiv_tG D 𝒢 (FractionRing 𝒢.genStalk)).trans htL)
+
+/-- **`Step7`**, with no hypotheses: `abs_norm_le_of_comparisons` with
+`J = coefficientFractionalIdeal 𝒢 hdim η_W hη` and the local comparison at every finite place. -/
+theorem step7_unconditional : ZInQ.Contrib.CMHeight62.Step7 := by
+  intro K _ _ L _ _ _ E hdim D 𝒢 hprop hη
+  exact abs_norm_le_of_comparisons 𝒢 D.W D.W_Δ_ne_zero (D.etaW 𝒢)
+    (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal_ne_zero 𝒢 hdim
+      (D.etaW 𝒢) hη)
+    (ZInQ.Contrib.RC53Assist.HodgeLatticeIdeal.coefficientFractionalIdeal_coe 𝒢 hdim
+      (D.etaW 𝒢) hη)
+    (localComparison_unconditional hdim D 𝒢 hprop hη)
 
 /-- **`CMHeight62`**, with no hypotheses: `cmHeight62_of_step7'` applied to `Step7`. -/
 theorem cmHeight62_unconditional : HDec.CMBranch.CMHeight62 :=
-  cmHeight62_full localAssemblyCore shortComparisonInput
+  ZInQ.Contrib.CMHeight62.cmHeight62_of_step7' step7_unconditional
+
+end Final
 
 end ZInQ.Contrib.CMHeight62Full
