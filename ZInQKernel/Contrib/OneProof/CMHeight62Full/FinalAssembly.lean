@@ -29,6 +29,7 @@ This file discharges the two open inputs of `TreeStep7.step7`.
 -/
 
 set_option autoImplicit false
+set_option linter.style.haveILetI false
 
 noncomputable section
 
@@ -234,8 +235,9 @@ theorem groupModel_isReduced (𝒢 : GroupModel E L) : AlgebraicGeometry.IsReduc
   haveI := isIntegral_of_geometricallyIntegral (E.baseChange L).X
   have hgf : AlgebraicGeometry.IsReduced (Limits.pullback 𝒢.G.hom
       (Spec.map (CommRingCat.ofHom (algebraMap (𝓞 L) L)))) := by
-    haveI : IsOpenImmersion ((Over.forget _).mapIso 𝒢.gen).hom := inferInstance
-    exact isReduced_of_isOpenImmersion ((Over.forget _).mapIso 𝒢.gen).hom
+    have hY : AlgebraicGeometry.IsReduced (E.baseChange L).X.left := inferInstance
+    exact @isReduced_of_isOpenImmersion _ _ ((Over.forget _).mapIso 𝒢.gen).hom
+      (IsOpenImmersion.of_isIso _) hY
   exact fa_isReduced_of_flat L 𝒢.G.hom hgf
 
 /-- **The group model is integral**: reduced, and irreducible since it is flat over `𝓞_L` with an
@@ -251,6 +253,7 @@ end Integral
 
 section Core
 
+set_option maxHeartbeats 1000000 in
 /-- **`LocalAssemblyCore`**, from the reduced per-place assembly and the centre data of
 `CentreData.exists_centre_data`. -/
 theorem localAssemblyCore : LocalAssemblyCore := by
@@ -390,15 +393,20 @@ theorem localAssemblyCore : LocalAssemblyCore := by
     have hgen : SpecialFibreGap.stalkStructMap 𝒢.G (genericPoint 𝒢.G.left) c =
         (𝒢.G.left.presheaf.stalkSpecializes
           (genericPoint_specializes (𝒢.unitSection s))).hom
-          (SpecialFibreGap.stalkStructMap 𝒢.G (𝒢.unitSection s) c) :=
-      (TopCat.Presheaf.germ_stalkSpecializes_apply _ _ _ _).symm
-    rw [hgen, ← hR c, CentreData.functionFieldHom_germ, ← IsScalarTower.algebraMap_apply]
+          (SpecialFibreGap.stalkStructMap 𝒢.G (𝒢.unitSection s) c) := by
+      have h := congrArg (fun k => k.hom c) (structGermHom_stalkSpecializes 𝒢.G.hom
+        (genericPoint_specializes (𝒢.unitSection s)))
+      exact h.symm
+    rw [hgen, ← hR c, CentreData.functionFieldHom_germ,
+      ← IsScalarTower.algebraMap_apply (Localization.AtPrime s.asIdeal)
+        (Localization.AtPrime (sectionPrime σ))
+        (FractionRing (Localization.AtPrime (sectionPrime σ)))]
   have hAgdef : ∀ x, x ∈ genericSubring Ψ₀ P ↔
       ∃ r u : Localization.AtPrime (sectionPrime σ),
         u ∉ RingHom.ker (localSection σ) ∧ algebraMap _ _ u * x = algebraMap _ _ r := by
     intro x
-    rw [mem_genericSubring_iff, hker]
-    exact hgen₀ x
+    refine (mem_genericSubring_iff Ψ₀ P x).trans ((hgen₀ x).trans ?_)
+    rw [hker]
   refine localComparison_reduced 𝒢 W v s hs σ φ φη hφ hsp hR hϖ ht hmax hker B hB Ψ₀ P hfd
     hdimP hgen₀ hPt₀ hW hX' hY' hXS hYS ι₀ hι₀ tG htG₀ ?_
   intro f hf
@@ -414,8 +422,9 @@ theorem localAssemblyCore : LocalAssemblyCore := by
     · exact (map_ne_zero_iff _ (IsLocalization.injective (Localization.AtPrime s.asIdeal)
         (Ideal.primeCompl_le_nonZeroDivisors s.asIdeal))).2 ht0
     · exact (IsLocalization.AtPrime.to_map_mem_maximal_iff _ s.asIdeal t').2 hts
-  exact CentreData.exists_centre_data 𝒢.unitSection s σ φ hϖ 𝒢.G.hom (unitSection_comp 𝒢) hφ
-    htr hρ (genericSubring Ψ₀ P) hAgdef hhor
+  have hcd := CentreData.exists_centre_data 𝒢.unitSection s σ φ hϖ 𝒢.G.hom (unitSection_comp 𝒢)
+    hφ htr hρ (genericSubring Ψ₀ P) hAgdef hhor
+  exact hcd
 
 end Core
 
