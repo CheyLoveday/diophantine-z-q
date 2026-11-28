@@ -83,10 +83,9 @@ theorem range_genericGermPullOmega :
   rw [HeightModelM2.globalOmega_eq, Submodule.mem_iInf, LinearMap.mem_range]
   constructor
   · rintro ⟨m, rfl⟩ s
-    have hv : genericGermPullOmega 𝒢 m ∈ Set.range
-        (GG.genericGerm 𝒢.G.hom 𝒢.unitSection HeightModelM2.genericPt_specializes) := ⟨m, rfl⟩
-    rw [hR, Set.mem_iInter] at hv
-    have h2 : genericGermPullOmega 𝒢 m ∈ Set.range (HeightModelM3.stalkToGeneric 𝒢 s) := hv s
+    have hv := (Set.ext_iff.1 hR (genericGermPullOmega 𝒢 m)).1 ⟨m, rfl⟩
+    have h2 : genericGermPullOmega 𝒢 m ∈ Set.range (HeightModelM3.stalkToGeneric 𝒢 s) :=
+      Set.mem_iInter.1 hv s
     rw [HeightModelM3.range_stalkToGeneric] at h2
     exact h2
   · intro hv
@@ -97,8 +96,7 @@ theorem range_genericGermPullOmega :
           hv s
         rw [← HeightModelM3.range_stalkToGeneric] at h2
         exact h2
-    rw [← hR] at h1
-    obtain ⟨m, hm⟩ := h1
+    obtain ⟨m, hm⟩ := (Set.ext_iff.1 hR v).2 h1
     exact ⟨m, hm⟩
 
 /-- **The tree's `ω` from the sheaf**: `printedOmega 𝒢` is the preimage under `θ` of the image of
