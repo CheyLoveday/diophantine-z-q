@@ -20,4 +20,9 @@ import ZInQKernel.Contrib.OneProof.CMHeight62Full.CentreData
 #print axioms ZInQ.Contrib.CMHeight62Full.CentreData.functionFieldHom_germ
 #print axioms ZInQ.Contrib.CMHeight62Full.CentreData.ne_of_isCentre
 #print axioms ZInQ.Contrib.CMHeight62Full.CentreData.exists_generic_centre
+#print axioms ZInQ.Contrib.CMHeight62Full.CentreData.exists_localHom_of_le
+#print axioms ZInQ.Contrib.CMHeight62Full.CentreData.exists_centre_of_le
+#print axioms ZInQ.Contrib.CMHeight62Full.CentreData.centre_eq
+#print axioms ZInQ.Contrib.CMHeight62Full.CentreData.valuation_lt_one_iff_mem_ker
+#print axioms ZInQ.Contrib.CMHeight62Full.CentreData.exists_section_centre
 #print axioms ZInQ.Contrib.CMHeight62Full.CentreData.exists_centre_data

@@ -29,9 +29,15 @@ those facts for a proper morphism `g : X ⟶ Spec S` that is smooth of relative 
   not a centre of a place `O ≠ ē, ⊤`.
 * `exists_centre_hom`, `exists_generic_centre`: the special-fibre valuation is centred at the
   generic point of the special-fibre component through `e(s)`, with a local surjection onto `𝒪_w`.
+* `exists_localHom_of_le`, `exists_centre_of_le`, `centre_eq`: a valuation subring containing a
+  local ring has a centre below that point, and centres are unique (separatedness).
+* `valuation_lt_one_iff_mem_ker`, `exists_section_centre`: the generic subring `Ag = A_𝔭` (`𝔭` the
+  kernel of the localized section) is centred at `e(η_S)`, whose closure meets the fibre over `s`
+  only in `e(s)`.
 * `functionFieldHom`, `exists_centre_data`: the instantiation to `A = 𝒪_{X,e(s)}`, `Ω = Frac A`.
   The base map `R → Ω` is not determined by the isomorphism `φ` alone, so its compatibility with
-  `g` at the generic point stays an explicit hypothesis (`hρ`), as in `hcentre_of_model`.
+  `g` at the generic point stays an explicit hypothesis (`hρ`), as in `hcentre_of_model`; the
+  transcendence degree of `κ_w` (`htr`) is also an input.
 -/
 
 set_option autoImplicit false
@@ -807,6 +813,148 @@ theorem exists_centre_hom :
 
 end CentreHom
 
+section CentreOfLE
+
+open AlgebraicGeometry CategoryTheory
+
+variable {C : Type*} [CommRing C] (p0 : Ideal C) [p0.IsPrime] {Tη : Type*} [CommRing Tη]
+  [Algebra C Tη] [IsLocalization.AtPrime Tη p0] {Ω : Type*} [Field Ω] (V : ValuationSubring Ω)
+  (F : Tη →+* Ω) (G : C →+* Ω) (hFG : ∀ c, F (algebraMap C Tη c) = G c)
+  (hG1 : ∀ c, G c ∈ V) (hGlt : ∀ c, V.valuation (G c) < 1 ↔ c ∈ p0)
+
+include hFG hG1 hGlt in
+/-- If `G : C → Ω` lands in a valuation subring `V`, in its maximal ideal exactly on `p₀`, then
+`F : C_{p₀} → Ω` factors through a local homomorphism `C_{p₀} → V`. -/
+theorem exists_localHom_of_le :
+    ∃ φ₀ : Tη →+* V, IsLocalHom φ₀ ∧ ∀ b, F b = φ₀ b := by
+  have hGd : ∀ d : C, d ∉ p0 → V.valuation (G d) = 1 := fun d hd =>
+    le_antisymm ((V.valuation_le_one_iff _).2 (hG1 d)) (not_lt.1 fun h => hd ((hGlt d).1 h))
+  have hval : ∀ (c : C) (d : p0.primeCompl),
+      V.valuation (F (IsLocalization.mk' Tη c d)) = V.valuation (G c) := by
+    intro c d
+    have hmk : F (IsLocalization.mk' Tη c d) * G d = G c := by
+      rw [← hFG, ← hFG, ← map_mul, IsLocalization.mk'_spec]
+    have h := congrArg V.valuation hmk
+    rwa [map_mul, hGd d d.2, mul_one] at h
+  have hFV : ∀ b, F b ∈ V := fun b => by
+    obtain ⟨⟨c, d⟩, rfl⟩ := IsLocalization.mk'_surjective p0.primeCompl b
+    rw [← V.valuation_le_one_iff, hval, V.valuation_le_one_iff]
+    exact hG1 c
+  refine ⟨F.codRestrict V hFV, ⟨fun b hb => ?_⟩, fun _ => rfl⟩
+  by_contra hnu
+  have := IsLocalization.AtPrime.isLocalRing Tη p0
+  obtain ⟨⟨c, d⟩, rfl⟩ := IsLocalization.mk'_surjective p0.primeCompl b
+  have hc : c ∈ p0 := (IsLocalization.AtPrime.mk'_mem_maximal_iff Tη p0 c d).1
+    ((IsLocalRing.mem_maximalIdeal _).2 hnu)
+  have h1 := (V.valuation_lt_one_iff ((F.codRestrict V hFV) (IsLocalization.mk' Tη c d))).2.mt
+    (fun h => (IsLocalRing.mem_maximalIdeal _).1 h hb)
+  change ¬ V.valuation (F _) < 1 at h1
+  rw [hval] at h1
+  exact h1 ((hGlt c).2 hc)
+
+end CentreOfLE
+
+section SchemeCentre
+
+open AlgebraicGeometry CategoryTheory
+
+universe u
+
+/-- **A centre below a point.** If the local ring of `c` lies in a valuation subring `V` of `Ω`
+(through `τ : K(X) → Ω`), then `V` has a centre `x` which specializes to `c`: a local
+homomorphism `𝒪_{X,x} → V` compatible with `τ`. -/
+theorem exists_centre_of_le {X : Scheme.{u}} [IsIntegral X] {Ω : Type u} [Field Ω]
+    (τ : X.functionField ⟶ CommRingCat.of Ω) (V : ValuationSubring Ω) (c : X)
+    (hc : ∀ b, τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b) ∈ V) :
+    ∃ (x : X) (_ : x ⤳ c) (φx : X.presheaf.stalk x ⟶ CommRingCat.of V), IsLocalHom φx.hom ∧
+      ∀ b, τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes x)).hom b) =
+        algebraMap V Ω (φx.hom b) := by
+  obtain ⟨W, hW, hcW, -⟩ := exists_isAffineOpen_mem_and_subset (x := c) (U := ⊤) trivial
+  let _ : Algebra Γ(X, W) (X.presheaf.stalk c) := (X.presheaf.germ W c hcW).hom.toAlgebra
+  have hp : IsLocalization.AtPrime (X.presheaf.stalk c) (hW.primeIdealOf ⟨c, hcW⟩).asIdeal :=
+    hW.isLocalization_stalk ⟨c, hcW⟩
+  let Fc : X.presheaf.stalk c →+* Ω :=
+    (X.presheaf.stalkSpecializes (genericPoint_specializes c) ≫ τ).hom
+  let G : Γ(X, W) →+* Ω := Fc.comp (X.presheaf.germ W c hcW).hom
+  let GV : Γ(X, W) →+* V := G.codRestrict V fun a => hc _
+  let p0 := (IsLocalRing.maximalIdeal V).comap GV
+  have hp0 : p0.IsPrime := Ideal.comap_isPrime GV _
+  let y : Spec Γ(X, W) := ⟨p0, hp0⟩
+  have hx : hW.fromSpec y ∈ W := by
+    have h : hW.fromSpec y ∈ (W : Set X) := hW.range_fromSpec ▸ ⟨y, rfl⟩
+    exact h
+  let algx : Algebra Γ(X, W) (X.presheaf.stalk (hW.fromSpec y)) :=
+    (X.presheaf.germ W (hW.fromSpec y) hx).hom.toAlgebra
+  have hxl : IsLocalization.AtPrime (X.presheaf.stalk (hW.fromSpec y)) p0 :=
+    hW.isLocalization_stalk' y hx
+  have hle : p0 ≤ (hW.primeIdealOf ⟨c, hcW⟩).asIdeal := by
+    intro a ha
+    rw [← IsLocalization.AtPrime.under_maximalIdeal (X.presheaf.stalk c)
+      (hW.primeIdealOf ⟨c, hcW⟩).asIdeal]
+    change algebraMap Γ(X, W) (X.presheaf.stalk c) a ∈ IsLocalRing.maximalIdeal _
+    refine (IsLocalRing.mem_maximalIdeal _).2 fun hu => ?_
+    have hu' : IsUnit (GV a) := by
+      have hcod : GV = (Fc.codRestrict V fun b => hc b).comp
+          (X.presheaf.germ W c hcW).hom := rfl
+      rw [hcod, RingHom.comp_apply]
+      exact hu.map _
+    exact (IsLocalRing.mem_maximalIdeal _).1 ha hu'
+  have hxc : hW.fromSpec y ⤳ c := by
+    have h := ((PrimeSpectrum.le_iff_specializes y (hW.primeIdealOf ⟨c, hcW⟩)).1 hle).map
+      hW.fromSpec.continuous
+    rwa [hW.fromSpec_primeIdealOf] at h
+  let F : X.presheaf.stalk (hW.fromSpec y) →+* Ω :=
+    (X.presheaf.stalkSpecializes (genericPoint_specializes _) ≫ τ).hom
+  have hFG : ∀ a, F (algebraMap Γ(X, W) (X.presheaf.stalk (hW.fromSpec y)) a) = G a := by
+    intro a
+    have h1 : algebraMap Γ(X, W) (X.presheaf.stalk (hW.fromSpec y)) a =
+        (X.presheaf.stalkSpecializes hxc).hom ((X.presheaf.germ W c hcW).hom a) :=
+      (TopCat.Presheaf.germ_stalkSpecializes_apply X.presheaf hcW hxc a).symm
+    have h2 := congrArg (fun m => m.hom ((X.presheaf.germ W c hcW).hom a))
+      (TopCat.Presheaf.stalkSpecializes_comp X.presheaf (genericPoint_specializes _) hxc)
+    simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h2
+    change τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes _)).hom _) = _
+    rw [h1, h2]
+    rfl
+  have hGlt : ∀ a, V.valuation (G a) < 1 ↔ a ∈ p0 := fun a =>
+    (V.valuation_lt_one_iff (GV a)).symm
+  have key := @exists_localHom_of_le Γ(X, W) _ p0 hp0 (X.presheaf.stalk (hW.fromSpec y)) _ algx
+    hxl Ω _ V F G hFG (fun a => hc _) hGlt
+  obtain ⟨φ₀, hloc, hF⟩ := key
+  exact ⟨hW.fromSpec y, hxc, CommRingCat.ofHom φ₀, hloc, hF⟩
+
+/-- **Centres are unique (separatedness).** Two points carrying local homomorphisms into the same
+valuation subring `V` of `Ω`, both compatible with `τ`, are equal. -/
+theorem centre_eq {X : Scheme.{u}} [IrreducibleSpace X] {T : CommRingCat.{u}}
+    (g : X ⟶ Spec T) [IsSeparated g] {Ω : Type u} [Field Ω]
+    (τ : X.functionField ⟶ CommRingCat.of Ω) (V : ValuationSubring Ω) (x₁ x₂ : X)
+    (φ₁ : X.presheaf.stalk x₁ ⟶ CommRingCat.of V) (φ₂ : X.presheaf.stalk x₂ ⟶ CommRingCat.of V)
+    [IsLocalHom φ₁.hom] [IsLocalHom φ₂.hom]
+    (h₁ : ∀ b, τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes x₁)).hom b) =
+      algebraMap V Ω (φ₁.hom b))
+    (h₂ : ∀ b, τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes x₂)).hom b) =
+      algebraMap V Ω (φ₂.hom b)) : x₁ = x₂ := by
+  let a := CommRingCat.ofHom (algebraMap V Ω)
+  have e1 : φ₁ ≫ a = X.presheaf.stalkSpecializes (genericPoint_specializes x₁) ≫ τ := by
+    ext b
+    exact (h₁ b).symm
+  have e2 : φ₂ ≫ a = X.presheaf.stalkSpecializes (genericPoint_specializes x₂) ≫ τ := by
+    ext b
+    exact (h₂ b).symm
+  have k₁ : Spec.map a ≫ Spec.map φ₁ ≫ X.fromSpecStalk x₁ =
+      Spec.map a ≫ Spec.map φ₂ ≫ X.fromSpecStalk x₂ := by
+    rw [← Category.assoc, ← Spec.map_comp, e1, ← Category.assoc, ← Spec.map_comp, e2,
+      Spec.map_comp, Category.assoc, Scheme.SpecMap_stalkSpecializes_fromSpecStalk,
+      Spec.map_comp, Category.assoc, Scheme.SpecMap_stalkSpecializes_fromSpecStalk]
+  have k₂ : Spec.map φ₁ ≫ X.fromSpecStalk x₁ ≫ g = Spec.map φ₂ ≫ X.fromSpecStalk x₂ ≫ g := by
+    refine Centre.spec_ext_of_injective a Subtype.val_injective _ _ ?_
+    have := k₁ =≫ g
+    simp only [Category.assoc] at this
+    exact this
+  exact Centre.centre_unique g (K := Ω) φ₁ φ₂ k₁ k₂
+
+end SchemeCentre
+
 section Instantiation
 
 open AlgebraicGeometry CategoryTheory SpecialFibreFunctionField SpecialFibreValuation
@@ -1000,6 +1148,145 @@ theorem exists_generic_centre :
   rw [h]
   rfl
 
+omit [IsNoetherianRing (Localization.AtPrime (sectionPrime σ))]
+  [FaithfulSMul (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ))] in
+/-- In the local ring `A_𝔭` of `A` at the kernel `𝔭` of the localized section, an element of `A`
+has value less than one exactly when it lies in `𝔭`. -/
+theorem valuation_lt_one_iff_mem_ker
+    (Ag : ValuationSubring (FractionRing (Localization.AtPrime (sectionPrime σ))))
+    (hAgdef : ∀ x, x ∈ Ag ↔ ∃ r u : Localization.AtPrime (sectionPrime σ),
+      u ∉ RingHom.ker (localSection σ) ∧ algebraMap _ _ u * x = algebraMap _ _ r)
+    (a : Localization.AtPrime (sectionPrime σ)) :
+    Ag.valuation (algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) a) < 1 ↔
+      a ∈ RingHom.ker (localSection σ) := by
+  set P := RingHom.ker (localSection σ)
+  have hP : P.IsPrime := RingHom.ker_isPrime _
+  have hinj := IsFractionRing.injective (Localization.AtPrime (sectionPrime σ))
+    (FractionRing (Localization.AtPrime (sectionPrime σ)))
+  have hmem : algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) a ∈ Ag :=
+    (hAgdef _).2 ⟨a, 1, fun h => hP.ne_top ((Ideal.eq_top_iff_one _).2 h), by rw [map_one, one_mul]⟩
+  constructor
+  · intro hlt
+    by_contra ha
+    have ha0 : a ≠ 0 := fun h => ha (h ▸ P.zero_mem)
+    have hA0 : algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) a ≠ 0 :=
+      (map_ne_zero_iff _ hinj).2 ha0
+    have hinv : (algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) a)⁻¹ ∈ Ag :=
+      (hAgdef _).2 ⟨1, a, ha, by rw [map_one, mul_inv_cancel₀ hA0]⟩
+    have h1 := (Ag.valuation_le_one_iff _).2 hinv
+    have h2 := congrArg Ag.valuation (mul_inv_cancel₀ hA0)
+    rw [map_mul, map_one] at h2
+    have h3 := lt_of_le_of_lt (mul_le_of_le_one_right' h1) hlt
+    rw [h2] at h3
+    exact lt_irrefl _ h3
+  · intro ha
+    by_contra hlt
+    have h1 : Ag.valuation (algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) a)
+        = 1 := le_antisymm ((Ag.valuation_le_one_iff _).2 hmem) (not_lt.1 hlt)
+    have hA0 : algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) a ≠ 0 := by
+      intro h
+      rw [h, map_zero] at h1
+      exact zero_ne_one h1
+    have hinv : (algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) a)⁻¹ ∈ Ag :=
+      (Ag.valuation_le_one_iff _).1 (by rw [map_inv₀, h1, inv_one])
+    obtain ⟨r, u, hu, hru⟩ := (hAgdef _).1 hinv
+    apply hu
+    have : u = r * a := by
+      apply hinj
+      rw [map_mul, ← hru, mul_assoc, inv_mul_cancel₀ hA0, mul_one]
+    rw [this]
+    exact P.mul_mem_left r ha
+
+omit [IsNoetherianRing (Localization.AtPrime (sectionPrime σ))]
+  [FaithfulSMul (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ))] in
+set_option maxHeartbeats 800000 in
+/-- **The centre of the generic subring.** Let `Ag = A_𝔭` for the kernel `𝔭` of the localized
+section. Then `Ag` is centred at the image `ξ = e(η_S)` of the generic point, and the closure of
+`ξ` meets the fibre over `s` only in `e(s)` (a section of a separated morphism is a closed
+immersion). -/
+theorem exists_section_centre [IsDomain S] (g : X ⟶ Spec (CommRingCat.of S)) [IsSeparated g]
+    (he : e ≫ g = 𝟙 _)
+    (hφ : ∀ a, (e.stalkMap s).hom (φ a) = specStalkEquiv s (localSection σ a))
+    (Ag : ValuationSubring (FractionRing (Localization.AtPrime (sectionPrime σ))))
+    (hAgdef : ∀ x, x ∈ Ag ↔ ∃ r u : Localization.AtPrime (sectionPrime σ),
+      u ∉ RingHom.ker (localSection σ) ∧ algebraMap _ _ u * x = algebraMap _ _ r) :
+    ∃ (ξ : X) (φξ : X.presheaf.stalk ξ ⟶ CommRingCat.of Ag), IsLocalHom φξ.hom ∧
+      (∀ b, (functionFieldHom e s σ φ).hom
+        ((X.presheaf.stalkSpecializes (genericPoint_specializes ξ)).hom b) =
+          algebraMap Ag _ (φξ.hom b)) ∧
+      ∀ c : X, ξ ⤳ c → g c = s → c = e s := by
+  let η := genericPoint (Spec (CommRingCat.of S))
+  have hηs : η ⤳ s := genericPoint_specializes s
+  have hξs : e η ⤳ e s := hηs.map e.continuous
+  obtain ⟨W, hW, hsW, -⟩ := exists_isAffineOpen_mem_and_subset (x := e s) (U := ⊤) trivial
+  have hξW : e η ∈ W := hξs.mem_open W.isOpen hsW
+  let algξ : Algebra Γ(X, W) (X.presheaf.stalk (e η)) :=
+    (X.presheaf.germ W (e η) hξW).hom.toAlgebra
+  have hξl : IsLocalization.AtPrime (X.presheaf.stalk (e η))
+      (hW.primeIdealOf ⟨e η, hξW⟩).asIdeal := hW.isLocalization_stalk ⟨e η, hξW⟩
+  let F : X.presheaf.stalk (e η) →+* FractionRing (Localization.AtPrime (sectionPrime σ)) :=
+    (X.presheaf.stalkSpecializes (genericPoint_specializes _) ≫ functionFieldHom e s σ φ).hom
+  let G : Γ(X, W) →+* FractionRing (Localization.AtPrime (sectionPrime σ)) :=
+    F.comp (algebraMap Γ(X, W) (X.presheaf.stalk (e η)))
+  have hgerm : ∀ a : Γ(X, W), algebraMap Γ(X, W) (X.presheaf.stalk (e η)) a =
+      (X.presheaf.stalkSpecializes hξs).hom ((X.presheaf.germ W (e s) hsW).hom a) := fun a =>
+    (TopCat.Presheaf.germ_stalkSpecializes_apply X.presheaf hsW hξs a).symm
+  have hGa : ∀ a : Γ(X, W),
+      G a = algebraMap _ _ (φ.symm ((X.presheaf.germ W (e s) hsW).hom a)) := by
+    intro a
+    have h2 := congrArg (fun m => m.hom ((X.presheaf.germ W (e s) hsW).hom a))
+      (TopCat.Presheaf.stalkSpecializes_comp X.presheaf (genericPoint_specializes _) hξs)
+    simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h2
+    change (functionFieldHom e s σ φ).hom
+      ((X.presheaf.stalkSpecializes (genericPoint_specializes _)).hom
+        (algebraMap Γ(X, W) (X.presheaf.stalk (e η)) a)) = _
+    rw [hgerm, h2, ← functionFieldHom_germ e s σ φ, RingEquiv.apply_symm_apply]
+  have hinjη : Function.Injective
+      ((Spec (CommRingCat.of S)).presheaf.stalkSpecializes hηs).hom :=
+    IsFractionRing.injective ((Spec (CommRingCat.of S)).presheaf.stalk s)
+      (Spec (CommRingCat.of S)).functionField
+  have hmemP : ∀ a : Γ(X, W), a ∈ (hW.primeIdealOf ⟨e η, hξW⟩).asIdeal ↔
+      φ.symm ((X.presheaf.germ W (e s) hsW).hom a) ∈ RingHom.ker (localSection σ) := by
+    intro a
+    rw [← IsLocalization.AtPrime.under_maximalIdeal (X.presheaf.stalk (e η))
+      (hW.primeIdealOf ⟨e η, hξW⟩).asIdeal]
+    change algebraMap Γ(X, W) (X.presheaf.stalk (e η)) a ∈ IsLocalRing.maximalIdeal _ ↔ _
+    rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff,
+      ← isUnit_map_iff (e.stalkMap η).hom, hgerm, Scheme.Hom.stalkSpecializes_stalkMap_apply]
+    have hφa : (e.stalkMap s).hom ((X.presheaf.germ W (e s) hsW).hom a) =
+        specStalkEquiv s (localSection σ (φ.symm ((X.presheaf.germ W (e s) hsW).hom a))) := by
+      rw [← hφ, RingEquiv.apply_symm_apply]
+    rw [hφa]
+    change ¬ IsUnit (((Spec (CommRingCat.of S)).presheaf.stalkSpecializes hηs).hom
+      (specStalkEquiv s _) : (Spec (CommRingCat.of S)).functionField) ↔ _
+    rw [isUnit_iff_ne_zero, not_not, RingHom.mem_ker,
+      map_eq_zero_iff _ hinjη, map_eq_zero_iff _ (specStalkEquiv s).injective]
+  have hG1 : ∀ a, G a ∈ Ag := fun a => by
+    rw [hGa]
+    exact (hAgdef _).2 ⟨φ.symm ((X.presheaf.germ W (e s) hsW).hom a), 1,
+      fun h => (RingHom.ker_isPrime (localSection σ)).ne_top ((Ideal.eq_top_iff_one _).2 h),
+      by rw [map_one, one_mul]⟩
+  have hGlt : ∀ a, Ag.valuation (G a) < 1 ↔ a ∈ (hW.primeIdealOf ⟨e η, hξW⟩).asIdeal := by
+    intro a
+    rw [hGa, hmemP]
+    exact valuation_lt_one_iff_mem_ker s σ Ag hAgdef _
+  have key := @exists_localHom_of_le Γ(X, W) _ (hW.primeIdealOf ⟨e η, hξW⟩).asIdeal _
+    (X.presheaf.stalk (e η)) _ algξ hξl _ _ Ag F G (fun _ => rfl) hG1 hGlt
+  obtain ⟨φ₀, hloc, hF⟩ := key
+  refine ⟨e η, CommRingCat.ofHom φ₀, hloc, hF, fun c hc hcs => ?_⟩
+  have : IsClosedImmersion (e ≫ g) := by
+    rw [he]
+    infer_instance
+  have : IsClosedImmersion e := IsClosedImmersion.of_comp e g
+  have hcl : IsClosed (Set.range e) := e.isClosedEmbedding.isClosed_range
+  have hc' : c ∈ closure {e η} := specializes_iff_mem_closure.1 hc
+  obtain ⟨s', rfl⟩ := closure_minimal (Set.singleton_subset_iff.2 (Set.mem_range_self η)) hcl hc'
+  have hs' : g (e s') = s' := by
+    rw [← Scheme.Hom.comp_apply, he]
+    rfl
+  rw [hs'] at hcs
+  rw [hcs]
+
 include hϖ in
 set_option maxHeartbeats 800000 in
 /-- **`hcentre` at a finite place (`exists_centre_data`).** Let `g : X ⟶ Spec S` be proper and
@@ -1008,11 +1295,13 @@ valuation ring of characteristic zero with perfect residue field and uniformizer
 `φ : A ≅ 𝒪_{X,e(s)}` for the local ring `A` of the chart at the section prime. Put `Ω = Frac A`,
 `w` the special-fibre valuation and `ē` the special-fibre place. The remaining inputs are explicit:
 `hρ` (the base map `R → Ω` is the one of `g` at the generic point), `htr` (`κ_w` has
-transcendence degree at most one) and `hAg` (`Ag` contains the local ring of no point `c ≠ e(s)`
-over `s`); the point at which `w` is centred is `exists_generic_centre`.
+transcendence degree at most one). The generic subring `Ag` is `A_𝔭` for the kernel `𝔭` of the
+localized section (`hAgdef`); its centre is `exists_section_centre`, and the point at which `w` is
+centred is `exists_generic_centre`.
 Then every constant place `O ≠ ē` has a centre as required by `reduce_mem_polePart`. -/
-theorem exists_centre_data (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g]
-    [SmoothOfRelativeDimension 1 g]
+theorem exists_centre_data [IsDomain S] (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g]
+    [SmoothOfRelativeDimension 1 g] (he : e ≫ g = 𝟙 _)
+    (hφ : ∀ a, (e.stalkMap s).hom (φ a) = specStalkEquiv s (localSection σ a))
     [PerfectField (ResidueField (Localization.AtPrime s.asIdeal))]
     [CharZero (Localization.AtPrime s.asIdeal)]
     (htr : letI := (residueHom (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
@@ -1027,9 +1316,8 @@ theorem exists_centre_data (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g]
         (FractionRing (Localization.AtPrime (sectionPrime σ)))).comp
           (algebraMap S (Localization.AtPrime s.asIdeal)))))
     (Ag : ValuationSubring (FractionRing (Localization.AtPrime (sectionPrime σ))))
-    (hAg : ∀ c : X, g c = s → c ≠ e s → ∃ b : X.presheaf.stalk c,
-      (functionFieldHom e s σ φ).hom
-        ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b) ∉ Ag)
+    (hAgdef : ∀ x, x ∈ Ag ↔ ∃ r u : Localization.AtPrime (sectionPrime σ),
+      u ∉ RingHom.ker (localSection σ) ∧ algebraMap _ _ u * x = algebraMap _ _ r)
     {f : FractionRing (Localization.AtPrime (sectionPrime σ))}
     (hhor : ∀ Q : ValuationSubring (FractionRing (Localization.AtPrime (sectionPrime σ))),
       (∀ t : S, algebraMap (Localization.AtPrime s.asIdeal) _
@@ -1089,9 +1377,20 @@ theorem exists_centre_data (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g]
     exact (map_ne_zero_iff _ (IsFractionRing.injective _ _)).2
       (algebraMap_ne_zero_of_irreducible _ hϖ)
   obtain ⟨η, φ₀, hφ₀l, hφ₀, hφ₀s⟩ := exists_generic_centre e s σ φ hϖ
+  have hAg' : ∀ c : X, g c = s → c ≠ e s → ∃ b : X.presheaf.stalk c,
+      (functionFieldHom e s σ φ).hom
+        ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b) ∉ Ag := by
+    obtain ⟨ξ, φξ, hξl, hξ, hξc⟩ := exists_section_centre e s σ φ g he hφ Ag hAgdef
+    intro c hcs hce
+    by_contra hcon
+    push Not at hcon
+    obtain ⟨x, hxc, φx, hxl, hx⟩ := exists_centre_of_le (functionFieldHom e s σ φ) Ag c hcon
+    have hxξ := centre_eq g (functionFieldHom e s σ φ) Ag x ξ φx φξ hx hξ
+    subst hxξ
+    exact hce (hξc c hxc hcs)
   refine hcentre_of_smoothModel g (functionFieldHom e s σ φ) (functionFieldHom_bijective e s σ φ)
     hϖ0 (hm ϖ hϖm) (fun x hx => specialFibreValuation_eq_zpow hϖ hx) s hϖ
-    (algebraMap _ _) hR hm hk htr hρ η φ₀ hφ₀ hφ₀s _ (e s) ?_ Ag hAg hhor
+    (algebraMap _ _) hR hm hk htr hρ η φ₀ hφ₀ hφ₀s _ (e s) ?_ Ag hAg' hhor
   intro O hO hne htop c φc _ hgc
   exact ne_of_isCentre e s σ φ hϖ O hne htop c φc hgc
 
