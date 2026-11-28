@@ -242,6 +242,8 @@ end InstanceCheck
 #print axioms ZInQ.HeightModelM5.GG.hodgeAlt
 #print axioms ZInQ.HeightModelM5.GG.toHodge
 #print axioms ZInQ.HeightModelM5.GG.toHodge_ιMulti
+#print axioms ZInQ.HeightModelM5.GG.toHodge_add
+#print axioms ZInQ.HeightModelM5.GG.toHodge_zero
 #print axioms ZInQ.HeightModelM5.GG.toHodge_smul
 #print axioms ZInQ.HeightModelM5.GG.thetaₛₗ
 #print axioms ZInQ.HeightModelM5.GG.fromHodge

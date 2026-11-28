@@ -674,6 +674,18 @@ theorem toHodge_ιMulti (w : Fin n → W) :
   exteriorPower.alternatingMapLinearEquiv_apply_ιMulti _ _
 
 include hsurj hwedge in
+theorem toHodge_add (y z : ⋀[E]^n W) :
+    toHodge κ θ hsurj n hwedge (y + z) =
+      toHodge κ θ hsurj n hwedge y + toHodge κ θ hsurj n hwedge z :=
+  letI := hodgeModule (V := V) κ n
+  (toHodge κ θ hsurj n hwedge).map_add y z
+
+include hsurj hwedge in
+theorem toHodge_zero : toHodge κ θ hsurj n hwedge 0 = 0 :=
+  letI := hodgeModule (V := V) κ n
+  (toHodge κ θ hsurj n hwedge).map_zero
+
+include hsurj hwedge in
 theorem toHodge_smul (r : E) (y : ⋀[E]^n W) :
     toHodge κ θ hsurj n hwedge (r • y) = κ r • toHodge κ θ hsurj n hwedge y :=
   letI := hodgeModule (V := V) κ n

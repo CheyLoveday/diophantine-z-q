@@ -72,7 +72,7 @@ noncomputable def genericGermPullOmegaTop (g : ℕ) :
   toFun m := toHodgeLine 𝒢 g
     (GG.genericGermTop 𝒢.G.hom 𝒢.unitSection HeightModelM2.genericPt_specializes g m)
   map_add' a b := (congrArg (toHodgeLine 𝒢 g) (map_add _ a b)).trans
-    (LinearMap.map_add _ _ _)
+    (GG.toHodge_add _ _ _ g _ _ _)
   map_smul' a m := by
     have h1 := GG.genericGermTop_smul 𝒢.G.hom 𝒢.unitSection
       HeightModelM2.genericPt_specializes g
@@ -123,11 +123,11 @@ theorem stalkTopMap_add (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)))
       (X := (Spec (CommRingCat.of (𝓞 L))).toPresheafedSpace)
       (GG.pullOmegaTop 𝒢.G.hom 𝒢.unitSection g).val.presheaf s) :
     stalkTopMap 𝒢 g s (y + z) = stalkTopMap 𝒢 g s y + stalkTopMap 𝒢 g s z :=
-  (congrArg (toHodgeLine 𝒢 g) (map_add _ y z)).trans (LinearMap.map_add _ _ _)
+  (congrArg (toHodgeLine 𝒢 g) (map_add _ y z)).trans (GG.toHodge_add _ _ _ g _ _ _)
 
 theorem stalkTopMap_zero (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L))) :
     stalkTopMap 𝒢 g s 0 = 0 :=
-  (congrArg (toHodgeLine 𝒢 g) (map_zero _)).trans (LinearMap.map_zero _)
+  (congrArg (toHodgeLine 𝒢 g) (map_zero _)).trans (GG.toHodge_zero _ _ _ g _)
 
 /-- The value on a wedge of germs. -/
 theorem stalkTopMap_symm_ιMulti (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)))
@@ -201,6 +201,63 @@ theorem exists_smul_mem_iInf_of_mem (s : Spec (CommRingCat.of (𝓞 L)))
   obtain ⟨V, W, hs, hVW, hmem⟩ := h
   exact HeightModelM2.exists_smul_mem_iInf 𝒢 hs hVW hmem
 
+/-- A wedge of elements of `printedOmegaAt s` has a multiple by some `d ∉ s` in
+`printedDetLattice`. -/
+theorem exists_smul_wedge_mem (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)))
+    (u : Fin g → (Reta L) ⊗[𝒢.genStalk] Ω[𝒢.genStalk⁄𝓞 L]) (hu : ∀ i, u i ∈ printedOmegaAt 𝒢 s) :
+    ∃ d : 𝓞 L, d ∉ s.asIdeal ∧ d • ((1 : L) ⊗ₜ[𝓞 L] exteriorPower.ιMulti (𝓞 L) g
+      (fun i => (HeightModelM3.thetaEquiv 𝒢).symm (u i))) ∈ printedDetLattice 𝒢 g := by
+  haveI : s.asIdeal.IsPrime := s.isPrime
+  choose d hd hdu using fun i => exists_smul_mem_iInf_of_mem 𝒢 s (hu i)
+  refine ⟨∏ i, d i, ?_, ?_⟩
+  · intro h
+    obtain ⟨i, -, hi⟩ := Ideal.IsPrime.prod_mem_iff.mp h
+    exact hd i hi
+  · have hmem : ∀ i, d i • (HeightModelM3.thetaEquiv 𝒢).symm (u i) ∈ printedOmega 𝒢 := by
+      intro i
+      show theta' 𝒢 (d i • (HeightModelM3.thetaEquiv 𝒢).symm (u i)) ∈ ⨅ s', printedOmegaAt 𝒢 s'
+      rw [map_smul]
+      change d i • (HeightModelM3.thetaEquiv 𝒢) ((HeightModelM3.thetaEquiv 𝒢).symm (u i)) ∈ _
+      rw [LinearEquiv.apply_symm_apply]
+      exact hdu i
+    rw [← TensorProduct.tmul_smul, ← AlternatingMap.map_smul_univ]
+    exact Submodule.subset_span ⟨fun i => ⟨_, hmem i⟩, rfl⟩
+
+/-- Multiplying by an element of `𝒪_{S,s}` keeps a multiple by some `d ∉ s` in
+`printedDetLattice`. -/
+theorem exists_smul_smul_mem (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)))
+    (r : (Spec (CommRingCat.of (𝓞 L))).presheaf.stalk s) (z : 𝒢.hodgeSpace g) {d : 𝓞 L}
+    (hd : d ∉ s.asIdeal) (h : d • z ∈ printedDetLattice 𝒢 g) :
+    ∃ d' : 𝓞 L, d' ∉ s.asIdeal ∧
+      d' • (HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r) • z) ∈
+        printedDetLattice 𝒢 g := by
+  haveI : s.asIdeal.IsPrime := s.isPrime
+  letI : Algebra (𝓞 L) ((Spec (CommRingCat.of (𝓞 L))).presheaf.stalk s) :=
+    (baseStalk s).toAlgebra
+  haveI : IsLocalization.AtPrime ((Spec (CommRingCat.of (𝓞 L))).presheaf.stalk s) s.asIdeal :=
+    StructureSheaf.IsLocalization.to_stalk (CommRingCat.of (𝓞 L)) s
+  obtain ⟨⟨a, t⟩, hat⟩ := IsLocalization.surj s.asIdeal.primeCompl r
+  have hat' : HeightModelM3.sigma s r * baseStalk (genericPt L) (t : 𝓞 L) =
+      baseStalk (genericPt L) a := by
+    have h0 := congrArg (HeightModelM3.sigma s) hat
+    rwa [map_mul, show algebraMap (𝓞 L) _ (t : 𝓞 L) = baseStalk s t from rfl,
+      show algebraMap (𝓞 L) _ a = baseStalk s a from rfl, HeightModelM3.sigma_baseStalk,
+      HeightModelM3.sigma_baseStalk] at h0
+  have hL : algebraMap (𝓞 L) L (t : 𝓞 L) *
+      HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r) = algebraMap (𝓞 L) L a := by
+    rw [← HeightModelM4.etaFieldEquiv_algebraMap, ← HeightModelM4.etaFieldEquiv_algebraMap,
+      ← map_mul, mul_comm]
+    exact congrArg _ hat'
+  have e2 : (d * (t : 𝓞 L)) • (HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r) • z) =
+      a • (d • z) := by
+    rw [mul_smul,
+      ← smul_assoc (t : 𝓞 L) (HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r)) z,
+      Algebra.smul_def (t : 𝓞 L) (HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r)), hL,
+      algebraMap_smul L a z, smul_comm d a z]
+  refine ⟨d * t, fun h' => (s.isPrime.mem_or_mem h').elim hd t.2, ?_⟩
+  rw [e2]
+  exact Submodule.smul_mem _ a h
+
 /-- **Locally at `s`, the image of the stalk lies in `printedDetLattice`**: every element has a
 multiple by some `d ∉ s` there. -/
 theorem exists_smul_stalkTopMap_mem (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)))
@@ -209,10 +266,6 @@ theorem exists_smul_stalkTopMap_mem (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)
       (GG.pullOmegaTop 𝒢.G.hom 𝒢.unitSection g).val.presheaf s) :
     ∃ d : 𝓞 L, d ∉ s.asIdeal ∧ d • stalkTopMap 𝒢 g s y ∈ printedDetLattice 𝒢 g := by
   haveI : s.asIdeal.IsPrime := s.isPrime
-  letI : Algebra (𝓞 L) ((Spec (CommRingCat.of (𝓞 L))).presheaf.stalk s) :=
-    (baseStalk s).toAlgebra
-  haveI : IsLocalization.AtPrime ((Spec (CommRingCat.of (𝓞 L))).presheaf.stalk s) s.asIdeal :=
-    StructureSheaf.IsLocalization.to_stalk (CommRingCat.of (𝓞 L)) s
   obtain ⟨ω, rfl⟩ :=
     (schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm.surjective y
   have hω : ω ∈ Submodule.span ((Spec (CommRingCat.of (𝓞 L))).presheaf.stalk s)
@@ -222,81 +275,45 @@ theorem exists_smul_stalkTopMap_mem (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)
   | mem z hz =>
     obtain ⟨m, rfl⟩ := hz
     have key := stalkTopMap_symm_ιMulti 𝒢 g s m
-    have hd : ∀ i, ∃ d : 𝓞 L, d ∉ s.asIdeal ∧
-        d • GG.phi 𝒢.G.hom 𝒢.unitSection HeightModelM2.genericPt_specializes s (m i) ∈
-          ⨅ s', printedOmegaAt 𝒢 s' := fun i =>
-      exists_smul_mem_iInf_of_mem 𝒢 s (phi_mem_printedOmegaAt 𝒢 s (m i))
-    choose d hd hdu using hd
-    refine ⟨∏ i, d i, ?_, ?_⟩
-    · intro h
-      obtain ⟨i, -, hi⟩ := Ideal.IsPrime.prod_mem_iff.mp h
-      exact hd i hi
-    · have hmem : ∀ i, d i • (HeightModelM3.thetaEquiv 𝒢).symm
-          (GG.phi 𝒢.G.hom 𝒢.unitSection HeightModelM2.genericPt_specializes s (m i)) ∈
-            printedOmega 𝒢 := by
-        intro i
-        show theta' 𝒢 (d i • (HeightModelM3.thetaEquiv 𝒢).symm
-          (GG.phi 𝒢.G.hom 𝒢.unitSection HeightModelM2.genericPt_specializes s (m i))) ∈
-            ⨅ s', printedOmegaAt 𝒢 s'
-        rw [map_smul]
-        change d i • (HeightModelM3.thetaEquiv 𝒢) ((HeightModelM3.thetaEquiv 𝒢).symm _) ∈ _
-        rw [LinearEquiv.apply_symm_apply]
-        exact hdu i
-      rw [key, ← TensorProduct.tmul_smul, ← AlternatingMap.map_smul_univ]
-      exact Submodule.subset_span ⟨fun i => ⟨_, hmem i⟩, rfl⟩
+    obtain ⟨d, hd, hdP⟩ := exists_smul_wedge_mem 𝒢 g s _
+      (fun i => phi_mem_printedOmegaAt 𝒢 s (m i))
+    exact ⟨d, hd, (congrArg (fun X => d • X ∈ printedDetLattice 𝒢 g) key).mpr hdP⟩
   | zero =>
-    refine ⟨1, fun h => s.isPrime.ne_top ((Ideal.eq_top_iff_one _).mpr h), ?_⟩
     have h0 : stalkTopMap 𝒢 g s
         ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm 0) = 0 :=
       (congrArg (stalkTopMap 𝒢 g s) (map_zero _)).trans (stalkTopMap_zero 𝒢 g s)
-    rw [h0, smul_zero]
-    exact Submodule.zero_mem _
+    have h1 : (1 : 𝓞 L) • (0 : 𝒢.hodgeSpace g) ∈ printedDetLattice 𝒢 g := by
+      rw [smul_zero]; exact Submodule.zero_mem _
+    exact ⟨1, fun h => s.isPrime.ne_top ((Ideal.eq_top_iff_one _).mpr h),
+      (congrArg (fun X => (1 : 𝓞 L) • X ∈ printedDetLattice 𝒢 g) h0).mpr h1⟩
   | add x y _ _ hx hy =>
     obtain ⟨d₁, hd₁, h₁⟩ := hx
     obtain ⟨d₂, hd₂, h₂⟩ := hy
-    refine ⟨d₁ * d₂, fun h => (s.isPrime.mem_or_mem h).elim hd₁ hd₂, ?_⟩
     have h0 : stalkTopMap 𝒢 g s
         ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm (x + y)) =
         stalkTopMap 𝒢 g s ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm x)
           + stalkTopMap 𝒢 g s
             ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm y) :=
       (congrArg (stalkTopMap 𝒢 g s) (map_add _ x y)).trans (stalkTopMap_add 𝒢 g s _ _)
-    rw [h0, smul_add]
-    refine Submodule.add_mem _ ?_ ?_
-    · rw [mul_comm, mul_smul]; exact Submodule.smul_mem _ _ h₁
-    · rw [mul_smul]; exact Submodule.smul_mem _ _ h₂
+    have hadd : ∀ z₁ z₂ : 𝒢.hodgeSpace g, d₁ • z₁ ∈ printedDetLattice 𝒢 g →
+        d₂ • z₂ ∈ printedDetLattice 𝒢 g → (d₁ * d₂) • (z₁ + z₂) ∈ printedDetLattice 𝒢 g := by
+      intro z₁ z₂ h₁' h₂'
+      rw [smul_add]
+      refine Submodule.add_mem _ ?_ ?_
+      · rw [mul_comm, mul_smul]; exact Submodule.smul_mem _ _ h₁'
+      · rw [mul_smul]; exact Submodule.smul_mem _ _ h₂'
+    exact ⟨d₁ * d₂, fun h => (s.isPrime.mem_or_mem h).elim hd₁ hd₂,
+      (congrArg (fun X => (d₁ * d₂) • X ∈ printedDetLattice 𝒢 g) h0).mpr (hadd _ _ h₁ h₂)⟩
   | smul r x _ hx =>
     obtain ⟨d, hd, h⟩ := hx
-    obtain ⟨⟨a, t⟩, hat⟩ := IsLocalization.surj s.asIdeal.primeCompl r
-    have hat' : HeightModelM3.sigma s r * baseStalk (genericPt L) (t : 𝓞 L) =
-        baseStalk (genericPt L) a := by
-      have h0 := congrArg (HeightModelM3.sigma s) hat
-      rwa [map_mul, show algebraMap (𝓞 L) _ (t : 𝓞 L) = baseStalk s t from rfl,
-        show algebraMap (𝓞 L) _ a = baseStalk s a from rfl, HeightModelM3.sigma_baseStalk,
-        HeightModelM3.sigma_baseStalk] at h0
-    have hL : algebraMap (𝓞 L) L (t : 𝓞 L) *
-        HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r) = algebraMap (𝓞 L) L a := by
-      rw [← HeightModelM4.etaFieldEquiv_algebraMap, ← HeightModelM4.etaFieldEquiv_algebraMap,
-        ← map_mul, mul_comm]
-      exact congrArg _ hat'
     have e1 : stalkTopMap 𝒢 g s
         ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm (r • x)) =
         HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r) • stalkTopMap 𝒢 g s
           ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm x) :=
       (congrArg (stalkTopMap 𝒢 g s) (GG.schemeWedgeStalkEquiv_symm_smul 𝒢.G.hom 𝒢.unitSection
         g s r x)).trans (stalkTopMap_smul 𝒢 g s r _)
-    refine ⟨d * t, fun h => (s.isPrime.mem_or_mem h).elim hd t.2, ?_⟩
-    rw [e1]
-    generalize stalkTopMap 𝒢 g s
-      ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm x) = z at h ⊢
-    have e2 : (d * (t : 𝓞 L)) • (HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r) • z) =
-        a • (d • z) := by
-      rw [mul_smul,
-        ← smul_assoc (t : 𝓞 L) (HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r)) z,
-        Algebra.smul_def (t : 𝓞 L) (HeightModelM4.etaFieldEquiv (HeightModelM3.sigma s r)), hL,
-        algebraMap_smul L a z, smul_comm d a z]
-    rw [e2]
-    exact Submodule.smul_mem _ a h
+    obtain ⟨d', hd', h'⟩ := exists_smul_smul_mem 𝒢 g s r _ hd h
+    exact ⟨d', hd', (congrArg (fun X => d' • X ∈ printedDetLattice 𝒢 g) e1).mpr h'⟩
 
 /-! ## The global sections -/
 

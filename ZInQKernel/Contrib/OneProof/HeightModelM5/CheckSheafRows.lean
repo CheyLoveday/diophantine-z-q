@@ -35,6 +35,8 @@ directory with the tree's lattices. Each list is expected to lie within `propext
 #print axioms ZInQ.HeightModelM5.exists_phi_eq
 #print axioms ZInQ.HeightModelM5.printedDetLattice_le_stalk
 #print axioms ZInQ.HeightModelM5.exists_smul_mem_iInf_of_mem
+#print axioms ZInQ.HeightModelM5.exists_smul_wedge_mem
+#print axioms ZInQ.HeightModelM5.exists_smul_smul_mem
 #print axioms ZInQ.HeightModelM5.exists_smul_stalkTopMap_mem
 #print axioms ZInQ.HeightModelM5.range_genericGermPullOmegaTop_eq_iInter
 #print axioms ZInQ.HeightModelM5.printedDetLattice_eq_sheaf
