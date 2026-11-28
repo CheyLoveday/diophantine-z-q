@@ -1,0 +1,430 @@
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.NormAssembly
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.Weierstrass
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.Reduction
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.Lattice
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.LatticeBasis
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.Hartogs
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.GenericComparison
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.WeierstrassDVR
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.LocalStructure
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.GroupCurveNotP1
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.DepthTwoHartogs
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.IdentityPointDepth
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreValuation
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.LatticeFinite
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.PoleLadder
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.IntegralModel
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.LocalParameter
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.LocalStructureScheme
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreFunctionField
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.TranslationNoFixedPlace
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.TreeStatements
+
+/-!
+# Axiom check for all `CMHeight62Full` files (waves 1 and 2)
+
+Imports every source file of the finite-place development in one environment: the base
+files and the wave-1 nodes, the wave-2 nodes (N6a, N6b, N6c, N8b, N9-alg, N10, N12-alg,
+N5-bridge, N9-bridge B1+B2 and B3) and the tree-facing statements. A declaration-name clash
+between files would fail here. It prints the axioms of every theorem of these files
+(352 theorems; the automatically generated `congr_simp` lemmas are omitted). Each
+should depend only on `propext`, `Classical.choice` and `Quot.sound`.
+-/
+
+namespace ZInQ.Contrib.CMHeight62Full
+
+-- NormAssembly.lean
+#print axioms abs_norm_le_absNorm_pow_of_pow_le
+#print axioms abs_norm_le_absNorm_pow_of_valuation
+#print axioms boundSubmodule_mul_le
+#print axioms boundSubmodule_self_le
+#print axioms mem_boundSubmodule
+#print axioms one_le_boundSubmodule
+#print axioms pow_le_boundSubmodule
+#print axioms pow_le_spanSingleton_of_valuation
+
+-- Weierstrass.lean
+#print axioms valuation_denom_eq
+#print axioms valuation_param_eq
+#print axioms valuation_param_sub_le
+#print axioms valuation_pow_le_of_variableChange
+
+-- Reduction.lean
+#print axioms abs_norm_algebraMap_le_of_models
+#print axioms abs_norm_le_absNorm_pow_twelve_of_models
+
+-- Lattice.lean
+#print axioms div_mem_integral_of_lt_one
+#print axioms exists_valuation_sum_eq
+#print axioms linearIndependent_of_residuallyIndependent
+#print axioms sum_integral_iff
+
+-- LatticeBasis.lean
+#print axioms IsUniformizer.le_of_lt_one
+#print axioms IsUniformizer.lt_one_iff_div
+#print axioms IsUniformizer.valuation_ne_zero
+#print axioms exists_best_approximation
+#print axioms exists_lattice_basis
+#print axioms exists_linearForm_of_notMem
+#print axioms exists_residuallyIndependent_basis
+#print axioms exists_residuallyIndependent_cons
+#print axioms exists_residuallyIndependent_fin
+#print axioms exists_zpow_bound
+#print axioms le_of_zpow_le_zpow_of_lt_one_aux
+#print axioms residuallyIndependent_cons
+#print axioms zpow_le_zpow_of_lt_one_of_le_aux
+
+-- Hartogs.lean
+#print axioms algebraMap_surjective_of_forall_height_ne_one
+#print axioms algebraMap_surjective_of_ringKrullDim_nonpos
+#print axioms exists_isPrime_hartogsConductor
+#print axioms hartogsConductor_le_smul
+#print axioms height_hartogsConductor_eq_one
+#print axioms iInf_localization_height_one
+#print axioms iInf_localization_height_one_fractionRing
+#print axioms iInf_localization_height_one_of_isField
+#print axioms mem_hartogsConductor
+#print axioms mem_localizationAtPrimeSubalgebra_iff
+#print axioms mem_range_of_forall_height_one
+
+-- GenericComparison.lean
+#print axioms exists_variableChange_of_mem_span
+#print axioms exists_variableChange_of_poleSpaces
+#print axioms genCmp_coeff_eq_zero
+#print axioms genCmp_coeffs_eq_zero
+#print axioms genCmp_equation_baseChange_iff
+#print axioms genCmp_equation_smul
+#print axioms genCmp_val_smul_le
+
+-- WeierstrassDVR.lean
+#print axioms closure_eq_closure_param
+#print axioms coe_toIntegers
+#print axioms equation_variableChange_map
+#print axioms exists_singular_of_partials
+#print axioms exists_singular_point_char_three
+#print axioms exists_singular_point_char_two
+#print axioms exists_singular_point_of_Δ_eq_zero
+#print axioms exists_singular_point_short
+#print axioms exists_weierstrassCurve_of_fin_relation
+#print axioms exists_weierstrassCurve_of_relation
+#print axioms isLocalHom_toIntegers
+#print axioms isSingularParam_of_Δ_eq_zero
+#print axioms isSingularParam_reduce
+#print axioms param_of_singular
+#print axioms reduce_algebraMap_mul
+#print axioms reduce_equation
+#print axioms singular_of_variableChange
+#print axioms valuation_algebraMap_mul_le
+#print axioms valuation_eq_of_sq_eq
+#print axioms valuation_of_eq_sq_add
+#print axioms weierstrass_equation_map
+#print axioms weierstrass_normalization_dvr
+#print axioms weierstrass_polyX_variableChange
+#print axioms weierstrass_polyY_variableChange
+#print axioms weierstrass_poly_variableChange
+
+-- LocalStructure.lean
+#print axioms bijective_toSpanSingleton_cotangent
+#print axioms cotangentBasis_apply
+#print axioms exists_param
+#print axioms isRegularLocalRing
+#print axioms ker_isPrime
+#print axioms ker_le_span_sup_sq
+#print axioms ker_localSection_eq_span
+#print axioms ker_lt_sectionPrime
+#print axioms ker_notMem_minimalPrimes
+#print axioms localSection_algebraMap
+#print axioms localStructure
+#print axioms localStructure_of_standardSmooth
+#print axioms map_ker_eq_span
+#print axioms maximalIdeal_eq_span
+#print axioms mem_sq_of_secDer_eq_zero
+#print axioms mul_pow_ne_zero_of_secDer
+#print axioms ringKrullDim_eq_two
+#print axioms secDer_add
+#print axioms secDer_algebraMap
+#print axioms secDer_eq_zero_of_mem_sq
+#print axioms secDer_mul
+#print axioms secDer_one
+#print axioms secDer_sub
+#print axioms secDer_zero
+#print axioms sectionPrime_eq_ker_sup
+#print axioms spanFinrank_maximalIdeal_le_two
+#print axioms sub_mem_sq
+#print axioms two_le_height_sectionPrime
+#print axioms two_le_ringKrullDim
+
+-- GroupCurveNotP1.lean
+#print axioms GroupCurveNotP1.adjoin_le_place
+#print axioms GroupCurveNotP1.aeval_mem_place
+#print axioms GroupCurveNotP1.comap_comap_symm
+#print axioms GroupCurveNotP1.comap_ratPlace_eq
+#print axioms GroupCurveNotP1.comap_symm_comap
+#print axioms GroupCurveNotP1.eq_algebraMap_of_forall_mem
+#print axioms GroupCurveNotP1.eq_mul_of_mem_nonunits
+#print axioms GroupCurveNotP1.eq_of_le_of_nonunits
+#print axioms GroupCurveNotP1.eq_zero_of_algebraMap_mem_nonunits
+#print axioms GroupCurveNotP1.exists_constPlace_not_mem
+#print axioms GroupCurveNotP1.exists_mobius
+#print axioms GroupCurveNotP1.exists_poly_of_mem_pow
+#print axioms GroupCurveNotP1.exists_sub_eq_mul
+#print axioms GroupCurveNotP1.hasSimplePoleOnlyAt_comap
+#print axioms GroupCurveNotP1.inv_not_mem_of_mem_nonunits
+#print axioms GroupCurveNotP1.inv_sub_not_mem_ratPlace
+#print axioms GroupCurveNotP1.isConstPlace_comap
+#print axioms GroupCurveNotP1.isConstPlace_ratPlace
+#print axioms GroupCurveNotP1.isDegreeOnePlace_comap
+#print axioms GroupCurveNotP1.isDegreeOnePlace_ratPlace
+#print axioms GroupCurveNotP1.isIntegral_of_forall_mem
+#print axioms GroupCurveNotP1.mem_comap_algEquiv
+#print axioms GroupCurveNotP1.mem_nonunits_comap
+#print axioms GroupCurveNotP1.mem_nonunits_of_inv_not_mem
+#print axioms GroupCurveNotP1.mem_of_isIntegral
+#print axioms GroupCurveNotP1.mem_of_mem_nonunits
+#print axioms GroupCurveNotP1.mem_ratPlace
+#print axioms GroupCurveNotP1.mul_mem_nonunits
+#print axioms GroupCurveNotP1.ne_zero_of_hasSimplePoleOnlyAt
+#print axioms GroupCurveNotP1.ratPlace_aux
+#print axioms GroupCurveNotP1.ratPlace_eq
+#print axioms GroupCurveNotP1.sub_mem_nonunits_ratPlace
+#print axioms GroupCurveNotP1.sub_mem_ratPlace
+#print axioms GroupCurveNotP1.sub_ne_zero_of_hasSimplePoleOnlyAt
+#print axioms GroupCurveNotP1.transcendental_of_hasSimplePoleOnlyAt
+#print axioms GroupCurveNotP1.valuation_aeval_eq_one
+#print axioms GroupCurveNotP1.valuation_aeval_le
+#print axioms GroupCurveNotP1.valuation_algebraMap_eq_one
+#print axioms GroupCurveNotP1.valuation_le_of_isIntegral
+#print axioms GroupCurveNotP1.valuation_le_of_monic_root
+#print axioms adjoin_eq_top_of_hasSimplePoleOnlyAt
+#print axioms eq_algebraMap_of_mul_uniformizer_mem
+#print axioms eq_algebraMap_of_mul_uniformizer_mem_of_baseChange
+#print axioms false_of_hasSimplePoleOnlyAt
+#print axioms not_hasSimplePoleOnlyAt
+#print axioms not_hasSimplePoleOnlyAt_of_baseChange
+
+-- DepthTwoHartogs.lean
+#print axioms depthTwo_exists_maximalIdeal_eq_span_pair
+#print axioms depthTwo_exists_mem_maximalIdeal_notMem
+#print axioms depthTwo_exists_pow_mul
+#print axioms depthTwo_height
+#print axioms depthTwo_height_maximalIdeal
+#print axioms depthTwo_height_one_cases
+#print axioms depthTwo_iInf_localization_height_one
+#print axioms depthTwo_isDVR
+#print axioms depthTwo_isDomain
+#print axioms depthTwo_isPrime
+#print axioms depthTwo_mem_range
+#print axioms depthTwo_ringKrullDim
+
+-- IdentityPointDepth.lean
+#print axioms IdentityPointDepth.algebraMap_mem_nonZeroDivisors_of_flat
+#print axioms IdentityPointDepth.exists_eq_pow_mul_isUnit_of_maximalIdeal_eq_span
+#print axioms IdentityPointDepth.flat_localization
+#print axioms IdentityPointDepth.flat_of_standardSmooth
+#print axioms IdentityPointDepth.isDiscreteValuationRing_of_maximalIdeal_eq_span
+#print axioms IdentityPointDepth.isDomain_of_maximalIdeal_eq_span
+#print axioms IdentityPointDepth.ker_localSectionAlgHom
+#print axioms IdentityPointDepth.localSectionAlgHom_apply
+#print axioms IdentityPointDepth.localSectionAlgHom_surjective
+#print axioms IdentityPointDepth.maximalIdeal_quotient_eq_span
+#print axioms IdentityPointDepth.not_isNilpotent_mk_of_maximalIdeal_eq
+#print axioms IdentityPointDepth.quotientSpanEquiv_mk
+#print axioms IdentityPointDepth.quotient_isDiscreteValuationRing
+#print axioms IdentityPointDepth.quotient_isDomain
+#print axioms IdentityPointDepth.quotient_ringKrullDim
+#print axioms identityPoint_depthTwo
+#print axioms identityPoint_isNoetherianRing
+#print axioms identityPoint_mem_maximalIdeal
+#print axioms identityPoint_mem_nonZeroDivisors
+#print axioms identityPoint_of_depthTwo
+#print axioms identityPoint_quotient_isDiscreteValuationRing
+#print axioms identityPoint_quotient_isDomain
+
+-- SpecialFibreValuation.lean
+#print axioms SpecialFibreValuation.algebraMap_ne_zero_of_irreducible
+#print axioms SpecialFibreValuation.algebraMap_primeLocalization_apply
+#print axioms SpecialFibreValuation.exists_mk_eq_mk_mul
+#print axioms SpecialFibreValuation.exists_mul_specialFibreResidueMap_eq
+#print axioms SpecialFibreValuation.isDegreeOnePlace_specialFibrePlace
+#print axioms SpecialFibreValuation.isDiscreteValuationRing_primeLocalization
+#print axioms SpecialFibreValuation.isFractionRing_primeLocalization
+#print axioms SpecialFibreValuation.isFractionRing_specialFibreResidueMap
+#print axioms SpecialFibreValuation.isLocalRing_primeLocalization
+#print axioms SpecialFibreValuation.isLocalization_primeLocalization
+#print axioms SpecialFibreValuation.isPrime_span_algebraMap
+#print axioms SpecialFibreValuation.isUniformizerAt_specialFibrePlace
+#print axioms SpecialFibreValuation.maximalIdeal_primeLocalization
+#print axioms SpecialFibreValuation.mem_of_mem_nonunits_specialFibrePlace
+#print axioms SpecialFibreValuation.mem_specialFibrePlace
+#print axioms SpecialFibreValuation.not_isUnit_mk_of_mem_ker
+#print axioms SpecialFibreValuation.primeValuation_algebraMap_eq_one
+#print axioms SpecialFibreValuation.primeValuation_algebraMap_le_one
+#print axioms SpecialFibreValuation.primeValuation_algebraMap_lt_one_iff
+#print axioms SpecialFibreValuation.primeValuation_eq_zpow
+#print axioms SpecialFibreValuation.primeValuation_le_one
+#print axioms SpecialFibreValuation.primeValuation_le_one_iff
+#print axioms SpecialFibreValuation.primeValuation_le_one_iff_mem_range
+#print axioms SpecialFibreValuation.primeValuation_lt_one_iff_mem
+#print axioms SpecialFibreValuation.residueHom_residue_eq
+#print axioms SpecialFibreValuation.specialFibreResidueMap_injective
+#print axioms SpecialFibreValuation.specialFibreResidueMap_mem_nonunits_iff
+#print axioms SpecialFibreValuation.specialFibreResidueMap_mk
+#print axioms SpecialFibreValuation.specialFibreValuation_algebraMap_base_le_one
+#print axioms SpecialFibreValuation.specialFibreValuation_algebraMap_base_lt_one
+#print axioms SpecialFibreValuation.specialFibreValuation_algebraMap_le_one
+#print axioms SpecialFibreValuation.specialFibreValuation_algebraMap_lt_one_iff
+#print axioms SpecialFibreValuation.specialFibreValuation_eq_zpow
+#print axioms SpecialFibreValuation.specialFibreValuation_field_le_one_iff
+#print axioms SpecialFibreValuation.specialFibreValuation_le_one_iff
+#print axioms exists_specialFibreValuation
+
+-- LatticeFinite.lean
+#print axioms eq_span_singleton_of_height_eq_one
+#print axioms exists_coeff_of_exists_coeff_algebraMap
+#print axioms exists_family_of_ker_eq_bot
+#print axioms exists_family_of_ne_zero
+#print axioms exists_finite_span_of_poleBound
+#print axioms exists_lattice_basis_of_poleBound
+#print axioms exists_mem_span_pow_add_mul
+#print axioms finite_quotient_span_pow
+#print axioms mem_poleLatticeSubmodule
+
+-- PoleLadder.lean
+#print axioms eq_zero_of_sum_residueHom_mul_reduce
+#print axioms exists_exactPoleOrder_two_three
+#print axioms exists_finset_polePart_le_span
+#print axioms exists_not_mem_polePart_of_linearIndependent
+#print axioms exists_polePart_succ_le
+#print axioms exists_reduce_not_mem_polePart
+#print axioms finiteDimensional_polePart
+#print axioms finrank_polePart_le
+#print axioms isUnit_of_valuation_eq_one'
+#print axioms linearIndependent_reduce
+#print axioms mem_polePart
+#print axioms mem_polePart_iff
+#print axioms mem_polePart_of_mul_pow_mem_nonunits
+#print axioms mul_pow_mem_nonunits_iff
+#print axioms not_mem_polePart_iff_valuation_eq_one
+#print axioms polePart_gap_of_baseChange
+#print axioms polePart_mono
+#print axioms span_eq_polePart_of_linearIndependent
+#print axioms valuation_algebraMap_eq_one_of_isUnit
+
+-- IntegralModel.lean
+#print axioms IntegralModel.add_ne_zero_of_valuation_lt
+#print axioms IntegralModel.coeff_ne_zero_of_poleOrders
+#print axioms IntegralModel.exists_integralModel
+#print axioms IntegralModel.exists_integralModel_of_baseChange
+#print axioms IntegralModel.exists_relation_of_finrank_lt
+#print axioms IntegralModel.exists_unit_coeff_relation
+#print axioms IntegralModel.reduce_seven_relation
+#print axioms IntegralModel.valuation_mul_le_pow
+
+-- LocalParameter.lean
+#print axioms LocalParameter.eq_span_of_height_eq_one
+#print axioms LocalParameter.exists_localParameter_of_standardSmooth
+#print axioms LocalParameter.exists_mul_pow_eq
+#print axioms LocalParameter.exists_unit_localParameter
+#print axioms LocalParameter.exists_unit_localParameter_of_maximalIdeal
+#print axioms LocalParameter.exists_unit_localParameter_of_units_smul
+#print axioms LocalParameter.isUnit_of_reduce_notMem_nonunits
+#print axioms LocalParameter.mul_pow_succ_notMem_nonunits
+#print axioms LocalParameter.reduceHom_apply
+#print axioms LocalParameter.reduce_congr
+#print axioms LocalParameter.reduce_eq_zero
+#print axioms LocalParameter.reduce_mem_nonunits_of_maximalIdeal
+#print axioms LocalParameter.reduce_mul
+#print axioms LocalParameter.reduce_pow
+
+-- LocalStructureScheme.lean
+#print axioms chartBase_isLocalization
+#print axioms chartSection_algebraMap
+#print axioms chartSection_tmul
+#print axioms comap_ker_chartSection
+#print axioms comap_sectionPrime_chartSection
+#print axioms eq_one_of_genericSection_equiv
+#print axioms exists_localModel
+#print axioms exists_localModel_generic
+#print axioms exists_localModel_of_smooth
+#print axioms exists_localizationEquiv
+#print axioms exists_localizationEquiv_of_comap
+#print axioms finrank_cotangentSpace_eq_of_basis
+#print axioms finrank_cotangentSpace_genericSection
+#print axioms germ_appLE_of_eq_id
+#print axioms isFractionRing_residueField_genericSection
+#print axioms isLocalHom_ringEquiv_toRingHom
+#print axioms isPrime_asIdeal_specPoint
+#print axioms isPrime_ker_sectionAlgHom
+#print axioms isUnit_algebraMap_genericSection
+#print axioms residue_algebraMap_genericSection
+
+-- SpecialFibreFunctionField.lean
+#print axioms SpecialFibreFunctionField.algebraMap_mem_liftValuationSubring
+#print axioms SpecialFibreFunctionField.exists_centre
+#print axioms SpecialFibreFunctionField.inv_mem_of_not_mem
+#print axioms SpecialFibreFunctionField.liftValuationSubring_le
+#print axioms SpecialFibreFunctionField.mem_centre_of_hartogs
+#print axioms SpecialFibreFunctionField.mem_liftValuationSubring
+#print axioms SpecialFibreFunctionField.reduce_mem_of_mem_centre
+#print axioms SpecialFibreFunctionField.reduce_mem_polePart
+#print axioms SpecialFibreFunctionField.residue_inv_mem
+#print axioms SpecialFibreFunctionField.trdegLeOne_fibre_stalk
+#print axioms SpecialFibreFunctionField.trdegLeOne_of_baseChange
+#print axioms SpecialFibreFunctionField.trdegLeOne_of_formallyUnramified
+#print axioms SpecialFibreFunctionField.trdegLeOne_of_isAlgebraic_adjoin
+#print axioms SpecialFibreFunctionField.trdegLeOne_of_isLocalization
+#print axioms SpecialFibreFunctionField.trdegLeOne_quotient_localization
+#print axioms SpecialFibreFunctionField.trdegLeOne_specialFibre
+#print axioms SpecialFibreFunctionField.trdegLeOne_stalk
+
+-- TranslationNoFixedPlace.lean
+#print axioms TranslationNoFixedPlace.algebraMap_comp_fieldMap
+#print axioms TranslationNoFixedPlace.algebraMap_residue_eq
+#print axioms TranslationNoFixedPlace.algebraMap_residue_surjective_of_isClosed
+#print axioms TranslationNoFixedPlace.comp_translate
+#print axioms TranslationNoFixedPlace.exists_fixed_point_of_comap_eq
+#print axioms TranslationNoFixedPlace.exists_point_of_isClosed
+#print axioms TranslationNoFixedPlace.exists_residue_retraction
+#print axioms TranslationNoFixedPlace.fieldEquiv_apply
+#print axioms TranslationNoFixedPlace.fieldMap_algebraMap
+#print axioms TranslationNoFixedPlace.fromSpecResidueField_hom
+#print axioms TranslationNoFixedPlace.gammaEvaluation_congr
+#print axioms TranslationNoFixedPlace.image_mem_irreducibleComponents
+#print axioms TranslationNoFixedPlace.instIsIsoCommRingCatFieldMap
+#print axioms TranslationNoFixedPlace.instIsIsoOverSchemeSpecOfTranslate
+#print axioms TranslationNoFixedPlace.not_isUnit_map
+#print axioms TranslationNoFixedPlace.one_of_comp_translate
+#print axioms TranslationNoFixedPlace.spec_fieldMap
+#print axioms TranslationNoFixedPlace.spec_fromSpecResidueField_eq
+#print axioms TranslationNoFixedPlace.translate_comp_translate
+#print axioms TranslationNoFixedPlace.translate_eq_mul
+#print axioms TranslationNoFixedPlace.translate_one
+#print axioms TranslationNoFixedPlace.translationInput_of_component
+#print axioms exists_noFixedPlace_baseChange
+#print axioms exists_noFixedPlace_baseChange_of_component
+#print axioms exists_noFixedPlace_of_component
+#print axioms exists_noFixedPlace_of_translation
+#print axioms noFixedDegreeOnePlace_of_noFixedPoint
+#print axioms not_hasSimplePoleOnlyAt_of_component
+#print axioms not_hasSimplePoleOnlyAt_of_translation
+#print axioms not_isClosed_of_isDegreeOnePlace
+#print axioms translation_noFixedDegreeOnePlace
+
+-- TreeStatements.lean
+#print axioms abs_norm_le_of_comparisons
+#print axioms abs_norm_le_of_localModels
+#print axioms exists_variableChange_of_riemannRoch
+#print axioms finrank_poleSpaceIn
+#print axioms finrank_poleSpace_of_dim
+#print axioms localModel_of_comparison
+#print axioms mem_poleSpaceIn_iff
+#print axioms mem_poleSpace_iff
+#print axioms one_lt_exp_one_int
+#print axioms one_mem_poleSpace
+#print axioms poleSpace_mono
+#print axioms poleSpace_two_eq_span
+#print axioms setOf_eq_poleSpace
+#print axioms sup_span_singleton_eq_of_finrank_le
+#print axioms valuation_mul_le_of_mem_line
+
+end ZInQ.Contrib.CMHeight62Full
