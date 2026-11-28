@@ -721,6 +721,62 @@ theorem hcentre_of_smoothModel {S : Type} [CommRing S] {X : Scheme.{0}} [IsInteg
 
 end Assembly
 
+section CentreHom
+
+open Centre
+
+variable {C : Type*} [CommRing C] (p0 : Ideal C) [p0.IsPrime] {Tη : Type*} [CommRing Tη]
+  [Algebra C Tη] [IsLocalization.AtPrime Tη p0] {Ω : Type*} [Field Ω] {Γ₀ : Type*}
+  [LinearOrderedCommGroupWithZero Γ₀] (w : Valuation Ω Γ₀) (F : Tη →+* Ω) (G : C →+* Ω)
+  (hFG : ∀ c, F (algebraMap C Tη c) = G c) (hG1 : ∀ c, w (G c) ≤ 1)
+  (hGlt : ∀ c, w (G c) < 1 ↔ c ∈ p0)
+  (hsurj : ∀ g : Ω, w g ≤ 1 → ∃ c d : C, d ∉ p0 ∧ G d * g = G c)
+
+include hFG hG1 hGlt hsurj in
+/-- **The centre of `w`.** If `T` is the localization of `C` at `p₀`, and `G : C → Ω` has `w ≤ 1`
+everywhere, `w < 1` exactly on `p₀`, and every element of `𝒪_w` is a fraction `G c / G d` with
+`d ∉ p₀`, then `F : T → Ω` factors through a local surjection `T → 𝒪_w`. -/
+theorem exists_centre_hom :
+    ∃ φ₀ : Tη →+* w.valuationSubring, IsLocalHom φ₀ ∧ (∀ b, F b = φ₀ b) ∧
+      Function.Surjective φ₀ := by
+  have hGd : ∀ d : C, d ∉ p0 → w (G d) = 1 := fun d hd =>
+    le_antisymm (hG1 d) (not_lt.1 fun h => hd ((hGlt d).1 h))
+  have hmk : ∀ (c : C) (d : p0.primeCompl),
+      F (IsLocalization.mk' Tη c d) * G d = G c := by
+    intro c d
+    rw [← hFG, ← hFG, ← map_mul, IsLocalization.mk'_spec]
+  have hval : ∀ (c : C) (d : p0.primeCompl), w (F (IsLocalization.mk' Tη c d)) = w (G c) := by
+    intro c d
+    have h := congrArg w (hmk c d)
+    rwa [map_mul, hGd d d.2, mul_one] at h
+  have hF1 : ∀ b, w (F b) ≤ 1 := fun b => by
+    obtain ⟨⟨c, d⟩, rfl⟩ := IsLocalization.mk'_surjective p0.primeCompl b
+    rw [hval]
+    exact hG1 c
+  let φ₀ : Tη →+* w.valuationSubring :=
+    F.codRestrict _ fun b => (w.mem_valuationSubring_iff _).2 (hF1 b)
+  refine ⟨φ₀, ⟨fun b hb => ?_⟩, fun _ => rfl, fun ⟨g, hg⟩ => ?_⟩
+  · by_contra hnu
+    have := IsLocalization.AtPrime.isLocalRing Tη p0
+    obtain ⟨⟨c, d⟩, rfl⟩ := IsLocalization.mk'_surjective p0.primeCompl b
+    have hc : c ∈ p0 := (IsLocalization.AtPrime.mk'_mem_maximal_iff Tη p0 c d).1
+      ((IsLocalRing.mem_maximalIdeal _).2 hnu)
+    have h1 := val_eq_one_of_isUnit w hb
+    change w (F _) = 1 at h1
+    rw [hval] at h1
+    exact absurd ((hGlt c).2 hc) (by rw [h1]; exact lt_irrefl _)
+  · obtain ⟨c, d, hd, hcd⟩ := hsurj g ((w.mem_valuationSubring_iff _).1 hg)
+    refine ⟨IsLocalization.mk' Tη c (⟨d, hd⟩ : p0.primeCompl), Subtype.ext ?_⟩
+    have hd0 : G d ≠ 0 := fun h => by
+      have := hGd d hd
+      rw [h, map_zero] at this
+      exact zero_ne_one this
+    change F _ = g
+    apply mul_right_cancel₀ hd0
+    rw [hmk c ⟨d, hd⟩, ← hcd, mul_comm]
+
+end CentreHom
+
 section Instantiation
 
 open AlgebraicGeometry CategoryTheory SpecialFibreFunctionField SpecialFibreValuation
@@ -782,15 +838,145 @@ theorem ne_of_isCentre (O : ValuationSubring (ResidueField
     exact (φc.hom (φ a)).2
   exact hmem
 
+omit [IsDiscreteValuationRing (Localization.AtPrime (sectionPrime σ) ⧸
+  Ideal.span {(algebraMap (Localization.AtPrime s.asIdeal)
+    (Localization.AtPrime (sectionPrime σ)) ϖ)})] in
 include hϖ in
+set_option maxHeartbeats 800000 in
+/-- **The centre of `w` on `X`.** The prime `(ϖ)` of `𝒪_{X,e(s)} ≅ A` is the generic point `η` of
+the special-fibre component through `e(s)`, and `τ` restricts to a local surjection
+`𝒪_{X,η} → 𝒪_w`. -/
+theorem exists_generic_centre :
+    ∃ (η : X) (φ₀ : X.presheaf.stalk η ⟶ CommRingCat.of
+      (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+        (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ).valuationSubring),
+      IsLocalHom φ₀.hom ∧
+      (∀ b, (functionFieldHom e s σ φ).hom
+        ((X.presheaf.stalkSpecializes (genericPoint_specializes η)).hom b) =
+          algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) (φ₀.hom b)) ∧
+      Function.Surjective φ₀.hom := by
+  obtain ⟨V, hV, hxV, -⟩ := exists_isAffineOpen_mem_and_subset (x := e s) (U := ⊤) trivial
+  let _ : Algebra Γ(X, V) (X.presheaf.stalk (e s)) := (X.presheaf.germ V (e s) hxV).hom.toAlgebra
+  have hp : IsLocalization.AtPrime (X.presheaf.stalk (e s)) (hV.primeIdealOf ⟨e s, hxV⟩).asIdeal :=
+    hV.isLocalization_stalk ⟨e s, hxV⟩
+  let P := Ideal.span {(algebraMap (Localization.AtPrime s.asIdeal)
+    (Localization.AtPrime (sectionPrime σ)) ϖ)}
+  have hP : P.IsPrime := isPrime_span_algebraMap _
+  let ψ : Γ(X, V) →+* Localization.AtPrime (sectionPrime σ) :=
+    φ.symm.toRingHom.comp (X.presheaf.germ V (e s) hxV).hom
+  let p0 := P.comap ψ
+  have hp0 : p0.IsPrime := Ideal.comap_isPrime ψ P
+  let y : Spec Γ(X, V) := ⟨p0, hp0⟩
+  have hη : hV.fromSpec y ∈ V := by
+    have h : hV.fromSpec y ∈ (V : Set X) := hV.range_fromSpec ▸ ⟨y, rfl⟩
+    exact h
+  let algη : Algebra Γ(X, V) (X.presheaf.stalk (hV.fromSpec y)) :=
+    (X.presheaf.germ V (hV.fromSpec y) hη).hom.toAlgebra
+  have hηl : IsLocalization.AtPrime (X.presheaf.stalk (hV.fromSpec y)) p0 :=
+    hV.isLocalization_stalk' y hη
+  -- `η` specializes to `e(s)`
+  have hle : p0 ≤ (hV.primeIdealOf ⟨e s, hxV⟩).asIdeal := by
+    intro c hc
+    rw [← IsLocalization.AtPrime.under_maximalIdeal (X.presheaf.stalk (e s))
+      (hV.primeIdealOf ⟨e s, hxV⟩).asIdeal]
+    change algebraMap Γ(X, V) (X.presheaf.stalk (e s)) c ∈ IsLocalRing.maximalIdeal _
+    have hPm : ψ c ∈ IsLocalRing.maximalIdeal (Localization.AtPrime (sectionPrime σ)) := by
+      refine (IsLocalRing.le_maximalIdeal hP.ne_top) hc
+    have h1 : φ (ψ c) = algebraMap Γ(X, V) (X.presheaf.stalk (e s)) c := by
+      change φ (φ.symm _) = _
+      rw [RingEquiv.apply_symm_apply]
+      rfl
+    rw [← h1]
+    exact (map_mem_nonunits_iff
+      (φ : Localization.AtPrime (sectionPrime σ) →+* X.presheaf.stalk (e s)) _).2 hPm
+  have hηs : hV.fromSpec y ⤳ e s := by
+    have h := ((PrimeSpectrum.le_iff_specializes y (hV.primeIdealOf ⟨e s, hxV⟩)).1 hle).map
+      hV.fromSpec.continuous
+    rwa [hV.fromSpec_primeIdealOf] at h
+  -- the maps `F` and `G`
+  let F : X.presheaf.stalk (hV.fromSpec y) →+* FractionRing (Localization.AtPrime (sectionPrime σ)) :=
+    (X.presheaf.stalkSpecializes (genericPoint_specializes _) ≫ functionFieldHom e s σ φ).hom
+  let G : Γ(X, V) →+* FractionRing (Localization.AtPrime (sectionPrime σ)) :=
+    (algebraMap _ _).comp ψ
+  have hFG : ∀ c, F (algebraMap Γ(X, V) (X.presheaf.stalk (hV.fromSpec y)) c) = G c := by
+    intro c
+    have h1 : algebraMap Γ(X, V) (X.presheaf.stalk (hV.fromSpec y)) c =
+        (X.presheaf.stalkSpecializes hηs).hom ((X.presheaf.germ V (e s) hxV).hom c) :=
+      (TopCat.Presheaf.germ_stalkSpecializes_apply X.presheaf hxV hηs c).symm
+    have h2 := congrArg (fun m => m.hom ((X.presheaf.germ V (e s) hxV).hom c))
+      (TopCat.Presheaf.stalkSpecializes_comp X.presheaf (genericPoint_specializes _) hηs)
+    simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h2
+    change (functionFieldHom e s σ φ).hom
+      ((X.presheaf.stalkSpecializes (genericPoint_specializes _)).hom _) = _
+    rw [h1, h2]
+    have h3 : (X.presheaf.germ V (e s) hxV).hom c = φ (ψ c) := by
+      change _ = φ (φ.symm _)
+      rw [RingEquiv.apply_symm_apply]
+    rw [h3, functionFieldHom_germ]
+    rfl
+  have hG1 : ∀ c, specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+      (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ (G c) ≤ 1 := fun c =>
+    specialFibreValuation_algebraMap_le_one hϖ (ψ c)
+  have hGlt : ∀ c, specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+      (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ (G c) < 1 ↔ c ∈ p0 := fun c =>
+    specialFibreValuation_algebraMap_lt_one_iff hϖ (ψ c)
+  have hunit : ∀ d : Γ(X, V), d ∉ (hV.primeIdealOf ⟨e s, hxV⟩).asIdeal → IsUnit (ψ d) := by
+    intro d hd
+    have h := IsLocalization.map_units (X.presheaf.stalk (e s))
+      (⟨d, hd⟩ : (hV.primeIdealOf ⟨e s, hxV⟩).asIdeal.primeCompl)
+    exact h.map φ.symm.toRingHom
+  have hfrac : ∀ a : Localization.AtPrime (sectionPrime σ), ∃ c d : Γ(X, V),
+      d ∉ (hV.primeIdealOf ⟨e s, hxV⟩).asIdeal ∧ ψ c = a * ψ d := by
+    intro a
+    obtain ⟨⟨c, d⟩, hcd⟩ := IsLocalization.mk'_surjective
+      (hV.primeIdealOf ⟨e s, hxV⟩).asIdeal.primeCompl (φ a)
+    refine ⟨c, d, d.2, ?_⟩
+    have h := IsLocalization.mk'_spec (X.presheaf.stalk (e s)) c d
+    change IsLocalization.mk' _ c d = φ a at hcd
+    rw [hcd] at h
+    change φ.symm (algebraMap _ _ c) = a * φ.symm (algebraMap _ _ (d : Γ(X, V)))
+    rw [← h, map_mul, RingEquiv.symm_apply_apply]
+  have hsurj : ∀ g, specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+      (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ g ≤ 1 →
+      ∃ c d : Γ(X, V), d ∉ p0 ∧
+      G d * g = G c := by
+    intro g hg
+    obtain ⟨r, t, ht, hrt⟩ := (specialFibreValuation_le_one_iff hϖ g).1 hg
+    obtain ⟨c1, d1, hd1, h1⟩ := hfrac r
+    obtain ⟨c2, d2, hd2, h2⟩ := hfrac t
+    refine ⟨c1 * d2, d1 * c2, ?_, ?_⟩
+    · change ψ (d1 * c2) ∉ P
+      rw [map_mul, h2]
+      intro hmem
+      rcases hP.mem_or_mem hmem with h | h
+      · exact hP.ne_top (Ideal.eq_top_of_isUnit_mem _ h (hunit d1 hd1))
+      rcases hP.mem_or_mem h with h' | h'
+      · exact ht h'
+      · exact hP.ne_top (Ideal.eq_top_of_isUnit_mem _ h' (hunit d2 hd2))
+    · simp only [G, RingHom.comp_apply, map_mul, h1, h2]
+      rw [← hrt]
+      ring
+  have key := @exists_centre_hom Γ(X, V) _ p0 hp0
+    (X.presheaf.stalk (hV.fromSpec y)) _ algη hηl _ _ _ _
+    (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+      (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ) F G hFG hG1 hGlt hsurj
+  obtain ⟨φ₀, hloc, hF, hφs⟩ := key
+  refine ⟨hV.fromSpec y, CommRingCat.ofHom φ₀, hloc, fun b => ?_, hφs⟩
+  have h := hF b
+  simp only [F, CommRingCat.hom_comp, RingHom.comp_apply] at h
+  rw [h]
+  rfl
+
+include hϖ in
+set_option maxHeartbeats 800000 in
 /-- **`hcentre` at a finite place (`exists_centre_data`).** Let `g : X ⟶ Spec S` be proper and
 smooth of relative dimension one with `X` integral, `s` a point with `R = S_s` a discrete
 valuation ring of characteristic zero with perfect residue field and uniformizer `ϖ`, and
 `φ : A ≅ 𝒪_{X,e(s)}` for the local ring `A` of the chart at the section prime. Put `Ω = Frac A`,
 `w` the special-fibre valuation and `ē` the special-fibre place. The remaining inputs are explicit:
 `hρ` (the base map `R → Ω` is the one of `g` at the generic point), `htr` (`κ_w` has
-transcendence degree at most one), the point `η` at which `w` is centred with a local surjection
-`φ₀ : 𝒪_{X,η} → 𝒪_w`, and `hAg` (`Ag` contains the local ring of no point `c ≠ e(s)` over `s`).
+transcendence degree at most one) and `hAg` (`Ag` contains the local ring of no point `c ≠ e(s)`
+over `s`); the point at which `w` is centred is `exists_generic_centre`.
 Then every constant place `O ≠ ē` has a centre as required by `reduce_mem_polePart`. -/
 theorem exists_centre_data (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g]
     [SmoothOfRelativeDimension 1 g]
@@ -807,14 +993,6 @@ theorem exists_centre_data (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g]
       Spec.map (CommRingCat.ofHom ((algebraMap (Localization.AtPrime s.asIdeal)
         (FractionRing (Localization.AtPrime (sectionPrime σ)))).comp
           (algebraMap S (Localization.AtPrime s.asIdeal)))))
-    (η : X) (φ₀ : X.presheaf.stalk η ⟶ CommRingCat.of
-      (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
-        (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ).valuationSubring)
-    [IsLocalHom φ₀.hom]
-    (hφ₀ : ∀ b, (functionFieldHom e s σ φ).hom
-      ((X.presheaf.stalkSpecializes (genericPoint_specializes η)).hom b) =
-        algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) (φ₀.hom b))
-    (hφ₀s : Function.Surjective φ₀.hom)
     (Ag : ValuationSubring (FractionRing (Localization.AtPrime (sectionPrime σ))))
     (hAg : ∀ c : X, g c = s → c ≠ e s → ∃ b : X.presheaf.stalk c,
       (functionFieldHom e s σ φ).hom
@@ -875,6 +1053,7 @@ theorem exists_centre_data (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g]
     rw [IsScalarTower.algebraMap_apply _ (Localization.AtPrime (sectionPrime σ))]
     exact (map_ne_zero_iff _ (IsFractionRing.injective _ _)).2
       (algebraMap_ne_zero_of_irreducible _ hϖ)
+  obtain ⟨η, φ₀, hφ₀l, hφ₀, hφ₀s⟩ := exists_generic_centre e s σ φ hϖ
   refine hcentre_of_smoothModel g (functionFieldHom e s σ φ) (functionFieldHom_bijective e s σ φ)
     hϖ0 (hm ϖ hϖm) (fun x hx => specialFibreValuation_eq_zpow hϖ hx) s hϖ
     (algebraMap _ _) hR hm hk htr hρ η φ₀ hφ₀ hφ₀s _ (e s) ?_ Ag hAg hhor
