@@ -37,7 +37,7 @@ it. So those fields are a DEPARTURE of form.
 
 PROVED:
 * `KummerCoordinateBlockR.tie`, `disk_valuations`: the order tie and the disk valuations of the
-  constructed disks, from the nine book statements and `arith`.
+  constructed disks, from the eight book statements and `arith`.
 * `KummerCoordinateBlockR.leafHK`: the field `hK` of the calibration leaf in its exact form.
 * `KummerCoordinateBlockR.ofLit`: every literature block gives an R-block (the link from Lit's
   `link`, `hu₀` and `hval_j`), so the R-block asks for no more than Lit.
@@ -276,7 +276,7 @@ theorem hu₀ (R : KummerCoordinateBlockR K E₀ hZ DK zK wK j vL m tA shaA) :
   change v2 (central (1 : PowerSeries ℚ_[2])) = 0
   simp [central, v2]
 
-/-- **The order tie of the constructed disks, from the nine book statements** (tex 3429–3431,
+/-- **The order tie of the constructed disks, from the eight book statements** (tex 3429–3431,
 4005–4018). Kind: PROVED. -/
 theorem tie (R : KummerCoordinateBlockR K E₀ hZ DK zK wK j vL m tA shaA)
     (B : CalibrationBookProps) : DiskTie R.G R.x₁ R.x₂ R.x₃ := by
@@ -308,7 +308,7 @@ theorem v2_bK (R : KummerCoordinateBlockR K E₀ hZ DK zK wK j vL m tA shaA) (hm
   exact v2_central_C_mul hm R.hbP
 
 /-- **The field `hK` of the calibration leaf, in its exact form** (tex 4057–4064), from the
-R-block: the nine book statements `B`, `m ≠ 0`, `z_K ⊗ w_K = u_K adj D_K` and `adj D_K ≠ 0`.
+R-block: the eight book statements `B`, `m ≠ 0`, `z_K ⊗ w_K = u_K adj D_K` and `adj D_K ≠ 0`.
 Kind: PROVED. -/
 theorem leafHK (R : KummerCoordinateBlockR K E₀ hZ DK zK wK j vL m tA shaA)
     (B : CalibrationBookProps) (hm : m ≠ 0) {uK : PowerSeries ℚ_[2]}

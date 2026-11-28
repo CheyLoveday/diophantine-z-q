@@ -10,14 +10,14 @@ asks at every address for an RC53 model with its Kummer block's named inputs: fi
 `hfinite`, the places above `2`, no real places `hK`, finite `2`-primary torsion, rank one, and
 the three disk-length identifications `hval₁`–`hval₃`. This file removes the redundant ones.
 
-* `diskLengths_of_tie`: given the nine book statements and the other named inputs, the three
+* `diskLengths_of_tie`: given the eight book statements and the other named inputs, the three
   disk-length identifications follow from the RC53 block's own order tie (`DiskTie.determined`
   against the tie of the constructed integral disks, `diskTie_of_literature`); conversely they
   give the tie (`KummerCoordinateBlockLit.tie`). So the identifications restate the old tie.
-* `calibrationInputsLit_iff_named`: the literature form is the nine statements and, at every
+* `calibrationInputsLit_iff_named`: the literature form is the eight statements and, at every
   address, an RC53 model with `hfinite`, `h2`, `hK`, `finite2` and `rank_one` (no identification).
 * `calibrationInputsLit_iff_min`: `hfinite` is derived as well (`centralCohomologyFinite` from the
-  two finiteness statements and `h2`): the literature form is exactly the nine statements and, at
+  two finiteness statements and `h2`): the literature form is exactly the eight statements and, at
   every address, an RC53 model with `h2`, `hK`, `finite2` and `rank_one`.
 * `isTotallyComplex_of_quadData_neg`, `hK_of_kfin_neg`: `hK` follows from the model's quadratic
   data when `k < 0` (the converse, that `ℚ(√k)` with `k > 0` has a real place, is standard and not
@@ -45,7 +45,7 @@ attribute [local instance] Nat.fact_prime_two
 /-! **The disk-length identifications are the old tie** -/
 
 /-- **The disk-length identifications from the RC53 tie** (tex 4005–4018, 4050–4060): for an RC53
-Kummer block `L` (`KummerCoordinateBlockG`, with its order tie), the nine book statements and the
+Kummer block `L` (`KummerCoordinateBlockG`, with its order tie), the eight book statements and the
 named inputs (finite generation, the places above `2`, no real places, finite `2`-primary
 torsion, rank one), the three disks have the lengths of the constructed integral disks: both
 satisfy an order tie for the same genuine data (`L.tie` and `diskTie_of_literature`), and an order
@@ -75,7 +75,7 @@ theorem diskLengths_of_tie {K : Type} [Field K] [NumberField K] {E₀ : Weierstr
 variable {ℓ : ℕ} {D : RCData ℓ}
 
 /-- **The literature form without the disk-length identifications** ((4.6), tex 3987–4141): the
-nine book statements and, at every address of a final family with `ord L(E^{(h_x)}) = 1` and
+eight book statements and, at every address of a final family with `ord L(E^{(h_x)}) = 1` and
 `ord L(E^{(h_x k)}) = 0`, an RC53 model with finite generation, the places above `2`, no real
 places, finite `2`-primary torsion and rank one (`calibrationInputsLit_iff`, with the
 identifications from `diskLengths_of_tie`). Kind: PROVED. -/
@@ -102,7 +102,7 @@ theorem calibrationInputsLit_iff_named :
     obtain ⟨e1, e2, e3⟩ := diskLengths_of_tie M.kummer B hfinite h2 hK finite2 rank_one
     exact ⟨M, hfinite, h2, hK, finite2, rank_one, e1, e2, e3⟩
 
-/-- **The literature form with the minimal named inputs** ((4.6), tex 3987–4141): the nine book
+/-- **The literature form with the minimal named inputs** ((4.6), tex 3987–4141): the eight book
 statements and, at every such address, an RC53 model with the places above `2`, no real places,
 finite `2`-primary torsion and rank one; finite generation follows from the two finiteness
 statements and the places above `2` (`centralCohomologyFinite`), and the disk lengths from the

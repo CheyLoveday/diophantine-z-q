@@ -391,7 +391,7 @@ def CalibrationModelP.toZ (M : CalibrationModelP B D vL G₀ Fam x) :
     CalibrationModelZ D vL G₀ Fam x :=
   { M with kummer := M.kummer.toBlockZ }
 
-/-- **The calibration leaf with the point half derived** ((4.6), tex 3987–4141): the nine book
+/-- **The calibration leaf with the point half derived** ((4.6), tex 3987–4141): the eight book
 statements and, at every address of a final family with `ord L(E^{(h_x)}) = 1` and
 `ord L(E^{(h_x k)}) = 0`, a `CalibrationModelP` (lane RC35's model with the Kummer block's point
 inputs replaced by the point data). Kind: definition. -/

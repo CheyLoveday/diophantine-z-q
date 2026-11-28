@@ -199,7 +199,7 @@ variable {K : Type} [Field K] [NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ 
   {DK : Matrix (Fin n) (Fin n) (PowerSeries ℚ_[2])} {zK wK : Fin n → PowerSeries ℚ_[2]}
   {j vL m : ℤ} {tA shaA : ℕ}
 
-/-- **The cohomology shape of `C_K` from the nine book statements** (for an R-block).
+/-- **The cohomology shape of `C_K` from the eight book statements** (for an R-block).
 Kind: PROVED. -/
 theorem shape (R : KummerCoordinateBlockR K E₀ hZ DK zK wK j vL m tA shaA)
     (B : CalibrationBookProps) : CalibrationCohomologyShape (compactCentralComplex R.G) := by
@@ -521,14 +521,14 @@ def CalibrationModelZ.toR (M : CalibrationModelZ D vL G₀ Fam x) :
     CalibrationModelR D vL G₀ Fam x :=
   { M with kummer := M.kummer.toR M.m_ne_zero }
 
-/-- **The RC53 group's model from the Z-model and the nine book statements.**
+/-- **The RC53 group's model from the Z-model and the eight book statements.**
 Kind: definition. -/
 def CalibrationModelZ.toModelH (M : CalibrationModelZ D vL G₀ Fam x)
     (B : CalibrationBookProps) : CalibrationModelH D vL G₀ Fam x :=
   M.toR.toModelH B
 
 /-- **The calibration leaf with the genuine pinned identification** ((4.6), tex 3987–4141): the
-nine book statements and, at every address of a final family with `ord L(E^{(h_x)}) = 1` and
+eight book statements and, at every address of a final family with `ord L(E^{(h_x)}) = 1` and
 `ord L(E^{(h_x k)}) = 0`, a `CalibrationModelZ`. Kind: definition. -/
 def CalibrationInputsZ (D : RCData ℓ) : Prop :=
   CalibrationBookProps ∧ ∃ vL G₀ : ℤ, 0 ≤ vL ∧ ∀ Co Ce : ℤ, ∀ F : Family,

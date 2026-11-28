@@ -1,3 +1,4 @@
+import ZInQKernel.Contrib.OneProof.MilneFiniteDegreeBound
 import ZInQKernel.Contrib.RC53Assist.CalibrationModel.IntegralReplacement
 import ZInQKernel.Contrib.RC53Assist.CalibrationShape.CalibrationDischarge
 import ZInQKernel.Contrib.RC53Assist.DKLocalAdapter.ArithmeticCentralDuality
@@ -11,46 +12,49 @@ coordinate (tex 3877–3909, 4005–4018, 4050–4064). The current leaf `Calibr
 group's `CalibrationModelHK2` (`RC53Assist/Calibration/KummerIntegral.lean`) derives `hK` from a
 Kummer block `KummerCoordinateBlockG`, whose order tie `DiskTie` (the integral central disks
 compute the orders of the genuine finite-level Kummer Selmer cohomology) is GLUE. This file
-derives that tie from nine cited book statements, through the RC53 group's integral central
-model (`diskTie_of_finite_cohomology`, with the canonical reductions proved) and the integral
-central Kummer duality `integralCentralKummerDuality_of_literature_with_finiteness`.
+derives that tie from eight cited book statements and the proved finite degree bound, through
+the RC53 group's integral central model (`diskTie_of_finite_cohomology`, with the canonical
+reductions proved) and the integral central Kummer duality
+`integralCentralKummerDuality_of_literature_with_finiteness`.
 
-* `CalibrationBookProps`: the nine book statements, each a Lean proposition with its source
+* `CalibrationBookProps`: the eight book statements, each a Lean proposition with its source
   (PRINT and GLUE as rated at each field; no inhabitant is supplied):
-  Milne, *Arithmetic Duality Theorems*, 2nd ed., I.3.4 (with 3.2, 3.5), I.2.3 (twice: the finite
-  local duality and its higher-degree part), I.2.1 (last sentence), I.4.15, I.4.10(c) and I.2.3
-  (cohomological dimension two); Nekovář, *Selmer complexes*, 5.4.1 and 5.4.3(ii).
+  Milne, *Arithmetic Duality Theorems*, 2nd ed., I.3.4 (with 3.2, 3.5), I.2.3 (finite local
+  duality), I.2.1 (last sentence), I.4.15, I.4.10(c) and I.2.3 (cohomological dimension two);
+  Nekovář, *Selmer complexes*, 5.4.1 and 5.4.3(ii).
+  `milneFiniteDegreeBoundPrint_proof` supplies the higher-degree bound for the finite Tate
+  coefficients.
 * `DiskTie.of_valuation_eq`: an order tie depends only on the valuations of the three disks.
 * `calibrationShape_of_literature`, `diskTie_of_literature`: for any genuine Kummer data `G` over a
   totally complex `K` with the places above `2` in the support, finite `2`-primary torsion of the
   central twist and integral central first cohomology of rank one, the calibration shape and the
-  order tie of the constructed integral disks follow from the nine statements. This is the RC53
+  order tie of the constructed integral disks follow from the eight statements. This is the RC53
   group's `calibrationShape_of_arithmetic` with the rank one as an input in place of its curve
   binding, cochain comparison and Selmer corank (which bind the central twist to `E_ℓ'` with
   `ℓ' : ℕ`, available at an address exactly when `h_x > 0`).
 * `KummerCoordinateBlockLit`, `CalibrationModelLit`: `KummerCoordinateBlockG` and
   `CalibrationModelHK2` with the order tie replaced by the inputs of the literature route and the
   identification of the three disk lengths with those of the constructed integral disks.
-* `CalibrationInputsLit D`: the nine statements and, at every address, a `CalibrationModelLit`.
+* `CalibrationInputsLit D`: the eight statements and, at every address, a `CalibrationModelLit`.
   PROVED: `CalibrationInputsLit.toHK2`, `CalibrationInputsLit.toH`, `calibrationTarget_of_Lit`;
   `CalibrationModelLit.ofHK2`, `nonempty_modelLit_iff` and `calibrationInputsLit_iff` (a
   `CalibrationModelLit` is exactly a `CalibrationModelHK2` with the named inputs for its Kummer
   data, the tie being derived; of these inputs `hfinite` follows from the two finiteness
-  statements and `h2`, and given the nine statements the three length identifications are
+  statements and `h2`, and given the eight statements the three length identifications are
   equivalent to the tie, by `DiskTie.of_valuation_eq` and `DiskTie.determined`, so the literature
-  form amounts to the nine statements and the RC53 form with `h2`, `hK`, `finite2` and `rank_one`
+  form amounts to the eight statements and the RC53 form with `h2`, `hK`, `finite2` and `rank_one`
   at every address; that reduced equivalence is not stated in Lean here);
   `calibrationInputsLit_of_noAddress` (non-vacuity in the degenerate case).
 
 **The human-review boundary.**
-* H1, the faithfulness of the nine formulations: each Lean proposition is meant to state the
+* H1, the faithfulness of the eight formulations: each Lean proposition is meant to state the
   cited printed result for the objects named (finite discrete modules, elliptic curves over local
   fields, finite free two-adic coefficients). Verbatim quotations are at
   `MilneLocalDualityPrint` and `MilneFiniteLocalDualityPrint`, each joined with an
   identification, and, in the fields of `CalibrationBookProps`, of the printed statements behind
   `MilneLocalFiniteness`, `MilneGlobalFiniteness` (single statements) and `MilneGlobalDimensionTwo`
-  (with its specialization to fields without real places); `MilneFiniteDegreeBoundPrint`,
-  `MilneLocalDimensionTwo`, `NekovarIntegralCompactLocality` and `NekovarIntegralGlobalDuality`
+  (with its specialization to fields without real places); `MilneLocalDimensionTwo`,
+  `NekovarIntegralCompactLocality` and `NekovarIntegralGlobalDuality`
   are readings or joins. The page locators are in the docstrings of the definitions and of the
   fields. That they say what the books say is a human check.
 * H2, the supporting definitions: continuous cochains, the compact Kummer complex of the central
@@ -86,26 +90,28 @@ open ZInQ.Contrib.RC53Assist.CalibrationShape (IntegralCentralKummerDuality
   canonicalCentralReductionMap_quasiIso)
 open ZInQ.Contrib.RC53Assist.DKLocalAdapter
   (integralCentralKummerDuality_of_literature_with_finiteness)
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound
+  (milneFiniteDegreeBoundPrint_proof)
 open ZInQ.Contrib.CloudB3RC53.PairedFunctional ZInQ.Contrib.CloudB3RC53.SelmerDuality
 open ZInQ.Contrib.CloudB3RC53.Torsion
 open ZInQ.Manuscript.RC.SelmerComplex ZInQ.Manuscript.RC.CoefModules ZInQ.Manuscript.RC.KummerMaps
 
 attribute [local instance] Nat.fact_prime_two
 
-/-! **The nine book statements** -/
+/-! **The eight book statements** -/
 
-/-- **The nine cited book statements of the integral central Kummer duality** (PRINT and GLUE, as
+/-- **The eight cited book statements of the integral central Kummer duality** (PRINT and GLUE, as
 rated at each field; tex 3413–3498, 4005–4018, 4385–4451). Each field is a Lean proposition citing
 a printed statement: verbatim quotations at `MilneLocalDualityPrint` and
 `MilneFiniteLocalDualityPrint` (both joined with an identification — the diagrams of I.3.2, I.3.5
 and I.3.3, resp. the Weil self-duality of `B[n]` — so PRINT + GLUE); the single statements behind
 `MilneLocalFiniteness` and `MilneGlobalFiniteness` (I.2.1, I.4.15) are quoted verbatim in the
 fields below (PRINT), as is I.4.10(c) behind `MilneGlobalDimensionTwo`, with its specialization to
-fields without real places (PRINT + GLUE); `MilneFiniteDegreeBoundPrint` and
-`MilneLocalDimensionTwo` are readings of I.2.3 (GLUE);
+fields without real places (PRINT + GLUE); `MilneLocalDimensionTwo` is a reading of I.2.3 (GLUE);
 `NekovarIntegralCompactLocality` and `NekovarIntegralGlobalDuality` join 5.4.1 / 5.4.3(ii) with
 5.1, 5.2.1, 5.3.1 and 2.4.4–2.7 and transport them to the tree's cones and bounded finite free
-models (GLUE). None is given an inhabitant here (the human-review boundary H1).
+models (GLUE). The finite higher-degree bound for the two Tate coefficient families is
+supplied by `milneFiniteDegreeBoundPrint_proof`.
 Kind: definition (PRINT and GLUE inputs). -/
 structure CalibrationBookProps : Prop where
   /-- PRINT + GLUE, Milne, *Arithmetic Duality Theorems*, 2nd ed., I.3.4 (p. 43), joined with the
@@ -116,10 +122,6 @@ structure CalibrationBookProps : Prop where
   /-- PRINT + GLUE, Milne, I.2.3 (p. 28), with the Weil identification `B[n]^D ≅ B[n]`: finite
   local duality for `B[n]`, the degree-one perfect pairing and the degree-two isomorphism. -/
   milneFiniteLocalDuality : ZInQ.Contrib.RC53Assist.DerivedKummer.MilneFiniteLocalDualityPrint
-  /-- GLUE (reading of Milne, I.2.3, p. 28, `r ≥ 3`): its finite higher-degree part, for the two
-  coefficient families used. -/
-  milneFiniteDegreeBound :
-    ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound.MilneFiniteDegreeBoundPrint
   /-- PRINT, Milne, *Arithmetic Duality Theorems*, 2nd ed. (the author's online edition), Chapter
   I, Theorem 2.1, last sentence (p. 27; the manuscript cites I.2.3), for `G = Gal(K^s/K)` with `K`
   a local field (here `K_v`, of characteristic zero, so every order is prime to `char(K)`): "The
@@ -197,8 +199,8 @@ over a totally complex `K` whose support contains the places above `2`, with fin
 torsion of the central twist and integral central first cohomology of rank one, the compact
 central complex has cohomology in degrees one to three with ranks `1, 1, 0`. The amplitude comes
 from the finiteness and dimension statements (`compactCentral_outside`), the ranks in degrees two
-and three from the integral duality of the nine statements (`integralCentralDuality_ranks`). As
-the RC53 group's `calibrationShape_of_arithmetic`, with the rank one as an input.
+and three from the integral duality (`integralCentralDuality_ranks`). As the RC53 group's
+`calibrationShape_of_arithmetic`, with the rank one as an input.
 Kind: PROVED. -/
 theorem calibrationShape_of_literature (G : GenuineKummerData K E₀ hZ)
     (hfinite : ∀ n : ℤ, Module.Finite ℤ_[2] ((compactCentralComplex G).homology n))
@@ -209,7 +211,7 @@ theorem calibrationShape_of_literature (G : GenuineKummerData K E₀ hZ)
     CalibrationCohomologyShape (compactCentralComplex G) := by
   have hdual : IntegralCentralKummerDuality G hfinite :=
     integralCentralKummerDuality_of_literature_with_finiteness G hfinite B.milneLocalDuality
-      B.milneFiniteLocalDuality B.milneFiniteDegreeBound B.nekovarCompactLocality
+      B.milneFiniteLocalDuality milneFiniteDegreeBoundPrint_proof B.nekovarCompactLocality
       B.nekovarGlobalDuality B.milneGlobalFiniteness B.milneLocalFiniteness
       B.milneGlobalDimensionTwo B.milneLocalDimensionTwo hK h2
   have hout : ∀ n : ℤ, n < 1 ∨ 3 < n → Subsingleton ((compactCentralComplex G).homology n) :=
@@ -252,7 +254,7 @@ and in its place the inputs of `diskTie_of_literature` for the address's genuine
 generation, the places above `2`, no real places, finite `2`-primary torsion of the central twist,
 rank one of the integral central first cohomology) and the identification of the lengths of the
 three disks of the Knudsen–Mumford identification with those of the constructed integral disks
-(GLUE; given the nine statements and the named inputs it is equivalent to the RC53 form's order
+(GLUE; given the eight statements and the named inputs it is equivalent to the RC53 form's order
 tie `DiskTie`, by `DiskTie.of_valuation_eq` and `DiskTie.determined`). Kind: definition
 (inputs). -/
 structure KummerCoordinateBlockLit (K : Type) [Field K] [NumberField K] (E₀ : WeierstrassCurve ℚ)
@@ -348,7 +350,7 @@ variable {K : Type} [Field K] [NumberField K] {E₀ : WeierstrassCurve ℚ} {hZ 
   {DK : Matrix (Fin n) (Fin n) (PowerSeries ℚ_[2])} {zK wK : Fin n → PowerSeries ℚ_[2]}
   {j vL m : ℤ} {tA shaA : ℕ}
 
-/-- **The order tie of the block, from the nine book statements** (tex 3429–3431, 4005–4018):
+/-- **The order tie of the block, from the eight book statements** (tex 3429–3431, 4005–4018):
 `diskTie_of_literature` for the constructed disks, transferred to the block's disks through the
 length identification (`DiskTie.of_valuation_eq`). Kind: PROVED. -/
 theorem tie (L : KummerCoordinateBlockLit K E₀ hZ DK zK wK j vL m tA shaA)
@@ -544,7 +546,7 @@ structure CalibrationModelLit {ℓ : ℕ} (D : RCData ℓ) (vL G₀ : ℤ) (Fam 
   saying that its generic cohomology has dimensions (1,1). -/
   hadj : DK.adjugate ≠ 0
   /-- **the Kummer block with the disk lengths from the literature route** (its order tie is
-  derived from the nine book statements, `KummerCoordinateBlockLit.toG`); it replaces the field
+  derived from the eight book statements, `KummerCoordinateBlockLit.toG`); it replaces the field
   `hK`, which is derived -/
   kummer : KummerCoordinateBlockLit K (Ecurve ℓ) (Fam.h x) DK zK wK (D.jrc (Fam.h x) D.kfin) vL
     (amov - 2 * chimov) tA shaA
@@ -586,7 +588,7 @@ attribute [instance] CalibrationModelLit.fieldK CalibrationModelLit.nfK Calibrat
 
 variable {ℓ : ℕ} {D : RCData ℓ} {vL G₀ : ℤ} {Fam : Family} {x : Addr Fam.b}
 
-/-- **The RC53 group's model from the literature model and the nine book statements**: the Kummer
+/-- **The RC53 group's model from the literature model and the eight book statements**: the Kummer
 block through `KummerCoordinateBlockLit.toG`. Kind: definition. -/
 def CalibrationModelLit.toHK2 (M : CalibrationModelLit D vL G₀ Fam x) (B : CalibrationBookProps) :
     CalibrationModelHK2 D vL G₀ Fam x :=
@@ -610,7 +612,7 @@ def CalibrationModelLit.ofHK2 (M : CalibrationModelHK2 D vL G₀ Fam x)
       hval₃ }
 
 /-- **A literature model is exactly an RC53 model with the named inputs for its Kummer data**
-(given the nine statements): the order tie of the RC53 model is derived. Of the named inputs on
+(given the eight statements): the order tie of the RC53 model is derived. Of the named inputs on
 the right, `hfinite` follows from the two finiteness statements and `h2`, and the three length
 identifications are equivalent to the tie (`DiskTie.of_valuation_eq`, `DiskTie.determined`).
 Kind: PROVED. -/
@@ -636,7 +638,7 @@ theorem nonempty_modelLit_iff (B : CalibrationBookProps) :
     exact ⟨CalibrationModelLit.ofHK2 M hfinite h2 hK finite2 rank_one hval₁ hval₂ hval₃⟩
 
 /-- **The calibration leaf with its duality input from the literature** ((4.6), tex 3987–4141):
-the nine book statements (`CalibrationBookProps`; PRINT and GLUE as rated at each field) and, as
+the eight book statements (`CalibrationBookProps`; PRINT and GLUE as rated at each field) and, as
 in `CalibrationInputsH`, constants
 `vL ≥ 0`, `G₀` before the families and at every address of a final family with
 `ord L(E^{(h_x)}) = 1` and `ord L(E^{(h_x k)}) = 0` a `CalibrationModelLit`. Kind: definition. -/
@@ -665,7 +667,7 @@ theorem calibrationTarget_of_Lit (Pr : Prints) (hℓ : 0 < ℓ) (h : Calibration
     CalibrationTarget D :=
   calibrationTarget_of_HK2 Pr hℓ h.toHK2
 
-/-- **The literature leaf is the nine statements and, at every address, an RC53 model with the
+/-- **The literature leaf is the eight statements and, at every address, an RC53 model with the
 named inputs for its Kummer data** (`nonempty_modelLit_iff`). Kind: PROVED. -/
 theorem calibrationInputsLit_iff :
     CalibrationInputsLit D ↔ CalibrationBookProps ∧ ∃ vL G₀ : ℤ, 0 ≤ vL ∧ ∀ Co Ce : ℤ,
@@ -690,7 +692,7 @@ theorem calibrationInputsLit_iff :
     exact ⟨B, vL, G₀, hvL, fun Co Ce F hF x h1 h0 =>
       (nonempty_modelLit_iff B).2 (H Co Ce F hF x h1 h0)⟩
 
-/-- **Non-vacuity in the degenerate case**: given the nine statements, the leaf holds when no
+/-- **Non-vacuity in the degenerate case**: given the eight statements, the leaf holds when no
 address of a final family has the two analytic ranks. Kind: PROVED. -/
 theorem calibrationInputsLit_of_noAddress (B : CalibrationBookProps)
     (hD : ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F → ∀ x : Addr F.b,

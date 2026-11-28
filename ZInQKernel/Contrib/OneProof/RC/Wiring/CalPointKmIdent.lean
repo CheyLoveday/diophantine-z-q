@@ -1,3 +1,4 @@
+import ZInQKernel.Contrib.OneProof.MilneFiniteDegreeBound
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalPointSelfDual
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalPointKummerClass
 import ZInQKernel.Contrib.OneProof.RC.Wiring.CalPointRenorm
@@ -20,7 +21,7 @@ from the genuine objects:
 * `centralClassFunctional hdual D hm`: `z₀ := kummerCentralCycle D m` (a cycle whose class is
   `κ(L m P)`, tex 3901), `λ₀ := kummerCentralFunctional e D m` (the image of a cycle of class
   `c_K(κ(L m P))` under the duality homotopy equivalence `e`, tex 3902), for the point data `D`
-  at the address; `hdual` is the integral central Kummer duality (from the nine book statements).
+  at the address; `hdual` is the integral central Kummer duality supplied by `bookDuality`.
 * `centralClassFunctional_v2_a0`, `centralClassFunctional_v2_b0`: `v₂ a₀ = v₂ b₀ = j + vL + v₂ m`
   (tex 3905–3907, 4061–4062).
 * `centralClassFunctional_core_v2`: for RC35's identification `I`,
@@ -157,21 +158,24 @@ end Central
 section Book
 
 open ZInQ.Manuscript.RC.Wiring (CalibrationBookProps)
+open ZInQ.Contrib.RC53Assist.DerivedKummerActual.FiniteLocalDegreeBound
+  (milneFiniteDegreeBoundPrint_proof)
 
 variable {K : Type} [Field K] [NumberField K] [DecidableEq K] {E₀ : WeierstrassCurve ℚ}
   {hZ : ℤ} (G : GenuineKummerData K E₀ hZ)
   (hfinite : ∀ n : ℤ, Module.Finite ℤ_[2] ((compactCentralComplex G).homology n))
 
 omit [DecidableEq K] in
-/-- **The integral central Kummer duality from the nine book statements** of the calibration
-leaf's literature form (the same statements as its disk half; tex 4015–4018).
+/-- **The integral central Kummer duality from the eight book statements** of the calibration
+leaf's literature form and the proved finite degree bound (the same inputs as its disk half;
+tex 4015–4018).
 PROVED (from `CalibrationBookProps`). -/
 theorem bookDuality (B : CalibrationBookProps) (hK : NumberField.IsTotallyComplex K)
     (h2 : ∀ v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K),
       (2 : NumberField.RingOfIntegers K) ∈ v.asIdeal → v ∈ G.S) :
     IntegralCentralKummerDuality G hfinite :=
   ZInQ.Contrib.RC53Assist.DKLocalAdapter.integralCentralKummerDuality_of_literature_with_finiteness
-    G hfinite B.milneLocalDuality B.milneFiniteLocalDuality B.milneFiniteDegreeBound
+    G hfinite B.milneLocalDuality B.milneFiniteLocalDuality milneFiniteDegreeBoundPrint_proof
     B.nekovarCompactLocality B.nekovarGlobalDuality B.milneGlobalFiniteness
     B.milneLocalFiniteness B.milneGlobalDimensionTwo B.milneLocalDimensionTwo hK h2
 

@@ -11,7 +11,7 @@ Proposition `ex:arith-central-calibration` (`diophantine_zq.tex`, tex 3987–414
   identifications replaced by the constructed identification of the ordinary Kummer complex; the
   coordinate transfer is the central GLUE `link`).
 * `CalibrationModelR.toModelH`: the RC53 group's `CalibrationModelH` (its `hK` from
-  `KummerCoordinateBlockR.leafHK`) given the nine book statements.
+  `KummerCoordinateBlockR.leafHK`) given the eight book statements.
 * `CalibrationModelR.ofLit`: every literature model gives an R-model.
 * `CalibrationInputsR`, `CalibrationInputsR.toH`, `CalibrationInputsR.ofLit`,
   `calibrationTarget_of_R`, `calibrationInputsR_of_noAddress` (non-vacuity in the degenerate case;
@@ -227,7 +227,7 @@ theorem CalibrationModelR.m_ne_zero (M : CalibrationModelR D vL G₀ Fam x) :
   intro h0
   exact M.hnd (by rw [h0]; exact dvd_zero _)
 
-/-- **The RC53 group's model from the R-model and the nine book statements**: `hK` from
+/-- **The RC53 group's model from the R-model and the eight book statements**: `hK` from
 `KummerCoordinateBlockR.leafHK`. Kind: definition. -/
 def CalibrationModelR.toModelH (M : CalibrationModelR D vL G₀ Fam x)
     (B : CalibrationBookProps) : CalibrationModelH D vL G₀ Fam x :=
@@ -246,7 +246,7 @@ def CalibrationModelR.ofLit (M : CalibrationModelLit D vL G₀ Fam x) :
   { M with kummer := KummerCoordinateBlockR.ofLit M.kummer (litModel_m_ne_zero M) }
 
 /-- **The calibration leaf with the constructed Knudsen–Mumford identification** ((4.6),
-tex 3987–4141): the nine book statements and, as in `CalibrationInputsLit`, constants `vL ≥ 0`,
+tex 3987–4141): the eight book statements and, as in `CalibrationInputsLit`, constants `vL ≥ 0`,
 `G₀` before the families and at every address of a final family with `ord L(E^{(h_x)}) = 1` and
 `ord L(E^{(h_x k)}) = 0` a `CalibrationModelR`. Kind: definition. -/
 def CalibrationInputsR (D : RCData ℓ) : Prop :=
@@ -275,7 +275,7 @@ theorem calibrationTarget_of_R (Pr : Prints) (hℓ : 0 < ℓ) (h : CalibrationIn
     CalibrationTarget D :=
   calibrationTarget_of_H Pr hℓ h.toH
 
-/-- **Non-vacuity in the degenerate case**: given the nine statements, the R-leaf holds when no
+/-- **Non-vacuity in the degenerate case**: given the eight statements, the R-leaf holds when no
 address of a final family has the two analytic ranks. Kind: PROVED. -/
 theorem calibrationInputsR_of_noAddress (B : CalibrationBookProps)
     (hD : ∀ Co Ce : ℤ, ∀ F : Family, D.FinalFamilyAt Co Ce F → ∀ x : Addr F.b,
