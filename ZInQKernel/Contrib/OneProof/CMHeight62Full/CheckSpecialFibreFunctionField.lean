@@ -10,6 +10,9 @@ open ZInQ.Contrib.CMHeight62Full
 #print axioms SpecialFibreFunctionField.trdegLeOne_of_baseChange
 #print axioms SpecialFibreFunctionField.trdegLeOne_quotient_localization
 #print axioms SpecialFibreFunctionField.trdegLeOne_specialFibre
+#print axioms SpecialFibreFunctionField.trdegLeOne_stalk
+#print axioms SpecialFibreFunctionField.trdegLeOne_fibre_stalk
+#print axioms SpecialFibreFunctionField.exists_centre
 #print axioms SpecialFibreFunctionField.liftValuationSubring
 #print axioms SpecialFibreFunctionField.mem_liftValuationSubring
 #print axioms SpecialFibreFunctionField.liftValuationSubring_le

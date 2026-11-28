@@ -19,9 +19,15 @@ most one over the residue field, in the `TrdegLeOne` form of `GroupCurveNotP1.le
   field `K` over `A₀` and over a field `k` under `R`, through the base change `k ⊗[R] A₀`.
 * `trdegLeOne_specialFibre`: `κ_w = Frac(A/ϖA)`, `A` the localization of `A₀` at the point of the
   section `σ` over the closed point (the setting of `LocalStructure.lean`).
+* `trdegLeOne_stalk`, `trdegLeOne_fibre_stalk`: scheme forms. For `X` smooth of relative dimension
+  one over a field `k` (for instance the fibre over `Spec k → S` of a `G → S` smooth of relative
+  dimension one), the fraction field of a local ring of `X` that is a domain.
 
 **B2.** Reductions of elements of `M_n` land in `L(n ē)`.
 
+* `exists_centre`: places have centres. For `f : X → Y` proper (Mathlib's valuative criterion),
+  a square `Spec K → X`, `Spec R → Y` with `R` a valuation ring of `K` gives a point `c` and a local
+  homomorphism `𝒪_{X,c} → R` through which `Spec K → X` factors.
 * `liftValuationSubring`: the composite valuation ring `Õ = {g ∈ 𝒪_w | ḡ ∈ O}` of `Ω`;
   `algebraMap_mem_liftValuationSubring`: it contains `R` when `O` is a constant place.
 * `mem_centre_of_hartogs`: Hartogs at a centre, with the height-one primes through `ϖ` controlled
@@ -225,6 +231,103 @@ theorem trdegLeOne_specialFibre {R : Type*} [CommRing R] [IsDomain R]
   trdegLeOne_quotient_localization (sectionPrime σ).primeCompl _
 
 end SpecialFibre
+
+section Scheme
+
+open AlgebraicGeometry CategoryTheory
+
+universe u
+
+/-- **B1, scheme form.** Let `X` be smooth of relative dimension one over a field `k`, and `x` a
+point whose local ring is a domain (with its `k`-algebra structure from `X → Spec k`). Then the
+fraction field `K` of `𝒪_{X,x}` has transcendence degree at most one over `k`. Applied to the
+special fibre at the identity point, it gives B1 for the function field of the identity
+component. -/
+theorem trdegLeOne_stalk {k : Type u} [Field k] {X : Scheme.{u}}
+    (f : X ⟶ Spec (CommRingCat.of k)) [SmoothOfRelativeDimension 1 f] (x : X)
+    [IsDomain (X.presheaf.stalk x)] [Algebra k (X.presheaf.stalk x)]
+    (halg : algebraMap k (X.presheaf.stalk x) =
+      ((Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ f.appTop ≫
+        X.presheaf.germ ⊤ x trivial).hom)
+    {K : Type u} [Field K] [Algebra (X.presheaf.stalk x) K] [IsFractionRing (X.presheaf.stalk x) K]
+    [Algebra k K] [IsScalarTower k (X.presheaf.stalk x) K] : TrdegLeOne k K := by
+  obtain ⟨U, -, V, hV, hxV, e, hss⟩ :=
+    SmoothOfRelativeDimension.exists_isStandardSmoothOfRelativeDimension (n := 1) (f := f) x
+  have hU : U = ⊤ := eq_top_iff.2 fun z _ => (Subsingleton.elim (f.base x) z) ▸ e hxV
+  subst hU
+  let φ : k →+* Γ(X, V) := ((Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ f.appLE ⊤ V e).hom
+  have hφ : RingHom.IsStandardSmoothOfRelativeDimension 1 φ := by
+    have := (RingHom.isStandardSmoothOfRelativeDimension_respectsIso.cancel_left_isIso
+      (Scheme.ΓSpecIso (CommRingCat.of k)).inv (f.appLE ⊤ V e)).2 hss
+    rwa [← CommRingCat.hom_comp] at this
+  let _ : Algebra k Γ(X, V) := φ.toAlgebra
+  have : IsStandardSmoothOfRelativeDimension 1 k Γ(X, V) := hφ
+  let _ : Algebra Γ(X, V) (X.presheaf.stalk x) := (X.presheaf.germ V x hxV).hom.toAlgebra
+  have hloc : IsLocalization.AtPrime (X.presheaf.stalk x)
+      (hV.primeIdealOf ⟨x, hxV⟩).asIdeal := hV.isLocalization_stalk ⟨x, hxV⟩
+  let _ : Algebra Γ(X, V) K :=
+    ((algebraMap (X.presheaf.stalk x) K).comp (X.presheaf.germ V x hxV).hom).toAlgebra
+  have : IsScalarTower Γ(X, V) (X.presheaf.stalk x) K :=
+    IsScalarTower.of_algebraMap_eq fun _ => rfl
+  have hcomp : f.appLE ⊤ V e ≫ X.presheaf.germ V x hxV =
+      f.appTop ≫ X.presheaf.germ ⊤ x trivial := by
+    rw [Scheme.Hom.appLE, Category.assoc, X.presheaf.germ_res]
+    rfl
+  have hk : ∀ c : k, algebraMap k (X.presheaf.stalk x) c =
+      (X.presheaf.germ V x hxV).hom (φ c) := by
+    intro c
+    rw [halg]
+    simp only [φ, CommRingCat.hom_comp, RingHom.comp_apply]
+    rw [← RingHom.comp_apply (X.presheaf.germ V x hxV).hom, ← CommRingCat.hom_comp, hcomp]
+    rfl
+  have : IsScalarTower k Γ(X, V) K :=
+    IsScalarTower.of_algebraMap_eq fun c => by
+      rw [IsScalarTower.algebraMap_apply k (X.presheaf.stalk x) K, hk c]
+      rfl
+  exact trdegLeOne_of_isLocalization (B := Γ(X, V)) (C := X.presheaf.stalk x)
+    (hV.primeIdealOf ⟨x, hxV⟩).asIdeal.primeCompl
+
+/-- **B1 on a fibre.** If `G → S` is smooth of relative dimension one, so is its fibre over any
+`Spec k → S`, and the fraction field of the local ring of the fibre at a point where it is a
+domain has transcendence degree at most one over `k`. -/
+theorem trdegLeOne_fibre_stalk {k : Type u} [Field k] {S G : Scheme.{u}} (g : G ⟶ S)
+    [SmoothOfRelativeDimension 1 g] (ι : Spec (CommRingCat.of k) ⟶ S)
+    (x : ↥(Limits.pullback g ι)) [IsDomain ((Limits.pullback g ι).presheaf.stalk x)]
+    [Algebra k ((Limits.pullback g ι).presheaf.stalk x)]
+    (halg : algebraMap k ((Limits.pullback g ι).presheaf.stalk x) =
+      ((Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ (Limits.pullback.snd g ι).appTop ≫
+        (Limits.pullback g ι).presheaf.germ ⊤ x trivial).hom)
+    {K : Type u} [Field K] [Algebra ((Limits.pullback g ι).presheaf.stalk x) K]
+    [IsFractionRing ((Limits.pullback g ι).presheaf.stalk x) K] [Algebra k K]
+    [IsScalarTower k ((Limits.pullback g ι).presheaf.stalk x) K] : TrdegLeOne k K :=
+  trdegLeOne_stalk (Limits.pullback.snd g ι) x halg
+
+/-- **Centres from properness (B2, scheme part).** For a proper morphism `f : X → Y`, a valuation
+ring `R` with fraction field `K`, and a commutative square `Spec K → X`, `Spec R → Y`, there is a
+point `c` of `X` (the centre) and a local homomorphism `𝒪_{X,c} → R` through which the given
+`Spec K → X` factors. This is Mathlib's valuative criterion, read through the description of
+morphisms out of the spectrum of a local ring. -/
+theorem exists_centre {X Y : Scheme.{u}} (f : X ⟶ Y) [IsProper f] {R K : Type u} [CommRing R]
+    [IsDomain R] [ValuationRing R] [Field K] [Algebra R K] [IsFractionRing R K]
+    (i₁ : Spec (CommRingCat.of K) ⟶ X) (i₂ : Spec (CommRingCat.of R) ⟶ Y)
+    (h : i₁ ≫ f = Spec.map (CommRingCat.ofHom (algebraMap R K)) ≫ i₂) :
+    ∃ (c : X) (φ : X.presheaf.stalk c ⟶ CommRingCat.of R), IsLocalHom φ.hom ∧
+      Spec.map φ ≫ X.fromSpecStalk c ≫ f = i₂ ∧
+      Spec.map (CommRingCat.ofHom (algebraMap R K)) ≫ Spec.map φ ≫ X.fromSpecStalk c = i₁ := by
+  have hex : ValuativeCriterion.Existence f := by
+    have := (UniversallyClosed.eq_valuativeCriterion ▸ (inferInstance : UniversallyClosed f) :
+      (ValuativeCriterion.Existence ⊓ @QuasiCompact) f)
+    exact this.1
+  let S : ValuativeCommSq f := ⟨R, K, i₁, i₂, ⟨h⟩⟩
+  obtain ⟨l, hl1, hl2⟩ := (hex S).exists_lift
+  refine ⟨l (IsLocalRing.closedPoint (CommRingCat.of R)), Scheme.stalkClosedPointTo l,
+    inferInstance, ?_, ?_⟩
+  · rw [← Category.assoc, Scheme.Spec_stalkClosedPointTo_fromSpecStalk]
+    exact hl2
+  · rw [Scheme.Spec_stalkClosedPointTo_fromSpecStalk]
+    exact hl1
+
+end Scheme
 
 section Landing
 
