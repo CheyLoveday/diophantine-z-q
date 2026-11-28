@@ -23,7 +23,7 @@ section `m` of `M` under the unit of the adjunction `e^* ⊣ e_*` is sent to `1 
 * The inverse map is `fromSky` of the adjoint of a morphism `M ⟶ e_* (skyMod s T)`.
 
 The `𝒪_{X,e(s)}`-algebra structure on `𝒪_{S,s}` is `(e.stalkMap s).hom.toAlgebra`; it is the
-reducible definition `stalkAlgebra e s`, a local instance in the main section. The headline
+reducible definition `pullbackStalkAlgebra e s`, a local instance in the main section. The headline
 statement is `stalkPullbackFormula`; the equivalence itself is `stalkPullbackEquiv`.
 -/
 
@@ -279,7 +279,7 @@ lemma stalkPullback_hom_ext {N : Type u} [AddCommGroup N] [Module (S.presheaf.st
   exact congrArg (fun φ => skyApp hU (φ.app U a)) key
 
 /-- The `𝒪_{X,e(s)}`-algebra structure on `𝒪_{S,s}` given by the stalk map of `e`. -/
-noncomputable abbrev stalkAlgebra : Algebra (X.presheaf.stalk (e s)) (S.presheaf.stalk s) :=
+noncomputable abbrev pullbackStalkAlgebra : Algebra (X.presheaf.stalk (e s)) (S.presheaf.stalk s) :=
   (e.stalkMap s).hom.toAlgebra
 
 /-- The `𝒪_{X,e(s)}`-module structure on `(e^* M)_s`, by restriction of scalars. -/
@@ -287,7 +287,7 @@ noncomputable abbrev pullStalkModule : Module (X.presheaf.stalk (e s))
     (TopCat.Presheaf.stalk (C := Ab.{u}) ((Scheme.Modules.pullback e).obj M).val.presheaf s) :=
   Module.compHom _ (e.stalkMap s).hom
 
-attribute [local instance] stalkAlgebra pullStalkModule
+attribute [local instance] pullbackStalkAlgebra pullStalkModule
 
 lemma pullStalk_isScalarTower : IsScalarTower (X.presheaf.stalk (e s)) (S.presheaf.stalk s)
     (TopCat.Presheaf.stalk (C := Ab.{u}) ((Scheme.Modules.pullback e).obj M).val.presheaf s) :=

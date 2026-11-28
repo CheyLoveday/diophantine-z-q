@@ -1,4 +1,5 @@
 import Mathlib
+import ZInQKernel.Contrib.OneProof.HeightModelM5.PullbackStalk
 
 /-!
 # The sheaf of relative differentials of a scheme over an affine base
@@ -111,12 +112,15 @@ lemma dSheaf_map {U V : X.Opens} (i : V ⟶ U) (b : Γ(X, U)) :
   erw [(dPre f).d_map i.op b]
   exact (PresheafOfModules.naturality_apply (unitOmega f) i.op ((dPre f).d b)).symm
 
-/-- The stalk of `Ω¹_{X/R}` is a module over the local ring. -/
+/-- The stalk of `Ω¹_{X/R}` is a module over the local ring. It is the instance `stalkModule`
+for stalks of sheaves of modules, so the two module structures agree by definition. -/
 noncomputable instance moduleStalkOmega (x : X) :
     Module (X.presheaf.stalk x) (stalkOmega f x) :=
-  inferInstanceAs (Module (X.presheaf.stalk x)
-    (TopCat.Presheaf.stalk (C := Ab.{u}) (X := X.toPresheafedSpace.carrier)
-      (relOmegaPre f).presheaf x))
+  stalkModule (relOmega f) x
+
+/-- The module structure on the stalk of `Ω¹_{X/R}` is `stalkModule`. -/
+theorem moduleStalkOmega_eq_stalkModule (x : X) :
+    moduleStalkOmega f x = stalkModule (relOmega f) x := rfl
 
 lemma germ_smul_stalkOmega (x : X) (U : X.Opens) (hx : x ∈ U) (a : Γ(X, U))
     (m : (relOmegaPre f).obj (op U)) :
