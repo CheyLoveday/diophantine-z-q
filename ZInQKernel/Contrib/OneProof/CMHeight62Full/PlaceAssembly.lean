@@ -4,6 +4,13 @@ import ZInQKernel.Contrib.OneProof.CMHeight62Full.HorizontalPrimes
 import ZInQKernel.Contrib.OneProof.CMHeight62Full.PoleRegCore
 import ZInQKernel.Contrib.OneProof.CMHeight62Full.Weierstrass
 import ZInQKernel.Contrib.OneProof.CMHeight62Full.WeierstrassDVR
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.DepthTwoHartogs
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.PoleLadder
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreFunctionField
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.IntegralModel
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.LocalParameter
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.IdentityPointDepth
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreValuation
 
 /-!
 # cmHeight62 (finite place): the per-place assembly
@@ -17,6 +24,15 @@ local-parameter steps (a pair `x, y` with exact pole orders two and three, an in
 the tuple `(W₀, C, θ, b)` of the comparison at `v`. The variable change `C` comes from the
 generic comparison, the line `θ` from the Hodge-line glue, and `η = b • θ` from the first order
 change of the parameter: the tree parameter and `u_C · ε t` agree modulo `𝔪_ξ²`.
+
+Part 2 (`localComparison_core`): the same tuple from the chart of the smooth model at the unit
+section, the parameter `t` of the local structure and the tree place, through the depth-two
+lemmas, the special-fibre valuation `w` and its place `ē`, the pole bounds of the pole spaces
+`V_n`, their lattice bases, the landing of the reductions in the pole spaces at `ē`, the exact
+pole orders, the integral model and the local parameter. The conclusions of the two nodes that
+are still open enter as the hypotheses `hL1` (centres of the constant places `O ≠ ē`) and `hL5`
+(the gap at `ē` and no function with a single simple pole at `ē`). `placeInstances` supplies
+the instances on `A = (A₀)_𝔭` that the statement uses.
 -/
 
 set_option autoImplicit false
@@ -362,8 +378,8 @@ theorem hcmp_of_localData (W : WeierstrassCurve K)
     rw [hy₀def, hΨe, map_mul, hPL Q _ he0, one_mul]
     exact ((mem_poleSpaceIn_iff Ψ P 3 y).1 hy3).1 Q hQ
   -- the equation of `W₀ = W0_L` at `(Ψ x₀, Ψ y₀)`
-  have hW₀ : ((W0.map (algebraMap (Localization.AtPrime s.asIdeal) L)).baseChange F).toAffine.Equation
-      (Ψ x₀) (Ψ y₀) := by
+  have hW₀ : ((W0.map (algebraMap (Localization.AtPrime s.asIdeal) L)).baseChange
+      F).toAffine.Equation (Ψ x₀) (Ψ y₀) := by
     have h := weierstrass_equation_map (Ψ : Ω →+* F) _ heq
     have hcurve : (W0.map (algebraMap (Localization.AtPrime s.asIdeal) Ω)).map (Ψ : Ω →+* F) =
         (W0.map (algebraMap (Localization.AtPrime s.asIdeal) L)).baseChange F := by
@@ -436,6 +452,333 @@ theorem hcmp_of_localData (W : WeierstrassCurve K)
   · rw [map_mul, hr, mul_one]
 
 end Comparison
+
+/-! ## Part 2: the per-place assembly from the local nodes -/
+
+section Instances
+
+variable {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
+  {A₀ : Type*} [CommRing A₀] [Algebra R A₀] [Algebra.IsStandardSmoothOfRelativeDimension 1 R A₀]
+
+/-- The instances on `A = (A₀)_𝔭` that the special-fibre valuation needs, from the parameter of
+the local structure (`𝔪 = (ϖ, t)`, dimension two): `A` is Noetherian, a domain, faithful over
+`R`, and `A ⧸ (ϖ)` is a domain and a discrete valuation ring. -/
+theorem placeInstances (σ : A₀ →ₐ[R] R) {ϖ : R} (hϖ : Irreducible ϖ) {t : A₀}
+    (hdim : ringKrullDim (Localization.AtPrime (sectionPrime σ)) = 2)
+    (hmax : maximalIdeal (Localization.AtPrime (sectionPrime σ)) =
+      Ideal.span {algebraMap R (Localization.AtPrime (sectionPrime σ)) ϖ,
+        algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t}) :
+    IsNoetherianRing (Localization.AtPrime (sectionPrime σ)) ∧
+      IsDomain (Localization.AtPrime (sectionPrime σ)) ∧
+      FaithfulSMul R (Localization.AtPrime (sectionPrime σ)) ∧
+      ∃ _ : IsDomain (Localization.AtPrime (sectionPrime σ) ⧸
+          Ideal.span {algebraMap R (Localization.AtPrime (sectionPrime σ)) ϖ}),
+        IsDiscreteValuationRing (Localization.AtPrime (sectionPrime σ) ⧸
+          Ideal.span {algebraMap R (Localization.AtPrime (sectionPrime σ)) ϖ}) := by
+  have hnoeth := identityPoint_isNoetherianRing (R := R) σ
+  have hnzd := identityPoint_mem_nonZeroDivisors σ hϖ.ne_zero
+  have hϖm : algebraMap R (Localization.AtPrime (sectionPrime σ)) ϖ ∈
+      maximalIdeal (Localization.AtPrime (sectionPrime σ)) :=
+    hmax ▸ Ideal.subset_span (by simp)
+  have hdom := IdentityPointDepth.quotient_isDomain hmax hdim
+  have hdvr := IdentityPointDepth.quotient_isDiscreteValuationRing hmax hdim
+  exact ⟨hnoeth, depthTwo_isDomain hnzd hϖm,
+    SmallGlue.faithfulSMul_of_irreducible_mem_nonZeroDivisors hϖ hnzd, hdom, hdvr⟩
+
+end Instances
+
+section Core
+
+/-- If `h π^(m+1)` is a unit at `O` and `π ∈ 𝔪_O`, then `h π^m ∉ O`. -/
+theorem not_mem_of_valuation_mul_pow_succ {K : Type*} [Field K] {O : ValuationSubring K}
+    {π h : K} (hπ : π ∈ O.nonunits) {m : ℕ} (hv : O.valuation (h * π ^ (m + 1)) = 1) :
+    h * π ^ m ∉ O := by
+  intro hmem
+  have h1 := GroupCurveNotP1.mul_mem_nonunits hπ hmem
+  rw [ValuationSubring.mem_nonunits_iff] at h1
+  have heq : π * (h * π ^ m) = h * π ^ (m + 1) := by ring
+  rw [heq, hv] at h1
+  exact lt_irrefl _ h1
+
+open SpecialFibreValuation SpecialFibreFunctionField
+
+variable {K : Type} [Field K] {E : PkgI3.AbVar K} {L : Type} [Field L] [NumberField L]
+  [Algebra K L] (𝒢 : GroupModel E L)
+
+/-- **The per-place assembly (`localComparison_core`).** At a finite place `v` (`s = v`,
+`R = (𝓞_L)_s`, `ϖ` a uniformizer), with the chart `(A₀, σ, φ, φη)` of the smooth model at the
+unit section and the parameter `t` of the local structure (`𝔪_A = (ϖ, t)`, dimension two,
+`ker (localSection σ) = (t)`, cotangent basis `B`), and the tree objects as hypotheses (the
+place `P` with `Ψ`, `hgen`, `hPt`, `hfd`, `hdimP`; the pair `X', Y'`; the map `ι` and the
+parameter `tG`), the comparison tuple at `v` holds for `η = 𝒢.wedge ![tG]`.
+
+Internally: the depth-two lemmas give `hhart` and `hcases`; `w` is the special-fibre valuation
+and `ē` its place, with uniformizer the residue of `t`; the pole bounds of `V_n` come from the
+place `P`; the lattice bases of `V₂`, `V₃` reduce into the pole spaces at `ē` (with the centres
+of `hL1`); the gap and the absence of a function with a single simple pole (`hL5`) give the
+exact pole orders; then the integral model, the local parameter and Part 1.
+
+Two hypotheses are the conclusions of nodes still open: `hL1` (the centre data of a constant
+place `O ≠ ē`, for every `f` that lies in every discrete valuation subring containing `L` other
+than the generic one) and `hL5` (the gap at `ē` and no function with a single simple pole at
+`ē`). -/
+theorem localComparison_core (W : WeierstrassCurve K)
+    (v : HeightOneSpectrum (𝓞 L)) (s : Spec (CommRingCat.of (𝓞 L)))
+    (hs : s.asIdeal = v.asIdeal)
+    [IsDiscreteValuationRing (Localization.AtPrime s.asIdeal)]
+    [PerfectField (ResidueField (Localization.AtPrime s.asIdeal))]
+    [CharZero (Localization.AtPrime s.asIdeal)]
+    [Algebra (Localization.AtPrime s.asIdeal) L]
+    [IsScalarTower (𝓞 L) (Localization.AtPrime s.asIdeal) L]
+    [IsFractionRing (Localization.AtPrime s.asIdeal) L]
+    {A₀ : Type} [CommRing A₀] [Algebra (Localization.AtPrime s.asIdeal) A₀]
+    [Algebra.IsStandardSmoothOfRelativeDimension 1 (Localization.AtPrime s.asIdeal) A₀]
+    (σ : A₀ →ₐ[Localization.AtPrime s.asIdeal] Localization.AtPrime s.asIdeal)
+    (φ : Localization.AtPrime (sectionPrime σ) ≃+*
+      𝒢.G.left.presheaf.stalk (𝒢.unitSection s))
+    (φη : Localization.AtPrime (RingHom.ker σ) ≃+* 𝒢.genStalk)
+    (hφ : ∀ a, (𝒢.unitSection.stalkMap s).hom (φ a) = specStalkEquiv s (localSection σ a))
+    (hsp : ∀ x : A₀, 𝒢.G.left.presheaf.stalkSpecializes (𝒢.specializes_genericUnit s)
+      (φ (algebraMap A₀ _ x)) = φη (algebraMap A₀ _ x))
+    (hφS : ∀ a : 𝓞 L, 𝒢.G.left.presheaf.stalkSpecializes (𝒢.specializes_genericUnit s)
+      (φ (algebraMap (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ))
+        (algebraMap (𝓞 L) (Localization.AtPrime s.asIdeal) a))) = 𝒢.structMap a)
+    {ϖ : Localization.AtPrime s.asIdeal} (hϖ : Irreducible ϖ)
+    {t : A₀} (ht : t ∈ RingHom.ker σ)
+    (hmax : maximalIdeal (Localization.AtPrime (sectionPrime σ)) =
+      Ideal.span {(algebraMap (Localization.AtPrime s.asIdeal)
+        (Localization.AtPrime (sectionPrime σ)) ϖ),
+        algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t})
+    (hker : RingHom.ker (localSection σ) =
+      Ideal.span {algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t})
+    (B : Module.Basis (Fin 1) (Localization.AtPrime s.asIdeal) (RingHom.ker σ).Cotangent)
+    (hB : ∀ i, B i = (RingHom.ker σ).toCotangent ⟨t, ht⟩)
+    [IsNoetherianRing (Localization.AtPrime (sectionPrime σ))]
+    [IsDomain (Localization.AtPrime (sectionPrime σ))]
+    [FaithfulSMul (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ))]
+    [IsDomain (Localization.AtPrime (sectionPrime σ) ⧸ Ideal.span
+      {algebraMap (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ)) ϖ})]
+    [IsDiscreteValuationRing (Localization.AtPrime (sectionPrime σ) ⧸ Ideal.span
+      {algebraMap (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ)) ϖ})]
+    {Ω : Type*} [Field Ω] [Algebra (Localization.AtPrime (sectionPrime σ)) Ω]
+    [IsFractionRing (Localization.AtPrime (sectionPrime σ)) Ω]
+    [Algebra L Ω] [Algebra (Localization.AtPrime s.asIdeal) Ω]
+    [IsScalarTower (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ)) Ω]
+    [IsScalarTower (Localization.AtPrime s.asIdeal) L Ω]
+    {F : Type*} [Field F] [Algebra L F] (Ψ : Ω ≃ₐ[L] F) (P : TauCeti.Place L F)
+    (hfd : ∀ n : ℕ, FiniteDimensional L (poleSpace P n))
+    (hdimP : ∀ n : ℕ, 1 ≤ n →
+      TauCeti.Divisor.dim (Finsupp.single P (n : ℤ) : TauCeti.Divisor L F) = n)
+    (hgen : ∀ g : Ω, P.valuation (Ψ g) ≤ 1 ↔
+      ∃ r s' : Localization.AtPrime (sectionPrime σ),
+        s' ∉ Ideal.span {algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t} ∧
+          algebraMap _ Ω s' * g = algebraMap _ Ω r)
+    (hPt : P.valuation (Ψ (algebraMap (Localization.AtPrime (sectionPrime σ)) Ω
+      (algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t))) = WithZero.exp (-1 : ℤ))
+    {X' Y' : F} (hW : ((W.map (algebraMap K L)).baseChange F).toAffine.Equation X' Y')
+    (hX' : P.valuation X' = WithZero.exp (1 : ℤ) ^ 2)
+    (hY' : P.valuation Y' = WithZero.exp (1 : ℤ) ^ 3)
+    (hXS : X' ∈ regularAway P) (hYS : Y' ∈ regularAway P)
+    (ι : 𝒢.genStalk →+* Ω)
+    (hι : ∀ x : A₀, ι (φη (algebraMap A₀ _ x)) =
+      algebraMap (Localization.AtPrime (sectionPrime σ)) Ω (algebraMap A₀ _ x))
+    (tG : maximalIdeal 𝒢.genStalk) (htG : Ψ (ι tG) = -X' / Y')
+    (hL1 : letI := (residueHom (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+        (specialFibreValuation_algebraMap_base_le_one hϖ)
+        (specialFibreValuation_algebraMap_base_lt_one hϖ)).toAlgebra
+      ∀ f : Ω, (∀ Q : ValuationSubring Ω, (∀ c : L, algebraMap L Ω c ∈ Q) →
+        IsDiscreteValuationRing Q → Q ≠ genericSubring Ψ P → f ∈ Q) →
+      ∀ O : ValuationSubring (ResidueField
+          (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ).valuationSubring),
+        IsConstPlace (ResidueField (Localization.AtPrime s.asIdeal)) O →
+        O ≠ specialFibrePlace (Localization.AtPrime (sectionPrime σ)) Ω hϖ →
+        ∃ (Ac : Subring Ω) (π : Ac), (∀ a ∈ Ac, a ∈ liftValuationSubring
+            (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ) O) ∧
+          (∀ g : Ω, (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 →
+            ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * g = r) → g ∈ Ac) ∧
+          (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → π ∈ 𝔮 → ∀ g : Ω,
+            specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ g ≤ 1 →
+            ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * g = r) ∧
+          (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → π ∉ 𝔮 →
+            ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * f = r))
+    (hL5 : letI := (residueHom (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+        (specialFibreValuation_algebraMap_base_le_one hϖ)
+        (specialFibreValuation_algebraMap_base_lt_one hϖ)).toAlgebra
+      (∀ h ∈ polePart (ResidueField (Localization.AtPrime s.asIdeal))
+          (specialFibrePlace (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+          (reduce (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+            (algebraMap (Localization.AtPrime (sectionPrime σ)) Ω
+              (algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t))
+            (specialFibreValuation_algebraMap_le_one hϖ _)) 1,
+        ∃ c : ResidueField (Localization.AtPrime s.asIdeal),
+          h = algebraMap (ResidueField (Localization.AtPrime s.asIdeal))
+            (ResidueField (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+              Ω hϖ).valuationSubring) c) ∧
+      ∀ f : ResidueField
+          (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ).valuationSubring,
+        ¬ HasSimplePoleOnlyAt (ResidueField (Localization.AtPrime s.asIdeal))
+          (specialFibrePlace (Localization.AtPrime (sectionPrime σ)) Ω hϖ) f) :
+    ∃ (W₀ : WeierstrassCurve L) (C : VariableChange L) (θ : 𝒢.hodgeSpace 1) (b : L),
+      v.valuation L W₀.Δ = 1 ∧ C⁻¹ • W.map (algebraMap K L) = W₀ ∧ θ ≠ 0 ∧
+        (∀ m ∈ 𝒢.detLattice 1, ∃ r : L, v.valuation L r ≤ 1 ∧ m = r • θ) ∧
+        𝒢.wedge ![tG] = b • θ ∧ v.valuation L (C.u : L) = v.valuation L b := by
+  classical
+  let := (residueHom (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+    (specialFibreValuation_algebraMap_base_le_one hϖ)
+    (specialFibreValuation_algebraMap_base_lt_one hϖ)).toAlgebra
+  obtain ⟨hgap, hnsp⟩ := hL5
+  -- the special-fibre valuation `w`
+  have hR := specialFibreValuation_algebraMap_base_le_one
+    (A := Localization.AtPrime (sectionPrime σ)) (Ω := Ω) hϖ
+  have hm := specialFibreValuation_algebraMap_base_lt_one
+    (A := Localization.AtPrime (sectionPrime σ)) (Ω := Ω) hϖ
+  have hwA := specialFibreValuation_algebraMap_le_one
+    (A := Localization.AtPrime (sectionPrime σ)) (Ω := Ω) hϖ
+  have hw : ∀ g : Ω,
+      specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ g ≤ 1 →
+      ∃ r c : Localization.AtPrime (sectionPrime σ), c ∉ Ideal.span {(algebraMap
+        (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ)) ϖ)} ∧
+        algebraMap _ Ω c * g = algebraMap _ Ω r :=
+    fun g hg => (specialFibreValuation_le_one_iff hϖ g).1 hg
+  have hϖw : specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ
+      (algebraMap _ Ω (algebraMap (Localization.AtPrime s.asIdeal)
+        (Localization.AtPrime (sectionPrime σ)) ϖ)) < 1 :=
+    (specialFibreValuation_algebraMap_lt_one_iff hϖ _).2 (Ideal.mem_span_singleton_self _)
+  have hunif : IsUniformizer (F := L)
+      (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+      (algebraMap (Localization.AtPrime s.asIdeal) L ϖ) :=
+    SmallGlue.isUniformizer_specialFibreValuation hϖ
+  -- depth two at the identity point
+  have hnzd := identityPoint_mem_nonZeroDivisors σ hϖ.ne_zero
+  have hϖm : algebraMap (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ))
+      ϖ ∈ maximalIdeal (Localization.AtPrime (sectionPrime σ)) :=
+    hmax ▸ Ideal.subset_span (by simp)
+  have hhart : ∀ g : Ω, (∀ 𝔮 : Ideal (Localization.AtPrime (sectionPrime σ)), 𝔮.IsPrime →
+      𝔮.height = 1 → ∃ r c : Localization.AtPrime (sectionPrime σ), c ∉ 𝔮 ∧
+        algebraMap _ Ω c * g = algebraMap _ Ω r) →
+      g ∈ (algebraMap (Localization.AtPrime (sectionPrime σ)) Ω).range :=
+    fun g hg => depthTwo_mem_range hnzd hϖm g hg
+  have hcases : ∀ 𝔮 : Ideal (Localization.AtPrime (sectionPrime σ)), 𝔮.IsPrime →
+      𝔮.height = 1 → algebraMap (Localization.AtPrime s.asIdeal)
+        (Localization.AtPrime (sectionPrime σ)) ϖ ∈ 𝔮 →
+      𝔮 = Ideal.span {(algebraMap (Localization.AtPrime s.asIdeal)
+        (Localization.AtPrime (sectionPrime σ)) ϖ)} :=
+    fun 𝔮 _ h1 hq => depthTwo_height_one_cases hnzd hϖm 𝔮 h1 hq
+  -- the place `ē` and the residue `π` of `t`
+  have hker' : RingHom.ker (IdentityPointDepth.localSectionAlgHom σ) =
+      Ideal.span {algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t} :=
+    (IdentityPointDepth.ker_localSectionAlgHom σ).trans hker
+  have hπ := SmallGlue.isUniformizerAt_reduce_specialFibrePlace (Ω := Ω) hϖ
+    (IdentityPointDepth.localSectionAlgHom σ) hker'
+  have hP : IsDegreeOnePlace (ResidueField (Localization.AtPrime s.asIdeal))
+      (specialFibrePlace (Localization.AtPrime (sectionPrime σ)) Ω hϖ) :=
+    isDegreeOnePlace_specialFibrePlace hϖ (IdentityPointDepth.localSectionAlgHom σ)
+  have hAē := SmallGlue.exists_reduce_mem_specialFibrePlace
+    (A := Localization.AtPrime (sectionPrime σ)) (Ω := Ω) hϖ
+  -- the pole bounds of `V_n`
+  have hhorDVR : ∀ (𝔮 : Ideal (Localization.AtPrime (sectionPrime σ))) [𝔮.IsPrime],
+      𝔮.height = 1 → algebraMap (Localization.AtPrime s.asIdeal)
+        (Localization.AtPrime (sectionPrime σ)) ϖ ∉ 𝔮 →
+      algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t ∉ 𝔮 →
+      IsDiscreteValuationRing (Localization.AtPrime 𝔮) :=
+    fun 𝔮 _ h1 hq _ => isDiscreteValuationRing_localization_horizontal_sectionLocal hϖ σ 𝔮 h1 hq
+  have hdim1 : TauCeti.Divisor.dim (Finsupp.single P (1 : ℤ) : TauCeti.Divisor L F) = 1 := by
+    simpa using hdimP 1 le_rfl
+  have hPB := fun n => poleBounds_of_place Ψ P hϖ hgen hPt hhorDVR hdim1 hfd n
+  have htA0 : algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t ≠ 0 := by
+    intro h
+    rw [h, map_zero, map_zero, map_zero] at hPt
+    exact WithZero.exp_ne_zero hPt.symm
+  have hint : ∀ (n : ℕ) (f : Ω), f ∈ poleSpaceIn Ψ P n →
+      specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ f ≤ 1 →
+      ∃ a : Localization.AtPrime (sectionPrime σ),
+        f * algebraMap _ Ω (algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t) ^ n =
+          algebraMap _ Ω a := by
+    intro n f hf hfw
+    obtain ⟨a, ha⟩ := LocalParameter.exists_mul_pow_eq
+      (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ) (localSection σ)
+      hker htA0 hhart hcases hw hwA n hfw ((hPB n).1 f hf) ((hPB n).2.1 f hf)
+    exact ⟨a, ha.symm⟩
+  -- landing in the pole spaces at `ē`
+  have hland : ∀ (n : ℕ) (f : Ω) (hf : f ∈ poleSpaceIn Ψ P n)
+      (hfw : specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ f ≤ 1),
+      (∀ O : ValuationSubring (ResidueField
+          (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ).valuationSubring),
+        IsConstPlace (ResidueField (Localization.AtPrime s.asIdeal)) O →
+        O ≠ specialFibrePlace (Localization.AtPrime (sectionPrime σ)) Ω hϖ →
+        reduce (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ) f hfw ∈ O) ∧
+      reduce (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ) f hfw ∈
+        polePart (ResidueField (Localization.AtPrime s.asIdeal))
+          (specialFibrePlace (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+          (reduce (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+            (algebraMap (Localization.AtPrime (sectionPrime σ)) Ω
+              (algebraMap A₀ (Localization.AtPrime (sectionPrime σ)) t)) (hwA _)) n := by
+    intro n f hf hfw
+    have hc := hL1 f (fun Q hk hQ hne => mem_of_mem_poleSpaceIn Ψ P hf Q hQ hk hne)
+    obtain ⟨h1, h2⟩ := reduce_mem_polePart
+      (w := specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+      (k := ResidueField (Localization.AtPrime s.asIdeal))
+      (specialFibrePlace (Localization.AtPrime (sectionPrime σ)) Ω hϖ) hAē (hwA _) hfw
+      (hint n f hf hfw) hc
+    exact ⟨h1, (mem_polePart_iff hP.1).2 ⟨h1, h2⟩⟩
+  -- finite dimension of `V_n`
+  have hfin : ∀ n : ℕ, 1 ≤ n → FiniteDimensional L (poleSpaceIn Ψ P n) ∧
+      Module.finrank L (poleSpaceIn Ψ P n) = n :=
+    fun n hn => finrank_poleSpaceIn Ψ P hfd hdimP hn
+  have := (hfin 2 (by norm_num)).1
+  have := (hfin 3 (by norm_num)).1
+  have := (hfin 6 (by norm_num)).1
+  -- the lattice bases of `V₂` and `V₃`
+  obtain ⟨b₂, hb₂, hb₂V, -⟩ := exists_lattice_basis_of_poleBound
+    (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+    (IdentityPointDepth.localSectionAlgHom σ) hker' hϖ hunif hhart hcases hw hwA
+    (poleSpaceIn Ψ P 2) 2 (hPB 2).1 (hPB 2).2.1 (hPB 2).2.2
+  obtain ⟨b₃, hb₃, hb₃V, -⟩ := exists_lattice_basis_of_poleBound
+    (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+    (IdentityPointDepth.localSectionAlgHom σ) hker' hϖ hunif hhart hcases hw hwA
+    (poleSpaceIn Ψ P 3) 3 (hPB 3).1 (hPB 3).2.1 (hPB 3).2.2
+  have hcard2 : Fintype.card (Fin (Module.finrank L (poleSpaceIn Ψ P 2))) = 0 + 2 := by
+    rw [Fintype.card_fin, (hfin 2 (by norm_num)).2]
+  have hcard3 : Fintype.card (Fin (Module.finrank L (poleSpaceIn Ψ P 3))) = 1 + 2 := by
+    rw [Fintype.card_fin, (hfin 3 (by norm_num)).2]
+  -- exact pole orders two and three at `ē`
+  obtain ⟨⟨i, hi⟩, -⟩ := exists_reduce_not_mem_polePart
+    (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ) hR hm rfl hP hπ hgap
+    hb₂ (n := 0) hcard2 fun i => (hland 2 (b₂ i) (hb₂V i) (hb₂.1 i)).2
+  obtain ⟨⟨j, hj⟩, -⟩ := exists_reduce_not_mem_polePart
+    (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ) hR hm rfl hP hπ hgap
+    hb₃ (n := 1) hcard3 fun i => (hland 3 (b₃ i) (hb₃V i) (hb₃.1 i)).2
+  have hx2 := hb₂V i
+  have hy3 := hb₃V j
+  have hxw := hb₂.1 i
+  have hyw := hb₃.1 j
+  have hx1 : b₂ i ∉ poleSpaceIn Ψ P 1 := fun h => hi (hland 1 (b₂ i) h hxw).2
+  have hy2 : b₃ j ∉ poleSpaceIn Ψ P 2 := fun h => hj (hland 2 (b₃ j) h hyw).2
+  have hxP := (not_mem_polePart_iff_valuation_eq_one hP.1 hπ (n := 1)
+    (hland 2 (b₂ i) hx2 hxw).2).1 hi
+  have hyP := (not_mem_polePart_iff_valuation_eq_one hP.1 hπ (n := 2)
+    (hland 3 (b₃ j) hy3 hyw).2).1 hj
+  -- the integral model
+  obtain ⟨W0, e, hΔ, heq⟩ := IntegralModel.exists_integralModel
+    (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ) hR hm rfl
+    (poleSpaceIn Ψ P 6) (le_of_eq (hfin 6 (by norm_num)).2)
+    (SmallGlue.monomials_mem_poleSpaceIn Ψ P hx2 hy3) hxw hyw
+    (specialFibrePlace (Localization.AtPrime (sectionPrime σ)) Ω hϖ) hP.1 hπ hxP hyP
+    (hland 2 (b₂ i) hx2 hxw).1 hnsp
+  -- orders zero at `ē` after multiplying by `t̄²`, `t̄³`
+  have hox := not_mem_of_valuation_mul_pow_succ hπ.2.1 (m := 1) hxP
+  rw [pow_one] at hox
+  have hoy := not_mem_of_valuation_mul_pow_succ hπ.2.1 (m := 2) hyP
+  -- the local parameter
+  obtain ⟨a, b, -, -, hab⟩ := LocalParameter.exists_unit_localParameter_of_units_smul
+    (specialFibreValuation (Localization.AtPrime (sectionPrime σ)) Ω hϖ) (localSection σ) hker
+    hmax hhart hcases hw hwA hϖw (specialFibrePlace (Localization.AtPrime (sectionPrime σ)) Ω hϖ)
+    (fun a => SmallGlue.reduce_mem_specialFibrePlace hϖ a) hπ e hxw hyw ((hPB 2).1 _ hx2)
+    ((hPB 3).1 _ hy3) ((hPB 2).2.1 _ hx2) ((hPB 3).2.1 _ hy3) hox hoy
+  exact hcmp_of_localData 𝒢 W v s hs σ φ φη hφ hsp hφS ht hker B hB Ψ P hfd hdimP hgen hPt hW
+    hX' hY' hXS hYS ι hι tG htG hx2 hx1 hy3 hy2 W0 e hΔ heq (-a * b⁻¹) hab
+
+end Core
 
 end PlaceAssembly
 
