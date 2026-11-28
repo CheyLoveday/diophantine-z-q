@@ -3,13 +3,14 @@ import ZInQKernel.Contrib.OneProof.HeightModelM5.StalkOmega
 import ZInQKernel.Contrib.OneProof.HeightModelM5.PullbackStalk
 import ZInQKernel.Contrib.OneProof.HeightModelM5.IrreducibleSections
 import ZInQKernel.Contrib.OneProof.HeightModelM5.ExteriorSheaf
+import ZInQKernel.Contrib.OneProof.HeightModelM5.GenericGerm
 
 /-!
 # Axiom check for the Mathlib-only part of the sheaf construction
 
 Prints the axioms of every theorem of `Defs`, `StalkOmega`, `PullbackStalk`,
-`IrreducibleSections` and `ExteriorSheaf`, and of the main constructions. Each list is expected
-to lie within `propext`, `Classical.choice` and `Quot.sound`.
+`IrreducibleSections`, `ExteriorSheaf` and `GenericGerm`, and of the main constructions. Each
+list is expected to lie within `propext`, `Classical.choice` and `Quot.sound`.
 
 It also checks that the two module structures on a stalk of the sheaf of differentials, the
 instance `moduleStalkOmega` and the general instance `stalkModule`, agree by definition, at
@@ -173,3 +174,31 @@ end InstanceCheck
 #print axioms ZInQ.HeightModelM5.schemeWedge
 #print axioms ZInQ.HeightModelM5.schemeWedgeStalkEquiv
 #print axioms ZInQ.HeightModelM5.schemeWedgeStalkEquiv_germ
+
+-- generic germ (GenericGerm)
+#print axioms ZInQ.HeightModelM5.modSpec
+#print axioms ZInQ.HeightModelM5.modSpec_germ
+#print axioms ZInQ.HeightModelM5.modSpec_smul
+#print axioms ZInQ.HeightModelM5.GG.kStalk
+#print axioms ZInQ.HeightModelM5.GG.kStalk_germ_dSheaf
+#print axioms ZInQ.HeightModelM5.GG.towerSp
+#print axioms ZInQ.HeightModelM5.GG.kMap
+#print axioms ZInQ.HeightModelM5.GG.kMap_kStalk
+#print axioms ZInQ.HeightModelM5.GG.sig
+#print axioms ZInQ.HeightModelM5.GG.sig_self
+#print axioms ZInQ.HeightModelM5.GG.stalkToGeneric
+#print axioms ZInQ.HeightModelM5.GG.stalkToGeneric_tmul
+#print axioms ZInQ.HeightModelM5.GG.stalkToGeneric_smul
+#print axioms ZInQ.HeightModelM5.GG.pullStalkEquiv
+#print axioms ZInQ.HeightModelM5.GG.pullStalkEquiv_unitGerm
+#print axioms ZInQ.HeightModelM5.GG.phi
+#print axioms ZInQ.HeightModelM5.GG.phi_smul
+#print axioms ZInQ.HeightModelM5.GG.phi_unitGerm
+#print axioms ZInQ.HeightModelM5.GG.phi_modSpec
+#print axioms ZInQ.HeightModelM5.GG.pullAbSheaf
+#print axioms ZInQ.HeightModelM5.GG.genericGerm
+#print axioms ZInQ.HeightModelM5.GG.phi_injective
+#print axioms ZInQ.HeightModelM5.GG.modSpec_injective
+#print axioms ZInQ.HeightModelM5.GG.genericGerm_injective
+#print axioms ZInQ.HeightModelM5.GG.range_genericGerm
+#print axioms ZInQ.HeightModelM5.GG.genericGerm_smul
