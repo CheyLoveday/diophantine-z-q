@@ -1,4 +1,5 @@
 import ZInQKernel.Contrib.OneProof.HeightModelM5.GlobalOmega
+import ZInQKernel.Contrib.OneProof.HeightModelM5.DetLattice
 
 /-!
 # Axiom check for the tree-facing statements
@@ -15,3 +16,24 @@ directory with the tree's lattices. Each list is expected to lie within `propext
 #print axioms ZInQ.HeightModelM5.genericGermPullOmega_injective
 #print axioms ZInQ.HeightModelM5.range_genericGermPullOmega
 #print axioms ZInQ.HeightModelM5.printedOmega_eq_sheaf
+
+-- N5b: global sections of `ε*Ω^g`
+#print axioms ZInQ.HeightModelM5.cotangent_isScalarTower
+#print axioms ZInQ.HeightModelM5.GlobalPullOmegaTop
+#print axioms ZInQ.HeightModelM5.toHodgeLine
+#print axioms ZInQ.HeightModelM5.toHodgeLine_injective
+#print axioms ZInQ.HeightModelM5.genericGermPullOmegaTop
+#print axioms ZInQ.HeightModelM5.genericGermPullOmegaTop_apply
+#print axioms ZInQ.HeightModelM5.genericGermPullOmegaTop_injective
+#print axioms ZInQ.HeightModelM5.stalkTopMap
+#print axioms ZInQ.HeightModelM5.stalkTopMap_smul
+#print axioms ZInQ.HeightModelM5.stalkTopMap_add
+#print axioms ZInQ.HeightModelM5.stalkTopMap_zero
+#print axioms ZInQ.HeightModelM5.stalkTopMap_symm_ιMulti
+#print axioms ZInQ.HeightModelM5.phi_mem_printedOmegaAt
+#print axioms ZInQ.HeightModelM5.exists_phi_eq
+#print axioms ZInQ.HeightModelM5.printedDetLattice_le_stalk
+#print axioms ZInQ.HeightModelM5.exists_smul_mem_iInf_of_mem
+#print axioms ZInQ.HeightModelM5.exists_smul_stalkTopMap_mem
+#print axioms ZInQ.HeightModelM5.range_genericGermPullOmegaTop_eq_iInter
+#print axioms ZInQ.HeightModelM5.printedDetLattice_eq_sheaf

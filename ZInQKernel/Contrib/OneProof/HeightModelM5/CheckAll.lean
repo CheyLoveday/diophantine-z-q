@@ -4,13 +4,14 @@ import ZInQKernel.Contrib.OneProof.HeightModelM5.PullbackStalk
 import ZInQKernel.Contrib.OneProof.HeightModelM5.IrreducibleSections
 import ZInQKernel.Contrib.OneProof.HeightModelM5.ExteriorSheaf
 import ZInQKernel.Contrib.OneProof.HeightModelM5.GenericGerm
+import ZInQKernel.Contrib.OneProof.HeightModelM5.GenericGermTop
 
 /-!
 # Axiom check for the Mathlib-only part of the sheaf construction
 
 Prints the axioms of every theorem of `Defs`, `StalkOmega`, `PullbackStalk`,
-`IrreducibleSections`, `ExteriorSheaf` and `GenericGerm`, and of the main constructions. Each
-list is expected to lie within `propext`, `Classical.choice` and `Quot.sound`.
+`IrreducibleSections`, `ExteriorSheaf`, `GenericGerm` and `GenericGermTop`, and of the main
+constructions. Each list is expected to lie within `propext`, `Classical.choice` and `Quot.sound`.
 
 It also checks that the two module structures on a stalk of the sheaf of differentials, the
 instance `moduleStalkOmega` and the general instance `stalkModule`, agree by definition, at
@@ -202,3 +203,51 @@ end InstanceCheck
 #print axioms ZInQ.HeightModelM5.GG.genericGerm_injective
 #print axioms ZInQ.HeightModelM5.GG.range_genericGerm
 #print axioms ZInQ.HeightModelM5.GG.genericGerm_smul
+
+-- N5b general argument (GenericGermTop)
+#print axioms ZInQ.HeightModelM5.GG.stalkToGenericₛₗ
+#print axioms ZInQ.HeightModelM5.GG.stalkToGenericₛₗ_apply
+#print axioms ZInQ.HeightModelM5.GG.wedgeGen
+#print axioms ZInQ.HeightModelM5.GG.exists_baseChange
+#print axioms ZInQ.HeightModelM5.GG.wedgeMap_equiv_injective
+#print axioms ZInQ.HeightModelM5.GG.wedgeMap_comp_eq
+#print axioms ZInQ.HeightModelM5.GG.wedgeMap_injective_of_baseChange
+#print axioms ZInQ.HeightModelM5.GG.wedgeGen_injective
+#print axioms ZInQ.HeightModelM5.GG.wedgeUnit
+#print axioms ZInQ.HeightModelM5.GG.schemeWedge_exists_germ
+#print axioms ZInQ.HeightModelM5.GG.schemeWedgeStalkEquiv_wedgeUnit
+#print axioms ZInQ.HeightModelM5.GG.wedgeUnit_smul
+#print axioms ZInQ.HeightModelM5.GG.schemeWedgeStalkEquiv_smul
+#print axioms ZInQ.HeightModelM5.GG.pullPre
+#print axioms ZInQ.HeightModelM5.GG.pullOmegaTop
+#print axioms ZInQ.HeightModelM5.GG.phiₛₗ
+#print axioms ZInQ.HeightModelM5.GG.phiₛₗ_apply
+#print axioms ZInQ.HeightModelM5.GG.rhoTop
+#print axioms ZInQ.HeightModelM5.GG.rhoTop_apply
+#print axioms ZInQ.HeightModelM5.GG.wedgeMap_phi_wedgeGerm
+#print axioms ZInQ.HeightModelM5.GG.rhoTop_modSpec
+#print axioms ZInQ.HeightModelM5.GG.rhoTop_smul
+#print axioms ZInQ.HeightModelM5.GG.schemeWedgeStalkEquiv_symm_smul
+#print axioms ZInQ.HeightModelM5.GG.rhoTop_symm_ιMulti
+#print axioms ZInQ.HeightModelM5.GG.wedgeMap_phi_eq
+#print axioms ZInQ.HeightModelM5.GG.rhoTop_injective
+#print axioms ZInQ.HeightModelM5.GG.modSpecTop_injective
+#print axioms ZInQ.HeightModelM5.GG.topAbSheaf
+#print axioms ZInQ.HeightModelM5.GG.genericGermTop
+#print axioms ZInQ.HeightModelM5.GG.genericGermTop_injective
+#print axioms ZInQ.HeightModelM5.GG.range_genericGermTop
+#print axioms ZInQ.HeightModelM5.GG.genericGermTop_smul
+#print axioms ZInQ.HeightModelM5.GG.hodgeModule
+#print axioms ZInQ.HeightModelM5.GG.hodge_smul_aux
+#print axioms ZInQ.HeightModelM5.GG.hodgeAlt
+#print axioms ZInQ.HeightModelM5.GG.toHodge
+#print axioms ZInQ.HeightModelM5.GG.toHodge_ιMulti
+#print axioms ZInQ.HeightModelM5.GG.toHodge_smul
+#print axioms ZInQ.HeightModelM5.GG.thetaₛₗ
+#print axioms ZInQ.HeightModelM5.GG.fromHodge
+#print axioms ZInQ.HeightModelM5.GG.fromHodge_tmul
+#print axioms ZInQ.HeightModelM5.GG.fromHodge_smul
+#print axioms ZInQ.HeightModelM5.GG.fromHodge_toHodge
+#print axioms ZInQ.HeightModelM5.GG.toHodge_injective
+#print axioms ZInQ.HeightModelM5.GG.range_comp_eq_iInter
+#print axioms ZInQ.HeightModelM5.GG.mem_of_forall_maximal
