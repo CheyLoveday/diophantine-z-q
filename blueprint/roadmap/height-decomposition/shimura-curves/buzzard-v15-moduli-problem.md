@@ -3,7 +3,7 @@ article_id: af_7de3b9de810a60c7eab687c0
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenResearchLeaves82.buzzardXDV15Lit
+lean: HDec.HSyn.OpenResearchLeaves85.buzzardXDV15Lit
 ---
 
 # Buzzard's moduli problem at level V₁(5) is a projective curve over ℤ[1/30]
@@ -27,20 +27,19 @@ over which $(\mathcal A',\iota')$ maps to $(\mathcal A,\iota)$ (a cartesian squa
 $\mathcal O$ and carrying the one level structure to the other), and that map is unique.
 
 It is a published statement: the printed theorem, or a direct instance of it that needs no argument.
-Its reading against the print or its review is not complete, and until both are the project's strict
-count does not count it as published. It is Buzzard's Theorem 2.1 with Corollary 2.3 at the level
-$U=V_1(5)$, for which $\mathbb Z[1/M_Ud]=\mathbb Z[1/30]$, with his own definitions of level
-structures (Definitions 1.1 and 1.2) and of the morphisms of $X^D(U)$. Buzzard fixes $\kappa$ once
-and for all; every isomorphism $\mathcal O/5\mathcal O\cong\mathrm M_2(\mathbb F_5)$ is the
-reduction of an admissible one, so his results hold for the $\kappa$ above. "Algebraic stack" and
-"regular" are dropped, and projectivity over the affine base is stated as the closed immersion (EGA
-II (5.5.4)(ii)). Buzzard asks that $\mathcal A'\to\mathcal A_S$ be an isomorphism compatible with
-$\iota$; the statement asks for a cartesian square commuting with $\mathcal O$, which carries zero
-to zero and so is a homomorphism (Milne, Corollary 20.2(a)). Over the empty base, which Buzzard's
-injectivity of $\iota$ excludes, every clause holds trivially. The concrete form of level-$V_1(5)$
-structures used elsewhere in the proof (a section $Q$ with $5Q=0$ and $\iota(e)Q=0$, nonzero at
-every geometric point) is derived from this one in the Lean proof, with Milne's Proposition 20.7 and
-Remark 8.4 at $n=5$. It is a hypothesis, not proved here.
+It is Buzzard's Theorem 2.1 with Corollary 2.3 at the level $U=V_1(5)$, for which
+$\mathbb Z[1/M_Ud]=\mathbb Z[1/30]$, with his own definitions of level structures (Definitions 1.1
+and 1.2) and of the morphisms of $X^D(U)$. Buzzard fixes $\kappa$ once and for all; every
+isomorphism $\mathcal O/5\mathcal O\cong\mathrm M_2(\mathbb F_5)$ is the reduction of an admissible
+one, so his results hold for the $\kappa$ above. "Algebraic stack" and "regular" are dropped, and
+projectivity over the affine base is stated as the closed immersion (EGA II (5.5.4)(ii)). Buzzard
+asks that $\mathcal A'\to\mathcal A_S$ be an isomorphism compatible with $\iota$; the statement asks
+for a cartesian square commuting with $\mathcal O$, which carries zero to zero and so is a
+homomorphism (Milne, Corollary 20.2(a)). Over the empty base, which Buzzard's injectivity of $\iota$
+excludes, every clause holds trivially. The concrete form of level-$V_1(5)$ structures used
+elsewhere in the proof (a section $Q$ with $5Q=0$ and $\iota(e)Q=0$, nonzero at every geometric
+point) is derived from this one in the Lean proof, with Milne's Proposition 20.7 and Remark 8.4 at
+$n=5$. It is a hypothesis, not proved here.
 
 ## Depends on
 

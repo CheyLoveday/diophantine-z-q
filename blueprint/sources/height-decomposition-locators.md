@@ -10,7 +10,7 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the twenty-six statements of the chapter in the
+The minimal height hypothesis is proved from the twenty-nine statements of the chapter in the
 project's assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof
 is the project-authored note `docs/research/h-trust.md`.
 
@@ -40,12 +40,6 @@ audit) and §11.3; T. Gee, *Modularity lifting theorems*, Essent. Number Theory 
 arXiv:2202.05818v2: Fact 4.20 in §4.19, p. 28, with the conventions on pp. 2–3 (AI-read); R. Taylor,
 *Galois representations*, Ann. Fac. Sci. Toulouse Math. (6) 13 (2004). Kato's §11.3, Taylor and the
 journal numbering of Gee are unverified.
-
-## Shimura Main Theorem I in Deligne form
-
-G. Shimura, Ann. of Math. 85 (1967), Main Theorem I; P. Deligne, *Travaux de Shimura*, Sém. Bourbaki
-389 (1971), §§4–5 (Corollaire 5.7, Exemple 5.8); J. Milne, *Introduction to Shimura varieties*
-(2005), §§5–8 and 12–14. Numbers unverified.
 
 ## Javanpeykar bound
 
@@ -78,13 +72,6 @@ Silverman, Proposition 1.1 (not read).
 G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.
 Proc. Cambridge Philos. Soc. 180 (2026), 607–641, Proposition 2.7, p. 615, with the class number
 defined on p. 613; the manuscript's citation (`diophantine_zq.tex`, lines 588–593).
-
-## Degree of singular moduli
-
-G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.
-Proc. Cambridge Philos. Soc. 180 (2026), 607–641, §2.1, p. 613, with the discriminant of a singular
-modulus defined on p. 612; D. A. Cox, *Primes of the form $x^2+ny^2$*, Theorem 11.1 and Proposition
-13.2, as Fowler cites them. The manuscript's use: `diophantine_zq.tex`, lines 584–587.
 
 ## Semistable reduction theorem
 
@@ -187,15 +174,19 @@ there); K.-W. Lan, *Arithmetic compactifications of PEL-type Shimura varieties*,
 (2008), Corollary 1.3.1.6. The pages of the 1986 printing are unverified, and Mumford's corollary
 was not read.
 
-## False elliptic curves are projective
+## EGA IV 17.5.7
 
-K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1, read in the
-author's preprint (p. 3); K.-W. Lan, *Arithmetic compactifications of PEL-type Shimura varieties*,
-Harvard thesis (2008), Theorem 1.3.2.6, Lemma 1.3.2.16, Corollary 1.3.1.5, Proposition 1.3.2.18 and
-Definition 1.3.2.20 (Proposition 1.3.2.15 and Definition 1.3.2.16 of the 2021 revision); J. S.
-Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*,
-Springer (1986), §20 (p. 46 of the author's retyped edition); The Stacks Project, tags 01VT, 0C4K
-and 0B45. The journal and 1986 pages are unverified.
+A. Grothendieck, *Éléments de géométrie algébrique IV, Étude locale des schémas et des morphismes de
+schémas (quatrième partie)*, Publ. Math. IHÉS 32 (1967), Proposition (17.5.7), p. 70, with (17.1.1),
+(17.1.2), (17.1.6), (17.3.1) and (17.3.7), pp. 56–62; EGA I, Publ. Math. IHÉS 4 (1960), (4.1.4), p.
+37; EGA IV₂, Publ. Math. IHÉS 24 (1965), (5.8.6) and (5.13.5), pp. 108 and 133.
+
+## Raynaud LNM 119 XI 1.4
+
+M. Raynaud, *Faisceaux amples sur les schémas en groupes et les espaces homogènes*, Lecture Notes in
+Mathematics 119, Springer (1970), Chapter XI, §1, p. 159, and Chapter XII, p. 185, read in the
+publisher's preview; A. Grothendieck, EGA II, Publ. Math. IHÉS 8 (1961), (4.1.1), (5.1.1)–(5.1.2)
+and (5.5.1)–(5.5.6), pp. 71, 94 and 103–105; EGA IV₂, Publ. Math. IHÉS 24 (1965), (5.13.5), p. 133.
 
 ## Milne Prop 20.7 at n = 5
 
@@ -203,15 +194,22 @@ J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Ari
 Springer (1986), Proposition 20.7, read in the author's retyped edition (p. 44 there; abelian
 schemes are defined on p. 42). The pages of the 1986 printing are unverified.
 
-## Colmez Theorem 5.2
+## Voight 43.6.14
 
-P. Colmez, *Périodes $p$-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème
-5.2 (i)–(ii), p. 639, with the standing hypotheses on pp. 629 and 638 and $B_{\rm dR}$ as in §2, p.
-632; the proof is on pp. 639–641. AI-read: a three-lens adversarial reading of page images,
-2026-11-26 (docs/research/tate-prints-adversarial-readings.md); no person has read these pages. For
-this step the manuscript's lemma on de Rham comparison and finite descent (`diophantine_zq.tex`,
-lines 10939–10973) cites Scholze's Corollary 1.8 and Milne's Theorem 12.1(a); this statement and the
-Hodge–Tate theorem of Tate and Raynaud (Fontaine's Théorème 2) replace those two citations.
+J. Voight, *Quaternion Algebras*, Graduate Texts in Mathematics 288, Springer (2021), §43.4 and
+§43.6: 43.4.6, 43.6.12, Main Theorem 43.6.14, Proposition 43.6.28.
+
+## Cornut–Vatsal Lemma 3.11
+
+C. Cornut, V. Vatsal, *CM points and quaternion algebras*, Documenta Math. 10 (2005), 263–309,
+§3.1.1 (p. 291), Lemma 3.7 (p. 296), §3.2.4 and Lemma 3.11 (pp. 298–299), §3.2.5 (p. 300), Remark
+3.15 (p. 301).
+
+## glue
+
+G. Shimura, *Construction of class fields and zeta functions of algebraic curves*, Ann. of Math. 85
+(1967), Main Theorem I (not read); P. Deligne, *Travaux de Shimura*, Sém. Bourbaki 389 (1971),
+4.11–4.21, 5.5, 5.7–5.8; C. Cornut, V. Vatsal, Documenta Math. 10 (2005), §3.1.2, p. 292.
 
 ## Fontaine Theorem 2
 
@@ -226,3 +224,14 @@ numbers $2,2$ of $H^1_{\rm dR}(A/F)$ and the weights $0,0,-1,-1$ of the Tate mod
 citation (lines 10996–10997). With Colmez's Théorème 5.2 this statement replaces the two citations,
 and Lean derives from the pair the de Rham property and the Hodge filtration of the dual of $V_pA$
 that those lines use (`DeRhamScholze.TatePrints.vpDual_of_colmezFontaine`).
+
+## Milne 1986 Thm 7.1
+
+J. S. Milne, *Abelian varieties*, in G. Cornell, J. H. Silverman (eds.), *Arithmetic Geometry*
+(Storrs 1984), Springer (1986), 103–150, §7, Theorem 7.1 (author's retyped edition, p. 10); A.
+Grothendieck, EGA II, Publ. Math. IHÉS 8 (1961), (4.1.1) and (4.1.3), pp. 71–72.
+
+## Colmez 1992 Thm 5.2
+
+P. Colmez, *Périodes p-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème
+5.2 (i)–(ii), p. 639 (setting p. 638; $B^+_{\mathrm{dR}}$ p. 632; proof pp. 639–641).

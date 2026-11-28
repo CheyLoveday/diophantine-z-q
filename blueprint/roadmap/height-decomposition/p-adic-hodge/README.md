@@ -22,10 +22,10 @@ finite extension $K'$ of $K$ inside $\overline{\mathbb Q}_p$, where
 $B_{\rm st}=B_{\rm cris}[\log[\tilde p]]$ is Fontaine's ring as Brinon and Conrad define it, taken
 inside $B_{\rm dR}$ with $\log_p(p)=0$.
 
-Of these four statements, two are published statements and two are consequences of published
+Of these four statements, three are published statements and one is a consequence of published
 theorems; none is proved here.
 
 - [Berger's theorem: de Rham representations are potentially semistable](berger-de-rham-potentially-semistable.md)
 - [Pan's Fontaine–Mazur theorem](pan-fontaine-mazur.md)
-- [Colmez's p-adic periods of an abelian variety](colmez-p-adic-periods.md)
 - [The Hodge–Tate theorem of Tate and Raynaud for abelian varieties](fontaine-hodge-tate-abelian.md)
+- [Colmez's p-adic periods of an abelian variety, on a proper model](colmez-periods-on-a-proper-model.md)

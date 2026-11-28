@@ -1,4 +1,4 @@
-import ZInQKernel.OneProof.H.TailZ110
+import ZInQKernel.OneProof.H.TailZ116
 import ZInQKernel.MainGreenTao
 import ZInQKernel.Contrib.OneProof.DeRhamRange
 import ZInQKernel.Contrib.OneProof.PoleCompletenessFromRCGenuineFinal
@@ -169,8 +169,8 @@ fold-cm (the CM-branch package, cm-branch, cm-branch2, cox-lattice and cm-fold-r
 at +4 (Recommended)") replaced the base of the chain, NoCM (FS5, from González–Rotger's Thm 5.12 on `X₆`, its count and the
 `X₆` Kummer fibre), by the manuscript's CM branch (L581-631): the research field `gonzalezRotgerThm512X6RCF` is no longer
 read, and the CM-branch inputs `cmFibreSplit` (glue), `fowlerProp27`, `cmjDegree`, `cmPotentialGood` and `cmHeight62`
-(leaves pending review) became fields (of these only `cmHeight62` is still a field; the others were discharged or
-replaced by the folds below). `OpenResearchLeaves62` (`TailZ88`) is the new generation, and
+(leaves pending review) became fields (none of these is still a field; each was discharged or replaced by the folds
+below). `OpenResearchLeaves62` (`TailZ88`) is the new generation, and
 `HDec.HSyn.sixContactMin_of_open81` goes through the chain of `sixContactMin_of_open80` with the CM inputs threaded and the
 CM branch at its base (`Contrib/OneProof/CMBranchUC8.lean`, `OneProof/H/CMTopLive.lean`), the moduli row carried in its
 weak form (`R5ptProps` as `True`, `OneProof/H/CMR5*.lean`) and the bundles without the field (`OneProof/H/CMOpen.lean`);
@@ -311,6 +311,23 @@ chain and its vpdual-merge copy; the generations off the live route keep it. `Af
 existence, the coefficient recurrence and the finiteness of `K_f`: it is weaker than Shimura 1973 Theorem 1, and its
 proof is not a Lean proof of that theorem. No generation is added (22 → 21 assumptions).
 
+cmj-reroute-fold (`TailZ114`, `Contrib/OneProof/CMjReroute/README.md`) removes `cmjDegreePrint` without proving it.
+Its one reader on the live route, `CMBranch.faltingsHeight_le_bcm`, used it (as `cmjDegree`) only to bound the class
+number of the CM order `R` of the matrix-unit curve by `[L:ℚ]`, before Fowler's Prop. 2·7 at `n = D`. The copy chain
+`Contrib/OneProof/CMjReroute/Chain1` to `Chain4` (top `sixContactMin_of_open106_cmj`) applies Fowler at `n = 324` to a
+sub-order `R₀ ⊆ R` with at most `324` proper ideal classes (`CMjReroute.cmBranchOut_of_bl`):
+`CMjReroute.cmFibreSplitBL_of_liveInputs_nos` supplies `R₀` from the inputs of the CM split, as the order of the CM
+point of the fibre, whose ring class field has degree at most the number of points of a fibre of `Y₃ → P¹_j`, by
+Shimura's reciprocity law in `Y3Hodge.DeligneCanonicalModelY3EveryPrint`, which the chain derives from the rows that
+replaced the field `deligneCanonicalModelY3EveryPrint`. `OpenResearchLeaves85` is the new generation and
+`HDec.HSyn.sixContactMin_of_open107` the new top (33 → 32 assumptions).
+
+cmheight62-fold (`TailZ115`, autofold, fork PR #252, `Contrib/OneProof/CMHeight62Full/`) proves `cmHeight62` in Lean,
+with no hypotheses: `ZInQ.Contrib.CMHeight62Full.cmHeight62_unconditional` is `cmHeight62_of_step7'` applied to
+`step7_unconditional`, the bound `|N_{L/ℚ} D| ≤ N(J)^12` for a proper smooth group model, from a local comparison at
+every finite place (`CMHeight62Full/FinalAssembly.lean`). No leaf enters. `OpenResearchLeaves86` is the new generation
+and `HDec.HSyn.sixContactMin_of_open108` the new top (32 → 31 assumptions).
+
 The hypotheses of `frozenTarget` are therefore exactly the open statements. Discharging one means replacing a field or
 hypothesis by its proof; the theorem's statement then loses that hypothesis.
 -/
@@ -321,13 +338,13 @@ namespace ZInQ.OneProof
 its genuine Selmer condition, the Cassels–Tate pairing on the curves `E_ℓ`, and Silverman's rank-one forward
 implication (Appendix C, Evidence 16.5.5). Pole completeness (Theorem 5.2) uses only these last three inputs. -/
 theorem _root_.ZInQ.OneProof.frozenTarget
-    (r : HDec.HSyn.OpenResearchLeaves82) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves30)
+    (r : HDec.HSyn.OpenResearchLeaves87) (t : HDec.HSyn.OpenTextbookLeaves18) (l : HDec.HSyn.OpenAddedLeaves31)
     (hRC : ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine)
     (hCT : ZInQ.Manuscript.PoleS12.CasselsTatePairingCurves)
     (hRank : ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne) :
     ZInQ.FrozenTarget :=
   ZInQ.exists_bounded_integer_polynomial_defining_integers_of_sixContactMin_poleCompleteness
-    (HDec.HSyn.sixContactMin_of_open103 r t l)
+    (HDec.HSyn.sixContactMin_of_open109 r t l)
     (ZInQ.Manuscript.PoleS12.SilvermanRank.poleCompleteness_of_rankOne hRC hCT
       (ZInQ.Manuscript.PoleS12.SilvermanRank.rankOne_of_aec hRank))
 

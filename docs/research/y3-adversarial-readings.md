@@ -381,3 +381,322 @@ hand.
 Effect, if folded: `buzzardThm21Cor23V15` (a consequence row) is replaced by
 `buzzardXDV15Lit`, a direct instance of Buzzard's Thm 2.1 with Cor. 2.3 after the stated
 identifications, with no new inputs and the count unchanged.
+
+## 10. Addendum: unit U12, `EGAIV17_5_7`
+
+A further contribution (#226) proves, in Lean, that every local ring of the level-V₁(5) moduli
+scheme is an integrally closed domain, and that the ring of every affine open is a finite product
+of integrally closed domains, from one printed statement: EGA IV₄, Prop. (17.5.7), in its
+"intégralement clos" case, in the direction from the base to the source, for a smooth morphism.
+The base Spec ℤ[1/30] is handled in Lean (localizations of ℤ). It is the normality input for the
+route to the projectivity of the universal false elliptic curve through Raynaud, *Faisceaux amples
+sur les schémas en groupes*, Thm XI 1.4, whose text has not been read yet.
+
+Sources read: EGA IV₄, Publ. Math. IHÉS 32 (1967), open-access copy, SHA-256
+b4277fb99c6edf8feec5b01f54368e4b8521bcd52871316c0edf6ff4ae69389e, pp. 56-59, 61, 62, 70; EGA IV₂,
+Publ. Math. IHÉS 24 (1965), SHA-256 c3e960aa1c5c37046e8892d8a3cac098e2738164136b5cdaa5d5d893f89931da,
+pp. 108, 133, 143; EGA I, Publ. Math. IHÉS 4 (1960), SHA-256
+9aba23020217535977e279bdd06a0413f48da703086865ba4c00766c85df4ae6, p. 37; and kernel printouts, at
+the pinned Mathlib, of `Smooth`, `Algebra.Smooth`, `Algebra.FormallySmooth` with its lifting
+criterion, and `IsIntegrallyClosed`.
+
+| Unit | Fidelity | Skeptic | Red team |
+| --- | --- | --- | --- |
+| U12 `EGAIV17_5_7` | FWC, MINOR | FAITHFUL, MINOR | FWC, MINOR |
+
+Lean as read: `SmoothNormal/Normal.lean` at `b11a545b20832b0ff2dd9153aa3762be2e841011` (SHA-256
+`f824c485f79e8d6f2d42b13c342e6e1020ea8e1f1d545581e515fe860af19e2a`).
+
+Prop. (17.5.7), p. 70: "Soit f : X → Y un morphisme localement de présentation finie, lisse en un
+point x ∈ X; posons y = f(x). Alors, pour que l'anneau 𝒪_{X,x} soit réduit (resp. intégralement
+clos, resp. géométriquement unibranche), il faut et il suffit que 𝒪_{Y,y} le soit." The Lean
+statement: for f smooth (Mathlib's `Smooth`) and every point x, if the local ring at f(x) is an
+integrally closed domain, so is the local ring at x. All three readers found it a direct
+instance, weaker than the print: one of three cases, one of two directions, smoothness at every
+point instead of at x. Mathlib's `Smooth` gives EGA's hypotheses: locally of finite presentation
+by instance, and formally smooth because on affine opens the ring maps are smooth, hence have the
+lifting property along nilpotent ideals (a theorem in Mathlib, whose definition of formal
+smoothness is cotangent-theoretic), which is EGA's (17.1.1) for affine schemes by Remark
+(17.1.2)(i), and formal smoothness is local (17.1.6); so f is lisse (17.3.1) at every point
+(17.3.7). "Intégralement clos" for a local ring includes "intègre" in EGA's usage, Bourbaki's
+convention: EGA 0_I (4.1.4) defines normal ring sheaves by "un anneau intègre et intégralement
+clos", (5.13.5) defines normal rings the same way, and the proof of (5.8.6), p. 108, reads "X
+normal" as "𝒪_x est un anneau local noethérien intégralement clos" and then uses that 𝒪_x is
+intègre. The Lean asks for `IsDomain` and `IsIntegrallyClosed` together, which is needed since
+Mathlib's `IsIntegrallyClosed` alone does not imply domain.
+
+The MINOR findings were all in the docstring: the quotation was not verbatim (O_x for 𝒪_{X,x},
+a comma for the semicolon), the formal-smoothness step was not argued, and Bourbaki's definition
+itself is not in the kit. The first two were fixed, comments only, at
+`8a45b60031f9e6cdaac0ca2ee5bfd42c3013455a` (`Normal.lean` SHA-256
+`3f037a1ad46d80750e4e0bd46cbb340ea76a77485b0dd208a862d3531d4e933f`; the code is identical after
+stripping comments).
+
+All 84 source quotes and 64 Lean quotes were found; three quotes that the skeptic took from pages
+of the EGA IV₄ copy outside the kit's page list (p. 140 and the errata, pp. 352 and 355) were found
+by an exact search of the whole copy.
+
+## 11. Addendum: unit U13, `RaynaudLNM119Normal`
+
+A further contribution (stacked on #226) replaces the input `ProjectiveFEC` (a consequence row resting
+on Buzzard's polarization, Lan's thesis and the Stacks Project through step B-6) by a statement printed
+in M. Raynaud, *Faisceaux amples sur les schémas en groupes et les espaces homogènes*, Lecture Notes in
+Math. 119, Springer (1970), and proves in Lean (`locProjNormal_of_raynaud`) the form the construction
+uses: finite subsets of the universal false elliptic curve lie in affine opens, through closed
+immersions into projective space over the affine opens of the moduli curve, whose rings are noetherian
+and normal by unit U12. The leaf, `SmoothNormal.RaynaudLNM119Normal`: for every noetherian ring R whose
+localizations at primes are integrally closed domains, every false elliptic curve over Spec R has a
+closed immersion into some P^N_R over R.
+
+Sources read: the publisher's free preview of Ch. XI (pp. 159-160; SHA-256
+3263d919ad13c3a777a2b0ffeb8b73ceafdc2a4ae109339170afa564f0fd9960) and of Ch. XII (pp. 185-186; SHA-256
+4d4926d534b86997d761054c0f7d03d9656fe7d63bb6aaa9f3f57b64f618423a); the chapter-opening pages carry no
+printed number, which is read from "- 160 -" and "- 186 -" on the following pages. The page on which
+Théorème XI 1.4 itself is printed was not available and was not read. Also EGA II (Publ. Math. IHÉS 8,
+1961; SHA-256 111834efffe9e90d068389d418f08925a82b4a54ae2957f080712d4180e032eb), pp. 71, 94, 103-105;
+EGA I, p. 37; EGA IV₂, p. 133; Milne 1986, p. 42 (copies as in sections 1 and 10).
+
+p. 159, the opening of Ch. XI, §1: "Soient S un schéma normal, G un S-schéma en groupes lisse, à fibres
+connexes. Nous savons que G est localement quasi-projectif sur S (VI 2.4), mais dans deux cas
+importants on peut même affirmer que G est globalement quasi-projectif sur S : en effet, si les fibres
+maximales de G sont affines, on a vu que G était quasi-affine sur S (VII 2.2) ; d'autre part, si G est
+un S-schéma abélien, Grothendieck a montré que G était projectif sur S (cf. XI 1.4 ci-dessous)". p. 185
+recalls it: "on a vu également (XI 1.4) que A est projectif sur S si S est intègre et géométriquement
+unibranche".
+
+| Unit | Fidelity | Skeptic | Red team |
+| --- | --- | --- | --- |
+| U13 `RaynaudLNM119Normal` | FWC, MINOR | FWC, MINOR | FWC, MAJOR |
+
+Lean as read: `SmoothNormal/Raynaud.lean`, SHA-256
+`f8082b5d0198b1438b5f5f2eb9134e57ea37317a41fe2c242c63ad6e23aabe9f`, with `IsNormalNoeth`
+(`SmoothNormal/Normal.lean`), `PNR` and `PNR.toSpec` (`SmoothNormal/ProjectiveGlue.lean`),
+`LocProjNormal` (`SmoothNormal/Projective.lean`) and `FEC`. No reader found a mismatch.
+
+The points the readers settled:
+- **Global, not local.** p. 159 sets the global statement against the local quasi-projectivity of
+  VI 2.4; "projectif sur S" is the global notion, which is what the leaf asks.
+- **Normal.** `IsNormalNoeth` is EGA's normality of Spec R (0_I (4.1.4), IV₂ (5.13.5)) plus
+  noetherian, which only weakens the leaf. Spec R may be disconnected: p. 159 has no integrality
+  hypothesis; p. 185's form (integral, geometrically unibranch) covers the leaf component by component,
+  since a noetherian normal ring is a finite product of normal domains (IV₂ (5.13.5)), a normal local
+  domain is geometrically unibranch (background), and immersions over the components glue
+  (EGA II (5.5.5)-(5.5.6)).
+- **Abelian scheme.** `FEC` (proper, smooth of relative dimension 2, a group, geometrically connected,
+  with an O-action that plays no part) is an abelian scheme in Milne's sense (p. 42).
+- **"Projectif".** In EGA II's sense ((5.5.1)-(5.5.2)), over the affine base, (5.1.1)-(5.1.2) c') and
+  (5.5.4)(ii) give a closed subscheme of some P^r over the base, and P^r = P(O^{r+1}) = Proj of the
+  polynomial ring in total degree ((4.1.1)) is `PNR`. The red team's first MAJOR was that Raynaud's
+  "projectif" is not defined on the pages read and p. 185 passes from an S-ample sheaf to "projectif":
+  under that reading the conclusion still follows, through (5.5.3)(ii) (proper and quasi-projective over
+  a quasi-compact base is projective) or (5.5.4)(i) (proper with a relatively very ample sheaf, over a
+  locally noetherian base). Its second MAJOR was the disconnected base and the unread XI 1.4, as above.
+  Both were docstring bridges.
+- **Nothing stronger.** One closed immersion over the whole base, for each given family; the empty base
+  is trivial.
+
+The MINOR findings were wording: "proved there as XI 1.4" for "attributed to Grothendieck, cf. XI 1.4";
+"connected fibres" for Milne's "geometric fibres … connected"; the missing page-number and edition
+notes; and the uncited identification of P^r with `PNR`. All were addressed, comments only, in the
+edition with SHA-256 `050fae3d9619b753385bc8ec016293f2ce9a030099d153033efe90bd85153621` (the code is
+identical after stripping comments).
+
+All 100 source quotes and 62 Lean quotes were found; the Raynaud quotes are matched against a poor OCR
+text layer, and the three that fell below the matching threshold ("Alors L est S-ample dans chacun des
+cas suivants", twice, and the heading "2.- Exemple d'un schéma abélien sur une base locale intègre de
+dimension 1, qui n'est pas projectif") were confirmed by hand on the page images. One red-team run
+stopped before finishing its quote list (it quoted long passages) and was rerun with short quotes; the
+rerun is the reading recorded here.
+
+Whether a statement printed in a Lecture Notes monograph, in the volume that proves it, counts as a
+published source is the maintainer's ruling.
+
+Effect, if folded: `projectiveFalseEllipticCurve` (consequence) leaves; `egaIV1757SmoothNormal`
+(unit U12) and `raynaudLNM119Normal` (this unit) enter; count +1; y3FullThreeRepZ30 is then
+`Y3Buzzard.SmoothNormal.y3FullThreeRepZ30_of_printed_raynaud` of nine rows, each a printed statement or
+a direct instance of one.
+
+## 12. Addendum: the Deligne row, units U14-U18
+
+The open row `Y3Hodge.DeligneCanonicalModelY3EveryPrint` (Shimura's Main Theorem I for Y₃, stated for every witness of
+the polarization-free fine moduli problem `Y3Fix.R1fpPropsAbP`) is reduced by a further contribution
+(`DelignePrintShaped/`) to four print-shaped statements and one labelled GLUE:
+
+- T2a `DelignePS.VoightQMComplexModuliPrint`: the complex moduli of QM abelian surfaces in lattice form, at level 1
+  (Voight, *Quaternion Algebras*, §43.6: 43.6.12, Main Theorem 43.6.14, Proposition 43.6.28);
+- T2b `DelignePS.CornutVatsalCMReciprocityPrint`: Shimura's canonical model at level K₃, its complex points and the
+  reciprocity law at CM points (Cornut-Vatsal, Doc. Math. 10 (2005), §3.1.1, Lemmas 3.7 and 3.11);
+- T2c `DelignePS.BoutotCarayolModuliPrint`: the moduli ℚ-scheme of the polarization-free problem at level U(3) and
+  its complex points (Boutot-Carayol, Astérisque 196-197 (1991), Ch. III, §§0-1);
+- T2c′ `DelignePS.BoutotCarayolPolarizationPrint`: the principal *-polarization of a complex QM surface
+  (Boutot-Carayol, Prop. (1.5));
+- W-a `DelignePS.FineModuliCanonicalModelGlue`, GLUE: the fine moduli ℚ-scheme at K₃ with its moduli uniformization is
+  Shimura's canonical model. No legally readable refereed print read for this row states it.
+
+The row is proved in Lean from T2a, T2b and W-a; the moduli clauses from T2a, T2c′ and the existing textbook field
+`GAGAMorphism`.
+
+Sources read: Voight, the author's corrected edition v1.0.7u (SHA-256
+a9316b834dbd500c52cd3a981c3205c9f4145b217042b213d23f696aee84b0f0), pp. 796-811, which states that it differs from the
+printed edition (errata fixed, addenda, pages and numbering slightly different); the statements' quotations were taken
+from the Springer print (SHA-256 f6c56f6ca7b4bee139b88865a3cf045f899da59d0217618c4dc81daf19ef1ad4, read by the literature
+lane) and match this edition word for word for 43.6.12, 43.6.14, 43.6.27 and 43.6.28; in Ch. 43 the print's pages run
+about 14 higher;
+Cornut-Vatsal, the EMS Press open-access copy (47ff862cffc6980c79a63ef041762397dcdf5b71155ce4d7d09d65e16507b109),
+pp. 263, 291-302; Boutot-Carayol, numdam's scan of the volume (2a9aa0b0a046cb37e4d6b6ccc06dfaa00f10d90223ac9d2cb94918d069295119),
+pp. 1-2, 45, 125-132. Lean read with kernel printouts of every constant used (`#print` with docstrings on the built
+world; SHA-256 b74221a0…586e and 42511a3e…5cc2) and a printout fixing the Artin map's normalization (913b1b0b…77ca).
+
+| Unit | Statement | Fidelity | Skeptic | Red team |
+| --- | --- | --- | --- | --- |
+| U14 | T2a, first edition | FWC, MAJOR | FWC, MAJOR | FWC, MAJOR |
+| U15 | T2b | FWC, MINOR | FWC, MAJOR (resolved) | FWC, MINOR |
+| U16 | T2c | FWC, MINOR | FWC, MAJOR | FWC, MAJOR |
+| U17 | T2a, second edition, with `HasPrincipalRiemannMu` | FWC, MINOR | FWC, MAJOR (Voight's proof) | FWC, MINOR |
+| U18 | T2c′ | FWC, MINOR | FWC, MAJOR | FWC, MINOR |
+
+No reader found a mismatch. What the readings settled:
+
+- **U14, T2a clause (ii).** The first edition said that every complex abelian surface with an action of 𝒪 has a
+  period, with no polarization. That is stronger than Proposition 43.6.28, which assumes a principally polarized
+  QM surface; the only printed bridge, Remark 43.6.27, rests on Lemma 43.6.23, proved for A_τ only. All three
+  readers found it. The clause was changed in code: it now takes 43.6.28's hypothesis (`HasPrincipalRiemannMu`), and
+  the polarization is supplied by T2c′. U17 confirmed that the predicate is Voight's "principally polarized, with
+  Rosati involution compatible with μ" (Definitions 43.4.9, 43.4.14, 43.4.16, 43.6.9, (43.6.10)), that n and the
+  lattice are forced by integrality and positivity, and that clause (ii) is now a direct instance of 43.6.28. The
+  skeptic's MAJOR in U17 concerns Voight's own proof: its half-plane step cites Lemma 43.4.17, which normalizes a
+  period matrix and not the O-generator; a unit of norm −1 (43.7.1) repairs it, and the printed statement is
+  unaffected.
+- **U15, the reciprocity normalization.** Cornut-Vatsal's rec_K sends uniformizers to geometric Frobenius (§3.2.4);
+  the kernel's `ArtinCondC` uses Tau Ceti's idele class Artin map, which kernel theorems
+  (`of_ideleClassArtinMap`, `globalArtinMap_primeIdeleClass_eq_of_isArithFrobAt`, standard axioms) show sends prime
+  idele classes to arithmetic Frobenius. So σ = rec_K(λ) is `ArtinCondC κ σ λ⁻¹`, as written. The skeptic's MAJOR
+  (normalization not shown in the first printout) was resolved by that printout. ε and δ are existential, so a sign
+  slip would not have falsified the statement. The holomorphic identification of X with ℍ^± is CV's Remark 3.15
+  (p. 301); the level-H forms are CV's own (pp. 295, 300, 302).
+- **U16, T2c.** Properness and smoothness over ℚ come from §1.4's second sentence (the integral model, on its
+  generic fibre). III.0.1, Theorem 1.1, 1.2, 1.3 and 1.4 are stated with citations ([De], [Mi], [Gi], [Bo]), not
+  proved in the article; only Proposition 1.5 is proved there. The comparison of the kernel's `LevelPrint` with BC's
+  ν, the identification of the moduli ℚ-scheme's complex points with S_U(ℂ) (Yoneda through Theorem 1.1), and
+  holomorphy are background steps.
+- **U18, T2c′.** μ = 2j + ij is an admissible choice of BC's t (t ∈ 𝒪_Δ, t² = −δ); the proof of (1.5) uses only
+  that t is a unit at ℓ ∤ δ and a uniformizer at ℓ | δ (Sous-lemme 1.7 and the Remarque), which μ satisfies. In the
+  article the existence of a *-polarization up to ℚ^× is cited; principality is proved in sketch.
+
+Every finding was addressed in the editions that followed: the code change to T2a clause (ii) and the new T2c′ in the
+second edition (SHA-256 3b1d7cc895916df4316b14a3e281bc6366e398655e7d403ce058cf681b7f524d), the docstring findings of
+U17 and U18 in the third, comment-only (2d4fda888397d3a3d12869f56ee6b6295cfab4e6e032d9bb4dd5ae7d9b181055; the code is
+identical to the second edition's after stripping comments).
+
+Quote checks: 449 source quotes and 430 Lean quotes over the fifteen readings. All Lean quotes were found. The source
+quotes not matched against the text layer were formula renderings and OCR-garbled lines, of which those relied on
+were confirmed by hand on the page images (Λ_τ and E_τ on Voight p. 805, the computation (43.6.29) on p. 809, the
+formula for S_U(ℂ) and Δ*(R) on BC p. 125, the level-H diagram on CV p. 300), and six quotes from CV pp. 295, 301 and
+302, found in the PDF's text.
+
+Board effect. The row `deligneCanonicalModelY3EveryPrint` is discharged by
+`DelignePS.deligneCanonicalModelY3EveryPrint_of_prints`, which still assumes T2a, T2b and W-a (`#discharges` on main
+43c4d0da with the contribution's files). T2c and T2c′ are not inputs to it: they carry the moduli clauses of the
+bridge to the level-three classification (`LevelOnto`), and enter the board only if a later fold uses them. A fold
+replaces the row by T2a and T2b (published, pending the maintainer's rating) and W-a (GLUE): count +2.
+
+Rulings for the maintainer: Voight's *Quaternion Algebras* as a published source (a Springer GTM; the literature
+lane read in the Springer print's preface, p. xi, "Special thanks to the anonymous referees for their constructive
+feedback"; the author's edition read here does not carry that sentence); Cornut-Vatsal's Lemma 3.11 (a lemma of a
+refereed article, printed on p. 299 after the norm computation that derives it from the reciprocity law for CM points,
+"following [14] instead of [4]", §3.2.4); W-a stays GLUE until Shimura, Ann. of Math. 85 (1967), or Deligne, PSPM 33
+(1979), is read. Whether Boutot-Carayol (Astérisque 196-197, a volume "issu d'un Séminaire") counts as published
+matters only if T2c or T2c′ become rows.
+
+## 13. Addendum (2026-11-28): the Deligne row by Milne's route, units U22-U24
+
+The glue row `fineModuliCanonicalModelGlue` (W-a) and the print `cornutVatsalCMReciprocityPrint` (T2b) leave the board.
+A further contribution (`DelignePrintShapedMilne/`) proves `Y3Hodge.DeligneCanonicalModelY3EveryPrint` from five
+statements, on standard axioms (`DelignePSMilne.deligneCanonicalModelY3EveryPrint_of_milne`):
+
+- T2a `DelignePS.VoightQMComplexModuliPrint` (section 12, units U14 and U17; unchanged);
+- T2c′ `DelignePS.BoutotCarayolPolarizationPrint` (section 12, unit U18; unchanged);
+- T2c″ `DelignePSMilne.BoutotCarayolRepresentabilityPrint`: Boutot-Carayol, Astérisque 196-197 (1991), III 1.4
+  (p. 129), the moduli problem at `U(3) = K₃` representable over ℚ, read on field points and on families over proper
+  smooth complex curves;
+- M1 `DelignePSMilne.MilneShimuraFamilyPrint`: a proper smooth curve `T` over ℂ with a family of QM surfaces with
+  full level-3 structure and a uniformization `ψ`, onto and holomorphic in τ, whose fibre at `ψ(z, g)` is the level
+  object of `[z, g]`; from Milne, *Introduction to Shimura varieties*, Clay Math. Proc. 4 (2005), Thm 14.8 (p. 352)
+  applied as on p. 354, which is Deligne, *Théorie de Hodge II*, Publ. Math. IHÉS 40 (1971), Rappel (4.4.3), p. 51,
+  with Baily-Borel (Thm 3.12, pp. 291-292) and Prop. 3.8 (p. 290);
+- M2 `DelignePSMilne.MilneCanonicalModelPrint`: Milne loc. cit. §14, the PEL paragraph (pp. 354-355), with Def. 12.8
+  and (54) (p. 346): a proper smooth curve over ℚ uniformized by `B^× \ (ℍ^± × (B ⊗ 𝔸_f)^× / K₃)`, on which
+  `Aut(ℂ)` acts as on the level objects, satisfies the reciprocity law at CM points.
+
+`GAGAMorphism`, used by the moduli clauses, is proved on main (`ZInQ.Contrib.OneProof.GAGAMorphism.gagaMorphism_proof`).
+The datum facts M2 needs (type C, `E(G, X) = ℚ`, positivity of `*`) are proved in Lean (`DelignePrintShapedMilne/Datum.lean`).
+
+Sources read: Milne, the Clay volume as published (claymath.org; SHA-256
+f57278711bf829491bae0e2fa510ecf0185d378fe8acc6105a7ac73878154e54), pp. 290-293, 319, 340-347, 352-355; Deligne,
+*Théorie de Hodge II*, numdam (748edefb44fded8af67869abfed87062d66977d25b5d12f7d014f1810a063c3f), pp. 50-51;
+Boutot-Carayol, numdam's scan of the volume (2a9aa0b0a046cb37e4d6b6ccc06dfaa00f10d90223ac9d2cb94918d069295119),
+pp. 127-130. Lean read with kernel printouts of every constant used (SHA-256 475b8d9f…).
+
+| Unit | Lean | Fidelity | Skeptic | Red team |
+| --- | --- | --- | --- | --- |
+| U22 | `MilneShimuraFamilyPrint` (M1) | FWC, MINOR | FWC, MAJOR | NOT FAITHFUL, MAJOR |
+| U23 | `MilneCanonicalModelPrint` (M2) | FWC, MINOR | FWC, MAJOR | FWC, MINOR |
+| U24 | `BoutotCarayolRepresentabilityPrint` (T2c″) | FWC, MAJOR | FWC, MINOR | FWC, MINOR |
+
+### 13.1 Unit U22: M1 is a consequence, not a direct instance
+
+The three readers agree that M1 follows from the printed steps together with derived steps, and no reader found a
+clause false: the red team checked each derived step and found it true (background). The red team's NOT FAITHFUL is
+directed at the first edition's docstring, which called M1 "the print or weaker"; the comment-only edition calls it a
+consequence and lists the derived steps:
+
+1. properness: each `Γ_ε \ ℍ` is compact since `B` is a division algebra, and `π₀(Sh_{K₃})` is finite;
+2. smoothness at `K₃`: `Γ_ε` is torsion free (for `γ ∈ Γ_ε`, `nrd(γ − 1) ∈ 9ℤ`, which no nontrivial root of unity
+   satisfies) and `−1 ∉ Γ_ε`;
+3. the PEL case from the Siegel outline ("The proof is similar to the Siegel case", p. 354), with the integral
+   variation of Hodge structure on each component polarizable;
+4. the action of `𝒪` on the family, by the full faithfulness in Hodge II 4.4.3 ("le S-schéma Hom_S(X₁, X₂) est non
+   ramifié sur S, donc a mêmes sections algébriques ou holomorphes");
+5. the level-3 sections: `Γ_ε` acts trivially on `Λ/3Λ`, which gives analytic sections, algebraic by Chow (Thm 3.11)
+   applied to the finite étale `𝒜[3]`; the printed level condition then holds at every geometric point;
+6. the fibre clause at every `(z, g)`: the reduction to a representative `(τ, u)` with `τ ∈ ℍ` and `u ∈ 𝒪̂^×`, which
+   the readers took for an unprinted step (strong approximation, class number one), is a Lean theorem on main,
+   `DelignePS.exists_unit_rep` (from `Y3Hodge.exists_upper` and `RayClassCFT.classNumberOneB_proof`), and the fibre of
+   the family depends only on the point `[z, g] = [τ, u]`.
+
+So M1 enters as a consequence (GLUE), on steps 1-5. Its LEAF path is a Lean proof of those steps. The edition read
+is `DelignePrintShapedMilne/Prints.lean` SHA-256 cee34e61…; the comment-only edition that answers the readings is
+8795a308102f19d6cad5f4600e0e0c1685937c18042af1947f7a2c4a7104e529 (code identical with comments stripped).
+
+### 13.2 Unit U23: M2
+
+M2 is Milne's PEL criterion in the case at hand: the reflex field is ℚ and the datum is of type C (`Datum.lean`), and
+the model is read as a proper smooth curve over ℚ with a holomorphic uniformization (`UnifK3`), algebraic by Chow and
+Cor. 3.16. The readers found no clause stronger than the print. Two readers checked the sign independently: with
+`B^×` acting on `V = B` through right multiplication by `γ⁻¹`, `μ_x(w) = (w⁻¹, 1)` in `(κ, κ̄)` coordinates, so
+`E(x) = κ(K)` and (52) gives `r_x(s) = s⁻¹`; with Milne's `art = rec⁻¹` ((51), p. 341; `rec` sends a prime element to
+the Frobenius, p. 340), (54) is `CVReciprocityAt` with `(ε, δ) = (−1, true)`, which the Lean keeps existential.
+
+The skeptic's MAJOR: the agreement hypothesis reads Milne's action on quadruples on the integral level objects through
+a dictionary whose steps were unstated. The comment-only edition states them: Milne §8 with `ker¹(ℚ, B^×) = 1`; the
+unique principal *-polarization (Boutot-Carayol 1.5); the lift of `η` to `η̂ : 𝒪̂ ≅ T̂(A)` (units of `𝒪₃` surject
+modulo 3), two lifts differing by `K₃`; non-vacuity through strong approximation; rigidity for base change. It also
+states the model steps (`ℍ⁻` through `γ = i`, `nrd i = −2`; `Γ_ε` torsion free and cocompact; a holomorphic bijection
+of compact Riemann surfaces is biholomorphic) and that the PEL paragraph is an outline ("the Shimura-Taniyama theorem
+shows that"), and corrects two transcriptions (`ℳ_K → M_K(ℂ)`, p. 353; "π a prime element of `O_{E_v}`", p. 340).
+
+### 13.3 Unit U24: T2c″
+
+T2c″ is Boutot-Carayol's 1.4 at `U(3)`, which is small enough by 1.3, read weakly: field points, base change, the
+universal family, and classifying maps for families over proper smooth curves over ℚ and over ℂ. The readers found no
+clause stronger than 1.4 read with its second sentence, which gives properness and smoothness (the generic fibre of
+the curve over `ℤ[1/δN]`, `δ = 6`). The fidelity reader's MAJOR is the source status (stated in the print, the second
+sentence cited to [Mi] and [Bo]); the maintainer ruled the volume published on 2026-11-28. The comment-only edition
+quotes the second sentence for properness and smoothness and states the readings of "représentable sur ℚ" (on all
+ℚ-schemes) and of `W ⊗ ℤ/3ℤ` (a constant group scheme).
+
+Quote checks: every Lean quote was found mechanically. Source quotes containing formulas, and those from the
+Boutot-Carayol scan, whose text layer is garbled, were checked by hand on the page images.
+
+Ratings: T2c″ and M2 LEAF and T2c′ LEAF (the maintainer ruled the Clay volume and Astérisque 196-197 published on
+2026-11-28, and the readings found no mismatch); M1 GLUE (a consequence).

@@ -28,3 +28,40 @@ from buzzardLemma22Full5 (Buzzard's Lemma 2.2) and milneThm125Pts (Milne's Thm 1
 milneTorsionCount and milneZeroPreservingHomLN. With them
 y3FullThreeRepZ30 is Y3Buzzard.y3FullThreeRepZ30_of_printed_xdv15 of eight rows. The readings of the old rows were of
 the old statements; those of the new rows are sections 8 and 9 of docs/research/y3-adversarial-readings.md.
+
+Later (y3-f3-1127, the rows of #226 and #243): the row of projectiveFalseEllipticCurve moved here. It was a
+consequence row of the y3FullThreeRepZ30 fold (#212), resting on Buzzard's polarization, Lan's thesis and the Stacks
+Project through step B-6. #243 replaces it by raynaudLNM119Normal, the statement printed in Raynaud, LNM 119 (1970),
+Ch. XI, p. 159 (an abelian scheme over a normal base is projective, attributed there to Grothendieck), and proves in
+Lean the form the construction uses, with the normality of the moduli curve from egaIV1757SmoothNormal (EGA IV (17.5.7),
+#226). The reading of the old row was of the old statement; those of the new rows are sections 10 and 11 of
+docs/research/y3-adversarial-readings.md.
+
+Later (y3-colmez-1127, #247): the row of colmez1992DeRhamAbVar moved here. The field was replaced by
+milneThm71Projective (Milne, Abelian varieties (1986), Thm 7.1: every abelian variety is projective) and
+colmez1992DeRhamAbVarModel (Colmez 1992, Thm 5.2, on a proper model), from which
+ZInQ.Contrib.ColmezProperModel.colmez1992DeRhamAbVar_of_model_milne proves it in Lean through the scheme-theoretic
+closure. The readings of the old row were of the old statement; those of the new rows are section 6 of
+docs/research/tate-prints-adversarial-readings.md.
+
+Later (cmj-reroute-fold): the row of cmjDegreePrint moved here. The field was removed by a reroute, with no
+replacement leaf: its one reader, the CM branch's bound h_F(E) <= B_cm, used it only to bound the class number of the
+CM order of E by [L:Q] before Fowler's Prop. 2.7 at n = D. The reroute bounds instead by 324 the class number of a
+sub-order, the order of the CM point of the fibre, from Shimura's reciprocity law in
+Y3Hodge.DeligneCanonicalModelY3EveryPrint (which the conversion of TailZ112 proves from voightQMComplexModuliPrint,
+cornutVatsalCMReciprocityPrint and fineModuliCanonicalModelGlue) and the fibre bound of Y3 -> P^1_j, and applies Fowler
+at n = 324 (ZInQKernel/Contrib/OneProof/CMjReroute/README.md). The reading, a human reading of Fowler's p. 613 sentence
+that the maintainer ruled YES for this field, is kept here as a record.
+
+Later (cmheight62-fold, #252): cmHeight62 left the open statements, proved in Lean with no hypotheses
+(ZInQ.Contrib.CMHeight62Full.cmHeight62_unconditional, ZInQKernel/Contrib/OneProof/CMHeight62Full/FinalAssembly.lean).
+It had no row in reviews.tsv, so no row moves here; its rating in kinds.tsv (GLUE after the two-lens skeptic pass of
+11-17, with Silverman's Prop. 1.1 unread) is retired with the field.
+
+Later (y3-milne-1128, #256): the row of cornutVatsalCMReciprocityPrint moved here. The field left the board when the
+Deligne row was rerouted through Milne's existence argument: DelignePSMilne.deligneCanonicalModelY3EveryPrint_of_milne
+proves Y3Hodge.DeligneCanonicalModelY3EveryPrint from voightQMComplexModuliPrint, boutotCarayolPolarizationPrint,
+boutotCarayolRepresentabilityPrint, milneShimuraFamilyPrint and milneCanonicalModelPrint, and the reciprocity law at
+CM points now comes from Milne's PEL criterion (milneCanonicalModelPrint) instead of Cornut-Vatsal's Lemma 3.11. The
+reading of the old row stands as a record of Cornut-Vatsal's statement (docs/research/y3-adversarial-readings.md,
+section 12, unit U15); those of the new rows are section 13.

@@ -136,18 +136,74 @@ correspondences, is proved here and is no longer an open statement.
 ]
 
 LEAVES = {
-    'deligneCanonicalModelY3EveryPrint': dict(
-        group='shimura-curves', slug='shimura-main-theorem-y3',
-        title="Shimura's Main Theorem I on Y₃ in Deligne's form",
-        anchor='Shimura Main Theorem I in Deligne form',
+    'voightQMComplexModuliPrint': dict(
+        group='shimura-curves', slug='complex-qm-abelian-surfaces-voight',
+        title="Complex abelian surfaces with quaternionic multiplication, in lattice form",
+        anchor='Voight 43.6.14',
         statement=r"""
-The *Shimura–Deligne statement on $Y_3$* is the following assertion. Let $\mathfrak H$ be the upper half-plane in $\mathfrak H^\pm=\mathbb C\setminus\mathbb R$, $\widehat{\mathcal O}^\times$ the group of units of the closure $\widehat{\mathcal O}$ of $\mathcal O$ in $B\otimes\mathbb A_f$, and $K_3=\{k\in\widehat{\mathcal O}^\times: k\equiv1\bmod 3\widehat{\mathcal O}\}$. Let $B$ act on $\mathbb C^2$, and by Möbius transformations on $\mathfrak H^\pm$, through a fixed embedding $B\to\mathrm M_2(\mathbb R)$, which identifies $B\otimes\mathbb R$ with $\mathrm M_2(\mathbb R)$, and for $\tau\in\mathfrak H$ let $J_\tau\in\mathrm M_2(\mathbb R)$ be the matrix with $J_\tau(\tau,1)^T=i(\tau,1)^T$. Let $Y$ be a proper smooth curve over $\mathbb Q$ with, for every field $F\supseteq\mathbb Q$, a bijection between $Y(F)$ and the isomorphism classes of QM abelian surfaces over $F$ with a level-$3$ structure (an $\mathcal O$-linear injection $\mathcal O/3\mathcal O\to A(F)$); say that a point *classifies* the surfaces in its class. Suppose that these bijections are compatible with extension of $F$; that each point classifies the fibre at that point of a single abelian scheme $\mathcal A$ over $Y$ with a ring homomorphism $\mathcal O\to\operatorname{End}_Y(\mathcal A)$ and an $\mathcal O$-linear map $\mathcal O/3\mathcal O\to\mathcal A(Y)$ that is a bijection onto $\mathcal A_s[3]$ at every geometric point $s$; and that every abelian scheme of this kind over a proper smooth curve $S$ over $\mathbb Q$, whose fibres at field-valued points are QM abelian surfaces with level-$3$ structure, has a morphism $S\to Y$ taking each field-valued point of $S$ to a point classifying its fibre. Then there is a map $\Psi:\mathfrak H^\pm\times(B\otimes\mathbb A_f)^\times\to Y(\mathbb C)$ with four properties. First, $\Psi$ is surjective, and $\Psi(z,g)=\Psi(z',g')$ exactly when $z'=\gamma z$ and $g'=\gamma gk$ for some $\gamma\in B^\times$ and $k\in K_3$; so $\Psi$ identifies $B^\times\backslash\bigl(\mathfrak H^\pm\times(B\otimes\mathbb A_f)^\times\bigr)/K_3$ with $Y(\mathbb C)$. Second, for every $g$ the map $\tau\mapsto\Psi(\tau,g)$ is holomorphic on $\mathfrak H$. Third, for $\tau\in\mathfrak H$ and $u\in\widehat{\mathcal O}^\times$ the point $\Psi(\tau,u)$ classifies a QM abelian surface $(A,\iota)$ with a level-$3$ structure such that $H_1(A(\mathbb C),\mathbb Z)$, the abelianized fundamental group of $A(\mathbb C)$ with $\mathcal O$ acting through $\iota$, is isomorphic to $\mathcal O$ with left multiplication by an isomorphism whose real extension $B\otimes\mathbb R\to H_1(A(\mathbb C),\mathbb R)=\operatorname{Lie}A$ carries right multiplication by $J_\tau$ to multiplication by $i$. Fourth, Shimura's reciprocity law holds at the CM points of $\mathfrak H$ in the following form: there are a sign $\varepsilon=\pm1$ and a choice, made once for all fields, between an embedding into $\mathbb C$ and its complex conjugate, such that for every imaginary quadratic field $K$, embedding $\kappa:K\to\mathbb C$, embedding $q:K\to B$ and point $z\in\mathfrak H$ with $q(a)(z,1)^T=\kappa'(a)(z,1)^T$ for all $a\in K$, where $\kappa'$ is the chosen one of $\kappa$ and $\bar\kappa$, and for every $\sigma\in\operatorname{Aut}(\mathbb C)$ and every idele $s$ of $K$ such that $\sigma$ acts on each finite abelian extension of $\kappa(K)$ in $\mathbb C$ as the Artin symbol of $s$, one has $\sigma(\Psi(z,g))=\Psi\bigl(z,\hat q(s)^{\varepsilon}g\bigr)$ for every $g$, where $\hat q:\mathbb A_{K,f}\to B\otimes\mathbb A_f$ is the extension of $q$ to finite adeles, applied to the finite part of $s$.
+Let $B$ be the quaternion algebra over $\mathbb Q$ of discriminant $6$, $\mathcal O$ its maximal order, $\iota:B\to M_2(\mathbb R)$ the fixed splitting, and for $\tau$ in the upper half-plane let $\Lambda_\tau=\iota(\mathcal O)\binom{\tau}{1}\subset\mathbb C^2$. (i) For every $\tau$ there is a complex abelian surface $A$ with an injective ring homomorphism $\mathcal O\to\operatorname{End}(A)$ and an $\mathcal O$-equivariant analytic isomorphism $\mathbb C^2/\Lambda_\tau\cong A(\mathbb C)$. (ii) Every complex abelian surface with such an action and a principal polarization whose Rosati involution induces $x\mapsto\mu^{-1}\bar x\mu$ on $\mathcal O$, $\mu=2j+ij$, is of this form for some $\tau$. (iii) If one such surface is of this form for $\tau$ and for $\tau'$, then $\tau'=\gamma\tau$ for some $\gamma\in\mathcal O$ of reduced norm $1$, acting by Möbius transformations through $\iota$.
 """,
         caveat=r"""
-It is Shimura's Main Theorem I in Deligne's adelic form, at $B=\left(\frac{2,-3}{\mathbb Q}\right)$ and level $K_3$, stated for every curve with these moduli properties; it asserts nothing about the existence of such a curve. It is weaker than the print in three ways: it asks for a bijection from the double coset space that is holomorphic in $\tau$ in place of a biholomorphism; it states the moduli clause only at the points $(\tau,u)$ with $u\in\widehat{\mathcal O}^\times$, without the polarization or the level structure; and it states the reciprocity law only at CM points of $\mathfrak H$, with its sign conventions left open. Deligne's moduli problem is the polarized one; that $H_1(A(\mathbb C),\mathbb Z)$ carries exactly one principal Riemann form of the type the project fixes is proved here, and Riemann's theorem turns it into the polarization. The project's earlier form, on the upper half-plane, is proved equivalent to it.
+It is Voight's construction 43.6.12, Main Theorem 43.6.14 and Proposition 43.6.28, with the polarization kept only as the hypothesis of (ii) and dropped from the conclusions. A complex abelian surface is read as an algebraic one through Riemann's theorem (43.4.6) and GAGA. The proof of 43.6.28 cites Lemma 43.4.17 to put $\tau$ in the upper half-plane, which that lemma does not give; a unit of norm $-1$ (43.7.1) repairs the step, and the statement is unaffected. The author's corrected edition was read; the quotations agree with the printed book.
 """,
         src=r"""
-G. Shimura, Ann. of Math. 85 (1967), Main Theorem I; P. Deligne, *Travaux de Shimura*, Sém. Bourbaki 389 (1971), §§4–5 (Corollaire 5.7, Exemple 5.8); J. Milne, *Introduction to Shimura varieties* (2005), §§5–8 and 12–14. Numbers unverified.
+J. Voight, *Quaternion Algebras*, Graduate Texts in Mathematics 288, Springer (2021), §43.4 and §43.6: 43.4.6, 43.6.12, Main Theorem 43.6.14, Proposition 43.6.28.
+""",
+    ),
+    'boutotCarayolPolarizationPrint': dict(
+        group='shimura-curves', slug='principal-polarization-qm-surfaces',
+        title="Complex QM abelian surfaces carry a compatible principal polarization",
+        anchor='Boutot–Carayol III 1.5',
+        statement=r"""
+Every abelian surface over $\mathbb C$ with an action of $\mathcal O$ and a full level-$3$ structure has a principal polarization whose Rosati involution induces $x\mapsto\mu^{-1}\bar x\mu$ on $\mathcal O$, with $\mu=2j+ij$.
+""",
+        caveat=r"""
+It is Boutot and Carayol's Proposition (1.5) over $\mathbb C$, at the level $U(3)$ and for their choice $t=\mu$ (III.0.5). A polarization is read as a principal Riemann form on the period lattice (Appell–Humbert). The article cites the existence of a polarization up to a rational multiple and sketches the proof that it can be taken principal; uniqueness, which it also states, is not used.
+""",
+        src=r"""
+J.-F. Boutot, H. Carayol, *Uniformisation $p$-adique des courbes de Shimura : les théorèmes de Čerednik et de Drinfeld*, Astérisque 196–197 (1991), 45–158, Ch. III, 0.5 (p. 127) and 1.5 (p. 129).
+""",
+    ),
+    'boutotCarayolRepresentabilityPrint': dict(
+        group='shimura-curves', slug='qm-moduli-representable-over-q',
+        title="The level-three QM moduli problem is representable over the rationals",
+        anchor='Boutot–Carayol III 1.4',
+        statement=r"""
+There is a scheme $S$ over $\mathbb Q$, proper and smooth of relative dimension $1$, whose points with values in every field $K\supseteq\mathbb Q$ are in bijection, compatibly with extension of fields, with the isomorphism classes of abelian surfaces over $K$ with an action of $\mathcal O$ and a full level-$3$ structure, carrying a universal family; and every such family over a proper smooth curve $T$ over $\mathbb C$ is classified by a morphism $T\to S$ over $\mathbb Q$.
+""",
+        caveat=r"""
+It is the first sentence of Boutot and Carayol's 1.4, that their moduli problem $\mathcal M_U$ is defined and representable over $\mathbb Q$, at the level $U(3)$, the units of $\mathcal O\otimes\hat{\mathbb Z}$ congruent to $1$ modulo $3$, which is small enough by their 1.3. Properness and smoothness come from the second sentence of 1.4, the proper smooth curve over $\mathbb Z[1/\delta N]$ (here $\delta=6$) that it recalls from Milne and Boutot. Only the consequences listed here are used: field-valued points, the universal family, and classifying maps for families over proper smooth complex curves.
+""",
+        src=r"""
+J.-F. Boutot, H. Carayol, Astérisque 196–197 (1991), Ch. III, 1.1–1.4 (pp. 127–129).
+""",
+    ),
+    'milneShimuraFamilyPrint': dict(
+        group='shimura-curves', slug='family-over-complex-shimura-curve',
+        title="The complex Shimura curve at level three carries its family of QM surfaces",
+        anchor='Milne 14.8, Deligne Hodge II 4.4.3',
+        statement=r"""
+There are a proper smooth curve $T$ over $\mathbb C$, a family of abelian surfaces over $T$ with an action of $\mathcal O$ and a full level-$3$ structure, and a surjection $\psi$ from $\mathbb H^\pm\times(B\otimes\mathbb A_f)^\times$ onto $T(\mathbb C)$, holomorphic in the first variable, whose fibre at $\psi(z,g)$ is the level-$3$ QM surface of $[z,g]$.
+""",
+        caveat=r"""
+It is Milne's construction in the existence proof for canonical models, in the PEL case: the variation of Hodge structures on each component $\Gamma_\varepsilon\backslash X^+$ comes from a polarized family of abelian varieties by his Theorem 14.8, which is Deligne's Rappel (4.4.3) in *Théorie de Hodge II*; the quotient is an algebraic curve by Baily–Borel, here compact since $B$ is a division algebra. It is a consequence of these printed steps, not a single print: the compactness of the quotients, the absence of torsion at level three, the action of $\mathcal O$ on the family (from the full faithfulness in 4.4.3), and the level-$3$ sections (from $\Gamma_\varepsilon$ acting trivially on $\Lambda/3\Lambda$, made algebraic by Chow's theorem) are derived here, not printed; the reduction of every point to a representative $(\tau,u)$ with $u$ a unit is proved in Lean.
+""",
+        src=r"""
+J. S. Milne, *Introduction to Shimura varieties*, in *Harmonic Analysis, the Trace Formula, and Shimura Varieties*, Clay Math. Proc. 4 (2005), 265–378, Theorem 14.8 (p. 352) and its use on p. 354, Theorem 3.12 (pp. 291–292), Proposition 3.8 (p. 290), Theorem 6.8 (p. 319); P. Deligne, *Théorie de Hodge II*, Publ. Math. IHÉS 40 (1971), Rappel (4.4.3), p. 51.
+""",
+    ),
+    'milneCanonicalModelPrint': dict(
+        group='shimura-curves', slug='moduli-model-is-canonical',
+        title="A model on which Galois acts as on the moduli objects is canonical",
+        anchor='Milne §14, Def. 12.8',
+        statement=r"""
+For every proper smooth curve $M$ over $\mathbb Q$ with a uniformization $\psi$ of $M(\mathbb C)$ by $B^\times\backslash(\mathbb H^\pm\times(B\otimes\mathbb A_f)^\times/K_3)$, holomorphic in the first variable, on which every automorphism $\sigma$ of $\mathbb C$ acts as on the level-$3$ QM surfaces of the points, there is a sign $\varepsilon$ such that, at every CM point $z$ of an imaginary quadratic field $K$, the automorphism $\sigma=\mathrm{rec}_K(\lambda)$ acts by $\sigma\,\psi(z,g)=\psi(z,\hat q(\lambda)^{\varepsilon}g)$.
+""",
+        caveat=r"""
+It is Milne's statement in the PEL case of type A or C, that a model over the reflex field on which $\mathrm{Aut}(\mathbb C/E)$ acts as on the moduli quadruples is canonical, with his definition of a canonical model at one level (Definition 12.8 and (54)). The reflex field is $\mathbb Q$ and the datum is of type C (proved in Lean). Milne's quadruples are read on the integral objects: the polarization is the unique compatible principal one, and the level structure is the level-$3$ structure of the Tate module. Milne's Artin map is the reciprocal of the arithmetic one ((51), p. 341). The source is a survey that states the result with an outline.
+""",
+        src=r"""
+J. S. Milne, *Introduction to Shimura varieties*, Clay Math. Proc. 4 (2005), §14, pp. 353–355 (the PEL case), Definition 12.8 and (54), p. 346, (52), p. 345, (51), p. 341, and "Models of varieties", p. 343.
 """,
     ),
     'buzzardXDV15Lit': dict(
@@ -234,18 +290,32 @@ It is Milne's Corollary 20.2(a), which is stated for abelian schemes over any ba
 J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), Corollary 20.2(a) and Proposition 20.1, read in the author's retyped edition (p. 43 there); K.-W. Lan, *Arithmetic compactifications of PEL-type Shimura varieties*, Harvard thesis (2008), Corollary 1.3.1.6. The pages of the 1986 printing are unverified, and Mumford's corollary was not read.
 """,
     ),
-    'projectiveFalseEllipticCurve': dict(
-        group='shimura-curves', slug='false-elliptic-curves-projective',
-        title="False elliptic curves over a projective base are projective",
-        anchor='False elliptic curves are projective',
+    'egaIV1757SmoothNormal': dict(
+        group='shimura-curves', slug='smooth-over-normal-is-normal',
+        title="A scheme smooth over a normal base is normal",
+        anchor='EGA IV 17.5.7',
         statement=r"""
-Let $X$ be a scheme over $\mathbb Z[1/30]$ with a closed immersion into some $\mathbb P^N_{\mathbb Z[1/30]}$ over $\mathbb Z[1/30]$, and $\mathcal A$ an abelian scheme of relative dimension $2$ over $X$ with a ring homomorphism $\mathcal O\to\operatorname{End}_X(\mathcal A)$. Then $\mathcal A$ has a closed immersion into some $\mathbb P^{N'}_{\mathbb Z[1/30]}$.
+For every smooth morphism of schemes $f:X\to Y$ and every point $x$ of $X$, if the local ring of $Y$ at $f(x)$ is an integrally closed domain, then so is the local ring of $X$ at $x$.
 """,
         caveat=r"""
-A consequence of printed statements, not a single print, and weaker than what they give: the closed immersion is not asked to lie over $\mathbb Z[1/30]$. Buzzard's canonical principal polarization $\lambda$ of $\mathcal A$ is read in Milne's sense, as $\varphi_L$ with $L$ ample at every geometric point; Buzzard does not define a polarization over a base. It is symmetric by Lan's Lemma 1.3.2.16 and rigidity on the connected components of the noetherian $X$, so it is a polarization in Lan's sense, and $(\mathrm{Id},\lambda)^*\mathcal P$ is relatively ample over $X$ (Lan, Proposition 1.3.2.18). Since $\mathcal O_X(1)$ is ample, twisting by a power of its pull-back gives a sheaf ample relative to $\mathbb Z[1/30]$, and a proper scheme over an affine base with a relatively ample sheaf has a closed immersion into projective space (Stacks Project). The symmetry step is written out in the notes accompanying the Lean proof.
+It is Grothendieck's Proposition (17.5.7) of EGA IV, in its "intégralement clos" case, in the direction from the base to the source, for a morphism smooth at every point. A smooth morphism is locally of finite presentation and formally smooth, which are EGA's hypotheses: formal smoothness in EGA's sense is the lifting property along nilpotent ideals, which smooth ring maps have. In EGA's usage "intégralement clos" for a local ring includes "intègre". It shows that the moduli curve at level $V_1(5)$, smooth over $\mathbb Z[1/30]$, has integrally closed local rings, which the projectivity statement below needs.
 """,
         src=r"""
-K. Buzzard, *Integral models of certain Shimura curves*, Duke Math. J. 87 (1997), §1, read in the author's preprint (p. 3); K.-W. Lan, *Arithmetic compactifications of PEL-type Shimura varieties*, Harvard thesis (2008), Theorem 1.3.2.6, Lemma 1.3.2.16, Corollary 1.3.1.5, Proposition 1.3.2.18 and Definition 1.3.2.20 (Proposition 1.3.2.15 and Definition 1.3.2.16 of the 2021 revision); J. S. Milne, *Abelian varieties*, in G. Cornell and J. H. Silverman (eds.), *Arithmetic Geometry*, Springer (1986), §20 (p. 46 of the author's retyped edition); The Stacks Project, tags 01VT, 0C4K and 0B45. The journal and 1986 pages are unverified.
+A. Grothendieck, *Éléments de géométrie algébrique IV, Étude locale des schémas et des morphismes de schémas (quatrième partie)*, Publ. Math. IHÉS 32 (1967), Proposition (17.5.7), p. 70, with (17.1.1), (17.1.2), (17.1.6), (17.3.1) and (17.3.7), pp. 56–62; EGA I, Publ. Math. IHÉS 4 (1960), (4.1.4), p. 37; EGA IV₂, Publ. Math. IHÉS 24 (1965), (5.8.6) and (5.13.5), pp. 108 and 133.
+""",
+    ),
+    'raynaudLNM119Normal': dict(
+        group='abelian-varieties', slug='abelian-schemes-over-normal-bases-are-projective',
+        title="Abelian schemes over a normal base are projective",
+        anchor='Raynaud LNM 119 XI 1.4',
+        statement=r"""
+For every noetherian ring $R$ all of whose localizations at primes are integrally closed domains, and every abelian scheme $\mathcal A$ of relative dimension $2$ over $\operatorname{Spec}R$ with a ring homomorphism $\iota:\mathcal O\to\operatorname{End}(\mathcal A)$, there is a closed immersion of $\mathcal A$ into some $\mathbb P^N_R$ over $R$.
+""",
+        caveat=r"""
+Raynaud prints, at the opening of Chapter XI of his Lecture Notes, that an abelian scheme over a normal base is projective over it, a theorem of Grothendieck proved in that chapter (Théorème XI 1.4); Chapter XII recalls it for an integral, geometrically unibranch base, which covers the noetherian normal case one component at a time. "Projectif" is read in the sense of EGA II (5.5.2); over the affine base it gives the closed immersion into $\mathbb P^N_R$ (EGA II (5.5.4)(ii)), and the other usual readings give the same (EGA II (5.5.3)(ii) and (5.5.4)(i)). The action of $\mathcal O$ plays no part. Restricted to affine opens of the moduli curve, it gives the projectivity of the universal false elliptic curve that the level-three construction uses, in place of the earlier argument through Buzzard's polarization. The page of Théorème XI 1.4 itself was not read.
+""",
+        src=r"""
+M. Raynaud, *Faisceaux amples sur les schémas en groupes et les espaces homogènes*, Lecture Notes in Mathematics 119, Springer (1970), Chapter XI, §1, p. 159, and Chapter XII, p. 185, read in the publisher's preview; A. Grothendieck, EGA II, Publ. Math. IHÉS 8 (1961), (4.1.1), (5.1.1)–(5.1.2) and (5.5.1)–(5.5.6), pp. 71, 94 and 103–105; EGA IV₂, Publ. Math. IHÉS 24 (1965), (5.13.5), p. 133.
 """,
     ),
     'milneProp207At5': dict(
@@ -276,36 +346,6 @@ Equation (6.2) of Barquero-Sanchez, Cadwallader, Cannon, Genao and Masri is the 
 """,
         src=r"""
 A. Barquero-Sanchez, L. Cadwallader, O. Cannon, T. Genao and R. Masri, *Faltings heights of CM elliptic curves and special Gamma values*, Res. Number Theory 3 (2017), art. 13, §6, Eq. (6.2), pp. 13–14, with the metric on p. 1, read in the published article by the upstream review of the manuscript's CM argument (project note `docs/reviews/height-replacement/height/AUDIT.md`, item 2); the manuscript's citation (`diophantine_zq.tex`, lines 595–605). The paper attributes the formula to Silverman, Proposition 1.1 (not read).
-""",
-    ),
-    'cmjDegreePrint': dict(
-        group='cm-fibres', slug='cm-field-degree',
-        title='The degree of a singular modulus',
-        anchor='Degree of singular moduli',
-        statement=r"""
-The *degree statement* is the following assertion. Let $\tau$ be a point of the upper half-plane
-satisfying $a\tau^2+b\tau+c=0$ with $a,b,c\in\mathbb Z$, $a>0$ and $\gcd(a,b,c)=1$, put
-$\Delta=b^2-4ac$, and let $x=j(\tau)$ be the corresponding singular modulus. Then for every order $R$
-of an imaginary quadratic field with discriminant $\Delta$, $[\mathbb Q(x):\mathbb Q]=\#\operatorname{Pic}(R)$,
-the class number of $R$.
-""",
-        caveat=r"""
-This is the equality over $\mathbb Q$ in a sentence of Fowler's §2.1, which he derives from Cox (Theorem
-11.1 and Proposition 13.2): for a singular modulus of discriminant $\Delta$, $[\mathbb Q(x):\mathbb Q]=h(\Delta)$,
-the class number of the imaginary quadratic order of discriminant $\Delta$. The discriminant is the
-one of his form definition. The order of discriminant $\Delta$ is a parameter here; Lean proves that it
-is unique up to isomorphism and that its class number does not depend on the choice. The manuscript
-uses the fact without a citation ("The degree of $j(E)$ is its order class number, so $h(\Delta)\le d\le D$"),
-and Lean derives from this statement the bound it needs: an elliptic curve over a number field $L$
-with complex multiplication by $R$ has $\#\operatorname{Pic}(R)\le[L:\mathbb Q]$. A person's reading
-of the publisher's PDF, recorded as a human reading, compared the sentence with the print. A two-lens
-review rated the statement published in its printed form.
-""",
-        src=r"""
-G. Fowler, *Some uniform effective results on André–Oort for sums of powers in $\mathbb C^n$*, Math.
-Proc. Cambridge Philos. Soc. 180 (2026), 607–641, §2.1, p. 613, with the discriminant of a singular
-modulus defined on p. 612; D. A. Cox, *Primes of the form $x^2+ny^2$*, Theorem 11.1 and Proposition
-13.2, as Fowler cites them. The manuscript's use: `diophantine_zq.tex`, lines 584–587.
 """,
     ),
     'fowlerProp27PrintCanonical': dict(
@@ -560,18 +600,32 @@ It is Theorem 1.0.4 of Pan, whose hypotheses are those of his Conjecture 1.0.1, 
 L. Pan, *The Fontaine–Mazur conjecture in the residually reducible case*, J. Amer. Math. Soc. 35 (2022), 1031–1169, Theorem 1.0.4, read in arXiv:1901.07166v2, the version the manuscript cites: Conjecture 1.0.1, p. 2; Theorem 1.0.4, p. 5; conventions (geometric Frobenius, Hodge–Tate weight $-1$ for the cyclotomic character), pp. 6–7. The journal text and its numbering are unread. Potential semistability in the sense of J.-M. Fontaine, *Représentations $p$-adiques semi-stables*, Astérisque 223 (1994), Exp. III: potential $B_{\rm st}$-admissibility, 5.6.1, p. 166; admissibility by dimension, 1.8.5, pp. 134–135, under the regularity that 5.1.2(ii), p. 155, supplies for $B_{\rm st}$; $B_{\rm st}$ inside $B_{\rm dR}$ as in J.-M. Fontaine, *Le corps des périodes $p$-adiques*, Astérisque 223 (1994), Exp. II, 4.2.4–4.2.5, p. 86. AI-read: a three-lens adversarial reading of page images, 2026-11-26 (docs/research/pb-adversarial-readings.md).
 """,
     ),
-    'colmez1992DeRhamAbVar': dict(
-        group='p-adic-hodge', slug='colmez-p-adic-periods',
-        title="Colmez's p-adic periods of an abelian variety",
-        anchor='Colmez Theorem 5.2',
+    'milneThm71Projective': dict(
+        group='abelian-varieties', slug='abelian-varieties-are-projective',
+        title="Every abelian variety is projective",
+        anchor='Milne 1986 Thm 7.1',
         statement=r"""
-The *period statement* is the following assertion. Let $F$ be a finite extension of $\mathbb Q_p$, $\overline F$ an algebraic closure of $F$, $G_F=\operatorname{Gal}(\overline F/F)$, $A$ an abelian variety over $F$, $T_pA=\varprojlim_nA(\overline F)[p^n]$ its Tate module and $V_pA=\mathbb Q_p\otimes_{\mathbb Z_p}T_pA$, on which $G_F$ acts through its action on the points of $A$, and let $G_F$ act on $B_{\rm dR}$ through the restriction map $G_F\to G_{\mathbb Q_p}$ along an embedding of $\overline{\mathbb Q}_p$ in $\overline F$. Then there are a set $H$ and, for each $\omega\in H$, a $\mathbb Q_p$-linear map $P_\omega:V_pA\to B_{\rm dR}$ with the following properties: every value $P_\omega(u)$ lies in $B_{\rm dR}^+$; $P_\omega(\sigma u)=\sigma\bigl(P_\omega(u)\bigr)$ for every $\sigma\in G_F$ and $u\in V_pA$; and if $x\in B_{\rm dR}\otimes_{\mathbb Q_p}V_pA$ is sent to $0$ by the $B_{\rm dR}$-linear extension $b\otimes u\mapsto b\,P_\omega(u)$ of every $P_\omega$, then $x=0$.
+For every field $K$ and every abelian variety $A$ over $K$ there are $N$ and a closed immersion $A\to\mathbb P^N_K$ over $K$.
 """,
         caveat=r"""
-It is Théorème 5.2 (i)–(ii) of Colmez with $H$ the de Rham cohomology $H^1_{\rm dR}(A/F)$ and $P_\omega(u)=\int_u\omega$, the $p$-adic period of $\omega$ along $u$, extended $\mathbb Q_p$-linearly from $T_pA$ to $V_pA$. Of the printed theorem the statement keeps three clauses: the periods lie in $B_{\rm dR}^+$, they commute with the action of $G_F$, and the pairing is non-degenerate on the side of $T_pA$ once the scalars are extended to $B_{\rm dR}$. The extension to $V_pA$ uses the linearity in $u$, which the readings take from "bilinéaire" and from the proof on p. 640. The statement drops the identification of $H$ with de Rham cohomology, the linearity in $\omega$, the compatibility with the filtrations, part (iii) and the functoriality. Colmez works with a proper model $\mathcal X$ of $A$ over the integers $\mathcal O_F$ of $F$, and the periods do not depend on it. He builds $T_pA$ from $\mathcal X(\mathcal O_{\mathbb C_p})$, which he identifies with the points of $A$ over $\mathbb C_p$; for every proper model this identification, compatible with the action of $G_F$, is proved here, and so is the identification of the Tate module built from $\mathcal X(\mathcal O_{\mathbb C_p})$ with the one built from the points of $A$ over $\mathbb C_p$. On $p$-power torsion these points are the points over $\overline F$, since $A[p^n]$ is finite over $F$, and this identification, compatible with the action of $G_F$, is also proved here. The model step therefore reduces to the existence of a proper model of $A$ over $\mathcal O_F$, which is proved neither here nor in Mathlib.
+It is Milne's Theorem 7.1 in his survey in *Arithmetic Geometry*. Milne calls a variety projective when it has a very ample linear system (citing Hartshorne II 7.8.2), which gives the closed immersion. His proof treats an algebraically closed field first and then descends to any field. Here $\mathbb P^N_K$ is the base change of $\mathbb P^N_{\mathbb Z}$ (EGA II (4.1.1), (4.1.3)). Taking the closure of $A$ in $\mathbb P^N$ over the integers of a finite extension of $\mathbb Q_p$ gives a proper model of $A$, which Colmez's theorem below assumes. The page and wording of the 1986 printing were not checked; the author's retyped edition was read.
 """,
         src=r"""
-P. Colmez, *Périodes $p$-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème 5.2 (i)–(ii), p. 639, with the standing hypotheses on pp. 629 and 638 and $B_{\rm dR}$ as in §2, p. 632; the proof is on pp. 639–641. AI-read: a three-lens adversarial reading of page images, 2026-11-26 (docs/research/tate-prints-adversarial-readings.md); no person has read these pages. For this step the manuscript's lemma on de Rham comparison and finite descent (`diophantine_zq.tex`, lines 10939–10973) cites Scholze's Corollary 1.8 and Milne's Theorem 12.1(a); this statement and the Hodge–Tate theorem of Tate and Raynaud (Fontaine's Théorème 2) replace those two citations.
+J. S. Milne, *Abelian varieties*, in G. Cornell, J. H. Silverman (eds.), *Arithmetic Geometry* (Storrs 1984), Springer (1986), 103–150, §7, Theorem 7.1 (author's retyped edition, p. 10); A. Grothendieck, EGA II, Publ. Math. IHÉS 8 (1961), (4.1.1) and (4.1.3), pp. 71–72.
+""",
+    ),
+    'colmez1992DeRhamAbVarModel': dict(
+        group='p-adic-hodge', slug='colmez-periods-on-a-proper-model',
+        title="Colmez's p-adic periods of an abelian variety, on a proper model",
+        anchor='Colmez 1992 Thm 5.2',
+        statement=r"""
+For every prime $p$, every finite extension $F$ of $\mathbb Q_p$, every abelian variety $A$ over $F$ and every proper model $\mathcal X$ of $A$ over $\mathcal O_F$, there is a family of $\mathbb Z_p$-linear maps from the Tate module of $\mathcal X(\mathcal O_{\mathbb C_p})$ to $B_{\mathrm{dR}}$, with values in $B^+_{\mathrm{dR}}$, compatible with the action of $\mathrm{Gal}(\bar F/F)$, whose extension of scalars to $B_{\mathrm{dR}}$ has no common kernel.
+""",
+        caveat=r"""
+It is Colmez's Théorème 5.2 (i)–(ii), in his own setting: a proper model of the abelian variety over the integers, points with coordinates in $\mathcal O_{\mathbb C_p}$, and $B^+_{\mathrm{dR}}$ built from $W(R)[1/p]$ as on p. 632. The de Rham cohomology is kept only as an index set; linearity in it, the filtration clause and the Riemann relation (iii) are dropped. The model is not required to be flat: replacing it by the closure of its generic fibre changes neither its points nor the statement. Given a proper model for every abelian variety, which Milne's theorem above supplies, it is equivalent to the row it replaces.
+""",
+        src=r"""
+P. Colmez, *Périodes p-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème 5.2 (i)–(ii), p. 639 (setting p. 638; $B^+_{\mathrm{dR}}$ p. 632; proof pp. 639–641).
 """,
     ),
     'fontaine1982HTAbVar': dict(

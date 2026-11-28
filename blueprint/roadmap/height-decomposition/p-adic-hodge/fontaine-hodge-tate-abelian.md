@@ -3,7 +3,7 @@ article_id: af_2f0b2ecb3bf06eff5e1da42f
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenAddedLeaves30.fontaine1982HTAbVar
+lean: HDec.HSyn.OpenAddedLeaves31.fontaine1982HTAbVar
 ---
 
 # The Hodge–Tate theorem of Tate and Raynaud for abelian varieties
