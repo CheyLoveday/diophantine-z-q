@@ -15,7 +15,7 @@ removes it. See
 
 **30 hypotheses of the H part** (in the bundles `OpenAddedLeaves31`, `OpenResearchLeaves84`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end.
 
-* **Strict count: 13 published / 17 glue** (the strictest flagged reading; 14/16 without the one strictest-reading flag).
+* **Strict count: 18 published / 12 glue** (the strictest flagged reading; 19/11 without the one strictest-reading flag).
 * LEAF means a published, refereed theorem stated over genuine definitions in its printed form, or a direct
   instance of it (a special case that needs no argument). GLUE is everything else: a consequence of one theorem,
   a composite of several, project glue, or a leaf whose published form is still pending a reading (`kinds.tsv`,
@@ -128,33 +128,33 @@ p-adic Hodge theory and modular Galois representations. Claim it on [Deicyde #14
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`afCharpolyDS965`](#afcharpolyds965) | research | consequence | GLUE | note |  |  | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 1 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/224)) |
 | [`bergerSurveyF`](#bergersurveyf) | research | consequence | GLUE | pending-reading | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/231)) |
-| [`buzzardLemma22Full5`](#buzzardlemma22full5) | research | published | GLUE | unread |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
-| [`buzzardXDV15Lit`](#buzzardxdv15lit) | research | published | GLUE | unread |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`carayolThmAFrob`](#carayolthmafrob) | research | consequence | GLUE | unread | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-6998146928)) |
 | [`cmHeight62`](#cmheight62) | research | consequence | GLUE | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7005825482)) |
-| [`egaIV1757SmoothNormal`](#egaiv1757smoothnormal) | research | published | GLUE | unread |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`fineModuliCanonicalModelGlue`](#finemodulicanonicalmodelglue) | research | consequence | GLUE | pending-reading |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`gaudronRemondSec9LowerGR1Weak`](#gaudronremondsec9lowergr1weak) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/232)) |
 | [`gaudronRemondThm14GR1`](#gaudronremondthm14gr1) | research | published | GLUE | note, strictest | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`javanpeykarThm111An`](#javanpeykarthm111an) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`milneThm125Pts`](#milnethm125pts) | research | published | GLUE | unread |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`modularHTCoeff`](#modularhtcoeff) | research | consequence | GLUE | pending-review | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open (last released by the project: #191 landed as additive code without a fold. Its premise `NewformGeometricComparison` is stronger than `ModularHTCoeff` (it fixes one of the row's two normalizations and adds algebraic coefficients...) |
 | [`panThm104F`](#panthm104f) | research | published | GLUE | pending-reading | long-pole | T4 | [elliotglazer #37](https://github.com/elliotglazer/diophantine-z-q/issues/37) | 0 | open |
 | [`pazukiCor13Upper`](#pazukicor13upper) | research | consequence | GLUE | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
-| [`raynaudLNM119Normal`](#raynaudlnm119normal) | research | published | GLUE | unread |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`silverbergZarhinThm34`](#silverbergzarhinthm34) | research | consequence | GLUE | note | good-first |  | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 1 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/223)) |
 | [`colmez1992DeRhamAbVarModel`](#colmez1992derhamabvarmodel) | added | published | LEAF | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`fontaine1982HTAbVar`](#fontaine1982htabvar) | added | published | LEAF | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
 | [`milneThm71Projective`](#milnethm71projective) | added | published | LEAF | note | long-pole | T4 | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | open |
+| [`buzzardLemma22Full5`](#buzzardlemma22full5) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
+| [`buzzardXDV15Lit`](#buzzardxdv15lit) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`cmjDegreePrint`](#cmjdegreeprint) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 1 | open |
 | [`cornutVatsalCMReciprocityPrint`](#cornutvatsalcmreciprocityprint) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`dsThm966Printed`](#dsthm966printed) | research | published | LEAF | note | good-first |  | [elliotglazer #84](https://github.com/elliotglazer/diophantine-z-q/issues/84) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/pull/48)) |
+| [`egaIV1757SmoothNormal`](#egaiv1757smoothnormal) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`egaIV_9_7_7_OL`](#egaiv_9_7_7_ol) | research | published | LEAF | note | long-pole | T4 | [elliotglazer #85](https://github.com/elliotglazer/diophantine-z-q/issues/85) | 0 | open |
 | [`fowlerProp27PrintCanonical`](#fowlerprop27printcanonical) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 1 | open (last released by the project: no fold. Oesterlé's Théorème 1 implies Fowler's Proposition 2·7, so putting it in place of the Fowler row at the same count would make `frozenTarget`'s hypothesis stronger (review on #184). #184 st...) |
 | [`milneProp207At3`](#milneprop207at3) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`milneProp207At5`](#milneprop207at5) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
+| [`milneThm125Pts`](#milnethm125pts) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`milneTorsionCount`](#milnetorsioncount) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`milneZeroPreservingHomLN`](#milnezeropreservinghomln) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
+| [`raynaudLNM119Normal`](#raynaudlnm119normal) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`voightQMComplexModuliPrint`](#voightqmcomplexmoduliprint) | research | published | LEAF | note |  |  | [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86) | 0 | open |
 | [`hRC`](#hrc) | frozenTarget | manuscript hypothesis | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by the project ([claim](https://github.com/Deicyde/diophantine-z-q/issues/83)) |
 | [`hCT`](#hct) | frozenTarget | published | GLUE | note |  |  | [Deicyde #83](https://github.com/Deicyde/diophantine-z-q/issues/83) | 0 | held by [@mccorvie](https://github.com/mccorvie) ([claim](https://github.com/Deicyde/diophantine-z-q/issues/14#issuecomment-7031756860)) |
@@ -204,34 +204,6 @@ HDec.PkgI4.PanDict.BergerSurveyF
 > (PanBergerRefereed.bergerSurveyF_of_colmez); the converse needs the G_K-regularity of B_st, which
 > is not proved, so ColmezThm01 is not a replacement at the same count.
 
-### buzzardLemma22Full5
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves84.buzzardLemma22Full5`; kind **published**, strict **GLUE**; flag: unread: new printed leaf (Buzzard 1997 Lemma 2.2, 'Let N >= 4 be an integer prime to d, and let k be an algebraically closed field of either characteristic 0 or of characteristic p prime to Nd. ... Then the only automorphism of (A/k, i) which fixes alpha is the identity', at N = 5, preprint p. 6; adversarial AI reading 11-26 (docs/research/y3-adversarial-readings.md, section 8, unit U9; three independent lenses on three model families from the page images of SHA-256-hashed copies, every quote checked mechanically): fidelity FAITHFUL WITH CAVEATS (MINOR), skeptic and red team FAITHFUL WITH CAVEATS (MAJOR: docstring bridges, now added); no mismatch; direct instance after the stated identifications).
-* Source: K. Buzzard, Integral models of certain Shimura curves, Duke Math. J. 87 (1997), Def. 1.1 and Lemma 2.2, read in the author's preprint (https://www.ma.imperial.ac.uk/~buzzard/maths/research/papers/shimura.pdf), pp. 3 and 6 of its pagination; Duke pages UNVERIFIED; identifications: Milne 1986 Prop. 20.7 (p. 44 of the author's retyped edition); Voight, Quaternion Algebras, GTM 288, Thm 15.5.5
-* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-Y3Buzzard.BuzzardLemma22Full5
-```
-
-> y3-printed, Buzzard, Duke Math. J. 87 (1997) Lemma 2.2 at N = 5 (author's preprint p. 6): over an algebraically closed field k with (30 : k) != 0, an automorphism of an FEC over Spec k with iota injective, commuting with iota(O), that fixes a point P with a |-> iota(a)P a bijection O/5O -> A[5](k), is the identity. P gives a full level-5 structure (Def. 1.1; A[5] finite etale by Milne 1986 Prop. 20.7, hence constant) whose H-orbit is a V1(5)-structure for every kappa. With milneThm125Pts and the 3-adic argument it proves the fibre rigidity at level 3 (Y3Buzzard.serreRigidityFibreZ30_of_leaves), so serreRigidityLevel3 and Buzzard's polarization (README B-2, B-3) are no longer inputs. One of the eight rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_xdv15).
-
-### buzzardXDV15Lit
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves84.buzzardXDV15Lit`; kind **published**, strict **GLUE**; flag: unread: new printed leaf (Buzzard 1997 Thm 2.1 with Cor. 2.3 at U = V1(5), with his own level structures and morphisms, 'X^D(U) is an algebraic stack over Z[1/M_U d]. Moreover, the morphism X^D(U) -> Spec(Z[1/M_U d]) is proper and smooth of relative dimension 1', preprint p. 5; adversarial AI reading 11-27 (docs/research/y3-adversarial-readings.md, section 9, unit U11; three independent lenses on three model families from the page images of SHA-256-hashed copies, every quote checked mechanically): fidelity FAITHFUL WITH CAVEATS (MINOR), skeptic and red team FAITHFUL WITH CAVEATS (MAJOR: unstated steps on the comparison maps and the empty base, now in the docstrings); no mismatch; direct instance after the stated identifications).
-* Source: K. Buzzard, Integral models of certain Shimura curves, Duke Math. J. 87 (1997), section 1 (Def. 1.1, Def. 1.2, the action, the sheafification), Thm 2.1, Lemma 2.2 and Cor. 2.3, read in the author's preprint (https://www.ma.imperial.ac.uk/~buzzard/maths/research/papers/shimura.pdf), pp. 2-7 of its pagination; Duke pages UNVERIFIED; identifications: EGA II (5.5.4)(ii), Publ. Math. IHES 8 (1961), p. 104; Milne 1986 Cor. 20.2(a), p. 43 of the author's retyped edition
-* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-Y3Buzzard.XDV15.BuzzardXDV15Lit
-```
-
-> y3-printed, Buzzard, Duke Math. J. 87 (1997) Thm 2.1 and Cor. 2.3 at U = V1(5), where M_U d = 30 (author's preprint: Thm 2.1 p. 5, Cor. 2.3 p. 7), with Buzzard's own definitions: full level-5 structures as O-linear isomorphisms (O/5O)_T -> A[5]_T of T-schemes (Def. 1.1, p. 3), the left action alpha -> alpha o r_delta, H = kappa^-1{(a b; 0 1)} in (O/5O)^x for a fixed kappa (Y3Buzzard.XDV15.kappa5), level structures as sections over S of the etale sheafification on S-schemes of T -> H\F_{A/S,5}(T) (p. 4, Def. 1.2), and the morphisms of X^D(U) (p. 5): a proper smooth curve X over Z[1/30] with a closed immersion into some P^N over Z[1/30], and an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End) over X with a level-V1(5) structure, universal over every Z[1/30]-scheme S (exactly one g : S -> X admits a morphism, and that morphism is unique). 'Algebraic stack' and 'regular' dropped; projective over the affine base as the closed immersion (EGA II (5.5.4)(ii)); comparison maps are homomorphisms by Milne 1986 Cor. 20.2(a). Gives buzzardThm21Cor23V15 (proved: Y3Buzzard.b1Prime_of_literal, with milneProp207At5 and Y3Buzzard.geomCard5_of_rem84). One of the eight rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_xdv15).
-
 ### carayolThmAFrob
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves84.carayolThmAFrob`; kind **consequence**, strict **GLUE**; flag: unread: new printed leaf (packaged form; consequence of DDT 1997 Thm 3.1 (a)-(d) via CarayolRefold.frob_of_DDT31 (statement check on Deicyde/diophantine-z-q#14, 2026-11-19, AI-read: verdict CONSEQUENCE; DDT's proof of 3.1 (d) cites Carayol's Theoreme (A), p. 87 of the author-hosted 2007 revision), of which every clause was found printed by reviewer verdict queue10 carIrr and AI audit #65); statement check: (i) irreducible over K_{f,lambda} (Ribet LNM 601 Thm 2.3 or DDT 3.1(c) 'absolutely irreducible'); (ii) arithmetic Frobenius polynomial X^2 - a_p X + p psi(p) (manuscript L9794 from Carayol's normalization; DDT 3.1 trace a_p and det = psi chi_l); (iii) the conductor clause is a consequence of Carayol 1986 Theoreme (A) with the conductor compatibility of local Langlands and Casselman 1973 Thm 1, printed as one statement only in DDT 3.1 ('N(rho) is the prime-to-l part of N', AI reading); Carayol's form of Theorem A is not expressible in Lean (report section 2); locators UNVERIFIED.
@@ -271,20 +243,6 @@ HDec.CMBranch.CMHeight62
 
 > cm-branch (leaf, consequence form; GLUE: rating refuted 11-17, reported formula):
 > Barquero-Sanchez et al., Res. Number Theory 3 (2017), Eq. (6.2) (L600-605).
-
-### egaIV1757SmoothNormal
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves84.egaIV1757SmoothNormal`; kind **published**, strict **GLUE**; flag: unread: new printed leaf (EGA IV4 (17.5.7), 'pour que l'anneau O_{X,x} soit reduit (resp. integralement clos, resp. geometriquement unibranche), il faut et il suffit que O_{Y,y} le soit', p. 70, integrally closed case, base to source, for a smooth morphism; adversarial AI reading 11-27 (docs/research/y3-adversarial-readings.md, section 10, unit U12; three independent lenses on three model families from page images of the numdam scans with kernel printouts of Mathlib's Smooth and IsIntegrallyClosed, every quote checked mechanically): fidelity and red team FAITHFUL WITH CAVEATS (MINOR: docstring quotation and the formal-smoothness step, fixed), skeptic FAITHFUL; no mismatch; direct instance).
-* Source: A. Grothendieck, Elements de geometrie algebrique IV (quatrieme partie), Publ. Math. IHES 32 (1967), Prop. (17.5.7), p. 70, with (17.1.1), (17.1.2), (17.1.6), (17.3.1), (17.3.7), pp. 56-62 (numdam scan); EGA I, Publ. Math. IHES 4 (1960), (4.1.4), p. 37; EGA IV2, Publ. Math. IHES 24 (1965), (5.8.6), (5.13.5), pp. 108, 133
-* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-Y3Buzzard.SmoothNormal.EGAIV17_5_7
-```
-
-> y3-printed, EGA IV4, Publ. Math. IHES 32 (1967), Prop. (17.5.7), p. 70, the 'integralement clos' case, in the direction from the base to the source, for a morphism smooth at every point: if the local ring of Y at f(x) is an integrally closed domain, so is the local ring of X at x. Mathlib's Smooth gives EGA's hypotheses (locally of finite presentation; formally smooth through the lifting criterion, EGA IV4 (17.1.1), (17.1.2)(i), (17.1.6), (17.3.1), (17.3.7)); 'integralement clos' for a local ring includes 'integre' in EGA's usage (EGA 0_I (4.1.4), IV2 (5.8.6), (5.13.5)). With the regularity-free smoothness of the level-V1(5) moduli curve over Z[1/30], it gives that the rings of its affine opens are noetherian and normal (Y3Buzzard.SmoothNormal.isNormalNoeth_of_B1). One of the nine rows that replace y3FullThreeRepZ30 (Y3Buzzard.SmoothNormal.y3FullThreeRepZ30_of_printed_raynaud).
 
 ### fineModuliCanonicalModelGlue
 
@@ -371,20 +329,6 @@ JavanpeykarAnRetype.JavanpeykarThm111An
 > uniformizationLeafAll_proof for T35); the converse javanpeykarThm111An_of_thm111 holds given T35,
 > so the leaf is not stronger than the row it replaces.
 
-### milneThm125Pts
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves84.milneThm125Pts`; kind **published**, strict **GLUE**; flag: unread: new printed leaf (Milne 1986 Thm 12.5, 'For all abelian varieties A and B, Hom(A,B) is a free Z-module of finite rank <= 4 dim A dim B; for each prime l != char(k), the natural map Z_l (x) Hom(A,B) -> Hom(T_l A, T_l B) is injective with torsion-free cokernel', p. 21 of the author's retyped edition; adversarial AI reading 11-26 (docs/research/y3-adversarial-readings.md, section 8, unit U10; three independent lenses on three model families from the page images of SHA-256-hashed copies, every quote checked mechanically): fidelity FAITHFUL (MINOR), skeptic FAITHFUL WITH CAVEATS (MINOR: citations, now added), red team FAITHFUL; no mismatch; direct instance after the stated identification).
-* Source: J. S. Milne, Abelian varieties, in G. Cornell and J. H. Silverman (eds.), Arithmetic Geometry, Springer (1986), Cor. 2.4, Rem. 8.4 and Thm 12.5, read in the author's retyped edition (https://www.jmilne.org/math/xnotes/AVs.pdf), pp. 3, 14 and 21; 1986 pages UNVERIFIED
-* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-Y3Buzzard.MilneThm125Pts
-```
-
-> y3-printed, Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry (Springer 1986), Thm 12.5 (p. 21 of the author's retyped edition), with Rem. 8.4 (p. 14) and Cor. 2.4 (p. 3): over an algebraically closed field k, two endomorphisms of an FEC over Spec k that agree on every point of l-power order, l a prime with (l : k) != 0, are equal. Uses only the printed injectivity of Z_l (x) End(A) -> End(T_l A) and the freeness of End(A). With buzzardLemma22Full5 it proves the fibre rigidity at level 3 (Y3Buzzard.serreRigidityFibreZ30_of_leaves). One of the eight rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_xdv15).
-
 ### modularHTCoeff
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves84.modularHTCoeff`; kind **consequence**, strict **GLUE**; flag: pending review (new leaf, GLUE until a reviewer rates it; source: cited print (modular HT existence form, Gee 2022 Fact 4.20); inbox 33a;) unread: new printed leaf (existence form over the print's coefficient field K_{f,lambda} / F_lambda, Hodge-Tate weights 0, k-1 in the print's tensor-product definition, every level; the four normalization/sign-convention readings reduce to the two disjuncts in Lean; trace clause only); Gee's statement is Fact 4.20 in section 4.19, p. 28 (arXiv v2, AI-read; section 2 has nothing on modular forms); Taylor 2004 and Kato section 11.3 locators UNVERIFIED.
@@ -441,20 +385,6 @@ ZInQ.HeightSplit.PazukiCor13Upper
 ```
 
 > height-split, H-18: the upper half of Pazuki 2012 Cor. 1.3(2), replaces `r22`.
-
-### raynaudLNM119Normal
-
-* Bundle field `HDec.HSyn.OpenResearchLeaves84.raynaudLNM119Normal`; kind **published**, strict **GLUE**; flag: unread: new printed leaf (Raynaud, LNM 119 (1970), Ch. XI, p. 159, 'si G est un S-schema abelien, Grothendieck a montre que G etait projectif sur S (cf. XI 1.4 ci-dessous)', S normal; Ch. XII, p. 185, recalls XI 1.4 for S integral and geometrically unibranch; read in the publisher's preview, the page of XI 1.4 itself not read; adversarial AI reading 11-27 (docs/research/y3-adversarial-readings.md, section 11, unit U13; three independent lenses on three model families from page images, every quote checked mechanically): fidelity and skeptic FAITHFUL WITH CAVEATS (MINOR), red team FAITHFUL WITH CAVEATS (MAJOR: docstring bridges for the readings of 'projectif' and for disconnected bases, fixed); no mismatch; direct instance over affine noetherian normal bases after the stated identifications; whether a Lecture Notes volume counts as published is the maintainer's ruling).
-* Source: M. Raynaud, Faisceaux amples sur les schemas en groupes et les espaces homogenes, Lecture Notes in Mathematics 119, Springer (1970), Ch. XI, section 1, p. 159, and Ch. XII, p. 185 (publisher's preview; the page numbers of these chapter-opening pages are read from the following pages); EGA II, Publ. Math. IHES 8 (1961), (4.1.1), (5.1.1)-(5.1.2), (5.5.1)-(5.5.6), pp. 71, 94, 103-105; EGA IV2 (5.13.5), p. 133
-* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
-* Human readings recorded: none.
-* Status: open.
-
-```lean
-Y3Buzzard.SmoothNormal.RaynaudLNM119Normal
-```
-
-> y3-printed, Raynaud, Faisceaux amples sur les schemas en groupes et les espaces homogenes, LNM 119 (Springer 1970), Ch. XI, p. 159 (Grothendieck's theorem, cf. XI 1.4): for every noetherian ring R whose localizations at primes are integrally closed domains (Y3Buzzard.SmoothNormal.IsNormalNoeth) and an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End) over Spec R, there is a closed immersion of A into some P^N_R over R (PNR). 'Projectif' read in EGA II's sense ((5.5.1)-(5.5.2)), turned into P^N over the affine base by (5.1.2) c'), (5.5.4)(ii) and (4.1.1); the alternative readings give the same through (5.5.3)(ii) or (5.5.4)(i). Gives LocProjNormal (proved: Y3Buzzard.SmoothNormal.locProjNormal_of_raynaud), so projectiveFalseEllipticCurve is no longer an input. One of the nine rows that replace y3FullThreeRepZ30 (Y3Buzzard.SmoothNormal.y3FullThreeRepZ30_of_printed_raynaud).
 
 ### silverbergZarhinThm34
 
@@ -522,6 +452,34 @@ ZInQ.Contrib.ColmezProperModel.MilneThm71Projective
 
 > y3-printed, Milne, Abelian varieties, in Arithmetic Geometry (Storrs 1984), Springer 1986, Thm 7.1 (p. 10 of the author's retyped edition): every abelian variety over a field K has a closed immersion over K into P^N_Z x_{Spec Z} Spec K for some N. With the scheme-theoretic closure in P^N over O_F it gives a proper model of every abelian variety over a finite extension of Q_p (ZInQ.Contrib.ColmezProperModel.properModelExists_of_milne). One of the two rows that replace colmez1992DeRhamAbVar (ZInQ.Contrib.ColmezProperModel.colmez1992DeRhamAbVar_of_model_milne).
 
+### buzzardLemma22Full5
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves84.buzzardLemma22Full5`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-26 (docs/research/y3-adversarial-readings.md, section 8, unit U9; three independent lenses on three model families from the page images of the author's copy (PDF SHA-256 4854cb4adc99fec7eac47596dea86832e2e468f3c80d78726afeb98d2404b915), every quote checked mechanically): fidelity FAITHFUL WITH CAVEATS (MINOR), skeptic and red team FAITHFUL WITH CAVEATS (MAJOR: docstring bridges, now added); no mismatch: direct instance at N = 5, after the stated identifications, of Buzzard (1997) Lemma 2.2, 'Let N >= 4 be an integer prime to d, and let k be an algebraically closed field of either characteristic 0 or of characteristic p prime to Nd. ... Then the only automorphism of (A/k, i) which fixes alpha is the identity', p. 6 of that copy; the Duke typeset text was not compared; LEAF at the maintainer's request (2026-11-27) on this reading.
+* Source: K. Buzzard, Integral models of certain Shimura curves, Duke Math. J. 87 (1997), Def. 1.1 and Lemma 2.2, read in the author's preprint (https://www.ma.imperial.ac.uk/~buzzard/maths/research/papers/shimura.pdf), pp. 3 and 6 of its pagination; Duke pages UNVERIFIED; identifications: Milne 1986 Prop. 20.7 (p. 44 of the author's retyped edition); Voight, Quaternion Algebras, GTM 288, Thm 15.5.5
+* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+Y3Buzzard.BuzzardLemma22Full5
+```
+
+> y3-printed, Buzzard, Duke Math. J. 87 (1997) Lemma 2.2 at N = 5 (author's preprint p. 6): over an algebraically closed field k with (30 : k) != 0, an automorphism of an FEC over Spec k with iota injective, commuting with iota(O), that fixes a point P with a |-> iota(a)P a bijection O/5O -> A[5](k), is the identity. P gives a full level-5 structure (Def. 1.1; A[5] finite etale by Milne 1986 Prop. 20.7, hence constant) whose H-orbit is a V1(5)-structure for every kappa. With milneThm125Pts and the 3-adic argument it proves the fibre rigidity at level 3 (Y3Buzzard.serreRigidityFibreZ30_of_leaves), so serreRigidityLevel3 and Buzzard's polarization (README B-2, B-3) are no longer inputs. One of the eight rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_xdv15).
+
+### buzzardXDV15Lit
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves84.buzzardXDV15Lit`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-27 (docs/research/y3-adversarial-readings.md, section 9, unit U11; three independent lenses on three model families from the page images of the author's copy (PDF SHA-256 4854cb4adc99fec7eac47596dea86832e2e468f3c80d78726afeb98d2404b915), every quote checked mechanically): fidelity FAITHFUL WITH CAVEATS (MINOR), skeptic and red team FAITHFUL WITH CAVEATS (MAJOR: unstated steps on the comparison maps and the empty base, now in the docstrings); no mismatch: direct instance after the stated identifications of Buzzard (1997) Thm 2.1 with Cor. 2.3 at U = V1(5), with his own level structures and morphisms, 'X^D(U) is an algebraic stack over Z[1/M_U d]. Moreover, the morphism X^D(U) -> Spec(Z[1/M_U d]) is proper and smooth of relative dimension 1', p. 5 of that copy; the Duke typeset text was not compared; LEAF at the maintainer's request (2026-11-27) on this reading.
+* Source: K. Buzzard, Integral models of certain Shimura curves, Duke Math. J. 87 (1997), section 1 (Def. 1.1, Def. 1.2, the action, the sheafification), Thm 2.1, Lemma 2.2 and Cor. 2.3, read in the author's preprint (https://www.ma.imperial.ac.uk/~buzzard/maths/research/papers/shimura.pdf), pp. 2-7 of its pagination; Duke pages UNVERIFIED; identifications: EGA II (5.5.4)(ii), Publ. Math. IHES 8 (1961), p. 104; Milne 1986 Cor. 20.2(a), p. 43 of the author's retyped edition
+* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+Y3Buzzard.XDV15.BuzzardXDV15Lit
+```
+
+> y3-printed, Buzzard, Duke Math. J. 87 (1997) Thm 2.1 and Cor. 2.3 at U = V1(5), where M_U d = 30 (author's preprint: Thm 2.1 p. 5, Cor. 2.3 p. 7), with Buzzard's own definitions: full level-5 structures as O-linear isomorphisms (O/5O)_T -> A[5]_T of T-schemes (Def. 1.1, p. 3), the left action alpha -> alpha o r_delta, H = kappa^-1{(a b; 0 1)} in (O/5O)^x for a fixed kappa (Y3Buzzard.XDV15.kappa5), level structures as sections over S of the etale sheafification on S-schemes of T -> H\F_{A/S,5}(T) (p. 4, Def. 1.2), and the morphisms of X^D(U) (p. 5): a proper smooth curve X over Z[1/30] with a closed immersion into some P^N over Z[1/30], and an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End) over X with a level-V1(5) structure, universal over every Z[1/30]-scheme S (exactly one g : S -> X admits a morphism, and that morphism is unique). 'Algebraic stack' and 'regular' dropped; projective over the affine base as the closed immersion (EGA II (5.5.4)(ii)); comparison maps are homomorphisms by Milne 1986 Cor. 20.2(a). Gives buzzardThm21Cor23V15 (proved: Y3Buzzard.b1Prime_of_literal, with milneProp207At5 and Y3Buzzard.geomCard5_of_rem84). One of the eight rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_xdv15).
+
 ### cmjDegreePrint
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves84.cmjDegreePrint`; kind **published**, strict **LEAF**; flag: p. 613: "[Q(x_i) : Q] = [Q(sqrt(Delta), x_i) : Q(sqrt(Delta))] = h(Delta), where h(Delta) denotes the class number of the imaginary quadratic order of discriminant Delta." Lean uses the equality over Q; Delta is the primitive-equation discriminant of p. 612; the order and its proper class number are determined by Delta (orders_ringEquiv_of_discr_eq, properClassNumber_ringEquiv)..
@@ -570,6 +528,20 @@ DSThm966EV.DSThm966Printed
 > outside N, with tr rho(Frob_p) = a_p (the T_p-eigenvalue F.eigenvalue p) and det rho(Frob_p) =
 > eps(p). The coefficient form a_p = coeff g p (from a_1 = 1) and eps(-1) = -1 (parity lemma,
 > TauCeti Parity.lean:113) are glue in DSThm966EV.dsThm966_of_printed (coeff-fix).
+
+### egaIV1757SmoothNormal
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves84.egaIV1757SmoothNormal`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-27 (docs/research/y3-adversarial-readings.md, section 10, unit U12; three independent lenses on three model families from the page images of the numdam scans of EGA IV4 (Publ. Math. IHÉS 32, 1967; PDF SHA-256 b4277fb99c6edf8feec5b01f54368e4b8521bcd52871316c0edf6ff4ae69389e) with kernel printouts of Mathlib's Smooth and IsIntegrallyClosed, every quote checked mechanically): fidelity and red team FAITHFUL WITH CAVEATS (MINOR: docstring quotation and the formal-smoothness step, fixed), skeptic FAITHFUL; no mismatch: direct instance of EGA IV4 (17.5.7), 'pour que l'anneau O_{X,x} soit reduit (resp. integralement clos, resp. geometriquement unibranche), il faut et il suffit que O_{Y,y} le soit', p. 70, integrally closed case, base to source, for a smooth morphism; journal text read; LEAF under the maintainer's general rule of 2026-11-26.
+* Source: A. Grothendieck, Elements de geometrie algebrique IV (quatrieme partie), Publ. Math. IHES 32 (1967), Prop. (17.5.7), p. 70, with (17.1.1), (17.1.2), (17.1.6), (17.3.1), (17.3.7), pp. 56-62 (numdam scan); EGA I, Publ. Math. IHES 4 (1960), (4.1.4), p. 37; EGA IV2, Publ. Math. IHES 24 (1965), (5.8.6), (5.13.5), pp. 108, 133
+* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+Y3Buzzard.SmoothNormal.EGAIV17_5_7
+```
+
+> y3-printed, EGA IV4, Publ. Math. IHES 32 (1967), Prop. (17.5.7), p. 70, the 'integralement clos' case, in the direction from the base to the source, for a morphism smooth at every point: if the local ring of Y at f(x) is an integrally closed domain, so is the local ring of X at x. Mathlib's Smooth gives EGA's hypotheses (locally of finite presentation; formally smooth through the lifting criterion, EGA IV4 (17.1.1), (17.1.2)(i), (17.1.6), (17.3.1), (17.3.7)); 'integralement clos' for a local ring includes 'integre' in EGA's usage (EGA 0_I (4.1.4), IV2 (5.8.6), (5.13.5)). With the regularity-free smoothness of the level-V1(5) moduli curve over Z[1/30], it gives that the rings of its affine opens are noetherian and normal (Y3Buzzard.SmoothNormal.isNormalNoeth_of_B1). One of the nine rows that replace y3FullThreeRepZ30 (Y3Buzzard.SmoothNormal.y3FullThreeRepZ30_of_printed_raynaud).
 
 ### egaIV_9_7_7_OL
 
@@ -637,6 +609,20 @@ Y3Buzzard.MilneProp207 5
 
 > y3-printed, Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry (Springer 1986), Prop. 20.7 at g = 2, n = 5 (p. 44 of the author's retyped edition): for an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End; injectivity of iota is automatic over a nonempty base, README B-1) over a Z[1/30]-scheme S, iota(5), which is multiplication by 5 (proved: iotaHom_natCast), is finite and etale. On a Z[1/30]-scheme no residue characteristic divides 5. One of the seven rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_rem84); prints quoted and unprinted steps written out in ZInQKernel/Contrib/OneProof/Y3FullThreeRepZ30/README.md.
 
+### milneThm125Pts
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves84.milneThm125Pts`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-26 (docs/research/y3-adversarial-readings.md, section 8, unit U10; three independent lenses on three model families from the page images of the author's retyped edition (2022, numbering unchanged; PDF SHA-256 bffdf81c57c77420b5454b31270007989d12f332abea62424be15c424079fc7c), every quote checked mechanically): fidelity FAITHFUL (MINOR), skeptic FAITHFUL WITH CAVEATS (MINOR: citations, now added), red team FAITHFUL; no mismatch: direct instance after the stated identification of Milne (1986) Thm 12.5, 'For all abelian varieties A and B, Hom(A,B) is a free Z-module of finite rank <= 4 dim A dim B; for each prime l != char(k), the natural map Z_l (x) Hom(A,B) -> Hom(T_l A, T_l B) is injective with torsion-free cokernel', p. 21 of that edition; the pages of the 1986 printing were not compared; LEAF at the maintainer's request (2026-11-27) on this reading.
+* Source: J. S. Milne, Abelian varieties, in G. Cornell and J. H. Silverman (eds.), Arithmetic Geometry, Springer (1986), Cor. 2.4, Rem. 8.4 and Thm 12.5, read in the author's retyped edition (https://www.jmilne.org/math/xnotes/AVs.pdf), pp. 3, 14 and 21; 1986 pages UNVERIFIED
+* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+Y3Buzzard.MilneThm125Pts
+```
+
+> y3-printed, Milne, Abelian varieties, in Cornell-Silverman (eds.), Arithmetic Geometry (Springer 1986), Thm 12.5 (p. 21 of the author's retyped edition), with Rem. 8.4 (p. 14) and Cor. 2.4 (p. 3): over an algebraically closed field k, two endomorphisms of an FEC over Spec k that agree on every point of l-power order, l a prime with (l : k) != 0, are equal. Uses only the printed injectivity of Z_l (x) End(A) -> End(T_l A) and the freeness of End(A). With buzzardLemma22Full5 it proves the fibre rigidity at level 3 (Y3Buzzard.serreRigidityFibreZ30_of_leaves). One of the eight rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_xdv15).
+
 ### milneTorsionCount
 
 * Bundle field `HDec.HSyn.OpenResearchLeaves84.milneTorsionCount`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-26 (docs/research/y3-adversarial-readings.md, section 7, unit U8; three independent lenses on three model families from the page images of the author's retyped edition (2022, numbering unchanged; PDF SHA-256 bffdf81c57c77420b5454b31270007989d12f332abea62424be15c424079fc7c), every quote checked mechanically against the text layers and the Lean files): fidelity and red team FAITHFUL WITH CAVEATS (MINOR: docstring citations, fixed), skeptic FAITHFUL, no mismatch: direct instance at g = 2, for every n not divisible by the characteristic, of Milne 1986 Rem. 8.4 with Thm 8.2 (pp. 13-14 of that edition), 'If k is separably algebraically closed and n is not divisible by its characteristic, then the theorem says that the kernel A_n(k) of n : A(k) -> A(k) has n^{2g} elements', on the geometric fibre (an abelian surface by section 20, p. 42, and the relative dimension in FEC); the same statement is Rem. 7.3 of Milne's course notes v2.0 (2008); the pages of the 1986 printing were not compared; LEAF by the maintainer's row ruling of 2026-11-27 on this reading.
@@ -664,6 +650,20 @@ Y3Buzzard.ZeroPreservingIsHomLN
 ```
 
 > y3-printed, Milne, Abelian varieties (1986) Cor. 20.2(a) (p. 43 of the author's retyped edition), restricted to locally noetherian bases: a morphism over S of FECs (abelian schemes of relative dimension 2 with a ring homomorphism from O) carrying the unit section to the unit section is a homomorphism. The printed proof applies Prop. 20.1, stated for a connected base; Lan, Harvard thesis (2008) Cor. 1.3.1.6 states it over any base, citing GIT Cor. 6.4. One of the seven rows that replace y3FullThreeRepZ30 (Y3Buzzard.y3FullThreeRepZ30_of_printed_rem84); prints quoted and unprinted steps written out in ZInQKernel/Contrib/OneProof/Y3FullThreeRepZ30/README.md.
+
+### raynaudLNM119Normal
+
+* Bundle field `HDec.HSyn.OpenResearchLeaves84.raynaudLNM119Normal`; kind **published**, strict **LEAF**; flag: adversarial AI reading 11-27 (docs/research/y3-adversarial-readings.md, section 11, unit U13; three independent lenses on three model families from the page images of the publisher's preview of LNM 119 (Ch. XI PDF SHA-256 3263d919ad13c3a777a2b0ffeb8b73ceafdc2a4ae109339170afa564f0fd9960, Ch. XII 4d4926d534b86997d761054c0f7d03d9656fe7d63bb6aaa9f3f57b64f618423a), every quote checked mechanically): fidelity and skeptic FAITHFUL WITH CAVEATS (MINOR), red team FAITHFUL WITH CAVEATS (MAJOR: docstring bridges for the readings of 'projectif' and for disconnected bases, fixed); no mismatch: direct instance over affine noetherian normal bases, after the stated identifications, of Raynaud, LNM 119 (1970), Ch. XI, p. 159, 'si G est un S-schema abelien, Grothendieck a montre que G etait projectif sur S (cf. XI 1.4 ci-dessous)', S normal, restated in Ch. XII, p. 185; the page of XI 1.4 itself was not read; LNM 119 ruled published by the maintainer on 2026-11-27; LEAF under the maintainer's general rule of 2026-11-26.
+* Source: M. Raynaud, Faisceaux amples sur les schemas en groupes et les espaces homogenes, Lecture Notes in Mathematics 119, Springer (1970), Ch. XI, section 1, p. 159, and Ch. XII, p. 185 (publisher's preview; the page numbers of these chapter-opening pages are read from the following pages); EGA II, Publ. Math. IHES 8 (1961), (4.1.1), (5.1.1)-(5.1.2), (5.5.1)-(5.5.6), pp. 71, 94, 103-105; EGA IV2 (5.13.5), p. 133
+* discussion: [elliotglazer #86](https://github.com/elliotglazer/diophantine-z-q/issues/86).
+* Human readings recorded: none.
+* Status: open.
+
+```lean
+Y3Buzzard.SmoothNormal.RaynaudLNM119Normal
+```
+
+> y3-printed, Raynaud, Faisceaux amples sur les schemas en groupes et les espaces homogenes, LNM 119 (Springer 1970), Ch. XI, p. 159 (Grothendieck's theorem, cf. XI 1.4): for every noetherian ring R whose localizations at primes are integrally closed domains (Y3Buzzard.SmoothNormal.IsNormalNoeth) and an FEC (Buzzard's false elliptic curve: an abelian scheme of relative dimension 2 with a ring homomorphism iota : O -> End) over Spec R, there is a closed immersion of A into some P^N_R over R (PNR). 'Projectif' read in EGA II's sense ((5.5.1)-(5.5.2)), turned into P^N over the affine base by (5.1.2) c'), (5.5.4)(ii) and (4.1.1); the alternative readings give the same through (5.5.3)(ii) or (5.5.4)(i). Gives LocProjNormal (proved: Y3Buzzard.SmoothNormal.locProjNormal_of_raynaud), so projectiveFalseEllipticCurve is no longer an input. One of the nine rows that replace y3FullThreeRepZ30 (Y3Buzzard.SmoothNormal.y3FullThreeRepZ30_of_printed_raynaud).
 
 ### voightQMComplexModuliPrint
 
@@ -786,4 +786,4 @@ ZInQ.Manuscript.PoleS12.SilvermanRank.SilvermanAEC_C_16_5_5_RankOne
 | gaudronRemondThm14GR1 | statement-check | project | yes |  |
 
 
-<!-- render stamp: claims-free 1af329ccf02c46ca, output 7ed7c46a64fa483c -->
+<!-- render stamp: claims-free e5a64bb07c1c2045, output 571c455180eddcaa -->

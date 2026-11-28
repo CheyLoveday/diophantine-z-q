@@ -14,10 +14,9 @@ the characteristic of $k$. If two endomorphisms of $\mathcal A$ agree on every p
 $\mathcal A(k)$ of $\ell$-power order, they are equal.
 
 It is a published statement: the printed theorem, or a direct instance of it that needs no argument.
-Its reading against the print or its review is not complete, and until both are the project's strict
-count does not count it as published. It follows from Milne's Theorem 12.5 by the printed parts
-only: if $f$ and $g$ agree on every $\mathcal A_{\ell^n}(k)$, then $T_\ell(f-g)=0$ (Remark 8.4
-describes $T_\ell\mathcal A$ as the limit of the $\mathcal A_{\ell^n}(k)$); the map
+It follows from Milne's Theorem 12.5 by the printed parts only: if $f$ and $g$ agree on every
+$\mathcal A_{\ell^n}(k)$, then $T_\ell(f-g)=0$ (Remark 8.4 describes $T_\ell\mathcal A$ as the limit
+of the $\mathcal A_{\ell^n}(k)$); the map
 $\mathbb Z_\ell\otimes\operatorname{End}(\mathcal A)\to\operatorname{End}(T_\ell\mathcal A)$ is
 injective, so $1\otimes(f-g)=0$; and $\operatorname{End}(\mathcal A)$ is a free $\mathbb Z$-module,
 so $f=g$. The difference is taken in the commutative group $\operatorname{End}(\mathcal A)$

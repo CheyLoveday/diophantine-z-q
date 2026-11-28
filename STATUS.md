@@ -23,7 +23,7 @@ in the Glossary at the end):
 <!-- open-count:begin -->
 **30 hypotheses of the H part** (in the bundles `OpenAddedLeaves31`, `OpenResearchLeaves84`), plus three hypotheses outside the H part (`hRC`, `hCT`, `hRank`, from which Lean proves pole completeness, Theorem 5.2 of the 11/5 manuscript), listed at the end of docs/one-proof/OPEN.md.
 
-* **Strict count: 13 published / 17 glue** (the strictest flagged reading; 14/16 without the one strictest-reading flag).
+* **Strict count: 18 published / 12 glue** (the strictest flagged reading; 19/11 without the one strictest-reading flag).
 * By kind: consequence 10, published 20.
 * Generated from docs/one-proof/OPEN.md by scripts/one_proof/render_open.py.
 <!-- open-count:end -->

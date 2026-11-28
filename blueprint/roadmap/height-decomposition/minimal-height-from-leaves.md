@@ -20,8 +20,8 @@ theory they come from ([Shimura curves of discriminant 6](shimura-curves/README.
 the literature, twenty are published statements, some of them specialized or weakened; and ten are
 consequences of published theorems, which take further theorems to reach from the print. The
 project's strict convention, which counts a published statement only once its reading against the
-print and its review are complete and find it in its printed form, counts thirteen of the thirty as
-published (fourteen without the strictest reading of one flagged statement). None of the thirty is
+print and its review are complete and find it in its printed form, counts eighteen of the thirty as
+published (nineteen without the strictest reading of one flagged statement). None of the thirty is
 proved here.
 
 The proof follows the manuscript's proof of its Theorem 4.1 at the one instance the main theorem

@@ -17,7 +17,7 @@ Of the thirty statements from the literature, twenty are published statements: t
 or a direct instance of it that needs no argument. Ten are consequences of published theorems, which
 take further theorems to reach from the print. The project's strict convention, which counts a
 published statement only once its reading against the print and its review are complete and find it
-in its printed form, counts thirteen of the thirty as published (fourteen without the strictest
+in its printed form, counts eighteen of the thirty as published (nineteen without the strictest
 reading of one flagged statement). None of the thirty is proved here, and every step from them to
 the minimal height hypothesis is.
 
