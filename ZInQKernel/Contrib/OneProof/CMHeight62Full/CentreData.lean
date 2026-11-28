@@ -563,7 +563,7 @@ valuation of `Ω` centred at `η` (a local surjection `𝒪_{X,η} → 𝒪_w` c
 one over `κ(s)`. The base map `ρR` is compatible with `g` at the generic point (`hρ`). Let `e₀` be
 a point which is not a centre of any constant place `O ≠ ē, ⊤` (`he₀`), and `Ag` a valuation subring
 of `Ω` not containing the local ring of any point `c ≠ e₀` over `s` (`hAg`). If `f` lies in every
-discrete valuation subring containing the image of `S`, inverting an element of `s`, and different
+discrete valuation subring containing the image of `R`, inverting an element of `s`, and different
 from `Ag`, then the hypothesis `hcentre` of `reduce_mem_polePart` holds. -/
 theorem hcentre_of_smoothModel {S : Type} [CommRing S] {X : Scheme.{0}} [IsIntegral X]
     (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g] [SmoothOfRelativeDimension 1 g]
@@ -600,7 +600,7 @@ theorem hcentre_of_smoothModel {S : Type} [CommRing S] {X : Scheme.{0}} [IsInteg
       τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b) ∉ Ag)
     {f : Ω}
     (hhor : ∀ Q : ValuationSubring Ω,
-      (∀ t : S, ρR (algebraMap S (Localization.AtPrime s.asIdeal) t) ∈ Q) →
+      (∀ r : Localization.AtPrime s.asIdeal, ρR r ∈ Q) →
       (∃ t : S, t ≠ 0 ∧ (ρR (algebraMap S (Localization.AtPrime s.asIdeal) t))⁻¹ ∈ Q ∧
         t ∈ s.asIdeal) →
       IsDiscreteValuationRing Q → Q ≠ Ag → f ∈ Q) :
@@ -719,10 +719,10 @@ theorem hcentre_of_smoothModel {S : Type} [CommRing S] {X : Scheme.{0}} [IsInteg
     intro 𝔮 hq h1 hϖq
     have := chart_horizontal hϖ 𝔭 𝔮 h1 hϖq
     refine exists_of_forall_valuationSubring 𝔮
-      (fun Q => (∀ t : S, ρR (algebraMap S (Localization.AtPrime (g c).asIdeal) t) ∈ Q) ∧
+      (fun Q => (∀ r : Localization.AtPrime (g c).asIdeal, ρR r ∈ Q) ∧
         ∃ t : S, t ≠ 0 ∧ (ρR (algebraMap S (Localization.AtPrime (g c).asIdeal) t))⁻¹ ∈ Q ∧
           t ∈ (g c).asIdeal) Ag
-      (fun Q hP hD hQ => hhor Q hP.1 hP.2 hD hQ) ⟨fun t => ?_, ?_⟩ ?_
+      (fun Q hP hD hQ => hhor Q hP.1 hP.2 hD hQ) ⟨fun r => ?_, ?_⟩ ?_
     · rw [← hFR]
       exact algebraMap_mem_localizationValuationSubring 𝔮 _
     · obtain ⟨⟨a, b⟩, hab⟩ := IsLocalization.mk'_surjective (g c).asIdeal.primeCompl ϖ
@@ -1320,8 +1320,7 @@ theorem exists_centre_data [IsDomain S] (g : X ⟶ Spec (CommRingCat.of S)) [IsP
       u ∉ RingHom.ker (localSection σ) ∧ algebraMap _ _ u * x = algebraMap _ _ r)
     {f : FractionRing (Localization.AtPrime (sectionPrime σ))}
     (hhor : ∀ Q : ValuationSubring (FractionRing (Localization.AtPrime (sectionPrime σ))),
-      (∀ t : S, algebraMap (Localization.AtPrime s.asIdeal) _
-        (algebraMap S (Localization.AtPrime s.asIdeal) t) ∈ Q) →
+      (∀ r : Localization.AtPrime s.asIdeal, algebraMap (Localization.AtPrime s.asIdeal) _ r ∈ Q) →
       (∃ t : S, t ≠ 0 ∧ (algebraMap (Localization.AtPrime s.asIdeal) _
         (algebraMap S (Localization.AtPrime s.asIdeal) t))⁻¹ ∈ Q ∧ t ∈ s.asIdeal) →
       IsDiscreteValuationRing Q → Q ≠ Ag → f ∈ Q) :
