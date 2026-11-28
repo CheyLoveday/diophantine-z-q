@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.OneProof.CMHeight62Full.Centre
 /-!
 # Axiom check for `Centre.lean`
 
-Each `#print axioms` below should report only `propext`, `Classical.choice` and `Quot.sound`.
+Each axiom report below should list only `propext`, `Classical.choice` and `Quot.sound`.
 -/
 
 open ZInQ.Contrib.CMHeight62Full.Centre
