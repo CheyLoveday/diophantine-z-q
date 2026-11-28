@@ -1,0 +1,19 @@
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreFunctionField
+
+/-! Axiom check for node N9-bridge, parts B1 and B2 (`SpecialFibreFunctionField.lean`). -/
+
+open ZInQ.Contrib.CMHeight62Full
+
+#print axioms SpecialFibreFunctionField.trdegLeOne_of_isAlgebraic_adjoin
+#print axioms SpecialFibreFunctionField.trdegLeOne_of_formallyUnramified
+#print axioms SpecialFibreFunctionField.trdegLeOne_of_isLocalization
+#print axioms SpecialFibreFunctionField.trdegLeOne_of_baseChange
+#print axioms SpecialFibreFunctionField.trdegLeOne_quotient_localization
+#print axioms SpecialFibreFunctionField.trdegLeOne_specialFibre
+#print axioms SpecialFibreFunctionField.liftValuationSubring
+#print axioms SpecialFibreFunctionField.mem_liftValuationSubring
+#print axioms SpecialFibreFunctionField.liftValuationSubring_le
+#print axioms SpecialFibreFunctionField.algebraMap_mem_liftValuationSubring
+#print axioms SpecialFibreFunctionField.reduce_mem_of_mem_centre
+#print axioms SpecialFibreFunctionField.mem_centre_of_hartogs
+#print axioms SpecialFibreFunctionField.reduce_mem_polePart
