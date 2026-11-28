@@ -26,3 +26,6 @@ open ZInQ.Contrib.CMHeight62Full.Centre
 #print axioms exists_val_eq_one_of_centre
 #print axioms isFractionRing_stalk
 #print axioms hcentre_of_model
+#print axioms localizationValuationSubring_isDVR
+#print axioms inv_algebraMap_mem_localizationValuationSubring
+#print axioms exists_of_forall_valuationSubring

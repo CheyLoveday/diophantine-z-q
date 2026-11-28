@@ -11,21 +11,45 @@ place `O ≠ ē` of the residue field `κ_w` has a centre `A_c ⊆ Ω` dominated
 `Õ`, with the Hartogs property, whose height-one primes through `ϖ` are controlled by `w`, and at
 whose other height-one primes `f` is regular. This file produces it.
 
-**Local algebra.** Let `A_c` be a local Noetherian subring of `Ω` with fraction field `Ω`, `ϖ` a
-nonzerodivisor in its maximal ideal with `A_c / ϖ` a discrete valuation ring.
+**Local algebra.** Let `A` be a local Noetherian ring with fraction field `Ω`, and `ϖ` a
+nonzerodivisor in its maximal ideal with `A / ϖ` a discrete valuation ring.
 
-* `centre_hartogs`: Hartogs at `A_c` (the depth-two lemma).
-* `centre_val_eq_one`: if `w ≤ 1` on `A_c`, `w ϖ < 1` and `w` is not centred at the closed point
+* `centre_val_eq_one`: if `w ≤ 1` on `A`, `w ϖ < 1` and `w` is not centred at the closed point
   (some `c ∈ 𝔪` has `w c = 1`), then `w = 1` off `(ϖ)`.
-* `centre_vertical`: under the same hypotheses, every `g` with `w g ≤ 1` lies in `(A_c)_𝔮` for
-  the height-one primes `𝔮 ∋ ϖ` (they all equal `(ϖ)`).
-* `centre_spec`: the four clauses of `hcentre` for one place.
+* `centre_vertical`: under the same hypotheses, every `g` with `w g ≤ 1` lies in `A_𝔮` for the
+  height-one primes `𝔮 ∋ ϖ` (they all equal `(ϖ)`).
+* `centre_spec`: the four clauses of `hcentre` for one place, for the image `A_c` of `A` in `Ω`
+  (`rangeEquiv`, `forall_height_one_of_range`, `forall_height_one_range_of` transport primes
+  and heights to the image).
 
 **The trivial place.** `O = ⊤` is a constant place, and its centre is `𝒪_w` itself:
 `isDiscreteValuationRing_valuationSubring` (a discrete `w` has a DVR as valuation ring) and
 `centre_spec_top`.
 
-**Assembly.** `hcentre_of_centres`: `hcentre` from centres at the nontrivial constant places.
+**Smooth curves over a field.** `isDiscreteValuationRing_of_formallySmooth`: for `B` formally
+smooth and Noetherian over a field `k` with `Ω[B⁄k]` free of rank one, and a surjection `π` of
+`B` onto a field formally étale over `k`, the localization at `ker π` is a discrete valuation
+ring. The derivation `ptDer` along `π` plays the role of the section derivation of
+`LocalStructure.lean`: formal smoothness of `κ` makes `ker π = (t) + (ker π)²`, and lifting
+`a ↦ π a + (Da) X` to `κ[X]/(X^(n+1))` shows `t` is not nilpotent.
+`isDiscreteValuationRing_of_standardSmooth`: hence the local rings at closed points of a smooth
+curve over a perfect field are discrete valuation rings.
+
+**Schemes.**
+* `centre_unique`: centres are unique for a separated morphism.
+* `stalk_hom_eq_of_spec`, `exists_centre_germ`: the local map at a centre is the generic germ.
+* `exists_val_eq_one_of_centre`: `w` is centred at a single point, so at any other point some
+  element of the maximal ideal has value one.
+
+**Horizontal primes.** `localizationValuationSubring`: `A_𝔮 ⊆ Ω` as a discrete valuation
+subring; `exists_of_forall_valuationSubring` turns "f lies in every such subring other than
+`A_g`" into regularity at `𝔮`.
+
+**Assembly.**
+* `hcentre_of_centres`: `hcentre` from centres at the nontrivial constant places.
+* `hcentre_of_model`: `hcentre` from a proper integral locally Noetherian model, the point `η`
+  at which `w` is centred, and the local facts at the centres (the depth-two hypotheses, `w ϖ < 1`
+  and regularity of `f` at the horizontal primes).
 
 Only Mathlib and the earlier files of this directory are used.
 -/
@@ -729,7 +753,8 @@ theorem val_eq_one_of_isUnit {Ω : Type*} [Field Ω] {Γ₀ : Type*}
   obtain ⟨u, rfl⟩ := hx
   have h := congrArg (fun y : w.valuationSubring => w (y : Ω)) u.mul_inv
   simp only [MulMemClass.coe_mul, OneMemClass.coe_one, map_mul, map_one] at h
-  have h1 : w ((u : w.valuationSubring) : Ω) ≤ 1 := (w.mem_valuationSubring_iff _).1 (u : w.valuationSubring).2
+  have h1 : w ((u : w.valuationSubring) : Ω) ≤ 1 :=
+    (w.mem_valuationSubring_iff _).1 (u : w.valuationSubring).2
   have h2 : w (((u⁻¹ : _ˣ) : w.valuationSubring) : Ω) ≤ 1 :=
     (w.mem_valuationSubring_iff _).1 (u⁻¹ : _ˣ).1.2
   by_contra hne
@@ -784,6 +809,116 @@ theorem exists_val_eq_one_of_centre {X : Scheme.{u}} [IrreducibleSpace X] {T : C
   exact hne (centre_unique g (K := Ω) (CommRingCat.ofHom φc) φ₀ h₁ h₂)
 
 end Uniqueness
+
+section Horizontal
+
+variable {Ω : Type*} [Field Ω] {A : Type*} [CommRing A] [IsDomain A] [Algebra A Ω]
+  [IsFractionRing A Ω] (𝔮 : Ideal A) [𝔮.IsPrime]
+
+omit [IsDomain A] in
+theorem isUnit_algebraMap_primeCompl (y : 𝔮.primeCompl) : IsUnit (algebraMap A Ω y) := by
+  refine isUnit_iff_ne_zero.2 fun h => ?_
+  have h0 : (y : A) = 0 := IsFractionRing.injective A Ω (by rw [h, map_zero])
+  exact y.2 (h0 ▸ 𝔮.zero_mem)
+
+/-- The embedding `A_𝔮 → Ω`. -/
+def localizationLift : Localization.AtPrime 𝔮 →+* Ω :=
+  IsLocalization.lift (M := 𝔮.primeCompl) (isUnit_algebraMap_primeCompl 𝔮)
+
+theorem localizationLift_injective : Function.Injective (localizationLift (Ω := Ω) 𝔮) := by
+  refine (IsLocalization.lift_injective_iff _).2 fun x y => ?_
+  constructor
+  · intro h
+    rw [IsLocalization.injective (Localization.AtPrime 𝔮)
+      (Ideal.primeCompl_le_nonZeroDivisors 𝔮) h]
+  · intro h
+    rw [IsFractionRing.injective A Ω h]
+
+omit [IsDomain A] in
+theorem localizationLift_algebraMap (a : A) :
+    localizationLift (Ω := Ω) 𝔮 (algebraMap A (Localization.AtPrime 𝔮) a) = algebraMap A Ω a :=
+  IsLocalization.lift_eq _ a
+
+variable [IsDiscreteValuationRing (Localization.AtPrime 𝔮)]
+
+/-- The valuation subring `A_𝔮 ⊆ Ω`, for `A_𝔮` a discrete valuation ring. -/
+def localizationValuationSubring : ValuationSubring Ω :=
+  { (localizationLift (Ω := Ω) 𝔮).range with
+    mem_or_inv_mem' := fun g => by
+      by_cases hg : g = 0
+      · exact Or.inl ⟨0, by rw [hg, map_zero]⟩
+      obtain ⟨a, b, hb, rfl⟩ := IsFractionRing.div_surjective (A := A) g
+      have hb0 : algebraMap A Ω b ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hb
+      have ha0 : algebraMap A Ω a ≠ 0 := fun h => hg (by rw [h, zero_div])
+      rcases ValuationRing.dvd_total (algebraMap A (Localization.AtPrime 𝔮) b)
+        (algebraMap A (Localization.AtPrime 𝔮) a) with ⟨z, hz⟩ | ⟨z, hz⟩
+      · left
+        refine ⟨z, ?_⟩
+        have := congrArg (localizationLift (Ω := Ω) 𝔮) hz
+        rw [map_mul, localizationLift_algebraMap, localizationLift_algebraMap] at this
+        rw [this, mul_div_cancel_left₀ _ hb0]
+      · right
+        refine ⟨z, ?_⟩
+        have := congrArg (localizationLift (Ω := Ω) 𝔮) hz
+        rw [map_mul, localizationLift_algebraMap, localizationLift_algebraMap] at this
+        rw [inv_div, this, mul_div_cancel_left₀ _ ha0] }
+
+theorem mem_localizationValuationSubring {g : Ω} :
+    g ∈ localizationValuationSubring 𝔮 ↔ ∃ y, localizationLift 𝔮 y = g :=
+  Iff.rfl
+
+/-- `A_𝔮 ⊆ Ω` is a discrete valuation ring. -/
+theorem localizationValuationSubring_isDVR :
+    IsDiscreteValuationRing (localizationValuationSubring (Ω := Ω) 𝔮) := by
+  let φ : Localization.AtPrime 𝔮 →+* localizationValuationSubring (Ω := Ω) 𝔮 :=
+    (localizationLift 𝔮).codRestrict (localizationValuationSubring 𝔮) fun y => ⟨y, rfl⟩
+  have hbij : Function.Bijective φ := by
+    refine ⟨fun x y h => localizationLift_injective 𝔮 (congrArg Subtype.val h), ?_⟩
+    rintro ⟨g, y, rfl⟩
+    exact ⟨y, rfl⟩
+  exact IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing
+    (RingEquiv.ofBijective φ hbij)
+
+/-- `A` lies in `A_𝔮`. -/
+theorem algebraMap_mem_localizationValuationSubring (a : A) :
+    algebraMap A Ω a ∈ localizationValuationSubring 𝔮 :=
+  ⟨algebraMap A (Localization.AtPrime 𝔮) a, localizationLift_algebraMap 𝔮 a⟩
+
+/-- Elements outside `𝔮` are invertible in `A_𝔮`. -/
+theorem inv_algebraMap_mem_localizationValuationSubring {s : A} (hs : s ∉ 𝔮) :
+    (algebraMap A Ω s)⁻¹ ∈ localizationValuationSubring 𝔮 := by
+  refine ⟨IsLocalization.mk' (Localization.AtPrime 𝔮) (1 : A) (⟨s, hs⟩ : 𝔮.primeCompl), ?_⟩
+  have h := congrArg (localizationLift (Ω := Ω) 𝔮)
+    (IsLocalization.mk'_spec (Localization.AtPrime 𝔮) (1 : A) (⟨s, hs⟩ : 𝔮.primeCompl))
+  rw [map_mul, localizationLift_algebraMap, localizationLift_algebraMap, map_one] at h
+  have hs0 : algebraMap A Ω s ≠ 0 := (isUnit_algebraMap_primeCompl 𝔮 ⟨s, hs⟩).ne_zero
+  exact eq_inv_of_mul_eq_one_left h
+
+/-- Membership in `A_𝔮` is regularity at `𝔮`. -/
+theorem exists_of_mem_localizationValuationSubring {g : Ω}
+    (hg : g ∈ localizationValuationSubring 𝔮) :
+    ∃ r s : A, s ∉ 𝔮 ∧ algebraMap A Ω s * g = algebraMap A Ω r := by
+  obtain ⟨y, rfl⟩ := hg
+  obtain ⟨⟨r, s⟩, rfl⟩ := IsLocalization.mk'_surjective 𝔮.primeCompl y
+  refine ⟨r, s, s.2, ?_⟩
+  have h := congrArg (localizationLift (Ω := Ω) 𝔮)
+    (IsLocalization.mk'_spec (Localization.AtPrime 𝔮) r s)
+  rw [map_mul, localizationLift_algebraMap, localizationLift_algebraMap] at h
+  rw [mul_comm]
+  exact h
+
+/-- **Horizontal primes.** If `f` lies in every discrete valuation subring of `Ω` with a property
+`P` other than `A_g`, then `f` is regular at every prime `𝔮` with `A_𝔮` a discrete valuation ring,
+`A_𝔮 ⊆ Ω` satisfying `P`, and `A_𝔮 ≠ A_g`. -/
+theorem exists_of_forall_valuationSubring (P : ValuationSubring Ω → Prop)
+    (Ag : ValuationSubring Ω) {f : Ω}
+    (hhor : ∀ Q : ValuationSubring Ω, P Q → IsDiscreteValuationRing Q → Q ≠ Ag → f ∈ Q)
+    (hP : P (localizationValuationSubring 𝔮)) (hAg : localizationValuationSubring 𝔮 ≠ Ag) :
+    ∃ r s : A, s ∉ 𝔮 ∧ algebraMap A Ω s * f = algebraMap A Ω r :=
+  exists_of_mem_localizationValuationSubring 𝔮
+    (hhor _ hP (localizationValuationSubring_isDVR 𝔮) hAg)
+
+end Horizontal
 
 section Assembly
 
@@ -847,10 +982,12 @@ theorem isFractionRing_stalk {X : Scheme.{u}} [IsIntegral X] (c : X) {Ω : Type 
 
 /-- **`hcentre` from a proper model.** Let `g : X → Spec T` be proper with `X` integral and locally
 Noetherian, `τ : K(X) ≅ Ω`, and `w` a discrete valuation of `Ω` centred at a point `η` (a local
-surjection `𝒪_{X,η} → 𝒪_w` compatible with `τ`). Let `ρ : T → Ω` be the generic point of `Spec T`, landing in
-`Õ` for every constant place `O`. Suppose that at every centre `c` of a constant place
-`O ≠ ē, ⊤` (a point with a local `𝒪_{X,c} → Õ` compatible with `τ`) there is an element `ϖ` of `𝔪_c` which is a nonzerodivisor with `𝒪_{X,c}/ϖ` a discrete valuation ring and `w ϖ < 1`,
-and `f` regular at the height-one primes of `𝒪_{X,c}` off `ϖ`. Then `hcentre` holds. -/
+surjection `𝒪_{X,η} → 𝒪_w` compatible with `τ`). Let `ρ : T → Ω` be the generic point of
+`Spec T`, landing in `Õ` for every constant place `O`. Suppose that at every centre `c` of a
+constant place `O ≠ ē, ⊤` (a point with a local `𝒪_{X,c} → Õ` compatible with `τ`) there is an
+element `ϖ` of `𝔪_c` which is a nonzerodivisor with `𝒪_{X,c}/ϖ` a discrete valuation ring and
+`w ϖ < 1`, and `f` is regular at the height-one primes of `𝒪_{X,c}` off `ϖ`. Then `hcentre`
+holds. -/
 theorem hcentre_of_model {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
     {T : CommRingCat.{u}} (g : X ⟶ Spec T) [IsProper g] {Ω : Type u} [Field Ω]
     (τ : X.functionField ⟶ CommRingCat.of Ω) (hτ : Function.Bijective τ.hom)
