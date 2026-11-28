@@ -150,32 +150,60 @@ It is Voight's construction 43.6.12, Main Theorem 43.6.14 and Proposition 43.6.2
 J. Voight, *Quaternion Algebras*, Graduate Texts in Mathematics 288, Springer (2021), §43.4 and §43.6: 43.4.6, 43.6.12, Main Theorem 43.6.14, Proposition 43.6.28.
 """,
     ),
-    'cornutVatsalCMReciprocityPrint': dict(
-        group='shimura-curves', slug='canonical-model-level-three-reciprocity',
-        title="Shimura's canonical model at level three and the reciprocity law at CM points",
-        anchor='Cornut–Vatsal Lemma 3.11',
+    'boutotCarayolPolarizationPrint': dict(
+        group='shimura-curves', slug='principal-polarization-qm-surfaces',
+        title="Complex QM abelian surfaces carry a compatible principal polarization",
+        anchor='Boutot–Carayol III 1.5',
         statement=r"""
-With $K_3=\{k\in\hat{\mathcal O}^\times: k\equiv1\bmod 3\}$, there are a smooth curve $M$ over $\mathbb Q$ and a map $\psi$ from $(\mathbb C\setminus\mathbb R)\times(B\otimes\mathbb A_f)^\times$ onto $M(\mathbb C)$, holomorphic in the first variable, whose fibres are the classes of $B^\times\backslash\big((\mathbb C\setminus\mathbb R)\times(B\otimes\mathbb A_f)^\times/K_3\big)$, such that, for one sign $\varepsilon$, for every imaginary quadratic field $K$ with an embedding $q:K\to B$, every CM point $z$ of $q$ in the upper half-plane and every idele $\lambda$ of $K$, the automorphism $\sigma=\mathrm{rec}_K(\lambda)$ satisfies $\sigma\,\psi(z,g)=\psi(z,\hat q(\lambda)^{\varepsilon}g)$.
+Every abelian surface over $\mathbb C$ with an action of $\mathcal O$ and a full level-$3$ structure has a principal polarization whose Rosati involution induces $x\mapsto\mu^{-1}\bar x\mu$ on $\mathcal O$, with $\mu=2j+ij$.
 """,
         caveat=r"""
-It is Cornut and Vatsal's description of Shimura's canonical model (§3.1.1) at level $K_3$, with their Lemma 3.11, which they derive on p. 299 from the reciprocity law for CM points. Their reciprocity map sends uniformizers to geometric Frobenius and Galois acts on points on the left (§3.2.4); with the arithmetic Artin map used here, $\sigma=\mathrm{rec}_K(\lambda)$ is the Artin symbol of $\lambda^{-1}$. The holomorphic identification of their symmetric space with $\mathbb C\setminus\mathbb R$ is their Remark 3.15, and the level-$K_3$ forms are their §3.2 and §3.2.5.
+It is Boutot and Carayol's Proposition (1.5) over $\mathbb C$, at the level $U(3)$ and for their choice $t=\mu$ (III.0.5). A polarization is read as a principal Riemann form on the period lattice (Appell–Humbert). The article cites the existence of a polarization up to a rational multiple and sketches the proof that it can be taken principal; uniqueness, which it also states, is not used.
 """,
         src=r"""
-C. Cornut, V. Vatsal, *CM points and quaternion algebras*, Documenta Math. 10 (2005), 263–309, §3.1.1 (p. 291), Lemma 3.7 (p. 296), §3.2.4 and Lemma 3.11 (pp. 298–299), §3.2.5 (p. 300), Remark 3.15 (p. 301).
+J.-F. Boutot, H. Carayol, *Uniformisation $p$-adique des courbes de Shimura : les théorèmes de Čerednik et de Drinfeld*, Astérisque 196–197 (1991), 45–158, Ch. III, 0.5 (p. 127) and 1.5 (p. 129).
 """,
     ),
-    'fineModuliCanonicalModelGlue': dict(
-        group='shimura-curves', slug='fine-moduli-scheme-is-canonical-model',
-        title="The fine moduli scheme at level three is Shimura's canonical model",
-        anchor='glue',
+    'boutotCarayolRepresentabilityPrint': dict(
+        group='shimura-curves', slug='qm-moduli-representable-over-q',
+        title="The level-three QM moduli problem is representable over the rationals",
+        anchor='Boutot–Carayol III 1.4',
         statement=r"""
-For every curve $M$ with a uniformization $\psi$ as in the previous statement, and every scheme $Y$ over $\mathbb Q$ that represents, in the sense of the fine-moduli clauses, abelian surfaces with an action of $\mathcal O$ and a full level-$3$ structure, there is an isomorphism $f:Y\to M$ over $\mathbb Q$ carrying the moduli point of $[z,g]$ to $\psi(z,g)$.
+There is a scheme $S$ over $\mathbb Q$, proper and smooth of relative dimension $1$, whose points with values in every field $K\supseteq\mathbb Q$ are in bijection, compatibly with extension of fields, with the isomorphism classes of abelian surfaces over $K$ with an action of $\mathcal O$ and a full level-$3$ structure, carrying a universal family; and every such family over a proper smooth curve $T$ over $\mathbb C$ is classified by a morphism $T\to S$ over $\mathbb Q$.
 """,
         caveat=r"""
-No legally readable refereed print read for this project states it. It combines the identification of the fine moduli scheme, with its complex moduli description, with Shimura's canonical model (Shimura 1967, Main Theorem I; Deligne's moduli construction in Sém. Bourbaki 389) and the uniqueness of canonical models (Cornut–Vatsal §3.1.2; Deligne 5.5), applied at level $K_3$ alone. Boutot and Carayol state both structures on $S_U$ but do not compare them. It stays a glue step until one of these sources is read.
+It is the first sentence of Boutot and Carayol's 1.4, that their moduli problem $\mathcal M_U$ is defined and representable over $\mathbb Q$, at the level $U(3)$, the units of $\mathcal O\otimes\hat{\mathbb Z}$ congruent to $1$ modulo $3$, which is small enough by their 1.3. Properness and smoothness come from the second sentence of 1.4, the proper smooth curve over $\mathbb Z[1/\delta N]$ (here $\delta=6$) that it recalls from Milne and Boutot. Only the consequences listed here are used: field-valued points, the universal family, and classifying maps for families over proper smooth complex curves.
 """,
         src=r"""
-G. Shimura, *Construction of class fields and zeta functions of algebraic curves*, Ann. of Math. 85 (1967), Main Theorem I (not read); P. Deligne, *Travaux de Shimura*, Sém. Bourbaki 389 (1971), 4.11–4.21, 5.5, 5.7–5.8; C. Cornut, V. Vatsal, Documenta Math. 10 (2005), §3.1.2, p. 292.
+J.-F. Boutot, H. Carayol, Astérisque 196–197 (1991), Ch. III, 1.1–1.4 (pp. 127–129).
+""",
+    ),
+    'milneShimuraFamilyPrint': dict(
+        group='shimura-curves', slug='family-over-complex-shimura-curve',
+        title="The complex Shimura curve at level three carries its family of QM surfaces",
+        anchor='Milne 14.8, Deligne Hodge II 4.4.3',
+        statement=r"""
+There are a proper smooth curve $T$ over $\mathbb C$, a family of abelian surfaces over $T$ with an action of $\mathcal O$ and a full level-$3$ structure, and a surjection $\psi$ from $\mathbb H^\pm\times(B\otimes\mathbb A_f)^\times$ onto $T(\mathbb C)$, holomorphic in the first variable, whose fibre at $\psi(z,g)$ is the level-$3$ QM surface of $[z,g]$.
+""",
+        caveat=r"""
+It is Milne's construction in the existence proof for canonical models, in the PEL case: the variation of Hodge structures on each component $\Gamma_\varepsilon\backslash X^+$ comes from a polarized family of abelian varieties by his Theorem 14.8, which is Deligne's Rappel (4.4.3) in *Théorie de Hodge II*; the quotient is an algebraic curve by Baily–Borel, here compact since $B$ is a division algebra. It is a consequence of these printed steps, not a single print: the compactness of the quotients, the absence of torsion at level three, the action of $\mathcal O$ on the family (from the full faithfulness in 4.4.3), and the level-$3$ sections (from $\Gamma_\varepsilon$ acting trivially on $\Lambda/3\Lambda$, made algebraic by Chow's theorem) are derived here, not printed; the reduction of every point to a representative $(\tau,u)$ with $u$ a unit is proved in Lean.
+""",
+        src=r"""
+J. S. Milne, *Introduction to Shimura varieties*, in *Harmonic Analysis, the Trace Formula, and Shimura Varieties*, Clay Math. Proc. 4 (2005), 265–378, Theorem 14.8 (p. 352) and its use on p. 354, Theorem 3.12 (pp. 291–292), Proposition 3.8 (p. 290), Theorem 6.8 (p. 319); P. Deligne, *Théorie de Hodge II*, Publ. Math. IHÉS 40 (1971), Rappel (4.4.3), p. 51.
+""",
+    ),
+    'milneCanonicalModelPrint': dict(
+        group='shimura-curves', slug='moduli-model-is-canonical',
+        title="A model on which Galois acts as on the moduli objects is canonical",
+        anchor='Milne §14, Def. 12.8',
+        statement=r"""
+For every proper smooth curve $M$ over $\mathbb Q$ with a uniformization $\psi$ of $M(\mathbb C)$ by $B^\times\backslash(\mathbb H^\pm\times(B\otimes\mathbb A_f)^\times/K_3)$, holomorphic in the first variable, on which every automorphism $\sigma$ of $\mathbb C$ acts as on the level-$3$ QM surfaces of the points, there is a sign $\varepsilon$ such that, at every CM point $z$ of an imaginary quadratic field $K$, the automorphism $\sigma=\mathrm{rec}_K(\lambda)$ acts by $\sigma\,\psi(z,g)=\psi(z,\hat q(\lambda)^{\varepsilon}g)$.
+""",
+        caveat=r"""
+It is Milne's statement in the PEL case of type A or C, that a model over the reflex field on which $\mathrm{Aut}(\mathbb C/E)$ acts as on the moduli quadruples is canonical, with his definition of a canonical model at one level (Definition 12.8 and (54)). The reflex field is $\mathbb Q$ and the datum is of type C (proved in Lean). Milne's quadruples are read on the integral objects: the polarization is the unique compatible principal one, and the level structure is the level-$3$ structure of the Tate module. Milne's Artin map is the reciprocal of the arithmetic one ((51), p. 341). The source is a survey that states the result with an outline.
+""",
+        src=r"""
+J. S. Milne, *Introduction to Shimura varieties*, Clay Math. Proc. 4 (2005), §14, pp. 353–355 (the PEL case), Definition 12.8 and (54), p. 346, (52), p. 345, (51), p. 341, and "Models of varieties", p. 343.
 """,
     ),
     'buzzardXDV15Lit': dict(

@@ -57,3 +57,11 @@ Later (cmheight62-fold, #252): cmHeight62 left the open statements, proved in Le
 (ZInQ.Contrib.CMHeight62Full.cmHeight62_unconditional, ZInQKernel/Contrib/OneProof/CMHeight62Full/FinalAssembly.lean).
 It had no row in reviews.tsv, so no row moves here; its rating in kinds.tsv (GLUE after the two-lens skeptic pass of
 11-17, with Silverman's Prop. 1.1 unread) is retired with the field.
+
+Later (y3-milne-1128, #256): the row of cornutVatsalCMReciprocityPrint moved here. The field left the board when the
+Deligne row was rerouted through Milne's existence argument: DelignePSMilne.deligneCanonicalModelY3EveryPrint_of_milne
+proves Y3Hodge.DeligneCanonicalModelY3EveryPrint from voightQMComplexModuliPrint, boutotCarayolPolarizationPrint,
+boutotCarayolRepresentabilityPrint, milneShimuraFamilyPrint and milneCanonicalModelPrint, and the reciprocity law at
+CM points now comes from Milne's PEL criterion (milneCanonicalModelPrint) instead of Cornut-Vatsal's Lemma 3.11. The
+reading of the old row stands as a record of Cornut-Vatsal's statement (docs/research/y3-adversarial-readings.md,
+section 12, unit U15); those of the new rows are section 13.

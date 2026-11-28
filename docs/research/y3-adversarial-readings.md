@@ -607,3 +607,96 @@ refereed article, printed on p. 299 after the norm computation that derives it f
 "following [14] instead of [4]", §3.2.4); W-a stays GLUE until Shimura, Ann. of Math. 85 (1967), or Deligne, PSPM 33
 (1979), is read. Whether Boutot-Carayol (Astérisque 196-197, a volume "issu d'un Séminaire") counts as published
 matters only if T2c or T2c′ become rows.
+
+## 13. Addendum (2026-11-28): the Deligne row by Milne's route, units U22-U24
+
+The glue row `fineModuliCanonicalModelGlue` (W-a) and the print `cornutVatsalCMReciprocityPrint` (T2b) leave the board.
+A further contribution (`DelignePrintShapedMilne/`) proves `Y3Hodge.DeligneCanonicalModelY3EveryPrint` from five
+statements, on standard axioms (`DelignePSMilne.deligneCanonicalModelY3EveryPrint_of_milne`):
+
+- T2a `DelignePS.VoightQMComplexModuliPrint` (section 12, units U14 and U17; unchanged);
+- T2c′ `DelignePS.BoutotCarayolPolarizationPrint` (section 12, unit U18; unchanged);
+- T2c″ `DelignePSMilne.BoutotCarayolRepresentabilityPrint`: Boutot-Carayol, Astérisque 196-197 (1991), III 1.4
+  (p. 129), the moduli problem at `U(3) = K₃` representable over ℚ, read on field points and on families over proper
+  smooth complex curves;
+- M1 `DelignePSMilne.MilneShimuraFamilyPrint`: a proper smooth curve `T` over ℂ with a family of QM surfaces with
+  full level-3 structure and a uniformization `ψ`, onto and holomorphic in τ, whose fibre at `ψ(z, g)` is the level
+  object of `[z, g]`; from Milne, *Introduction to Shimura varieties*, Clay Math. Proc. 4 (2005), Thm 14.8 (p. 352)
+  applied as on p. 354, which is Deligne, *Théorie de Hodge II*, Publ. Math. IHÉS 40 (1971), Rappel (4.4.3), p. 51,
+  with Baily-Borel (Thm 3.12, pp. 291-292) and Prop. 3.8 (p. 290);
+- M2 `DelignePSMilne.MilneCanonicalModelPrint`: Milne loc. cit. §14, the PEL paragraph (pp. 354-355), with Def. 12.8
+  and (54) (p. 346): a proper smooth curve over ℚ uniformized by `B^× \ (ℍ^± × (B ⊗ 𝔸_f)^× / K₃)`, on which
+  `Aut(ℂ)` acts as on the level objects, satisfies the reciprocity law at CM points.
+
+`GAGAMorphism`, used by the moduli clauses, is proved on main (`ZInQ.Contrib.OneProof.GAGAMorphism.gagaMorphism_proof`).
+The datum facts M2 needs (type C, `E(G, X) = ℚ`, positivity of `*`) are proved in Lean (`DelignePrintShapedMilne/Datum.lean`).
+
+Sources read: Milne, the Clay volume as published (claymath.org; SHA-256
+f57278711bf829491bae0e2fa510ecf0185d378fe8acc6105a7ac73878154e54), pp. 290-293, 319, 340-347, 352-355; Deligne,
+*Théorie de Hodge II*, numdam (748edefb44fded8af67869abfed87062d66977d25b5d12f7d014f1810a063c3f), pp. 50-51;
+Boutot-Carayol, numdam's scan of the volume (2a9aa0b0a046cb37e4d6b6ccc06dfaa00f10d90223ac9d2cb94918d069295119),
+pp. 127-130. Lean read with kernel printouts of every constant used (SHA-256 475b8d9f…).
+
+| Unit | Lean | Fidelity | Skeptic | Red team |
+| --- | --- | --- | --- | --- |
+| U22 | `MilneShimuraFamilyPrint` (M1) | FWC, MINOR | FWC, MAJOR | NOT FAITHFUL, MAJOR |
+| U23 | `MilneCanonicalModelPrint` (M2) | FWC, MINOR | FWC, MAJOR | FWC, MINOR |
+| U24 | `BoutotCarayolRepresentabilityPrint` (T2c″) | FWC, MAJOR | FWC, MINOR | FWC, MINOR |
+
+### 13.1 Unit U22: M1 is a consequence, not a direct instance
+
+The three readers agree that M1 follows from the printed steps together with derived steps, and no reader found a
+clause false: the red team checked each derived step and found it true (background). The red team's NOT FAITHFUL is
+directed at the first edition's docstring, which called M1 "the print or weaker"; the comment-only edition calls it a
+consequence and lists the derived steps:
+
+1. properness: each `Γ_ε \ ℍ` is compact since `B` is a division algebra, and `π₀(Sh_{K₃})` is finite;
+2. smoothness at `K₃`: `Γ_ε` is torsion free (for `γ ∈ Γ_ε`, `nrd(γ − 1) ∈ 9ℤ`, which no nontrivial root of unity
+   satisfies) and `−1 ∉ Γ_ε`;
+3. the PEL case from the Siegel outline ("The proof is similar to the Siegel case", p. 354), with the integral
+   variation of Hodge structure on each component polarizable;
+4. the action of `𝒪` on the family, by the full faithfulness in Hodge II 4.4.3 ("le S-schéma Hom_S(X₁, X₂) est non
+   ramifié sur S, donc a mêmes sections algébriques ou holomorphes");
+5. the level-3 sections: `Γ_ε` acts trivially on `Λ/3Λ`, which gives analytic sections, algebraic by Chow (Thm 3.11)
+   applied to the finite étale `𝒜[3]`; the printed level condition then holds at every geometric point;
+6. the fibre clause at every `(z, g)`: the reduction to a representative `(τ, u)` with `τ ∈ ℍ` and `u ∈ 𝒪̂^×`, which
+   the readers took for an unprinted step (strong approximation, class number one), is a Lean theorem on main,
+   `DelignePS.exists_unit_rep` (from `Y3Hodge.exists_upper` and `RayClassCFT.classNumberOneB_proof`), and the fibre of
+   the family depends only on the point `[z, g] = [τ, u]`.
+
+So M1 enters as a consequence (GLUE), on steps 1-5. Its LEAF path is a Lean proof of those steps. The edition read
+is `DelignePrintShapedMilne/Prints.lean` SHA-256 cee34e61…; the comment-only edition that answers the readings is
+8795a308102f19d6cad5f4600e0e0c1685937c18042af1947f7a2c4a7104e529 (code identical with comments stripped).
+
+### 13.2 Unit U23: M2
+
+M2 is Milne's PEL criterion in the case at hand: the reflex field is ℚ and the datum is of type C (`Datum.lean`), and
+the model is read as a proper smooth curve over ℚ with a holomorphic uniformization (`UnifK3`), algebraic by Chow and
+Cor. 3.16. The readers found no clause stronger than the print. Two readers checked the sign independently: with
+`B^×` acting on `V = B` through right multiplication by `γ⁻¹`, `μ_x(w) = (w⁻¹, 1)` in `(κ, κ̄)` coordinates, so
+`E(x) = κ(K)` and (52) gives `r_x(s) = s⁻¹`; with Milne's `art = rec⁻¹` ((51), p. 341; `rec` sends a prime element to
+the Frobenius, p. 340), (54) is `CVReciprocityAt` with `(ε, δ) = (−1, true)`, which the Lean keeps existential.
+
+The skeptic's MAJOR: the agreement hypothesis reads Milne's action on quadruples on the integral level objects through
+a dictionary whose steps were unstated. The comment-only edition states them: Milne §8 with `ker¹(ℚ, B^×) = 1`; the
+unique principal *-polarization (Boutot-Carayol 1.5); the lift of `η` to `η̂ : 𝒪̂ ≅ T̂(A)` (units of `𝒪₃` surject
+modulo 3), two lifts differing by `K₃`; non-vacuity through strong approximation; rigidity for base change. It also
+states the model steps (`ℍ⁻` through `γ = i`, `nrd i = −2`; `Γ_ε` torsion free and cocompact; a holomorphic bijection
+of compact Riemann surfaces is biholomorphic) and that the PEL paragraph is an outline ("the Shimura-Taniyama theorem
+shows that"), and corrects two transcriptions (`ℳ_K → M_K(ℂ)`, p. 353; "π a prime element of `O_{E_v}`", p. 340).
+
+### 13.3 Unit U24: T2c″
+
+T2c″ is Boutot-Carayol's 1.4 at `U(3)`, which is small enough by 1.3, read weakly: field points, base change, the
+universal family, and classifying maps for families over proper smooth curves over ℚ and over ℂ. The readers found no
+clause stronger than 1.4 read with its second sentence, which gives properness and smoothness (the generic fibre of
+the curve over `ℤ[1/δN]`, `δ = 6`). The fidelity reader's MAJOR is the source status (stated in the print, the second
+sentence cited to [Mi] and [Bo]); the maintainer ruled the volume published on 2026-11-28. The comment-only edition
+quotes the second sentence for properness and smoothness and states the readings of "représentable sur ℚ" (on all
+ℚ-schemes) and of `W ⊗ ℤ/3ℤ` (a constant group scheme).
+
+Quote checks: every Lean quote was found mechanically. Source quotes containing formulas, and those from the
+Boutot-Carayol scan, whose text layer is garbled, were checked by hand on the page images.
+
+Ratings: T2c″ and M2 LEAF and T2c′ LEAF (the maintainer ruled the Clay volume and Astérisque 196-197 published on
+2026-11-28, and the readings found no mismatch); M1 GLUE (a consequence).
