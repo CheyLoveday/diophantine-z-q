@@ -4,25 +4,25 @@ declaration: theorem
 origin: bridged
 statement: formalized
 proof: formalized
-lean: HDec.HSyn.sixContactMin_of_open104
+lean: HDec.HSyn.sixContactMin_of_open105
 ---
 
-# The minimal height hypothesis from twenty-seven statements
+# The minimal height hypothesis from twenty-nine statements
 
 The [minimal height hypothesis](../multiplication/certificate/six-contact-min.md) follows from the
-twenty-seven statements of this chapter taken together: theorems from the literature, grouped by the
+twenty-nine statements of this chapter taken together: theorems from the literature, grouped by the
 theory they come from ([Shimura curves of discriminant 6](shimura-curves/README.md),
 [complex multiplication](cm-fibres/README.md), [abelian varieties](abelian-varieties/README.md),
 [Néron models, semistable reduction and monodromy](neron-models/README.md),
 [Faltings 1983 and Faltings heights](heights/README.md),
 [p-adic Hodge theory](p-adic-hodge/README.md),
-[Galois representations of modular forms](modular-galois/README.md)). Of the twenty-seven statements
-from the literature, sixteen are published statements, some of them specialized or weakened; and
+[Galois representations of modular forms](modular-galois/README.md)). Of the twenty-nine statements
+from the literature, eighteen are published statements, some of them specialized or weakened; and
 eleven are consequences of published theorems, which take further theorems to reach from the print.
 The project's strict convention, which counts a published statement only once its reading against
-the print and its review are complete and find it in its printed form, counts nine of the
-twenty-seven as published (ten without the strictest reading of one flagged statement). None of the
-twenty-seven is proved here.
+the print and its review are complete and find it in its printed form, counts eleven of the
+twenty-nine as published (twelve without the strictest reading of one flagged statement). None of
+the twenty-nine is proved here.
 
 The proof follows the manuscript's proof of its Theorem 4.1 at the one instance the main theorem
 uses, which the project has split into named steps, each proved from these statements and the steps
@@ -44,7 +44,6 @@ height hypothesis.
 - [The Deligne–Serre theorem](modular-galois/deligne-serre.md)
 - [Frobenius on the Tate module of Shimura's abelian variety](modular-galois/shimura-af-frobenius.md)
 - [Hodge–Tate weights of the representation of a newform](modular-galois/kato-hodge-tate-weights.md)
-- [Shimura's Main Theorem I on Y₃ in Deligne's form](shimura-curves/shimura-main-theorem-y3.md)
 - [Javanpeykar's bound for curves with a Belyi map](heights/javanpeykar-bound.md)
 - [Carayol's theorem on the conductor](modular-galois/carayol-conductor.md)
 - [The discriminant formula for the Faltings height of an elliptic curve](cm-fibres/elliptic-height-discriminant-formula.md)
@@ -65,6 +64,9 @@ height hypothesis.
 - [A scheme smooth over a normal base is normal](shimura-curves/smooth-over-normal-is-normal.md)
 - [Abelian schemes over a normal base are projective](abelian-varieties/abelian-schemes-over-normal-bases-are-projective.md)
 - [Multiplication by 5 on an abelian scheme is finite étale](abelian-varieties/milne-multiplication-by-5.md)
+- [Complex abelian surfaces with quaternionic multiplication, in lattice form](shimura-curves/complex-qm-abelian-surfaces-voight.md)
+- [Shimura's canonical model at level three and the reciprocity law at CM points](shimura-curves/canonical-model-level-three-reciprocity.md)
+- [The fine moduli scheme at level three is Shimura's canonical model](shimura-curves/fine-moduli-scheme-is-canonical-model.md)
 - [Colmez's p-adic periods of an abelian variety](p-adic-hodge/colmez-p-adic-periods.md)
 - [The Hodge–Tate theorem of Tate and Raynaud for abelian varieties](p-adic-hodge/fontaine-hodge-tate-abelian.md)
 

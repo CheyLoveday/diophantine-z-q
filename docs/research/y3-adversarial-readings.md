@@ -515,3 +515,95 @@ Effect, if folded: `projectiveFalseEllipticCurve` (consequence) leaves; `egaIV17
 (unit U12) and `raynaudLNM119Normal` (this unit) enter; count +1; y3FullThreeRepZ30 is then
 `Y3Buzzard.SmoothNormal.y3FullThreeRepZ30_of_printed_raynaud` of nine rows, each a printed statement or
 a direct instance of one.
+
+## 12. Addendum: the Deligne row, units U14-U18
+
+The open row `Y3Hodge.DeligneCanonicalModelY3EveryPrint` (Shimura's Main Theorem I for Y₃, stated for every witness of
+the polarization-free fine moduli problem `Y3Fix.R1fpPropsAbP`) is reduced by a further contribution
+(`DelignePrintShaped/`) to four print-shaped statements and one labelled GLUE:
+
+- T2a `DelignePS.VoightQMComplexModuliPrint`: the complex moduli of QM abelian surfaces in lattice form, at level 1
+  (Voight, *Quaternion Algebras*, §43.6: 43.6.12, Main Theorem 43.6.14, Proposition 43.6.28);
+- T2b `DelignePS.CornutVatsalCMReciprocityPrint`: Shimura's canonical model at level K₃, its complex points and the
+  reciprocity law at CM points (Cornut-Vatsal, Doc. Math. 10 (2005), §3.1.1, Lemmas 3.7 and 3.11);
+- T2c `DelignePS.BoutotCarayolModuliPrint`: the moduli ℚ-scheme of the polarization-free problem at level U(3) and
+  its complex points (Boutot-Carayol, Astérisque 196-197 (1991), Ch. III, §§0-1);
+- T2c′ `DelignePS.BoutotCarayolPolarizationPrint`: the principal *-polarization of a complex QM surface
+  (Boutot-Carayol, Prop. (1.5));
+- W-a `DelignePS.FineModuliCanonicalModelGlue`, GLUE: the fine moduli ℚ-scheme at K₃ with its moduli uniformization is
+  Shimura's canonical model. No legally readable refereed print read for this row states it.
+
+The row is proved in Lean from T2a, T2b and W-a; the moduli clauses from T2a, T2c′ and the existing textbook field
+`GAGAMorphism`.
+
+Sources read: Voight, the author's corrected edition v1.0.7u (SHA-256
+a9316b834dbd500c52cd3a981c3205c9f4145b217042b213d23f696aee84b0f0), pp. 796-811, which states that it differs from the
+printed edition (errata fixed, addenda, pages and numbering slightly different); the statements' quotations were taken
+from the Springer print (SHA-256 f6c56f6ca7b4bee139b88865a3cf045f899da59d0217618c4dc81daf19ef1ad4, read by the literature
+lane) and match this edition word for word for 43.6.12, 43.6.14, 43.6.27 and 43.6.28; in Ch. 43 the print's pages run
+about 14 higher;
+Cornut-Vatsal, the EMS Press open-access copy (47ff862cffc6980c79a63ef041762397dcdf5b71155ce4d7d09d65e16507b109),
+pp. 263, 291-302; Boutot-Carayol, numdam's scan of the volume (2a9aa0b0a046cb37e4d6b6ccc06dfaa00f10d90223ac9d2cb94918d069295119),
+pp. 1-2, 45, 125-132. Lean read with kernel printouts of every constant used (`#print` with docstrings on the built
+world; SHA-256 b74221a0…586e and 42511a3e…5cc2) and a printout fixing the Artin map's normalization (913b1b0b…77ca).
+
+| Unit | Statement | Fidelity | Skeptic | Red team |
+| --- | --- | --- | --- | --- |
+| U14 | T2a, first edition | FWC, MAJOR | FWC, MAJOR | FWC, MAJOR |
+| U15 | T2b | FWC, MINOR | FWC, MAJOR (resolved) | FWC, MINOR |
+| U16 | T2c | FWC, MINOR | FWC, MAJOR | FWC, MAJOR |
+| U17 | T2a, second edition, with `HasPrincipalRiemannMu` | FWC, MINOR | FWC, MAJOR (Voight's proof) | FWC, MINOR |
+| U18 | T2c′ | FWC, MINOR | FWC, MAJOR | FWC, MINOR |
+
+No reader found a mismatch. What the readings settled:
+
+- **U14, T2a clause (ii).** The first edition said that every complex abelian surface with an action of 𝒪 has a
+  period, with no polarization. That is stronger than Proposition 43.6.28, which assumes a principally polarized
+  QM surface; the only printed bridge, Remark 43.6.27, rests on Lemma 43.6.23, proved for A_τ only. All three
+  readers found it. The clause was changed in code: it now takes 43.6.28's hypothesis (`HasPrincipalRiemannMu`), and
+  the polarization is supplied by T2c′. U17 confirmed that the predicate is Voight's "principally polarized, with
+  Rosati involution compatible with μ" (Definitions 43.4.9, 43.4.14, 43.4.16, 43.6.9, (43.6.10)), that n and the
+  lattice are forced by integrality and positivity, and that clause (ii) is now a direct instance of 43.6.28. The
+  skeptic's MAJOR in U17 concerns Voight's own proof: its half-plane step cites Lemma 43.4.17, which normalizes a
+  period matrix and not the O-generator; a unit of norm −1 (43.7.1) repairs it, and the printed statement is
+  unaffected.
+- **U15, the reciprocity normalization.** Cornut-Vatsal's rec_K sends uniformizers to geometric Frobenius (§3.2.4);
+  the kernel's `ArtinCondC` uses Tau Ceti's idele class Artin map, which kernel theorems
+  (`of_ideleClassArtinMap`, `globalArtinMap_primeIdeleClass_eq_of_isArithFrobAt`, standard axioms) show sends prime
+  idele classes to arithmetic Frobenius. So σ = rec_K(λ) is `ArtinCondC κ σ λ⁻¹`, as written. The skeptic's MAJOR
+  (normalization not shown in the first printout) was resolved by that printout. ε and δ are existential, so a sign
+  slip would not have falsified the statement. The holomorphic identification of X with ℍ^± is CV's Remark 3.15
+  (p. 301); the level-H forms are CV's own (pp. 295, 300, 302).
+- **U16, T2c.** Properness and smoothness over ℚ come from §1.4's second sentence (the integral model, on its
+  generic fibre). III.0.1, Theorem 1.1, 1.2, 1.3 and 1.4 are stated with citations ([De], [Mi], [Gi], [Bo]), not
+  proved in the article; only Proposition 1.5 is proved there. The comparison of the kernel's `LevelPrint` with BC's
+  ν, the identification of the moduli ℚ-scheme's complex points with S_U(ℂ) (Yoneda through Theorem 1.1), and
+  holomorphy are background steps.
+- **U18, T2c′.** μ = 2j + ij is an admissible choice of BC's t (t ∈ 𝒪_Δ, t² = −δ); the proof of (1.5) uses only
+  that t is a unit at ℓ ∤ δ and a uniformizer at ℓ | δ (Sous-lemme 1.7 and the Remarque), which μ satisfies. In the
+  article the existence of a *-polarization up to ℚ^× is cited; principality is proved in sketch.
+
+Every finding was addressed in the editions that followed: the code change to T2a clause (ii) and the new T2c′ in the
+second edition (SHA-256 3b1d7cc895916df4316b14a3e281bc6366e398655e7d403ce058cf681b7f524d), the docstring findings of
+U17 and U18 in the third, comment-only (2d4fda888397d3a3d12869f56ee6b6295cfab4e6e032d9bb4dd5ae7d9b181055; the code is
+identical to the second edition's after stripping comments).
+
+Quote checks: 449 source quotes and 430 Lean quotes over the fifteen readings. All Lean quotes were found. The source
+quotes not matched against the text layer were formula renderings and OCR-garbled lines, of which those relied on
+were confirmed by hand on the page images (Λ_τ and E_τ on Voight p. 805, the computation (43.6.29) on p. 809, the
+formula for S_U(ℂ) and Δ*(R) on BC p. 125, the level-H diagram on CV p. 300), and six quotes from CV pp. 295, 301 and
+302, found in the PDF's text.
+
+Board effect. The row `deligneCanonicalModelY3EveryPrint` is discharged by
+`DelignePS.deligneCanonicalModelY3EveryPrint_of_prints`, which still assumes T2a, T2b and W-a (`#discharges` on main
+43c4d0da with the contribution's files). T2c and T2c′ are not inputs to it: they carry the moduli clauses of the
+bridge to the level-three classification (`LevelOnto`), and enter the board only if a later fold uses them. A fold
+replaces the row by T2a and T2b (published, pending the maintainer's rating) and W-a (GLUE): count +2.
+
+Rulings for the maintainer: Voight's *Quaternion Algebras* as a published source (a Springer GTM; the literature
+lane read in the Springer print's preface, p. xi, "Special thanks to the anonymous referees for their constructive
+feedback"; the author's edition read here does not carry that sentence); Cornut-Vatsal's Lemma 3.11 (a lemma of a
+refereed article, printed on p. 299 after the norm computation that derives it from the reciprocity law for CM points,
+"following [14] instead of [4]", §3.2.4); W-a stays GLUE until Shimura, Ann. of Math. 85 (1967), or Deligne, PSPM 33
+(1979), is read. Whether Boutot-Carayol (Astérisque 196-197, a volume "issu d'un Séminaire") counts as published
+matters only if T2c or T2c′ become rows.
