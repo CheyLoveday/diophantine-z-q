@@ -2,6 +2,7 @@ import ZInQKernel.Contrib.OneProof.CMHeight62Full.Centre
 import ZInQKernel.Contrib.OneProof.CMHeight62Full.HorizontalPrimes
 import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreDVR
 import ZInQKernel.Contrib.OneProof.CMHeight62Full.LocalStructureScheme
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreValuation
 
 set_option autoImplicit false
 
@@ -421,6 +422,99 @@ theorem chart_isMaximal (htr : TrdegLeOne (ResidueField R) (ResidueField w.valua
 
 end ChartMaximal
 
+section Overring
+
+variable {D K : Type*} [CommRing D] [IsDomain D] [IsDiscreteValuationRing D] [Field K]
+
+/-- **Overrings of a discrete valuation ring.** Let `ι : D → K` embed a discrete valuation ring in
+a field which is its fraction field. A valuation subring `O ⊇ ι D` containing the inverse of the
+image of a nonzero nonunit is all of `K`. -/
+theorem eq_top_of_inv_mem (ι : D →+* K) (hι : Function.Injective ι)
+    (hfrac : ∀ z : K, ∃ a b : D, ι b ≠ 0 ∧ z * ι b = ι a) (O : ValuationSubring K)
+    (hle : ∀ d, ι d ∈ O) {d : D} (hd0 : d ≠ 0) (hdu : ¬ IsUnit d) (hd : (ι d)⁻¹ ∈ O) :
+    O = ⊤ := by
+  obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible D
+  have hπ0 : ι π ≠ 0 := (map_ne_zero_iff ι hι).2 hπ.ne_zero
+  have hunit : ∀ u : Dˣ, (ι u)⁻¹ ∈ O := fun u => by
+    have : (ι u)⁻¹ = ι ↑u⁻¹ := by
+      rw [eq_comm, ← mul_eq_one_iff_eq_inv₀ ((u.isUnit.map ι).ne_zero), ← map_mul,
+        Units.inv_mul, map_one]
+    rw [this]
+    exact hle _
+  have hπinv : (ι π)⁻¹ ∈ O := by
+    obtain ⟨n, u, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hd0 hπ
+    rcases n with _ | n
+    · exact absurd (by simp) hdu
+    · have h1 : (ι π)⁻¹ = ι π ^ n * ι ↑u * (ι (↑u * π ^ (n + 1)))⁻¹ := by
+        rw [map_mul, map_pow, mul_inv, pow_succ, mul_inv]
+        field_simp [(u.isUnit.map ι).ne_zero, hπ0]
+      rw [h1]
+      exact O.mul_mem _ _ (O.mul_mem _ _ (O.pow_mem (hle π) n) (hle _)) hd
+  refine eq_top_iff.2 fun z _ => ?_
+  obtain ⟨a, b, hb, hz⟩ := hfrac z
+  have hb0 : b ≠ 0 := fun h => hb (by rw [h, map_zero])
+  obtain ⟨m, u, rfl⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hb0 hπ
+  have hu0 := (u.isUnit.map ι).ne_zero
+  have hz' : z = ι a * (ι u)⁻¹ * ((ι π)⁻¹) ^ m := by
+    rw [← hz, map_mul, map_pow, inv_pow]
+    field_simp
+  rw [hz']
+  exact O.mul_mem _ _ (O.mul_mem _ _ (hle a) (hunit u)) (O.pow_mem hπinv m)
+
+end Overring
+
+section PlaceOverring
+
+open SpecialFibreFunctionField SpecialFibreValuation
+
+variable {R : Type*} [CommRing R]
+  {A : Type*} [CommRing A] [IsNoetherianRing A] [IsDomain A] [Algebra R A] [FaithfulSMul R A]
+  {Ω : Type*} [Field Ω] [Algebra A Ω] [IsFractionRing A Ω]
+  {ϖ : R} (hϖ : Irreducible ϖ) [IsDomain (A ⧸ Ideal.span {algebraMap R A ϖ})]
+  [IsDiscreteValuationRing (A ⧸ Ideal.span {algebraMap R A ϖ})]
+
+include hϖ in
+/-- **Only `ē` and `⊤` contain `A`.** A valuation subring `O` of `κ_w` whose lift `Õ` contains `A`
+is `ē` or `⊤`. -/
+theorem eq_top_of_specialFibrePlace_le
+    (O : ValuationSubring (ResidueField (specialFibreValuation A Ω hϖ).valuationSubring))
+    (hle : ∀ a : A, algebraMap A Ω a ∈ liftValuationSubring _ O)
+    (hne : O ≠ specialFibrePlace A Ω hϖ) : O = ⊤ := by
+  have hle' : ∀ y, specialFibreResidueMap A Ω hϖ y ∈ O := by
+    intro y
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective y
+    obtain ⟨_, h2⟩ := hle a
+    exact h2
+  have hēO : ∀ z ∈ specialFibrePlace A Ω hϖ, z ∈ O := fun z hz => by
+    obtain ⟨y, rfl⟩ := (mem_specialFibrePlace hϖ).1 hz
+    exact hle' y
+  obtain ⟨z, hzO, hzē⟩ : ∃ z ∈ O, z ∉ specialFibrePlace A Ω hϖ := by
+    by_contra h
+    push Not at h
+    exact hne (le_antisymm (fun z hz => h z hz) (fun z hz => hēO z hz))
+  have hz0 : z ≠ 0 := fun h => hzē (h ▸ (specialFibrePlace A Ω hϖ).zero_mem)
+  obtain ⟨y, hy⟩ := (mem_specialFibrePlace hϖ).1
+    (((specialFibrePlace A Ω hϖ).mem_or_inv_mem z).resolve_left hzē)
+  have hy0 : y ≠ 0 := by
+    rintro rfl
+    rw [map_zero, eq_comm, inv_eq_zero] at hy
+    exact hz0 hy
+  have hyu : ¬ IsUnit y := by
+    intro hu
+    obtain ⟨v, hv⟩ := hu.exists_right_inv
+    apply hzē
+    have h1 : specialFibreResidueMap A Ω hϖ y * specialFibreResidueMap A Ω hϖ v = 1 := by
+      rw [← map_mul, hv, map_one]
+    rw [hy] at h1
+    rw [(inv_mul_eq_one₀ hz0).1 h1]
+    exact (mem_specialFibrePlace hϖ).2 ⟨_, rfl⟩
+  refine eq_top_of_inv_mem _ (specialFibreResidueMap_injective hϖ)
+    (exists_mul_specialFibreResidueMap_eq hϖ) O hle' hy0 hyu ?_
+  rw [hy, inv_inv]
+  exact hzO
+
+end PlaceOverring
+
 section Assembly
 
 open AlgebraicGeometry CategoryTheory SpecialFibreFunctionField Centre
@@ -626,6 +720,168 @@ theorem hcentre_of_smoothModel {S : Type} [CommRing S] {X : Scheme.{0}} [IsInteg
   exact centre_spec w hnzd hmT O hdom' hϖw' hcen hhor'
 
 end Assembly
+
+section Instantiation
+
+open AlgebraicGeometry CategoryTheory SpecialFibreFunctionField SpecialFibreValuation
+
+variable {S : Type} [CommRing S] {X : Scheme.{0}} [IsIntegral X]
+  (e : Spec (CommRingCat.of S) ⟶ X) (s : Spec (CommRingCat.of S))
+  [IsDomain (Localization.AtPrime s.asIdeal)]
+  [IsDiscreteValuationRing (Localization.AtPrime s.asIdeal)]
+  {A₀ : Type} [CommRing A₀] [Algebra (Localization.AtPrime s.asIdeal) A₀]
+  (σ : A₀ →ₐ[Localization.AtPrime s.asIdeal] Localization.AtPrime s.asIdeal)
+  (φ : Localization.AtPrime (sectionPrime σ) ≃+* X.presheaf.stalk (e s))
+
+/-- The isomorphism `K(X) ≅ Frac A` induced by `φ : A ≅ 𝒪_{X,e(s)}`. -/
+def functionFieldHom :
+    X.functionField ⟶ CommRingCat.of (FractionRing (Localization.AtPrime (sectionPrime σ))) :=
+  CommRingCat.ofHom (IsFractionRing.ringEquivOfRingEquiv (A := X.presheaf.stalk (e s))
+    (K := X.functionField) φ.symm).toRingHom
+
+theorem functionFieldHom_bijective : Function.Bijective (functionFieldHom e s σ φ).hom :=
+  (IsFractionRing.ringEquivOfRingEquiv (A := X.presheaf.stalk (e s))
+    (K := X.functionField) (L := FractionRing (Localization.AtPrime (sectionPrime σ)))
+    φ.symm).bijective
+
+/-- Through `functionFieldHom`, the generic germ of `φ a` is `a`. -/
+theorem functionFieldHom_germ (a : Localization.AtPrime (sectionPrime σ)) :
+    (functionFieldHom e s σ φ).hom
+        ((X.presheaf.stalkSpecializes (genericPoint_specializes (e s))).hom (φ a)) =
+      algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) a := by
+  change IsFractionRing.ringEquivOfRingEquiv φ.symm
+    (algebraMap (X.presheaf.stalk (e s)) X.functionField (φ a)) = _
+  rw [IsFractionRing.ringEquivOfRingEquiv_algebraMap, RingEquiv.symm_apply_apply]
+
+variable [IsDomain (Localization.AtPrime (sectionPrime σ))]
+  [IsNoetherianRing (Localization.AtPrime (sectionPrime σ))]
+  [FaithfulSMul (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ))]
+  {ϖ : Localization.AtPrime s.asIdeal} (hϖ : Irreducible ϖ)
+  [IsDomain (Localization.AtPrime (sectionPrime σ) ⧸
+    Ideal.span {algebraMap (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ)) ϖ})]
+  [IsDiscreteValuationRing (Localization.AtPrime (sectionPrime σ) ⧸
+    Ideal.span {algebraMap (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ)) ϖ})]
+
+include hϖ in
+/-- **The identity point is not a centre.** A constant place `O ≠ ⊤` of `κ_w` with a centre at
+`e(s)` contains the image of `A / ϖA`, hence equals `ē`. -/
+theorem ne_of_isCentre (O : ValuationSubring (ResidueField
+      (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+        (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ).valuationSubring))
+    (hne : O ≠ specialFibrePlace (Localization.AtPrime (sectionPrime σ))
+      (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ) (htop : O ≠ ⊤) (c : X)
+    (φc : X.presheaf.stalk c ⟶ CommRingCat.of (liftValuationSubring _ O))
+    (hgc : ∀ b, (functionFieldHom e s σ φ).hom
+      ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b) =
+        algebraMap (liftValuationSubring _ O) _ (φc.hom b)) : c ≠ e s := by
+  rintro rfl
+  refine htop (eq_top_of_specialFibrePlace_le hϖ O (fun a => ?_) hne)
+  have hmem : algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) a ∈
+      liftValuationSubring _ O := by
+    rw [← functionFieldHom_germ e s σ φ a, hgc]
+    exact (φc.hom (φ a)).2
+  exact hmem
+
+include hϖ in
+/-- **`hcentre` at a finite place (`exists_centre_data`).** Let `g : X ⟶ Spec S` be proper and
+smooth of relative dimension one with `X` integral, `s` a point with `R = S_s` a discrete
+valuation ring of characteristic zero with perfect residue field and uniformizer `ϖ`, and
+`φ : A ≅ 𝒪_{X,e(s)}` for the local ring `A` of the chart at the section prime. Put `Ω = Frac A`,
+`w` the special-fibre valuation and `ē` the special-fibre place. The remaining inputs are explicit:
+`hρ` (the base map `R → Ω` is the one of `g` at the generic point), `htr` (`κ_w` has
+transcendence degree at most one), the point `η` at which `w` is centred with a local surjection
+`φ₀ : 𝒪_{X,η} → 𝒪_w`, and `hAg` (`Ag` contains the local ring of no point `c ≠ e(s)` over `s`).
+Then every constant place `O ≠ ē` has a centre as required by `reduce_mem_polePart`. -/
+theorem exists_centre_data (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g]
+    [SmoothOfRelativeDimension 1 g]
+    [PerfectField (ResidueField (Localization.AtPrime s.asIdeal))]
+    [CharZero (Localization.AtPrime s.asIdeal)]
+    (htr : letI := (residueHom (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+        (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ)
+        (specialFibreValuation_algebraMap_base_le_one hϖ)
+        (specialFibreValuation_algebraMap_base_lt_one hϖ)).toAlgebra
+      TrdegLeOne (ResidueField (Localization.AtPrime s.asIdeal))
+        (ResidueField (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+          (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ).valuationSubring))
+    (hρ : (Spec.map (functionFieldHom e s σ φ) ≫ X.fromSpecStalk (genericPoint X)) ≫ g =
+      Spec.map (CommRingCat.ofHom ((algebraMap (Localization.AtPrime s.asIdeal)
+        (FractionRing (Localization.AtPrime (sectionPrime σ)))).comp
+          (algebraMap S (Localization.AtPrime s.asIdeal)))))
+    (η : X) (φ₀ : X.presheaf.stalk η ⟶ CommRingCat.of
+      (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+        (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ).valuationSubring)
+    [IsLocalHom φ₀.hom]
+    (hφ₀ : ∀ b, (functionFieldHom e s σ φ).hom
+      ((X.presheaf.stalkSpecializes (genericPoint_specializes η)).hom b) =
+        algebraMap _ (FractionRing (Localization.AtPrime (sectionPrime σ))) (φ₀.hom b))
+    (hφ₀s : Function.Surjective φ₀.hom)
+    (Ag : ValuationSubring (FractionRing (Localization.AtPrime (sectionPrime σ))))
+    (hAg : ∀ c : X, g c = s → c ≠ e s → ∃ b : X.presheaf.stalk c,
+      (functionFieldHom e s σ φ).hom
+        ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b) ∉ Ag)
+    {f : FractionRing (Localization.AtPrime (sectionPrime σ))}
+    (hhor : ∀ Q : ValuationSubring (FractionRing (Localization.AtPrime (sectionPrime σ))),
+      (∀ t : S, algebraMap (Localization.AtPrime s.asIdeal) _
+        (algebraMap S (Localization.AtPrime s.asIdeal) t) ∈ Q) →
+      (∃ t : S, t ≠ 0 ∧ (algebraMap (Localization.AtPrime s.asIdeal) _
+        (algebraMap S (Localization.AtPrime s.asIdeal) t))⁻¹ ∈ Q ∧ t ∈ s.asIdeal) →
+      IsDiscreteValuationRing Q → Q ≠ Ag → f ∈ Q) :
+    letI := (residueHom (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+        (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ)
+        (specialFibreValuation_algebraMap_base_le_one hϖ)
+        (specialFibreValuation_algebraMap_base_lt_one hϖ)).toAlgebra
+    ∀ O : ValuationSubring (ResidueField (specialFibreValuation
+        (Localization.AtPrime (sectionPrime σ))
+        (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ).valuationSubring),
+      IsConstPlace (ResidueField (Localization.AtPrime s.asIdeal)) O →
+      O ≠ specialFibrePlace (Localization.AtPrime (sectionPrime σ))
+        (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ →
+      ∃ (Ac : Subring (FractionRing (Localization.AtPrime (sectionPrime σ)))) (π : Ac),
+        (∀ a ∈ Ac, a ∈ liftValuationSubring (specialFibreValuation
+          (Localization.AtPrime (sectionPrime σ))
+          (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ) O) ∧
+        (∀ g : FractionRing (Localization.AtPrime (sectionPrime σ)),
+          (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 →
+            ∃ r u : Ac, u ∉ 𝔮 ∧
+              (u : FractionRing (Localization.AtPrime (sectionPrime σ))) * g = r) → g ∈ Ac) ∧
+        (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → π ∈ 𝔮 →
+          ∀ g : FractionRing (Localization.AtPrime (sectionPrime σ)),
+            specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+              (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ g ≤ 1 →
+            ∃ r u : Ac, u ∉ 𝔮 ∧
+              (u : FractionRing (Localization.AtPrime (sectionPrime σ))) * g = r) ∧
+        (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → π ∉ 𝔮 →
+          ∃ r u : Ac, u ∉ 𝔮 ∧
+            (u : FractionRing (Localization.AtPrime (sectionPrime σ))) * f = r) := by
+  have hR := specialFibreValuation_algebraMap_base_le_one (A := Localization.AtPrime (sectionPrime σ))
+    (Ω := FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ
+  have hm := specialFibreValuation_algebraMap_base_lt_one (A := Localization.AtPrime (sectionPrime σ))
+    (Ω := FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ
+  let _ := (residueHom (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+    (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ) hR hm).toAlgebra
+  have hk : ∀ r, algebraMap (ResidueField (Localization.AtPrime s.asIdeal)) _ (residue _ r) =
+      reduce (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
+        (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ)
+        (algebraMap (Localization.AtPrime s.asIdeal) _ r) (hR r) := by
+    intro r
+    have := isLocalHom_toIntegers _ hR hm
+    change residueHom _ hR hm (residue _ r) = _
+    rw [residueHom, ResidueField.map_residue]
+    rfl
+  have hϖm : ϖ ∈ maximalIdeal (Localization.AtPrime s.asIdeal) :=
+    hϖ.maximalIdeal_eq ▸ Ideal.mem_span_singleton_self ϖ
+  have hϖ0 : algebraMap (Localization.AtPrime s.asIdeal)
+      (FractionRing (Localization.AtPrime (sectionPrime σ))) ϖ ≠ 0 := by
+    rw [IsScalarTower.algebraMap_apply _ (Localization.AtPrime (sectionPrime σ))]
+    exact (map_ne_zero_iff _ (IsFractionRing.injective _ _)).2
+      (algebraMap_ne_zero_of_irreducible _ hϖ)
+  refine hcentre_of_smoothModel g (functionFieldHom e s σ φ) (functionFieldHom_bijective e s σ φ)
+    hϖ0 (hm ϖ hϖm) (fun x hx => specialFibreValuation_eq_zpow hϖ hx) s hϖ
+    (algebraMap _ _) hR hm hk htr hρ η φ₀ hφ₀ hφ₀s _ (e s) ?_ Ag hAg hhor
+  intro O hO hne htop c φc _ hgc
+  exact ne_of_isCentre e s σ φ hϖ O hne htop c φc hgc
+
+end Instantiation
 
 end CentreData
 
