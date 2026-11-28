@@ -5,8 +5,8 @@ import ZInQKernel.Contrib.RC53Assist.HodgeLatticeIdeal.Fractional
 /-!
 # cmHeight62 (finite place), tree wiring: `localComparison`, `step7` and `CMHeight62` (H5)
 
-The finite-place step `Step7` from the tree inputs already proved (H1, the N5-bridge chart at the
-unit section, H2) and two inputs that are still open, stated as explicit hypotheses:
+The finite-place step `Step7` from the tree inputs (H1, the N5-bridge chart at the unit section,
+H2) and two further inputs, stated here as explicit hypotheses:
 
 * `LocalAssemblyCore` (node L6 of the blueprint, edition 4): the per-place algebraic assembly.
   Given the N5-bridge chart at `e(s)`, a fraction field `Ω` of `𝒪_{𝒢,ξ}` with an isomorphism
@@ -25,6 +25,11 @@ unit section, H2) and two inputs that are still open, stated as explicit hypothe
 `localComparison` builds the data of `abs_norm_le_of_comparisons` at every finite place from
 these, `step7` is `Step7`, and `cmHeight62_full` is `CMHeight62` through
 `cmHeight62_of_step7'`.
+
+Both inputs are proved in `FinalAssembly.lean`: `shortComparisonInput` from H3, and the
+per-place assembly in the form `localAssemblyCoreK`, with the Weierstrass curve over `K`
+(the form the assembly of the local nodes gives). `FinalAssembly.lean` repeats the proofs of
+`localComparison` and `step7` below with that input, and proves `cmHeight62_unconditional`.
 -/
 
 set_option autoImplicit false
