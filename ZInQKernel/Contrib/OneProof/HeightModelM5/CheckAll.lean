@@ -251,3 +251,4 @@ end InstanceCheck
 #print axioms ZInQ.HeightModelM5.GG.toHodge_injective
 #print axioms ZInQ.HeightModelM5.GG.range_comp_eq_iInter
 #print axioms ZInQ.HeightModelM5.GG.mem_of_forall_maximal
+#print axioms ZInQ.HeightModelM5.GG.relIndex_span_range

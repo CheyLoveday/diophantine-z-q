@@ -71,8 +71,8 @@ noncomputable def genericGermPullOmegaTop (g : ℕ) :
     GlobalPullOmegaTop 𝒢 g →ₗ[𝓞 L] 𝒢.hodgeSpace g where
   toFun m := toHodgeLine 𝒢 g
     (GG.genericGermTop 𝒢.G.hom 𝒢.unitSection HeightModelM2.genericPt_specializes g m)
-  map_add' a b := by
-    simp only [map_add]
+  map_add' a b := (congrArg (toHodgeLine 𝒢 g) (map_add _ a b)).trans
+    (LinearMap.map_add _ _ _)
   map_smul' a m := by
     have h1 := GG.genericGermTop_smul 𝒢.G.hom 𝒢.unitSection
       HeightModelM2.genericPt_specializes g
@@ -122,12 +122,12 @@ theorem stalkTopMap_add (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)))
     (y z : TopCat.Presheaf.stalk (C := AddCommGrpCat)
       (X := (Spec (CommRingCat.of (𝓞 L))).toPresheafedSpace)
       (GG.pullOmegaTop 𝒢.G.hom 𝒢.unitSection g).val.presheaf s) :
-    stalkTopMap 𝒢 g s (y + z) = stalkTopMap 𝒢 g s y + stalkTopMap 𝒢 g s z := by
-  simp only [stalkTopMap, map_add]
+    stalkTopMap 𝒢 g s (y + z) = stalkTopMap 𝒢 g s y + stalkTopMap 𝒢 g s z :=
+  (congrArg (toHodgeLine 𝒢 g) (map_add _ y z)).trans (LinearMap.map_add _ _ _)
 
 theorem stalkTopMap_zero (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L))) :
-    stalkTopMap 𝒢 g s 0 = 0 := by
-  simp only [stalkTopMap, map_zero]
+    stalkTopMap 𝒢 g s 0 = 0 :=
+  (congrArg (toHodgeLine 𝒢 g) (map_zero _)).trans (LinearMap.map_zero _)
 
 /-- The value on a wedge of germs. -/
 theorem stalkTopMap_symm_ιMulti (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)))
@@ -161,8 +161,8 @@ theorem exists_phi_eq (s : Spec (CommRingCat.of (𝓞 L)))
     rw [HeightModelM3.range_stalkToGeneric]; exact hu
   obtain ⟨t, ht⟩ := h
   refine ⟨(GG.pullStalkEquiv 𝒢.G.hom 𝒢.unitSection s).symm t, ?_⟩
-  rw [GG.phi_apply, LinearEquiv.apply_symm_apply]
-  exact ht
+  exact (congrArg (GG.stalkToGeneric 𝒢.G.hom 𝒢.unitSection HeightModelM2.genericPt_specializes s)
+    ((GG.pullStalkEquiv 𝒢.G.hom 𝒢.unitSection s).apply_symm_apply t)).trans ht
 
 /-- The image of the stalk at `s` contains `printedDetLattice`. -/
 theorem printedDetLattice_le_stalk (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)))
@@ -221,7 +221,7 @@ theorem exists_smul_stalkTopMap_mem (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)
   induction hω using Submodule.span_induction with
   | mem z hz =>
     obtain ⟨m, rfl⟩ := hz
-    rw [stalkTopMap_symm_ιMulti]
+    have key := stalkTopMap_symm_ιMulti 𝒢 g s m
     have hd : ∀ i, ∃ d : 𝓞 L, d ∉ s.asIdeal ∧
         d • GG.phi 𝒢.G.hom 𝒢.unitSection HeightModelM2.genericPt_specializes s (m i) ∈
           ⨅ s', printedOmegaAt 𝒢 s' := fun i =>
@@ -242,17 +242,26 @@ theorem exists_smul_stalkTopMap_mem (g : ℕ) (s : Spec (CommRingCat.of (𝓞 L)
         change d i • (HeightModelM3.thetaEquiv 𝒢) ((HeightModelM3.thetaEquiv 𝒢).symm _) ∈ _
         rw [LinearEquiv.apply_symm_apply]
         exact hdu i
-      rw [← TensorProduct.tmul_smul, ← AlternatingMap.map_smul_univ]
+      rw [key, ← TensorProduct.tmul_smul, ← AlternatingMap.map_smul_univ]
       exact Submodule.subset_span ⟨fun i => ⟨_, hmem i⟩, rfl⟩
   | zero =>
     refine ⟨1, fun h => s.isPrime.ne_top ((Ideal.eq_top_iff_one _).mpr h), ?_⟩
-    rw [map_zero, stalkTopMap_zero, smul_zero]
+    have h0 : stalkTopMap 𝒢 g s
+        ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm 0) = 0 :=
+      (congrArg (stalkTopMap 𝒢 g s) (map_zero _)).trans (stalkTopMap_zero 𝒢 g s)
+    rw [h0, smul_zero]
     exact Submodule.zero_mem _
   | add x y _ _ hx hy =>
     obtain ⟨d₁, hd₁, h₁⟩ := hx
     obtain ⟨d₂, hd₂, h₂⟩ := hy
     refine ⟨d₁ * d₂, fun h => (s.isPrime.mem_or_mem h).elim hd₁ hd₂, ?_⟩
-    rw [map_add, stalkTopMap_add, smul_add]
+    have h0 : stalkTopMap 𝒢 g s
+        ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm (x + y)) =
+        stalkTopMap 𝒢 g s ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm x)
+          + stalkTopMap 𝒢 g s
+            ((schemeWedgeStalkEquiv (GG.pullPre 𝒢.G.hom 𝒢.unitSection) g s).symm y) :=
+      (congrArg (stalkTopMap 𝒢 g s) (map_add _ x y)).trans (stalkTopMap_add 𝒢 g s _ _)
+    rw [h0, smul_add]
     refine Submodule.add_mem _ ?_ ?_
     · rw [mul_comm, mul_smul]; exact Submodule.smul_mem _ _ h₁
     · rw [mul_smul]; exact Submodule.smul_mem _ _ h₂

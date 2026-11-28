@@ -778,6 +778,21 @@ theorem mem_of_forall_maximal {R H : Type*} [CommRing R] [AddCommGroup H] [Modul
   have h2 : (1 : R) • x ∈ P := h1
   rwa [one_smul] at h2
 
+/-- The index of `R x` in `M` is the index of `R φ(x)` in the image of an injective linear
+map `φ`. -/
+theorem relIndex_span_range {R M N : Type*} [CommRing R] [AddCommGroup M] [Module R M]
+    [AddCommGroup N] [Module R N] (φ : M →ₗ[R] N) (hφ : Function.Injective φ) (x : M) :
+    (Submodule.span R {φ x}).toAddSubgroup.relIndex (LinearMap.range φ).toAddSubgroup =
+      (Submodule.span R {x}).toAddSubgroup.index := by
+  have h1 : (Submodule.span R {φ x}).toAddSubgroup =
+      (Submodule.span R {x}).toAddSubgroup.map (φ : M →+ N) := by
+    rw [← Submodule.map_toAddSubgroup, Submodule.map_span, Set.image_singleton]
+  have h2 : (LinearMap.range φ).toAddSubgroup = (⊤ : AddSubgroup M).map (φ : M →+ N) := by
+    rw [LinearMap.range_eq_map, Submodule.map_toAddSubgroup, Submodule.top_toAddSubgroup]
+  rw [h1, h2, AddSubgroup.relIndex_map_map_of_injective _ _
+    (show Function.Injective (φ : M →+ N) from hφ),
+    AddSubgroup.relIndex_top_right]
+
 end GG
 
 end ZInQ.HeightModelM5

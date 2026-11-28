@@ -1,5 +1,6 @@
 import ZInQKernel.Contrib.OneProof.HeightModelM5.GlobalOmega
 import ZInQKernel.Contrib.OneProof.HeightModelM5.DetLattice
+import ZInQKernel.Contrib.OneProof.HeightModelM5.SheafRows
 
 /-!
 # Axiom check for the tree-facing statements
@@ -37,3 +38,14 @@ directory with the tree's lattices. Each list is expected to lie within `propext
 #print axioms ZInQ.HeightModelM5.exists_smul_stalkTopMap_mem
 #print axioms ZInQ.HeightModelM5.range_genericGermPullOmegaTop_eq_iInter
 #print axioms ZInQ.HeightModelM5.printedDetLattice_eq_sheaf
+
+-- N6: the GR1 rows over the sheaf
+#print axioms ZInQ.HeightModelM5.secIndex_genericGermPullOmegaTop
+#print axioms ZInQ.HeightModelM5.IsGR1StableHeightSheaf
+#print axioms ZInQ.HeightModelM5.isGR1StableHeightSheaf_iff
+#print axioms ZInQ.HeightModelM5.GaudronRemondThm14GR1Sheaf
+#print axioms ZInQ.HeightModelM5.gaudronRemondThm14GR1Sheaf_iff
+#print axioms ZInQ.HeightModelM5.gaudronRemondThm14GR1_of_sheaf
+#print axioms ZInQ.HeightModelM5.GaudronRemondSec9LowerGR1WeakSheaf
+#print axioms ZInQ.HeightModelM5.gaudronRemondSec9LowerGR1WeakSheaf_iff
+#print axioms ZInQ.HeightModelM5.gaudronRemondSec9LowerGR1Weak_of_sheaf
