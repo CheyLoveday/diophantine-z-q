@@ -3,7 +3,7 @@ article_id: af_54193364dca109793d5bf8ce
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenResearchLeaves84.fineModuliCanonicalModelGlue
+lean: HDec.HSyn.OpenResearchLeaves85.fineModuliCanonicalModelGlue
 ---
 
 # The fine moduli scheme at level three is Shimura's canonical model

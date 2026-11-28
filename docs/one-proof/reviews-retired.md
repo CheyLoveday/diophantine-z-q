@@ -43,3 +43,12 @@ colmez1992DeRhamAbVarModel (Colmez 1992, Thm 5.2, on a proper model), from which
 ZInQ.Contrib.ColmezProperModel.colmez1992DeRhamAbVar_of_model_milne proves it in Lean through the scheme-theoretic
 closure. The readings of the old row were of the old statement; those of the new rows are section 6 of
 docs/research/tate-prints-adversarial-readings.md.
+
+Later (cmj-reroute-fold): the row of cmjDegreePrint moved here. The field was removed by a reroute, with no
+replacement leaf: its one reader, the CM branch's bound h_F(E) <= B_cm, used it only to bound the class number of the
+CM order of E by [L:Q] before Fowler's Prop. 2.7 at n = D. The reroute bounds instead by 324 the class number of a
+sub-order, the order of the CM point of the fibre, from Shimura's reciprocity law in
+Y3Hodge.DeligneCanonicalModelY3EveryPrint (which the conversion of TailZ112 proves from voightQMComplexModuliPrint,
+cornutVatsalCMReciprocityPrint and fineModuliCanonicalModelGlue) and the fibre bound of Y3 -> P^1_j, and applies Fowler
+at n = 324 (ZInQKernel/Contrib/OneProof/CMjReroute/README.md). The reading, a human reading of Fowler's p. 613 sentence
+that the maintainer ruled YES for this field, is kept here as a record.

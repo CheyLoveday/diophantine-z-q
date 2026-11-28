@@ -3,7 +3,7 @@ article_id: af_3be0a7cd511e338c711087b8
 declaration: def
 origin: cited
 statement: formalized
-lean: HDec.HSyn.OpenResearchLeaves84.cornutVatsalCMReciprocityPrint
+lean: HDec.HSyn.OpenResearchLeaves85.cornutVatsalCMReciprocityPrint
 ---
 
 # Shimura's canonical model at level three and the reciprocity law at CM points
