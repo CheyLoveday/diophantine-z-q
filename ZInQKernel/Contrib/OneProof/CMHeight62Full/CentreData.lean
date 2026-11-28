@@ -4,6 +4,36 @@ import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreDVR
 import ZInQKernel.Contrib.OneProof.CMHeight62Full.LocalStructureScheme
 import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreValuation
 
+/-!
+# Centres of constant places on a smooth proper model (completion of `hcentre`)
+
+`Centre.hcentre_of_model` reduces the hypothesis `hcentre` of
+`SpecialFibreFunctionField.reduce_mem_polePart` to local facts at the centres. This file proves
+those facts for a proper morphism `g : X ⟶ Spec S` that is smooth of relative dimension one.
+
+* `chart_depthTwo`, `chart_horizontal`: at a localization of a standard smooth algebra of
+  relative dimension one at a maximal ideal containing `ϖ`, the image of `ϖ` is a nonzerodivisor
+  in the maximal ideal with a discrete valuation ring as quotient (node L1a), and the horizontal
+  height-one localizations are discrete valuation rings (node L2 (b)).
+* `exists_aeval_mem_nonunits`, `isMaximal_of_forall_aeval_mem`, `chart_isMaximal`: a centre of a
+  constant place `O ≠ ⊤` is a closed point of the special fibre, since residues of a place of a
+  field of transcendence degree at most one are algebraic over the constants.
+* `exists_chart`: the stalk at any point is the localization of a standard smooth algebra of
+  relative dimension one over the local ring of its image, compatibly with the stalk map of `g`.
+* `centre_stalkMap_apply`, `centre_image_eq`: a centre given by the valuative criterion lies over
+  the image of the closed point, compatibly with the base map.
+* `hcentre_of_smoothModel`: `hcentre` from these facts, with two inputs left explicit: a point
+  `e₀` which is not a centre of a place `O ≠ ē, ⊤`, and a valuation subring `Ag` containing the
+  local ring of no other point over `s`.
+* `eq_top_of_inv_mem`, `eq_top_of_specialFibrePlace_le`, `ne_of_isCentre`: the identity point is
+  not a centre of a place `O ≠ ē, ⊤`.
+* `exists_centre_hom`, `exists_generic_centre`: the special-fibre valuation is centred at the
+  generic point of the special-fibre component through `e(s)`, with a local surjection onto `𝒪_w`.
+* `functionFieldHom`, `exists_centre_data`: the instantiation to `A = 𝒪_{X,e(s)}`, `Ω = Frac A`.
+  The base map `R → Ω` is not determined by the isomorphism `φ` alone, so its compatibility with
+  `g` at the generic point stays an explicit hypothesis (`hρ`), as in `hcentre_of_model`.
+-/
+
 set_option autoImplicit false
 
 noncomputable section
@@ -814,9 +844,11 @@ variable [IsDomain (Localization.AtPrime (sectionPrime σ))]
   [FaithfulSMul (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ))]
   {ϖ : Localization.AtPrime s.asIdeal} (hϖ : Irreducible ϖ)
   [IsDomain (Localization.AtPrime (sectionPrime σ) ⧸
-    Ideal.span {algebraMap (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ)) ϖ})]
+    Ideal.span {(algebraMap (Localization.AtPrime s.asIdeal)
+      (Localization.AtPrime (sectionPrime σ)) ϖ)})]
   [IsDiscreteValuationRing (Localization.AtPrime (sectionPrime σ) ⧸
-    Ideal.span {algebraMap (Localization.AtPrime s.asIdeal) (Localization.AtPrime (sectionPrime σ)) ϖ})]
+    Ideal.span {(algebraMap (Localization.AtPrime s.asIdeal)
+      (Localization.AtPrime (sectionPrime σ)) ϖ)})]
 
 include hϖ in
 /-- **The identity point is not a centre.** A constant place `O ≠ ⊤` of `κ_w` with a centre at
@@ -894,7 +926,8 @@ theorem exists_generic_centre :
       hV.fromSpec.continuous
     rwa [hV.fromSpec_primeIdealOf] at h
   -- the maps `F` and `G`
-  let F : X.presheaf.stalk (hV.fromSpec y) →+* FractionRing (Localization.AtPrime (sectionPrime σ)) :=
+  let F : X.presheaf.stalk (hV.fromSpec y) →+*
+      FractionRing (Localization.AtPrime (sectionPrime σ)) :=
     (X.presheaf.stalkSpecializes (genericPoint_specializes _) ≫ functionFieldHom e s σ φ).hom
   let G : Γ(X, V) →+* FractionRing (Localization.AtPrime (sectionPrime σ)) :=
     (algebraMap _ _).comp ψ
@@ -1031,9 +1064,11 @@ theorem exists_centre_data (g : X ⟶ Spec (CommRingCat.of S)) [IsProper g]
         (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → π ∉ 𝔮 →
           ∃ r u : Ac, u ∉ 𝔮 ∧
             (u : FractionRing (Localization.AtPrime (sectionPrime σ))) * f = r) := by
-  have hR := specialFibreValuation_algebraMap_base_le_one (A := Localization.AtPrime (sectionPrime σ))
+  have hR := specialFibreValuation_algebraMap_base_le_one
+    (A := Localization.AtPrime (sectionPrime σ))
     (Ω := FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ
-  have hm := specialFibreValuation_algebraMap_base_lt_one (A := Localization.AtPrime (sectionPrime σ))
+  have hm := specialFibreValuation_algebraMap_base_lt_one
+    (A := Localization.AtPrime (sectionPrime σ))
     (Ω := FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ
   let _ := (residueHom (specialFibreValuation (Localization.AtPrime (sectionPrime σ))
     (FractionRing (Localization.AtPrime (sectionPrime σ))) hϖ) hR hm).toAlgebra
