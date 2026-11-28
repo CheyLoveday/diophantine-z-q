@@ -45,7 +45,8 @@ namespace IntegralModel
 
 /-! ### A relation with a unit coefficient -/
 
-/-- `#ι` elements of a subspace of dimension `< #ι` satisfy a nontrivial `R`-relation. -/
+/-- A family indexed by `ι` in a subspace of dimension less than `Fintype.card ι`
+satisfies a nontrivial `R`-relation. -/
 theorem exists_relation_of_finrank_lt {R : Type*} [CommRing R] [IsDomain R] {F : Type*}
     [Field F] [Algebra R F] [IsFractionRing R F] {Ω : Type*} [Field Ω] [Algebra F Ω]
     [Algebra R Ω] [IsScalarTower R F Ω] (V : Submodule F Ω) [FiniteDimensional F V]
