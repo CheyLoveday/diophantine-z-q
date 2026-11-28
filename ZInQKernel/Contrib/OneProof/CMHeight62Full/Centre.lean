@@ -60,58 +60,52 @@ section Local
 
 variable {Ω : Type*} [Field Ω] {Γ₀ : Type*} [LinearOrderedCommGroupWithZero Γ₀]
   (w : Valuation Ω Γ₀)
-variable {Ac : Subring Ω} [IsLocalRing Ac] [IsNoetherianRing Ac] {ϖ : Ac}
-  (hϖ : ϖ ∈ nonZeroDivisors Ac) (hm : ϖ ∈ maximalIdeal Ac)
-  [IsDomain (Ac ⧸ Ideal.span {ϖ})] [IsDiscreteValuationRing (Ac ⧸ Ideal.span {ϖ})]
+variable {A : Type*} [CommRing A] [IsLocalRing A] [IsNoetherianRing A] [Algebra A Ω] {ϖ : A}
+  (hϖ : ϖ ∈ nonZeroDivisors A) (hm : ϖ ∈ maximalIdeal A)
+  [IsDomain (A ⧸ Ideal.span {ϖ})] [IsDiscreteValuationRing (A ⧸ Ideal.span {ϖ})]
 
 include hϖ hm
 
-/-- **Hartogs at a centre.** -/
-theorem centre_hartogs [IsFractionRing Ac Ω] (g : Ω)
-    (hg : ∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * g = r) :
-    g ∈ Ac := by
-  obtain ⟨a, ha⟩ := depthTwo_mem_range hϖ hm g hg
-  rw [← ha]
-  exact a.2
-
-omit [IsNoetherianRing Ac] hϖ in
-/-- If `w ≤ 1` on `A_c`, `w ϖ < 1`, and some element of the maximal ideal has value one, then
+omit [IsNoetherianRing A] hϖ in
+/-- If `w ≤ 1` on `A`, `w ϖ < 1`, and some element of the maximal ideal has value one, then
 `w = 1` off `(ϖ)`. -/
-theorem centre_val_eq_one (hAw : ∀ a : Ac, w a ≤ 1) (hϖw : w ϖ < 1)
-    (hcen : ∃ c ∈ maximalIdeal Ac, w c = 1) {b : Ac} (hb : b ∉ Ideal.span {ϖ}) : w b = 1 := by
+theorem centre_val_eq_one (hAw : ∀ a : A, w (algebraMap A Ω a) ≤ 1)
+    (hϖw : w (algebraMap A Ω ϖ) < 1) (hcen : ∃ c ∈ maximalIdeal A, w (algebraMap A Ω c) = 1)
+    {b : A} (hb : b ∉ Ideal.span {ϖ}) : w (algebraMap A Ω b) = 1 := by
   obtain ⟨c, hc, hc1⟩ := hcen
   by_contra hne
-  have hlt : w b < 1 := lt_of_le_of_ne (hAw b) hne
+  have hlt : w (algebraMap A Ω b) < 1 := lt_of_le_of_ne (hAw b) hne
   have hb0 : Ideal.Quotient.mk (Ideal.span {ϖ}) b ≠ 0 := by
     rwa [Ne, Ideal.Quotient.eq_zero_iff_mem]
-  have hcm : Ideal.Quotient.mk (Ideal.span {ϖ}) c ∈ maximalIdeal (Ac ⧸ Ideal.span {ϖ}) := by
+  have hcm : Ideal.Quotient.mk (Ideal.span {ϖ}) c ∈ maximalIdeal (A ⧸ Ideal.span {ϖ}) := by
     rw [mem_maximalIdeal, mem_nonunits_iff]
     rintro ⟨u, hu⟩
-    obtain ⟨d, hd⟩ := Ideal.Quotient.mk_surjective (↑u⁻¹ : Ac ⧸ Ideal.span {ϖ})
+    obtain ⟨d, hd⟩ := Ideal.Quotient.mk_surjective (↑u⁻¹ : A ⧸ Ideal.span {ϖ})
     have h1 : Ideal.Quotient.mk (Ideal.span {ϖ}) (c * d - 1) = 0 := by
       rw [map_sub, map_mul, hd, ← hu, map_one, Units.mul_inv, sub_self]
     rw [Ideal.Quotient.eq_zero_iff_mem] at h1
-    have h2 : c * d - 1 ∈ maximalIdeal Ac :=
+    have h2 : c * d - 1 ∈ maximalIdeal A :=
       (Ideal.span_singleton_le_iff_mem _).mpr hm h1
-    have h3 : c * d ∈ maximalIdeal Ac := Ideal.mul_mem_right d _ hc
-    have h4 : (1 : Ac) ∈ maximalIdeal Ac := by
+    have h3 : c * d ∈ maximalIdeal A := Ideal.mul_mem_right d _ hc
+    have h4 : (1 : A) ∈ maximalIdeal A := by
       have := Ideal.sub_mem _ h3 h2
       rwa [sub_sub_cancel] at this
-    exact (maximalIdeal.isMaximal Ac).ne_top ((Ideal.eq_top_iff_one _).mpr h4)
+    exact (maximalIdeal.isMaximal A).ne_top ((Ideal.eq_top_iff_one _).mpr h4)
   obtain ⟨N, d, hd⟩ := dvd_pow_of_mem_maximalIdeal hb0 hcm
   obtain ⟨d', rfl⟩ := Ideal.Quotient.mk_surjective d
   have hmem : c ^ N - b * d' ∈ Ideal.span {ϖ} := by
     rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_pow, map_mul, hd, sub_self]
   obtain ⟨e, he⟩ := Ideal.mem_span_singleton'.mp hmem
-  have hcN : w ((c : Ω) ^ N) = 1 := by rw [map_pow, hc1, one_pow]
-  have heq : ((c : Ω) ^ N) = (b : Ω) * d' + e * ϖ := by
-    have := congrArg (fun x : Ac => (x : Ω)) he
-    push_cast at this
+  have hcN : w (algebraMap A Ω c ^ N) = 1 := by rw [map_pow, hc1, one_pow]
+  have heq : algebraMap A Ω c ^ N =
+      algebraMap A Ω b * algebraMap A Ω d' + algebraMap A Ω e * algebraMap A Ω ϖ := by
+    have := congrArg (algebraMap A Ω) he
+    simp only [map_mul, map_sub, map_pow] at this
     linear_combination -this
-  have h1 : w ((b : Ω) * d') < 1 := by
+  have h1 : w (algebraMap A Ω b * algebraMap A Ω d') < 1 := by
     rw [map_mul]
     exact lt_of_le_of_lt (mul_le_of_le_one_right' (hAw d')) hlt
-  have h2 : w ((e : Ω) * ϖ) < 1 := by
+  have h2 : w (algebraMap A Ω e * algebraMap A Ω ϖ) < 1 := by
     rw [map_mul]
     exact lt_of_le_of_lt (mul_le_of_le_one_left' (hAw e)) hϖw
   have h3 := Valuation.map_add_lt w h1 h2
@@ -120,78 +114,150 @@ theorem centre_val_eq_one (hAw : ∀ a : Ac, w a ≤ 1) (hϖw : w ϖ < 1)
 
 /-- **Vertical primes.** Every height-one prime through `ϖ` is `(ϖ)`, and every `g` with
 `w g ≤ 1` is a fraction with denominator outside `(ϖ)`. -/
-theorem centre_vertical [IsFractionRing Ac Ω] (hAw : ∀ a : Ac, w a ≤ 1) (hϖw : w ϖ < 1)
-    (hcen : ∃ c ∈ maximalIdeal Ac, w c = 1) (𝔮 : Ideal Ac) (hq : 𝔮.IsPrime) (h1 : 𝔮.height = 1)
-    (hϖq : ϖ ∈ 𝔮) (g : Ω) (hg : w g ≤ 1) : ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * g = r := by
+theorem centre_vertical [IsFractionRing A Ω] (hAw : ∀ a : A, w (algebraMap A Ω a) ≤ 1)
+    (hϖw : w (algebraMap A Ω ϖ) < 1) (hcen : ∃ c ∈ maximalIdeal A, w (algebraMap A Ω c) = 1)
+    (𝔮 : Ideal A) (hq : 𝔮.IsPrime) (h1 : 𝔮.height = 1) (hϖq : ϖ ∈ 𝔮) (g : Ω) (hg : w g ≤ 1) :
+    ∃ r s : A, s ∉ 𝔮 ∧ algebraMap A Ω s * g = algebraMap A Ω r := by
   have h𝔮 := depthTwo_height_one_cases hϖ hm 𝔮 h1 hϖq
   subst h𝔮
   have hP := depthTwo_isPrime hϖ hm
   have := depthTwo_isDomain hϖ hm
-  have hϖ0 : (ϖ : Ω) ≠ 0 := by
-    intro h
-    exact nonZeroDivisors.ne_zero hϖ (Subtype.ext h)
+  have hϖ0 : algebraMap A Ω ϖ ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hϖ
   by_cases hg0 : g = 0
   · refine ⟨0, 1, fun h => hP.ne_top ((Ideal.eq_top_iff_one _).mpr h), ?_⟩
-    rw [hg0, mul_zero]
-    rfl
-  obtain ⟨a, b, hb, hab⟩ := IsFractionRing.div_surjective (A := Ac) g
+    rw [hg0, mul_zero, map_zero]
+  obtain ⟨a, b, hb, hab⟩ := IsFractionRing.div_surjective (A := A) g
   have hb0 : b ≠ 0 := nonZeroDivisors.ne_zero hb
-  have hbΩ : (b : Ω) ≠ 0 := fun h => hb0 (Subtype.ext h)
+  have hbΩ : algebraMap A Ω b ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hb
   have ha0 : a ≠ 0 := by
     rintro rfl
     apply hg0
-    rw [← hab]
-    simp
+    rw [← hab, map_zero, zero_div]
   obtain ⟨n, a', ha', rfl⟩ := depthTwo_exists_pow_mul hϖ hm ha0
   obtain ⟨k, b', hb', rfl⟩ := depthTwo_exists_pow_mul hϖ hm hb0
-  have hgb : g * ((ϖ ^ k * b' : Ac) : Ω) = ((ϖ ^ n * a' : Ac) : Ω) := by
+  have hgb : g * algebraMap A Ω (ϖ ^ k * b') = algebraMap A Ω (ϖ ^ n * a') := by
     rw [← hab]
     exact div_mul_cancel₀ _ hbΩ
-  push_cast at hgb
-  have hwa : w (a' : Ω) = 1 := centre_val_eq_one w hm hAw hϖw hcen ha'
+  simp only [map_mul, map_pow] at hgb
+  have hwa : w (algebraMap A Ω a') = 1 := centre_val_eq_one w hm hAw hϖw hcen ha'
   rcases le_or_gt k n with hkn | hnk
   · obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le hkn
     refine ⟨ϖ ^ j * a', b', hb', ?_⟩
-    have hk0 : (ϖ : Ω) ^ k ≠ 0 := pow_ne_zero _ hϖ0
+    have hk0 : algebraMap A Ω ϖ ^ k ≠ 0 := pow_ne_zero _ hϖ0
     apply mul_left_cancel₀ hk0
-    push_cast
+    rw [map_mul, map_pow]
     rw [pow_add] at hgb
     linear_combination hgb
   · obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_lt hnk
     exfalso
-    have hn0 : (ϖ : Ω) ^ n ≠ 0 := pow_ne_zero _ hϖ0
-    have hrel : g * (ϖ : Ω) ^ (j + 1) * b' = a' := by
+    have hn0 : algebraMap A Ω ϖ ^ n ≠ 0 := pow_ne_zero _ hϖ0
+    have hrel : g * algebraMap A Ω ϖ ^ (j + 1) * algebraMap A Ω b' = algebraMap A Ω a' := by
       apply mul_left_cancel₀ hn0
       rw [pow_add] at hgb
       linear_combination hgb
-    have hb'1 : w (b' : Ω) ≤ 1 := hAw b'
-    have hlt : w (g * (ϖ : Ω) ^ (j + 1) * b') < 1 := by
+    have hlt : w (g * algebraMap A Ω ϖ ^ (j + 1) * algebraMap A Ω b') < 1 := by
       rw [map_mul, map_mul, map_pow]
-      refine lt_of_le_of_lt (mul_le_of_le_one_right' hb'1) ?_
+      refine lt_of_le_of_lt (mul_le_of_le_one_right' (hAw b')) ?_
       refine lt_of_le_of_lt (mul_le_of_le_one_left' hg) ?_
       exact pow_lt_one₀ zero_le hϖw (Nat.succ_ne_zero j)
     rw [hrel, hwa] at hlt
     exact lt_irrefl _ hlt
 
-/-- **The four clauses of `hcentre` at one place.** -/
-theorem centre_spec [IsFractionRing Ac Ω] (O : ValuationSubring (ResidueField w.valuationSubring))
-    (hdom : ∀ a ∈ Ac, a ∈ liftValuationSubring w O) (hϖw : w ϖ < 1)
-    (hcen : ∃ c ∈ maximalIdeal Ac, w c = 1) {f : Ω}
-    (hhor : ∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → ϖ ∉ 𝔮 →
-      ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * f = r) :
-    (∀ a ∈ Ac, a ∈ liftValuationSubring w O) ∧
+end Local
+
+section Transport
+
+variable {Ω : Type*} [Field Ω] {A : Type*} [CommRing A] [Algebra A Ω]
+  (hinj : Function.Injective (algebraMap A Ω))
+
+/-- `A` is isomorphic to its image in `Ω`. -/
+def rangeEquiv : A ≃+* (algebraMap A Ω).range :=
+  RingEquiv.ofBijective (algebraMap A Ω).rangeRestrict
+    ⟨fun _ _ h => hinj (congrArg Subtype.val h), (algebraMap A Ω).rangeRestrict_surjective⟩
+
+theorem coe_rangeEquiv (a : A) : ((rangeEquiv hinj a : (algebraMap A Ω).range) : Ω) =
+    algebraMap A Ω a :=
+  rfl
+
+theorem algebraMap_rangeEquiv_symm (s : (algebraMap A Ω).range) :
+    algebraMap A Ω ((rangeEquiv hinj).symm s) = s := by
+  rw [← coe_rangeEquiv hinj, RingEquiv.apply_symm_apply]
+
+include hinj in
+/-- Height-one conditions on the image transfer to `A`. -/
+theorem forall_height_one_of_range {g : Ω}
+    (h : ∀ 𝔮 : Ideal (algebraMap A Ω).range, 𝔮.IsPrime → 𝔮.height = 1 →
+      ∃ r s : (algebraMap A Ω).range, s ∉ 𝔮 ∧ (s : Ω) * g = r) :
+    ∀ 𝔮 : Ideal A, 𝔮.IsPrime → 𝔮.height = 1 →
+      ∃ r s : A, s ∉ 𝔮 ∧ algebraMap A Ω s * g = algebraMap A Ω r := by
+  intro 𝔮 hq h1
+  set e := rangeEquiv hinj
+  have hP : (𝔮.comap e.symm).IsPrime := Ideal.comap_isPrime _ _
+  have hh : (𝔮.comap e.symm).height = 1 := by
+    rw [Ideal.comap_symm, RingEquiv.height_map, h1]
+  obtain ⟨r, s, hs, hrs⟩ := h _ hP hh
+  refine ⟨e.symm r, e.symm s, hs, ?_⟩
+  rw [algebraMap_rangeEquiv_symm, algebraMap_rangeEquiv_symm, hrs]
+
+/-- Height-one conditions on `A` transfer to the image. -/
+theorem forall_height_one_range_of (Φ : Ideal A → Prop) {g : Ω}
+    (h : ∀ 𝔮 : Ideal A, 𝔮.IsPrime → 𝔮.height = 1 → Φ 𝔮 →
+      ∃ r s : A, s ∉ 𝔮 ∧ algebraMap A Ω s * g = algebraMap A Ω r) :
+    ∀ 𝔮 : Ideal (algebraMap A Ω).range, 𝔮.IsPrime → 𝔮.height = 1 →
+      Φ (𝔮.comap (rangeEquiv hinj)) →
+      ∃ r s : (algebraMap A Ω).range, s ∉ 𝔮 ∧ (s : Ω) * g = r := by
+  intro 𝔮 hq h1 hΦ
+  set e := rangeEquiv hinj
+  have hP : (𝔮.comap e).IsPrime := Ideal.comap_isPrime _ _
+  have hh : (𝔮.comap e).height = 1 := by
+    rw [← Ideal.map_symm, RingEquiv.height_map, h1]
+  obtain ⟨r, s, hs, hrs⟩ := h _ hP hh hΦ
+  exact ⟨e r, e s, hs, hrs⟩
+
+end Transport
+
+section Spec
+
+variable {Ω : Type*} [Field Ω] {Γ₀ : Type*} [LinearOrderedCommGroupWithZero Γ₀]
+  (w : Valuation Ω Γ₀)
+variable {A : Type*} [CommRing A] [IsLocalRing A] [IsNoetherianRing A] [Algebra A Ω]
+  [IsFractionRing A Ω] {ϖ : A} (hϖ : ϖ ∈ nonZeroDivisors A) (hm : ϖ ∈ maximalIdeal A)
+  [IsDomain (A ⧸ Ideal.span {ϖ})] [IsDiscreteValuationRing (A ⧸ Ideal.span {ϖ})]
+
+include hϖ hm
+
+/-- **The four clauses of `hcentre` at one place**, for the image `A_c` of a local ring `A` with
+fraction field `Ω` and `ϖ` as in the depth-two lemmas, dominated by `Õ`, with `w ϖ < 1`, `w` not
+centred at the closed point, and `f` regular at the height-one primes off `ϖ`. -/
+theorem centre_spec (O : ValuationSubring (ResidueField w.valuationSubring))
+    (hdom : ∀ a : A, algebraMap A Ω a ∈ liftValuationSubring w O)
+    (hϖw : w (algebraMap A Ω ϖ) < 1) (hcen : ∃ c ∈ maximalIdeal A, w (algebraMap A Ω c) = 1)
+    {f : Ω} (hhor : ∀ 𝔮 : Ideal A, 𝔮.IsPrime → 𝔮.height = 1 → ϖ ∉ 𝔮 →
+      ∃ r s : A, s ∉ 𝔮 ∧ algebraMap A Ω s * f = algebraMap A Ω r) :
+    ∃ (Ac : Subring Ω) (ϖ' : Ac), (∀ a ∈ Ac, a ∈ liftValuationSubring w O) ∧
       (∀ g : Ω, (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 →
         ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * g = r) → g ∈ Ac) ∧
-      (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → ϖ ∈ 𝔮 → ∀ g : Ω, w g ≤ 1 →
+      (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → ϖ' ∈ 𝔮 → ∀ g : Ω, w g ≤ 1 →
         ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * g = r) ∧
-      (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → ϖ ∉ 𝔮 →
+      (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → ϖ' ∉ 𝔮 →
         ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * f = r) := by
-  have hAw : ∀ a : Ac, w a ≤ 1 := fun a =>
-    (w.mem_valuationSubring_iff _).mp (liftValuationSubring_le O (hdom a a.2))
-  exact ⟨hdom, centre_hartogs hϖ hm, fun 𝔮 hq h1 hϖq g hg =>
-    centre_vertical w hϖ hm hAw hϖw hcen 𝔮 hq h1 hϖq g hg, hhor⟩
+  have hinj := IsFractionRing.injective A Ω
+  have hAw : ∀ a : A, w (algebraMap A Ω a) ≤ 1 := fun a =>
+    (w.mem_valuationSubring_iff _).mp (liftValuationSubring_le O (hdom a))
+  refine ⟨(algebraMap A Ω).range, rangeEquiv hinj ϖ, ?_, ?_, ?_, ?_⟩
+  · rintro _ ⟨a, rfl⟩
+    exact hdom a
+  · intro g hg
+    obtain ⟨a, ha⟩ := depthTwo_mem_range hϖ hm g (forall_height_one_of_range hinj hg)
+    exact ⟨a, ha⟩
+  · intro 𝔮 hq h1 hϖq g hg
+    exact forall_height_one_range_of hinj (fun 𝔮' => ϖ ∈ 𝔮')
+      (fun 𝔮' hq' h1' hϖ' => centre_vertical w hϖ hm hAw hϖw hcen 𝔮' hq' h1' hϖ' g hg)
+      𝔮 hq h1 hϖq
+  · intro 𝔮 hq h1 hϖq
+    exact forall_height_one_range_of hinj (fun 𝔮' => ϖ ∉ 𝔮') hhor 𝔮 hq h1 hϖq
 
-end Local
+end Spec
 
 section Top
 
@@ -574,28 +640,177 @@ theorem isDiscreteValuationRing_of_standardSmooth [PerfectField k]
 
 end CurveDVR
 
+section Uniqueness
+
+open AlgebraicGeometry CategoryTheory
+
+universe u
+
+/-- **Uniqueness of centres (separatedness).** Let `g : X → Y` be separated and `R` a valuation
+ring with fraction field `K`. If two points `c₁, c₂` of `X` carry local homomorphisms
+`𝒪_{X,cᵢ} → R` inducing the same `Spec K → X` and the same `Spec R → Y`, then `c₁ = c₂`. -/
+theorem centre_unique {X Y : Scheme.{u}} (g : X ⟶ Y) [IsSeparated g] {R K : Type u}
+    [CommRing R] [IsDomain R] [ValuationRing R] [Field K] [Algebra R K] [IsFractionRing R K]
+    {c₁ c₂ : X} (φ₁ : X.presheaf.stalk c₁ ⟶ CommRingCat.of R)
+    (φ₂ : X.presheaf.stalk c₂ ⟶ CommRingCat.of R) [IsLocalHom φ₁.hom] [IsLocalHom φ₂.hom]
+    (h₁ : Spec.map (CommRingCat.ofHom (algebraMap R K)) ≫ Spec.map φ₁ ≫ X.fromSpecStalk c₁ =
+      Spec.map (CommRingCat.ofHom (algebraMap R K)) ≫ Spec.map φ₂ ≫ X.fromSpecStalk c₂)
+    (h₂ : Spec.map φ₁ ≫ X.fromSpecStalk c₁ ≫ g = Spec.map φ₂ ≫ X.fromSpecStalk c₂ ≫ g) :
+    c₁ = c₂ := by
+  let l₁ := Spec.map φ₁ ≫ X.fromSpecStalk c₁
+  let l₂ := Spec.map φ₂ ≫ X.fromSpecStalk c₂
+  let S : ValuativeCommSq g := ⟨R, K, Spec.map (CommRingCat.ofHom (algebraMap R K)) ≫ l₁,
+    l₁ ≫ g, ⟨by simp only [Category.assoc]⟩⟩
+  have hsub := IsSeparated.valuativeCriterion g S
+  let L₁ : S.commSq.LiftStruct := ⟨l₁, rfl, rfl⟩
+  let L₂ : S.commSq.LiftStruct := ⟨l₂, h₁.symm, by
+    change (Spec.map φ₂ ≫ X.fromSpecStalk c₂) ≫ g = (Spec.map φ₁ ≫ X.fromSpecStalk c₁) ≫ g
+    simp only [Category.assoc]
+    exact h₂.symm⟩
+  have hl : l₁ = l₂ := congrArg CommSq.LiftStruct.l (Subsingleton.elim L₁ L₂)
+  have e₁ : l₁ (IsLocalRing.closedPoint (CommRingCat.of R)) = c₁ := by
+    change (X.fromSpecStalk c₁) ((Spec.map φ₁) (IsLocalRing.closedPoint (CommRingCat.of R))) = _
+    rw [Spec_closedPoint, Scheme.fromSpecStalk_closedPoint]
+  have e₂ : l₂ (IsLocalRing.closedPoint (CommRingCat.of R)) = c₂ := by
+    change (X.fromSpecStalk c₂) ((Spec.map φ₂) (IsLocalRing.closedPoint (CommRingCat.of R))) = _
+    rw [Spec_closedPoint, Scheme.fromSpecStalk_closedPoint]
+  rw [← e₁, ← e₂, hl]
+
+/-- **The stalk map at a centre is the generic germ.** If `ψ : 𝒪_{X,c} → Ω` induces the same
+`Spec Ω → X` as `τ : K(X) → Ω` at the generic point, then `ψ` is the specialization map
+`𝒪_{X,c} → K(X)` followed by `τ`. -/
+theorem stalk_hom_eq_of_spec {X : Scheme.{u}} [IrreducibleSpace X] (c : X) {Ω : CommRingCat.{u}}
+    (ψ : X.presheaf.stalk c ⟶ Ω) (τ : X.functionField ⟶ Ω)
+    (h : Spec.map ψ ≫ X.fromSpecStalk c = Spec.map τ ≫ X.fromSpecStalk (genericPoint X)) :
+    ψ = X.presheaf.stalkSpecializes (genericPoint_specializes c) ≫ τ := by
+  apply Spec.map_injective
+  rw [← cancel_mono (X.fromSpecStalk c), h, Spec.map_comp, Category.assoc,
+    Scheme.SpecMap_stalkSpecializes_fromSpecStalk]
+
+/-- **Centres from properness, ring form.** Let `g : X → Y` be proper with `X` irreducible,
+`τ : K(X) → Ω` a map to a field, `V` a valuation ring of `Ω`, and `Spec V → Y` extending the
+generic point. Then there is a point `c` and a local homomorphism `φ : 𝒪_{X,c} → V` such that
+`τ` of the generic germ of every `b ∈ 𝒪_{X,c}` is `φ b ∈ V`. -/
+theorem exists_centre_germ {X Y : Scheme.{u}} [IrreducibleSpace X] (g : X ⟶ Y) [IsProper g]
+    {Ω : Type u} [Field Ω] (τ : X.functionField ⟶ CommRingCat.of Ω) (V : ValuationSubring Ω)
+    (i₂ : Spec (CommRingCat.of V) ⟶ Y)
+    (hsq : (Spec.map τ ≫ X.fromSpecStalk (genericPoint X)) ≫ g =
+      Spec.map (CommRingCat.ofHom (algebraMap V Ω)) ≫ i₂) :
+    ∃ (c : X) (φ : X.presheaf.stalk c ⟶ CommRingCat.of V), IsLocalHom φ.hom ∧
+      Spec.map φ ≫ X.fromSpecStalk c ≫ g = i₂ ∧
+      ∀ b, τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b) =
+        algebraMap V Ω (φ.hom b) := by
+  obtain ⟨c, φ, hφ, h₂, h₁⟩ := exists_centre g (Spec.map τ ≫ X.fromSpecStalk (genericPoint X))
+    i₂ hsq
+  refine ⟨c, φ, hφ, h₂, fun b => ?_⟩
+  have key := stalk_hom_eq_of_spec c (φ ≫ CommRingCat.ofHom (algebraMap V Ω)) τ (by
+    rw [Spec.map_comp, Category.assoc]
+    exact h₁)
+  have := congrArg (fun f => f.hom b) key
+  exact this.symm
+
+/-- Two morphisms `Spec V → Spec T` that agree on `Spec Ω`, for an injective `V → Ω`, agree. -/
+theorem spec_ext_of_injective {V Ω T : CommRingCat.{u}} (a : V ⟶ Ω)
+    (ha : Function.Injective a.hom) (l₁ l₂ : Spec V ⟶ Spec T)
+    (h : Spec.map a ≫ l₁ = Spec.map a ≫ l₂) : l₁ = l₂ := by
+  rw [← Spec.map_preimage l₁, ← Spec.map_preimage l₂] at h ⊢
+  rw [← Spec.map_comp, ← Spec.map_comp] at h
+  have h' := Spec.map_injective h
+  congr 1
+  ext x
+  apply ha
+  have := congrArg (fun f => f.hom x) h'
+  simpa using this
+
+/-- Units of `𝒪_w` have value one. -/
+theorem val_eq_one_of_isUnit {Ω : Type*} [Field Ω] {Γ₀ : Type*}
+    [LinearOrderedCommGroupWithZero Γ₀] (w : Valuation Ω Γ₀) {x : w.valuationSubring}
+    (hx : IsUnit x) : w (x : Ω) = 1 := by
+  obtain ⟨u, rfl⟩ := hx
+  have h := congrArg (fun y : w.valuationSubring => w (y : Ω)) u.mul_inv
+  simp only [MulMemClass.coe_mul, OneMemClass.coe_one, map_mul, map_one] at h
+  have h1 : w ((u : w.valuationSubring) : Ω) ≤ 1 := (w.mem_valuationSubring_iff _).1 (u : w.valuationSubring).2
+  have h2 : w (((u⁻¹ : _ˣ) : w.valuationSubring) : Ω) ≤ 1 :=
+    (w.mem_valuationSubring_iff _).1 (u⁻¹ : _ˣ).1.2
+  by_contra hne
+  have hlt := lt_of_le_of_ne h1 hne
+  have := lt_of_le_of_lt (mul_le_of_le_one_right' h2) hlt
+  rw [h] at this
+  exact lt_irrefl _ this
+
+/-- **The valuation is not centred at another point (separatedness).** Let `g : X → Spec T` be
+separated, `τ : K(X) → Ω`, and `w` a valuation of `Ω` centred at a point `η` (a local
+`𝒪_{X,η} → 𝒪_w` compatible with `τ`). If `w ≤ 1` on `𝒪_{X,c}` for a point `c ≠ η`, then some
+element of the maximal ideal of `𝒪_{X,c}` has value one. -/
+theorem exists_val_eq_one_of_centre {X : Scheme.{u}} [IrreducibleSpace X] {T : CommRingCat.{u}}
+    (g : X ⟶ Spec T) [IsSeparated g] {Ω : Type u} [Field Ω]
+    (τ : X.functionField ⟶ CommRingCat.of Ω) {Γ₀ : Type*} [LinearOrderedCommGroupWithZero Γ₀]
+    (w : Valuation Ω Γ₀) (c η : X)
+    (hAw : ∀ b, w (τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b)) ≤ 1)
+    (φ₀ : X.presheaf.stalk η ⟶ CommRingCat.of w.valuationSubring) [IsLocalHom φ₀.hom]
+    (hφ₀ : ∀ b, τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes η)).hom b) =
+      algebraMap w.valuationSubring Ω (φ₀.hom b))
+    (hne : c ≠ η) :
+    ∃ b ∈ maximalIdeal (X.presheaf.stalk c),
+      w (τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b)) = 1 := by
+  by_contra hcon
+  push Not at hcon
+  let ψ := (X.presheaf.stalkSpecializes (genericPoint_specializes c) ≫ τ).hom
+  let φc : X.presheaf.stalk c →+* w.valuationSubring :=
+    ψ.codRestrict w.valuationSubring fun b => (w.mem_valuationSubring_iff _).2 (hAw b)
+  have hloc : IsLocalHom (CommRingCat.ofHom φc).hom := ⟨fun b hb => by
+    by_contra hnu
+    have hb1 := val_eq_one_of_isUnit w hb
+    exact hcon b ((mem_maximalIdeal _).2 hnu) hb1⟩
+  let a := CommRingCat.ofHom (algebraMap w.valuationSubring Ω)
+  have e1 : CommRingCat.ofHom φc ≫ a =
+      X.presheaf.stalkSpecializes (genericPoint_specializes c) ≫ τ := by
+    ext b
+    rfl
+  have e2 : φ₀ ≫ a = X.presheaf.stalkSpecializes (genericPoint_specializes η) ≫ τ := by
+    ext b
+    exact (hφ₀ b).symm
+  have h₁ : Spec.map a ≫ Spec.map (CommRingCat.ofHom φc) ≫ X.fromSpecStalk c =
+      Spec.map a ≫ Spec.map φ₀ ≫ X.fromSpecStalk η := by
+    rw [← Category.assoc, ← Spec.map_comp, e1, ← Category.assoc, ← Spec.map_comp, e2,
+      Spec.map_comp, Category.assoc, Scheme.SpecMap_stalkSpecializes_fromSpecStalk,
+      Spec.map_comp, Category.assoc, Scheme.SpecMap_stalkSpecializes_fromSpecStalk]
+  have h₂ : Spec.map (CommRingCat.ofHom φc) ≫ X.fromSpecStalk c ≫ g =
+      Spec.map φ₀ ≫ X.fromSpecStalk η ≫ g := by
+    refine spec_ext_of_injective a Subtype.val_injective _ _ ?_
+    have := h₁ =≫ g
+    simp only [Category.assoc] at this
+    exact this
+  exact hne (centre_unique g (K := Ω) (CommRingCat.ofHom φc) φ₀ h₁ h₂)
+
+end Uniqueness
+
 section Assembly
+
+universe v
 
 variable {Ω : Type*} [Field Ω] {Γ₀ : Type*} [LinearOrderedCommGroupWithZero Γ₀]
   {w : Valuation Ω Γ₀}
 
 /-- **`hcentre`.** Let `w` be discrete with uniformizer `ϖ_w`. Suppose every constant place
-`O ≠ ē, ⊤` of `κ_w` has a centre: a local Noetherian subring `A_c` of `Ω` with fraction field `Ω`
-and an element `ϖ` of its maximal ideal, a nonzerodivisor with `A_c / ϖ` a discrete valuation
-ring, such that `A_c ⊆ Õ`, `w ϖ < 1`, `w` is not centred at the closed point, and `f` is regular
-at the height-one primes of `A_c` off `ϖ`. Then the hypothesis `hcentre` of
+`O ≠ ē, ⊤` of `κ_w` has a centre: a local Noetherian ring `A` with fraction field `Ω` and an
+element `ϖ` of its maximal ideal, a nonzerodivisor with `A / ϖ` a discrete valuation ring, such
+that `A ⊆ Õ`, `w ϖ < 1`, `w` is not centred at the closed point, and `f` is regular at the
+height-one primes of `A` off `ϖ`. Then the hypothesis `hcentre` of
 `SpecialFibreFunctionField.reduce_mem_polePart` holds. -/
 theorem hcentre_of_centres {k : Type*} [Field k] [Algebra k (ResidueField w.valuationSubring)]
     (ē : ValuationSubring (ResidueField w.valuationSubring)) {ϖw : Ω} (hϖ0 : ϖw ≠ 0)
     (hϖw : w ϖw < 1) (hdisc : ∀ x : Ω, x ≠ 0 → ∃ m : ℤ, w x = w ϖw ^ m) {f : Ω}
     (hc : ∀ O : ValuationSubring (ResidueField w.valuationSubring), IsConstPlace k O →
-      O ≠ ē → O ≠ ⊤ → ∃ (Ac : Subring Ω) (_ : IsLocalRing Ac) (_ : IsNoetherianRing Ac)
-        (_ : IsFractionRing Ac Ω) (ϖ : Ac) (_ : IsDomain (Ac ⧸ Ideal.span {ϖ})),
-        IsDiscreteValuationRing (Ac ⧸ Ideal.span {ϖ}) ∧ ϖ ∈ nonZeroDivisors Ac ∧
-        ϖ ∈ maximalIdeal Ac ∧ w ϖ < 1 ∧ (∃ c ∈ maximalIdeal Ac, w c = 1) ∧
-        (∀ a ∈ Ac, a ∈ liftValuationSubring w O) ∧
-        (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → ϖ ∉ 𝔮 →
-          ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * f = r)) :
+      O ≠ ē → O ≠ ⊤ → ∃ (A : Type v) (_ : CommRing A) (_ : IsLocalRing A)
+        (_ : IsNoetherianRing A) (_ : Algebra A Ω) (_ : IsFractionRing A Ω) (ϖ : A)
+        (_ : IsDomain (A ⧸ Ideal.span {ϖ})),
+        IsDiscreteValuationRing (A ⧸ Ideal.span {ϖ}) ∧ ϖ ∈ nonZeroDivisors A ∧
+        ϖ ∈ maximalIdeal A ∧ w (algebraMap A Ω ϖ) < 1 ∧
+        (∃ c ∈ maximalIdeal A, w (algebraMap A Ω c) = 1) ∧
+        (∀ a : A, algebraMap A Ω a ∈ liftValuationSubring w O) ∧
+        (∀ 𝔮 : Ideal A, 𝔮.IsPrime → 𝔮.height = 1 → ϖ ∉ 𝔮 →
+          ∃ r s : A, s ∉ 𝔮 ∧ algebraMap A Ω s * f = algebraMap A Ω r)) :
     ∀ O : ValuationSubring (ResidueField w.valuationSubring), IsConstPlace k O →
       O ≠ ē → ∃ (Ac : Subring Ω) (ϖ : Ac), (∀ a ∈ Ac, a ∈ liftValuationSubring w O) ∧
         (∀ g : Ω, (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 →
@@ -608,10 +823,109 @@ theorem hcentre_of_centres {k : Type*} [Field k] [Algebra k (ResidueField w.valu
   by_cases htop : O = ⊤
   · subst htop
     exact centre_spec_top w hϖ0 hϖw hdisc f
-  obtain ⟨Ac, _, _, _, ϖ, _, _, hϖ, hm, hϖw', hcen, hdom, hhor⟩ := hc O hO hne htop
-  exact ⟨Ac, ϖ, centre_spec w hϖ hm O hdom hϖw' hcen hhor⟩
+  obtain ⟨A, _, _, _, _, _, ϖ, _, _, hϖ, hm, hϖw', hcen, hdom, hhor⟩ := hc O hO hne htop
+  exact centre_spec w hϖ hm O hdom hϖw' hcen hhor
 
 end Assembly
+
+section Model
+
+open AlgebraicGeometry CategoryTheory
+
+universe u
+
+/-- For an integral scheme and a field isomorphism `τ : K(X) ≅ Ω`, every stalk has fraction field
+`Ω` (through the generic germ followed by `τ`). -/
+theorem isFractionRing_stalk {X : Scheme.{u}} [IsIntegral X] (c : X) {Ω : Type u} [Field Ω]
+    (τ : X.functionField ⟶ CommRingCat.of Ω) (hτ : Function.Bijective τ.hom) :
+    letI := (X.presheaf.stalkSpecializes (genericPoint_specializes c) ≫ τ).hom.toAlgebra
+    IsFractionRing (X.presheaf.stalk c) Ω := by
+  let _ := (X.presheaf.stalkSpecializes (genericPoint_specializes c) ≫ τ).hom.toAlgebra
+  let e : X.functionField ≃ₐ[X.presheaf.stalk c] Ω :=
+    { RingEquiv.ofBijective τ.hom hτ with commutes' := fun _ => rfl }
+  exact IsLocalization.isLocalization_of_algEquiv (nonZeroDivisors _) e
+
+/-- **`hcentre` from a proper model.** Let `g : X → Spec T` be proper with `X` integral and locally
+Noetherian, `τ : K(X) ≅ Ω`, and `w` a discrete valuation of `Ω` centred at a point `η` (a local
+surjection `𝒪_{X,η} → 𝒪_w` compatible with `τ`). Let `ρ : T → Ω` be the generic point of `Spec T`, landing in
+`Õ` for every constant place `O`. Suppose that at every centre `c` of a constant place
+`O ≠ ē, ⊤` (a point with a local `𝒪_{X,c} → Õ` compatible with `τ`) there is an element `ϖ` of `𝔪_c` which is a nonzerodivisor with `𝒪_{X,c}/ϖ` a discrete valuation ring and `w ϖ < 1`,
+and `f` regular at the height-one primes of `𝒪_{X,c}` off `ϖ`. Then `hcentre` holds. -/
+theorem hcentre_of_model {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
+    {T : CommRingCat.{u}} (g : X ⟶ Spec T) [IsProper g] {Ω : Type u} [Field Ω]
+    (τ : X.functionField ⟶ CommRingCat.of Ω) (hτ : Function.Bijective τ.hom)
+    {Γ₀ : Type*} [LinearOrderedCommGroupWithZero Γ₀] {w : Valuation Ω Γ₀}
+    {ϖw : Ω} (hϖ0 : ϖw ≠ 0) (hϖw : w ϖw < 1) (hdisc : ∀ x : Ω, x ≠ 0 → ∃ m : ℤ, w x = w ϖw ^ m)
+    {k : Type*} [Field k] [Algebra k (ResidueField w.valuationSubring)]
+    (ē : ValuationSubring (ResidueField w.valuationSubring))
+    (ρ : T ⟶ CommRingCat.of Ω)
+    (hρ : (Spec.map τ ≫ X.fromSpecStalk (genericPoint X)) ≫ g = Spec.map ρ)
+    (hρO : ∀ O : ValuationSubring (ResidueField w.valuationSubring), IsConstPlace k O →
+      ∀ t, ρ.hom t ∈ liftValuationSubring w O)
+    (η : X) (φ₀ : X.presheaf.stalk η ⟶ CommRingCat.of w.valuationSubring) [IsLocalHom φ₀.hom]
+    (hφ₀ : ∀ b, τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes η)).hom b) =
+      algebraMap w.valuationSubring Ω (φ₀.hom b)) (hφ₀s : Function.Surjective φ₀.hom)
+    {f : Ω}
+    (hloc : ∀ O : ValuationSubring (ResidueField w.valuationSubring), IsConstPlace k O →
+      O ≠ ē → O ≠ ⊤ → ∀ (c : X)
+      (φ : X.presheaf.stalk c ⟶ CommRingCat.of (liftValuationSubring w O)), IsLocalHom φ.hom →
+      (∀ b, τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b) =
+        algebraMap (liftValuationSubring w O) Ω (φ.hom b)) →
+      ∃ (ϖ : X.presheaf.stalk c) (_ : IsDomain (X.presheaf.stalk c ⧸ Ideal.span {ϖ})),
+        IsDiscreteValuationRing (X.presheaf.stalk c ⧸ Ideal.span {ϖ}) ∧
+        ϖ ∈ nonZeroDivisors (X.presheaf.stalk c) ∧ ϖ ∈ maximalIdeal (X.presheaf.stalk c) ∧
+        w (τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom ϖ)) < 1 ∧
+        ∀ 𝔮 : Ideal (X.presheaf.stalk c), 𝔮.IsPrime → 𝔮.height = 1 → ϖ ∉ 𝔮 →
+          ∃ r s : X.presheaf.stalk c, s ∉ 𝔮 ∧
+            τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom s) * f =
+            τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom r)) :
+    ∀ O : ValuationSubring (ResidueField w.valuationSubring), IsConstPlace k O →
+      O ≠ ē → ∃ (Ac : Subring Ω) (ϖ : Ac), (∀ a ∈ Ac, a ∈ liftValuationSubring w O) ∧
+        (∀ g : Ω, (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 →
+          ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * g = r) → g ∈ Ac) ∧
+        (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → ϖ ∈ 𝔮 → ∀ g : Ω, w g ≤ 1 →
+          ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * g = r) ∧
+        (∀ 𝔮 : Ideal Ac, 𝔮.IsPrime → 𝔮.height = 1 → ϖ ∉ 𝔮 →
+          ∃ r s : Ac, s ∉ 𝔮 ∧ (s : Ω) * f = r) := by
+  intro O hO hne
+  by_cases htop : O = ⊤
+  · subst htop
+    exact centre_spec_top w hϖ0 hϖw hdisc f
+  let ρO : T →+* liftValuationSubring w O :=
+    ρ.hom.codRestrict (liftValuationSubring w O) (hρO O hO)
+  have hsq : (Spec.map τ ≫ X.fromSpecStalk (genericPoint X)) ≫ g =
+      Spec.map (CommRingCat.ofHom (algebraMap (liftValuationSubring w O) Ω)) ≫
+        Spec.map (CommRingCat.ofHom ρO) := by
+    rw [hρ, ← Spec.map_comp]
+    rfl
+  obtain ⟨c, φ, hφ, -, hgerm⟩ := exists_centre_germ g τ (liftValuationSubring w O)
+    (Spec.map (CommRingCat.ofHom ρO)) hsq
+  obtain ⟨ϖ, _, _, hϖ, hm, hϖw', hhor⟩ := hloc O hO hne htop c φ hφ hgerm
+  have hcη : c ≠ η := by
+    rintro rfl
+    apply htop
+    refine eq_top_iff.2 fun x _ => ?_
+    obtain ⟨y, rfl⟩ := IsLocalRing.residue_surjective x
+    obtain ⟨b, rfl⟩ := hφ₀s y
+    have hmem : algebraMap w.valuationSubring Ω (φ₀.hom b) ∈ liftValuationSubring w O := by
+      rw [← hφ₀, hgerm]
+      exact (φ.hom b).2
+    obtain ⟨_, hres⟩ := hmem
+    exact hres
+  let _ := (X.presheaf.stalkSpecializes (genericPoint_specializes c) ≫ τ).hom.toAlgebra
+  have := isFractionRing_stalk c τ hτ
+  have hdom : ∀ b : X.presheaf.stalk c,
+      algebraMap (X.presheaf.stalk c) Ω b ∈ liftValuationSubring w O := fun b => by
+    change τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b) ∈ _
+    rw [hgerm b]
+    exact (φ.hom b).2
+  have hAw : ∀ b, w (τ.hom ((X.presheaf.stalkSpecializes (genericPoint_specializes c)).hom b))
+      ≤ 1 := fun b =>
+    (w.mem_valuationSubring_iff _).mp (liftValuationSubring_le O (hdom b))
+  have hcen := exists_val_eq_one_of_centre g τ w c η hAw φ₀ hφ₀ hcη
+  exact centre_spec w hϖ hm O hdom hϖw' hcen hhor
+
+end Model
 
 end Centre
 
