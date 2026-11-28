@@ -3,7 +3,7 @@ import ZInQKernel.Contrib.OneProof.GAGAMorphism
 
 /-! # The row `deligneCanonicalModelY3EveryPrint` from Milne's existence argument: bridges and assembly
 
-Proved here (standard axioms, no GLUE):
+Proved here (standard axioms; no comparison statement is used):
 
 * `compare_iso_P`: two witnesses of the printed fine-moduli clause list `Y3Fix.R1fpPropsAbP` are isomorphic over `ℚ`,
   compatibly with their moduli bijections (the argument of `Y3Fix.compare_iso_np`, for the printed level structure).
@@ -191,8 +191,8 @@ theorem agree_of_witness {Y : Over (Spec (CommRingCat.of ℚ))} {Φ : PtEquiv Y}
 
 /-! ## 5. The discharge -/
 
-/-- **The discharge, with no GLUE.** T2a (Voight), T2c′ (Boutot–Carayol 1.5), T2c″ (Boutot–Carayol 1.4), M1 (Milne,
-Theorem 14.8 as applied in §14) and M2 (Milne, §14 PEL case with Definition 12.8) give
+/-- **The discharge, with no comparison statement.** T2a (Voight), T2c′ (Boutot–Carayol 1.5), T2c″ (Boutot–Carayol
+1.4), M1 (a consequence of Milne, Theorem 14.8 as applied in §14) and M2 (Milne, §14 PEL case with Definition 12.8) give
 `Y3Hodge.DeligneCanonicalModelY3EveryPrint`; the analytic representation of homomorphisms enters through the proved
 `ZInQ.Contrib.OneProof.GAGAMorphism.gagaMorphism_proof`. On a witness `(Y, Φ)`, `Ψ` is the moduli map of B2.1
 (`DelignePS.moduli_clauses_of_prints`: onto, the double-coset fibres, the moduli clause in the print's `H₁` form at
