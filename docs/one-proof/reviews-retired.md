@@ -36,3 +36,10 @@ Ch. XI, p. 159 (an abelian scheme over a normal base is projective, attributed t
 Lean the form the construction uses, with the normality of the moduli curve from egaIV1757SmoothNormal (EGA IV (17.5.7),
 #226). The reading of the old row was of the old statement; those of the new rows are sections 10 and 11 of
 docs/research/y3-adversarial-readings.md.
+
+Later (y3-colmez-1127, #247): the row of colmez1992DeRhamAbVar moved here. The field was replaced by
+milneThm71Projective (Milne, Abelian varieties (1986), Thm 7.1: every abelian variety is projective) and
+colmez1992DeRhamAbVarModel (Colmez 1992, Thm 5.2, on a proper model), from which
+ZInQ.Contrib.ColmezProperModel.colmez1992DeRhamAbVar_of_model_milne proves it in Lean through the scheme-theoretic
+closure. The readings of the old row were of the old statement; those of the new rows are section 6 of
+docs/research/tate-prints-adversarial-readings.md.

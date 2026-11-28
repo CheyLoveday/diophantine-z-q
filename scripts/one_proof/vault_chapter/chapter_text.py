@@ -602,18 +602,32 @@ It is Theorem 1.0.4 of Pan, whose hypotheses are those of his Conjecture 1.0.1, 
 L. Pan, *The Fontaine–Mazur conjecture in the residually reducible case*, J. Amer. Math. Soc. 35 (2022), 1031–1169, Theorem 1.0.4, read in arXiv:1901.07166v2, the version the manuscript cites: Conjecture 1.0.1, p. 2; Theorem 1.0.4, p. 5; conventions (geometric Frobenius, Hodge–Tate weight $-1$ for the cyclotomic character), pp. 6–7. The journal text and its numbering are unread. Potential semistability in the sense of J.-M. Fontaine, *Représentations $p$-adiques semi-stables*, Astérisque 223 (1994), Exp. III: potential $B_{\rm st}$-admissibility, 5.6.1, p. 166; admissibility by dimension, 1.8.5, pp. 134–135, under the regularity that 5.1.2(ii), p. 155, supplies for $B_{\rm st}$; $B_{\rm st}$ inside $B_{\rm dR}$ as in J.-M. Fontaine, *Le corps des périodes $p$-adiques*, Astérisque 223 (1994), Exp. II, 4.2.4–4.2.5, p. 86. AI-read: a three-lens adversarial reading of page images, 2026-11-26 (docs/research/pb-adversarial-readings.md).
 """,
     ),
-    'colmez1992DeRhamAbVar': dict(
-        group='p-adic-hodge', slug='colmez-p-adic-periods',
-        title="Colmez's p-adic periods of an abelian variety",
-        anchor='Colmez Theorem 5.2',
+    'milneThm71Projective': dict(
+        group='abelian-varieties', slug='abelian-varieties-are-projective',
+        title="Every abelian variety is projective",
+        anchor='Milne 1986 Thm 7.1',
         statement=r"""
-The *period statement* is the following assertion. Let $F$ be a finite extension of $\mathbb Q_p$, $\overline F$ an algebraic closure of $F$, $G_F=\operatorname{Gal}(\overline F/F)$, $A$ an abelian variety over $F$, $T_pA=\varprojlim_nA(\overline F)[p^n]$ its Tate module and $V_pA=\mathbb Q_p\otimes_{\mathbb Z_p}T_pA$, on which $G_F$ acts through its action on the points of $A$, and let $G_F$ act on $B_{\rm dR}$ through the restriction map $G_F\to G_{\mathbb Q_p}$ along an embedding of $\overline{\mathbb Q}_p$ in $\overline F$. Then there are a set $H$ and, for each $\omega\in H$, a $\mathbb Q_p$-linear map $P_\omega:V_pA\to B_{\rm dR}$ with the following properties: every value $P_\omega(u)$ lies in $B_{\rm dR}^+$; $P_\omega(\sigma u)=\sigma\bigl(P_\omega(u)\bigr)$ for every $\sigma\in G_F$ and $u\in V_pA$; and if $x\in B_{\rm dR}\otimes_{\mathbb Q_p}V_pA$ is sent to $0$ by the $B_{\rm dR}$-linear extension $b\otimes u\mapsto b\,P_\omega(u)$ of every $P_\omega$, then $x=0$.
+For every field $K$ and every abelian variety $A$ over $K$ there are $N$ and a closed immersion $A\to\mathbb P^N_K$ over $K$.
 """,
         caveat=r"""
-It is Théorème 5.2 (i)–(ii) of Colmez with $H$ the de Rham cohomology $H^1_{\rm dR}(A/F)$ and $P_\omega(u)=\int_u\omega$, the $p$-adic period of $\omega$ along $u$, extended $\mathbb Q_p$-linearly from $T_pA$ to $V_pA$. Of the printed theorem the statement keeps three clauses: the periods lie in $B_{\rm dR}^+$, they commute with the action of $G_F$, and the pairing is non-degenerate on the side of $T_pA$ once the scalars are extended to $B_{\rm dR}$. The extension to $V_pA$ uses the linearity in $u$, which the readings take from "bilinéaire" and from the proof on p. 640. The statement drops the identification of $H$ with de Rham cohomology, the linearity in $\omega$, the compatibility with the filtrations, part (iii) and the functoriality. Colmez works with a proper model $\mathcal X$ of $A$ over the integers $\mathcal O_F$ of $F$, and the periods do not depend on it. He builds $T_pA$ from $\mathcal X(\mathcal O_{\mathbb C_p})$, which he identifies with the points of $A$ over $\mathbb C_p$; for every proper model this identification, compatible with the action of $G_F$, is proved here, and so is the identification of the Tate module built from $\mathcal X(\mathcal O_{\mathbb C_p})$ with the one built from the points of $A$ over $\mathbb C_p$. On $p$-power torsion these points are the points over $\overline F$, since $A[p^n]$ is finite over $F$, and this identification, compatible with the action of $G_F$, is also proved here. The model step therefore reduces to the existence of a proper model of $A$ over $\mathcal O_F$, which is proved neither here nor in Mathlib.
+It is Milne's Theorem 7.1 in his survey in *Arithmetic Geometry*. Milne calls a variety projective when it has a very ample linear system (citing Hartshorne II 7.8.2), which gives the closed immersion. His proof treats an algebraically closed field first and then descends to any field. Here $\mathbb P^N_K$ is the base change of $\mathbb P^N_{\mathbb Z}$ (EGA II (4.1.1), (4.1.3)). Taking the closure of $A$ in $\mathbb P^N$ over the integers of a finite extension of $\mathbb Q_p$ gives a proper model of $A$, which Colmez's theorem below assumes. The page and wording of the 1986 printing were not checked; the author's retyped edition was read.
 """,
         src=r"""
-P. Colmez, *Périodes $p$-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème 5.2 (i)–(ii), p. 639, with the standing hypotheses on pp. 629 and 638 and $B_{\rm dR}$ as in §2, p. 632; the proof is on pp. 639–641. AI-read: a three-lens adversarial reading of page images, 2026-11-26 (docs/research/tate-prints-adversarial-readings.md); no person has read these pages. For this step the manuscript's lemma on de Rham comparison and finite descent (`diophantine_zq.tex`, lines 10939–10973) cites Scholze's Corollary 1.8 and Milne's Theorem 12.1(a); this statement and the Hodge–Tate theorem of Tate and Raynaud (Fontaine's Théorème 2) replace those two citations.
+J. S. Milne, *Abelian varieties*, in G. Cornell, J. H. Silverman (eds.), *Arithmetic Geometry* (Storrs 1984), Springer (1986), 103–150, §7, Theorem 7.1 (author's retyped edition, p. 10); A. Grothendieck, EGA II, Publ. Math. IHÉS 8 (1961), (4.1.1) and (4.1.3), pp. 71–72.
+""",
+    ),
+    'colmez1992DeRhamAbVarModel': dict(
+        group='p-adic-hodge', slug='colmez-periods-on-a-proper-model',
+        title="Colmez's p-adic periods of an abelian variety, on a proper model",
+        anchor='Colmez 1992 Thm 5.2',
+        statement=r"""
+For every prime $p$, every finite extension $F$ of $\mathbb Q_p$, every abelian variety $A$ over $F$ and every proper model $\mathcal X$ of $A$ over $\mathcal O_F$, there is a family of $\mathbb Z_p$-linear maps from the Tate module of $\mathcal X(\mathcal O_{\mathbb C_p})$ to $B_{\mathrm{dR}}$, with values in $B^+_{\mathrm{dR}}$, compatible with the action of $\mathrm{Gal}(\bar F/F)$, whose extension of scalars to $B_{\mathrm{dR}}$ has no common kernel.
+""",
+        caveat=r"""
+It is Colmez's Théorème 5.2 (i)–(ii), in his own setting: a proper model of the abelian variety over the integers, points with coordinates in $\mathcal O_{\mathbb C_p}$, and $B^+_{\mathrm{dR}}$ built from $W(R)[1/p]$ as on p. 632. The de Rham cohomology is kept only as an index set; linearity in it, the filtration clause and the Riemann relation (iii) are dropped. The model is not required to be flat: replacing it by the closure of its generic fibre changes neither its points nor the statement. Given a proper model for every abelian variety, which Milne's theorem above supplies, it is equivalent to the row it replaces.
+""",
+        src=r"""
+P. Colmez, *Périodes p-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème 5.2 (i)–(ii), p. 639 (setting p. 638; $B^+_{\mathrm{dR}}$ p. 632; proof pp. 639–641).
 """,
     ),
     'fontaine1982HTAbVar': dict(

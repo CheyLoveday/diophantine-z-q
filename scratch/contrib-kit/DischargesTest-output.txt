@@ -886,6 +886,9 @@ DISCHARGES [OpenResearchLeaves84.pazukiCor13Upper] by ZInQ.ChevFree.pazukiCor13U
  BPAnalytic.Uniformization.UniformizationLeafAll,
  AvSplit.MumfordTorsionAlgClosed]
   axioms: [propext, Classical.choice, Quot.sound]
+DISCHARGES [OpenAddedLeaves31.colmez1992DeRhamAbVarModel] by ZInQ.Contrib.ColmezProperModel.colmez1992DeRhamAbVarModel_of_printed
+  still assumes: [DeRhamScholze.TatePrints.ColmezPrinted.Colmez1992DeRhamAbVarPrinted]
+  axioms: [propext, Classical.choice, Quot.sound]
 DISCHARGES [OpenResearchLeaves84.pazukiCor13Upper] by ZInQ.HeightDict.pazukiCor13Upper_of_printed
   still assumes: [ZInQ.HeightDict.PazukiCor13UpperPrinted,
  BPAnalytic.Uniformization.UniformizationLeafAll,
@@ -906,4 +909,4 @@ DISCHARGES [OpenResearchLeaves84.pazukiCor13Upper] by ZInQ.SemiAbDescend.pazukiC
  AvSplit.MumfordTorsionAlgClosed,
  ZInQ.SemiAbDescend.ChevalleyPerfect]
   axioms: [propext, Classical.choice, Quot.sound]
-#discharges: 32 open hypotheses, 22327 theorems checked, 299 discharge one
+#discharges: 33 open hypotheses, 22700 theorems checked, 300 discharge one

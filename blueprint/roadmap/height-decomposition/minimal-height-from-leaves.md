@@ -4,25 +4,25 @@ declaration: theorem
 origin: bridged
 statement: formalized
 proof: formalized
-lean: HDec.HSyn.sixContactMin_of_open105
+lean: HDec.HSyn.sixContactMin_of_open106
 ---
 
-# The minimal height hypothesis from twenty-nine statements
+# The minimal height hypothesis from thirty statements
 
 The [minimal height hypothesis](../multiplication/certificate/six-contact-min.md) follows from the
-twenty-nine statements of this chapter taken together: theorems from the literature, grouped by the
+thirty statements of this chapter taken together: theorems from the literature, grouped by the
 theory they come from ([Shimura curves of discriminant 6](shimura-curves/README.md),
 [complex multiplication](cm-fibres/README.md), [abelian varieties](abelian-varieties/README.md),
 [Néron models, semistable reduction and monodromy](neron-models/README.md),
 [Faltings 1983 and Faltings heights](heights/README.md),
 [p-adic Hodge theory](p-adic-hodge/README.md),
-[Galois representations of modular forms](modular-galois/README.md)). Of the twenty-nine statements
-from the literature, eighteen are published statements, some of them specialized or weakened; and
-eleven are consequences of published theorems, which take further theorems to reach from the print.
-The project's strict convention, which counts a published statement only once its reading against
-the print and its review are complete and find it in its printed form, counts eleven of the
-twenty-nine as published (twelve without the strictest reading of one flagged statement). None of
-the twenty-nine is proved here.
+[Galois representations of modular forms](modular-galois/README.md)). Of the thirty statements from
+the literature, twenty are published statements, some of them specialized or weakened; and ten are
+consequences of published theorems, which take further theorems to reach from the print. The
+project's strict convention, which counts a published statement only once its reading against the
+print and its review are complete and find it in its printed form, counts thirteen of the thirty as
+published (fourteen without the strictest reading of one flagged statement). None of the thirty is
+proved here.
 
 The proof follows the manuscript's proof of its Theorem 4.1 at the one instance the main theorem
 uses, which the project has split into named steps, each proved from these statements and the steps
@@ -67,8 +67,9 @@ height hypothesis.
 - [Complex abelian surfaces with quaternionic multiplication, in lattice form](shimura-curves/complex-qm-abelian-surfaces-voight.md)
 - [Shimura's canonical model at level three and the reciprocity law at CM points](shimura-curves/canonical-model-level-three-reciprocity.md)
 - [The fine moduli scheme at level three is Shimura's canonical model](shimura-curves/fine-moduli-scheme-is-canonical-model.md)
-- [Colmez's p-adic periods of an abelian variety](p-adic-hodge/colmez-p-adic-periods.md)
 - [The Hodge–Tate theorem of Tate and Raynaud for abelian varieties](p-adic-hodge/fontaine-hodge-tate-abelian.md)
+- [Every abelian variety is projective](abelian-varieties/abelian-varieties-are-projective.md)
+- [Colmez's p-adic periods of an abelian variety, on a proper model](p-adic-hodge/colmez-periods-on-a-proper-model.md)
 
 ## Sources
 

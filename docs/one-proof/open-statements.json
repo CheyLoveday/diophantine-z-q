@@ -162,18 +162,24 @@
    "docstring":
    "y3-glue: for every curve (M, psi) with the properties of cornutVatsalCMReciprocityPrint and every witness (Y, Phi) of the polarization-free fine moduli problem at full level 3 (Y3Fix.R1fpPropsAbP), there is an isomorphism f : Y = M over Q carrying the moduli point of [z, g] (DelignePS.IsLevelPoint) to psi(z, g). It identifies the fine moduli scheme with Shimura's canonical model. One of the three rows that replace deligneCanonicalModelY3EveryPrint. ",
    "bundle": "OpenResearchLeaves84"},
-  {"type": "DeRhamScholze.TatePrints.Colmez1992DeRhamAbVar",
-   "statement": "DeRhamScholze.TatePrints.Colmez1992DeRhamAbVar",
-   "field": "colmez1992DeRhamAbVar",
-   "docstring":
-   "Colmez, Périodes p-adiques des variétés abéliennes, Math. Ann. 292 (1992), 629-644, Théorème 5.2 (i)-(ii),\np. 639: for an abelian variety A over a finite extension F of ℚ_p, the p-adic period pairing (ω, u) ↦ ∫_u ω\ntakes values in B_dR⁺, commutes with the action of G_F, and is non-degenerate on the side of\nV_p(A) = ℚ_p ⊗ T_p(A) after extending scalars to B_dR. H¹_dR(A) is weakened to an existential type;\nbilinearity in ω, the Fil¹ clause and (iii) are dropped. ",
-   "bundle": "OpenAddedLeaves30"},
   {"type": "DeRhamScholze.TatePrints.Fontaine1982HTAbVar",
    "statement": "DeRhamScholze.TatePrints.Fontaine1982HTAbVar",
    "field": "fontaine1982HTAbVar",
    "docstring":
    "Fontaine, Formes différentielles et modules de Tate des variétés abéliennes sur les corps locaux,\nInvent. Math. 65 (1982), 379-409, Théorème 2 (Tate, Raynaud), p. 388, in dimension form: for an abelian\nvariety A of dimension g over a finite extension F of ℚ_p, Hom_{G_F}(V_p(A), ℂ_p(1)) and\nHom_{G_F}(V_p(A), ℂ_p) both have dimension g over F (`htF (A.galRep p) i`, i = 1, 0). The equality with g is\nprinted in the proof on p. 388 (\"chacune de ces dimensions est égale à d\"); the maps ρ¹_X, ρ⁰_X are dropped. ",
-   "bundle": "OpenAddedLeaves30"},
+   "bundle": "OpenAddedLeaves31"},
+  {"type": "ZInQ.Contrib.ColmezProperModel.MilneThm71Projective",
+   "statement": "ZInQ.Contrib.ColmezProperModel.MilneThm71Projective",
+   "field": "milneThm71Projective",
+   "docstring":
+   "y3-printed, Milne, Abelian varieties, in Arithmetic Geometry (Storrs 1984), Springer 1986, Thm 7.1 (p. 10 of the author's retyped edition): every abelian variety over a field K has a closed immersion over K into P^N_Z x_{Spec Z} Spec K for some N. With the scheme-theoretic closure in P^N over O_F it gives a proper model of every abelian variety over a finite extension of Q_p (ZInQ.Contrib.ColmezProperModel.properModelExists_of_milne). One of the two rows that replace colmez1992DeRhamAbVar (ZInQ.Contrib.ColmezProperModel.colmez1992DeRhamAbVar_of_model_milne). ",
+   "bundle": "OpenAddedLeaves31"},
+  {"type": "ZInQ.Contrib.ColmezProperModel.Colmez1992DeRhamAbVarModel",
+   "statement": "ZInQ.Contrib.ColmezProperModel.Colmez1992DeRhamAbVarModel",
+   "field": "colmez1992DeRhamAbVarModel",
+   "docstring":
+   "y3-printed, Colmez, Math. Ann. 292 (1992), Theoreme 5.2 (i)-(ii), p. 639, in the setting of p. 638: for every proper model of an abelian variety A over the integers of a finite extension F of Q_p, the p-adic period pairing exists on the Tate module of the model's O_{C_p}-points, with values in Colmez's B+_DR (as built on p. 632), compatible with Galois and non-degenerate on the T_p side after extending scalars to B_DR. Given a proper model for every A it is equivalent to the row as stated (ZInQ.Contrib.ColmezProperModel.colmez1992DeRhamAbVar_iff_model). One of the two rows that replace colmez1992DeRhamAbVar. ",
+   "bundle": "OpenAddedLeaves31"},
   {"type": "ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine",
    "statement": "ZInQ.Manuscript.SelmerTwoPower.RestrictedConverseGenuine",
    "field": "hRC",
@@ -194,4 +200,4 @@
    "docstring":
    "Silverman, *The Arithmetic of Elliptic Curves*, 2nd ed. (2009), Appendix C,\nEvidence 16.5.5, p. 453, rank-one line. The Hasse–Weil L-function is represented\nby its analytic continuation from the half-plane of absolute convergence.\nKind: consequence, GLUE. Silverman reports this line; the records derive it from\nMiller, LMS J. Comput. Math. 14 (2011), Thm 4.4 (`silvermanRankOne_of_miller`). ",
    "bundle": "frozenTarget"}],
- "count": 32}
+ "count": 33}

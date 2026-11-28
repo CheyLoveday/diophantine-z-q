@@ -213,3 +213,123 @@ The two rows replace the added rows `scholzeH1AbVar` and `t10TateDuality` in the
 the reading, the instance and the points above; since w188 `colmez1992DeRhamAbVar` is GLUE (the lead's Tate-fold audit)
 and `fontaine1982HTAbVar` is LEAF. The count of open statements stays at 22. The strict count of the H part
 goes from 6/13 to 8/11, and from 6/16 to 8/14 with the three root hypotheses.
+
+## 6. Addendum (2026-11-27): `colmez1992DeRhamAbVar`, the model step and the two reading points
+
+Since 11-26 the row's LEAF path had three open items (the row's flag): (a) the existence of a proper model, which
+Colmez takes as given (p. 638: "Dans la suite de cette section, X sera une variété abélienne, 𝒳 un modèle propre de X
+sur O_K"); (b) ℤ_p-linearity in `u`; (c) an amended fidelity mapping of the `T_p` clause. A contribution proves (a) in
+Lean from one further printed leaf, and two adversarial AI readings (units U19 and U20; three independent lenses on
+three model families each, from page images, every quote checked) settle (b), (c) and the new leaf.
+
+### 6.1 The model step
+
+`ZInQ.Contrib.ColmezProperModel.properModelExists_of_milne : MilneThm71Projective → ProperModelExists` (proved; standard
+axioms): embed `A` in `ℙᴺ_F` (the leaf), view `ℙᴺ_F` as the generic fibre of `ℙᴺ_{O_F} = ℙᴺ_ℤ ×_ℤ Spec O_F` (`F` is
+`O_F[1/p]`, the open `D(p)`), and take the scheme-theoretic image `𝒳` of `A → ℙᴺ_{O_F}`. `𝒳` is closed in a proper
+scheme, hence proper over `O_F`; its restriction to the open generic fibre is the scheme-theoretic image of the closed
+immersion `A → ℙᴺ_F`, which is `A` (Mathlib's `Scheme.ker_ideal_of_isPullback_of_isOpenImmersion`). With
+`colmez1992DeRhamAbVar_of_model_milne`, the row is Colmez's Théorème 5.2 (`Colmez1992DeRhamAbVarModel`, the row with
+the model as Colmez states it) plus Milne's Theorem 7.1. `#discharges` at main 439cb860: "DISCHARGES
+[OpenAddedLeaves30.colmez1992DeRhamAbVar] by …colmez1992DeRhamAbVar_of_model_milne, still assumes:
+[MilneThm71Projective, Colmez1992DeRhamAbVarModel]".
+
+### 6.2 Unit U20: the leaf `MilneThm71Projective`
+
+The leaf: for every field `K` (universe 0) and every `A : AbVar K`, there are `N` and a closed immersion
+`A → ℙᴺ_ℤ ×_{Spec ℤ} Spec K` over `Spec K`, with `ℙᴺ_ℤ = Proj ℤ[x₀, …, x_N]` (total-degree grading). Print: J. S.
+Milne, *Abelian varieties*, in *Arithmetic Geometry* (Storrs 1984), Springer (1986), 103-150, §7, Theorem 7.1, "Every
+abelian variety is projective", read in the author's retyped edition (SHA-256
+bffdf81c57c77420b5454b31270007989d12f332abea62424be15c424079fc7c), p. 10, which states that "some corrections have been
+made" and "the numbering is unchanged": the 1986 printing's page and wording are unchecked.
+
+| Lens | Verdict |
+| --- | --- |
+| Fidelity | FAITHFUL WITH CAVEATS, MINOR (docstring quotations) |
+| Skeptic | FAITHFUL WITH CAVEATS, MAJOR (the finite-type bridge, below) |
+| Red team | FAITHFUL WITH CAVEATS, MINOR |
+
+No reader found a mismatch. Theorem 7.1 is for an arbitrary ground field: the proof treats k̄ first and descends
+(p. 11: "(a) Let D be a divisor on A; if |D_k̄| is very ample, then so also is |D|. (The map A_k̄ ↪ ℙⁿ defined by
+|D_k̄| is obtained by base change from that defined by |D|.)"). Milne's "projective" is "a very ample linear system"
+(p. 10, citing Hartshorne II 7.8.2), which gives a closed immersion into some ℙᴺ_k over k (background: Hartshorne II
+7.1). The skeptic's MAJOR: Milne's variety is of finite type (p. 2: "A variety V over k is a separated scheme of finite
+type over k such that V_k̄ is integral"), the kernel's `AbVar` gives `IsProper` (separated, universally closed, locally
+of finite type) and `Smooth` (local); quasi-compactness comes from universal closedness (background), so every `AbVar K`
+is an abelian variety in Milne's sense ("A complete connected group variety is called an abelian variety", p. 3).
+ℙᴺ_K ≅ ℙᴺ_ℤ ×_ℤ Spec K over K by EGA II (4.1.1), (4.1.3.1), pp. 71-72. The docstring findings (a quotation that
+silently corrected the print's "a sheaf of divisor", the place of the Conventions, the finite-type bridge, the
+notation ℙ(L(D)), "≅" for "=", the edition note) were fixed in a comment-only edition (SHA-256 fcca5a553c1e723e8b15fd961cc771c258646e861ed5fd5e75793e205a4476b5). The
+leaf read was the first edition (e7f21800…c0fe); the second (3135cc73…87f2) replaces an import of the level-three
+moduli modules, whose closure reaches held material, by a local `ℙᴺ_ℤ` with the same definition, and the two
+statements are equal by `Iff.rfl` (checked by the kernel), so the reading carries over.
+
+### 6.3 Unit U19: points (b) and (c)
+
+| Lens | Verdict |
+| --- | --- |
+| Fidelity | FAITHFUL WITH CAVEATS, MINOR |
+| Skeptic | FAITHFUL WITH CAVEATS, MAJOR (an omitted step in Colmez's proof, not a mismatch) |
+| Red team | FAITHFUL WITH CAVEATS, MINOR |
+
+**(b) ℤ_p-linearity in u.** The statement asserts it: 5.2 (ii) calls the pairing on H¹_DR(X) × T_p(X) "bilinéaire"
+and non-degenerate "quand on étend les scalaires à B_DR", which reads K-linear in ω and ℤ_p-linear in u. The proof
+on p. 640 prints additivity ("La linéarité par rapport à u se démontre en utilisant le lemme 5.3(i)"), and the
+estimate before it, uniform in u (r is chosen in Lemma 5.3 before the points), gives continuity in u; ℤ_p-linearity
+then follows by density of ℤ in ℤ_p (background: the values lie in a lattice of A^k_cris,K that is p-adically
+separated in the topology of B⁺_DR). The row reads the printed statement; the passage from additivity to
+ℤ_p-linearity is a step of Colmez's proof that the article does not write out.
+
+**(c) The T_p clause.** It is now a match after proved identifications: `ColmezCp.colmez1992DeRhamAbVar_iff_cp` (the
+row is equivalent to the row with `T_p` built from the ℂ_p-points, `VCp = ℚ_p ⊗ Tate.T p (A(ℂ_p))`, `Tate.T` the
+sequences with `x 0 = 0` and transition maps multiplication by p); `ColmezTorsionIso.vCp_galRep` (the G_F-equivariant
+isomorphism, `galRepCp` acting through `cpGal σ = cpAct (gfToGqp σ)`, one fixed embedding F ↪ ℚ̄_p ⊂ ℂ_p); and, for
+Colmez's wording "u_n ∈ 𝒳(O_{C_p})", `ColmezProperModel.modelPtsEquiv` and `modelPtsEquiv_gal` (for a proper model,
+𝒳(O_{C_p}) ≃ A(ℂ_p), G_F-equivariantly), with the group law on 𝒳(O_{C_p}) transported from X, as Colmez transports it
+(pp. 638-639: "Par construction, 𝒳(O_{C_p}) s'identifie à X(C_p) … ce qui fait que 𝒳(A^k_inf,K) est muni d'une structure
+de groupe abélien"). `filB p 0` is the image of Mathlib's `BDeRhamPlus` in `BdR p`. All four theorems use the standard
+axioms only (printouts SHA-256 ab5e4b69…f8f3 and de1b6a41…f48a).
+
+**Quotations.** The row's docstring writes B⁺_dR, H¹_dR for the printed B⁺_DR, H¹_DR, and its p. 638 quotation elides
+"Soit k un entier supérieur ou égal à df_𝒳"; both are typography or faithful elision (MINOR), recorded here and not
+edited in the frozen file.
+
+### 6.4 Unit U21: the leaf `Colmez1992DeRhamAbVarModel`
+
+The row is proved from `MilneThm71Projective` and `Colmez1992DeRhamAbVarModel` (`ColmezProperModel/ModelRow.lean`, on
+main): Colmez's Théorème 5.2 (i)-(ii) in his own setting, for every proper model π : 𝒳 → Spec O_F of A (an isomorphism
+of the generic fibre with A over F), with T_p the Tate module of 𝒳(O_{C_p}) (the group law carried over from A(ℂ_p))
+and values in Colmez's B⁺_DR, `ColmezBdRPlus`, the adic completion of W(R)[1/p] at Ker θ, as printed on p. 632, with B_DR
+its fraction field. `colmez1992DeRhamAbVar_iff_model` (standard axioms): given a proper model for every A, the row
+as stated is equivalent to this form; `properModelExists_of_milne` supplies the models.
+
+| Lens | Verdict |
+| --- | --- |
+| Fidelity | FAITHFUL WITH CAVEATS, MINOR |
+| Skeptic | FAITHFUL WITH CAVEATS, MAJOR (the class of models, below) |
+| Red team | FAITHFUL WITH CAVEATS, MINOR |
+
+No reader found a mismatch. The period ring is the printed one, literally: Colmez's R (sequences with
+(x^{(n+1)})^p = x^{(n)}, the printed limit addition and coordinatewise product), θ, "B⁺_DR = lim← W(R)[p⁻¹]/(Ker θ)ⁿ"
+and "B_DR le corps des fractions de B⁺_DR" (p. 632); it is identified with Mathlib's `BDeRhamPlus` by
+`colmezBdRPlusEquiv`, compatibly with the Galois actions and the ℤ_p-algebra structures. The Tate module is
+Colmez's (u₀ = 0, transition maps [p], coordinates in 𝒳(O_{C_p}) = X(C_p), p. 638); the Galois action on points and on
+B_DR runs through one embedding F ↪ ℂ_p. The three kept clauses (values in B⁺_DR, Galois compatibility, non-degeneracy
+on the T_p side after extending scalars to B_DR) are 5.2 (i)-(ii) with weakenings only; quantifying over every proper
+model is a direct instance of 5.2 for each pair (A, 𝒳), and letting the periods depend on 𝒳 is weaker than the
+print, which proves independence of 𝒳 (p. 640).
+
+The skeptic's MAJOR: the Lean's "proper model" asks for no flatness, while Colmez's "modèle propre" may mean a flat
+model (the print does not say). The leaf still follows from the print: replace 𝒳 by the schematic closure of its
+generic fibre, which is proper and flat over O_F with the same generic fibre and through which every O_{C_p}-point
+factors uniquely (O_{C_p} has no O_F-torsion), compatibly with the group law carried over from A(ℂ_p) and with G_F
+(background). The two remaining MINOR points are wording: ModelTate.lean says Colmez transports the group law to
+𝒳(O_{C_p}) on p. 638, where the print states the transported law for 𝒳(A^k_inf,K) and the one on 𝒳(O_{C_p}) is implicit
+in "𝒳(O_{C_p}) s'identifie à X(C_p)"; and ℤ_p acts on B_DR through W(F_p) → W(R), which is the canonical ℤ_p ⊂ B⁺_DR.
+
+Quote checks: 246 source quotes and 254 Lean quotes over the nine readings (U19-U21); every Lean quote was found. The
+Colmez scan's text layer is unusable for mechanical matching (accents and formulas), so its quotes were checked by hand
+on the page images (pp. 632, 638-640 by the recorder).
+
+Rulings for the maintainer: whether the row, now Colmez Théorème 5.2 plus Milne Theorem 7.1 with the model step proved
+in Lean, is LEAF; and Milne 1986's status as published (the Storrs proceedings volume, Springer 1986).

@@ -10,9 +10,9 @@ web access (`docs/research/locators.md`) read some of them, as marked; the other
 
 ## The decomposition
 
-The minimal height hypothesis is proved from the twenty-nine statements of the chapter in the
-project's assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof
-is the project-authored note `docs/research/h-trust.md`.
+The minimal height hypothesis is proved from the thirty statements of the chapter in the project's
+assembly of the proof of the manuscript's Theorem 4.1; the trust assessment of that proof is the
+project-authored note `docs/research/h-trust.md`.
 
 ## Pazuki bound
 
@@ -218,16 +218,6 @@ G. Shimura, *Construction of class fields and zeta functions of algebraic curves
 (1967), Main Theorem I (not read); P. Deligne, *Travaux de Shimura*, Sém. Bourbaki 389 (1971),
 4.11–4.21, 5.5, 5.7–5.8; C. Cornut, V. Vatsal, Documenta Math. 10 (2005), §3.1.2, p. 292.
 
-## Colmez Theorem 5.2
-
-P. Colmez, *Périodes $p$-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème
-5.2 (i)–(ii), p. 639, with the standing hypotheses on pp. 629 and 638 and $B_{\rm dR}$ as in §2, p.
-632; the proof is on pp. 639–641. AI-read: a three-lens adversarial reading of page images,
-2026-11-26 (docs/research/tate-prints-adversarial-readings.md); no person has read these pages. For
-this step the manuscript's lemma on de Rham comparison and finite descent (`diophantine_zq.tex`,
-lines 10939–10973) cites Scholze's Corollary 1.8 and Milne's Theorem 12.1(a); this statement and the
-Hodge–Tate theorem of Tate and Raynaud (Fontaine's Théorème 2) replace those two citations.
-
 ## Fontaine Theorem 2
 
 J.-M. Fontaine, *Formes différentielles et modules de Tate des variétés abéliennes sur les corps
@@ -241,3 +231,14 @@ numbers $2,2$ of $H^1_{\rm dR}(A/F)$ and the weights $0,0,-1,-1$ of the Tate mod
 citation (lines 10996–10997). With Colmez's Théorème 5.2 this statement replaces the two citations,
 and Lean derives from the pair the de Rham property and the Hodge filtration of the dual of $V_pA$
 that those lines use (`DeRhamScholze.TatePrints.vpDual_of_colmezFontaine`).
+
+## Milne 1986 Thm 7.1
+
+J. S. Milne, *Abelian varieties*, in G. Cornell, J. H. Silverman (eds.), *Arithmetic Geometry*
+(Storrs 1984), Springer (1986), 103–150, §7, Theorem 7.1 (author's retyped edition, p. 10); A.
+Grothendieck, EGA II, Publ. Math. IHÉS 8 (1961), (4.1.1) and (4.1.3), pp. 71–72.
+
+## Colmez 1992 Thm 5.2
+
+P. Colmez, *Périodes p-adiques des variétés abéliennes*, Math. Ann. 292 (1992), 629–644, Théorème
+5.2 (i)–(ii), p. 639 (setting p. 638; $B^+_{\mathrm{dR}}$ p. 632; proof pp. 639–641).
