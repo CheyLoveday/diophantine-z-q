@@ -52,3 +52,8 @@ Y3Hodge.DeligneCanonicalModelY3EveryPrint (which the conversion of TailZ112 prov
 cornutVatsalCMReciprocityPrint and fineModuliCanonicalModelGlue) and the fibre bound of Y3 -> P^1_j, and applies Fowler
 at n = 324 (ZInQKernel/Contrib/OneProof/CMjReroute/README.md). The reading, a human reading of Fowler's p. 613 sentence
 that the maintainer ruled YES for this field, is kept here as a record.
+
+Later (cmheight62-fold, #252): cmHeight62 left the open statements, proved in Lean with no hypotheses
+(ZInQ.Contrib.CMHeight62Full.cmHeight62_unconditional, ZInQKernel/Contrib/OneProof/CMHeight62Full/FinalAssembly.lean).
+It had no row in reviews.tsv, so no row moves here; its rating in kinds.tsv (GLUE after the two-lens skeptic pass of
+11-17, with Silverman's Prop. 1.1 unread) is retired with the field.
