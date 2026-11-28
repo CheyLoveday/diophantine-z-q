@@ -1,0 +1,64 @@
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.SpecialFibreValuation
+
+/-!
+# Axiom check for `SpecialFibreValuation.lean`
+
+Every declaration below should report exactly `propext`, `Classical.choice` and `Quot.sound`.
+-/
+
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeLocalization
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.isLocalization_primeLocalization
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.isFractionRing_primeLocalization
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.isLocalRing_primeLocalization
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.algebraMap_primeLocalization_apply
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.maximalIdeal_primeLocalization
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.isDiscreteValuationRing_primeLocalization
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeValuation
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeValuation_le_one
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeValuation_lt_one_iff_mem
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeValuation_le_one_iff_mem_range
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeValuation_algebraMap_lt_one_iff
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeValuation_algebraMap_le_one
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeValuation_algebraMap_eq_one
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeValuation_le_one_iff
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.primeValuation_eq_zpow
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.isPrime_span_algebraMap
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.algebraMap_ne_zero_of_irreducible
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreValuation
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreValuation_algebraMap_le_one
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreValuation_algebraMap_lt_one_iff
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreValuation_le_one_iff
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreValuation_algebraMap_base_le_one
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreValuation_eq_zpow
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreValuation_algebraMap_base_lt_one
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreValuation_field_le_one_iff
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.toSpecialFibreIntegers
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreResidueMap
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreResidueMap_mk
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreResidueMap_injective
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.exists_mul_specialFibreResidueMap_eq
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.isFractionRing_specialFibreResidueMap
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.not_isUnit_mk_of_mem_ker
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibrePlace
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.mem_specialFibrePlace
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.mem_of_mem_nonunits_specialFibrePlace
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.specialFibreResidueMap_mem_nonunits_iff
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.exists_mk_eq_mk_mul
+#print axioms ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.residueHom_residue_eq
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.isDegreeOnePlace_specialFibrePlace
+#print axioms
+  ZInQ.Contrib.CMHeight62Full.SpecialFibreValuation.isUniformizerAt_specialFibrePlace
+#print axioms ZInQ.Contrib.CMHeight62Full.exists_specialFibreValuation

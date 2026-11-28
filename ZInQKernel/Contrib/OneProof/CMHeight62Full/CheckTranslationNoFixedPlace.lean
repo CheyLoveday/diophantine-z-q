@@ -1,0 +1,26 @@
+import ZInQKernel.Contrib.OneProof.CMHeight62Full.TranslationNoFixedPlace
+
+/-! Axiom check for node N9-bridge B3 (`TranslationNoFixedPlace.lean`). -/
+
+open ZInQ.Contrib.CMHeight62Full
+
+#print axioms TranslationNoFixedPlace.fromSpecResidueField_hom
+#print axioms TranslationNoFixedPlace.comp_translate
+#print axioms TranslationNoFixedPlace.one_of_comp_translate
+#print axioms TranslationNoFixedPlace.spec_fieldMap
+#print axioms TranslationNoFixedPlace.fieldEquiv
+#print axioms TranslationNoFixedPlace.exists_residue_retraction
+#print axioms TranslationNoFixedPlace.exists_fixed_point_of_comap_eq
+#print axioms noFixedDegreeOnePlace_of_noFixedPoint
+#print axioms translation_noFixedDegreeOnePlace
+#print axioms exists_noFixedPlace_of_translation
+#print axioms exists_noFixedPlace_baseChange
+#print axioms not_hasSimplePoleOnlyAt_of_translation
+#print axioms TranslationNoFixedPlace.exists_point_of_isClosed
+#print axioms TranslationNoFixedPlace.image_mem_irreducibleComponents
+#print axioms TranslationNoFixedPlace.translationInput_of_component
+#print axioms TranslationNoFixedPlace.algebraMap_residue_surjective_of_isClosed
+#print axioms exists_noFixedPlace_of_component
+#print axioms exists_noFixedPlace_baseChange_of_component
+#print axioms not_isClosed_of_isDegreeOnePlace
+#print axioms not_hasSimplePoleOnlyAt_of_component
