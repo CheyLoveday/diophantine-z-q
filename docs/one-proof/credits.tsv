@@ -37,4 +37,4 @@ gaudronRemondSec9LowerAnSS, gaudronRemondThm14Printed	reduction	project	yes		htt
 egaIV_9_7_7_OL	statement-check	project	yes			item-m-adversarial-readings	
 gaudronRemondSec9LowerGR1Weak	statement-check	project	yes			item-m-adversarial-readings	
 gaudronRemondThm14GR1	statement-check	project	yes			item-m-adversarial-readings	
-cmHeight62	proof	Claude Code lanes, at Jack's request	yes		https://github.com/Deicyde/diophantine-z-q/pull/252	cmheight62-fold	
+cmHeight62	proof	Claude Code lanes, at Jack's request	yes		https://github.com/Deicyde/diophantine-z-q/pull/252	cmheight62-fold	1e8472e0185a8af2ad803b79032efad7d9702fe5
